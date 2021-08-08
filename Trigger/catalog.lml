@@ -1,632 +1,541 @@
-01-Main: Main
-    1-Main: Main
-02-Raw: Raw
-    '1-Untitled Script 002': 'Untitled Script 002'
-03-Color: Color
-    1-Color: Color
-04-CoreAbility: CoreAbility
-    1-AbilityLvl: AbilityLvl
-    2-Desctiption: Desctiption
-    3-InitDescription: InitDescription
+01-Libraries: Libraries
+    1-RandomShit: RandomShit
+    2-InitAbilities: InitAbilities
+    3-Quest: Quest
+    4-NewTable: NewTable
+    5-PlayerInfo: PlayerInfo
+02-description: description
+    1-AbilDis: AbilDis
+    2-InitDescription: InitDescription
         Run
-    4-Spells: Spells
-        1-Standart: Standart
-            1-Alliance: Alliance
-                '01-Storm bolt': 'Storm bolt'
-                '02-Inner fire': 'Inner fire'
-                '03-Holy Light': 'Holy Light'
-                '04-Flame Strike': 'Flame Strike'
-                05-Fog: Fog
-                06-Blizzard: Blizzard
-                '07-Thunder Clap': 'Thunder Clap'
-                08-Banish: Banish
-                '09-Divine Shield': 'Divine Shield'
-                10-Avatar: Avatar
-                '11-Summon Water Elemental': 'Summon Water Elemental'
-                12-Phoenix: Phoenix
-                13-Multishot: Multishot
-                '14-Devation Aura': 'Devation Aura'
-                '15-Brilliance Aura': 'Brilliance Aura'
-            2-Orc: Orc
-                '01-War Stomp': 'War Stomp'
-                02-Berserk: Berserk
-                '03-War Drums': 'War Drums'
-                04-Pilage: Pilage
-                05-Shockwave: Shockwave
-                '06-Spirit Link': 'Spirit Link'
-                '07-Chain Lightning': 'Chain Lightning'
-                08-HealingWave: HealingWave
-                '09-Slow Aura': 'Slow Aura'
-                '10-Endurance Aura': 'Endurance Aura'
-                '11-Feral Spirit': 'Feral Spirit'
-                '12-Serpent Ward': 'Serpent Ward'
-                '13-Mirror Image': 'Mirror Image'
-                '14-Critical Strike': 'Critical Strike'
-                '15-Big Bad Voodoo': 'Big Bad Voodoo'
-                '16-Wind Walk': 'Wind Walk'
-                17-Bloodlust: Bloodlust
-                '18-Healing Ward': 'Healing Ward'
-                '19-Stasis Trap': 'Stasis Trap'
-                20-Pulverize: Pulverize
-            3-Undead: Undead
-                01-Vampirism: Vampirism
-                '02-Carrion Beetles': 'Carrion Beetles'
-                03-Inferno: Inferno
-                '04-Carrion Swarm': 'Carrion Swarm'
-                '05-Death and Decay': 'Death and Decay'
-                '06-Death Pact': 'Death Pact'
-                '07-Frost Armor': 'Frost Armor'
-                '08-Frost Nova': 'Frost Nova'
-                09-Impale: Impale
-                '10-Spiked Carapace': 'Spiked Carapace'
-                '11-Unholy Aura': 'Unholy Aura'
-                '12-AntiMagic Shell': 'AntiMagic Shell'
-                13-Curse: Curse
-                '14-Raise Dead': 'Raise Dead'
-                '15-Unholy Frenzy': 'Unholy Frenzy'
-            4-NightElf: NightElf
-                01-Blink: Blink
-                '02-Entangling Roots': 'Entangling Roots'
-                03-Rejuvenation: Rejuvenation
-                04-Tranquility: Tranquility
-                05-Thorns: Thorns
-                06-Evasion: Evasion
-                '07-Fan of Knives': 'Fan of Knives'
-                08-Immolation: Immolation
-                '09-Searing Arrows': 'Searing Arrows'
-                '10-Shadow Strike': 'Shadow Strike'
-                11-Starfall: Starfall
-                '12-Summon Mountain Giant': 'Summon Mountain Giant'
-                '13-Trueshot Aura': 'Trueshot Aura'
-                '14-Faerie Fire': 'Faerie Fire'
-                '15-Hardened Skin': 'Hardened Skin'
-                '16-Phase Shift': 'Phase Shift'
-            5-Neutral: Neutral
-        2-DamageAbilty: DamageAbilty
-        3-InitSpells: InitSpells
-05-FixFunction: FixFunction
+    3-FunctionDes: FunctionDes
+03-FixFunction: FixFunction
     1-Debug: Debug
     2-Fix: Fix
-06-Buffs: Buffs
+04-Buffs: Buffs
     1-Damage: Damage
     2-BuffSys: BuffSys
     3-PereodicDmg: PereodicDmg
     4-InitInfoBuffs: InitInfoBuffs
-07-OrderAbility: OrderAbility
+05-OrderAbility: OrderAbility
     1-test: test
     2-Cyclone: Cyclone
         1-Abil: Abil
-08-channel: channel
+06-channel: channel
     1-Order: Order
     '2-Untitled Trigger 002': 'Untitled Trigger 002'
-09-Init: Init
+07-Init: Init
     1-CustomState: CustomState
     2-Variable: Variable
     3-UnitStateSys: UnitStateSys
-10-Fun: Fun
-    1-LossHp: LossHp
-    2-HealController: HealController
-    3-VampirsmController: VampirsmController
-    4-Multi: Multi
-    '5-AOE DMG': 'AOE DMG'
-    6-Glory: Glory
-    7-Functions: Functions
-11-SpellStart: SpellStart
+08-Fun: Fun
+    1-VampirsmController: VampirsmController
+    2-Multi: Multi
+    '3-AOE DMG': 'AOE DMG'
+    '4-Untitled Trigger 003': 'Untitled Trigger 003'
+    5-Functions: Functions
+09-SpellStart: SpellStart
     1-StartFunction: StartFunction
-12-Tome: Tome
+10-Tome: Tome
     1-Toms: Toms
-13-Heros: Heros
+11-Heros: Heros
     1-Lich: Lich
         '1-Event lich': 'Event lich'
-14-1: 1
+12-1: 1
     1-Vers: Vers
         Disab
         Run
     '2-Untitled Trigger 005': 'Untitled Trigger 005'
-15-Frame: Frame
+13-Frame: Frame
     1-E: E
         Disab
     '2-Untitled Script 001': 'Untitled Script 001'
     3-bonus1: bonus1
     4-Init: Init
     5-UpdateFrame: UpdateFrame
-16-Variables: Variables
-    '001-Untitled Category': 'Untitled Category'
-    002-DrainAuraUser: DrainAuraUser
-    003-DrainDamage: DrainDamage
-    004-DrainAuraTarget: DrainAuraTarget
-    005-WhirlwindBaseDamage: WhirlwindBaseDamage
-    006-CommandDamage: CommandDamage
-    007-TrueShotDamage: TrueShotDamage
-    008-WarDrumsDamage: WarDrumsDamage
-    009-WarDrumsMultiplier: WarDrumsMultiplier
-    010-CommandMultiplier: CommandMultiplier
-    011-TrueshotMultiplier: TrueshotMultiplier
-    012-WhirlwindLevelMultiplier: WhirlwindLevelMultiplier
-    013-WhirlwindLevel: WhirlwindLevel
-    014-StatDifference: StatDifference
-    015-MaxBaseStat: MaxBaseStat
-    016-MaxStat: MaxStat
-    017-BaseAgi: BaseAgi
-    018-BaseStr: BaseStr
-    019-BaseInt: BaseInt
-    020-MaxAgi: MaxAgi
-    021-MaxInt: MaxInt
-    022-MaxStr: MaxStr
-    023-SaveSkillLevel: SaveSkillLevel
-    024-WhirlwindDamage: WhirlwindDamage
-    025-PlayerLumber: PlayerLumber
-    026-Camera_Distance: Camera_Distance
-    027-FactorCleared: FactorCleared
-    028-RecipeFactor: RecipeFactor
-    029-Ingredients: Ingredients
-    030-skills: skills
-    031-Items: Items
-    032-Description: Description
-    033-Skill: Skill
-    034-trigger154: trigger154
-    035-unit38: unit38
-    036-unit37: unit37
-    037-unit36: unit36
-    038-unit35: unit35
-    039-unit34: unit34
-    040-unit33: unit33
-    041-unit32: unit32
-    042-unit31: unit31
-    043-unit30: unit30
-    044-unit29: unit29
-    045-unit28: unit28
-    046-unit27: unit27
-    047-unit26: unit26
-    048-unit25: unit25
-    049-unit24: unit24
-    050-unit23: unit23
-    051-unit22: unit22
-    052-unit21: unit21
-    053-unit20: unit20
-    054-unit19: unit19
-    055-unit18: unit18
-    056-unit17: unit17
-    057-unit16: unit16
-    058-unit15: unit15
-    059-unit14: unit14
-    060-unit13: unit13
-    061-unit12: unit12
-    062-unit11: unit11
-    063-unit10: unit10
-    064-unit09: unit09
-    065-unit08: unit08
-    066-unit07: unit07
-    067-unit06: unit06
-    068-trigger153: trigger153
-    069-trigger152: trigger152
-    070-trigger151: trigger151
-    071-trigger150: trigger150
-    072-trigger149: trigger149
-    073-trigger148: trigger148
-    074-trigger147: trigger147
-    075-trigger146: trigger146
-    076-trigger145: trigger145
-    077-trigger144: trigger144
-    078-trigger143: trigger143
-    079-trigger142: trigger142
-    080-trigger141: trigger141
-    081-trigger140: trigger140
-    082-trigger139: trigger139
-    083-trigger138: trigger138
-    084-trigger137: trigger137
-    085-trigger136: trigger136
-    086-trigger135: trigger135
-    087-trigger134: trigger134
-    088-trigger133: trigger133
-    089-trigger132: trigger132
-    090-trigger131: trigger131
-    091-trigger130: trigger130
-    092-trigger129: trigger129
-    093-trigger128: trigger128
-    094-trigger127: trigger127
-    095-trigger126: trigger126
-    096-trigger125: trigger125
-    097-trigger124: trigger124
-    098-trigger123: trigger123
-    099-trigger122: trigger122
-    100-trigger121: trigger121
-    101-trigger120: trigger120
-    102-trigger119: trigger119
-    103-trigger118: trigger118
-    104-trigger117: trigger117
-    105-trigger116: trigger116
-    106-trigger115: trigger115
-    107-trigger114: trigger114
-    108-trigger113: trigger113
-    109-trigger112: trigger112
-    110-trigger111: trigger111
-    111-trigger110: trigger110
-    112-trigger109: trigger109
-    113-trigger108: trigger108
-    114-trigger107: trigger107
-    115-trigger106: trigger106
-    116-trigger105: trigger105
-    117-trigger104: trigger104
-    118-trigger103: trigger103
-    119-trigger102: trigger102
-    120-trigger101: trigger101
-    121-trigger100: trigger100
-    122-trigger99: trigger99
-    123-trigger98: trigger98
-    124-trigger97: trigger97
-    125-trigger96: trigger96
-    126-trigger95: trigger95
-    127-trigger94: trigger94
-    128-trigger93: trigger93
-    129-trigger92: trigger92
-    130-trigger91: trigger91
-    131-trigger90: trigger90
-    132-trigger89: trigger89
-    133-trigger88: trigger88
-    134-trigger87: trigger87
-    135-trigger86: trigger86
-    136-trigger85: trigger85
-    137-trigger84: trigger84
-    138-trigger83: trigger83
-    139-trigger82: trigger82
-    140-trigger81: trigger81
-    141-trigger80: trigger80
-    142-trigger79: trigger79
-    143-trigger78: trigger78
-    144-trigger77: trigger77
-    145-trigger76: trigger76
-    146-trigger75: trigger75
-    147-trigger74: trigger74
-    148-trigger73: trigger73
-    149-trigger72: trigger72
-    150-trigger71: trigger71
-    151-trigger70: trigger70
-    152-trigger69: trigger69
-    153-trigger68: trigger68
-    154-trigger67: trigger67
-    155-trigger66: trigger66
-    156-trigger65: trigger65
-    157-trigger64: trigger64
-    158-trigger63: trigger63
-    159-trigger62: trigger62
-    160-trigger61: trigger61
-    161-trigger60: trigger60
-    162-trigger59: trigger59
-    163-trigger58: trigger58
-    164-trigger57: trigger57
-    165-trigger56: trigger56
-    166-trigger55: trigger55
-    167-trigger54: trigger54
-    168-trigger53: trigger53
-    169-trigger52: trigger52
-    170-trigger51: trigger51
-    171-trigger50: trigger50
-    172-trigger49: trigger49
-    173-trigger48: trigger48
-    174-trigger47: trigger47
-    175-trigger46: trigger46
-    176-trigger45: trigger45
-    177-trigger44: trigger44
-    178-trigger43: trigger43
-    179-trigger42: trigger42
-    180-trigger41: trigger41
-    181-trigger40: trigger40
-    182-trigger39: trigger39
-    183-trigger38: trigger38
-    184-trigger37: trigger37
-    185-trigger36: trigger36
-    186-trigger35: trigger35
-    187-trigger34: trigger34
-    188-trigger33: trigger33
-    189-trigger32: trigger32
-    190-trigger31: trigger31
-    191-trigger30: trigger30
-    192-trigger29: trigger29
-    193-trigger28: trigger28
-    194-trigger27: trigger27
-    195-trigger26: trigger26
-    196-trigger25: trigger25
-    197-trigger24: trigger24
-    198-trigger23: trigger23
-    199-trigger22: trigger22
-    200-trigger21: trigger21
-    201-trigger20: trigger20
-    202-trigger19: trigger19
-    203-trigger18: trigger18
-    204-trigger17: trigger17
-    205-trigger16: trigger16
-    206-trigger15: trigger15
-    207-trigger14: trigger14
-    208-trigger13: trigger13
-    209-trigger12: trigger12
-    210-trigger11: trigger11
-    211-trigger10: trigger10
-    212-trigger09: trigger09
-    213-trigger08: trigger08
-    214-trigger07: trigger07
-    215-trigger06: trigger06
-    216-trigger05: trigger05
-    217-trigger04: trigger04
-    218-trigger03: trigger03
-    219-trigger02: trigger02
-    220-trigger01: trigger01
-    221-sound25: sound25
-    222-sound24: sound24
-    223-sound23: sound23
-    224-sound22: sound22
-    225-sound21: sound21
-    226-sound20: sound20
-    227-sound19: sound19
-    228-sound18: sound18
-    229-sound17: sound17
-    230-sound16: sound16
-    231-sound15: sound15
-    232-sound14: sound14
-    233-sound13: sound13
-    234-sound12: sound12
-    235-sound11: sound11
-    236-sound10: sound10
-    237-sound09: sound09
-    238-sound08: sound08
-    239-sound07: sound07
-    240-sound06: sound06
-    241-sound05: sound05
-    242-sound04: sound04
-    243-sound03: sound03
-    244-sound02: sound02
-    245-sound01: sound01
-    246-camerasetup01: camerasetup01
-    247-rect09: rect09
-    248-rect08: rect08
-    249-rect07: rect07
-    250-rect06: rect06
-    251-rect05: rect05
-    252-rect04: rect04
-    253-rect03: rect03
-    254-rect02: rect02
-    255-rect01: rect01
-    256-integer63: integer63
-    257-unit05: unit05
-    258-boolean18: boolean18
-    259-unit04: unit04
-    260-location02: location02
-    261-group09: group09
-    262-unit03: unit03
-    263-strings02: strings02
-    264-boolean17: boolean17
-    265-real04: real04
-    266-integer62: integer62
-    267-integers16: integers16
-    268-integers15: integers15
-    269-boolean16: boolean16
-    270-dialog07: dialog07
-    271-player03: player03
-    272-boolean15: boolean15
-    273-buttons04: buttons04
-    274-dialog06: dialog06
-    275-boolean14: boolean14
-    276-boolean13: boolean13
-    277-dialog05: dialog05
-    278-integer61: integer61
-    279-integer60: integer60
-    280-integer59: integer59
-    281-integer58: integer58
-    282-integer57: integer57
-    283-integers14: integers14
-    284-unit02: unit02
-    285-real03: real03
-    286-group08: group08
-    287-sounds01: sounds01
-    288-group07: group07
-    289-integer56: integer56
-    290-integer55: integer55
-    291-integer54: integer54
-    292-group06: group06
-    293-effects02: effects02
-    294-effects01: effects01
-    295-integer53: integer53
-    296-integers13: integers13
-    297-integer52: integer52
-    298-integer51: integer51
-    299-integer50: integer50
-    300-integer49: integer49
-    301-integer48: integer48
-    302-boolean12: boolean12
-    303-force07: force07
-    304-integer47: integer47
-    305-integer46: integer46
-    306-integer45: integer45
-    307-integer44: integer44
-    308-integer43: integer43
-    309-integer42: integer42
-    310-boolean11: boolean11
-    311-boolean10: boolean10
-    312-integer41: integer41
-    313-boolean09: boolean09
-    314-integer40: integer40
-    315-group05: group05
-    316-buttons03: buttons03
-    317-dialog04: dialog04
-    318-integer39: integer39
-    319-boolean08: boolean08
-    320-integers12: integers12
-    321-strings01: strings01
-    322-force06: force06
-    323-boolean07: boolean07
-    324-integer38: integer38
-    325-string01: string01
-    326-integers11: integers11
-    327-booleans05: booleans05
-    328-booleans04: booleans04
-    329-force05: force05
-    330-force04: force04
-    331-buttons02: buttons02
-    332-dialogs01: dialogs01
-    333-integer37: integer37
-    334-integer36: integer36
-    335-integers10: integers10
-    336-integer35: integer35
-    337-locations01: locations01
-    338-boolean06: boolean06
-    339-integer34: integer34
-    340-integer33: integer33
-    341-integer32: integer32
-    342-player02: player02
-    343-dialog03: dialog03
-    344-boolean05: boolean05
-    345-integer31: integer31
-    346-dialog02: dialog02
-    347-boolean04: boolean04
-    348-boolean03: boolean03
-    349-integer30: integer30
-    350-integer29: integer29
-    351-group04: group04
-    352-integer28: integer28
-    353-integer27: integer27
-    354-integer26: integer26
-    355-integers09: integers09
-    356-integers08: integers08
-    357-integer25: integer25
-    358-integer24: integer24
-    359-integer23: integer23
-    360-integer22: integer22
-    361-integer21: integer21
-    362-integers07: integers07
-    363-buttons01: buttons01
-    364-dialog01: dialog01
-    365-integers06: integers06
-    366-unit01: unit01
-    367-real02: real02
-    368-integer20: integer20
-    369-integer19: integer19
-    370-location01: location01
-    371-force03: force03
-    372-booleans03: booleans03
-    373-items01: items01
-    374-integer18: integer18
-    375-integer17: integer17
-    376-booleans02: booleans02
-    377-integers05: integers05
-    378-boolean02: boolean02
-    379-booleans01: booleans01
-    380-integer16: integer16
-    381-integer15: integer15
-    382-group03: group03
-    383-group02: group02
-    384-integers04: integers04
-    385-integers03: integers03
-    386-integer14: integer14
-    387-units03: units03
-    388-group01: group01
-    389-force02: force02
-    390-boolean01: boolean01
-    391-force01: force01
-    392-units02: units02
-    393-integer13: integer13
-    394-player01: player01
-    395-integer12: integer12
-    396-integer11: integer11
-    397-integer10: integer10
-    398-integer09: integer09
-    399-real01: real01
-    400-integer08: integer08
-    401-integer07: integer07
-    402-integer06: integer06
-    403-integer05: integer05
-    404-rects01: rects01
-    405-integer04: integer04
-    406-integer03: integer03
-    407-integer02: integer02
-    408-integers02: integers02
-    409-integers01: integers01
-    410-integer01: integer01
-    411-units01: units01
-17-triggers: triggers
-    1-core: core
-        '1-InitAbility Copy': 'InitAbility Copy'
-        '2-AbsoluteAbilityUpgrade Copy': 'AbsoluteAbilityUpgrade Copy'
-    2-other: other
-        '01-Timer Copy': 'Timer Copy'
-        '02-Key Copy': 'Key Copy'
-            Disab
-        '03-Cooldown Copy': 'Cooldown Copy'
-        '04-functions Copy': 'functions Copy'
-        '05-InAl Copy': 'InAl Copy'
-        '06-FixUnit Copy': 'FixUnit Copy'
-        '07-InitHash Copy': 'InitHash Copy'
-        '08-Whirlwind Damage Copy': 'Whirlwind Damage Copy'
-        '09-reset cooldown spell Copy': 'reset cooldown spell Copy'
-        '10-axe recipe Copy': 'axe recipe Copy'
-        '11-ring recipe Copy': 'ring recipe Copy'
-        '12-pitlord passive cleave Copy': 'pitlord passive cleave Copy'
-        '13-Zoom Copy': 'Zoom Copy'
-        '14-AttackController Copy': 'AttackController Copy'
-        '15-EvaryChk Copy Copy': 'EvaryChk Copy Copy'
-        '16-HeroLvl Copy': 'HeroLvl Copy'
-            Run
-        '17-AbilityCast Copy': 'AbilityCast Copy'
-        '18-Effect Copy': 'Effect Copy'
-    '3-init Copy': 'init Copy'
-    '4-InitData Copy': 'InitData Copy'
+14-Variables: Variables
+    001-DrainAuraUser: DrainAuraUser
+    002-DrainDamage: DrainDamage
+    003-DrainAuraTarget: DrainAuraTarget
+    004-WhirlwindBaseDamage: WhirlwindBaseDamage
+    005-CommandDamage: CommandDamage
+    006-TrueShotDamage: TrueShotDamage
+    007-WarDrumsDamage: WarDrumsDamage
+    008-WarDrumsMultiplier: WarDrumsMultiplier
+    009-CommandMultiplier: CommandMultiplier
+    010-TrueshotMultiplier: TrueshotMultiplier
+    011-WhirlwindLevelMultiplier: WhirlwindLevelMultiplier
+    012-WhirlwindLevel: WhirlwindLevel
+    013-StatDifference: StatDifference
+    014-MaxBaseStat: MaxBaseStat
+    015-MaxStat: MaxStat
+    016-BaseAgi: BaseAgi
+    017-BaseStr: BaseStr
+    018-BaseInt: BaseInt
+    019-MaxAgi: MaxAgi
+    020-MaxInt: MaxInt
+    021-MaxStr: MaxStr
+    022-SaveSkillLevel: SaveSkillLevel
+    023-WhirlwindDamage: WhirlwindDamage
+    024-PlayerLumber: PlayerLumber
+    025-Camera_Distance: Camera_Distance
+    026-FactorCleared: FactorCleared
+    027-RecipeFactor: RecipeFactor
+    028-Ingredients: Ingredients
+    029-skills: skills
+    030-Items: Items
+    031-Description: Description
+    032-Skill: Skill
+    033-trigger154: trigger154
+    034-unit38: unit38
+    035-unit37: unit37
+    036-unit36: unit36
+    037-unit35: unit35
+    038-unit34: unit34
+    039-unit33: unit33
+    040-unit32: unit32
+    041-unit31: unit31
+    042-unit30: unit30
+    043-unit29: unit29
+    044-unit28: unit28
+    045-unit27: unit27
+    046-unit26: unit26
+    047-unit25: unit25
+    048-unit24: unit24
+    049-unit23: unit23
+    050-unit22: unit22
+    051-unit21: unit21
+    052-unit20: unit20
+    053-unit19: unit19
+    054-unit18: unit18
+    055-unit17: unit17
+    056-unit16: unit16
+    057-unit15: unit15
+    058-unit14: unit14
+    059-unit13: unit13
+    060-unit12: unit12
+    061-unit11: unit11
+    062-unit10: unit10
+    063-unit09: unit09
+    064-unit08: unit08
+    065-unit07: unit07
+    066-unit06: unit06
+    067-trigger153: trigger153
+    068-trigger152: trigger152
+    069-trigger151: trigger151
+    070-trigger150: trigger150
+    071-trigger149: trigger149
+    072-trigger148: trigger148
+    073-trigger147: trigger147
+    074-trigger146: trigger146
+    075-trigger145: trigger145
+    076-trigger144: trigger144
+    077-trigger143: trigger143
+    078-trigger142: trigger142
+    079-trigger141: trigger141
+    080-trigger140: trigger140
+    081-trigger139: trigger139
+    082-trigger138: trigger138
+    083-trigger137: trigger137
+    084-trigger136: trigger136
+    085-trigger135: trigger135
+    086-trigger134: trigger134
+    087-trigger133: trigger133
+    088-trigger132: trigger132
+    089-trigger131: trigger131
+    090-trigger130: trigger130
+    091-trigger129: trigger129
+    092-trigger128: trigger128
+    093-trigger127: trigger127
+    094-trigger126: trigger126
+    095-trigger125: trigger125
+    096-trigger124: trigger124
+    097-trigger123: trigger123
+    098-trigger122: trigger122
+    099-trigger121: trigger121
+    100-trigger120: trigger120
+    101-trigger119: trigger119
+    102-trigger118: trigger118
+    103-trigger117: trigger117
+    104-trigger116: trigger116
+    105-trigger115: trigger115
+    106-trigger114: trigger114
+    107-trigger113: trigger113
+    108-trigger112: trigger112
+    109-trigger111: trigger111
+    110-trigger110: trigger110
+    111-trigger109: trigger109
+    112-trigger108: trigger108
+    113-trigger107: trigger107
+    114-trigger106: trigger106
+    115-trigger105: trigger105
+    116-trigger104: trigger104
+    117-trigger103: trigger103
+    118-trigger102: trigger102
+    119-trigger101: trigger101
+    120-trigger100: trigger100
+    121-trigger99: trigger99
+    122-trigger98: trigger98
+    123-trigger97: trigger97
+    124-trigger96: trigger96
+    125-trigger95: trigger95
+    126-trigger94: trigger94
+    127-trigger93: trigger93
+    128-trigger92: trigger92
+    129-trigger91: trigger91
+    130-trigger90: trigger90
+    131-trigger89: trigger89
+    132-trigger88: trigger88
+    133-trigger87: trigger87
+    134-trigger86: trigger86
+    135-trigger85: trigger85
+    136-trigger84: trigger84
+    137-trigger83: trigger83
+    138-trigger82: trigger82
+    139-trigger81: trigger81
+    140-trigger80: trigger80
+    141-trigger79: trigger79
+    142-trigger78: trigger78
+    143-trigger77: trigger77
+    144-trigger76: trigger76
+    145-trigger75: trigger75
+    146-trigger74: trigger74
+    147-trigger73: trigger73
+    148-trigger72: trigger72
+    149-trigger71: trigger71
+    150-trigger70: trigger70
+    151-trigger69: trigger69
+    152-trigger68: trigger68
+    153-trigger67: trigger67
+    154-trigger66: trigger66
+    155-trigger65: trigger65
+    156-trigger64: trigger64
+    157-trigger63: trigger63
+    158-trigger62: trigger62
+    159-trigger61: trigger61
+    160-trigger60: trigger60
+    161-trigger59: trigger59
+    162-trigger58: trigger58
+    163-trigger57: trigger57
+    164-trigger56: trigger56
+    165-trigger55: trigger55
+    166-trigger54: trigger54
+    167-trigger53: trigger53
+    168-trigger52: trigger52
+    169-trigger51: trigger51
+    170-trigger50: trigger50
+    171-trigger49: trigger49
+    172-trigger48: trigger48
+    173-trigger47: trigger47
+    174-trigger46: trigger46
+    175-trigger45: trigger45
+    176-trigger44: trigger44
+    177-trigger43: trigger43
+    178-trigger42: trigger42
+    179-trigger41: trigger41
+    180-trigger40: trigger40
+    181-trigger39: trigger39
+    182-trigger38: trigger38
+    183-trigger37: trigger37
+    184-trigger36: trigger36
+    185-trigger35: trigger35
+    186-trigger34: trigger34
+    187-trigger33: trigger33
+    188-trigger32: trigger32
+    189-trigger31: trigger31
+    190-trigger30: trigger30
+    191-trigger29: trigger29
+    192-trigger28: trigger28
+    193-trigger27: trigger27
+    194-trigger26: trigger26
+    195-trigger25: trigger25
+    196-trigger24: trigger24
+    197-trigger23: trigger23
+    198-trigger22: trigger22
+    199-trigger21: trigger21
+    200-trigger20: trigger20
+    201-trigger19: trigger19
+    202-trigger18: trigger18
+    203-trigger17: trigger17
+    204-trigger16: trigger16
+    205-trigger15: trigger15
+    206-trigger14: trigger14
+    207-trigger13: trigger13
+    208-trigger12: trigger12
+    209-trigger11: trigger11
+    210-trigger10: trigger10
+    211-trigger09: trigger09
+    212-trigger08: trigger08
+    213-trigger07: trigger07
+    214-trigger06: trigger06
+    215-trigger05: trigger05
+    216-trigger04: trigger04
+    217-trigger03: trigger03
+    218-trigger02: trigger02
+    219-trigger01: trigger01
+    220-sound25: sound25
+    221-sound24: sound24
+    222-sound23: sound23
+    223-sound22: sound22
+    224-sound21: sound21
+    225-sound20: sound20
+    226-sound19: sound19
+    227-sound18: sound18
+    228-sound17: sound17
+    229-sound16: sound16
+    230-sound15: sound15
+    231-sound14: sound14
+    232-sound13: sound13
+    233-sound12: sound12
+    234-sound11: sound11
+    235-sound10: sound10
+    236-sound09: sound09
+    237-sound08: sound08
+    238-sound07: sound07
+    239-sound06: sound06
+    240-sound05: sound05
+    241-sound04: sound04
+    242-sound03: sound03
+    243-sound02: sound02
+    244-sound01: sound01
+    245-camerasetup01: camerasetup01
+    246-rect09: rect09
+    247-rect08: rect08
+    248-rect07: rect07
+    249-rect06: rect06
+    250-rect05: rect05
+    251-rect04: rect04
+    252-rect03: rect03
+    253-rect02: rect02
+    254-rect01: rect01
+    255-integer63: integer63
+    256-unit05: unit05
+    257-boolean18: boolean18
+    258-unit04: unit04
+    259-location02: location02
+    260-group09: group09
+    261-unit03: unit03
+    262-strings02: strings02
+    263-boolean17: boolean17
+    264-real04: real04
+    265-integer62: integer62
+    266-integers16: integers16
+    267-integers15: integers15
+    268-boolean16: boolean16
+    269-dialog07: dialog07
+    270-player03: player03
+    271-boolean15: boolean15
+    272-buttons04: buttons04
+    273-dialog06: dialog06
+    274-boolean14: boolean14
+    275-boolean13: boolean13
+    276-dialog05: dialog05
+    277-integer61: integer61
+    278-integer60: integer60
+    279-integer59: integer59
+    280-integer58: integer58
+    281-integer57: integer57
+    282-integers14: integers14
+    283-unit02: unit02
+    284-real03: real03
+    285-group08: group08
+    286-sounds01: sounds01
+    287-group07: group07
+    288-integer56: integer56
+    289-integer55: integer55
+    290-integer54: integer54
+    291-group06: group06
+    292-effects02: effects02
+    293-effects01: effects01
+    294-integer53: integer53
+    295-integers13: integers13
+    296-integer52: integer52
+    297-integer51: integer51
+    298-integer50: integer50
+    299-integer49: integer49
+    300-integer48: integer48
+    301-boolean12: boolean12
+    302-force07: force07
+    303-integer47: integer47
+    304-integer46: integer46
+    305-integer45: integer45
+    306-integer44: integer44
+    307-integer43: integer43
+    308-integer42: integer42
+    309-boolean11: boolean11
+    310-boolean10: boolean10
+    311-integer41: integer41
+    312-boolean09: boolean09
+    313-integer40: integer40
+    314-group05: group05
+    315-buttons03: buttons03
+    316-dialog04: dialog04
+    317-integer39: integer39
+    318-boolean08: boolean08
+    319-integers12: integers12
+    320-strings01: strings01
+    321-force06: force06
+    322-boolean07: boolean07
+    323-integer38: integer38
+    324-string01: string01
+    325-integers11: integers11
+    326-booleans05: booleans05
+    327-booleans04: booleans04
+    328-force05: force05
+    329-force04: force04
+    330-buttons02: buttons02
+    331-dialogs01: dialogs01
+    332-integer37: integer37
+    333-integer36: integer36
+    334-integers10: integers10
+    335-integer35: integer35
+    336-locations01: locations01
+    337-boolean06: boolean06
+    338-integer34: integer34
+    339-integer33: integer33
+    340-integer32: integer32
+    341-player02: player02
+    342-dialog03: dialog03
+    343-boolean05: boolean05
+    344-integer31: integer31
+    345-dialog02: dialog02
+    346-boolean04: boolean04
+    347-boolean03: boolean03
+    348-integer30: integer30
+    349-integer29: integer29
+    350-group04: group04
+    351-integer28: integer28
+    352-integer27: integer27
+    353-integer26: integer26
+    354-integers09: integers09
+    355-integers08: integers08
+    356-integer25: integer25
+    357-integer24: integer24
+    358-integer23: integer23
+    359-integer22: integer22
+    360-integer21: integer21
+    361-integers07: integers07
+    362-buttons01: buttons01
+    363-dialog01: dialog01
+    364-integers06: integers06
+    365-unit01: unit01
+    366-real02: real02
+    367-integer20: integer20
+    368-integer19: integer19
+    369-location01: location01
+    370-force03: force03
+    371-booleans03: booleans03
+    372-items01: items01
+    373-integer18: integer18
+    374-integer17: integer17
+    375-booleans02: booleans02
+    376-integers05: integers05
+    377-boolean02: boolean02
+    378-booleans01: booleans01
+    379-integer16: integer16
+    380-integer15: integer15
+    381-group03: group03
+    382-group02: group02
+    383-integers04: integers04
+    384-integers03: integers03
+    385-integer14: integer14
+    386-units03: units03
+    387-group01: group01
+    388-force02: force02
+    389-boolean01: boolean01
+    390-force01: force01
+    391-units02: units02
+    392-integer13: integer13
+    393-player01: player01
+    394-integer12: integer12
+    395-integer11: integer11
+    396-integer10: integer10
+    397-integer09: integer09
+    398-real01: real01
+    399-integer08: integer08
+    400-integer07: integer07
+    401-integer06: integer06
+    402-integer05: integer05
+    403-rects01: rects01
+    404-integer04: integer04
+    405-integer03: integer03
+    406-integer02: integer02
+    407-integers02: integers02
+    408-integers01: integers01
+    409-integer01: integer01
+    410-units01: units01
+15-triggers: triggers
+    01-Items: Items
+        '1-Full Restore': 'Full Restore'
+    02-Timer: Timer
+    03-Key: Key
+        Disab
+    04-Cooldown: Cooldown
+    05-InAl: InAl
+    06-FixUnit: FixUnit
+    07-InitHash: InitHash
+    '08-axe recipe': 'axe recipe'
+    '09-ring recipe': 'ring recipe'
+    '10-pitlord passive cleave': 'pitlord passive cleave'
+    11-Zoom: Zoom
+    12-init: init
+    13-InitData: InitData
         Run
-    5-ZAbiI: ZAbiI
-        '01-A044 Copy': 'A044 Copy'
-        '02-AutoCastSpells Copy': 'AutoCastSpells Copy'
-        '03-RbAbil Copy': 'RbAbil Copy'
-        '04-AbilS Copy': 'AbilS Copy'
-        '05-RaAbil Copy': 'RaAbil Copy'
-        '06-Untitled Trigger 004 Copy': 'Untitled Trigger 004 Copy'
-            Disab
-        '07-AbilDragonStaff Copy': 'AbilDragonStaff Copy'
-        08-AbilityData: AbilityData
-        09-CustomAbility: CustomAbility
-            '1-Death Pact': 'Death Pact'
-                '1-Spell Death Pact': 'Spell Death Pact'
-            '2-Holy Light': 'Holy Light'
-                '1-Spell Holy Light': 'Spell Holy Light'
-            3-Tranquility: Tranquility
-                '1-Spell Tranquility': 'Spell Tranquility'
-            4-Rejuvination: Rejuvination
-                '1-Spell Rejuvination': 'Spell Rejuvination'
-            '5-Healing totem': 'Healing totem'
-                '1-Abil Healing Ward': 'Abil Healing Ward'
-            '6-Healing wave': 'Healing wave'
-                '1-Abil Healing Wave': 'Abil Healing Wave'
-        10-Cast: Cast
-    6-Multicast: Multicast
-        '1-Multicast Copy': 'Multicast Copy'
-    7-DamageSystem: DamageSystem
-        1-Damage: Damage
-            1-Abilityes: Abilityes
-                1-AUav_Vampirism: AUav_Vampirism
-                2-AEah_Thorns: AEah_Thorns
-                '3-AUts_Spiked Carapace': 'AUts_Spiked Carapace'
-            2-Items: Items
-                1-I05G_MagicNecklaceOfAbsorption: I05G_MagicNecklaceOfAbsorption
-                2-I07O_BoneArmor: I07O_BoneArmor
-            3-Heroes: Heroes
-                '1-O002 dreadlord': 'O002 dreadlord'
-                '2-H01H Ghoul': 'H01H Ghoul'
-        '2-Astu Copy': 'Astu Copy'
-        '3-Crit Copy': 'Crit Copy'
-        '4-PhysDmg Copy': 'PhysDmg Copy'
-        '5-MagicDmg Copy': 'MagicDmg Copy'
-        '6-Damage Controller After Copy': 'Damage Controller After Copy'
-        '7-Damage Controller Befor Copy': 'Damage Controller Befor Copy'
-    '8-Untitled Category': 'Untitled Category'
-        '1-ItemBonus Copy': 'ItemBonus Copy'
-        '2-EvaryChk Copy 2': 'EvaryChk Copy 2'
-        '3-Killing Copy': 'Killing Copy'
-    '9-Summoning bonus': 'Summoning bonus'
-        '1-It Copy 3': 'It Copy 3'
-        '2-It Copy Copy': 'It Copy Copy'
-        '3-It Copy 2 Copy': 'It Copy 2 Copy'
-18-Elements: Elements
+    14-Effect: Effect
+    15-HeroLvl: HeroLvl
+        Run
+    16-Test2: Test2
+        Disab
+    '17-Untitled Category': 'Untitled Category'
+        1-ItemBonus: ItemBonus
+    '18-Summoning bonus': 'Summoning bonus'
+        1-It: It
+        '2-It Copy': 'It Copy'
+        '3-It Copy 2': 'It Copy 2'
+16-Spells: Spells
+    '1-Spell Lib': 'Spell Lib'
+        1-AbilityData: AbilityData
+        2-SpellDataTable: SpellDataTable
+        3-RandomAbilityData: RandomAbilityData
+        '4-Untitled Trigger 001': 'Untitled Trigger 001'
+            Run
+        5-AutocastAbilityData: AutocastAbilityData
+        6-AbsoluteAbilityLevelup: AbsoluteAbilityLevelup
+        7-PhoenixProccCheck: PhoenixProccCheck
+        '8-Timer Functions': 'Timer Functions'
+    '2-Spell Code': 'Spell Code'
+        1-Abilities: Abilities
+            '01-Stone Protection': 'Stone Protection'
+            '02-Ancient Teaching': 'Ancient Teaching'
+            '03-Reset Time': 'Reset Time'
+            04-Whirlwind: Whirlwind
+            '05-Absolute Cold': 'Absolute Cold'
+            '06-Frost Bolt': 'Frost Bolt'
+            '07-Martial Retribution': 'Martial Retribution'
+            '08-Sand Of Time': 'Sand Of Time'
+            09-Purge: Purge
+            '10-Chaos Magic Spell EFfect': 'Chaos Magic Spell EFfect'
+            '11-Last Breath': 'Last Breath'
+        2-Items: Items
+            1-Urn: Urn
+            '2-Scroll of Transformation Staff of Lightning': 'Scroll of Transformation Staff of Lightning'
+        3-General: General
+            1-Multicast: Multicast
+            '2-Damage System': 'Damage System'
+                '1-Physical Damage': 'Physical Damage'
+                '2-Magical Damage': 'Magical Damage'
+                '3-Damage Controller After': 'Damage Controller After'
+                '4-Damage Controller Before': 'Damage Controller Before'
+    '3-Spell Effects': 'Spell Effects'
+        1-AttackController: AttackController
+        2-ShortPeriodCheck: ShortPeriodCheck
+        3-LongPeriodCheck: LongPeriodCheck
+        4-Killing: Killing
+17-Elements: Elements
     1-ElementStartAbility: ElementStartAbility
     2-InitElements: InitElements
         Run
-19-Rune: Rune
+18-Rune: Rune
     '1-Untitled Category': 'Untitled Category'
     2-item: item
         1-RuneCast: RuneCast
@@ -646,7 +555,7 @@
         10-RuneOfAir: RuneOfAir
     6-InitRune: InitRune
     7-InitRuneTrigger: InitRuneTrigger
-'20-Spell Effectiveness': 'Spell Effectiveness'
+'19-Spell Effectiveness': 'Spell Effectiveness'
     1-InitBoolx: InitBoolx
     2-EffectInit: EffectInit
         Run
