@@ -1,0 +1,27 @@
+Event
+    TriggerRegisterEnterRectSimple
+        Call  : GetEntireMapRect
+Condition
+    OperatorCompareUnitCode
+        Call  : GetUnitTypeId
+            Call  : GetTriggerUnit
+        Preset: OperatorEqualENE
+        Const : O007
+Action
+    SetPlayerAbilityAvailableBJ
+        Preset: EnableDisableEnable
+        Const : A01T
+        Call  : GetOwningPlayer
+            Call  : GetTriggerUnit
+    UnitAddAbilityBJ
+        Const : A01T
+        Call  : GetTriggerUnit
+    BlzUnitHideAbility
+        Call  : GetTriggerUnit
+        Const : A01T
+        Const : true
+    SetPlayerAbilityAvailableBJ
+        Preset: EnableDisableDisable
+        Const : A01T
+        Call  : GetOwningPlayer
+            Call  : GetTriggerUnit

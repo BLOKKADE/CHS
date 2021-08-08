@@ -1,0 +1,502 @@
+Event
+    TriggerRegisterAnyUnitEventBJ
+        Preset: PlayerUnitEventSpellCast
+Condition
+    OperatorCompareAbilityId
+        Call  : GetSpellAbilityId
+        Preset: OperatorEqualENE
+        Const : A025
+Action
+    SetVariable
+        Var   : WhirlwindDamage
+        Call  : BlzGetUnitBaseDamage
+            Call  : GetTriggerUnit
+            Const : 1
+    SetVariable
+        Var   : MaxStr
+        Call  : GetHeroStatBJ
+            Preset: HeroStatStr
+            Call  : GetTriggerUnit
+            Preset: InclusionInclude
+    SetVariable
+        Var   : BaseStr
+        Call  : GetHeroStatBJ
+            Preset: HeroStatStr
+            Call  : GetTriggerUnit
+            Preset: InclusionExclude
+    SetVariable
+        Var   : MaxAgi
+        Call  : GetHeroStatBJ
+            Preset: HeroStatAgi
+            Call  : GetTriggerUnit
+            Preset: InclusionInclude
+    SetVariable
+        Var   : BaseAgi
+        Call  : GetHeroStatBJ
+            Preset: HeroStatAgi
+            Call  : GetTriggerUnit
+            Preset: InclusionExclude
+    SetVariable
+        Var   : MaxInt
+        Call  : GetHeroStatBJ
+            Preset: HeroStatInt
+            Call  : GetTriggerUnit
+            Preset: InclusionInclude
+    SetVariable
+        Var   : BaseInt
+        Call  : GetHeroStatBJ
+            Preset: HeroStatInt
+            Call  : GetTriggerUnit
+            Preset: InclusionExclude
+    SetVariable
+        Var   : MaxStat
+        Call  : IMaxBJ
+            Var   : MaxAgi
+            Var   : MaxInt
+    SetVariable
+        Var   : MaxStat
+        Call  : IMaxBJ
+            Var   : MaxStat
+            Var   : MaxStr
+    SetVariable
+        Var   : MaxBaseStat
+        Call  : IMaxBJ
+            Var   : BaseAgi
+            Var   : BaseInt
+    SetVariable
+        Var   : MaxStat
+        Call  : IMaxBJ
+            Var   : MaxStat
+            Var   : BaseStr
+    IfThenElseMultiple
+        Condition
+            OperatorCompareInteger
+                Var   : MaxStat
+                Preset: OperatorGreater
+                Var   : MaxBaseStat
+        Action
+            SetVariable
+                Var   : StatDifference
+                Call  : OperatorInt
+                    Var   : MaxStat
+                    Preset: OperatorSubtract
+                    Var   : MaxBaseStat
+        Action
+            SetVariable
+                Var   : StatDifference
+                Var   : MaxBaseStat
+    SetVariable
+        Var   : StatDifference
+        Call  : OperatorInt
+            Var   : MaxStat
+            Preset: OperatorSubtract
+            Var   : MaxBaseStat
+    SetVariable
+        Var   : WhirlwindDamage
+        Call  : OperatorInt
+            Var   : StatDifference
+            Preset: OperatorAdd
+            Var   : WhirlwindDamage
+    IfThenElseMultiple
+        Condition
+            OperatorCompareBoolean
+                Call  : UnitHasBuffBJ
+                    Call  : GetTriggerUnit
+                    Const : Bakb
+                Preset: OperatorEqualENE
+                Const : true
+        Action
+            SetVariable
+                Var   : WarDrumsMultiplier
+                Call  : GetUnitAbilityLevelSwapped
+                    Const : Aakb
+                    Call  : GetTriggerUnit
+            SetVariable
+                Var   : WarDrumsDamage
+                Call  : OperatorInt
+                    Var   : WarDrumsMultiplier
+                    Preset: OperatorMultiply
+                    Const : 15
+            SetVariable
+                Var   : WhirlwindDamage
+                Call  : OperatorInt
+                    Var   : WarDrumsDamage
+                    Preset: OperatorAdd
+                    Var   : WhirlwindDamage
+    IfThenElseMultiple
+        Condition
+            OperatorCompareBoolean
+                Call  : UnitHasBuffBJ
+                    Call  : GetTriggerUnit
+                    Const : BEar
+                Preset: OperatorEqualENE
+                Const : true
+        Action
+            SetVariable
+                Var   : TrueshotMultiplier
+                Call  : GetUnitAbilityLevelSwapped
+                    Const : AEar
+                    Call  : GetTriggerUnit
+            SetVariable
+                Var   : TrueShotDamage
+                Call  : OperatorInt
+                    Var   : TrueshotMultiplier
+                    Preset: OperatorMultiply
+                    Const : 5
+            SetVariable
+                Var   : TrueShotDamage
+                Call  : OperatorInt
+                    Var   : TrueShotDamage
+                    Preset: OperatorMultiply
+                    Var   : WhirlwindDamage
+            SetVariable
+                Var   : TrueShotDamage
+                Call  : OperatorInt
+                    Var   : TrueShotDamage
+                    Preset: OperatorDivide
+                    Const : 100
+    IfThenElseMultiple
+        Condition
+            OperatorCompareBoolean
+                Call  : UnitHasBuffBJ
+                    Call  : GetTriggerUnit
+                    Const : BOac
+                Preset: OperatorEqualENE
+                Const : true
+        Action
+            SetVariable
+                Var   : CommandMultiplier
+                Call  : GetUnitAbilityLevelSwapped
+                    Const : ACac
+                    Call  : GetTriggerUnit
+            SetVariable
+                Var   : CommandDamage
+                Call  : OperatorInt
+                    Var   : CommandMultiplier
+                    Preset: OperatorMultiply
+                    Const : 5
+            SetVariable
+                Var   : CommandDamage
+                Call  : OperatorInt
+                    Var   : CommandDamage
+                    Preset: OperatorMultiply
+                    Var   : WhirlwindDamage
+            SetVariable
+                Var   : CommandDamage
+                Call  : OperatorInt
+                    Var   : CommandDamage
+                    Preset: OperatorDivide
+                    Const : 100
+    IfThenElseMultiple
+        Condition
+            OperatorCompareBoolean
+                Call  : UnitHasBuffBJ
+                    Call  : GetTriggerUnit
+                    Const : BNbr
+                Preset: OperatorEqualENE
+                Const : true
+        Action
+            SetVariable
+                Var   : WarDrumsMultiplier
+                Call  : GetUnitAbilityLevelSwapped
+                    Const : ANbr
+                    Call  : GetTriggerUnit
+            SetVariable
+                Var   : WarDrumsDamage
+                Call  : OperatorInt
+                    Var   : WarDrumsMultiplier
+                    Preset: OperatorMultiply
+                    Const : 10
+            SetVariable
+                Var   : WhirlwindDamage
+                Call  : OperatorInt
+                    Var   : WarDrumsDamage
+                    Preset: OperatorAdd
+                    Var   : WhirlwindDamage
+    IfThenElseMultiple
+        Condition
+            OperatorCompareBoolean
+                Call  : UnitHasBuffBJ
+                    Call  : GetTriggerUnit
+                    Const : BHav
+                Preset: OperatorEqualENE
+                Const : true
+        Action
+            SetVariable
+                Var   : WarDrumsMultiplier
+                Call  : GetUnitAbilityLevelSwapped
+                    Const : AHav
+                    Call  : GetTriggerUnit
+            SetVariable
+                Var   : WarDrumsDamage
+                Call  : OperatorInt
+                    Var   : WarDrumsMultiplier
+                    Preset: OperatorMultiply
+                    Const : 10
+            SetVariable
+                Var   : WhirlwindDamage
+                Call  : OperatorInt
+                    Var   : WarDrumsDamage
+                    Preset: OperatorAdd
+                    Var   : WhirlwindDamage
+    SetVariable
+        Var   : WhirlwindDamage
+        Call  : OperatorInt
+            Var   : TrueShotDamage
+            Preset: OperatorAdd
+            Var   : WhirlwindDamage
+    SetVariable
+        Var   : WhirlwindDamage
+        Call  : OperatorInt
+            Var   : CommandDamage
+            Preset: OperatorAdd
+            Var   : WhirlwindDamage
+    ForLoopAMultiple
+        Const : 1
+        Const : 6
+        Action
+            IfThenElseMultiple
+                Condition
+                    OperatorCompareItemCode
+                        Call  : GetItemTypeId
+                            Call  : UnitItemInSlotBJ
+                                Call  : GetTriggerUnit
+                                Call  : GetForLoopIndexA
+                        Preset: OperatorEqualENE
+                        Const : I015
+                Action
+                    SetVariable
+                        Var   : WhirlwindDamage
+                        Call  : OperatorInt
+                            Var   : WhirlwindDamage
+                            Preset: OperatorAdd
+                            Const : 34
+                Action
+                    IfThenElseMultiple
+                        Condition
+                            OperatorCompareItemCode
+                                Call  : GetItemTypeId
+                                    Call  : UnitItemInSlotBJ
+                                        Call  : GetTriggerUnit
+                                        Call  : GetForLoopIndexA
+                                Preset: OperatorEqualENE
+                                Const : I013
+                        Action
+                            SetVariable
+                                Var   : WhirlwindDamage
+                                Call  : OperatorInt
+                                    Var   : WhirlwindDamage
+                                    Preset: OperatorAdd
+                                    Const : 4
+                        Action
+                            IfThenElseMultiple
+                                Condition
+                                    OperatorCompareItemCode
+                                        Call  : GetItemTypeId
+                                            Call  : UnitItemInSlotBJ
+                                                Call  : GetTriggerUnit
+                                                Call  : GetForLoopIndexA
+                                        Preset: OperatorEqualENE
+                                        Const : I049
+                                Action
+                                    SetVariable
+                                        Var   : WhirlwindDamage
+                                        Call  : OperatorInt
+                                            Var   : WhirlwindDamage
+                                            Preset: OperatorAdd
+                                            Const : 15
+                                Action
+                                    IfThenElseMultiple
+                                        Condition
+                                            OperatorCompareItemCode
+                                                Call  : GetItemTypeId
+                                                    Call  : UnitItemInSlotBJ
+                                                        Call  : GetTriggerUnit
+                                                        Call  : GetForLoopIndexA
+                                                Preset: OperatorEqualENE
+                                                Const : I01C
+                                        Action
+                                            SetVariable
+                                                Var   : WhirlwindDamage
+                                                Call  : OperatorInt
+                                                    Var   : WhirlwindDamage
+                                                    Preset: OperatorAdd
+                                                    Const : 80
+                                        Action
+                                            IfThenElseMultiple
+                                                Condition
+                                                    OperatorCompareItemCode
+                                                        Call  : GetItemTypeId
+                                                            Call  : UnitItemInSlotBJ
+                                                                Call  : GetTriggerUnit
+                                                                Call  : GetForLoopIndexA
+                                                        Preset: OperatorEqualENE
+                                                        Const : I014
+                                                Action
+                                                    SetVariable
+                                                        Var   : WhirlwindDamage
+                                                        Call  : OperatorInt
+                                                            Var   : WhirlwindDamage
+                                                            Preset: OperatorAdd
+                                                            Const : 6
+                                                Action
+                                                    IfThenElseMultiple
+                                                        Condition
+                                                            OperatorCompareItemCode
+                                                                Call  : GetItemTypeId
+                                                                    Call  : UnitItemInSlotBJ
+                                                                        Call  : GetTriggerUnit
+                                                                        Call  : GetForLoopIndexA
+                                                                Preset: OperatorEqualENE
+                                                                Const : I012
+                                                        Action
+                                                            SetVariable
+                                                                Var   : WhirlwindDamage
+                                                                Call  : OperatorInt
+                                                                    Var   : WhirlwindDamage
+                                                                    Preset: OperatorAdd
+                                                                    Const : 2
+                                                        Action
+                                                            IfThenElseMultiple
+                                                                Condition
+                                                                    OperatorCompareItemCode
+                                                                        Call  : GetItemTypeId
+                                                                            Call  : UnitItemInSlotBJ
+                                                                                Call  : GetTriggerUnit
+                                                                                Call  : GetForLoopIndexA
+                                                                        Preset: OperatorEqualENE
+                                                                        Const : I04A
+                                                                Action
+                                                                    SetVariable
+                                                                        Var   : WhirlwindDamage
+                                                                        Call  : OperatorInt
+                                                                            Var   : WhirlwindDamage
+                                                                            Preset: OperatorAdd
+                                                                            Const : 150
+                                                                Action
+                                                                    IfThenElseMultiple
+                                                                        Condition
+                                                                            OperatorCompareItemCode
+                                                                                Call  : GetItemTypeId
+                                                                                    Call  : UnitItemInSlotBJ
+                                                                                        Call  : GetTriggerUnit
+                                                                                        Call  : GetForLoopIndexA
+                                                                                Preset: OperatorEqualENE
+                                                                                Const : I01E
+                                                                        Action
+                                                                            SetVariable
+                                                                                Var   : WhirlwindDamage
+                                                                                Call  : OperatorInt
+                                                                                    Var   : WhirlwindDamage
+                                                                                    Preset: OperatorAdd
+                                                                                    Const : 120
+                                                                        Action
+                                                                            IfThenElseMultiple
+                                                                                Condition
+                                                                                    OperatorCompareItemCode
+                                                                                        Call  : GetItemTypeId
+                                                                                            Call  : UnitItemInSlotBJ
+                                                                                                Call  : GetTriggerUnit
+                                                                                                Call  : GetForLoopIndexA
+                                                                                        Preset: OperatorEqualENE
+                                                                                        Const : I01F
+                                                                                Action
+                                                                                    SetVariable
+                                                                                        Var   : WhirlwindDamage
+                                                                                        Call  : OperatorInt
+                                                                                            Var   : WhirlwindDamage
+                                                                                            Preset: OperatorAdd
+                                                                                            Const : 24
+                                                                                Action
+                                                                                    IfThenElseMultiple
+                                                                                        Condition
+                                                                                            OperatorCompareItemCode
+                                                                                                Call  : GetItemTypeId
+                                                                                                    Call  : UnitItemInSlotBJ
+                                                                                                        Call  : GetTriggerUnit
+                                                                                                        Call  : GetForLoopIndexA
+                                                                                                Preset: OperatorEqualENE
+                                                                                                Const : I01K
+                                                                                        Action
+                                                                                            SetVariable
+                                                                                                Var   : WhirlwindDamage
+                                                                                                Call  : OperatorInt
+                                                                                                    Var   : WhirlwindDamage
+                                                                                                    Preset: OperatorAdd
+                                                                                                    Const : 48
+                                                                                        Action
+                                                                                            IfThenElseMultiple
+                                                                                                Condition
+                                                                                                    OperatorCompareItemCode
+                                                                                                        Call  : GetItemTypeId
+                                                                                                            Call  : UnitItemInSlotBJ
+                                                                                                                Call  : GetTriggerUnit
+                                                                                                                Call  : GetForLoopIndexA
+                                                                                                        Preset: OperatorEqualENE
+                                                                                                        Const : I01O
+                                                                                                Action
+                                                                                                    SetVariable
+                                                                                                        Var   : WhirlwindDamage
+                                                                                                        Call  : OperatorInt
+                                                                                                            Var   : WhirlwindDamage
+                                                                                                            Preset: OperatorAdd
+                                                                                                            Const : 96
+    SetVariable
+        Var   : WhirlwindLevel
+        Call  : GetUnitAbilityLevelSwapped
+            Call  : GetSpellAbilityId
+            Call  : GetTriggerUnit
+    SetVariable
+        Var   : WhirlwindLevelMultiplier
+        Call  : OperatorInt
+            Var   : WhirlwindLevel
+            Preset: OperatorMultiply
+            Const : 7
+    SetVariable
+        Var   : WhirlwindDamage
+        Call  : OperatorInt
+            Var   : WhirlwindDamage
+            Preset: OperatorMultiply
+            Var   : WhirlwindLevelMultiplier
+    SetVariable
+        Var   : WhirlwindDamage
+        Call  : OperatorInt
+            Var   : WhirlwindDamage
+            Preset: OperatorDivide
+            Const : 100
+    SetVariable
+        Var   : WhirlwindBaseDamage
+        Call  : OperatorInt
+            Var   : WhirlwindLevel
+            Preset: OperatorMultiply
+            Const : 25
+    SetVariable
+        Var   : WhirlwindDamage
+        Call  : IMaxBJ
+            Var   : WhirlwindBaseDamage
+            Var   : WhirlwindDamage
+    TriggerSleepAction
+        Const : 0.10
+    ForGroupMultiple
+        Call  : GetUnitsInRangeOfLocAll
+            Const : 250.00
+            Call  : GetUnitLoc
+                Call  : GetTriggerUnit
+        Action
+            IfThenElseMultiple
+                Condition
+                    OperatorCompareBoolean
+                        Call  : IsUnitEnemy
+                            Call  : GetEnumUnit
+                            Call  : GetOwningPlayer
+                                Call  : GetTriggerUnit
+                        Preset: OperatorEqualENE
+                        Const : true
+                Action
+                    UnitDamageTargetBJ
+                        Call  : GetTriggerUnit
+                        Call  : GetEnumUnit
+                        Call  : I2R
+                            Var   : WhirlwindDamage
+                        Preset: AttackTypeNormal
+                        Preset: DamageTypeMagic

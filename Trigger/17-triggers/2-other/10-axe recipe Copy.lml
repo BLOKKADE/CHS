@@ -1,0 +1,98 @@
+Event
+    TriggerRegisterAnyUnitEventBJ
+        Preset: PlayerUnitEventHeroPickUpItem
+Condition
+    OrMultiple
+        Condition
+            OperatorCompareItemCode
+                Call  : GetItemTypeId
+                    Call  : GetManipulatedItem
+                Preset: OperatorEqualENE
+                Const : I012
+            OperatorCompareItemCode
+                Call  : GetItemTypeId
+                    Call  : GetManipulatedItem
+                Preset: OperatorEqualENE
+                Const : I013
+            OperatorCompareItemCode
+                Call  : GetItemTypeId
+                    Call  : GetManipulatedItem
+                Preset: OperatorEqualENE
+                Const : I014
+    OperatorCompareBoolean
+        Call  : UnitHasItemOfTypeBJ
+            Call  : GetManipulatingUnit
+            Const : I012
+        Preset: OperatorEqualENE
+        Const : true
+    OperatorCompareBoolean
+        Call  : UnitHasItemOfTypeBJ
+            Call  : GetManipulatingUnit
+            Const : I013
+        Preset: OperatorEqualENE
+        Const : true
+    OperatorCompareBoolean
+        Call  : UnitHasItemOfTypeBJ
+            Call  : GetManipulatingUnit
+            Const : I014
+        Preset: OperatorEqualENE
+        Const : true
+Action
+    SetVariable
+        Var   : Ingredients
+        Const : 3
+    SetVariable
+        Array : RecipeFactor
+            Const : 1
+        Const : I012
+    SetVariable
+        Array : RecipeFactor
+            Const : 2
+        Const : I013
+    SetVariable
+        Array : RecipeFactor
+            Const : 3
+        Const : I014
+    ForLoopAMultiple
+        Const : 1
+        Var   : Ingredients
+        Action
+            SetVariable
+                Array : FactorCleared
+                    Call  : GetForLoopIndexA
+                Const : false
+    ForLoopAMultiple
+        Const : 1
+        Const : 6
+        Action
+            ForLoopBMultiple
+                Const : 1
+                Var   : Ingredients
+                Action
+                    IfThenElseMultiple
+                        Condition
+                            OperatorCompareItemCode
+                                Call  : GetItemTypeId
+                                    Call  : UnitItemInSlotBJ
+                                        Call  : GetManipulatingUnit
+                                        Call  : GetForLoopIndexA
+                                Preset: OperatorEqualENE
+                                Array : RecipeFactor
+                                    Call  : GetForLoopIndexB
+                            OperatorCompareBoolean
+                                Array : FactorCleared
+                                    Call  : GetForLoopIndexB
+                                Preset: OperatorEqualENE
+                                Const : false
+                        Action
+                            RemoveItem
+                                Call  : UnitItemInSlotBJ
+                                    Call  : GetManipulatingUnit
+                                    Call  : GetForLoopIndexA
+                            SetVariable
+                                Array : FactorCleared
+                                    Call  : GetForLoopIndexB
+                                Const : true
+    UnitAddItemByIdSwapped
+        Const : I049
+        Call  : GetManipulatingUnit
