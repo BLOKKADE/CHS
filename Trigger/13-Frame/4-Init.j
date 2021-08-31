@@ -76,31 +76,35 @@ elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
 
 if NumButton == 0 then
 
-     set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(udg_units01[PlID + 1])) + "|r\n" + GetClassification(GetUnitTypeId(udg_units01[PlID + 1])) + "\n" + LoadStr(HT_data, GetUnitTypeId(udg_units01[PlID + 1]), 2) + "\n\n"
-     if IncomeMode != 2 then
+    set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(udg_units01[PlID + 1])) + "|r\n" + GetClassification(GetUnitTypeId(udg_units01[PlID + 1])) + "\n" + LoadStr(HT_data, GetUnitTypeId(udg_units01[PlID + 1]), 2) + "\n\n"
+    if IncomeMode != 2 then
         set ToolTipS=ToolTipS + "|cffd4954dIncome|r: " + I2S(Income[PlID]) + "\n"
     endif
-	 set ToolTipS=ToolTipS + "|cff4d4dd4Hero attributes|r  \n"
-     set ToolTipS=ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('ustp'))) + "\n"
-     set ToolTipS=ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uagp'))) + "\n"
-     set ToolTipS=ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uinp'))) + "\n"
-     set ToolTipS=ToolTipS + "|cff51d44dBase hit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uhpr'))) + "/" + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('umpr'))) + "\n"
+    set ToolTipS=ToolTipS + "|cffc94dd4Absolute slots:|r " + I2S(GetHeroMaxAbsoluteAbility(udg_units01[PlID + 1]) + 1) + "\n"
+    set ToolTipS=ToolTipS + "|cff4d4dd4Hero attributes|r  \n"
+    set ToolTipS=ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('ustp'))) + "\n"
+    set ToolTipS=ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uagp'))) + "\n"
+    set ToolTipS=ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uinp'))) + "\n"
+    set ToolTipS=ToolTipS + "|cff51d44dBase hit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uhpr'))) + "/" + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('umpr'))) + "\n"
+    
     if GetLocalPlayer() == GetTriggerPlayer() then
-         call BlzFrameSetText(ToolBoxSpelsT, ToolTipS)
-         call BlzFrameSetVisible(ToolBoxSpels, true)
+        call BlzFrameSetText(ToolBoxSpelsT, ToolTipS)
+        call BlzFrameSetVisible(ToolBoxSpels, true)
     endif
 endif
 
 if NumButton == 100 then
-	set SpellU=udg_units01[NumPlayerLast[PlID] + 1]
-	set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(SpellU)) + "|r\n" + GetClassification(GetUnitTypeId(SpellU)) + "\n" + LoadStr(HT_data, GetUnitTypeId(SpellU), 2) + "\n\n"
-    if IncomeMode != 2 then
-        set ToolTipS=ToolTipS + "|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
-    endif
+  set SpellU=udg_units01[NumPlayerLast[PlID] + 1]
+  set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(SpellU)) + "|r\n" + GetClassification(GetUnitTypeId(SpellU)) + "\n" + LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
+  set ToolTipS=ToolTipS + GetPassiveStr(SpellU)
 
-	 if GetLocalPlayer() == GetTriggerPlayer() then
-         call BlzFrameSetText(ToolBoxSpelsT, ToolTipS)
-         call BlzFrameSetVisible(ToolBoxSpels, true)
+  if IncomeMode != 2 and GetTriggerPlayer() != GetOwningPlayer(SpellU) then
+      set ToolTipS=ToolTipS + "\n\n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
+  endif
+
+  if GetLocalPlayer() == GetTriggerPlayer() then
+        call BlzFrameSetText(ToolBoxSpelsT, ToolTipS)
+        call BlzFrameSetVisible(ToolBoxSpels, true)
     endif
 endif
 
@@ -113,10 +117,16 @@ if NumButton > 100 and  NumButton <= 120 then
     set ToolTipS =   BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )+"\n"
     set ToolTipS =ToolTipS +  GetClassification(i3 ) + "\n"
     set ToolTipS =ToolTipS +   BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )
+
+    if NumButton > 110 and NumButton <=120 then
+      set i1 = GetAbsoluteElement(i3)
+      set i2 = GetClassUnitSpell(SpellU, i1)
+      set ToolTipS = ToolTipS + "\n\n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
+    endif
         
     if GetLocalPlayer() == GetTriggerPlayer() then	
-         call BlzFrameSetText(ToolBoxSpelsT  , ToolTipS )
-         call BlzFrameSetVisible(ToolBoxSpels  ,true )
+        call BlzFrameSetText(ToolBoxSpelsT  , ToolTipS )
+        call BlzFrameSetVisible(ToolBoxSpels  ,true )
     endif       
 endif
 

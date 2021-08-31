@@ -34,7 +34,7 @@ function Purge takes unit source, unit target returns nothing
     call TimerStart(t, delay, false, function PurgeCast)    
     
     if delay > 0 then
-        call AddSpecialEffectTargetTimer("Abilities\\Spells\\Items\\AIlb\\AIlbTarget.mdl", target, "overhead", delay)
+        call AddSpecialEffectTargetTimer("Abilities\\Spells\\Items\\AIlb\\AIlbTarget.mdl", target, "overhead", delay, false)
     endif
     
     if delay > 1 then

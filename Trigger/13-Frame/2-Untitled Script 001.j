@@ -75,7 +75,11 @@ function UpdateTextRelaese takes unit u returns nothing
    call BlzFrameSetText(TextUI[10], R2SW(GetUnitMagicDef(u), 1, 1))
    call BlzFrameSetText(TextUI[11], R2SW(GetUnitEvasion(u), 1, 1))
    set CustomInfoT1[1]=R2S(100 * GetUnitRealEvade(u))
-   set CustomInfoT1[2]=R2S(((((BlzGetUnitArmor(u)))*0.06)/(1+0.06*(BlzGetUnitArmor(u)))) * 100)
+   if BlzGetUnitArmor(u) >= 0 then
+        set CustomInfoT1[2]= "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))*0.06)/(1+0.06*(BlzGetUnitArmor(u)))) * 100)
+   else
+   set CustomInfoT1[2]= "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))*0.06)/(1+0.06*(BlzGetUnitArmor(u)))) * 100)
+   endif
    set CustomInfoT1[3]=R2S(GetUnitMagicDmg(u))
    set CustomInfoT1[4]=R2S( (1 - (50 / ( 50 + GetUnitMagicDef(u) ))) * 100 )
    
@@ -151,7 +155,7 @@ function GameUINewPanel takes nothing returns nothing
         local framehandle NewPanel= BlzCreateSimpleFrame("CustomUnitInfoPanel3x4", BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0), 0)
         call InitDataInfoPanel(1 , "Damage: " , "ReplaceableTextures\\CommandButtons\\BTNAttack.blp" , "The amount of damage the unit's basic attack deals")
         call InitDataInfoPanel(2 , "Attack cooldown: " , "ReplaceableTextures\\CommandButtons\\BTNHoldPosition.blp" , "Time between the unit's attacks.\nNot an indicator of attack speed")
-        call InitDataInfoPanel(3 , "Armor: " , "ReplaceableTextures\\CommandButtons\\BTNStop.blp" , "Reduces physical damage taken by |cffe7544a")
+        call InitDataInfoPanel(3 , "Armor: " , "ReplaceableTextures\\CommandButtons\\BTNStop.blp" , "")
         call InitDataInfoPanel(4 , "Block: " , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , "Damage reduction applied to all damage taken.")
         call InitDataInfoPanel(5 , "Movement speed: " , "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed" , "Current movement speed. ")
         call InitDataInfoPanel(6 , "Strength: " , "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower" , "Each point increases hit points by 26.\nEach point increases hit point regeneration by 0.075.")

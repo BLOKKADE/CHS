@@ -16,11 +16,11 @@ scope Quests initializer init
     endfunction
     
     function QuestSetUp takes nothing returns nothing
-        call AddQuest("General Information", "Continuation of Custom Hero Survival 1.9.xx by snowww.\nThanks to everyone on the Discord for feedback and suggestions.", "ReplaceableTextures\\PassiveButtons\\PASTimeEclipse3.blp", true, true, false)
+        call AddQuest("General Information", "Continuation of Custom Hero Survival 1.9.xx by Snowww & BLOKKADE.\nThanks to everyone on the Discord for feedback and suggestions.", "ReplaceableTextures\\PassiveButtons\\PASTimeEclipse3.blp", true, true, false)
         call AddQuestItem(bj_lastCreatedQuest, "Visit the discord to join our community!", false)
         call AddQuestItem(bj_lastCreatedQuest, "discord.gg/dtTcyMGTyu", false)
         
-        call AddQuest("Commands", "-zoom xxxx, zooms your camera in or out.\n-clear, clears all text off your screen.\n-hint, disables hints.\n-time, displays playtime", "ReplaceableTextures\\PassiveButtons\\PASScarlet_Aegis_Icon.blp", false, true, false)
+        call AddQuest("Commands", "-zoom xxxx, zooms your camera in or out.\n-clear, clears all text off your screen.\n-hint, disables hints.\n-time, displays playtime\n-nis, disables income texts from other players", "ReplaceableTextures\\PassiveButtons\\PASScarlet_Aegis_Icon.blp", false, true, false)
         
         call AddQuest("Selected Mode", "", "ReplaceableTextures\\CommandButtons\\BTNWisp.blp", false, true, false)
     endfunction

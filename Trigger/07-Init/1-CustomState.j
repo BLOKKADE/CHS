@@ -168,6 +168,7 @@ function AddHeroMaxAbsoluteAbility takes unit u returns boolean
 if GetHeroMaxAbsoluteAbility(u) < 10 then
 
     call SaveInteger(HT,GetHandleId(u),-8852352,LoadInteger(HT,GetHandleId(u),-8852352)+1)
+    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,("|cffffcc00An extra Absolute Ability slot is available."))
     return true
 else
     return false

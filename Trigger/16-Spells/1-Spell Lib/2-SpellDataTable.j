@@ -6,6 +6,9 @@ endglobals
 // 2 = whirlwind
 // 3 = cosmic retribution phys
 // 4 = whirlwind bool
+// 5 = extra dimensional cooperation bool
+// 6 = extra dimensional cooperation count
+// 7 = last attack damage
 
 function Trig_SpellDataTable_Actions takes nothing returns nothing
     set SpellData = HashTable.create()

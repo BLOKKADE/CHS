@@ -36,22 +36,26 @@ endfunction
 
 
 function AABfunction takes unit u returns nothing
+    //Mysterious Talent
     if GetUnitAbilityLevel(u,'A05Z') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A05Z') <= 0.001 and BlzIsUnitInvulnerable(u) == false then
         call UseSpellsAT(u)
         call AbilStartCD(u,'A05Z',45-GetUnitAbilityLevel(u,'A05Z') ) 
     endif
 
+    //Holy Shield
     if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetWidgetLife(u)/I2R(BlzGetUnitMaxHP(u)) < 0.75 then
         call UseSpellsHolyShield(u)
         call AbilStartCD(u,'A066',10 ) 
     endif
 
+    //Runestone of Creation
     if GetUnitAbilityLevel(u,'A073') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A073') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
         call CreateRandomRune(0,GetUnitX(u),GetUnitY(u),u )
         call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)-2000)
         call AbilStartCD(u,'A073',20 ) 
     endif
 
+    //Earthquake
     if GetUnitAbilityLevel(u,'A07L') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A07L') <= 0.001 and BlzIsUnitInvulnerable(u) == false  then
 
         call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap",GetUnitAbilityLevel(u,'A07L')*100,ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
@@ -66,7 +70,7 @@ function FunUpdateSkill takes integer i returns nothing
     local string textureS= ""
     local integer unitId = GetUnitTypeId(udg_units01[NumPlayerLast[i] + 1])
 
-    if unitId != 0 and i != NumPlayerLast[i] then
+    if unitId != 0 then
         if GetLocalPlayer() == Pl then
             set textureS = LoadStr(HT_data, unitId, 1)
             call BlzFrameSetVisible(SpellUP[100], true)
@@ -96,6 +100,7 @@ function FunUpdateSkill takes integer i returns nothing
         set i1=i1 + 1
     endloop
 
+    set Pl = null
 endfunction
 
 
@@ -130,7 +135,7 @@ function Trig_LongPeriodCheck_Actions takes nothing returns nothing
     local real Smat1 = 0
     local real Smat2 = 0
     local real HpBonus = 0
-
+    local unit u
 
     loop
     exitwhen   II > 8
@@ -138,205 +143,230 @@ function Trig_LongPeriodCheck_Actions takes nothing returns nothing
 
 
         call FunUpdateSkill(II)
-
-        if GetWidgetLife(udg_units01[II]) > 0 then
-            call SaveReal(HT,GetHandleId(udg_units01[II]),-32145, GetClassUnitSpell(udg_units01[II],11))
-            call FunctionAttackSpeedA(udg_units01[II])
+        set u = udg_units01[II]
+        if GetWidgetLife(u) > 0.405 then
+            call FunctionAttackSpeedA(u)
             
-            if GetUnitAbilityLevel(udg_units01[II] ,'B00F') >= 1 then
-                set ARMORN = BlzGetUnitArmor(udg_units01[II])
-                set ARMORN2 = LoadReal(HT,GetHandleId(udg_units01[II]),11)
+            //Double Armor
+            if GetUnitAbilityLevel(u ,'B00F') >= 1 then
+                set ARMORN = BlzGetUnitArmor(u)
+                set ARMORN2 = LoadReal(HT,GetHandleId(u),11)
                 set ARMFIN  = ARMORN - ARMORN2
                 set ARMG  = ARMFIN  - ARMORN2 
-                call SaveReal(HT,GetHandleId(udg_units01[II]),11,ARMORN2+ARMG  )
+                call SaveReal(HT,GetHandleId(u),11,ARMORN2+ARMG  )
                 
-                call BlzSetUnitArmor(udg_units01[II],ARMORN + ARMG   )
-            elseif LoadReal(HT,GetHandleId(udg_units01[II]),11) != 0 then
-                call BlzSetUnitArmor(udg_units01[II], BlzGetUnitArmor(udg_units01[II]) - LoadReal(HT,GetHandleId(udg_units01[II]),11)   )
-                call SaveReal(HT,GetHandleId(udg_units01[II]),11,0)
+                call BlzSetUnitArmor(u,ARMORN + ARMG   )
+            elseif LoadReal(HT,GetHandleId(u),11) != 0 then
+                call BlzSetUnitArmor(u, BlzGetUnitArmor(u) - LoadReal(HT,GetHandleId(u),11)   )
+                call SaveReal(HT,GetHandleId(u),11,0)
             endif
             
-            if GetUnitAbilityLevel(udg_units01[II] ,'B00S') >= 1 then
-                set Agi1 = GetHeroAgi(udg_units01[II],false)
-                set Agi2 = LoadReal(HT,GetHandleId(udg_units01[II]),1001)
+            //Panda Relic
+            if GetUnitAbilityLevel(u ,'B00S') >= 1 then
+                set Agi1 = GetHeroAgi(u,false)
+                set Agi2 = LoadReal(HT,GetHandleId(u),1001)
                 set Smat1 = R2I((Agi1-Agi2)*0.35)  //?????? ????
                 
-                call SaveReal(HT,GetHandleId(udg_units01[II]),1001 ,Smat1   )
-                call SetHeroAgi(udg_units01[II],R2I(Agi1+Smat1-Agi2 ) ,false)
+                call SaveReal(HT,GetHandleId(u),1001 ,Smat1   )
+                call SetHeroAgi(u,R2I(Agi1+Smat1-Agi2 ) ,false)
                 
-                set Str1 = GetHeroStr(udg_units01[II],false)
-                set Str2 = LoadReal(HT,GetHandleId(udg_units01[II]),1002)
+                set Str1 = GetHeroStr(u,false)
+                set Str2 = LoadReal(HT,GetHandleId(u),1002)
                 set Smat1 = R2I((Str1-Str2)*0.35)  //?????? ????
                 
-                call SaveReal(HT,GetHandleId(udg_units01[II]),1002 ,Smat1   )
-                call SetHeroStr(udg_units01[II],R2I(Str1+Smat1-Str2 ) ,false)
+                call SaveReal(HT,GetHandleId(u),1002 ,Smat1   )
+                call SetHeroStr(u,R2I(Str1+Smat1-Str2 ) ,false)
                 
-                set Int1 = GetHeroInt(udg_units01[II],false)
-                set Int2 = LoadReal(HT,GetHandleId(udg_units01[II]),1003)
+                set Int1 = GetHeroInt(u,false)
+                set Int2 = LoadReal(HT,GetHandleId(u),1003)
                 set Smat1 = R2I((Int1-Int2)*0.35)  //?????? ????
                 
-                call SaveReal(HT,GetHandleId(udg_units01[II]),1003 ,Smat1   )
-                call SetHeroInt(udg_units01[II],R2I(Int1+Smat1-Int2 ) ,false)
-            elseif (LoadReal(HT,GetHandleId(udg_units01[II]),1001) != 0) or (LoadReal(HT,GetHandleId(udg_units01[II]),1002) != 0) or (LoadReal(HT,GetHandleId(udg_units01[II]),1003) != 0) then
-                call SetHeroAgi(udg_units01[II],R2I(GetHeroAgi(udg_units01[II],false) - (LoadReal(HT,GetHandleId(udg_units01[II]),1001)) ) ,false)	
-                call SaveReal(HT,GetHandleId(udg_units01[II]),1001,0)
+                call SaveReal(HT,GetHandleId(u),1003 ,Smat1   )
+                call SetHeroInt(u,R2I(Int1+Smat1-Int2 ) ,false)
+            elseif (LoadReal(HT,GetHandleId(u),1001) != 0) or (LoadReal(HT,GetHandleId(u),1002) != 0) or (LoadReal(HT,GetHandleId(u),1003) != 0) then
+                call SetHeroAgi(u,R2I(GetHeroAgi(u,false) - (LoadReal(HT,GetHandleId(u),1001)) ) ,false)	
+                call SaveReal(HT,GetHandleId(u),1001,0)
                 
-                call SetHeroStr(udg_units01[II],R2I(GetHeroStr(udg_units01[II],false) - (LoadReal(HT,GetHandleId(udg_units01[II]),1002)) ) ,false)	
-                call SaveReal(HT,GetHandleId(udg_units01[II]),1002,0)
+                call SetHeroStr(u,R2I(GetHeroStr(u,false) - (LoadReal(HT,GetHandleId(u),1002)) ) ,false)	
+                call SaveReal(HT,GetHandleId(u),1002,0)
                 
-                call SetHeroInt(udg_units01[II],R2I(GetHeroInt(udg_units01[II],false) - (LoadReal(HT,GetHandleId(udg_units01[II]),1003)) ) ,false)	
-                call SaveReal(HT,GetHandleId(udg_units01[II]),1003,0)		
+                call SetHeroInt(u,R2I(GetHeroInt(u,false) - (LoadReal(HT,GetHandleId(u),1003)) ) ,false)	
+                call SaveReal(HT,GetHandleId(u),1003,0)		
             endif
             
-            if GetUnitAbilityLevel(udg_units01[II] ,'B00Q') >= 1 then	
-                   set HpR =  BlzGetUnitMaxHP(udg_units01[II])  - GetWidgetLife(udg_units01[II]) 
+            //Relic of Magic
+            if GetUnitAbilityLevel(u ,'B00Q') >= 1 then	
+                   set HpR =  BlzGetUnitMaxHP(u)  - GetWidgetLife(u) 
                    
                    if HpR > 0 then
-                       set MpR = GetUnitState(udg_units01[II], UNIT_STATE_MANA)/100 
+                       set MpR = GetUnitState(u, UNIT_STATE_MANA)/100 
                        
                        if MpR  >  HpR then
-                           call SetUnitState(udg_units01[II], UNIT_STATE_MANA, GetUnitState(udg_units01[II], UNIT_STATE_MANA) - HpR  )
-                           call SetWidgetLife(udg_units01[II],  GetWidgetLife(udg_units01[II]) + HpR) 
+                           call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - HpR  )
+                           call SetWidgetLife(u,  GetWidgetLife(u) + HpR) 
                        else
-                           call SetUnitState(udg_units01[II], UNIT_STATE_MANA, GetUnitState(udg_units01[II], UNIT_STATE_MANA) - MpR  )
-                           call SetWidgetLife(udg_units01[II],  GetWidgetLife(udg_units01[II]) + MpR)      
+                           call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - MpR  )
+                           call SetWidgetLife(u,  GetWidgetLife(u) + MpR)      
                        endif
                    endif
             endif
 
-            if GetWidgetLife(udg_units01[II]) > 0 then
+            if GetWidgetLife(u) > 0 then
                 set HpBonus = 0
-                if GetUnitAbilityLevel(udg_units01[II] ,'B00N') >= 1 then
+                //Heart of a Hero
+                if GetUnitAbilityLevel(u ,'B00N') >= 1 then
                     set HpBonus = HpBonus + 1
                 endif
                 
-                set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A07P')
+                //Absolute Light
+                set i1 = GetUnitAbilityLevel(u ,'A07P')
                 if i1 >= 1  then
-                    set i1 = i1*GetClassUnitSpell(udg_units01[II],8)
+                    set i1 = i1*GetClassUnitSpell(u,8)
                     set HpBonus = HpBonus + 0.005*I2R(i1)
                 endif
                 
-                set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A082')
+                //Divine Gift
+                set i1 = GetUnitAbilityLevel(u ,'A082')
                 if i1 >= 1 then
                     set HpBonus = HpBonus + 0.05*I2R(i1)
                 endif
                 
-                call SetUnitProcHp(udg_units01[II],HpBonus)
+                call SetUnitProcHp(u,HpBonus)
                 
                 
-                if BlzIsUnitInvulnerable(udg_units01[II]) == false  then
-                    set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A07Q')
+                if BlzIsUnitInvulnerable(u) == false  then
+
+                    //Absolute Dark
+                    set i1 = GetUnitAbilityLevel(u ,'A07Q')
                     if i1 >= 1  then
-                        set i1 = i1*GetClassUnitSpell(udg_units01[II],7)
-                        call AoeDrainAura(udg_units01[II], (0.5*I2R(i1)),500,false)
+                        set i1 = i1*GetClassUnitSpell(u,7)
+                        call AoeDrainAura(u, (0.5*I2R(i1)),500,false)
                     endif
                     
-                    set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A023')
+                    //Drain aura
+                    set i1 = GetUnitAbilityLevel(u ,'A023')
                     if i1 >= 1  then
-                        call AoeDrainAura(udg_units01[II], I2R(i1),500,true)
+                        call AoeDrainAura(u, I2R(i1) * 0.0002,500,true)
                     endif
                 endif
-                call AABfunction(udg_units01[II])
+                call AABfunction(u)
                 
-                
-                if GetUnitTypeId(udg_units01[II]) == 'H01I' then
-                    set i1 = (BlzGetUnitMaxHP(udg_units01[II])*3)/4
-                    set i2 = LoadInteger(HT,GetHandleId(udg_units01[II]),'H01I')
+                //Banshee
+                if GetUnitTypeId(u) == 'H01I' then
+                    set i1 = (BlzGetUnitMaxHP(u)*3)/4
+                    set i2 = LoadInteger(HT,GetHandleId(u),'H01I')
                     
-                    call BlzSetUnitMaxMana(udg_units01[II],BlzGetUnitMaxMana(udg_units01[II])+i1-i2   )
-                    call SaveInteger(HT,GetHandleId(udg_units01[II]),'H01I',i1  )
+                    call BlzSetUnitMaxMana(u,BlzGetUnitMaxMana(u)+i1-i2   )
+                    call SaveInteger(HT,GetHandleId(u),'H01I',i1  )
                 
                 endif
                 
                 
-                
-                if GetUnitAbilityLevel(udg_units01[II] ,'B00L') >= 1 then
+                //Robes of the Archmage
+                if GetUnitAbilityLevel(u ,'B00L') >= 1 then
 
-                    set ARMORN =      R2I( (BlzGetUnitMaxMana( udg_units01[II] )  -  GetUnitState( udg_units01[II]  , UNIT_STATE_MANA  )  )/300 )
-                    set ARMORN2 = LoadReal(HT,GetHandleId(udg_units01[II]),291)
+                    set ARMORN =      R2I( (BlzGetUnitMaxMana( u )  -  GetUnitState( u  , UNIT_STATE_MANA  )  )/300 )
+                    set ARMORN2 = LoadReal(HT,GetHandleId(u),291)
 
-                    set ARMFIN  = BlzGetUnitArmor(udg_units01[II])
+                    set ARMFIN  = BlzGetUnitArmor(u)
 
                     set ARMG  = ARMORN  + ARMFIN  - ARMORN2
 
-                    call SaveReal(HT,GetHandleId(udg_units01[II]),291,ARMORN  )
-                    call BlzSetUnitArmor(udg_units01[II],ARMG  )
+                    call SaveReal(HT,GetHandleId(u),291,ARMORN  )
+                    call BlzSetUnitArmor(u,ARMG  )
 
-                elseif LoadReal(HT,GetHandleId(udg_units01[II]),291) != 0 then
-                    call BlzSetUnitArmor(udg_units01[II], BlzGetUnitArmor(udg_units01[II]) - LoadReal(HT,GetHandleId(udg_units01[II]),291)   )
-                    call SaveReal(HT,GetHandleId(udg_units01[II]),291,0)
+                elseif LoadReal(HT,GetHandleId(u),291) != 0 then
+                    call BlzSetUnitArmor(u, BlzGetUnitArmor(u) - LoadReal(HT,GetHandleId(u),291)   )
+                    call SaveReal(HT,GetHandleId(u),291,0)
                 endif
             endif
                 
-            set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A07B')
-            set i2 = LoadInteger(HT,GetHandleId(udg_units01[II]),'A07B')
+            //Absolute Fire
+            set i1 = GetUnitAbilityLevel(u ,'A07B')
+            set i2 = LoadInteger(HT,GetHandleId(u),'A07B')
             if i1 >= 1 or i2 != 0 then
-                set i1 = i1*GetClassUnitSpell(udg_units01[II],1)
-                call AddUnitMagicDmg(udg_units01[II] ,   0.5*I2R(i1-i2)  )	
-                call SaveInteger(HT,GetHandleId(udg_units01[II]),'A07B',i1)	
+                set i1 = i1*GetClassUnitSpell(u,1)
+                call AddUnitMagicDmg(u ,   0.5*I2R(i1-i2)  )	
+                call SaveInteger(HT,GetHandleId(u),'A07B',i1)	
             endif
 
-            set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A07C')
-            set i2 = LoadInteger(HT,GetHandleId(udg_units01[II]),'A07C')
+            //Absolute Water
+            set i1 = GetUnitAbilityLevel(u ,'A07C')
+            set i2 = LoadInteger(HT,GetHandleId(u),'A07C')
             if i1 >= 1 or i2 != 0 then
-                set i1 = i1*GetClassUnitSpell(udg_units01[II],2)
-                call BlzSetUnitMaxMana(udg_units01[II],BlzGetUnitMaxMana(udg_units01[II]) + 100*(i1-i2)    )
-                call SaveInteger(HT,GetHandleId(udg_units01[II]),'A07C',i1)	
-            endif
-            
-            
-            set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A07E')
-            set i2 = LoadInteger(HT,GetHandleId(udg_units01[II]),'A07E')
-            if i1 >= 1 or i2 != 0 then
-                set i1 = i1*GetClassUnitSpell(udg_units01[II],3)
-                call AddUnitEvasion(udg_units01[II] ,   0.5*I2R(i1-i2)  )
-                call SetHeroAgi(udg_units01[II],GetHeroAgi(udg_units01[II],false)+10*(i1-i2),false     )
-                call SaveInteger(HT,GetHandleId(udg_units01[II]),'A07E',i1)	
+                set i1 = i1*GetClassUnitSpell(u,2)
+                call BlzSetUnitMaxMana(u,BlzGetUnitMaxMana(u) + 100*(i1-i2)    )
+                call SaveInteger(HT,GetHandleId(u),'A07C',i1)	
             endif
             
+            //Absolute Wind
+            set i1 = GetUnitAbilityLevel(u ,'A07E')
+            set i2 = LoadInteger(HT,GetHandleId(u),'A07E')
+            if i1 >= 1 or i2 != 0 then
+                set i1 = i1*GetClassUnitSpell(u,3)
+                call AddUnitEvasion(u ,   0.5*I2R(i1-i2)  )
+                call SetHeroAgi(u,GetHeroAgi(u,false)+10*(i1-i2),false     )
+                call SaveInteger(HT,GetHandleId(u),'A07E',i1)	
+            endif
             
-            set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A07D')
-            set i2 = LoadInteger(HT,GetHandleId(udg_units01[II]),'A07D')
+            //Absolute Earth
+            set i1 = GetUnitAbilityLevel(u ,'A07D')
+            set i2 = LoadInteger(HT,GetHandleId(u),'A07D')
             if i1 >= 1 or i2 != 0 then
-                set i1 = i1*GetClassUnitSpell(udg_units01[II],4)
-                call AddUnitBlock(udg_units01[II] ,   20*I2R(i1-i2)  )	
-                call SaveInteger(HT,GetHandleId(udg_units01[II]),'A07D',i1)	
+                set i1 = i1*GetClassUnitSpell(u,4)
+                call AddUnitBlock(u ,   20*I2R(i1-i2)  )	
+                call SaveInteger(HT,GetHandleId(u),'A07D',i1)	
             endif
 
-            set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A07R')
-            set i2 = LoadInteger(HT,GetHandleId(udg_units01[II]),'A07R')
+            //Absolute Blood
+            set i1 = GetUnitAbilityLevel(u ,'A07R')
+            set i2 = LoadInteger(HT,GetHandleId(u),'A07R')
             if i1 >= 1 or i2 != 0 then
-                set i1 = i1*GetClassUnitSpell(udg_units01[II],11)
-                call SetHeroStr(udg_units01[II],GetHeroStr(udg_units01[II],false)+12*(i1-i2),false     )
-                call SaveInteger(HT,GetHandleId(udg_units01[II]),'A07R',i1)	
+                set i1 = i1*GetClassUnitSpell(u,11)
+                call SetHeroStr(u,GetHeroStr(u,false)+12*(i1-i2),false     )
+                call SaveInteger(HT,GetHandleId(u),'A07R',i1)	
             endif
 
-
-
-            set i1 = GetUnitAbilityLevel(udg_units01[II] ,'A07K')
-            set i2 = LoadInteger(HT,GetHandleId(udg_units01[II]),'A07K')
-            if i1 >= 1 or i2 != 0 then
-                set i1 = i1*GetClassUnitSpell(udg_units01[II],5)
-                call AddUnitSummonStronger(udg_units01[II] ,   1*I2R(i1-i2)  )	
-                call SaveInteger(HT,GetHandleId(udg_units01[II]),'A07K',i1)	
+            //Brilliance Aura
+            set i1 = GetUnitAbilityLevel(u, 'AHab')
+            if i1 > 0 then
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) + ((0.0001 * i1) * GetUnitState(u, UNIT_STATE_MAX_MANA)))
             endif
 
+            //Absolute Wild
+            set i1 = GetUnitAbilityLevel(u ,'A07K')
+            set i2 = LoadInteger(HT,GetHandleId(u),'A07K')
+            if i1 >= 1 or i2 != 0 then
+                set i1 = i1*GetClassUnitSpell(u,5)
+                call AddUnitSummonStronger(u ,   1*I2R(i1-i2)  )	
+                call SaveInteger(HT,GetHandleId(u),'A07K',i1)	
+            endif
 
-
-            if GetUnitAbilityLevel(udg_units01[II] ,'A02X') >= 1 then
-                set MANA1  = LoadInteger(HT,GetHandleId(udg_units01[II]),12)
-                set MANA2  =  10000*GetUnitAbilityLevel(udg_units01[II] ,'A02X')
-                if MANA1 != MANA2 then
-                    call BlzSetUnitMaxMana(udg_units01[II], BlzGetUnitMaxMana(udg_units01[II]) + MANA2-MANA1 )
-                    call SaveInteger(HT,GetHandleId(udg_units01[II]),12,MANA2  )
+            //Thunder Witch
+            if GetUnitTypeId(u) == 'O001' then
+                if GetTimerCD(u , 10202 , 1) and CheckProc(u, 610) then
+                    call ElemFuncStart(u,'O001')
+                    call USOrderA(u,GetUnitX(u),GetUnitY(u),'A036',"fanofknives",  30+GetHeroLevel(u)*30 , ConvertAbilityRealLevelField('Ocl1') )
                 endif
-            elseif LoadInteger(HT,GetHandleId(udg_units01[II]),12) != 0 then
-                call BlzSetUnitMaxMana(udg_units01[II], BlzGetUnitMaxMana(udg_units01[II]) -LoadInteger(HT,GetHandleId(udg_units01[II]),12)  )
-                call SaveInteger(HT,GetHandleId(udg_units01[II]),12,0 )	
+            endif
+
+            //Mana Bonus
+            if GetUnitAbilityLevel(u ,'A02X') >= 1 then
+                set MANA1  = LoadInteger(HT,GetHandleId(u),12)
+                set MANA2  =  10000*GetUnitAbilityLevel(u ,'A02X')
+                if MANA1 != MANA2 then
+                    call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + MANA2-MANA1 )
+                    call SaveInteger(HT,GetHandleId(u),12,MANA2  )
+                endif
+            elseif LoadInteger(HT,GetHandleId(u),12) != 0 then
+                call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) -LoadInteger(HT,GetHandleId(u),12)  )
+                call SaveInteger(HT,GetHandleId(u),12,0 )	
             endif
         endif
         set II = II + 1
     endloop
+
+    set u = null
 endfunction
 
 //===========================================================================

@@ -1,3 +1,4 @@
+library AoeDamage requires Vampirism
     globals
         group Area_group = CreateGroup()
         unit Sourse_unit = null
@@ -130,9 +131,13 @@
         local real hp
         local real dmg
         if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 then
-
+    
             set hp = GetWidgetLife(GetFilterUnit())
             set dmg = Dmg_ef
+            if GLOB_LIFESTEAL then
+                set dmg = dmg * BlzGetUnitMaxHP(GetFilterUnit())
+            endif
+            
             if hp - 0.405 <= dmg then
                 set dmg = hp
                 call SetWidgetLife(GetFilterUnit(),1)
@@ -141,6 +146,7 @@
             endif
             
             if GLOB_LIFESTEAL then
+                
                 if IsHeroUnitId(GetUnitTypeId(GetFilterUnit())) then
                 
                     call Vamp(Sourse_unit,GetFilterUnit(),dmg)
@@ -212,3 +218,4 @@
         set BoolArray[104] = Condition(function DrainRealase)
         set BoolArray[105] = Condition(function DrainRealase2)
     endfunction
+endlibrary

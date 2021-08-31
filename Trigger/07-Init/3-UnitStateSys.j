@@ -25,7 +25,9 @@ local integer UpgradeU = 15*UnitHasItemI(hero,'I07K')
 local integer LvlWildD = GetUnitAbilityLevel(hero,'A06X')
 local real wild = 1 + GetUnitSummonStronger(hero)/100
 
-
+if GetUnitTypeId(hero) == 'N00P' then
+    set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.3)
+endif
 
 if LvlWildD > 0 then
 
@@ -244,39 +246,46 @@ endfunction
 
 function Trig_UnitStateSys_Actions takes nothing returns nothing
 ///call UnitAddAbility(GetTriggerUnit(),'A06K')
+local unit u = GetTriggerUnit()
 local timer t = null
-call UnitAddAbility(GetTriggerUnit(),'A057')
-call BlzUnitDisableAbility(GetTriggerUnit(),'A057',false,true)
+call UnitAddAbility(u,'A057')
+call BlzUnitDisableAbility(u,'A057',false,true)
 
-if  GetUnitTypeId(GetTriggerUnit()) == 'H017' then
-call AddUnitBlock(GetTriggerUnit(),50)
-call AddUnitMagicDef(GetTriggerUnit(),15)
+if  GetUnitTypeId(u) == 'H017' then
+call AddUnitBlock(u,50)
+call AddUnitMagicDef(u,15)
 endif
 
 
-if  GetUnitTypeId(GetTriggerUnit()) == 'H01G' then
-call AddUnitMagicDmg(GetTriggerUnit(),5)
+if  GetUnitTypeId(u) == 'H01G' then
+call AddUnitMagicDmg(u,5)
 endif
 
 
-if  GetUnitTypeId(GetTriggerUnit()) == 'O00C' then
-call AddUnitEvasion(GetTriggerUnit(),10)
+if  GetUnitTypeId(u) == 'O00C' then
+call AddUnitEvasion(u,10)
 endif
 
 
-if  GetUnitTypeId(GetTriggerUnit()) == 'H00A' then
-    call AddUnitPvpBonus(GetTriggerUnit(),15)
+if  GetUnitTypeId(u) == 'H00A' then
+    call AddUnitPvpBonus(u,15)
 endif
 
-if IsHeroUnitId(GetUnitTypeId(GetTriggerUnit())) == false then
+if GetUnitTypeId(u) == 'O006' then
+    call AddHeroMaxAbsoluteAbility(u)
+    call SetBonus(u, 0, 1)
+endif
+
+if IsHeroUnitId(GetUnitTypeId(u)) == false then
     set t = CreateTimer()
-    call SaveUnitHandle(HT,GetHandleId(t),1,GetTriggerUnit())
+    call SaveUnitHandle(HT,GetHandleId(t),1,u)
     call TimerStart(t,0,false,function SummonUnitS)
 endif
 
 
 
 set t = null
+set u = null
 endfunction
 
 //===========================================================================

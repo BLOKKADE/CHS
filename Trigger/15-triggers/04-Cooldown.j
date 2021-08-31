@@ -65,7 +65,7 @@ function Trig_Cooldown_Actions takes nothing returns nothing
     set  Lv = GetUnitAbilityLevel(t,Aid)
     set timeT = BlzGetAbilityCooldown (Aid,Lv-1)
 
-
+    //Fast Magic
     if GetUnitAbilityLevel(t,'A03P') >= 1 then
         set   ResCD =  ResCD*(1-0.01*GetUnitAbilityLevel(t,'A03P')) 
     endif
@@ -86,14 +86,19 @@ function Trig_Cooldown_Actions takes nothing returns nothing
         endif
     endif
     
-    
+    //Fishing Rod and Blink Strike
+    if UnitHasItemS(u, 'I07T') and Aid == 'A08J' then
+        set ResCD = ResCD * 0.5
+    endif
 
+    //staff of water
     if  UnitHasItemS(u,'I08Y') and LoadBoolean(Elem,Aid,2) then
         if GetRandomReal(0,100) <= 40*luck then
             set ResCD = 0.001
         endif
     endif
     
+    //Fan
     if  UnitHasItemS(u,'I08Z') and LoadBoolean(Elem,Aid,3) then
             set ResCD =ResCD*0.65
     endif   

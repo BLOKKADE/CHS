@@ -52,12 +52,13 @@ function Trig_Spell12_Actions takes nothing returns nothing
         return
     endif
     
-    
+    //Demon Hunter
     if GetUnitTypeId(u2) == 'O004' then
-        set r1 =  GetHeroLevel(   udg_units01[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]   )*12
+        set r1 =  GetHeroLevel(   udg_units01[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]   )*20
         set r2 = GetUnitState(u, UNIT_STATE_MANA)
         set r3 = r2 - r1
         call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA)-r1  )
+        call SetUnitState(u2, UNIT_STATE_MANA, GetUnitState(u2, UNIT_STATE_MANA)+r1  )
         call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", u, "head"))
         if r3 <= 0 then
             if GetWidgetLife(u) <= - r3 then

@@ -398,8 +398,14 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
     
     set udg_integers08[163]='A08E' 
     set udg_integers09[163]='I09N'
+
+	set udg_integers08[164]='A08J' 
+    set udg_integers09[164]='I09P'
+
+	set udg_integers08[165]='A08I' 
+    set udg_integers09[165]='I09Q'
     
-	set udg_integer26=163
+	set udg_integer26=165
     
     
     

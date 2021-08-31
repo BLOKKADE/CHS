@@ -11,13 +11,21 @@ call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,  GetPlayerState(p,PLAYER_STATE
 
 endfunction
 
-function IncomeText takes integer pid returns nothing
+function IncomeText takes integer pid, boolean all returns nothing
     local integer i = 0
     loop
-        if pid == i then
-            call DisplayTimedTextToPlayer(Player(i), 0, 0, 2, "|cffdfb632You upgraded your creeps to|r |cffd64646level "+I2S(BonusNeutral + BonusNeutralPlayer[pid]) + "|r (|cffdf9432Global level: "+ I2S(BonusNeutral) +"|r)")
+        if all then
+            if pid == i then
+                call DisplayTimedTextToPlayer(Player(i), 0, 0, 1, "|cffdfb632You upgraded your creeps to|r |cffd64646level "+I2S(BonusNeutral + BonusNeutralPlayer[pid]) + "|r (|cffdf9432Global level: "+ I2S(BonusNeutral) +"|r)")
+            elseif IncomeSpamDisabled[i] == false then
+                call DisplayTimedTextToPlayer(Player(i), 0, 0, 1, GetPlayerNameColour(Player(pid))+" |cffdfb632upgrades your creeps to|r |cffd64646level "+I2S(BonusNeutral + BonusNeutralPlayer[pid]) + "|r (|cffdf9432Global level: "+ I2S(BonusNeutral) +"|r)")
+            endif
         else
-            call DisplayTimedTextToPlayer(Player(i), 0, 0, 2, GetPlayerNameColour(Player(i))+" |cffdfb632upgrades your creeps to|r |cffd64646level "+I2S(BonusNeutral + BonusNeutralPlayer[pid]) + "|r (|cffdf9432Global level: "+ I2S(BonusNeutral) +"|r)")
+            if pid == i then
+                call DisplayTimedTextToPlayer(Player(i), 0, 0, 1, "|cffdfb632You upgraded your creeps to|r |cffd64646level "+I2S(BonusNeutral + BonusNeutralPlayer[pid]) + "|r")
+            elseif IncomeSpamDisabled[i] == false then
+                call DisplayTimedTextToPlayer(Player(i), 0, 0, 1, GetPlayerNameColour(Player(pid))+" |cffdfb632upgrades the creeps for themselves to|r |cffd64646level "+I2S(BonusNeutralPlayer[pid] ))
+            endif
         endif
         set i = i + 1
         exitwhen i > 8
@@ -151,13 +159,13 @@ function Trig_Toms_Actions takes nothing returns nothing
 		set Income[pid] = Income[pid] + 90
 		set BonusNeutral = BonusNeutral  + 1
 		set BonusNeutralPlayer[pid] =BonusNeutralPlayer[pid] +  3
-        call IncomeText(pid)
+        call IncomeText(pid, true)
         
         elseif  II  == 'I09O' then   
 
 		set Income[pid] = Income[pid] + 90
 		set BonusNeutralPlayer[pid] =BonusNeutralPlayer[pid] +  4
-		call DisplayTimedTextToForce(GetPlayersAll(),1, GetPlayerNameColour(p)+" |cffdfb632upgrades the creeps for themselves to|r |cffd64646level "+I2S(BonusNeutralPlayer[pid] ))
+		call IncomeText(pid, false)
 
        elseif   II == 'I07D' then
            if GetHeroXP(u) >=  100000  then

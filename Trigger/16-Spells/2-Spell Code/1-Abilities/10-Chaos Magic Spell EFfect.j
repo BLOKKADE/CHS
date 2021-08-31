@@ -162,6 +162,14 @@ function AbilityChannel takes nothing returns nothing
         endif
     endif
 
+    if id == 'A08J' then
+        call BlinkStrike(u, lvl)
+    endif
+
+    if id == 'A08I' then
+        call ExtradimensionalCooperation(u, id)
+    endif
+
     if id == 'A07X' then
         call  UsFrostBolt(u,u2,120*GetUnitAbilityLevel(u,'A07X')*(1+0.25*R2I(GetClassUnitSpell(u,7))) ,GetClassUnitSpell(u,9))
     endif

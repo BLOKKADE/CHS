@@ -132,6 +132,7 @@ function EndStateGrunt takes nothing returns nothing
      
             call BlzSetUnitBaseDamage(Herou,BlzGetUnitBaseDamage(Herou,0)-R2I(r4),0)
             call SetHeroStr(Herou,GetHeroStr(Herou,false)-(r4),false)
+            call UnitRemoveAbility(Herou, 'A091')
 
     call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
     call DestroyTimer(startbattle)
@@ -141,8 +142,8 @@ endfunction
 
 function FunctionTimerSpell takes nothing returns nothing
     local timer   startbattle = GetExpiredTimer()
-    local timer  NewTimer = null
-    local timer  OldTimer = null
+    local timer  nTimer = null
+    local timer  oTimer = null
     local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1)
     local boolean urn = LoadBoolean(HT_timerSpell, GetHandleId(startbattle), 4)
     local integer pid = GetPlayerId(GetOwningPlayer(Herou))
@@ -173,14 +174,14 @@ function FunctionTimerSpell takes nothing returns nothing
     if r1 > 0 then
                 call ElemFuncStart(Herou,'A03U')
         if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),1) == null then
-            set NewTimer = CreateTimer()
-            call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),1,NewTimer)
-            call SaveUnitHandle(HT_timerSpell,GetHandleId(NewTimer),1,Herou)
+            set nTimer = CreateTimer()
+            call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),1,nTimer)
+            call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
             call UnitAddAbility(Herou,'A03V')
-            call TimerStart(NewTimer,(1.8 + (0.2*r1))*r3 ,false,function EndInvision)
+            call TimerStart(nTimer,(1.8 + (0.2*r1))*r3 ,false,function EndInvision)
         else
-               set NewTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),1)
-              call TimerStart(NewTimer,(1.8 + (0.2*r1))*r3 ,false,function EndInvision)
+               set nTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),1)
+              call TimerStart(nTimer,(1.8 + (0.2*r1))*r3 ,false,function EndInvision)
         endif  
     endif
     
@@ -188,22 +189,22 @@ function FunctionTimerSpell takes nothing returns nothing
     set r1 = GetUnitAbilityLevel(Herou,'A04E')    
     if r1 > 0 then
             call ElemFuncStart(Herou,'A04E')
-            set OldTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),'A04E')
+            set oTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),'A04E')
             
-            if TimerGetRemaining(OldTimer) > 0 then
-                call TimerStart(OldTimer,0,false,function EndState)
+            if TimerGetRemaining(oTimer) > 0 then
+                call TimerStart(oTimer,0,false,function EndState)
             endif
-            set OldTimer = null
+            set oTimer = null
             
-            set NewTimer = CreateTimer()    
-            call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),'A04E',NewTimer)
-            call SaveUnitHandle(HT_timerSpell,GetHandleId(NewTimer),1,Herou)
+            set nTimer = CreateTimer()    
+            call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),'A04E',nTimer)
+            call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
             set r4 = 40*r1*(1+0.02*r2) 
-            call SaveInteger(HT_timerSpell,GetHandleId(NewTimer),2,R2I(r4))
+            call SaveInteger(HT_timerSpell,GetHandleId(nTimer),2,R2I(r4))
             call SetHeroStr(Herou,GetHeroStr(Herou,false)+R2I(r4),false)
             call SetHeroAgi(Herou,GetHeroAgi(Herou,false)+R2I(r4),false)
             call SetHeroInt(Herou,GetHeroInt(Herou,false)+R2I(r4),false)
-            call TimerStart(NewTimer,(8+ (0.02*r2))*r3 ,false,function EndState)
+            call TimerStart(nTimer,(8+ (0.02*r2))*r3 ,false,function EndState)
 
 
     endif
@@ -228,15 +229,15 @@ function FunctionTimerSpell takes nothing returns nothing
     if r1 > 0 then
         call ElemFuncStart(Herou,'A040')
         if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),2) == null then
-            set NewTimer = CreateTimer()
-            call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),2,NewTimer)
-            call SaveUnitHandle(HT_timerSpell,GetHandleId(NewTimer),1,Herou)
-            call SaveEffectHandle(HT_timerSpell,GetHandleId(NewTimer),2, AddSpecialEffectTarget( "Objects\\InventoryItems\\tome\\tome.mdl", Herou ,"overhead"  )   )
-            call TimerStart(NewTimer,(2.75 + (0.25*r1))*r3 ,false,function EndCheaterMagic)
+            set nTimer = CreateTimer()
+            call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),2,nTimer)
+            call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
+            call SaveEffectHandle(HT_timerSpell,GetHandleId(nTimer),2, AddSpecialEffectTarget( "Objects\\InventoryItems\\tome\\tome.mdl", Herou ,"overhead"  )   )
+            call TimerStart(nTimer,(2.75 + (0.25*r1))*r3 ,false,function EndCheaterMagic)
             call UnitAddAbility(Herou, 'A08G')
         else
-              set NewTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),2)
-              call TimerStart(NewTimer,(2.75 + (0.25*r1))*r3 ,false,function EndCheaterMagic)
+              set nTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),2)
+              call TimerStart(nTimer,(2.75 + (0.25*r1))*r3 ,false,function EndCheaterMagic)
               call UnitAddAbility(Herou, 'A08G')
         endif     
     endif
@@ -245,14 +246,14 @@ function FunctionTimerSpell takes nothing returns nothing
     if r1 > 0 then
         call ElemFuncStart(Herou,'A045')
         if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),3) == null then
-            set NewTimer = CreateTimer()
-            call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),3,NewTimer)
-            call SaveUnitHandle(HT_timerSpell,GetHandleId(NewTimer),1,Herou)
-            call SaveEffectHandle(HT_timerSpell,GetHandleId(NewTimer),2, AddSpecialEffectTarget( "Soul Armor Divine_opt.mdx", Herou ,"head"  )   )
-            call TimerStart(NewTimer,(2.70 + (0.3*r1))*r3 ,false,function EndGodDefender)
+            set nTimer = CreateTimer()
+            call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),3,nTimer)
+            call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
+            call SaveEffectHandle(HT_timerSpell,GetHandleId(nTimer),2, AddSpecialEffectTarget( "Soul Armor Divine_opt.mdx", Herou ,"head"  )   )
+            call TimerStart(nTimer,(2.70 + (0.3*r1))*r3 ,false,function EndGodDefender)
         else
-              set NewTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),3)
-            call TimerStart(NewTimer,(2.70 + (0.3*r1))*r3 ,false,function EndGodDefender)
+              set nTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),3)
+            call TimerStart(nTimer,(2.70 + (0.3*r1))*r3 ,false,function EndGodDefender)
         endif     
     endif
     
@@ -277,13 +278,14 @@ function FunctionTimerSpell takes nothing returns nothing
     
     if GetUnitTypeId(Herou) == 'H01J' then
             call ElemFuncStart(Herou,'H01J')
-            set NewTimer = CreateTimer()  
+            set nTimer = CreateTimer()  
             set r4 = 20*GetHeroLevel(Herou) 
             call SetHeroStr(Herou,GetHeroStr(Herou,false)+R2I(r4),false)
             call BlzSetUnitBaseDamage(Herou,BlzGetUnitBaseDamage(Herou,0)+R2I(r4),0)
-            call SaveUnitHandle(HT_timerSpell,GetHandleId(NewTimer),1,Herou)
-            call SaveInteger(HT_timerSpell,GetHandleId(NewTimer),2,R2I(r4))
-            call TimerStart(NewTimer,8+0.05 ,false,function EndStateGrunt)
+            call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
+            call SaveInteger(HT_timerSpell,GetHandleId(nTimer),2,R2I(r4))
+            call UnitAddAbility(Herou, 'A091')
+            call TimerStart(nTimer, 9.9 + (0.1 * GetHeroLevel(Herou)) ,false,function EndStateGrunt)
     endif
     
     
@@ -358,7 +360,7 @@ function FunctionTimerSpell takes nothing returns nothing
     set r1 = GetUnitAbilityLevel(Herou,'A03X')    
     if r1 > 0 then
         call ElemFuncStart(Herou,'A03X')
-      call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar",(10*r1)*(1+0.02*r2),ABILITY_RLF_LIFE_REGENERATION_RATE,(10*r1)*(1+0.02*r2),ABILITY_RLF_MANA_REGEN ,(8+(r2*0.2))*r3,ABILITY_RLF_DURATION_HERO,(8+(r2*0.2))*r3,ABILITY_RLF_DURATION_NORMAL)
+      call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * r1)*(1+0.02*r2),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * r1)*(1+0.02*r2),ABILITY_RLF_MANA_REGEN ,(8+(r2*0.2))*r3,ABILITY_RLF_DURATION_HERO,(8+(r2*0.2))*r3,ABILITY_RLF_DURATION_NORMAL)
 
     endif
     
@@ -373,7 +375,7 @@ function FunctionTimerSpell takes nothing returns nothing
     call DestroyTimer(startbattle)
     set U = null
     set startbattle = null
-    set NewTimer = null
+    set nTimer = null
 endfunction
 
     function FixAbilityU takes unit u returns nothing
