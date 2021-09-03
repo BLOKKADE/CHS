@@ -7,7 +7,7 @@
     call UnitRemoveAbility(u, 'A08B')
     call UnitRemoveAbility(u, 'B01D')
     call FlushChildHashtable(HT,GetHandleId(tim))
-    call DestroyTimer(tim)
+    call ReleaseTimer(tim)
     set tim = null
     set eff = null
     set u = null
@@ -30,7 +30,7 @@
             call SetWidgetLife(u,Hp)
             call BlzSetEventDamage(0)
         elseif GetWidgetLife(u) <= GetEventDamage()+0.405 and BlzGetUnitAbilityCooldownRemaining(u,'A05R') <= 0.501 then
-            set tim = CreateTimer()
+            set tim = NewTimer()
             call BlzSetEventDamage(0)
             call SetWidgetLife(u,1.405)
             call  AbilStartCD(u,'A05R', 60+ BlzGetUnitAbilityCooldownRemaining(u,'A05R') )  

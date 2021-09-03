@@ -1,12 +1,14 @@
 library MouseHoverInfo requires TimerUtils, GetClass, RandomShit
 
     globals
-        timer MouseHoverTimer
+        timer MouseHoverTimer = null
     endglobals
 
     public function DisableMouseHover takes nothing returns nothing
-        call ReleaseTimer(MouseHoverTimer)
-        set MouseHoverTimer = null
+        if MouseHoverTimer != null then
+            call ReleaseTimer(MouseHoverTimer)
+            set MouseHoverTimer = null
+        endif
     endfunction
 
     private function DisplayText takes player p, unit u returns nothing

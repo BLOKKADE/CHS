@@ -1,3 +1,109 @@
+library PeriodicDamage initializer init
+    globals
+        HashTable PeriodicCounter
+    endglobals
+    struct PeriodicDamage extends array
+        real dmg
+        unit target
+        unit caster
+        boolean magic
+        integer endTick
+        integer limit
+        integer abilId
+        string fx
+        string attachPoint
+        integer interval
+        real lifeDamage
+        boolean allowRecursion
+
+        private static integer instanceCount = 0
+        private static thistype recycle = 0
+        private thistype recycleNext
+
+        private method periodic takes nothing returns nothing
+            if T32_Tick >= this.endTick and this.limit > 0 then
+                if GetWidgetLife(this.target) > 0.405 then
+                    if this.allowRecursion == false then
+                        set TypeDmg_b = 2
+                    endif
+                    if magic then
+                        call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)*0.01)*this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, null)
+                    else
+                        set GLOB_typeDmg = 2
+                        call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)*0.01)*this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
+                    endif
+                    if this.fx != null then
+                        call DestroyEffect(AddSpecialEffectTarget(this.fx, this.target, attachPoint))
+                    endif
+                endif
+
+                set this.limit = this.limit - 1
+                set this.endTick = T32_Tick + interval
+            elseif this.limit == 0 then
+                call this.stopPeriodic()
+                call this.destroy()
+            endif
+        endmethod  
+
+        method addFx takes string fx, string attachPoint returns nothing
+            set this.fx = fx
+            set this.attachPoint = attachPoint
+            call DestroyEffect(AddSpecialEffectTarget(fx, this.target, attachPoint))
+        endmethod
+
+        method addLimit takes integer abilId, integer limit, real cd returns nothing
+            local integer count = PeriodicCounter[GetHandleId(this.caster)].integer[abilId]
+            set this.abilId = abilId
+            set PeriodicCounter[GetHandleId(this.caster)].integer[abilId] = count + 1
+            if count >= limit then  
+                call BlzStartUnitAbilityCooldown(this.caster, abilId, cd)
+            endif
+        endmethod
+
+        static method create takes unit caster, unit target, real intervalDmg, boolean magic, real interval, real duration, real lifeDamage, boolean allowRecursion returns thistype
+            local thistype this
+
+            if (recycle == 0) then
+                set instanceCount = instanceCount + 1
+                set this = instanceCount
+            else
+                set this = recycle
+                set recycle = recycle.recycleNext
+            endif
+            
+            set this.abilId = 0
+            set this.fx = null
+            set this.dmg = intervalDmg
+            set this.target = target
+            set this.magic = magic
+            set this.caster = caster
+            set this.limit = R2I(duration / interval)
+            set this.interval = R2I(interval * 32)
+            set this.endTick = T32_Tick + this.interval
+            set this.lifeDamage = lifeDamage
+            set this.allowRecursion = allowRecursion
+            call this.startPeriodic()
+            return this
+        endmethod
+        
+        method destroy takes nothing returns nothing
+            if this.abilId != 0 then
+                set PeriodicCounter[GetHandleId(this.caster)].integer[this.abilId] = PeriodicCounter[GetHandleId(this.caster)].integer[this.abilId] - 1
+            endif
+            set this.caster = null
+            set this.target = null
+
+            set recycleNext = recycle
+            set recycle = this
+        endmethod
+
+        implement T32x
+    endstruct
+
+    private function init takes nothing returns nothing
+        set PeriodicCounter = HashTable.create()
+    endfunction
+/*
 function peredioc_s takes nothing returns nothing
     local timer t = GetExpiredTimer()
     local integer i = GetHandleId(t)
@@ -27,7 +133,7 @@ function peredioc_s takes nothing returns nothing
         call UnitDamageTarget(u1,u2,dmg1+GetWidgetLife(u2)*0.01*dmg2,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL,WEAPON_TYPE_WHOKNOWS)
 
     else
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
     
     endif
@@ -36,12 +142,13 @@ function peredioc_s takes nothing returns nothing
     set u1 = null
     set u2 = null
 endfunction
+*/
 
-function PerodicDmg takes unit u1,unit u2,real dmg1,real dmg2,real evary,real max,integer id,boolean first returns nothing
-    local timer t = LoadTimerHandle(HT,GetHandleId(u2),id)
+/*function LiquidFireEnvenomedWeapons takes unit u1,unit u2,real dmg1,real dmg2,real evary,real max,integer id,boolean first returns nothing
+    /*local timer t = LoadTimerHandle(HT,GetHandleId(u2),id)
     local integer i
     if t == null then
-        set t = CreateTimer()
+        set t = NewTimer()
     endif
     
     set i = GetHandleId(t)
@@ -57,5 +164,6 @@ function PerodicDmg takes unit u1,unit u2,real dmg1,real dmg2,real evary,real ma
         call TimerStart(t,0,false,function peredioc_s)
     endif
 
-    set t = null
-endfunction
+    set t = null*/
+endfunction*/
+endlibrary

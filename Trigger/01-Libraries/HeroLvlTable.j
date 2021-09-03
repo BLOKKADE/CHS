@@ -66,7 +66,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('H004', 0, "|cffe7544aDamage bonus|r: ,0,%%")
 
-        call SetBonusStr('H003', 0, "|cffe7544aAgility bonus|r: ,0,")
+        call SetBonusStr('H003', 0, "|cffe7544aIntelligence bonus|r: ,0,")
 
         call SetBonusStr('O003', 0, "|cffe7544aStrength bonus|r: ,0,")
         call SetBonusStr('O003', 1, "|cffd6e049Agility bonus|r: ,0,")
@@ -141,8 +141,9 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('H01C', 0, "|cffe7544aDamage|r: ,0,")
 
-        call SetBonusStr('H01D', 0, "|cffe7544aMana bonus|r: ,0,")
-        call SetBonusStr('H01D', 1, "|cffd6e049Mana regeneration bonus|r: ,0,")
+        call SetBonusStr('H01D', 0, "|cffe7544aXesil's Legacy Chance|r: ,0,")
+        call SetBonusStr('H01D', 1, "|cffd6e049Mana bonus|r: ,0,")
+        call SetBonusStr('H01D', 2, "|cff4daed4Mana regeneration bonus|r: ,0,")
 
         call SetBonusStr('H01E', 0, "|cffe7544aChance|r: ,0,%%")
 

@@ -226,11 +226,8 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
             loop
                 exitwhen i1 > 10
                 set i2 = GetInfoHeroSpell(TrigU ,i1)
-                
-                if BlzGetUnitAbilityCooldownRemaining(TrigU,i2)>0 and i2 != 'A07S' and i2 != 'A05R' then
-                    call BlzStartUnitAbilityCooldown(TrigU,i2,BlzGetUnitAbilityCooldownRemaining(TrigU,i2)-1 - 0.25*I2R(GetUnitAbilityLevel(TrigU,'A07T')))
-                    elseif  BlzGetUnitAbilityCooldownRemaining(TrigU,i2) <  1 + 0.25*I2R(GetUnitAbilityLevel(TrigU,'A07T'))  then
-                      call BlzEndUnitAbilityCooldown(TrigU,i2)
+                if i2 != 'A07S' and i2 != 'A05R' and i2 != 'A05U' then
+                    call ResetSpell(TrigU, i2, 1 + 0.25*I2R(GetUnitAbilityLevel(TrigU,'A07T')), false)
                 endif
                 set i1 = i1 + 1
             endloop

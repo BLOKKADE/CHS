@@ -3,7 +3,7 @@ function PurgeTimer takes nothing returns nothing
     local real duration = LoadReal(HT, GetHandleId(t), 1) - 1
     local unit target = LoadUnitHandle(HT,GetHandleId(t),2)
     if duration <= 0 then
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         call FlushChildHashtable(HT,GetHandleId(t))
     else
         call CreateTextTagTimer(I2S(R2I(duration)) , 1 , GetUnitX(target) , GetUnitY(target) , 50 , 1)
@@ -27,7 +27,7 @@ function PurgeCast takes nothing returns nothing
 endfunction
 
 function Purge takes unit source, unit target returns nothing
-    local timer t = CreateTimer()
+    local timer t = NewTimer()
     local real delay = 4.2 - (0.14 * GetUnitAbilityLevel(source, 'A08E'))
     call SaveUnitHandle(HT,GetHandleId(t),1,source)
     call SaveUnitHandle(HT,GetHandleId(t),2,target)
@@ -38,7 +38,7 @@ function Purge takes unit source, unit target returns nothing
     endif
     
     if delay > 1 then
-        set t = CreateTimer()
+        set t = NewTimer()
         call SaveReal(HT, GetHandleId(t), 1, delay)
         call SaveUnitHandle(HT,GetHandleId(t),2,target)
         call CreateTextTagTimer(I2S(R2I(delay)) , 1 , GetUnitX(target) , GetUnitY(target) , 50 , 1)

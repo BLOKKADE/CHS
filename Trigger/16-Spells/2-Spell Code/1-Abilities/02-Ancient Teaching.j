@@ -24,7 +24,7 @@ function A05U_Reset_Timer takes nothing returns nothing
     call ResetAbility_A05U(U,Id)
 
     call FlushChildHashtable(HT,GetHandleId(t))
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     set t =null
     set U = null
 endfunction
@@ -47,7 +47,7 @@ function Trig_Ancient_Teaching_Actions takes nothing returns nothing
 
     if Id != 'A024' then
         if GetUnitAbilityLevel(U,'A05U')>0 and BlzGetUnitAbilityCooldownRemaining(U,'A05U')<=0.001 then
-            set t = CreateTimer()
+            set t = NewTimer()
             call SaveInteger(HT,GetHandleId(t),1,Id)
             call SaveUnitHandle(HT,GetHandleId(t),2, U)
             call TimerStart(t,0,false,function A05U_Reset_Timer)

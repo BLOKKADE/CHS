@@ -25,7 +25,7 @@ function realaisFrostBolt takes nothing returns nothing
     
     if count == 0 then
         call FlushChildHashtable(HT,GetHandleId(t))
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
     else 
         set count = count - 1 
         call UsOrderUTimer51(u1,u2,LoadReal(HT,GetHandleId(t),2))   
@@ -42,7 +42,7 @@ function realaisFrostBolt takes nothing returns nothing
 endfunction
 
 function UsFrostBolt takes unit u1, unit u2,real dmg, integer count returns nothing
-    local timer t = CreateTimer()
+    local timer t = NewTimer()
     call SaveInteger(HT,GetHandleId(t),1,count)
     call SaveReal(HT,GetHandleId(t),2,dmg)
     call SaveUnitHandle(HT,GetHandleId(t),3,u1)

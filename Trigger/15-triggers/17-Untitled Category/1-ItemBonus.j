@@ -424,7 +424,7 @@ function DestrTimer takes nothing returns nothing
 	endif  
     
 	call FlushChildHashtable(HTi,GetHandleId(Time2))
-	call DestroyTimer(Time2)
+	call ReleaseTimer(Time2)
 	set Time2 = null
 	set U2 = null
 endfunction
@@ -436,7 +436,7 @@ function Trig_ItemBonus_Actions takes nothing returns nothing
 	local timer Time1 = null
 
 
-	set Time1 = CreateTimer()
+	set Time1 = NewTimer()
 
 
 	call SaveUnitHandle(HTi,GetHandleId(Time1),1, GetTriggerUnit() )

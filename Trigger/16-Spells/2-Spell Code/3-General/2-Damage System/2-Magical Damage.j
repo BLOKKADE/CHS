@@ -43,7 +43,7 @@ function TakeMagickDmg takes unit Dealing ,unit Trigger returns nothing
     endif
 
     //Shadow Chain Mail
-    if UnitHasItemS(Dealing,'I084')  then
+    if UnitHasItemS(Trigger,'I084')  then
             if GetRandomReal(0,100) <= 50*luck then
                 set CritDmg = 0
             endif

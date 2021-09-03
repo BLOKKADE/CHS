@@ -541,14 +541,14 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
              loop
                 exitwhen  LastLvlHero[Pid] ==  I_l  
                 
-        	 call BlzSetUnitMaxMana(UnitHero,  BlzGetUnitMaxMana(UnitHero) + 100)
-             call UpdateBonus(UnitHero, 0, 100)   
-                 call BlzSetUnitRealField(UnitHero,ConvertUnitRealField('umpr'),BlzGetUnitRealField(UnitHero,ConvertUnitRealField('umpr')) + 1)
-                 call UpdateBonus(UnitHero, 0, 1)   
+                call BlzSetUnitMaxMana(UnitHero,  BlzGetUnitMaxMana(UnitHero) + 100)
+                call UpdateBonus(UnitHero, 1, 100)   
+                call BlzSetUnitRealField(UnitHero,ConvertUnitRealField('umpr'),BlzGetUnitRealField(UnitHero,ConvertUnitRealField('umpr')) + 1)
+                call UpdateBonus(UnitHero, 2, 1)   
 
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop 
-            
+            call SetBonus(UnitHero, 0, 15 + (0.1 * (I_l+1)))
         elseif TypeHero == 'H017' then
      
          loop
@@ -565,8 +565,8 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
             call SetBonus(UnitHero, 1, (I_l+1) * 0.04)
             call SetBonus(UnitHero, 2, (I_l+1) * 0.08)
         elseif TypeHero == 'N02P' then
-            call SetBonus(UnitHero, 0, (I_l+1) * 4)
-            call SetBonus(UnitHero, 1, (I_l+1) * 5)
+            call SetBonus(UnitHero, 0, 20 + ((I_l+1) * 5))
+            call SetBonus(UnitHero, 1, 21 + ((I_l+1) * 4))
         elseif TypeHero == 'H01B' then
             call SetBonus(UnitHero, 0, (I_l+1) * 5)
         elseif TypeHero == 'H01C' then

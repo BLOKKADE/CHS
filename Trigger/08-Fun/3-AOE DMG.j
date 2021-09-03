@@ -35,7 +35,7 @@ library AoeDamage requires Vampirism
         local real Area = LoadReal(HT,i,5)
         local integer AbilId = LoadInteger(HT,i,6)
         
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         
         set Sourse_unit = Sourse
@@ -51,7 +51,7 @@ library AoeDamage requires Vampirism
         local timer t
         local integer i
         if Sourse != null then
-            set t = CreateTimer()
+            set t = NewTimer()
             set i = GetHandleId(t)
             
             call SaveUnitHandle(HT,i,1,Sourse)
@@ -91,7 +91,7 @@ library AoeDamage requires Vampirism
         local real Area = LoadReal(HT,i,5)
         local integer AbilId = LoadInteger(HT,i,6)
         
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         
         set Sourse_unit = Sourse
@@ -107,7 +107,7 @@ library AoeDamage requires Vampirism
         local timer t
         local integer i
         if Sourse != null then
-            set t = CreateTimer()
+            set t = NewTimer()
             set i = GetHandleId(t)
             
             call SaveUnitHandle(HT,i,1,Sourse)

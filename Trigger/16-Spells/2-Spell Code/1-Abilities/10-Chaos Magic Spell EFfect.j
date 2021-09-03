@@ -106,7 +106,7 @@ function CastRandomSpell1Timer takes nothing returns nothing
          //call DisplayTextToPlayer(GetLocalPlayer(),0,0,GetObjectName(sp) + "ERROR: " + Order + " " + I2S(Type) )
      endif 
      
-     call DestroyTimer(t)
+     call ReleaseTimer(t)
      call FlushChildHashtable(HT,i)
     
     call SaveInteger(HT,GetHandleId(u),-4555101,lvl)
@@ -120,7 +120,7 @@ endfunction
 
 
 function CastRandomSpell1 takes unit u, integer sp, integer lvl, unit u2, real x1,real y1 returns nothing
-    local timer t = CreateTimer()
+    local timer t = NewTimer()
     local integer i = GetHandleId(t)
     
     call SaveUnitHandle(HT,i,1,u)
@@ -192,8 +192,7 @@ function AbilityChannel takes nothing returns nothing
     endif
     
     if id == 'A08E' then
-        call Purge(u, u2)
-        
+        call Purge(u, u2)      
     endif
 
     set u = null
@@ -228,13 +227,13 @@ if GetUnitAbilityLevel(u,'A04L') > 0 then
 if u2 != null and u != u2 then
     set ID = GetRandomAbility1()
     call ElemFuncStart(u,'A04L' )
-    call CreateTextTagTimerColor(  "CHAOS MAGIC "+GetObjectName(ID),1,GetUnitX(u),GetUnitY(u),50,1,122,50,255)
+    call CreateTextTagTimerColor(  "Chaos Magic "+GetObjectName(ID),1,GetUnitX(u),GetUnitY(u),50,1,122,50,255)
     call CastRandomSpell1(u,ID ,GetUnitAbilityLevel(u,'A04L'),u2,0,0) 
 
 elseif x1 != 0 and y1 != 0 then
     call ElemFuncStart(u,'A04L' )
       set ID = GetRandomAbility2()
-       call CreateTextTagTimerColor(  "CHAOS MAGIC  "+GetObjectName(ID),1,GetUnitX(u),GetUnitY(u),50,1,122,50,255)
+       call CreateTextTagTimerColor(  "Chaos Magic  "+GetObjectName(ID),1,GetUnitX(u),GetUnitY(u),50,1,122,50,255)
 
   call CastRandomSpell1(u,ID ,GetUnitAbilityLevel(u,'A04L'),null,x1,y1)
 

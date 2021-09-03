@@ -6,7 +6,7 @@ function TimerMagDmg  takes nothing returns nothing
 
 
     call FlushChildHashtable(HT,GetHandleId(t))
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
 
     set t =null
     set u = null
@@ -51,7 +51,7 @@ function Trig_Killing_Actions takes nothing returns nothing
 
             call AddUnitMagicDmg(Ku,i*15)
 
-            set t = CreateTimer()
+            set t = NewTimer()
             call SaveUnitHandle(HT,GetHandleId(t),1,Ku)
             call SaveInteger(HT,GetHandleId(t),2,i)
             call TimerStart(t,10,false,function TimerMagDmg )

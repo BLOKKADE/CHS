@@ -133,13 +133,13 @@ local unit u = LoadUnitHandle(HT,GetHandleId(t),3)
     endif  
     
 call FlushChildHashtable(HT,GetHandleId(t))
-call DestroyTimer(t)
+call ReleaseTimer(t)
 set u = null
 set t = null
 endfunction
 
 function AddStateTemp takes unit u,integer i, real r, real time returns nothing
-    local timer t = CreateTimer()
+    local timer t = NewTimer()
     
     call SaveInteger(HT,GetHandleId(t),1,i)
     call SaveReal(HT,GetHandleId(t),2,r)  

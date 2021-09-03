@@ -107,13 +107,13 @@ function ElemStartTimer takes nothing returns nothing
     local timer t = GetExpiredTimer()
     call ElementStartAbility(LoadUnitHandle(HT,GetHandleId(t),1),LoadInteger(HT,GetHandleId(t),2))
     call FlushChildHashtable(HT,GetHandleId(t))
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     set t = null
 endfunction
 
 
 function ElementStartAbilityS takes nothing returns nothing
-    local timer t = CreateTimer()
+    local timer t = NewTimer()
     call SaveUnitHandle(HT,GetHandleId(t),1,GLOB_ELEM_U)
     call SaveInteger(HT,GetHandleId(t),2,GLOB_ELEM_I)
     call TimerStart(t,0,false,function ElemStartTimer)

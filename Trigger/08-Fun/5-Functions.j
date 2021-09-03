@@ -87,6 +87,8 @@ function  FuncEditParam takes integer iDs, unit GetU returns nothing
     	set i2 = LoadInteger(HT,GetHandleId(GetU),-10004) 
         call AddUnitMagicDef(GetU ,   3*I2R(i1-i2)  )	
     	call SaveInteger(HT,GetHandleId(GetU),-10004,i1)
+        call SetPlayerAbilityAvailable(GetOwningPlayer(GetU), 'A05S', false)
+        call SetPlayerAbilityAvailable(GetOwningPlayer(GetU), 'A05S', true)
     endif 
 
     if iDs == 'A06V' then

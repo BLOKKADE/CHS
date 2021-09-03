@@ -5,7 +5,10 @@ globals
         integer Global_i = 0
         unit Global_u = null
         
-
+        constant real TEXT_SIZE = 0.024
+        constant real TEXT_VEL = 0.06
+        constant real TEXT_LIFE = 1
+        constant real TEXT_FADE = 0.6
 
         boolean EffectVisible = true
         string LastBreathAnim = "Abilities\\Spells\\Undead\\Unsummon\\UnsummonTarget.mdl"
@@ -13,20 +16,6 @@ globals
         unit GLOB_DEBUF = null
 
     endglobals
-
-    function EndTextTagTimer takes nothing returns nothing
-        local timer t  = GetExpiredTimer()
-        local texttag tt = LoadTextTagHandle(HT_timerSpell,GetHandleId(t),1)
-        
-        call FlushChildHashtable(HT_timerSpell,GetHandleId(t))
-        call DestroyTextTag(tt)
-        call DestroyTimer(t)
-        set t = null
-        set tt = null
-    endfunction
-
-
-
 
     function ReplaceText takes string stringToReplace, string value, string inputString returns string
         local integer Lenght = StringLength(stringToReplace)
@@ -45,47 +34,35 @@ globals
         return inputString
     endfunction
 
-
-
     function CreateTextTagTimer takes string Text, real Height, real x1, real y1,real z1, real time returns nothing
-        local texttag tt = CreateTextTag()
-        local timer t = CreateTimer()
-        
-        call SetTextTagText(tt,Text,Height* 0.023)
-        call SetTextTagPos(tt,x1,y1,z1)
-        call SetTextTagColor(tt,255,255,120,128)
-        
-        call SetTextTagVelocity(tt,0.01,0.04)
-        
-        call SaveTextTagHandle(HT_timerSpell,GetHandleId(t),1,tt)
-        
+        local texttag floatingText = CreateTextTag()
 
-        call TimerStart(t,time,false,function EndTextTagTimer)
+        call SetTextTagText(floatingText,Text,Height* TEXT_SIZE)
+        call SetTextTagPos(floatingText,x1,y1,z1)
+        call SetTextTagColor(floatingText,255,255,120,128)
         
-        set tt =null
-        set t  =null
+        call SetTextTagVelocity(floatingText,0.01, TEXT_VEL)
+        call SetTextTagFadepoint(floatingText, TEXT_FADE)
+        call SetTextTagLifespan(floatingText, time)
+        call SetTextTagPermanent(floatingText,false)
+        
+        set floatingText = null
     endfunction
 
     function CreateTextTagTimerColor takes string Text, real Height, real x1, real y1,real z1, real time,integer iR,integer iG,integer iB returns nothing
-        local texttag tt = CreateTextTag()
-        local timer t = CreateTimer()
+        local texttag floatingText = CreateTextTag()
         
-        call SetTextTagText(tt,Text,Height* 0.023)
-        call SetTextTagPos(tt,x1,y1,z1)
-        call SetTextTagColor(tt,iR,iG,iB,128)
+        call SetTextTagText(floatingText,Text,Height* TEXT_SIZE)
+        call SetTextTagPos(floatingText,x1,y1,z1)
+        call SetTextTagColor(floatingText,iR,iG,iB,128)
         
-        call SetTextTagVelocity(tt,0.01,0.04)
-        
-        call SaveTextTagHandle(HT_timerSpell,GetHandleId(t),1,tt)
-        
+        call SetTextTagVelocity(floatingText,0.01, TEXT_VEL)
+        call SetTextTagFadepoint(floatingText, TEXT_FADE)
+        call SetTextTagLifespan(floatingText, time)
+        call SetTextTagPermanent(floatingText,false)
 
-        call TimerStart(t,time,false,function EndTextTagTimer)
-        
-        set tt =null
-        set t  =null
+        set floatingText =null
     endfunction
-
-
 
     function UnitHasItemS takes unit u, integer id returns boolean 
 
@@ -109,7 +86,6 @@ globals
         endif
 
         return false
-
     endfunction
 
 
@@ -147,13 +123,13 @@ globals
         call SetHeroAgi(u,GetHeroAgi(u,false)-value,false)
 
         call FlushChildHashtable(HT,GetHandleId(t))
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         set t = null
         set u = null
     endfunction
 
     function AddHeroTempAgi takes unit u, integer value, real time returns nothing
-        local timer t = CreateTimer()
+        local timer t = NewTimer()
         
         call SetHeroAgi(u,GetHeroAgi(u,false)+value,false)
         call SaveInteger(HT,GetHandleId(t),1,value)
@@ -173,8 +149,7 @@ globals
     endfunction
 
 
-    function DebufEx takes nothing returns nothing
-        local unit Un = GLOB_DEBUF
+    function DebufEx takes unit Un returns nothing
         call UnitRemoveAbility(Un, 'Bclf')
         call UnitRemoveAbility(Un, 'Bply')
         call UnitRemoveAbility(Un, 'Bslo')
@@ -259,22 +234,8 @@ globals
         set Un = null
     endfunction
 
-    function Debuf takes nothing returns nothing 
-        local timer t = GetExpiredTimer()
-        set GLOB_DEBUF = LoadUnitHandle(HT,GetHandleId(t),1)
-        call DebufEx()
-        call FlushChildHashtable(HT,GetHandleId(t))
-        call DestroyTimer(t)
-        set t =null
-    endfunction
-
     function RemoveDebuff takes unit Un returns nothing
-        local timer t = CreateTimer()
-        set GLOB_DEBUF = Un
-        call DebufEx()
-        call SaveUnitHandle(HT,GetHandleId(t),1,Un)
-        call TimerStart(t,0,false,function Debuf)
-        set t = null        
+        call DebufEx(Un)  
     endfunction
 
 
@@ -290,7 +251,7 @@ globals
         local real life_1 = LoadReal(HT,i,7)
         local abilityreallevelfield REALF = ConvertAbilityRealLevelField(LoadInteger(HT,i,8))
         local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)-y, GetUnitX(u2)-x))  )
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         set t  = null
         call UnitAddAbility(Caster1,idsp ) 
@@ -305,20 +266,12 @@ globals
     endfunction
 
     function UsOrderU takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield  REALF returns nothing
-        local timer t = CreateTimer()
-        local integer i = GetHandleId(t)
-        call SaveUnitHandle(HT,i,1,u1)
-        call SaveUnitHandle(HT,i,2,u2)
-        call SaveReal(HT,i,3,x)
-        call SaveReal(HT,i,4,y)
-        call SaveInteger(HT,i,5,idsp)
-        call SaveStr(HT,i,6,ordstr)
-        call SaveReal(HT,i,7,life_1)
-        call SaveInteger(HT,i,8,GetHandleId(REALF))
-        call TimerStart(t,0,false,function UsOrderUTimer)
-        set u1 = null
-        set u2 = null
-
+        local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 6)
+        call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
+        if REALF != null then
+            call dummy.setAbilityRealField(idsp, REALF, life_1)
+        endif
+        call dummy.target(u2).activate()
     endfunction
 
 
@@ -345,7 +298,7 @@ globals
         call UnitApplyTimedLife(Caster1,'B000',6)
         
         
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         set Caster1  = null
         set t = null
@@ -355,25 +308,15 @@ globals
 
 
     function UsOrderU2 takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real Field1,real Field2, abilityreallevelfield  RealField1,abilityreallevelfield  RealField2 returns nothing
-        local timer t = CreateTimer()
-        local integer i = GetHandleId(t)
-        call SaveUnitHandle(HT,i,1,u1)
-        call SaveUnitHandle(HT,i,2,u2)
-        call SaveReal(HT,i,3,x)
-        call SaveReal(HT,i,4,y)
-        call SaveInteger(HT,i,5,idsp)
-        call SaveStr(HT,i,6,ordstr)
-        call SaveReal(HT,i,7,Field1)
-        call SaveInteger(HT,i,8,GetHandleId(RealField1))
-        call SaveReal(HT,i,9,Field2)
-        call SaveInteger(HT,i,10,GetHandleId(RealField2))
-
-        
-        call TimerStart(t,0,false,function UsOrderU2Timer)
-
-
-        set u1 = null
-        set t = null
+        local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 2)
+        call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
+        if RealField1 != null then
+            call dummy.setAbilityRealField(idsp, RealField1, Field1)
+        endif
+        if RealField2 != null then
+            call dummy.setAbilityRealField(idsp, RealField2, Field2)
+        endif
+        call dummy.target(u2).activate()
     endfunction
 
     function GetUnitLuck takes unit u returns real
@@ -389,14 +332,17 @@ globals
     function CalculateCooldown takes unit u, integer id, real cd returns real
         local real ResCD = 1
         local real luck = GetUnitLuck(u)
-    
+        local real xesilChance = 0
             
         if GetUnitAbilityLevel(u,'A03P') >= 1 then
             set ResCD =  ResCD*(1-0.01*I2R(GetUnitAbilityLevel(u,'A03P'))) 
         endif
         
+        if (GetUnitTypeId(u ) == 'H01D') then
+            set xesilChance = 15 + (0.1*GetHeroLevel(u) )
+        endif
 
-        if (UnitHasItemS(u,'I03P') or GetUnitTypeId(u ) == 'H01D')  and  GetRandomReal(0,100) <= 25*luck then
+        if (xesilChance <= 25*luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25*luck) or (GetUnitTypeId(u ) == 'H01D' and UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance*luck) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
@@ -451,7 +397,7 @@ globals
         call DestroyEffect(fx)
         
         call FlushChildHashtable(HT,GetHandleId(t))
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         set fx = null
         set t = null
     endfunction
@@ -460,7 +406,7 @@ globals
 
     function AddSpecialEffectTargetTimer takes string s1, unit u, string s2,real time, boolean skipDeath returns nothing
         local string EffectString = ""
-        local timer t = CreateTimer()
+        local timer t = NewTimer()
         local effect e 
         if EffectVisible then
             set EffectString = s1
@@ -485,7 +431,7 @@ globals
         local abilityreallevelfield REALF = ConvertAbilityRealLevelField(LoadInteger(HT,i,8))
         local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, 0  )
 
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         set t  = null
 
@@ -502,18 +448,12 @@ globals
 
 
     function USOrderA takes unit u1, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield  REALF returns nothing
-
-        local timer t = CreateTimer()
-        local integer i = GetHandleId(t)
-        call SaveUnitHandle(HT,i,1,u1)
-        call SaveReal(HT,i,3,x)
-        call SaveReal(HT,i,4,y)
-        call SaveInteger(HT,i,5,idsp)
-        call SaveStr(HT,i,6,ordstr)
-        call SaveReal(HT,i,7,life_1)
-        call SaveInteger(HT,i,8,GetHandleId(REALF))
-        call TimerStart(t,0,false,function USOrderATimer)
-        
+        local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 9)
+        call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
+        if REALF != null then
+            call dummy.setAbilityRealField(idsp, REALF, life_1)
+        endif
+        call dummy.instant().activate()
     endfunction
 
     function GetUnitPowerRune takes unit u returns real
@@ -554,6 +494,19 @@ globals
 
     function GetNumHeroSpell takes unit u,integer id returns integer
         return LoadInteger(HT_SpellPlayer,GetHandleId(u),id)
+    endfunction
+
+    function RemoveHeroAbilities takes unit u returns nothing
+        local integer i = 0
+        local integer abilId = 0
+        loop
+            set abilId = GetInfoHeroSpell(u, i)
+            if abilId != 0 then
+                call UnitRemoveAbility(u, abilId)
+            endif
+            set i = i + 1
+            exitwhen i > 20
+        endloop
     endfunction
 
     function GetClassUnitSpell takes unit u, integer id returns integer 

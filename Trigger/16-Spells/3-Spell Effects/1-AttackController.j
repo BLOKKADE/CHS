@@ -7,7 +7,7 @@ function EndEvasionTimer takes nothing returns nothing
     call AddUnitEvasion(u,-bonus)
     call UnitRemoveAbility(u, 'A08D')
     call UnitRemoveAbility(u, 'B01F')
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     call FlushChildHashtable(HT,i)
     set t = null
     set u = null
@@ -22,7 +22,7 @@ function Stop takes nothing returns nothing
 
     
     call FlushChildHashtable(HT,GetHandleId(t))
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     set u =null
     set t = null
 endfunction
@@ -44,7 +44,7 @@ function Trig_Spell12_Actions takes nothing returns nothing
     
     if IsUnitEnemy(u,GetOwningPlayer(u2)) == false then
 
-        set t = CreateTimer()
+        set t = NewTimer()
         call SaveUnitHandle(HT,GetHandleId(t),1,u2)
         call TimerStart(t,0.0,false,function Stop)
         set u = null
@@ -76,7 +76,7 @@ function Trig_Spell12_Actions takes nothing returns nothing
     endif
     
     if GetUnitAbilityLevel(u,'A06C') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A06C') <= 0.001  then
-        set t = CreateTimer()
+        set t = NewTimer()
         
         call SaveUnitHandle(HT,GetHandleId(t),1,u)
         call SaveInteger(HT,GetHandleId(t),2,GetUnitAbilityLevel(u,'A06C')*10)

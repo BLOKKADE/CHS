@@ -26,7 +26,7 @@ function USOrder4fieldTimer takes nothing returns nothing
     local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, 0  )
     
     call FlushChildHashtable(HT,i)
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     call UnitAddAbility(Caster1,idsp ) 
 
 
@@ -47,8 +47,24 @@ endfunction
 
 
 function USOrder4field takes unit u1, real x, real y,integer idsp, string ordstr, real Field1, abilityreallevelfield  RealField1, real Field2, abilityreallevelfield  RealField2,real Field3, abilityreallevelfield  RealField3,real Field4, abilityreallevelfield  RealField4 returns nothing
+    local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 2)
+    call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
+    if RealField1 != null then
+        call dummy.setAbilityRealField(idsp, RealField1, Field1)
+    endif
+    if RealField2 != null then
+        call dummy.setAbilityRealField(idsp, RealField2, Field2)
+    endif
+    if RealField3 != null then
+        call dummy.setAbilityRealField(idsp, RealField3, Field3)
+    endif
+    if RealField4 != null then
+        call dummy.setAbilityRealField(idsp, RealField4, Field4)
+    endif
+    call dummy.instant().activate()
 
-    local timer t = CreateTimer()
+    /*
+    local timer t = NewTimer()
     local integer i = GetHandleId(t)
     call SaveUnitHandle(HT,i,1,u1)
     call SaveReal(HT,i,3,x)
@@ -69,6 +85,7 @@ function USOrder4field takes unit u1, real x, real y,integer idsp, string ordstr
 
     set u1 = null
     set t = null
+    */
 endfunction
 
  function EndInvision takes nothing returns nothing
@@ -77,9 +94,9 @@ endfunction
  
       call UnitRemoveAbility(Herou,'A03V')
  
-    call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),1,null)
+    call RemoveSavedHandle(HT_timerSpell,GetHandleId(Herou),1)
     call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call DestroyTimer(startbattle)
+    call ReleaseTimer(startbattle)
     set startbattle = null
 endfunction
  
@@ -87,12 +104,10 @@ function EndCheaterMagic takes nothing returns nothing
      local timer   startbattle = GetExpiredTimer()
      local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1) 
      call DestroyEffect(  LoadEffectHandle(HT_timerSpell,GetHandleId(startbattle),2)   ) 
- 
-    call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),2,null)
-    call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
+    call RemoveSavedHandle(HT_timerSpell,GetHandleId(Herou),2)
     call UnitRemoveAbility(Herou, 'A08G')
     call UnitRemoveAbility(Herou, 'B01G')
-    call DestroyTimer(startbattle)
+    call ReleaseTimer(startbattle)
     set startbattle = null
 endfunction
 
@@ -102,9 +117,9 @@ function EndGodDefender takes nothing returns nothing
      local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1) 
      call DestroyEffect(  LoadEffectHandle(HT_timerSpell,GetHandleId(startbattle),2)   ) 
  
-    call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),3,null)
+    call RemoveSavedHandle(HT_timerSpell,GetHandleId(Herou),3)
     call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call DestroyTimer(startbattle)
+    call ReleaseTimer(startbattle)
     set startbattle = null
 endfunction
 
@@ -120,7 +135,7 @@ function EndState takes nothing returns nothing
             call SetHeroInt(Herou,GetHeroInt(Herou,false)-(r4),false) 
 
     call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call DestroyTimer(startbattle)
+    call ReleaseTimer(startbattle)
     set startbattle = null
 endfunction
 
@@ -135,7 +150,7 @@ function EndStateGrunt takes nothing returns nothing
             call UnitRemoveAbility(Herou, 'A091')
 
     call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call DestroyTimer(startbattle)
+    call ReleaseTimer(startbattle)
     set startbattle = null
 endfunction
 
@@ -174,7 +189,7 @@ function FunctionTimerSpell takes nothing returns nothing
     if r1 > 0 then
                 call ElemFuncStart(Herou,'A03U')
         if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),1) == null then
-            set nTimer = CreateTimer()
+            set nTimer = NewTimer()
             call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),1,nTimer)
             call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
             call UnitAddAbility(Herou,'A03V')
@@ -196,7 +211,7 @@ function FunctionTimerSpell takes nothing returns nothing
             endif
             set oTimer = null
             
-            set nTimer = CreateTimer()    
+            set nTimer = NewTimer()    
             call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),'A04E',nTimer)
             call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
             set r4 = 40*r1*(1+0.02*r2) 
@@ -229,16 +244,20 @@ function FunctionTimerSpell takes nothing returns nothing
     if r1 > 0 then
         call ElemFuncStart(Herou,'A040')
         if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),2) == null then
-            set nTimer = CreateTimer()
+            set nTimer = NewTimer()
             call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),2,nTimer)
             call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
             call SaveEffectHandle(HT_timerSpell,GetHandleId(nTimer),2, AddSpecialEffectTarget( "Objects\\InventoryItems\\tome\\tome.mdl", Herou ,"overhead"  )   )
             call TimerStart(nTimer,(2.75 + (0.25*r1))*r3 ,false,function EndCheaterMagic)
-            call UnitAddAbility(Herou, 'A08G')
+            if GetUnitAbilityLevel(Herou, 'A08G') == 0 then
+                call UnitAddAbility(Herou, 'A08G')
+            endif
         else
               set nTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),2)
               call TimerStart(nTimer,(2.75 + (0.25*r1))*r3 ,false,function EndCheaterMagic)
-              call UnitAddAbility(Herou, 'A08G')
+              if GetUnitAbilityLevel(Herou, 'A08G') == 0 then
+                call UnitAddAbility(Herou, 'A08G')
+            endif
         endif     
     endif
     
@@ -246,7 +265,7 @@ function FunctionTimerSpell takes nothing returns nothing
     if r1 > 0 then
         call ElemFuncStart(Herou,'A045')
         if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),3) == null then
-            set nTimer = CreateTimer()
+            set nTimer = NewTimer()
             call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),3,nTimer)
             call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
             call SaveEffectHandle(HT_timerSpell,GetHandleId(nTimer),2, AddSpecialEffectTarget( "Soul Armor Divine_opt.mdx", Herou ,"head"  )   )
@@ -278,7 +297,7 @@ function FunctionTimerSpell takes nothing returns nothing
     
     if GetUnitTypeId(Herou) == 'H01J' then
             call ElemFuncStart(Herou,'H01J')
-            set nTimer = CreateTimer()  
+            set nTimer = NewTimer()  
             set r4 = 20*GetHeroLevel(Herou) 
             call SetHeroStr(Herou,GetHeroStr(Herou,false)+R2I(r4),false)
             call BlzSetUnitBaseDamage(Herou,BlzGetUnitBaseDamage(Herou,0)+R2I(r4),0)
@@ -372,8 +391,9 @@ function FunctionTimerSpell takes nothing returns nothing
     endif
   
     call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call DestroyTimer(startbattle)
+    call ReleaseTimer(startbattle)
     set U = null
+    set Herou = null
     set startbattle = null
     set nTimer = null
 endfunction
@@ -393,7 +413,7 @@ endfunction
     endfunction
 
     function StartFunctionSpell takes unit Hero, integer i1 returns nothing
-        local timer startbattle = CreateTimer()
+        local timer startbattle = NewTimer()
         
         if i1 != 6 then
             call FixAbilityU (Hero)

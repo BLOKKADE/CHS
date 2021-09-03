@@ -15,7 +15,7 @@ function EndTimerTr takes nothing returns nothing
     
     
     call FlushChildHashtable(HT_it,GetHandleId(Tr))
-    call DestroyTimer(Tr)
+    call ReleaseTimer(Tr)
     set Tr = null
     set u = null
 endfunction
@@ -41,7 +41,7 @@ elseif   GetSpellAbilityId() == 'A049' and  Trig_Disable_Abilities_Func001C() ==
     call SetHeroAgi(u,GetHeroAgi(u,false)-i1,false)
     call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0) + i2 ,0)
 
-     set Tr = CreateTimer()
+     set Tr = NewTimer()
      call SaveUnitHandle(HT_it,GetHandleId(Tr),1,u)
      call SaveInteger(HT_it,GetHandleId(Tr),2,i1)
      call SaveInteger(HT_it,GetHandleId(Tr),3,i2)

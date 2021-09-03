@@ -10,7 +10,6 @@ endglobals
 function damageStartCyclone takes nothing returns boolean
     if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(GLOB_unitCyclone)) then
         call UnitDamageTarget(GLOB_unitCyclone,GetFilterUnit(),GLOB_damageCyclone,false,false,ATTACK_TYPE_MAGIC,DAMAGE_TYPE_LIGHTNING, WEAPON_TYPE_WHOKNOWS )
-
     endif
     return false
 endfunction
@@ -25,15 +24,16 @@ function timerCyclone takes nothing returns nothing
         set GLOB_unitCyclone = caster
         set GLOB_damageCyclone = GetUnitAbilityLevel(caster,'A05X')*10
         call GroupEnumUnitsInRange(GLOB_gr,GetUnitX(u),GetUnitY(u),350,GLOB_boolCyclone )
-    
     else
         call FlushChildHashtable(HT,GetHandleId(t))
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
     endif
     
     
     set u = null
     set t = null
+    call DestroyGroup(g)
+    set g = null
     set caster = null
 endfunction
 
@@ -50,7 +50,7 @@ function Trig_Abil_Conditions takes nothing returns boolean
         set u= CreateUnit(GetOwningPlayer(GetTriggerUnit()),'h01K',X1,Y1,0)
         call UnitApplyTimedLife(u,'A041',10)
         
-        set t = CreateTimer()
+        set t = NewTimer()
         call SaveUnitHandle(HT,GetHandleId(t),1,GetTriggerUnit() )
         call SaveUnitHandle(HT,GetHandleId(t),2,u )
         call TimerStart(t,0.2,true,function timerCyclone )
@@ -59,8 +59,6 @@ function Trig_Abil_Conditions takes nothing returns boolean
         set u = null
         set t = null
     endif
-    
-    
 
     return false
 endfunction

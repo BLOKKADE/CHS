@@ -1,5 +1,5 @@
 function FixTimerD takes unit U, integer NumTimer returns nothing
-    call DestroyTimer( LoadTimerHandle( DataUnitHT,GetHandleId(U),NumTimer ))
+    call ReleaseTimer( LoadTimerHandle( DataUnitHT,GetHandleId(U),NumTimer ))
 endfunction
 
 function FixSkeletonDefender takes integer pid returns nothing

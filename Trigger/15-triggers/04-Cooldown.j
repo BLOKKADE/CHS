@@ -15,76 +15,39 @@ function RefreshSpellO takes nothing returns nothing
 
 
      call FlushChildHashtable(HT_SPELC,GetHandleId(TimerT))
-     call DestroyTimer(TimerT)
+     call ReleaseTimer(TimerT)
      set TimerT = null
 endfunction
 
-
-
-
-function XesilChanceI takes nothing returns boolean 
-	local integer Chance
-
-	if GetTriggerEventId() == EVENT_PLAYER_UNIT_SPELL_CAST  then
-	  set Chance = GetRandomInt(1,4)
-
-	  call SaveInteger(HT_SPELC,GetHandleId(GetTriggerUnit()),GetSpellAbilityId(),Chance )
-	endif
-	if GetTriggerEventId() == EVENT_PLAYER_UNIT_SPELL_EFFECT then
-	  set Chance = LoadInteger(HT_SPELC,GetHandleId(GetTriggerUnit()),GetSpellAbilityId())  
-	endif
-	if GetTriggerEventId() == EVENT_PLAYER_UNIT_SPELL_FINISH then
-	  set Chance = LoadInteger(HT_SPELC,GetHandleId(GetTriggerUnit()),GetSpellAbilityId()) 
-	endif
-
-	if Chance == 3 then
-		return true
-	endif
-	
-	return false
-
-endfunction
-
-
-
-
-
-
-function Trig_Cooldown_Actions takes nothing returns nothing
-
-    local unit t = GetTriggerUnit()   
+function Trig_Cooldown_Actions takes nothing returns nothing 
     local timer TimerT = null
     local real timeT = 0
     local integer Aid = GetSpellAbilityId()
-    local integer Lv 
     local real ResCD = 1 
     local unit u = GetTriggerUnit()
-    local real TIM2 = BlzGetAbilityRealLevelField(GetSpellAbility(),ConvertAbilityRealLevelField('acdn'),GetUnitAbilityLevel(t,Aid)-1)
     local real luck = GetUnitLuck(u)
     local real ress = 0
-    set  Lv = GetUnitAbilityLevel(t,Aid)
-    set timeT = BlzGetAbilityCooldown (Aid,Lv-1)
+    local integer lvl = GetUnitAbilityLevel(u,Aid) - 1
+    local real xesilChance = 0
+    set timeT = BlzGetAbilityCooldown (Aid,lvl)
 
     //Fast Magic
-    if GetUnitAbilityLevel(t,'A03P') >= 1 then
-        set   ResCD =  ResCD*(1-0.01*GetUnitAbilityLevel(t,'A03P')) 
+    if GetUnitAbilityLevel(u,'A03P') >= 1 then
+        set   ResCD =  ResCD*(1-0.01*GetUnitAbilityLevel(u,'A03P')) 
     endif
-
 
     if Aid == 'A07X' then
-        set ress = GetClassUnitSpell(t,2)
-    
+        set ress = GetClassUnitSpell(u,2)
     endif
-
-
 	
-    if GetUnitTypeId(GetTriggerUnit() ) == 'H01D' then
-        if XesilChanceI()  then
-            set ResCD = 0.001
-
-            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",GetTriggerUnit(),"origin" )  ) 
-        endif
+    if (GetUnitTypeId(u ) == 'H01D') then
+        set xesilChance = 15 + (0.1*GetHeroLevel(u) )
     endif
+
+    if (xesilChance <= 25*luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25*luck) or (GetUnitTypeId(u ) == 'H01D' and UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance*luck) then
+        set ResCD = 0.001
+        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
+    endif 
     
     //Fishing Rod and Blink Strike
     if UnitHasItemS(u, 'I07T') and Aid == 'A08J' then
@@ -104,7 +67,7 @@ function Trig_Cooldown_Actions takes nothing returns nothing
     endif   
 
 
-    if  LoadTimerHandle(HT_timerSpell,GetHandleId(t),2) != null and GetUnitAbilityLevel(u, 'A08G') > 0 then
+    if  LoadTimerHandle(HT_timerSpell,GetHandleId(u),2) != null and GetUnitAbilityLevel(u, 'A08G') > 0 then
         if Aid == 'A049' or Aid == 'A024' then
             set  ResCD = ResCD*0.1
         else
@@ -117,14 +80,11 @@ function Trig_Cooldown_Actions takes nothing returns nothing
  
 
     if ResCD != 1 or ress != 0  then
-    
-    
-        set  Lv = GetUnitAbilityLevel(t,Aid)
 	//call BlzSetAbilityRealLevelField(GetSpellAbility(),ConvertAbilityRealLevelField('acdn'),GetUnitAbilityLevel(t,Aid)-1,timeT*ResCD)
-        call BlzSetUnitAbilityCooldown(t,Aid, Lv-1,(timeT-ress)*ResCD) 
-        set TimerT = CreateTimer()
+        call BlzSetUnitAbilityCooldown(u,Aid, lvl,(timeT-ress)*ResCD) 
+        set TimerT = NewTimer()
         call SaveInteger(HT_SPELC,GetHandleId(TimerT),1,Aid  )
-        call SaveUnitHandle(HT_SPELC,GetHandleId(TimerT),2, t )
+        call SaveUnitHandle(HT_SPELC,GetHandleId(TimerT),2, u )
         call SaveReal(HT_SPELC,GetHandleId(TimerT),3,  timeT)
 
         call TimerStart(TimerT,0.01,false,function RefreshSpellO)
@@ -137,9 +97,9 @@ endfunction
 //===========================================================================
 function InitTrig_Cooldown takes nothing returns nothing
     set gg_trg_Cooldown = CreateTrigger(  )
-    call TriggerRegisterAnyUnitEventBJ( gg_trg_Cooldown, EVENT_PLAYER_UNIT_SPELL_CAST )
+    //call TriggerRegisterAnyUnitEventBJ( gg_trg_Cooldown, EVENT_PLAYER_UNIT_SPELL_CAST )
     call TriggerRegisterAnyUnitEventBJ( gg_trg_Cooldown, EVENT_PLAYER_UNIT_SPELL_EFFECT )
-    call TriggerRegisterAnyUnitEventBJ( gg_trg_Cooldown, EVENT_PLAYER_UNIT_SPELL_FINISH )
+    //call TriggerRegisterAnyUnitEventBJ( gg_trg_Cooldown, EVENT_PLAYER_UNIT_SPELL_FINISH )
                 //call TriggerRegisterAnyUnitEventBJ( gg_trg_Cooldown, EVENT_PLAYER_UNIT_SPELL_ENDCAST )
     call TriggerAddAction( gg_trg_Cooldown, function Trig_Cooldown_Actions )
 endfunction

@@ -1,32 +1,58 @@
-function ResetSpell takes unit hero, integer SpellId, real time returns nothing
+function ResetSpell takes unit hero, integer SpellId, real time, boolean earthBonus returns nothing
     local real cur_time
         
-        if LoadBoolean(Elem,SpellId,4) then
+        if earthBonus and LoadBoolean(Elem,SpellId,4) then
             set cur_time = time*2
         else
             set cur_time = time
         endif 
-        
-        if BlzGetUnitAbilityCooldownRemaining(hero,SpellId)>0 then
-            call BlzStartUnitAbilityCooldown(hero,SpellId,BlzGetUnitAbilityCooldownRemaining(hero,SpellId)-time )
-            elseif  BlzGetUnitAbilityCooldownRemaining(hero,SpellId) <  time then
-              call BlzEndUnitAbilityCooldown(hero,SpellId)
+
+        if BlzGetUnitAbilityCooldownRemaining(hero,SpellId) - cur_time > 0 then
+            call BlzStartUnitAbilityCooldown(hero,SpellId,BlzGetUnitAbilityCooldownRemaining(hero,SpellId)-cur_time )
+        else
+            call BlzEndUnitAbilityCooldown(hero,SpellId)
         endif
 endfunction
 
+function SandRefreshExceptions takes integer abilId returns boolean
+    return abilId != 'A083' and abilId != 'A06Q' and abilId != 'A06O'
+endfunction
 
 function SandRefreshAbility takes unit hero, real time returns nothing
    local integer i1 = 0
    local integer SpellId = 0
-   local real cur_time 
    
    loop
         exitwhen i1 > 10
-        call ResetSpell(hero, GetInfoHeroSpell(hero ,i1), time)
+        set SpellId = GetInfoHeroSpell(hero ,i1)
+        if SpellId != 0 and SandRefreshExceptions(SpellId) then
+            call ResetSpell(hero, SpellId, time, true)
+        endif
         set i1 = i1 + 1
     endloop
 
+    //Ogre Warrior
     if GetUnitTypeId(hero) == 'H01C' then
-        call ResetSpell(hero, 'A08U', time)
+        call ResetSpell(hero, 'A08U', time, true)
+    endif
+
+    //Pit Lord
+    if GetUnitTypeId(hero) == 'O007' then
+        call ResetSpell(hero, 'A08V', time, true)
+    endif
+
+    //Centaur
+    if GetUnitTypeId(hero) == 'H01B' then
+        call ResetSpell(hero, 'A08T', time, true)
+    endif
+
+    //Thunder Witch
+    if GetUnitTypeId(hero) == 'O001' then
+        call ResetSpell(hero, 'A08P', time, true)
+    endif
+
+    //Lich
+    if GetUnitTypeId(hero) == 'H018' then
+        call ResetSpell(hero, 'A08W', time, true)
     endif
 endfunction

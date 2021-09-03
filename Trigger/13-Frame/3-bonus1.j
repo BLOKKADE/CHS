@@ -4,15 +4,11 @@ endglobals
 
 
 function Init_Hero_data takes nothing returns nothing
-
-
     call SaveStr(HT_data,'E000',1, "ReplaceableTextures\\CommandButtons\\BTNSpellBreaker.blp" )        //letinant
     call SaveStr(HT_data,'E000',2, "|cffffff00Level Up Bonus|r: +8 to two random stats." )
 
-
     call SaveStr(HT_data,'H005',1, "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp" )       // amb
     call SaveStr(HT_data,'H005',2, "|cff00ffffPassive|r: Disease Cloud: Damages nearby enemies every second. \n|cffffff00Level Up Bonus|r: Disease Cloud: +40 damage." )
-    
     
     call SaveStr(HT_data,'H006',1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheClaw.blp" )       // druid1
     call SaveStr(HT_data,'H006',2, "|cffffff00Level Up Bonus|r: +800 summon hit points, +6 summon armor." )
@@ -23,7 +19,6 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'H001',1, "ReplaceableTextures\\CommandButtons\\BTNHeroBloodElfPrince.blp" )       // mage
     call SaveStr(HT_data,'H001',2, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 1000 total mana \n|cffffff00Level Up Bonus|r: +250 mana." )   
     
-     
     call SaveStr(HT_data,'H004',1, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )       // mortal team
     call SaveStr(HT_data,'H004',2, "|cff00ffffPassive|r: Mortar Aura: Increases all physical damage dealt by a percentage. \n|cffffff00Level Up Bonus|r: Mortar Aura: +2% physical damage bonus." )    
                  
@@ -48,9 +43,8 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'O008',1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )       // Mystic
     call SaveStr(HT_data,'O008',2, "|cff00ffffPassive|r: Faerie Friend: A Faerie Dragon follows it, attacking nearby enemies every 2 seconds. Faerie Dragon attacks count as Mystic attacks.\n|cffffff00Level Up Bonus|r: +40 summon damage. (Every 3 levels) increases Faerie Dragon damage." )
         
-    
     call SaveStr(HT_data,'O007',1, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )       // Pit Lord
-    call SaveStr(HT_data,'O007',2, "|cff00ffffPassive|r: Rain of Fire: autoamtically casts Rain of Fire when it deals damage once every 4 seconds. \n|cffffff00Level Up Bonus|r: Rain of Fire: +30 initial damage, +10 damage per second." )
+    call SaveStr(HT_data,'O007',2, "|cff00ffffPassive|r: Rain of Fire: automatically casts Rain of Fire when it deals damage once every 2 seconds. \n|cffffff00Level Up Bonus|r: Rain of Fire: +30 initial damage, +10 damage per second." )
         
     call SaveStr(HT_data,'O001',1, "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp" )       // Thunder Witch
     call SaveStr(HT_data,'O001',2, "|cff00ffffPassive|r: Thunder Bolt: Damages 2 nearby enemies every second. [|cff96ffffStable|r] \n|cffffff00Level Up Bonus|r: Thunder Bolt: +30 damage." )
@@ -64,18 +58,15 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'N024',1, "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp" )       // Grom
     call SaveStr(HT_data,'N024',2, "|cff00ffffPassive|r: Valiant Strike: All physical damage dealt by the player has 100% of the Hero's strength added to it.\n|cffffff00Level Up Bonus|r: +3 armor and +6 hit point regeneration." )
     
-        
     call SaveStr(HT_data,'N00I',1, "ReplaceableTextures\\CommandButtons\\BTNHeadHunterBerserker.blp" )       // Troll Head Hunter
     call SaveStr(HT_data,'N00I',2, "|cff00ffffPassive|r: Troll Anatomy: Gains bonus hit point regen based on 60% of its strength. \n|cffffff00Level Up Bonus|r: Troll Anatomy: +3% strength conversion." )
                      
-    
     call SaveStr(HT_data,'N00L',1, "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp" )       // Tinker
     call SaveStr(HT_data,'N00L',2, "|cffffff00Level Up Bonus|r: Gains 55 * hero level experience." )
     
     call SaveStr(HT_data,'N00P',1, "ReplaceableTextures\\CommandButtons\\BTNBeastMaster.blp" )       // Beast master
     call SaveStr(HT_data,'N00P',2, "|cffffff00Level Up Bonus|r: (Every 3 levels) Increases the level of all summons by 1." )
         
-    
     call SaveStr(HT_data,'N00B',1, "ReplaceableTextures\\CommandButtons\\BTNBansheeRanger.blp" )       // Fallen Ranger
     call SaveStr(HT_data,'N00B',2, "|cff00ffffPassive|r: Fear Aura: Reduces the armor of nearby enemies. \n|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
     
@@ -90,8 +81,7 @@ function Init_Hero_data takes nothing returns nothing
                 
     call SaveStr(HT_data,'N00Q',1, "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp" )       // Ursa
     call SaveStr(HT_data,'N00Q',2, "|cff00ffffPassive|r: Bleed: Every time it attacks it causes enemies to bleed for 3 seconds, dealing 30% of its attack damage per second. \n|cffffff00Level Up Bonus|r: +25 attack damage." )
-            
-                         
+                          
     call SaveStr(HT_data,'N00C',1, "ReplaceableTextures\\CommandButtons\\BTNFleshGolem.blp" )       // War golem
     call SaveStr(HT_data,'N00C',2, "|cffffff00Level Up Bonus|r: +600 hit points." )         
         
@@ -110,41 +100,33 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'H017',1, "ReplaceableTextures\\CommandButtons\\BTNRockGolem.blp" )       // golem
     call SaveStr(HT_data,'H017',2, "|cffffff00Level Up Bonus|r: +16 block." )       
     
-    
-    
     call SaveStr(HT_data,'N02K',1, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )  
  //   call SaveStr(HT_data,'N02K',1, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )       // cold
     call SaveStr(HT_data,'N02K',2, "|cff00ffffPassive|r: Frost Aura: Reduces the attack speed of enemies. \n|cffffff00Level Up Bonus|r: Frost Aura: +6% attack speed reduction." )  
 
-
     call SaveStr(HT_data,'H018',1, "ReplaceableTextures\\CommandButtons\\BTNHeroLich.blp" )       // Lich
-    call SaveStr(HT_data,'H018',2, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals magic damage it deals bonus damage in an area around the target once every 6 seconds. \n|cffffff00Level Up Bonus|r: Flash Freeze: +60 damage." ) 
+    call SaveStr(HT_data,'H018',2, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals magic damage it deals bonus damage in an area around the target based on 100% of its intelligence once every 6 seconds. \n|cffffff00Level Up Bonus|r: Flash Freeze: +60 damage." ) 
     
     call SaveStr(HT_data,'H019',1, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )       // Gnome master
     call SaveStr(HT_data,'H019',2, "|cff00ffffPassive|r: Gnome Stomp: At the start of every fight it deals damage and stuns all nearby heroes for 1 second and creeps for 2 seconds. \n|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun." )             
 
     call SaveStr(HT_data,'N02P',1, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )       // Greed goblin
-    call SaveStr(HT_data,'N02P',2, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. 1% less effective for each level of Pillage.\n|cffffff00Level Up Bonus|r: Greed: +4 bonus gold and +5 experience" ) 
-
-
+    call SaveStr(HT_data,'N02P',2, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. |cffc0c0c01% less effective for each level of Pillage|r.\n|cffffff00Level Up Bonus|r: Greed: +4 bonus gold and +5 experience" ) 
 
     call SaveStr(HT_data,'H01B',1, "ReplaceableTextures\\CommandButtons\\BTNCentaurArcher.blp" )       // Cent archer
     call SaveStr(HT_data,'H01B',2, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus damage + 6% of the targets total hit points once every 2 seconds.\n|cffffff00Level Up Bonus|r: Horsepower: +5% damage." )
 
     call SaveStr(HT_data,'H01C',1, "ReplaceableTextures\\CommandButtons\\BTNOgre.blp" )       // ogre
-    call SaveStr(HT_data,'H01C',2, "|cff00ffffPassive|r: Ogre Stomp: Once every 9 seconds when the Hero is physically damaged it damages nearby enemies for 100% of its strength and stuns them for 1 second.\n|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
+    call SaveStr(HT_data,'H01C',2, "|cff00ffffPassive|r: Ogre Stomp: Once every 6 seconds when the Hero deals physical damage it damages nearby enemies for 100% of its strength and stuns them for 1 second.\n|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
     call SaveStr(HT_data,'H01D',1, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )       //Xesil
-    call SaveStr(HT_data,'H01D',2, "|cff00ffffPassive|r: Xesil's Legacy: Whenever the Hero casts a spell it has a 25% to instantly reset its cooldown. Does not stack with the item. [|cff80ff80Luck|r]\n|cffffff00Level Up Bonus|r: +100 mana, +1 mana regeneration." )
+    call SaveStr(HT_data,'H01D',2, "|cff00ffffPassive|r: Xesil's Legacy: 15% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name if stronger and is overriden if weaker.|r [|cff80ff80Luck|r]\n|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
 
     call SaveStr(HT_data,'H01E',1, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )       //OGRE MAGE
     call SaveStr(HT_data,'H01E',2, "|cff00ffffPassive|r: Ogre's Luck: Whenever the Hero casts an ability it has a 15% chance to cast it again. [|cff80ff80Luck|r] \n|cffffff00Level Up Bonus|r: Ogre's Luck: +2% chance." )
 
-
     call SaveStr(HT_data,'O00A',1, "ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp" )       //OGRE MAGE
     call SaveStr(HT_data,'O00A',2, "|cffffff00Level Up Bonus|r: +1% attack speed." )
-
-
 
     call SaveStr(HT_data,'O00B',1, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )       //Yeti
     call SaveStr(HT_data,'O00B',2, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength if it hass less than 50 armor. \n|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus, +2 armor limit." )
@@ -155,11 +137,9 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'H01F',1, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )       //Murlock
     call SaveStr(HT_data,'H01F',2, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy, lasts until the end of the fight. \n|cffffff00Level Up Bonus|r: (Every 10 levels) Fish Hook: +1 stat per attack." )
     
-    
     call SaveStr(HT_data,'H01G',1, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )       //Mediv
     call SaveStr(HT_data,'H01G',2, "|cffffff00Level Up Bonus|r: +2 magic power." )
-    
-        
+      
     call SaveStr(HT_data,'H01H',1, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )       //ghoul
     call SaveStr(HT_data,'H01H',2, "|cff00ffffPassive|r: Cannibal Frenzy: +1% attack damage and 100% lifesteal on that damage. \n|cffffff00Level Up Bonus|r: Cannibal Frenzy: +1% attack damage." )
 
@@ -172,7 +152,6 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'H01L',1, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )       //seer
     call SaveStr(HT_data,'H01L',2, "|cff00ffffPassive|r: Magical Insight: The Hero's physical damage dealt becomes magic damage and its magic damage dealt becomes physical damage." )
  
-     call SaveStr(HT_data,'H00A',1, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )       //Areana master
+    call SaveStr(HT_data,'H00A',1, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )       //Areana master
     call SaveStr(HT_data,'H00A',2, "|cff00ffffPassive|r: Arena Veteran: +15 Pvp bonus. \n|cffffff00Level Up Bonus|r: +30 glory." )
- 
 endfunction

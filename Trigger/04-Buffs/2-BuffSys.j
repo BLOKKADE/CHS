@@ -19,10 +19,10 @@ function TimerBuff1 takes nothing returns nothing
 
     call UnitRemoveAbility(u,abilA)
     call UnitRemoveAbility(u,abil)
-    call SaveTimerHandle(HT,GetHandleId(u),abilA,null)
+    call RemoveSavedHandle(HT,GetHandleId(u),abilA)
     
     call FlushChildHashtable(HT,i)
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     set t = null
     set u = null
 endfunction
@@ -34,7 +34,7 @@ function SetBuff takes unit u, integer level,real time returns nothing
     local timer t = LoadTimerHandle(HT,GetHandleId(u),DeBufLvlA[level])
     if GetUnitAbilityLevel(u,DeBufLvl[level]) == 0 then
         if t == null  then
-            set t = CreateTimer()
+            set t = NewTimer()
 
             call SaveInteger(HT,GetHandleId(t),1,DeBufLvl[level])
             call SaveInteger(HT,GetHandleId(t),2,DeBufLvlA[level])

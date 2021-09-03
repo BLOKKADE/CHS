@@ -9,7 +9,7 @@ function endTimerStone takes nothing returns nothing
     call UnitShareVision(u2,GetOwningPlayer(u1),false)
     call SaveBoolean(ShateHT,GetHandleId(u2),GetHandleId(u1),false)
     call FlushChildHashtable(HT,GetHandleId(t))
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     set t = null
     set u1 = null
     set u2 = null
@@ -37,14 +37,14 @@ function stoneProtectA takes nothing returns nothing
     local unit u2 = LoadUnitHandle(HT,i,2)
     local boolean Bil = false
     
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     call FlushChildHashtable(HT,i)
 
     if BlzGetUnitAbilityCooldownRemaining(u1,'A060') <= 0.001 and IsUnitEnemy(u2, GetOwningPlayer(u1)) then    
         
         if LoadBoolean(ShateHT,GetHandleId(u2),GetHandleId(u1)) == false and IsUnitVisible(u2,GetOwningPlayer(u1) ) == false then
             call UnitShareVision(u2,GetOwningPlayer(u1),true)
-            set t = CreateTimer()
+            set t = NewTimer()
             call SaveUnitHandle(HT,GetHandleId(t),1,u2)
             call SaveUnitHandle(HT,GetHandleId(t),2,u1)
             call TimerStart(t,3,false,function endTimerStone)
@@ -74,7 +74,7 @@ function stoneProtectA takes nothing returns nothing
 endfunction
 
 function stoneProtect takes unit u1, unit u2 returns nothing
-    local timer t = CreateTimer()
+    local timer t = NewTimer()
     local integer i = GetHandleId(t)
     
     call SaveUnitHandle(HT,i,1,u1)

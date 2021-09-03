@@ -19,7 +19,7 @@ function DamageTimer takes nothing returns nothing
     endif
 
     call FlushChildHashtable(HT,GetHandleId(t))
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     set t = null
     set u1 = null
     set u2 = null
@@ -28,7 +28,7 @@ endfunction
 
 
 function MagicDamage takes unit u1, unit u2, real dmg, boolean typeDmg returns nothing
-    local timer t = CreateTimer()
+    local timer t = NewTimer()
 
     call SaveUnitHandle(HT,GetHandleId(t),1,u1)
     call SaveUnitHandle(HT,GetHandleId(t),2,u2)
@@ -41,7 +41,7 @@ function MagicDamage takes unit u1, unit u2, real dmg, boolean typeDmg returns n
 endfunction
 
 function PhysicalDamage takes unit u1, unit u2, real dmg, boolean typeDmg returns nothing
-    local timer t = CreateTimer()
+    local timer t = NewTimer()
 
     call SaveUnitHandle(HT,GetHandleId(t),1,u1)
     call SaveUnitHandle(HT,GetHandleId(t),2,u2)

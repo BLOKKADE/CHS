@@ -34,7 +34,7 @@ function EndLichTimer takes nothing returns nothing
   
   call FlushChildHashtable(DataUnitHT,GetHandleId(t))
   
-  call DestroyTimer(t)
+  call ReleaseTimer(t)
   set t = null
   set u = null
 

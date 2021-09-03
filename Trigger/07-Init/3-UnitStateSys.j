@@ -238,7 +238,7 @@ function SummonUnitS takes nothing returns nothing
     local timer  t = GetExpiredTimer()
     call SummonUnit(LoadUnitHandle(HT,GetHandleId(t),1))
     call FlushChildHashtable(HT,GetHandleId(t))
-    call DestroyTimer(t)
+    call ReleaseTimer(t)
     set t = null
 endfunction
 
@@ -277,7 +277,7 @@ if GetUnitTypeId(u) == 'O006' then
 endif
 
 if IsHeroUnitId(GetUnitTypeId(u)) == false then
-    set t = CreateTimer()
+    set t = NewTimer()
     call SaveUnitHandle(HT,GetHandleId(t),1,u)
     call TimerStart(t,0,false,function SummonUnitS)
 endif

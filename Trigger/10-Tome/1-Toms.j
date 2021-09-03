@@ -190,7 +190,7 @@ function Trig_Toms_Actions takes nothing returns nothing
 	call ResourseRefresh(GetOwningPlayer(u)) 
 	set It = null
 	set u =null
-
+    set p = null
 endfunction
 
 

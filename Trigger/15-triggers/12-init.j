@@ -1883,28 +1883,8 @@ globals
   endfunction
   
   function Trig_Cast_Channeling_Ability_Func001Func002C takes nothing returns boolean
-  if((GetSpellAbilityId()=='AHbz'))then
-  return true
-  endif
-  if((GetSpellAbilityId()=='ANrf'))then
-  return true
-  endif
-  if((GetSpellAbilityId()=='ANst'))then
-  return true
-  endif
-  if((GetSpellAbilityId()=='ANvc'))then
-  return true
-  endif
-  if((GetSpellAbilityId()=='AEtq'))then
-  return true
-  endif
-  if((GetSpellAbilityId()=='Aclf'))then
-  return true
-  endif
-  if((GetSpellAbilityId()=='ANmo'))then
-  return true
-  endif
-  return false
+    local integer abilId = GetSpellAbilityId()
+    return abilId == 'AHbz' or abilId == 'ANrf' or abilId == 'ANst' or abilId == 'ANvc' or abilId == 'AEtq' or abilId == 'Aclf' or abilId == 'ANmo' or abilId == 'AEsf'
   endfunction
   
   function Trig_Cast_Channeling_Ability_Func001C takes nothing returns boolean
@@ -1966,35 +1946,50 @@ globals
   return true
   endfunction
   
+  
   function Trig_Cast_Channeling_Ability_Actions takes nothing returns nothing
-  if(Trig_Cast_Channeling_Ability_Func003C())then
-  call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),PolarProjectionBJ(GetSpellTargetLoc(),256.00,AngleBetweenPoints(GetSpellTargetLoc(),GetUnitLoc(GetTriggerUnit()))),bj_UNIT_FACING)
-  else
-  call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
-  endif
-  call UnitApplyTimedLifeBJ(60.00,'BTLF',GetLastCreatedUnit())
-  call UnitAddAbilityBJ(GetSpellAbilityId(),GetLastCreatedUnit())
-  call SetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetLastCreatedUnit(),GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit()))
-  if(Trig_Cast_Channeling_Ability_Func009C())then
+    local integer order = GetUnitCurrentOrder(GetTriggerUnit())
+    local location spellLoc = GetSpellTargetLoc()
+    local integer abilId = GetSpellAbilityId()
+    if abilId != 'AEtq' and abilId != 'AEsf'then
+        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),PolarProjectionBJ(GetSpellTargetLoc(),256.00,AngleBetweenPoints(GetSpellTargetLoc(),GetUnitLoc(GetTriggerUnit()))),bj_UNIT_FACING)
+    else
+        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+    endif
+
+    call UnitApplyTimedLifeBJ(60.00,'BTLF',GetLastCreatedUnit())
+    call UnitAddAbilityBJ(GetSpellAbilityId(),GetLastCreatedUnit())
+    call SetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetLastCreatedUnit(),GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit()))
+
+    if order == 852183 or order == 852184 then
+        call IssueImmediateOrderById(GetLastCreatedUnit(), order)
+    else
+        call IssuePointOrderById(GetLastCreatedUnit(), order, GetLocationX(spellLoc), GetLocationY(spellLoc))
+    endif
+  /*
+  if GetSpellAbilityId()=='ANmo' then
   call IssuePointOrderLocBJ(GetLastCreatedUnit(),"blizzard",GetSpellTargetLoc())
-  elseif(Trig_Cast_Channeling_Ability_Func009Func001C())then
+  elseif GetSpellAbilityId()=='ANmo' then
   call IssuePointOrderLocBJ(GetLastCreatedUnit(),"rainoffire",GetSpellTargetLoc())
-  elseif(Trig_Cast_Channeling_Ability_Func009Func001Func001C())then
+    elseif GetSpellAbilityId()=='ANmo' then
   call IssuePointOrderLocBJ(GetLastCreatedUnit(),"stampede",GetSpellTargetLoc())
-  elseif(Trig_Cast_Channeling_Ability_Func009Func001Func001Func001C())then
+    elseif GetSpellAbilityId()=='ANmo' then
   call IssuePointOrderLocBJ(GetLastCreatedUnit(),"volcano",GetSpellTargetLoc())
-  elseif(Trig_Cast_Channeling_Ability_Func009Func001Func001Func001Func001C())then
+    elseif GetSpellAbilityId()=='ANmo' then
   call IssueImmediateOrderBJ(GetLastCreatedUnit(),"tranquility")
-  elseif GetSpellAbilityId()=='Aclf' then
+    elseif GetSpellAbilityId()=='ANmo' then
   call IssuePointOrderLocBJ(GetLastCreatedUnit(),"cloudoffog",GetSpellTargetLoc())
   elseif GetSpellAbilityId()=='ANmo' then
   call IssuePointOrderLocBJ(GetLastCreatedUnit(),"monsoon",GetSpellTargetLoc())
-  
+  elseif 
   endif
+  */
   call TriggerSleepAction(0.00)
   call IssueImmediateOrderBJ(GetTriggerUnit(),"stop")
   call SetUnitAnimation(GetTriggerUnit(),"spell")
   call QueueUnitAnimationBJ(GetTriggerUnit(),"stand")
+  call RemoveLocation(spellLoc)
+  set spellLoc = null
   endfunction
   
   function Trig_Acquire_Item_Conditions takes nothing returns boolean
@@ -2292,19 +2287,22 @@ globals
   endfunction
   
   function Trig_Hero_Dies_Battle_Royal_Func004A takes nothing returns nothing
-      local unit u = GetEnumUnit()
-  
-      call RemoveItem(UnitItemInSlot(u, 0))
-      call RemoveItem(UnitItemInSlot(u, 1))
-      call RemoveItem(UnitItemInSlot(u, 2))
-      call RemoveItem(UnitItemInSlot(u, 3))
-      call RemoveItem(UnitItemInSlot(u, 4))
-      call RemoveItem(UnitItemInSlot(u, 5))
-  
-      call UnitRemoveAbility(u, 'A038')
-      call KillUnit(GetEnumUnit())
-      call RemoveUnit(GetEnumUnit())
-      set u = null
+    local unit u = GetEnumUnit()
+
+    if IsUnitType(u, UNIT_TYPE_HERO) then
+        call RemoveItem(UnitItemInSlot(u, 0))
+        call RemoveItem(UnitItemInSlot(u, 1))
+        call RemoveItem(UnitItemInSlot(u, 2))
+        call RemoveItem(UnitItemInSlot(u, 3))
+        call RemoveItem(UnitItemInSlot(u, 4))
+        call RemoveItem(UnitItemInSlot(u, 5))
+    
+        call RemoveHeroAbilities(u)
+    endif
+    
+    call KillUnit(u)
+    call RemoveUnit(u)
+    set u = null
   endfunction
   
   function Trig_Hero_Dies_Battle_Royal_Actions takes nothing returns nothing
@@ -6566,11 +6564,12 @@ endif
   if udg_integer55 == 1 then
   set s = s + "Thunderclap "
   endif
+
   
   if s == "" then
-  call DisplayTimedTextToForce(GetPlayersAll(),20.00, "|cfffce177Next round|r: |cff77d2fc" + GetObjectName(udg_integer04)  +"|r: No abilities ")
+  call DisplayTimedTextToForce(GetPlayersAll(),20.00, "|cfffce177Next round|r: |cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r - |cff77fc94No abilities|r ")
   else
-  call DisplayTimedTextToForce(GetPlayersAll(),20.00, "|cfffce177Next round|r: |cff77d2fc" + GetObjectName(udg_integer04) + "|r: " + s)
+  call DisplayTimedTextToForce(GetPlayersAll(),20.00, "|cfffce177Next round|r: |cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r - |cff77fc94" + s + "|r")
   endif
   endfunction
   
@@ -10608,19 +10607,22 @@ endif
   endfunction
   
   function Trig_Hero_Dies_Death_Match_PvP_Func008A takes nothing returns nothing
-      local unit u = GetEnumUnit()
-  
-      call RemoveItem(UnitItemInSlot(u, 0))
-      call RemoveItem(UnitItemInSlot(u, 1))
-      call RemoveItem(UnitItemInSlot(u, 2))
-      call RemoveItem(UnitItemInSlot(u, 3))
-      call RemoveItem(UnitItemInSlot(u, 4))
-      call RemoveItem(UnitItemInSlot(u, 5))
-  
-      call UnitRemoveAbility(u, 'A038')
-      call KillUnit(GetEnumUnit())
-      call RemoveUnit(GetEnumUnit())
-      set u = null
+        local unit u = GetEnumUnit()
+
+        if IsUnitType(u, UNIT_TYPE_HERO) then
+            call RemoveItem(UnitItemInSlot(u, 0))
+            call RemoveItem(UnitItemInSlot(u, 1))
+            call RemoveItem(UnitItemInSlot(u, 2))
+            call RemoveItem(UnitItemInSlot(u, 3))
+            call RemoveItem(UnitItemInSlot(u, 4))
+            call RemoveItem(UnitItemInSlot(u, 5))
+        
+            call RemoveHeroAbilities(u)
+        endif
+
+        call KillUnit(u)
+        call RemoveUnit(u)
+        set u = null
   endfunction
   
   function Trig_Hero_Dies_Death_Match_PvP_Func011C takes nothing returns boolean
@@ -10848,19 +10850,22 @@ endif
   endfunction
   
   function Trig_Hero_Dies_Elimination_Func008A takes nothing returns nothing
-      local unit u = GetEnumUnit()
-  
-      call RemoveItem(UnitItemInSlot(u, 0))
-      call RemoveItem(UnitItemInSlot(u, 1))
-      call RemoveItem(UnitItemInSlot(u, 2))
-      call RemoveItem(UnitItemInSlot(u, 3))
-      call RemoveItem(UnitItemInSlot(u, 4))
-      call RemoveItem(UnitItemInSlot(u, 5))
-  
-      call UnitRemoveAbility(u, 'A038')
-      call KillUnit(GetEnumUnit())
-      call RemoveUnit(GetEnumUnit())
-      set u = null
+        local unit u = GetEnumUnit()
+
+        if IsUnitType(u, UNIT_TYPE_HERO) then
+            call RemoveItem(UnitItemInSlot(u, 0))
+            call RemoveItem(UnitItemInSlot(u, 1))
+            call RemoveItem(UnitItemInSlot(u, 2))
+            call RemoveItem(UnitItemInSlot(u, 3))
+            call RemoveItem(UnitItemInSlot(u, 4))
+            call RemoveItem(UnitItemInSlot(u, 5))
+        
+            call RemoveHeroAbilities(u)
+        endif
+        
+        call KillUnit(u)
+        call RemoveUnit(u)
+        set u = null
   endfunction
   
   function Trig_Hero_Dies_Elimination_Func010001002 takes nothing returns boolean
@@ -11560,10 +11565,10 @@ endif
   call TriggerRegisterAnyUnitEventBJ(udg_trigger96,EVENT_PLAYER_UNIT_ATTACKED)
   call TriggerAddCondition(udg_trigger96,Condition(function Trig_Volcanic_Armor_Conditions))
   call TriggerAddAction(udg_trigger96,function Trig_Volcanic_Armor_Actions)
-  set udg_trigger97=CreateTrigger()
+  /*set udg_trigger97=CreateTrigger()
   call TriggerRegisterAnyUnitEventBJ(udg_trigger97,EVENT_PLAYER_UNIT_SPELL_EFFECT)
   call TriggerAddCondition(udg_trigger97,Condition(function Trig_Xesils_Legacy_Conditions))
-  call TriggerAddAction(udg_trigger97,function Trig_Xesils_Legacy_Actions)
+  call TriggerAddAction(udg_trigger97,function Trig_Xesils_Legacy_Actions)*/
   set udg_trigger98=CreateTrigger()
   call TriggerRegisterTimerEventPeriodic(udg_trigger98,6.00)
   call TriggerAddAction(udg_trigger98,function Trig_Attack_Move_Actions)

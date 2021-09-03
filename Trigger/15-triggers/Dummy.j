@@ -5,7 +5,12 @@ scope DebugCommands initializer init
 //===========================================================================
     function SpawnDummy takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        call CreateUnit(Player(8), 'hfoo', GetUnitX(udg_units01[pid+1]), GetUnitY(udg_units01[pid+1]), 0)
+        call CreateUnit(Player(11), 'hfoo', GetUnitX(udg_units01[pid+1]), GetUnitY(udg_units01[pid+1]), 0)
+    endfunction
+
+    function LvlHero takes nothing returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+        call SetHeroLevel(udg_units01[pid+1], 5000, true)
     endfunction
     
     //===========================================================================
@@ -23,8 +28,13 @@ scope DebugCommands initializer init
         endloop
         
         if PlayerCount == 1 then
+            set trg = CreateTrigger()
             call TriggerRegisterPlayerChatEvent(trg,Player(0),"-dummy",true)
             call TriggerAddAction(trg, function SpawnDummy)
+
+            set trg = CreateTrigger()
+            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-lvl",true)
+            call TriggerAddAction(trg, function LvlHero)
         endif
 
         set trg = null

@@ -41,7 +41,7 @@ endglobals
     call UnitRemoveAbility(u, 'A08C')
     call UnitRemoveAbility(u, 'B01E')
     call FlushChildHashtable(HT,GetHandleId(tim))
-    call DestroyTimer(tim)
+    call ReleaseTimer(tim)
     set tim = null
     set eff = null
     set u = null
@@ -143,7 +143,7 @@ endglobals
         if LoadBoolean(HT,GetHandleId(TriigerU),'A07S') and GetUnitAbilityLevel(TriigerU, 'A08C') > 0 then
             call RemoveDebuff(TriigerU) 
         elseif BlzGetUnitAbilityCooldownRemaining(TriigerU,'A07S') <= 0.001 then
-            set tim = CreateTimer()
+            set tim = NewTimer()
             call RemoveDebuff(TriigerU) 
             call UnitAddAbility(TriigerU, 'A08C')
             call AbilStartCD(TriigerU,'A07S', 60)  
@@ -292,7 +292,8 @@ endglobals
 
     //Ursa Warrior
     if GetUnitTypeId(AttackerU) == 'N00Q' and attack then
-        call CastUrsaBleed(AttackerU, TriigerU, GetEventDamage(), DmgType !=  DAMAGE_TYPE_NORMAL)
+        //call CastUrsaBleed(AttackerU, TriigerU, GetEventDamage(), DmgType !=  DAMAGE_TYPE_NORMAL)
+        call PeriodicDamage.create(AttackerU, TriigerU, GetEventDamage()/3, DmgType !=  DAMAGE_TYPE_NORMAL, 1., 3, 0, true).addFx(FX_Bleed, "head")
     endif
     
     //Pvp Bonus
@@ -303,7 +304,7 @@ endglobals
    //Ogre Warrior
     if GetUnitTypeId(AttackerU) == 'H01C' and  DmgType ==  DAMAGE_TYPE_NORMAL then
         if BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08U') <= 0 then
-            call AbilStartCD(AttackerU, 'A08U', 8)
+            call AbilStartCD(AttackerU, 'A08U', 6)
             call ElemFuncStart(AttackerU,'H01C')
             call USOrder4field(AttackerU,GetUnitX(TriigerU),GetUnitY(TriigerU),'A047',"stomp",GetHeroStr(AttackerU,true) + 60*GetHeroLevel(AttackerU) ,ABILITY_RLF_DAMAGE_INCREASE,300,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,1,ABILITY_RLF_DURATION_NORMAL)
          endif
@@ -324,7 +325,7 @@ endglobals
     //Pit Lord
     if GetUnitTypeId(AttackerU) == 'O007' then
         if BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08V') <= 0 then
-            call AbilStartCD(AttackerU, 'A08V', 4)
+            call AbilStartCD(AttackerU, 'A08V', 2)
             call ElemFuncStart(AttackerU,'O007')
             call UsOrderU2 (AttackerU,TriigerU,GetUnitX(AttackerU),GetUnitY(AttackerU),'A08N',"rainoffire", GetHeroLevel(AttackerU)*40, GetHeroLevel(AttackerU)*20, ABILITY_RLF_DAMAGE_HBZ2, ABILITY_RLF_DAMAGE_PER_SECOND_HBZ5)
         endif
@@ -335,7 +336,7 @@ endglobals
         if BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08W') <= 0 then
             call AbilStartCD(AttackerU, 'A08W', 6)
             call ElemFuncStart(AttackerU,'H018')
-            call UsOrderU2 (AttackerU,TriigerU,GetUnitX(AttackerU),GetUnitY(AttackerU),'A03J',"frostnova",GetHeroLevel(AttackerU)*60,GetHeroLevel(GUS)*60, ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
+            call UsOrderU2 (AttackerU,TriigerU,GetUnitX(AttackerU),GetUnitY(AttackerU),'A03J',"frostnova", GetHeroInt(AttackerU, true) + (GetHeroLevel(AttackerU)*60), GetHeroInt(AttackerU, true) + (GetHeroLevel(AttackerU)*60), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
 	endif
 	
@@ -430,27 +431,29 @@ endglobals
     
         //Liquid Fire
         set II = GetUnitAbilityLevel(AttackerU,'A06Q')
-        if II > 0 then
+        if II > 0 and BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A06Q') == 0 then
         
-            if GetUnitAbilityLevel(TriigerU,'B016') == 0 then
+            /*if GetUnitAbilityLevel(TriigerU,'B016') == 0 then
                 set Bfirst = true
                 else
                 set Bfirst = false 
-            endif
-            call SetBuff(TriigerU,3,8)
-            call PerodicDmg(AttackerU,TriigerU,40*II +  GetUnitMagicDmg(AttackerU)*5,0,1,3.01,'B016',Bfirst)
+            endif*/
+            call SetBuff(TriigerU,3,3)
+            //call PerodicDmg(AttackerU,TriigerU,40*II +  GetUnitMagicDmg(AttackerU)*5,0,1,3.01,'B016',Bfirst)
+            call PeriodicDamage.create(AttackerU, TriigerU, 40*II + GetUnitMagicDmg(AttackerU)*5, true, 1., 3, 0, false).addLimit('A06Q', 150, 1)
         endif
         
         //Envenomed Weapons
         set II = GetUnitAbilityLevel(AttackerU,'A06O')
-        if II > 0 then
-            if GetUnitAbilityLevel(TriigerU,'B015') == 0 then
+        if II > 0 and BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A06O') == 0 then
+            /*if GetUnitAbilityLevel(TriigerU,'B015') == 0 then
                 set Bfirst = true
             else
                 set Bfirst = false 
-            endif
-            call SetBuff(TriigerU,2,11)
-            call PerodicDmg(AttackerU,TriigerU,10*II,0.5,1,8.01,'B015',Bfirst)
+            endif*/
+            call SetBuff(TriigerU,2,8)
+            //call PerodicDmg(AttackerU,TriigerU,10*II,0.5,1,8.01,'B015',Bfirst)
+            call PeriodicDamage.create(AttackerU, TriigerU, 30*II, true, 1., 8, 1, false).addLimit('A06O', 150, 1)
         endif
 
         //Incinerate
@@ -489,7 +492,6 @@ endglobals
 	set II =  UnitHasItemI( TriigerU,'I06E' )
     if  II > 0  then
         if GetRandomReal(1,100)  <= II*8*luck then
-        
          if GetUnitState(TriigerU,UNIT_STATE_MANA) >= 750 then
             call CastRandomSpell1 (TriigerU,GetRandomAbility1_B(),15, AttackerU,GetUnitX(AttackerU),GetUnitY(AttackerU))
             call SetUnitState(TriigerU,UNIT_STATE_MANA,GetUnitState(TriigerU,UNIT_STATE_MANA)-750 )
