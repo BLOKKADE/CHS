@@ -88,7 +88,6 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
             call UnitAddAbility(dummy, abilityId)
             call UnitMakeAbilityPermanent(this.dummy, true, abilityId)
             call SetUnitAbilityLevel(dummy, abilityId, level)
-
             set this.order = order
             set this.abil = abilityId
 
@@ -100,12 +99,13 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
             call UnitAddAbility(dummy, abilityId)
             call UnitMakeAbilityPermanent(this.dummy, true, abilityId)
             call SetUnitAbilityLevel(dummy, abilityId, level)
+            
             //call BJDebugMsg("dummy added passive")
             return this
         endmethod
 
         method periodic takes nothing returns nothing
-            if T32_Tick >= this.endTick or this.stopDummy then
+            if T32_Tick >= this.endTick or this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0 then
                 //call BJDebugMsg("dummy destroy")
                 call this.stopPeriodic()
                 call this.destroy()
@@ -117,8 +117,11 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
             if this.orderType == 1 then //instant
                 call IssueImmediateOrderById(this.dummy, this.order) 
             elseif this.orderType == 2 then //target
-                call IssueTargetOrderById(this.dummy, this.order, this.targetUnit)
+                if not IssueTargetOrderById(this.dummy, this.order, this.targetUnit) then
+                    call IssueImmediateOrderById(this.dummy, this.order)
+                endif
             elseif this.orderType == 3 then //point
+                //call BJDebugMsg("dummy: " + GetUnitName(this.dummy) + "ordr: " + I2S(this.order) + " x: " + R2S(this.targetX) + " y: " + R2S(this.targetY))
                 call IssuePointOrderById(this.dummy, this.order, this.targetX, this.targetY)
             endif
             //call BJDebugMsg("ordered dummy, started timer")
@@ -157,16 +160,15 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         endmethod
         
         method destroy takes nothing returns nothing
-            call UnitRemoveAbility(this.dummy, this.abil)
+            //call UnitRemoveAbility(this.dummy, this.abil)
 
             set DummyInfo[GetHandleId(this.dummy)] = 0
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             ///set DummyInfo[GetUnitId(this.dummy)].boolean[2] = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[3] = false
 
-            call SetUnitX(this.dummy, -999999)
-            call SetUnitY(this.dummy, -999999)
-            call RemoveUnit(this.dummy)
+            call UnitApplyTimedLife(this.dummy, 'BTLF', 5)
+            //call RemoveUnit(this.dummy)
             //set this.callback = null
             set this.dummy = null
             set this.source = null

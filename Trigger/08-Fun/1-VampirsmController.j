@@ -1,9 +1,20 @@
-library Vampirism
+library Vampirism requires RandomShit
     function Vamp takes unit u1, unit u2,real vamp returns nothing
         local real V1 = 0
         local real V2 = 0
         local integer i1 = 0
         
+        //Bloodstone passive
+        if UnitHasItemS(u2, 'I0AK') then
+            set vamp = vamp * 0.7
+        endif
+
+        //Bloodstone target & Divine Bubble
+        if GetUnitAbilityLevel(u1, 'B01V') > 0 or LoadBoolean(HT,GetHandleId(u2),'A07S') then
+            return
+        endif
+
+        //Ancient Blood
         set i1 = GetUnitAbilityLevel(u1,'A07R')
         if i1 > 0 then
         
@@ -16,10 +27,8 @@ library Vampirism
             
             set V1 = vamp + V1
             
-            
             loop
                 exitwhen V2 > V1 
-                
                 set V1 = V1 - V2 
                 set V2 = V2 + 1
                 call BlzSetUnitMaxHP(u1,BlzGetUnitMaxHP(u1)+4)

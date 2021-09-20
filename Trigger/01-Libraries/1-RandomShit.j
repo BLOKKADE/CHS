@@ -1,4 +1,4 @@
-library RandomShit requires WitchDoctor
+library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken
 globals
 
         integer array SpellCP
@@ -6,7 +6,7 @@ globals
         unit Global_u = null
         
         constant real TEXT_SIZE = 0.024
-        constant real TEXT_VEL = 0.06
+        constant real TEXT_VEL = 0.09
         constant real TEXT_LIFE = 1
         constant real TEXT_FADE = 0.6
 
@@ -39,10 +39,10 @@ globals
 
         call SetTextTagText(floatingText,Text,Height* TEXT_SIZE)
         call SetTextTagPos(floatingText,x1,y1,z1)
-        call SetTextTagColor(floatingText,255,255,120,128)
+        call SetTextTagColor(floatingText,255,255,120,200)
         
         call SetTextTagVelocity(floatingText,0.01, TEXT_VEL)
-        call SetTextTagFadepoint(floatingText, TEXT_FADE)
+        call SetTextTagFadepoint(floatingText, time - (time*0.1))
         call SetTextTagLifespan(floatingText, time)
         call SetTextTagPermanent(floatingText,false)
         
@@ -54,10 +54,10 @@ globals
         
         call SetTextTagText(floatingText,Text,Height* TEXT_SIZE)
         call SetTextTagPos(floatingText,x1,y1,z1)
-        call SetTextTagColor(floatingText,iR,iG,iB,128)
+        call SetTextTagColor(floatingText,iR,iG,iB,200)
         
         call SetTextTagVelocity(floatingText,0.01, TEXT_VEL)
-        call SetTextTagFadepoint(floatingText, TEXT_FADE)
+        call SetTextTagFadepoint(floatingText, time - (time*0.1))
         call SetTextTagLifespan(floatingText, time)
         call SetTextTagPermanent(floatingText,false)
 
@@ -230,7 +230,15 @@ globals
         call UnitRemoveAbility(Un, 'BHtc')
         call UnitRemoveAbility(Un, 'BUhf')
         call UnitRemoveAbility(Un, 'B01I')
-        call UnitRemoveAbility(Un, 'B01H')
+        call UnitRemoveAbility(Un, 'B01W')
+        call UnitRemoveAbility(Un, 'B01N')
+        call UnitRemoveAbility(Un, 'B01Q')
+        call UnitRemoveAbility(Un, 'B01R')
+        call UnitRemoveAbility(Un, 'B01P')
+        call UnitRemoveAbility(Un, 'B01V')
+        call UnitRemoveAbility(Un, 'B01Y')
+        call UnitRemoveAbility(Un, 'B01X')
+        call UnitRemoveAbility(Un,'A03V')
         set Un = null
     endfunction
 
@@ -263,6 +271,24 @@ globals
         set Caster1  = null
         set u1 = null
         set u2 = null
+    endfunction
+
+    function USOrder4field takes unit u1, real x, real y,integer idsp, string ordstr, real Field1, abilityreallevelfield  RealField1, real Field2, abilityreallevelfield  RealField2,real Field3, abilityreallevelfield  RealField3,real Field4, abilityreallevelfield  RealField4 returns nothing
+        local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 2)
+        call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
+        if RealField1 != null then
+            call dummy.setAbilityRealField(idsp, RealField1, Field1)
+        endif
+        if RealField2 != null then
+            call dummy.setAbilityRealField(idsp, RealField2, Field2)
+        endif
+        if RealField3 != null then
+            call dummy.setAbilityRealField(idsp, RealField3, Field3)
+        endif
+        if RealField4 != null then
+            call dummy.setAbilityRealField(idsp, RealField4, Field4)
+        endif
+        call dummy.instant().activate()
     endfunction
 
     function UsOrderU takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield  REALF returns nothing
@@ -319,6 +345,76 @@ globals
         call dummy.target(u2).activate()
     endfunction
 
+    function GetInfoHeroSpell takes unit u, integer num returns integer
+        return LoadInteger(HT_SpellPlayer,GetHandleId(u),num)
+    endfunction
+
+    function GetNumHeroSpell takes unit u,integer id returns integer
+        return LoadInteger(HT_SpellPlayer,GetHandleId(u),id)
+    endfunction
+
+    function IsSpellElement takes unit u, integer abilId, integer id returns boolean
+
+        //Null Void Orb
+        if GetUnitAbilityLevel(u, 'B01W') > 0 then
+            return false
+        endif
+
+        //Pretty Bright Gem : Light to Dark and Dark to Light
+        if UnitHasItemS(u, 'I0AM') then
+            if (id == Element_Light and IsObjectElement(abilId, Element_Dark)) or (id == Element_Dark and IsObjectElement(abilId, Element_Light)) then
+                return true
+            endif
+        endif
+        
+        if IsObjectElement(abilId, id) then
+            return true
+        endif
+
+        return false
+    endfunction
+    
+    function GetClassUnitSpell takes unit u, integer id returns integer 
+        local integer abilId = 0
+        local integer i = 1
+        local integer elementCount = 0
+
+        //Null Void Orb
+        if GetUnitAbilityLevel(u, 'B01W') > 0 then
+            return 0
+        endif
+
+        //Pretty Bright Gem +1 to dark and light
+        if UnitHasItemS(u, 'I0AM') and (id == Element_Light or id == Element_Dark) then
+            set elementCount = elementCount + 1
+        endif
+
+        //Hero element
+        if IsObjectElement(GetUnitTypeId(u), id) then
+            set elementCount = elementCount + 1
+        endif
+        
+        loop
+            exitwhen i > 20   
+            if IsSpellElement(u, GetInfoHeroSpell(u ,i), id) then
+                set elementCount = elementCount + 1
+            endif
+            
+            set i = i + 1
+        endloop
+
+        //Mauler passive
+        if id == Element_Light and GetUnitTypeId(u) == 'H002' then
+            set elementCount = elementCount + R2I(GetHeroLevel(u) / 10)
+        endif
+
+        //Witch Doctor passive
+        if GetUnitTypeId(u) == 'O006' then
+            set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
+        endif
+        return elementCount 
+    endfunction
+
     function GetUnitLuck takes unit u returns real
         return LoadReal(HT_unitstate,GetHandleId(u),5)+1
     endfunction
@@ -329,49 +425,92 @@ globals
         call ExecuteFunc("ElementStartAbilityS")
     endfunction 
 
-    function CalculateCooldown takes unit u, integer id, real cd returns real
-        local real ResCD = 1
+    function CalculateCooldown takes unit u, integer id, real cd, boolean active returns real
         local real luck = GetUnitLuck(u)
-        local real xesilChance = 0
+        local real xesilChance = -1
+        local real time = cd
+        local real ResCD = 1
+
+        if active then
+            //Frost Bolt
+            if id == 'A07X' then
+                set time = time - GetClassUnitSpell(u,2)
+            endif
+
+            //Spellbane Token
+            if IsSpellbaneCooldownEnabled(u) then
+                //call BJDebugMsg("spellbane bonus: " + R2S(((1 - (GetUnitState(u, UNIT_STATE_MANA) / GetUnitState(u, UNIT_STATE_MAX_MANA))) / 0.05) * 0.5))
+                set time = time + (((1 - (GetUnitState(u, UNIT_STATE_MANA) / GetUnitState(u, UNIT_STATE_MAX_MANA))) / 0.05) * 0.5)
+            endif
+
+            //Fishing Rod and Blink Strike
+            if UnitHasItemS(u, 'I07T') and id == 'A08J' then
+                set ResCD = ResCD * 0.5
+            endif
+
+            //Fan
+            if UnitHasItemS(u,'I08Z') and IsObjectElement(id,3) then
+                set ResCD =ResCD*0.65
+            endif   
+
+            //Cheater Magic
+            if LoadTimerHandle(HT_timerSpell,GetHandleId(u),2) != null and GetUnitAbilityLevel(u, 'A08G') > 0 and id != 'A024' then
+                if id == 'A049' then
+                    set ResCD = ResCD*0.1
+                else       
+                    set ResCD = ResCD*0.05
+                endif
+            endif
+        endif
             
+        //Fast Magic
         if GetUnitAbilityLevel(u,'A03P') >= 1 then
             set ResCD =  ResCD*(1-0.01*I2R(GetUnitAbilityLevel(u,'A03P'))) 
         endif
         
+        //Xesil
         if (GetUnitTypeId(u ) == 'H01D') then
             set xesilChance = 15 + (0.1*GetHeroLevel(u) )
         endif
 
-        if (xesilChance <= 25*luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25*luck) or (GetUnitTypeId(u ) == 'H01D' and UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance*luck) then
+        //Xesil's Legacy
+        if (GetUnitTypeId(u ) != 'H01D' and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25*luck) or (xesilChance <= 25*luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25*luck) or (UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance*luck) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
         
-        if  UnitHasItemS(u,'I08Y') and LoadBoolean(Elem,id,2) then
+        //Staff of Water
+        if  UnitHasItemS(u,'I08Y') and IsObjectElement(id, 2) then
             if GetRandomReal(0,100) <= 40*luck then
                 set ResCD = 0.001
             endif
         endif
         
-        if  UnitHasItemS(u,'I08Z') and LoadBoolean(Elem,id,3) then
+        //Fan
+        if  UnitHasItemS(u,'I08Z') and IsObjectElement(id,3) then
                 set ResCD =ResCD*0.65
         endif  
 
-        return ResCD * cd
+        //Dousing Hex
+        if GetUnitAbilityLevel(u, 'B01Y') > 0 then
+            //call BJDebugMsg("cd bonus: " + R2S(DousingHexCooldown.real[GetHandleId(u)]))
+            set ResCD = ResCD * DousingHexCooldown.real[GetHandleId(u)]
+        endif
+
+        return time*ResCD
     endfunction
 
     function AbilStartCD takes unit u, integer id,real cd returns real
-        local real newCooldown =  CalculateCooldown(u, id, cd)
-
+        local real newCooldown = CalculateCooldown(u, id, cd, false)
         call ElemFuncStart(u,id)
-        call BlzStartUnitAbilityCooldown(u,id,newCooldown)
-        
+        call BlzStartUnitAbilityCooldown(u,id, newCooldown)
+
         if id != 'A05U' then
             set Global_i = id
             set Global_u = u
             call ExecuteFunc("ResetAbilit_Ec")
         endif
-
+        
         return newCooldown 
     endfunction
 
@@ -456,44 +595,12 @@ globals
         call dummy.instant().activate()
     endfunction
 
-    function GetUnitPowerRune takes unit u returns real
-        return LoadReal(HT_unitstate,GetHandleId(u),6)
-    endfunction
-
-    function CreateRandomRune takes real power,real x,real y,unit owner returns item
-        local item i = CreateItem( Runes[GetRandomInt(1,RuneCount)] ,x,y)
-        call SaveReal(HT,GetHandleId(i),2,power+GetUnitPowerRune(owner) + GetHeroLevel(owner)*2 )
-        if GetLocalPlayer() != GetOwningPlayer(owner) then
-            call BlzSetItemSkin(i,'I06F')
-        endif
-        return i
-    endfunction 
-
-    function CreateRune takes real power,real x,real y,unit owner,integer id returns item
-        local item i = CreateItem( Runes[id] ,x,y)
-        call SaveReal(HT,GetHandleId(i),2,power+GetUnitPowerRune(owner) + GetHeroLevel(owner) )
-        if GetLocalPlayer() != GetOwningPlayer(owner) then
-            call BlzSetItemSkin(i,'I06F')
-        endif
-        return i
-    endfunction
-
-
     function SetUnitProcHp takes unit u, real bonus returns nothing
         local real BonusOldHp = LoadReal(HT,GetHandleId(u),-412446)
         local real Hp  =   I2R(BlzGetUnitMaxHP(u))-BonusOldHp
         local real BonusNewHp  = Hp*bonus
         call BlzSetUnitMaxHP(u,R2I(Hp + BonusNewHp) )  
         call SaveReal(HT,GetHandleId(u),-412446, I2R(R2I(BonusNewHp)))
-    endfunction
-
-
-    function GetInfoHeroSpell takes unit u, integer num returns integer
-        return LoadInteger(HT_SpellPlayer,GetHandleId(u),num)
-    endfunction
-
-    function GetNumHeroSpell takes unit u,integer id returns integer
-        return LoadInteger(HT_SpellPlayer,GetHandleId(u),id)
     endfunction
 
     function RemoveHeroAbilities takes unit u returns nothing
@@ -508,38 +615,6 @@ globals
             exitwhen i > 20
         endloop
     endfunction
-
-    function GetClassUnitSpell takes unit u, integer id returns integer 
-        local integer i1 = 1
-        local integer i2 = 0
-        if LoadBoolean(Elem,GetUnitTypeId(u), id) then
-            set i2 = i2 + 1
-        endif
-
-        
-        
-        loop
-            exitwhen i1 > 20
-            
-            if LoadBoolean(Elem,GetInfoHeroSpell(u ,i1), id) then
-                set i2 = i2 + 1
-            endif
-
-            set i1 = i1 + 1
-        endloop
-
-        if id == 8 and GetUnitTypeId(u) == 'H002' then
-            set i2 = i2 + R2I(GetHeroLevel(u) / 10)
-        endif
-
-        if GetUnitTypeId(u) == 'O006' then
-            set i2 = i2 + GetWitchDoctorAbsoluteLevel(u, id)
-        endif
-        return i2 
-    endfunction
-
-
-
 
     function AddCooldowns takes unit u,real cd returns nothing
         local integer i1 = 1

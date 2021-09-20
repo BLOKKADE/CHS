@@ -1,18 +1,17 @@
 globals
 
 	integer array NumPlayerLast 
-
+    unit array selectedUnit
 endglobals
 
 
 function Trig_UpdateFrame_Actions takes nothing returns nothing
-
+    local integer pid = GetPlayerId(GetTriggerPlayer())
 
 //if udg_units01[ GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] != null then
-   set NumPlayerLast[GetPlayerId( GetTriggerPlayer()) ] =  GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
+   set NumPlayerLast[pid] =  GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
+   set selectedUnit[pid] = GetTriggerUnit()
 //endif
-
-
 endfunction
 
 //===========================================================================

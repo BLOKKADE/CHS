@@ -1,4 +1,4 @@
-library Multicast requires T32, RandomShit
+library Multicast requires T32, RandomShit, AbilityChannel
     globals
         private integer MulticastInterval = 8
     endglobals
@@ -6,6 +6,7 @@ library Multicast requires T32, RandomShit
     struct Multicast extends array
         unit target
         unit caster
+        group caston
         integer abilId
         integer abilLevel
         integer abilOrder
@@ -13,6 +14,7 @@ library Multicast requires T32, RandomShit
         integer endTick
         integer count
         integer interval
+        boolean mono
         real x
         real y
 
@@ -20,11 +22,27 @@ library Multicast requires T32, RandomShit
         private static thistype recycle = 0
         private thistype recycleNext
 
-        private method CastSpell takes nothing returns nothing
+        private method GetNewTarget takes real range returns nothing
+            if this.caston == null then
+                set this.caston = CreateGroup()
+                call GroupAddUnit(this.caston, this.target)
+            endif
+            
+            call RUH.reset().excludeGroup(this.caston)
+            
+            if GetAbilityTargetType(this.abilId) then
+                call RUH.checkAlly()
+            endif
+
+            call RUH.EnumUnits(GetUnitX(this.caster), GetUnitY(this.caster), range, GetOwningPlayer(this.caster))
+
+            set this.target = RUH.GetRandomUnit(false)
+            call GroupAddUnit(this.caston, this.target)
+        endmethod
+
+        private method castSpell takes nothing returns nothing
             local DummyOrder dummy = DummyOrder.create(this.caster, GetUnitX(this.caster), GetUnitY(this.caster), GetUnitFacing(this.caster), 9)
             call dummy.addActiveAbility(this.abilId, this.abilLevel, this.abilOrder)
-
-            call AbilityChanelCst(this.caster, this.target,this.x, this.y, this.abilId)
 
             if this.orderType == 0 then
                 call dummy.instant()
@@ -37,9 +55,18 @@ library Multicast requires T32, RandomShit
             call dummy.activate()
         endmethod
 
+        private method checkSpell takes nothing returns nothing
+            if this.orderType == 1 and this.mono then
+                call GetNewTarget(GetAbilityRange(this.caster, this.abilId))
+            endif
+            if not AbilityChannel(this.caster, this.target, this.x, this.y, this.abilId, this.abilLevel) then
+                call this.castSpell()
+            endif
+        endmethod
+
         private method periodic takes nothing returns nothing
             if T32_Tick >= this.endTick and this.count > 0 then
-                call this.CastSpell()
+                call this.checkSpell()
                 set this.count = this.count - 1
                 set this.endTick = T32_Tick + MulticastInterval
             elseif this.count == 0 then
@@ -61,11 +88,17 @@ library Multicast requires T32, RandomShit
 
             set this.caster = caster
             set this.target = target
-
+            set this.caston = null
             set this.abilId = abilId
-            set this.abilLevel = abilLevel
+            set this.abilLevel = abilLvl
             set this.abilOrder = abilOrder
             set this.orderType = orderType
+
+            if IsAbilityMono(abilId) then
+                set this.mono = true
+            else
+                set this.mono = false
+            endif
 
             set this.x = x
             set this.y = y
@@ -82,6 +115,10 @@ library Multicast requires T32, RandomShit
             set this.caster = null
             set this.target = null
 
+            if this.caston != null then
+                call DestroyGroup(this.caston)
+                set this.caston = null
+            endif
             set recycleNext = recycle
             set recycle = this
         endmethod

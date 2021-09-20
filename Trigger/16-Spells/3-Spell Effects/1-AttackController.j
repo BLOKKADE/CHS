@@ -37,6 +37,7 @@ function Trig_Spell12_Actions takes nothing returns nothing
     local timer t = null
     local unit u = GetTriggerUnit()
     local unit u2 = GetAttacker()
+    local unit attackerHero = udg_units01[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]
     local real luck =  GetUnitLuck(u)
     
     
@@ -54,7 +55,7 @@ function Trig_Spell12_Actions takes nothing returns nothing
     
     //Demon Hunter
     if GetUnitTypeId(u2) == 'O004' then
-        set r1 =  GetHeroLevel(   udg_units01[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]   )*20
+        set r1 =  GetHeroLevel(   attackerHero   )*20
         set r2 = GetUnitState(u, UNIT_STATE_MANA)
         set r3 = r2 - r1
         call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA)-r1  )
@@ -100,9 +101,13 @@ function Trig_Spell12_Actions takes nothing returns nothing
         call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", u, "head"))
         call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", u2, "head"))
     endif
+    
+    //Huntress
     if GetUnitTypeId(u2) == 'N00R' then
-        call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  7+GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer( u2  )  )] )*7 , ConvertAbilityRealLevelField('Ocl1') )
+        call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.097 + (0.003 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
     endif
+
+
     if (GetUnitAbilityLevel(GetTriggerUnit(),'A02U' ) >= 1)  and (GetRandomReal(1,100)<= 12*luck) then
         call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A02V',"fanofknives",  GetHeroStr(GetTriggerUnit(),true)*(60+20*I2R(GetUnitAbilityLevel(u,'A02U' )))/100, ConvertAbilityRealLevelField('Ocl1') )
     endif

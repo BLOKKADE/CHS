@@ -9,6 +9,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
     local integer i = 0
     local real r3 = 0
     local real r2 = 0
+    local integer vampCount = 0
     local real r1 = 0
     local integer i1 = 0
     local integer i2 = 0
@@ -86,7 +87,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
 	if LoadInteger(HTi,GetHandleId(GUS),1) == 1 then
         set r2 = (GetEventDamage()/4)
         call Vamp(TrigA,TrigU,r2)
-		call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", GUS, "chest"))		
+        set vampCount = vampCount + 1	
 		call BlzSetEventDamage(   GetEventDamage()*0.75 )
 	endif
 
@@ -95,14 +96,14 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
     if r1 > 0 then
         set r2 = GetEventDamage()*(0.005 + 0.005*r1 +  GetClassUnitSpell(TrigA,11)*0.02 )
         call Vamp(TrigA,TrigU,r2)
-		call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", TrigA, "chest"))   
+        set vampCount = vampCount + 1
     endif
 
     //Dreadlord Passive
 	if GetUnitTypeId(GUS) == 'O002' then
         set r2 = GetEventDamage()*(0.02*I2R(GetHeroLevel(GUS)) )
         call Vamp(TrigA,TrigU,r2)
-		call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", GUS, "chest"))
+        set vampCount = vampCount + 1
 	endif	
     
     //Ghoul Passive
@@ -110,9 +111,8 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
         set i = GetHeroLevel(TrigA)
         set r2 = (GetEventDamage() * (i * 0.01))
         call Vamp(TrigA,TrigU,r2)
-        
+        set vampCount = vampCount + 1
         call BlzSetEventDamage(   GetEventDamage()+ r2 ) 
-        call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", TrigA, "chest")) 
     endif
 
     //Mortar Aura
@@ -145,7 +145,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
         if i > 0 then
             set r2 = GetEventDamage()*(  0.25* I2R(i))
             call Vamp(TrigA,TrigU,r2)
-		call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", TrigA, "chest"))      
+            set vampCount = vampCount + 1  
         endif
    endif
 
@@ -153,7 +153,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
 	if GetUnitAbilityLevel(GUS  ,'B00O') >= 1 and  BlzGetEventDamageType() !=  DAMAGE_TYPE_NORMAL  then
         set r2 = GetEventDamage()*0.33 
         call Vamp(TrigA,TrigU,r2)
-		call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", GUS, "chest"))
+        set vampCount = vampCount + 1
 	endif
 
     //Heavy Blow
@@ -176,8 +176,8 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
 
     //Frostmourne
 	if GetUnitAbilityLevel(GUS ,'B008') >= 1 then
-       call Vamp(GUS,TrigU, (GetEventDamage()/4))
-	   call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Undead\\UndeadBlood\\UndeadBloodCryptFiend.mdl", TrigA, "chest"))		
+       call Vamp(GUS,TrigU, (GetEventDamage()/4))	
+       set vampCount = vampCount + 1 
 	endif
 	
 	//Heavy Mace
@@ -186,15 +186,19 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
 	    set r1 =  (GetWidgetLife(TrigU)/100)*1.5*I2R(i)  
         call Vamp(TrigA,TrigU,r1)
 	    call BlzSetEventDamage( GetEventDamage()+r1)
-	    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", TrigU, "chest"))
+        set vampCount = vampCount + 1
 	endif
     
     //Cutting
     if GLOB_cuttting then
         call Vamp(TrigA,TrigU,GetEventDamage()/2 )
-        call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", TrigA, "chest"))
+        set vampCount = vampCount + 1 
         call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Other\\PandarenBrewmasterBlood\\PandarenBrewmasterBlood.mdl", TrigU, "chest"))
     endif 
+
+    if vampCount > 0 then
+        call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", TrigA, "chest"))
+    endif
     
     //Finishing Blow
 	if GetUnitAbilityLevel(GUS ,'A02N') >= 1 then
@@ -264,6 +268,11 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
                 call BlzSetEventDamage(  BlzGetUnitMaxMana(TrigU)/5 ) 
             endif
         endif
+    endif
+
+    //Flimsy Token
+    if UnitHasItemS(TrigU, 'I0A3') and GetUnitAbilityLevel(TrigA, 'B01Q') == 0 then
+        call FlimsyToken(TrigU, TrigA)
     endif
 
     //Blademaster

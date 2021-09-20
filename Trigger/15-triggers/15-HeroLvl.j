@@ -117,29 +117,6 @@ function BaraBonus takes unit UnitHero returns nothing
     if AbilLvl > 0 and AbilLvl < 40 then
         call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl+1) 
     endif 
-
-
-
-endfunction
-
-function ItemLvlAction takes unit u, integer lvl returns nothing
-local integer i = 0 
-
-set i = UnitHasItemI(u,'I071')
-if i > 0 then
-     call SetHeroStr(u, GetHeroStr(u,false) + 2*i ,false)
-endif
-set i = UnitHasItemI(u,'I072')
-if i > 0 then
-     call SetHeroInt(u, GetHeroInt(u,false) + 2*i ,false)
-endif
-set i = UnitHasItemI(u,'I073')
-if i > 0 then
-     call SetHeroAgi(u, GetHeroAgi(u,false) + 2*i ,false)
-endif
-
-
-
 endfunction
 
 function UpdateAbilityDesc takes unit h, player p, integer heroLvl returns nothing
@@ -168,20 +145,31 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
     local boolean Economic =  GetUnitAbilityLevel(UnitHero,'Asal') == 0 and GetUnitAbilityLevel(UnitHero,'A02W') == 0
     local integer i = 0
 
+    if UnitHero == null then
+        set UnitHero = null
+        set Pl = null
+        return
+    endif
 
     if I_l < 250 then
-    
         if Economic then
           call AdjustPlayerStateBJ( (I_l+20)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
           call AdjustPlayerStateBJ( 8*(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
+          call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cffffcc00+" + I2S((I_l+20)*(RI)) + " gold|r and |cff1eff00+" + I2S(8*(RI)) + " lumber|r for leveling up")
         else
           call AdjustPlayerStateBJ( (I_l+2)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
           call AdjustPlayerStateBJ( 4*(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
+          call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cffffcc00+" + I2S((I_l+2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4*(RI)) + " lumber|r for leveling up")
         endif
     
     endif
     
+    if ModuloInteger(I_l+1, 25) == 0 then
+        call AdjustPlayerStateBJ( I_l+1, Pl, PLAYER_STATE_RESOURCE_LUMBER) 
+        call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cff1eff00+" + I2S(I_l+1) + " bonus lumber|r for reaching |cffbda546level " + I2S(I_l+1) + "!|r")
+    endif
 
+    /*
     if (Bonus25l[Pid])==false and I_l >= 25 then
 	set Bonus25l[Pid] = true
   	call AdjustPlayerStateBJ( 25, Pl, PLAYER_STATE_RESOURCE_LUMBER) 
@@ -214,11 +202,12 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
 	 set Bonus200l[Pid] = true
   	 call AdjustPlayerStateBJ( 300, Pl, PLAYER_STATE_RESOURCE_LUMBER)
     endif
-
+    */
     call ResourseRefresh(Pl) 
 
-    call ItemLvlAction(UnitHero,RI)
-    
+    call SetHeroStr(UnitHero, GetHeroStr(UnitHero, false) + R2I(GetStrengthLevelBonus(UnitHero)), true)
+    call SetHeroAgi(UnitHero, GetHeroAgi(UnitHero, false) + R2I(GetAgilityLevelBonus(UnitHero)), true)
+    call SetHeroInt(UnitHero, GetHeroInt(UnitHero, false) + R2I(GetIntelligenceLevelBonus(UnitHero)), true)
     
     if TypeHero == 'E000' then //Letinant    
 
@@ -413,8 +402,8 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
                 exitwhen  LastLvlHero[Pid] ==  I_l  
                 
                  
-                    set Glory[Pid] = Glory[Pid] + 30
-                    call UpdateBonus(UnitHero, 0, 30)   
+                    set Glory[Pid] = Glory[Pid] + 200
+                    call UpdateBonus(UnitHero, 0, 200)   
                     
                set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
            endloop          
@@ -422,7 +411,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
             call ResourseRefresh(GetOwningPlayer(UnitHero)) 
     elseif TypeHero == 'N00P' then              
             
-        call SetBonus(UnitHero, 0, R2I(I_l/3))   
+        call SetBonus(UnitHero, 0, R2I(I_l/4))   
             /*
             loop
                 exitwhen  BRL_BONUS [Pid] ==  I_l /2
@@ -443,7 +432,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
           set LastLvlHero[Pid]  = I_l 
   
      elseif TypeHero == 'N00R' then         
-        call SetBonus(UnitHero, 0, (I_l+1) * 7)   
+        call SetBonus(UnitHero, 0, 97 + ((I_l+1) * 3))   
      elseif TypeHero == 'N00O' then   
      
         loop
@@ -594,11 +583,11 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
      
          loop
             exitwhen  LastLvlHero[Pid] ==  I_l    
-            call AddUnitEvasion(UnitHero,0.9)
-            call UpdateBonus(UnitHero, 0, 0.9)   
+            call AddUnitEvasion(UnitHero, 0.5)
+            call UpdateBonus(UnitHero, 0, 0.5)
             set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
          endloop 
-         
+         call SetBonus(UnitHero, 1, 98 + ((I_l+1) * 2))
         elseif TypeHero == 'H01G' then
      
          loop
@@ -609,6 +598,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
          endloop 
         
     endif
+    
     
     call UpdateAbilityDesc(UnitHero, Pl, GetHeroLevel(UnitHero))
 

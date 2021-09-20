@@ -4,12 +4,26 @@ globals
     integer MorePvp = 1 
     boolean duel
     integer IncomeMode = 0
+    integer AbilityMode = 0
+    integer array LumberGained
     dialog IncomeDialog
+    Table roundAbilities
+    integer ReflectionAuraChance = 0
+    integer WizardbaneAuraChance = 0
+    integer DrunkenMasterchance = 0
+    integer SlowAuraChance = 0
+    integer PulverizeChance = 0 
+    integer LastBreathChance = 0
+    integer FireshieldChance = 0
+    integer CorrosiveSkinChance = 0
+    integer MulticastChance = 0
+    integer FastMagicChance = 0
   endglobals
   
   function InitGlobals3 takes nothing returns nothing
   local integer i=0
   set udg_integer01=0	
+  set roundAbilities = Table.create()
   set i=0
   loop
   exitwhen(i>1)
@@ -659,7 +673,7 @@ globals
   set udg_unit34=CreateUnit(p,'ncop',512.0,256.0,270.000)
   //	set u=CreateUnit(p,'n00A',-960.0,-604.0,270.000)
   //	set u=CreateUnit(p,'n00M',960.0,-604.0,270.000)
-  if(udg_boolean05==false)then
+  if(udg_boolean05==false) and AbilityMode == 1 then
   
   
   
@@ -693,7 +707,7 @@ globals
   set u=CreateUnit(p,'n02N',1116,707+248,270.000)  
   set u=CreateUnit(p,'n032',372,707+248,270.000)  
   set u=CreateUnit(p,'n02X',868,707+248,270.000) 
-  
+  set u=CreateUnit(p,'n031',620,707+248,270.000) 
   
    
   //		set u=CreateUnit(p,'n001',384.0,576.0,270.000)
@@ -708,12 +722,13 @@ globals
   
   //		set u=CreateUnit(p,'n00S',0,-1160,270.000)
   else
+    set u=CreateUnit(p, 'n031', 0, 750, 270) 
   //	set u=CreateUnit(p,'n004',0.0,640.0,270.000)
   //	set u=CreateUnit(p,'n016',-960.0,-256.0,270.000)
   //	set u=CreateUnit(p,'n016',0.0,-1152.0,270.000)
   //	set u=CreateUnit(p,'n016',960.0,-256.0,270.000)
   endif
-  set u=CreateUnit(p,'n031',620,707+248,270.000) 
+  
   set u=CreateUnit(p,'n02H',-868,-1152,270.000) 
   set u=CreateUnit(p,'n00A',-620,-1152,270.000) 
   set u=CreateUnit(p,'n00M',-372,-1152,270.000) 
@@ -831,7 +846,7 @@ globals
   local real luck = GetUnitLuck(GetTriggerUnit())
   
   if GetRandomReal(0,100) <= 25*luck then
-  call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetAttackedUnitBJ()),GetUnitLoc(GetAttackedUnitBJ()),bj_UNIT_FACING)
+  call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetAttackedUnitBJ()),GetUnitLoc(GetAttackedUnitBJ()),bj_UNIT_FACING)
   call UnitAddAbilityBJ('A00R',GetLastCreatedUnit())
   call SetUnitAbilityLevelSwapped('A00R',GetLastCreatedUnit(),GetUnitAbilityLevelSwapped('A00Q',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetAttackedUnitBJ()))]))
   call IssueTargetOrderBJ(GetLastCreatedUnit(),"firebolt",GetAttacker())
@@ -886,7 +901,7 @@ globals
   endfunction
   
   function Trig_Devastating_Blow_Actions takes nothing returns nothing
-    if GetUnitAbilityLevel(GetTriggerUnit(), 'B01D') == 0 then
+    if GetUnitAbilityLevel(GetTriggerUnit(), 'B01D') == 0 and GetEventDamageSource() != GetTriggerUnit() then
     call DestroyEffectBJ(udg_effects01[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))])
     call DestroyEffectBJ(udg_effects02[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))])
     set udg_effects01[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))] = null
@@ -1116,146 +1131,95 @@ globals
   endfunction
   
   
-  
-  function Trig_Pillage_Conditions takes nothing returns boolean
-  local integer GG_d1 = 0
-  local integer PilageBonus = 0
-  local integer RingBonus = 0
-  local integer RemBon = 0
-  local integer XpBonus = 0
-  local integer GoldBonus = 0
-  local unit Gku = udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]
-  local player OwningUnit = GetOwningPlayer(Gku)     
-  local integer pid = GetPlayerId(OwningUnit)
-  local real luck = GetUnitLuck(Gku)
-  
-  
-  
-  set XpBonus =XpBonus + BonusNeutral+BonusNeutralPlayer[pid] 
-  
-  //Greedy Goblin
-  if GetUnitTypeId(Gku) == 'N02P' then
-  set GoldBonus = GoldBonus + (((21+GetHeroLevel(Gku)*4)*70)/(70 + GetUnitAbilityLevel(Gku,'Asal')))
-  set XpBonus = XpBonus + (((20+GetHeroLevel(Gku)*5)*70)/(70 + GetUnitAbilityLevel(Gku,'Asal')))
-  set RemBon = 20
-  call AdjustPlayerStateBJ(GoldBonus,OwningUnit,PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh(OwningUnit)
-  endif
-  
-  
-  set udg_integer60=0
-  
-  
-  if    (IsUnitIllusionBJ(GetTriggerUnit())!=true) and (GetUnitTypeId(GetTriggerUnit())!='n00T') and (GetUnitAbilityLevelSwapped('Asal',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])>0) and  (IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))) then
-  
-  
-  if   GetRandomReal(0,100) <= 65*luck then
-  set PilageBonus=PilageBonus +(((GetUnitAbilityLevelSwapped('Asal',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])*18)*70)/(70+RemBon+GetUnitAbilityLevelSwapped('A02W',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))  )
-  call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
-  call DestroyEffectBJ(GetLastCreatedEffectBJ())
-  else
-  endif	
-  
-  endif
-  
-  
-  if    (IsUnitIllusionBJ(GetTriggerUnit())!=true) and (GetUnitTypeId(GetTriggerUnit())!='n00T') and (GetUnitAbilityLevelSwapped('A02W',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])>0) and  (IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))) then
-  
-  set XpBonus = XpBonus +    ( 35* GetUnitAbilityLevel(Gku,'A02W') *70 )/(70+RemBon+GetUnitAbilityLevel(Gku,'Asal')   )	
-  endif	
-  
-  
-  if   GetItemTypeId(UnitItemInSlot( Gku,0)) == 'I04R' then
-  set RingBonus= RingBonus + 10
-  endif
-  if   GetItemTypeId(UnitItemInSlot( Gku,1)) == 'I04R' then
-  set RingBonus= RingBonus + 10
-  endif
-  if   GetItemTypeId(UnitItemInSlot( Gku,2)) == 'I04R' then
-  set RingBonus= RingBonus + 10
-  endif
-  if   GetItemTypeId(UnitItemInSlot( Gku,3)) == 'I04R' then
-  set RingBonus= RingBonus + 10
-  endif
-  if   GetItemTypeId(UnitItemInSlot( Gku,4)) == 'I04R' then
-  set RingBonus= RingBonus + 10
-  endif
-  if   GetItemTypeId(UnitItemInSlot( Gku,5)) == 'I04R' then
-  set RingBonus= RingBonus + 10
-  endif
-  
-  
-  
-  //fixPilage
-  
-  
-  
-  
-  if RingBonus >   PilageBonus then
-  set udg_integer60 =  RingBonus
-  call AdjustPlayerStateBJ(RingBonus,GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh( GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])) 
-  
-  else
-  set udg_integer60 =  PilageBonus
-  call AdjustPlayerStateBJ(PilageBonus,GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh( GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))
-  endif  
-  
-  if UnitHasItemS(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],'I05U') then
-  if PilageBonus == 0 then
-       set GG_d1 = GG_d1 +  2*GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])
-  else
-       set GG_d1 = GG_d1 +  GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]) 
-  endif
-  endif
-  
-  
-  if   GetItemTypeId(UnitItemInSlot( udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],0)) == 'I05A' then
-  set udg_integer60= udg_integer60 + 50
-  set GG_d1 = GG_d1 + 50
-  call AdjustPlayerStateBJ(50,GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh( GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))
-  
-  endif
-  if   GetItemTypeId(UnitItemInSlot( udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],1)) == 'I05A' then
-  set udg_integer60= udg_integer60 + 50
-          set GG_d1 = GG_d1 + 50
-  call AdjustPlayerStateBJ(50,GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh( GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))
-  endif
-  if   GetItemTypeId(UnitItemInSlot( udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],2)) == 'I05A' then
-  set udg_integer60= udg_integer60 + 50
-          set GG_d1 = GG_d1 + 50
-  call AdjustPlayerStateBJ(50,GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh( GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))
-  endif
-  if   GetItemTypeId(UnitItemInSlot( udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],3)) == 'I05A' then
-  set udg_integer60= udg_integer60 + 50
-          set GG_d1 = GG_d1 + 50
-  call AdjustPlayerStateBJ(50,GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh( GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))
-  endif
-  if   GetItemTypeId(UnitItemInSlot( udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],4)) == 'I05A' then
-  set udg_integer60= udg_integer60 + 50
-          set GG_d1 = GG_d1 + 50
-  call AdjustPlayerStateBJ(50,GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh( GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))
-  endif
-  if   GetItemTypeId(UnitItemInSlot( udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],5)) == 'I05A' then
-  set udg_integer60= udg_integer60 + 50
-          set GG_d1 = GG_d1 + 50
-  call AdjustPlayerStateBJ(50,GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh( GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))
-  endif
-  
-  set udg_integer60= udg_integer60 +GoldBonus 
-  call AddHeroXP (Gku, GG_d1+XpBonus,true)
-         
-  
-  return false
-  endfunction
-  
+  library Pillage requires RandomShit
+    function Trig_Pillage_Conditions takes nothing returns boolean
+    local integer GG_d1 = 0
+    local integer PilageBonus = 0
+    local integer RingBonus = 0
+    local integer RemBon = 0
+    local integer XpBonus = 0
+    local integer GoldBonus = 0
+    local unit Gku = udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]
+    local player OwningUnit = GetOwningPlayer(Gku)     
+    local integer pid = GetPlayerId(OwningUnit)
+    local real luck = GetUnitLuck(Gku)
+    local integer itemCount = 0
+    
+    
+    set XpBonus =XpBonus + BonusNeutral+BonusNeutralPlayer[pid] 
+    
+    //Greedy Goblin
+    if GetUnitTypeId(Gku) == 'N02P' then
+    set GoldBonus = GoldBonus + (((21+GetHeroLevel(Gku)*4)*70)/(70 + GetUnitAbilityLevel(Gku,'Asal')))
+    set XpBonus = XpBonus + (((20+GetHeroLevel(Gku)*5)*70)/(70 + GetUnitAbilityLevel(Gku,'Asal')))
+    set RemBon = 20
+    call AdjustPlayerStateBJ(GoldBonus,OwningUnit,PLAYER_STATE_RESOURCE_GOLD)
+    call ResourseRefresh(OwningUnit)
+    endif
+    
+    
+    set udg_integer60=0
+    
+    
+    if    (IsUnitIllusionBJ(GetTriggerUnit())!=true) and (GetUnitTypeId(GetTriggerUnit())!='n00T') and (GetUnitAbilityLevelSwapped('Asal',Gku)>0) and  (IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(Gku))) then
+    
+    
+    if   GetRandomReal(0,100) <= 65*luck then
+    set PilageBonus=PilageBonus +(((GetUnitAbilityLevelSwapped('Asal',Gku)*18)*70)/(70+RemBon+GetUnitAbilityLevelSwapped('A02W',Gku))  )
+    call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
+    call DestroyEffectBJ(GetLastCreatedEffectBJ())
+    else
+    endif	
+    
+    endif
+    
+    
+    if (IsUnitIllusionBJ(GetTriggerUnit())!=true) and (GetUnitTypeId(GetTriggerUnit())!='n00T') and (GetUnitAbilityLevelSwapped('A02W',Gku)>0) and  (IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(Gku))) then
+        set XpBonus = XpBonus +    ( 35* GetUnitAbilityLevel(Gku,'A02W') *70 )/(70+RemBon+GetUnitAbilityLevel(Gku,'Asal')   )	
+    endif	
+    
+    set itemCount = UnitHasItemI(Gku, 'I04R')
+    if itemCount > 0 then
+        set RingBonus = RingBonus + 10 * itemCount
+    endif
+    
+    //fixPilage? < idk why that comment is there
+
+    if RingBonus >   PilageBonus then
+        set udg_integer60 =  RingBonus
+        call AdjustPlayerStateBJ(RingBonus,GetOwningPlayer(Gku),PLAYER_STATE_RESOURCE_GOLD)
+        call ResourseRefresh( GetOwningPlayer(Gku)) 
+    else
+        set udg_integer60 =  PilageBonus
+        call AdjustPlayerStateBJ(PilageBonus,GetOwningPlayer(Gku),PLAYER_STATE_RESOURCE_GOLD)
+        call ResourseRefresh( GetOwningPlayer(Gku))
+    endif  
+
+    set itemCount = UnitHasItemI(Gku, 'I05U')
+    if itemCount > 0 then
+        if PilageBonus == 0 then
+            set GG_d1 = GG_d1 +  (2*GetHeroLevel(Gku)) * itemCount
+        else
+            set GG_d1 = GG_d1 +  (GetHeroLevel(Gku)) * itemCount 
+        endif
+    endif
+
+    set itemCount = UnitHasItemI(Gku, 'I05A')
+    if itemCount > 0 then
+        set udg_integer60= udg_integer60 + (50 * itemCount)
+        set GG_d1 = GG_d1 + (50 * itemCount)
+        call AdjustPlayerStateBJ(50 * itemCount,GetOwningPlayer(Gku),PLAYER_STATE_RESOURCE_GOLD)
+        call ResourseRefresh(GetOwningPlayer(Gku))
+    endif
+
+
+    
+    set udg_integer60= udg_integer60 +GoldBonus 
+    call AddHeroXP (Gku, GG_d1+XpBonus,true)
+            
+    return false
+    endfunction
+endlibrary
   
   
   
@@ -1821,6 +1785,7 @@ globals
   set GRP = null
   endfunction
   
+  /*
   function Trig_Disable_Abilities_Func001Func003Func003Func003C takes nothing returns boolean
   if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)!=true))then
   return false
@@ -1872,16 +1837,18 @@ globals
   endif
   return true
   endfunction
+  */
   
   function Trig_Disable_Abilities_Actions takes nothing returns nothing
-  if(Trig_Disable_Abilities_Func001C())then
-  call IssueImmediateOrderBJ(GetTriggerUnit(),"stop")
+  if(Trig_Disable_Abilities_Func001C(GetTriggerUnit()))then
+    call IssueImmediateOrderBJ(GetTriggerUnit(),"stop")
   
   else
-  call ConditionalTriggerExecute(udg_trigger37)
+  //call ConditionalTriggerExecute(udg_trigger37)
   endif
   endfunction
   
+  /*
   function Trig_Cast_Channeling_Ability_Func001Func002C takes nothing returns boolean
     local integer abilId = GetSpellAbilityId()
     return abilId == 'AHbz' or abilId == 'ANrf' or abilId == 'ANst' or abilId == 'ANvc' or abilId == 'AEtq' or abilId == 'Aclf' or abilId == 'ANmo' or abilId == 'AEsf'
@@ -1951,46 +1918,51 @@ globals
     local integer order = GetUnitCurrentOrder(GetTriggerUnit())
     local location spellLoc = GetSpellTargetLoc()
     local integer abilId = GetSpellAbilityId()
-    if abilId != 'AEtq' and abilId != 'AEsf'then
-        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),PolarProjectionBJ(GetSpellTargetLoc(),256.00,AngleBetweenPoints(GetSpellTargetLoc(),GetUnitLoc(GetTriggerUnit()))),bj_UNIT_FACING)
-    else
-        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
-    endif
+    local real manaCost = BlzGetAbilityManaCost(abilId, GetUnitAbilityLevel(GetTriggerUnit(), abilId))
+    if GetUnitState(GetTriggerUnit(), UNIT_STATE_MANA) - manaCost > 0 then
+        if abilId != 'AEtq' and abilId != 'AEsf'then
+            call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),PolarProjectionBJ(GetSpellTargetLoc(),256.00,AngleBetweenPoints(GetSpellTargetLoc(),GetUnitLoc(GetTriggerUnit()))),bj_UNIT_FACING)
+        else
+            call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+        endif
 
-    call UnitApplyTimedLifeBJ(60.00,'BTLF',GetLastCreatedUnit())
-    call UnitAddAbilityBJ(GetSpellAbilityId(),GetLastCreatedUnit())
-    call SetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetLastCreatedUnit(),GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit()))
+        call UnitApplyTimedLifeBJ(60.00,'BTLF',GetLastCreatedUnit())
+        call UnitAddAbilityBJ(GetSpellAbilityId(),GetLastCreatedUnit())
+        call SetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetLastCreatedUnit(),GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit()))
 
-    if order == 852183 or order == 852184 then
-        call IssueImmediateOrderById(GetLastCreatedUnit(), order)
-    else
-        call IssuePointOrderById(GetLastCreatedUnit(), order, GetLocationX(spellLoc), GetLocationY(spellLoc))
+        if order == 852183 or order == 852184 then
+            call IssueImmediateOrderById(GetLastCreatedUnit(), order)
+        else
+            call IssuePointOrderById(GetLastCreatedUnit(), order, GetLocationX(spellLoc), GetLocationY(spellLoc))
+        endif
+        /*
+        if GetSpellAbilityId()=='ANmo' then
+        call IssuePointOrderLocBJ(GetLastCreatedUnit(),"blizzard",GetSpellTargetLoc())
+        elseif GetSpellAbilityId()=='ANmo' then
+        call IssuePointOrderLocBJ(GetLastCreatedUnit(),"rainoffire",GetSpellTargetLoc())
+            elseif GetSpellAbilityId()=='ANmo' then
+        call IssuePointOrderLocBJ(GetLastCreatedUnit(),"stampede",GetSpellTargetLoc())
+            elseif GetSpellAbilityId()=='ANmo' then
+        call IssuePointOrderLocBJ(GetLastCreatedUnit(),"volcano",GetSpellTargetLoc())
+            elseif GetSpellAbilityId()=='ANmo' then
+        call IssueImmediateOrderBJ(GetLastCreatedUnit(),"tranquility")
+            elseif GetSpellAbilityId()=='ANmo' then
+        call IssuePointOrderLocBJ(GetLastCreatedUnit(),"cloudoffog",GetSpellTargetLoc())
+        elseif GetSpellAbilityId()=='ANmo' then
+        call IssuePointOrderLocBJ(GetLastCreatedUnit(),"monsoon",GetSpellTargetLoc())
+        elseif 
+        endif
+        */
+        call TriggerSleepAction(0.00)
+        call IssueImmediateOrderBJ(GetTriggerUnit(),"stop")
+        call SetUnitAnimation(GetTriggerUnit(),"spell")
+        call QueueUnitAnimationBJ(GetTriggerUnit(),"stand")
+        call SetUnitState(GetTriggerUnit(), UNIT_STATE_MANA, GetUnitState(GetTriggerUnit(), UNIT_STATE_MANA) - manaCost)
+        call AbilStartCD(GetTriggerUnit(), abilId, BlzGetUnitAbilityCooldown(GetTriggerUnit(), abilId, GetUnitAbilityLevel(GetTriggerUnit(), abilId)))
     endif
-  /*
-  if GetSpellAbilityId()=='ANmo' then
-  call IssuePointOrderLocBJ(GetLastCreatedUnit(),"blizzard",GetSpellTargetLoc())
-  elseif GetSpellAbilityId()=='ANmo' then
-  call IssuePointOrderLocBJ(GetLastCreatedUnit(),"rainoffire",GetSpellTargetLoc())
-    elseif GetSpellAbilityId()=='ANmo' then
-  call IssuePointOrderLocBJ(GetLastCreatedUnit(),"stampede",GetSpellTargetLoc())
-    elseif GetSpellAbilityId()=='ANmo' then
-  call IssuePointOrderLocBJ(GetLastCreatedUnit(),"volcano",GetSpellTargetLoc())
-    elseif GetSpellAbilityId()=='ANmo' then
-  call IssueImmediateOrderBJ(GetLastCreatedUnit(),"tranquility")
-    elseif GetSpellAbilityId()=='ANmo' then
-  call IssuePointOrderLocBJ(GetLastCreatedUnit(),"cloudoffog",GetSpellTargetLoc())
-  elseif GetSpellAbilityId()=='ANmo' then
-  call IssuePointOrderLocBJ(GetLastCreatedUnit(),"monsoon",GetSpellTargetLoc())
-  elseif 
-  endif
-  */
-  call TriggerSleepAction(0.00)
-  call IssueImmediateOrderBJ(GetTriggerUnit(),"stop")
-  call SetUnitAnimation(GetTriggerUnit(),"spell")
-  call QueueUnitAnimationBJ(GetTriggerUnit(),"stand")
-  call RemoveLocation(spellLoc)
+    call RemoveLocation(spellLoc)
   set spellLoc = null
-  endfunction
+  endfunction*/
   
   function Trig_Acquire_Item_Conditions takes nothing returns boolean
   if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
@@ -2216,6 +2188,20 @@ globals
   endif
   return true
   endfunction
+
+  function ShowDraftBuildings takes boolean b returns nothing
+    local integer i = 0
+    if AbilityMode == 2 then
+        loop
+            call ShowUnit(circle1, b)
+            call ShowUnit(circle2, b)
+            call ShowUnit(udg_Draft_DraftBuildings[i], b)
+            call ShowUnit(udg_Draft_UpgradeBuildings[i], b)
+            set i = i + 1
+            exitwhen i > 9
+        endloop
+    endif
+  endfunction
   
   function Trig_Battle_Royal_Actions takes nothing returns nothing
   call DisableTrigger(udg_trigger149)
@@ -2230,6 +2216,7 @@ globals
   call DisplayTextToForce(GetPlayersAll(),"|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL")
   call PauseAllUnitsBJ(true)
   call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+  call ShowDraftBuildings(false)
   call ForGroupBJ(GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE),Condition(function Trig_Battle_Royal_Func015001002)),function Trig_Battle_Royal_Func015A)
   set bj_forLoopAIndex=1
   set bj_forLoopAIndexEnd=8
@@ -2301,7 +2288,6 @@ globals
     endif
     
     call KillUnit(u)
-    call RemoveUnit(u)
     set u = null
   endfunction
   
@@ -2877,6 +2863,9 @@ globals
   
   call DialogAddButtonBJ(udg_dialog03,"Random Abilities")
   set udg_buttons01[8]=GetLastCreatedButtonBJ()
+
+  call DialogAddButtonBJ(udg_dialog03,"Draft Abilities")
+  set udg_buttons01[22]=GetLastCreatedButtonBJ()
   
   call DialogAddButtonBJ(udg_dialog03,"Doesn't Matter")
   set udg_buttons01[9]=GetLastCreatedButtonBJ()
@@ -3213,6 +3202,18 @@ globals
   set udg_integers07[7]=(udg_integers07[7]+1)
   call DialogDisplayBJ(true,udg_dialog07,GetTriggerPlayer())
   endfunction
+
+  function Trig_Draft_Abilities_Conditions takes nothing returns boolean
+    if(not(GetClickedButtonBJ()==udg_buttons01[22]))then
+        return false
+    endif
+        return true
+    endfunction
+    
+    function Trig_Draft_Abilities_Actions takes nothing returns nothing
+        set udg_integers07[19]=(udg_integers07[19]+1)
+        call DialogDisplayBJ(true,udg_dialog07,GetTriggerPlayer())
+    endfunction
   
   function Trig_Doesnt_Matter_Abilities_Conditions takes nothing returns boolean
   if(not(GetClickedButtonBJ()==udg_buttons01[9]))then
@@ -3636,11 +3637,23 @@ globals
   call DeleteUnit(GetEnumUnit())
   endfunction
   
-  function Trig_Dialog_Complete_Func010C takes nothing returns boolean
-  if(not(udg_integers07[7]>udg_integers07[6]))then
-  return false
-  endif
-  return true
+  function CheckAbilityVotes takes nothing returns nothing
+    //random
+    if udg_integers07[7] > udg_integers07[6] and udg_integers07[7] > udg_integers07[19] then
+        set AbilityMode = 0
+
+    //pick
+    elseif udg_integers07[6] > udg_integers07[7] and udg_integers07[6] > udg_integers07[19] then
+        set AbilityMode = 1
+    
+    //draft
+    elseif udg_integers07[19] > udg_integers07[6] and udg_integers07[19] > udg_integers07[7] then
+        set AbilityMode = 2
+
+    //if tie just do ap
+    else
+        set AbilityMode = 1
+    endif
   endfunction
   
   function Trig_Dialog_Complete_Func012C takes nothing returns boolean
@@ -3909,58 +3922,60 @@ globals
     endif
     endif
     if(Trig_Dialog_Complete_Func008C())then
-    if(Trig_Dialog_Complete_Func008Func002C())then
-        call DisableTrigger(GetTriggeringTrigger())
-        set udg_boolean08=true
-    else
-        call DisableTrigger(GetTriggeringTrigger())
-        set udg_boolean08=false
-    endif
-    if(Trig_Dialog_Complete_Func008Func003C())then
-        set udg_strings02[1]="Mode: Normal (25 Levels)|r"
-        call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000"+udg_strings02[1]))
-        call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
-        set Lives[0] = 1
-           set Lives[1] = 1
-           set Lives[2] = 1
-          set Lives[3] = 1
-         set Lives[4] = 1
-           set Lives[5] = 1
-           set Lives[6] = 1
-          set Lives[7] = 1
-         set Lives[8] = 1
-        set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+"|n"))
-        set udg_strings02[1]="PvP: Every 5th Level|r"
-        if(Trig_Dialog_Complete_Func008Func003Func012001())then
-            set udg_strings02[1]="PvP: None|r"
+        if(Trig_Dialog_Complete_Func008Func002C())then
+            call DisableTrigger(GetTriggeringTrigger())
+            set udg_boolean08=true
         else
-            call DoNothing()
+            call DisableTrigger(GetTriggeringTrigger())
+            set udg_boolean08=false
         endif
-        call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000"+udg_strings02[1]))
-        call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func014001001)),function Trig_Dialog_Complete_Func008Func003Func014A)
-    else
-        set udg_strings02[1]="Mode: Normal (50 Levels)|r"
-        call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000"+udg_strings02[1]))
-        call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
-           set Lives[0] = 1
-           set Lives[1] = 1
-           set Lives[2] = 1
-          set Lives[3] = 1
-         set Lives[4] = 1
-           set Lives[5] = 1
-           set Lives[6] = 1
-          set Lives[7] = 1
-         set Lives[8] = 1	       	
-        set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+"|n"))
-        set udg_strings02[1]="PvP: Every 5th Level|r"
-        if(Trig_Dialog_Complete_Func008Func003Func006001())then
-            set udg_strings02[1]="PvP: None|r"
+        
+        //boolean08
+        if(Trig_Dialog_Complete_Func008Func003C())then
+            set udg_strings02[1]="Mode: Normal (25 Levels)|r"
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000"+udg_strings02[1]))
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
+            set Lives[0] = 1
+            set Lives[1] = 1
+            set Lives[2] = 1
+            set Lives[3] = 1
+            set Lives[4] = 1
+            set Lives[5] = 1
+            set Lives[6] = 1
+            set Lives[7] = 1
+            set Lives[8] = 1
+            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+"|n"))
+            set udg_strings02[1]="PvP: Every 5th Level|r"
+            if(Trig_Dialog_Complete_Func008Func003Func012001())then
+                set udg_strings02[1]="PvP: None|r"
+            else
+                call DoNothing()
+            endif
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000"+udg_strings02[1]))
+            call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func014001001)),function Trig_Dialog_Complete_Func008Func003Func014A)
         else
-            call DoNothing()
+            set udg_strings02[1]="Mode: Normal (50 Levels)|r"
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000"+udg_strings02[1]))
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
+            set Lives[0] = 1
+            set Lives[1] = 1
+            set Lives[2] = 1
+            set Lives[3] = 1
+            set Lives[4] = 1
+            set Lives[5] = 1
+            set Lives[6] = 1
+            set Lives[7] = 1
+            set Lives[8] = 1	       	
+            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+"|n"))
+            set udg_strings02[1]="PvP: Every 5th Level|r"
+            if(Trig_Dialog_Complete_Func008Func003Func006001())then
+                set udg_strings02[1]="PvP: None|r"
+            else
+                call DoNothing()
+            endif
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000"+udg_strings02[1]))
+            call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func008001001)),function Trig_Dialog_Complete_Func008Func003Func008A)
         endif
-        call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000"+udg_strings02[1]))
-        call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func008001001)),function Trig_Dialog_Complete_Func008Func003Func008A)
-    endif
     else
     endif
     call CheckIncomeVotes()
@@ -3974,14 +3989,22 @@ globals
     set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+"|n"))
     set udg_strings02[1]="Creep Upgrades: Disabled"
     endif
-    if(Trig_Dialog_Complete_Func010C())then
+    call CheckAbilityVotes()
+    if AbilityMode == 0 then
     set udg_boolean05=true
     set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+"|n"))
     set udg_strings02[1]="Type: Random Abilities"
-    else
+    elseif AbilityMode == 1 then
     set udg_boolean05=false
     set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+"|n"))
     set udg_strings02[1]="Type: Pick Abilities"
+    call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
+
+    //Draft mode
+    elseif AbilityMode == 2 then
+    set udg_boolean05=false
+    set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+"|n"))
+    set udg_strings02[1]="Type: Draft Abilities"
     call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
     endif
     if(Trig_Dialog_Complete_Func012C())then
@@ -4264,7 +4287,9 @@ globals
   call TriggerSleepAction(0.00)
   call ConditionalTriggerExecute(udg_trigger148)
   call ConditionalTriggerExecute(udg_trigger143)
-  
+  if AbilityMode == 2 and DraftInitialised == false then
+  call ConditionalTriggerExecute( gg_trg_DraftInit )
+  endif
   call CreateNeutralPassiveBuildings2()
   else
   endif
@@ -4314,29 +4339,31 @@ globals
   
   function Trig_Hero_Dies_Conditions takes nothing returns boolean
   if(not Trig_Hero_Dies_Func026C())then
-  return false
+    return false
   endif
                             //udg_boolean07
-  if ModeNoDeath == true and udg_boolean07 == false and udg_boolean02 == false  then
-  call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
-  call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
-  
-  call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[1+GetPlayerId(GetOwningPlayer(GetDyingUnit()))],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
-  
-  return false
+  if ModeNoDeath == true and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
+    call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
+    call FixDeath(GetDyingUnit())
+    call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
+    
+    call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[1+GetPlayerId(GetOwningPlayer(GetDyingUnit()))],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+    
+    return false
   endif
   
   if Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] > 0 and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
-  
-  
-  call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
-  call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
-  call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[1+GetPlayerId(GetOwningPlayer(GetDyingUnit()))],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
-  
-   set Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] = Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] - 1
-  call DisplayTextToPlayer(GetOwningPlayer(GetDyingUnit()) ,0,0,"You have " + I2S(Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))]) + " lives left")
-  
-  return false
+    
+    
+    call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
+    call FixDeath(GetDyingUnit())
+    call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
+    call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[1+GetPlayerId(GetOwningPlayer(GetDyingUnit()))],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+    
+    set Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] = Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] - 1
+    call DisplayTextToPlayer(GetOwningPlayer(GetDyingUnit()) ,0,0,"You have " + I2S(Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))]) + " lives left")
+    
+    return false
   endif
   
   
@@ -4492,6 +4519,7 @@ globals
   call PlaySoundBJ(udg_sound13)
   call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
   set udg_integer06=(udg_integer06-1)
+  call AllowSinglePlayerCommands()
   set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=true
   call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+"|cffC60000 was defeated!|r")))
   call DisableTrigger(udg_trigger16)
@@ -4746,6 +4774,8 @@ globals
   call ConditionalTriggerExecute(udg_trigger85)
   call PlaySoundOnUnitBJ(udg_sounds01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],100,GetTriggerUnit())
   endfunction
+
+  /*
   
   function Trig_Display_Hint_Func001Func001Func001001001001 takes nothing returns boolean
   return(IsPlayerInForce(GetFilterPlayer(),udg_force06)!=true)
@@ -4865,6 +4895,7 @@ globals
   set udg_integers12[3]=16
   call EnableTrigger(udg_trigger87)
   endfunction
+  */
   
   function Trig_Map_Initialization_Func010001001001001 takes nothing returns boolean
   return(GetFilterPlayer()!=Player(8))
@@ -4901,7 +4932,7 @@ globals
   set bj_forLoopAIndexEnd=8
   loop
   exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
-  call SetPlayerAllianceStateBJ(GetEnumPlayer(),ConvertedPlayer(GetForLoopIndexA()),bj_ALLIANCE_UNALLIED_VISION)
+  call SetPlayerAllianceStateBJ(GetEnumPlayer(),ConvertedPlayer(GetForLoopIndexA()),bj_ALLIANCE_UNALLIED)
   set bj_forLoopAIndex=bj_forLoopAIndex+1
   endloop
   call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,0)
@@ -5159,10 +5190,10 @@ endif
   function Trig_Scepter_of_Confusion_Actions takes nothing returns nothing
   set udg_integer14=GetRandomInt(1,4)
   if(Trig_Scepter_of_Confusion_Func002C())then
-  call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+  call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
   call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
-  call UnitAddItemByIdSwapped('will',GetLastCreatedUnit())
-  call UnitUseItemTarget(GetLastCreatedUnit(),GetLastCreatedItem(),GetTriggerUnit())
+  call UnitAddAbility(GetLastCreatedUnit(), 'A014')
+  call IssueTargetOrderById(GetLastCreatedUnit(), 852274, GetTriggerUnit())
   else
   endif
   endfunction
@@ -5175,7 +5206,7 @@ endif
   endfunction
   
   function Trig_The_Divine_Source_Actions takes nothing returns nothing
-  call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+  call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
   call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
   call UnitRemoveBuffBJ('Bena',GetTriggerUnit())
   call UnitRemoveBuffBJ('Bens',GetTriggerUnit())
@@ -5207,7 +5238,7 @@ endif
   function Trig_Volcanic_Armor_Actions takes nothing returns nothing
   set udg_integer14=GetRandomInt(1,100)
   if(Trig_Volcanic_Armor_Func003C())then
-  call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+  call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
   call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
   call UnitAddAbilityBJ('A015',GetLastCreatedUnit())
   call IssueTargetOrderBJ(GetLastCreatedUnit(),"firebolt",GetAttacker())
@@ -5354,6 +5385,22 @@ endif
   endif
   return true
   endfunction
+
+  function ResetRoundAbilities takes nothing returns nothing
+    local integer index = roundAbilities.integer[0]
+    loop
+        set roundAbilities.integer[index] = 0
+        set index = index - 1
+        exitwhen index <= 0
+    endloop
+    set roundAbilities.integer[0] = 0
+  endfunction
+
+  function AddRoundAbility takes integer abilityId returns nothing
+    local integer index = roundAbilities.integer[0] + 1
+    set roundAbilities[index] = abilityId
+    set roundAbilities.integer[0] = index
+  endfunction
   
   function Trig_Add_Unit_Abilities_Actions takes nothing returns nothing
   if(Trig_Add_Unit_Abilities_Func001001())then
@@ -5362,7 +5409,7 @@ endif
   call DoNothing()
   endif
   if(Trig_Add_Unit_Abilities_Func002001())then
-  call UnitAddAbilityBJ('ACct',GetLastCreatedUnit())
+  call UnitAddAbilityBJ('AOcr',GetLastCreatedUnit())
   else
   call DoNothing()
   endif
@@ -5384,7 +5431,7 @@ endif
   endif
   if(Trig_Add_Unit_Abilities_Func006001())then
   call UnitAddAbilityBJ('A08F',GetLastCreatedUnit())
-  call SetUnitAbilityLevel(GetLastCreatedUnit(), 'A08F', 10)
+  call SetUnitAbilityLevel(GetLastCreatedUnit(), 'A08F', IMinBJ(R2I(udg_integer02*0.4), 30))
   else
   call DoNothing()
   endif
@@ -5680,180 +5727,183 @@ endif
   endfunction
   
   function Trig_Add_Unit_Power_Actions takes nothing returns nothing
-  if(Trig_Add_Unit_Power_Func001C())then
-  if(Trig_Add_Unit_Power_Func001Func002C())then
-      set udg_real01=(I2R((udg_integer02*1))/(I2R(udg_integer03)/2.00))
-      if(Trig_Add_Unit_Power_Func001Func002Func003001())then
-          set udg_real01=(udg_real01/1.50)
-      else
-          call DoNothing()
-      endif
-  else
-      if(Trig_Add_Unit_Power_Func001Func002Func001C())then
-          set udg_real01=((I2R(udg_integer02)*1.25)/(I2R(udg_integer03)/2.00))
-          if(Trig_Add_Unit_Power_Func001Func002Func001Func004001())then
-              set udg_real01=(udg_real01/1.50)
-          else
-              call DoNothing()
-          endif
-      else
-          if(Trig_Add_Unit_Power_Func001Func002Func001Func001C())then
-              set udg_real01=((I2R(udg_integer02)*1.75)/(I2R(udg_integer03)/2.00))
-              if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func004001())then
-                  set udg_real01=(udg_real01/1.50)
-              else
-                  call DoNothing()
-              endif
-          else
-              if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002C())then
-                  set udg_real01=((I2R(udg_integer02)*2.50)/(I2R(udg_integer03)/2.00))
-                  if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func002001())then
-                      set udg_real01=(udg_real01/1.50)
-                  else
-                      call DoNothing()
-                  endif
-              else
-                  if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003C())then
-                      set udg_real01=(I2R((udg_integer02*4))/(I2R(udg_integer03)/2.00))
-                      if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003Func003001())then
-                          set udg_real01=(udg_real01/1.50)
-                      else
-                          call DoNothing()
-                      endif
-                  else
-                      set udg_real01=(I2R(((udg_integer02*udg_integer02)/2))/(I2R(udg_integer03)/2.00))
-                  endif
-              endif
-          endif
-      endif
-  endif
-  if(Trig_Add_Unit_Power_Func001Func009C())then
-      set bj_forLoopBIndex=1
-      set bj_forLoopBIndexEnd=R2I(udg_real01)
-      loop
-          exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-          call UnitAddItemByIdSwapped('I02L',GetLastCreatedUnit())
-          if(Trig_Add_Unit_Power_Func001Func009Func003Func002C())then
-              call UnitAddItemByIdSwapped('I02L',GetLastCreatedUnit())
-          else
-          endif
-          if(Trig_Add_Unit_Power_Func001Func009Func003Func003C())then
-              call UnitAddItemByIdSwapped('I02L',GetLastCreatedUnit())
-          else
-          endif
-          set bj_forLoopBIndex=bj_forLoopBIndex+1
-      endloop
-  else
-      if(Trig_Add_Unit_Power_Func001Func009Func001C())then
-          set bj_forLoopBIndex=1
-          set bj_forLoopBIndexEnd=(R2I(udg_real01)/4)
-          loop
-              exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-              call UnitAddItemByIdSwapped('I03K',GetLastCreatedUnit())
-              set bj_forLoopBIndex=bj_forLoopBIndex+1
-          endloop
-      else
-          if(Trig_Add_Unit_Power_Func001Func009Func001Func001C())then
-              set bj_forLoopBIndex=1
-              set bj_forLoopBIndexEnd=(R2I(udg_real01)/8)
-              loop
-                  exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-                  call UnitAddItemByIdSwapped('I03L',GetLastCreatedUnit())
-                  set bj_forLoopBIndex=bj_forLoopBIndex+1
-              endloop
-          else
-              if(Trig_Add_Unit_Power_Func001Func009Func001Func001Func001C())then
-                  set bj_forLoopBIndex=1
-                  set bj_forLoopBIndexEnd=(R2I(udg_real01)/8)
-                  loop
-                      exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-                      call UnitAddItemByIdSwapped('I03L',GetLastCreatedUnit())
-                      set bj_forLoopBIndex=bj_forLoopBIndex+1
-                  endloop
-              else
-              endif
-          endif
-      endif
-  endif
-  else
-  if(Trig_Add_Unit_Power_Func001Func004C())then
-      set udg_real01=((I2R(udg_integer02)*1.75)/(I2R(udg_integer03)/2.00))
-      if(Trig_Add_Unit_Power_Func001Func004Func004001())then
-          set udg_real01=(udg_real01/1.50)
-      else
-          call DoNothing()
-      endif
-  else
-      if(Trig_Add_Unit_Power_Func001Func004Func002C())then
-          set udg_real01=((I2R(udg_integer02)*2.50)/(I2R(udg_integer03)/2.00))
-          if(Trig_Add_Unit_Power_Func001Func004Func002Func002001())then
-              set udg_real01=(udg_real01/1.50)
-          else
-              call DoNothing()
-          endif
-      else
-          if(Trig_Add_Unit_Power_Func001Func004Func002Func003C())then
-              set udg_real01=((I2R(udg_integer02)*4.00)/(I2R(udg_integer03)/2.00))
-              if(Trig_Add_Unit_Power_Func001Func004Func002Func003Func003001())then
-                  set udg_real01=(udg_real01/1.50)
-              else
-                  call DoNothing()
-              endif
-          else
-              set udg_real01=(I2R(((udg_integer02*udg_integer02)/10))/(I2R(udg_integer03)/2.00))
-          endif
-      endif
-  endif
-  if(Trig_Add_Unit_Power_Func001Func006C())then
-      set bj_forLoopBIndex=1
-      set bj_forLoopBIndexEnd=R2I(udg_real01)
-      loop
-          exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-          call UnitAddItemByIdSwapped('I02L',GetLastCreatedUnit())
-          if(Trig_Add_Unit_Power_Func001Func006Func003Func002C())then
-              call UnitAddItemByIdSwapped('I02L',GetLastCreatedUnit())
-          else
-          endif
-          if(Trig_Add_Unit_Power_Func001Func006Func003Func003C())then
-              call UnitAddItemByIdSwapped('I02L',GetLastCreatedUnit())
-          else
-          endif
-          set bj_forLoopBIndex=bj_forLoopBIndex+1
-      endloop
-  else
-      if(Trig_Add_Unit_Power_Func001Func006Func001C())then
-          set bj_forLoopBIndex=1
-          set bj_forLoopBIndexEnd=(R2I(udg_real01)/4)
-          loop
-              exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-              call UnitAddItemByIdSwapped('I03K',GetLastCreatedUnit())
-              set bj_forLoopBIndex=bj_forLoopBIndex+1
-          endloop
-      else
-          if(Trig_Add_Unit_Power_Func001Func006Func001Func001C())then
-              set bj_forLoopBIndex=1
-              set bj_forLoopBIndexEnd=(R2I(udg_real01)/8)
-              loop
-                  exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-                  call UnitAddItemByIdSwapped('I03L',GetLastCreatedUnit())
-                  set bj_forLoopBIndex=bj_forLoopBIndex+1
-              endloop
-          else
-              if(Trig_Add_Unit_Power_Func001Func006Func001Func001Func001C())then
-                  set bj_forLoopBIndex=1
-                  set bj_forLoopBIndexEnd=(R2I(udg_real01)/8)
-                  loop
-                      exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-                      call UnitAddItemByIdSwapped('I03L',GetLastCreatedUnit())
-                      set bj_forLoopBIndex=bj_forLoopBIndex+1
-                  endloop
-              else
-              endif
-          endif
-      endif
-  endif
-  endif
-  endfunction
+    local unit u = GetLastCreatedUnit()
+    if(Trig_Add_Unit_Power_Func001C())then
+        if(Trig_Add_Unit_Power_Func001Func002C())then
+            set udg_real01=(I2R((udg_integer02*1))/(I2R(udg_integer03)/2.00))
+            if(Trig_Add_Unit_Power_Func001Func002Func003001())then
+                set udg_real01=(udg_real01/1.50)
+            else
+                call DoNothing()
+            endif
+        else
+            if(Trig_Add_Unit_Power_Func001Func002Func001C())then
+                set udg_real01=((I2R(udg_integer02)*1.25)/(I2R(udg_integer03)/2.00))
+                if(Trig_Add_Unit_Power_Func001Func002Func001Func004001())then
+                    set udg_real01=(udg_real01/1.50)
+                else
+                    call DoNothing()
+                endif
+            else
+                if(Trig_Add_Unit_Power_Func001Func002Func001Func001C())then
+                    set udg_real01=((I2R(udg_integer02)*1.75)/(I2R(udg_integer03)/2.00))
+                    if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func004001())then
+                        set udg_real01=(udg_real01/1.50)
+                    else
+                        call DoNothing()
+                    endif
+                else
+                    if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002C())then
+                        set udg_real01=((I2R(udg_integer02)*2.50)/(I2R(udg_integer03)/2.00))
+                        if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func002001())then
+                            set udg_real01=(udg_real01/1.50)
+                        else
+                            call DoNothing()
+                        endif
+                    else
+                        if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003C())then
+                            set udg_real01=(I2R((udg_integer02*4))/(I2R(udg_integer03)/2.00))
+                            if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003Func003001())then
+                                set udg_real01=(udg_real01/1.50)
+                            else
+                                call DoNothing()
+                            endif
+                        else
+                            set udg_real01=(I2R(((udg_integer02*udg_integer02)/2))/(I2R(udg_integer03)/2.00))
+                        endif
+                    endif
+                endif
+            endif
+        endif
+        if(Trig_Add_Unit_Power_Func001Func009C())then
+            set bj_forLoopBIndex=1
+            set bj_forLoopBIndexEnd=R2I(udg_real01)
+            loop
+                exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
+                call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                if(Trig_Add_Unit_Power_Func001Func009Func003Func002C())then
+                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                else
+                endif
+                if(Trig_Add_Unit_Power_Func001Func009Func003Func003C())then
+                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                else
+                endif
+                set bj_forLoopBIndex=bj_forLoopBIndex+1
+            endloop
+        else
+            if(Trig_Add_Unit_Power_Func001Func009Func001C())then
+                set bj_forLoopBIndex=1
+                set bj_forLoopBIndexEnd=(R2I(udg_real01)/4)
+                loop
+                    exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
+                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 600)
+                    set bj_forLoopBIndex=bj_forLoopBIndex+1
+                endloop
+            else
+                if(Trig_Add_Unit_Power_Func001Func009Func001Func001C())then
+                    set bj_forLoopBIndex=1
+                    set bj_forLoopBIndexEnd=(R2I(udg_real01)/8)
+                    loop
+                        exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
+                        set bj_forLoopBIndex=bj_forLoopBIndex+1
+                    endloop
+                else
+                    if(Trig_Add_Unit_Power_Func001Func009Func001Func001Func001C())then
+                        set bj_forLoopBIndex=1
+                        set bj_forLoopBIndexEnd=(R2I(udg_real01)/8)
+                        loop
+                            exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
+                            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
+                            set bj_forLoopBIndex=bj_forLoopBIndex+1
+                        endloop
+                    else
+                    endif
+                endif
+            endif
+        endif
+    else
+        if(Trig_Add_Unit_Power_Func001Func004C())then
+            set udg_real01=((I2R(udg_integer02)*1.75)/(I2R(udg_integer03)/2.00))
+            if(Trig_Add_Unit_Power_Func001Func004Func004001())then
+                set udg_real01=(udg_real01/1.50)
+            else
+                call DoNothing()
+            endif
+        else
+            if(Trig_Add_Unit_Power_Func001Func004Func002C())then
+                set udg_real01=((I2R(udg_integer02)*2.50)/(I2R(udg_integer03)/2.00))
+                if(Trig_Add_Unit_Power_Func001Func004Func002Func002001())then
+                    set udg_real01=(udg_real01/1.50)
+                else
+                    call DoNothing()
+                endif
+            else
+                if(Trig_Add_Unit_Power_Func001Func004Func002Func003C())then
+                    set udg_real01=((I2R(udg_integer02)*4.00)/(I2R(udg_integer03)/2.00))
+                    if(Trig_Add_Unit_Power_Func001Func004Func002Func003Func003001())then
+                        set udg_real01=(udg_real01/1.50)
+                    else
+                        call DoNothing()
+                    endif
+                else
+                    set udg_real01=(I2R(((udg_integer02*udg_integer02)/10))/(I2R(udg_integer03)/2.00))
+                endif
+            endif
+        endif
+        if(Trig_Add_Unit_Power_Func001Func006C())then
+            set bj_forLoopBIndex=1
+            set bj_forLoopBIndexEnd=R2I(udg_real01)
+            loop
+                exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
+                call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                if(Trig_Add_Unit_Power_Func001Func006Func003Func002C())then
+                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                else
+                endif
+                if(Trig_Add_Unit_Power_Func001Func006Func003Func003C())then
+                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                else
+                endif
+                set bj_forLoopBIndex=bj_forLoopBIndex+1
+            endloop
+        else
+            if(Trig_Add_Unit_Power_Func001Func006Func001C())then
+                set bj_forLoopBIndex=1
+                set bj_forLoopBIndexEnd=(R2I(udg_real01)/4)
+                loop
+                    exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
+                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 600)
+                    set bj_forLoopBIndex=bj_forLoopBIndex+1
+                endloop
+            else
+                if(Trig_Add_Unit_Power_Func001Func006Func001Func001C())then
+                    set bj_forLoopBIndex=1
+                    set bj_forLoopBIndexEnd=(R2I(udg_real01)/8)
+                    loop
+                        exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
+                        set bj_forLoopBIndex=bj_forLoopBIndex+1
+                    endloop
+                else
+                    if(Trig_Add_Unit_Power_Func001Func006Func001Func001Func001C())then
+                        set bj_forLoopBIndex=1
+                        set bj_forLoopBIndexEnd=(R2I(udg_real01)/8)
+                        loop
+                            exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
+                            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
+                            set bj_forLoopBIndex=bj_forLoopBIndex+1
+                        endloop
+                    else
+                    endif
+                endif
+            endif
+        endif
+    endif
+    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_MAX_LIFE))
+    set u = null
+    endfunction
   
   function Trig_Creep_AutoCast_Func001001002 takes nothing returns boolean
   return(IsUnitAliveBJ(GetFilterUnit())==true)
@@ -6507,26 +6557,32 @@ endif
   
   if udg_integer10 == 1 then
   set s = s + "Bash "
+  call AddRoundAbility('ACbh')
   endif
   
   if udg_integer24 == 1 then
   set s = s + "Hurl Boulder "
+  call AddRoundAbility('A00W')
   endif
   
   if udg_integer25 == 1 then
   set s = s + "Rejuvenation "
+  call AddRoundAbility('A00X')
   endif
   
   if udg_integer50 == 1 then
   set s = s + "Big Bad Voodoo "
+  call AddRoundAbility('A018')
   endif
   
   if udg_integer54 == 1 then
   set s = s + "Blink "
+  call AddRoundAbility('A01A')
   endif
   
   if udg_integer11 == 1 then
   set s = s + "Critical Strike "
+  call AddRoundAbility('AOcr')
   endif
   
   if udg_integer12 == 1 then
@@ -6535,49 +6591,167 @@ endif
   
   if udg_integer51 == 1 then
   set s = s + "Faerie Fire "
+  call AddRoundAbility('A016')
   endif
   
   if udg_integer18 == 1 then
   set s = s + "Lifesteal "
+  call AddRoundAbility('SCva')
   endif
   
   if udg_integer23 == 1 then
   set s = s + "Mana Burn "
+  call AddRoundAbility('A00V')
   endif
   
   if udg_integer21 == 1 then
   set s = s + "Shockwave "
+  call AddRoundAbility('A00U')
   endif
   
   if udg_integer49 == 1 then
   set s = s + "Slow "
+  call AddRoundAbility('A013')
   endif
   
   if udg_integer17 == 1 then
   set s = s + "Cleave "
+  call AddRoundAbility('ACce')
   endif
   
   if udg_integer20 == 1 then
-  set s = s + "Thorns "
+  set s = s + "Thorns Aura "
+  call AddRoundAbility('A08F')
   endif
   
   if udg_integer55 == 1 then
-  set s = s + "Thunderclap "
+  set s = s + "Thunder Clap "
+  call AddRoundAbility('A01B')
   endif
 
+    if ReflectionAuraChance == 1 then
+        set s = s + "Reflection Aura "
+        call AddRoundAbility('A093')
+    endif
+
+    if WizardbaneAuraChance == 1 then
+        set s = s + "Wizardbane Aura  "
+        call AddRoundAbility('A088')
+    endif
+
+    if DrunkenMasterchance == 1 then
+        set s = s + "Drunken Master "
+        call AddRoundAbility('Acdb')
+    endif
+
+    if SlowAuraChance == 1 then
+        set s = s + "Slow Aura "
+        call AddRoundAbility('AOr2')
+    endif
+
+    if PulverizeChance == 1 then
+        set s = s + "Pulverize "
+        call AddRoundAbility('Awar')
+    endif
+
+    if LastBreathChance == 1 then
+        set s = s + "Last Breath "
+        call AddRoundAbility('A05R')
+    endif
+
+    if FireshieldChance == 1 then
+        set s = s + "Fire Shield "
+        call AddRoundAbility('A05S')
+    endif
+
+    if CorrosiveSkinChance == 1 then
+        set s = s + "Corrosive Skin "
+        call AddRoundAbility('A00Q')
+    endif
+
+    if MulticastChance == 1 then
+        set s = s + "Multicast "
+        call AddRoundAbility('A04F')
+    endif
+
+    if FastMagicChance == 1 then
+        set s = s + "Fast Magic "
+        call AddRoundAbility('A03P')
+    endif
   
   if s == "" then
-  call DisplayTimedTextToForce(GetPlayersAll(),20.00, "|cfffce177Next round|r: |cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r - |cff77fc94No abilities|r ")
+  call DisplayTimedTextToForce(GetPlayersAll(),20.00, "|cfffce177Next level|r: |cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r - |cff77fc94No abilities|r ")
   else
-  call DisplayTimedTextToForce(GetPlayersAll(),20.00, "|cfffce177Next round|r: |cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r - |cff77fc94" + s + "|r")
+  call DisplayTimedTextToForce(GetPlayersAll(),20.00, "|cfffce177Next level|r: |cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r - |cff77fc94" + s + "|r")
   endif
+  endfunction
+
+  function UnitAddNewAbilities takes unit u returns nothing
+    if udg_integer11 == 1 then
+        call SetUnitAbilityLevel(u, 'AOcr', IMinBJ(R2I(udg_integer02*0.2), 30))
+    endif
+
+    if DrunkenMasterchance == 1 then
+        call UnitAddAbility(u, 'Acdb')
+        call FuncEditParam('Acdb',u)
+        call SetUnitAbilityLevel(u, 'Acdb', IMinBJ(R2I(udg_integer02*0.6), 30))
+    endif
+
+    if ReflectionAuraChance == 1 then
+        call UnitAddAbility(u, 'A093')
+        call SetUnitAbilityLevel(u, 'A093', IMinBJ(R2I(udg_integer02*0.4), 30))
+    endif
+
+    if WizardbaneAuraChance == 1 then
+        call UnitAddAbility(u, 'A088')
+        call SetUnitAbilityLevel(u, 'A088', IMinBJ(R2I(udg_integer02*0.4), 30))
+    endif
+
+    if SlowAuraChance == 1 then
+        call UnitAddAbility(u, 'AOr2')
+        call SetUnitAbilityLevel(u, 'AOr2', IMinBJ(R2I(udg_integer02*0.75), 30))
+    endif
+
+    if PulverizeChance == 1 then
+        call UnitAddAbility(u, 'Awar')
+        call SetUnitAbilityLevel(u, 'Awar', IMinBJ(R2I(udg_integer02*0.4), 30))
+    endif
+
+    if LastBreathChance == 1 then
+        call UnitAddAbility(u, 'A05R')
+        call FuncEditParam('A05R', u)
+        call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(udg_integer02*0.4), 30))
+    endif
+
+    if FireshieldChance == 1 then
+        call UnitAddAbility(u, 'A05S')
+        call SetUnitAbilityLevel(u, 'A05S', IMinBJ(R2I(udg_integer02*0.3), 30))
+    endif
+
+    if CorrosiveSkinChance == 1 then
+        call UnitAddAbility(u, 'A00Q')
+        call SetUnitAbilityLevel(u, 'A00Q', IMinBJ(R2I(udg_integer02*0.6), 30))
+    endif
+
+    if MulticastChance == 1 then
+        call UnitAddAbility(u, 'A04F')
+        call SetUnitAbilityLevel(u, 'A04F', IMinBJ(R2I(udg_integer02*0.5), 30))
+    endif
+
+    if FastMagicChance == 1 then
+        call UnitAddAbility(u, 'A03P')
+        call SetUnitAbilityLevel(u, 'A03P', IMinBJ(R2I(udg_integer02*0.6), 30))
+    endif
   endfunction
   
   //next round unit create
   
   function Trig_Generate_Next_Level_Actions takes nothing returns nothing
+    local integer newAbilChance = 50
+    local integer oldAbilChance = 20
   call DisableTrigger(GetTriggeringTrigger())
   call ConditionalTriggerExecute(udg_trigger104)
+  call ResetRoundAbilities()
   set udg_integer04=udg_integers02[GetRandomInt(1,udg_integer22)]
   set udg_integer09=GetRandomInt(150,400)
   set udg_integer05=GetRandomInt(1,udg_integer02)
@@ -6587,20 +6761,39 @@ endif
   set udg_integer25=GetRandomInt(1,20)
   else
   endif
+  if udg_integer02 > 25 then
+    set newAbilChance = 20
+  endif
+  if udg_integer02 > 40 then
+    set oldAbilChance = 15
+  endif
   if(Trig_Generate_Next_Level_Func012C())then
-  set udg_integer50=GetRandomInt(1,20)
-  set udg_integer54=GetRandomInt(1,20)
-  set udg_integer11=GetRandomInt(1,20)
-  set udg_integer12=GetRandomInt(1,20)
-  set udg_integer51=GetRandomInt(1,20)
-  set udg_integer18=GetRandomInt(1,20)
-  set udg_integer23=GetRandomInt(1,20)
-  set udg_integer21=GetRandomInt(1,20)
-  set udg_integer49=GetRandomInt(1,20)
-  set udg_integer17=GetRandomInt(1,20)
-  set udg_integer20=GetRandomInt(1,20)
-  set udg_integer55=GetRandomInt(1,20)    
-  else
+    set udg_integer50=GetRandomInt(1,oldAbilChance)
+    set udg_integer54=GetRandomInt(1,oldAbilChance)
+    set udg_integer11=GetRandomInt(1,oldAbilChance)
+    set udg_integer12=GetRandomInt(1,oldAbilChance)
+    set udg_integer51=GetRandomInt(1,oldAbilChance)
+    set udg_integer18=GetRandomInt(1,oldAbilChance)
+    set udg_integer23=GetRandomInt(1,oldAbilChance)
+    set udg_integer21=GetRandomInt(1,oldAbilChance)
+    set udg_integer49=GetRandomInt(1,oldAbilChance)
+    set udg_integer17=GetRandomInt(1,oldAbilChance)
+    set udg_integer20=GetRandomInt(1,oldAbilChance)
+    set udg_integer55=GetRandomInt(1,oldAbilChance)    
+    set ReflectionAuraChance=GetRandomInt(1,oldAbilChance)
+    set WizardbaneAuraChance=GetRandomInt(1,oldAbilChance)
+    set SlowAuraChance=GetRandomInt(1,newAbilChance)
+  endif
+  if udg_integer02 > 10 then
+    set DrunkenMasterchance=GetRandomInt(1,oldAbilChance)
+    set LastBreathChance=GetRandomInt(1,newAbilChance)
+    set PulverizeChance=GetRandomInt(1,newAbilChance)
+    set FireshieldChance=GetRandomInt(1,newAbilChance)
+    set CorrosiveSkinChance=GetRandomInt(1,newAbilChance)
+  endif
+  if udg_integer02 >= 35 then
+    set MulticastChance = GetRandomInt(1,newAbilChance+10)
+    set FastMagicChance = GetRandomInt(1,newAbilChance+6)
   endif
   if(Trig_Generate_Next_Level_Func014C())then
   set udg_integer03=GetRandomInt(2,(udg_integer02/2+4))
@@ -6634,8 +6827,8 @@ endif
       if(Trig_Generate_Next_Level_Func021Func001Func001C())then
           call CreateNUnitsAtLoc(1,udg_integer04,Player(11),OffsetLocation(GetRectCenter(udg_rects01[udg_integer40]),GetRandomReal(-600.00,600.00),GetRandomReal(-600.00,600.00)),GetRandomDirectionDeg())
           call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group05)
-          call UnitAddAbility(GetLastCreatedUnit(),'A057')
-          call BlzUnitDisableAbility(GetLastCreatedUnit(),'A057',false,true)
+          //call UnitAddAbility(GetLastCreatedUnit(),'A057')
+          //call BlzUnitDisableAbility(GetLastCreatedUnit(),'A057',false,true)
           set NumberOfUnit[udg_integer40-1] =  NumberOfUnit[udg_integer40-1] + 1
   
   
@@ -6645,7 +6838,7 @@ endif
              call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ ((BonusNeutral+BonusNeutralPlayer[udg_integer40-1] )*udg_integer02),0)
           endif
           
-          call AddUnitMagicDmg(GetLastCreatedUnit(),2*(BonusNeutral+BonusNeutralPlayer[udg_integer40-1] ))	
+          call AddUnitMagicDmg(GetLastCreatedUnit(),1*(BonusNeutral+BonusNeutralPlayer[udg_integer40-1] ))	
           call AddUnitMagicDef(GetLastCreatedUnit(),0.09*(BonusNeutral+BonusNeutralPlayer[udg_integer40-1] ))
           call AddUnitEvasion(GetLastCreatedUnit(),0.06*(BonusNeutral+BonusNeutralPlayer[udg_integer40-1] ))	
           call AddUnitBlock(GetLastCreatedUnit(),0.12*(BonusNeutral+BonusNeutralPlayer[udg_integer40-1] ))			
@@ -6710,6 +6903,7 @@ endif
           
           
           call SetUnitScalePercent(GetLastCreatedUnit(),(85.00+((I2R(udg_integer02)-1.00)*0.50)),100,100)
+          call UnitAddNewAbilities(GetLastCreatedUnit())
           call ConditionalTriggerExecute(udg_trigger99)
           call ConditionalTriggerExecute(udg_trigger100)
           call SetUnitMoveSpeed(GetLastCreatedUnit(),I2R(udg_integer09))
@@ -6857,41 +7051,52 @@ endif
   endfunction
   
   function Trig_Complete_Level_Move_Actions takes nothing returns nothing
-  
-  call Func_completeLevel(  udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] )
+    local integer pid = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
+    
   if(Trig_Complete_Level_Move_Func003C())then
   call RemoveDebuff(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])
   call SetUnitPositionLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetRectCenter(udg_rect09))
   call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),GetRectCenter(udg_rect09),0.20)
-  else
   endif
   if(Trig_Complete_Level_Move_Func005C())then
   if(Trig_Complete_Level_Move_Func005Func003C())then
+        set LumberGained[pid] = 21*udg_integer02
       call AdjustPlayerStateBJ((21*udg_integer02),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+      //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(21*udg_integer02) + " lumber|r")
       call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
   else
       if(Trig_Complete_Level_Move_Func005Func003Func001C())then
+        set LumberGained[pid] = 11*udg_integer02
           call AdjustPlayerStateBJ((11*udg_integer02),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
           call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
       else
+        set LumberGained[pid] = R2I((I2R(udg_integer02)/2.00))*6
           call AdjustPlayerStateBJ((R2I((I2R(udg_integer02)/2.00))*6),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
           call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
       endif
   endif
   else
   if(Trig_Complete_Level_Move_Func005Func002C())then
+    set LumberGained[pid] = 10*udg_integer02
       call AdjustPlayerStateBJ((10*udg_integer02),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+      //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(10*udg_integer02) + " lumber|r")
       call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
   else
       if(Trig_Complete_Level_Move_Func005Func002Func001C())then
+        set LumberGained[pid] = 6*udg_integer02
           call AdjustPlayerStateBJ((6*udg_integer02),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+          //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(6*udg_integer02) + " lumber|r")
           call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
       else
+        set LumberGained[pid] = R2I((I2R(udg_integer02)/4.00))*6
           call AdjustPlayerStateBJ((R2I((I2R(udg_integer02)/4.00))*6),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+          //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S((R2I((I2R(udg_integer02)/4.00))*6)) + " lumber|r")
           call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
       endif
   endif
   endif
+  call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00Level Completed!"))
+  call Func_completeLevel(  udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] )
   call DeleteUnit(GetTriggerUnit())
   call ConditionalTriggerExecute(udg_trigger108)
   endfunction
@@ -6998,7 +7203,7 @@ endif
   call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))))+(" |cffffcc00survived the level! (+"+(I2S(udg_integer48)+" exp)|r")))))
   call AddHeroXPSwapped(udg_integer48,udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)
   endif
-  call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(GetKillingUnitBJ()),GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
+  call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetKillingUnitBJ()),GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
   call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
   call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group08)
   endfunction
@@ -7256,7 +7461,9 @@ endif
   return true
   endfunction
   
+  //trigger108
   function Trig_Level_Completed_Actions takes nothing returns nothing
+    local integer round = udg_integer02 + 1
   if(Trig_Level_Completed_Func001C())then
   if(Trig_Level_Completed_Func001Func001001())then
       return
@@ -7264,13 +7471,13 @@ endif
       call DoNothing()
   endif
   call DisableTrigger(udg_trigger110)
+  call StopSuddenDeathTimer()
   call DisableTrigger(udg_trigger116)
   call ConditionalTriggerExecute(udg_trigger122)
   call ConditionalTriggerExecute(udg_trigger119)
   set udg_boolean01=true
   set udg_integer08=0
   call PlaySoundBJ(udg_sound02)
-  call DisplayTimedTextToForce(GetPlayersAll(),5.00,("|cffffcc00Level Completed!"))
   if(Trig_Level_Completed_Func001Func014C())then
       if(Trig_Level_Completed_Func001Func014Func001C())then
           call ConditionalTriggerExecute(udg_trigger152)
@@ -7317,16 +7524,19 @@ endif
   endif
   call ConditionalTriggerExecute(udg_trigger103)
   call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")
+  set NextRound[round] = true
   if(Trig_Level_Completed_Func001Func028C())then
-      call StartTimerBJ(GetLastCreatedTimerBJ(),false,20.00)
-      call TriggerSleepAction(20.00)
+      call StartTimerBJ(GetLastCreatedTimerBJ(),false, RoundTime)
+      call TriggerSleepAction(RoundTime)
   else
-      call StartTimerBJ(GetLastCreatedTimerBJ(),false,15.00)
-      call TriggerSleepAction(15.00)
+      call StartTimerBJ(GetLastCreatedTimerBJ(),false,RoundTime * 0.75)
+      call TriggerSleepAction(RoundTime * 0.75)
   endif
-  call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+  
+  if NextRound[round] then
+    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
   call TriggerExecute(udg_trigger109)
-  else
+  endif
   endif
   endfunction
   
@@ -7412,17 +7622,19 @@ endif
   return GetBooleanAnd(Trig_Start_Level_Func015Func002Func003001002001(),Trig_Start_Level_Func015Func002Func003001002002())
   endfunction
   
-  function Trig_Start_Level_Func015Func002Func003Func001001 takes nothing returns boolean
-  return(GetUnitTypeId(GetEnumUnit())=='hphx')
+  function Trig_Start_Level_Func015Func002Func003Func001001 takes unit u returns boolean
+  return GetUnitTypeId(u)=='h009' or GetUnitTypeId(u)=='h014' or GetUnitTypeId(u)=='h015' or GetUnitTypeId(u)=='h00B'
   endfunction
   
   function Trig_Start_Level_Func015Func002Func003A takes nothing returns nothing
-  if(Trig_Start_Level_Func015Func002Func003Func001001())then
-  call DeleteUnit(GetEnumUnit())
-  else
-  call DoNothing()
-  endif
-  call ExplodeUnitBJ(GetEnumUnit())
+    if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' then
+        if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit()))then
+        call DeleteUnit(GetEnumUnit())
+        else
+        call DoNothing()
+        endif
+        call ExplodeUnitBJ(GetEnumUnit())
+    endif
   endfunction
   
   function Trig_Start_Level_Func015Func002Func004A takes nothing returns nothing
@@ -7490,6 +7702,7 @@ endif
   call ConditionalTriggerExecute(udg_trigger98)
   set udg_integer39=0
   call EnableTrigger(udg_trigger110)
+  call StartSuddenDeathTimer()
   call EnableTrigger(udg_trigger116)
   call EnableTrigger(udg_trigger103)
   endfunction
@@ -7546,6 +7759,9 @@ endif
   
   function Trig_Sudden_Death_Timer_Actions takes nothing returns nothing
   set udg_integer39=(udg_integer39+1)
+  if udg_integer39 == 240 or udg_integer39 == 480 or udg_integer39 == 720 then
+    call UpdateSuddenDeathTimer()
+  endif
   if(Trig_Sudden_Death_Timer_Func002C())then
   call ForGroupBJ(GetUnitsInRectOfPlayer(GetPlayableMapRect(),Player(11)),function Trig_Sudden_Death_Timer_Func002Func001A)
   if(Trig_Sudden_Death_Timer_Func002Func002C())then
@@ -7932,11 +8148,10 @@ endif
   
   function Trig_Learn_Ability_Actions takes nothing returns nothing
     local integer abilLevel
-  set udg_integer01='Amnz'
-  call ConditionalTriggerExecute(udg_trigger112)
-  if(Trig_Learn_Ability_Func006C())then
-  return
-  else
+  set udg_integer01= GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
+  //call ConditionalTriggerExecute(udg_trigger112)
+  if udg_integer01 == 0 or IsAbsolute(udg_integer01) then
+    return
   endif
   set abilLevel = GetUnitAbilityLevel(GetTriggerUnit(), udg_integer01)
   if(Trig_Learn_Ability_Func008C())then
@@ -7957,6 +8172,7 @@ endif
                       call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
                       call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
                   endif
+                  //call BJDebugMsg("failed?1")
                   call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
                   call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to learn!")
                   call ForceRemovePlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
@@ -7971,6 +8187,7 @@ endif
               call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
               call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
           endif
+          //call BJDebugMsg("failed?2")
           call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
           call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to learn!")
           call ForceRemovePlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
@@ -7978,7 +8195,7 @@ endif
       else
           set udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+1)
           set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=udg_integer01
-          
+          //call BJDebugMsg("add ap")
           call UnitAddAbilityBJ(udg_integer01,GetTriggerUnit())
           call FuncEditParam(udg_integer01,GetTriggerUnit())
           call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
@@ -7989,7 +8206,9 @@ endif
           
       endif
   else
+      //increase level ap
       if(Trig_Learn_Ability_Func008Func002Func003C())then
+        //call BJDebugMsg("inc ap1")
           call IncUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())
           call FuncEditParam(udg_integer01,GetTriggerUnit())
           call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
@@ -7998,6 +8217,7 @@ endif
           call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffbbff00Learned |r" + BlzGetAbilityTooltip(udg_integer01, abilLevel))
           call ForceRemovePlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
       else
+        //max level reached
           if(Trig_Learn_Ability_Func008Func002Func003Func001C())then
               call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
               call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
@@ -8005,6 +8225,7 @@ endif
               call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
               call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
           endif
+          //call BJDebugMsg("max lvl ap")
           call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
           call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to learn!")
           call ForceRemovePlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
@@ -8014,6 +8235,7 @@ endif
   else
   if(Trig_Learn_Ability_Func008Func001C())then
       if(Trig_Learn_Ability_Func008Func001Func002C())then
+        //failed ar
           if(Trig_Learn_Ability_Func008Func001Func002Func001C())then
               call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
               call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
@@ -8022,11 +8244,14 @@ endif
               call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
           endif
           call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
+          //call BJDebugMsg("f ar")
           call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to learn! (Random Mode)")
           call ForceRemovePlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
           return
       else
+          //increase level ap
           if(Trig_Learn_Ability_Func008Func001Func002Func002C())then
+                //call BJDebugMsg("inc ap 2")
               call IncUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())
               call FuncEditParam(udg_integer01,GetTriggerUnit())
               call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
@@ -8042,6 +8267,7 @@ endif
                   call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
                   call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
               endif
+              //call BJDebugMsg("inc f ap")
               call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
               call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to learn!")
               call ForceRemovePlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
@@ -8090,9 +8316,13 @@ endif
   endfunction
   
   function Trig_Random_Ability_Actions takes nothing returns nothing
-  set udg_integer37=0
-  set udg_unit01=GetTriggerUnit()
-  call ConditionalTriggerExecute(udg_trigger114)
+    if AbilityMode != 2 then
+    set udg_integer37=0
+    set udg_unit01=GetTriggerUnit()
+    call ConditionalTriggerExecute(udg_trigger114)
+    else
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "Random is unavailable in Draft mode")
+    endif
   endfunction
   
   function Trig_Learn_Random_Ability_Func004Func001Func001C takes nothing returns boolean
@@ -8143,10 +8373,10 @@ endif
   if(not Trig_Learn_Random_Ability_Func004Func001Func005Func001C())then
   return false
   endif
-  if(not(GetUnitAbilityLevelSwapped(udg_integers08[udg_integer14],udg_unit01)>0))then
+  if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(udg_integer14),udg_unit01)>0))then
   return false
   endif
-  if(not(GetUnitAbilityLevelSwapped(udg_integers08[udg_integer14],udg_unit01)<30))then
+  if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(udg_integer14),udg_unit01)<30))then
   return false
   endif
   if(not(udg_integer37<=500))then
@@ -8200,10 +8430,10 @@ endif
   endfunction
   
   function Trig_Learn_Random_Ability_Func004Func003C takes nothing returns boolean
-  if(not(GetUnitAbilityLevelSwapped(udg_integers08[udg_integer14],udg_unit01)==0))then
+  if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(udg_integer14),udg_unit01)==0))then
   return false
   endif
-  if(not(udg_integers09[udg_integer14]!=GetItemTypeId(null)))then
+  if(not(udg_integer14!=GetItemTypeId(null)))then
   return false
   endif
   if(not Trig_Learn_Random_Ability_Func004Func003Func003C())then
@@ -8221,23 +8451,23 @@ endif
   
   function Trig_Learn_Random_Ability_Actions takes nothing returns nothing
   set udg_player02=GetOwningPlayer(udg_unit01)
-  set udg_integer14=GetRandomInt(1,udg_integer26)
+  set udg_integer14= GetItemFromAbility(GetRandomAbility())
   if(Trig_Learn_Random_Ability_Func004C())then
   if(Trig_Learn_Random_Ability_Func004Func002C())then
       set udg_boolean05=false
       set udg_boolean06=true
-      call UnitAddItemByIdSwapped(udg_integers09[udg_integer14],udg_units01[GetConvertedPlayerId(udg_player02)])
+      call UnitAddItemByIdSwapped(udg_integer14,udg_units01[GetConvertedPlayerId(udg_player02)])
       set udg_boolean06=false
       set udg_boolean05=true
   else
-      call UnitAddItemByIdSwapped(udg_integers09[udg_integer14],udg_units01[GetConvertedPlayerId(udg_player02)])
+      call UnitAddItemByIdSwapped(udg_integer14,udg_units01[GetConvertedPlayerId(udg_player02)])
   endif
   else
   if(Trig_Learn_Random_Ability_Func004Func001C())then
       if(Trig_Learn_Random_Ability_Func004Func001Func002C())then
           set udg_boolean05=false
           set udg_boolean06=true
-          call UnitAddItemByIdSwapped(udg_integers09[udg_integer14],udg_units01[GetConvertedPlayerId(udg_player02)])
+          call UnitAddItemByIdSwapped(udg_integer14,udg_units01[GetConvertedPlayerId(udg_player02)])
           set udg_boolean06=false
           set udg_boolean05=true
       else
@@ -8297,7 +8527,7 @@ endif
     local integer lastLearned = 0
     local integer Pid = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))
 
-    if(Trig_Unlearn_Ability_Func001C())then
+    if(Trig_Unlearn_Ability_Func001C()) and AbilityMode != 2 then
 
         set CountS = LoadCountHeroSpell(GetTriggerUnit(),0)
         if  CountS > 0 then
@@ -8319,7 +8549,7 @@ endif
         call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
         call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),bj_FORCE_PLAYER[11])
 
-        if(Trig_Unlearn_Ability_Func001Func003C())then
+        if(Trig_Unlearn_Ability_Func001Func003C()) or AbilityMode == 2 then
             call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to unlearn!")
         else
             call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to unlearn! (Random Mode)")
@@ -8792,6 +9022,7 @@ endif
   call ClearTextMessagesBJ(GetPlayersMatching(Condition(function Trig_Clear_Command_Func001001001)))
   endfunction
   
+  /*
   function Trig_Hint_Command_Func001Func002001001 takes nothing returns boolean
   return(GetFilterPlayer()==GetTriggerPlayer())
   endfunction
@@ -8816,6 +9047,7 @@ endif
   call DisplayTimedTextToForce(GetPlayersMatching(Condition(function Trig_Hint_Command_Func001Func002001001)),3.00,"|cff959697Display Hints: OFF|r")
   endif
   endfunction
+  */
   
   function Trig_Level_Command_Actions takes nothing returns nothing
   call ForceAddPlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
@@ -8950,13 +9182,18 @@ endif
   endfunction
   
   function ResetHero takes unit u returns nothing
-  call RemoveItem(UnitItemInSlot(u, 0))
-  call RemoveItem(UnitItemInSlot(u, 1))
-  call RemoveItem(UnitItemInSlot(u, 2))
-  call RemoveItem(UnitItemInSlot(u, 3))
-  call RemoveItem(UnitItemInSlot(u, 4))
-  call RemoveItem(UnitItemInSlot(u, 5))
-  call UnitRemoveAbility(u, 'ANr2')
+
+    if IsUnitType(u, UNIT_TYPE_HERO) then
+        call RemoveItem(UnitItemInSlot(u, 0))
+        call RemoveItem(UnitItemInSlot(u, 1))
+        call RemoveItem(UnitItemInSlot(u, 2))
+        call RemoveItem(UnitItemInSlot(u, 3))
+        call RemoveItem(UnitItemInSlot(u, 4))
+        call RemoveItem(UnitItemInSlot(u, 5))
+    
+        call RemoveHeroAbilities(u)
+    endif
+    call UnitRemoveAbility(u, 'ANr2')
   endfunction
   
   function Trig_Player_Leaves_Actions takes nothing returns nothing
@@ -9126,6 +9363,7 @@ endif
   call ForForce(GetPlayersMatching(Condition(function Trig_Player_Selection_Camera_Func002001001)),function Trig_Player_Selection_Camera_Func002A)
   endfunction
   
+  /*
   function Trig_PvP_Func002001002001 takes nothing returns boolean
   return(GetOwningPlayer(GetFilterUnit())!=Player(8))
   endfunction
@@ -9149,9 +9387,10 @@ endif
   function Trig_PvP_Func002001002002 takes nothing returns boolean
   return GetBooleanAnd(Trig_PvP_Func002001002002001(),Trig_PvP_Func002001002002002())
   endfunction
+  */
   
   function Trig_PvP_Func002001002 takes nothing returns boolean
-  return GetBooleanAnd(Trig_PvP_Func002001002001(),Trig_PvP_Func002001002002())
+  return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and IsUnitAliveBJ(GetFilterUnit()) and GetOwningPlayer(GetFilterUnit())!=Player(11) and GetOwningPlayer(GetFilterUnit())!=Player(8)
   endfunction
   
   function Trig_PvP_Func002A takes nothing returns nothing
@@ -9269,6 +9508,11 @@ endif
   if(Trig_PvP_Func007C())then
   call DisplayTextToForce(GetPlayersAll(),"|cffffcc00Death Match - Survive to advance to the next level!")
   else
+    /*
+    call UpdatePlayerCount()
+    call MoveRoundRobin()
+    call DisplayDuelNemesis()
+    call BJDebugMsg("test")*/
   endif
   call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
   call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
@@ -9580,12 +9824,13 @@ endif
   
   function Trig_End_PvP_Actions takes nothing returns nothing
   if(Trig_End_PvP_Func001C())then
-  set udg_unit05=udg_units03[2]
+    set udg_unit05=udg_units03[2]
   else
-  set udg_unit05=udg_units03[1]
+    set udg_unit05=udg_units03[1]
   endif
   call DisableTrigger(udg_trigger140)
   call DisableTrigger(udg_trigger141)
+  call PvpStopSuddenDeathTimer()
   call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" |cffffcc00has defeated |r"+(GetPlayerNameColour(GetOwningPlayer(GetDyingUnit()))+"|cffffcc00!!|r")))))
   call SetUnitInvulnerable(udg_unit05,true)
   call TriggerSleepAction(4.00)
@@ -9594,97 +9839,89 @@ endif
   call GroupRemoveUnitSimple(GetDyingUnit(),udg_group03)
   call GroupRemoveUnitSimple(udg_unit05,udg_group02)
   call GroupRemoveUnitSimple(GetDyingUnit(),udg_group02)
-  call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED_VISION)
-  call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED_VISION)
+  call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED)
+  call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED)
   call ForForce(GetPlayersAll(),function Trig_End_PvP_Func019A)
   call SetUnitPositionLoc(udg_unit05,GetRectCenter(udg_rect09))
   if(Trig_End_PvP_Func021C())then
-  call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
-  set udg_integer32=1
-  loop
-      exitwhen udg_integer32>6
-      call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
-      call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
-      call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
-      call UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32)
-      call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
-      call UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32)
-      set udg_integer32=udg_integer32+1
-  endloop
+    call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
+    call FixDeath(GetDyingUnit())
+    set udg_integer32=1
+    loop
+        exitwhen udg_integer32>6
+        call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
+        call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
+        call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
+        call UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32)
+        call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
+        call UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32)
+        set udg_integer32=udg_integer32+1
+    endloop
   else
-  set udg_integer32=1
-  loop
-      exitwhen udg_integer32>6
-      if(Trig_End_PvP_Func021Func001Func001C())then
-          call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
-          call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
-          call UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32)
-      else
-          call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
-          call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
-          call UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32)
-      endif
-      set udg_integer32=udg_integer32+1
-  endloop
+    set udg_integer32=1
+    loop
+        exitwhen udg_integer32>6
+        if(Trig_End_PvP_Func021Func001Func001C())then
+            call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
+            call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
+            call UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32)
+        else
+            call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
+            call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
+            call UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32)
+        endif
+        set udg_integer32=udg_integer32+1
+    endloop
   endif
   call ConditionalTriggerExecute(udg_trigger54)
   call ConditionalTriggerExecute(udg_trigger122)
   set udg_integer38=1
   loop
-  exitwhen udg_integer38>8
-  call EnumItemsInRectBJ(udg_rects01[udg_integer38],function Trig_End_PvP_Func024Func001A)
-  set udg_integer38=udg_integer38+1
+    exitwhen udg_integer38>8
+    call EnumItemsInRectBJ(udg_rects01[udg_integer38],function Trig_End_PvP_Func024Func001A)
+    set udg_integer38=udg_integer38+1
   endloop
   set udg_unit05=null
   if(Trig_End_PvP_Func026C())then
-  call TriggerSleepAction(2)
-  call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_End_PvP_Func026Func007001002)),function Trig_End_PvP_Func026Func007A)
-  if(Trig_End_PvP_Func026Func008C())then
-      if(Trig_End_PvP_Func026Func008Func003C())then
-          call DisplayTimedTextToForce(GetPlayersAll(),10.00,"|cffffcc00The PvP battles are over and all winners will receive a prize!|r")
-      else
-          call DisplayTimedTextToForce(GetPlayersAll(),10.00,"|cffffcc00The PvP battles are over and the winner will receive a prize!|r")
-      endif
+    call TriggerSleepAction(2)
+    call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_End_PvP_Func026Func007001002)),function Trig_End_PvP_Func026Func007A)
+    if(Trig_End_PvP_Func026Func008C())then
+        if(Trig_End_PvP_Func026Func008Func003C())then
+            call DisplayTimedTextToForce(GetPlayersAll(),10.00,"|cffffcc00The PvP battles are over and all winners will receive a prize!|r")
+        else
+            call DisplayTimedTextToForce(GetPlayersAll(),10.00,"|cffffcc00The PvP battles are over and the winner will receive a prize!|r")
+        endif
+    else
+        return
+    endif
+    set udg_integer41=(udg_integer41+1)
+    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+    call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Reward in ...")
+    call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
+    call TriggerSleepAction(10.00)
+    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+    
+    if(Trig_End_PvP_Func026Func016C())then
+        set udg_integer15  =  ItemN1[GetRandomInt(  ((udg_integer02/5)-1)*4-1 ,((udg_integer02/5)-1)*4+4 ) ] 
+    else
+        set udg_integer15  =  ItemN1[GetRandomInt(  ((udg_integer02/5)-1)*4+1 ,((udg_integer02/5)-1)*4+4 ) ]		
+    endif
+    if(Trig_End_PvP_Func026Func018C())then
+        call ForGroupBJ(udg_group03,function Trig_End_PvP_Func026Func018Func002A)
+    endif
+    call PlaySoundBJ(udg_sound07)
+    call ConditionalTriggerExecute(udg_trigger138)
+    call CreateItemLoc(udg_integer15,GetRectCenter(GetPlayableMapRect()))
+    call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00Prize: "+(GetItemName(GetLastCreatedItem())+"|r")))
+    call RemoveItem(GetLastCreatedItem())
+    call ConditionalTriggerExecute(udg_trigger136)
   else
-      return
-  endif
-  set udg_integer41=(udg_integer41+1)
-  call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-  call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Reward in ...")
-  call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
-  call TriggerSleepAction(10.00)
-  call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-  
-  if(Trig_End_PvP_Func026Func016C())then
-      
-    set udg_integer15  =  ItemN1[GetRandomInt(  ((udg_integer02/5)-1)*4-1 ,((udg_integer02/5)-1)*4+4 ) ]
-      
-  else
-  
-    set udg_integer15  =  ItemN1[GetRandomInt(  ((udg_integer02/5)-1)*4+1 ,((udg_integer02/5)-1)*4+4 ) ]		
-      
-      
-  endif
-  
-  
-  
-  if(Trig_End_PvP_Func026Func018C())then
-      call ForGroupBJ(udg_group03,function Trig_End_PvP_Func026Func018Func002A)
-  else
-  endif
-  call PlaySoundBJ(udg_sound07)
-  call ConditionalTriggerExecute(udg_trigger138)
-  call CreateItemLoc(udg_integer15,GetRectCenter(GetPlayableMapRect()))
-  call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00Prize: "+(GetItemName(GetLastCreatedItem())+"|r")))
-  call RemoveItem(GetLastCreatedItem())
-  call ConditionalTriggerExecute(udg_trigger136)
-  else
-  call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-  call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next PvP Battle ...")
-  call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
-  call TriggerSleepAction(10.00)
-  call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-  call ConditionalTriggerExecute(udg_trigger136)
+    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+    call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next PvP Battle ...")
+    call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
+    call TriggerSleepAction(10.00)
+    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+    call ConditionalTriggerExecute(udg_trigger136)
   endif
   endfunction
   
@@ -9828,7 +10065,7 @@ endif
   endfunction
   
   function Trig_PvP_Battle_Func001Func018A takes nothing returns nothing
-  if(Trig_PvP_Battle_Func001Func018Func001001())then
+  if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit()))then
   call DeleteUnit(GetEnumUnit())
   else
   call DoNothing()
@@ -9914,106 +10151,106 @@ endif
   endif
   return true
   endfunction
-  
+
   function Trig_PvP_Battle_Actions takes nothing returns nothing
-  if(Trig_PvP_Battle_Func001C())then
-  set udg_units03[1]=GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
-  call GroupRemoveUnitSimple(udg_units03[1],udg_group01)
-  if(Trig_PvP_Battle_Func001Func010C())then
-      set udg_units03[2]=GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func003002001002)))
-  else
-      set udg_units03[2]=GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
-  endif
-  call GroupRemoveUnitSimple(udg_units03[2],udg_group01)
-  call PlaySoundBJ(udg_sound08)
-  call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r "+(GetPlayerNameColour(GetOwningPlayer(udg_units03[1]))+(" vs "+(GetPlayerNameColour(GetOwningPlayer(udg_units03[2])))))))
-  set udg_integer14=GetRandomInt(1,8)
-  call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func017A)
-  call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer14],Condition(function Trig_PvP_Battle_Func001Func018001002)),function Trig_PvP_Battle_Func001Func018A)
-  call EnumItemsInRectBJ(udg_rects01[udg_integer14],function Trig_PvP_Battle_Func001Func019A)
-  set udg_location01=OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),-40.00,-50.00)
-  call SetUnitPositionLocFacingLocBJ(udg_units03[1],OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),-500.00,0),GetRectCenter(udg_rects01[udg_integer14]))
-  call SetUnitPositionLocFacingLocBJ(udg_units03[2],OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),500.00,0),GetRectCenter(udg_rects01[udg_integer14]))
-  set bj_forLoopAIndex=1
-  set bj_forLoopAIndexEnd=2
-  loop
-      exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
-      call PauseUnitBJ(true,udg_units03[GetForLoopIndexA()])
-      call SelectUnitForPlayerSingle(udg_units03[GetForLoopIndexA()],GetOwningPlayer(udg_units03[GetForLoopIndexA()]))
-      set udg_unit01=udg_units03[GetForLoopIndexA()]
-      call ConditionalTriggerExecute(udg_trigger82)
-      call GroupAddUnitSimple(udg_units03[GetForLoopIndexA()],udg_group02)
-      set bj_forLoopAIndex=bj_forLoopAIndex+1
-  endloop
-  call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED)
-  call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED)
-  set udg_integer33=1
-  loop
-      exitwhen udg_integer33>6
-      set udg_integers03[udg_integer33]=GetItemTypeId(UnitItemInSlotBJ(udg_units03[1],udg_integer33))
-      set udg_integers04[udg_integer33]=GetItemTypeId(UnitItemInSlotBJ(udg_units03[2],udg_integer33))
-      set udg_integer33=udg_integer33+1
-  endloop
-  call TriggerSleepAction(0.20)
-  set udg_boolean18=true
-  if(Trig_PvP_Battle_Func001Func031C())then
-      call DialogClearBJ(udg_dialogs01[1])
-      call DialogSetMessageBJ(udg_dialogs01[1],"Betting Menu")
-      set bj_forLoopAIndex=1
-      set bj_forLoopAIndexEnd=2
-      loop
-          exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
-          if(Trig_PvP_Battle_Func001Func031Func003Func001C())then
-              call DialogAddButtonBJ(udg_dialogs01[1],("<< "+(GetPlayerNameColour(GetOwningPlayer(udg_units03[GetForLoopIndexA()]))+"|r   ")))
-          else
-              call DialogAddButtonBJ(udg_dialogs01[1],("   "+(GetPlayerNameColour(GetOwningPlayer(udg_units03[GetForLoopIndexA()]))+"|r >>")))
-          endif
-          set udg_buttons02[GetForLoopIndexA()]=GetLastCreatedButtonBJ()
-          set bj_forLoopAIndex=bj_forLoopAIndex+1
-      endloop
-      call DialogAddButtonBJ(udg_dialogs01[1],"Skip")
-      set udg_buttons02[3]=GetLastCreatedButtonBJ()
-      call ForForce(GetPlayersMatching(Condition(function Trig_PvP_Battle_Func001Func031Func006001001)),function Trig_PvP_Battle_Func001Func031Func006A)
-  else
-  endif
-  call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-  call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Prepare ...")
-  call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
-  call TriggerSleepAction(4.50)
-  set udg_integer19=5
-  call ConditionalTriggerExecute(udg_trigger117)
-  call TriggerSleepAction(5.50)
-  set udg_boolean18=false
-  call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func041A)
-  call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-  set udg_integer39=0
-  set udg_real03=100.00
-  call EnableTrigger(udg_trigger140)
-  call EnableTrigger(udg_trigger141)
-  call PlaySoundBJ(udg_sound15)
-  set bj_forLoopAIndex=1
-  set bj_forLoopAIndexEnd=2
-  loop
-      exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
-      call SetUnitInvulnerable(udg_units03[GetForLoopIndexA()],false)
-      call StartFunctionSpell(udg_units03[GetForLoopIndexA()],4 ) 
-      call PauseUnitBJ(false,udg_units03[GetForLoopIndexA()])
-      set bj_forLoopAIndex=bj_forLoopAIndex+1
-  endloop
-  else
-  if(Trig_PvP_Battle_Func001Func001001())then
-      return
-  else
-      call DoNothing()
-  endif
-  call ConditionalTriggerExecute(udg_trigger103)
-  call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")
-  call StartTimerBJ(GetLastCreatedTimerBJ(),false,30)
-  call TriggerSleepAction(30.00)
-  call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-  call TriggerExecute(udg_trigger109)
-  endif
-  endfunction
+    if(Trig_PvP_Battle_Func001C())then
+    set udg_units03[1]=GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
+    call GroupRemoveUnitSimple(udg_units03[1],udg_group01)
+    if(Trig_PvP_Battle_Func001Func010C())then
+        set udg_units03[2]=GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func003002001002)))
+    else
+        set udg_units03[2]=GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
+    endif
+    call GroupRemoveUnitSimple(udg_units03[2],udg_group01)
+    call PlaySoundBJ(udg_sound08)
+    call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r "+(GetPlayerNameColour(GetOwningPlayer(udg_units03[1]))+(" vs "+(GetPlayerNameColour(GetOwningPlayer(udg_units03[2])))))))
+    set udg_integer14=GetRandomInt(1,8)
+    call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func017A)
+    call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer14],Condition(function Trig_PvP_Battle_Func001Func018001002)),function Trig_PvP_Battle_Func001Func018A)
+    call EnumItemsInRectBJ(udg_rects01[udg_integer14],function Trig_PvP_Battle_Func001Func019A)
+    set udg_location01=OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),-40.00,-50.00)
+    call SetUnitPositionLocFacingLocBJ(udg_units03[1],OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),-500.00,0),GetRectCenter(udg_rects01[udg_integer14]))
+    call SetUnitPositionLocFacingLocBJ(udg_units03[2],OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),500.00,0),GetRectCenter(udg_rects01[udg_integer14]))
+    set bj_forLoopAIndex=1
+    set bj_forLoopAIndexEnd=2
+    loop
+        exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
+        call PauseUnitBJ(true,udg_units03[GetForLoopIndexA()])
+        call SelectUnitForPlayerSingle(udg_units03[GetForLoopIndexA()],GetOwningPlayer(udg_units03[GetForLoopIndexA()]))
+        set udg_unit01=udg_units03[GetForLoopIndexA()]
+        call ConditionalTriggerExecute(udg_trigger82)
+        call GroupAddUnitSimple(udg_units03[GetForLoopIndexA()],udg_group02)
+        set bj_forLoopAIndex=bj_forLoopAIndex+1
+    endloop
+    call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED)
+    call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED)
+    set udg_integer33=1
+    loop
+        exitwhen udg_integer33>6
+        set udg_integers03[udg_integer33]=GetItemTypeId(UnitItemInSlotBJ(udg_units03[1],udg_integer33))
+        set udg_integers04[udg_integer33]=GetItemTypeId(UnitItemInSlotBJ(udg_units03[2],udg_integer33))
+        set udg_integer33=udg_integer33+1
+    endloop
+    call TriggerSleepAction(0.20)
+    set udg_boolean18=true
+    if(Trig_PvP_Battle_Func001Func031C())then
+        call DialogClearBJ(udg_dialogs01[1])
+        call DialogSetMessageBJ(udg_dialogs01[1],"Betting Menu")
+        set bj_forLoopAIndex=1
+        set bj_forLoopAIndexEnd=2
+        loop
+            exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
+            if(Trig_PvP_Battle_Func001Func031Func003Func001C())then
+                call DialogAddButtonBJ(udg_dialogs01[1],("<< "+(GetPlayerNameColour(GetOwningPlayer(udg_units03[GetForLoopIndexA()]))+"|r   ")))
+            else
+                call DialogAddButtonBJ(udg_dialogs01[1],("   "+(GetPlayerNameColour(GetOwningPlayer(udg_units03[GetForLoopIndexA()]))+"|r >>")))
+            endif
+            set udg_buttons02[GetForLoopIndexA()]=GetLastCreatedButtonBJ()
+            set bj_forLoopAIndex=bj_forLoopAIndex+1
+        endloop
+        call DialogAddButtonBJ(udg_dialogs01[1],"Skip")
+        set udg_buttons02[3]=GetLastCreatedButtonBJ()
+        call ForForce(GetPlayersMatching(Condition(function Trig_PvP_Battle_Func001Func031Func006001001)),function Trig_PvP_Battle_Func001Func031Func006A)
+    endif
+    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+    call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Prepare ...")
+    call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
+    call TriggerSleepAction(4.50)
+    set udg_integer19=5
+    call ConditionalTriggerExecute(udg_trigger117)
+    call TriggerSleepAction(5.50)
+    set udg_boolean18=false
+    call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func041A)
+    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+    set udg_integer39=0
+    set udg_real03=100.00
+    call EnableTrigger(udg_trigger140)
+    call EnableTrigger(udg_trigger141)
+    call PvpStartSuddenDeathTimer()
+    call PlaySoundBJ(udg_sound15)
+    set bj_forLoopAIndex=1
+    set bj_forLoopAIndexEnd=2
+    loop
+        exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
+        call SetUnitInvulnerable(udg_units03[GetForLoopIndexA()],false)
+        call StartFunctionSpell(udg_units03[GetForLoopIndexA()],4 ) 
+        call PauseUnitBJ(false,udg_units03[GetForLoopIndexA()])
+        set bj_forLoopAIndex=bj_forLoopAIndex+1
+    endloop
+    else
+    if(Trig_PvP_Battle_Func001Func001001())then
+        return
+    else
+        call DoNothing()
+    endif
+    call ConditionalTriggerExecute(udg_trigger103)
+    call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")
+    call StartTimerBJ(GetLastCreatedTimerBJ(),false,30)
+    call TriggerSleepAction(30.00)
+    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+    call TriggerExecute(udg_trigger109)
+    endif
+endfunction
   
   function Trig_PvP_No_Player_Func001Func001001002001001 takes nothing returns boolean
   return(IsUnitAliveBJ(GetFilterUnit())==true)
@@ -10165,8 +10402,9 @@ endif
       endif
   endif
   else
-  set udg_real03=( udg_real03 - 1 )
+  set udg_real03=( udg_real03 - 2 )
   endif
+  call PvpUpdateDeathTimerDisplay(udg_real03)
   endfunction
   
   function Trig_Sudden_Death_Timer_PvP_Func002C takes nothing returns boolean
@@ -10204,12 +10442,6 @@ endif
   call SetUnitInvulnerable(GetTriggerUnit(),true)
   call SetUnitLifePercentBJ(GetTriggerUnit(),100)
   call SetUnitManaPercentBJ(GetTriggerUnit(),100)
-  call UnitResetCooldown(GetTriggerUnit())
-  set udg_unit01=GetTriggerUnit()
-  call ConditionalTriggerExecute(udg_trigger82)
-  call TriggerSleepAction(4.00)
-  set udg_unit01=GetTriggerUnit()
-  call ConditionalTriggerExecute(udg_trigger82)
   endfunction
   
   function Trig_Enter_Shop_Mode_Conditions takes nothing returns boolean
@@ -10621,7 +10853,6 @@ endif
         endif
 
         call KillUnit(u)
-        call RemoveUnit(u)
         set u = null
   endfunction
   
@@ -10637,6 +10868,7 @@ endif
   call PlaySoundBJ(udg_sound13)
   call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
   set udg_integer06=(udg_integer06-1)
+  call AllowSinglePlayerCommands()
   set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=true
   call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+"|cffC60000 was defeated!|r")))
   call DisableTrigger(udg_trigger16)
@@ -10794,6 +11026,7 @@ endif
   call PauseAllUnitsBJ(true)
   call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
   call ConditionalTriggerExecute(udg_trigger147)
+  call ShowDraftBuildings(false)
   set udg_integer46=1
   loop
   exitwhen udg_integer46>8
@@ -10864,7 +11097,6 @@ endif
         endif
         
         call KillUnit(u)
-        call RemoveUnit(u)
         set u = null
   endfunction
   
@@ -10912,7 +11144,7 @@ endif
   endfunction
   
   function Trig_Hero_Dies_Elimination_Func018Func001A takes nothing returns nothing
-  call SetPlayerAllianceStateBJ(GetOwningPlayer(GetEnumUnit()),ConvertedPlayer(udg_integer47),bj_ALLIANCE_UNALLIED_VISION)
+  call SetPlayerAllianceStateBJ(GetOwningPlayer(GetEnumUnit()),ConvertedPlayer(udg_integer47),bj_ALLIANCE_UNALLIED)
   endfunction
   
   function Trig_Hero_Dies_Elimination_Func021001 takes nothing returns boolean
@@ -11042,6 +11274,7 @@ endif
   call PlaySoundBJ(udg_sound13)
   call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
   set udg_integer06=(udg_integer06-1)
+  call AllowSinglePlayerCommands()
   call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+"|cffffcc00 was defeated!|r")))
   call DisableTrigger(udg_trigger16)
   call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_Elimination_Func008A)
@@ -11084,6 +11317,7 @@ endif
   call EnableTrigger(udg_trigger149)
   call DisableTrigger(udg_trigger153)
   call ConditionalTriggerExecute(udg_trigger148)
+  call ShowDraftBuildings(true)
   call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Hero_Dies_Elimination_Func030001002)),function Trig_Hero_Dies_Elimination_Func030A)
   call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Hero_Dies_Elimination_Func031001002)),function Trig_Hero_Dies_Elimination_Func031A)
   call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Hero_Dies_Elimination_Func032001002)),function Trig_Hero_Dies_Elimination_Func032A)
@@ -11225,7 +11459,7 @@ endif
   call TriggerAddCondition(udg_trigger09,Condition(function Trig_Dark_Ritual_Conditions))
   call TriggerAddAction(udg_trigger09,function Trig_Dark_Ritual_Actions)
   set udg_trigger10=CreateTrigger()
-  call TriggerRegisterAnyUnitEventBJ(udg_trigger10,EVENT_PLAYER_UNIT_SPELL_EFFECT)
+call TriggerRegisterAnyUnitEventBJ(udg_trigger10,EVENT_PLAYER_UNIT_SPELL_EFFECT)
   call TriggerAddCondition(udg_trigger10,Condition(function Trig_Death_Pact_Conditions))
   call TriggerAddAction(udg_trigger10,function Trig_Death_Pact_Actions)
   set udg_trigger11=CreateTrigger()
@@ -11309,11 +11543,11 @@ endif
   call TriggerAddCondition(udg_trigger32,Condition(function Trig_Summon_Quilbeast_Conditions))
   call TriggerAddAction(udg_trigger32,function Trig_Summon_Quilbeast_Actions)
   set udg_trigger33=CreateTrigger()
-  call TriggerRegisterAnyUnitEventBJ(udg_trigger33,EVENT_PLAYER_UNIT_SPELL_CAST)
-  call TriggerRegisterAnyUnitEventBJ(udg_trigger33,EVENT_PLAYER_UNIT_SPELL_EFFECT)
-  call TriggerRegisterAnyUnitEventBJ(udg_trigger33,EVENT_PLAYER_UNIT_SPELL_FINISH)
-  call TriggerAddCondition(udg_trigger33,Condition(function Trig_Time_Wizard_Cooldown_Conditions))
-  call TriggerAddAction(udg_trigger33,function Trig_Time_Wizard_Cooldown_Actions)
+  //call TriggerRegisterAnyUnitEventBJ(udg_trigger33,EVENT_PLAYER_UNIT_SPELL_CAST)
+  //call TriggerRegisterAnyUnitEventBJ(udg_trigger33,EVENT_PLAYER_UNIT_SPELL_EFFECT)
+  //call TriggerRegisterAnyUnitEventBJ(udg_trigger33,EVENT_PLAYER_UNIT_SPELL_FINISH)
+  //call TriggerAddCondition(udg_trigger33,Condition(function Trig_Time_Wizard_Cooldown_Conditions))
+  //call TriggerAddAction(udg_trigger33,function Trig_Time_Wizard_Cooldown_Actions)
   set udg_trigger34=CreateTrigger()
   call TriggerRegisterEnterRectSimple(udg_trigger34,GetPlayableMapRect())
   call TriggerAddCondition(udg_trigger34,Condition(function Trig_Ward_Location_Conditions))
@@ -11322,11 +11556,11 @@ endif
   call TriggerRegisterTimerEventPeriodic(udg_trigger35,1.00)
   call TriggerAddAction(udg_trigger35,function Trig_Wisp_Actions)
   set udg_trigger36=CreateTrigger()
-  call TriggerRegisterAnyUnitEventBJ(udg_trigger36,EVENT_PLAYER_UNIT_SPELL_EFFECT)
+  call TriggerRegisterAnyUnitEventBJ(udg_trigger36,EVENT_PLAYER_UNIT_SPELL_CAST)
   call TriggerAddAction(udg_trigger36,function Trig_Disable_Abilities_Actions)
-  set udg_trigger37=CreateTrigger()
+  /*set udg_trigger37=CreateTrigger()
   call TriggerAddCondition(udg_trigger37,Condition(function Trig_Cast_Channeling_Ability_Conditions))
-  call TriggerAddAction(udg_trigger37,function Trig_Cast_Channeling_Ability_Actions)
+  call TriggerAddAction(udg_trigger37,function Trig_Cast_Channeling_Ability_Actions)*/
   set udg_trigger38=CreateTrigger()
   call TriggerRegisterAnyUnitEventBJ(udg_trigger38,EVENT_PLAYER_UNIT_PICKUP_ITEM)
   call TriggerAddCondition(udg_trigger38,Condition(function Trig_Acquire_Item_Conditions))
@@ -11442,6 +11676,10 @@ endif
   call TriggerRegisterDialogEventBJ(udg_trigger68,udg_dialog03)
   call TriggerAddCondition(udg_trigger68,Condition(function Trig_Random_Abilities_Conditions))
   call TriggerAddAction(udg_trigger68,function Trig_Random_Abilities_Actions)
+  set trg=CreateTrigger()
+  call TriggerRegisterDialogEventBJ(trg,udg_dialog03)
+  call TriggerAddCondition(trg,Condition(function Trig_Draft_Abilities_Conditions))
+  call TriggerAddAction(trg,function Trig_Draft_Abilities_Actions)
   set udg_trigger69=CreateTrigger()
   call TriggerRegisterDialogEventBJ(udg_trigger69,udg_dialog03)
   call TriggerAddCondition(udg_trigger69,Condition(function Trig_Doesnt_Matter_Abilities_Conditions))
@@ -11533,13 +11771,14 @@ endif
   call TriggerRegisterAnyUnitEventBJ(udg_trigger86,EVENT_PLAYER_UNIT_DROP_ITEM)
   call TriggerAddCondition(udg_trigger86,Condition(function Trig_Pandaren_Dies_Conditions))
   call TriggerAddAction(udg_trigger86,function Trig_Pandaren_Dies_Actions)
+  /*
   set udg_trigger87=CreateTrigger()
   call DisableTrigger(udg_trigger87)
   call TriggerRegisterTimerEventPeriodic(udg_trigger87,60.00)
   call TriggerAddAction(udg_trigger87,function Trig_Display_Hint_Actions)
   set udg_trigger88=CreateTrigger()
   call TriggerRegisterTimerEventSingle(udg_trigger88,30.00)
-  call TriggerAddAction(udg_trigger88,function Trig_Hint_Initialization_Actions)
+  call TriggerAddAction(udg_trigger88,function Trig_Hint_Initialization_Actions)*/
   set udg_trigger89=CreateTrigger()
   call TriggerAddAction(udg_trigger89,function Trig_Map_Initialization_Actions)
   set udg_trigger90=CreateTrigger()
@@ -11677,6 +11916,7 @@ endif
   call TriggerRegisterPlayerChatEvent(udg_trigger124,Player(6),"-clear",true)
   call TriggerRegisterPlayerChatEvent(udg_trigger124,Player(7),"-clear",true)
   call TriggerAddAction(udg_trigger124,function Trig_Clear_Command_Actions)
+  /*
   set udg_trigger125=CreateTrigger()
   call TriggerRegisterPlayerChatEvent(udg_trigger125,Player(0),"-hint",true)
   call TriggerRegisterPlayerChatEvent(udg_trigger125,Player(1),"-hint",true)
@@ -11686,7 +11926,7 @@ endif
   call TriggerRegisterPlayerChatEvent(udg_trigger125,Player(5),"-hint",true)
   call TriggerRegisterPlayerChatEvent(udg_trigger125,Player(6),"-hint",true)
   call TriggerRegisterPlayerChatEvent(udg_trigger125,Player(7),"-hint",true)
-  call TriggerAddAction(udg_trigger125,function Trig_Hint_Command_Actions)
+  call TriggerAddAction(udg_trigger125,function Trig_Hint_Command_Actions)*/
   set udg_trigger126=CreateTrigger()
   call DisableTrigger(udg_trigger126)
   call TriggerRegisterPlayerChatEvent(udg_trigger126,Player(0),"-level",true)

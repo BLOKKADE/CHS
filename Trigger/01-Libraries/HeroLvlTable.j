@@ -104,7 +104,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('N00B', 0, "|cffe7544aArmor reduction|r: ,0,")
 
-        call SetBonusStr('N00R', 0, "|cffe7544aChakrum damage|r: ,0,")
+        call SetBonusStr('N00R', 0, "|cffe7544aChakrum damage|r: ,0,%%")
 
         call SetBonusStr('N00O', 0, "|cffe7544aArmor bonus|r: ,0,")
         call SetBonusStr('N00O', 1, "|cffd6e049Summon armor bonus|r: ,0,")
@@ -153,6 +153,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr('O00B', 1, "|cffd6e049Armor limit|r: ,0,")
 
         call SetBonusStr('O00C', 0, "|cffe7544aEvasion bonus|r: ,0,")
+        call SetBonusStr('O00C', 1, "|cffd6e049Counter damage|r: ,0,")
 
         call SetBonusStr('H01F', 0, "|cffe7544aStat bonus per attack|r: ,0,")
 

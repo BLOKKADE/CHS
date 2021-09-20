@@ -66,18 +66,19 @@ function SkillSysStart takes nothing returns nothing
 	elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
 		//Hero icon
 		if NumButton == 0 then
-			set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(udg_units01[PlID + 1])) + "|r\n" + GetClassification(GetUnitTypeId(udg_units01[PlID + 1])) + "\n" + LoadStr(HT_data, GetUnitTypeId(udg_units01[PlID + 1]), 2) + "\n\n"
+			set SpellU = udg_units01[PlID + 1]
+			set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(SpellU)) + "|r\n" + GetClassification(SpellU, GetUnitTypeId(SpellU), false) + "\n" + LoadStr(HT_data, GetUnitTypeId(SpellU), 2) + "\n\n"
 			
 			if IncomeMode != 2 then
 				set ToolTipS=ToolTipS + "|cffd4954dIncome|r: " + I2S(Income[PlID]) + "\n"
 			endif
 
-			set ToolTipS=ToolTipS + "|cffc94dd4Absolute slots:|r " + I2S(GetHeroMaxAbsoluteAbility(udg_units01[PlID + 1]) + 1) + "\n"
+			set ToolTipS=ToolTipS + "|cffc94dd4Absolute slots:|r " + I2S(GetHeroMaxAbsoluteAbility(SpellU) + 1) + "\n"
 			set ToolTipS=ToolTipS + "|cff4d4dd4Hero attributes|r  \n"
-			set ToolTipS=ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('ustp'))) + "\n"
-			set ToolTipS=ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uagp'))) + "\n"
-			set ToolTipS=ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uinp'))) + "\n"
-			set ToolTipS=ToolTipS + "|cff51d44dBase hit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('uhpr'))) + "/" + R2S(BlzGetUnitRealField(udg_units01[PlID + 1], ConvertUnitRealField('umpr'))) + "\n"
+			set ToolTipS=ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(SpellU)) + "\n"
+			set ToolTipS=ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(SpellU)) + "\n"
+			set ToolTipS=ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(SpellU)) + "\n"
+			set ToolTipS=ToolTipS + "|cff51d44dHit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uhpr')) + (GetHeroStr(SpellU, true) * 0.075)) + "/" + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('umpr'))  + (GetHeroInt(SpellU, true) * 0.065)) + "\n"
 
 			if GetLocalPlayer() == GetTriggerPlayer() then
 				call BlzFrameSetText(ToolBoxSpelsT, ToolTipS)
@@ -87,11 +88,17 @@ function SkillSysStart takes nothing returns nothing
 		//Hero passive
 		elseif NumButton == 100 then
 			set SpellU=udg_units01[NumPlayerLast[PlID] + 1]
-			set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(SpellU)) + "|r\n" + GetClassification(GetUnitTypeId(SpellU)) + "\n" + LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
+			set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(SpellU)) + "|r\n" + GetClassification(SpellU, GetUnitTypeId(SpellU), false) + "\n" + LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
 			set ToolTipS=ToolTipS + GetPassiveStr(SpellU)
 
-			if IncomeMode != 2 and GetTriggerPlayer() != GetOwningPlayer(SpellU) then
-				set ToolTipS=ToolTipS + "\n\n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
+			if GetTriggerPlayer() != GetOwningPlayer(SpellU) then
+				set ToolTipS=ToolTipS + "\n"
+				if IncomeMode != 2 then
+					set ToolTipS=ToolTipS + "\n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
+				endif
+				set ToolTipS=ToolTipS + "\n|cfffaf61cGold|r: " + I2S(GetPlayerState(Player(NumPlayerLast[PlID]), PLAYER_STATE_RESOURCE_GOLD))
+				set ToolTipS=ToolTipS + "\n|cff41e400Lumber|r: " + I2S(GetPlayerState(Player(NumPlayerLast[PlID]), PLAYER_STATE_RESOURCE_LUMBER))
+				set ToolTipS=ToolTipS + "\n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[NumPlayerLast[PlID]]))
 			endif
 
 			if GetLocalPlayer() == GetTriggerPlayer() then
@@ -101,24 +108,37 @@ function SkillSysStart takes nothing returns nothing
 
 		//Hero abilities and absolutes
 		elseif NumButton > 100 and  NumButton <= 120 then
-			set SpellU = udg_units01[NumPlayerLast[PlID]+1]
-			set i3 =  GetInfoHeroSpell(SpellU ,NumButton-100) 
-			set SpellCP[PlID] = i3
-			set ToolTipS =   BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )+"\n"
-			set ToolTipS =ToolTipS +  GetClassification(i3 ) + "\n"
-			set ToolTipS =ToolTipS +   BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )
+			if NumPlayerLast[PlID] != 11 then
+				set SpellU = udg_units01[NumPlayerLast[PlID]+1]
+				set i3 =  GetInfoHeroSpell(SpellU ,NumButton-100) 
+				set SpellCP[PlID] = i3
+				set ToolTipS =   BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )+"\n"
+				set ToolTipS =ToolTipS +  GetClassification(SpellU, i3, true) + "\n"
+				set ToolTipS =ToolTipS +   BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )
 
-			//Hero absolutes
-			if NumButton > 110 and NumButton <=120 then
-				set i1 = GetAbsoluteElement(i3)
-				set i2 = GetClassUnitSpell(SpellU, i1)
-				set ToolTipS = ToolTipS + "\n\n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
+				//Hero absolutes
+				if NumButton > 110 and NumButton <=120 then
+					set i1 = GetAbsoluteElement(i3)
+					set i2 = GetClassUnitSpell(SpellU, i1)
+					set ToolTipS = ToolTipS + "\n\n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
+				endif
+
+				if GetLocalPlayer() == GetTriggerPlayer() then	
+					call BlzFrameSetText(ToolBoxSpelsT  , ToolTipS )
+					call BlzFrameSetVisible(ToolBoxSpels  ,true )
+				endif       
+			else
+				set SpellU = selectedUnit[PlID]
+				set i3 =  roundAbilities[NumButton-100]
+				set SpellCP[PlID] = i3
+				set ToolTipS =   BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )+"\n"
+				set ToolTipS =ToolTipS +   BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )
+
+				if GetLocalPlayer() == GetTriggerPlayer() then	
+					call BlzFrameSetText(ToolBoxSpelsT  , ToolTipS )
+					call BlzFrameSetVisible(ToolBoxSpels  ,true )
+				endif       
 			endif
-
-			if GetLocalPlayer() == GetTriggerPlayer() then	
-				call BlzFrameSetText(ToolBoxSpelsT  , ToolTipS )
-				call BlzFrameSetVisible(ToolBoxSpels  ,true )
-			endif       
 		endif
 	elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_LEAVE then
 

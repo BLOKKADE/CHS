@@ -1,7 +1,7 @@
 
 
 
-function TakePhysDmg takes unit Dealing ,unit Trigger returns nothing
+function TakePhysDmg takes unit Dealing ,unit Trigger, boolean AbilA returns nothing
     local integer i = 0
     local real luck = 1
     local real BaseCrit = 0
@@ -12,11 +12,6 @@ function TakePhysDmg takes unit Dealing ,unit Trigger returns nothing
     local real CritDmg = 0
     local timer t = null
     local boolean Halfcr = false
-    local boolean AbilA = true
-    
-    if TypeDmg_b == 2 then
-        set AbilA = false
-    endif
  
  
     set luck = GetUnitLuck(Dealing)
@@ -48,9 +43,13 @@ function TakePhysDmg takes unit Dealing ,unit Trigger returns nothing
             call UsOrderU(Dealing,Trigger,GetUnitX(Trigger),GetUnitY(Trigger),'A06T',"thunderbolt",  i*100+GetHeroStr(Dealing,true)/2, ABILITY_RLF_DAMAGE_HTB1 )
         endif
     endif
-    
-    
+
     //Crit
+    //Creep Critical Strike
+    set i = GetUnitAbilityLevel(Dealing,'ACct') //Critical Strike 
+    if i > 0 and GetRandomReal(0,100) <= 10*luck + BaseChCr then
+        set CritDmg = CritDmg +  Dmg
+    endif
 
     //Blink Strike
     set i = GetUnitAbilityLevel(Dealing,'A08J') //Blink Strike

@@ -4,6 +4,10 @@ library AbsoluteElements initializer init requires Table
         Table AbsoluteElements
     endglobals
 
+    function IsAbsolute takes integer absoluteId returns boolean
+        return AbsoluteElements[absoluteId] != 0
+    endfunction
+
     function GetAbsoluteElement takes integer absoluteId returns integer
         return AbsoluteElements[absoluteId]
     endfunction

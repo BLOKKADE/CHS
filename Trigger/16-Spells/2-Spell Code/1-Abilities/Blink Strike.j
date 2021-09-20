@@ -4,9 +4,10 @@ library BlinkStrike initializer init requires RandomShit
         Table BlinkStrikeEnabled
     endglobals
 
+    /*
     private function UnitIsAlive takes nothing returns boolean
         return IsUnitSpellTarget(GetFilterUnit()) and IsUnitInvis(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), Player(OwnerId))
-    endfunction
+    endfunction*/
 
     private function BlinkAndStrike takes unit caster, unit target, integer level returns nothing
         local real angle = Atan2(GetUnitY(target) - GetUnitY(caster), GetUnitX(target) - GetUnitX(caster))*(180.00/ 3.14159)
@@ -23,20 +24,19 @@ library BlinkStrike initializer init requires RandomShit
         set BlinkStrikeEnabled.boolean[GetHandleId(caster)] = true
 
         set GLOB_typeDmg = 2
-        call UnitDamageTarget(caster, target, SpellData[GetHandleId(caster)].real[7], false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
+        set DamageIsAttack = true
+        call UnitDamageTarget(caster, target, GetAttackDamage(caster), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
         set BlinkStrikeEnabled.boolean[GetHandleId(caster)] = false
     endfunction
 
     function BlinkStrike takes unit caster, integer level returns nothing
-        local group g = CreateGroup()
+        //local group g = CreateGroup()
         local unit target
         local integer size = 0
         local integer i = 0
 
-        set OwnerId = GetPlayerId(GetOwningPlayer(caster))
-
-        call GroupEnumUnitsInRange(g, GetUnitX(caster), GetUnitY(caster), 600 + (20 * level), Filter(function UnitIsAlive))
-        set size = BlzGroupGetSize(g)
+        set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), 600 + (20 * level), GetOwningPlayer(caster), false, true, true)
+        /*set size = BlzGroupGetSize(g)
         loop
             set target = BlzGroupUnitAt(g, i)
             set i = i + 1
@@ -45,14 +45,14 @@ library BlinkStrike initializer init requires RandomShit
 
         if i >= size then
             set target = BlzGroupUnitAt(g, GetRandomInt(0, size - 1))
-        endif
+        endif*/
 
         if target != null then
             call BlinkAndStrike(caster, target, level)
         endif
 
-        call DestroyGroup(g)
-        set g = null
+        //call DestroyGroup(g)
+        //set g = null
         set target = null
     endfunction
 

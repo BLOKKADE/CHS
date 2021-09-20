@@ -14,15 +14,15 @@ endfunction
 
 function FixUnit takes unit u returns nothing
 if IsUnitIllusion(u) then
-    call FixTimerD(u,10001)
-    call FixTimerD(u,10002)
-    call FixTimerD(u,10003)
-    call FixTimerD(u,10101)
-    call FixTimerD(u,10102)
-    call FixTimerD(u,10103)
-    call FixTimerD(u,10201)
-    call FixTimerD(u,10301)
-    call FixTimerD(u,10401)
+    //call FixTimerD(u,10001)
+    //call FixTimerD(u,10002)
+    //call FixTimerD(u,10003)
+    //call FixTimerD(u,10101)
+    //call FixTimerD(u,10102)
+    //call FixTimerD(u,10103)
+    //call FixTimerD(u,10201)
+    //call FixTimerD(u,10301)
+    //call FixTimerD(u,10401)
     call FlushChildHashtable(DataUnitHT,GetHandleId(u))  
 endif
 

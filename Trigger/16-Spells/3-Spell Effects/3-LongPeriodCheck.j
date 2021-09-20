@@ -14,8 +14,11 @@ function  FunctionAttackSpeedA takes unit u returns nothing
        set  r2 = r1 
     endif
 
-    set r2 = r2 + i2*1.4
+    set r2 = r2 + i2 * 1.4
 
+    if GetUnitAbilityLevel(u, 'B01Q') > 0 then
+        set r2 = r2 + 0.4
+    endif
 
     if UnitHasItemS(u,'I06B') then
       set r2 = r2*0.8
@@ -38,7 +41,7 @@ endfunction
 function AABfunction takes unit u returns nothing
     //Mysterious Talent
     if GetUnitAbilityLevel(u,'A05Z') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A05Z') <= 0.001 and BlzIsUnitInvulnerable(u) == false then
-        call UseSpellsAT(u)
+        call MysteriousTalent(u)
         call AbilStartCD(u,'A05Z',45-GetUnitAbilityLevel(u,'A05Z') ) 
     endif
 
@@ -56,8 +59,7 @@ function AABfunction takes unit u returns nothing
     endif
 
     //Earthquake
-    if GetUnitAbilityLevel(u,'A07L') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A07L') <= 0.001 and BlzIsUnitInvulnerable(u) == false  then
-
+    if GetUnitAbilityLevel(u,'A07L') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A07L') <= 0.001 and BlzIsUnitInvulnerable(u) == false and CheckProc(u, 600) then
         call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap",GetUnitAbilityLevel(u,'A07L')*100,ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
         call AbilStartCD(u,'A07L',5 ) 
     endif
@@ -82,23 +84,43 @@ function FunUpdateSkill takes integer i returns nothing
         endif
     endif
 
-    loop
-        exitwhen i1 > 21
-        set SpellId=GetInfoHeroSpell(udg_units01[NumPlayerLast[i] + 1] , i1)
-        if SpellId != 0 then
-            set textureS=BlzGetAbilityIcon(SpellId)
+    if NumPlayerLast[i] == 11 then
+        loop
+            exitwhen i1 > 21
+            set SpellId= roundAbilities[i1]
+            if SpellId != 0 then
+                set textureS=BlzGetAbilityIcon(SpellId)
 
-            if GetLocalPlayer() == Pl then
-              call BlzFrameSetVisible(SpellUP[100 + i1], true)
-              call BlzFrameSetTexture(SpellFR[100 + i1], textureS, 0, true)
+                if GetLocalPlayer() == Pl then
+                    call BlzFrameSetVisible(SpellUP[100 + i1], true)
+                    call BlzFrameSetTexture(SpellFR[100 + i1], textureS, 0, true)
+                endif
+            else
+                if GetLocalPlayer() == Pl then
+                    call BlzFrameSetVisible(SpellUP[100 + i1], false)
+                endif
             endif
-        else
-            if GetLocalPlayer() == Pl then
-              call BlzFrameSetVisible(SpellUP[100 + i1], false)
+            set i1=i1 + 1
+        endloop
+    else
+        loop
+            exitwhen i1 > 21
+            set SpellId=GetInfoHeroSpell(udg_units01[NumPlayerLast[i] + 1] , i1)
+            if SpellId != 0 then
+                set textureS=BlzGetAbilityIcon(SpellId)
+
+                if GetLocalPlayer() == Pl then
+                call BlzFrameSetVisible(SpellUP[100 + i1], true)
+                call BlzFrameSetTexture(SpellFR[100 + i1], textureS, 0, true)
+                endif
+            else
+                if GetLocalPlayer() == Pl then
+                call BlzFrameSetVisible(SpellUP[100 + i1], false)
+                endif
             endif
-        endif
-        set i1=i1 + 1
-    endloop
+            set i1=i1 + 1
+        endloop
+    endif
 
     set Pl = null
 endfunction
@@ -344,9 +366,10 @@ function Trig_LongPeriodCheck_Actions takes nothing returns nothing
 
             //Thunder Witch
             if GetUnitTypeId(u) == 'O001' then
-                if GetTimerCD(u , 10202 , 1) and CheckProc(u, 610) then
+                if BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and CheckProc(u, 610) then
                     call ElemFuncStart(u,'O001')
                     call USOrderA(u,GetUnitX(u),GetUnitY(u),'A036',"fanofknives",  30+GetHeroLevel(u)*30 , ConvertAbilityRealLevelField('Ocl1') )
+                    call AbilStartCD(u, 'A08P', 1)
                 endif
             endif
 

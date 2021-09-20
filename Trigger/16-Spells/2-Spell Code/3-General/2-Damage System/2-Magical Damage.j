@@ -1,4 +1,4 @@
-function TakeMagickDmg takes unit Dealing ,unit Trigger returns nothing
+function TakeMagickDmg takes unit Dealing ,unit Trigger, boolean AbilA returns nothing
     local integer i = 0
     local real luck = 1
     local real BaseCrit = 0
@@ -8,12 +8,7 @@ function TakeMagickDmg takes unit Dealing ,unit Trigger returns nothing
     local real CritDmg = 0
     local real lifesteal = 0
     local timer t = null
-    local boolean AbilA = true
     local boolean Halfcr = false
-    
-    if TypeDmg_b == 2 then
-        set AbilA = false
-    endif
     
     //Ranger Passive
     set i = GetUnitAbilityLevel(Dealing,'A033') //HeroPassive

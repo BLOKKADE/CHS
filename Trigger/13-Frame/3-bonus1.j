@@ -65,13 +65,13 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'N00L',2, "|cffffff00Level Up Bonus|r: Gains 55 * hero level experience." )
     
     call SaveStr(HT_data,'N00P',1, "ReplaceableTextures\\CommandButtons\\BTNBeastMaster.blp" )       // Beast master
-    call SaveStr(HT_data,'N00P',2, "|cffffff00Level Up Bonus|r: (Every 3 levels) Increases the level of all summons by 1." )
+    call SaveStr(HT_data,'N00P',2, "|cffffff00Level Up Bonus|r: (Every 4 levels) Increases the level of all summons by 1." )
         
     call SaveStr(HT_data,'N00B',1, "ReplaceableTextures\\CommandButtons\\BTNBansheeRanger.blp" )       // Fallen Ranger
     call SaveStr(HT_data,'N00B',2, "|cff00ffffPassive|r: Fear Aura: Reduces the armor of nearby enemies. \n|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
     
     call SaveStr(HT_data,'N00R',1, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )       // Luna
-    call SaveStr(HT_data,'N00R',2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero is attacked. \n|cffffff00Level Up Bonus|r: Moon Chakrum: +7 damage" )
+    call SaveStr(HT_data,'N00R',2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero is attacked, dealing 10% of her attack damage in magic damage. \n|cffffff00Level Up Bonus|r: Moon Chakrum: +0.3% of her attack damage" )
         
     call SaveStr(HT_data,'N00O',1, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )       // Brute Skelet
     call SaveStr(HT_data,'N00O',2, "|cff00ffffPassive|r: Skeleton Army: Summons a skeleton every time it kills an enemy unit.\n|cffffff00Level Up Bonus|r: +2 armor, +5 summon armor." )
@@ -132,7 +132,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'O00B',2, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength if it hass less than 50 armor. \n|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus, +2 armor limit." )
     
     call SaveStr(HT_data,'O00C',1, "ReplaceableTextures\\CommandButtons\\BTNSatyr.blp" )       //Satyr
-    call SaveStr(HT_data,'O00C',2, "|cffffff00Level Up Bonus|r: +0.5 evasion." )
+    call SaveStr(HT_data,'O00C',2, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it counters, dealing 100% of its attack damage back to the attacker.\n|cffffff00Level Up Bonus|r: Trickshot: +2% damage. +0.5 evasion." )
 
     call SaveStr(HT_data,'H01F',1, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )       //Murlock
     call SaveStr(HT_data,'H01F',2, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy, lasts until the end of the fight. \n|cffffff00Level Up Bonus|r: (Every 10 levels) Fish Hook: +1 stat per attack." )
@@ -153,5 +153,5 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'H01L',2, "|cff00ffffPassive|r: Magical Insight: The Hero's physical damage dealt becomes magic damage and its magic damage dealt becomes physical damage." )
  
     call SaveStr(HT_data,'H00A',1, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )       //Areana master
-    call SaveStr(HT_data,'H00A',2, "|cff00ffffPassive|r: Arena Veteran: +15 Pvp bonus. \n|cffffff00Level Up Bonus|r: +30 glory." )
+    call SaveStr(HT_data,'H00A',2, "|cffffff00Level Up Bonus|r: +200 glory." )
 endfunction

@@ -15,23 +15,25 @@ library MouseHoverInfo requires TimerUtils, GetClass, RandomShit
         local string heroInfo = "" 
         local string temp = ""
 
-        call ClearTextMessages()
-        set heroInfo = heroInfo + "|cffff0000" + GetObjectName(GetUnitTypeId( u )) +"|r\n"
-        set temp = GetClassification(GetUnitTypeId( u ))
+        if udg_units01[GetPlayerId(p) + 1] == null then
+            call ClearTextMessages()
+            set heroInfo = heroInfo + "|cffff0000" + GetObjectName(GetUnitTypeId( u )) +"|r\n"
+            set temp = GetClassification(u, GetUnitTypeId( u ), false)
 
-        if temp != "" then
-            set heroInfo = heroInfo + temp + "\n"
+            if temp != "" then
+                set heroInfo = heroInfo + temp + "\n"
+            endif
+            set heroInfo = heroInfo +  LoadStr(HT_data,GetUnitTypeId( u ),2 )   + "\n\n"
+            set heroInfo = heroInfo + "|cff0000ffAttributes|r  \n"
+            set heroInfo = heroInfo + "|cffe7544aStrength|r: " + I2S(GetHeroStr(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('ustp')))
+            set heroInfo = heroInfo + "\n|cffd6e049Agility|r: " + I2S(GetHeroAgi(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uagp')))
+            set heroInfo = heroInfo + "\n|cff4daed4Intelligence|r: " + I2S(GetHeroInt(u, false)) + ", +" +  R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uinp')))   
+            set heroInfo = heroInfo + "\n|cff51d44dHp regen|r: " +  R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uhpr')))
+            set heroInfo = heroInfo + ", |cff51d44dMana regen|r: " + R2S(BlzGetUnitRealField(u,ConvertUnitRealField('umpr')))
+            set heroInfo = heroInfo + "\n|cffd99ddfSelect this Hero twice to pick it.|r"
+
+            call DisplayTextToPlayer(p, 0,0, heroInfo)
         endif
-        set heroInfo = heroInfo +  LoadStr(HT_data,GetUnitTypeId( u ),2 )   + "\n\n"
-        set heroInfo = heroInfo + "|cff0000ffAttributes|r  \n"
-        set heroInfo = heroInfo + "|cffe7544aStrength|r: " + I2S(GetHeroStr(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('ustp')))
-        set heroInfo = heroInfo + "\n|cffd6e049Agility|r: " + I2S(GetHeroAgi(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uagp')))
-        set heroInfo = heroInfo + "\n|cff4daed4Intelligence|r: " + I2S(GetHeroInt(u, false)) + ", +" +  R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uinp')))   
-        set heroInfo = heroInfo + "\n|cff51d44dHp regen|r: " +  R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uhpr')))
-        set heroInfo = heroInfo + ", |cff51d44dMana regen|r: " + R2S(BlzGetUnitRealField(u,ConvertUnitRealField('umpr')))
-        set heroInfo = heroInfo + "\n|cffd99ddfSelect this Hero twice to pick it.|r"
-
-        call DisplayTextToPlayer(p, 0,0, heroInfo)
     endfunction
 
     private function MouseHoverCheck takes nothing returns nothing

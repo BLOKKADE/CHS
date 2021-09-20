@@ -4,7 +4,6 @@ globals
     integer array Absolute_ability
     
     hashtable ITEM_SPELL = InitHashtable()
-
 endglobals
 
 
@@ -18,7 +17,7 @@ function GetItemAbility takes integer itemId returns integer
 endfunction
 
 function Trig_Spell_Initialization_Actions takes nothing returns nothing
-	set udg_integers08[1]='A06S'
+	/*set udg_integers08[1]='A06S'
 	set udg_integers08[2]='ANms'
 	set udg_integers08[3]='AUcs'
 	set udg_integers08[4]='AOcr'
@@ -418,7 +417,7 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
     call SaveItemAbility('A07K','I093')      
     call SaveItemAbility('A07E','I08W')    
     call SaveItemAbility('A07V','I09F')    
-    
+    */
     
   
 

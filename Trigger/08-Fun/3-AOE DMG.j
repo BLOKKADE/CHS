@@ -130,7 +130,7 @@ library AoeDamage requires Vampirism
     function DrainRealase takes nothing returns boolean
         local real hp
         local real dmg
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 then
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and LoadBoolean(HT,GetHandleId(GetFilterUnit()),'A07S') == false then
     
             set hp = GetWidgetLife(GetFilterUnit())
             set dmg = Dmg_ef
@@ -174,7 +174,7 @@ library AoeDamage requires Vampirism
     function DrainRealase2 takes nothing returns boolean
         local real hp
         local real dmg
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 then
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and LoadBoolean(HT,GetHandleId(GetFilterUnit()),'A07S') == false then
 
             set hp = GetWidgetLife(GetFilterUnit())
             set dmg = Dmg_ef*hp/100

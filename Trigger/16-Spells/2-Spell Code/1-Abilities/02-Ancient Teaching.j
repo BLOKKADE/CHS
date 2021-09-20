@@ -29,11 +29,6 @@ function A05U_Reset_Timer takes nothing returns nothing
     set U = null
 endfunction
 
-
-
-
-
-
 function Trig_Ancient_Teaching_Actions takes nothing returns nothing
     local unit U =  GetTriggerUnit()
     local integer Id = GetSpellAbilityId()

@@ -2,22 +2,19 @@ globals
     hashtable HT_SpellPlayer = InitHashtable()
 endglobals
 
-
 function LoadCountHeroSpell takes  unit u,integer list returns integer 
     return LoadInteger(HT_SpellPlayer,GetHandleId(u),-list)
 endfunction
+
 function SetInfoHeroSpell takes unit u, integer num, integer id returns nothing
     call SaveInteger(HT_SpellPlayer,GetHandleId(u),num,id)
     call SaveInteger(HT_SpellPlayer,GetHandleId(u),id,num)
 endfunction
 
-
-
-
-
 function SaveCountHeroSpell takes unit u,integer count,integer list returns nothing 
     call SaveInteger(HT_SpellPlayer,GetHandleId(u),-list,count)
 endfunction
+
 function RemoveInfoHeroSpell takes unit u, integer id returns nothing
     local integer num =LoadInteger(HT_SpellPlayer,GetHandleId(u),id)
     call SaveInteger(HT_SpellPlayer,GetHandleId(u),num,0)
@@ -56,10 +53,12 @@ function  FuncEditParam takes integer iDs, unit GetU returns nothing
     local integer i1 = 0
     local integer i2 = 0
     local integer NumAbility
-    
-    call AddSpellPlayerInfo(iDs,GetU,0)
-    
-    call SetChanellOrder(GetU,iDs,GetInfoHeroSpell(GetU,iDs)  )
+
+    if IsUnitType(GetU, UNIT_TYPE_HERO) then
+        call AddSpellPlayerInfo(iDs,GetU,0)
+        
+        call SetChanellOrder(GetU,iDs,GetInfoHeroSpell(GetU,iDs)  )
+    endif
     
     if iDs == 'AEev' then
        	set i1 = GetUnitAbilityLevel(GetU,iDs)
@@ -114,8 +113,6 @@ function  FuncEditParam takes integer iDs, unit GetU returns nothing
     endif
 endfunction
 
-
-
 function  FunResetAbility takes integer iDs, unit GetU returns nothing
     local integer i1 =0
     local integer i2 =0
@@ -156,14 +153,12 @@ function  FunResetAbility takes integer iDs, unit GetU returns nothing
         call AddUnitLuck(GetU ,   0.01*I2R(i1-i2)  )	
     	call SaveInteger(HT,GetHandleId(GetU),-10005,i1)
     endif 
-    
-    
 
-   if iDs == 'A02O' then
-     if LoadReal(HT, GetHandleId(GetU),1 ) != 0 then
-     //   call BlzSetUnitAttackCooldown(GetU,LoadReal(HT, GetHandleId(GetU),1 ) ,0 ) 
-     endif
-   endif
+    if iDs == 'A02O' then
+        if LoadReal(HT, GetHandleId(GetU),1 ) != 0 then
+        //   call BlzSetUnitAttackCooldown(GetU,LoadReal(HT, GetHandleId(GetU),1 ) ,0 ) 
+        endif
+    endif
 endfunction
 
 function FunctionStartUnit takes unit U returns nothing
@@ -173,65 +168,39 @@ function FunctionStartUnit takes unit U returns nothing
     endif
 endfunction
 
-
-
-
-
-
-
-
-
 function Func_completeLevel takes unit u returns nothing
-local player p = GetOwningPlayer(u)
-local integer pid = GetPlayerId(p)
-local integer i1 = 0 
+    local player p = GetOwningPlayer(u)
+    local integer pid = GetPlayerId(p)
+    local integer i1 = 0 
 
-set i1 = LoadInteger(HT,GetHandleId(u),54001)
-if i1 != 0 then 
-call BlzSetUnitArmor(u,BlzGetUnitArmor(u)-i1)
-call AddUnitBlock(u,-i1)
-call SaveInteger(HT,GetHandleId(u),54001,0)
-set NumberOfUnit[pid] = 0
-endif
+    set i1 = LoadInteger(HT,GetHandleId(u),54001)
+    if i1 != 0 then 
+        call BlzSetUnitArmor(u,BlzGetUnitArmor(u)-i1)
+        call AddUnitBlock(u,-i1)
+        call SaveInteger(HT,GetHandleId(u),54001,0)
+        set NumberOfUnit[pid] = 0
+    endif
 
+    set i1 = LoadInteger(HT,GetHandleId(u),54021)
+    if i1 != 0 then 
+        call SetHeroStr(u,GetHeroStr(u,false)-i1,false)
+        call SetHeroAgi(u,GetHeroAgi(u,false)-i1,false)
+        call SetHeroInt(u,GetHeroInt(u,false)-i1,false)
+        call SaveInteger(HT,GetHandleId(u),54021,0)
+    endif
 
-set i1 = LoadInteger(HT,GetHandleId(u),54021)
-if i1 != 0 then 
+    set i1 = UnitHasItemI(u,'I07H') 
+    if i1 > 0 then
+        call AddUnitBlock(u,15*i1)
+        call AddUnitMagicDef(u,1*i1)
+    endif
 
-call SetHeroStr(u,GetHeroStr(u,false)-i1,false)
-call SetHeroAgi(u,GetHeroAgi(u,false)-i1,false)
-call SetHeroInt(u,GetHeroInt(u,false)-i1,false)
-call SaveInteger(HT,GetHandleId(u),54021,0)
-endif
+    set Glory[pid] = Glory[pid] + 200 + GloryRoundBonus[pid]
+    call ResourseRefresh(Player(pid)) 
+    call AdjustPlayerStateBJ( Income[pid],p,PLAYER_STATE_RESOURCE_GOLD)
+    call DisplayTextToPlayer(p,0,0,"|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " - |cff00aa0eLumber|r: +" + I2S(LumberGained[pid]) + " - |cff7af0f8Glory|r: +" + I2S(R2I((200 + GloryRoundBonus[pid]))))
 
-set i1 = UnitHasItemI(u,'I07H') 
-if i1 > 0 then
-call AddUnitBlock(u,15*i1)
-call AddUnitMagicDef(u,1*i1)
-
-endif
-
-
-
-set Glory[pid] = Glory[pid] + 200
-call AdjustPlayerStateBJ( Income[pid],p,PLAYER_STATE_RESOURCE_GOLD)
-call DisplayTextToPlayer(p,0,0,"|cffffff00Income:|r " + I2S(Income[pid]) )  
-
-
-
-
-
-if Income[pid] == 0 then 
-    call DisplayTextToPlayer(p,0,0,"You can increase your income in Power Ups Shop II")       
-endif
-
+    if Income[pid] == 0 then 
+        call DisplayTextToPlayer(p,0,0,"You can increase your income in Power Ups Shop II")       
+    endif
 endfunction
-
-
-
-
-
-
-
-
-

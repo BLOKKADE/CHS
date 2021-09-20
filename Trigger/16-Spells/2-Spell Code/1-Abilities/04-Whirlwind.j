@@ -29,6 +29,10 @@ function Trig_Whirlwind_Damage_Func030Func001C takes nothing returns boolean
     return true
 endfunction
 
+function IsDamageWhirlwind takes unit u returns boolean
+    return SpellData[GetHandleId(u)].boolean[4]
+endfunction
+
 function Trig_Whirlwind_Damage_Func030A takes nothing returns nothing
     if ( Trig_Whirlwind_Damage_Func030Func001C() ) then
         call UnitDamageTargetBJ( GetTriggerUnit(), GetEnumUnit(), I2R(udg_WhirlwindDamage), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
@@ -38,7 +42,7 @@ endfunction
 
 function Trig_Whirlwind_Actions takes nothing returns nothing
     local unit caster = GetTriggerUnit()
-    local integer lastDamage = R2I(SpellData[GetHandleId(caster)].real[2])
+    local integer lastDamage = R2I(GetAttackDamage(caster))
     if lastDamage != 0 then
         set udg_WhirlwindDamage = lastDamage
     else

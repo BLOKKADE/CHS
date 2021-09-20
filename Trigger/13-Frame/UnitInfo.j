@@ -48,6 +48,21 @@ function GameUIStandart takes nothing returns nothing
 	call BlzFrameSetVisible(parent, false)
 endfunction
 
+function ExtraFieldInfo takes unit u returns string
+	local integer pid = GetPlayerId(GetOwningPlayer(u))
+	local string s = ""
+
+	set s = s + "Lives: " + I2S(Lives[pid] - 1) + "\n"
+	set s = s + "Income: " + I2S(Income[pid]) + "\n"
+	set s = s + "Glory per Round: " + I2S(R2I(GloryRoundBonus[pid] + 200)) + "\n"
+	set s = s + "Movespeed: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"
+	set s = s + "Rune Power: " + R2SW(GetUnitPowerRune(u), 1, 1) + "%%\n"
+	set s = s + "Luck: +" + R2SW(((GetUnitLuck(u) - 1) * 100), 1, 1) + "%%\n"
+	set s = s + "Absolute Slots: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1)
+
+	return s
+endfunction
+
 function UpdateTextRelaese takes unit u returns nothing
 	local string dmgT= "-"
 	local integer Pid=  GetPlayerId(GetOwningPlayer(u))
@@ -57,8 +72,8 @@ function UpdateTextRelaese takes unit u returns nothing
 
 	call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
 	call BlzFrameSetText(TextUI[4], R2SW(GetUnitBlock(u), 1, 0))
-	call BlzFrameSetText(TextUI[2], R2S(BlzGetUnitAttackCooldown(u, 0)))
-	call BlzFrameSetText(TextUI[5], I2S(R2I(GetUnitMoveSpeed(u))))
+	call BlzFrameSetText(TextUI[2], R2SW(BlzGetUnitAttackCooldown(u, 0), 1, 2) + "/" + R2SW(BlzGetUnitRealField(u, UNIT_RF_CAST_POINT), 1, 2))
+	call BlzFrameSetText(TextUI[5], R2SW(GetUnitPvpBonus(u), 1, 1))
 	call BlzFrameSetText(TextUI[9], R2SW(GetUnitMagicDmg(u), 1, 1))
 	call BlzFrameSetText(TextUI[10], R2SW(GetUnitMagicDef(u), 1, 1))
 	call BlzFrameSetText(TextUI[11], R2SW(GetUnitEvasion(u), 1, 1))
@@ -73,6 +88,7 @@ function UpdateTextRelaese takes unit u returns nothing
 	endif
 	set CustomInfoT1[3] = R2S(GetUnitMagicDmg(u))
 	set CustomInfoT1[4] = R2S( (1 - (50 / ( 50 + GetUnitMagicDef(u) ))) * 100 )
+	set CustomInfoT1[5] = ExtraFieldInfo(u)
 
 	if IsHeroUnitId(GetUnitTypeId(u)) then
 		call BlzFrameSetText(TextUI[6], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroStrengthValue", 6)))
@@ -87,7 +103,7 @@ function UpdateTextRelaese takes unit u returns nothing
 			call BlzFrameSetText(TextUI[8], "*" + BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroIntellectValue", 6)))
 		endif
 
-		call BlzFrameSetText(TextUI[12], R2SW(GetUnitPvpBonus(u), 1, 1))
+		call BlzFrameSetText(TextUI[12], "More")
 	else
 		call BlzFrameSetText(TextUI[6], "-")
 		call BlzFrameSetText(TextUI[7], "-")
@@ -135,17 +151,17 @@ endfunction
 function GameUINewPanel takes nothing returns nothing
 	local framehandle NewPanel= BlzCreateSimpleFrame("CustomUnitInfoPanel3x4", BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0), 0)
 	call InitDataInfoPanel(1 , "Damage: " , "ReplaceableTextures\\CommandButtons\\BTNAttack.blp" , "The amount of damage the unit's basic attack deals")
-	call InitDataInfoPanel(2 , "Attack cooldown: " , "ReplaceableTextures\\CommandButtons\\BTNHoldPosition.blp" , "Time between the unit's attacks.\nNot an indicator of attack speed")
+	call InitDataInfoPanel(2 , "Attack cooldown: " , "ReplaceableTextures\\CommandButtons\\BTNHoldPosition.blp" , "Time between the unit's attacks / Time to start the effect of a spell.\nAbilities and items can affect these values making them inaccurate.")
 	call InitDataInfoPanel(3 , "Armor: " , "ReplaceableTextures\\CommandButtons\\BTNStop.blp" , "")
 	call InitDataInfoPanel(4 , "Block: " , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , "Damage reduction applied to all damage taken.")
-	call InitDataInfoPanel(5 , "Movement speed: " , "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed" , "Current movement speed. ")
+	call InitDataInfoPanel(5 , "Pvp bonus: " , "BTNHUHoldPosition.blp" , "Increases damage dealt to enemy heroes\nReduces damage taken from enemy heroes. ")
 	call InitDataInfoPanel(6 , "Strength: " , "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower" , "Each point increases hit points by 26.\nEach point increases hit point regeneration by 0.075.")
 	call InitDataInfoPanel(7 , "Agility: " , "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility" , "Each point increases armor by 0.150.\nEach point increases attack speed by 0.01%.")
 	call InitDataInfoPanel(8 , "Intelligence: " , "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence" , "Each point increases mana by 20.1.\nEach point increases mana regeneration by 0.065.")
 	call InitDataInfoPanel(9 , "Magic power: " , "ReplaceableTextures\\CommandButtons\\BTNControlMagic" , "Increases magic damage dealt by |cff4daed4")
 	call InitDataInfoPanel(10 , "Magic protection: " , "ReplaceableTextures\\CommandButtons\\BTNRunedBracers.blp" , "Reduces magic damage taken by |cff51d44d")
 	call InitDataInfoPanel(11 , "Evasion: " , "ReplaceableTextures\\CommandButtons\\BTNEvasion" , "Increases the chance to evade enemy attacks by |cffd6e049")
-	call InitDataInfoPanel(12 , "Pvp bonus: " , "BTNHUHoldPosition.blp" , "Increases damage dealt to enemy heroes\nReduces damage taken from enemy heroes.")
+	call InitDataInfoPanel(12 , "" , "ReplaceableTextures\\CommandButtons\\BTNEngineeringUpgrade.blp", "")
 
 
 	//     call InitDataInfoPanel(11, "Mp/s: ", "ReplaceableTextures\\CommandButtons\\BTNMagicalSentry","")
@@ -171,6 +187,9 @@ function update takes nothing returns nothing
 				set ToolTipA=ToolTipA + CustomInfoT1[4] + "%%|r."
 			elseif loopA == 11 then
 				set ToolTipA=ToolTipA + CustomInfoT1[1] + "%%|r."
+			elseif loopA == 12 then
+				set ToolTipA="More info\n------------------------------\n" + DataDesc[loopA]
+				set ToolTipA=ToolTipA + CustomInfoT1[5]
 			endif
 			call BlzFrameSetText(tooltipText, ToolTipA)
 		endif

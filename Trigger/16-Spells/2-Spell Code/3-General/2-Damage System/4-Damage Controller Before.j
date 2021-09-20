@@ -1,10 +1,10 @@
 globals
     boolean GLOB_cuttting = false 
+    boolean DamageIsAttack = false
 endglobals
  
  
  function SetTypeDamage takes unit u returns nothing
-
    if BlzGetEventDamageType() != DAMAGE_TYPE_SPIRIT_LINK then
         if BlzGetEventIsAttack() or GLOB_typeDmg == 2  then
             set GLOB_typeDmg = 0
@@ -50,53 +50,67 @@ endglobals
  
  
  function Trig_Damage_Controller_Before_Actions takes nothing returns nothing
- 	local unit TriigerU = GetTriggerUnit()
-	local unit AttackerU= GetEventDamageSource()
+ 	local unit damageTarget = GetTriggerUnit()
+	local unit damageSource= GetEventDamageSource()
 	
-	local integer PidT = GetPlayerId(GetOwningPlayer(TriigerU ))
-	local integer PidA = GetPlayerId(GetOwningPlayer(AttackerU))
+	local integer PidT = GetPlayerId(GetOwningPlayer(damageTarget ))
+	local integer PidA = GetPlayerId(GetOwningPlayer(damageSource))
 	
-	local integer HandleId1 = GetHandleId(TriigerU) 	
-	local unit GUS = udg_units01[GetConvertedPlayerId(GetOwningPlayer( AttackerU) ) ]
-	local unit GUT = udg_units01[GetConvertedPlayerId(GetOwningPlayer( TriigerU) ) ]
+    local integer HandleId1 = GetHandleId(damageSource) 	
+	local integer HandleId2 = GetHandleId(damageTarget) 	
+	local unit damageSourceHero = udg_units01[GetConvertedPlayerId(GetOwningPlayer( damageSource) ) ]
+	local unit damageTargetHero = udg_units01[GetConvertedPlayerId(GetOwningPlayer( damageTarget) ) ]
 	local damagetype  DmgType
-	local real DMG_1 = 0
+	local real blockDamage = 0
 	local timer tim = null
-	local real DMG_DF = 0
+	local real magicResDamage = 0
     local boolean  attack = BlzGetEventIsAttack()
     local real Admg
-	local real DMG_M = 1
+	local real magicPowerDamage = 1
     local integer II = 0
-    local integer CuId = GetUnitTypeId(AttackerU)
-    local real luck = 1
-    local real luck_t = 1
+    local integer CuId = GetUnitTypeId(damageSource)
+    local real luckSource = 1
+    local real luckTarget = 1
     local boolean AbilA = true
     local boolean Bfirst = false
-    
-    if GetOwningPlayer(TriigerU) == Player(11) then
-        set GUT = TriigerU
+
+    if GetEventDamage() == 0 then
+        set damageSourceHero = null
+        set damageTargetHero = null
+        set damageTarget = null
+        set damageSource = null
+        return
+    endif
+
+    if DamageIsAttack then
+        set attack = true
+        set DamageIsAttack = false
     endif
     
-    if GetOwningPlayer(AttackerU) == Player(11) then
-        set GUS = AttackerU
+    if GetOwningPlayer(damageTarget) == Player(11) then
+        set damageTargetHero = damageTarget
     endif
     
-    if AttackerU == null then
-        set GUS = null
+    if GetOwningPlayer(damageSource) == Player(11) then
+        set damageSourceHero = damageSource
+    endif
+    
+    if damageSource == null then
+        set damageSourceHero = null
     endif
 
     if CuId == 'h015' or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
-        set AttackerU = GUS
+        set damageSource = damageSourceHero
     endif
 
     if CuId == 'e001' then
-        set AttackerU = GUS
+        set damageSource = damageSourceHero
     endif
 
-    set luck = GetUnitLuck(AttackerU)
-    set luck_t = GetUnitLuck(TriigerU)
+    set luckSource = GetUnitLuck(damageSource)
+    set luckTarget = GetUnitLuck(damageTarget)
     
-    call SetTypeDamage(AttackerU)
+    call SetTypeDamage(damageSource)
     set DmgType = BlzGetEventDamageType()
 
     if TypeDmg_b == 2 then
@@ -104,405 +118,471 @@ endglobals
     endif 
     set TypeDmg_b = 0
 
-    //set attack damage
-    if IsUnitType(AttackerU, UNIT_TYPE_HERO) and attack then
-        set SpellData[GetHandleId(AttackerU)].real[7] = GetEventDamage()
+    //Evasion
+    if (attack or GetUnitAbilityLevel(damageTarget, 'B01T') > 0) and GetUnitEvasion(damageTarget) > 0 then
+        set Admg = Evade(damageSource, damageTarget, GetEventDamage())
+        if Admg == 0 then
+            call BlzSetEventDamage(0)
+            set damageSourceHero = null
+            set damageTargetHero = null
+            set damageTarget = null
+            set damageSource = null
+            return
+        endif
     endif
-    
-    //Whirlwind
-    if GetUnitAbilityLevel(AttackerU, 'A025') > 0 and DmgType == DAMAGE_TYPE_NORMAL and SpellData[GetHandleId(AttackerU)].boolean[4] == false then
-        set SpellData[GetHandleId(AttackerU)].real[2] = GetEventDamage()
-        call Whirlwind_Description(AttackerU, GetEventDamage())
+
+    //set attack damage
+    if IsUnitType(damageSource, UNIT_TYPE_HERO) and attack and IsDamageWhirlwind(damageSource) == false then
+        set SpellData[GetHandleId(damageSource)].real[7] = GetEventDamage()
+        //Whirlwind
+        if GetUnitAbilityLevel(damageSource, 'A025') > 0 then
+            call Whirlwind_Description(damageSource, GetEventDamage())
+        endif
+
+        //Arcane Assault
+        if GetUnitAbilityLevel(damageSource, 'A098') > 0 and IsDamageArcaneAssault(damageSource) == false then
+            call ArcaneAssault(damageSource, damageTarget, GetEventDamage())
+        endif
     endif
 
     //Extradimensional Cooperation
-    if GetUnitAbilityLevel(AttackerU, 'B01H') > 0 and AbilA and SpellData[GetHandleId(AttackerU)].boolean[5] == false then
-        call CastExtradimensionalCoop(AttackerU, TriigerU, GetEventDamage(), DmgType != DAMAGE_TYPE_NORMAL)
+    if GetUnitAbilityLevel(damageSource, 'B01H') > 0 and AbilA and IsDamageExtradimensional(damageSource) == false then
+        call CastExtradimensionalCoop(damageSource, damageTarget, GetEventDamage(), DmgType != DAMAGE_TYPE_NORMAL)
+    endif
+
+    //Divine Bubble
+    set II = GetUnitAbilityLevel(damageTarget,'A07S')
+    if II > 0 then
+        if LoadBoolean(HT,GetHandleId(damageTarget),'A07S') and GetUnitAbilityLevel(damageTarget, 'A08C') > 0 then
+            call RemoveDebuff(damageTarget) 
+            set AbilA = false
+        elseif BlzGetUnitAbilityCooldownRemaining(damageTarget,'A07S') <= 0.001 then
+            //call BJDebugMsg("divine bubble")
+            set tim = NewTimer()
+            set AbilA = false
+            call RemoveDebuff(damageTarget) 
+            call UnitAddAbility(damageTarget, 'A08C')
+            call AbilStartCD(damageTarget,'A07S', 30)  
+            call SaveBoolean(HT,GetHandleId(damageTarget),'A07S',true)	    
+            call SaveUnitHandle(HT,GetHandleId(tim),1,GetTriggerUnit())
+            call SaveEffectHandle(HT,GetHandleId(tim),2,AddSpecialEffectTarget( "RighteousGuard.mdx" , damageTarget , "origin" ) ) 
+            call TimerStart(tim, 3,false, function DivineBubbleEnd)
+        endif
+    endif
+
+    
+    //Sword of Bloodthirst
+    set II = UnitHasItemI(damageSource, 'I0AI')
+    if II > 0 and DmgType == DAMAGE_TYPE_NORMAL then
+        call BlzSetEventDamage(GetEventDamage() + 900 * II)
     endif
     
     //Crits
     if DmgType ==  DAMAGE_TYPE_NORMAL then
-        call TakePhysDmg(AttackerU,TriigerU)
+        call TakePhysDmg(damageSource,damageTarget, AbilA)
     else
-        call TakeMagickDmg(AttackerU,TriigerU)
+        call TakeMagickDmg(damageSource,damageTarget, AbilA)
     endif
 
-    
-    
-    
     //Cutting
     set GLOB_cuttting = false
-    set II =  GetUnitAbilityLevel(AttackerU,'A081')
-    if II > 0 and attack and GetRandomReal(1,100) < 20*luck then
+    set II =  GetUnitAbilityLevel(damageSource,'A081')
+    if II > 0 and attack and GetRandomReal(1,100) < 20*luckSource then
         call BlzSetEventDamage(GetEventDamage()+II*100)
         set GLOB_cuttting = true
     endif
-    
-    //Divine Bubble
-    if GetUnitAbilityLevel(TriigerU,'A07S') > 0 then
-        if LoadBoolean(HT,GetHandleId(TriigerU),'A07S') and GetUnitAbilityLevel(TriigerU, 'A08C') > 0 then
-            call RemoveDebuff(TriigerU) 
-        elseif BlzGetUnitAbilityCooldownRemaining(TriigerU,'A07S') <= 0.001 then
-            set tim = NewTimer()
-            call RemoveDebuff(TriigerU) 
-            call UnitAddAbility(TriigerU, 'A08C')
-            call AbilStartCD(TriigerU,'A07S', 60)  
-            call SaveBoolean(HT,GetHandleId(TriigerU),'A07S',true)	    
-            call SaveUnitHandle(HT,GetHandleId(tim),1,GetTriggerUnit())
-            call SaveEffectHandle(HT,GetHandleId(tim),2,AddSpecialEffectTarget( "RighteousGuard.mdx" , TriigerU , "origin" ) ) 
-            call TimerStart(tim,1.50 + 0.15*I2R(GetUnitAbilityLevel(TriigerU,'A07S')) ,false, function DivineBubbleEnd)
-        endif
-    endif
-    
-	if GetEventDamage() == 0 then
-        set TriigerU = null
-        set AttackerU = null
-		set GUS = null
-		set GUT = null
-		return
-	endif
-	
+
     //Storm Horn
 	if GetUnitAbilityLevel(GetTriggerUnit() ,'B00B') >= 1 then
-		if GetRandomReal(1,100) <= 14*luck_t then
+		if GetRandomReal(1,100) <= 14*luckTarget then
 			call BlzSetEventDamage(   0 )
 			call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", GetTriggerUnit(), "chest"))
-			set GUS = null
-		    set GUT = null
+			set damageSourceHero = null
+            set damageTargetHero = null
+            set damageTarget = null
+            set damageSource = null
 		    return
 		endif		
 	endif
 
     //Aura of Immortality
 	if GetUnitAbilityLevel(GetTriggerUnit() ,'B00D') >= 1 then
-		if GetRandomInt(1,100) <= GetUnitAbilityLevel(GUT  ,'A02L') then
+		if GetRandomInt(1,100) <= GetUnitAbilityLevel(damageTargetHero  ,'A02L') then
 			call BlzSetEventDamage(   0 )
 			call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", GetTriggerUnit(), "chest"))
-	    	set GUS = null
-		    set GUT = null
+            set damageSourceHero = null
+            set damageTargetHero = null
+            set damageTarget = null
+            set damageSource = null
 	    	return			
 		endif		
 	endif	
 	
 	
     //Dark Shield
-    if  UnitHasItemS( TriigerU,'I060' )  then
+    if  UnitHasItemS( damageTarget,'I060' )  then
         if   DmgType ==  DAMAGE_TYPE_NORMAL then
-            if  BlzGetUnitAbilityCooldownRemaining(TriigerU, 'A08R') <= 0 then
-                call AbilStartCD(TriigerU, 'A08R', 1)
+            if  BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08R') <= 0 then
+                call AbilStartCD(damageTarget, 'A08R', 1)
                 call BlzSetEventDamage(0) 
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", TriigerU, "chest")) 
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", damageTarget, "chest")) 
                 set tim = null
-                set GUS = null
-	            set GUT = null
-	            set TriigerU = null
-            	set AttackerU = null
+                set damageSourceHero = null
+	            set damageTargetHero = null
+	            set damageTarget = null
+            	set damageSource = null
                 return
             endif 
         else 
-            if  BlzGetUnitAbilityCooldownRemaining(TriigerU, 'A08Q') <= 0 then
-                call AbilStartCD(TriigerU, 'A08Q', 3)
+            if  BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08Q') <= 0 then
+                call AbilStartCD(damageTarget, 'A08Q', 3)
                 call BlzSetEventDamage(0) 
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", TriigerU, "chest")) 
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", damageTarget, "chest")) 
                 set tim = null
-                set GUS = null
-	            set GUT = null
-	            set TriigerU = null
-            	set AttackerU = null
+                set damageSourceHero = null
+	            set damageTargetHero = null
+	            set damageTarget = null
+            	set damageSource = null
                 return
             endif 
         endif      
-        if  BlzGetUnitAbilityCooldownRemaining(TriigerU, 'A08S') <= 0 then
-            call AbilStartCD(TriigerU, 'A08S', 6)
-            call RemoveDebuff(TriigerU)  
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", TriigerU, "chest")) 
+        if  BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08S') <= 0 then
+            call AbilStartCD(damageTarget, 'A08S', 6)
+            call RemoveDebuff(damageTarget)  
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", damageTarget, "chest")) 
             set tim = null
-            set GUS = null
-            set GUT = null
-            set TriigerU = null
-            set AttackerU = null
+            set damageSourceHero = null
+            set damageTargetHero = null
+            set damageTarget = null
+            set damageSource = null
             return
         endif 
     endif 
 
     //Light Magic Shield
-    if   UnitHasItemS( TriigerU,'I06K' ) and BlzGetUnitArmor(TriigerU)<=50  then
+    if   UnitHasItemS( damageTarget,'I06K' ) and BlzGetUnitArmor(damageTarget)<=50  then
          call BlzSetEventDamage(  GetEventDamage()*0.7  )
     endif
 
     //Centuar Archer passive
-    if GetUnitTypeId(AttackerU) == 'H01B' and attack then
-        if BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08T') <= 0 then
-            call AbilStartCD(AttackerU, 'A08T', 2)
-            call ElemFuncStart(AttackerU,'H01B')
-            call BlzSetEventDamage(GetEventDamage() + (BlzGetUnitMaxHP(TriigerU) * 0.06) + (GetEventDamage() * (1 + (0.05 * GetHeroLevel(AttackerU)))) )
-            call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", TriigerU, "chest"))
+    if GetUnitTypeId(damageSource) == 'H01B' and attack then
+        if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08T') <= 0 then
+            call AbilStartCD(damageSource, 'A08T', 2)
+            call ElemFuncStart(damageSource,'H01B')
+            call BlzSetEventDamage(GetEventDamage() + (BlzGetUnitMaxHP(damageTarget) * 0.06) + (GetEventDamage() * (1 + (0.05 * GetHeroLevel(damageSource)))) )
+            call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", damageTarget, "chest"))
          endif
      endif  
      
     //Hero's Hammer
-    set II =  UnitHasItemI( AttackerU,'I064' )
+    set II =  UnitHasItemI( damageSource,'I064' )
     if  II > 0 and DmgType ==  DAMAGE_TYPE_NORMAL then 
-        if BlzGetUnitAbilityCooldownRemaining(AttackerU,'A051') <= 0 then
-	     call  AbilStartCD(AttackerU,'A051',15/(  BlzGetUnitAttackCooldown(AttackerU,0) ))
-         call BlzSetEventDamage(GetEventDamage() + II*(2.2*GetHeroStr(AttackerU ,true)-GetHeroAgi(AttackerU ,true))  )  
-         call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\BallistaMissile\\BallistaMissileTarget.mdl", TriigerU, "chest"))  
+        if BlzGetUnitAbilityCooldownRemaining(damageSource,'A051') <= 0 then
+	     call  AbilStartCD(damageSource,'A051',15/(  BlzGetUnitAttackCooldown(damageSource,0) ))
+         call BlzSetEventDamage(GetEventDamage() + II*(2.2*GetHeroStr(damageSource ,true)-GetHeroAgi(damageSource ,true))  )  
+         call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\BallistaMissile\\BallistaMissileTarget.mdl", damageTarget, "chest"))  
         endif
     endif
         
     //Hammer of Chaos
-    if  UnitHasItemS( AttackerU,'I06H' ) and  attack then
-        if BlzGetUnitAbilityCooldownRemaining(AttackerU,'A04Y') <= 0 then
-              call  AbilStartCD(AttackerU,'A04Y', 8 )
-              call USOrder4field(AttackerU,GetUnitX(TriigerU),GetUnitY(TriigerU),'A04R',"stomp",GetEventDamage(),ABILITY_RLF_DAMAGE_INCREASE,500,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,0.05,ABILITY_RLF_DURATION_NORMAL)
+    if  UnitHasItemS( damageSource,'I06H' ) and  attack then
+        if BlzGetUnitAbilityCooldownRemaining(damageSource,'A04Y') <= 0 then
+              call  AbilStartCD(damageSource,'A04Y', 8 )
+              call USOrder4field(damageSource,GetUnitX(damageTarget),GetUnitY(damageTarget),'A04R',"stomp",GetEventDamage(),ABILITY_RLF_DAMAGE_INCREASE,500,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,0.05,ABILITY_RLF_DURATION_NORMAL)
          endif       
     endif   
     
     //Cruelty
-    set II =  GetUnitAbilityLevel(AttackerU,'A067')
-    if II > 0 and  DmgType ==  DAMAGE_TYPE_NORMAL and (BlzGetUnitAbilityCooldownRemaining(AttackerU,'A067') <= 0.001 or CheckTimerZero(GUS,'A067') ) then
+    set II =  GetUnitAbilityLevel(damageSource,'A067')
+    if II > 0 and  DmgType ==  DAMAGE_TYPE_NORMAL and (BlzGetUnitAbilityCooldownRemaining(damageSource,'A067') <= 0.001 or CheckTimerZero(damageSourceHero,'A067') ) then
         call BlzSetEventDamage(GetEventDamage() +   GetEventDamage()*(2.5+I2R(II)/2) ) 
-        call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", TriigerU, "chest"))
-        if ZetoTimerStart(AttackerU,'A067') then
-            call  AbilStartCD(AttackerU,'A067', 6 )
+        call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", damageTarget, "chest"))
+        if ZetoTimerStart(damageSource,'A067') then
+            call  AbilStartCD(damageSource,'A067', 6 )
         endif
     endif
 
     //Trident of Pain
-    if  UnitHasItemS( AttackerU,'I061' )  then
+    if  UnitHasItemS( damageSource,'I061' )  then
         if   DmgType ==  DAMAGE_TYPE_NORMAL then
-            if BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08X') <= 0 then
-                call AbilStartCD(AttackerU, 'A08X', 12)
-                call ElemFuncStart(AttackerU,'I061')
+            if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08X') <= 0 then
+                call AbilStartCD(damageSource, 'A08X', 12)
+                call ElemFuncStart(damageSource,'I061')
                call BlzSetEventDamage(GetEventDamage()*2.6)
-               call CreateTextTagTimer( R2S(GetEventDamage()) + "!",1,GetUnitX(TriigerU),GetUnitY(TriigerU),50,1)
-            elseif BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08Y') <= 0 then
-                call AbilStartCD(AttackerU, 'A08Y', 12)
-                call ElemFuncStart(AttackerU,'I061')
+               call CreateTextTagTimer( R2S(GetEventDamage()) + "!",1,GetUnitX(damageTarget),GetUnitY(damageTarget),50,1)
+            elseif BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08Y') <= 0 then
+                call AbilStartCD(damageSource, 'A08Y', 12)
+                call ElemFuncStart(damageSource,'I061')
                call BlzSetEventDamage(GetEventDamage()*2.6)
-               call CreateTextTagTimer( R2S(GetEventDamage()) + "!",1,GetUnitX(TriigerU),GetUnitY(TriigerU),50,1)
-            elseif BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08Z') <= 0 then
-                call AbilStartCD(AttackerU, 'A08Z', 12)
-                call ElemFuncStart(AttackerU,'I061')
+               call CreateTextTagTimer( R2S(GetEventDamage()) + "!",1,GetUnitX(damageTarget),GetUnitY(damageTarget),50,1)
+            elseif BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08Z') <= 0 then
+                call AbilStartCD(damageSource, 'A08Z', 12)
+                call ElemFuncStart(damageSource,'I061')
                call BlzSetEventDamage(GetEventDamage()*2.6)
-               call CreateTextTagTimer( R2S(GetEventDamage()) + "!",1,GetUnitX(TriigerU),GetUnitY(TriigerU),50,1)
+               call CreateTextTagTimer( R2S(GetEventDamage()) + "!",1,GetUnitX(damageTarget),GetUnitY(damageTarget),50,1)
             endif
         endif
     endif
 
     //Ursa Warrior
-    if GetUnitTypeId(AttackerU) == 'N00Q' and attack then
-        //call CastUrsaBleed(AttackerU, TriigerU, GetEventDamage(), DmgType !=  DAMAGE_TYPE_NORMAL)
-        call PeriodicDamage.create(AttackerU, TriigerU, GetEventDamage()/3, DmgType !=  DAMAGE_TYPE_NORMAL, 1., 3, 0, true).addFx(FX_Bleed, "head")
+    if GetUnitTypeId(damageSource) == 'N00Q' and attack then
+        //call CastUrsaBleed(damageSource, damageTarget, GetEventDamage(), DmgType !=  DAMAGE_TYPE_NORMAL)
+        call SetBuff(damageTarget,4,3)
+        call PeriodicDamage.create(damageSource, damageTarget, GetEventDamage()/3, DmgType !=  DAMAGE_TYPE_NORMAL, 1., 3, 0, true, 'B01I').addFx(FX_Bleed, "head")
     endif
     
     //Pvp Bonus
-   if IsHeroUnitId( GetUnitTypeId(TriigerU)) then
-       call BlzSetEventDamage(GetEventDamage()+  (GetEventDamage()*(GetUnitPvpBonus(AttackerU)-GetUnitPvpBonus(TriigerU)  )/100)   )
+   if IsHeroUnitId( GetUnitTypeId(damageTarget)) then
+       call BlzSetEventDamage(GetEventDamage()+  (GetEventDamage()*(GetUnitPvpBonus(damageSource)-GetUnitPvpBonus(damageTarget)  )/100)   )
    endif 
 
    //Ogre Warrior
-    if GetUnitTypeId(AttackerU) == 'H01C' and  DmgType ==  DAMAGE_TYPE_NORMAL then
-        if BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08U') <= 0 then
-            call AbilStartCD(AttackerU, 'A08U', 6)
-            call ElemFuncStart(AttackerU,'H01C')
-            call USOrder4field(AttackerU,GetUnitX(TriigerU),GetUnitY(TriigerU),'A047',"stomp",GetHeroStr(AttackerU,true) + 60*GetHeroLevel(AttackerU) ,ABILITY_RLF_DAMAGE_INCREASE,300,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,1,ABILITY_RLF_DURATION_NORMAL)
+    if GetUnitTypeId(damageSource) == 'H01C' and  DmgType ==  DAMAGE_TYPE_NORMAL then
+        if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08U') <= 0 then
+            call AbilStartCD(damageSource, 'A08U', 6)
+            call ElemFuncStart(damageSource,'H01C')
+            call USOrder4field(damageSource,GetUnitX(damageTarget),GetUnitY(damageTarget),'A047',"stomp",GetHeroStr(damageSource,true) + 60*GetHeroLevel(damageSource) ,ABILITY_RLF_DAMAGE_INCREASE,300,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,1,ABILITY_RLF_DURATION_NORMAL)
          endif
      endif  
       
      //Ice Armor
-    if GetUnitAbilityLevel(TriigerU,'A053')>0 and  BlzGetUnitAbilityCooldownRemaining(TriigerU,'A053') <= 0    then
-          call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", TriigerU, "chest"))
+    if GetUnitAbilityLevel(damageTarget,'A053')>0 and  BlzGetUnitAbilityCooldownRemaining(damageTarget,'A053') <= 0    then
+          call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", damageTarget, "chest"))
           call BlzSetEventDamage( GetEventDamage()/5) 
-          call  AbilStartCD(TriigerU,'A053', 2.05 -  0.05*I2R(GetUnitAbilityLevel(TriigerU,'A053')) )
+          call  AbilStartCD(damageTarget,'A053', 2.05 -  0.05*I2R(GetUnitAbilityLevel(damageTarget,'A053')) )
     endif  
 
     //Blessed Protection
-    if LoadTimerHandle(HT_timerSpell,HandleId1,3) != null then
+    if LoadTimerHandle(HT_timerSpell,HandleId2,3) != null then
 		call BlzSetEventDamage(  GetEventDamage()/10) 
 	endif
 
     //Pit Lord
-    if GetUnitTypeId(AttackerU) == 'O007' then
-        if BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08V') <= 0 then
-            call AbilStartCD(AttackerU, 'A08V', 2)
-            call ElemFuncStart(AttackerU,'O007')
-            call UsOrderU2 (AttackerU,TriigerU,GetUnitX(AttackerU),GetUnitY(AttackerU),'A08N',"rainoffire", GetHeroLevel(AttackerU)*40, GetHeroLevel(AttackerU)*20, ABILITY_RLF_DAMAGE_HBZ2, ABILITY_RLF_DAMAGE_PER_SECOND_HBZ5)
+    if GetUnitTypeId(damageSource) == 'O007' then
+        if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08V') <= 0 then
+            call AbilStartCD(damageSource, 'A08V', 2)
+            call ElemFuncStart(damageSource,'O007')
+            call UsOrderU2 (damageSource,damageTarget,GetUnitX(damageSource),GetUnitY(damageSource),'A08N',"rainoffire", GetHeroLevel(damageSource)*40, GetHeroLevel(damageSource)*20, ABILITY_RLF_DAMAGE_HBZ2, ABILITY_RLF_DAMAGE_PER_SECOND_HBZ5)
         endif
     endif
 
     //Lich
-	if GetUnitTypeId(AttackerU) == 'H018' and  DmgType !=  DAMAGE_TYPE_NORMAL then
-        if BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A08W') <= 0 then
-            call AbilStartCD(AttackerU, 'A08W', 6)
-            call ElemFuncStart(AttackerU,'H018')
-            call UsOrderU2 (AttackerU,TriigerU,GetUnitX(AttackerU),GetUnitY(AttackerU),'A03J',"frostnova", GetHeroInt(AttackerU, true) + (GetHeroLevel(AttackerU)*60), GetHeroInt(AttackerU, true) + (GetHeroLevel(AttackerU)*60), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
+	if GetUnitTypeId(damageSource) == 'H018' and  DmgType !=  DAMAGE_TYPE_NORMAL then
+        if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08W') <= 0 then
+            call AbilStartCD(damageSource, 'A08W', 6)
+            call ElemFuncStart(damageSource,'H018')
+            call UsOrderU2 (damageSource,damageTarget,GetUnitX(damageSource),GetUnitY(damageSource),'A03J',"frostnova", GetHeroInt(damageSource, true) + (GetHeroLevel(damageSource)*60), GetHeroInt(damageSource, true) + (GetHeroLevel(damageSource)*60), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
 	endif
 	
     //Air Force
-	if GetUnitAbilityLevel(GUS  ,'A02T') >= 1 then
-        if GetUnitAbilityLevel(TriigerU,'Bams') > 0 or GetUnitAbilityLevel(TriigerU,'Bam2') > 0  then
+	if GetUnitAbilityLevel(damageSourceHero  ,'A02T') >= 1 then
+        if GetUnitAbilityLevel(damageTarget,'Bams') > 0 or GetUnitAbilityLevel(damageTarget,'Bam2') > 0  then
         
-            call BlzSetEventDamage(  GetEventDamage()  + (I2R(GetUnitAbilityLevel(GUS  ,'A02T'))*GetHeroAgi(GUS,true))/40  )
+            call BlzSetEventDamage(  GetEventDamage()  + (I2R(GetUnitAbilityLevel(damageSourceHero  ,'A02T'))*GetHeroAgi(damageSourceHero,true))/40  )
         else
-            call BlzSetEventDamage(  GetEventDamage()  + (I2R(GetUnitAbilityLevel(GUS  ,'A02T'))*GetHeroAgi(GUS,true))/20  )
+            call BlzSetEventDamage(  GetEventDamage()  + (I2R(GetUnitAbilityLevel(damageSourceHero  ,'A02T'))*GetHeroAgi(damageSourceHero,true))/20  )
         endif
-		call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", TriigerU, "chest"))		
+		call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", damageTarget, "chest"))		
 	endif
 
     //Grom Hellscream
-    if GetUnitTypeId(GUS) == 'N024' and DmgType == DAMAGE_TYPE_NORMAL then
-        call BlzSetEventDamage(GetEventDamage() + GetHeroStr(GUS, true))
-        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", TriigerU, "chest"))		
+    if GetUnitTypeId(damageSourceHero) == 'N024' and DmgType == DAMAGE_TYPE_NORMAL then
+        call BlzSetEventDamage(GetEventDamage() + GetHeroStr(damageSourceHero, true))
+        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", damageTarget, "chest"))		
     endif
 
-    //Robes of the ARchmage
-	if GetUnitAbilityLevel(AttackerU  ,'B00L') >= 1 and  DmgType !=  DAMAGE_TYPE_NORMAL  then
-     	set DMG_M = DMG_M   +          (  BlzGetUnitMaxMana( TriigerU )  -  GetUnitState( TriigerU  , UNIT_STATE_MANA  )  )/90000
+    //Robes of the Archmage
+	if GetUnitAbilityLevel(damageSource  ,'B00L') >= 1 and  DmgType !=  DAMAGE_TYPE_NORMAL  then
+     	set magicPowerDamage = magicPowerDamage + (BlzGetUnitMaxMana(damageTarget) - GetUnitState(damageTarget, UNIT_STATE_MANA)) / 90000
 	endif
+
+    //Vigour Token
+    set II = UnitHasItemI(damageSource, 'I0A2')
+    if II > 0 and BlzGetUnitMaxHP(damageSource) < BlzGetUnitMaxHP(damageTarget) then
+        call BlzSetEventDamage(GetEventDamage() * 1 + (0.5 * II))
+    endif
+
+    //Flimsy Token
+    set II = UnitHasItemI(damageSource, 'I0A3')
+    if II > 0 and BlzGetUnitArmor(damageSource) < BlzGetUnitArmor(damageTarget) then
+        call BlzSetEventDamage(GetEventDamage() * 1 + (0.5 * II))
+    endif
+
+    //Spellbane Token
+    set II = UnitHasItemI(damageSource, 'I0A1')
+    if II > 0 and BlzGetUnitMaxMana(damageSource) < BlzGetUnitMaxMana(damageTarget) then
+        call BlzSetEventDamage(GetEventDamage() * 1 + (0.5 * II))
+    endif
+
+    if DmgType == DAMAGE_TYPE_NORMAL and AbilA then
+        //Incinerate
+        set II = GetUnitAbilityLevel(damageSource,'A06M')
+        if II > 0 then
+            if GetUnitAbilityLevel(damageTarget,'B014') > 0 then
+                set Admg = II*5 + LoadInteger(HT,GetHandleId(damageTarget),-300001)
+            else
+                set Admg = II*5
+            endif
+            call SaveInteger(HT,GetHandleId(damageTarget),-300001, R2I(Admg))
+            call SaveInteger(HT,GetHandleId(damageTarget),-300002,II*100)
+            call SaveUnitHandle(HT,GetHandleId(damageTarget),-300003,damageSource)
+            call SaveInteger(HT,GetHandleId(damageTarget),-300004,Glob_time)
+            call SetBuff(damageTarget,1,5)
+            
+            if GetEventDamage() > 0 then
+                call BlzSetEventDamage(GetEventDamage()+Admg)
+            endif
+        endif
+    endif
 	
 	if DmgType !=  DAMAGE_TYPE_NORMAL then 
         //Magic Power
-    	if DMG_M != 1 or GetUnitMagicDmg(AttackerU) > 0 then
-    		call BlzSetEventDamage(  GetEventDamage()*(DMG_M+GetUnitMagicDmg(AttackerU)/100 )   )
+    	if magicPowerDamage != 1 or GetUnitMagicDmg(damageSource) > 0 then
+    		call BlzSetEventDamage(  GetEventDamage()*(magicPowerDamage+GetUnitMagicDmg(damageSource)/100 )   )
     	endif   
         
         //Magic Resistance
-        set DMG_DF =  GetUnitMagicDef(TriigerU)   
-        if DMG_DF > 0 then
-           call BlzSetEventDamage(  GetEventDamage()*( 50/(50+DMG_DF) )   )        
-        endif                
-	endif
-	
-	//Block
-	if GetUnitBlock(TriigerU) != 0 then
-		set DMG_1 = GetEventDamage()	
-		set DMG_1 = DMG_1 - GetUnitBlock(TriigerU) 
-		if DMG_1 < 0 then
-			call BlzSetEventDamage(0)
-		else
-			call BlzSetEventDamage(DMG_1 )
-		endif
-	
+        set magicResDamage =  GetUnitMagicDef(damageTarget)   
+        if magicResDamage > 0 then
+           call BlzSetEventDamage(  GetEventDamage()*( 50/(50+magicResDamage) )   )        
+        endif
 	endif
 
+	//Block
+	if GetUnitBlock(damageTarget) != 0 then	
+        set blockDamage = GetUnitBlock(damageTarget)
+
+        //Sword of Bloodthirst
+        if UnitHasItemS(damageSource, 'I0AI') and attack then
+            set blockDamage = blockDamage * 0.7
+        endif
+
+		set blockDamage = GetEventDamage() - blockDamage
+		if blockDamage < 0 then
+			call BlzSetEventDamage(0)
+		else
+			call BlzSetEventDamage(blockDamage )
+		endif
+	endif
+
+    //Wisdom Chestplate
+    if DmgType !=  DAMAGE_TYPE_NORMAL and UnitHasItemS(damageTarget, 'I0AH') then 
+        call ActivateWisdomChestplate(damageTarget, GetEventDamage())
+    endif
+
     if AbilA then
-        if DmgType == DAMAGE_TYPE_NORMAL and not (GetUnitTypeId(AttackerU) == 'new1' or GetUnitTypeId(AttackerU) == 'nwe2' or GetUnitTypeId(AttackerU) == 'nwe3'  or GetUnitTypeId(AttackerU) == 'h009'  or GetUnitTypeId(AttackerU) == 'n00W' or GetUnitTypeId(AttackerU) == 'n01H') then
+        if DmgType == DAMAGE_TYPE_NORMAL then
             
-            //thorns
-            if (GetUnitAbilityLevel(TriigerU, 'B01C') > 0 or GetUnitAbilityLevel(TriigerU, 'A08F') > 0) then
-                set SpellData[HandleId1].boolean[1] = true
-                if IsUnitType(AttackerU, UNIT_TYPE_HERO) then
-                    call MagicDamage(TriigerU,AttackerU, GetEventDamage() * (GetUnitAbilityLevel(GUT, 'A08F') * 0.01), true)
+            //Thorns
+            if (GetUnitAbilityLevel(damageTarget, 'B01C') > 0 and IsUnitType(damageSource, UNIT_TYPE_MELEE_ATTACKER)) then
+                
+                set Admg = 1 - (0.01*GetUnitAbilityLevel(damageTargetHero, 'A088' + GetUnitAbilityLevel(damageTargetHero, 'A093')))
+                //call BJDebugMsg("thorns: admg:" + R2S(Admg) + " ttl: " + R2S((GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A08F') * 0.01)) * Admg))
+                if IsUnitType(damageSource, UNIT_TYPE_HERO) then
+                    call MagicDamage(damageTarget,damageSource, (GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A08F') * 0.01)) * Admg, true)
                 else
-                    call MagicDamage(TriigerU,AttackerU, GetEventDamage() * (GetUnitAbilityLevel(GUT, 'A08F') * 0.02), true)
+                    call MagicDamage(damageTarget,damageSource, (GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A08F') * 0.02)) * Admg, true)
+                endif
+            endif
+
+            //Reflection
+            if (GetUnitAbilityLevel(damageTarget, 'B01O') > 0 and IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER)) then
+                set Admg = 1 - (0.01*GetUnitAbilityLevel(damageTargetHero, 'A088' + GetUnitAbilityLevel(damageTargetHero, 'A08F')))
+                //call BJDebugMsg("ref: admg:" + R2S(Admg) + " ttl: " + R2S((GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A093') * 0.01)) * Admg))
+                if IsUnitType(damageSource, UNIT_TYPE_HERO) then
+                    call MagicDamage(damageTarget,damageSource, (GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A093') * 0.01)) * Admg, true)
+                else
+                    call MagicDamage(damageTarget,damageSource, (GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A093') * 0.02)) * Admg, true)
                 endif
             endif
             
-            //spiked carapace
-            if GetUnitAbilityLevel(TriigerU, 'AUts') > 0 then
-                set SpellData[HandleId1].boolean[1] = true
-                call MagicDamage(TriigerU,AttackerU, GetEventDamage() * (GetUnitAbilityLevel(GUT, 'AUts') * 0.005), true)
+            //spiked carapaces
+            if GetUnitAbilityLevel(damageTarget, 'AUts') > 0 then
+                call MagicDamage(damageTarget,damageSource, GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'AUts') * 0.005), true)
             endif
         endif
         
-        if DmgType == DAMAGE_TYPE_MAGIC or GetUnitTypeId(AttackerU) == 'nwe1' or GetUnitTypeId(AttackerU) == 'nwe2' or GetUnitTypeId(AttackerU) == 'nwe3'  or GetUnitTypeId(AttackerU) == 'h009'  or GetUnitTypeId(AttackerU) == 'n00W' or GetUnitTypeId(AttackerU) == 'n01H' then
+        if DmgType == DAMAGE_TYPE_MAGIC then
             
-            //wizardbane
-            if GetUnitAbilityLevel(TriigerU, 'B01B') > 0 then
-                set SpellData[HandleId1].boolean[1] = true
-                if IsUnitType(AttackerU, UNIT_TYPE_HERO) then
-                    call MagicDamage(TriigerU,AttackerU, GetEventDamage() * (GetUnitAbilityLevel(GUT, 'A088') * 0.01), true)
+            //Wizardbane
+            if GetUnitAbilityLevel(damageTarget, 'B01B') > 0 then
+                set Admg = 1 - (0.01*GetUnitAbilityLevel(damageTargetHero, 'A08F' + GetUnitAbilityLevel(damageTargetHero, 'A093')))
+                //call BJDebugMsg("wb: admg:" + R2S(Admg) + " ttl: " + R2S((GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A088') * 0.01)) * Admg))
+                if IsUnitType(damageSource, UNIT_TYPE_HERO) then
+                    call MagicDamage(damageTarget,damageSource, (GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A088') * 0.01)) * Admg, true)
                 else
-                    call MagicDamage(TriigerU,AttackerU, GetEventDamage() * (GetUnitAbilityLevel(GUT, 'A088') * 0.02), true)
+                    call MagicDamage(damageTarget,damageSource, (GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A088') * 0.02)) * Admg, true)
                 endif
-                call DestroyEffect(AddSpecialEffect("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", GetUnitX(AttackerU), GetUnitY(AttackerU)))
+                call DestroyEffect(AddSpecialEffect("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", GetUnitX(damageSource), GetUnitY(damageSource)))
             endif
         endif
     endif
     
     //Martial retribution
-    if GetUnitAbilityLevel(TriigerU, 'A089') > 0 and BlzGetUnitAbilityCooldownRemaining(TriigerU,'A089') <= 0 then
-        call MartialRetributionStore(TriigerU, GetEventDamage() * 0.5)
+    if GetUnitAbilityLevel(damageTarget, 'A089') > 0 and BlzGetUnitAbilityCooldownRemaining(damageTarget,'A089') <= 0 then
+        call MartialRetributionStore(damageTarget, GetEventDamage() * 0.5)
     endif
 
     if AbilA and DmgType == DAMAGE_TYPE_NORMAL then   
     
         //Liquid Fire
-        set II = GetUnitAbilityLevel(AttackerU,'A06Q')
-        if II > 0 and BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A06Q') == 0 then
+        set II = GetUnitAbilityLevel(damageSource,'A06Q')
+        if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A06Q') == 0 then
         
-            /*if GetUnitAbilityLevel(TriigerU,'B016') == 0 then
+            /*if GetUnitAbilityLevel(damageTarget,'B016') == 0 then
                 set Bfirst = true
                 else
                 set Bfirst = false 
             endif*/
-            call SetBuff(TriigerU,3,3)
-            //call PerodicDmg(AttackerU,TriigerU,40*II +  GetUnitMagicDmg(AttackerU)*5,0,1,3.01,'B016',Bfirst)
-            call PeriodicDamage.create(AttackerU, TriigerU, 40*II + GetUnitMagicDmg(AttackerU)*5, true, 1., 3, 0, false).addLimit('A06Q', 150, 1)
+            call SetBuff(damageTarget,3,3)
+            //call PerodicDmg(damageSource,damageTarget,40*II +  GetUnitMagicDmg(damageSource)*5,0,1,3.01,'B016',Bfirst)
+            call PeriodicDamage.create(damageSource, damageTarget, 40*II + GetUnitMagicDmg(damageSource)*5, true, 1., 3, 0, false, 'B016').addLimit('A06Q', 150, 1)
         endif
         
         //Envenomed Weapons
-        set II = GetUnitAbilityLevel(AttackerU,'A06O')
-        if II > 0 and BlzGetUnitAbilityCooldownRemaining(AttackerU, 'A06O') == 0 then
-            /*if GetUnitAbilityLevel(TriigerU,'B015') == 0 then
+        set II = GetUnitAbilityLevel(damageSource,'A06O')
+        if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A06O') == 0 then
+            /*if GetUnitAbilityLevel(damageTarget,'B015') == 0 then
                 set Bfirst = true
             else
                 set Bfirst = false 
             endif*/
-            call SetBuff(TriigerU,2,8)
-            //call PerodicDmg(AttackerU,TriigerU,10*II,0.5,1,8.01,'B015',Bfirst)
-            call PeriodicDamage.create(AttackerU, TriigerU, 30*II, true, 1., 8, 1, false).addLimit('A06O', 150, 1)
-        endif
-
-        //Incinerate
-        set II = GetUnitAbilityLevel(AttackerU,'A06M')
-        if II > 0 then
-            if GetUnitAbilityLevel(TriigerU,'B014') > 0 then
-                set Admg = II*5 + LoadInteger(HT,GetHandleId(TriigerU),-300001)
-            else
-                set Admg = II*5
-            endif
-            call SaveInteger(HT,GetHandleId(TriigerU),-300001, R2I(Admg))
-            call SaveInteger(HT,GetHandleId(TriigerU),-300002,II*100)
-            call SaveUnitHandle(HT,GetHandleId(TriigerU),-300003,AttackerU)
-            call SaveInteger(HT,GetHandleId(TriigerU),-300004,Glob_time)
-            call SetBuff(TriigerU,1,5)
-            
-            if GetEventDamage() > 0 then
-                call BlzSetEventDamage(GetEventDamage()+Admg)
-            endif
-        
+            call SetBuff(damageTarget,2,8)
+            //call PerodicDmg(damageSource,damageTarget,10*II,0.5,1,8.01,'B015',Bfirst)
+            call PeriodicDamage.create(damageSource, damageTarget, 30*II, true, 1., 8, 1, false, 'B015').addLimit('A06O', 150, 1)
         endif
     endif
     
     //Frostbite of the Soul
-    set II = GetUnitAbilityLevel(TriigerU,'A080')
-    if II > 0 and IsHeroUnitId(GetUnitTypeId(AttackerU)) then
-        if BlzGetUnitAbilityCooldownRemaining(TriigerU,'A080') <= 0 then
-            call  AbilStartCD(TriigerU,'A080', 9)
-            call AddCooldowns(AttackerU,0.95+I2R(II)*0.05)
-            call MagicDamage(TriigerU,AttackerU,200*II, false)
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl", AttackerU, "chest"))
+    set II = GetUnitAbilityLevel(damageTarget,'A080')
+    if II > 0 and IsHeroUnitId(GetUnitTypeId(damageSource)) then
+        if BlzGetUnitAbilityCooldownRemaining(damageTarget,'A080') <= 0 then
+            call  AbilStartCD(damageTarget,'A080', 9)
+            call AddCooldowns(damageSource,0.95+I2R(II)*0.05)
+            call MagicDamage(damageTarget,damageSource,200*II, false)
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl", damageSource, "chest"))
         endif
     endif 
 	
     //Mystical armor
-	set II =  UnitHasItemI( TriigerU,'I06E' )
+	set II =  UnitHasItemI( damageTarget,'I06E' )
     if  II > 0  then
-        if GetRandomReal(1,100)  <= II*8*luck then
-         if GetUnitState(TriigerU,UNIT_STATE_MANA) >= 750 then
-            call CastRandomSpell1 (TriigerU,GetRandomAbility1_B(),15, AttackerU,GetUnitX(AttackerU),GetUnitY(AttackerU))
-            call SetUnitState(TriigerU,UNIT_STATE_MANA,GetUnitState(TriigerU,UNIT_STATE_MANA)-750 )
+        if GetRandomReal(1,100)  <= II*8*luckSource then
+         if GetUnitState(damageTarget,UNIT_STATE_MANA) >= 750 then
+            set RandomSpellLoc = Location(GetUnitX(damageSource), GetUnitY(damageSource))
+            call CastRandomSpell(damageTarget, damageSource, RandomSpellLoc, true, 15)
+            call RemoveLocation(RandomSpellLoc)
+            set RandomSpellLoc = null
+            call SetUnitState(damageTarget,UNIT_STATE_MANA,GetUnitState(damageTarget,UNIT_STATE_MANA)-750 )
          endif
         endif
     endif
 
-	set GUS = null
-	set GUT = null
-	set TriigerU = null
-	set AttackerU = null
+	set damageSourceHero = null
+	set damageTargetHero = null
+	set damageTarget = null
+	set damageSource = null
 endfunction
 
 //===========================================================================

@@ -1,19 +1,8 @@
-library ChannelOrder
+library ChannelOrder initializer FreeInitChannel
     globals 
         string array OrderString
         hashtable HTInfoSpell = InitHashtable()
     endglobals
-    function AbilityChanelCst takes unit u,unit u2,real x1,real y1,integer id returns nothing
-        set GLOB_AB_CH = u
-        set GLOB_TR_CH = u2  
-        set GLOB_X1_CH = x1
-        set GLOB_Y1_CH = y1
-        set GLOB_LV_CH = GetUnitAbilityLevel(u,id)
-        set GLOB_ID_CH = id
-        call ExecuteFunc("AbilityChannel")
-
-
-    endfunction
 
 
     function FreeInitChannel takes nothing returns nothing

@@ -14,6 +14,11 @@ function Trig_ShortPeriodCheck_Actions takes nothing returns nothing
         set hid = GetHandleId(u)
         if GetWidgetLife(u) > 0.405 then
 
+            //Vigour token
+            if GetUnitAbilityLevel(u, 'A09A') > 0 then
+                call VigourTokenHpLoss(u)
+            endif
+
             //Power of Ice
             if GetUnitAbilityLevel(u ,'A02Z') >= 1 then
                 if CheckProc(u, 610) then
@@ -63,31 +68,21 @@ function Trig_ShortPeriodCheck_Actions takes nothing returns nothing
             //Absolute Cold
             set i1 = GetUnitAbilityLevel(u,'A07V')
             if i1 > 0 then
-                set i2 =  LoadInteger(HT,hid,-41256)
-                if i2 == 4 then
-                    set i2 = 0
+                if BlzGetUnitAbilityCooldownRemaining(u,'A07V') == 0 and CheckProc(u, 500) then
+                    call AbilStartCD(u, 'A07V', 20.5 - (0.5 * i1))
                     call AbsoluteCold(u,GetClassUnitSpell(u,9)*20*i1 )
-                else
-                    set i2 = i2 + 1
-                  
                 endif
-                call SaveInteger(HT,hid,-41256,i2)
             endif
             
             //Divine Gift
             set i1 = GetUnitAbilityLevel(u,'A082')
             if i1 > 0 then
-                set i2 =  LoadInteger(HT,hid,-41257)
-                if i2 == 8 then
-                    set i2 = 0
+                if BlzGetUnitAbilityCooldownRemaining(u,'A082') == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
+                    call AbilStartCD(u, 'A082', 8)
                     call SetWidgetLife(u,GetWidgetLife(u)+2500*i1)
                     call AddSpecialEffectTargetTimer( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
                     call RemoveDebuff( u )
-                else
-                    set i2 = i2 + 1
-                  
                 endif
-                call SaveInteger(HT,hid,-41257,i2)
             endif       
             
             //Blood Elf Mage

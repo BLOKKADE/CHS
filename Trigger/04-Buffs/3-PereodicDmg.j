@@ -12,6 +12,7 @@ library PeriodicDamage initializer init
         integer abilId
         string fx
         string attachPoint
+        integer buffId
         integer interval
         real lifeDamage
         boolean allowRecursion
@@ -20,23 +21,26 @@ library PeriodicDamage initializer init
         private static thistype recycle = 0
         private thistype recycleNext
 
+        private method damage takes nothing returns nothing
+            if GetWidgetLife(this.target) > 0.405 and ((this.buffId != 0 and GetUnitAbilityLevel(this.target, this.buffId) > 0) or this.buffId == 0) then
+                if this.allowRecursion == false then
+                    set TypeDmg_b = 2
+                endif
+                if magic then
+                    call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)*0.01)*this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, null)
+                else
+                    set GLOB_typeDmg = 2
+                    call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)*0.01)*this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
+                endif
+                if this.fx != null then
+                    call DestroyEffect(AddSpecialEffectTarget(this.fx, this.target, attachPoint))
+                endif
+            endif
+        endmethod
+
         private method periodic takes nothing returns nothing
             if T32_Tick >= this.endTick and this.limit > 0 then
-                if GetWidgetLife(this.target) > 0.405 then
-                    if this.allowRecursion == false then
-                        set TypeDmg_b = 2
-                    endif
-                    if magic then
-                        call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)*0.01)*this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, null)
-                    else
-                        set GLOB_typeDmg = 2
-                        call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)*0.01)*this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
-                    endif
-                    if this.fx != null then
-                        call DestroyEffect(AddSpecialEffectTarget(this.fx, this.target, attachPoint))
-                    endif
-                endif
-
+                call this.damage()
                 set this.limit = this.limit - 1
                 set this.endTick = T32_Tick + interval
             elseif this.limit == 0 then
@@ -60,7 +64,7 @@ library PeriodicDamage initializer init
             endif
         endmethod
 
-        static method create takes unit caster, unit target, real intervalDmg, boolean magic, real interval, real duration, real lifeDamage, boolean allowRecursion returns thistype
+        static method create takes unit caster, unit target, real intervalDmg, boolean magic, real interval, real duration, real lifeDamage, boolean allowRecursion, integer buffId returns thistype
             local thistype this
 
             if (recycle == 0) then
@@ -72,6 +76,7 @@ library PeriodicDamage initializer init
             endif
             
             set this.abilId = 0
+            set this.buffId = 0
             set this.fx = null
             set this.dmg = intervalDmg
             set this.target = target
@@ -82,6 +87,10 @@ library PeriodicDamage initializer init
             set this.endTick = T32_Tick + this.interval
             set this.lifeDamage = lifeDamage
             set this.allowRecursion = allowRecursion
+            call this.damage()
+            if buffId != 0 then
+                set this.buffId = buffId
+            endif
             call this.startPeriodic()
             return this
         endmethod
