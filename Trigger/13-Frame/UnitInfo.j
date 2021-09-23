@@ -26,6 +26,8 @@ globals
 
 	string ToolTipA = ""
 	unit array UnitArrayUpdate
+
+	string array statColour
 endglobals
 
 function UnitInfoGetUnit takes player p returns unit
@@ -63,6 +65,38 @@ function ExtraFieldInfo takes unit u returns string
 	return s
 endfunction
 
+function PrimaryAttributeText takes unit u, integer stat returns nothing
+	call BlzFrameSetText(TextUI[6+stat], statColour[stat] + "*" + BlzFrameGetText(TextUI[6+stat]) + "|r")
+endfunction
+
+function PrimaryAttributeDmg takes unit u, integer stat returns string
+	if IsPrimaryStat(u, stat) then
+		return "Each point increases attack damage by 1. (" + statColour[stat] + "+" + I2S(GetHeroStatBJ(stat, u, true)) + " total|r)\n"
+	endif
+	return ""
+endfunction
+
+function StrInfo takes unit u returns string
+	local string s = PrimaryAttributeDmg(u, 0)
+	set s = s + "Each point increases hit points by 26. (" + statColour[0] + "+" + I2S(GetHeroStr(u, true) * 26) + " total|r)\n" 
+	set s = s + "Each point increases hit point regeneration by 0.075. (" + statColour[0] + "+" + R2SW(BlzGetUnitRealField(u, ConvertUnitRealField('uhpr')) + (GetHeroStr(u, true) * 0.075), 1, 1) + " total|r)\n"
+	return s + "Strength per level: " + statColour[0] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(u)) + "|r"
+endfunction
+
+function AgiInfo takes unit u returns string
+	local string s = PrimaryAttributeDmg(u, 1)
+	set s = s + "Each point increases armor by 0.150. (" + statColour[1] + "+" + R2SW(GetHeroAgi(u, true) * 0.15, 1, 1) + " total|r)\n" 
+	set s = s + "Each point increases attack speed by 1%%. (" + statColour[1] + "+" + R2SW((GetHeroAgi(u, true) * 0.01), 1, 1) + "%% total|r) (Max 400%%)\n"
+	return s + "Agility per level: " + statColour[1] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(u)) + "|r"
+endfunction
+
+function IntInfo takes unit u returns string
+	local string s = PrimaryAttributeDmg(u, 2)
+	set s = s + "Each point increases mana by 20.1. (" + statColour[2] + "+" + R2SW(GetHeroInt(u, true) * 20.1, 1, 1) + " total|r)\n" 
+	set s = s + "Each point increases mana regeneration by 0.065. (" + statColour[2] + "+" + R2SW(BlzGetUnitRealField(u, ConvertUnitRealField('umpr'))  + (GetHeroInt(u, true) * 0.065), 1, 1) + " total|r)\n"
+	return s + "Intelligence per level: " + statColour[2] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(u)) + "|r"
+endfunction
+
 function UpdateTextRelaese takes unit u returns nothing
 	local string dmgT= "-"
 	local integer Pid=  GetPlayerId(GetOwningPlayer(u))
@@ -89,19 +123,24 @@ function UpdateTextRelaese takes unit u returns nothing
 	set CustomInfoT1[3] = R2S(GetUnitMagicDmg(u))
 	set CustomInfoT1[4] = R2S( (1 - (50 / ( 50 + GetUnitMagicDef(u) ))) * 100 )
 	set CustomInfoT1[5] = ExtraFieldInfo(u)
+	set CustomInfoT1[6] = StrInfo(u)
+	set CustomInfoT1[7] = AgiInfo(u)
+	set CustomInfoT1[8] = IntInfo(u)
+
+	/*
+	set ToolTipS=ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(SpellU)) + "\n"
+	set ToolTipS=ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(SpellU)) + "\n"
+	set ToolTipS=ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(SpellU)) + "\n"
+	set ToolTipS=ToolTipS + "|cff51d44dHit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uhpr')) + (GetHeroStr(SpellU, true) * 0.075)) + 
+	"/" + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('umpr'))  + (GetHeroInt(SpellU, true) * 0.065)) + "\n"
+	*/
 
 	if IsHeroUnitId(GetUnitTypeId(u)) then
 		call BlzFrameSetText(TextUI[6], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroStrengthValue", 6)))
 		call BlzFrameSetText(TextUI[7], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroAgilityValue", 6)))
 		call BlzFrameSetText(TextUI[8], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroIntellectValue", 6)))
 
-		if BlzGetUnitIntegerField(u, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 then
-			call BlzFrameSetText(TextUI[6], "*" + BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroStrengthValue", 6)))
-		elseif BlzGetUnitIntegerField(u, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 then
-			call BlzFrameSetText(TextUI[7], "*" + BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroAgilityValue", 6)))
-		else
-			call BlzFrameSetText(TextUI[8], "*" + BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroIntellectValue", 6)))
-		endif
+		call PrimaryAttributeText(u, GetHeroPrimaryStat(u))
 
 		call BlzFrameSetText(TextUI[12], "More")
 	else
@@ -155,9 +194,9 @@ function GameUINewPanel takes nothing returns nothing
 	call InitDataInfoPanel(3 , "Armor: " , "ReplaceableTextures\\CommandButtons\\BTNStop.blp" , "")
 	call InitDataInfoPanel(4 , "Block: " , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , "Damage reduction applied to all damage taken.")
 	call InitDataInfoPanel(5 , "Pvp bonus: " , "BTNHUHoldPosition.blp" , "Increases damage dealt to enemy heroes\nReduces damage taken from enemy heroes. ")
-	call InitDataInfoPanel(6 , "Strength: " , "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower" , "Each point increases hit points by 26.\nEach point increases hit point regeneration by 0.075.")
-	call InitDataInfoPanel(7 , "Agility: " , "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility" , "Each point increases armor by 0.150.\nEach point increases attack speed by 0.01%.")
-	call InitDataInfoPanel(8 , "Intelligence: " , "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence" , "Each point increases mana by 20.1.\nEach point increases mana regeneration by 0.065.")
+	call InitDataInfoPanel(6 , "Strength: " , "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower" , "")
+	call InitDataInfoPanel(7 , "Agility: " , "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility" , "")
+	call InitDataInfoPanel(8 , "Intelligence: " , "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence" , "")
 	call InitDataInfoPanel(9 , "Magic power: " , "ReplaceableTextures\\CommandButtons\\BTNControlMagic" , "Increases magic damage dealt by |cff4daed4")
 	call InitDataInfoPanel(10 , "Magic protection: " , "ReplaceableTextures\\CommandButtons\\BTNRunedBracers.blp" , "Reduces magic damage taken by |cff51d44d")
 	call InitDataInfoPanel(11 , "Evasion: " , "ReplaceableTextures\\CommandButtons\\BTNEvasion" , "Increases the chance to evade enemy attacks by |cffd6e049")
@@ -181,6 +220,12 @@ function update takes nothing returns nothing
 			set ToolTipA=DataLabel[loopA] + BlzFrameGetText(TextUI[loopA]) + "\n------------------------------\n" + DataDesc[loopA]
 			if loopA == 3 then
 				set ToolTipA=ToolTipA + CustomInfoT1[2] + "%%|r."
+			elseif loopA == 6 then
+				set ToolTipA=ToolTipA + CustomInfoT1[6]
+			elseif loopA == 7 then
+				set ToolTipA=ToolTipA + CustomInfoT1[7]
+			elseif loopA == 8 then
+				set ToolTipA=ToolTipA + CustomInfoT1[8]
 			elseif loopA == 9 then
 				set ToolTipA=ToolTipA + CustomInfoT1[3] + "%%|r."
 			elseif loopA == 10 then
@@ -215,6 +260,9 @@ endfunction
 
 
 function InitGameUI takes nothing returns nothing
+	set statColour[0] = "|cffff6e6e"
+	set statColour[1] = "|cffe4e74a"
+	set statColour[2] = "|cff4ae7df"
 	set isReforged = GetLocalizedString("REFORGED") != "REFORGED"      
 	call BlzLoadTOCFile("war3mapImported\\UnitInfoPanels.toc")
 	call BlzLoadTOCFile("war3mapimported\\BoxedText.toc")

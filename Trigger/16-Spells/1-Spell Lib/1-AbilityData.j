@@ -679,8 +679,8 @@ library AbilityData initializer init requires Table
         call SaveAbilData('AHds', 'I011', false, 0, 0, false, Order_None, "divineshield")
         call SetObjectElement('AHds', Element_Light)
 
-        //123 - Transmute 
-        call SaveAbilData('ANtm', 'I00G', false, 0, 1, true, Order_Target, "transmute")
+        //123 - Midas Touch 
+        call SaveAbilData('A0A2', 'I00G', false, 0, 1, true, Order_Target, "transmute")
 
         //124 - Silence 
         call SaveAbilData('ANsi', 'I03C', false, 0, 1, true, Order_Point, "silence")

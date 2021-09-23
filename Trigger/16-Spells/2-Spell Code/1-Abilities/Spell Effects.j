@@ -52,6 +52,10 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         elseif abilId == 'A09J' then
             call CastManaStarvation(caster, target, lvl)
             return true
+        //Midas Touch
+        elseif abilId == 'A0A2' then
+            call CastMidasTouch(caster, target, lvl)
+            return true
         //Dousing Hex
         elseif abilId == 'A09I' then
             call CastDousingHex(caster, target, lvl)
@@ -157,7 +161,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call MaskOfVitality(caster)
                 endif
 
-                if GetUnitAbilityLevel(caster, 'A04F') > 0 or GetUnitTypeId(caster) == 'H01E' then
+                if GetUnitAbilityLevel(caster, 'A04F') > 0 or GetUnitTypeId(caster) == 'H01E' or UnitHasItemS(caster, 'I08X')  and abilId != 'A024' then
                     call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                 endif
 
@@ -166,10 +170,8 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call CastRandomSpell(caster, target, spelLLoc, false, lvl)
                 endif
 
-                if abilId != 'ANtm' then
-                    if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then
-                        call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
-                    endif
+                if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then
+                    call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
                 endif
 
                 if GetUnitAbilityLevel(caster, 'B01R') > 0 then

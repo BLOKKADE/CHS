@@ -31,6 +31,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants
             set abilLvl = GetUnitAbilityLevel(damageSource, 'AEar')
             if abilLvl > 0 then
                 set returnDamage = returnDamage * (0.005 * abilLvl)
+                set TrueDamage = true
             endif
 
             //Lucky Pants

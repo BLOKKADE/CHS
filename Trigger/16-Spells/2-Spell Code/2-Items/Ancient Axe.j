@@ -4,7 +4,7 @@ library AncientAxe requires DummyOrder, RandomShit
         local real cd = 2
         loop
             exitwhen i >= count
-            set cd = cd * 1.3
+            set cd = cd * 1.2
             //call BJDebugMsg("aa dmg: " + R2S(cd) + " i: " + I2S(i))
             set i = i + 1
         endloop

@@ -126,7 +126,8 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('H017', 0, "|cffe7544aBlock bonus|r: ,0,")
 
-        call SetBonusStr('N02K', 0, "|cffe7544aAttack speed reduction|r: ,0,")
+        call SetBonusStr('N02K', 0, "|cffe7544aAttack speed reduction|r: ,0,%%")
+        call SetBonusStr('N02K', 1, "|cffd6e049Movespeed reduction|r: ,0,%%")
 
         call SetBonusStr('H018', 0, "|cffe7544aDamage|r: ,0,")
 

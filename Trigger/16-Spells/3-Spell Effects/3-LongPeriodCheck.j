@@ -257,14 +257,6 @@ function Trig_LongPeriodCheck_Actions takes nothing returns nothing
                 
                 
                 if BlzIsUnitInvulnerable(u) == false  then
-
-                    //Absolute Dark
-                    set i1 = GetUnitAbilityLevel(u ,'A07Q')
-                    if i1 >= 1  then
-                        set i1 = i1*GetClassUnitSpell(u,7)
-                        call AoeDrainAura(u, (0.5*I2R(i1)),500,false)
-                    endif
-                    
                     //Drain aura
                     set i1 = GetUnitAbilityLevel(u ,'A023')
                     if i1 >= 1  then

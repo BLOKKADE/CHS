@@ -242,7 +242,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
         
     elseif TypeHero == 'H002' then  
     
-        if ModuloInteger(I_l + 1, 10) == 0 then
+        if ModuloInteger(I_l + 1, 8) == 0 then
             call UpdateBonus(UnitHero, 0, 1)
             call DisplayTimedTextToPlayer(GetOwningPlayer(UnitHero), 0, 0, 10,(ClassAbil[8] + " |cffffcc00bonus acquired"))
         endif
@@ -259,7 +259,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
    
      elseif TypeHero == 'H004' then  
 
-        call SetBonus(UnitHero, 0, 2 * (I_l+1))
+        call SetBonus(UnitHero, 0, 3 * (I_l+1))
        
      elseif TypeHero == 'H003' then     
             loop
@@ -382,7 +382,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
             endloop      
                       
      elseif TypeHero == 'N00I' then   
-        call SetBonus(UnitHero, 0, 57 + 3 * (I_l+1))
+        call SetBonus(UnitHero, 0, 40 + 1.5 * (I_l+1))
     elseif TypeHero == 'N00L' then  
     
     		call TriggerSleepAction(0.1)
@@ -432,7 +432,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
           set LastLvlHero[Pid]  = I_l 
   
      elseif TypeHero == 'N00R' then         
-        call SetBonus(UnitHero, 0, 97 + ((I_l+1) * 3))   
+        call SetBonus(UnitHero, 0, 9.5 + ((I_l+1) * 0.5))   
      elseif TypeHero == 'N00O' then   
      
         loop
@@ -519,8 +519,10 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
                                     
                                     
             call SetUnitAbilityLevel(UnitHero,'A03H',2)
-            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(UnitHero,'A03H'),ABILITY_RLF_ATTACK_SPEED_INCREASE_PERCENT_OAE2,0, -(I_l+1)*0.06 )         
-            call SetBonus(UnitHero, 0, (I_l+1)*0.06 )
+            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(UnitHero,'A03H'),ABILITY_RLF_ATTACK_SPEED_INCREASE_PERCENT_OAE2,0, -(I_l+1)*0.06)
+            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(UnitHero,'A03H'),ABILITY_RLF_MOVEMENT_SPEED_INCREASE_PERCENT_OAE1,0, RMaxBJ(-(I_l+1)*0.005, -0.95))
+            call SetBonus(UnitHero, 0, ((I_l+1)*0.06)*100 )
+            call SetBonus(UnitHero, 1, RMinBJ((I_l+1)*0.005, 0.95)*100 )
             call SetUnitAbilityLevel(UnitHero,'A03H',1)
             
           set LastLvlHero[Pid]  = I_l  
@@ -554,8 +556,8 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
             call SetBonus(UnitHero, 1, (I_l+1) * 0.04)
             call SetBonus(UnitHero, 2, (I_l+1) * 0.08)
         elseif TypeHero == 'N02P' then
-            call SetBonus(UnitHero, 0, 20 + ((I_l+1) * 5))
-            call SetBonus(UnitHero, 1, 21 + ((I_l+1) * 4))
+            call SetBonus(UnitHero, 0, 20 + ((I_l+1) * 4))
+            call SetBonus(UnitHero, 1, 21 + ((I_l+1) * 3))
         elseif TypeHero == 'H01B' then
             call SetBonus(UnitHero, 0, (I_l+1) * 5)
         elseif TypeHero == 'H01C' then

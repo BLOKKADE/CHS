@@ -12,6 +12,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             return
         endif
         
+        //Fire Runestone
         if  UnitHasItemS(u,'I08P') and IsSpellElement(u,id,1) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A076') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,3)  )
@@ -20,6 +21,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             endif
         endif
         
+        //Water Runestone
         if  UnitHasItemS(u,'I08Q') and IsSpellElement(u,id,2) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A077') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,9)  )
@@ -28,6 +30,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             endif
         endif
         
+        //Earth Runestone
         if  UnitHasItemS(u,'I08R') and IsSpellElement(u,id,4) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A078') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,8)  )
@@ -36,6 +39,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             endif
         endif
         
+        //Wind Runestone
         if  UnitHasItemS(u,'I08S') and IsSpellElement(u,id,3) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A079') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 500 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,10)  )
@@ -44,40 +48,43 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             endif
         endif
         
-        
+        //Absolute Fire
         if GetUnitAbilityLevel(u,'A07B') > 0 and IsSpellElement(u,id,1) then
             call AddStateTemp(u,1,4,10)
-
         endif
         
-
-        
+        //Absolute Water
         if GetUnitAbilityLevel(u,'A07C') > 0 and IsSpellElement(u,id,2) then
             call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))*.02    )
         endif      
         
+        //Absolute Wind
         if GetUnitAbilityLevel(u,'A07E') > 0 and IsSpellElement(u,id,3) then
             call AddHeroTempAgi(u,25,9)
             call AddStateTemp(u,3,5,9)
         endif   
         
-
+        //Absolute Earth
         if GetUnitAbilityLevel(u,'A07D') > 0 and IsSpellElement(u,id,4) then
             call AddStateTemp(u,4, 50,15)
         endif     
         
+        //Absolute Dark
         if GetUnitAbilityLevel(u,'A07Q') > 0 and IsSpellElement(u,id,7) then
-            call AoeDrainAura2(u,4,500,false)
+            call AoeDrainAura2(u,8,500,false)
         endif           
         
+        //Absolute Cold
         if GetUnitAbilityLevel(u,'A07V') > 0 and IsSpellElement(u,id,9) then
             call AbsoluteColdCooldown(u)
         endif           
         
+        //Absolute Light
         if GetUnitAbilityLevel(u,'A07P') > 0 and IsSpellElement(u,id,8) then
-            call SetUnitState(u,UNIT_STATE_LIFE,GetUnitState(u,UNIT_STATE_LIFE) + (GetUnitState(u,UNIT_STATE_LIFE))*.025    )
+            call SetUnitState(u,UNIT_STATE_LIFE,GetUnitState(u,UNIT_STATE_LIFE) + (GetUnitState(u,UNIT_STATE_LIFE))*.04)
         endif 
 
+        //Absolute Wild
         if GetUnitAbilityLevel(u,'A07K') > 0 and IsSpellElement(u,id,5) then
                 set U = CreateUnit( GetOwningPlayer(u),'h01N',GetUnitX(u)+40*CosBJ(-30+GetUnitFacing(u)),GetUnitY(u)+40*SinBJ(-30+GetUnitFacing(u)),GetUnitFacing(u) )
                 call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)-1000 +   GetHeroLevel(u)*(1000))
@@ -86,7 +93,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
                 call UnitApplyTimedLife(U,'A041',15)
         endif    
         
-        
+        //Stone Helmet
         if  UnitHasItemS(u,'I090') and IsSpellElement(u,id,4) then   
             if GetRandomReal(0,100) <= 30*luck then 
                 set U = CreateUnit( GetOwningPlayer(u),'h01M',GetUnitX(u)+40*CosBJ(-30+GetUnitFacing(u)),GetUnitY(u)+40*SinBJ(-30+GetUnitFacing(u)),GetUnitFacing(u) )

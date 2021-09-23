@@ -18,6 +18,7 @@ globals
     integer CorrosiveSkinChance = 0
     integer MulticastChance = 0
     integer FastMagicChance = 0
+    boolean SuddenDeathEnabled = false
   endglobals
   
   function InitGlobals3 takes nothing returns nothing
@@ -1010,6 +1011,7 @@ globals
   endif
   if(Trig_Faerie_Dragon_Func001Func001Func003C())then
     set MysticFaerie[GetPlayerId(GetOwningPlayer(GetEnumUnit()))] = GetEnumUnit()
+    call BlzSetUnitAttackCooldown(GetEnumUnit(), BlzGetUnitAttackCooldown(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))], 0), 0)
       call SetUnitAbilityLevelSwapped('A000',GetEnumUnit(),R2I(GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])/3))
       call IssuePointOrderLocBJ(GetEnumUnit(),"attack",OffsetLocation(GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(-300.00,300.00),GetRandomReal(-300.00,300.00)))
       call SetUnitManaBJ(GetEnumUnit(),GetRandomReal(0,1.00))
@@ -1133,12 +1135,12 @@ globals
   
   library Pillage requires RandomShit
     function Trig_Pillage_Conditions takes nothing returns boolean
-    local integer GG_d1 = 0
+    /*local integer GG_d1 = 0
     local integer PilageBonus = 0
     local integer RingBonus = 0
     local integer RemBon = 0
-    local integer XpBonus = 0
-    local integer GoldBonus = 0
+    local integer expBounty = 0
+    local integer goldBounty = 0
     local unit Gku = udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]
     local player OwningUnit = GetOwningPlayer(Gku)     
     local integer pid = GetPlayerId(OwningUnit)
@@ -1146,15 +1148,20 @@ globals
     local integer itemCount = 0
     
     
-    set XpBonus =XpBonus + BonusNeutral+BonusNeutralPlayer[pid] 
+    set expBounty =expBounty + BonusNeutral+BonusNeutralPlayer[pid] 
     
     //Greedy Goblin
     if GetUnitTypeId(Gku) == 'N02P' then
-    set GoldBonus = GoldBonus + (((21+GetHeroLevel(Gku)*4)*70)/(70 + GetUnitAbilityLevel(Gku,'Asal')))
-    set XpBonus = XpBonus + (((20+GetHeroLevel(Gku)*5)*70)/(70 + GetUnitAbilityLevel(Gku,'Asal')))
+    set goldBounty = goldBounty + (((21+GetHeroLevel(Gku)*3)*70)/(70 + GetUnitAbilityLevel(Gku,'Asal')))
+    set expBounty = expBounty + (((20+GetHeroLevel(Gku)*4)*70)/(70 + GetUnitAbilityLevel(Gku,'Asal')))
     set RemBon = 20
-    call AdjustPlayerStateBJ(GoldBonus,OwningUnit,PLAYER_STATE_RESOURCE_GOLD)
-    call ResourseRefresh(OwningUnit)
+    call AdjustPlayerStateBJ(goldBounty,OwningUnit,PLAYER_STATE_RESOURCE_GOLD)
+    endif
+
+    if MidasTouchGold[GetHandleId(GetDyingUnit())] > 0 then
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\Other\\Transmute\\GoldBottleMissile.mdl", GetUnitX(GetTriggerUnit()), GetUnitX(GetTriggerUnit())))
+        call AdjustPlayerStateBJ(MidasTouchGold[GetHandleId(GetDyingUnit())],OwningUnit,PLAYER_STATE_RESOURCE_GOLD)
+        set MidasTouchGold[GetHandleId(GetDyingUnit())] = 0
     endif
     
     
@@ -1175,7 +1182,7 @@ globals
     
     
     if (IsUnitIllusionBJ(GetTriggerUnit())!=true) and (GetUnitTypeId(GetTriggerUnit())!='n00T') and (GetUnitAbilityLevelSwapped('A02W',Gku)>0) and  (IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(Gku))) then
-        set XpBonus = XpBonus +    ( 35* GetUnitAbilityLevel(Gku,'A02W') *70 )/(70+RemBon+GetUnitAbilityLevel(Gku,'Asal')   )	
+        set expBounty = expBounty +    ( 35* GetUnitAbilityLevel(Gku,'A02W') *70 )/(70+RemBon+GetUnitAbilityLevel(Gku,'Asal')   )	
     endif	
     
     set itemCount = UnitHasItemI(Gku, 'I04R')
@@ -1188,11 +1195,9 @@ globals
     if RingBonus >   PilageBonus then
         set udg_integer60 =  RingBonus
         call AdjustPlayerStateBJ(RingBonus,GetOwningPlayer(Gku),PLAYER_STATE_RESOURCE_GOLD)
-        call ResourseRefresh( GetOwningPlayer(Gku)) 
     else
         set udg_integer60 =  PilageBonus
         call AdjustPlayerStateBJ(PilageBonus,GetOwningPlayer(Gku),PLAYER_STATE_RESOURCE_GOLD)
-        call ResourseRefresh( GetOwningPlayer(Gku))
     endif  
 
     set itemCount = UnitHasItemI(Gku, 'I05U')
@@ -1209,14 +1214,13 @@ globals
         set udg_integer60= udg_integer60 + (50 * itemCount)
         set GG_d1 = GG_d1 + (50 * itemCount)
         call AdjustPlayerStateBJ(50 * itemCount,GetOwningPlayer(Gku),PLAYER_STATE_RESOURCE_GOLD)
-        call ResourseRefresh(GetOwningPlayer(Gku))
     endif
 
 
-    
-    set udg_integer60= udg_integer60 +GoldBonus 
-    call AddHeroXP (Gku, GG_d1+XpBonus,true)
-            
+    call ResourseRefresh(GetOwningPlayer(Gku))
+    set udg_integer60= udg_integer60 +goldBounty 
+    call AddHeroXP (Gku, GG_d1+expBounty,true)
+            */
     return false
     endfunction
 endlibrary
@@ -6472,6 +6476,7 @@ endif
   return true
   endfunction
   
+  /*
   function Trig_Creep_Dies_Func003Func005001001002001 takes nothing returns boolean
   return(IsUnitAliveBJ(GetFilterUnit())==true)
   endfunction
@@ -6490,22 +6495,9 @@ endif
   endif
   return true
   endfunction
-  
+  */
   function Trig_Creep_Dies_Actions takes nothing returns nothing
-  call ConditionalTriggerExecute(udg_trigger22)
-  if(Trig_Creep_Dies_Func003C())then
-  call AdjustPlayerStateBJ((udg_integer59+udg_integer61),GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh(GetOwningPlayer(GetKillingUnitBJ())  )
-  call CreateTextTagLocBJ(("+"+I2S(((udg_integer59+udg_integer61)+udg_integer60))),OffsetLocation(GetUnitLoc(GetTriggerUnit()),(-2.50*I2R(StringLength(GetAbilityName(udg_integers14[udg_integer14])))),0),0,10,100.00,80.00,10.00,0)
-  else
-  call AdjustPlayerStateBJ(udg_integer59,GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_GOLD)
-  call ResourseRefresh(GetOwningPlayer(GetKillingUnitBJ())  )
-  call CreateTextTagLocBJ(("+"+I2S((udg_integer59+udg_integer60))),OffsetLocation(GetUnitLoc(GetTriggerUnit()),(-2.50*I2R(StringLength(GetAbilityName(udg_integers14[udg_integer14])))),0),0,10,100.00,80.00,10.00,0)
-  endif
-  call SetTextTagVelocityBJ(GetLastCreatedTextTag(),64,90)
-  call SetTextTagPermanentBJ(GetLastCreatedTextTag(),false)
-  call SetTextTagFadepointBJ(GetLastCreatedTextTag(),1.00)
-  call SetTextTagLifespanBJ(GetLastCreatedTextTag(),2.00)
+    call CreepDeath_Death(GetTriggerUnit(), udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()))])
   call TriggerSleepAction(0.00)
   call SetUnitOwner(GetTriggerUnit(),Player(PLAYER_NEUTRAL_PASSIVE),false)
   endfunction
@@ -6720,7 +6712,7 @@ endif
     if LastBreathChance == 1 then
         call UnitAddAbility(u, 'A05R')
         call FuncEditParam('A05R', u)
-        call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(udg_integer02*0.4), 30))
+        call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(udg_integer02*0.2), 30))
     endif
 
     if FireshieldChance == 1 then
@@ -6786,7 +6778,6 @@ endif
   endif
   if udg_integer02 > 10 then
     set DrunkenMasterchance=GetRandomInt(1,oldAbilChance)
-    set LastBreathChance=GetRandomInt(1,newAbilChance)
     set PulverizeChance=GetRandomInt(1,newAbilChance)
     set FireshieldChance=GetRandomInt(1,newAbilChance)
     set CorrosiveSkinChance=GetRandomInt(1,newAbilChance)
@@ -6795,6 +6786,13 @@ endif
     set MulticastChance = GetRandomInt(1,newAbilChance+10)
     set FastMagicChance = GetRandomInt(1,newAbilChance+6)
   endif
+
+  if udg_integer02 == 28 or udg_integer02 == 38 or udg_integer02 == 48 then
+    set LastBreathChance = 1
+  else  
+    set LastBreathChance = 2
+  endif
+
   if(Trig_Generate_Next_Level_Func014C())then
   set udg_integer03=GetRandomInt(2,(udg_integer02/2+4))
   else
@@ -6822,6 +6820,9 @@ endif
   loop
   exitwhen udg_integer28>udg_integer03
   set udg_integer40=1
+  if udg_integer28 > 4 then
+    set udg_integer50 = 2
+  endif
   loop
       exitwhen udg_integer40>8
       if(Trig_Generate_Next_Level_Func021Func001Func001C())then
@@ -6915,9 +6916,6 @@ endif
       else
       endif
       set udg_integer40=udg_integer40+1
-      if udg_integer40 > 2 then
-          set  udg_integer50 = 2
-      endif
   endloop
   set udg_integer28=udg_integer28+1
   endloop
@@ -7095,7 +7093,7 @@ endif
       endif
   endif
   endif
-  call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00Level Completed!"))
+  call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, ("|cffffcc00Level Completed!"))
   call Func_completeLevel(  udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] )
   call DeleteUnit(GetTriggerUnit())
   call ConditionalTriggerExecute(udg_trigger108)
@@ -7709,23 +7707,18 @@ endif
   
   function Trig_Sudden_Death_Timer_Func002Func001A takes nothing returns nothing
   call SetUnitMoveSpeed(GetEnumUnit(),(GetUnitMoveSpeed(GetEnumUnit())+25.00))
-  endfunction
-  
-  function Trig_Sudden_Death_Timer_Func002Func002Func001Func004C takes nothing returns boolean
-  if(not(GetUnitAbilityLevelSwapped('A000',GetEnumUnit())<50))then
-  return false
+  if GetUnitAbilityLevel(GetEnumUnit(), 'AOcr') == 0 then
+    call UnitAddAbility(GetEnumUnit(), 'AOcr')
+  elseif GetUnitAbilityLevel(GetEnumUnit(), 'AOcr') < 10 then
+    call SetUnitAbilityLevel(GetEnumUnit(), 'AOcr', 10)
   endif
-  return true
   endfunction
   
   function Trig_Sudden_Death_Timer_Func002Func002Func001A takes nothing returns nothing
   call UnitAddAbilityBJ('Atru',GetEnumUnit())
   call UnitAddAbilityBJ('A00W',GetEnumUnit())
   call UnitAddAbilityBJ('A01B',GetEnumUnit())
-  if(Trig_Sudden_Death_Timer_Func002Func002Func001Func004C())then
-  call IncUnitAbilityLevelSwapped('A000',GetEnumUnit())
-  else
-  endif
+  call BlzSetUnitBaseDamage(GetEnumUnit(), R2I(BlzGetUnitBaseDamage(GetEnumUnit(), 0) * 1.1), 0)
   endfunction
   
   function Trig_Sudden_Death_Timer_Func002Func002Func002Func001001001 takes nothing returns boolean
@@ -9313,33 +9306,33 @@ endif
   endfunction
   
   function Trig_Kick_Player_Command_Actions takes nothing returns nothing
-  local string command = SubStringBJ(GetEventPlayerChatString(),7,StringLength(GetEventPlayerChatString()))
-  set udg_boolean17=false
-  if command == "red" then
-      call KickPlayer(Player(0))
-  elseif command == "blue" then
-      call KickPlayer(Player(1))
-  elseif command == "teal" then
-      call KickPlayer(Player(2))
-  elseif command == "purple" then
-      call KickPlayer(Player(3))
-  elseif command == "yellow" then
-      call KickPlayer(Player(4))
-  elseif command == "orange" then
-      call KickPlayer(Player(5))
-  elseif command == "green" then
-      call KickPlayer(Player(6))
-  elseif command == "pink" then
-      call KickPlayer(Player(7))
-  else
-  call ForForce(GetPlayersMatching(Condition(function Trig_Kick_Player_Command_Func002001001)),function Trig_Kick_Player_Command_Func002A)
-  if(Trig_Kick_Player_Command_Func003001())then
-  return
-  else
-  call DoNothing()
-  endif
-  call DisplayTimedTextToForce(GetPlayersMatching(Condition(function Trig_Kick_Player_Command_Func004001001)),5.00,("|cffffcc00"+("Couldn't kick player \""+(SubStringBJ(GetEventPlayerChatString(),7,StringLength(GetEventPlayerChatString()))+"\"|r"))))
-  endif
+    local string command = SubStringBJ(GetEventPlayerChatString(),7,StringLength(GetEventPlayerChatString()))
+    set udg_boolean17=false
+    if command == "red" then
+        call KickPlayer(Player(0))
+    elseif command == "blue" then
+        call KickPlayer(Player(1))
+    elseif command == "teal" then
+        call KickPlayer(Player(2))
+    elseif command == "purple" then
+        call KickPlayer(Player(3))
+    elseif command == "yellow" then
+        call KickPlayer(Player(4))
+    elseif command == "orange" then
+        call KickPlayer(Player(5))
+    elseif command == "green" then
+        call KickPlayer(Player(6))
+    elseif command == "pink" then
+        call KickPlayer(Player(7))
+    else
+        call ForForce(GetPlayersMatching(Condition(function Trig_Kick_Player_Command_Func002001001)),function Trig_Kick_Player_Command_Func002A)
+        if(Trig_Kick_Player_Command_Func003001())then
+            return
+        else
+            call DoNothing()
+        endif
+        call DisplayTimedTextToForce(GetPlayersMatching(Condition(function Trig_Kick_Player_Command_Func004001001)),5.00,("|cffffcc00"+("Couldn't kick player \""+(SubStringBJ(GetEventPlayerChatString(),7,StringLength(GetEventPlayerChatString()))+"\"|r"))))
+    endif
   endfunction
   
   function Trig_Player_Selection_Camera_Func001001 takes nothing returns boolean
@@ -9833,6 +9826,13 @@ endif
   call PvpStopSuddenDeathTimer()
   call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" |cffffcc00has defeated |r"+(GetPlayerNameColour(GetOwningPlayer(GetDyingUnit()))+"|cffffcc00!!|r")))))
   call SetUnitInvulnerable(udg_unit05,true)
+
+  //Midas Touch
+  if GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
+    call CreepDeath_BountyText(GetDyingUnit(), GetMidasTouch(GetHandleId(GetDyingUnit())).bonus)
+    call SetPlayerState(GetOwningPlayer(udg_unit05), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(udg_unit05), PLAYER_STATE_RESOURCE_GOLD) + GetMidasTouch(GetHandleId(GetDyingUnit())).bonus)
+    set GetMidasTouch(GetHandleId(GetDyingUnit())).stop = true
+    endif
   call TriggerSleepAction(4.00)
   call GroupAddUnitSimple(udg_unit05,udg_group03)
   call FunWinner( udg_unit05 )
@@ -10223,7 +10223,7 @@ endif
     call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func041A)
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     set udg_integer39=0
-    set udg_real03=100.00
+    set udg_real03=0.02
     call EnableTrigger(udg_trigger140)
     call EnableTrigger(udg_trigger141)
     call PvpStartSuddenDeathTimer()
@@ -10393,17 +10393,7 @@ endfunction
   endfunction
   
   function Trig_Sudden_Death_Damage_PvP_Actions takes nothing returns nothing
-  if udg_real03 <= 2 then
-  if udg_real03 > 0.1 then
-      set udg_real03 = udg_real03 - 0.05
-  else
-      if udg_real03 > 0.02 then
-          set udg_real03 = udg_real03 - 0.01
-      endif
-  endif
-  else
-  set udg_real03=( udg_real03 - 2 )
-  endif
+    set udg_real03 = udg_real03 * 1.1
   call PvpUpdateDeathTimerDisplay(udg_real03)
   endfunction
   
@@ -10421,10 +10411,10 @@ endfunction
   call DisableTrigger(udg_trigger26)
   call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(udg_units03[1]),GetUnitLoc(udg_units03[1]),bj_UNIT_FACING)
   call UnitApplyTimedLifeBJ(0.25,'BTLF',GetLastCreatedUnit())
-  call UnitDamageTargetBJ(GetLastCreatedUnit(),udg_units03[2],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,udg_units03[2])/udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
+  call UnitDamageTargetBJ(GetLastCreatedUnit(),udg_units03[2],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,udg_units03[2])*udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
   call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(udg_units03[2]),GetUnitLoc(udg_units03[2]),bj_UNIT_FACING)
   call UnitApplyTimedLifeBJ(0.25,'BTLF',GetLastCreatedUnit())
-  call UnitDamageTargetBJ(GetLastCreatedUnit(),udg_units03[1],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,udg_units03[1])/udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
+  call UnitDamageTargetBJ(GetLastCreatedUnit(),udg_units03[1],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,udg_units03[1])*udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
   call EnableTrigger(udg_trigger11)
   call EnableTrigger(udg_trigger26)
   else

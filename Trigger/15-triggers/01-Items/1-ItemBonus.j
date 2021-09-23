@@ -103,7 +103,7 @@ function DestrTimer takes nothing returns nothing
 	if itemId == 'I0AI' then
 		set i = UnitHasItemI(u, itemId)
 		set prevCount = LoadInteger(HTi, GetHandleId(u), 47)
-		set r = BlzGetUnitIntegerField(u, UNIT_IF_PRIMARY_ATTRIBUTE)
+		set r = GetHeroPrimaryStat(u)
 		call SetHeroStat(u, r, GetHeroStatBJ(r, u, false) + 300 * (i-prevCount))
 		call SaveInteger(HTi,GetHandleId(u),47,i)	
 	endif

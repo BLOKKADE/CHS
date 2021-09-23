@@ -8,6 +8,11 @@ library ExtradimensionalCooperation requires RandomShit
         return SpellData[GetHandleId(u)].boolean[5]
     endfunction
 
+    function ResetExtraDimensional takes unit u returns nothing
+        set SpellData[GetHandleId(u)].integer[6] = 0
+        call UnitRemoveAbility(u, 'B01H')
+    endfunction
+
     struct ExtraDimensionalCoop extends array
 
         real dmg
@@ -80,7 +85,7 @@ library ExtradimensionalCooperation requires RandomShit
             call SetUnitAnimation(this.ssdummy, "attack")
             call UnitApplyTimedLife(this.ssdummy, 'BTLF', 0.3)
             call SetUnitTimeScale(this.ssdummy, 3.)
-            set this.endTick = T32_Tick + 10
+            set this.endTick = T32_Tick + GetRandomInt(5,15)
             call this.startPeriodic()
             
             return this
@@ -113,7 +118,8 @@ library ExtradimensionalCooperation requires RandomShit
         call UnitAddAbility(u, 'A08K')
         call IssueTargetOrderById(u, 852101, caster)
         call UnitApplyTimedLife(u,'BTLF', 3) 
-        set SpellData[GetHandleId(caster)].integer[6] = 2 + GetUnitAbilityLevel(caster, abilId)
+        set SpellData[GetHandleId(caster)].integer[6] = SpellData[GetHandleId(caster)].integer[6] + 2 + GetUnitAbilityLevel(caster, abilId)
+        call BJDebugMsg("edc: " + I2S(SpellData[GetHandleId(caster)].integer[6]))
         set u = null
     endfunction
 endlibrary

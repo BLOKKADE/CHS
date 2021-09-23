@@ -1,6 +1,7 @@
 globals
     boolean GLOB_cuttting = false 
     boolean DamageIsAttack = false
+    boolean TrueDamage = false
 endglobals
  
  
@@ -73,6 +74,12 @@ endglobals
     local real luckTarget = 1
     local boolean AbilA = true
     local boolean Bfirst = false
+    local boolean trueAttack = false
+
+    if LoadBoolean(HT,GetHandleId(damageTarget),'A07S') and GetUnitAbilityLevel(damageTarget, 'A08C') > 0 then
+        call RemoveDebuff(damageTarget) 
+        set AbilA = false
+    endif
 
     if GetEventDamage() == 0 then
         set damageSourceHero = null
@@ -107,6 +114,10 @@ endglobals
         set damageSource = damageSourceHero
     endif
 
+    if CuId == 'n00V' then
+        call BlzSetEventDamageType(DAMAGE_TYPE_UNIVERSAL)
+    endif
+
     set luckSource = GetUnitLuck(damageSource)
     set luckTarget = GetUnitLuck(damageTarget)
     
@@ -129,6 +140,10 @@ endglobals
             set damageSource = null
             return
         endif
+        if TrueDamage then
+            set trueAttack = true
+            set TrueDamage = false
+        endif
     endif
 
     //set attack damage
@@ -147,7 +162,7 @@ endglobals
 
     //Extradimensional Cooperation
     if GetUnitAbilityLevel(damageSource, 'B01H') > 0 and AbilA and IsDamageExtradimensional(damageSource) == false then
-        call CastExtradimensionalCoop(damageSource, damageTarget, GetEventDamage(), DmgType != DAMAGE_TYPE_NORMAL)
+        call CastExtradimensionalCoop(damageSource, damageTarget, GetEventDamage(), DmgType == DAMAGE_TYPE_MAGIC)
     endif
 
     //Divine Bubble
@@ -162,7 +177,7 @@ endglobals
             set AbilA = false
             call RemoveDebuff(damageTarget) 
             call UnitAddAbility(damageTarget, 'A08C')
-            call AbilStartCD(damageTarget,'A07S', 30)  
+            call AbilStartCD(damageTarget,'A07S', 30.69 - (0.69 * GetUnitAbilityLevel(damageTarget, 'A07S'))) 
             call SaveBoolean(HT,GetHandleId(damageTarget),'A07S',true)	    
             call SaveUnitHandle(HT,GetHandleId(tim),1,GetTriggerUnit())
             call SaveEffectHandle(HT,GetHandleId(tim),2,AddSpecialEffectTarget( "RighteousGuard.mdx" , damageTarget , "origin" ) ) 
@@ -180,7 +195,7 @@ endglobals
     //Crits
     if DmgType ==  DAMAGE_TYPE_NORMAL then
         call TakePhysDmg(damageSource,damageTarget, AbilA)
-    else
+    elseif DmgType == DAMAGE_TYPE_MAGIC then
         call TakeMagickDmg(damageSource,damageTarget, AbilA)
     endif
 
@@ -328,7 +343,7 @@ endglobals
     if GetUnitTypeId(damageSource) == 'N00Q' and attack then
         //call CastUrsaBleed(damageSource, damageTarget, GetEventDamage(), DmgType !=  DAMAGE_TYPE_NORMAL)
         call SetBuff(damageTarget,4,3)
-        call PeriodicDamage.create(damageSource, damageTarget, GetEventDamage()/3, DmgType !=  DAMAGE_TYPE_NORMAL, 1., 3, 0, true, 'B01I').addFx(FX_Bleed, "head")
+        call PeriodicDamage.create(damageSource, damageTarget, GetEventDamage()/3, DmgType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, 'B01I').addFx(FX_Bleed, "head")
     endif
     
     //Pvp Bonus
@@ -367,7 +382,7 @@ endglobals
     endif
 
     //Lich
-	if GetUnitTypeId(damageSource) == 'H018' and  DmgType !=  DAMAGE_TYPE_NORMAL then
+	if GetUnitTypeId(damageSource) == 'H018' and  DmgType == DAMAGE_TYPE_MAGIC then
         if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08W') <= 0 then
             call AbilStartCD(damageSource, 'A08W', 6)
             call ElemFuncStart(damageSource,'H018')
@@ -389,11 +404,11 @@ endglobals
     //Grom Hellscream
     if GetUnitTypeId(damageSourceHero) == 'N024' and DmgType == DAMAGE_TYPE_NORMAL then
         call BlzSetEventDamage(GetEventDamage() + GetHeroStr(damageSourceHero, true))
-        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", damageTarget, "chest"))		
+        call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", damageTarget, "chest"))		
     endif
 
     //Robes of the Archmage
-	if GetUnitAbilityLevel(damageSource  ,'B00L') >= 1 and  DmgType !=  DAMAGE_TYPE_NORMAL  then
+	if GetUnitAbilityLevel(damageSource  ,'B00L') >= 1 and  DmgType == DAMAGE_TYPE_MAGIC then
      	set magicPowerDamage = magicPowerDamage + (BlzGetUnitMaxMana(damageTarget) - GetUnitState(damageTarget, UNIT_STATE_MANA)) / 90000
 	endif
 
@@ -436,7 +451,7 @@ endglobals
         endif
     endif
 	
-	if DmgType !=  DAMAGE_TYPE_NORMAL then 
+	if DmgType == DAMAGE_TYPE_MAGIC then 
         //Magic Power
     	if magicPowerDamage != 1 or GetUnitMagicDmg(damageSource) > 0 then
     		call BlzSetEventDamage(  GetEventDamage()*(magicPowerDamage+GetUnitMagicDmg(damageSource)/100 )   )
@@ -450,12 +465,18 @@ endglobals
 	endif
 
 	//Block
-	if GetUnitBlock(damageTarget) != 0 then	
+	if GetUnitBlock(damageTarget) != 0 and trueAttack == false then	
         set blockDamage = GetUnitBlock(damageTarget)
 
         //Sword of Bloodthirst
         if UnitHasItemS(damageSource, 'I0AI') and attack then
             set blockDamage = blockDamage * 0.7
+        endif
+
+        //Absolute Dark
+        set II = GetUnitAbilityLevel(damageSourceHero, 'A07Q')
+        if II > 0 then
+            set blockDamage = blockDamage * (1 - ((0.009 + (0.1 * II)) * GetClassUnitSpell(damageSourceHero, Element_Dark)))
         endif
 
 		set blockDamage = GetEventDamage() - blockDamage
@@ -467,7 +488,7 @@ endglobals
 	endif
 
     //Wisdom Chestplate
-    if DmgType !=  DAMAGE_TYPE_NORMAL and UnitHasItemS(damageTarget, 'I0AH') then 
+    if DmgType == DAMAGE_TYPE_MAGIC and UnitHasItemS(damageTarget, 'I0AH') then 
         call ActivateWisdomChestplate(damageTarget, GetEventDamage())
     endif
 
@@ -498,8 +519,8 @@ endglobals
             endif
             
             //spiked carapaces
-            if GetUnitAbilityLevel(damageTarget, 'AUts') > 0 then
-                call MagicDamage(damageTarget,damageSource, GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'AUts') * 0.005), true)
+            if GetUnitAbilityLevel(damageTarget, 'AUts') > 0 and attack then
+                call MagicDamage(damageTarget,damageSource, GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'AUts') * 0.003), true)
             endif
         endif
         
@@ -514,7 +535,7 @@ endglobals
                 else
                     call MagicDamage(damageTarget,damageSource, (GetEventDamage() * (GetUnitAbilityLevel(damageTargetHero, 'A088') * 0.02)) * Admg, true)
                 endif
-                call DestroyEffect(AddSpecialEffect("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", GetUnitX(damageSource), GetUnitY(damageSource)))
+                call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", damageSource, "chest"))
             endif
         endif
     endif

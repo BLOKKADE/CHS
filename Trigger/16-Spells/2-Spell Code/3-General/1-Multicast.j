@@ -27,19 +27,21 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             set targetY = GetUnitY(target)
         endif
 
-        //Blaze Staff
-        if  UnitHasItemS(caster,'I08X') and IsSpellElement(caster, abilId,1) then
-            set amount = 2
-        endif
+        
 
         //Check if caster has multicast
-        if (multicastLvl == 0 and GetUnitTypeId(caster) != 'H01E' and amount == 0) or abilId == 'AOmi' then
+        if abilId == 'AOmi' then
             set caster = null
             set target = null
             return
         endif
 
         if Trig_Disable_Abilities_Func001C(caster) == false then
+
+            //Blaze Staff
+            if  UnitHasItemS(caster,'I08X') and IsSpellElement(caster, abilId,1) then
+                set amount = 2
+            endif
 
             //amounticast chances
             if multicastLvl > 0 then

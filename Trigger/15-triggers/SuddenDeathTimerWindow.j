@@ -18,13 +18,20 @@ library SuddenDeathTimerWindow requires TimerUtils
         local real remaining = TimerGetRemaining(SuddenDeathTimer)
         if remaining <= 5 then
             set level = level + 1
+            set SuddenDeathEnabled = true
             call TimerDialogSetTitle(SuddenDeathDialog, "Creep enrage level " + I2S(level))
+            if level == 2 then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are pretty angry!")
+            elseif level == 3 then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are extremely agitated!")
+            endif
             call TimerStart(SuddenDeathTimer, 60, false, null)
         endif
     endfunction
 
     function StartSuddenDeathTimer takes nothing returns nothing
         if SuddenDeathTimer == null then
+            set SuddenDeathEnabled = false
             set SuddenDeathTimer = NewTimer()
             call TimerStart(SuddenDeathTimer, LevelUp, false, null)
             set level = 1

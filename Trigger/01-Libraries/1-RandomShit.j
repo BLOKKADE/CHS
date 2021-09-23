@@ -238,6 +238,7 @@ globals
         call UnitRemoveAbility(Un, 'B01V')
         call UnitRemoveAbility(Un, 'B01Y')
         call UnitRemoveAbility(Un, 'B01X')
+        call UnitRemoveAbility(Un, 'B021')
         call UnitRemoveAbility(Un,'A03V')
         set Un = null
     endfunction
@@ -404,8 +405,8 @@ globals
         endloop
 
         //Mauler passive
-        if id == Element_Light and GetUnitTypeId(u) == 'H002' then
-            set elementCount = elementCount + R2I(GetHeroLevel(u) / 10)
+        if GetUnitTypeId(u) == 'H002' and (id == Element_Light or (id == Element_Dark and UnitHasItemS(u, 'I0AM'))) then
+            set elementCount = elementCount + R2I(GetHeroLevel(u) / 8)
         endif
 
         //Witch Doctor passive

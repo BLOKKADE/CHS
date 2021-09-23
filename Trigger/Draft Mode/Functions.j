@@ -24,50 +24,46 @@ function RemoveDraftSpells takes integer playerNumber, integer NOSpells returns 
     endloop
 endfunction
 
+function AddDraftSpellToStore takes integer PlayerNumber, integer ChosenSpell, integer i returns nothing
+        call AddItemToStock( udg_Draft_DraftBuildings[PlayerNumber], LoadIntegerBJ(PlayerNumber, ChosenSpell, udg_Draft_PlayerSpells), 1, 1)    
+        set DisplayedSpells[PlayerNumber].integer[i] = LoadIntegerBJ(PlayerNumber, ChosenSpell, udg_Draft_PlayerSpells)
+        call SaveIntegerBJ( LoadIntegerBJ(PlayerNumber, udg_Draft_PlayerSpellsMaxIndex[PlayerNumber], udg_Draft_PlayerSpells), PlayerNumber, ChosenSpell, udg_Draft_PlayerSpells) // 
+        set udg_Draft_PlayerSpellsMaxIndex[PlayerNumber] = udg_Draft_PlayerSpellsMaxIndex[PlayerNumber] - 1
+endfunction
+
+
 function GenerateDraftSpells takes integer PlayerNumber, integer NOSpells returns nothing
-    local integer chosenSpell = 0 
+    local integer ChosenSpell = 0 
     local integer i = 0
     call RemoveDraftSpells(PlayerNumber, NOSpells)
     // call DisplayTextToForce( GetPlayersAll(), ( "Player Id: " + I2S(PlayerNumber) ) )
     loop
         exitwhen i == NOSpells
-        set chosenSpell = GetRandomInt(0, udg_Draft_PlayerSpellsMaxIndex[PlayerNumber] - udg_Draft_NOSpellsLearned[PlayerNumber])        
-        call AddItemToStock( udg_Draft_DraftBuildings[PlayerNumber], LoadIntegerBJ(PlayerNumber, chosenSpell, udg_Draft_PlayerSpells), 1, 1)    
-        set DisplayedSpells[PlayerNumber].integer[i] = LoadIntegerBJ(PlayerNumber, chosenSpell, udg_Draft_PlayerSpells)
-        call SaveIntegerBJ( LoadIntegerBJ(PlayerNumber, udg_Draft_PlayerSpellsMaxIndex[PlayerNumber], udg_Draft_PlayerSpells), PlayerNumber, chosenSpell, udg_Draft_PlayerSpells) // 
-        set udg_Draft_PlayerSpellsMaxIndex[PlayerNumber] = udg_Draft_PlayerSpellsMaxIndex[PlayerNumber] - 1
+        set ChosenSpell = GetRandomInt(1, udg_Draft_PlayerSpellsMaxIndex[PlayerNumber] - udg_Draft_NOSpellsLearned[PlayerNumber])        
+        call AddDraftSpellToStore(PlayerNumber, ChosenSpell, i)
         set i = i + 1
        // call DisplayTextToForce( GetPlayersAll(), ( "loop: " + I2S(i) ) )
     endloop
 
 endfunction
 
-/*  THIS VERSION Spawns the buildings next to each other
-    Only run once for the initial building creation, called by CreateDraftBuildings below.
-    Calls GenerateDraftSpells once. 
-    The first line might leak. 
-
-function CreateDraftBuildingsLoop takes nothing returns nothing
-    local location spawn = OffsetLocation(GetRectCenter(GetPlayableMapRect()), 200*(I2R(GetConvertedPlayerId(GetEnumPlayer())-5)), 500)
-    set udg_Draft_DraftBuildings[GetConvertedPlayerId(GetEnumPlayer())] = CreateUnitAtLoc(GetEnumPlayer(), udg_Draft_DraftBuilding, spawn, 0)
-    call GenerateDraftSpells(GetConvertedPlayerId(GetEnumPlayer()), udg_Draft_NODraftSpells)
-    call RemoveLocation(spawn)
-    set spawn = OffsetLocation(GetRectCenter(GetPlayableMapRect()), 200*(I2R(GetConvertedPlayerId(GetEnumPlayer())-5)), 700)
-    set udg_Draft_UpgradeBuildings[GetConvertedPlayerId(GetEnumPlayer())] = CreateUnitAtLoc(GetEnumPlayer(), udg_Draft_UpgradeBuilding, spawn, 0)
-    call RemoveLocation(spawn)
-    set spawn = null
+/*
+    Guarantees that Pillage, Transmute, Holy Enlightenment and Learnability are added to the first draft
+*/
+function GenerateInitialDraftSpells takes integer PlayerNumber, integer NOSpells returns nothing
+    if ( NOSpells - 4 > 0 ) then
+    call GenerateDraftSpells(PlayerNumber, NOSpells - 4) // Generate Draft Spells uses indices i : 0 =< i < 2nd argument
+    endif
+    call AddDraftSpellToStore(PlayerNumber, 104, NOSpells - 4) // Learnability
+    call AddDraftSpellToStore(PlayerNumber, 122, NOSpells - 3) // Transmute
+    call AddDraftSpellToStore(PlayerNumber, 89, NOSpells - 2) // Pillage
+    call AddDraftSpellToStore(PlayerNumber, 134, NOSpells - 1) // Holy Enlightenment
 endfunction
-*/
-/*  THIS VERSION Spawns the buildings on top of each other
-    Only run once for the initial building creation, called by CreateDraftBuildings below.
-    Calls GenerateDraftSpells once. 
-    The first line might leak. 
-*/
 
 function CreateDraftBuildingsLoop takes nothing returns nothing
     set udg_Draft_DraftBuildings[GetConvertedPlayerId(GetEnumPlayer())] = CreateUnit(GetEnumPlayer(), udg_Draft_DraftBuilding, 0 - OffsetX, OffsetY, 0)
     set udg_Draft_UpgradeBuildings[GetConvertedPlayerId(GetEnumPlayer())] = CreateUnit(GetEnumPlayer(), udg_Draft_UpgradeBuilding, OffsetX, OffsetY, 0)
-    call GenerateDraftSpells(GetConvertedPlayerId(GetEnumPlayer()), udg_Draft_NODraftSpells)
+    call GenerateInitialDraftSpells(GetConvertedPlayerId(GetEnumPlayer()), udg_Draft_NODraftSpells)
 endfunction
 
 function CreateDraftBuildings takes nothing returns nothing

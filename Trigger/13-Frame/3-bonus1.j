@@ -14,13 +14,13 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'H006',2, "|cffffff00Level Up Bonus|r: +800 summon hit points, +6 summon armor." )
     
     call SaveStr(HT_data,'H002',1, "ReplaceableTextures\\CommandButtons\\BTNHeroPaladin.blp" )       // paladin
-    call SaveStr(HT_data,'H002',2, "|cff00ffffPassive|r: Lightbringer: Gets a free point towards the [|cffd2d2d2Light|r] element just for existing. \n|cffffff00Level Up Bonus|r: (Every 10 levels) Lightbringer: +1 point towards [|cffd2d2d2Light|r]." )   
+    call SaveStr(HT_data,'H002',2, "|cff00ffffPassive|r: Lightbringer: Gets a free point towards the [|cffd2d2d2Light|r] element just for existing. \n|cffffff00Level Up Bonus|r: (Every 8 levels) Lightbringer: +1 point towards [|cffd2d2d2Light|r]." )   
    
     call SaveStr(HT_data,'H001',1, "ReplaceableTextures\\CommandButtons\\BTNHeroBloodElfPrince.blp" )       // mage
     call SaveStr(HT_data,'H001',2, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 1000 total mana \n|cffffff00Level Up Bonus|r: +250 mana." )   
     
     call SaveStr(HT_data,'H004',1, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )       // mortal team
-    call SaveStr(HT_data,'H004',2, "|cff00ffffPassive|r: Mortar Aura: Increases all physical damage dealt by a percentage. \n|cffffff00Level Up Bonus|r: Mortar Aura: +2% physical damage bonus." )    
+    call SaveStr(HT_data,'H004',2, "|cff00ffffPassive|r: Mortar Aura: Increases all physical damage dealt by a percentage. \n|cffffff00Level Up Bonus|r: Mortar Aura: +3% physical damage bonus." )    
                  
     call SaveStr(HT_data,'H003',1, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )       // naga
     call SaveStr(HT_data,'H003',2, "|cffffff00Level Up Bonus|r: Increases intelligence by a random amount between 1 and 11. Repeats if strength is at 0 and again if agility is at 0." )    
@@ -41,7 +41,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'O000',2, "|cff00ffffPassive|r: Spirit Mage: Spells in the Active Spells I shop can go up to level 40. \n|cffffff00Level Up Bonus|r: (Every 2 levels) Increases the level of all spells from Active Spells I by 1." )
       
     call SaveStr(HT_data,'O008',1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )       // Mystic
-    call SaveStr(HT_data,'O008',2, "|cff00ffffPassive|r: Faerie Friend: A Faerie Dragon follows it, attacking nearby enemies every 2 seconds. Faerie Dragon attacks count as Mystic attacks.\n|cffffff00Level Up Bonus|r: +40 summon damage. (Every 3 levels) increases Faerie Dragon damage." )
+    call SaveStr(HT_data,'O008',2, "|cff00ffffPassive|r: Faerie Friend: A Faerie Dragon follows it, attacking enemies. Faerie Dragon attacks count as Mystic attacks, it has the same attack speed.\n|cffffff00Level Up Bonus|r: +40 summon damage. (Every 3 levels) increases Faerie Dragon damage." )
         
     call SaveStr(HT_data,'O007',1, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )       // Pit Lord
     call SaveStr(HT_data,'O007',2, "|cff00ffffPassive|r: Rain of Fire: automatically casts Rain of Fire when it deals damage once every 2 seconds. \n|cffffff00Level Up Bonus|r: Rain of Fire: +30 initial damage, +10 damage per second." )
@@ -59,7 +59,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'N024',2, "|cff00ffffPassive|r: Valiant Strike: All physical damage dealt by the player has 100% of the Hero's strength added to it.\n|cffffff00Level Up Bonus|r: +3 armor and +6 hit point regeneration." )
     
     call SaveStr(HT_data,'N00I',1, "ReplaceableTextures\\CommandButtons\\BTNHeadHunterBerserker.blp" )       // Troll Head Hunter
-    call SaveStr(HT_data,'N00I',2, "|cff00ffffPassive|r: Troll Anatomy: Gains bonus hit point regen based on 60% of its strength. \n|cffffff00Level Up Bonus|r: Troll Anatomy: +3% strength conversion." )
+    call SaveStr(HT_data,'N00I',2, "|cff00ffffPassive|r: Troll Anatomy: Gains bonus hit point regen based on 40% of its strength. \n|cffffff00Level Up Bonus|r: Troll Anatomy: +1.5% strength conversion." )
                      
     call SaveStr(HT_data,'N00L',1, "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp" )       // Tinker
     call SaveStr(HT_data,'N00L',2, "|cffffff00Level Up Bonus|r: Gains 55 * hero level experience." )
@@ -71,7 +71,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'N00B',2, "|cff00ffffPassive|r: Fear Aura: Reduces the armor of nearby enemies. \n|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
     
     call SaveStr(HT_data,'N00R',1, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )       // Luna
-    call SaveStr(HT_data,'N00R',2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero is attacked, dealing 10% of her attack damage in magic damage. \n|cffffff00Level Up Bonus|r: Moon Chakrum: +0.3% of her attack damage" )
+    call SaveStr(HT_data,'N00R',2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 10% of her attack damage in magic damage. \n|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
         
     call SaveStr(HT_data,'N00O',1, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )       // Brute Skelet
     call SaveStr(HT_data,'N00O',2, "|cff00ffffPassive|r: Skeleton Army: Summons a skeleton every time it kills an enemy unit.\n|cffffff00Level Up Bonus|r: +2 armor, +5 summon armor." )
@@ -102,7 +102,7 @@ function Init_Hero_data takes nothing returns nothing
     
     call SaveStr(HT_data,'N02K',1, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )  
  //   call SaveStr(HT_data,'N02K',1, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )       // cold
-    call SaveStr(HT_data,'N02K',2, "|cff00ffffPassive|r: Frost Aura: Reduces the attack speed of enemies. \n|cffffff00Level Up Bonus|r: Frost Aura: +6% attack speed reduction." )  
+    call SaveStr(HT_data,'N02K',2, "|cff00ffffPassive|r: Frost Aura: Reduces the attack speed and movement speed of enemies. \n|cffffff00Level Up Bonus|r: Frost Aura: +6% attack speed reduction . +0.5% movespeed reduction (max 95%)" )  
 
     call SaveStr(HT_data,'H018',1, "ReplaceableTextures\\CommandButtons\\BTNHeroLich.blp" )       // Lich
     call SaveStr(HT_data,'H018',2, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals magic damage it deals bonus damage in an area around the target based on 100% of its intelligence once every 6 seconds. \n|cffffff00Level Up Bonus|r: Flash Freeze: +60 damage." ) 
@@ -111,7 +111,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'H019',2, "|cff00ffffPassive|r: Gnome Stomp: At the start of every fight it deals damage and stuns all nearby heroes for 1 second and creeps for 2 seconds. \n|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun." )             
 
     call SaveStr(HT_data,'N02P',1, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )       // Greed goblin
-    call SaveStr(HT_data,'N02P',2, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. |cffc0c0c01% less effective for each level of Pillage|r.\n|cffffff00Level Up Bonus|r: Greed: +4 bonus gold and +5 experience" ) 
+    call SaveStr(HT_data,'N02P',2, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. |cffc0c0c01% less effective for each level of Pillage\nPillage and Learnability are 22% less effective.|r.\n|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
 
     call SaveStr(HT_data,'H01B',1, "ReplaceableTextures\\CommandButtons\\BTNCentaurArcher.blp" )       // Cent archer
     call SaveStr(HT_data,'H01B',2, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus damage + 6% of the targets total hit points once every 2 seconds.\n|cffffff00Level Up Bonus|r: Horsepower: +5% damage." )

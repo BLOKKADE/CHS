@@ -118,7 +118,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
     //Mortar Aura
     if GetUnitAbilityLevel(TrigA, 'B00G') > 0 and  BlzGetEventDamageType() ==  DAMAGE_TYPE_NORMAL   then
         set i = GetHeroLevel(GUS)
-        call BlzSetEventDamage(   GetEventDamage() + (GetEventDamage() * (i * 0.02)) ) 
+        call BlzSetEventDamage(   GetEventDamage() + (GetEventDamage() * (i * 0.03)) ) 
     endif
 
     //Bone Armor Skeleton Defender
@@ -128,8 +128,8 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
     endif
     
     //Magic Necklace of Absorption
-    if GetUnitAbilityLevel(TrigU  ,'B00R') >= 1 and  BlzGetEventDamageType() !=  DAMAGE_TYPE_NORMAL  then
-        if GetUnitAbilityLevel(TrigA, 'A087') == 0 then
+    if GetUnitAbilityLevel(TrigU  ,'B00R') >= 1 and  BlzGetEventDamageType() == DAMAGE_TYPE_MAGIC then
+        if GetUnitAbilityLevel(TrigA, 'A087') == 0 and SuddenDeathEnabled == false then
             if TrigU == TrigA then
                 call AddHeroXP(TrigU, R2I(GetEventDamage()*0.015),true)
             else
@@ -150,7 +150,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
    endif
 
    //Staff of Absolute Magic
-	if GetUnitAbilityLevel(GUS  ,'B00O') >= 1 and  BlzGetEventDamageType() !=  DAMAGE_TYPE_NORMAL  then
+	if GetUnitAbilityLevel(GUS  ,'B00O') >= 1 and  BlzGetEventDamageType() == DAMAGE_TYPE_MAGIC  then
         set r2 = GetEventDamage()*0.33 
         call Vamp(TrigA,TrigU,r2)
         set vampCount = vampCount + 1
@@ -166,7 +166,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
     endif
     
     //Combustion
-    if GetUnitAbilityLevel(GUS   ,'A04H') > 0 and  BlzGetEventDamageType() !=  DAMAGE_TYPE_NORMAL and (BlzGetUnitAbilityCooldownRemaining(GUS,'A04H') <= 0 or CheckTimerZero(GUS,'A04H')) then
+    if GetUnitAbilityLevel(GUS   ,'A04H') > 0 and  BlzGetEventDamageType() == DAMAGE_TYPE_MAGIC and (BlzGetUnitAbilityCooldownRemaining(GUS,'A04H') <= 0 or CheckTimerZero(GUS,'A04H')) then
           if ZetoTimerStart(GUS,'A04H') then
             call  AbilStartCD(GUS,'A04H',0.3)
           endif

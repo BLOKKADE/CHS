@@ -34,7 +34,7 @@ function TakeMagickDmg takes unit Dealing ,unit Trigger, boolean AbilA returns n
     //Magic Critical Strike
     set i = GetUnitAbilityLevel(Dealing,'A06U')
     if i > 0 and GetRandomReal(0,100) <= 20*luck + BaseChCr then
-        set CritDmg = CritDmg +  Dmg*(1.4+0.12*I2R(i))
+        set CritDmg = CritDmg +  Dmg*(1.9+0.17*I2R(i))
     endif
 
     //Shadow Chain Mail

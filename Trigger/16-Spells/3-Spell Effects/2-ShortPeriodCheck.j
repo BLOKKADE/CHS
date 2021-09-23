@@ -99,7 +99,7 @@ function Trig_ShortPeriodCheck_Actions takes nothing returns nothing
 
             //Head Hunter
             if GetUnitTypeId(u) == 'N00I' then
-                set i1 = R2I(GetHeroStr(u, true) * (0.57 + (0.03 * GetHeroLevel(u))))
+                set i1 = R2I(GetHeroStr(u, true) * (0.4 + (0.015 * GetHeroLevel(u))))
                 set i2 = LoadInteger(DataUnitHT, hid, 542)
                 if i1 != i2 then
                     call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)

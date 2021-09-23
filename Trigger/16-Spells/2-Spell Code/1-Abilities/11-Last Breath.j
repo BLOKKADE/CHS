@@ -36,14 +36,13 @@
             call  AbilStartCD(u,'A05R', 60+ BlzGetUnitAbilityCooldownRemaining(u,'A05R') )  
             call SaveInteger(HT,GetHandleId(u),'A05R',1)	             
             call SaveUnitHandle(HT,GetHandleId(tim),1,GetTriggerUnit())
-            call SaveEffectHandle(HT,GetHandleId(tim),2,AddSpecialEffectTarget( LastBreathAnim , u , "origin" ) ) 
-            call UnitAddAbility(u, 'A08B')
-            
-            if GetOwningPlayer(GetEventDamageSource()) == Player(11) then
-                call TimerStart(tim,0.4 + 0.1*lvlAbility,false, function LastBreathEnd)            
-            else
-                call TimerStart(tim,0.8 + 0.2*lvlAbility,false, function LastBreathEnd)
+            if GetOwningPlayer(u) != Player(11) then
+                call SaveEffectHandle(HT,GetHandleId(tim),2,AddSpecialEffectTarget( LastBreathAnim , u , "origin" ) ) 
             endif
+            call UnitAddAbility(u, 'A08B')
+
+            call TimerStart(tim,0.8 + 0.2*lvlAbility,false, function LastBreathEnd)
+        
 	    endif
         
         

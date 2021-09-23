@@ -10,6 +10,8 @@ endglobals
 // 6 = extra dimensional cooperation count
 // 7 = last attack damage
 // 8 = manifold staff
+// 9 = Spellbane Token
+// 10 = Extradimensional Multiply
 
 function Trig_SpellDataTable_Actions takes nothing returns nothing
     set SpellData = HashTable.create()
