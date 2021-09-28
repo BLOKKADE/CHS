@@ -83,7 +83,7 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         set RuneOfWinds_b = Condition(function CastRuneOfWinds)    
         call AddRune('I08O',function RuneOfWinds, "Wind Rune")   
         call AddRune('I0AY',function BloodRune, "Blood Rune")
-        call AddRune('I0AZ',function SpiritRune, "Spirit Rune")
+        //call AddRune('I0AZ',function SpiritRune, "Spirit Rune")
         call AddRune('I0AV',function DarkRune, "Dark Rune")
         call AddRune('I0AW',function LightRune, "Light Rune")
         call AddRune('I0AX',function PoisonRune, "Poison Rune")

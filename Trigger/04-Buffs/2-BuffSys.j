@@ -1,4 +1,4 @@
-library BuffSystem requires TimerUtils
+library BuffSystem initializer init requires TimerUtils
     globals
         constant integer IdBuffAbility = 'A06H'
         constant integer IdDeBuffAbility = 'A06I'
@@ -60,7 +60,7 @@ library BuffSystem requires TimerUtils
         set u = null
     endfunction
 
-    function InitBuffForLevel takes nothing returns nothing
+    private function init takes nothing returns nothing
     set DeBufLvlA[1] = 'A06L'
     set DeBufLvl[1] = 'B014'
 

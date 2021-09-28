@@ -1,4 +1,4 @@
-function DataEffect takes integer spell, integer id, integer fieldId  returns nothing
+/*function DataEffect takes integer spell, integer id, integer fieldId  returns nothing
 call SaveInteger(HT,spell,-23000+id,fieldId)
 endfunction
 
@@ -76,3 +76,4 @@ function InitTrig_EffectInit takes nothing returns nothing
     call TriggerAddAction( gg_trg_EffectInit, function Trig_EffectInit_Actions )
 endfunction
 
+*/

@@ -12,13 +12,16 @@ library AoeDamage requires Vampirism
         integer GLOB_typeDmg = 0 
         
         unit Drain
+        private boolean OnHit = false
     endglobals
 
 
 
     function DamageRealase takes nothing returns boolean
         if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and GetUnitTypeId(GetFilterUnit()) != 'h015' then
-            set TypeDmg_b = 2
+            if OnHit then
+                set TypeDmg_b = 2
+            endif
             call UnitDamageTarget(Sourse_unit,GetFilterUnit(),Dmg_ef,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS)
         endif
 
@@ -34,6 +37,7 @@ library AoeDamage requires Vampirism
         local real Dmg = LoadReal(HT,i,4)
         local real Area = LoadReal(HT,i,5)
         local integer AbilId = LoadInteger(HT,i,6)
+        set OnHit = LoadBoolean(HT, i, 7)
         
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
@@ -47,7 +51,7 @@ library AoeDamage requires Vampirism
         set Sourse = null
     endfunction
 
-    function AreaDamage takes unit Sourse,real x1,real y1, real Dmg, real Area,integer AbilId returns nothing
+    function AreaDamage takes unit Sourse,real x1,real y1, real Dmg, real Area, boolean onhit, integer AbilId returns nothing
         local timer t
         local integer i
         if Sourse != null then
@@ -59,6 +63,7 @@ library AoeDamage requires Vampirism
             call SaveReal(HT,i,3,y1)
             call SaveReal(HT,i,4,Dmg)
             call SaveReal(HT,i,5,Area)
+            call SaveBoolean(HT,i,7,onhit)
 
             call SaveInteger(HT,i,6,AbilId)
             call TimerStart(t,0,false,function AreaDamageTimer)

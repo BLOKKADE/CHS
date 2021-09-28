@@ -1,4 +1,4 @@
-library Glory
+library Glory initializer initLState
     globals
         real array Glory
         real array GloryRoundBonus
@@ -15,17 +15,17 @@ library Glory
         endif
     endfunction
 
-    function InitLState takes nothing returns nothing
-    set ResPlayer = BlzGetFrameByName("ResourceBarUpkeepText" , 0)
-    set Glory[0] = 0
-    set Glory[1] = 0
-    set Glory[2] = 0
-    set Glory[3] = 0
-    set Glory[4] = 0
-    set Glory[5] = 0
-    set Glory[6] = 0
-    set Glory[7] = 0
-    set Glory[8] = 0
+    function initLState takes nothing returns nothing
+        set ResPlayer = BlzGetFrameByName("ResourceBarUpkeepText" , 0)
+        set Glory[0] = 0
+        set Glory[1] = 0
+        set Glory[2] = 0
+        set Glory[3] = 0
+        set Glory[4] = 0
+        set Glory[5] = 0
+        set Glory[6] = 0
+        set Glory[7] = 0
+        set Glory[8] = 0
     endfunction
 
     function FunWinner takes unit u returns nothing 

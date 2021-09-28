@@ -23,12 +23,20 @@ library UnitHelpers initializer init
         return IsUnitTargettable(u) and UnitAlive(u)
     endfunction
 
+    function IsUnitTargetCheck takes unit u, player p returns boolean
+        return IsUnitTargettable(u) and UnitAlive(u) and IsUnitVisible(u, p)
+    endfunction
+
+    function IsUnitSpellTargetCheck takes unit u, player p returns boolean
+        return IsUnitTargettable(u) and UnitAlive(u) and IsUnitVisible(u, p) and not IsUnitMagicImmune(u)
+    endfunction
+
     function IsUnitTargetFilterFunc takes nothing returns boolean
-        return IsUnitTargettable(GetFilterUnit()) and UnitAlive(GetFilterUnit()) and IsUnitVisible(GetFilterUnit(), VisibilityOwner)
+        return IsUnitTargetCheck(GetFilterUnit(), VisibilityOwner)
     endfunction
 
     function IsUnitSpellTargetFilterFunc takes nothing returns boolean
-        return IsUnitTargettable(GetFilterUnit()) and UnitAlive(GetFilterUnit()) and IsUnitVisible(GetFilterUnit(), VisibilityOwner) and not IsUnitMagicImmune(GetFilterUnit())
+        return IsUnitSpellTargetCheck(GetFilterUnit(), VisibilityOwner)
     endfunction
 
     function EnumTargettableUnitsInRange takes group g, real x, real y, real range, player owner, boolean allowMagicImmune returns nothing

@@ -866,6 +866,7 @@ library AbilityData initializer init requires Table
         //157 - Frostbite of the Soul 
         call SaveAbilData('A080', 'I09H', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Cold, 1)
+        call SetLastObjectElement(Element_Dark, 1)
 
         //158 - Cutting 
         call SaveAbilData('A081', 'I09I', false, 0, 0, false, Order_None, null)

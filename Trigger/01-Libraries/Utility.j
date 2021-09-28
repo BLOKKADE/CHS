@@ -16,4 +16,7 @@ library Utility
         return (i == 1 and stat == 0) or (i == 2 and stat == 2) or (i == 3 and stat == 1)
     endfunction
 
+    function HasPlayerFinishedLevel takes player p returns boolean
+        return IsPlayerInForce(p,udg_force03)
+    endfunction
 endlibrary

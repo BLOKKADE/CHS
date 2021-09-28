@@ -14,7 +14,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Fire Runestone
         if  UnitHasItemS(u,'I08P') and IsSpellElement(u,id,1) then            
-            if BlzGetUnitAbilityCooldownRemaining(u,'A076') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
+            if BlzGetUnitAbilityCooldownRemaining(u,'A076') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,3)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)-1000)
                 call AbilStartCD(u,'A076',3 ) 
@@ -23,7 +23,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Water Runestone
         if  UnitHasItemS(u,'I08Q') and IsSpellElement(u,id,2) then            
-            if BlzGetUnitAbilityCooldownRemaining(u,'A077') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
+            if BlzGetUnitAbilityCooldownRemaining(u,'A077') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,9)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)-1000)
                 call AbilStartCD(u,'A077',3 ) 
@@ -32,7 +32,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Earth Runestone
         if  UnitHasItemS(u,'I08R') and IsSpellElement(u,id,4) then            
-            if BlzGetUnitAbilityCooldownRemaining(u,'A078') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
+            if BlzGetUnitAbilityCooldownRemaining(u,'A078') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,8)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)-1000)
                 call AbilStartCD(u,'A078',8 ) 
@@ -41,7 +41,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Wind Runestone
         if  UnitHasItemS(u,'I08S') and IsSpellElement(u,id,3) then            
-            if BlzGetUnitAbilityCooldownRemaining(u,'A079') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 500 then
+            if BlzGetUnitAbilityCooldownRemaining(u,'A079') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 500 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,10)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)-500)
                 call AbilStartCD(u,'A079',12 ) 

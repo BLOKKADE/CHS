@@ -7460,80 +7460,74 @@ endif
   //trigger108
   function Trig_Level_Completed_Actions takes nothing returns nothing
     local integer round = udg_integer02 + 1
-  if(Trig_Level_Completed_Func001C())then
-  if(Trig_Level_Completed_Func001Func001001())then
-      return
-  else
-      call DoNothing()
-  endif
-  call DisableTrigger(udg_trigger110)
-  call StopSuddenDeathTimer()
-  call DisableTrigger(udg_trigger116)
-  call ConditionalTriggerExecute(udg_trigger122)
-  call ConditionalTriggerExecute(udg_trigger119)
-  set udg_boolean01=true
-  set udg_integer08=0
-  call PlaySoundBJ(udg_sound02)
-  if(Trig_Level_Completed_Func001Func014C())then
-      if(Trig_Level_Completed_Func001Func014Func001C())then
-          call ConditionalTriggerExecute(udg_trigger152)
-          return
-      else
-      endif
-  else
-  endif
-  if(Trig_Level_Completed_Func001Func018C())then
-      if(Trig_Level_Completed_Func001Func018Func002C())then
-          call GroupClear(udg_group03)
-          call ConditionalTriggerExecute(udg_trigger134)
-          return
-      else
-      endif
-  else
-      if(Trig_Level_Completed_Func001Func018Func001C())then
-          call GroupClear(udg_group03)
-          call ConditionalTriggerExecute(udg_trigger134)
-          return
-      else
-      endif
-  endif
-  if(Trig_Level_Completed_Func001Func023C())then
-      if(Trig_Level_Completed_Func001Func023Func002C())then
-          if(Trig_Level_Completed_Func001Func023Func002Func003C())then
-              call ConditionalTriggerExecute(udg_trigger119)
-          else
-              call ConditionalTriggerExecute(udg_trigger42)
-          endif
-          return
-      else
-      endif
-  else
-      if(Trig_Level_Completed_Func001Func023Func001C())then
-          if(Trig_Level_Completed_Func001Func023Func001Func003C())then
-              call ConditionalTriggerExecute(udg_trigger119)
-          else
-              call ConditionalTriggerExecute(udg_trigger42)
-          endif
-          return
-      else
-      endif
-  endif
-  call ConditionalTriggerExecute(udg_trigger103)
-  call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")
-  set NextRound[round] = true
-  if(Trig_Level_Completed_Func001Func028C())then
-      call StartTimerBJ(GetLastCreatedTimerBJ(),false, RoundTime)
-      call TriggerSleepAction(RoundTime)
-  else
-      call StartTimerBJ(GetLastCreatedTimerBJ(),false,RoundTime * 0.75)
-      call TriggerSleepAction(RoundTime * 0.75)
-  endif
-  
-  if NextRound[round] then
-    call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-  call TriggerExecute(udg_trigger109)
-  endif
-  endif
+    if(Trig_Level_Completed_Func001C())then
+        if(Trig_Level_Completed_Func001Func001001())then
+            return
+        else
+            call DoNothing()
+        endif
+        call DisableTrigger(udg_trigger110)
+        call StopSuddenDeathTimer()
+        call DisableTrigger(udg_trigger116)
+        call ConditionalTriggerExecute(udg_trigger122)
+        call ConditionalTriggerExecute(udg_trigger119)
+        set udg_boolean01=true
+        set udg_integer08=0
+        call PlaySoundBJ(udg_sound02)
+        if(Trig_Level_Completed_Func001Func014C())then
+            if(Trig_Level_Completed_Func001Func014Func001C())then
+                call ConditionalTriggerExecute(udg_trigger152)
+                return
+            endif
+        endif
+        if(Trig_Level_Completed_Func001Func018C())then
+            if(Trig_Level_Completed_Func001Func018Func002C())then
+                call GroupClear(udg_group03)
+                call ConditionalTriggerExecute(udg_trigger134)
+                return
+            endif
+        else
+            if(Trig_Level_Completed_Func001Func018Func001C())then
+                call GroupClear(udg_group03)
+                call ConditionalTriggerExecute(udg_trigger134)
+                return
+            endif
+        endif
+        if(Trig_Level_Completed_Func001Func023C())then
+            if(Trig_Level_Completed_Func001Func023Func002C())then
+                if(Trig_Level_Completed_Func001Func023Func002Func003C())then
+                    call ConditionalTriggerExecute(udg_trigger119)
+                else
+                    call ConditionalTriggerExecute(udg_trigger42)
+                endif
+                return
+            endif
+        else
+            if(Trig_Level_Completed_Func001Func023Func001C())then
+                if(Trig_Level_Completed_Func001Func023Func001Func003C())then
+                    call ConditionalTriggerExecute(udg_trigger119)
+                else
+                    call ConditionalTriggerExecute(udg_trigger42)
+                endif
+                return
+            endif
+        endif
+        call ConditionalTriggerExecute(udg_trigger103)
+        call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")
+        set NextRound[round] = true
+        if(Trig_Level_Completed_Func001Func028C())then
+            call StartTimerBJ(GetLastCreatedTimerBJ(),false, RoundTime)
+            call TriggerSleepAction(RoundTime)
+        else
+            call StartTimerBJ(GetLastCreatedTimerBJ(),false,RoundTime * 0.75)
+            call TriggerSleepAction(RoundTime * 0.75)
+        endif
+
+        if NextRound[round] then
+        call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+        call TriggerExecute(udg_trigger109)
+        endif
+    endif
   endfunction
   
   function Trig_Start_Level_Conditions takes nothing returns boolean
@@ -9835,11 +9829,14 @@ endif
     set GetMidasTouch(GetHandleId(GetDyingUnit())).stop = true
     endif
   call TriggerSleepAction(4.00)
-  call GroupAddUnitSimple(udg_unit05,udg_group03)
+  if IsUnitInGroup(udg_unit05, udg_group03) == false then
+    call GroupAddUnitSimple(udg_unit05,udg_group03)
+  endif
   call FunWinner( udg_unit05 )
-  call GroupRemoveUnitSimple(GetDyingUnit(),udg_group03)
+  //call GroupRemoveUnitSimple(GetDyingUnit(),udg_group03)
   call GroupRemoveUnitSimple(udg_unit05,udg_group02)
   call GroupRemoveUnitSimple(GetDyingUnit(),udg_group02)
+  call ForceAddPlayer(DuelLosers, GetOwningPlayer(GetDyingUnit()))
   call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED)
   call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED)
   call ForForce(GetPlayersAll(),function Trig_End_PvP_Func019A)
@@ -9853,9 +9850,17 @@ endif
         call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
         call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
         call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
-        call UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32)
+        if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
+            call BJDebugMsg("item move success")
+        else
+            call BJDebugMsg("item move fail")
+        endif
         call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
-        call UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32)
+        if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
+            call BJDebugMsg("item move success")
+        else
+            call BJDebugMsg("item move fail")
+        endif
         set udg_integer32=udg_integer32+1
     endloop
   else
@@ -9865,11 +9870,19 @@ endif
         if(Trig_End_PvP_Func021Func001Func001C())then
             call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
             call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
-            call UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32)
+            if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
+                call BJDebugMsg("item move success")
+            else
+                call BJDebugMsg("item move fail")
+            endif
         else
             call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
             call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
-            call UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32)
+            if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
+                call BJDebugMsg("item move success")
+            else
+                call BJDebugMsg("item move fail")
+            endif
         endif
         set udg_integer32=udg_integer32+1
     endloop
@@ -9895,6 +9908,7 @@ endif
     else
         return
     endif
+    call ForceClear(DuelLosers)
     set udg_integer41=(udg_integer41+1)
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Reward in ...")
@@ -9903,9 +9917,9 @@ endif
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     
     if(Trig_End_PvP_Func026Func016C())then
-        set udg_integer15  =  ItemN1[GetRandomInt(  ((udg_integer02/5)-1)*4-1 ,((udg_integer02/5)-1)*4+4 ) ] 
+        set udg_integer15  =  DuelGoldReward[udg_integer02]
     else
-        set udg_integer15  =  ItemN1[GetRandomInt(  ((udg_integer02/5)-1)*4+1 ,((udg_integer02/5)-1)*4+4 ) ]		
+        set udg_integer15  =  DuelGoldReward[udg_integer02]		
     endif
     if(Trig_End_PvP_Func026Func018C())then
         call ForGroupBJ(udg_group03,function Trig_End_PvP_Func026Func018Func002A)
@@ -9913,7 +9927,7 @@ endif
     call PlaySoundBJ(udg_sound07)
     call ConditionalTriggerExecute(udg_trigger138)
     call CreateItemLoc(udg_integer15,GetRectCenter(GetPlayableMapRect()))
-    call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00Prize: "+(GetItemName(GetLastCreatedItem())+"|r")))
+    call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00Prize: "+ (I2S(udg_integer15) + " gold|r")))
     call RemoveItem(GetLastCreatedItem())
     call ConditionalTriggerExecute(udg_trigger136)
   else
@@ -9983,7 +9997,7 @@ endif
   endfunction
   
   function Trig_PvP_Battle_Func001Func010Func001002001002002002002002 takes nothing returns boolean
-  return(IsUnitInGroup(GetFilterUnit(),udg_group03)==true)
+    return IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DuelLosers)
   endfunction
   
   function Trig_PvP_Battle_Func001Func010Func001002001002002002002 takes nothing returns boolean
@@ -10336,27 +10350,27 @@ endfunction
   endfunction
   
   function Trig_Receive_Prize_Func002A takes nothing returns nothing
-  set udg_integer56=0
-  set udg_integer34=1
-  loop
-  exitwhen udg_integer34>6
-  if(Trig_Receive_Prize_Func002Func002Func001C())then
-      set udg_integer56=(udg_integer56+1)
-  else
-  endif
-  set udg_integer34=udg_integer34+1
-  endloop
-  if(Trig_Receive_Prize_Func002Func003C())then
-  call UnitAddItemByIdSwapped(udg_integer15,GetEnumUnit())
-  call GroupRemoveUnitSimple(GetEnumUnit(),udg_group03)
-  else
-  endif
+    set udg_integer56=0
+    set udg_integer34=1
+    loop
+    exitwhen udg_integer34>6
+    if(Trig_Receive_Prize_Func002Func002Func001C())then
+        set udg_integer56=(udg_integer56+1)
+    else
+    endif
+    set udg_integer34=udg_integer34+1
+    endloop
+    if(Trig_Receive_Prize_Func002Func003C())then
+    call UnitAddItemByIdSwapped(udg_integer15,GetEnumUnit())
+    call GroupRemoveUnitSimple(GetEnumUnit(),udg_group03)
+    else
+    endif
   endfunction
   
   function Trig_Receive_Prize_Actions takes nothing returns nothing
-  call ForGroupBJ(udg_group03,function Trig_Receive_Prize_Func002A)
-  call TriggerSleepAction(0.50)
-  call ConditionalTriggerExecute(GetTriggeringTrigger())
+    call ForGroupBJ(udg_group03,function Trig_Receive_Prize_Func002A)
+    call TriggerSleepAction(0.50)
+    call ConditionalTriggerExecute(GetTriggeringTrigger())
   endfunction
   
   function Trig_Drop_Prize_Item_Conditions takes nothing returns boolean
@@ -12055,8 +12069,9 @@ call TriggerRegisterAnyUnitEventBJ(udg_trigger10,EVENT_PLAYER_UNIT_SPELL_EFFECT)
   call InitGlobals3()
   call ExecuteFunc("main2")
   endfunction
-  
-  function InitTrig_init takes nothing returns nothing
-  
-  call ExecuteFunc("main3")
-  endfunction                                                 
+
+library OldCodeInit
+    public function start takes nothing returns nothing
+        call ExecuteFunc("main3")
+    endfunction                                                 
+endlibrary

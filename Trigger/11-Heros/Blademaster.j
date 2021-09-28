@@ -13,7 +13,7 @@ library Blademaster initializer init requires AoeDamage, RandomShit
         call UnitApplyTimedLife(dummy, 'BTLF', 1)
         call ElemFuncStart(u, 'N00K')
         if magic then
-            call AreaDamage(u, x, y, (damage * 0.5) + (20 * GetHeroLevel(u)), 297 + (3 * GetHeroLevel(u)), 'N00K')
+            call AreaDamage(u, x, y, (damage * 0.5) + (20 * GetHeroLevel(u)), 297 + (3 * GetHeroLevel(u)), false, 'N00K')
         else
             call AreaDamagePhys(u, x, y, (damage * 0.5) + (20 * GetHeroLevel(u)), 297 + (3 * GetHeroLevel(u)), 'N00K')
         endif

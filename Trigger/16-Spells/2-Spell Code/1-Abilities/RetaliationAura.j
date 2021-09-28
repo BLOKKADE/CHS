@@ -1,4 +1,4 @@
-library RetaliationAura requires AbilityData, CastSpellOnTarget
+library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
 
     globals
         private group RetaliationGroup = CreateGroup()
@@ -54,5 +54,9 @@ library RetaliationAura requires AbilityData, CastSpellOnTarget
         if BlzGroupGetSize(RetaliationGroup) > 0 then
             call CastRetaliation(source, target, abilId, abilLevel)
         endif
+    endfunction
+
+    private function init takes nothing returns nothing
+        set RetaliationDamage = Table.create()
     endfunction
 endlibrary

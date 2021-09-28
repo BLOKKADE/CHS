@@ -3,7 +3,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
         hashtable HT_timerSpell = InitHashtable()
     endglobals
 
-    function USOrder4fieldTimer takes nothing returns nothing
+    /*function USOrder4fieldTimer takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local integer i = GetHandleId(t)
         local unit u1 = LoadUnitHandle(HT,i,1)
@@ -19,26 +19,26 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
         local abilityreallevelfield RealField3 = ConvertAbilityRealLevelField(LoadInteger(HT,i,12))
         local real Field4 = LoadReal(HT,i,13)
         local abilityreallevelfield RealField4 = ConvertAbilityRealLevelField(LoadInteger(HT,i,14))
-        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, 0  )
+        local unit CasteabilLevel = CreateUnit(GetOwningPlayer(u1),'h015',x,y, 0  )
         
         call FlushChildHashtable(HT,i)
         call ReleaseTimer(t)
-        call UnitAddAbility(Caster1,idsp ) 
+        call UnitAddAbility(CasteabilLevel,idsp ) 
 
 
-        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),RealField1,0,Field1)
-        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),RealField2,0,Field2)
-        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),RealField3,0,Field3)
-        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),RealField4,0,Field4)
+        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(CasteabilLevel,idsp),RealField1,0,Field1)
+        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(CasteabilLevel,idsp),RealField2,0,Field2)
+        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(CasteabilLevel,idsp),RealField3,0,Field3)
+        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(CasteabilLevel,idsp),RealField4,0,Field4)
 
-        call IssueImmediateOrder( Caster1, ordstr )
-        call UnitApplyTimedLife(Caster1,'B000',2)
+        call IssueImmediateOrder( CasteabilLevel, ordstr )
+        call UnitApplyTimedLife(CasteabilLevel,'B000',2)
 
 
-        set Caster1  = null
+        set CasteabilLevel  = null
         set t = null
         set u1 = null
-    endfunction
+    endfunction*/
 
     function EndInvision takes nothing returns nothing
         local timer   startbattle = GetExpiredTimer()
@@ -116,9 +116,9 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
         local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1)
         local boolean urn = LoadBoolean(HT_timerSpell, GetHandleId(startbattle), 4)
         local integer pid = GetPlayerId(GetOwningPlayer(Herou))
-        local real r1 = 0
-        local real r2 = 0
-        local real r3 = 1 + (0.05*I2R(GetUnitAbilityLevel(Herou,'A03Y')))
+        local real abilLevel = 0
+        local real heroLevel = 0
+        local real ChronusLevel = 1 + (0.05*I2R(GetUnitAbilityLevel(Herou,'A03Y')))
         local real r4 = 0
         local real r5 = 0
         local integer i = 0
@@ -130,112 +130,54 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
             call KillUnit(Herou)
             return
         endif
+        set heroLevel = GetHeroLevel(Herou)
         
-        set r2 = GetHeroLevel(Herou)
-        
-        set r1 = GetUnitAbilityLevel(Herou,'A03Q')
-        if r1 > 0 then
+        set abilLevel = GetUnitAbilityLevel(Herou,'A03Q')
+        if abilLevel > 0 then
             call ElemFuncStart(Herou,'A03Q')
-            call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03T',"battleroar",(100*r1)*(1+0.009*r2),ABILITY_RLF_DAMAGE_INCREASE,(10*r1)*(1+0.009*r2),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,(7+(r2*0.09))*r3,ABILITY_RLF_DURATION_HERO,(7+(r2*0.09))*r3,ABILITY_RLF_DURATION_NORMAL)
+            call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03T',"battleroar",(100*abilLevel)*(1+0.009*heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10*abilLevel)*(1+0.009*heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,(7+(heroLevel*0.09))*ChronusLevel,ABILITY_RLF_DURATION_HERO,(7+(heroLevel*0.09))*ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
         endif
     
-        set r1 = GetUnitAbilityLevel(Herou,'A03U')    
-        if r1 > 0 then
-                    call ElemFuncStart(Herou,'A03U')
-            if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),1) == null then
-                set nTimer = NewTimer()
-                call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),1,nTimer)
-                call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
-                call UnitAddAbility(Herou,'A03V')
-                call TimerStart(nTimer,(1.8 + (0.2*r1))*r3 ,false,function EndInvision)
-            else
-                set nTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),1)
-                call TimerStart(nTimer,(1.8 + (0.2*r1))*r3 ,false,function EndInvision)
-            endif  
+        set abilLevel = GetUnitAbilityLevel(Herou,'A03U')    
+        if abilLevel > 0 then
+            call TempInvisStruct.create(Herou, (1.8 + (0.2 * abilLevel)) * ChronusLevel)
         endif
         
-        
-        set r1 = GetUnitAbilityLevel(Herou,'A04E')    
-        if r1 > 0 then
-                call ElemFuncStart(Herou,'A04E')
-                set oTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),'A04E')
-                
-                if TimerGetRemaining(oTimer) > 0 then
-                    call TimerStart(oTimer,0,false,function EndState)
-                endif
-                set oTimer = null
-                
-                set nTimer = NewTimer()    
-                call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),'A04E',nTimer)
-                call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
-                set r4 = 40*r1*(1+0.02*r2) 
-                call SaveInteger(HT_timerSpell,GetHandleId(nTimer),2,R2I(r4))
-                call SetHeroStr(Herou,GetHeroStr(Herou,false)+R2I(r4),false)
-                call SetHeroAgi(Herou,GetHeroAgi(Herou,false)+R2I(r4),false)
-                call SetHeroInt(Herou,GetHeroInt(Herou,false)+R2I(r4),false)
-                call TimerStart(nTimer,(8+ (0.02*r2))*r3 ,false,function EndState)
-
-
+        set abilLevel = GetUnitAbilityLevel(Herou,'A04E')    
+        if abilLevel > 0 then
+            call TempPowerStruct.create(Herou, (8 + (0.02 * heroLevel)) * ChronusLevel)
         endif
         
-        set r1 = GetUnitAbilityLevel(Herou,'A04K')    
-        if r1 > 0 and urn == false then
+        set abilLevel = GetUnitAbilityLevel(Herou,'A04K')    
+        if abilLevel > 0 and urn == false then
             call ElemFuncStart(Herou,'A04K')
-            set r4 = 50*(r2+3)*(r2+4)-110  
+            set r4 = 50*(heroLevel+3)*(heroLevel+4)-110  
             set r5 =  GetHeroXP(Herou)
 
-        if GetUnitAbilityLevel(Herou,'Asal') > 0 then   
-            call AddHeroXP(Herou,   R2I((r4-r5)*(r1 * 1.5))/200  , true) 
-        else
-            call AddHeroXP(Herou,   R2I((r4-r5)*(r1 * 1.5))/100  , true) 
+            if GetUnitAbilityLevel(Herou,'Asal') > 0 then   
+                call AddHeroXP(Herou,   R2I((r4-r5)*(abilLevel * 1.5))/200  , true) 
+            else
+                call AddHeroXP(Herou,   R2I((r4-r5)*(abilLevel * 1.5))/100  , true) 
+            endif
         endif
-        
-        endif
-
     
         //Cheater Magic
-        set r1 = GetUnitAbilityLevel(Herou,'A040')    
-        if r1 > 0 then
-            call ElemFuncStart(Herou,'A040')
-            if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),2) == null then
-                set nTimer = NewTimer()
-                call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),2,nTimer)
-                call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
-                call SaveEffectHandle(HT_timerSpell,GetHandleId(nTimer),2, AddSpecialEffectTarget( "Objects\\InventoryItems\\tome\\tome.mdl", Herou ,"overhead"  )   )
-                call TimerStart(nTimer,(2.75 + (0.25*r1))*r3 ,false,function EndCheaterMagic)
-                if GetUnitAbilityLevel(Herou, 'A08G') == 0 then
-                    call UnitAddAbility(Herou, 'A08G')
-                endif
-            else
-                set nTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),2)
-                call TimerStart(nTimer,(2.75 + (0.25*r1))*r3 ,false,function EndCheaterMagic)
-                if GetUnitAbilityLevel(Herou, 'A08G') == 0 then
-                    call UnitAddAbility(Herou, 'A08G')
-                endif
-            endif     
+        set abilLevel = GetUnitAbilityLevel(Herou,'A040')    
+        if abilLevel > 0 then
+            call CheaterMagicStruct.create(Herou, (2.75 + (0.25*abilLevel))*ChronusLevel)
         endif
         
-        set r1 = GetUnitAbilityLevel(Herou,'A045')    
-        if r1 > 0 then
-            call ElemFuncStart(Herou,'A045')
-            if LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),3) == null then
-                set nTimer = NewTimer()
-                call SaveTimerHandle(HT_timerSpell,GetHandleId(Herou),3,nTimer)
-                call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
-                call SaveEffectHandle(HT_timerSpell,GetHandleId(nTimer),2, AddSpecialEffectTarget( "Soul Armor Divine_opt.mdx", Herou ,"head"  )   )
-                call TimerStart(nTimer,(2.70 + (0.3*r1))*r3 ,false,function EndGodDefender)
-            else
-                set nTimer = LoadTimerHandle(HT_timerSpell,GetHandleId(Herou),3)
-                call TimerStart(nTimer,(2.70 + (0.3*r1))*r3 ,false,function EndGodDefender)
-            endif     
+        set abilLevel = GetUnitAbilityLevel(Herou,'A045')    
+        if abilLevel > 0 then
+            call BlessedProtectionStruct.create(Herou, (2.70 + (0.3*abilLevel))*ChronusLevel)
         endif
         
-        set r1 = GetUnitAbilityLevel(Herou,'A09O')    
-        if r1 > 0 then
+        set abilLevel = GetUnitAbilityLevel(Herou,'A09O')    
+        if abilLevel > 0 then
             call ElemFuncStart(Herou,'A09O')
-            call CreateRandomRune(-60+10*r1,GetRandomReal(-100,100)+GetUnitX(Herou) ,GetRandomReal(-100,100)+GetUnitY(Herou)   ,Herou)
-            call CreateRandomRune(-60+10*r1,GetRandomReal(-100,100)+GetUnitX(Herou) ,GetRandomReal(-100,100)+GetUnitY(Herou)   ,Herou)
-            call CreateRandomRune(-60+10*r1,GetRandomReal(-100,100)+GetUnitX(Herou) ,GetRandomReal(-100,100)+GetUnitY(Herou)   ,Herou)   
+            call CreateRandomRune(-60+10*abilLevel,GetRandomReal(-100,100)+GetUnitX(Herou) ,GetRandomReal(-100,100)+GetUnitY(Herou)   ,Herou)
+            call CreateRandomRune(-60+10*abilLevel,GetRandomReal(-100,100)+GetUnitX(Herou) ,GetRandomReal(-100,100)+GetUnitY(Herou)   ,Herou)
+            call CreateRandomRune(-60+10*abilLevel,GetRandomReal(-100,100)+GetUnitX(Herou) ,GetRandomReal(-100,100)+GetUnitY(Herou)   ,Herou)   
         endif
         
         set i1 = UnitHasItemI( Herou,'I08L' )
@@ -250,15 +192,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
         endif
         
         if GetUnitTypeId(Herou) == 'H01J' then
-                call ElemFuncStart(Herou,'H01J')
-                set nTimer = NewTimer()  
-                set r4 = 20*GetHeroLevel(Herou) 
-                call SetHeroStr(Herou,GetHeroStr(Herou,false)+R2I(r4),false)
-                call BlzSetUnitBaseDamage(Herou,BlzGetUnitBaseDamage(Herou,0)+R2I(r4),0)
-                call SaveUnitHandle(HT_timerSpell,GetHandleId(nTimer),1,Herou)
-                call SaveInteger(HT_timerSpell,GetHandleId(nTimer),2,R2I(r4))
-                call UnitAddAbility(Herou, 'A091')
-                call TimerStart(nTimer, 9.9 + (0.1 * GetHeroLevel(Herou)) ,false,function EndStateGrunt)
+            call GruntsGruntStruct.create(Herou)
         endif
         
         
@@ -278,21 +212,21 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
         
         
         
-        set r1 = GetUnitAbilityLevel(Herou,'A041')   
-        if r1 > 0 then
+        set abilLevel = GetUnitAbilityLevel(Herou,'A041')   
+        if abilLevel > 0 then
             call ElemFuncStart(Herou,'A041')
             set U = CreateUnit( GetOwningPlayer(Herou),'h01A',GetUnitX(Herou)+40*CosBJ(-30+GetUnitFacing(Herou)),GetUnitY(Herou)+40*SinBJ(-30+GetUnitFacing(Herou)),GetUnitFacing(Herou) )
-            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)-500+R2I((r1*10000)*(1+(r2*0.038) )) )
-            call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) -10 + R2I((r1*100)*(1+(r2*0.038)) ),0)
+            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)-500+R2I((abilLevel*10000)*(1+(heroLevel*0.038) )) )
+            call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) -10 + R2I((abilLevel*100)*(1+(heroLevel*0.038)) ),0)
             call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
-            call UnitApplyTimedLife(U,'A041',8 + (r2*0.09))
+            call UnitApplyTimedLife(U,'A041',8 + (heroLevel*0.09))
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))
 
             set U = CreateUnit( GetOwningPlayer(Herou),'h01A',GetUnitX(Herou)+40*CosBJ(30+GetUnitFacing(Herou)),GetUnitY(Herou)+40*SinBJ(30+GetUnitFacing(Herou)),GetUnitFacing(Herou) )
-            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)-500+R2I((r1*10000)*(1+(r2*0.038) )) )
-            call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) -10 + R2I((r1*100)*(1+(r2*0.038)) ),0)
+            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)-500+R2I((abilLevel*10000)*(1+(heroLevel*0.038) )) )
+            call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) -10 + R2I((abilLevel*100)*(1+(heroLevel*0.038)) ),0)
             call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
-            call UnitApplyTimedLife(U,'A041',8 + (r2*0.09))
+            call UnitApplyTimedLife(U,'A041',8 + (heroLevel*0.09))
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))       
         endif
 
@@ -326,21 +260,21 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
             
         if GetUnitTypeId(Herou) == 'H019' then
             call ElemFuncStart(Herou,'H019')
-            call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55*r2,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,1+(r2*0.04),ABILITY_RLF_DURATION_HERO,2+(r2*0.08),ABILITY_RLF_DURATION_NORMAL)
+            call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55*heroLevel,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,1+(heroLevel*0.04),ABILITY_RLF_DURATION_HERO,2+(heroLevel*0.08),ABILITY_RLF_DURATION_NORMAL)
         endif
             
-        set r1 = GetUnitAbilityLevel(Herou,'A03X')    
-        if r1 > 0 then
+        set abilLevel = GetUnitAbilityLevel(Herou,'A03X')    
+        if abilLevel > 0 then
             call ElemFuncStart(Herou,'A03X')
-        call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * r1)*(1+0.02*r2),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * r1)*(1+0.02*r2),ABILITY_RLF_MANA_REGEN ,(8+(r2*0.2))*r3,ABILITY_RLF_DURATION_HERO,(8+(r2*0.2))*r3,ABILITY_RLF_DURATION_NORMAL)
+        call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * abilLevel)*(1+0.02*heroLevel),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel)*(1+0.02*heroLevel),ABILITY_RLF_MANA_REGEN ,(8+(heroLevel*0.2))*ChronusLevel,ABILITY_RLF_DURATION_HERO,(8+(heroLevel*0.2))*ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
 
         endif
         
         
-        set r1 = GetUnitAbilityLevel(Herou,'A042')    
-        if r1 > 0 then
+        set abilLevel = GetUnitAbilityLevel(Herou,'A042')    
+        if abilLevel > 0 then
                 call ElemFuncStart(Herou,'A042')
-        call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A043',"howlofterror",0,ABILITY_RLF_DAMAGE_INCREASE_PERCENT_ROA1,(10*r1)*(1+0.02*r2),ABILITY_RLF_DAMAGE_HBZ2 ,(8+(r2*0.09))*r3,ABILITY_RLF_DURATION_HERO,(8+(r2*0.09))*r3,ABILITY_RLF_DURATION_NORMAL)
+        call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A043',"howlofterror",0,ABILITY_RLF_DAMAGE_INCREASE_PERCENT_ROA1,(10*abilLevel)*(1+0.02*heroLevel),ABILITY_RLF_DAMAGE_HBZ2 ,(8+(heroLevel*0.09))*ChronusLevel,ABILITY_RLF_DURATION_HERO,(8+(heroLevel*0.09))*ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
         endif
     
         call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 

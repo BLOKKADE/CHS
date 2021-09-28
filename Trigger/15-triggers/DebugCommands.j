@@ -1,4 +1,4 @@
-scope DebugCommands initializer init
+library DebugCommands initializer init
     globals
         boolean array NextRound
         real RoundTime = 20
@@ -98,4 +98,4 @@ scope DebugCommands initializer init
 
         set trg = null
     endfunction
-endscope
+endlibrary

@@ -23,7 +23,7 @@ function TakePhysDmg takes unit Dealing ,unit Trigger, boolean AbilA returns not
         if i > 0 and GetRandomReal(0,100) <= 20*luck then
             call DestroyEffect(AddSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(Trigger),GetUnitY(Trigger) ))
             set area =  BlzGetAbilityRealLevelField(BlzGetUnitAbility(Dealing,'Awar'), ABILITY_RLF_AREA_OF_EFFECT,i-1)
-            call AreaDamage(Dealing,GetUnitX(Trigger),GetUnitY(Trigger),100*i,area,'Awar')
+            call AreaDamage(Dealing,GetUnitX(Trigger),GetUnitY(Trigger),100*i,area, true, 'Awar')
 
         endif
 
@@ -33,7 +33,7 @@ function TakePhysDmg takes unit Dealing ,unit Trigger, boolean AbilA returns not
             call DestroyEffect(AddSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(Trigger),GetUnitY(Trigger) ))
             set area =  BlzGetAbilityRealLevelField(BlzGetUnitAbility(Dealing,'ACpv'), ABILITY_RLF_AREA_OF_EFFECT,i-1)
 
-            call AreaDamage(Dealing,GetUnitX(Trigger),GetUnitY(Trigger),400*i,area,'ACpv')
+            call AreaDamage(Dealing,GetUnitX(Trigger),GetUnitY(Trigger),400*i,area, true, 'ACpv')
 
         endif
         

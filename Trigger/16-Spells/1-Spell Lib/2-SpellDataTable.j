@@ -1,3 +1,4 @@
+library SpellDataTable initializer init
 globals
     HashTable SpellData
 endglobals
@@ -18,8 +19,10 @@ function Trig_SpellDataTable_Actions takes nothing returns nothing
 endfunction
 
 //===========================================================================
-function InitTrig_SpellDataTable takes nothing returns nothing
-    set gg_trg_SpellDataTable = CreateTrigger(  )
-    call TriggerRegisterTimerEventSingle( gg_trg_SpellDataTable, 0.00 )
-    call TriggerAddAction( gg_trg_SpellDataTable, function Trig_SpellDataTable_Actions )
+private function init takes nothing returns nothing
+    local trigger trg = CreateTrigger()
+    call TriggerRegisterTimerEventSingle( trg, 0.00 )
+    call TriggerAddAction( trg, function Trig_SpellDataTable_Actions )
+    set trg = null
 endfunction
+endlibrary

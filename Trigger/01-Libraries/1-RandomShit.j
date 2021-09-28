@@ -482,13 +482,18 @@ globals
             endif   
 
             //Cheater Magic
-            if LoadTimerHandle(HT_timerSpell,GetHandleId(u),2) != null and GetUnitAbilityLevel(u, 'A08G') > 0 and id != 'A024' then
+            if GetBuffLevel(u, 'A08G') > 0 and id != 'A024' then
                 if id == 'A049' then
                     set ResCD = ResCD*0.1
                 else       
                     set ResCD = ResCD*0.05
                 endif
             endif
+        endif
+        
+        //Absolute Arcane
+        if GetUnitAbilityLevel(u, 'A0AB') > 0 then
+            set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, 'A0AB')) * GetClassUnitSpell(u, Element_Arcane)))
         endif
             
         //Fast Magic

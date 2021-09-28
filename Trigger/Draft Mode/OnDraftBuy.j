@@ -26,9 +26,9 @@ endfunction
 
 //===========================================================================
 function InitTrig_OnDraftBuy takes nothing returns nothing
-    set gg_trg_OnDraftBuy = CreateTrigger(  )
-    call TriggerRegisterAnyUnitEventBJ( gg_trg_OnDraftBuy, EVENT_PLAYER_UNIT_SELL_ITEM )
-    call TriggerAddCondition( gg_trg_OnDraftBuy, Condition( function Trig_OnDraftBuy_Conditions ) )
-    call TriggerAddAction( gg_trg_OnDraftBuy, function Trig_OnDraftBuy_Actions )
+    set udg_Draft_TrgOnBuy = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ( udg_Draft_TrgOnBuy, EVENT_PLAYER_UNIT_SELL_ITEM )
+    call TriggerAddCondition( udg_Draft_TrgOnBuy, Condition( function Trig_OnDraftBuy_Conditions ) )
+    call TriggerAddAction( udg_Draft_TrgOnBuy, function Trig_OnDraftBuy_Actions )
 endfunction
 
