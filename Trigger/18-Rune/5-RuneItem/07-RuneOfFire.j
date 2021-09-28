@@ -12,6 +12,8 @@ library FireRune requires RandomShit
 
 
     call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02V',"fanofknives",  R2I(4000*power), ConvertAbilityRealLevelField('Ocl1') )
+
+    set u = null
     return false
     endfunction
 endlibrary

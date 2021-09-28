@@ -70,7 +70,7 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         set PlayerRunes = HashTable.create()
         set RunesIndex = Table.create()
 
-        call AddRune('I08D',function RuneOfAttack,"Attack Rune")
+        call AddRune('I08D',function RuneOfAttack, "Battle Rune")
         call AddRune('I08J',function RuneOfChaos, "Chaos Rune")
         call AddRune('I08G',function RuneOfFire, "Fire Rune")
         call AddRune('I088',function RuneOfLife, "Life Rune")
@@ -79,8 +79,14 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         call AddRune('I08C',function RuneOfPower, "Power Rune")
         call AddRune('I08H',function RuneOfEarth, "Earth Rune")
         set RuneOfStorm_b = Condition(function CastRuneOfStorm)
-        call AddRune('I08I',function RuneOfStorm,  "Storm Rune")
+        call AddRune('I08I',function RuneOfStorm, "Water Rune")
         set RuneOfWinds_b = Condition(function CastRuneOfWinds)    
-        call AddRune('I08O',function RuneOfWinds,  "Wind Rune")   
+        call AddRune('I08O',function RuneOfWinds, "Wind Rune")   
+        call AddRune('I0AY',function BloodRune, "Blood Rune")
+        call AddRune('I0AZ',function SpiritRune, "Spirit Rune")
+        call AddRune('I0AV',function DarkRune, "Dark Rune")
+        call AddRune('I0AW',function LightRune, "Light Rune")
+        call AddRune('I0AX',function PoisonRune, "Poison Rune")
+        call AddRune('I0AU',function WildRune, "Wild Rune")
     endfunction
 endlibrary

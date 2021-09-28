@@ -731,8 +731,8 @@ globals
   endif
   
   set u=CreateUnit(p,'n02H',-868,-1152,270.000) 
-  set u=CreateUnit(p,'n00A',-620,-1152,270.000) 
-  set u=CreateUnit(p,'n00M',-372,-1152,270.000) 
+  set u=CreateUnit(p,'n00Z',-620,-1152,270.000) 
+  set u=CreateUnit(p,'n01D',-372,-1152,270.000) 
   set u=CreateUnit(p,'n02V',-124,-1152,270.000) 
   set u=CreateUnit(p,'n02W',-124,-1152-256,270.000)
   set u=CreateUnit(p,'n02I',124,-1152,270.000) 
@@ -1000,24 +1000,22 @@ globals
   
   function Trig_Faerie_Dragon_Func001A takes nothing returns nothing
   if(Trig_Faerie_Dragon_Func001Func001C())then
-  if(Trig_Faerie_Dragon_Func001Func001Func002C())then
-      call AddSpecialEffectLocBJ(GetUnitLoc(GetEnumUnit()),"Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl")
-      call DestroyEffectBJ(GetLastCreatedEffectBJ())
-      call SetUnitPositionLoc(GetEnumUnit(),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))
-      call IssueImmediateOrderBJ(GetEnumUnit(),"stop")
-      call AddSpecialEffectTargetUnitBJ("origin",GetEnumUnit(),"Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl")
-      call DestroyEffectBJ(GetLastCreatedEffectBJ())
-  else
-  endif
-  if(Trig_Faerie_Dragon_Func001Func001Func003C())then
-    set MysticFaerie[GetPlayerId(GetOwningPlayer(GetEnumUnit()))] = GetEnumUnit()
-    call BlzSetUnitAttackCooldown(GetEnumUnit(), BlzGetUnitAttackCooldown(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))], 0), 0)
-      call SetUnitAbilityLevelSwapped('A000',GetEnumUnit(),R2I(GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])/3))
-      call IssuePointOrderLocBJ(GetEnumUnit(),"attack",OffsetLocation(GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(-300.00,300.00),GetRandomReal(-300.00,300.00)))
-      call SetUnitManaBJ(GetEnumUnit(),GetRandomReal(0,1.00))
-  else
-  endif
-  else
+    if(Trig_Faerie_Dragon_Func001Func001Func002C())then
+        call AddSpecialEffectLocBJ(GetUnitLoc(GetEnumUnit()),"Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl")
+        call DestroyEffectBJ(GetLastCreatedEffectBJ())
+        call SetUnitPositionLoc(GetEnumUnit(),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))
+        call IssueImmediateOrderBJ(GetEnumUnit(),"stop")
+        call AddSpecialEffectTargetUnitBJ("origin",GetEnumUnit(),"Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl")
+        call DestroyEffectBJ(GetLastCreatedEffectBJ())
+    endif
+    if(Trig_Faerie_Dragon_Func001Func001Func003C())then
+        set MysticFaerie[GetPlayerId(GetOwningPlayer(GetEnumUnit()))] = GetEnumUnit()
+        call BlzSetUnitAttackCooldown(GetEnumUnit(), BlzGetUnitAttackCooldown(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))], 0), 0)
+        call SetUnitAbilityLevelSwapped('A000',GetEnumUnit(),R2I(GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])/3))
+        call UnitSetAttackSpeed(GetEnumUnit(), GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]) * 0.03)
+        call IssuePointOrderLocBJ(GetEnumUnit(),"attack",OffsetLocation(GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(-300.00,300.00),GetRandomReal(-300.00,300.00)))
+        call SetUnitManaBJ(GetEnumUnit(),GetRandomReal(0,1.00))
+    endif
   endif
   endfunction
   
@@ -4686,7 +4684,7 @@ endlibrary
   call UnitRemoveBuffBJ('BPSE',udg_unit01)
   call UnitRemoveBuffBJ('BHtc',udg_unit01)
   call UnitRemoveBuffBJ('Buhf',udg_unit01)
-  call RemoveDebuff(udg_unit01)
+  call RemoveDebuff(udg_unit01, 0)
   endfunction
   
   function Trig_DeathDialog_Initialization_Actions takes nothing returns nothing
@@ -7052,7 +7050,7 @@ endif
     local integer pid = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
     
   if(Trig_Complete_Level_Move_Func003C())then
-  call RemoveDebuff(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])
+  call RemoveDebuff(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))], 0)
   call SetUnitPositionLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetRectCenter(udg_rect09))
   call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),GetRectCenter(udg_rect09),0.20)
   endif
@@ -7718,7 +7716,10 @@ endif
   call UnitAddAbilityBJ('Atru',GetEnumUnit())
   call UnitAddAbilityBJ('A00W',GetEnumUnit())
   call UnitAddAbilityBJ('A01B',GetEnumUnit())
-  call BlzSetUnitBaseDamage(GetEnumUnit(), R2I(BlzGetUnitBaseDamage(GetEnumUnit(), 0) * 1.1), 0)
+  if UnitGetAttackDamage(GetEnumUnit()) == 0 then
+    call UnitSetAttackDamage(GetEnumUnit(), R2I(BlzGetUnitBaseDamage(GetEnumUnit(), 0) * 0.1) + 1)
+  endif
+  call UnitSetAttackDamage(GetEnumUnit(), R2I(UnitGetAttackDamage(GetEnumUnit()) * 1.1) + 1)
   endfunction
   
   function Trig_Sudden_Death_Timer_Func002Func002Func002Func001001001 takes nothing returns boolean
@@ -7752,7 +7753,7 @@ endif
   
   function Trig_Sudden_Death_Timer_Actions takes nothing returns nothing
   set udg_integer39=(udg_integer39+1)
-  if udg_integer39 == 240 or udg_integer39 == 480 or udg_integer39 == 720 then
+  if udg_integer39 == 120 or udg_integer39 == 240 or udg_integer39 == 480 or udg_integer39 == 720 then
     call UpdateSuddenDeathTimer()
   endif
   if(Trig_Sudden_Death_Timer_Func002C())then
@@ -9296,7 +9297,7 @@ endif
   function Trig_Kick_Player_Command_Func004001001 takes nothing returns boolean
   return(GetFilterPlayer()==GetTriggerPlayer())
   endfunction
-  
+  /*
   function KickPlayer takes player p returns nothing
       set udg_boolean17=true
       call PlaySoundBJ(udg_sound04)
@@ -9333,7 +9334,7 @@ endif
         endif
         call DisplayTimedTextToForce(GetPlayersMatching(Condition(function Trig_Kick_Player_Command_Func004001001)),5.00,("|cffffcc00"+("Couldn't kick player \""+(SubStringBJ(GetEventPlayerChatString(),7,StringLength(GetEventPlayerChatString()))+"\"|r"))))
     endif
-  endfunction
+  endfunction*/
   
   function Trig_Player_Selection_Camera_Func001001 takes nothing returns boolean
   return(udg_boolean12==true)
@@ -10661,27 +10662,15 @@ endfunction
   endfunction
   
   function Trig_Update_Items_Actions takes nothing returns nothing
-  if(Trig_Update_Items_Func001C())then
-  if(Trig_Update_Items_Func001Func002C())then
-      call ForGroupBJ(GetUnitsOfTypeIdAll('n00A'),function Trig_Update_Items_Func001Func002Func002A)
-      call ForGroupBJ(GetUnitsOfTypeIdAll('n00M'),function Trig_Update_Items_Func001Func002Func003A)
-  else
-      if(Trig_Update_Items_Func001Func002Func001C())then
-          call ForGroupBJ(GetUnitsOfTypeIdAll('n004'),function Trig_Update_Items_Func001Func002Func001Func001A)
-      else
-      endif
-  endif
-  else
-  if(Trig_Update_Items_Func001Func003C())then
-      call ForGroupBJ(GetUnitsOfTypeIdAll('n00A'),function Trig_Update_Items_Func001Func003Func002A)
-      call ForGroupBJ(GetUnitsOfTypeIdAll('n00M'),function Trig_Update_Items_Func001Func003Func003A)
-  else
-      if(Trig_Update_Items_Func001Func003Func001C())then
-          call ForGroupBJ(GetUnitsOfTypeIdAll('n004'),function Trig_Update_Items_Func001Func003Func001Func001A)
-      else
-      endif
-  endif
-  endif
+    if(Trig_Update_Items_Func001C())then
+        if(Trig_Update_Items_Func001Func002Func001C())then
+            call ForGroupBJ(GetUnitsOfTypeIdAll('n004'),function Trig_Update_Items_Func001Func002Func001Func001A)
+        endif
+    else
+        if(Trig_Update_Items_Func001Func003Func001C())then
+            call ForGroupBJ(GetUnitsOfTypeIdAll('n004'),function Trig_Update_Items_Func001Func003Func001Func001A)
+        endif
+    endif
   endfunction
   
   function Trig_Hide_Shops_Func002001002 takes nothing returns boolean
@@ -11966,7 +11955,7 @@ call TriggerRegisterAnyUnitEventBJ(udg_trigger10,EVENT_PLAYER_UNIT_SPELL_EFFECT)
   call TriggerRegisterTimerEventPeriodic(udg_trigger130,4)
   call TriggerAddAction(udg_trigger130,function Trig_Spacebar_Point_Actions)
   set udg_trigger131=CreateTrigger()
-  call TriggerAddAction(udg_trigger131,function Trig_Select_Game_Master_Actions)
+  call TriggerAddAction(udg_trigger131,function Trig_Select_Game_Master_Actions)/*
   set udg_trigger132=CreateTrigger()
   call DisableTrigger(udg_trigger132)
   call TriggerRegisterPlayerChatEvent(udg_trigger132,Player(0),"-kick",false)
@@ -11978,7 +11967,7 @@ call TriggerRegisterAnyUnitEventBJ(udg_trigger10,EVENT_PLAYER_UNIT_SPELL_EFFECT)
   call TriggerRegisterPlayerChatEvent(udg_trigger132,Player(6),"-kick",false)
   call TriggerRegisterPlayerChatEvent(udg_trigger132,Player(7),"-kick",false)
   call TriggerAddCondition(udg_trigger132,Condition(function Trig_Kick_Player_Command_Conditions))
-  call TriggerAddAction(udg_trigger132,function Trig_Kick_Player_Command_Actions)
+  call TriggerAddAction(udg_trigger132,function Trig_Kick_Player_Command_Actions)*/
   set udg_trigger133=CreateTrigger()
   call TriggerRegisterTimerEventPeriodic(udg_trigger133,0.02)
   call TriggerAddAction(udg_trigger133,function Trig_Player_Selection_Camera_Actions)

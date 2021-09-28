@@ -41,7 +41,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'O000',2, "|cff00ffffPassive|r: Spirit Mage: Spells in the Active Spells I shop can go up to level 40. \n|cffffff00Level Up Bonus|r: (Every 2 levels) Increases the level of all spells from Active Spells I by 1." )
       
     call SaveStr(HT_data,'O008',1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )       // Mystic
-    call SaveStr(HT_data,'O008',2, "|cff00ffffPassive|r: Faerie Friend: A Faerie Dragon follows it, attacking enemies. Faerie Dragon attacks count as Mystic attacks, it has the same attack speed.\n|cffffff00Level Up Bonus|r: +40 summon damage. (Every 3 levels) increases Faerie Dragon damage." )
+    call SaveStr(HT_data,'O008',2, "|cff00ffffPassive|r: Faerie Friend: A Faerie Dragon follows it, attacking enemies. Faerie Dragon attacks count as Mystic attacks, it has the same attack speed.\n|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: +3% attack speed. (Every 3 levels) increases Faerie Dragon damage." )
         
     call SaveStr(HT_data,'O007',1, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )       // Pit Lord
     call SaveStr(HT_data,'O007',2, "|cff00ffffPassive|r: Rain of Fire: automatically casts Rain of Fire when it deals damage once every 2 seconds. \n|cffffff00Level Up Bonus|r: Rain of Fire: +30 initial damage, +10 damage per second." )
@@ -53,7 +53,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'U000',2, "|cffffff00Level Up Bonus|r: +5 agility, +10 agility if the Hero's strength is higher than its agility, +20 agility if the Hero's strength is more than twice as high as its agility." )
                
     call SaveStr(HT_data,'N00K',1, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )       // Blade master
-    call SaveStr(HT_data,'N00K',2, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 50% of its attack damage to nearby enemies.\n|cffffff00Level Up Bonus|r: Bladestorm: +20 damage, +2 area of effect." )
+    call SaveStr(HT_data,'N00K',2, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 50% of its attack damage to nearby enemies as physical damage.\n|cffffff00Level Up Bonus|r: Bladestorm: +20 damage, +3 area of effect." )
                                                 
     call SaveStr(HT_data,'N024',1, "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp" )       // Grom
     call SaveStr(HT_data,'N024',2, "|cff00ffffPassive|r: Valiant Strike: All physical damage dealt by the player has 100% of the Hero's strength added to it.\n|cffffff00Level Up Bonus|r: +3 armor and +6 hit point regeneration." )
@@ -71,7 +71,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'N00B',2, "|cff00ffffPassive|r: Fear Aura: Reduces the armor of nearby enemies. \n|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
     
     call SaveStr(HT_data,'N00R',1, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )       // Luna
-    call SaveStr(HT_data,'N00R',2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 10% of her attack damage in magic damage. \n|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
+    call SaveStr(HT_data,'N00R',2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 50% of her attack damage in magic damage. \n|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
         
     call SaveStr(HT_data,'N00O',1, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )       // Brute Skelet
     call SaveStr(HT_data,'N00O',2, "|cff00ffffPassive|r: Skeleton Army: Summons a skeleton every time it kills an enemy unit.\n|cffffff00Level Up Bonus|r: +2 armor, +5 summon armor." )
@@ -83,7 +83,7 @@ function Init_Hero_data takes nothing returns nothing
     call SaveStr(HT_data,'N00Q',2, "|cff00ffffPassive|r: Bleed: Every time it attacks it causes enemies to bleed for 3 seconds, dealing 30% of its attack damage per second. \n|cffffff00Level Up Bonus|r: +25 attack damage." )
                           
     call SaveStr(HT_data,'N00C',1, "ReplaceableTextures\\CommandButtons\\BTNFleshGolem.blp" )       // War golem
-    call SaveStr(HT_data,'N00C',2, "|cffffff00Level Up Bonus|r: +600 hit points." )         
+    call SaveStr(HT_data,'N00C',2, "|cff00ffffPassive|r: Construct: Receives 50% bonus hit points from its strength stat. |cffffff00Level Up Bonus|r: Construct: +1% bonus hit points from strength." )         
         
     call SaveStr(HT_data,'O006',1, "ReplaceableTextures\\CommandButtons\\BTNOrcWarlockRed.blp" )       // warlock
     call SaveStr(HT_data,'O006',2, "|cff00ffffPassive|r: Absolute Magic: Starts with a bonus absolute slot.\n|cffffff00Level Up Bonus|r: (Every 20 levels) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (Every 15 levels) Gets a bonus Absolute slot. (max 10)" ) 

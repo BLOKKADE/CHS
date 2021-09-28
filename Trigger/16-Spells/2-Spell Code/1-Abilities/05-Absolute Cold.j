@@ -1,11 +1,11 @@
-library AbsoluteCold requires RandomShit
+library AbsoluteCold requires RandomShit, DivineBubble
     globals
         unit GLOB_ABSOLUTE_COLD_U = null
         real GLOB_ABSOLUTE_COLD_DMG = 0
     endglobals
 
     function AbsoluteIceFunc takes nothing returns boolean
-        if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U,GetOwningPlayer(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != 'h015' then
+        if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U,GetOwningPlayer(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != 'h015' and IsUnitTarget(GetFilterUnit()) and IsUnitDivineBubbled(GetFilterUnit()) == false then
             call UsOrderU2(GLOB_ABSOLUTE_COLD_U,GetFilterUnit(),GetUnitX(GLOB_ABSOLUTE_COLD_U),GetUnitY(GLOB_ABSOLUTE_COLD_U),'A07W',"entanglingroots",GLOB_ABSOLUTE_COLD_DMG,1.0001,ABILITY_RLF_DAMAGE_PER_SECOND_EER1,ABILITY_RLF_DURATION_NORMAL)        
         endif
         return false
@@ -19,7 +19,7 @@ library AbsoluteCold requires RandomShit
     endfunction
 
     function AbsoluteColdFunc takes nothing returns boolean
-        if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U,GetOwningPlayer(GetFilterUnit())) and IsHeroUnitId(GetUnitTypeId(GetFilterUnit())) then
+        if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U,GetOwningPlayer(GetFilterUnit())) and IsHeroUnitId(GetUnitTypeId(GetFilterUnit())) and IsUnitTarget(GetFilterUnit()) and IsUnitDivineBubbled(GetFilterUnit()) == false and IsUnitMagicImmune(GetFilterUnit()) == false then
             call AddCooldowns(GetFilterUnit(),0.2)
         endif
         return false

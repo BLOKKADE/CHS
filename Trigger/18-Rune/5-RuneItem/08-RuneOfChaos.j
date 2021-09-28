@@ -12,7 +12,7 @@ globals
         
             if IsUnitEnemy(GLOB_RUNE_U,GetOwningPlayer(u)) and GetWidgetLife(u) > 0.405 then
                 set RandomSpellLoc = Location(GetUnitX(u), GetUnitY(u))
-                call CastRandomSpell(GLOB_RUNE_U, u, RandomSpellLoc, false, GLOB_LVL_abil)
+                call CastRandomSpell(GLOB_RUNE_U, 0, u, RandomSpellLoc, false, GLOB_LVL_abil)
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             endif
@@ -42,7 +42,7 @@ globals
             exitwhen i >= lp
         endloop
 
-
+        set u = null
     return false
     endfunction
 endlibrary

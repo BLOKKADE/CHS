@@ -191,7 +191,7 @@ function Trig_Toms_Actions takes nothing returns nothing
                  call UnitAddItem(u,CreateItem('I0A2',0,0))
                  set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),20000)
+                 call PlayerAddGold( GetOwningPlayer(u),15000)
           endif
 
         //Flimsy Token
@@ -200,7 +200,7 @@ function Trig_Toms_Actions takes nothing returns nothing
                  call UnitAddItem(u,CreateItem('I0A3',0,0))
                  set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),20000)
+                 call PlayerAddGold( GetOwningPlayer(u),15000)
           endif
 
         //Spellbane Token
@@ -209,34 +209,34 @@ function Trig_Toms_Actions takes nothing returns nothing
                  call UnitAddItem(u,CreateItem('I0A1',0,0))
                  set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),20000)
+                 call PlayerAddGold( GetOwningPlayer(u),15000)
           endif	
         
         //Mask of Elusion
         elseif  II  == 'I0A8' then   
-            if Glory[pid] >= 20000 and UnitHasFullItems(u) == false then
+            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
                  call UnitAddItem(u,CreateItem('I0AD',0,0))
-                 set  Glory[pid]= Glory[pid]- 20000 
+                 set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),30000)
+                 call PlayerAddGold( GetOwningPlayer(u),20000)
           endif
 
         //Mask of Vitality
         elseif  II  == 'I0A7' then   
-            if Glory[pid] >= 20000 and UnitHasFullItems(u) == false then
+            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
                  call UnitAddItem(u,CreateItem('I0AC',0,0))
-                 set  Glory[pid]= Glory[pid]- 20000 
+                 set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),30000)
+                 call PlayerAddGold( GetOwningPlayer(u),20000)
           endif
 
         //Mask of Protection
         elseif  II  == 'I0A9' then   
-            if Glory[pid] >= 20000 and UnitHasFullItems(u) == false then
+            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
                  call UnitAddItem(u,CreateItem('I0AE',0,0))
-                 set  Glory[pid]= Glory[pid]- 20000 
+                 set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),30000)
+                 call PlayerAddGold( GetOwningPlayer(u),20000)
           endif	
 
           //Sword of Blodthirst
@@ -245,7 +245,7 @@ function Trig_Toms_Actions takes nothing returns nothing
                  call UnitAddItem(u,CreateItem('I0AI',0,0))
                  set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),15000)
+                 call PlayerAddGold( GetOwningPlayer(u),10000)
           endif
 
         //Wisdom Chestplate
@@ -254,16 +254,16 @@ function Trig_Toms_Actions takes nothing returns nothing
                  call UnitAddItem(u,CreateItem('I0AH',0,0))
                  set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),30000)
+                 call PlayerAddGold( GetOwningPlayer(u),15000)
           endif
 
         //Lucky Pants
         elseif  II  == 'I0AB' then   
-            if Glory[pid] >= 20000 and UnitHasFullItems(u) == false then
+            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
                  call UnitAddItem(u,CreateItem('I0AJ',0,0))
-                 set  Glory[pid]= Glory[pid]- 20000 
+                 set  Glory[pid]= Glory[pid]- 10000 
             else
-                 call PlayerAddGold( GetOwningPlayer(u),30000)
+                 call PlayerAddGold( GetOwningPlayer(u),20000)
           endif	
 
         //Income all

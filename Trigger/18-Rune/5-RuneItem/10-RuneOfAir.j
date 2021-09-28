@@ -14,13 +14,12 @@ library WindRune requires RandomShit
     endfunction
 
     function RuneOfWinds takes nothing returns boolean
-    local unit u = GLOB_RUNE_U
-    local real power = GLOB_RUNE_POWER 
+        local unit u = GLOB_RUNE_U
+        local real power = GLOB_RUNE_POWER 
 
         call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),400+100*power,RuneOfWinds_b )
 
-
-
-    return false
+        set u = null
+        return false
     endfunction
 endlibrary

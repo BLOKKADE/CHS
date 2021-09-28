@@ -44,10 +44,10 @@ library MaskOfProtection initializer init requires CustomState
             endif
 
             set this.source = source
-            set this.armorBonus = magicpower * 2
+            set this.armorBonus = magicpower * 3
             call BlzSetUnitArmor(source, BlzGetUnitArmor(source) + this.armorBonus)
 
-            set this.magicResBonus = magicpower * 0.3
+            set this.magicResBonus = magicpower * 0.5
             call AddUnitMagicDef(source, this.magicResBonus)
 
             set this.endTick = T32_Tick + R2I(7*32)

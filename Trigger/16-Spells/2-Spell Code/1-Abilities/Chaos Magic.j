@@ -3,7 +3,7 @@ library ChaosMagic requires UnitHelpers, AbilityData, CastSpellOnTarget, RandomS
         location RandomSpellLoc
     endglobals
 
-    function CastRandomSpell takes unit caster, unit target, location spellLoc, boolean banInstant, integer chaosLevel returns nothing
+    function CastRandomSpell takes unit caster, integer abilCast, unit target, location spellLoc, boolean banInstant, integer chaosLevel returns nothing
         local real    targetX
         local real    targetY
         local integer orderType = 0
@@ -14,12 +14,14 @@ library ChaosMagic requires UnitHelpers, AbilityData, CastSpellOnTarget, RandomS
             set orderType = Order_Target
             set targetX = GetUnitX(target)
             set targetY = GetUnitY(target)
-            if IsUnitAlly(target, GetOwningPlayer(caster)) then
+            if abilCast != 0 and GetAbilityTargetType(abilCast) then
                 set ally = Target_Ally
+            else
+                set ally = Target_Enemy
             endif
             set abilId = GetRandomChaosAbility(Order_Target, ally)
             call CreateTextTagTimerColor(GetObjectName(abilId) + "!?", 1, GetUnitX(caster), GetUnitY(caster), 50, 1, GetRandomInt(100,255), GetRandomInt(100,255),GetRandomInt(100,255))
-            call CastSpell(caster, target, abilId, chaosLevel, orderType, targetX, targetY)
+            call CastSpell(caster, target, abilId, chaosLevel, orderType, targetX, targetY).activate()
         else
             set orderType = 1
             if spellLoc == null and banInstant == false then
@@ -34,7 +36,7 @@ library ChaosMagic requires UnitHelpers, AbilityData, CastSpellOnTarget, RandomS
                 set abilId = GetRandomChaosAbility(Order_Point, ally)
             endif
             call CreateTextTagTimerColor(GetObjectName(abilId) + "!?", 1, GetUnitX(caster), GetUnitY(caster), 50, 1, GetRandomInt(100,255), GetRandomInt(100,255),GetRandomInt(100,255))
-            call CastSpell(caster, null, abilId, chaosLevel, orderType, targetX, targetY)
+            call CastSpell(caster, null, abilId, chaosLevel, orderType, targetX, targetY).activate()
         endif
     endfunction
 endlibrary

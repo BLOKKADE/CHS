@@ -44,7 +44,6 @@ function BaraBonus takes unit UnitHero returns nothing
     local integer AbilLvl
     local integer AbilId
 
-
     set AbilId  = 'Aspl'
     set AbilLvl =  GetUnitAbilityLevel(UnitHero,AbilId)
     if AbilLvl > 0 and AbilLvl < 40 then
@@ -106,7 +105,7 @@ function BaraBonus takes unit UnitHero returns nothing
     endif 
              
 
-    set AbilId  = 'ANvc'
+    set AbilId  = 'A09X'
     set AbilLvl =  GetUnitAbilityLevel(UnitHero,AbilId)
     if AbilLvl > 0 and AbilLvl < 40 then
         call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl+1) 
@@ -340,8 +339,8 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
             set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
         endloop   
      
-        call SetBonus(UnitHero, 1, BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(MysticFaerie[Pid], 'A000'), ABILITY_ILF_ATTACK_BONUS, GetHeroLevel(UnitHero)/3))
-     
+        call SetBonus(UnitHero, 1, BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(MysticFaerie[Pid], 'A000'), ABILITY_ILF_ATTACK_BONUS, IMinBJ(GetHeroLevel(UnitHero)/3, 50)))
+        call SetBonus(UnitHero, 2, 3 * (I_l+1))
      
      elseif TypeHero == 'O007' then          
         call SetBonus(UnitHero, 0, (I_l+1) * 30)
@@ -368,7 +367,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
         endloop  
      elseif TypeHero == 'N00K' then                   
         call SetBonus(UnitHero, 0, 20 * (I_l+1))
-        call SetBonus(UnitHero, 1, 298 + 2 * (I_l+1))
+        call SetBonus(UnitHero, 1, 297 + 3 * (I_l+1))
      elseif TypeHero == 'N024' then   
             loop
                 exitwhen  LastLvlHero[Pid] ==  I_l  
@@ -432,7 +431,7 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
           set LastLvlHero[Pid]  = I_l 
   
      elseif TypeHero == 'N00R' then         
-        call SetBonus(UnitHero, 0, 9.5 + ((I_l+1) * 0.5))   
+        call SetBonus(UnitHero, 0, 49.5 + ((I_l+1) * 0.5))   
      elseif TypeHero == 'N00O' then   
      
         loop
@@ -458,17 +457,8 @@ function Trig_HeroLvl_Actions takes nothing returns nothing
             set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
         endloop          
              
-     elseif TypeHero == 'N00C' then          
-              
-        loop
-            exitwhen  LastLvlHero[Pid] ==  I_l     
-            call BlzSetUnitMaxHP(UnitHero,  BlzGetUnitMaxHP(UnitHero) + 600 )
-            call UpdateBonus(UnitHero, 0, 600)   
-
-            
-             set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
-        endloop 
-        
+     elseif TypeHero == 'N00C' then             
+        call SetBonus(UnitHero, 0, 49 + ((I_l+1) * 1))
      elseif TypeHero == 'O006' then         
 
         if ModuloInteger(I_l + 1, 15) == 0 then

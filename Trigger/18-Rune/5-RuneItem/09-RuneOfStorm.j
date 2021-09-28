@@ -23,7 +23,7 @@ library StormRune requires RandomShit
         call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),300+100*power,RuneOfStorm_b )
 
 
-
+        set u = null
     return false
     endfunction
 endlibrary

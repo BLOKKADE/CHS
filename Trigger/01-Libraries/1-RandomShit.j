@@ -148,103 +148,120 @@ globals
         return false
     endfunction
 
-
-    function DebufEx takes unit Un returns nothing
-        call UnitRemoveAbility(Un, 'Bclf')
-        call UnitRemoveAbility(Un, 'Bply')
-        call UnitRemoveAbility(Un, 'Bslo')
-        call UnitRemoveAbility(Un, 'BHbd')
-        call UnitRemoveAbility(Un, 'BHfs')
-        call UnitRemoveAbility(Un, 'BHbn')
-        call UnitRemoveAbility(Un, 'Bbof')
-        call UnitRemoveAbility(Un, 'Bliq')
-        call UnitRemoveAbility(Un, 'Bens')
-        call UnitRemoveAbility(Un, 'BOhx')
-        call UnitRemoveAbility(Un, 'BOeq')
-        call UnitRemoveAbility(Un, 'Bcri')
-        call UnitRemoveAbility(Un, 'Bweb')
-        call UnitRemoveAbility(Un, 'Bwea')
-        call UnitRemoveAbility(Un, 'Bfzr')
-        call UnitRemoveAbility(Un, 'Bapl')
-        call UnitRemoveAbility(Un, 'BUsl')
-        call UnitRemoveAbility(Un, 'BUdd')
-        call UnitRemoveAbility(Un, 'Bssd')
-        call UnitRemoveAbility(Un, 'Bspo')
-        call UnitRemoveAbility(Un, 'Bcor')
-        call UnitRemoveAbility(Un, 'Bfae')
-        call UnitRemoveAbility(Un, 'BEer')
-        call UnitRemoveAbility(Un, 'BEsh')
-        call UnitRemoveAbility(Un, 'Bpsd')
-        call UnitRemoveAbility(Un, 'Bpoi')
-        call UnitRemoveAbility(Un, 'BNba')
-        call UnitRemoveAbility(Un, 'BNdh')
-        call UnitRemoveAbility(Un, 'BNht')
-        call UnitRemoveAbility(Un, 'Basl')
-        call UnitRemoveAbility(Un, 'BNdo')
-        call UnitRemoveAbility(Un, 'BNbf')
-        call UnitRemoveAbility(Un, 'BNrd')
-        call UnitRemoveAbility(Un, 'BSTN')
-        call UnitRemoveAbility(Un, 'BNpm')
-        call UnitRemoveAbility(Un, 'BPpa')
-        call UnitRemoveAbility(Un, 'BNrd')
-        call UnitRemoveAbility(Un, 'BPSE')
-        call UnitRemoveAbility(Un, 'BSTN')
-        call UnitRemoveAbility(Un, 'BNsi')
-        call UnitRemoveAbility(Un, 'Bcsd')
-        call UnitRemoveAbility(Un, 'BHca')
-        call UnitRemoveAbility(Un, 'BNht')
-        call UnitRemoveAbility(Un, 'BCbf')
-        call UnitRemoveAbility(Un, 'Bfro')
-        call UnitRemoveAbility(Un, 'Blcb')
-        call UnitRemoveAbility(Un, 'BNso')
-        call UnitRemoveAbility(Un, 'BNab')
-        call UnitRemoveAbility(Un, 'BNic')
-        call UnitRemoveAbility(Un, 'BNvc')
-        call UnitRemoveAbility(Un, 'B00J')
-        call UnitRemoveAbility(Un, 'B00H')
-        call UnitRemoveAbility(Un, 'B001')
-        call UnitRemoveAbility(Un, 'B005')
-        call UnitRemoveAbility(Un, 'B00V')
-        call UnitRemoveAbility(Un, 'B017')
-        call UnitRemoveAbility(Un, 'A06L')
-        call UnitRemoveAbility(Un, 'A06P')
-        call UnitRemoveAbility(Un, 'A06R')
-        call UnitRemoveAbility(Un, 'B014')
-        call UnitRemoveAbility(Un, 'B015')
-        call UnitRemoveAbility(Un, 'B016')
-        call UnitRemoveAbility(Un, 'Bvul')
-        call UnitRemoveAbility(Un, 'Bam2')
-        call UnitRemoveAbility(Un, 'BHav')
-        call UnitRemoveAbility(Un, 'BNbr')
-        call UnitRemoveAbility(Un, 'Bbsk')
-        call UnitRemoveAbility(Un, 'Bplg')
-        call UnitRemoveAbility(Un, 'Bena')
-        call UnitRemoveAbility(Un, 'Beng')
-        call UnitRemoveAbility(Un, 'BUfa')
-        call UnitRemoveAbility(Un, 'Binf')
-        call UnitRemoveAbility(Un, 'Blsh')
-        call UnitRemoveAbility(Un, 'Brej')
-        call UnitRemoveAbility(Un, 'Bdef')
-        call UnitRemoveAbility(Un, 'B002')
-        call UnitRemoveAbility(Un, 'Bspl')
-        call UnitRemoveAbility(Un, 'BHtc')
-        call UnitRemoveAbility(Un, 'BUhf')
-        call UnitRemoveAbility(Un, 'B01I')
-        call UnitRemoveAbility(Un, 'B01W')
-        call UnitRemoveAbility(Un, 'B01N')
-        call UnitRemoveAbility(Un, 'B01Q')
-        call UnitRemoveAbility(Un, 'B01R')
-        call UnitRemoveAbility(Un, 'B01P')
-        call UnitRemoveAbility(Un, 'B01V')
-        call UnitRemoveAbility(Un, 'B01Y')
-        call UnitRemoveAbility(Un, 'B01X')
-        call UnitRemoveAbility(Un, 'B021')
-        call UnitRemoveAbility(Un,'A03V')
-        set Un = null
+    function PositiveBuffs takes unit u returns nothing
+        call UnitRemoveAbility(u, 'Bvul')
+        call UnitRemoveAbility(u, 'Bam2')
+        call UnitRemoveAbility(u, 'BHav')
+        call UnitRemoveAbility(u, 'BNbr')
+        call UnitRemoveAbility(u, 'Bbsk')
+        call UnitRemoveAbility(u, 'BUfa')
+        call UnitRemoveAbility(u, 'Binf')
+        call UnitRemoveAbility(u, 'Blsh')
+        call UnitRemoveAbility(u, 'Brej')
+        call UnitRemoveAbility(u, 'Bdef')
+        call UnitRemoveAbility(u, 'B002')
+        call UnitRemoveAbility(u, 'Bspl')
+        call UnitRemoveAbility(u, 'A09H')
+        call UnitRemoveAbility(u, 'A09R')
+        call UnitRemoveAbility(u, 'A09S')
+        call UnitRemoveAbility(u, 'B01H')
+        call UnitRemoveAbility(u, 'B01S')
+        call UnitRemoveAbility(u, 'B01Z')
+        call UnitRemoveAbility(u, 'B020')
+        call UnitRemoveAbility(u, 'A08G')
+        call UnitRemoveAbility(u, 'B01G')
     endfunction
 
-    function RemoveDebuff takes unit Un returns nothing
-        call DebufEx(Un)  
+    function NegativeBuffs takes unit u returns nothing
+        call UnitRemoveAbility(u, 'Bclf')
+        call UnitRemoveAbility(u, 'Bply')
+        call UnitRemoveAbility(u, 'Bslo')
+        call UnitRemoveAbility(u, 'BHbd')
+        call UnitRemoveAbility(u, 'BHfs')
+        call UnitRemoveAbility(u, 'BHbn')
+        call UnitRemoveAbility(u, 'Bbof')
+        call UnitRemoveAbility(u, 'Bliq')
+        call UnitRemoveAbility(u, 'Bens')
+        call UnitRemoveAbility(u, 'BOhx')
+        call UnitRemoveAbility(u, 'BOeq')
+        call UnitRemoveAbility(u, 'Bcri')
+        call UnitRemoveAbility(u, 'Bweb')
+        call UnitRemoveAbility(u, 'Bwea')
+        call UnitRemoveAbility(u, 'Bapl')
+        call UnitRemoveAbility(u, 'BUsl')
+        call UnitRemoveAbility(u, 'BUdd')
+        call UnitRemoveAbility(u, 'Bssd')
+        call UnitRemoveAbility(u, 'Bspo')
+        call UnitRemoveAbility(u, 'Bcor')
+        call UnitRemoveAbility(u, 'Bfae')
+        call UnitRemoveAbility(u, 'BEer')
+        call UnitRemoveAbility(u, 'BEsh')
+        call UnitRemoveAbility(u, 'Bpsd')
+        call UnitRemoveAbility(u, 'Bpoi')
+        call UnitRemoveAbility(u, 'BNba')
+        call UnitRemoveAbility(u, 'BNdh')
+        call UnitRemoveAbility(u, 'BNht')
+        call UnitRemoveAbility(u, 'Basl')
+        call UnitRemoveAbility(u, 'BNdo')
+        call UnitRemoveAbility(u, 'BNbf')
+        call UnitRemoveAbility(u, 'BNrd')
+        call UnitRemoveAbility(u, 'BSTN')
+        call UnitRemoveAbility(u, 'BNpm')
+        call UnitRemoveAbility(u, 'BPpa')
+        call UnitRemoveAbility(u, 'BNrd')
+        call UnitRemoveAbility(u, 'BPSE')
+        call UnitRemoveAbility(u, 'BNsi')
+        call UnitRemoveAbility(u, 'Bcsd')
+        call UnitRemoveAbility(u, 'BHca')
+        call UnitRemoveAbility(u, 'BNht')
+        call UnitRemoveAbility(u, 'BCbf')
+        call UnitRemoveAbility(u, 'Bfro')
+        call UnitRemoveAbility(u, 'Blcb')
+        call UnitRemoveAbility(u, 'BNso')
+        call UnitRemoveAbility(u, 'BNab')
+        call UnitRemoveAbility(u, 'BNic')
+        call UnitRemoveAbility(u, 'BNvc')
+        call UnitRemoveAbility(u, 'B00J')
+        call UnitRemoveAbility(u, 'B00H')
+        call UnitRemoveAbility(u, 'B001')
+        call UnitRemoveAbility(u, 'B005')
+        call UnitRemoveAbility(u, 'B00V')
+        call UnitRemoveAbility(u, 'B017')
+        call UnitRemoveAbility(u, 'A06L')
+        call UnitRemoveAbility(u, 'A06P')
+        call UnitRemoveAbility(u, 'A06R')
+        call UnitRemoveAbility(u, 'B014')
+        call UnitRemoveAbility(u, 'B015')
+        call UnitRemoveAbility(u, 'B016')
+        call UnitRemoveAbility(u, 'Bplg')
+        call UnitRemoveAbility(u, 'Bena')
+        call UnitRemoveAbility(u, 'Beng')
+        call UnitRemoveAbility(u, 'BHtc')
+        call UnitRemoveAbility(u, 'BUhf')
+        call UnitRemoveAbility(u, 'B01I')
+        call UnitRemoveAbility(u, 'B01W')
+        call UnitRemoveAbility(u, 'B01N')
+        call UnitRemoveAbility(u, 'B01Q')
+        call UnitRemoveAbility(u, 'B01R')
+        call UnitRemoveAbility(u, 'B01P')
+        call UnitRemoveAbility(u, 'B01V')
+        call UnitRemoveAbility(u, 'B01Y')
+        call UnitRemoveAbility(u, 'B01X')
+        call UnitRemoveAbility(u, 'B021')
+        call UnitRemoveAbility(u, 'A09B')
+        call UnitRemoveAbility(u, 'A08O')
+        call UnitRemoveAbility(u, 'A03V')
+    endfunction
+
+    //0 = all, 1 = negative, 2 = positive
+    function RemoveDebuff takes unit u, integer buffType returns nothing
+        if buffType == 0 or buffType == 1 then
+            call NegativeBuffs(u)
+        endif
+
+        if buffType == 0 or buffType == 2 then
+            call PositiveBuffs(u)
+        endif
     endfunction
 
 
@@ -374,6 +391,20 @@ globals
 
         return false
     endfunction
+
+    function GetSpellElementCount takes unit u, integer abilId, integer id returns integer
+
+        //Pretty Bright Gem : Light to Dark and Dark to Light
+        if UnitHasItemS(u, 'I0AM') then
+            if (id == Element_Light and IsObjectElement(abilId, Element_Dark)) then
+                return GetObjectElementCount(abilId, Element_Dark)
+            elseif (id == Element_Dark and IsObjectElement(abilId, Element_Light)) then
+                return GetObjectElementCount(abilId, Element_Light)
+            endif
+        endif
+
+        return GetObjectElementCount(abilId, id)
+    endfunction
     
     function GetClassUnitSpell takes unit u, integer id returns integer 
         local integer abilId = 0
@@ -391,16 +422,11 @@ globals
         endif
 
         //Hero element
-        if IsObjectElement(GetUnitTypeId(u), id) then
-            set elementCount = elementCount + 1
-        endif
+        set elementCount = elementCount + GetObjectElementCount(GetUnitTypeId(u), id)
         
         loop
-            exitwhen i > 20   
-            if IsSpellElement(u, GetInfoHeroSpell(u ,i), id) then
-                set elementCount = elementCount + 1
-            endif
-            
+            exitwhen i > 20 
+            set elementCount = elementCount + GetSpellElementCount(u, GetInfoHeroSpell(u, i), id)  
             set i = i + 1
         endloop
 
@@ -413,6 +439,7 @@ globals
         if GetUnitTypeId(u) == 'O006' then
             set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
         endif
+        
         return elementCount 
     endfunction
 

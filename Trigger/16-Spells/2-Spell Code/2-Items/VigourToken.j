@@ -13,7 +13,7 @@ library VigourToken
         loop
             set p = FirstOfGroup(VigourTokenGroup)
             exitwhen p == null
-            if GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(p, UNIT_STATE_LIFE) then
+            if IsUnitEnemy(p, GetOwningPlayer(u)) and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(p, UNIT_STATE_LIFE) then
                 call SetUnitState(p, UNIT_STATE_LIFE, GetUnitState(p, UNIT_STATE_LIFE) - (GetUnitState(p, UNIT_STATE_LIFE) * 0.1))
             endif
             call GroupRemoveUnit(VigourTokenGroup, p)

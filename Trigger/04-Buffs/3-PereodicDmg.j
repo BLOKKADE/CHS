@@ -1,4 +1,4 @@
-library PeriodicDamage initializer init
+library PeriodicDamage initializer init requires RandomShit
     globals
         HashTable PeriodicCounter
     endglobals
@@ -33,7 +33,7 @@ library PeriodicDamage initializer init
                     call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)*0.01)*this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
                 endif
                 if this.fx != null then
-                    call DestroyEffect(AddSpecialEffectTarget(this.fx, this.target, attachPoint))
+                    call DestroyEffect(AddSpecialEffectTargetFix(this.fx, this.target, attachPoint))
                 endif
             endif
         endmethod
@@ -43,25 +43,29 @@ library PeriodicDamage initializer init
                 call this.damage()
                 set this.limit = this.limit - 1
                 set this.endTick = T32_Tick + interval
-            elseif this.limit == 0 then
+            endif
+            
+            if this.limit == 0 or UnitAlive(this.target) == false or GetDivineBubbleStruct(GetHandleId(this.target)) != 0 then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
         endmethod  
 
-        method addFx takes string fx, string attachPoint returns nothing
+        method addFx takes string fx, string attachPoint returns thistype
             set this.fx = fx
             set this.attachPoint = attachPoint
-            call DestroyEffect(AddSpecialEffectTarget(fx, this.target, attachPoint))
+            call DestroyEffect(AddSpecialEffectTargetFix(fx, this.target, attachPoint))
+            return this
         endmethod
 
-        method addLimit takes integer abilId, integer limit, real cd returns nothing
+        method addLimit takes integer abilId, integer limit, real cd returns thistype
             local integer count = PeriodicCounter[GetHandleId(this.caster)].integer[abilId]
             set this.abilId = abilId
             set PeriodicCounter[GetHandleId(this.caster)].integer[abilId] = count + 1
             if count >= limit then  
                 call BlzStartUnitAbilityCooldown(this.caster, abilId, cd)
             endif
+            return this
         endmethod
 
         static method create takes unit caster, unit target, real intervalDmg, boolean magic, real interval, real duration, real lifeDamage, boolean allowRecursion, integer buffId returns thistype

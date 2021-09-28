@@ -81,7 +81,7 @@ function Trig_ShortPeriodCheck_Actions takes nothing returns nothing
                     call AbilStartCD(u, 'A082', 8)
                     call SetWidgetLife(u,GetWidgetLife(u)+2500*i1)
                     call AddSpecialEffectTargetTimer( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
-                    call RemoveDebuff( u )
+                    call RemoveDebuff( u, 1)
                 endif
             endif       
             
@@ -103,6 +103,17 @@ function Trig_ShortPeriodCheck_Actions takes nothing returns nothing
                 set i2 = LoadInteger(DataUnitHT, hid, 542)
                 if i1 != i2 then
                     call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
+                    call SaveInteger(DataUnitHT, hid, 542, i1)
+                endif
+            endif
+
+            //War Golem
+            if GetUnitTypeId(u) == 'N00X' then
+                set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))
+                set i2 = LoadInteger(DataUnitHT, hid, 542)
+                if i1 != i2 then
+                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + i1)
+                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) * (1 + (i1 / BlzGetUnitMaxHP(u))))
                     call SaveInteger(DataUnitHT, hid, 542, i1)
                 endif
             endif

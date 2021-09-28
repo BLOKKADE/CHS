@@ -21,8 +21,10 @@ library SuddenDeathTimerWindow requires TimerUtils
             set SuddenDeathEnabled = true
             call TimerDialogSetTitle(SuddenDeathDialog, "Creep enrage level " + I2S(level))
             if level == 2 then
-                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are pretty angry!")
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are pissed off! They won't let you use Midas Touch!")
             elseif level == 3 then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are pretty angry!")
+            elseif level == 4 then
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are extremely agitated!")
             endif
             call TimerStart(SuddenDeathTimer, 60, false, null)

@@ -32,7 +32,7 @@ endglobals
 
  endfunction
  
- 
+ /*
   function DivineBubbleEnd takes nothing returns nothing
     local timer tim = GetExpiredTimer()
     local unit u = LoadUnitHandle(HT,GetHandleId(tim),1)
@@ -47,7 +47,7 @@ endglobals
     set eff = null
     set u = null
  endfunction
- 
+ */
  
  
  function Trig_Damage_Controller_Before_Actions takes nothing returns nothing
@@ -76,11 +76,7 @@ endglobals
     local boolean Bfirst = false
     local boolean trueAttack = false
 
-    if LoadBoolean(HT,GetHandleId(damageTarget),'A07S') and GetUnitAbilityLevel(damageTarget, 'A08C') > 0 then
-        call RemoveDebuff(damageTarget) 
-        set AbilA = false
-    endif
-
+    //some abilities like faerie fire start a 0 damage event this negates that
     if GetEventDamage() == 0 then
         set damageSourceHero = null
         set damageTargetHero = null
@@ -89,11 +85,13 @@ endglobals
         return
     endif
 
+    //Some abilities are counted as attacks by setting DamageIsAttack before they use UnitDamageTarget
     if DamageIsAttack then
         set attack = true
         set DamageIsAttack = false
     endif
     
+    //Modify damage source when dummy unit
     if GetOwningPlayer(damageTarget) == Player(11) then
         set damageTargetHero = damageTarget
     endif
@@ -106,14 +104,19 @@ endglobals
         set damageSourceHero = null
     endif
 
-    if CuId == 'h015' or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
+    //Retaliation Aura damage
+    if RetaliationDamage[GetHandleId(damageSource)] > 0 then
+        call BlzSetEventDamage(GetEventDamage() * RetaliationDamage[GetHandleId(damageSource)])
+        set RetaliationDamage[GetHandleId(damageSource)] = 0
+    endif
+
+    if CuId == 'h015' or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' or CuId == 'e001' then
         set damageSource = damageSourceHero
     endif
 
-    if CuId == 'e001' then
-        set damageSource = damageSourceHero
-    endif
+    
 
+    //pvp drain cant crit when set to universal damage
     if CuId == 'n00V' then
         call BlzSetEventDamageType(DAMAGE_TYPE_UNIVERSAL)
     endif
@@ -168,20 +171,19 @@ endglobals
     //Divine Bubble
     set II = GetUnitAbilityLevel(damageTarget,'A07S')
     if II > 0 then
-        if LoadBoolean(HT,GetHandleId(damageTarget),'A07S') and GetUnitAbilityLevel(damageTarget, 'A08C') > 0 then
-            call RemoveDebuff(damageTarget) 
+        if IsUnitDivineBubbled(damageTarget) then
+            call RemoveDebuff(damageTarget, 1) 
             set AbilA = false
-        elseif BlzGetUnitAbilityCooldownRemaining(damageTarget,'A07S') <= 0.001 then
-            //call BJDebugMsg("divine bubble")
-            set tim = NewTimer()
+        endif
+        
+        if BlzGetUnitAbilityCooldownRemaining(damageTarget,'A07S') <= 0.001 then
             set AbilA = false
-            call RemoveDebuff(damageTarget) 
-            call UnitAddAbility(damageTarget, 'A08C')
-            call AbilStartCD(damageTarget,'A07S', 30.69 - (0.69 * GetUnitAbilityLevel(damageTarget, 'A07S'))) 
-            call SaveBoolean(HT,GetHandleId(damageTarget),'A07S',true)	    
-            call SaveUnitHandle(HT,GetHandleId(tim),1,GetTriggerUnit())
-            call SaveEffectHandle(HT,GetHandleId(tim),2,AddSpecialEffectTarget( "RighteousGuard.mdx" , damageTarget , "origin" ) ) 
-            call TimerStart(tim, 3,false, function DivineBubbleEnd)
+            call RemoveDebuff(damageTarget, 1) 
+            if IsUnitDivineBubbled(damageTarget) then
+                set GetDivineBubbleStruct(GetHandleId(damageTarget)).endTick = T32_Tick + (32 * 3)
+            else
+                call DivineBubbleStruct.create(damageTarget, 3)
+            endif
         endif
     endif
 
@@ -263,7 +265,7 @@ endglobals
         endif      
         if  BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08S') <= 0 then
             call AbilStartCD(damageTarget, 'A08S', 6)
-            call RemoveDebuff(damageTarget)  
+            call RemoveDebuff(damageTarget, 1)  
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", damageTarget, "chest")) 
             set tim = null
             set damageSourceHero = null
@@ -343,7 +345,7 @@ endglobals
     if GetUnitTypeId(damageSource) == 'N00Q' and attack then
         //call CastUrsaBleed(damageSource, damageTarget, GetEventDamage(), DmgType !=  DAMAGE_TYPE_NORMAL)
         call SetBuff(damageTarget,4,3)
-        call PeriodicDamage.create(damageSource, damageTarget, GetEventDamage()/3, DmgType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, 'B01I').addFx(FX_Bleed, "head")
+        call PeriodicDamage.create(damageSource, damageTarget, GetEventDamage()/3, DmgType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, 'B01I').addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1)
     endif
     
     //Pvp Bonus
@@ -460,6 +462,14 @@ endglobals
         //Magic Resistance
         set magicResDamage =  GetUnitMagicDef(damageTarget)   
         if magicResDamage > 0 then
+            
+            //Fatal Flaw
+            set II = GetUnitAbilityLevel(damageSource,'A0AA')
+            if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A0AA') == 0 then
+                set magicResDamage = magicResDamage * (1 - (0.02 * II))
+                call AbilStartCD(damageSource, 'A0AA', 5)
+            endif
+
            call BlzSetEventDamage(  GetEventDamage()*( 50/(50+magicResDamage) )   )        
         endif
 	endif
@@ -545,11 +555,11 @@ endglobals
         call MartialRetributionStore(damageTarget, GetEventDamage() * 0.5)
     endif
 
-    if AbilA and DmgType == DAMAGE_TYPE_NORMAL then   
+    if AbilA then   
     
         //Liquid Fire
         set II = GetUnitAbilityLevel(damageSource,'A06Q')
-        if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A06Q') == 0 then
+        if DmgType == DAMAGE_TYPE_NORMAL and II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A06Q') == 0 then
         
             /*if GetUnitAbilityLevel(damageTarget,'B016') == 0 then
                 set Bfirst = true
@@ -562,8 +572,8 @@ endglobals
         endif
         
         //Envenomed Weapons
-        set II = GetUnitAbilityLevel(damageSource,'A06O')
-        if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A06O') == 0 then
+        set II = GetUnitAbilityLevel(damageSource,'A06O') //+ PoisonRuneBonus[PidA]
+        if (DmgType == DAMAGE_TYPE_NORMAL /*or PoisonRuneBonus[PidA] > 0*/) and II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A06O') == 0 then
             /*if GetUnitAbilityLevel(damageTarget,'B015') == 0 then
                 set Bfirst = true
             else
@@ -592,7 +602,7 @@ endglobals
         if GetRandomReal(1,100)  <= II*8*luckSource then
          if GetUnitState(damageTarget,UNIT_STATE_MANA) >= 750 then
             set RandomSpellLoc = Location(GetUnitX(damageSource), GetUnitY(damageSource))
-            call CastRandomSpell(damageTarget, damageSource, RandomSpellLoc, true, 15)
+            call CastRandomSpell(damageTarget, 0, damageSource, RandomSpellLoc, true, 15)
             call RemoveLocation(RandomSpellLoc)
             set RandomSpellLoc = null
             call SetUnitState(damageTarget,UNIT_STATE_MANA,GetUnitState(damageTarget,UNIT_STATE_MANA)-750 )

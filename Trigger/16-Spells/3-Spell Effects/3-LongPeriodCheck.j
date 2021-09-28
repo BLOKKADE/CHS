@@ -260,7 +260,7 @@ function Trig_LongPeriodCheck_Actions takes nothing returns nothing
                     //Drain aura
                     set i1 = GetUnitAbilityLevel(u ,'A023')
                     if i1 >= 1  then
-                        call AoeDrainAura(u, I2R(i1) * 0.0002,500,true)
+                        call AoeDrainAura(u, I2R(i1) * 0.0001,500,true)
                     endif
                 endif
                 call AABfunction(u)

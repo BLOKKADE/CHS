@@ -4,7 +4,7 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, ChannelOrder
         return BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, abilityId), ABILITY_RLF_CAST_RANGE, GetUnitAbilityLevel(u, abilityId) - 1)
     endfunction
 
-    function CastSpell takes unit caster, unit target, integer abilId, integer level, integer orderType, real targetX, real targetY returns nothing
+    function CastSpell takes unit caster, unit target, integer abilId, integer level, integer orderType, real targetX, real targetY returns DummyOrder
         local integer order = GetAbilityOrder(abilId)
         local DummyOrder dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 21)
         call dummy.addActiveAbility(abilId, level, order)
@@ -20,7 +20,8 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, ChannelOrder
             //call BJDebugMsg("cs point")
             call dummy.point(targetX, targetY)
         endif
-        call dummy.activate()
+        
+        return dummy
         //call BJDebugMsg("cs casted")
     endfunction
 endlibrary

@@ -37,13 +37,13 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             if target != null then
                 //call BJDebugMsg("target")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(caster, target, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
+                call CastRandomSpell(caster, 0, target, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             elseif x != 0.00 and y != 0.00 then
                 //call BJDebugMsg("point")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(caster, null, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
+                call CastRandomSpell(caster, 0, null, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             endif
@@ -53,7 +53,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             call CastManaStarvation(caster, target, lvl)
             return true
         //Midas Touch
-        elseif abilId == 'A0A2' then
+        elseif abilId == 'A0A2' and SuddenDeathEnabled == false then
             call CastMidasTouch(caster, target, lvl)
             return true
         //Dousing Hex
@@ -90,7 +90,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             return true
         //Frost Bolt
         elseif abilId == 'A07X' then
-            call  UsFrostBolt(caster,target,120*GetUnitAbilityLevel(caster,'A07X')*(1+0.25*R2I(GetClassUnitSpell(caster,7))) ,GetClassUnitSpell(caster,9))
+            call  UsFrostBolt(caster,target,120*GetUnitAbilityLevel(caster,'A07X')*(1+0.25*R2I(GetClassUnitSpell(caster,7))), GetClassUnitSpell(caster,9))
             return true
         //Sand of time
         elseif abilId == 'A083' then
@@ -141,6 +141,14 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
             if not Trig_Disable_Abilities_Func001C(caster) then
                 call ElementStartAbility(caster, abilId)
 
+                if GetUnitAbilityLevel(caster, 'B024') > 0 then
+                    call GetRetaliationSource(caster, target, abilId, abilLvl)
+                endif
+
+                if abilId == 'A0AE' then
+                    call CastAvatar(caster, abilLvl)
+                endif
+
                 if abilId == 'A044' then
                     call Urn(caster)
                 endif   
@@ -167,7 +175,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                 set lvl = GetUnitAbilityLevel(caster, 'A04L')
                 if lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId )-1 ) > 0 then
-                    call CastRandomSpell(caster, target, spelLLoc, false, lvl)
+                    call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
                 endif
 
                 if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then

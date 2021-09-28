@@ -42,7 +42,7 @@ library ManifoldStaff requires RandomShit, AbilityData, DummyOrder
                 exitwhen p == null or GetUnitState(caster, UNIT_STATE_MANA) - mana <= 0
                 call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) - mana)
                 call GroupRemoveUnit(ManifoldGroup, p)
-                call CastSpell(caster, p, abilId, lvl, Order_Target, x, y)
+                call CastSpell(caster, p, abilId, lvl, Order_Target, x, y).activate()
             endloop
 
             set SpellData[GetHandleId(caster)].boolean[8] = false

@@ -10,7 +10,7 @@ library Vampirism requires RandomShit
         endif
 
         //Bloodstone target & Divine Bubble
-        if GetUnitAbilityLevel(u1, 'B01V') > 0 or LoadBoolean(HT,GetHandleId(u2),'A07S') then
+        if GetUnitAbilityLevel(u1, 'B01V') > 0 or IsUnitDivineBubbled(u2) or GetUnitAbilityLevel(u1, 'B022') > 0 then
             return
         endif
 
@@ -33,7 +33,6 @@ library Vampirism requires RandomShit
                 set V2 = V2 + 1
                 call BlzSetUnitMaxHP(u1,BlzGetUnitMaxHP(u1)+4)
             endloop
-            
             
             call SaveReal(HT,GetHandleId(u1),-93000,V1)
             call SaveReal(HT,GetHandleId(u1),-93001,V2) 

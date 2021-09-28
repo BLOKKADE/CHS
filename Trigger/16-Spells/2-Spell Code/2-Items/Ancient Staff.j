@@ -1,7 +1,7 @@
 library AncientStaff requires DummyOrder, RandomShit, CustomState
     private function CalculateReduction takes integer count returns real
         local integer i = 1
-        local real mr = 30
+        local real mr = 0.3
         loop
             exitwhen i >= count
             set mr = mr * 1.2

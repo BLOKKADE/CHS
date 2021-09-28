@@ -196,8 +196,9 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
         call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Other\\PandarenBrewmasterBlood\\PandarenBrewmasterBlood.mdl", TrigU, "chest"))
     endif 
 
-    if vampCount > 0 then
+    if vampCount > 0 and IsFxOnCooldown(TrigA, 0) == false then
         call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", TrigA, "chest"))
+        call SetFxCooldown(TrigA, 0, 1)
     endif
     
     //Finishing Blow
@@ -239,7 +240,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
             
             
             
-            call RemoveDebuff(TrigU)
+            call RemoveDebuff(TrigU, 1)
         endloop
         call SaveReal(HT,GetHandleId(TrigU),82340,r1)
         call SaveReal(HT,GetHandleId(TrigU),82341,r2)
@@ -277,7 +278,7 @@ function Trig_Damage_Controller_After_Actions takes nothing returns nothing
 
     //Blademaster
     if GetUnitTypeId(TrigA) == 'N00K' and BladestormReady(TrigA) and attack then
-        call BladestormDamage(TrigA, GetEventDamage(), BlzGetEventDamageType() ==  DAMAGE_TYPE_NORMAL)
+        call BladestormDamage(TrigA, GetEventDamage(), BlzGetEventDamageType() ==  DAMAGE_TYPE_MAGIC)
     endif
 
     //Stone Protection

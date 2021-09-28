@@ -86,7 +86,7 @@ endfunction
 function AgiInfo takes unit u returns string
 	local string s = PrimaryAttributeDmg(u, 1)
 	set s = s + "Each point increases armor by 0.150. (" + statColour[1] + "+" + R2SW(GetHeroAgi(u, true) * 0.15, 1, 1) + " total|r)\n" 
-	set s = s + "Each point increases attack speed by 1%%. (" + statColour[1] + "+" + R2SW((GetHeroAgi(u, true) * 0.01), 1, 1) + "%% total|r) (Max 400%%)\n"
+	set s = s + "Each point increases attack speed by 1%%. (" + statColour[1] + "+" + R2SW(RMinBJ(GetHeroAgi(u, true), 400), 1, 1) + "%% total|r) (Max 400%%)\n"
 	return s + "Agility per level: " + statColour[1] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(u)) + "|r"
 endfunction
 

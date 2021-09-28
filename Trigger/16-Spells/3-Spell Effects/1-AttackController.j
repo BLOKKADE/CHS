@@ -104,7 +104,7 @@ function Trig_Spell12_Actions takes nothing returns nothing
     
     //Huntress
     if GetUnitTypeId(u2) == 'N00R' then
-        call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.095 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
+        call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.495 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
     endif
 
 

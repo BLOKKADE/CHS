@@ -39,7 +39,7 @@ library MidasTouch initializer init requires DummyOrder
         endmethod
 
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or this.stop then
+            if T32_Tick > this.endTick or this.stop or SuddenDeathEnabled then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -74,7 +74,7 @@ library MidasTouch initializer init requires DummyOrder
             set this.dmgBonus = R2I(BlzGetUnitBaseDamage(this.target, 0) * MidasBonus)
             //call BJDebugMsg("dmg: +" + I2S(this.dmgBonus))
             call this.updateStats(false)
-            call SetUnitState(this.target, UNIT_STATE_LIFE, GetUnitState(this.target, UNIT_STATE_LIFE) + this.hpBonus)
+            call SetUnitState(this.target, UNIT_STATE_LIFE, GetUnitState(this.target, UNIT_STATE_LIFE) * (1 + MidasBonus))
             call this.startPeriodic()
             return this
         endmethod
@@ -100,9 +100,9 @@ library MidasTouch initializer init requires DummyOrder
         
         if GetMidasTouch(GetHandleId(target)) == 0 then
             //call BJDebugMsg("midas power:" + R2S(power) + " abilpower: " + R2S(abilPower) +" gold: " + I2S((499 + (26 * level))) + " total: " + I2S(R2I((499 + (26 * level)) * power)))
-            set MidasTouchGold[GetHandleId(target)] = MidasTouch.create(target, R2I((499 + (26 * level)) * power), 6.5)
+            set MidasTouchGold[GetHandleId(target)] = MidasTouch.create(target, R2I((499 + (26 * level)) * power), 10.5)
         else
-            set GetMidasTouch(GetHandleId(target)).endTick = T32_Tick + R2I(6.5*32)
+            set GetMidasTouch(GetHandleId(target)).endTick = T32_Tick + R2I(10.5*32)
         endif
         //call BJDebugMsg("dh: " + I2S(DousingHexChance.integer[GetHandleId(target)]))
     endfunction

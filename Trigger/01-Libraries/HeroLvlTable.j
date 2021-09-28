@@ -80,6 +80,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('O008', 0, "|cffe7544aSummon damage bonus|r: ,0,")
         call SetBonusStr('O008', 1, "|cffd6e049Faerie Dragon damage|r: ,0,")
+        call SetBonusStr('O008', 2, "|cff4daed4Faerie Dragon attack speed|r: ,0,%%")
 
         call SetBonusStr('O007', 0, "|cffe7544aInitial damage|r: ,0,")
         call SetBonusStr('O007', 1, "|cffd6e049Damage per second|r: ,0,")
@@ -113,7 +114,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('N00Q', 0, "|cffe7544aAttack damage bonus|r: ,0,")
 
-        call SetBonusStr('N00C', 0, "|cffe7544aHit point bonus|r: ,0,")
+        call SetBonusStr('N00C', 0, "|cffe7544aHit point bonus|r: ,0,%%")
 
         call SetBonusStr('O006', 0, "|cffe7544aAbsolute slot bonus|r: ,0,")
 
