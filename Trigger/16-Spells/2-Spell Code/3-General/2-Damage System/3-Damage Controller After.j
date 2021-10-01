@@ -128,13 +128,6 @@ scope DamageControllerAfter initializer init
         
         //Magic Necklace of Absorption
         if GetUnitAbilityLevel(TrigU  ,'B00R') >= 1 and  BlzGetEventDamageType() == DAMAGE_TYPE_MAGIC then
-            if GetUnitAbilityLevel(TrigA, 'A087') == 0 and SuddenDeathEnabled == false then
-                if TrigU == TrigA then
-                    call AddHeroXP(TrigU, R2I(GetEventDamage()*0.015),true)
-                else
-                    call AddHeroXP(TrigU, R2I(GetEventDamage()*0.15),true)
-                endif
-            endif
             call SetUnitState(TrigU,UNIT_STATE_MANA,   GetUnitState( TrigU  , UNIT_STATE_MANA  )  +     GetEventDamage()*0.75 )
         endif
 
@@ -289,7 +282,10 @@ scope DamageControllerAfter initializer init
         if GetUnitAbilityLevel(TrigA,'A02S' ) >= 1 and attack  then
             call UsOrderU(TrigA,TrigU,GetUnitX(TrigA),GetUnitY(TrigA),'A02R',"chainlightning",  GetHeroInt(TrigA,true)*(20+8*I2R(GetUnitAbilityLevel(TrigA,'A02S' )))/100, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif
-        
+
+        if UnitHasItemS(TrigA, 'I05G') and BlzGetEventDamageType() ==  DAMAGE_TYPE_MAGIC and GetUnitState(TrigU, UNIT_STATE_LIFE) - GetEventDamage() <= 0 then
+            set MacigNecklaceBonus.boolean[GetHandleId(TrigU)] = true
+        endif
         set GUS = null
         set GUT = null
         set TrigU = null

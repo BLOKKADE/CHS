@@ -141,6 +141,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
             if not Trig_Disable_Abilities_Func001C(caster) then
                 call ElementStartAbility(caster, abilId)
 
+                if GetUnitAbilityLevel(caster, 'A0AC') > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
+                    call PoisonSpellCast(caster, target)
+                endif
+
                 if GetUnitAbilityLevel(caster, 'B024') > 0 then
                     call GetRetaliationSource(caster, target, abilId, abilLvl)
                 endif
@@ -174,7 +178,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                 endif
 
                 set lvl = GetUnitAbilityLevel(caster, 'A04L')
-                if lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId )-1 ) > 0 then
+                if lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
                     call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
                 endif
 

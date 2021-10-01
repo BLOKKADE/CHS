@@ -35,5 +35,7 @@ library AbsoluteElements initializer init requires Table
         call InitializeAbsolute(8, 'A07P')
         call InitializeAbsolute(9, 'A07V')
         call InitializeAbsolute(11, 'A07R')
+        call InitializeAbsolute(Element_Arcane, 'A0AB')
+        call InitializeAbsolute(Element_Poison, 'A0AC')
     endfunction
 endlibrary

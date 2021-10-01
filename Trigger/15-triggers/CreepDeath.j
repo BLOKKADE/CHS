@@ -86,9 +86,9 @@ library CreepDeath initializer init requires RandomShit
         set itemCount = UnitHasItemI(killingHero, 'I05U')
         if itemCount > 0 then
             if PilageBonus == 0 then
-                set expBounty = expBounty + (2*GetHeroLevel(killingHero)) * itemCount
+                set expBounty = expBounty + ((2*GetHeroLevel(killingHero)) * itemCount)
             else
-                set expBounty = expBounty + (GetHeroLevel(killingHero)) * itemCount 
+                set expBounty = expBounty + ((GetHeroLevel(killingHero)) * itemCount )
             endif
         endif
 
@@ -104,6 +104,10 @@ library CreepDeath initializer init requires RandomShit
             set goldBounty = goldBounty + udg_integer59+udg_integer61
         else
             set goldBounty = goldBounty + udg_integer59
+        endif
+
+        if MacigNecklaceBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05G') then
+            set expBounty = R2I(expBounty * 1.3)
         endif
         
         call BountyText(dyingUnit, goldBounty)

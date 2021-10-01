@@ -17,13 +17,22 @@ library MouseHoverInfo requires TimerUtils, GetClass, RandomShit
 
         if udg_units01[GetPlayerId(p) + 1] == null then
             call ClearTextMessages()
-            set heroInfo = heroInfo + "|cffff0000" + GetObjectName(GetUnitTypeId( u )) +"|r\n"
+            set heroInfo = heroInfo + "|cff56fc6c" + GetHeroProperName(u) + "|r the |cff00c3ff" + GetObjectName(GetUnitTypeId( u )) +"|r\n"
             set temp = GetClassification(u, GetUnitTypeId( u ), false)
-
             if temp != "" then
                 set heroInfo = heroInfo + temp + "\n"
             endif
-            set heroInfo = heroInfo +  LoadStr(HT_data,GetUnitTypeId( u ),2 )   + "\n\n"
+            set temp = LoadStr(HT_data, GetUnitTypeId(u), 2)
+            if temp != "" and temp != null then
+                set heroInfo = heroInfo + temp + "\n"
+            endif
+
+            set temp = LoadStr(HT_data, GetUnitTypeId(u), 3)
+            if temp != "" and temp != null then
+                set heroInfo = heroInfo + temp
+            endif
+
+            set heroInfo = heroInfo + "\n\n"
             set heroInfo = heroInfo + "|cff0000ffAttributes|r  \n"
             set heroInfo = heroInfo + "|cffe7544aStrength|r: " + I2S(GetHeroStr(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('ustp')))
             set heroInfo = heroInfo + "\n|cffd6e049Agility|r: " + I2S(GetHeroAgi(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uagp')))

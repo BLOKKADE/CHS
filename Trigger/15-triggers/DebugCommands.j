@@ -1,4 +1,4 @@
-library DebugCommands initializer init
+library DebugCommands initializer init requires CustomState
     globals
         boolean array NextRound
         real RoundTime = 20
@@ -7,7 +7,7 @@ library DebugCommands initializer init
 //===========================================================================
     function SpawnDummy takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        call CreateUnit(Player(11), 'hfoo', GetUnitX(udg_units01[pid+1]), GetUnitY(udg_units01[pid+1]), 0)
+        call AddUnitMagicDmg(CreateUnit(Player(11), 'hfoo', GetUnitX(udg_units01[pid+1]), GetUnitY(udg_units01[pid+1]), 0), 300)
     endfunction
 
     function LvlHero takes nothing returns nothing

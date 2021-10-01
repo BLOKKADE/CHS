@@ -5,6 +5,7 @@ library Hints initializer init
         integer limit2
         integer limit3
         boolean array DisableHint
+        integer hintCount = 0
     endglobals
 
     private function DisplayHint takes nothing returns nothing
@@ -54,7 +55,7 @@ library Hints initializer init
     endfunction
 
     private function init takes nothing returns nothing
-        set Hints[1]="There are hints showing in-game!"
+        set Hints[1]="Hold shift while buying glory buffs, income or abilities to isntantly buy as much as you can!"
         set Hints[2]="Wait a minute or two if you get stuck! The anti-stuck system is slow, but it'll get you out of there sooner or later."
         set Hints[3]="If you have overlapping hotkeys go to the menu > options > preset keybindings and set it to grid mode to fix it! (needs to be done in main menu)"
         set Hints[4]="Maximum level of ALL abilities is 30! Unless you're the Tauren."

@@ -27,7 +27,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
     endfunction
 
     function GetPassiveStr takes unit u returns string
-        local string s = "\n"
+        local string s = "|n"
         local integer i = 0
         local string bonusStr = ""
         local real value = 0
@@ -35,11 +35,11 @@ library HeroLvlTable initializer init requires Table, RandomShit
         loop
             set value = GetBonus(u, i)
             set bonusStr = GetBonusStr(uid, i)
-            if bonusStr != "" then
-                set s = s + "\n" + ReplaceText(",0,", R2S(value), bonusStr)
+            if bonusStr != "" and bonusStr != null then
+                set s = s + "|n" + ReplaceText(",0,", R2S(value), bonusStr)
             endif
             set i = i + 1
-            exitwhen i > 2
+            exitwhen i > 3 or bonusStr == null
         endloop
 
         return s
@@ -68,9 +68,10 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('H003', 0, "|cffe7544aIntelligence bonus|r: ,0,")
 
-        call SetBonusStr('O003', 0, "|cffe7544aStrength bonus|r: ,0,")
-        call SetBonusStr('O003', 1, "|cffd6e049Agility bonus|r: ,0,")
-        call SetBonusStr('O003', 2, "|cff4daed4Intelligence bonus|r: ,0,")
+        call SetBonusStr('O003', 0, "|cffe7544a[Light] Attack damage bonus |r: ,0,")
+        call SetBonusStr('O003', 1, "|cffd6e049[Light] Armor bonus|r: ,0,%%")
+        call SetBonusStr('O003', 2, "|cff4daed4[Dark] Magic power bonus|r: ,0,")
+        call SetBonusStr('O003', 3, "|cff4daed4[Dark] magic protection bouns]|r: ,0,")
 
         call SetBonusStr('O004', 0, "|cffe7544aFeedback|r: ,0,")
 
@@ -125,7 +126,8 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr('H016', 0, "|cffe7544aInitial damage|r: ,0,")
         call SetBonusStr('H016', 1, "|cffd6e049Damage per second|r: ,0,")
 
-        call SetBonusStr('H017', 0, "|cffe7544aBlock bonus|r: ,0,")
+        call SetBonusStr('H017', 0, "|cffe7544aStone Edge block damage|r: ,0,%%")
+        call SetBonusStr('H017', 1, "|cffe7544aBlock bonus|r: ,0,%%")
 
         call SetBonusStr('N02K', 0, "|cffe7544aAttack speed reduction|r: ,0,%%")
         call SetBonusStr('N02K', 1, "|cffd6e049Movespeed reduction|r: ,0,%%")

@@ -301,7 +301,7 @@ library AbilityData initializer init requires Table
         //28 - Shockwave 
         call SaveAbilData('AOsh', 'I00R', false, 0, 0, true, Order_Point, "shockwave")
         call SetLastObjectElement(Element_Earth, 2)
-        call SetLastObjectElement(Element_Energy, 1)
+        call SetLastObjectElement(Element_Light, 1)
 
         //29 - Summon Lava Spawn 
         call SaveAbilData('ANlm', 'I00T', false, 0, 0, false, Order_Instant, "slimemonster")
@@ -950,6 +950,14 @@ library AbilityData initializer init requires Table
         call SaveAbilData('A07R', 'I099', true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
+        //178 - Absolute Arcane
+        call SaveAbilData('A0AB', 'I0B2', true, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Arcane, 1)
+
+        //179 - Absolute Poison
+        call SaveAbilData('A0AC', 'I0B3', true, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Poison, 1)
+
         //177 - Mana Starvation
         call SaveAbilData('A09J', 'I0AO', false, 0, 1, true, Order_Target, "ancestralspirit")
         call SetLastObjectElement(Element_Dark, 1)
@@ -998,6 +1006,7 @@ library AbilityData initializer init requires Table
         call SetObjectElement('N00I', Element_Dark, 1)
         call SetObjectElement('H002', Element_Light, 1)
         call SetObjectElement('E000', Element_Light, 1)
+        call SetObjectElement('O003', Element_Light, 1)
         call SetObjectElement('H018', Element_Cold, 1)
         call SetObjectElement('N02K', Element_Cold, 1)
         call SetObjectElement('H007', Element_Blood, 1)
@@ -1012,7 +1021,7 @@ library AbilityData initializer init requires Table
         call SetObjectElement('O004', Element_Arcane, 1)
         call SetObjectElement('H01D', Element_Arcane, 1)
         call SetObjectElement('H01I', Element_Arcane, 1)
-        call SetObjectElement('O003', Element_Arcane, 1)
+        call SetObjectElement('H005', Element_Poison, 1)
 
 
         /*

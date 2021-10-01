@@ -25,7 +25,7 @@ scope DamageControllerBefore initializer init
                 endif
             else
                 //Staff of Power
-                if  UnitHasItemS( GetEventDamageSource() ,'I080') then
+                if  UnitHasItemS( GetEventDamageSource() ,'I080') or GetUnitTypeId(u) == 'n00W' or GetUnitTypeId(u) == 'N01H' then
                     call BlzSetEventDamageType(DAMAGE_TYPE_MAGIC)
                 endif
             endif
@@ -435,9 +435,14 @@ scope DamageControllerBefore initializer init
         if II > 0 and BlzGetUnitMaxMana(damageSource) < BlzGetUnitMaxMana(damageTarget) then
             call BlzSetEventDamage(GetEventDamage() * 1 + (0.5 * II))
         endif
+        
+        //Absolute Poison
+        if GetUnitAbilityLevel(damageSource, 'A0AC') > 0 and GetUnitAbilityLevel(damageSource, 'B01W') == 0  then
+            call PoisonSpellCast(damageSource, damageTarget)
+        endif
 
         //Absolute Arcane
-        if GetUnitAbilityLevel(damageSource, 'A0AB') > 0 and (not attack) and DmgType == DAMAGE_TYPE_MAGIC then
+        if GetUnitAbilityLevel(damageSource, 'A0AB') > 0 and (not attack) and DmgType == DAMAGE_TYPE_MAGIC and GetUnitAbilityLevel(damageSource, 'B01W') == 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A0AB') == 0 then
             call AbsoluteArcaneStruct.create(damageSource, damageTarget)
         endif
 
@@ -460,6 +465,13 @@ scope DamageControllerBefore initializer init
                     call BlzSetEventDamage(GetEventDamage()+Admg)
                 endif
             endif
+        endif
+
+        //Rock Golem
+        if GetUnitTypeId(damageTarget) == 'H017' and BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A0AH') == 0 then
+            call AbilStartCD(damageTarget, 'A0AH', 1)
+            call DestroyEffect(AddSpecialEffectFix("war3mapImported\\NewDirtEXNofire.mdx", GetUnitX(damageTarget), GetUnitY(damageTarget)))
+            call AreaDamagePhys(damageTarget, GetUnitX(damageTarget), GetUnitY(damageTarget), GetUnitBlock(damageTarget) * (0.49 + (0.01 * GetHeroLevel(damageTarget))), 400, 'A0AH')
         endif
         
         if DmgType == DAMAGE_TYPE_MAGIC then 
@@ -492,12 +504,14 @@ scope DamageControllerBefore initializer init
                 set blockDamage = blockDamage * 0.7
             endif
 
+            call BJDebugMsg(GetUnitName(damageTarget) + ", block:  " + R2S(GetUnitBlock(damageTarget)) + ", calc: " + R2S(blockDamage))
             //Absolute Dark
             set II = GetUnitAbilityLevel(damageSourceHero, 'A07Q')
-            if II > 0 then
-                set blockDamage = blockDamage * (1 - ((0.009 + (0.1 * II)) * GetClassUnitSpell(damageSourceHero, Element_Dark)))
+            if II > 0 and GetUnitAbilityLevel(damageSourceHero, 'B01W') == 0 then
+                set blockDamage = blockDamage * (1 - ((0.009 + (0.001 * II)) * GetClassUnitSpell(damageSourceHero, Element_Dark)))
             endif
 
+            call BJDebugMsg("dmg: " + R2S(GetEventDamage()) + ", block after ad: " + R2S(blockDamage) + " new dmg: " + R2S(GetEventDamage() - blockDamage))
             set blockDamage = GetEventDamage() - blockDamage
             if blockDamage < 0 then
                 call BlzSetEventDamage(0)
@@ -588,9 +602,15 @@ scope DamageControllerBefore initializer init
                 else
                     set Bfirst = false 
                 endif*/
+                
+                //Absolute Poison
+                set Admg = PoisonBonus.real[GetHandleId(damageSource)]
+                if Admg == 0 or GetUnitAbilityLevel(damageSourceHero, 'B01W') == 0 then
+                    set Admg = 1
+                endif
                 call SetBuff(damageTarget,2,8)
                 //call PerodicDmg(damageSource,damageTarget,10*II,0.5,1,8.01,'B015',Bfirst)
-                call PeriodicDamage.create(damageSource, damageTarget, 30*II, true, 1., 8, 1, false, 'B015').addLimit('A06O', 150, 1)
+                call PeriodicDamage.create(damageSource, damageTarget, 30*II * Admg, true, 1., 8, 1, false, 'B015').addLimit('A06O', 150, 1)
             endif
         endif
         

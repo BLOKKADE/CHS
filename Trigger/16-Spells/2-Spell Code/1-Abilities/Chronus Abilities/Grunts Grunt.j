@@ -15,7 +15,7 @@ library GruntsGrunt requires BuffLevel, RandomShit
             endif
         endmethod  
     
-        static method create takes unit source returns thistype
+        static method create takes unit source, real chronus returns thistype
             local thistype this
     
             if (recycle == 0) then
@@ -36,7 +36,7 @@ library GruntsGrunt requires BuffLevel, RandomShit
             call ElemFuncStart(this.source,'H01J')
             call SetHeroStr(this.source,GetHeroStr(this.source,false)+bonus,false)
             call BlzSetUnitBaseDamage(this.source,BlzGetUnitBaseDamage(this.source,0)+bonus,0)
-            set this.endTick = T32_Tick + R2I((9.9 + (0.1 * GetHeroLevel(this.source))) * 32)
+            set this.endTick = T32_Tick + R2I(((9.9 + (0.1 * GetHeroLevel(this.source))) * chronus) * 32)
             call this.startPeriodic()
             return this
         endmethod

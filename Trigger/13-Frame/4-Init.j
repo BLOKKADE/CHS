@@ -9,12 +9,11 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 
 		trigger SPEL_DFF = null
 
-		framehandle ToolBoxSpels = null
-		framehandle ToolBoxSpelsT = null
+		
 
 		integer  MaxSpell = 11
 
-		boolean array ShowAbButton
+		boolean array ShowCreepAbilButton
 
 
 		framehandle array SpellFR 
@@ -22,7 +21,24 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		framehandle array SpellTT
 
 		hashtable HtSpell = InitHashtable()
+
+		framehandle Tooltip = null
+		framehandle TooltipTitleFrame
+		framehandle TooltipTextFrame
+		constant real TooltipX = 0
+        constant real TooltipY = 0.165
+		real DEFAULT_SIZE = 0.020
+        real LINE_SIZE = 0.012
+        Table TooltipYSize
 	endglobals
+
+	function GetTooltipSize takes string s returns real
+		return (CountNewLines(s) * LINE_SIZE) + DEFAULT_SIZE
+	endfunction
+
+	function GetObjectTooltipSize takes integer objectId returns real
+		return GetTooltipSize(BlzGetAbilityExtendedTooltip(objectId, 0))
+    endfunction
 
 	function SkillSysStart takes nothing returns nothing
 		local integer NumButton = LoadInteger(HtSpell ,GetHandleId(BlzGetTriggerFrame()),1)
@@ -32,6 +48,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		local integer AbilLevel = 0
 		local integer ULT_ID = 0
 		local string  ToolTipS = ""
+		local string temp = ""
 		local boolean TypT = false
 		local boolean en_d = true
 		local integer i1
@@ -65,46 +82,79 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		elseif  BlzGetTriggerFrameEvent()  ==FRAMEEVENT_MOUSE_UP then
 
 		elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
-			//Hero icon
+			/*//Hero icon
 			if NumButton == 0 then
 				set SpellU = udg_units01[PlID + 1]
-				set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(SpellU)) + "|r\n" + GetClassification(SpellU, GetUnitTypeId(SpellU), false) + "\n" + LoadStr(HT_data, GetUnitTypeId(SpellU), 2) + "\n\n"
+				set ToolTipS= GetClassification(SpellU, GetUnitTypeId(SpellU), false) + "|n"
+				set temp = LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
+				if temp != "" and temp != null then
+					set ToolTipS = ToolTipS + temp + "|n"
+				endif
+				
+				set temp = LoadStr(HT_data, GetUnitTypeId(SpellU), 3)
+				if temp != "" and temp != null then
+					set ToolTipS = ToolTipS + temp + "|n"
+				endif
 				
 				if IncomeMode != 2 then
-					set ToolTipS=ToolTipS + "|cffd4954dIncome|r: " + I2S(Income[PlID]) + "\n"
+					set ToolTipS=ToolTipS + "|cffd4954dIncome|r: " + I2S(Income[PlID]) + "|n"
 				endif
 
-				set ToolTipS=ToolTipS + "|cffc94dd4Absolute slots:|r " + I2S(GetHeroMaxAbsoluteAbility(SpellU) + 1) + "\n"
-				set ToolTipS=ToolTipS + "|cff4d4dd4Hero attributes|r  \n"
-				set ToolTipS=ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(SpellU)) + "\n"
-				set ToolTipS=ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(SpellU)) + "\n"
-				set ToolTipS=ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(SpellU)) + "\n"
-				set ToolTipS=ToolTipS + "|cff51d44dHit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uhpr')) + (GetHeroStr(SpellU, true) * 0.075)) + "/" + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('umpr'))  + (GetHeroInt(SpellU, true) * 0.065)) + "\n"
-
+				set ToolTipS=ToolTipS + "|cffc94dd4Absolute slots:|r " + I2S(GetHeroMaxAbsoluteAbility(SpellU) + 1) + "|n"
+				set ToolTipS=ToolTipS + "|cff4d4dd4Hero attributes|r  |n"
+				set ToolTipS=ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(SpellU)) + "|n"
+				set ToolTipS=ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(SpellU)) + "|n"
+				set ToolTipS=ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(SpellU)) + "|n"
+				set ToolTipS=ToolTipS + "|cff51d44dHit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uhpr')) + (GetHeroStr(SpellU, true) * 0.075)) + "/" + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('umpr'))  + (GetHeroInt(SpellU, true) * 0.065)) + "|n"
 				if GetLocalPlayer() == GetTriggerPlayer() then
-					call BlzFrameSetText(ToolBoxSpelsT, ToolTipS)
-					call BlzFrameSetVisible(ToolBoxSpels, true)
+					call BlzFrameSetText(TooltipTitleFrame, "|cffff0000" + GetObjectName(GetUnitTypeId(SpellU)) + "|r")
+					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+            		call BlzFrameSetSize(Tooltip, 0.29, GetTooltipSize(ToolTipS))
+					call BlzFrameSetVisible(Tooltip, true)
+				endif*/
+			
+			if NumButton == 2 then
+				if GetLocalPlayer() == GetTriggerPlayer() then
+					call BlzFrameSetText(TooltipTitleFrame, "|cfffce177Next level|r: " + RoundCreepTitle)
+					set temp = RoundCreepInfo[PlID] + "|n|n|cfffce177Abilities|r: " + RoundAbilities
+					call BlzFrameSetText(TooltipTextFrame, temp)
+            		call BlzFrameSetSize(Tooltip, 0.29, 0.12 + GetTooltipSize(RoundAbilities))
+					call BlzFrameSetVisible(Tooltip, true)
 				endif
-
 			//Hero passive
 			elseif NumButton == 100 then
 				set SpellU=udg_units01[NumPlayerLast[PlID] + 1]
-				set ToolTipS="|cffff0000" + GetObjectName(GetUnitTypeId(SpellU)) + "|r\n" + GetClassification(SpellU, GetUnitTypeId(SpellU), false) + "\n" + LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
-				set ToolTipS=ToolTipS + GetPassiveStr(SpellU)
+				set temp = GetClassification(SpellU, GetUnitTypeId(SpellU), false)
+				if temp != "" and temp != null then
+					set ToolTipS = ToolTipS + temp + "|n"
+				endif
+				set temp = LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
+				if temp != "" and temp != null then
+					set ToolTipS = ToolTipS + temp + "|n"
+				endif
+
+				set temp = LoadStr(HT_data, GetUnitTypeId(SpellU), 3)
+				if temp != "" and temp != null then
+					set ToolTipS = ToolTipS + temp
+				endif
+
+				set ToolTipS = ToolTipS + GetPassiveStr(SpellU)
 
 				if GetTriggerPlayer() != GetOwningPlayer(SpellU) then
-					set ToolTipS=ToolTipS + "\n"
+					set ToolTipS=ToolTipS + "|n"
 					if IncomeMode != 2 then
-						set ToolTipS=ToolTipS + "\n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
+						set ToolTipS=ToolTipS + "|n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
 					endif
-					set ToolTipS=ToolTipS + "\n|cfffaf61cGold|r: " + I2S(GetPlayerState(Player(NumPlayerLast[PlID]), PLAYER_STATE_RESOURCE_GOLD))
-					set ToolTipS=ToolTipS + "\n|cff41e400Lumber|r: " + I2S(GetPlayerState(Player(NumPlayerLast[PlID]), PLAYER_STATE_RESOURCE_LUMBER))
-					set ToolTipS=ToolTipS + "\n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[NumPlayerLast[PlID]]))
+					set ToolTipS=ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(Player(NumPlayerLast[PlID]), PLAYER_STATE_RESOURCE_GOLD))
+					set ToolTipS=ToolTipS + "|n|cff41e400Lumber|r: " + I2S(GetPlayerState(Player(NumPlayerLast[PlID]), PLAYER_STATE_RESOURCE_LUMBER))
+					set ToolTipS=ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[NumPlayerLast[PlID]]))
 				endif
 
 				if GetLocalPlayer() == GetTriggerPlayer() then
-					call BlzFrameSetText(ToolBoxSpelsT, ToolTipS)
-					call BlzFrameSetVisible(ToolBoxSpels, true)
+					call BlzFrameSetText(TooltipTitleFrame,GetPlayerNameColour(GetOwningPlayer(SpellU)) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(SpellU)))
+					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+            		call BlzFrameSetSize(Tooltip, 0.29, GetTooltipSize(ToolTipS))
+					call BlzFrameSetVisible(Tooltip, true)
 				endif
 
 			//Hero abilities and absolutes
@@ -113,39 +163,44 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 					set SpellU = udg_units01[NumPlayerLast[PlID]+1]
 					set i3 =  GetInfoHeroSpell(SpellU ,NumButton-100) 
 					set SpellCP[PlID] = i3
-					set ToolTipS =   BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )+"\n"
-					set ToolTipS =ToolTipS +  GetClassification(SpellU, i3, true) + "\n"
-					set ToolTipS =ToolTipS +   BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )
+					set temp = GetClassification(SpellU, i3, true)
+					if temp != "" and temp != null then
+						set ToolTipS = ToolTipS + temp + "|n"
+					endif
+					set ToolTipS = ToolTipS +   BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )
 
 					//Hero absolutes
 					if NumButton > 110 and NumButton <=120 then
 						set i1 = GetAbsoluteElement(i3)
 						set i2 = GetClassUnitSpell(SpellU, i1)
-						set ToolTipS = ToolTipS + "\n\n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
+						set ToolTipS = ToolTipS + "|n|n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
 					endif
 
 					if GetLocalPlayer() == GetTriggerPlayer() then	
-						call BlzFrameSetText(ToolBoxSpelsT  , ToolTipS )
-						call BlzFrameSetVisible(ToolBoxSpels  ,true )
+						call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 ))
+						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+						call BlzFrameSetSize(Tooltip, 0.29, GetTooltipSize(ToolTipS))
+						call BlzFrameSetVisible(Tooltip, true)
 					endif       
 				else
 					set SpellU = selectedUnit[PlID]
 					set i3 =  roundAbilities[NumButton-100]
 					set SpellCP[PlID] = i3
-					set ToolTipS =   BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )+"\n"
-					set ToolTipS =ToolTipS +   BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )
+					set ToolTipS = BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 )
 
 					if GetLocalPlayer() == GetTriggerPlayer() then	
-						call BlzFrameSetText(ToolBoxSpelsT  , ToolTipS )
-						call BlzFrameSetVisible(ToolBoxSpels  ,true )
+						call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)-1 ))
+						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+						call BlzFrameSetSize(Tooltip, 0.29, GetTooltipSize(ToolTipS))
+						call BlzFrameSetVisible(Tooltip, true)
 					endif       
 				endif
 			endif
 		elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_LEAVE then
 
 			if GetLocalPlayer() == GetTriggerPlayer() then	
-				call BlzFrameSetText(ToolBoxSpelsT  , ToolTipS)
-				call BlzFrameSetVisible(ToolBoxSpels  ,false )
+				call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+				call BlzFrameSetVisible(Tooltip, false)
 			endif
 		endif
 
@@ -187,7 +242,8 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		set gameUI=BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)
 		set SPEL_DFF=CreateTrigger()
 		call TriggerAddAction(SPEL_DFF, function SkillSysStart)
-		call CreateIconWorld(0 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.594 , - 0.39 , 0.036)
+		call CreateIconWorld(2 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - 0.39 , 0.036)
+		call BlzFrameSetTexture(SpellFR[2] , "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp" , 0, true)
 		call CreateIconWorld(36 , "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp" , 0.43 + 0.025 , - 0.024 , 0.025)
 		call BlzFrameSetVisible(SpellUP[36], true)
 		call CreateIconWorld(37 , "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp" , 0.43 + 0.05 , - 0.024 , 0.025)
@@ -214,21 +270,28 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		call CreateIconWorld(119 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 9*sizeAbil , - 2*sizeAbil , sizeAbil)
 		call CreateIconWorld(120 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 10*sizeAbil , -2*sizeAbil , sizeAbil)
 
-		set ToolBoxSpels=BlzCreateFrame("ListBoxWar3", gameUI, 0, 0)
-		call BlzFrameSetSize(ToolBoxSpels, 0.3, 0.16)
-		call BlzFrameSetPoint(ToolBoxSpels, FRAMEPOINT_TOPRIGHT, gameUI, FRAMEPOINT_TOPRIGHT, 0, - 0.02)
-		set ToolBoxSpelsT=BlzCreateFrameByType("TEXT", "StandardInfoTextTemplate", ToolBoxSpels, "StandardTitleTextTemplate", 0)
-		call BlzFrameSetPoint(ToolBoxSpelsT, FRAMEPOINT_TOPLEFT, ToolBoxSpels, FRAMEPOINT_TOPLEFT, 0.01, - 0.014)
-		call BlzFrameSetSize(ToolBoxSpelsT, 0.28, 0.2)
-		call BlzFrameSetText(ToolBoxSpelsT, "")
-		call BlzFrameSetVisible(ToolBoxSpels, false)
+		set Tooltip = BlzCreateFrame("TooltipText", gameUI  , 0, 0)
+		set TooltipTitleFrame = BlzGetFrameByName("TooltipTextTitle", 0)
+		set TooltipTextFrame = BlzGetFrameByName("TooltipTextValue", 0)
+        
+        call BlzFrameSetSize(Tooltip, 0.29, 0.03)
+        call BlzFrameSetPoint(Tooltip, FRAMEPOINT_BOTTOMRIGHT, gameUI, FRAMEPOINT_BOTTOMRIGHT, TooltipX, TooltipY)
+        call BlzFrameSetVisible(Tooltip, false )   
 	endfunction
 
 	//===========================================================================
 	private function init takes nothing returns nothing
+		local integer i = 0
 		local trigger trg = CreateTrigger()
+		set TooltipYSize = Table.create()
 		call TriggerRegisterTimerEventSingle( trg, 1.00 )
 		call TriggerAddAction( trg, function Trig_ABIL_TAKE_Actions )
+/*
+		loop
+            set OpenedTooltip[i] = -1
+            set i = i + 1
+            exitwhen i > 11
+        endloop*/
 		set trg = null
 	endfunction
 endlibrary

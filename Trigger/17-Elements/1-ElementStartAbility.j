@@ -91,7 +91,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
                 call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 150 + (50)*GetHeroLevel(u) ,0)
                 call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
                 call UnitApplyTimedLife(U,'A041',15)
-        endif    
+        endif   
         
         //Stone Helmet
         if  UnitHasItemS(u,'I090') and IsSpellElement(u,id,4) then   

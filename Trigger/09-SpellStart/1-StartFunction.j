@@ -132,22 +132,26 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
         endif
         set heroLevel = GetHeroLevel(Herou)
         
+        //Hero Buff
         set abilLevel = GetUnitAbilityLevel(Herou,'A03Q')
         if abilLevel > 0 then
             call ElemFuncStart(Herou,'A03Q')
             call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03T',"battleroar",(100*abilLevel)*(1+0.009*heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10*abilLevel)*(1+0.009*heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,(7+(heroLevel*0.09))*ChronusLevel,ABILITY_RLF_DURATION_HERO,(7+(heroLevel*0.09))*ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
         endif
     
+        //Temporary Inisibility
         set abilLevel = GetUnitAbilityLevel(Herou,'A03U')    
         if abilLevel > 0 then
             call TempInvisStruct.create(Herou, (1.8 + (0.2 * abilLevel)) * ChronusLevel)
         endif
         
+        //Temporary Power
         set abilLevel = GetUnitAbilityLevel(Herou,'A04E')    
         if abilLevel > 0 then
             call TempPowerStruct.create(Herou, (8 + (0.02 * heroLevel)) * ChronusLevel)
         endif
         
+        //Holy Enlightenment
         set abilLevel = GetUnitAbilityLevel(Herou,'A04K')    
         if abilLevel > 0 and urn == false then
             call ElemFuncStart(Herou,'A04K')
@@ -167,11 +171,13 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
             call CheaterMagicStruct.create(Herou, (2.75 + (0.25*abilLevel))*ChronusLevel)
         endif
         
+        //Blessed Protection
         set abilLevel = GetUnitAbilityLevel(Herou,'A045')    
         if abilLevel > 0 then
             call BlessedProtectionStruct.create(Herou, (2.70 + (0.3*abilLevel))*ChronusLevel)
         endif
         
+        //Ancient Runes
         set abilLevel = GetUnitAbilityLevel(Herou,'A09O')    
         if abilLevel > 0 then
             call ElemFuncStart(Herou,'A09O')
@@ -180,6 +186,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
             call CreateRandomRune(-60+10*abilLevel,GetRandomReal(-100,100)+GetUnitX(Herou) ,GetRandomReal(-100,100)+GetUnitY(Herou)   ,Herou)   
         endif
         
+        //Shining Runestone
         set i1 = UnitHasItemI( Herou,'I08L' )
         set i = 0
             call ElemFuncStart(Herou,'I08L')
@@ -191,27 +198,26 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
             endloop
         endif
         
+        //Grunt
         if GetUnitTypeId(Herou) == 'H01J' then
-            call GruntsGruntStruct.create(Herou)
+            call GruntsGruntStruct.create(Herou, ChronusLevel)
         endif
         
-        
+        //Bone Armor
         if UnitHasItemS(Herou,'I07O') then
             call ElemFuncStart(Herou,'I07O')
             set U = CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
-            call UnitApplyTimedLife(U,'A041',90)
+            call UnitApplyTimedLife(U,'A041',90*ChronusLevel)
             set U =  CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
-                    call UnitApplyTimedLife(U,'A041',90)
+                    call UnitApplyTimedLife(U,'A041',90*ChronusLevel)
             set U =  CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
-                    call UnitApplyTimedLife(U,'A041',90)
+                    call UnitApplyTimedLife(U,'A041',90*ChronusLevel)
             set U =  CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
-                    call UnitApplyTimedLife(U,'A041',90)
+                    call UnitApplyTimedLife(U,'A041',90*ChronusLevel)
             
         endif
         
-        
-        
-        
+        //Fearless Defenders
         set abilLevel = GetUnitAbilityLevel(Herou,'A041')   
         if abilLevel > 0 then
             call ElemFuncStart(Herou,'A041')
@@ -219,25 +225,25 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
             call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)-500+R2I((abilLevel*10000)*(1+(heroLevel*0.038) )) )
             call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) -10 + R2I((abilLevel*100)*(1+(heroLevel*0.038)) ),0)
             call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
-            call UnitApplyTimedLife(U,'A041',8 + (heroLevel*0.09))
+            call UnitApplyTimedLife(U,'A041',(8 + (heroLevel*0.09)) * ChronusLevel)
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))
 
             set U = CreateUnit( GetOwningPlayer(Herou),'h01A',GetUnitX(Herou)+40*CosBJ(30+GetUnitFacing(Herou)),GetUnitY(Herou)+40*SinBJ(30+GetUnitFacing(Herou)),GetUnitFacing(Herou) )
             call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)-500+R2I((abilLevel*10000)*(1+(heroLevel*0.038) )) )
             call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) -10 + R2I((abilLevel*100)*(1+(heroLevel*0.038)) ),0)
             call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
-            call UnitApplyTimedLife(U,'A041',8 + (heroLevel*0.09))
+            call UnitApplyTimedLife(U,'A041',(8 + (heroLevel*0.09)) * ChronusLevel)
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))       
         endif
 
+        //Magic Blade
         set i1 = UnitHasItemI( Herou,'I06I' )
         if  i1 > 0 then
             call ElemFuncStart(Herou,'I06I')
             call SetUnitState(Herou, UNIT_STATE_MANA, GetUnitState(Herou, UNIT_STATE_MANA)-35000*i1  )
         endif
         
-        
-        
+        //Armor of Ancestors
         set i1 = UnitHasItemI( Herou,'I07G' )
         if  i1 > 0 then
             call ElemFuncStart(Herou,'I07G')
@@ -246,7 +252,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
             call SaveInteger(HT,GetHandleId(Herou),54001,LoadInteger(HT,GetHandleId(Herou),54001)+i1*20*NumberOfUnit[pid] ) 
         endif
         
-
+        //I06J
         set i1 = UnitHasItemI( Herou,'I06J' )
         if  i1 > 0 then
             call ElemFuncStart(Herou,'I06J')
@@ -256,13 +262,13 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
                 
         endif 
 
-    
-            
+        //Gnome
         if GetUnitTypeId(Herou) == 'H019' then
             call ElemFuncStart(Herou,'H019')
             call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55*heroLevel,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,1+(heroLevel*0.04),ABILITY_RLF_DURATION_HERO,2+(heroLevel*0.08),ABILITY_RLF_DURATION_NORMAL)
         endif
             
+        //Rapid Recovery
         set abilLevel = GetUnitAbilityLevel(Herou,'A03X')    
         if abilLevel > 0 then
             call ElemFuncStart(Herou,'A03X')
@@ -270,7 +276,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
 
         endif
         
-        
+        //Demon Curse
         set abilLevel = GetUnitAbilityLevel(Herou,'A042')    
         if abilLevel > 0 then
                 call ElemFuncStart(Herou,'A042')

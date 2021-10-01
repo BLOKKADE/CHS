@@ -492,7 +492,7 @@ globals
         endif
         
         //Absolute Arcane
-        if GetUnitAbilityLevel(u, 'A0AB') > 0 then
+        if GetUnitAbilityLevel(u, 'A0AB') > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
             set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, 'A0AB')) * GetClassUnitSpell(u, Element_Arcane)))
         endif
             
@@ -545,6 +545,16 @@ globals
         endif
         
         return newCooldown 
+    endfunction
+
+    function AddSpecialEffectFix takes string s1, real x, real y returns effect
+        local string EffectString = ""
+
+        if EffectVisible then
+            set EffectString = s1
+        endif
+
+        return  AddSpecialEffect(EffectString, x, y)
     endfunction
 
     function AddSpecialEffectTargetFix takes string s1, unit u, string s2 returns effect

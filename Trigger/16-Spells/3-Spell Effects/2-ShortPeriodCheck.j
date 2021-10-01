@@ -24,25 +24,25 @@ scope ShortPeriodCheck initializer init
                 if GetUnitAbilityLevel(u ,'A02Z') >= 1 then
                     if CheckProc(u, 610) then
                         call ElemFuncStart(u,'A02Z')
-                        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", 200 + GetUnitAbilityLevel(u ,'A02Z')*50 + GetHeroLevel(u)*(0.8 + 0.2*GetUnitAbilityLevel(u ,'A02Z')), ConvertAbilityRealLevelField('Ocl1') )
+                        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", 200 + GetUnitAbilityLevel(u ,'A02Z')* 50 + GetHeroLevel(u)*(0.8 + 0.2 * GetUnitAbilityLevel(u ,'A02Z')), ConvertAbilityRealLevelField('Ocl1') )
                     endif
                     
                 endif
                 
                 //Absolute Blood
                 set i1 = GetUnitAbilityLevel(u,'A07R')
-                if i1 > 0 then
-                        set s = GetDesriptionAbility('A07R',i1-1)
-                        if LoadReal(HT,hid,-93001) == 0 then
-                            set s2 = "50"
-                        else
-                            set s2 = I2S(R2I(LoadReal(HT,hid,-93001)))
-                        endif
+                if i1 > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
+                    set s = GetDesriptionAbility('A07R',i1 - 1)
+                    if LoadReal(HT,hid,- 93001) == 0 then
+                        set s2 = "50"
+                    else
+                        set s2 = I2S(R2I(LoadReal(HT,hid,- 93001)))
+                    endif
                         
-                        set s3 = ReplaceText("2000",s2,s)
-                        set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,-93000) ) ,s3)
+                    set s3 = ReplaceText("2000",s2,s)
+                    set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,- 93000) ) ,s3)
                     if GetLocalPlayer() == GetOwningPlayer(u) then
-                        call BlzSetAbilityExtendedTooltip('A07R',s3  , i1-1  ) 
+                        call BlzSetAbilityExtendedTooltip('A07R',s3  , i1 - 1  ) 
                     endif
                 
                 endif
@@ -50,28 +50,28 @@ scope ShortPeriodCheck initializer init
                 //Ancient Blood
                 set i1 = GetUnitAbilityLevel(u,'A07T')
                 if i1 > 0 then
-                    set s = GetDesriptionAbility('A07T',i1-1)
+                    set s = GetDesriptionAbility('A07T',i1 - 1)
                     if LoadReal(HT,hid,82341) == 0 then
-                        set s2 =    "20000"
+                        set s2 = "20000"
                     else
-                        set s2 = I2S(R2I(LoadReal(HT,hid,82341)*(1- I2R(i1)*0.01 ) ))
+                        set s2 = I2S(R2I(LoadReal(HT,hid,82341)*(1 - I2R(i1)* 0.01 ) ))
                     endif
                     
                     set s3 = ReplaceText("20,000",s2,s) 
                     set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,82340) ) ,s3)
                         
                     if GetLocalPlayer() == GetOwningPlayer(u) then
-                        call BlzSetAbilityExtendedTooltip('A07T',s3  , i1-1  ) 
+                        call BlzSetAbilityExtendedTooltip('A07T',s3  , i1 - 1  ) 
                     endif
                 
                 endif
                         
                 //Absolute Cold
                 set i1 = GetUnitAbilityLevel(u,'A07V')
-                if i1 > 0 then
+                if i1 > 0 and GetUnitAbilityLevel(u, 'B01W') == 0  then
                     if BlzGetUnitAbilityCooldownRemaining(u,'A07V') == 0 and CheckProc(u, 500) then
                         call AbilStartCD(u, 'A07V', 20.5 - (0.5 * i1))
-                        call AbsoluteCold(u,GetClassUnitSpell(u,9)*20*i1 )
+                        call AbsoluteCold(u,GetClassUnitSpell(u,9)* 20 * i1 )
                     endif
                 endif
                 
@@ -80,11 +80,11 @@ scope ShortPeriodCheck initializer init
                 if i1 > 0 then
                     if BlzGetUnitAbilityCooldownRemaining(u,'A082') == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
                         call AbilStartCD(u, 'A082', 8)
-                        call SetWidgetLife(u,GetWidgetLife(u)+2500*i1)
+                        call SetWidgetLife(u,GetWidgetLife(u)+ 2500 * i1)
                         call AddSpecialEffectTargetTimer( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
                         call RemoveDebuff( u, 1)
                     endif
-                endif       
+                endif     
                 
                 //Blood Elf Mage
                 if GetUnitTypeId(u) == 'H001' then
@@ -96,20 +96,17 @@ scope ShortPeriodCheck initializer init
                         call AddUnitMagicDmg(u, i1)
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
-                endif
 
-                //Head Hunter
-                if GetUnitTypeId(u) == 'N00I' then
+                    //Head Hunter
+                elseif GetUnitTypeId(u) == 'N00I' then
                     set i1 = R2I(GetHeroStr(u, true) * (0.4 + (0.015 * GetHeroLevel(u))))
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
                         call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
-                endif
-
-                //War Golem
-                if GetUnitTypeId(u) == 'N00X' then
+                    //War Golem
+                elseif GetUnitTypeId(u) == 'N00X' then
                     set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
@@ -117,33 +114,46 @@ scope ShortPeriodCheck initializer init
                         call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) * (1 + (i1 / BlzGetUnitMaxHP(u))))
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
-                endif
 
-                //Abomination
-                if GetUnitTypeId(u) == 'H005' then
+                    //Abomination
+                elseif GetUnitTypeId(u) == 'H005' then
                     if CheckProc(u, 350) then
                         call ElemFuncStart(u,'H005')
                     endif
 
-                //Yeti
+                    //Yeti
                 elseif GetUnitTypeId(u) == 'O00B' then
-                if BlzGetUnitArmor(u) <= 50 + (2 * GetHeroLevel(u)) then
+                    if BlzGetUnitArmor(u) <= 50 + (2 * GetHeroLevel(u)) then
                         if GetUnitAbilityLevel(u, 'A092') == 0 then
                             call UnitAddAbility(u, 'A092')
                         endif
+                        set i1 = LoadInteger(DataUnitHT,hid,542)
+                        set i2 = 20 * GetHeroLevel(u)- i1
+                        call SetHeroStr(u,GetHeroStr(u,false)+ i2, false)
+                        call SaveInteger(DataUnitHT,hid,542,20 * GetHeroLevel(u))
+                    else
+                        set i1 = LoadInteger(DataUnitHT,hid,542)
+                        call SetHeroStr(u,GetHeroStr(u,false)- i1, false)
+                        call SaveInteger(DataUnitHT,hid,542,0)
+                        call UnitRemoveAbility(u, 'A092')
+                    endif
+                
+                    //Rock Golem
+                elseif GetUnitTypeId(u) == 'H017' then
                     set i1 = LoadInteger(DataUnitHT,hid,542)
-                    set i2 = 20*GetHeroLevel(u)-i1
-                    call SetHeroStr(u,GetHeroStr(u,false)+ i2, false)
-                    call SaveInteger(DataUnitHT,hid,542,20*GetHeroLevel(u))
-                else
-                    set i1 = LoadInteger(DataUnitHT,hid,542)
-                    call SetHeroStr(u,GetHeroStr(u,false)-i1, false)
-                    call SaveInteger(DataUnitHT,hid,542,0)
-                    call UnitRemoveAbility(u, 'A092')
-                endif
+                    set i2 = R2I((GetUnitBlock(u) - i1) * (0.01 * GetHeroLevel(u)))
+                    if i1 != i2 then
+                        call AddUnitBlock(u, 0 - i1)
+                        call AddUnitBlock(u, i2)
+                        call SaveInteger(DataUnitHT, hid, 542, i2)
+                    endif
+                
+                    //Dark Avatar
+                elseif GetUnitTypeId(u) == 'O003' then
+                    call SetAvatarMode(u, GetHeroLevel(u))
                 endif
             endif
-        set II = II + 1
+            set II = II + 1
         endloop
 
         set u = null

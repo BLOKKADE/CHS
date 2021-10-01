@@ -1,4 +1,4 @@
-library AbsoluteArcane requires CustomState
+library AbsoluteArcane requires CustomState, DivineBubble
     struct AbsoluteArcaneStruct extends array
         unit source
         unit target
@@ -10,7 +10,7 @@ library AbsoluteArcane requires CustomState
         private thistype recycleNext
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick then
+            if T32_Tick > this.endTick or IsUnitDivineBubbled(this.target) or IsUnitSpellTargetCheck(this.target, GetOwningPlayer(this.source)) == false or GetUnitAbilityLevel(this.source, 'B01W') > 0  then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -28,10 +28,13 @@ library AbsoluteArcane requires CustomState
             endif
             set this.source = source
             set this.target = target
-            set this.bonus = 0.5
-            if GetUnitMagicDmg(this.target) - this.bonus >= 0 then
+            set this.bonus = 0.5 * GetClassUnitSpell(this.source, Element_Arcane)
+            if GetUnitMagicDmg(this.target) - this.bonus > 0 then
                 call AddUnitMagicDmg(this.source, this.bonus)
                 call AddUnitMagicDmg(this.target, 0 - this.bonus)
+                call AbilStartCD(this.source, 'A0AB', 1)
+            else
+                set this.bonus = 0
             endif
 
             set this.endTick = T32_Tick + R2I(5*32)   
