@@ -1,6 +1,6 @@
 library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 	globals
-		boolean  isReforged
+		boolean isReforged
 
 		framehandle unitInfo
 		framehandle parent
@@ -67,7 +67,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 	endfunction
 
 	function PrimaryAttributeText takes unit u, integer stat returns nothing
-		call BlzFrameSetText(TextUI[6+stat], statColour[stat] + "*" + BlzFrameGetText(TextUI[6+stat]) + "|r")
+		call BlzFrameSetText(TextUI[6 + stat], statColour[stat] + "*" + BlzFrameGetText(TextUI[6 + stat]) + "|r")
 	endfunction
 
 	function PrimaryAttributeDmg takes unit u, integer stat returns string
@@ -99,10 +99,10 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 	endfunction
 
 	function UpdateTextRelaese takes unit u returns nothing
-		local string dmgT= "-"
-		local integer Pid=  GetPlayerId(GetOwningPlayer(u))
+		local string dmgT = "-"
+		local integer Pid = GetPlayerId(GetOwningPlayer(u))
 
-		set dmgT=BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 0))
+		set dmgT = BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 0))
 		call BlzFrameSetText(TextUI[1], dmgT)
 
 		call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
@@ -115,11 +115,11 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 		set CustomInfoT1[1] = R2S(100 * GetUnitRealEvade(u))
 
 		if BlzGetUnitArmor(u) >= 0 and not BlzIsUnitInvulnerable(u) then
-			set CustomInfoT1[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))*0.06)/(1+0.06*(BlzGetUnitArmor(u)))) * 100)
+			set CustomInfoT1[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
 		elseif BlzIsUnitInvulnerable(u) then
 			set CustomInfoT1[2] = "Reduces physical damage taken by |cff29f800100"
 		else
-			set CustomInfoT1[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))*0.06)/(1+0.06*(BlzGetUnitArmor(u)))) * 100)
+			set CustomInfoT1[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
 		endif
 		set CustomInfoT1[3] = R2S(GetUnitMagicDmg(u))
 		set CustomInfoT1[4] = R2S( (1 - (50 / ( 50 + GetUnitMagicDef(u) ))) * 100 )
@@ -129,10 +129,10 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 		set CustomInfoT1[8] = IntInfo(u)
 
 		/*
-		set ToolTipS=ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(SpellU)) + "\n"
-		set ToolTipS=ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(SpellU)) + "\n"
-		set ToolTipS=ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(SpellU)) + "\n"
-		set ToolTipS=ToolTipS + "|cff51d44dHit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uhpr')) + (GetHeroStr(SpellU, true) * 0.075)) + 
+		set ToolTipS = ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(SpellU)) + "\n"
+		set ToolTipS = ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(SpellU)) + "\n"
+		set ToolTipS = ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(SpellU)) + "\n"
+		set ToolTipS = ToolTipS + "|cff51d44dHit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uhpr')) + (GetHeroStr(SpellU, true) * 0.075)) + 
 		"/" + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('umpr'))  + (GetHeroInt(SpellU, true) * 0.065)) + "\n"
 		*/
 
@@ -151,7 +151,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 			call BlzFrameSetText(TextUI[12], "-")
 		endif
 
-		set dmgT=null
+		set dmgT = null
 	endfunction
 
 	function UpdateText takes nothing returns nothing 
@@ -177,7 +177,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 		set ToolTipUI[id] = BlzCreateFrameByType("SIMPLEFRAME", "", ButtonUI[id], "", 0)
 		set IconUI[id] = BlzGetFrameByName("CustomUnitInfoButtonIcon" + I2S(id), 0)
 		set TextUI[id]  = BlzGetFrameByName("CustomUnitInfoButtonText" + I2S(id), 0)
-		set TooltipTextUI[id] =BlzCreateFrame("CustomUnitInfoText", ToolTipUI[id], 0, 0)
+		set TooltipTextUI[id] = BlzCreateFrame("CustomUnitInfoText", ToolTipUI[id], 0, 0)
 		set ToolTextUI[id] = BlzCreateFrame("CustomUnitInfoText", ToolTipUI[id], 0, 0)
 		call BlzFrameSetAbsPoint(TooltipTextUI[id], FRAMEPOINT_BOTTOMRIGHT, 0.79, 0.18)
 
@@ -185,11 +185,11 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 		call BlzFrameSetTooltip(ButtonUI[id], ToolTipUI[id])
 
 		call BlzFrameSetTexture(IconUI[id], DataIcon[id], 0, false)  
-		call BlzFrameSetText(TextUI[id],"Test:"+I2S(id))        
+		call BlzFrameSetText(TextUI[id],"Test:" + I2S(id))        
 	endfunction
 
 	function GameUINewPanel takes nothing returns nothing
-		local framehandle NewPanel= BlzCreateSimpleFrame("CustomUnitInfoPanel3x4", BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0), 0)
+		local framehandle NewPanel = BlzCreateSimpleFrame("CustomUnitInfoPanel3x4", BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0), 0)
 		call InitDataInfoPanel(1 , "Damage: " , "ReplaceableTextures\\CommandButtons\\BTNAttack.blp" , "The amount of damage the unit's basic attack deals")
 		call InitDataInfoPanel(2 , "Attack cooldown: " , "ReplaceableTextures\\CommandButtons\\BTNHoldPosition.blp" , "Time between the unit's attacks / Time to start the effect of a spell.\nAbilities and items can affect these values making them inaccurate.")
 		call InitDataInfoPanel(3 , "Armor: " , "ReplaceableTextures\\CommandButtons\\BTNStop.blp" , "")
@@ -210,36 +210,36 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 	endfunction
 
 	function update takes nothing returns nothing
-		local integer loopA= 0
-		local boolean VisibleFrame= false
+		local integer loopA = 0
+		local boolean VisibleFrame = false
 
 		call UpdateText()
 
 		loop
 			if BlzFrameIsVisible(ToolTipUI[loopA]) then
-				set VisibleFrame=true
-				set ToolTipA=DataLabel[loopA] + BlzFrameGetText(TextUI[loopA]) + "\n------------------------------\n" + DataDesc[loopA]
+				set VisibleFrame = true
+				set ToolTipA = DataLabel[loopA] + BlzFrameGetText(TextUI[loopA]) + "\n------------------------------\n" + DataDesc[loopA]
 				if loopA == 3 then
-					set ToolTipA=ToolTipA + CustomInfoT1[2] + "%%|r."
+					set ToolTipA = ToolTipA + CustomInfoT1[2] + "%%|r."
 				elseif loopA == 6 then
-					set ToolTipA=ToolTipA + CustomInfoT1[6]
+					set ToolTipA = ToolTipA + CustomInfoT1[6]
 				elseif loopA == 7 then
-					set ToolTipA=ToolTipA + CustomInfoT1[7]
+					set ToolTipA = ToolTipA + CustomInfoT1[7]
 				elseif loopA == 8 then
-					set ToolTipA=ToolTipA + CustomInfoT1[8]
+					set ToolTipA = ToolTipA + CustomInfoT1[8]
 				elseif loopA == 9 then
-					set ToolTipA=ToolTipA + CustomInfoT1[3] + "%%|r."
+					set ToolTipA = ToolTipA + CustomInfoT1[3] + "%%|r."
 				elseif loopA == 10 then
-					set ToolTipA=ToolTipA + CustomInfoT1[4] + "%%|r."
+					set ToolTipA = ToolTipA + CustomInfoT1[4] + "%%|r."
 				elseif loopA == 11 then
-					set ToolTipA=ToolTipA + CustomInfoT1[1] + "%%|r."
+					set ToolTipA = ToolTipA + CustomInfoT1[1] + "%%|r."
 				elseif loopA == 12 then
-					set ToolTipA="More info\n------------------------------\n" + DataDesc[loopA]
-					set ToolTipA=ToolTipA + CustomInfoT1[5]
+					set ToolTipA = "More info\n------------------------------\n" + DataDesc[loopA]
+					set ToolTipA = ToolTipA + CustomInfoT1[5]
 				endif
 				call BlzFrameSetText(tooltipText, ToolTipA)
 			endif
-			set loopA=loopA + 1
+			set loopA = loopA + 1
 			exitwhen loopA > 12
 		endloop
 
@@ -254,8 +254,8 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 
 		call BlzFrameSetAbsPoint(tooltipText, FRAMEPOINT_BOTTOMRIGHT, 0.79, 0.18)
 		call BlzFrameSetSize(tooltipText, 0.275,0)
-		call BlzFrameSetPoint(tooltipBox, FRAMEPOINT_TOPLEFT, tooltipText, FRAMEPOINT_TOPLEFT, -0.01, 0.01)
-		call BlzFrameSetPoint(tooltipBox, FRAMEPOINT_BOTTOMRIGHT, tooltipText, FRAMEPOINT_BOTTOMRIGHT, 0.005, -0.01)
+		call BlzFrameSetPoint(tooltipBox, FRAMEPOINT_TOPLEFT, tooltipText, FRAMEPOINT_TOPLEFT, - 0.01, 0.01)
+		call BlzFrameSetPoint(tooltipBox, FRAMEPOINT_BOTTOMRIGHT, tooltipText, FRAMEPOINT_BOTTOMRIGHT, 0.005, - 0.01)
 		call BlzFrameSetVisible(tooltipBox, false)
 	endfunction
 

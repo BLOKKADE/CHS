@@ -21,7 +21,7 @@ library CustomState requires TimerUtils
     endfunction
 
     function AddUnitMagicDmg takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),1,LoadReal(HT_unitstate,GetHandleId(u),1)+r)
+        call SaveReal(HT_unitstate,GetHandleId(u),1,LoadReal(HT_unitstate,GetHandleId(u),1)+ r)
     endfunction
 
     function SetUnitMagicDef takes unit u,real r returns nothing
@@ -34,7 +34,7 @@ library CustomState requires TimerUtils
     endfunction
 
     function AddUnitMagicDef takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),2,LoadReal(HT_unitstate,GetHandleId(u),2)+r)
+        call SaveReal(HT_unitstate,GetHandleId(u),2,LoadReal(HT_unitstate,GetHandleId(u),2)+ r)
     endfunction
 
     function SetUnitEvasion takes unit u,real r returns nothing
@@ -42,7 +42,7 @@ library CustomState requires TimerUtils
     endfunction
 
     function AddUnitEvasion takes unit u,real r returns nothing
-        set r =  LoadReal(HT_unitstate,GetHandleId(u),3)+r
+        set r = LoadReal(HT_unitstate,GetHandleId(u),3)+ r
         call SaveReal(HT_unitstate,GetHandleId(u),3,r)    
     endfunction
 
@@ -51,7 +51,7 @@ library CustomState requires TimerUtils
     endfunction
 
     function GetUnitRealEvade takes unit u returns real
-        return  1 - (50/(50+LoadReal(HT_unitstate,GetHandleId(u),3))) 
+        return  1 - (50 /(50 + LoadReal(HT_unitstate,GetHandleId(u),3))) 
     endfunction
 
 
@@ -65,7 +65,7 @@ library CustomState requires TimerUtils
     endfunction
 
     function AddUnitBlock takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),4,LoadReal(HT_unitstate,GetHandleId(u),4)+r)
+        call SaveReal(HT_unitstate,GetHandleId(u),4,LoadReal(HT_unitstate,GetHandleId(u),4)+ r)
     endfunction
 
 
@@ -78,7 +78,7 @@ library CustomState requires TimerUtils
     //endfunction
 
     function AddUnitLuck takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),5,LoadReal(HT_unitstate,GetHandleId(u),5)+r)
+        call SaveReal(HT_unitstate,GetHandleId(u),5,LoadReal(HT_unitstate,GetHandleId(u),5)+ r)
     endfunction
 
 
@@ -91,7 +91,7 @@ library CustomState requires TimerUtils
     //endfunction
 
     function AddUnitPowerRune takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),6,LoadReal(HT_unitstate,GetHandleId(u),6)+r)
+        call SaveReal(HT_unitstate,GetHandleId(u),6,LoadReal(HT_unitstate,GetHandleId(u),6)+ r)
     endfunction
 
 
@@ -105,7 +105,7 @@ library CustomState requires TimerUtils
     endfunction
 
     function AddUnitSummonStronger takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),7,LoadReal(HT_unitstate,GetHandleId(u),7)+r)
+        call SaveReal(HT_unitstate,GetHandleId(u),7,LoadReal(HT_unitstate,GetHandleId(u),7)+ r)
     endfunction
 
 
@@ -119,7 +119,7 @@ library CustomState requires TimerUtils
     endfunction
 
     function AddUnitPvpBonus takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),8,LoadReal(HT_unitstate,GetHandleId(u),8)+r)
+        call SaveReal(HT_unitstate,GetHandleId(u),8,LoadReal(HT_unitstate,GetHandleId(u),8)+ r)
     endfunction
 
 
@@ -144,7 +144,7 @@ library CustomState requires TimerUtils
         call SaveReal(HT,GetHandleId(t),2,r)  
         call SaveUnitHandle(HT,GetHandleId(t),3,u)
         
-        call SaveReal(HT_unitstate,GetHandleId(u),i,LoadReal(HT_unitstate,GetHandleId(u),i)+r)   
+        call SaveReal(HT_unitstate,GetHandleId(u),i,LoadReal(HT_unitstate,GetHandleId(u),i)+ r)   
 
         call TimerStart(t,time,false,function endTimerState)
         set t = null
@@ -185,7 +185,7 @@ library CustomState requires TimerUtils
             set this.state = state
             call SaveReal(HT_unitstate, GetHandleId(source), state, LoadReal(HT_unitstate, GetHandleId(source), state) + bonus)   
 
-            set this.endTick = T32_Tick + R2I(duration*32)
+            set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this
         endmethod
@@ -203,13 +203,13 @@ library CustomState requires TimerUtils
     endstruct
 
     function GetHeroMaxAbsoluteAbility takes unit u returns integer
-        return LoadInteger(HT,GetHandleId(u),-8852352)
+        return LoadInteger(HT,GetHandleId(u),- 8852352)
     endfunction
 
     function AddHeroMaxAbsoluteAbility takes unit u returns boolean 
         if GetHeroMaxAbsoluteAbility(u) < 10 then
 
-            call SaveInteger(HT,GetHandleId(u),-8852352,LoadInteger(HT,GetHandleId(u),-8852352)+1)
+            call SaveInteger(HT,GetHandleId(u),- 8852352,LoadInteger(HT,GetHandleId(u),- 8852352)+ 1)
             call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,("|cffffcc00An extra Absolute Ability slot is available."))
             return true
         else

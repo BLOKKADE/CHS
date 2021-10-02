@@ -24,7 +24,7 @@ library MartialRetribution requires AoeDamage, RandomShit, AbilityDescription
     function MartialRetributionStore takes unit source, real damage returns nothing
         local integer lvl = GetUnitAbilityLevel(source, 'A089')
         local integer handleId = GetHandleId(source)
-        local string s = GetDesriptionAbility('A089', lvl -1)
+        local string s = GetDesriptionAbility('A089', lvl - 1)
         local real max = (300 * lvl) * (1 + 0.02 * GetHeroLevel(source))
 
         set SpellData[handleId].real[3] = SpellData[handleId].real[3] + damage

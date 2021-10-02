@@ -11,7 +11,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants
             set returnDamage = 0
             call BlzSetEventWeaponType(WEAPON_TYPE_WHOKNOWS)
         endif
-        call SetTextTagPosUnit(tx, damageSource, -15)
+        call SetTextTagPosUnit(tx, damageSource, - 15)
         call SetTextTagColor(tx, 255, 0, 0, 255)
         call SetTextTagLifespan(tx, 1.5)
         call SetTextTagFadepoint(tx, 1.2)

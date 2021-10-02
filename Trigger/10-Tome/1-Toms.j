@@ -348,40 +348,40 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set ctrl = false
                 endif
 
-            //Manual of health
+                //Manual of health
             elseif II == 'manh' then 
                 call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
-            //Tome of Power
+                //Tome of Power
             elseif II == 'tkno' then 
                 call AddHeroXP(u, 2000, false)
-            //Tome of agility + 1
+                //Tome of agility + 1
             elseif II == 'tdex' then 
                 call SetHeroAgi(u, GetHeroAgi(u, false) + 1, true)
-            //Tome of intelligence +1
+                //Tome of intelligence +1
             elseif II == 'tint' then 
                 call SetHeroInt(u, GetHeroInt(u, false) + 1, true)
-            //Tome of strength +1
+                //Tome of strength +1
             elseif II == 'tstr' then 
                 call SetHeroStr(u, GetHeroStr(u, false) + 1, true)
-            //Tome of Agility +10
+                //Tome of Agility +10
             elseif II == 'I03H' then 
                 call SetHeroAgi(u, GetHeroAgi(u, false) + 10, true)
-            //Tome of intelligence +10
+                //Tome of intelligence +10
             elseif II == 'I03J' then 
                 call SetHeroInt(u, GetHeroInt(u, false) + 10, true)
-            //Tome of strength +10
+                //Tome of strength +10
             elseif II == 'I03I' then 
                 call SetHeroStr(u, GetHeroStr(u, false) + 10, true)
-            //Tome of agility +5
+                //Tome of agility +5
             elseif II == 'tdx2' then 
                 call SetHeroAgi(u, GetHeroAgi(u, false) + 5, true)
-            //Tome of intelligence +5
+                //Tome of intelligence +5
             elseif II == 'tin2' then 
                 call SetHeroInt(u, GetHeroInt(u, false) + 5, true)
-            //Tome of strength +5
+                //Tome of strength +5
             elseif II == 'tst2' then 
                 call SetHeroStr(u, GetHeroStr(u, false) + 5, true)
-            //Tome of experience
+                //Tome of experience
             elseif II == 'texp' then
                 call AddHeroXP(u, 100, false)
             else
@@ -400,7 +400,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         elseif gloryBonus > 0 then
             call DisplayTimedTextToPlayer(p, 0, 0, 2, GetObjectName(II) + " +|cffffcc00" + R2SW(gloryBonus, 1, 1) + "|r")
         elseif i > 1 then
-            call DisplayTimedTextToPlayer(p, 0, 0, 2, "Bought |cff55df32" + I2S(i) + "|r |cffdf9432"  +GetObjectName(II) + "|r")
+            call DisplayTimedTextToPlayer(p, 0, 0, 2, "Bought |cff55df32" + I2S(i) + "|r |cffdf9432" + GetObjectName(II) + "|r")
         endif
 
         //Ancient Staff
@@ -512,18 +512,18 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             call NonLucrativeTomeBought(u)
         endif
 
-            call ResourseRefresh(GetOwningPlayer(u)) 
-            set It = null
-            set u = null
-            set p = null
-        endfunction
+        call ResourseRefresh(GetOwningPlayer(u)) 
+        set It = null
+        set u = null
+        set p = null
+    endfunction
 
 
-        //===========================================================================
-        private function init takes nothing returns nothing
-            local trigger trg = CreateTrigger()
-            call TriggerRegisterAnyUnitEventBJ( trg, EVENT_PLAYER_UNIT_PICKUP_ITEM )
-            call TriggerAddAction( trg, function Trig_Toms_Actions )
-            set trg = null
-        endfunction
-    endlibrary
+    //===========================================================================
+    private function init takes nothing returns nothing
+        local trigger trg = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ( trg, EVENT_PLAYER_UNIT_PICKUP_ITEM )
+        call TriggerAddAction( trg, function Trig_Toms_Actions )
+        set trg = null
+    endfunction
+endlibrary

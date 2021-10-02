@@ -68,7 +68,7 @@ library Avatar initializer init requires AttackDamage
             call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Avatar\\AvatarCaster.mdl", GetUnitX(this.source), GetUnitY(this.source)))
             call this.updateBonuses()
             set this.enabled = true
-            set this.endTick = T32_Tick + R2I(6.5*32)   
+            set this.endTick = T32_Tick + R2I(6.5 * 32)   
             call this.startPeriodic()
             return this
         endmethod
@@ -94,7 +94,7 @@ library Avatar initializer init requires AttackDamage
             call GetAvatar(GetHandleId(caster)).removeBonuses()
             call GetAvatar(GetHandleId(caster)).setBonuses(level)
             call GetAvatar(GetHandleId(caster)).updateBonuses()
-            set GetAvatar(GetHandleId(caster)).endTick = T32_Tick + R2I(6.5*32)
+            set GetAvatar(GetHandleId(caster)).endTick = T32_Tick + R2I(6.5 * 32)
         endif
     endfunction
 

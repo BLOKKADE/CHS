@@ -12,7 +12,7 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
     endglobals
     
     function GetRunePower takes item i returns real 
-        return 1. + LoadReal(HT,GetHandleId(i),2)/100
+        return 1. + LoadReal(HT,GetHandleId(i),2)/ 100
     endfunction
     
     function GetUnitPowerRune takes unit u returns real
@@ -28,7 +28,7 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         set RunesIndex.item[RunesIndex[0]] = rune
         set PlayerRunes[pid].integer[runeIndex] = RunesIndex[0]
         set PlayerRunes[pid].integer[0] = runeIndex
-        call SaveReal(HT,GetHandleId(rune),2,power+GetUnitPowerRune(owner) + GetHeroLevel(owner) )
+        call SaveReal(HT,GetHandleId(rune),2,power + GetUnitPowerRune(owner) + GetHeroLevel(owner) )
         if GetLocalPlayer() != p then
             call BlzSetItemSkin(rune,'I06F')
         endif
@@ -45,7 +45,7 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         if IdRune > 0 then
             set GLOB_RUNE_U = GetTriggerUnit()
             set GLOB_RUNE_POWER = GetRunePower(GetManipulatedItem())
-            call CreateTextTagTimerColor( RunesName[IdRune] + ": " + I2S(R2I(GLOB_RUNE_POWER*100))+"%"  ,1,GetUnitX(GLOB_RUNE_U),GetUnitY(GLOB_RUNE_U),50+GetRandomInt(0,150),1,122,50,255)
+            call CreateTextTagTimerColor( RunesName[IdRune] + ": " + I2S(R2I(GLOB_RUNE_POWER * 100))+ "%"  ,1,GetUnitX(GLOB_RUNE_U),GetUnitY(GLOB_RUNE_U),50 + GetRandomInt(0,150),1,122,50,255)
             call TriggerEvaluate(RunesTriggers[IdRune])
         endif
     endfunction

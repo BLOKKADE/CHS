@@ -5,7 +5,7 @@ library Cyclone requires AoeDamage
         local unit caster = LoadUnitHandle(HT,GetHandleId(t),1)
         
         if GetWidgetLife(u) > 0.45 then
-            call AreaDamage(caster, GetUnitX(u), GetUnitY(u), GetUnitAbilityLevel(caster,'A05X')*10, 350, false, 'A05X')
+            call AreaDamage(caster, GetUnitX(u), GetUnitY(u), GetUnitAbilityLevel(caster,'A05X')* 10, 350, false, 'A05X')
         else
             call FlushChildHashtable(HT,GetHandleId(t))
             call ReleaseTimer(t)

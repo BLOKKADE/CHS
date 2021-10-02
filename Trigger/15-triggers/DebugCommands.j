@@ -4,15 +4,15 @@ library DebugCommands initializer init requires CustomState
         real RoundTime = 20
         boolean Waiting
     endglobals
-//===========================================================================
+    //===========================================================================
     function SpawnDummy takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        call AddUnitMagicDmg(CreateUnit(Player(11), 'hfoo', GetUnitX(udg_units01[pid+1]), GetUnitY(udg_units01[pid+1]), 0), 300)
+        call AddUnitMagicDmg(CreateUnit(Player(11), 'hfoo', GetUnitX(udg_units01[pid + 1]), GetUnitY(udg_units01[pid + 1]), 0), 300)
     endfunction
 
     function LvlHero takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        call SetHeroLevel(udg_units01[pid+1], 5000, true)
+        call SetHeroLevel(udg_units01[pid + 1], 5000, true)
     endfunction
 
     function AddGlory takes nothing returns nothing
@@ -45,7 +45,7 @@ library DebugCommands initializer init requires CustomState
         local trigger trg2 = CreateTrigger()
         if udg_integer06 == 1 then
             loop
-                if UnitAlive(udg_units01[i+1]) then
+                if UnitAlive(udg_units01[i + 1]) then
                     call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Single player commands have been enabled")
                     call TriggerRegisterPlayerChatEvent(trg,Player(i),"-nx",true)
                     call TriggerAddAction(trg, function StartNextRound)

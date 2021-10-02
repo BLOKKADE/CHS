@@ -35,17 +35,17 @@ library Glory initializer initLState
 
         if udg_boolean08 == true then
             if WinCount[pid] != udg_integer02 then
-                set Glory[pid] = Glory[pid] + 4000  + ((udg_integer02/5)-1)*2000
+                set Glory[pid] = Glory[pid] + 4000 + ((udg_integer02 / 5)- 1)* 2000
                 set WinCount[pid] = udg_integer02 
-                else
-                set Glory[pid] = Glory[pid] + 2000  + ((udg_integer02/5)-1)*1000
+            else
+                set Glory[pid] = Glory[pid] + 2000 + ((udg_integer02 / 5)- 1)* 1000
             endif
         else
             if WinCount[pid] != udg_integer02 then
-                set Glory[pid] = Glory[pid] + 3000  + ((udg_integer02/5)-1)*1000
-            set WinCount[pid] = udg_integer02 
-                else
-                set Glory[pid] = Glory[pid] + 1500  + ((udg_integer02/5)-1)*500
+                set Glory[pid] = Glory[pid] + 3000 + ((udg_integer02 / 5)- 1)* 1000
+                set WinCount[pid] = udg_integer02 
+            else
+                set Glory[pid] = Glory[pid] + 1500 + ((udg_integer02 / 5)- 1)* 500
             endif
         endif
 

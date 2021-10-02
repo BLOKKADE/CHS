@@ -9,7 +9,7 @@ library ScrollOfTransformation initializer init requires Table
         local integer i1 = ScrollOfTransformationTable[GetHandleId(Tr)].integer[1]
         local integer i2 = ScrollOfTransformationTable[GetHandleId(Tr)].integer[2]
         
-        call SetHeroAgi(u,GetHeroAgi(u,false)+i1,false)
+        call SetHeroAgi(u,GetHeroAgi(u,false)+ i1,false)
         call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0) - i2 ,0) 
         
         set ScrollOfTransformationTable[GetHandleId(Tr)].unit[0] = null
@@ -24,10 +24,10 @@ library ScrollOfTransformation initializer init requires Table
         local integer i1 = 0
         local integer i2 = 0
 
-        set i1 = GetHeroAgi(caster,true)*3
+        set i1 = GetHeroAgi(caster,true)* 3
         set i2 = i1 * 2
         
-        call SetHeroAgi(caster,GetHeroAgi(caster,false)-i1,false)
+        call SetHeroAgi(caster,GetHeroAgi(caster,false)- i1,false)
         call BlzSetUnitBaseDamage(caster,BlzGetUnitBaseDamage(caster,0) + i2 ,0)
 
         set Tr = NewTimer()

@@ -1,4 +1,4 @@
- function LastBreathEnd takes nothing returns nothing
+function LastBreathEnd takes nothing returns nothing
     local timer tim = GetExpiredTimer()
     local unit u = LoadUnitHandle(HT,GetHandleId(tim),1)
     local effect eff = LoadEffectHandle(HT,GetHandleId(tim),2)
@@ -11,10 +11,10 @@
     set tim = null
     set eff = null
     set u = null
- endfunction
+endfunction
  
  
- function LastBreath takes nothing returns nothing 
+function LastBreath takes nothing returns nothing 
     local timer tim
     local unit u = GetTriggerUnit()
     local real lvlAbility = GetUnitAbilityLevel(u ,'A05R')
@@ -29,11 +29,11 @@
             endif
             call SetWidgetLife(u,Hp)
             call BlzSetEventDamage(0)
-        elseif GetWidgetLife(u) <= GetEventDamage()+0.405 and BlzGetUnitAbilityCooldownRemaining(u,'A05R') <= 0.501 then
+        elseif GetWidgetLife(u) <= GetEventDamage()+ 0.405 and BlzGetUnitAbilityCooldownRemaining(u,'A05R') <= 0.501 then
             set tim = NewTimer()
             call BlzSetEventDamage(0)
             call SetWidgetLife(u,1.405)
-            call  AbilStartCD(u,'A05R', 60+ BlzGetUnitAbilityCooldownRemaining(u,'A05R') )  
+            call AbilStartCD(u,'A05R', 60 + BlzGetUnitAbilityCooldownRemaining(u,'A05R') )  
             call SaveInteger(HT,GetHandleId(u),'A05R',1)	             
             call SaveUnitHandle(HT,GetHandleId(tim),1,GetTriggerUnit())
             if GetOwningPlayer(u) != Player(11) then
@@ -41,11 +41,11 @@
             endif
             call UnitAddAbility(u, 'A08B')
 
-            call TimerStart(tim,0.8 + 0.2*lvlAbility,false, function LastBreathEnd)
+            call TimerStart(tim,0.8 + 0.2 * lvlAbility,false, function LastBreathEnd)
         
-	    endif
+        endif
         
         
 	endif
     set tim = null
- endfunction
+endfunction

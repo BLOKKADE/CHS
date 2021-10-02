@@ -37,7 +37,7 @@ library AbsoluteArcane requires CustomState, DivineBubble
                 set this.bonus = 0
             endif
 
-            set this.endTick = T32_Tick + R2I(5*32)   
+            set this.endTick = T32_Tick + R2I(5 * 32)   
             call this.startPeriodic()
             return this
         endmethod

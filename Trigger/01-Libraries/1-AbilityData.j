@@ -12,7 +12,7 @@ library AbilityData initializer init requires Table
 
         integer LastObject
         /*
-        hashtable HT_AbilityData  = InitHashtable()
+        hashtable HT_AbilityData = InitHashtable()
         integer array AbilSpellRA1
         integer AbilSRA1_count = 0 
         integer array AbilSpellRA2
@@ -1124,60 +1124,60 @@ library AbilityData initializer init requires Table
 
     function InitDataRA2 takes nothing returns nothing
 
-    /*
-    set AbilSpellRA1[0] = 'AHtb'
-    set AbilSpellRA1[1] = 'AHbn'
-    set AbilSpellRA1[2] = 'AOhx'
-    set AbilSpellRA1[3] = 'AOcl'
-    set AbilSpellRA1[4] = 'AUfn'
-    set AbilSpellRA1[5] = 'Auhf'
-    set AbilSpellRA1[6] = 'Acrs'
-    set AbilSpellRA1[7] = 'AEsh'
-    set AbilSpellRA1[8] = 'Afae'
-    set AbilSpellRA1[9] = 'AEer'
-    set AbilSpellRA1[10] = 'ANab'
-    set AbilSpellRA1[11] = 'ANso'
-    set AbilSpellRA1[12] = 'ANdh'
-    set AbilSpellRA1[13] = 'ANfl'  
-    set AbilSpellRA1[14] = 'ACls'  
-    set AbilSpellRA1[15] = 'ANpa'  
-    set AbilSpellRA1[16] = 'ANen' 
-    set AbilSpellRA1[17] = 'ANtm'  
-    set AbilSpellRA1[18] = 'A08E' 
+        /*
+        set AbilSpellRA1[0] = 'AHtb'
+        set AbilSpellRA1[1] = 'AHbn'
+        set AbilSpellRA1[2] = 'AOhx'
+        set AbilSpellRA1[3] = 'AOcl'
+        set AbilSpellRA1[4] = 'AUfn'
+        set AbilSpellRA1[5] = 'Auhf'
+        set AbilSpellRA1[6] = 'Acrs'
+        set AbilSpellRA1[7] = 'AEsh'
+        set AbilSpellRA1[8] = 'Afae'
+        set AbilSpellRA1[9] = 'AEer'
+        set AbilSpellRA1[10] = 'ANab'
+        set AbilSpellRA1[11] = 'ANso'
+        set AbilSpellRA1[12] = 'ANdh'
+        set AbilSpellRA1[13] = 'ANfl'  
+        set AbilSpellRA1[14] = 'ACls'  
+        set AbilSpellRA1[15] = 'ANpa'  
+        set AbilSpellRA1[16] = 'ANen' 
+        set AbilSpellRA1[17] = 'ANtm'  
+        set AbilSpellRA1[18] = 'A08E' 
     
     
-    set AbilSRA1_count = 18
+        set AbilSRA1_count = 18
         
 
-    set AbilSpellRA2[0] = 'AHfs'
-    set AbilSpellRA2[1] = 'AHbz'
-    set AbilSpellRA2[2] = 'AOsh'
-    set AbilSpellRA2[3] = 'AUim'
-    set AbilSpellRA2[4] = 'AUdd'
-    set AbilSpellRA2[5] = 'AUcs'
-    set AbilSpellRA2[6] = 'ANst'
-    set AbilSpellRA2[7] = 'ANhs'
-    set AbilSpellRA2[8] = 'ANcs'
-    set AbilSpellRA2[9] = 'ANsi'
-    set AbilSpellRA2[10] = 'ANrf'
-    set AbilSpellRA2[11] = 'ANbf'
-    set AbilSpellRA2[12] = 'A046'  
-    set AbilSpellRA2[13] = 'Aclf'  
-    set AbilSpellRA2[14] = 'Asta' 
-    set AbilSpellRA2[15] = 'ANmo' 
-    set AbilSpellRA2[16] = 'A05X' 
-    set AbilSpellRA2[17] = 'A017'      
-    set AbilSpellRA2[18] = 'A046'   
+        set AbilSpellRA2[0] = 'AHfs'
+        set AbilSpellRA2[1] = 'AHbz'
+        set AbilSpellRA2[2] = 'AOsh'
+        set AbilSpellRA2[3] = 'AUim'
+        set AbilSpellRA2[4] = 'AUdd'
+        set AbilSpellRA2[5] = 'AUcs'
+        set AbilSpellRA2[6] = 'ANst'
+        set AbilSpellRA2[7] = 'ANhs'
+        set AbilSpellRA2[8] = 'ANcs'
+        set AbilSpellRA2[9] = 'ANsi'
+        set AbilSpellRA2[10] = 'ANrf'
+        set AbilSpellRA2[11] = 'ANbf'
+        set AbilSpellRA2[12] = 'A046'  
+        set AbilSpellRA2[13] = 'Aclf'  
+        set AbilSpellRA2[14] = 'Asta' 
+        set AbilSpellRA2[15] = 'ANmo' 
+        set AbilSpellRA2[16] = 'A05X' 
+        set AbilSpellRA2[17] = 'A017'      
+        set AbilSpellRA2[18] = 'A046'   
     
-    set AbilSRA2_count = 18
+        set AbilSRA2_count = 18
     
-    set AbilSpellRA3[0] = 'AHtc'  
-    set AbilSpellRA3[1] = 'AOws'  
-    set AbilSpellRA3[2] = 'AEsf' 
-    set AbilSpellRA3[3] = 'AEfk'      
-    set AbilSpellRA3[4] = 'ANht'      
-    set AbilSRA3_count = 4  
-    */
+        set AbilSpellRA3[0] = 'AHtc'  
+        set AbilSpellRA3[1] = 'AOws'  
+        set AbilSpellRA3[2] = 'AEsf' 
+        set AbilSpellRA3[3] = 'AEfk'      
+        set AbilSpellRA3[4] = 'ANht'      
+        set AbilSRA3_count = 4  
+        */
     
     
     
@@ -1190,28 +1190,28 @@ library AbilityData initializer init requires Table
     endfunction
 
     /*private function PreloadAbilities takes nothing returns nothing
-        local unit u = CreateUnit(Player(8), 'h014', 0, 0, 0)
-        local integer i = 0
-        local integer abilId = 0
-        loop
-            set abilId = GetAbilityFromIndex(i)
-            call UnitAddAbility(u, abilId)
-            call UnitRemoveAbility(u, abilId)
-            set i = i + 1
-            exitwhen i > GetAbilitycount()
-        endloop
-    endfunction*/
+    local unit u = CreateUnit(Player(8), 'h014', 0, 0, 0)
+    local integer i = 0
+    local integer abilId = 0
+    loop
+        set abilId = GetAbilityFromIndex(i)
+        call UnitAddAbility(u, abilId)
+        call UnitRemoveAbility(u, abilId)
+        set i = i + 1
+        exitwhen i > GetAbilitycount()
+    endloop
+endfunction */
 
-    private function init takes nothing returns nothing
-        set ChaosData = HashTable.create()
-        set ChaosDataEnemy = HashTable.create()
-        set ChaosDataAlly = HashTable.create()
-        set AbilityData = HashTable.create()
-        set ElementData = HashTable.create()
-        set ItemData = Table.create()
-        set AbilityIndex = Table.create()
-        call InitDataA1()
-        //call PreloadAbilities()
-    endfunction
+private function init takes nothing returns nothing
+    set ChaosData = HashTable.create()
+    set ChaosDataEnemy = HashTable.create()
+    set ChaosDataAlly = HashTable.create()
+    set AbilityData = HashTable.create()
+    set ElementData = HashTable.create()
+    set ItemData = Table.create()
+    set AbilityIndex = Table.create()
+    call InitDataA1()
+    //call PreloadAbilities()
+endfunction
 endlibrary
 

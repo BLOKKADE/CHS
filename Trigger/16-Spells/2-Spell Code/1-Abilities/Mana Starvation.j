@@ -15,7 +15,7 @@ library ManaStarvation requires DummyOrder, T32
     
         private method periodic takes nothing returns nothing
             local integer mana = R2I(GetUnitState(this.target, UNIT_STATE_MANA))
-            local integer currentBonus =  0
+            local integer currentBonus = 0
             if this.finalStage == false and GetUnitAbilityLevel(this.target, 'B01X') > 0 and IsUnitTarget(this.target) then
                 call BJDebugMsg(GetUnitName(target) + " mana: " + I2S(mana) + " limit: " + R2S(this.manaLimit) + " diff: " + R2S(RAbsBJ(this.manaLimit - mana)))
                 if mana > this.manaLimit then
@@ -34,7 +34,7 @@ library ManaStarvation requires DummyOrder, T32
             elseif this.finalStage == false and ((T32_Tick - this.beginTick > 32 and GetUnitAbilityLevel(this.target, 'B01X') == 0) or T32_Tick > this.endTick) then
                 //call BJDebugMsg("final stage")
                 set this.finalStage = true
-                set this.endTick = T32_Tick + (8*32)
+                set this.endTick = T32_Tick + (8 * 32)
             endif
 
             if this.finalStage and T32_Tick > this.endTick then
@@ -62,7 +62,7 @@ library ManaStarvation requires DummyOrder, T32
             set this.bonus = 0
 
             set this.beginTick = T32_Tick
-            set this.endTick = T32_Tick + R2I(duration*32)
+            set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this
         endmethod

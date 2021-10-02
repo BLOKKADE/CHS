@@ -80,7 +80,7 @@ library AoeDamage requires Vampirism
         if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 then
             set Attack_AbilId = ABILGLOB 
             set GLOB_typeDmg = 2
-             call UnitDamageTarget(Sourse_unit,GetFilterUnit(),Dmg_ef,true,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL,WEAPON_TYPE_WHOKNOWS)
+            call UnitDamageTarget(Sourse_unit,GetFilterUnit(),Dmg_ef,true,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL,WEAPON_TYPE_WHOKNOWS)
         endif
 
         return false
@@ -146,7 +146,7 @@ library AoeDamage requires Vampirism
                 set dmg = hp
                 call SetWidgetLife(GetFilterUnit(),1)
             else
-                call SetWidgetLife(GetFilterUnit(),hp-dmg)
+                call SetWidgetLife(GetFilterUnit(),hp - dmg)
             endif
             
             if GLOB_LIFESTEAL then
@@ -155,7 +155,7 @@ library AoeDamage requires Vampirism
                 
                     call Vamp(Sourse_unit,GetFilterUnit(),dmg)
                 else
-                    call Vamp(Sourse_unit,GetFilterUnit(),dmg/5)
+                    call Vamp(Sourse_unit,GetFilterUnit(),dmg / 5)
                 endif
             endif
             
@@ -181,13 +181,13 @@ library AoeDamage requires Vampirism
         if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'B01V') == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0  then
 
             set hp = GetWidgetLife(GetFilterUnit())
-            set dmg = Dmg_ef*hp/100
+            set dmg = Dmg_ef * hp / 100
                 
             if hp - 0.405 <= dmg then
-                        set dmg = hp
+                set dmg = hp
                 call SetWidgetLife(GetFilterUnit(),1)
             else
-                call SetWidgetLife(GetFilterUnit(),hp-dmg)
+                call SetWidgetLife(GetFilterUnit(),hp - dmg)
             endif
             
             if GLOB_LIFESTEAL then
@@ -195,7 +195,7 @@ library AoeDamage requires Vampirism
                 
                     call Vamp(Sourse_unit,GetFilterUnit(),dmg)
                 else
-                    call Vamp(Sourse_unit,GetFilterUnit(),dmg/5)
+                    call Vamp(Sourse_unit,GetFilterUnit(),dmg / 5)
                 endif
             endif
             

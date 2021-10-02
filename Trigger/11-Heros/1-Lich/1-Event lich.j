@@ -23,7 +23,7 @@ library Lich initializer init requires TimerUtils
     set t = null
     set u = null
   endfunction
-//===========================================================================
+  //===========================================================================
   private function init takes nothing returns nothing
     local trigger trg = CreateTrigger()
     call TriggerRegisterEnterRectSimple( trg, GetEntireMapRect() )

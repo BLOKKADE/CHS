@@ -8,44 +8,44 @@ library Table /* made by Bribe, special thanks to Vexorian & Nestharus, version 
     parent and large child keys, just like a standard hashtable. Previously,
     the user would have to instantiate a Table to do this on their own which -
     while doable - is something the user should not have to do if I can add it
-    to this resource myself (especially if they are inexperienced).
+        to this resource myself (especially if they are inexperienced).
    
-    This library was originally called NewTable so it didn't conflict with
-    the API of Table by Vexorian. However, the damage is done and it's too
-    late to change the library name now. To help with damage control, I
-    have provided an extension library called TableBC, which bridges all
-    the functionality of Vexorian's Table except for 2-D string arrays &
-    the ".flush(integer)" method. I use ".flush()" to flush a child hash-
-    table, because I wanted the API in NewTable to reflect the API of real
-    hashtables (I thought this would be more intuitive).
+        This library was originally called NewTable so it didn't conflict with
+        the API of Table by Vexorian. However, the damage is done and it's too
+        late to change the library name now. To help with damage control, I
+        have provided an extension library called TableBC, which bridges all
+        the functionality of Vexorian's Table except for 2 - D string arrays &
+        the ".flush(integer)" method. I use ".flush()" to flush a child hash -
+        table, because I wanted the API in NewTable to reflect the API of real
+        hashtables (I thought this would be more intuitive).
    
-    API
+        API
    
-    ------------
-    struct Table
-    | static method create takes nothing returns Table
-    |     create a new Table
-    |    
-    | method destroy takes nothing returns nothing
-    |     destroy it
-    |    
-    | method flush takes nothing returns nothing
-    |     flush all stored values inside of it
-    |    
-    | method remove takes integer key returns nothing
-    |     remove the value at index "key"
-    |    
-    | method operator []= takes integer key, $TYPE$ value returns nothing
-    |     assign "value" to index "key"
-    |    
-    | method operator [] takes integer key returns $TYPE$
-    |     load the value at index "key"
-    |    
-    | method has takes integer key returns boolean
-    |     whether or not the key was assigned
-    |
-    ----------------
-    struct TableArray
+        ------------
+        struct Table
+            | static method create takes nothing returns Table
+            |     create a new Table
+            |    
+            | method destroy takes nothing returns nothing
+            |     destroy it
+            |    
+            | method flush takes nothing returns nothing
+            |     flush all stored values inside of it
+            |    
+            | method remove takes integer key returns nothing
+            |     remove the value at index "key"
+            |    
+            | method operator []= takes integer key, $TYPE$ value returns nothing
+            |     assign "value" to index "key"
+            |    
+            | method operator [] takes integer key returns $TYPE$
+            |     load the value at index "key"
+            |    
+            | method has takes integer key returns boolean
+            |     whether or not the key was assigned
+            |
+            ----------------
+            struct TableArray
     | static method operator [] takes integer array_size returns TableArray
     |     create a new array of Tables of size "array_size"
     |
@@ -60,58 +60,58 @@ library Table /* made by Bribe, special thanks to Vexorian & Nestharus, version 
     |
     | method operator [] takes integer key returns Table
     |     returns a Table accessible exclusively to index "key"
-*/
+                */
    
-globals
-    private integer less = 0    //Index generation for TableArrays (below 0).
-    private integer more = 8190 //Index generation for Tables.
-    //Configure it if you use more than 8190 "key" variables in your map (this will never happen though).
+                globals
+                    private integer less = 0    //Index generation for TableArrays (below 0).
+                    private integer more = 8190 //Index generation for Tables.
+                    //Configure it if you use more than 8190 "key" variables in your map (this will never happen though).
    
-    private hashtable ht = InitHashtable()
-    private key sizeK
-    private key listK
-endglobals
+                    private hashtable ht = InitHashtable()
+                    private key sizeK
+                    private key listK
+                endglobals
    
-private struct dex extends array
+                private struct dex extends array
     static method operator size takes nothing returns Table
-        return sizeK
+                    return sizeK
     endmethod
     static method operator list takes nothing returns Table
-        return listK
+                    return listK
     endmethod
-endstruct
+            endstruct
    
-private struct handles extends array
-    method has takes integer key returns boolean
-        return HaveSavedHandle(ht, this, key)
-    endmethod
-    method remove takes integer key returns nothing
-        call RemoveSavedHandle(ht, this, key)
-    endmethod
-endstruct
+            private struct handles extends array
+            method has takes integer key returns boolean
+                return HaveSavedHandle(ht, this, key)
+            endmethod
+            method remove takes integer key returns nothing
+                call RemoveSavedHandle(ht, this, key)
+            endmethod
+        endstruct
    
-private struct agents extends array
-    method operator []= takes integer key, agent value returns nothing
-        call SaveAgentHandle(ht, this, key, value)
-    endmethod
-endstruct
+        private struct agents extends array
+        method operator []= takes integer key, agent value returns nothing
+            call SaveAgentHandle(ht, this, key, value)
+        endmethod
+    endstruct
    
-//! textmacro NEW_ARRAY_BASIC takes SUPER, FUNC, TYPE
-private struct $TYPE$s extends array
-    method operator [] takes integer key returns $TYPE$
-        return Load$FUNC$(ht, this, key)
-    endmethod
-    method operator []= takes integer key, $TYPE$ value returns nothing
-        call Save$FUNC$(ht, this, key, value)
-    endmethod
-    method has takes integer key returns boolean
-        return HaveSaved$SUPER$(ht, this, key)
-    endmethod
-    method remove takes integer key returns nothing
-        call RemoveSaved$SUPER$(ht, this, key)
-    endmethod
-endstruct
-private module $TYPE$m
+    //! textmacro NEW_ARRAY_BASIC takes SUPER, FUNC, TYPE
+        private struct $TYPE$s extends array
+        method operator [] takes integer key returns $TYPE$
+            return Load$FUNC$(ht, this, key)
+        endmethod
+        method operator []= takes integer key, $TYPE$ value returns nothing
+            call Save$FUNC$(ht, this, key, value)
+        endmethod
+        method has takes integer key returns boolean
+            return HaveSaved$SUPER$(ht, this, key)
+        endmethod
+        method remove takes integer key returns nothing
+            call RemoveSaved$SUPER$(ht, this, key)
+        endmethod
+    endstruct
+    private module $TYPE$m
     method operator $TYPE$ takes nothing returns $TYPE$s
         return this
     endmethod
@@ -119,7 +119,7 @@ endmodule
 //! endtextmacro
    
 //! textmacro NEW_ARRAY takes FUNC, TYPE
-private struct $TYPE$s extends array
+    private struct $TYPE$s extends array
     method operator [] takes integer key returns $TYPE$
         return Load$FUNC$Handle(ht, this, key)
     endmethod
@@ -134,9 +134,9 @@ private struct $TYPE$s extends array
     endmethod
 endstruct
 private module $TYPE$m
-    method operator $TYPE$ takes nothing returns $TYPE$s
-        return this
-    endmethod
+method operator $TYPE$ takes nothing returns $TYPE$s
+    return this
+endmethod
 endmodule
 //! endtextmacro
    
@@ -279,7 +279,7 @@ struct Table extends array
             call dex.list.remove(this) //Clear hashed memory
         endif
        
-        debug set dex.list[this] = -1
+        debug set dex.list[this] = - 1
         return this
     endmethod
    
@@ -288,9 +288,9 @@ struct Table extends array
     //     call tb.destroy()
     //
     method destroy takes nothing returns nothing
-        debug if dex.list[this] != -1 then
-            debug call BJDebugMsg("Table Error: Tried to double-free instance: " + I2S(this))
-            debug return
+        debug if dex.list[this] != - 1 then
+        debug call BJDebugMsg("Table Error: Tried to double-free instance: " + I2S(this))
+        debug return
         debug endif
        
         call this.flush()
@@ -315,8 +315,8 @@ struct TableArray extends array
         local TableArray this = tb[0]         //The last-destroyed TableArray that had this array size
        
         debug if array_size <= 0 then
-            debug call BJDebugMsg("TypeError: Invalid specified TableArray size: " + I2S(array_size))
-            debug return 0
+        debug call BJDebugMsg("TypeError: Invalid specified TableArray size: " + I2S(array_size))
+        debug return 0
         debug endif
        
         if this == 0 then
@@ -368,8 +368,8 @@ struct TableArray extends array
         local Table tb = dex.size[this.size]
        
         debug if this.size == 0 then
-            debug call BJDebugMsg("TypeError: Tried to destroy an invalid TableArray: " + I2S(this))
-            debug return
+        debug call BJDebugMsg("TypeError: Tried to destroy an invalid TableArray: " + I2S(this))
+        debug return
         debug endif
        
         if tb == 0 then
@@ -409,8 +409,8 @@ struct TableArray extends array
     //
     method flush takes nothing returns nothing
         debug if this.size == 0 then
-            debug call BJDebugMsg("TypeError: Tried to flush an invalid TableArray instance: " + I2S(this))
-            debug return
+        debug call BJDebugMsg("TypeError: Tried to flush an invalid TableArray instance: " + I2S(this))
+        debug return
         debug endif
         set .tempTable = this
         set .tempEnd = this + this.size

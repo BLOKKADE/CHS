@@ -43,7 +43,7 @@ library FlimsyToken initializer init requires BuffSystem
             set this.reduction = 0.4
             call BlzSetUnitAttackCooldown(source, BlzGetUnitAttackCooldown(source, 0) + this.reduction, 0)
 
-            set this.endTick = T32_Tick + R2I(5*32)
+            set this.endTick = T32_Tick + R2I(5 * 32)
             call this.startPeriodic()
             return this
         endmethod
@@ -65,7 +65,7 @@ library FlimsyToken initializer init requires BuffSystem
             if GetFlimsyStruct(GetHandleId(target)) == 0 then
                 set FlimsyTargets[GetHandleId(target)] = FlimsyTokenStruct.create(target)
             else
-                set GetFlimsyStruct(GetHandleId(target)).endTick = T32_Tick + R2I(5*32)
+                set GetFlimsyStruct(GetHandleId(target)).endTick = T32_Tick + R2I(5 * 32)
             endif
             
         endif

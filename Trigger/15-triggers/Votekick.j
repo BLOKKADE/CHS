@@ -11,23 +11,23 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
     endglobals
 
     function KickPlayer takes player p returns nothing
-        set udg_boolean17=true
+        set udg_boolean17 = true
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayerSimple(p,udg_force07)
         call CustomDefeatBJ(p,"Kicked!")
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+"|cffffcc00 was kicked out of the game!|r")))
+        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
     endfunction
 
     function VoteKickReset takes nothing returns nothing
         local integer i = 0
         loop
-            exitwhen i>11
+            exitwhen i > 11
             set voteKickPlayerVoted[i] = false
             set i = i + 1
         endloop
         
         set voteKickVotes = 0
-        set voteKickPlayer = -1
+        set voteKickPlayer = - 1
         set votesNeeded = 0
         set voteKickStarted = false
     endfunction
@@ -92,7 +92,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
         local integer foundPlayer = 12
         if playerName != null or playerNumber != null or playerColour != null then
             loop
-                exitwhen i>8
+                exitwhen i > 8
                 if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING then
                     if playerName == SubString(GetPlayerName(Player(i)), 0, StringLength(playerName)) or playerNumber - 1 == i or playerColour == playerColours[i] then
                         if foundPlayer != 12 then
@@ -107,7 +107,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
         endif
         
         if found == true then
-         return 20
+            return 20
         endif
         
         return foundPlayer
@@ -176,11 +176,11 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
     function voteKickPlayerNumbers takes nothing returns nothing
         local integer i = 0
         loop
-            exitwhen i>11
-                if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING then
-                    call DisplayTextToPlayer(GetTriggerPlayer(), 0, 0, "#" + I2S(i+1) + " " + playerColours[i] + " " + GetPlayerNameColour(Player(i)))
-                endif
-            set i=i+1
+            exitwhen i > 11
+            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING then
+                call DisplayTextToPlayer(GetTriggerPlayer(), 0, 0, "#" + I2S(i + 1) + " " + playerColours[i] + " " + GetPlayerNameColour(Player(i)))
+            endif
+            set i = i + 1
         endloop
     endfunction
 
@@ -202,7 +202,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
         set playerColours[7] = "pink"
 
         loop
-            exitwhen i>8
+            exitwhen i > 8
             call TriggerRegisterPlayerChatEvent(trgVotekick,Player(i),"-votekick",false)
             call TriggerRegisterPlayerChatEvent(trgVotekick,Player(i),"-vk",false)
             call TriggerRegisterPlayerChatEvent(trgYes,Player(i),"-yes",true)
@@ -211,7 +211,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
             call TriggerRegisterPlayerChatEvent(trgNo,Player(i),"-n",true)
             call TriggerRegisterPlayerChatEvent(trgPn,Player(i),"-playernumbers",true)
             call TriggerRegisterPlayerChatEvent(trgPn,Player(i),"-pn",true)
-            set i=i+1
+            set i = i + 1
         endloop
         call TriggerAddAction(trgVotekick,function VoteKickStart)
         call TriggerAddAction(trgYes,function VoteKickYes)

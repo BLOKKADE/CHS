@@ -4,8 +4,8 @@ library ChaosMagic requires UnitHelpers, AbilityData, CastSpellOnTarget, RandomS
     endglobals
 
     function CastRandomSpell takes unit caster, integer abilCast, unit target, location spellLoc, boolean banInstant, integer chaosLevel returns nothing
-        local real    targetX
-        local real    targetY
+        local real targetX
+        local real targetY
         local integer orderType = 0
         local integer abilId
         local integer ally = Target_Enemy

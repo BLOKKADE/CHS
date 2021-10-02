@@ -2,17 +2,17 @@ library SandOfTime requires RandomShit
     function ResetSpell takes unit hero, integer SpellId, real time, boolean earthBonus returns nothing
         local real cur_time
             
-            if earthBonus and IsSpellElement(hero, SpellId,4) then
-                set cur_time = time*2
-            else
-                set cur_time = time
-            endif 
+        if earthBonus and IsSpellElement(hero, SpellId,4) then
+            set cur_time = time * 2
+        else
+            set cur_time = time
+        endif 
 
-            if BlzGetUnitAbilityCooldownRemaining(hero,SpellId) - cur_time > 0 then
-                call BlzStartUnitAbilityCooldown(hero,SpellId,BlzGetUnitAbilityCooldownRemaining(hero,SpellId)-cur_time )
-            else
-                call BlzEndUnitAbilityCooldown(hero,SpellId)
-            endif
+        if BlzGetUnitAbilityCooldownRemaining(hero,SpellId) - cur_time > 0 then
+            call BlzStartUnitAbilityCooldown(hero,SpellId,BlzGetUnitAbilityCooldownRemaining(hero,SpellId)- cur_time )
+        else
+            call BlzEndUnitAbilityCooldown(hero,SpellId)
+        endif
     endfunction
 
     function SandRefreshExceptions takes integer abilId returns boolean
@@ -20,10 +20,10 @@ library SandOfTime requires RandomShit
     endfunction
 
     function SandRefreshAbility takes unit hero, real time returns nothing
-    local integer i1 = 0
-    local integer SpellId = 0
+        local integer i1 = 0
+        local integer SpellId = 0
     
-    loop
+        loop
             exitwhen i1 > 10
             set SpellId = GetInfoHeroSpell(hero ,i1)
             if SpellId != 0 and SandRefreshExceptions(SpellId) then

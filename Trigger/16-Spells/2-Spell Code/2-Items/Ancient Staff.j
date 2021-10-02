@@ -21,7 +21,7 @@ library AncientStaff requires DummyOrder, RandomShit, CustomState
         call dummy.target(target)
         call dummy.activate()
         call AbilStartCD(u, 'A094', 30)
-        call CustomStateBonus.create(target, CustomState_MagicRes, 0 - (GetUnitMagicDef(target)*CalculateReduction(UnitHasItemI(u, 'I06V'))), 5)
+        call CustomStateBonus.create(target, CustomState_MagicRes, 0 - (GetUnitMagicDef(target)* CalculateReduction(UnitHasItemI(u, 'I06V'))), 5)
         set target = null
     endfunction
 endlibrary

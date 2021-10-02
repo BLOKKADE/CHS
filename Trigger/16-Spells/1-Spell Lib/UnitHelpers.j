@@ -44,7 +44,7 @@ library UnitHelpers initializer init
         if allowMagicImmune then
             call GroupEnumUnitsInRange(g, x, y, range, IsUnitTargetFilter)
         else
-        call GroupEnumUnitsInRange(g, x, y, range, IsUnitSpellTargetFilter)
+            call GroupEnumUnitsInRange(g, x, y, range, IsUnitSpellTargetFilter)
         endif
     endfunction
 

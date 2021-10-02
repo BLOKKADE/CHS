@@ -11,9 +11,9 @@ library GetClass requires AbilityData, RandomShit
             endif
             
             if count > 1 then
-                set s = s  + ClassAbil[i] + "x" + I2S(count)
+                set s = s + ClassAbil[i] + "x" + I2S(count)
             elseif count == 1 then
-                set s = s  + ClassAbil[i]
+                set s = s + ClassAbil[i]
             endif
             set i = i + 1
             exitwhen i > 15

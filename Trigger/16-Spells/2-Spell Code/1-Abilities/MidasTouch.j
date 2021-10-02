@@ -28,7 +28,7 @@ library MidasTouch initializer init requires DummyOrder
         method updateStats takes boolean negative returns nothing
             local real multiplier = 1
             if negative then
-                set multiplier = -1
+                set multiplier = - 1
             endif
             call BlzSetUnitMaxHP(this.target, BlzGetUnitMaxHP(this.target) + R2I(this.hpBonus * multiplier)) 
             call BlzSetUnitArmor(this.target, BlzGetUnitArmor(this.target) + (this.armorBonus * multiplier))
@@ -102,7 +102,7 @@ library MidasTouch initializer init requires DummyOrder
             //call BJDebugMsg("midas power:" + R2S(power) + " abilpower: " + R2S(abilPower) +" gold: " + I2S((499 + (26 * level))) + " total: " + I2S(R2I((499 + (26 * level)) * power)))
             set MidasTouchGold[GetHandleId(target)] = MidasTouch.create(target, R2I((499 + (26 * level)) * power), 10.5)
         else
-            set GetMidasTouch(GetHandleId(target)).endTick = T32_Tick + R2I(10.5*32)
+            set GetMidasTouch(GetHandleId(target)).endTick = T32_Tick + R2I(10.5 * 32)
         endif
         //call BJDebugMsg("dh: " + I2S(DousingHexChance.integer[GetHandleId(target)]))
     endfunction

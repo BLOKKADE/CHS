@@ -24,7 +24,7 @@ library MysteriousTalent requires RandomShit, AbilityData, CastSpellOnTarget
                         set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), range, GetOwningPlayer(caster), GetAbilityTargetType(abilId), false, true)
                         //call BJDebugMsg(GetUnitName(target))
                         if target == null then
-                            call CastSpell(caster, target, abilId, GetUnitAbilityLevel(caster, abilId), orderType, GetUnitX(caster)+GetRandomReal(0, 200)*Cos(GetRandomReal(0,360)*bj_DEGTORAD), GetUnitY(caster)+GetRandomReal(0, 200)*Sin(GetRandomReal(0,360)*bj_DEGTORAD)).activate()
+                            call CastSpell(caster, target, abilId, GetUnitAbilityLevel(caster, abilId), orderType, GetUnitX(caster)+ GetRandomReal(0, 200)* Cos(GetRandomReal(0,360)* bj_DEGTORAD), GetUnitY(caster)+ GetRandomReal(0, 200)* Sin(GetRandomReal(0,360)* bj_DEGTORAD)).activate()
                         else
                             call CastSpell(caster, target, abilId, GetUnitAbilityLevel(caster, abilId), orderType, GetUnitX(target), GetUnitY(target)).activate()
                         endif

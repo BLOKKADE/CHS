@@ -1,5 +1,5 @@
 scope NoIncomeCommand initializer init
-//===========================================================================
+    //===========================================================================
     globals
         boolean array IncomeSpamDisabled
     endglobals
@@ -22,7 +22,7 @@ scope NoIncomeCommand initializer init
             call TriggerRegisterPlayerChatEvent(trg,Player(i),"-nis",true)
             call TriggerRegisterPlayerChatEvent(trg,Player(i),"-noincomespam",true)
             set i = i + 1
-            exitwhen i>11
+            exitwhen i > 11
         endloop
         
         call TriggerAddAction(trg, function NoIncomeSpam)

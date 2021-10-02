@@ -15,6 +15,6 @@ library AncientDagger requires DummyOrder, RandomShit, BuffSystem
         local unit target = GetRandomUnit(GetUnitX(u), GetUnitY(u), 900, GetOwningPlayer(u), false, true, false)
         //call BJDebugMsg("ancient dagger")
         call SetBuff(target,5,10)
-        call PeriodicDamage.create(u, target, CalculateDamage(GetHeroAgi(u, true)*0.5, UnitHasItemI(u, 'I06X')), true, 1., 10, 0, false, 'B01N')
+        call PeriodicDamage.create(u, target, CalculateDamage(GetHeroAgi(u, true)* 0.5, UnitHasItemI(u, 'I06X')), true, 1., 10, 0, false, 'B01N')
     endfunction
 endlibrary

@@ -13,7 +13,7 @@ function TakeMagickDmg takes unit Dealing ,unit Trigger, boolean AbilA returns n
     //Ranger Passive
     set i = GetUnitAbilityLevel(Dealing,'A033') //HeroPassive
     if i > 0 then
-        set BaseCrit = BaseCrit +   0.05*I2R(GetHeroLevel(Dealing))
+        set BaseCrit = BaseCrit + 0.05 * I2R(GetHeroLevel(Dealing))
     endif
     
     //Wanderers Cape
@@ -27,22 +27,22 @@ function TakeMagickDmg takes unit Dealing ,unit Trigger, boolean AbilA returns n
     set luck = GetUnitLuck(Dealing)
     
     //Archmage Staff
-    if UnitHasItemS(Dealing,'I086') and  GetRandomReal(0,100) <= 30*luck + BaseChCr then
-        set CritDmg = CritDmg + Dmg*1.5
+    if UnitHasItemS(Dealing,'I086') and GetRandomReal(0,100) <= 30 * luck + BaseChCr then
+        set CritDmg = CritDmg + Dmg * 1.5
     endif
     
     //Magic Critical Strike
     set i = GetUnitAbilityLevel(Dealing,'A06U')
-    if i > 0 and GetRandomReal(0,100) <= 20*luck + BaseChCr then
-        set CritDmg = CritDmg +  Dmg*(1.9+0.17*I2R(i))
+    if i > 0 and GetRandomReal(0,100) <= 20 * luck + BaseChCr then
+        set CritDmg = CritDmg + Dmg *(1.9 + 0.17 * I2R(i))
     endif
 
     //Shadow Chain Mail
     if UnitHasItemS(Trigger,'I084')  then
-            if GetRandomReal(0,100) <= 50*luck then
-                set CritDmg = 0
-            endif
-            set Halfcr = true
+        if GetRandomReal(0,100) <= 50 * luck then
+            set CritDmg = 0
+        endif
+        set Halfcr = true
 
     endif
 
@@ -52,9 +52,9 @@ function TakeMagickDmg takes unit Dealing ,unit Trigger, boolean AbilA returns n
     endif
         
     if CritDmg != 0 then
-        set CritDmg = CritDmg + BaseCrit*Dmg
+        set CritDmg = CritDmg + BaseCrit * Dmg
         if Halfcr then
-            set CritDmg = CritDmg/2
+            set CritDmg = CritDmg / 2
         endif 
 
         //Mithril Helmet
@@ -64,11 +64,11 @@ function TakeMagickDmg takes unit Dealing ,unit Trigger, boolean AbilA returns n
             set CritDmg = 0
         endif
 
-        call BlzSetEventDamage(Dmg+CritDmg)
-        call CreateTextTagTimerColor( I2S(R2I(Dmg+CritDmg)) + "!",1,GetUnitX(Trigger),GetUnitY(Trigger),50,1,0,0,177)
+        call BlzSetEventDamage(Dmg + CritDmg)
+        call CreateTextTagTimerColor( I2S(R2I(Dmg + CritDmg)) + "!",1,GetUnitX(Trigger),GetUnitY(Trigger),50,1,0,0,177)
         
         if lifesteal > 0 then
-            call SetWidgetLife(Dealing, GetWidgetLife(Dealing) + GetEventDamage()*lifesteal )
+            call SetWidgetLife(Dealing, GetWidgetLife(Dealing) + GetEventDamage()* lifesteal )
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", Dealing, "chest")) 
         endif
     endif

@@ -28,10 +28,10 @@ library DousingHex initializer init requires DummyOrder, RandomShit
         
         loop
             exitwhen i > 10
-                set abilId = GetInfoHeroSpell(target ,i)
-                if BlzGetUnitAbilityCooldownRemaining(target, abilId) > 0 then
-                    call BlzStartUnitAbilityCooldown(target,abilId, BlzGetUnitAbilityCooldownRemaining(target,abilId) * DousingHexCooldown.real[GetHandleId(target)])
-                endif
+            set abilId = GetInfoHeroSpell(target ,i)
+            if BlzGetUnitAbilityCooldownRemaining(target, abilId) > 0 then
+                call BlzStartUnitAbilityCooldown(target,abilId, BlzGetUnitAbilityCooldownRemaining(target,abilId) * DousingHexCooldown.real[GetHandleId(target)])
+            endif
 
             set i = i + 1
         endloop

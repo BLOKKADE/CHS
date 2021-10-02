@@ -9,10 +9,10 @@ library FrameUpdate initializer init
     function Trig_UpdateFrame_Actions takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
-    //if udg_units01[ GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] != null then
-    set NumPlayerLast[pid] =  GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
-    set selectedUnit[pid] = GetTriggerUnit()
-    //endif
+        //if udg_units01[ GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] != null then
+        set NumPlayerLast[pid] = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
+        set selectedUnit[pid] = GetTriggerUnit()
+        //endif
     endfunction
 
     //===========================================================================

@@ -31,7 +31,7 @@ library BuffSystem initializer init requires TimerUtils
 
         local timer t = LoadTimerHandle(HT,GetHandleId(u),DeBufLvlA[level])
         if GetUnitAbilityLevel(u,DeBufLvl[level]) == 0 then
-            if t == null  then
+            if t == null then
                 set t = NewTimer()
 
                 call SaveInteger(HT,GetHandleId(t),1,DeBufLvl[level])
@@ -39,7 +39,7 @@ library BuffSystem initializer init requires TimerUtils
                 call SaveUnitHandle(HT,GetHandleId(t),3,u)
                 call SaveTimerHandle(HT,GetHandleId(u),DeBufLvlA[level],t)
                 call UnitAddAbility(u,DeBufLvlA[level])
-            // call BlzUnitHideAbility(u,DeBufLvlA[level],false)
+                // call BlzUnitHideAbility(u,DeBufLvlA[level],false)
                 call BlzUnitDisableAbility(u,DeBufLvlA[level],false,true)
                 call TimerStart(t,time,false,function TimerBuff1)
             else
@@ -61,31 +61,31 @@ library BuffSystem initializer init requires TimerUtils
     endfunction
 
     private function init takes nothing returns nothing
-    set DeBufLvlA[1] = 'A06L'
-    set DeBufLvl[1] = 'B014'
+        set DeBufLvlA[1] = 'A06L'
+        set DeBufLvl[1] = 'B014'
 
-    set DeBufLvlA[2] = 'A06P'
-    set DeBufLvl[2] = 'B015'
+        set DeBufLvlA[2] = 'A06P'
+        set DeBufLvl[2] = 'B015'
 
-    set DeBufLvlA[3] = 'A06R'
-    set DeBufLvl[3] = 'B016'
+        set DeBufLvlA[3] = 'A06R'
+        set DeBufLvl[3] = 'B016'
 
-    set DeBufLvlA[4] = 'A08O'
-    set DeBufLvl[4] = 'B01I'
+        set DeBufLvlA[4] = 'A08O'
+        set DeBufLvl[4] = 'B01I'
 
-    set DeBufLvlA[5] = 'A095'
-    set DeBufLvl[5] = 'B01N'
+        set DeBufLvlA[5] = 'A095'
+        set DeBufLvl[5] = 'B01N'
 
-    set DeBufLvlA[6] = 'A09B'
-    set DeBufLvl[6] = 'B01Q'
+        set DeBufLvlA[6] = 'A09B'
+        set DeBufLvl[6] = 'B01Q'
 
-    set DeBufLvlA[7] = 'A09H'
-    set DeBufLvl[7] = 'B01S'
+        set DeBufLvlA[7] = 'A09H'
+        set DeBufLvl[7] = 'B01S'
 
-    set DeBufLvlA[8] = 'A09R'
-    set DeBufLvl[8] = 'B01Z'
+        set DeBufLvlA[8] = 'A09R'
+        set DeBufLvl[8] = 'B01Z'
 
-    set DeBufLvlA[9] = 'A09S'
-    set DeBufLvl[9] = 'B020'
+        set DeBufLvlA[9] = 'A09S'
+        set DeBufLvl[9] = 'B020'
     endfunction
 endlibrary

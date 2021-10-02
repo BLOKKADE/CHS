@@ -68,16 +68,16 @@ library ExtradimensionalCooperation requires RandomShit
 
             set this.dmg = damage
             if IsUnitType(caster, UNIT_TYPE_MELEE_ATTACKER) then
-                set this.newX=targetX+distance*Cos(angle)
-                set this.newY=targetY+distance*Sin(angle)
+                set this.newX = targetX + distance * Cos(angle)
+                set this.newY = targetY + distance * Sin(angle)
             else
-                set this.newX=casterX+distance*Cos(angle)
-                set this.newY=casterY+distance*Sin(angle)
+                set this.newX = casterX + distance * Cos(angle)
+                set this.newY = casterY + distance * Sin(angle)
             endif
             set this.target = target
             set this.magic = magic
             set this.caster = caster
-            set angle = Atan2(targetY - this.newY, targetX - this.newX)*(180.00/ 3.14159)
+            set angle = Atan2(targetY - this.newY, targetX - this.newX)*(180.00 / 3.14159)
 
             set this.ssdummy = CreateUnit(GetOwningPlayer(caster), 'h00B', this.newX, this.newY, angle)
             call SetUnitVertexColor(this.ssdummy, 100, 100, 150, 100)

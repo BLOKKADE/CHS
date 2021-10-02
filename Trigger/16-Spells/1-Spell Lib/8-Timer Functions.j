@@ -1,6 +1,6 @@
 function GetTimerCD takes unit U1, integer id, real timeT returns boolean
     local timer tim 
-    if  LoadTimerHandle( DataUnitHT,GetHandleId(U1),id ) == null then
+    if LoadTimerHandle( DataUnitHT,GetHandleId(U1),id ) == null then
         set tim = NewTimer()
         call TimerStart(tim,timeT,false,null)
         call SaveTimerHandle( DataUnitHT,GetHandleId(U1),id,tim) 
@@ -27,18 +27,18 @@ function EndZeroTimer takes nothing returns nothing
     local unit u = LoadUnitHandle(DataUnitHT,GetHandleId(tim),1)
     local integer id = LoadInteger(DataUnitHT,GetHandleId(tim),2)
 
-   call RemoveSavedHandle( DataUnitHT,GetHandleId(u),id) 
-   call FlushChildHashtable(DataUnitHT,GetHandleId(tim))
-   call ReleaseTimer(tim)
-   set tim = null
-   set u = null
+    call RemoveSavedHandle( DataUnitHT,GetHandleId(u),id) 
+    call FlushChildHashtable(DataUnitHT,GetHandleId(tim))
+    call ReleaseTimer(tim)
+    set tim = null
+    set u = null
 endfunction
  
  
 function ZetoTimerStart takes unit u,integer id returns boolean
     local timer tim 
     
-    if  LoadTimerHandle( DataUnitHT,GetHandleId(u),id ) == null then
+    if LoadTimerHandle( DataUnitHT,GetHandleId(u),id ) == null then
         set tim = NewTimer()
         call SaveUnitHandle(DataUnitHT,GetHandleId(tim),1,u)
         call SaveInteger(DataUnitHT,GetHandleId(tim),2,id)

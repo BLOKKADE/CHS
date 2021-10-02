@@ -11,9 +11,9 @@ library GetPlayerNames initializer init
         local integer i = StringLength(playerName)
 
         loop
-            set i = i-1
+            set i = i - 1
             exitwhen i < 0
-            if SubString(playerName, i, i+1) == "#" then
+            if SubString(playerName, i, i + 1) == "#" then
                 return SubString(playerName, 0, i)
             endif
         endloop

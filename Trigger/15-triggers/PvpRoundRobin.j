@@ -38,7 +38,7 @@ library PvpRoundRobin
 
         if enemy == replacementPlayer then
             set i = 0
-            if randomedPlayer == -1 then
+            if randomedPlayer == - 1 then
                 loop
                     set randomedPlayer = GetRandomInt(0, PlayerCount)
                     set i = i + 1
@@ -54,7 +54,7 @@ library PvpRoundRobin
     function DisplayDuelNemesis takes nothing returns nothing
         local integer i = 0
         loop
-            if UnitAlive(udg_units01[i+1]) then
+            if UnitAlive(udg_units01[i + 1]) then
                 call DisplayTimedTextToPlayer(Player(i), 0, 0, 20, "You are dueling " + GetPlayerNameColour(GetPlayerDuelEnemy(Player(i))))
             endif
             set i = i + 1
@@ -65,7 +65,7 @@ library PvpRoundRobin
     function MoveRoundRobin takes nothing returns nothing
         local integer i = 0
         local integer temp = 0
-        set randomedPlayer = -1
+        set randomedPlayer = - 1
         loop
             if i != 0 then
                 set PlayersBottom[i] = PlayersBottom[i] - 1
@@ -90,7 +90,7 @@ library PvpRoundRobin
         set PlayerCount = 0
 
         loop
-            if UnitAlive(udg_units01[i+1]) then
+            if UnitAlive(udg_units01[i + 1]) then
                 set PlayerCount = PlayerCount + 1
                 set Players[index] = i
                 set index = index + 1

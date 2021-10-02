@@ -61,7 +61,7 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable
             endif
 
             
-        call SetBonus(u, 1, 0)
+            call SetBonus(u, 1, 0)
         elseif dark > light then
             if AvatarMode[hid][0] != 2 then
                 call ResetAvatar(hid, u, 2)

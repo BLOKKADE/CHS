@@ -5,9 +5,9 @@ library NonLucrativeTome requires Functions, RandomShit
     endglobals
 
     function RemoveSpell takes integer pid, unit u, integer abilId returns nothing
-        set udg_integers01[pid+1]= udg_integers01[pid+1] - 1
-        if udg_integers05[pid+1] == abilId then
-            set udg_integers05[pid+1] = GetLastLearnedSpell(GetHandleId(u), SpellList_Normal, false)
+        set udg_integers01[pid + 1]= udg_integers01[pid + 1] - 1
+        if udg_integers05[pid + 1] == abilId then
+            set udg_integers05[pid + 1] = GetLastLearnedSpell(GetHandleId(u), SpellList_Normal, false)
         endif
         call SaveCountHeroSpell(u ,LoadCountHeroSpell(u,0) - 1 ,0 ) 
         call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(abilId, GetUnitAbilityLevel(u, abilId) - 1))    

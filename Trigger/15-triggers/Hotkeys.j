@@ -27,7 +27,7 @@ library ConversionHotkeys initializer init requires Table
     private function ConvertLumber takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         local integer lumber = 0
-        set lumber =  GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER)
+        set lumber = GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER)
         call SetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER,0)
         call SetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD)  + lumber * 30)
         call ResourseRefresh(Player(pid)) 
@@ -36,9 +36,9 @@ library ConversionHotkeys initializer init requires Table
     private function ConvertGold takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         local integer gold = 0
-        set gold =  GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD)/30
+        set gold = GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD)/ 30
 
-        call SetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD) - gold*30  )
+        call SetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD) - gold * 30  )
         call SetPlayerState(Player(pid), PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER) + gold)
         call ResourseRefresh(Player(pid)) 
     endfunction

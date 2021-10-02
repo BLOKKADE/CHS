@@ -122,7 +122,7 @@ library GetRandomUnit initializer init requires UnitHelpers
             set this.pickedUnit = null
             set this.heroGroup = null
             set this.exclusionGroup = null
-            set this.allowMagicImmune=  false
+            set this.allowMagicImmune = false
             set this.heroPriority = false
             set this.ally = false
             set this.RandomUnitHelperGroup = CreateGroup()

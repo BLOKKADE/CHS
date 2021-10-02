@@ -1,7 +1,7 @@
 library ElementTexts initializer init
-globals
-    string array ClassAbil
-endglobals
+    globals
+        string array ClassAbil
+    endglobals
 
     private function init takes nothing returns nothing
         set ClassAbil[1] = "[|cffff0000Fire|r]"

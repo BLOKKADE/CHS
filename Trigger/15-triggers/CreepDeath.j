@@ -1,7 +1,7 @@
 library CreepDeath initializer init requires RandomShit
 
     public function BountyText takes unit u, integer goldBounty returns nothing
-        local texttag ft = CreateTextTagLocBJ(("+"+I2S(goldBounty)), OffsetLocation(GetUnitLoc(u), (-2.50*I2R(StringLength(GetAbilityName(udg_integers14[udg_integer14])))), 0), 0, 10, 100.00, 80.00, 10.00, 0)
+        local texttag ft = CreateTextTagLocBJ(("+" + I2S(goldBounty)), OffsetLocation(GetUnitLoc(u), (- 2.50 * I2R(StringLength(GetAbilityName(udg_integers14[udg_integer14])))), 0), 0, 10, 100.00, 80.00, 10.00, 0)
         call SetTextTagVelocityBJ(ft, 64,90)
         call SetTextTagPermanentBJ(ft, false)
         call SetTextTagFadepointBJ(ft, 1.00)
@@ -41,7 +41,7 @@ library CreepDeath initializer init requires RandomShit
         local integer itemCount = 0
         
         //Creep upgrade xp bonus
-        set expBounty = expBounty + BonusNeutral+BonusNeutralPlayer[pid] 
+        set expBounty = expBounty + BonusNeutral + BonusNeutralPlayer[pid] 
         
         //Greedy Goblin
         if GetUnitTypeId(killingHero) == 'N02P' then
@@ -57,15 +57,15 @@ library CreepDeath initializer init requires RandomShit
         endif
 
         //Pillage
-        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('Asal',killingHero)>0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
+        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('Asal',killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
             if GetRandomReal(0,100) <= 65 * luck then
-                set PilageBonus= PilageBonus + (((GetUnitAbilityLevelSwapped('Asal',killingHero) * 18) * 70)/( 70 + RemBon + GetUnitAbilityLevelSwapped('A02W',killingHero))  )
+                set PilageBonus = PilageBonus + (((GetUnitAbilityLevelSwapped('Asal',killingHero) * 18) * 70)/( 70 + RemBon + GetUnitAbilityLevelSwapped('A02W',killingHero))  )
                 call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitX(dyingUnit)))
             endif
         endif
         
         //Learnability
-        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('A02W',killingHero)>0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
+        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('A02W',killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
             set expBounty = expBounty + ( 35 * GetUnitAbilityLevel(killingHero,'A02W') * 70 )/(70 + RemBon + GetUnitAbilityLevel(killingHero,'Asal'))	
         endif	
         
@@ -76,7 +76,7 @@ library CreepDeath initializer init requires RandomShit
         endif
 
         //Golden Ring + Pillage Check
-        if RingBonus >   PilageBonus then
+        if RingBonus > PilageBonus then
             set goldBounty = goldBounty + RingBonus
         else
             set goldBounty = goldBounty + PilageBonus
@@ -86,7 +86,7 @@ library CreepDeath initializer init requires RandomShit
         set itemCount = UnitHasItemI(killingHero, 'I05U')
         if itemCount > 0 then
             if PilageBonus == 0 then
-                set expBounty = expBounty + ((2*GetHeroLevel(killingHero)) * itemCount)
+                set expBounty = expBounty + ((2 * GetHeroLevel(killingHero)) * itemCount)
             else
                 set expBounty = expBounty + ((GetHeroLevel(killingHero)) * itemCount )
             endif
@@ -101,7 +101,7 @@ library CreepDeath initializer init requires RandomShit
 
         //Creep bounty
         if (Trig_Creep_Dies_Func003C()) then
-            set goldBounty = goldBounty + udg_integer59+udg_integer61
+            set goldBounty = goldBounty + udg_integer59 + udg_integer61
         else
             set goldBounty = goldBounty + udg_integer59
         endif

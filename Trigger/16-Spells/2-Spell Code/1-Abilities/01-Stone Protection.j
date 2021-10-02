@@ -15,15 +15,15 @@ function endTimerStone takes nothing returns nothing
     set u2 = null
 endfunction
 
-function UsOrderU1 takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield  REALF returns boolean
+function UsOrderU1 takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield REALF returns boolean
     local boolean BL
-    local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)-y, GetUnitX(u2)-x))  )
+    local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
     
     call UnitAddAbility(Caster1,idsp ) 
     call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),REALF,0,life_1)
     set BL = IssueTargetOrder(Caster1,ordstr,u2)
     call UnitApplyTimedLife(Caster1,'B000',6)
-    set Caster1  = null
+    set Caster1 = null
     return BL
 endfunction
 
@@ -51,7 +51,7 @@ function stoneProtectA takes nothing returns nothing
             call SaveBoolean(ShateHT,GetHandleId(u2),GetHandleId(u1),true)
             
         endif
-        set Bil = UsOrderU1(u1,u2,GetUnitX(u1),GetUnitY(u1),'A061',"creepthunderbolt",200*GetUnitAbilityLevel(u1,'A060'),ABILITY_RLF_DAMAGE_CTB1)
+        set Bil = UsOrderU1(u1,u2,GetUnitX(u1),GetUnitY(u1),'A061',"creepthunderbolt",200 * GetUnitAbilityLevel(u1,'A060'),ABILITY_RLF_DAMAGE_CTB1)
 
     endif
 

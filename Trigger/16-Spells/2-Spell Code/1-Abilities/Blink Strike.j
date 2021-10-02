@@ -7,13 +7,13 @@ library BlinkStrike initializer init requires RandomShit
     /*
     private function UnitIsAlive takes nothing returns boolean
         return IsUnitSpellTarget(GetFilterUnit()) and IsUnitInvis(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), Player(OwnerId))
-    endfunction*/
+    endfunction */
 
     private function BlinkAndStrike takes unit caster, unit target, integer level returns nothing
-        local real angle = Atan2(GetUnitY(target) - GetUnitY(caster), GetUnitX(target) - GetUnitX(caster))*(180.00/ 3.14159)
-        local real newX = GetUnitX(target) +80.00*Cos(angle*(3.14159/ 180.00))
-        local real newY = GetUnitY(target) +80.00*Cos(angle*(3.14159/ 180.00))
-        set angle = Atan2(GetUnitY(target) - newY, GetUnitX(target) - newX)*(180.00/ 3.14159)
+        local real angle = Atan2(GetUnitY(target) - GetUnitY(caster), GetUnitX(target) - GetUnitX(caster))*(180.00 / 3.14159)
+        local real newX = GetUnitX(target) + 80.00 * Cos(angle *(3.14159 / 180.00))
+        local real newY = GetUnitY(target) + 80.00 * Cos(angle *(3.14159 / 180.00))
+        set angle = Atan2(GetUnitY(target) - newY, GetUnitX(target) - newX)*(180.00 / 3.14159)
 
         call DestroyEffect(AddSpecialEffect(FX_BLINK, GetUnitX(caster), GetUnitY(caster)))
         call DestroyEffect(AddSpecialEffect(FX_BLINK, newX, newY))
@@ -45,7 +45,7 @@ library BlinkStrike initializer init requires RandomShit
 
         if i >= size then
             set target = BlzGroupUnitAt(g, GetRandomInt(0, size - 1))
-        endif*/
+        endif */
 
         if target != null then
             call BlinkAndStrike(caster, target, level)

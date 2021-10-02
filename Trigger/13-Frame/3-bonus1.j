@@ -126,7 +126,7 @@ library HeroData initializer init
         call SaveStr(HT_data,'H017',3, "|cffffff00Level Up Bonus|r: Stone Edge: +1% block damage. +0.5% block." )       
         
         call SaveStr(HT_data,'N02K',1, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )  
-    //   call SaveStr(HT_data,'N02K',1, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )       // cold
+        //   call SaveStr(HT_data,'N02K',1, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )       // cold
         call SaveStr(HT_data,'N02K',2, "|cff00ffffPassive|r: Frost Aura: Reduces the attack speed and movement speed of enemies. ")
         call SaveStr(HT_data,'N02K',3, "|cffffff00Level Up Bonus|r: Frost Aura: +6% attack speed reduction . +0.5% movespeed reduction (max 95%)" )  
 

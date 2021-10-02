@@ -90,7 +90,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             set this.reduction = 0
             set this.buffCount = 0
 
-            set this.endTick = T32_Tick + R2I(30*32)   
+            set this.endTick = T32_Tick + R2I(30 * 32)   
             set this.startTick = T32_Tick
             call this.startPeriodic()
             return this

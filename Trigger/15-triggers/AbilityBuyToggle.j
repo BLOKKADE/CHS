@@ -1,5 +1,5 @@
 scope AbilityBuyToggle initializer init
-//===========================================================================
+    //===========================================================================
     globals
         boolean array MaxAbilityBuyEnabled
     endglobals
@@ -27,7 +27,7 @@ scope AbilityBuyToggle initializer init
             call TriggerRegisterPlayerChatEvent(trg,Player(i),"-mab",true)
             call TriggerRegisterPlayerChatEvent(trg,Player(i),"-maxabilitybuy",true)
             set i = i + 1
-            exitwhen i>11
+            exitwhen i > 11
         endloop
         
         call TriggerAddAction(trg, function MAxAbilityBuy)

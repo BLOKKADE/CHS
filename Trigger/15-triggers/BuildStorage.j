@@ -132,14 +132,14 @@ library SaveBuild requires Table, RandomShit, CustomState
                 if abil then
                     set i = i + 1
                     set buildAbil = this.getAbil(i)
-                    set next = this.getAbil(i+1)
+                    set next = this.getAbil(i + 1)
                     //call BJDebugMsg("id: " + I2S(this) + " obj: " + I2S(buildAbil))
                     if buildAbil != 0 then
                         set returnS = this.AddToString(this, buildAbil.export(), returnS, next != 0)
                     endif
                 else
                     set buildItem = this.getItem(i)
-                    set next = this.getItem(i+1)
+                    set next = this.getItem(i + 1)
                     //call BJDebugMsg("id: " + I2S(this) + " obj: " + I2S(buildItem))
                     if buildItem != 0 then
                         set returnS = this.AddToString(this, buildItem.export(), returnS, next != 0)
@@ -242,8 +242,8 @@ library SaveBuild requires Table, RandomShit, CustomState
                 set lvl = GetUnitAbilityLevel(this.hero, objectId)
                 if objectId != 0 then
                     //call BJDebugMsg("abil id: " + GetObjectName(objectId) + " lvl: " + I2S(lvl) + " round: " + I2S(round) + "obj: " + I2S(this.abilities[round]))
-                    if GetBuildObject(this.abilities[round-1]).getAbil(i).level == lvl then
-                        call GetBuildObject(this.abilities[round]).addAbil(GetBuildObject(this.abilities[round-1]).getAbil(i))
+                    if GetBuildObject(this.abilities[round - 1]).getAbil(i).level == lvl then
+                        call GetBuildObject(this.abilities[round]).addAbil(GetBuildObject(this.abilities[round - 1]).getAbil(i))
                         //call BJDebugMsg("transferred prev round abil")
                     else
                         call GetBuildObject(this.abilities[round]).addAbil(BuildAbil.create(objectId, lvl, i))
@@ -259,8 +259,8 @@ library SaveBuild requires Table, RandomShit, CustomState
                 set objectId = GetItemTypeId(UnitItemInSlot(this.hero, i))
                 if objectId != 0 then
                     //call BJDebugMsg("item id: " + GetObjectName(objectId))
-                    if GetBuildObject(this.items[round-1]).getItem(i).id == objectId then
-                        call GetBuildObject(this.items[round]).addItem(GetBuildObject(this.items[round-1]).getItem(i).id)
+                    if GetBuildObject(this.items[round - 1]).getItem(i).id == objectId then
+                        call GetBuildObject(this.items[round]).addItem(GetBuildObject(this.items[round - 1]).getItem(i).id)
                         //call BJDebugMsg("transferred prev round item")
                     else
                         call GetBuildObject(this.items[round]).addItem(BuildItem.create(objectId, i))
@@ -304,7 +304,7 @@ library SaveBuild requires Table, RandomShit, CustomState
         if PlayerBuilds[pid] != 0 then
             call PlayerBuilds[pid].updateBuild(udg_integer02)
         else
-            set PlayerBuilds[pid] = PlayerBuild.create(udg_units01[pid+1])
+            set PlayerBuilds[pid] = PlayerBuild.create(udg_units01[pid + 1])
             call PlayerBuilds[pid].updateBuild(udg_integer02)
         endif
         //call BJDebugMsg(PlayerBuilds[pid].export(udg_integer02))
@@ -319,7 +319,7 @@ library SaveBuild requires Table, RandomShit, CustomState
     function StoreAllPlayerBuilds takes nothing returns nothing
         local integer i = 0
         loop
-            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING and GetPlayerController(Player(i)) == MAP_CONTROL_USER and udg_units01[i+1] != null then
+            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING and GetPlayerController(Player(i)) == MAP_CONTROL_USER and udg_units01[i + 1] != null then
                 call StoreBuild(i)
             endif
             set i = i + 1

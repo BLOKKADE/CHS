@@ -6,14 +6,14 @@ library FireRune requires RandomShit
 
 
     function RuneOfFire takes nothing returns boolean
-    local unit u = GLOB_RUNE_U
-    local real power = GLOB_RUNE_POWER 
+        local unit u = GLOB_RUNE_U
+        local real power = GLOB_RUNE_POWER 
 
 
 
-    call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02V',"fanofknives",  R2I(4000*power), ConvertAbilityRealLevelField('Ocl1') )
+        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02V',"fanofknives",  R2I(4000 * power), ConvertAbilityRealLevelField('Ocl1') )
 
-    set u = null
-    return false
+        set u = null
+        return false
     endfunction
 endlibrary

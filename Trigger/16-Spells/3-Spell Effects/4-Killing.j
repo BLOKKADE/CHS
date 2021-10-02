@@ -1,15 +1,15 @@
 scope Killing initializer init    
-    function TimerMagDmg  takes nothing returns nothing
+    function TimerMagDmg takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local unit u = LoadUnitHandle(HT,GetHandleId(t),1)
 
-        call AddUnitMagicDmg(u,-15*LoadInteger(HT,GetHandleId(t),2))
+        call AddUnitMagicDmg(u,- 15 * LoadInteger(HT,GetHandleId(t),2))
 
 
         call FlushChildHashtable(HT,GetHandleId(t))
         call ReleaseTimer(t)
 
-        set t =null
+        set t = null
         set u = null
     endfunction
 
@@ -19,38 +19,38 @@ scope Killing initializer init
         local unit k = GetKillingUnit()
         local player Pu = GetOwningPlayer(u)
         local player Pk = GetOwningPlayer(k)
-        local integer PidU =  GetPlayerId(Pu)
-        local integer PidK =  GetPlayerId(Pk)
-        local unit Gu = udg_units01[PidU+1]
-        local unit Ku = udg_units01[PidK+1]
+        local integer PidU = GetPlayerId(Pu)
+        local integer PidK = GetPlayerId(Pk)
+        local unit Gu = udg_units01[PidU + 1]
+        local unit Ku = udg_units01[PidK + 1]
         local integer i = 0
 
         local timer t
 
 
         //Incinerate
-        if LoadInteger(HT,GetHandleId(u),-300004)+160 > T32_Tick then
+        if LoadInteger(HT,GetHandleId(u),- 300004)+ 160 > T32_Tick then
 
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", u, "head"))
-            call AreaDamage(LoadUnitHandle(HT,uid,-300003),GetUnitX(u),GetUnitY(u),LoadInteger(HT,uid,-300002),300, true, 'B014')
+            call AreaDamage(LoadUnitHandle(HT,uid,- 300003),GetUnitX(u),GetUnitY(u),LoadInteger(HT,uid,- 300002),300, true, 'B014')
 
         endif
 
 
-        if IsHeroUnitId(GetUnitTypeId(u)) == false  then
+        if IsHeroUnitId(GetUnitTypeId(u)) == false then
 
             //Strong Chest Mail
-            set i =  UnitHasItemI( Ku,'I079') 
+            set i = UnitHasItemI( Ku,'I079') 
             if i > 0 and k != null then
-                call Vamp(Ku,Gu, BlzGetUnitMaxHP(Ku)*0.1*I2R(i))
+                call Vamp(Ku,Gu, BlzGetUnitMaxHP(Ku)* 0.1 * I2R(i))
                 call DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", Ku, "chest"))      
             endif
 
             //Amulet of the Night
-            set i =  UnitHasItemI( Ku,'I07E') 
+            set i = UnitHasItemI( Ku,'I07E') 
             if i > 0 and GetOwningPlayer(u) == Player(11) then
 
-                call AddUnitMagicDmg(Ku,i*15)
+                call AddUnitMagicDmg(Ku,i * 15)
 
                 set t = NewTimer()
                 call SaveUnitHandle(HT,GetHandleId(t),1,Ku)

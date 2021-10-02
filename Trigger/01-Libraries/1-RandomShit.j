@@ -1,5 +1,5 @@
 library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken
-globals
+    globals
 
         integer array SpellCP
         integer Global_i = 0
@@ -25,8 +25,8 @@ globals
         
         loop
             exitwhen lp > Lenght3
-            if SubString(inputString,lp,lp+Lenght) == stringToReplace then
-                return SubString(inputString,0,lp) + value + SubString(inputString,lp+Lenght,Lenght3)
+            if SubString(inputString,lp,lp + Lenght) == stringToReplace then
+                return SubString(inputString,0,lp) + value + SubString(inputString,lp + Lenght,Lenght3)
             endif
             set lp = lp + 1
         endloop
@@ -37,12 +37,12 @@ globals
     function CreateTextTagTimer takes string Text, real Height, real x1, real y1,real z1, real time returns nothing
         local texttag floatingText = CreateTextTag()
 
-        call SetTextTagText(floatingText,Text,Height* TEXT_SIZE)
+        call SetTextTagText(floatingText,Text,Height * TEXT_SIZE)
         call SetTextTagPos(floatingText,x1,y1,z1)
         call SetTextTagColor(floatingText,255,255,120,200)
         
         call SetTextTagVelocity(floatingText,0.01, TEXT_VEL)
-        call SetTextTagFadepoint(floatingText, time - (time*0.1))
+        call SetTextTagFadepoint(floatingText, time - (time * 0.1))
         call SetTextTagLifespan(floatingText, time)
         call SetTextTagPermanent(floatingText,false)
         
@@ -52,36 +52,36 @@ globals
     function CreateTextTagTimerColor takes string Text, real Height, real x1, real y1,real z1, real time,integer iR,integer iG,integer iB returns nothing
         local texttag floatingText = CreateTextTag()
         
-        call SetTextTagText(floatingText,Text,Height* TEXT_SIZE)
+        call SetTextTagText(floatingText,Text,Height * TEXT_SIZE)
         call SetTextTagPos(floatingText,x1,y1,z1)
         call SetTextTagColor(floatingText,iR,iG,iB,200)
         
         call SetTextTagVelocity(floatingText,0.01, TEXT_VEL)
-        call SetTextTagFadepoint(floatingText, time - (time*0.1))
+        call SetTextTagFadepoint(floatingText, time - (time * 0.1))
         call SetTextTagLifespan(floatingText, time)
         call SetTextTagPermanent(floatingText,false)
 
-        set floatingText =null
+        set floatingText = null
     endfunction
 
     function UnitHasItemS takes unit u, integer id returns boolean 
 
-        if   GetItemTypeId(UnitItemInSlot( u,0)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,0)) == id then
             return true
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,1)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,1)) == id then
             return true
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,2)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,2)) == id then
             return true
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,3)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,3)) == id then
             return true
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,4)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,4)) == id then
             return true
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,5)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,5)) == id then
             return true
         endif
 
@@ -91,22 +91,22 @@ globals
 
     function UnitHasItemI takes unit u, integer id returns integer
         local integer i = 0
-        if   GetItemTypeId(UnitItemInSlot( u,0)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,0)) == id then
             set i = i + 1
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,1)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,1)) == id then
             set i = i + 1
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,2)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,2)) == id then
             set i = i + 1
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,3)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,3)) == id then
             set i = i + 1
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,4)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,4)) == id then
             set i = i + 1
         endif
-        if   GetItemTypeId(UnitItemInSlot( u,5)) == id then
+        if GetItemTypeId(UnitItemInSlot( u,5)) == id then
             set i = i + 1
         endif
 
@@ -120,7 +120,7 @@ globals
         local integer value = LoadInteger(HT,GetHandleId(t),1)
         local unit u = LoadUnitHandle(HT,GetHandleId(t),2)
         
-        call SetHeroAgi(u,GetHeroAgi(u,false)-value,false)
+        call SetHeroAgi(u,GetHeroAgi(u,false)- value,false)
 
         call FlushChildHashtable(HT,GetHandleId(t))
         call ReleaseTimer(t)
@@ -131,7 +131,7 @@ globals
     function AddHeroTempAgi takes unit u, integer value, real time returns nothing
         local timer t = NewTimer()
         
-        call SetHeroAgi(u,GetHeroAgi(u,false)+value,false)
+        call SetHeroAgi(u,GetHeroAgi(u,false)+ value,false)
         call SaveInteger(HT,GetHandleId(t),1,value)
         call SaveUnitHandle(HT,GetHandleId(t),2,u)
         call TimerStart(t,time,false,function EndHeroTempAgi)
@@ -270,28 +270,28 @@ globals
         local integer i = GetHandleId(t)
         local unit u1 = LoadUnitHandle(HT,i,1)
         local unit u2 = LoadUnitHandle(HT,i,2)
-        local real x =  LoadReal(HT,i,3)
-        local real y =  LoadReal(HT,i,4)
-        local integer idsp =  LoadInteger(HT,i,5)
-        local string ordstr =  LoadStr(HT,i,6)
+        local real x = LoadReal(HT,i,3)
+        local real y = LoadReal(HT,i,4)
+        local integer idsp = LoadInteger(HT,i,5)
+        local string ordstr = LoadStr(HT,i,6)
         local real life_1 = LoadReal(HT,i,7)
         local abilityreallevelfield REALF = ConvertAbilityRealLevelField(LoadInteger(HT,i,8))
-        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)-y, GetUnitX(u2)-x))  )
+        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
-        set t  = null
+        set t = null
         call UnitAddAbility(Caster1,idsp ) 
         if REALF != null then
             call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),REALF,0,life_1)
         endif
         call IssueTargetOrder(Caster1,ordstr,u2)
         call UnitApplyTimedLife(Caster1,'B000',6)
-        set Caster1  = null
+        set Caster1 = null
         set u1 = null
         set u2 = null
     endfunction
 
-    function USOrder4field takes unit u1, real x, real y,integer idsp, string ordstr, real Field1, abilityreallevelfield  RealField1, real Field2, abilityreallevelfield  RealField2,real Field3, abilityreallevelfield  RealField3,real Field4, abilityreallevelfield  RealField4 returns nothing
+    function USOrder4field takes unit u1, real x, real y,integer idsp, string ordstr, real Field1, abilityreallevelfield RealField1, real Field2, abilityreallevelfield RealField2,real Field3, abilityreallevelfield RealField3,real Field4, abilityreallevelfield RealField4 returns nothing
         local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 2)
         call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
         if RealField1 != null then
@@ -309,7 +309,7 @@ globals
         call dummy.instant().activate()
     endfunction
 
-    function UsOrderU takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield  REALF returns nothing
+    function UsOrderU takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield REALF returns nothing
         local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 6)
         call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
         if REALF != null then
@@ -324,15 +324,15 @@ globals
         local integer i = GetHandleId(t)
         local unit u1 = LoadUnitHandle(HT,i,1)
         local unit u2 = LoadUnitHandle(HT,i,2)
-        local real x =  LoadReal(HT,i,3)
-        local real y =  LoadReal(HT,i,4)
-        local integer idsp =  LoadInteger(HT,i,5)
-        local string ordstr =  LoadStr(HT,i,6)
+        local real x = LoadReal(HT,i,3)
+        local real y = LoadReal(HT,i,4)
+        local integer idsp = LoadInteger(HT,i,5)
+        local string ordstr = LoadStr(HT,i,6)
         local real life_1 = LoadReal(HT,i,7)
         local abilityreallevelfield REALF1 = ConvertAbilityRealLevelField(LoadInteger(HT,i,8))
         local real life_2 = LoadReal(HT,i,9)
         local abilityreallevelfield REALF2 = ConvertAbilityRealLevelField(LoadInteger(HT,i,10))
-        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)-y, GetUnitX(u2)-x))  )
+        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
         
         
         call UnitAddAbility(Caster1,idsp ) 
@@ -344,14 +344,14 @@ globals
         
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
-        set Caster1  = null
+        set Caster1 = null
         set t = null
         set u1 = null
     endfunction
 
 
 
-    function UsOrderU2 takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real Field1,real Field2, abilityreallevelfield  RealField1,abilityreallevelfield  RealField2 returns nothing
+    function UsOrderU2 takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real Field1,real Field2, abilityreallevelfield RealField1,abilityreallevelfield RealField2 returns nothing
         local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 2)
         call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
         if RealField1 != null then
@@ -444,7 +444,7 @@ globals
     endfunction
 
     function GetUnitLuck takes unit u returns real
-        return LoadReal(HT_unitstate,GetHandleId(u),5)+1
+        return LoadReal(HT_unitstate,GetHandleId(u),5)+ 1
     endfunction
 
     function ElemFuncStart takes unit u, integer id returns nothing
@@ -455,7 +455,7 @@ globals
 
     function CalculateCooldown takes unit u, integer id, real cd, boolean active returns real
         local real luck = GetUnitLuck(u)
-        local real xesilChance = -1
+        local real xesilChance = - 1
         local real time = cd
         local real ResCD = 1
 
@@ -478,15 +478,15 @@ globals
 
             //Fan
             if UnitHasItemS(u,'I08Z') and IsObjectElement(id,3) then
-                set ResCD =ResCD*0.65
+                set ResCD = ResCD * 0.65
             endif   
 
             //Cheater Magic
             if GetBuffLevel(u, 'A08G') > 0 and id != 'A024' then
                 if id == 'A049' then
-                    set ResCD = ResCD*0.1
+                    set ResCD = ResCD * 0.1
                 else       
-                    set ResCD = ResCD*0.05
+                    set ResCD = ResCD * 0.05
                 endif
             endif
         endif
@@ -498,30 +498,30 @@ globals
             
         //Fast Magic
         if GetUnitAbilityLevel(u,'A03P') >= 1 then
-            set ResCD =  ResCD*(1-0.01*I2R(GetUnitAbilityLevel(u,'A03P'))) 
+            set ResCD = ResCD *(1 - 0.01 * I2R(GetUnitAbilityLevel(u,'A03P'))) 
         endif
         
         //Xesil
         if (GetUnitTypeId(u ) == 'H01D') then
-            set xesilChance = 15 + (0.1*GetHeroLevel(u) )
+            set xesilChance = 15 + (0.1 * GetHeroLevel(u) )
         endif
 
         //Xesil's Legacy
-        if (GetUnitTypeId(u ) != 'H01D' and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25*luck) or (xesilChance <= 25*luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25*luck) or (UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance*luck) then
+        if (GetUnitTypeId(u ) != 'H01D' and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (xesilChance <= 25 * luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance * luck) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
         
         //Staff of Water
-        if  UnitHasItemS(u,'I08Y') and IsObjectElement(id, 2) then
-            if GetRandomReal(0,100) <= 40*luck then
+        if UnitHasItemS(u,'I08Y') and IsObjectElement(id, 2) then
+            if GetRandomReal(0,100) <= 40 * luck then
                 set ResCD = 0.001
             endif
         endif
         
         //Fan
-        if  UnitHasItemS(u,'I08Z') and IsObjectElement(id,3) then
-                set ResCD =ResCD*0.65
+        if UnitHasItemS(u,'I08Z') and IsObjectElement(id,3) then
+            set ResCD = ResCD * 0.65
         endif  
 
         //Dousing Hex
@@ -530,7 +530,7 @@ globals
             set ResCD = ResCD * DousingHexCooldown.real[GetHandleId(u)]
         endif
 
-        return time*ResCD
+        return time * ResCD
     endfunction
 
     function AbilStartCD takes unit u, integer id,real cd returns real
@@ -554,7 +554,7 @@ globals
             set EffectString = s1
         endif
 
-        return  AddSpecialEffect(EffectString, x, y)
+        return AddSpecialEffect(EffectString, x, y)
     endfunction
 
     function AddSpecialEffectTargetFix takes string s1, unit u, string s2 returns effect
@@ -564,7 +564,7 @@ globals
             set EffectString = s1
         endif
 
-        return  AddSpecialEffectTarget(EffectString,u,s2)
+        return AddSpecialEffectTarget(EffectString,u,s2)
     endfunction
 
 
@@ -598,24 +598,24 @@ globals
         call SaveBoolean(HT, GetHandleId(t), 2, skipDeath)
         call TimerStart(t,time,false,function EffectEndTimer)
         set e = null
-        set t =null
+        set t = null
     endfunction
 
     function USOrderATimer takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local integer i = GetHandleId(t)
         local unit u1 = LoadUnitHandle(HT,i,1)
-        local real x =  LoadReal(HT,i,3)
-        local real y =  LoadReal(HT,i,4)
-        local integer idsp =  LoadInteger(HT,i,5)
-        local string ordstr =  LoadStr(HT,i,6)
+        local real x = LoadReal(HT,i,3)
+        local real y = LoadReal(HT,i,4)
+        local integer idsp = LoadInteger(HT,i,5)
+        local string ordstr = LoadStr(HT,i,6)
         local real life_1 = LoadReal(HT,i,7)
         local abilityreallevelfield REALF = ConvertAbilityRealLevelField(LoadInteger(HT,i,8))
         local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, 0  )
 
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
-        set t  = null
+        set t = null
 
         call UnitAddAbility(Caster1,idsp ) 
         call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),REALF,0,life_1)
@@ -625,11 +625,11 @@ globals
         call UnitApplyTimedLife(Caster1,'B000',9)
 
 
-        set Caster1  = null
+        set Caster1 = null
     endfunction
 
 
-    function USOrderA takes unit u1, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield  REALF returns nothing
+    function USOrderA takes unit u1, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield REALF returns nothing
         local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 9)
         call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
         if REALF != null then
@@ -639,11 +639,11 @@ globals
     endfunction
 
     function SetUnitProcHp takes unit u, real bonus returns nothing
-        local real BonusOldHp = LoadReal(HT,GetHandleId(u),-412446)
-        local real Hp  =   I2R(BlzGetUnitMaxHP(u))-BonusOldHp
-        local real BonusNewHp  = Hp*bonus
+        local real BonusOldHp = LoadReal(HT,GetHandleId(u),- 412446)
+        local real Hp = I2R(BlzGetUnitMaxHP(u))- BonusOldHp
+        local real BonusNewHp = Hp * bonus
         call BlzSetUnitMaxHP(u,R2I(Hp + BonusNewHp) )  
-        call SaveReal(HT,GetHandleId(u),-412446, I2R(R2I(BonusNewHp)))
+        call SaveReal(HT,GetHandleId(u),- 412446, I2R(R2I(BonusNewHp)))
     endfunction
 
     function RemoveHeroAbilities takes unit u returns nothing
@@ -665,8 +665,8 @@ globals
         
         loop
             exitwhen i1 > 10
-                set id = GetInfoHeroSpell(u ,i1)
-                call BlzStartUnitAbilityCooldown(u,id, cd+BlzGetUnitAbilityCooldownRemaining(u,id))
+            set id = GetInfoHeroSpell(u ,i1)
+            call BlzStartUnitAbilityCooldown(u,id, cd + BlzGetUnitAbilityCooldownRemaining(u,id))
 
             set i1 = i1 + 1
         endloop

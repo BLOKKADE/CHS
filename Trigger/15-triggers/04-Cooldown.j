@@ -11,7 +11,7 @@ library Cooldown requires RandomShit
 
         //call BlzSetAbilityRealLevelField(BlzGetUnitAbility(LoadUnitHandle(HT_SPELC,GetHandleId(TimerT),2), ),ConvertAbilityRealLevelField('acdn'),GetUnitAbilityLevel(t,Aid)-1,timeT*ResCD)
 
-        call BlzSetUnitAbilityCooldown(u,id, GetUnitAbilityLevel(u,id)-1,  time  ) 
+        call BlzSetUnitAbilityCooldown(u,id, GetUnitAbilityLevel(u,id)- 1,  time  ) 
 
 
 
@@ -27,8 +27,8 @@ library Cooldown requires RandomShit
         local real cd = CalculateCooldown(u, Aid, timeT, true)
         //call BJDebugMsg("cd default: " + R2S(timeT) + " new cd: " + R2S(cd))
         //call BJDebugMsg(GetUnitName(u) + " : " + GetObjectName(Aid))
-        if cd != timeT  then
-        //call BlzSetAbilityRealLevelField(GetSpellAbility(),ConvertAbilityRealLevelField('acdn'),GetUnitAbilityLevel(t,Aid)-1,timeT*ResCD)
+        if cd != timeT then
+            //call BlzSetAbilityRealLevelField(GetSpellAbility(),ConvertAbilityRealLevelField('acdn'),GetUnitAbilityLevel(t,Aid)-1,timeT*ResCD)
             call BlzSetUnitAbilityCooldown(u, Aid, lvl, cd) 
             set TimerT = NewTimer()
             call SaveInteger(HT_SPELC,GetHandleId(TimerT),1,Aid  )

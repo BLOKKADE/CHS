@@ -45,7 +45,7 @@ library DivineBubble initializer init requires T32, RandomShit
             set this.enabled = true
             call AbilStartCD(this.source,'A07S', 30.69 - (0.69 * GetUnitAbilityLevel(this.source, 'A07S'))) 
             set DivineBubbles[GetHandleId(this.source)] = this
-            set this.endTick = T32_Tick + R2I(duration*32)   
+            set this.endTick = T32_Tick + R2I(duration * 32)   
             call this.startPeriodic()
             return this
         endmethod

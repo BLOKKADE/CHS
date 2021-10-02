@@ -48,55 +48,55 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
                 set RandomSpellLoc = null
             endif
             return true
-        //Mana Starvation
+            //Mana Starvation
         elseif abilId == 'A09J' then
             call CastManaStarvation(caster, target, lvl)
             return true
-        //Midas Touch
+            //Midas Touch
         elseif abilId == 'A0A2' and SuddenDeathEnabled == false then
             call CastMidasTouch(caster, target, lvl)
             return true
-        //Dousing Hex
+            //Dousing Hex
         elseif abilId == 'A09I' then
             call CastDousingHex(caster, target, lvl)
             return true
-        //Cyclone
+            //Cyclone
         elseif abilId == 'A05X' then
             call Cyclone(caster, x, y)
             return true
-        //Ancient Axe
+            //Ancient Axe
         elseif abilId == 'A096' then
             call AncientAxe(caster)
             return true
-        //Ancient Dagger
+            //Ancient Dagger
         elseif abilId == 'A097' then
             call AncientDagger(caster)
             return true
-        //Ancient Staff
+            //Ancient Staff
         elseif abilId == 'A094' then
             call AncientStaff(caster)
             return true
-        //Reset Time
+            //Reset Time
         elseif abilId == 'A024' then
             call ResetTime(caster)
             return true
-        //Blink Strike
+            //Blink Strike
         elseif abilId == 'A08J' then
             call BlinkStrike(caster, lvl)
             return true
-        //Extra dimensional cooperation
+            //Extra dimensional cooperation
         elseif abilId == 'A08I' then
             call ExtradimensionalCooperation(caster, abilId)
             return true
-        //Frost Bolt
+            //Frost Bolt
         elseif abilId == 'A07X' then
-            call  UsFrostBolt(caster,target,120*GetUnitAbilityLevel(caster,'A07X')*(1+0.25*R2I(GetClassUnitSpell(caster,7))), GetClassUnitSpell(caster,9))
+            call UsFrostBolt(caster,target,120 * GetUnitAbilityLevel(caster,'A07X')*(1 + 0.25 * R2I(GetClassUnitSpell(caster,7))), GetClassUnitSpell(caster,9))
             return true
-        //Sand of time
+            //Sand of time
         elseif abilId == 'A083' then
-            call SandRefreshAbility(caster,1.75 + 0.25*I2R(GetUnitAbilityLevel(caster,'A083')))
+            call SandRefreshAbility(caster,1.75 + 0.25 * I2R(GetUnitAbilityLevel(caster,'A083')))
             return true
-        //Purge dummy
+            //Purge dummy
         elseif abilId == 'A08A' then
             //remove last breath
             if GetUnitAbilityLevel(target, 'A08B') > 0 and IsUnitEnemy(target, GetOwningPlayer(caster)) then
@@ -109,7 +109,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
                 call UnitRemoveAbility(target, 'B01G')
             endif
             return true
-        //Purge wait
+            //Purge wait
         elseif abilId == 'A08E' then
             call Purge(caster, target)    
             return true  
