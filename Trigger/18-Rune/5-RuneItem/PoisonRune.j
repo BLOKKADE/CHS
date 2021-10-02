@@ -6,7 +6,7 @@ library PoisonRune initializer init requires RandomShit
 
     function PoisonRune takes nothing returns boolean
         local integer pid = GetPlayerId(GetOwningPlayer(GLOB_RUNE_U))
-        local real power = GLOB_RUNE_POWER
+        local real power = GLOB_RUNE_POWER*100
         local integer levels = R2I(power / 20) + 1
 
         set PoisonRuneBonus[pid] = PoisonRuneBonus[pid] + levels

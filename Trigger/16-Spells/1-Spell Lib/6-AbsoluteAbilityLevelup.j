@@ -9,6 +9,38 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
         call FunResetAbility(id,u)
     endfunction
 
+    private function BuyLevel takes player p, unit u, integer abil, boolean maxBuy, boolean new returns nothing
+        local integer i = GetUnitAbilityLevel(u, abil) + 1
+        local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
+        local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
+        if maxBuy then
+            loop
+                if lumber - cost < 0 then
+                    exitwhen true
+                endif
+                set lumber = lumber - cost
+                set i = i + 1
+                exitwhen i >= 30
+            endloop
+            call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, lumber)
+        endif
+
+        if new then
+            call UnitAddAbility(u, abil)
+            call BlzUnitDisableAbility(u,abil,false,true)
+            call AddSpellPlayerInfo(abil,u,1)
+            call AddSpellLearned(GetHandleId(u), abil, SpellList_Absolute)
+            
+        endif
+        if i > 1 then
+            call SetUnitAbilityLevel(u, udg_integer01, i)
+        endif
+        call FuncEditParam(abil,u)
+        call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
+        call DestroyEffectBJ(GetLastCreatedEffectBJ())
+        call DisplayTimedTextToPlayer(p, 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(abil, GetUnitAbilityLevel(u, abil) - 1))
+    endfunction
+
     function Trig_AbsoluteAbilityLevelup_Actions takes nothing returns nothing
         local integer ItemId = GetItemTypeId(GetManipulatedItem())
         local integer counter = 0 
@@ -31,28 +63,21 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
             if abilityLevel > 0 then
             
                 if abilityLevel < 30 then
-                    call SetUnitAbilityLevel(u,abilityId,abilityLevel +1)
-                    call FuncEditParam(abilityId, u)
-                    //call BJDebugMsg("aalu level")
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"2|cffbbff00Learned |r" + BlzGetAbilityTooltip(abilityId, abilityLevel))
+                    call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], false)
                 else
                     call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
                     call ResourseRefresh(GetOwningPlayer(u) )
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "|cffffe600Failed to learn|r: maximum abilities reached")
                 endif
                 
             else
                 if counter < 10 and counter <= GetHeroMaxAbsoluteAbility(u) then
                     //call BJDebugMsg("aalu add")
-                    call UnitAddAbility(u,abilityId)
-                    call BlzUnitDisableAbility(u,abilityId,false,true)
-                    call AddSpellPlayerInfo(abilityId,u,1)
-                    call AddSpellLearned(GetHandleId(u), abilityId, SpellList_Absolute)
-                    call FuncEditParam(abilityId, u)
                     call SaveInteger(HT,GetHandleId(GetTriggerUnit()),941561,counter + 1 )
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"1|cffbbff00Learned |r" + BlzGetAbilityTooltip(abilityId, abilityLevel))
+                    call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], true)
                 elseif counter > GetHeroMaxAbsoluteAbility(u) then
                     //call BJDebugMsg("aalu acorn")
-                    call DisplayTextToPlayer(GetOwningPlayer(u),0,0,"Buy an |cffbbff00Absolute Acorn|r at |cffffd900Power Ups Shop II|r to buy more Absolute abilities. (|cffff1100Max:" +I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)"  ) 
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "Buy an |cffbbff00Absolute Acorn|r at |cffffd900Power Ups Shop II|r to buy more Absolute abilities. (|cffff1100Max:" +I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)"  ) 
                     call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
                     call ResourseRefresh(GetOwningPlayer(u) )
 

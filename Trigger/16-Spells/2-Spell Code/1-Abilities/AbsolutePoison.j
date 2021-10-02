@@ -17,14 +17,15 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         integer startTick
         integer endTick
         integer buffCount
-        real hpLimit
+        real reduction
     
         private static integer instanceCount = 0
         private static thistype recycle = 0
         private thistype recycleNext
 
-        private method countBuffs takes nothing returns nothing
+        private method countBuffs takes nothing returns real
             local integer count = 0
+            local real regen = BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE)
             if GetUnitAbilityLevel(this.target, 'BNpa') > 0 then
                 set count = count + 1
             endif
@@ -56,27 +57,19 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             if GetUnitAbilityLevel(this.target, 'B015') > 0 then
                 set count = count + 1
             endif
-
+            
             set this.buffCount = count
+            return regen + this.reduction - ((count * 0.12) * regen)
         endmethod
     
         private method periodic takes nothing returns nothing
             local real hp = GetUnitState(this.target, UNIT_STATE_LIFE)
-            local real currentBonus
-            call this.countBuffs()
-            if hp > this.hpLimit then
-                set currentBonus = hp - this.hpLimit
-                set currentBonus = this.hpLimit + (currentBonus * ( 1 - (HpReduction * this.buffCount)))
-                if currentBonus > 0 then
-                    call SetUnitState(this.target, UNIT_STATE_LIFE, this.hpLimit + (currentBonus * ( 1 - (HpReduction * this.buffCount))))
-                else
-                    call SetUnitState(this.target, UNIT_STATE_LIFE, 1)
-                endif
-                set this.hpLimit = GetUnitState(this.target, UNIT_STATE_LIFE)
-            else
-                set this.hpLimit = hp
+            local real currentBonus = this.countBuffs()
+            if reduction != currentBonus then
+                set this.reduction = currentBonus
+                call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, currentBonus)
             endif
-            if T32_Tick > this.endTick or (T32_Tick - this.startTick > 32 and buffCount == 0) or IsUnitDivineBubbled(this.target) or IsUnitSpellTargetCheck(this.target, GetOwningPlayer(this.source)) == false then
+            if T32_Tick > this.endTick or (T32_Tick - this.startTick > 32 and this.buffCount == 0) or IsUnitDivineBubbled(this.target) or IsUnitSpellTargetCheck(this.target, GetOwningPlayer(this.source)) == false then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -94,8 +87,8 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             endif
             set this.target = target
             set this.source = source
-
-            set this.hpLimit = GetUnitState(this.target, UNIT_STATE_LIFE)
+            set this.reduction = 0
+            set this.buffCount = 0
 
             set this.endTick = T32_Tick + R2I(30*32)   
             set this.startTick = T32_Tick

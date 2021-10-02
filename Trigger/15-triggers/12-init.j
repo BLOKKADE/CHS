@@ -6876,14 +6876,18 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
             endif
             
             //Creep upgrade bonuses
-            set magicPowerBonus = 1 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1])
+            if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
+                set magicPowerBonus = 1 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1])
+                set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* udg_integer02)
+            else
+                set magicPowerBonus = 0
+                set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* udg_integer02) / 2
+            endif
             set magicDefBonus = 0.09 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
             set evasionBonus = 0.06 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
             set blockBonus = 0.12 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
             if udg_integer02 < 40 then
-                set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* udg_integer02)/ 2
-            else
-                set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* udg_integer02)
+                set damageBonus = damageBonus / 2
             endif
 
             if(Trig_Generate_Next_Level_Func021Func001Func001C())then

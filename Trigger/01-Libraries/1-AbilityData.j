@@ -251,7 +251,7 @@ library AbilityData initializer init requires Table
 
         //17 - Shadow Strike 
         call SaveAbilData('AEsh', 'I00F', false, 0, 0, true, Order_Target, "shadowstrike")
-        call SetLastObjectElement(Element_Poison, 2)
+        call SetLastObjectElement(Element_Poison, 1)
 
         //18 - Thorns Aura 
         call SaveAbilData('A08F', 'I00H', false, 0, 0, false, Order_None, null)
@@ -260,7 +260,6 @@ library AbilityData initializer init requires Table
 
         //19 - Thunder Clap 
         call SaveAbilData('AHtc', 'I00I', false, 0, 0, true, Order_Instant, "thunderclap")
-        call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Earth, 1)
 
@@ -348,7 +347,7 @@ library AbilityData initializer init requires Table
 
         //39 - Drunken Haze 
         call SaveAbilData('ANdh', 'I01S', false, 0, 1, true, Order_Target, "drunkenhaze")
-        call SetLastObjectElement(Element_Poison, 1)
+        call SetLastObjectElement(Element_Poison, 2)
 
         //40 - Breath of Fire 
         call SaveAbilData('ANbf', 'I01T', false, 0, 0, true, Order_Point, "breathoffire")
@@ -368,7 +367,8 @@ library AbilityData initializer init requires Table
 
         //44 - Starfall 
         call SaveAbilData('A0A1', 'I01Y', false, 0, 0, true, Order_Instant, "starfall")
-        call SetLastObjectElement(Element_Energy, 2)
+        call SetLastObjectElement(Element_Energy, 1)
+        call SetLastObjectElement(Element_Arcane, 1)
         call SaveDummyAbilOrder('AEsf', "starfall")
 
         //45 - Anti-magic shell
@@ -480,7 +480,6 @@ library AbilityData initializer init requires Table
 
         //69 - Cold Arrows 
         call SaveAbilData('AHca', 'I02S', false, 0, 0, false, Order_None, "coldarrows")
-        call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //70 - Faerie Fire 
@@ -544,7 +543,7 @@ library AbilityData initializer init requires Table
 
         //84 - Lightning Shield 
         call SaveAbilData('ACls', 'I038', false, 0, 1, false, Order_None, "lightningshield")
-        call SetLastObjectElement(Element_Wind, 1)
+        call SetLastObjectElement(Element_Wind, 2)
 
         //85 - Volcano 
         call SaveAbilData('A09X', 'I039', false, 0, 0, true, Order_Point, "volcano")
@@ -635,7 +634,6 @@ library AbilityData initializer init requires Table
         //107 - Brilliance Aura 
         call SaveAbilData('AHab', 'I00U', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
-        call SetLastObjectElement(Element_Water, 1)
 
         //108 - Fast Magic 
         call SaveAbilData('A03P', 'I05M', false, 0, 0, false, Order_None, null)
@@ -661,6 +659,7 @@ library AbilityData initializer init requires Table
         //113 - Cheater Magic 
         call SaveAbilData('A040', 'I05R', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
+        call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
 
         //114 - Fearless Defenders 
@@ -707,7 +706,7 @@ library AbilityData initializer init requires Table
 
         //126 - Death Pact 
         call SaveAbilData('AUdp', 'I01V', false, 0, 1, false, Order_Target, "deathpact")
-        call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Dark, 2)
 
         //127 - Big Bad Voodoo 
         call SaveAbilData('AOvd', 'I03Z', false, 0, 0, false, Order_None, "voodoo")
@@ -716,7 +715,6 @@ library AbilityData initializer init requires Table
 
         //128 - Icy Breath 
         call SaveAbilData('A046', 'I05Z', false, 0, 1, true, Order_Point, "breathoffrost")
-        call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //129 - Soul Burn 
@@ -786,6 +784,7 @@ library AbilityData initializer init requires Table
 
         //141 - Ancient Teaching 
         call SaveAbilData('A05U', 'I07N', false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Arcane, 1)
 
         //142 - Cyclone 
         call SaveAbilData('A05X', 'I07Q', false, 0, 0, true, Order_Point, "creepanimatedead")
@@ -960,10 +959,11 @@ library AbilityData initializer init requires Table
 
         //177 - Mana Starvation
         call SaveAbilData('A09J', 'I0AO', false, 0, 1, true, Order_Target, "ancestralspirit")
+        call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Dark, 1)
 
         //178 - Fatal Flaw
-        call SaveAbilData('A0AA', 'I0N0', false, 0, 0, false, Order_None, null)
+        call SaveAbilData('A0AA', 'I0B0', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //179 - Retaliation Aura

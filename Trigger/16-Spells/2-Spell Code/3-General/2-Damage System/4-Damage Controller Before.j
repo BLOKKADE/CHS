@@ -487,11 +487,11 @@ scope DamageControllerBefore initializer init
                 //Fatal Flaw
                 set II = GetUnitAbilityLevel(damageSource,'A0AA')
                 if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A0AA') == 0 then
+                    call BJDebugMsg("magic prot: " + R2S(magicResDamage) + ", new: " + R2S(magicResDamage * (1 - (0.02 * II))))
                     set magicResDamage = magicResDamage * (1 - (0.02 * II))
                     call AbilStartCD(damageSource, 'A0AA', 5)
                 endif
-
-            call BlzSetEventDamage(  GetEventDamage()*( 50/(50+magicResDamage) )   )        
+                call BlzSetEventDamage(  GetEventDamage()*( 50/(50+magicResDamage) )   )        
             endif
         endif
 

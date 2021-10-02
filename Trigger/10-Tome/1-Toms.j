@@ -1,11 +1,4 @@
-library Tomes initializer init requires RandomShit, CustomState
-    globals
-        real array MagicProt
-        real array MagicPwr
-        real array PvpBonus
-
-    endglobals
-
+library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTome
     function PlayerAddGold takes player p, integer i returns nothing
 
         call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,  GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD) + i )
@@ -514,6 +507,9 @@ library Tomes initializer init requires RandomShit, CustomState
                 call PlayerAddGold( GetOwningPlayer(u),20000)
                     
             endif	
+            //Non-Lucrative Tome
+        elseif II == 'I0B4' then
+            call NonLucrativeTomeBought(u)
         endif
 
             call ResourseRefresh(GetOwningPlayer(u)) 
