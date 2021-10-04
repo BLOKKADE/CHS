@@ -37,10 +37,10 @@ library ManifoldStaff requires RandomShit, AbilityData, DummyOrder
                 endif
             endloop
 
-            call BJDebugMsg("mana cost: " + R2S(mana))
+            //call BJDebugMsg("mana cost: " + R2S(mana))
             loop
                 set p = FirstOfGroup(ManifoldGroup)
-                call BJDebugMsg("new mana: " + R2S(GetUnitState(caster, UNIT_STATE_MANA) - mana))
+                //call BJDebugMsg("new mana: " + R2S(GetUnitState(caster, UNIT_STATE_MANA) - mana))
                 exitwhen p == null or GetUnitState(caster, UNIT_STATE_MANA) - mana <= 0
                 call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) - mana)
                 call GroupRemoveUnit(ManifoldGroup, p)

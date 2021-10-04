@@ -10,6 +10,7 @@
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\Math.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\MathRound.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\OrderIds.j"
+//! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\StableSpells.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\StringFunctions.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\T32.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\TimerUtils.j"

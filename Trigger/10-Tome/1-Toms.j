@@ -174,6 +174,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == 'I06P' then
                 if Glory[pid] >= 100 then
                     call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 150)
+                    call CalculateNewCurrentHP(u, 150)
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
                     set Glory[pid]= Glory[pid]- 100
                     set gloryBonus = gloryBonus + 150
@@ -351,6 +352,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Manual of health
             elseif II == 'manh' then 
                 call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                call CalculateNewCurrentHP(u, 50)
                 //Tome of Power
             elseif II == 'tkno' then 
                 call AddHeroXP(u, 2000, false)

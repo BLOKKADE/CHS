@@ -59,7 +59,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 		set s = s + "Income: " + I2S(Income[pid]) + "\n"
 		set s = s + "Glory per Round: " + I2S(R2I(GloryRoundBonus[pid] + 200)) + "\n"
 		set s = s + "Movespeed: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"
-		set s = s + "Rune Power: " + R2SW(GetUnitPowerRune(u), 1, 1) + "%%\n"
+		set s = s + "Rune Power: " + R2SW(100 + GetUnitPowerRune(u) + GetHeroLevel(u), 1, 1) + "\n"
 		set s = s + "Luck: +" + R2SW(((GetUnitLuck(u) - 1) * 100), 1, 1) + "%%\n"
 		set s = s + "Absolute Slots: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1)
 

@@ -45,7 +45,7 @@ library PeriodicDamage initializer init requires RandomShit
                 set this.endTick = T32_Tick + interval
             endif
             
-            if this.limit == 0 or UnitAlive(this.target) == false or GetDivineBubbleStruct(GetHandleId(this.target)) != 0 then
+            if this.limit <= 0 or UnitAlive(this.target) == false or GetDivineBubbleStruct(GetHandleId(this.target)) != 0 then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -58,12 +58,16 @@ library PeriodicDamage initializer init requires RandomShit
             return this
         endmethod
 
-        method addLimit takes integer abilId, integer limit, real cd returns thistype
+        method addLimit takes integer abilId, integer max, real cd returns thistype
             local integer count = PeriodicCounter[GetHandleId(this.caster)].integer[abilId]
             set this.abilId = abilId
             set PeriodicCounter[GetHandleId(this.caster)].integer[abilId] = count + 1
-            if count >= limit then  
-                call BlzStartUnitAbilityCooldown(this.caster, abilId, cd)
+            if count >= max then  
+                if GetUnitAbilityLevel(this.caster, abilId) > 0 then
+                    call BlzStartUnitAbilityCooldown(this.caster, abilId, cd)
+                else
+                    set this.limit = 0
+                endif
             endif
             return this
         endmethod

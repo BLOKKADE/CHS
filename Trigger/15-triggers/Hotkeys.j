@@ -11,8 +11,6 @@ library ConversionHotkeys initializer init requires Table
         local integer pid = GetPlayerId(GetTriggerPlayer())
         if HoldCtrl[pid] == false then
             set HoldCtrl[pid] = true
-            call BJDebugMsg("control down")
-            
         endif
     endfunction
 
@@ -20,7 +18,6 @@ library ConversionHotkeys initializer init requires Table
         local integer pid = GetPlayerId(GetTriggerPlayer())
         if HoldCtrl[pid] == true then
             set HoldCtrl[pid] = false
-            call BJDebugMsg("control up")
         endif
     endfunction
 

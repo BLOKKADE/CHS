@@ -108,12 +108,11 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
     endstruct
 
     function UpdateAbilityField takes unit u, integer abilId, abilityreallevelfield arlf, integer level, real bonus returns nothing
-        call BJDebugMsg("uaf: " + R2S(bonus))
         if PoisonAbilField[GetHandleId(arlf)].real[level] == 0 then
             set PoisonAbilField[GetHandleId(arlf)].real[level] = BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, abilId), arlf, level - 1)
         endif
         call SetAbilityRealField(u, abilId, level, arlf, PoisonAbilField[GetHandleId(arlf)].real[level] * bonus)
-        call BJDebugMsg(GetObjectName(abilId) + ": " + R2S(PoisonAbilField[GetHandleId(arlf)].real[level] * bonus) + ": " + R2S(BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, abilId), arlf, level - 1)))
+        //call BJDebugMsg(GetObjectName(abilId) + ": " + R2S(PoisonAbilField[GetHandleId(arlf)].real[level] * bonus) + ": " + R2S(BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, abilId), arlf, level - 1)))
     endfunction
 
     function PoisonSpellCast takes unit caster, unit target returns nothing
@@ -129,7 +128,6 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         local integer abilLevel = 0
 
         set PoisonBonus.real[GetHandleId(u)] = bonus
-        call BJDebugMsg("hello?")
         //Shadow Strike
         set abilId = 'AEsh'
         set abilLevel = GetUnitAbilityLevel(u, abilId)
@@ -160,7 +158,6 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         if abilLevel > 0 then
             call UpdateAbilityField(u, abilId, ABILITY_RLF_DAMAGE_PER_SECOND_POI1, abilLevel, bonus)
         endif
-        call BJDebugMsg("fin?")
     endfunction
 
     private function init takes nothing returns nothing

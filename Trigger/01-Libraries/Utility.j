@@ -16,7 +16,11 @@ library Utility
         return (i == 1 and stat == 0) or (i == 2 and stat == 2) or (i == 3 and stat == 1)
     endfunction
 
-    function HasPlayerFinishedLevel takes player p returns boolean
-        return IsPlayerInForce(p,udg_force03)
+    function HasPlayerFinishedLevel takes unit u, player p returns boolean
+        return IsPlayerInForce(p,udg_force03) and udg_boolean02 == false and udg_units03[2] != u and udg_units03[1] != u
+    endfunction
+
+    function CalculateNewCurrentHP takes unit u, real hpBonus returns nothing
+        call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) * (BlzGetUnitMaxHP(u) / (BlzGetUnitMaxHP(u) - hpBonus)))
     endfunction
 endlibrary

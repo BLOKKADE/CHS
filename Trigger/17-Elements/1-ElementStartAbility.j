@@ -47,6 +47,51 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
                 call AbilStartCD(u,'A079',12 ) 
             endif
         endif
+
+        //Wild Runestone
+        if UnitHasItemS(u, 'I0B6') and IsSpellElement(u, id, Element_Wild) then
+            if BlzGetUnitAbilityCooldownRemaining(u, 'A0AN') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 500 then
+                call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 15)  )
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 500)
+                call AbilStartCD(u, 'A0AN', 10) 
+            endif
+        endif
+
+        //Light Runestone
+        if UnitHasItemS(u, 'I095') and IsSpellElement(u, id, Element_Light) then
+            if BlzGetUnitAbilityCooldownRemaining(u, 'A0AK') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
+                call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 13)  )
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
+                call AbilStartCD(u, 'A0AK', 15) 
+            endif
+        endif
+
+        //Dark Runestone
+        if UnitHasItemS(u, 'I0B5') and IsSpellElement(u, id, Element_Dark) then
+            if BlzGetUnitAbilityCooldownRemaining(u, 'A0AL') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
+                call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 12)  )
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
+                call AbilStartCD(u, 'A0AL', 12) 
+            endif
+        endif
+
+        //Poison Runestone
+        if UnitHasItemS(u, 'I0B8') and IsSpellElement(u, id, Element_Poison) then
+            if BlzGetUnitAbilityCooldownRemaining(u, 'A0AO') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
+                call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 14)  )
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
+                call AbilStartCD(u, 'A0AO', 15) 
+            endif
+        endif
+
+        //Arcane Runestone
+        if UnitHasItemS(u, 'I0B7') and IsSpellElement(u, id, Element_Arcane) then
+            if BlzGetUnitAbilityCooldownRemaining(u, 'A0AM') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
+                call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 5)  )
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
+                call AbilStartCD(u, 'A0AM', 30) 
+            endif
+        endif
         
         //Absolute Fire
         if GetUnitAbilityLevel(u,'A07B') > 0 and IsSpellElement(u,id,1) then

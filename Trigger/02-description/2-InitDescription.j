@@ -13,12 +13,15 @@ library ElementTexts initializer init
         set ClassAbil[7] = "[|cff000000Dark|r]"
         set ClassAbil[8] = "[|cffd2d2d2Light|r]"
         set ClassAbil[9] = "[|cff8080ffCold|r]"
-        set ClassAbil[10] = "[|cff104c0fPoison|r]"
+        set ClassAbil[10] = "[|cff3bc739Poison|r]"
         set ClassAbil[11] = "[|cff800000Blood|r]"   
-        
-        set ClassAbil[12] = "[|cffffff96Divinity|r]"
+
         set ClassAbil[13] = "[|cff6f2583Arcane|r]"
+        
+        /*
+        set ClassAbil[12] = "[|cffffff96Divinity|r]"
+        
         set ClassAbil[14] = "[|cff7a85ffTime|r]"
-        set ClassAbil[15] = "[|cffc0dec0Spirit|r]"
+        set ClassAbil[15] = "[|cffc0dec0Spirit|r]"*/
     endfunction
 endlibrary

@@ -13,10 +13,10 @@ library MagicRune requires RandomShit
         loop
             exitwhen i1 > 10
             set SpellId = GetInfoHeroSpell(u ,i1)
-            if BlzGetUnitAbilityCooldownRemaining(u,SpellId)> 0 then
-                call BlzStartUnitAbilityCooldown(u,SpellId,BlzGetUnitAbilityCooldownRemaining(u,SpellId)- RuneOfMagic_base * power )
-            elseif BlzGetUnitAbilityCooldownRemaining(u,SpellId) < RuneOfMagic_base * power then
+            if BlzGetUnitAbilityCooldownRemaining(u,SpellId) < RuneOfMagic_base * power then
                 call BlzEndUnitAbilityCooldown(u,SpellId)
+            elseif BlzGetUnitAbilityCooldownRemaining(u,SpellId)> 0 then
+                call BlzStartUnitAbilityCooldown(u,SpellId,BlzGetUnitAbilityCooldownRemaining(u,SpellId)- RuneOfMagic_base * power )
             endif
             set i1 = i1 + 1
         endloop

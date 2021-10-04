@@ -30,8 +30,8 @@ library HeroData initializer init
         call SaveStr(HT_data,'H003',3, "|cffffff00Level Up Bonus|r: Increases intelligence by a random amount between 1 and 11. Repeats if strength is at 0 and again if agility is at 0." )    
         
         call SaveStr(HT_data,'O003',1, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )       // avatar
-        call SaveStr(HT_data,'O003',2, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more {Light] than [Dark] abilities it gains bonus armor and attack damage, if it has more [Dark] than [Light] abilities it gains bonus magic protection and magic power.")
-        call SaveStr(HT_data,'O003',3, "|cffffff00Level Up Bonus|r: Glow In The Dark: [Light] mode: +1% armor, +35 attack damage. [Dark] mode: +0.3 magic protection, +0.75 magic power." )                    
+        call SaveStr(HT_data,'O003',2, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power.")
+        call SaveStr(HT_data,'O003',3, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +35 attack damage. [|cff000000Dark|r] mode: +0.3 magic protection, +0.75 magic power." )                    
             
         call SaveStr(HT_data,'O004',1, "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp" )       // Demon Hunter
         call SaveStr(HT_data,'O004',2, "|cff00ffffPassive|r: Feedback: Every time the Hero attacks it drains enemy mana, giving it to himself. ")
@@ -45,11 +45,11 @@ library HeroData initializer init
         call SaveStr(HT_data,'O005',3, "|cffffff00Level Up Bonus|r: +35 maximum attack damage." )  
         
         call SaveStr(HT_data,'O000',1, "ReplaceableTextures\\CommandButtons\\BTNSpiritWalker.blp" )       // tauren
-        call SaveStr(HT_data,'O000',2, "|cff00ffffPassive|r: Spirit Mage: Spells in the Active Spells I shop can go up to level 40. ")
+        call SaveStr(HT_data,'O000',2, "|cff00ffffPassive|r: Spirit Mage: Spells in the Active Spells I shop can go up to level 40.")
         call SaveStr(HT_data,'O000',3, "|cffffff00Level Up Bonus|r: (Every 2 levels) Increases the level of all spells from Active Spells I by 1." )
         
         call SaveStr(HT_data,'O008',1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )       // Mystic
-        call SaveStr(HT_data,'O008',2, "|cff00ffffPassive|r: Faerie Friend: A Faerie Dragon follows it, attacking enemies. Faerie Dragon attacks count as Mystic attacks, it has the same attack speed.")
+        call SaveStr(HT_data,'O008',2, "|cff00ffffPassive|r: Faerie Friend: A Faerie Dragon follows it, attacking enemies. Faerie Dragon damage can be increased by the Attack summon upgrade.")
         call SaveStr(HT_data,'O008',3, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: +3% attack speed. (Every 3 levels) increases Faerie Dragon damage." )
             
         call SaveStr(HT_data,'O007',1, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )       // Pit Lord
@@ -151,7 +151,7 @@ library HeroData initializer init
         call SaveStr(HT_data,'H01C',3, "|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
         call SaveStr(HT_data,'H01D',1, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )       //Xesil
-        call SaveStr(HT_data,'H01D',2, "|cff00ffffPassive|r: Xesil's Legacy: 15% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name if stronger and is overriden if weaker.|r [|cff80ff80Luck|r]")
+        call SaveStr(HT_data,'H01D',2, "|cff00ffffPassive|r: Xesil's Legacy: 15% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name if stronger and is overriden if weaker. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r[|cff80ff80Luck|r]")
         call SaveStr(HT_data,'H01D',3, "|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
 
         call SaveStr(HT_data,'H01E',1, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )       //OGRE MAGE
@@ -159,7 +159,7 @@ library HeroData initializer init
         call SaveStr(HT_data,'H01E',3, "|cffffff00Level Up Bonus|r: Ogre's Luck: +2% chance." )
 
         call SaveStr(HT_data,'O00A',1, "ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp" )       //OGRE MAGE
-        call SaveStr(HT_data,'O00A',3, "|cffffff00Level Up Bonus|r: +1% attack speed." )
+        call SaveStr(HT_data,'O00A',3, "|cffffff00Level Up Bonus|r: +1% base attack speed." )
 
         call SaveStr(HT_data,'O00B',1, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )       //Yeti
         call SaveStr(HT_data,'O00B',2, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength if it hass less than 50 armor. ")

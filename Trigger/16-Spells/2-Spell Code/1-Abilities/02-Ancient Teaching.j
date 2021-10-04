@@ -1,6 +1,6 @@
-library AncientTeaching initializer init requires RandomShit
+library AncientTeaching initializer init requires RandomShit, StableSpells
     function ResetAbility_A05U takes unit u,integer id returns nothing
-        if BlzGetUnitAbilityCooldownRemaining(u,'A05U')<= 0.001 and GetUnitAbilityLevel(u,'A05U') > 0 and id != 'AHds' and id != 'A07S' and id != 'A05R' and id != 'A0AB' then
+        if BlzGetUnitAbilityCooldownRemaining(u,'A05U')<= 0.001 and GetUnitAbilityLevel(u,'A05U') > 0 and IsSpellResettable(id) then
             call AbilStartCD(u,'A05U',BlzGetUnitAbilityCooldownRemaining(u,id)*(4 - 0.1 * I2R(GetUnitAbilityLevel(u,'A05U')))) 
             call BlzEndUnitAbilityCooldown(u,id)
         

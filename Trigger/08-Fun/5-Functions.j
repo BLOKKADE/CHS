@@ -215,5 +215,9 @@ library Functions requires RandomShit, ExtradimensionalCooperation
         if Income[pid] == 0 then 
             call DisplayTextToPlayer(p,0,0,"You can increase your income in Power Ups Shop II")       
         endif
+
+        if ModuloInteger(udg_integer02, 3) == 0 then
+            call Hints_DisplayHint(pid)
+        endif
     endfunction
 endlibrary

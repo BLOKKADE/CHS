@@ -1,6 +1,6 @@
 library AttackRune
     globals
-        constant real RuneOfAttack_base = 15
+        constant real RuneOfAttack_base = 30
     endglobals
 
 

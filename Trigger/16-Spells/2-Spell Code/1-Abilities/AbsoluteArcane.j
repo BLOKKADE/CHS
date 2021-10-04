@@ -1,4 +1,8 @@
 library AbsoluteArcane requires CustomState, DivineBubble
+    globals
+        group AbsoluteArcaneGroup = CreateGroup()
+    endglobals
+
     struct AbsoluteArcaneStruct extends array
         unit source
         unit target
@@ -28,16 +32,19 @@ library AbsoluteArcane requires CustomState, DivineBubble
             endif
             set this.source = source
             set this.target = target
-            set this.bonus = 0.5 * GetClassUnitSpell(this.source, Element_Arcane)
+            if IsUnitType(this.target, UNIT_TYPE_HERO) then
+                set this.bonus = 1 * GetClassUnitSpell(this.source, Element_Arcane)
+            else
+                set this.bonus = 0.1 * GetClassUnitSpell(this.source, Element_Arcane)
+            endif
             if GetUnitMagicDmg(this.target) - this.bonus > 0 then
                 call AddUnitMagicDmg(this.source, this.bonus)
                 call AddUnitMagicDmg(this.target, 0 - this.bonus)
-                call AbilStartCD(this.source, 'A0AB', 1)
             else
                 set this.bonus = 0
             endif
 
-            set this.endTick = T32_Tick + R2I(5 * 32)   
+            set this.endTick = T32_Tick + R2I(10*32)   
             call this.startPeriodic()
             return this
         endmethod
@@ -53,4 +60,20 @@ library AbsoluteArcane requires CustomState, DivineBubble
     
         implement T32x
     endstruct
+
+    function AbsoluteArcaneDrain takes unit caster returns nothing
+        local unit p = null
+        call GroupClear(AbsoluteArcaneGroup)
+
+        call GroupEnumUnitsInRange(AbsoluteArcaneGroup, GetUnitX(caster), GetUnitY(caster), 400, null)
+
+        loop
+            set p = FirstOfGroup(AbsoluteArcaneGroup)
+            exitwhen p == null
+            if IsUnitEnemy(p, GetOwningPlayer(caster)) and IsUnitSpellTargetCheck(p, GetOwningPlayer(caster)) then
+                call AbsoluteArcaneStruct.create(caster, p)
+            endif
+            call GroupRemoveUnit(AbsoluteArcaneGroup, p)
+        endloop
+    endfunction
 endlibrary

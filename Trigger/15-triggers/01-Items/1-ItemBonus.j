@@ -389,7 +389,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call AddUnitPowerRune(u ,   75 * I2R(i - prevCount)  )
 			call SaveInteger(HTi,GetHandleId(u),29,i)	
 		endif 
-		
+		/*
 		if itemId == 'I08P' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -398,7 +398,6 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			endif
 			set prevCount = LoadInteger(HTi,GetHandleId(u),30) 
 			call AddUnitPowerRune(u ,   100 * I2R(i - prevCount)  )
-			call AddUnitPowerRune(u ,   20 * I2R(i - prevCount)  )
 			call SaveInteger(HTi,GetHandleId(u),30,i)	
 		endif 
 		if itemId == 'I08Q' then
@@ -431,6 +430,17 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set prevCount = LoadInteger(HTi,GetHandleId(u),33) 
 			call AddUnitPowerRune(u ,   100 * I2R(i - prevCount)  )
 			call SaveInteger(HTi,GetHandleId(u),33,i)	
+		endif  */
+
+		if itemId == 'I08P' or itemId == 'I0B8' or itemId == 'I0B7' or itemId == 'I0B6' or itemId == 'I095' or itemId == 'I0B5' or itemId == 'I08S' or itemId == 'I08R' or itemId == 'I08Q' then
+			if UnitHasItemS(u ,itemId ) then
+				set i = 1 
+			else
+				set i = 0
+			endif
+			set prevCount = LoadInteger(HTi,GetHandleId(u),itemId) 
+			call AddUnitPowerRune(u ,   100 * I2R(i - prevCount)  )
+			call SaveInteger(HTi,GetHandleId(u),itemId,i)	
 		endif  
 		
 		

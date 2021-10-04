@@ -119,7 +119,7 @@ library ExtradimensionalCooperation requires RandomShit
         call IssueTargetOrderById(u, 852101, caster)
         call UnitApplyTimedLife(u,'BTLF', 3) 
         set SpellData[GetHandleId(caster)].integer[6] = SpellData[GetHandleId(caster)].integer[6] + 2 + GetUnitAbilityLevel(caster, abilId)
-        call BJDebugMsg("edc: " + I2S(SpellData[GetHandleId(caster)].integer[6]))
+        //call BJDebugMsg("edc: " + I2S(SpellData[GetHandleId(caster)].integer[6]))
         set u = null
     endfunction
 endlibrary

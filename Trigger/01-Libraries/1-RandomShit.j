@@ -1,4 +1,4 @@
-library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken
+library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpells
     globals
 
         integer array SpellCP
@@ -435,6 +435,10 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken
             set elementCount = elementCount + R2I(GetHeroLevel(u) / 8)
         endif
 
+        if id == Element_Poison and UnitHasItemS(u, 'I0B8') then
+            set elementCount = elementCount + 2
+        endif
+
         //Witch Doctor passive
         if GetUnitTypeId(u) == 'O006' then
             set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
@@ -482,7 +486,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken
             endif   
 
             //Cheater Magic
-            if GetBuffLevel(u, 'A08G') > 0 and id != 'A024' then
+            if GetBuffLevel(u, 'A08G') > 0 and IsSpellResettable(id) then
                 if id == 'A049' then
                     set ResCD = ResCD * 0.1
                 else       
@@ -507,13 +511,13 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken
         endif
 
         //Xesil's Legacy
-        if (GetUnitTypeId(u ) != 'H01D' and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (xesilChance <= 25 * luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance * luck) then
+        if (GetUnitTypeId(u ) != 'H01D' and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (xesilChance <= 25 * luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance * luck) and IsSpellResettable(id) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
         
         //Staff of Water
-        if UnitHasItemS(u,'I08Y') and IsObjectElement(id, 2) then
+        if UnitHasItemS(u,'I08Y') and IsObjectElement(id, 2) and IsSpellResettable(id) then
             if GetRandomReal(0,100) <= 40 * luck then
                 set ResCD = 0.001
             endif

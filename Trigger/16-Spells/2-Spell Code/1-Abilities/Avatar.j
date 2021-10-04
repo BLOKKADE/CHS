@@ -47,7 +47,7 @@ library Avatar initializer init requires AttackDamage
             call UnitAddAttackDamage(this.source, this.damageBonus)
             call BlzSetUnitArmor(this.source, BlzGetUnitArmor(this.source) + this.armorBonus)
             call BlzSetUnitMaxHP(this.source, BlzGetUnitMaxHP(this.source) + this.hpBonus)
-            call SetUnitState(this.source, UNIT_STATE_LIFE, GetUnitState(this.source, UNIT_STATE_LIFE) * (1 + (this.hpBonus / BlzGetUnitMaxHP(this.source))))
+            call CalculateNewCurrentHP(this.source, this.hpBonus)
         endmethod
     
         static method create takes unit source, integer level returns thistype

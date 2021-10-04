@@ -149,6 +149,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call GetRetaliationSource(caster, target, abilId, abilLvl)
                 endif
 
+                if UnitHasItemS(caster, 'I0B7') then
+                    call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
+                endif
+
                 if abilId == 'A0AE' then
                     call CastAvatar(caster, abilLvl)
                 endif

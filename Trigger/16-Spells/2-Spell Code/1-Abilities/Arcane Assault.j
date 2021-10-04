@@ -18,6 +18,7 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
         local real x = GetUnitX(damageSource)
         local real y = GetUnitY(damageSource)
 
+        call ElemFuncStart(damageSource, 'A098')
         if GetUnitAbilityLevel(damageSource, 'ANca') > 0 or GetUnitAbilityLevel(damageSource, 'Aroc') > 0 then
             set p = null
             return

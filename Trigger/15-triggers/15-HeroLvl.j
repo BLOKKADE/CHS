@@ -155,11 +155,11 @@ library HeroLevel initializer init requires HeroLvlTable
             if Economic then
                 call AdjustPlayerStateBJ( (I_l + 20)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
                 call AdjustPlayerStateBJ( 8 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
-                call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "Levelup bonus: |cffffcc00+" + I2S((I_l + 20)*(RI)) + " gold|r and |cff1eff00+" + I2S(8 *(RI)) + " lumber|r")
+                call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cffc300ffLevel: " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 20)*(RI)) + " gold|r and |cff1eff00+" + I2S(8 *(RI)) + " lumber|r")
             else
                 call AdjustPlayerStateBJ( (I_l + 2)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
                 call AdjustPlayerStateBJ( 4 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
-                call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "Levelup bonus: |cffffcc00+" + I2S((I_l + 2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4 *(RI)) + " lumber|r")
+                call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cffc300ffLevel " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4 *(RI)) + " lumber|r")
             endif
         
         endif

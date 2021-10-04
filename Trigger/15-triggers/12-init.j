@@ -1287,17 +1287,21 @@ function Trig_Plague_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Plague_Actions takes nothing returns nothing
-    local real bonus = PoisonBonus.real[GetHandleId(GetTriggerUnit())]
+    local real bonus = 1
     set udg_integer52 = 1
-    if bonus == 0 then
-        set bonus = 1
+    if PoisonBonus.real[GetHandleId(GetTriggerUnit())] != 0 then
+        set bonus = PoisonBonus.real[GetHandleId(GetTriggerUnit())]
     endif
     loop
         exitwhen udg_integer52 > 10
         call CreateNUnitsAtLoc(1,'n01L',GetOwningPlayer(GetTriggerUnit()),OffsetLocation(GetSpellTargetLoc(),GetRandomReal(- 300.00,300.00),GetRandomReal(- 300.00,300.00)),GetRandomDirectionDeg())
         call UnitApplyTimedLifeBJ(14.00,'BTLF',GetLastCreatedUnit())
         call UnitAddAbility(GetLastCreatedUnit(), 'A0AG')
+        call IncUnitAbilityLevel(GetLastCreatedUnit(), 'A0AG')
         call BlzSetAbilityRealLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A0AG'), ABILITY_RLF_DAMAGE_PER_INTERVAL, 0, (60 * GetUnitAbilityLevel(GetTriggerUnit(), 'A017')) * bonus)
+        call DecUnitAbilityLevel(GetLastCreatedUnit(), 'A0AG')
+        call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()), 'A0AG', false)
+        call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()), 'A0AG', true)
         call SetUnitTimeScalePercent(GetLastCreatedUnit(),50.00)
         call CreateCorpseLocBJ(ChooseRandomCreepBJ(- 1),GetOwningPlayer(GetTriggerUnit()),OffsetLocation(GetSpellTargetLoc(),GetRandomReal(- 300.00,300.00),GetRandomReal(- 300.00,300.00)))
         set udg_integer52 = udg_integer52 + 1
@@ -2220,6 +2224,7 @@ function Trig_Battle_Royal_Actions takes nothing returns nothing
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Battle Royal")
     call StartTimerBJ(GetLastCreatedTimerBJ(),false,60.00)
+    call DisplayTextToForce(GetPlayersAll(),"Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
     call TriggerSleepAction(60.00)
     set udg_boolean02 = true
     call PlaySoundBJ(udg_sound10)
@@ -6772,7 +6777,7 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
     endif
     set udg_integer09 = GetRandomInt(GetRandomInt(150, 150 + udg_integer02 * 2),400)
     set udg_integer05 = GetRandomInt(1,udg_integer02)
-    if(Trig_Generate_Next_Level_Func011C())then
+    if udg_integer02 > 5 then
         set udg_integer10 = GetRandomInt(1,20)
         set udg_integer24 = GetRandomInt(1,20)
         set udg_integer25 = GetRandomInt(1,20)
@@ -6789,14 +6794,23 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
         set udg_integer54 = GetRandomInt(1,oldAbilChance)
         if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
             set udg_integer11 = GetRandomInt(1,oldAbilChance)
+            set udg_integer21 = GetRandomInt(1,oldAbilChance)
+            set udg_integer55 = GetRandomInt(1,oldAbilChance)    
+        else
+            set udg_integer11 = 0
+            set udg_integer21 = 0
+            set udg_integer55 = 0
         endif
         set udg_integer12 = GetRandomInt(1,oldAbilChance)
         set udg_integer51 = GetRandomInt(1,oldAbilChance)
         set udg_integer18 = GetRandomInt(1,oldAbilChance)
         set udg_integer23 = GetRandomInt(1,oldAbilChance)
-        set udg_integer21 = GetRandomInt(1,oldAbilChance)
+        
         set udg_integer49 = GetRandomInt(1,oldAbilChance)
         set udg_integer17 = GetRandomInt(1,oldAbilChance)
+        set udg_integer20 = 0
+        set ReflectionAuraChance = 0
+        set WizardbaneAuraChance = 0
         if GetRandomInt(1, oldAbilChance) == 1 then
             set temp = GetRandomInt(1,4)
             if temp == 1 then
@@ -6817,7 +6831,7 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                 endif
             endif
         endif
-        set udg_integer55 = GetRandomInt(1,oldAbilChance)    
+        
         set SlowAuraChance = GetRandomInt(1,newAbilChance)
     endif
     if udg_integer02 > 10 then
@@ -6982,11 +6996,11 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cffebde71Range|r: Melee |n"
                     else
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff82f373Range|r: " + I2S(R2I(BlzGetUnitWeaponRealField(GetLastCreatedUnit(), UNIT_WEAPON_RF_ATTACK_RANGE, 0))) + "|n"
-                        set s = s + "|cff82f373ranged|r: "
+                        set s = s + "|cff82f373Ranged|r: "
                     endif
                     if udg_integer04 == 'n01H' or udg_integer04 == 'n00W' then
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bddf1Damage Type|r: magic |n"
-                        set s = s + "|cff9bddf1magic damage|r: "
+                        set s = s + "|cff9bddf1Magic Damage|r: "
                     else
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff167daDamage Type|r: physical |n"
 
@@ -7061,7 +7075,7 @@ endfunction
 function Trig_Bonus_Exp_Func001Func001A takes nothing returns nothing
     local real bonus = 1
     if MacigNecklaceBonus.boolean[GetHandleId(GetTriggerUnit())] and UnitHasItemOfTypeBJ(GetEnumUnit(), 'I05G') then
-        set bonus = 1.3
+        set bonus = MnBonus
     endif
     call AddHeroXPSwapped(R2I(((udg_real01)* 35) * bonus),GetEnumUnit(),true)
 endfunction
@@ -7073,7 +7087,7 @@ endfunction
 function Trig_Bonus_Exp_Func001Func002A takes nothing returns nothing
     local real bonus = 1
     if MacigNecklaceBonus.boolean[GetHandleId(GetTriggerUnit())] and UnitHasItemOfTypeBJ(GetEnumUnit(), 'I05G') then
-        set bonus = 1.3
+        set bonus = MnBonus
     endif
     call AddHeroXPSwapped(R2I(((udg_real01)* 55) * bonus),GetEnumUnit(),true)
 endfunction
@@ -8298,7 +8312,7 @@ function Trig_Learn_Ability_Actions takes nothing returns nothing
                             call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
                         endif
                         //call BJDebugMsg("failed?1")
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffbbff00Failed to learn|r: 1")
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
                         return
                     endif
                 endif
@@ -8310,18 +8324,16 @@ function Trig_Learn_Ability_Actions takes nothing returns nothing
                     call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
                 endif
                 //call BJDebugMsg("failed?2")
-                call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffffe600Failed to learn|r: maximum abilities reached")
+                call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffffe600Failed to learn|r")
                 return
             else
                 set udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+ 1)
                 set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= udg_integer01
-                call BJDebugMsg("add ap")
                 call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), udg_integer01, maxAbil, true)
             endif
         else
             //increase level ap
             if(Trig_Learn_Ability_Func008Func002Func003C())then
-                call BJDebugMsg("inc ap1")
                 call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), udg_integer01, maxAbil, false)
             else
                 //max level reached
@@ -8353,7 +8365,6 @@ function Trig_Learn_Ability_Actions takes nothing returns nothing
             else
                 //increase level ap
                 if(Trig_Learn_Ability_Func008Func001Func002Func002C())then
-                    call BJDebugMsg("inc ap 2")
                     call IncUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())
                     call FuncEditParam(udg_integer01,GetTriggerUnit())
                     call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
@@ -9615,6 +9626,7 @@ function Trig_PvP_Actions takes nothing returns nothing
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
     call StartTimerBJ(GetLastCreatedTimerBJ(),false,15.00)
+    call DisplayTimedTextToForce(GetPlayersAll(), 15, "|cff9dff00You can freely use items during PvP. They will be restored when done.|r")
     call TriggerSleepAction(15.00)
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     call ConditionalTriggerExecute(udg_trigger136)
@@ -9934,7 +9946,7 @@ function Trig_End_PvP_Actions takes nothing returns nothing
 
     //Midas Touch
     if GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
-        call CreepDeath_BountyText(GetDyingUnit(), GetMidasTouch(GetHandleId(GetDyingUnit())).bonus)
+        call CreepDeath_BountyText(udg_unit05, GetDyingUnit(), GetMidasTouch(GetHandleId(GetDyingUnit())).bonus)
         call SetPlayerState(GetOwningPlayer(udg_unit05), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(udg_unit05), PLAYER_STATE_RESOURCE_GOLD) + GetMidasTouch(GetHandleId(GetDyingUnit())).bonus)
         set GetMidasTouch(GetHandleId(GetDyingUnit())).stop = true
     endif
@@ -9994,6 +10006,8 @@ function Trig_End_PvP_Actions takes nothing returns nothing
                     call BJDebugMsg("item move fail")
                 endif
             endif
+            call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer32), true)
+            call SetItemPawnable(UnitItemInSlotBJ(udg_units03[2],udg_integer32), true)
             set udg_integer32 = udg_integer32 + 1
         endloop
     endif
@@ -10313,7 +10327,9 @@ function Trig_PvP_Battle_Actions takes nothing returns nothing
         loop
             exitwhen udg_integer33 > 6
             set udg_integers03[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(udg_units03[1],udg_integer33))
+            call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer33), false)
             set udg_integers04[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(udg_units03[2],udg_integer33))
+            call SetItemPawnable(UnitItemInSlotBJ(udg_units03[2],udg_integer33), false)
             set udg_integer33 = udg_integer33 + 1
         endloop
         call TriggerSleepAction(0.20)

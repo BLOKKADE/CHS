@@ -1,7 +1,6 @@
 library FireRune requires RandomShit
     globals
-        constant real RuneOfFire_base_dmg = 4000
-        constant real RuneOfFire_base_range = 650    
+        constant real RuneOfFire_base_dmg = 2000
     endglobals
 
 
@@ -11,7 +10,7 @@ library FireRune requires RandomShit
 
 
 
-        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02V',"fanofknives",  R2I(4000 * power), ConvertAbilityRealLevelField('Ocl1') )
+        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02V',"fanofknives",  R2I(RuneOfFire_base_dmg * power), ConvertAbilityRealLevelField('Ocl1') )
 
         set u = null
         return false

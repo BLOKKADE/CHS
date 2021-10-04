@@ -1,11 +1,14 @@
 library CreepDeath initializer init requires RandomShit
 
-    public function BountyText takes unit u, integer goldBounty returns nothing
-        local texttag ft = CreateTextTagLocBJ(("+" + I2S(goldBounty)), OffsetLocation(GetUnitLoc(u), (- 2.50 * I2R(StringLength(GetAbilityName(udg_integers14[udg_integer14])))), 0), 0, 10, 100.00, 80.00, 10.00, 0)
-        call SetTextTagVelocityBJ(ft, 64,90)
-        call SetTextTagPermanentBJ(ft, false)
-        call SetTextTagFadepointBJ(ft, 1.00)
-        call SetTextTagLifespanBJ(ft, 2.00)
+    public function BountyText takes unit source, unit u, integer goldBounty returns nothing
+        local texttag ft
+        if IsUnitVisible(u, GetLocalPlayer()) and (GetLocalPlayer() == GetOwningPlayer(source) or GetLocalPlayer() == GetOwningPlayer(u)) then
+            set ft = CreateTextTagLocBJ(("+" + I2S(goldBounty)), OffsetLocation(GetUnitLoc(u), (- 2.50 * I2R(StringLength(GetAbilityName(udg_integers14[udg_integer14])))), 0), 0, 10, 100.00, 80.00, 10.00, 0)
+            call SetTextTagVelocityBJ(ft, 64,90)
+            call SetTextTagPermanentBJ(ft, false)
+            call SetTextTagFadepointBJ(ft, 1.00)
+            call SetTextTagLifespanBJ(ft, 2.00)
+        endif
         set ft = null
     endfunction
 
@@ -60,7 +63,7 @@ library CreepDeath initializer init requires RandomShit
         if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('Asal',killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
             if GetRandomReal(0,100) <= 65 * luck then
                 set PilageBonus = PilageBonus + (((GetUnitAbilityLevelSwapped('Asal',killingHero) * 18) * 70)/( 70 + RemBon + GetUnitAbilityLevelSwapped('A02W',killingHero))  )
-                call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitX(dyingUnit)))
+                call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitY(dyingUnit)))
             endif
         endif
         
@@ -107,10 +110,10 @@ library CreepDeath initializer init requires RandomShit
         endif
 
         if MacigNecklaceBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05G') then
-            set expBounty = R2I(expBounty * 1.3)
+            set expBounty = R2I(expBounty * MnBonus)
         endif
         
-        call BountyText(dyingUnit, goldBounty)
+        call BountyText(killingHero, dyingUnit, goldBounty)
         call SetPlayerState(owner, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(owner, PLAYER_STATE_RESOURCE_GOLD) + goldBounty)
         call AddHeroXP (killingHero, expBounty, true)
         call ResourseRefresh(owner)
@@ -121,7 +124,7 @@ library CreepDeath initializer init requires RandomShit
     //To make Midas Touch work on all summons
     public function NonCreepDeath takes unit dyingUnit, unit killingHero returns nothing
         set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
-        call CreepDeath_BountyText(dyingUnit, GetMidasTouch(GetHandleId(dyingUnit)).bonus)
+        call CreepDeath_BountyText(killingHero, dyingUnit, GetMidasTouch(GetHandleId(dyingUnit)).bonus)
         call SetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD) + GetMidasTouch(GetHandleId(dyingUnit)).bonus)
         set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
         //call BJDebugMsg("non creep death")

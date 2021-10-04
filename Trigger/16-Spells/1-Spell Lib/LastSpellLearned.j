@@ -26,7 +26,6 @@ library SpellsLearned initializer init
             set SpellsLearned[hid][spellList].integer[0] = index - 1
         endif
         
-        call BJDebugMsg(GetObjectName(spellId))
         return spellId
     endfunction
 

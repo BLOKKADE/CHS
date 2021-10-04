@@ -1189,7 +1189,7 @@ library AbilityData initializer init requires Table
 
     endfunction
 
-    /*private function PreloadAbilities takes nothing returns nothing
+    private function PreloadAbilities takes nothing returns nothing
     local unit u = CreateUnit(Player(8), 'h014', 0, 0, 0)
     local integer i = 0
     local integer abilId = 0
@@ -1198,9 +1198,9 @@ library AbilityData initializer init requires Table
         call UnitAddAbility(u, abilId)
         call UnitRemoveAbility(u, abilId)
         set i = i + 1
-        exitwhen i > GetAbilitycount()
+        exitwhen i > GetAbilityCount()
     endloop
-endfunction */
+endfunction 
 
 private function init takes nothing returns nothing
     set ChaosData = HashTable.create()
@@ -1211,7 +1211,7 @@ private function init takes nothing returns nothing
     set ItemData = Table.create()
     set AbilityIndex = Table.create()
     call InitDataA1()
-    //call PreloadAbilities()
+    call PreloadAbilities()
 endfunction
 endlibrary
 

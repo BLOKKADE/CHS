@@ -85,6 +85,11 @@ scope ShortPeriodCheck initializer init
                         call RemoveDebuff( u, 1)
                     endif
                 endif     
+
+                set i1 = GetUnitAbilityLevel(u, 'A0AB')
+                if i1 > 0 then
+                    call AbsoluteArcaneDrain(u)
+                endif
                 
                 //Blood Elf Mage
                 if GetUnitTypeId(u) == 'H001' then
@@ -106,12 +111,12 @@ scope ShortPeriodCheck initializer init
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
                     //War Golem
-                elseif GetUnitTypeId(u) == 'N00X' then
+                elseif GetUnitTypeId(u) == 'N00C' then
                     set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
-                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + i1)
-                        call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) * (1 + (i1 / BlzGetUnitMaxHP(u))))
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) - i2 + i1)
+                        call CalculateNewCurrentHP(u, i1)
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
 

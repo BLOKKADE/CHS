@@ -8,7 +8,7 @@ library TempInvis requires BuffLevel, RandomShit
         private thistype recycleNext
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or HasPlayerFinishedLevel(GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
+            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif

@@ -18,13 +18,13 @@ library SuddenDeathTimerWindow requires TimerUtils
         set SuddenDeathEnabled = true
         call TimerDialogSetTitle(SuddenDeathDialog, "Creep enrage level " + I2S(level))
         if level == 2 then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are pissed off! They won't let you use Midas Touch or the Magic Necklace!")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "Sudden Death Level 1: Midas Touch disabled")
         elseif level == 3 then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are pretty angry! They have Crit and max movespeed!")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "Sudden Death Level 2: Creeps get Critical Strike and max movespeed")
         elseif level == 4 then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are extremely agitated! Their damage will start to increase!")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "Sudden Death Level 3: Creeps get attack damage bonus")
         elseif level == 5 then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "The creeps are going crazy!!! You start losing hp every second!")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "Sudden Death Level 4: HP drain")
         endif
         call TimerStart(SuddenDeathTimer, 30, false, null)
     endfunction

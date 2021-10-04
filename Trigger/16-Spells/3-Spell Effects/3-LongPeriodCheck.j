@@ -40,29 +40,31 @@ scope LongPeriodCheck initializer init
 
 
     function AABfunction takes unit u returns nothing
-        //Mysterious Talent
-        if GetUnitAbilityLevel(u,'A05Z') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A05Z') <= 0.001 and BlzIsUnitInvulnerable(u) == false then
-            call MysteriousTalent(u)
-            call AbilStartCD(u,'A05Z',45 - GetUnitAbilityLevel(u,'A05Z') ) 
-        endif
+        if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
+            //Mysterious Talent
+            if GetUnitAbilityLevel(u,'A05Z') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A05Z') <= 0.001 then
+                call MysteriousTalent(u)
+                call AbilStartCD(u,'A05Z',45 - GetUnitAbilityLevel(u,'A05Z') ) 
+            endif
 
-        //Holy Shield
-        if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 then
-            call UseSpellsHolyShield(u)
-            call AbilStartCD(u,'A066',10 ) 
-        endif
+            //Holy Shield
+            if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 then
+                call UseSpellsHolyShield(u)
+                call AbilStartCD(u,'A066',10 ) 
+            endif
 
-        //Runestone of Creation
-        if GetUnitAbilityLevel(u,'A073') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A073') <= 0.001 and BlzIsUnitInvulnerable(u) == false and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
-            call CreateRandomRune(0,GetUnitX(u),GetUnitY(u),u )
-            call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 2000)
-            call AbilStartCD(u,'A073',20 ) 
-        endif
+            //Runestone of Creation
+            if GetUnitAbilityLevel(u,'A073') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A073') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
+                call CreateRandomRune(0,GetUnitX(u),GetUnitY(u),u )
+                call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 2000)
+                call AbilStartCD(u,'A073',20 ) 
+            endif
 
-        //Earthquake
-        if GetUnitAbilityLevel(u,'A07L') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A07L') <= 0.001 and BlzIsUnitInvulnerable(u) == false and CheckProc(u, 600) then
-            call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap",GetUnitAbilityLevel(u,'A07L')* 100,ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
-            call AbilStartCD(u,'A07L',5 ) 
+            //Earthquake
+            if GetUnitAbilityLevel(u,'A07L') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A07L') <= 0.001 and CheckProc(u, 600) then
+                call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap",GetUnitAbilityLevel(u,'A07L')* 100,ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
+                call AbilStartCD(u,'A07L',5 ) 
+            endif
         endif
     endfunction
 
@@ -266,11 +268,15 @@ scope LongPeriodCheck initializer init
                 call SetUnitProcHp(u,HpBonus)
 
 
-                if BlzIsUnitInvulnerable(u) == false then
+                if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
                     //Drain aura
                     set i1 = GetUnitAbilityLevel(u ,'A023')
-                    if i1 >= 1  then
-                        call AoeDrainAura(u, I2R(i1) * 0.0001,500,true)
+                    if i1 >= 1 or UnitHasItemS(u, 'I0B5') then
+                        if UnitHasItemS(u, 'I0B5') then
+                            call AoeDrainAura(u, (I2R(i1) * 0.0001) + 0.001,500,true)
+                        else
+                            call AoeDrainAura(u, (I2R(i1) * 0.0001),500,true)
+                        endif
                     endif
                 endif
                 call AABfunction(u)

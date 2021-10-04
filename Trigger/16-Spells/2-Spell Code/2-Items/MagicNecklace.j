@@ -1,5 +1,6 @@
 library MagicNecklace initializer init requires Table
     globals
+        constant real MnBonus = 1.2
         Table MacigNecklaceBonus
     endglobals
 

@@ -22,15 +22,15 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable
 
         if mode == 0 then
             call UnitRemoveAbility(u, 'A0AI')
-            call UnitAddAbility(u, 'A0AJ')
+            call UnitRemoveAbility(u, 'A0AJ')
             set AvatarMode[hid][0] = 0
         elseif mode == 1 then
-            call UnitRemoveAbility(u, 'A0AJ')
-            call UnitAddAbility(u, 'A0AI')
-            set AvatarMode[hid][0] = 1
-        else
             call UnitRemoveAbility(u, 'A0AI')
             call UnitAddAbility(u, 'A0AJ')
+            set AvatarMode[hid][0] = 1
+        else
+            call UnitRemoveAbility(u, 'A0AJ')
+            call UnitAddAbility(u, 'A0AI')
             set AvatarMode[hid][0] = 2
         endif
     endfunction
@@ -46,12 +46,12 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable
             if AvatarMode[hid][0] != 1 then
                 call ResetAvatar(hid, u, 1)
             endif
-            set rBonus = (heroLevel * 0.01) * BlzGetUnitArmor(u)
+            set rBonus = (heroLevel * 0.01) * (BlzGetUnitArmor(u) - AvatarMode[hid].real[1])
             if rBonus != AvatarMode[hid].real[1] then
                 call BlzSetUnitArmor(u, BlzGetUnitArmor(u) - AvatarMode[hid].real[1] + rBonus)
                 set AvatarMode[hid].real[1] = rBonus
-                call SetBonus(u, 1, rBonus)
             endif
+            call SetBonus(u, 1, heroLevel * 0.01)
 
             set iBonus = (heroLevel * 35)
             if iBonus != AvatarMode[hid][2] then
@@ -60,8 +60,6 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable
                 call SetBonus(u, 0, iBonus)
             endif
 
-            
-            call SetBonus(u, 1, 0)
         elseif dark > light then
             if AvatarMode[hid][0] != 2 then
                 call ResetAvatar(hid, u, 2)

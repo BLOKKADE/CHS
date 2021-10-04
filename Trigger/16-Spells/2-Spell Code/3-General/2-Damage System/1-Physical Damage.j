@@ -83,7 +83,7 @@ function TakePhysDmg takes unit Dealing ,unit Trigger, boolean AbilA returns not
     //Drunken Haze
     set i = GetUnitAbilityLevel(Dealing,'Acdb') //Drink
     if i > 0 and GetRandomReal(0,100) <= 30 * luck + BaseChCr then
-        set CritDmg = CritDmg + i * 100
+        set CritDmg = CritDmg + ((i * 100) * (1 + 0.02 * GetHeroLevel(Dealing)))
     endif
     
     //Frostmourne

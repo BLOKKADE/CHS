@@ -36,8 +36,7 @@ library StringFunctions requires MathRound
             set count = count + 1
             set prevIndex = index
         endloop
-            
-        call BJDebugMsg("lines: " + I2S(count))
+
         return count
     endfunction
 endlibrary

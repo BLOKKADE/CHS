@@ -74,7 +74,7 @@ library MidasTouch initializer init requires DummyOrder
             set this.dmgBonus = R2I(BlzGetUnitBaseDamage(this.target, 0) * MidasBonus)
             //call BJDebugMsg("dmg: +" + I2S(this.dmgBonus))
             call this.updateStats(false)
-            call SetUnitState(this.target, UNIT_STATE_LIFE, GetUnitState(this.target, UNIT_STATE_LIFE) * (1 + MidasBonus))
+            call CalculateNewCurrentHP(this.target, this.hpBonus)
             call this.startPeriodic()
             return this
         endmethod

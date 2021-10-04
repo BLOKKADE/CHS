@@ -202,7 +202,7 @@ scope DamageControllerAfter initializer init
         endif
         
         //Ancient Blood
-        if GetUnitAbilityLevel(TrigU,'A07T') > 0 then
+        if GetUnitAbilityLevel(TrigU,'A07T') > 0 and CuId != 'n00V' then
             set r1 = LoadReal(HT,GetHandleId(TrigU),82340)
             set r2 = LoadReal(HT,GetHandleId(TrigU),82341)
             set r3 = 1 - 0.01 * I2R(GetUnitAbilityLevel(TrigU,'A07T') ) 
@@ -263,6 +263,11 @@ scope DamageControllerAfter initializer init
             endif
         endif
 
+        //Wild Runestone
+        if UnitHasItemS(GUT, 'I0B6') and IsUnitType(TrigU, UNIT_TYPE_HERO) == false then
+            call BlzSetEventDamage( GetEventDamage() * 0.7)
+        endif
+
         //Flimsy Token
         if UnitHasItemS(TrigU, 'I0A3') and GetUnitAbilityLevel(TrigA, 'B01Q') == 0 then
             call FlimsyToken(TrigU, TrigA)
@@ -283,6 +288,7 @@ scope DamageControllerAfter initializer init
             call UsOrderU(TrigA,TrigU,GetUnitX(TrigA),GetUnitY(TrigA),'A02R',"chainlightning",  GetHeroInt(TrigA,true)*(20 + 8 * I2R(GetUnitAbilityLevel(TrigA,'A02S' )))/ 100, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif
 
+        //Magic Necklace
         if UnitHasItemS(TrigA, 'I05G') and BlzGetEventDamageType() ==  DAMAGE_TYPE_MAGIC and GetUnitState(TrigU, UNIT_STATE_LIFE) - GetEventDamage() <= 0 then
             set MacigNecklaceBonus.boolean[GetHandleId(TrigU)] = true
         endif

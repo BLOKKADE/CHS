@@ -68,10 +68,10 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('H003', 0, "|cffe7544aIntelligence bonus|r: ,0,")
 
-        call SetBonusStr('O003', 0, "|cffe7544a[Light] Attack damage bonus |r: ,0,")
-        call SetBonusStr('O003', 1, "|cffd6e049[Light] Armor bonus|r: ,0,%%")
-        call SetBonusStr('O003', 2, "|cff4daed4[Dark] Magic power bonus|r: ,0,")
-        call SetBonusStr('O003', 3, "|cff4daed4[Dark] magic protection bouns]|r: ,0,")
+        call SetBonusStr('O003', 0, "[|cffd2d2d2Light|r]|cffe7544a Attack damage bonus |r: ,0,")
+        call SetBonusStr('O003', 1, "[|cffd2d2d2Light|r]|cffd6e049 Armor bonus|r: ,0,%%")
+        call SetBonusStr('O003', 2, "[|cff000000Dark|r]|cff4daed4 Magic power bonus|r: ,0,")
+        call SetBonusStr('O003', 3, "[|cff000000Dark|r]|cff51d44d magic protection bonus|r: ,0,")
 
         call SetBonusStr('O004', 0, "|cffe7544aFeedback|r: ,0,")
 
