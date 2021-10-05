@@ -13,6 +13,10 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
     function GetDummyOrderSource takes integer id returns unit
         return GetDummyOrder(id).source
     endfunction
+
+    function DummyOrdered takes nothing returns nothing
+        call BJDebugMsg(GetUnitName(GetTriggerUnit()) + " order: " + OrderId2String(GetIssuedOrderId()))
+    endfunction
     
     struct DummyOrder extends array
         unit dummy
@@ -105,8 +109,8 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         endmethod
 
         method periodic takes nothing returns nothing
-            if T32_Tick >= this.endTick or this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0 then
-                //call BJDebugMsg("dummy destroy")
+            if T32_Tick >= this.endTick or this.stopDummy or (GetUnitCurrentOrder(this.dummy) == 0 and this.abil != 'ANst') then
+                call BJDebugMsg("dummy destroy")
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -114,6 +118,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         implement T32x
 
         method activate takes nothing returns thistype
+            local trigger trg = CreateTrigger()
             if this.orderType == 1 then //instant
                 call IssueImmediateOrderById(this.dummy, this.order) 
             elseif this.orderType == 2 then //target
@@ -121,8 +126,15 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
                     call IssueImmediateOrderById(this.dummy, this.order)
                 endif
             elseif this.orderType == 3 then //point
-                //call BJDebugMsg("dummy: " + GetUnitName(this.dummy) + "ordr: " + I2S(this.order) + " x: " + R2S(this.targetX) + " y: " + R2S(this.targetY))
-                call IssuePointOrderById(this.dummy, this.order, this.targetX, this.targetY)
+                call BJDebugMsg("dummy: " + GetUnitName(this.dummy) + "ordr: " + OrderId2String(this.order) + " x: " + R2S(this.targetX) + " y: " + R2S(this.targetY))
+                call TriggerRegisterUnitEvent(trg, this.dummy, EVENT_UNIT_ISSUED_ORDER)
+                call TriggerRegisterUnitEvent(trg, this.dummy, EVENT_UNIT_ISSUED_POINT_ORDER)
+                call TriggerRegisterUnitEvent(trg, this.dummy, EVENT_UNIT_ISSUED_TARGET_ORDER)
+                call TriggerAddAction(trg, function DummyOrdered)
+                call BJDebugMsg("trigger?")
+                if IssuePointOrderById(this.dummy, this.order, this.targetX, this.targetY) then
+                    call BJDebugMsg("success")
+                endif
             endif
             //call BJDebugMsg("ordered dummy, started timer")
             set this.stopDummy = false
