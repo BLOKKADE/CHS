@@ -171,7 +171,7 @@ scope DamageControllerBefore initializer init
                     if IsUnitDivineBubbled(damageTarget) then
                         set GetDivineBubbleStruct(GetHandleId(damageTarget)).endTick = T32_Tick + (32 * (3 + II))
                     else
-                        call BJDebugMsg("db: " + I2S(3 + II))
+                        //call BJDebugMsg("db: " + I2S(3 + II))
                         call DivineBubbleStruct.create(damageTarget, 3 + II, 'A07S')
                     endif
                 endif

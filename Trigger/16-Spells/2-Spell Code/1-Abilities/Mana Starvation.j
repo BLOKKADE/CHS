@@ -17,7 +17,6 @@ library ManaStarvation requires DummyOrder, T32
             local integer mana = R2I(GetUnitState(this.target, UNIT_STATE_MANA))
             local integer currentBonus = 0
             if this.finalStage == false and GetUnitAbilityLevel(this.target, 'B01X') > 0 and IsUnitTarget(this.target) then
-                call BJDebugMsg(GetUnitName(target) + " mana: " + I2S(mana) + " limit: " + R2S(this.manaLimit) + " diff: " + R2S(RAbsBJ(this.manaLimit - mana)))
                 if mana > this.manaLimit then
                     set currentBonus = mana - this.manaLimit
                     set this.bonus = this.bonus + currentBonus

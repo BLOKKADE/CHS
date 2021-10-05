@@ -5,11 +5,11 @@ library ElementTexts initializer init
 
     private function init takes nothing returns nothing
         set ClassAbil[1] = "[|cffff0000Fire|r]"
-        set ClassAbil[2] = "[|cff000080Water|r]"
+        set ClassAbil[2] = "[|cff00f7ffWater|r]"
         set ClassAbil[3] = "[|cffc0c0c0Wind|r]"
         set ClassAbil[4] = "[|cffd45e19Earth|r]"
-        set ClassAbil[5] = "[|cff008000Wild|r]"
-        set ClassAbil[6] = "[|cff008080Energy|r]"
+        set ClassAbil[5] = "[|cff009600Wild|r]"
+        set ClassAbil[6] = "[|cff009292Energy|r]"
         set ClassAbil[7] = "[|cff000000Dark|r]"
         set ClassAbil[8] = "[|cffd2d2d2Light|r]"
         set ClassAbil[9] = "[|cff8080ffCold|r]"

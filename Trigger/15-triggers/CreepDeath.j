@@ -1,15 +1,18 @@
 library CreepDeath initializer init requires RandomShit
 
     public function BountyText takes unit source, unit u, integer goldBounty returns nothing
-        local texttag ft
-        if IsUnitVisible(u, GetLocalPlayer()) and (GetLocalPlayer() == GetOwningPlayer(source) or GetLocalPlayer() == GetOwningPlayer(u)) then
-            set ft = CreateTextTagLocBJ(("+" + I2S(goldBounty)), OffsetLocation(GetUnitLoc(u), (- 2.50 * I2R(StringLength(GetAbilityName(udg_integers14[udg_integer14])))), 0), 0, 10, 100.00, 80.00, 10.00, 0)
-            call SetTextTagVelocityBJ(ft, 64,90)
-            call SetTextTagPermanentBJ(ft, false)
-            call SetTextTagFadepointBJ(ft, 1.00)
-            call SetTextTagLifespanBJ(ft, 2.00)
+        local texttag floatingtext
+        if GetLocalPlayer() == GetOwningPlayer(source) and IsUnitVisible(u, GetLocalPlayer()) then
+            set floatingtext = CreateTextTag()
+            call SetTextTagText(floatingtext,"+"+I2S(R2I(goldBounty)), 0.023)
+            call SetTextTagPos(floatingtext,GetUnitX(u)-21.0,GetUnitY(u),0.0)
+            call SetTextTagColor(floatingtext,255,220,0,255)
+            call SetTextTagVelocity(floatingtext,0.0,0.04)
+            call SetTextTagFadepoint(floatingtext,1)
+            call SetTextTagLifespan(floatingtext,2)
+            call SetTextTagPermanent(floatingtext,false)
         endif
-        set ft = null
+        set floatingtext = null
     endfunction
 
     function Trig_Creep_Dies_Func003Func005001001002001 takes nothing returns boolean

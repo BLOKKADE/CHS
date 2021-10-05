@@ -1856,7 +1856,7 @@ endfunction
 function Trig_Disable_Abilities_Actions takes nothing returns nothing
     if(Trig_Disable_Abilities_Func001C(GetTriggerUnit()))then
         call IssueImmediateOrderBJ(GetTriggerUnit(),"stop")
-
+        call BJDebugMsg(GetUnitName(GetTriggerUnit()) +  "disable abilities stop")
     else
         //call ConditionalTriggerExecute(udg_trigger37)
     endif
@@ -2227,6 +2227,7 @@ function Trig_Battle_Royal_Actions takes nothing returns nothing
     call DisplayTextToForce(GetPlayersAll(),"Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
     call TriggerSleepAction(60.00)
     set udg_boolean02 = true
+    call SetAllCurrentlyFighting(true)
     call PlaySoundBJ(udg_sound10)
     call DisplayTextToForce(GetPlayersAll(),"|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL")
     call PauseAllUnitsBJ(true)
@@ -6988,6 +6989,7 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                 call SetUnitInvulnerable(GetLastCreatedUnit(),true)
                 call ShowUnitHide(GetLastCreatedUnit())
 
+                /*
                 if RoundCreepInfo[udg_integer40 - 1] == "" then
                     set RoundCreepTitle = "|cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r"
                     set s = RoundCreepTitle + ": "
@@ -7021,8 +7023,8 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitEvasion(GetLastCreatedUnit()) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r"
                     endif
                     set s = s + RoundAbilities
-                    call DisplayTextToForce(GetPlayersAll(), s)
-                endif
+                    call DisplayTimedTextToPlayer(Player(udg_integer40 - 1), 0, 0, 20, s)
+                endif*/
             else
             endif
             set udg_integer40 = udg_integer40 + 1
@@ -7311,6 +7313,7 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
         set udg_integer48 = 0
     endif
     call ForceAddPlayerSimple(GetOwningPlayer(GetKillingUnitBJ()),udg_force03)
+    call SetCurrentlyFighting(GetOwningPlayer(GetKillingUnitBJ()), false)
     set udg_integer08 =(udg_integer08 + 1)
     call SetUnitInvulnerable(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)
     if(Trig_Complete_Level_Player_Func010C())then
@@ -7681,6 +7684,7 @@ endfunction
 function Trig_Start_Level_Func011A takes nothing returns nothing
     call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,udg_integer02)
     set ShowCreepAbilButton[GetPlayerId(GetEnumPlayer())] = false
+    call SetCurrentlyFighting(GetEnumPlayer(), true)
     call ResourseRefresh(GetEnumPlayer()) 
 endfunction
 
@@ -9620,13 +9624,12 @@ function Trig_PvP_Actions takes nothing returns nothing
         /*
         call UpdatePlayerCount()
         call MoveRoundRobin()
-        call DisplayDuelNemesis()
-        call BJDebugMsg("test")*/
+        call DisplayDuelNemesis()*/
     endif
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
     call StartTimerBJ(GetLastCreatedTimerBJ(),false,15.00)
-    call DisplayTimedTextToForce(GetPlayersAll(), 15, "|cff9dff00You can freely use items during PvP. They will be restored when done.|r")
+    call DisplayTimedTextToForce(GetPlayersAll(), 15, "|cff9dff00You can freely use items during PvP. They will be restored when finished.\n|r|cffffcc00If there is an odd amount of players and you lose a duel you might duel again versus the leftover player.|r")
     call TriggerSleepAction(15.00)
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     call ConditionalTriggerExecute(udg_trigger136)
@@ -9973,15 +9976,15 @@ function Trig_End_PvP_Actions takes nothing returns nothing
             call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
             call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
             if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
-                call BJDebugMsg("item move success")
+                call BJDebugMsg("1a item move success")
             else
-                call BJDebugMsg("item move fail")
+                call BJDebugMsg("1a item move fail")
             endif
             call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
             if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
-                call BJDebugMsg("item move success")
+                call BJDebugMsg("2a item move success")
             else
-                call BJDebugMsg("item move fail")
+                call BJDebugMsg("2a item move fail")
             endif
             set udg_integer32 = udg_integer32 + 1
         endloop
@@ -9993,17 +9996,17 @@ function Trig_End_PvP_Actions takes nothing returns nothing
                 call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
                 call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
                 if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
-                    call BJDebugMsg("item move success")
+                    call BJDebugMsg("1b item move success")
                 else
-                    call BJDebugMsg("item move fail")
+                   call BJDebugMsg("1b item move fail")
                 endif
             else
                 call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
                 call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
                 if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
-                    call BJDebugMsg("item move success")
+                    call BJDebugMsg("2b item move success")
                 else
-                    call BJDebugMsg("item move fail")
+                    call BJDebugMsg("2b item move fail")
                 endif
             endif
             call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer32), true)
@@ -10020,25 +10023,19 @@ function Trig_End_PvP_Actions takes nothing returns nothing
         set udg_integer38 = udg_integer38 + 1
     endloop
     set udg_unit05 = null
+    call SetCurrentlyFighting(GetOwningPlayer(udg_units03[1]), false)
+    call SetCurrentlyFighting(GetOwningPlayer(udg_units03[2]), false)
     if(Trig_End_PvP_Func026C())then
         call TriggerSleepAction(2)
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_End_PvP_Func026Func007001002)),function Trig_End_PvP_Func026Func007A)
         if(Trig_End_PvP_Func026Func008C())then
-            if(Trig_End_PvP_Func026Func008Func003C())then
-                call DisplayTimedTextToForce(GetPlayersAll(),10.00,"|cffffcc00The PvP battles are over and all winners will receive a prize!|r")
-            else
-                call DisplayTimedTextToForce(GetPlayersAll(),10.00,"|cffffcc00The PvP battles are over and the winner will receive a prize!|r")
-            endif
         else
             return
         endif
         call ForceClear(DuelLosers)
         set udg_integer41 =(udg_integer41 + 1)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Reward in ...")
-        call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
-        call TriggerSleepAction(10.00)
-        call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+        call TriggerSleepAction(1.00)
 
         if(Trig_End_PvP_Func026Func016C())then
             set udg_integer15 = DuelGoldReward[udg_integer02]
@@ -10050,9 +10047,7 @@ function Trig_End_PvP_Actions takes nothing returns nothing
         endif
         call PlaySoundBJ(udg_sound07)
         call ConditionalTriggerExecute(udg_trigger138)
-        call CreateItemLoc(udg_integer15,GetRectCenter(GetPlayableMapRect()))
-        call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00Prize: " + (I2S(udg_integer15) + " gold|r")))
-        call RemoveItem(GetLastCreatedItem())
+        call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + (I2S(udg_integer15) + " gold|r")))
         call ConditionalTriggerExecute(udg_trigger136)
     else
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
@@ -10300,6 +10295,7 @@ function Trig_PvP_Battle_Actions takes nothing returns nothing
         else
             set udg_units03[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
         endif
+        
         call GroupRemoveUnitSimple(udg_units03[2],udg_group01)
         call PlaySoundBJ(udg_sound08)
         call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[1]))+(" vs " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[2])))))))
@@ -10368,6 +10364,8 @@ function Trig_PvP_Battle_Actions takes nothing returns nothing
         call EnableTrigger(udg_trigger140)
         call EnableTrigger(udg_trigger141)
         call PvpStartSuddenDeathTimer()
+        call SetCurrentlyFighting(GetOwningPlayer(udg_units03[1]), true)
+        call SetCurrentlyFighting(GetOwningPlayer(udg_units03[2]), true)
         call PlaySoundBJ(udg_sound15)
         set bj_forLoopAIndex = 1
         set bj_forLoopAIndexEnd = 2
@@ -10476,18 +10474,8 @@ function Trig_Receive_Prize_Func002Func003C takes nothing returns boolean
 endfunction
 
 function Trig_Receive_Prize_Func002A takes nothing returns nothing
-    set udg_integer56 = 0
-    set udg_integer34 = 1
-    loop
-        exitwhen udg_integer34 > 6
-        if(Trig_Receive_Prize_Func002Func002Func001C())then
-            set udg_integer56 =(udg_integer56 + 1)
-        else
-        endif
-        set udg_integer34 = udg_integer34 + 1
-    endloop
     if(Trig_Receive_Prize_Func002Func003C())then
-        call UnitAddItemByIdSwapped(udg_integer15,GetEnumUnit())
+        call SetPlayerState(GetOwningPlayer(GetEnumUnit()), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(GetEnumUnit()), PLAYER_STATE_RESOURCE_GOLD) + udg_integer15)
         call GroupRemoveUnitSimple(GetEnumUnit(),udg_group03)
     else
     endif
@@ -10986,6 +10974,7 @@ function Trig_Hero_Dies_Death_Match_PvP_Actions takes nothing returns nothing
     call StopSoundBJ(udg_sound13,false)
     call PlaySoundBJ(udg_sound13)
     call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
+    call SetCurrentlyFighting(GetOwningPlayer(GetTriggerUnit()), false)
     set udg_integer06 =(udg_integer06 - 1)
     call AllowSinglePlayerCommands()
     set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= true
@@ -11169,6 +11158,7 @@ function Trig_Elimination_Actions takes nothing returns nothing
     call ResumeMusicBJ()
     call PlaySoundBJ(udg_sound15)
     call DisplayTimedTextToForce(GetPlayersAll(),1.00,"|cffffcc00GO!!!|r")
+    call SetAllCurrentlyFighting(true)
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Elimination_Func036001002)),function Trig_Elimination_Func036A)
     if(Trig_Elimination_Func037C())then
         set udg_integer06 = 1
@@ -11392,6 +11382,7 @@ function Trig_Hero_Dies_Elimination_Actions takes nothing returns nothing
     call StopSoundBJ(udg_sound13,false)
     call PlaySoundBJ(udg_sound13)
     call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
+    call SetCurrentlyFighting(GetOwningPlayer(GetTriggerUnit()), false)
     set udg_integer06 =(udg_integer06 - 1)
     call AllowSinglePlayerCommands()
     call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffffcc00 was defeated!|r")))
@@ -11441,6 +11432,7 @@ function Trig_Hero_Dies_Elimination_Actions takes nothing returns nothing
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Hero_Dies_Elimination_Func031001002)),function Trig_Hero_Dies_Elimination_Func031A)
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Hero_Dies_Elimination_Func032001002)),function Trig_Hero_Dies_Elimination_Func032A)
     call ConditionalTriggerExecute(udg_trigger103)
+    call SetAllCurrentlyFighting(false)
     call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")
     call StartTimerBJ(GetLastCreatedTimerBJ(),false,20.00)
     call TriggerSleepAction(20.00)

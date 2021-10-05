@@ -178,25 +178,5 @@ library GetRandomUnit initializer init requires UnitHelpers
 
         call RUH.EnumUnits(x, y, range, p)
         return RUH.GetRandomUnit(false)
-        /*
-        call GroupClear(ENUM_GROUP1)
-        call GroupClear(ENUM_GROUP2)
-        call EnumTargettableUnitsInRange(ENUM_GROUP1, x, y, range, p, allowMagicImmune)
-        loop
-            set temp = FirstOfGroup(ENUM_GROUP1)
-            call BJDebugMsg("gru" + GetUnitName(temp) + " : " + I2S(GetHandleId(temp)))
-            exitwhen temp == null
-            if ((ally and IsUnitAlly(temp, p)) or (not ally and IsUnitEnemy(temp, p))) then
-                call GroupAddUnit(ENUM_GROUP2, temp)
-                call BJDebugMsg("gru add:" + I2S(GetHandleId(temp)))
-                if heroPriority and IsUnitType(temp, UNIT_TYPE_HERO) then
-                    set temp = null
-                    exitwhen true
-                endif
-            endif
-            call GroupRemoveUnit(ENUM_GROUP1, temp)
-        endloop
-        return BlzGroupUnitAt(ENUM_GROUP2, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP2) - 1))
-        */
     endfunction
 endlibrary

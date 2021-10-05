@@ -130,77 +130,79 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local location spelLLoc = GetSpellTargetLoc()
         local integer ID = 0 
         local integer lvl = 0
-        local boolean start = false
 
-        //call BJDebugMsg(GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
+        if /*not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster))*/ true then
+            //call BJDebugMsg(GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
 
-        if not DousingHexFailCheck(caster, abilId) then
+            if not DousingHexFailCheck(caster, abilId) then
             
-            call AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
+                call AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
             
-            if not Trig_Disable_Abilities_Func001C(caster) then
-                call ElementStartAbility(caster, abilId)
+                if not Trig_Disable_Abilities_Func001C(caster) then
+                    call ElementStartAbility(caster, abilId)
 
-                if GetUnitAbilityLevel(caster, 'A0AC') > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
-                    call PoisonSpellCast(caster, target)
-                endif
+                    if GetUnitAbilityLevel(caster, 'A0AC') > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
+                        call PoisonSpellCast(caster, target)
+                    endif
 
-                if GetUnitAbilityLevel(caster, 'B024') > 0 then
-                    call GetRetaliationSource(caster, target, abilId, abilLvl)
-                endif
+                    if GetUnitAbilityLevel(caster, 'B024') > 0 then
+                        call GetRetaliationSource(caster, target, abilId, abilLvl)
+                    endif
 
-                if UnitHasItemS(caster, 'I0B7') then
-                    call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
-                endif
+                    if UnitHasItemS(caster, 'I0B7') then
+                        call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
+                    endif
 
-                if abilId == 'A0AE' then
-                    call CastAvatar(caster, abilLvl)
-                endif
+                    if abilId == 'A0AE' then
+                        call CastAvatar(caster, abilLvl)
+                    endif
 
-                if abilId == 'A044' then
-                    call Urn(caster)
-                endif   
+                    if abilId == 'A044' then
+                        call Urn(caster)
+                    endif   
 
-                if abilId == 'A09Q' then
-                    call StaffOfPowerCast(caster)
-                endif
+                    if abilId == 'A09Q' then
+                        call StaffOfPowerCast(caster)
+                    endif
 
-                if abilId == 'A09O' then
-                    call CastAncientRunes(caster)
-                endif
+                    if abilId == 'A09O' then
+                        call CastAncientRunes(caster)
+                    endif
 
-                if abilId == 'A09D' then
-                    call MaskOfProtectionCast(caster)
-                endif
+                    if abilId == 'A09D' then
+                        call MaskOfProtectionCast(caster)
+                    endif
         
-                if abilId == 'A09F' then
-                    call MaskOfVitality(caster)
-                endif
+                    if abilId == 'A09F' then
+                        call MaskOfVitality(caster)
+                    endif
 
-                if GetUnitAbilityLevel(caster, 'A04F') > 0 or GetUnitTypeId(caster) == 'H01E' or UnitHasItemS(caster, 'I08X')  and abilId != 'A024' then
-                    call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
-                endif
+                    if GetUnitAbilityLevel(caster, 'A04F') > 0 or GetUnitTypeId(caster) == 'H01E' or UnitHasItemS(caster, 'I08X')  and abilId != 'A024' then
+                        call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
+                    endif
 
-                set lvl = GetUnitAbilityLevel(caster, 'A04L')
-                if lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
-                    call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
-                endif
+                    set lvl = GetUnitAbilityLevel(caster, 'A04L')
+                    if lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
+                        call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
+                    endif
 
-                if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then
-                    call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
-                endif
+                    if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then
+                        call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
+                    endif
 
-                if GetUnitAbilityLevel(caster, 'B01R') > 0 then
-                    call SpellbaneSpellCast(caster, abilId, abilLvl)
-                endif
+                    if GetUnitAbilityLevel(caster, 'B01R') > 0 then
+                        call SpellbaneSpellCast(caster, abilId, abilLvl)
+                    endif
                 
-                call SetCooldown(caster, abilId, start) 
+                    call SetCooldown(caster, abilId, false) 
+                endif
+            else
+                call SetCooldown(caster, abilId, true) 
             endif
-        else
-            call SetCooldown(caster, abilId, true) 
         endif
 
         call RemoveLocation(spelLLoc)
+        set spelLLoc = null
         set caster = null
         set target = null
     endfunction

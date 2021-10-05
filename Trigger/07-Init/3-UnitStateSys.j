@@ -161,7 +161,7 @@ library UnitStateSys initializer init requires RandomShit
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Inferno
-        elseif i == 'n02G' then
+        elseif i == 'n01E' or (i >= 'n01O' and i <= 'n01Z') or (i >= 'n020' and i <= 'n02G') then
             set i2 = UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 500,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(20 /(20 + I2R(i2)))  ,0)

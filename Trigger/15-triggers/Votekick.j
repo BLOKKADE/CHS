@@ -142,7 +142,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
                     call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38Can't find player:|r " + playerName)
                 else
                     if pickedPlayer != GetPlayerId(GetTriggerPlayer()) then
-                        if udg_integer06 > 2 then
+                        if udg_integer06 > 3 then
                             set voteKickStarted = true
                             set voteKickPlayer = pickedPlayer
                             set voteKickAllow[GetPlayerId(GetTriggerPlayer())] = true
