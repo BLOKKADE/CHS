@@ -12,7 +12,7 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
         set AssociatedAbil['A0A1'] = 'AEsf'//
         set AssociatedAbil['A0A0'] = 'ANmo'//
         set AssociatedAbil['A09V'] = 'ANrf'//
-        set AssociatedAbil['A09W'] = 'ANst'//
+        set AssociatedAbil['A09W'] = 'A0AQ'//
         set AssociatedAbil['A09X'] = 'ANvc'//
     endfunction
 
