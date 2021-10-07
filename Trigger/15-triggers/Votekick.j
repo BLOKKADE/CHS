@@ -10,6 +10,22 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
         boolean array voteKickAllow
     endglobals
 
+    function GetVotesNeeded takes nothing returns integer
+        if udg_integer06 == 4 or udg_integer06 == 6 or udg_integer06 == 8 then
+            return R2I(udg_integer06 / 2) + 1
+        elseif udg_integer06 == 5 then
+            return 3
+        elseif udg_integer06 == 7 then
+            return 4
+        else
+            return 3
+        endif
+    endfunction
+
+    function CanPlayerVotes takes player p returns boolean
+        return IsPlayerInForce(p, udg_force02) == false
+    endfunction
+
     function KickPlayer takes player p returns nothing
         set udg_boolean17 = true
         call PlaySoundBJ(udg_sound04)
@@ -44,13 +60,9 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
     function VoteKickEnd takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local integer i = 0
-        local integer playerAmount
         call ReleaseTimer(t)
-        
-        set playerAmount = udg_integer06
-        
-        set playerAmount = MathRound_ceil(I2R(playerAmount) / 2)
-        if voteKickVotes >= playerAmount then
+
+        if voteKickVotes >= votesNeeded then
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Kicking " + GetPlayerNameColour(Player(voteKickPlayer)))
             call KickPlayer(Player(voteKickPlayer))
         else
@@ -79,7 +91,9 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
     endfunction
 
     function VoteKickYes takes nothing returns nothing
-        call VoteKickVote(true, GetTriggerPlayer())
+        if CanPlayerVotes(GetTriggerPlayer()) then
+            call VoteKickVote(true, GetTriggerPlayer())
+        endif
     endfunction
 
     function VoteKickNo takes nothing returns nothing
@@ -121,53 +135,56 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
         local timer t = NewTimer()
         local timer t2 = NewTimerEx(GetPlayerId(GetTriggerPlayer()))
         local string input
-        if voteKickStarted == false then
-            if voteKickAllow[GetPlayerId(GetTriggerPlayer())] == false then
-                call VoteKickReset()
-                if SubString(GetEventPlayerChatString(),0,3) == "-vk" then
-                    set playerName = SubString(GetEventPlayerChatString(),4,40)
-                    set playerNumber = S2I(SubString(GetEventPlayerChatString(),4,6))
-                    set playerColour = SubString(GetEventPlayerChatString(), 4, 46)
-                    set pickedPlayer = VoteKickGetPlayer(playerName, playerNumber, playerColour)
-                elseif SubString(GetEventPlayerChatString(),0,9) == "-votekick" then
-                    set playerName = SubString(GetEventPlayerChatString(),10,46)
-                    set playerNumber = S2I(SubString(GetEventPlayerChatString(),10,12))
-                    set playerColour = SubString(GetEventPlayerChatString(), 4, 46)
-                    set pickedPlayer = VoteKickGetPlayer(playerName, playerNumber, playerColour)
-                endif
-                if pickedPlayer == 20 then
-                    call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38Found multiple players with that name, either use their player number or be more specific.|r ")
-                    call DisplayTextToPlayer(GetTriggerPlayer(), 0, 0, "|cffFFCD38You can use a playernumber to kick, type \"-pn\" to find each number|r ")
-                elseif pickedPlayer == 12 then
-                    call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38Can't find player:|r " + playerName)
-                else
-                    if pickedPlayer != GetPlayerId(GetTriggerPlayer()) then
-                        if udg_integer06 > 3 then
-                            set voteKickStarted = true
-                            set voteKickPlayer = pickedPlayer
-                            set voteKickAllow[GetPlayerId(GetTriggerPlayer())] = true
-
-                            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 30, "|cffC8E833Votekick|r has been initiated against " + GetPlayerNameColour(Player(voteKickPlayer)))
-                            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 30, "Votes will be counted in 30 seconds")
-                            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 30, "Type \"|cff97FF38-yes|r\" or \"|cff97FF38-y|r\" to vote. (Votes are private)")
-                            
-                            set votesNeeded = MathRound_ceil(I2R(udg_integer06) / 2)
-                            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 30, "|cffFFF645" + I2S(votesNeeded) + "|r |cff97FF38yes votes|r are needed")
-
-                            call TimerStart(t, 30., false, function VoteKickEnd)
-                            call TimerStart(t2, 60., false, function voteKickPlayerAllow)
-                        else
-                            call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38Not enough players to do a votekick.|r ")
-                        endif
-                    else
-                        call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38You can't start a votekick against yourself.|r ")
+        if CanPlayerVotes(GetTriggerPlayer()) then
+            if voteKickStarted == false then
+                if voteKickAllow[GetPlayerId(GetTriggerPlayer())] == false then
+                    call VoteKickReset()
+                    if SubString(GetEventPlayerChatString(),0,3) == "-vk" then
+                        set playerName = SubString(GetEventPlayerChatString(),4,40)
+                        set playerNumber = S2I(SubString(GetEventPlayerChatString(),4,6))
+                        set playerColour = SubString(GetEventPlayerChatString(), 4, 46)
+                        set pickedPlayer = VoteKickGetPlayer(playerName, playerNumber, playerColour)
+                    elseif SubString(GetEventPlayerChatString(),0,9) == "-votekick" then
+                        set playerName = SubString(GetEventPlayerChatString(),10,46)
+                        set playerNumber = S2I(SubString(GetEventPlayerChatString(),10,12))
+                        set playerColour = SubString(GetEventPlayerChatString(), 4, 46)
+                        set pickedPlayer = VoteKickGetPlayer(playerName, playerNumber, playerColour)
                     endif
+                    if pickedPlayer == 20 then
+                        call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38Found multiple players with that name, either use their player number or be more specific.|r ")
+                        call DisplayTextToPlayer(GetTriggerPlayer(), 0, 0, "|cffFFCD38You can use a playernumber to kick, type \"-pn\" to find each number|r ")
+                    elseif pickedPlayer == 12 then
+                        call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38Can't find player:|r " + playerName)
+                    else
+                        if pickedPlayer != GetPlayerId(GetTriggerPlayer()) then
+                            if udg_integer06 > 3 then
+                                set voteKickStarted = true
+                                set voteKickPlayer = pickedPlayer
+                                set voteKickAllow[GetPlayerId(GetTriggerPlayer())] = true
+
+                                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 30, "|cffC8E833Votekick|r has been initiated against " + GetPlayerNameColour(Player(voteKickPlayer)))
+                                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 30, "Votes will be counted in 30 seconds")
+                                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 30, "Type \"|cff97FF38-yes|r\" or \"|cff97FF38-y|r\" to vote. (Votes are private)")
+                                set votesNeeded = GetVotesNeeded()
+                                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 30, "|cffFFF645" + I2S(votesNeeded) + "|r |cff97FF38yes votes|r are needed")
+
+                                call TimerStart(t, 30., false, function VoteKickEnd)
+                                call TimerStart(t2, 60., false, function voteKickPlayerAllow)
+                            else
+                                call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38Not enough players to do a votekick.|r ")
+                            endif
+                        else
+                            call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38You can't start a votekick against yourself.|r ")
+                        endif
+                    endif
+                else
+                    call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38You can't start a votekick more than once every 60 seconds.|r")
                 endif
             else
-                call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38You can't start a votekick more than once every 60 seconds.|r")
+                call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38You can't start a votekick when another votekick is active.|r")
             endif
         else
-            call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38You can't start a votekick when another votekick is active.|r")
+            call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38You can't start a votekick if you're dead.|r")
         endif
         set t = null
         set t2 = null
