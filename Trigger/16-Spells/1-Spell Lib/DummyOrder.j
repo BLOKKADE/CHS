@@ -14,10 +14,6 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         return GetDummyOrder(id).source
     endfunction
 
-    function DummyOrdered takes nothing returns nothing
-        call BJDebugMsg(GetUnitName(GetTriggerUnit()) + " order: " + OrderId2String(GetIssuedOrderId()))
-    endfunction
-    
     struct DummyOrder extends array
         unit dummy
         unit source
@@ -110,7 +106,6 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
 
         method periodic takes nothing returns nothing
             if T32_Tick >= this.endTick or this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0 then
-                call BJDebugMsg("dummy destroy")
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -126,10 +121,8 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
                     call IssueImmediateOrderById(this.dummy, this.order)
                 endif
             elseif this.orderType == 3 then //point
-                call BJDebugMsg("dummy: " + GetUnitName(this.dummy) + "ordr: " + I2S(this.order) + " x: " + R2S(this.targetX) + " y: " + R2S(this.targetY))
-                if IssuePointOrderById(this.dummy, this.order, this.targetX, this.targetY) then
-                    call BJDebugMsg("success")
-                endif
+                //call BJDebugMsg("dummy: " + GetUnitName(this.dummy) + "ordr: " + I2S(this.order) + " x: " + R2S(this.targetX) + " y: " + R2S(this.targetY))
+                call IssuePointOrderById(this.dummy, this.order, this.targetX, this.targetY)
             endif
             //call BJDebugMsg("ordered dummy, started timer")
             set this.stopDummy = false

@@ -19,21 +19,11 @@ library Utility
     endfunction
 
     function SetCurrentlyFighting takes player p, boolean b returns nothing
-        if b then
-            call BJDebugMsg(GetPlayerNameColour(p) + ": fighting")
-        else
-            call BJDebugMsg(GetPlayerNameColour(p) + ": not fighting")
-        endif
         set CurrentlyFighting[GetPlayerId(p)] = b
     endfunction
 
     function SetAllCurrentlyFighting takes boolean b returns nothing
         local integer i = 0
-        if b then
-            call BJDebugMsg("all: fighting")
-        else
-            call BJDebugMsg("all: not fighting")
-        endif
         loop
             set CurrentlyFighting[i] = b
             set i = i + 1

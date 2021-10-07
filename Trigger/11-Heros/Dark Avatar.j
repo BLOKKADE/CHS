@@ -46,12 +46,12 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable
             if AvatarMode[hid][0] != 1 then
                 call ResetAvatar(hid, u, 1)
             endif
-            set rBonus = (heroLevel * 0.01) * (BlzGetUnitArmor(u) - AvatarMode[hid].real[1])
+            set rBonus = (heroLevel * 0.01) * (BlzGetUnitArmor(u) - AvatarMode[hid].real[1] - LoadReal(HT,GetHandleId(u),11))
             if rBonus != AvatarMode[hid].real[1] then
                 call BlzSetUnitArmor(u, BlzGetUnitArmor(u) - AvatarMode[hid].real[1] + rBonus)
                 set AvatarMode[hid].real[1] = rBonus
             endif
-            call SetBonus(u, 1, heroLevel * 0.01)
+            call SetBonus(u, 1, heroLevel)
 
             set iBonus = (heroLevel * 35)
             if iBonus != AvatarMode[hid][2] then

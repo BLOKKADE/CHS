@@ -2,13 +2,11 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
     
     function AbilityChannel takes unit caster, unit target, real x, real y, integer abilId, integer lvl returns boolean
 
-        call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
+        //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
         
         if GetUnitTypeId(caster) ==  'h00T' or GetUnitTypeId(caster) == 'h014' or GetUnitTypeId(caster) == 'h015' then
             set caster = udg_units01[GetConvertedPlayerId(GetOwningPlayer( caster ) ) ]
         endif
-
-        
 
         //Mysterious Runestone
         if abilId == 'A072' then
@@ -133,8 +131,8 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local integer ID = 0 
         local integer lvl = 0
 
-        if /*not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster))*/ true then
-            call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
+        if not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) then
+            //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
 
             if not DousingHexFailCheck(caster, abilId) then
             

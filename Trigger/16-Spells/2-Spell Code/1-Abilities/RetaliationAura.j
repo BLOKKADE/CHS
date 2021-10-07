@@ -38,6 +38,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
 
             //Set bonus damage
             set RetaliationDamage.real[GetHandleId(dummy.dummy)] = 0.25 + (0.025 * GetUnitAbilityLevel(caster, 'A0A9')) + damage
+            //call BJDebugMsg("retdmg: " + R2S(RetaliationDamage.real[GetHandleId(dummy.dummy)]) + " hid: " + I2S(GetHandleId(dummy.dummy)))
             call DestroyEffect(AddSpecialEffectTargetFix("war3mapImported\\Shiva'sWrath.mdx", caster, "origin"))
             call dummy.activate()
             call GroupRemoveUnit(RetaliationGroup, caster)
@@ -51,7 +52,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
         call GroupClear(RetaliationGroup)
         set RetaliationUnit = source
         call GroupEnumUnitsInRange(RetaliationGroup, GetUnitX(source), GetUnitY(source), 1200, Condition(function RetaliationSourceFilter))
-        call BJDebugMsg("rag: " + I2S(BlzGroupGetSize(RetaliationGroup)))
+        //call BJDebugMsg("rag: " + I2S(BlzGroupGetSize(RetaliationGroup)))
         if BlzGroupGetSize(RetaliationGroup) > 0 then
             call CastRetaliation(source, target, abilId, abilLevel)
         endif

@@ -88,10 +88,15 @@ scope DamageControllerBefore initializer init
             set damageSourceHero = null
         endif
 
+        set ChestOfGreedBonus.boolean[HandleId2] = false
+        set MacigNecklaceBonus.boolean[HandleId2] = false
+
+        //call BJDebugMsg("hid: " + I2S(HandleId1) + " retdmg: " + R2S(RetaliationDamage.real[HandleId1]))
         //Retaliation Aura damage
-        if RetaliationDamage[GetHandleId(damageSource)] > 0 then
-            call BlzSetEventDamage(GetEventDamage() * RetaliationDamage[GetHandleId(damageSource)])
-            set RetaliationDamage[GetHandleId(damageSource)] = 0
+        if RetaliationDamage.real[HandleId1] > 0 then
+            //call BJDebugMsg("ra dmg: " + R2S(RetaliationDamage.real[HandleId1]) + " new: " + R2S(GetEventDamage() * RetaliationDamage.real[HandleId1]))
+            call BlzSetEventDamage(GetEventDamage() * RetaliationDamage.real[HandleId1])
+            set RetaliationDamage.real[HandleId1] = 0
         endif
 
         if CuId == 'h015' or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
@@ -128,7 +133,7 @@ scope DamageControllerBefore initializer init
 
         //set attack damage
         if IsUnitType(damageSource, UNIT_TYPE_HERO) and attack and IsDamageWhirlwind(damageSource) == false then
-            set SpellData[GetHandleId(damageSource)].real[7] = GetEventDamage()
+            set SpellData[HandleId1].real[7] = GetEventDamage()
             //Whirlwind
             if GetUnitAbilityLevel(damageSource, 'A025') > 0 then
                 call Whirlwind_Description(damageSource, GetEventDamage())
@@ -581,7 +586,7 @@ scope DamageControllerBefore initializer init
             if (DmgType == DAMAGE_TYPE_NORMAL or PoisonRuneBonus[PidA] > 0) and II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A06O') == 0 then
 
                 //Absolute Poison
-                set Admg = PoisonBonus.real[GetHandleId(damageSource)]
+                set Admg = PoisonBonus.real[HandleId1]
                 if Admg == 0 or GetUnitAbilityLevel(damageSourceHero, 'B01W') == 0 then
                     set Admg = 1
                 endif

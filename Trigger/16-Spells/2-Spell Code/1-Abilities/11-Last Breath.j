@@ -40,7 +40,6 @@ function LastBreath takes nothing returns nothing
                 call SaveEffectHandle(HT,GetHandleId(tim),2,AddSpecialEffectTarget( LastBreathAnim , u , "origin" ) ) 
             endif
             call UnitAddAbility(u, 'A08B')
-
             call TimerStart(tim,0.8 + 0.2 * lvlAbility,false, function LastBreathEnd)
         
         endif

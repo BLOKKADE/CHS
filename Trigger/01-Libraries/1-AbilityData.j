@@ -393,9 +393,9 @@ library AbilityData initializer init requires Table
         call SaveDummyAbilOrder('ANrf', "rainoffire")
 
         //49 - Stampede 
-        call SaveAbilData('A09W', 'I026', false, 0, 0, true, Order_Point, "stampede")
+        call SaveAbilData('A09W', 'I026', false, 0, 0, true, Order_Point, "uncorporealform")
         call SetLastObjectElement(Element_Wild, 1)
-        call SaveDummyAbilOrder('A0AQ', "stampede")
+        call SaveDummyAbilOrder('ANst', "stampede")
 
         //50 - Howl of Terror 
         call SaveAbilData('ANht', 'I040', false, 0, 0, true, Order_Instant, "howlofterror")

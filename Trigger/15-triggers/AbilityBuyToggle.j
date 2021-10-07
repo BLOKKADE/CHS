@@ -1,21 +1,23 @@
-scope AbilityBuyToggle initializer init
+scope AbilityBuyToggle /*initializer init*/
     //===========================================================================
-    globals
+    /*globals
         boolean array MaxAbilityBuyEnabled
     endglobals
     
     private function MAxAbilityBuy takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        if udg_boolean05 == false then
-            set MaxAbilityBuyEnabled[pid] = not MaxAbilityBuyEnabled[pid]
-            if MaxAbilityBuyEnabled[pid] then
-                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, "|ccffdde31Max Ability Buy enabled|r: You now buy as much levels as you can pay for with lumber when you buy an ability.")
+        set HoldCtrl[pid] = HoldCtrl[pid] != true
+        
+        if HoldCtrl[pid] == false then
+            if firstTime[pid] == false then
+                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, "|ccffdde31Max Buy|r: Enabled: You can now buy as much levels as you can pay for when you buy an |ccf9efd31ability|r/|ccf31b2fdtome|r/|ccf31fd86glory buff|r/|ccffdfa31creep upgrade|r (|ccffd3131max 1000|r).")
             else
-                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, "|ccffdde31Max Ability Buy disabled|r: You now buy 1 level of an ability.")
+                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, "|ccffdde31Max Buy|r: Enabled")
             endif
         else
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, "|ccfff6d6dMax Ability Buy is only available in ability pick mode|r")
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, "|ccffd9431Max Buy|r: Disabled")
         endif
+        set firstTime[pid] = true
     endfunction
     
     //===========================================================================
@@ -24,9 +26,9 @@ scope AbilityBuyToggle initializer init
         local integer i = 0
         
         loop
-            call TriggerRegisterPlayerChatEvent(trg,Player(i),"-mab",true)
-            call TriggerRegisterPlayerChatEvent(trg,Player(i),"-maxabilitybuy",true)
-            set i = i + 1
+            call TriggerRegisterPlayerChatEvent(trg,Player(i),"-mb",true)
+            call TriggerRegisterPlayerChatEvent(trg,Player(i),"-maxbuy",true)
+            set i = i + 1   
             exitwhen i > 11
         endloop
         
@@ -34,5 +36,5 @@ scope AbilityBuyToggle initializer init
         set i = 0
 
         set trg = null
-    endfunction
+    endfunction*/
 endscope

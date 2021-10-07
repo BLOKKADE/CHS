@@ -10,7 +10,7 @@ globals
     Table roundAbilities
     string RoundCreepTitle
     string array RoundCreepInfo
-    string RoundAbilities
+    string RoundAbilities = ""
     integer ReflectionAuraChance = 0
     integer WizardbaneAuraChance = 0
     integer DrunkenMasterchance = 0
@@ -18,7 +18,7 @@ globals
     integer PulverizeChance = 0 
     integer LastBreathChance = 0
     integer FireshieldChance = 0
-    integer CorrosiveSkinChance = 0
+    integer CorrosiveSkinChance = 0 
     integer MulticastChance = 0
     integer FastMagicChance = 0
     boolean SuddenDeathEnabled = false
@@ -28,6 +28,7 @@ function InitGlobals3 takes nothing returns nothing
     local integer i = 0
     set udg_integer01 = 0	
     set roundAbilities = Table.create()
+    //call BJDebugMsg("ra create")
     set i = 0
     loop
         exitwhen(i > 1)
@@ -1856,7 +1857,7 @@ endfunction
 function Trig_Disable_Abilities_Actions takes nothing returns nothing
     if(Trig_Disable_Abilities_Func001C(GetTriggerUnit()))then
         call IssueImmediateOrderBJ(GetTriggerUnit(),"stop")
-        call BJDebugMsg(GetUnitName(GetTriggerUnit()) +  "disable abilities stop")
+        //call BJDebugMsg(GetUnitName(GetTriggerUnit()) +  "disable abilities stop")
     else
         //call ConditionalTriggerExecute(udg_trigger37)
     endif
@@ -2227,7 +2228,7 @@ function Trig_Battle_Royal_Actions takes nothing returns nothing
     call DisplayTextToForce(GetPlayersAll(),"Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
     call TriggerSleepAction(60.00)
     set udg_boolean02 = true
-    call SetAllCurrentlyFighting(true)
+    
     call PlaySoundBJ(udg_sound10)
     call DisplayTextToForce(GetPlayersAll(),"|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL")
     call PauseAllUnitsBJ(true)
@@ -2257,6 +2258,7 @@ function Trig_Battle_Royal_Actions takes nothing returns nothing
     call TriggerSleepAction(5.00)
     call PlaySoundBJ(udg_sound08)
     call DisplayTimedTextToForce(GetPlayersAll(),1.00,"|cffffcc00GO!!!|r")
+    call SetAllCurrentlyFighting(true)
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Battle_Royal_Func033001002)),function Trig_Battle_Royal_Func033A)
     if(Trig_Battle_Royal_Func034C())then
         set udg_integer06 = 1
@@ -6896,7 +6898,6 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                 set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* udg_integer02)
             else
                 set magicPowerBonus = 0
-                set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* udg_integer02) / 2
             endif
             set magicDefBonus = 0.09 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
             set evasionBonus = 0.06 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
@@ -6988,25 +6989,32 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                 call PauseUnitBJ(true,GetLastCreatedUnit())
                 call SetUnitInvulnerable(GetLastCreatedUnit(),true)
                 call ShowUnitHide(GetLastCreatedUnit())
+                
+                if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),R2I(BlzGetUnitBaseDamage(GetLastCreatedUnit(),0) * 0.5),0)
+                endif
 
-                /*
+                //call BJDebugMsg("rci: " + I2S(udg_integer40 - 1))
                 if RoundCreepInfo[udg_integer40 - 1] == "" then
+                    //call BJDebugMsg("a")
                     set RoundCreepTitle = "|cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r"
                     set s = RoundCreepTitle + ": "
                     set RoundCreepInfo[udg_integer40 - 1] = "|cfff19b9bHit points|r: " + I2S(BlzGetUnitMaxHP(GetLastCreatedUnit())) + "|n"
+                    //call BJDebugMsg("b")
                     if IsUnitType(GetLastCreatedUnit(), UNIT_TYPE_MELEE_ATTACKER) then
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cffebde71Range|r: Melee |n"
                     else
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff82f373Range|r: " + I2S(R2I(BlzGetUnitWeaponRealField(GetLastCreatedUnit(), UNIT_WEAPON_RF_ATTACK_RANGE, 0))) + "|n"
                         set s = s + "|cff82f373Ranged|r: "
                     endif
+                    //call BJDebugMsg("c")
                     if udg_integer04 == 'n01H' or udg_integer04 == 'n00W' then
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bddf1Damage Type|r: magic |n"
                         set s = s + "|cff9bddf1Magic Damage|r: "
                     else
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff167daDamage Type|r: physical |n"
-
                     endif
+                    //call BJDebugMsg("d")
                     if BonusNeutral == 0 and BonusNeutralPlayer[udg_integer40 - 1] == 0 then
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1)) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) ) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1)) + "|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
@@ -7022,9 +7030,12 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitMagicDef(GetLastCreatedUnit()) - magicDefBonus)) + " + |cff9bf1a9" + I2S(R2I(magicDefBonus)) + "|r|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitEvasion(GetLastCreatedUnit()) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r"
                     endif
+                    //call BJDebugMsg("e")
                     set s = s + RoundAbilities
                     call DisplayTimedTextToPlayer(Player(udg_integer40 - 1), 0, 0, 20, s)
-                endif*/
+                    //call BJDebugMsg("f")
+                endif
+                //call BJDebugMsg("rci finish: " + I2S(udg_integer40 - 1))
             else
             endif
             set udg_integer40 = udg_integer40 + 1
@@ -9936,6 +9947,7 @@ function Trig_End_PvP_Func026C takes nothing returns boolean
 endfunction
 
 function Trig_End_PvP_Actions takes nothing returns nothing
+    local real bonus = 1
     if(Trig_End_PvP_Func001C())then
         set udg_unit05 = udg_units03[2]
     else
@@ -9950,7 +9962,10 @@ function Trig_End_PvP_Actions takes nothing returns nothing
     //Midas Touch
     if GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
         call CreepDeath_BountyText(udg_unit05, GetDyingUnit(), GetMidasTouch(GetHandleId(GetDyingUnit())).bonus)
-        call SetPlayerState(GetOwningPlayer(udg_unit05), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(udg_unit05), PLAYER_STATE_RESOURCE_GOLD) + GetMidasTouch(GetHandleId(GetDyingUnit())).bonus)
+        if ChestOfGreedBonus.boolean[GetHandleId(GetDyingUnit())] then
+            set bonus = CgBonus
+        endif
+        call SetPlayerState(GetOwningPlayer(udg_unit05), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(udg_unit05), PLAYER_STATE_RESOURCE_GOLD) + R2I(GetMidasTouch(GetHandleId(GetDyingUnit())).bonus * bonus))
         set GetMidasTouch(GetHandleId(GetDyingUnit())).stop = true
     endif
     call TriggerSleepAction(4.00)
@@ -9976,15 +9991,15 @@ function Trig_End_PvP_Actions takes nothing returns nothing
             call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
             call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
             if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
-                call BJDebugMsg("1a item move success")
+                //call BJDebugMsg("1a item move success")
             else
-                call BJDebugMsg("1a item move fail")
+                //call BJDebugMsg("1a item move fail")
             endif
             call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
             if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
-                call BJDebugMsg("2a item move success")
+                //call BJDebugMsg("2a item move success")
             else
-                call BJDebugMsg("2a item move fail")
+                //call BJDebugMsg("2a item move fail")
             endif
             set udg_integer32 = udg_integer32 + 1
         endloop
@@ -9996,17 +10011,17 @@ function Trig_End_PvP_Actions takes nothing returns nothing
                 call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
                 call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
                 if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
-                    call BJDebugMsg("1b item move success")
+                    //call BJDebugMsg("1b item move success")
                 else
-                   call BJDebugMsg("1b item move fail")
+                   //call BJDebugMsg("1b item move fail")
                 endif
             else
                 call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
                 call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
                 if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
-                    call BJDebugMsg("2b item move success")
+                    //call BJDebugMsg("2b item move success")
                 else
-                    call BJDebugMsg("2b item move fail")
+                    //call BJDebugMsg("2b item move fail")
                 endif
             endif
             call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer32), true)

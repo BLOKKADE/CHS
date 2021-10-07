@@ -1,4 +1,4 @@
-library StableSpells
+library StableSpells initializer init
     globals
         Table StableSpells
     endglobals
@@ -20,5 +20,7 @@ library StableSpells
         set StableSpells.boolean['A024'] = true
         set StableSpells.boolean['A05U'] = true
         set StableSpells.boolean['A044'] = true
+        set StableSpells.boolean['A0AH'] = true
+        set StableSpells.boolean['A08P'] = true
     endfunction
 endlibrary

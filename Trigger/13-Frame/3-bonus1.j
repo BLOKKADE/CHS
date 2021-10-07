@@ -122,7 +122,7 @@ library HeroData initializer init
         call SaveStr(HT_data,'H016',3, "|cffffff00Level Up Bonus|r: Hellfire: +50 initial damage, +10 damage per second." )                      
                     
         call SaveStr(HT_data,'H017',1, "ReplaceableTextures\\CommandButtons\\BTNRockGolem.blp" )       // golem
-        call SaveStr(HT_data,'H017',2, "|cff00ffffPassive|r: Stone Edge: When the Golem is damaged it deals 50% of its block in damage to nearby enemy units within 400 range. 1 second cooldown.")
+        call SaveStr(HT_data,'H017',2, "|cff00ffffPassive|r: Stone Edge: When the Golem is damaged it deals 50% of its block in damage to nearby enemy units within 400 range. 1 second cooldown. [|cff96ffffStable|r]")
         call SaveStr(HT_data,'H017',3, "|cffffff00Level Up Bonus|r: Stone Edge: +1% block damage. +0.5% block." )       
         
         call SaveStr(HT_data,'N02K',1, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )  

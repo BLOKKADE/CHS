@@ -99,11 +99,11 @@ library CreepDeath initializer init requires RandomShit
         endif
 
         //Chest of Gread
-        set itemCount = UnitHasItemI(killingHero, 'I05A')
+        /*set itemCount = UnitHasItemI(killingHero, 'I05A')
         if itemCount > 0 then
             set goldBounty = goldBounty + (50 * itemCount)
             set expBounty = expBounty + (50 * itemCount)
-        endif
+        endif*/
 
         //Creep bounty
         if (Trig_Creep_Dies_Func003C()) then
@@ -114,6 +114,10 @@ library CreepDeath initializer init requires RandomShit
 
         if MacigNecklaceBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05G') then
             set expBounty = R2I(expBounty * MnBonus)
+        endif
+
+        if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05A') then
+            set goldBounty = R2I(goldBounty * CgBonus)
         endif
         
         call BountyText(killingHero, dyingUnit, goldBounty)
@@ -126,9 +130,13 @@ library CreepDeath initializer init requires RandomShit
 
     //To make Midas Touch work on all summons
     public function NonCreepDeath takes unit dyingUnit, unit killingHero returns nothing
+        local real bonus = 1
         set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
         call CreepDeath_BountyText(killingHero, dyingUnit, GetMidasTouch(GetHandleId(dyingUnit)).bonus)
-        call SetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD) + GetMidasTouch(GetHandleId(dyingUnit)).bonus)
+        if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05A') then
+            set bonus = CgBonus
+        endif
+        call SetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD) + R2I(GetMidasTouch(GetHandleId(dyingUnit)).bonus * bonus))
         set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
         //call BJDebugMsg("non creep death")
     endfunction

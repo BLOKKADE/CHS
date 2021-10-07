@@ -33,7 +33,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
             
         endif
         if i > 1 then
-            call SetUnitAbilityLevel(u, udg_integer01, i)
+            call SetUnitAbilityLevel(u, abil, i)
         endif
         call FuncEditParam(abil,u)
         call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")

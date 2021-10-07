@@ -140,11 +140,11 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 
 					set ToolTipS = ToolTipS + GetPassiveStr(SpellU)
 
+					if IncomeMode != 2 then
+						set ToolTipS = ToolTipS + "|n|n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
+					endif
+
 					if GetTriggerPlayer() != GetOwningPlayer(SpellU) then
-						set ToolTipS = ToolTipS + "|n"
-						if IncomeMode != 2 then
-							set ToolTipS = ToolTipS + "|n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
-						endif
 						set ToolTipS = ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(Player(NumPlayerLast[PlID]), PLAYER_STATE_RESOURCE_GOLD))
 						set ToolTipS = ToolTipS + "|n|cff41e400Lumber|r: " + I2S(GetPlayerState(Player(NumPlayerLast[PlID]), PLAYER_STATE_RESOURCE_LUMBER))
 						set ToolTipS = ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[NumPlayerLast[PlID]]))

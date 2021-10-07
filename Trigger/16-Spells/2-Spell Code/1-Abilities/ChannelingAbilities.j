@@ -12,7 +12,7 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
         set AssociatedAbil['A0A1'] = 'AEsf'//
         set AssociatedAbil['A0A0'] = 'ANmo'//
         set AssociatedAbil['A09V'] = 'ANrf'//
-        set AssociatedAbil['A09W'] = 'A0AQ'//
+        set AssociatedAbil['A09W'] = 'ANst'//
         set AssociatedAbil['A09X'] = 'ANvc'//
     endfunction
 
@@ -41,7 +41,7 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
     function ChannelingAbility takes unit caster, integer abilId, location spellLoc returns nothing
         local integer order = GetUnitCurrentOrder(caster)
         local real manaCost = BlzGetAbilityManaCost(abilId, GetUnitAbilityLevel(caster, abilId))
-        call BJDebugMsg("channel: " + GetObjectName(abilId) + " : " + GetUnitName(caster) + " : " + I2S(order))
+        //call BJDebugMsg("channel: " + GetObjectName(abilId) + " : " + GetUnitName(caster) + " : " + I2S(order))
         if abilId != 'AEtq' and abilId != 'AEsf'then
             call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(caster),PolarProjectionBJ(spellLoc,256.00,AngleBetweenPoints(spellLoc,GetUnitLoc(caster))),bj_UNIT_FACING)
         else
@@ -79,7 +79,6 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
     endfunction
 
     function CastChannelAbility takes unit caster, integer abilId, real x, real y, integer level returns nothing
-        call BJDebugMsg("channel: " + GetObjectName(abilId))
         call CastSpell(caster, null, AssociatedAbil[abilId], level, GetAbilityOrderType(abilId), x, y).activate()
     endfunction
 endlibrary

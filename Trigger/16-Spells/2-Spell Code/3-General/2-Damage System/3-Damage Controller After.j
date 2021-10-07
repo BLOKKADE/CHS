@@ -292,6 +292,11 @@ scope DamageControllerAfter initializer init
         if UnitHasItemS(TrigA, 'I05G') and BlzGetEventDamageType() ==  DAMAGE_TYPE_MAGIC and GetUnitState(TrigU, UNIT_STATE_LIFE) - GetEventDamage() <= 0 then
             set MacigNecklaceBonus.boolean[GetHandleId(TrigU)] = true
         endif
+
+        if UnitHasItemS(TrigA, 'I05A') and BlzGetEventDamageType() == DAMAGE_TYPE_NORMAL and GetUnitState(TrigU, UNIT_STATE_LIFE) - GetEventDamage() <= 0 then
+            set ChestOfGreedBonus.boolean[GetHandleId(TrigU)] = true
+        endif
+
         set GUS = null
         set GUT = null
         set TrigU = null

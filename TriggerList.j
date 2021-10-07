@@ -148,6 +148,7 @@
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\2-Items\Ancient Axe.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\2-Items\Ancient Dagger.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\2-Items\Ancient Staff.j"
+//! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\2-Items\ChestOfGreed.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\2-Items\FlimsyToken.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\2-Items\HolyShield.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\2-Items\Lucky Pants.j"

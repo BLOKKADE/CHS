@@ -11,13 +11,13 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, ChannelOrder
         call dummy.setAbilityRealField(abilId, ABILITY_RLF_CAST_RANGE, 99999)
 
         if orderType == Order_Instant then
-            call BJDebugMsg("cs instant")
+            //call BJDebugMsg("cs instant")
             call dummy.instant()
         elseif orderType == Order_Target then
-            call BJDebugMsg("cs target")
+            //call BJDebugMsg("cs target")
             call dummy.target(target)
         elseif orderType == Order_Point then
-            call BJDebugMsg("cs point")
+            //call BJDebugMsg("cs point")
             call dummy.point(targetX, targetY)
         endif
         
