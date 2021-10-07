@@ -2,7 +2,9 @@
 
 This is the map and code of the Warcraft 3 map Custom Hero Survival.
 
-To edit the map code:
+WARNING: CHS.W3X is readable in the World Editor but cannot be saved without first following the "Setup the map" tutorial below.
+
+Setup the map:
 1. Download the project and save it in a directory
 2. Open "CHS.w3x" in the Warcraft 3 World Editor
 3. Go to the trigger editor and open the "Import" trigger in the "JASS" category.
