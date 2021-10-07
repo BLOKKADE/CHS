@@ -8,7 +8,7 @@ Setup the map:
 1. Download the project and save it in a directory
 2. Open "CHS.w3x" in the Warcraft 3 World Editor
 3. Go to the trigger editor and open the "Import" trigger in the "JASS" category.
-4. Replace
+4. Replace the path in 
 //! import "C:\Users\Eigenaar\Projects\CHS\TriggerList.j"
 with the path of the TriggerList.j file in the project you saved.
 5. Save the map, if it doesn't give an error you're done.
