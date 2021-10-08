@@ -55,7 +55,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 		local integer pid = GetPlayerId(GetOwningPlayer(u))
 		local string s = ""
 
-		set s = s + "Lives: " + I2S(Lives[pid] - 1) + "\n"
+		set s = s + "Lives: " + I2S(Lives[pid]) + "\n"
 		set s = s + "Income: " + I2S(Income[pid]) + "\n"
 		set s = s + "Glory per Round: " + I2S(R2I(GloryRoundBonus[pid] + 200)) + "\n"
 		set s = s + "Movespeed: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"

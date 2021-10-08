@@ -1,21 +1,24 @@
-library DebugCommands initializer init requires CustomState
+library DebugCommands initializer init requires CustomState, RandomShit, Functions
     globals
         boolean array NextRound
         real RoundTime = 20
         boolean Waiting
-        integer dummyId = 0
+        integer dummyId = 'H00E'
         unit array PlayerDummy
         boolean array dummyEnabled
+        integer array CreatedDummies
     endglobals
     //===========================================================================
     function DummyHelp takes player p returns nothing
-        call DisplayTextToPlayer(p, 0, 0, "Dummy Commands: " + GetHandleId(PlayerDummy[GetPlayerId(p)]) + ": " + GetUnitName(PlayerDummy[GetPlayerId(p)]))
-        call DisplayTextToPlayer(p, 0, 0, "To edit the stats of the last dummy you've created: ")
-        call DisplayTextToPlayer(p, 0, 0, "-ddmg xxx (damage), -dbas xxx (attack speed), -darm xxx (armor), -dblo xxx (block), -dpvp xxx (pvp)")
-        call DisplayTextToPlayer(p, 0, 0, "-dstr, dagi, dint xxx (hero stats), -dmpo xxx (magic power), -dmpr xxx (magic protection), -deva xxx (evasion)")
-        call DisplayTextToPlayer(p, 0, 0, "-ditim: duplicates all your items to the dummy")
-        call DisplayTextToPlayer(p, 0, 0, "-dabil: duplicates all your abilities to the dummy")
-        call DisplayTextToPlayer(p, 0, 0, "-dname: xxxxxxxxxx: sets the name of the dummy")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "Dummy Commands: " + I2S(GetHandleId(PlayerDummy[GetPlayerId(p)])) + ": " + GetUnitName(PlayerDummy[GetPlayerId(p)]))
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "To edit the stats of the last dummy you've created: ")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-ddmg xxx (damage), -dbas xxx (attack speed), -darm xxx (armor), -dblo xxx (block), -dpvp xxx (pvp)")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dstr, dagi, dint xxx (hero stats), -dmpo xxx (magic power), -dmpr xxx (magic protection), -deva xxx (evasion)")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-ditem: duplicates all your items to the dummy")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dabil: duplicates all your abilities to the dummy (might bug if used more than once on the same dummy)") 
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dname: xxxxxxxxxx: sets the name of the dummy")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dkill: kill the dummy")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-help: see this list again")    
     endfunction
 
     private function CopyAbilitiesToDummy takes unit hero, unit dummy returns nothing
@@ -34,66 +37,94 @@ library DebugCommands initializer init requires CustomState
 
     function DummyCommandAction takes nothing returns nothing
         local string command = SubString(GetEventPlayerChatString(), 0, 5)
-        local real value = S2R(SubString(GetEventPlayerChatString(), 5, 20))
+        local real value = S2R(SubString(GetEventPlayerChatString(), 6, 20))
         local player p = GetTriggerPlayer()
         local unit u = PlayerDummy[GetPlayerId(p)]
         local unit hero = udg_units01[GetPlayerId(p) + 1]
+        local string s = ""
         if command == "-ddmg" then
             call BlzSetUnitBaseDamage(u, R2I(value), 0)
+            set s = "|cffffcc00" + GetUnitName(u) + "|r: " + R2S(value) + " attack damage"
         elseif command == "-dbas" then
             call BlzSetUnitAttackCooldown(u, value, 0)
+            set s = "|cfffff242" + GetUnitName(u) + "|r: " + R2S(value) + " base attack speed"
         elseif command == "-darm" then
             call BlzSetUnitArmor(u, value)
+            set s = "|cff7bff00" + GetUnitName(u) + "|r: " + R2S(value) + " armor"
         elseif command == "-dblo" then  
             call SetUnitBlock(u, value)
+            set s = "|cff00ffea" + GetUnitName(u) + "|r: " + R2S(value) + " block"
         elseif command == "-dpvp" then
             call SetUnitPvpBonus(u, value)
+            set s = "|cff00a2ff" + GetUnitName(u) + "|r: " + R2S(value) + " pvp bonus"
         elseif command == "-dstr" then
-            call SetHeroStr(u, value, true)
+            call SetHeroStr(u, R2I(value), true)
+            set s = "|cffff6464" + GetUnitName(u) + "|r: " + R2S(value) + " strength"
         elseif command == "-dagi" then
-            call SetHeroAgi(u, value, true)
+            call SetHeroAgi(u, R2I(value), true)
+            set s = "|cffffd941" + GetUnitName(u) + "|r: " + R2S(value) + " agility"
         elseif command == "-dint" then
-            call SetHeroInt(u, value, true)
+            call SetHeroInt(u, R2I(value), true)
+            set s = "|cff3d91ff" + GetUnitName(u) + "|r: " + R2S(value) + " intelligence"
         elseif command == "-dmpo" then
             call SetUnitMagicDmg(u, value)
+            set s = "|cffff3aff" + GetUnitName(u) + "|r: " + R2S(value) + " magic power"
         elseif command == "-dmpr" then
             call SetUnitMagicDef(u, value)
+            set s = "|cff00ff40" + GetUnitName(u) + "|r: " + R2S(value) + " magic protection"
         elseif command == "-deva" then
             call SetUnitEvasion(u, value)
+            set s = "|cff9e9e9e" + GetUnitName(u) + "|r: " + R2S(value) + " evasion"
+        elseif command == "-help" then
+            call DummyHelp(p)
         else
-            set command = = SubString(GetEventPlayerChatString(), 0, 6)
-            set value = SubString(GetEventPlayerChatString(), 5, 20)
+            set command = SubString(GetEventPlayerChatString(), 0, 6)
 
             if command == "-ditem" then
-                call UnitRemoveItemFromSlot(u, 0)
+                call RemoveItem(UnitItemInSlot(u, 0))
                 call UnitAddItemById(u, GetItemTypeId(UnitItemInSlot(hero, 0)))
-                call UnitRemoveItemFromSlot(u, 1)
+                call RemoveItem(UnitItemInSlot(u, 1))
                 call UnitAddItemById(u, GetItemTypeId(UnitItemInSlot(hero, 1)))
-                call UnitRemoveItemFromSlot(u, 2)
+                call RemoveItem(UnitItemInSlot(u, 2))
                 call UnitAddItemById(u, GetItemTypeId(UnitItemInSlot(hero, 2)))
-                call UnitRemoveItemFromSlot(u, 3)
+                call RemoveItem(UnitItemInSlot(u, 3))
                 call UnitAddItemById(u, GetItemTypeId(UnitItemInSlot(hero, 3)))
-                call UnitRemoveItemFromSlot(u, 4)
+                call RemoveItem(UnitItemInSlot(u, 4))
                 call UnitAddItemById(u, GetItemTypeId(UnitItemInSlot(hero, 4)))
-                call UnitRemoveItemFromSlot(u, 5)
+                call RemoveItem(UnitItemInSlot(u, 5))
                 call UnitAddItemById(u, GetItemTypeId(UnitItemInSlot(hero, 5)))
+                set s = "|cffff9532" + GetUnitName(u) + "|r: duplicated items"
             elseif command == "-dabil" then
                 call CopyAbilitiesToDummy(hero, u)
+                set s = "|cff9748ff" + GetUnitName(u) + "|r: duplicated abilities"
             elseif command == "-dname" then
-                call BlzSetUnitName(u, value)
+                call BlzSetUnitName(u, SubString(GetEventPlayerChatString(), 7, 20))
+                set s = "Set name to: |cffc5fca0" + GetUnitName(u) + "|r"
+            elseif command == "-dkill" then
+                call KillUnit(u)
+                set s = "Killed |cffff9532" + GetUnitName(u) + "|r: |cffc8ff32" + GetHeroProperName(u) + "|r"
             else
 
             endif
         endif
+        if s != "" then
+            call DisplayTextToPlayer(p, 0, 0, s)
+        endif
     endfunction
 
     function DummyCommands takes player p returns nothing
+        local trigger trg = CreateTrigger()
         call DummyHelp(p)
+        call TriggerRegisterPlayerChatEvent(trg, p, "-", false)
+        call TriggerAddAction(trg, function DummyCommandAction)
+        set trg = null
     endfunction
 
     function SpawnDummy takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        set PlayerDummy[pid = CreateUnit(Player(11), 'hfoo', GetUnitX(udg_units01[pid + 1]), GetUnitY(udg_units01[pid + 1]), 0)
+        set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(udg_units01[pid + 1]), GetUnitY(udg_units01[pid + 1]), 0)
+        set CreatedDummies[pid] = CreatedDummies[pid] + 1
+        call BlzSetHeroProperName(PlayerDummy[pid], "Subject #" + I2S(CreatedDummies[pid]))
         if dummyEnabled[pid] == false then
             set dummyEnabled[pid] = true
             call DummyCommands(GetTriggerPlayer())
@@ -102,12 +133,12 @@ library DebugCommands initializer init requires CustomState
 
     function LvlHero takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        call SetHeroLevel(udg_units01[pid + 1], 5000, true)
+        call SetHeroLevel(udg_units01[pid + 1], 200, true)
     endfunction
 
     function AddGlory takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        set Glory[pid] = 100000
+        set Glory[pid] = 5000
     endfunction
 
     function StartNextRound takes nothing returns nothing

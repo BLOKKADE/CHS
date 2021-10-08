@@ -101,7 +101,7 @@ library ConversionHotkeys initializer init requires Table
         call SetPlayerState(Player(pid), PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER) + gold)
         call ResourseRefresh(Player(pid)) 
     endfunction
-    private function init takes nothing returns nothing
+    private function HotKeyInit takes nothing returns nothing
         local trigger trg1 = CreateTrigger()
         local trigger trg2 = CreateTrigger()
         local trigger trg3 = CreateTrigger()
@@ -126,5 +126,12 @@ library ConversionHotkeys initializer init requires Table
         call TriggerAddAction(trg2, function CtrlRelease)
         set trg1 = null
         set trg2 = null
+    endfunction
+
+    private function init takes nothing returns nothing
+        local trigger trg = CreateTrigger()
+        call TriggerRegisterTimerEvent(trg, 1., false)
+        call TriggerAddAction(trg, function HotKeyInit)
+        set trg = null
     endfunction
 endlibrary

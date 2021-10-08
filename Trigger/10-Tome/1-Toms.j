@@ -5,8 +5,34 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
     endfunction
 
+    function GetItemCost takes item it, boolean gold returns integer
+        local integer goldCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_RED )
+        local integer lumberCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_GREEN )
+        local integer multiplier = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_BLUE )
+        if multiplier == 255 then
+            set multiplier = 1
+        endif
+        if goldCost == 255 then
+            set goldCost = 0
+        else
+            set goldCost = goldCost * multiplier
+        endif
+
+        if lumberCost == 255 then
+            set lumberCost = 0
+        else
+            set lumberCost = lumberCost * multiplier
+        endif
+
+        if gold then
+            return goldCost + (lumberCost * 30)
+        else
+            return lumberCost + ((goldCost - (ModuloInteger(goldCost, 30))) / 30)
+        endif
+    endfunction
+
     function PlayerReturnLumber takes item it, integer II, player p returns nothing 
-        call AdjustPlayerStateBJ(BlzGetItemIntegerField(it, ConvertItemIntegerField('iclr') ),p,PLAYER_STATE_RESOURCE_LUMBER)
+        call AdjustPlayerStateBJ(GetItemCost(it, false),p,PLAYER_STATE_RESOURCE_LUMBER)
         call ResourseRefresh(p)
     endfunction
 

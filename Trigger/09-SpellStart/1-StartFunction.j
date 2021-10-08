@@ -125,7 +125,7 @@ function FunctionTimerSpell takes nothing returns nothing
     local integer i1 = 0
     local unit U = null
         
-    if GetPlayerSlotState(Player(pid)) == PLAYER_SLOT_STATE_LEFT and ModeNoDeath == false then
+    if Herou != null and (IsPlayerInForce(GetOwningPlayer(Herou), udg_force07) or GetPlayerSlotState(GetOwningPlayer(Herou)) != PLAYER_SLOT_STATE_PLAYING) then
         call SetUnitInvulnerable(Herou, false)
         call KillUnit(Herou)
         return
