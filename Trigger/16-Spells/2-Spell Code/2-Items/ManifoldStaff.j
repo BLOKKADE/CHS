@@ -11,7 +11,7 @@ library ManifoldStaff requires RandomShit, AbilityData, DummyOrder
         local integer limit = 10
         local boolean ally = false
         local player owner = GetOwningPlayer(caster)
-        local real mana = BlzGetAbilityManaCost(abilId, lvl - 1) * 0.4
+        local real mana = BlzGetAbilityManaCost(abilId, lvl - 1) * 0.6
         local real x = GetUnitX(caster)
         local real y = GetUnitY(caster)
         if GetAbilityOrderType(abilId) == Order_Target then

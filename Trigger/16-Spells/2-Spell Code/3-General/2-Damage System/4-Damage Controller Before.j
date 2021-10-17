@@ -41,8 +41,8 @@ scope DamageControllerBefore initializer init
         local integer PidT = GetPlayerId(GetOwningPlayer(damageTarget ))
         local integer PidA = GetPlayerId(GetOwningPlayer(damageSource))
 
-        local integer HandleId1 = GetHandleId(damageSource) 	
-        local integer HandleId2 = GetHandleId(damageTarget) 	
+        local integer sourceId = GetHandleId(damageSource) 	
+        local integer targetId = GetHandleId(damageTarget) 	
         local unit damageSourceHero = udg_units01[GetConvertedPlayerId(GetOwningPlayer( damageSource) ) ]
         local unit damageTargetHero = udg_units01[GetConvertedPlayerId(GetOwningPlayer( damageTarget) ) ]
         local damagetype DmgType
@@ -59,6 +59,7 @@ scope DamageControllerBefore initializer init
         local boolean AbilA = true
         local boolean Bfirst = false
         local boolean trueAttack = false
+        local boolean unlimitedAgony = false
 
         //some abilities like faerie fire start a 0 damage event this negates that
         if GetEventDamage() == 0 then
@@ -88,15 +89,15 @@ scope DamageControllerBefore initializer init
             set damageSourceHero = null
         endif
 
-        set ChestOfGreedBonus.boolean[HandleId2] = false
-        set MacigNecklaceBonus.boolean[HandleId2] = false
+        set ChestOfGreedBonus.boolean[targetId] = false
+        set MacigNecklaceBonus.boolean[targetId] = false
 
-        //call BJDebugMsg("hid: " + I2S(HandleId1) + " retdmg: " + R2S(RetaliationDamage.real[HandleId1]))
+        //call BJDebugMsg("hid: " + I2S(sourceId) + " retdmg: " + R2S(RetaliationDamage.real[sourceId]))
         //Retaliation Aura damage
-        if RetaliationDamage.real[HandleId1] > 0 then
-            //call BJDebugMsg("ra dmg: " + R2S(RetaliationDamage.real[HandleId1]) + " new: " + R2S(GetEventDamage() * RetaliationDamage.real[HandleId1]))
-            call BlzSetEventDamage(GetEventDamage() * RetaliationDamage.real[HandleId1])
-            set RetaliationDamage.real[HandleId1] = 0
+        if RetaliationDamage.real[sourceId] > 0 then
+            //call BJDebugMsg("ra dmg: " + R2S(RetaliationDamage.real[sourceId]) + " new: " + R2S(GetEventDamage() * RetaliationDamage.real[sourceId]))
+            call BlzSetEventDamage(GetEventDamage() * RetaliationDamage.real[sourceId])
+            set RetaliationDamage.real[sourceId] = 0
         endif
 
         if CuId == 'h015' or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
@@ -133,7 +134,7 @@ scope DamageControllerBefore initializer init
 
         //set attack damage
         if IsUnitType(damageSource, UNIT_TYPE_HERO) and attack and IsDamageWhirlwind(damageSource) == false then
-            set SpellData[HandleId1].real[7] = GetEventDamage()
+            set SpellData[sourceId].real[7] = GetEventDamage()
             //Whirlwind
             if GetUnitAbilityLevel(damageSource, 'A025') > 0 then
                 call Whirlwind_Description(damageSource, GetEventDamage())
@@ -205,40 +206,87 @@ scope DamageControllerBefore initializer init
             set GLOB_cuttting = true
         endif
 
-        //Storm Horn
-        if GetUnitAbilityLevel(GetTriggerUnit() ,'B00B') >= 1 then
-            if GetRandomReal(1,100) <= 14 * luckTarget then
-                call BlzSetEventDamage(   0 )
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", GetTriggerUnit(), "chest"))
-                set damageSourceHero = null
-                set damageTargetHero = null
-                set damageTarget = null
-                set damageSource = null
-                return
-            endif		
+        //Unlimited Agony
+        set II = GetUnitAbilityLevel(damageSource, 'A0AQ')
+        if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A0AQ') == 0 then
+            call AbilStartCD(damageSource, 'A0AQ', 20.5 - (0.5 * II))
+            set unlimitedAgony = true
+            set UnlimitedAgonyActivated.boolean[sourceId] = true
+            //call BJDebugMsg("unlimited agony activated")
         endif
 
-        //Aura of Immortality
-        if GetUnitAbilityLevel(GetTriggerUnit() ,'B00D') >= 1 then
-            if GetRandomInt(1,100) <= GetUnitAbilityLevel(damageTargetHero  ,'A02L') then
-                call BlzSetEventDamage(   0 )
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", GetTriggerUnit(), "chest"))
-                set damageSourceHero = null
-                set damageTargetHero = null
-                set damageTarget = null
-                set damageSource = null
-                return			
-            endif		
-        endif	
+        if not unlimitedAgony then
+            //Storm Horn
+            if GetUnitAbilityLevel(damageTarget ,'B00B') >= 1 then
+                if GetRandomReal(1,100) <= 14 * luckTarget then
+                    call BlzSetEventDamage(   0 )
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", damageTarget, "chest"))
+                    set damageSourceHero = null
+                    set damageTargetHero = null
+                    set damageTarget = null
+                    set damageSource = null
+                    return
+                endif		
+            endif
+
+            //Aura of Immortality
+            if GetUnitAbilityLevel(damageTarget ,'B00D') >= 1 then
+                if GetRandomInt(1,100) <= GetUnitAbilityLevel(damageTargetHero  ,'A02L') then
+                    call BlzSetEventDamage(   0 )
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", damageTarget, "chest"))
+                    set damageSourceHero = null
+                    set damageTargetHero = null
+                    set damageTarget = null
+                    set damageSource = null
+                    return			
+                endif		
+            endif	
+
+            //Null Void Orb
+            if UnitHasItemS(damageTarget, 'I0AL') then
+                if GetRandomInt(1,100) <= 10 * luckTarget then
+                    call BlzSetEventDamage(0)
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", damageTarget, "chest"))
+                    set damageSourceHero = null
+                    set damageTargetHero = null
+                    set damageTarget = null
+                    set damageSource = null
+                    return			
+                endif		
+            endif
 
 
-        //Dark Shield
-        if UnitHasItemS( damageTarget,'I060' )  then
-            if DmgType ==  DAMAGE_TYPE_NORMAL then
-                if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08R') <= 0 then
-                    call AbilStartCD(damageTarget, 'A08R', 1)
-                    call BlzSetEventDamage(0) 
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", damageTarget, "chest")) 
+            //Dark Shield
+            if UnitHasItemS( damageTarget,'I060' )  then
+                if DmgType ==  DAMAGE_TYPE_NORMAL then
+                    if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08R') <= 0 then
+                        call AbilStartCD(damageTarget, 'A08R', 1)
+                        call BlzSetEventDamage(0) 
+                        call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", damageTarget, "chest")) 
+                        set tim = null
+                        set damageSourceHero = null
+                        set damageTargetHero = null
+                        set damageTarget = null
+                        set damageSource = null
+                        return
+                    endif 
+                else 
+                    if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08Q') <= 0 then
+                        call AbilStartCD(damageTarget, 'A08Q', 3)
+                        call BlzSetEventDamage(0) 
+                        call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", damageTarget, "chest")) 
+                        set tim = null
+                        set damageSourceHero = null
+                        set damageTargetHero = null
+                        set damageTarget = null
+                        set damageSource = null
+                        return
+                    endif 
+                endif      
+                if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08S') <= 0 then
+                    call AbilStartCD(damageTarget, 'A08S', 6)
+                    call RemoveDebuff(damageTarget, 1)  
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", damageTarget, "chest")) 
                     set tim = null
                     set damageSourceHero = null
                     set damageTargetHero = null
@@ -246,34 +294,11 @@ scope DamageControllerBefore initializer init
                     set damageSource = null
                     return
                 endif 
-            else 
-                if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08Q') <= 0 then
-                    call AbilStartCD(damageTarget, 'A08Q', 3)
-                    call BlzSetEventDamage(0) 
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", damageTarget, "chest")) 
-                    set tim = null
-                    set damageSourceHero = null
-                    set damageTargetHero = null
-                    set damageTarget = null
-                    set damageSource = null
-                    return
-                endif 
-            endif      
-            if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A08S') <= 0 then
-                call AbilStartCD(damageTarget, 'A08S', 6)
-                call RemoveDebuff(damageTarget, 1)  
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", damageTarget, "chest")) 
-                set tim = null
-                set damageSourceHero = null
-                set damageTargetHero = null
-                set damageTarget = null
-                set damageSource = null
-                return
             endif 
-        endif 
+        endif
 
-        //Light Magic Shield
-        if UnitHasItemS( damageTarget,'I06K' ) and BlzGetUnitArmor(damageTarget)<= 50  then
+         //Light Magic Shield
+        if UnitHasItemS(damageTarget,'I06K') and BlzGetUnitArmor(damageTarget)<= 50  then
             call BlzSetEventDamage(  GetEventDamage()* 0.7  )
         endif
 
@@ -358,23 +383,25 @@ scope DamageControllerBefore initializer init
             endif
         endif  
 
-        //Ice Armor
-        if GetUnitAbilityLevel(damageTarget,'A053')> 0 and BlzGetUnitAbilityCooldownRemaining(damageTarget,'A053') <= 0    then
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", damageTarget, "chest"))
-            call BlzSetEventDamage( GetEventDamage()/ 5) 
-            call AbilStartCD(damageTarget,'A053', 2.05 - 0.05 * I2R(GetUnitAbilityLevel(damageTarget,'A053')) )
-        endif  
+        if not unlimitedAgony then
+            //Ice Armor
+            if GetUnitAbilityLevel(damageTarget,'A053')> 0 and BlzGetUnitAbilityCooldownRemaining(damageTarget,'A053') <= 0    then
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", damageTarget, "chest"))
+                call BlzSetEventDamage( GetEventDamage()/ 5) 
+                call AbilStartCD(damageTarget,'A053', 2.05 - 0.05 * I2R(GetUnitAbilityLevel(damageTarget,'A053')) )
+            endif  
 
-        //Blessed Protection
-        set II = GetBuffLevel(damageTarget, 'A0AF')
-        if II > 0 then
-            loop
-                call BlzSetEventDamage(  GetEventDamage()/ 10) 
-                set II = II - 1
-                exitwhen II <= 0
-            endloop
+            //Blessed Protection
+            set II = GetBuffLevel(damageTarget, 'A0AF')
+            if II > 0 then
+                loop
+                    call BlzSetEventDamage(  GetEventDamage()/ 10) 
+                    set II = II - 1
+                    exitwhen II <= 0
+                endloop
+            endif
         endif
-
+        
         //Pit Lord
         if GetUnitTypeId(damageSource) == 'O007' then
             if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08V') <= 0 then
@@ -481,7 +508,7 @@ scope DamageControllerBefore initializer init
                 set II = GetUnitAbilityLevel(damageSource,'A0AA')
                 if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A0AA') == 0 then
                     set magicResDamage = magicResDamage * (1 - (0.025 * II))
-                    call AbilStartCD(damageSource, 'A0AA', 4)
+                    call AbilStartCD(damageSource, 'A0AA', 3)
                 endif
                 call BlzSetEventDamage(  GetEventDamage()*( 50 /(50 + magicResDamage) )   )        
             endif
@@ -586,7 +613,7 @@ scope DamageControllerBefore initializer init
             if (DmgType == DAMAGE_TYPE_NORMAL or PoisonRuneBonus[PidA] > 0) and II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A06O') == 0 then
 
                 //Absolute Poison
-                set Admg = PoisonBonus.real[HandleId1]
+                set Admg = PoisonBonus.real[sourceId]
                 if Admg == 0 or GetUnitAbilityLevel(damageSourceHero, 'B01W') == 0 then
                     set Admg = 1
                 endif

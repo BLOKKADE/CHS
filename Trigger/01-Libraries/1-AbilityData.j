@@ -339,7 +339,8 @@ library AbilityData initializer init requires Table
         call SaveDummyAbilOrder('AEtq', "tranquility")
 
         //37 - Cluster Rockets 
-        call SaveAbilData('ANcs', 'I01A', false, 0, 0, true, Order_Point, "clusterrockets")
+        call SaveAbilData('A0AT', 'I01A', false, 0, 0, true, Order_Point, "clusterrockets")
+        call SaveDummyAbilOrder('ANcs', "clusterrockets")
 
         //38 - Wind Walk 
         call SaveAbilData('AOwk', 'I01R', false, 0, 0, false, Order_None, "windwalk")
@@ -949,26 +950,34 @@ library AbilityData initializer init requires Table
         call SaveAbilData('A07R', 'I099', true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
-        //178 - Absolute Arcane
+        //177 - Absolute Arcane
         call SaveAbilData('A0AB', 'I0B2', true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
-        //179 - Absolute Poison
+        //178 - Absolute Poison
         call SaveAbilData('A0AC', 'I0B3', true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Poison, 1)
 
-        //177 - Mana Starvation
+        //179 - Mana Starvation
         call SaveAbilData('A09J', 'I0AO', false, 0, 1, true, Order_Target, "ancestralspirit")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Dark, 1)
 
-        //178 - Fatal Flaw
+        //180 - Fatal Flaw
         call SaveAbilData('A0AA', 'I0B0', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
-        //179 - Retaliation Aura
+        //181 - Retaliation Aura
         call SaveAbilData('A0A9', 'I0B1', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
+
+        //182 - Unlimited Agony
+        call SaveAbilData('A0AQ', 'I0BB', false, 0, 0, false, Order_None, null)
+
+        //183 - Time Manipulation
+        call SaveAbilData('A0AS', 'I0BA', false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Arcane, 1)
+        call SetLastObjectElement(Element_Light, 1)
 
         //Unit and item elements
         call SetObjectElement('H016', Element_Fire, 1)

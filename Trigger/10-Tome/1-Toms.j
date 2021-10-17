@@ -378,7 +378,6 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Manual of health
             elseif II == 'manh' then 
                 call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
-                call CalculateNewCurrentHP(u, 50)
                 //Tome of Power
             elseif II == 'tkno' then 
                 call AddHeroXP(u, 2000, false)
@@ -429,6 +428,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             call DisplayTimedTextToPlayer(p, 0, 0, 2, GetObjectName(II) + " +|cffffcc00" + R2SW(gloryBonus, 1, 1) + "|r")
         elseif i > 1 then
             call DisplayTimedTextToPlayer(p, 0, 0, 2, "Bought |cff55df32" + I2S(i) + "|r |cffdf9432" + GetObjectName(II) + "|r")
+        endif
+
+        if II == 'manh' then
+            call CalculateNewCurrentHP(u, i * 50)
         endif
 
         //Ancient Staff

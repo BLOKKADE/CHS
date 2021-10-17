@@ -13,20 +13,34 @@ library SuddenDeathTimerWindow requires TimerUtils
         set SuddenDeathDialog = null
     endfunction
 
+    function PlayerText takes string s returns nothing
+        local integer i = 0
+        loop
+            if HasPlayerFinishedLevel(udg_units01[i+1], Player(i)) == false then
+                call DisplayTimedTextToPlayer(Player(i), 0, 0, 10, s)
+            endif
+            set i = i + 1
+            exitwhen i > 8
+        endloop
+    endfunction
+
     function UpdateSuddenDeathTimer takes nothing returns nothing
+        local real duration = 60
         set level = level + 1
         set SuddenDeathEnabled = true
         call TimerDialogSetTitle(SuddenDeathDialog, "Creep enrage level " + I2S(level))
         if level == 2 then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|cffffee00Sudden Death Level 1|r: Midas Touch disabled")
+            call PlayerText("|cffffee00Sudden Death Level 1|r: Midas Touch disabled")
+            set duration = 30
         elseif level == 3 then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|cffff9900Sudden Death Level 2|r: Creeps get Critical Strike and max movespeed")
+            call PlayerText("|cffff9900Sudden Death Level 2|r: Creeps get Critical Strike and max movespeed")
         elseif level == 4 then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|cffff6600Sudden Death Level 3|r: Creeps get attack damage bonus")
+            call PlayerText("|cffff6600Sudden Death Level 3|r: Creeps get attack damage bonus")
         elseif level == 5 then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|cffff0000Sudden Death Level 4|r: HP drain")
+            call PlayerText("|cffff0000Sudden Death Level 4|r: HP drain")
+            return
         endif
-        call TimerStart(SuddenDeathTimer, 30, false, null)
+        call TimerStart(SuddenDeathTimer, duration, false, null)
     endfunction
 
     function StartSuddenDeathTimer takes nothing returns nothing

@@ -439,6 +439,10 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             set elementCount = elementCount + 2
         endif
 
+        if id == Element_Blood and UnitHasItemS(u, 'I0B9') then
+            set elementCount = elementCount + 2
+        endif
+
         //Witch Doctor passive
         if GetUnitTypeId(u) == 'O006' then
             set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
@@ -462,6 +466,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local real xesilChance = - 1
         local real time = cd
         local real ResCD = 1
+        local integer i = 0
 
         if active then
             //Frost Bolt
@@ -497,7 +502,15 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         
         //Absolute Arcane
         if GetUnitAbilityLevel(u, 'A0AB') > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
-            set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, 'A0AB')) * GetClassUnitSpell(u, Element_Arcane)))
+            set i = GetClassUnitSpell(u, Element_Arcane)
+            loop
+                set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, 'A0AB'))))
+                set i = i - 1
+                exitwhen i <= 0
+            endloop
+            if ResCD < 0.1 then
+                set ResCD = 0.1
+            endif
         endif
             
         //Fast Magic

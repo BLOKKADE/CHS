@@ -1,4 +1,4 @@
-library BlessedProtection requires BuffLevel, RandomShit
+library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
     struct BlessedProtectionStruct extends array
         unit source
         effect fx
@@ -33,6 +33,7 @@ library BlessedProtection requires BuffLevel, RandomShit
                 call UnitAddAbility(this.source, 'A0AF')
             endif
             call ElemFuncStart(this.source,'A045')
+            call TimeManipulation(source, duration)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this

@@ -6,14 +6,15 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
 
     private function init takes nothing returns nothing
         set AssociatedAbil = Table.create()
-        set AssociatedAbil['A09U'] = 'AHbz'//
-        set AssociatedAbil['A09Z'] = 'Aclf'//
-        set AssociatedAbil['A09Y'] = 'AEtq'//
-        set AssociatedAbil['A0A1'] = 'AEsf'//
-        set AssociatedAbil['A0A0'] = 'ANmo'//
-        set AssociatedAbil['A09V'] = 'ANrf'//
-        set AssociatedAbil['A09W'] = 'ANst'//
-        set AssociatedAbil['A09X'] = 'ANvc'//
+        set AssociatedAbil['A09U'] = 'AHbz'//Blizzard
+        set AssociatedAbil['A09Z'] = 'Aclf'//Fog
+        set AssociatedAbil['A09Y'] = 'AEtq'//Tranquility
+        set AssociatedAbil['A0A1'] = 'AEsf'//Starfall
+        set AssociatedAbil['A0A0'] = 'ANmo'//Monsoon
+        set AssociatedAbil['A09V'] = 'ANrf'//Rain of Fire
+        set AssociatedAbil['A09W'] = 'ANst'//Stampede
+        set AssociatedAbil['A09X'] = 'ANvc'//Volcano
+        set AssociatedAbil['A0AT'] = 'ANcs'//Cluster Rockets
     endfunction
 
     function IsChannelAbility takes integer abilId returns boolean

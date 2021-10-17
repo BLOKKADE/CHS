@@ -29,7 +29,6 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
             call UnitAddAbility(u, abil)
             call BlzUnitDisableAbility(u,abil,false,true)
             call AddSpellPlayerInfo(abil,u,1)
-            call AddSpellLearned(GetHandleId(u), abil, SpellList_Absolute)
             
         endif
         if i > 1 then
@@ -52,7 +51,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
             //call BJDebugMsg("aalu unlearn")
             set counter = LoadInteger(HT,GetHandleId(u),941561) 
             if counter > 0 then
-                call UnlearnAbsolute(u, GetLastLearnedSpell(GetHandleId(u), SpellList_Absolute, true))
+                call UnlearnAbsolute(u, GetLastLearnedSpell(u, SpellList_Absolute, true))
             endif
         endif
         if IsAbsolute(abilityId) then

@@ -1,4 +1,4 @@
-library TempInvis requires BuffLevel, RandomShit
+library TempInvis requires BuffLevel, RandomShit, TimeManipulation
     struct TempInvisStruct extends array
         unit source
         integer endTick
@@ -32,6 +32,7 @@ library TempInvis requires BuffLevel, RandomShit
                 call UnitAddAbility(this.source, 'A03V')
             endif
             call ElemFuncStart(this.source,'A03U')
+            call TimeManipulation(source, duration)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this

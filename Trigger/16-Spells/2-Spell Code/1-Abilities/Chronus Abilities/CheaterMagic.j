@@ -1,4 +1,4 @@
-library CheaterMagic requires BuffLevel, RandomShit
+library CheaterMagic requires BuffLevel, RandomShit, TimeManipulation
     struct CheaterMagicStruct extends array
         unit source
         integer endTick
@@ -32,6 +32,7 @@ library CheaterMagic requires BuffLevel, RandomShit
                 call UnitAddAbility(this.source, 'A08G')
             endif
             call ElemFuncStart(this.source,'A040')
+            call TimeManipulation(source, duration)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this

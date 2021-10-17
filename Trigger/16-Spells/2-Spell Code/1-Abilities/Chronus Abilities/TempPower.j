@@ -1,4 +1,4 @@
-library TempPower requires BuffLevel, RandomShit
+library TempPower requires BuffLevel, RandomShit, TimeManipulation
     struct TempPowerStruct extends array
         unit source
         integer endTick
@@ -33,6 +33,7 @@ library TempPower requires BuffLevel, RandomShit
             call SetHeroAgi(this.source, GetHeroAgi(this.source, false) + this.bonus, false)
             call SetHeroInt(this.source, GetHeroInt(this.source, false) + this.bonus, false)
             call ElemFuncStart(this.source,'A04E')
+            call TimeManipulation(source, duration)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this

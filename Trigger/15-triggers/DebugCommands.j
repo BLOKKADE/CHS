@@ -12,6 +12,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     function DummyHelp takes player p returns nothing
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "Dummy Commands: " + I2S(GetHandleId(PlayerDummy[GetPlayerId(p)])) + ": " + GetUnitName(PlayerDummy[GetPlayerId(p)]))
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "To edit the stats of the last dummy you've created: ")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dhpo xxx (hit points), -dman xxx (mana)")
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-ddmg xxx (damage), -dbas xxx (attack speed), -darm xxx (armor), -dblo xxx (block), -dpvp xxx (pvp)")
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dstr, dagi, dint xxx (hero stats), -dmpo xxx (magic power), -dmpr xxx (magic protection), -deva xxx (evasion)")
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-ditem: duplicates all your items to the dummy")
@@ -48,6 +49,12 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         elseif command == "-dbas" then
             call BlzSetUnitAttackCooldown(u, value, 0)
             set s = "|cfffff242" + GetUnitName(u) + "|r: " + R2S(value) + " base attack speed"
+        elseif command == "-dhpo" then
+            call BlzSetUnitMaxHP(u, R2I(value))
+            set s = "|cffff7e42" + GetUnitName(u) + "|r: " + R2S(value) + " hit points"
+        elseif command == "-dman" then
+            call BlzSetUnitMaxMana(u, R2I(value))
+            set s = "|cff7b42ff" + GetUnitName(u) + "|r: " + R2S(value) + " mana"
         elseif command == "-darm" then
             call BlzSetUnitArmor(u, value)
             set s = "|cff7bff00" + GetUnitName(u) + "|r: " + R2S(value) + " armor"

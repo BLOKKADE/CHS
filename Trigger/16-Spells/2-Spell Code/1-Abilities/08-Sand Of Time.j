@@ -15,10 +15,6 @@ library SandOfTime requires RandomShit
         endif
     endfunction
 
-    function SandRefreshExceptions takes integer abilId returns boolean
-        return abilId != 'A083' and abilId != 'A06Q' and abilId != 'A06O'
-    endfunction
-
     function SandRefreshAbility takes unit hero, real time returns nothing
         local integer i1 = 0
         local integer SpellId = 0
@@ -26,7 +22,7 @@ library SandOfTime requires RandomShit
         loop
             exitwhen i1 > 10
             set SpellId = GetInfoHeroSpell(hero ,i1)
-            if SpellId != 0 and SandRefreshExceptions(SpellId) then
+            if SpellId != 0 and IsSpellResettable(SpellId) then
                 call ResetSpell(hero, SpellId, time, true)
             endif
             set i1 = i1 + 1

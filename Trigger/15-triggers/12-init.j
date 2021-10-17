@@ -4354,9 +4354,19 @@ function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns bo
     return false
 endfunction
 
+globals
+    boolean array DisableDeathTrigger
+endglobals
+
+function EnableDeathTrigger takes nothing returns nothing
+    local integer pid = GetTimerData(GetExpiredTimer())
+    set DisableDeathTrigger[pid] = false
+    call ReleaseTimer(GetExpiredTimer())
+endfunction
 
 function Trig_Hero_Dies_Conditions takes nothing returns boolean
-    if(not Trig_Hero_Dies_Func026C())then
+    local integer pid = GetPlayerId(GetOwningPlayer(GetDyingUnit()))
+    if(not Trig_Hero_Dies_Func026C()) or DisableDeathTrigger[pid] then
         return false
     endif
     //udg_boolean07
@@ -4365,21 +4375,22 @@ function Trig_Hero_Dies_Conditions takes nothing returns boolean
         call FixDeath(GetDyingUnit())
         call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
 
-        call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[1 + GetPlayerId(GetOwningPlayer(GetDyingUnit()))],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+        call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
 
         return false
     endif
 
     if Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] > 0 and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
-
+        set DisableDeathTrigger[pid] = true
+        call TimerStart(NewTimerEx(pid), 1, false, function EnableDeathTrigger)
 
         call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
         call FixDeath(GetDyingUnit())
         call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
-        call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[1 + GetPlayerId(GetOwningPlayer(GetDyingUnit()))],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+        call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
 
-        set Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] = Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] - 1
-        call DisplayTextToPlayer(GetOwningPlayer(GetDyingUnit()) ,0,0,"You have " + I2S(Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))]) + " lives left")
+        set Lives[pid] = Lives[pid] - 1
+        call DisplayTextToPlayer(GetOwningPlayer(GetDyingUnit()) ,0,0,"You have " + I2S(Lives[pid]) + " lives left")
 
         return false
     endif
@@ -8285,7 +8296,6 @@ function BuyLevels takes player p, unit u, integer abil, boolean maxBuy, boolean
 
     if new then
         call UnitAddAbility(u, abil)
-        call AddSpellLearned(GetHandleId(u), abil, SpellList_Normal)
     endif
     if i > 1 then
         call SetUnitAbilityLevel(u, udg_integer01, i)
@@ -8657,7 +8667,7 @@ function Trig_Unlearn_Ability_Actions takes nothing returns nothing
         if CountS > 0 then
 
             set udg_integers01[Pid]=(udg_integers01[Pid]- 1)
-            set udg_integers05[Pid] = GetLastLearnedSpell(GetHandleId(GetTriggerUnit()), SpellList_Normal, true)
+            set udg_integers05[Pid] = GetLastLearnedSpell(GetTriggerUnit(), SpellList_Normal, true)
             call SetInfoHeroSpell(GetTriggerUnit(),CountS,0 )
             call SaveCountHeroSpell(GetTriggerUnit() ,CountS - 1,0 ) 
 

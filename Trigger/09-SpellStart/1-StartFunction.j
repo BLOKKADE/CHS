@@ -40,81 +40,12 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
     set u1 = null
 endfunction */
 
-function EndInvision takes nothing returns nothing
-    local timer startbattle = GetExpiredTimer()
-    local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1) 
-    
-    if GetUnitAbilityLevel(Herou, 'A03V') > 0 then
-        call UnitRemoveAbility(Herou,'A03V')
-    endif
-    
-    call RemoveSavedHandle(HT_timerSpell,GetHandleId(Herou),1)
-    call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call ReleaseTimer(startbattle)
-    set startbattle = null
-endfunction
-    
-function EndCheaterMagic takes nothing returns nothing
-    local timer startbattle = GetExpiredTimer()
-    local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1) 
-    call DestroyEffect(  LoadEffectHandle(HT_timerSpell,GetHandleId(startbattle),2)   ) 
-    call RemoveSavedHandle(HT_timerSpell,GetHandleId(Herou),2)
-    call UnitRemoveAbility(Herou, 'A08G')
-    call UnitRemoveAbility(Herou, 'B01G')
-    call ReleaseTimer(startbattle)
-    set startbattle = null
-endfunction
-
-
-function EndGodDefender takes nothing returns nothing
-    local timer startbattle = GetExpiredTimer()
-    local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1) 
-    call DestroyEffect(  LoadEffectHandle(HT_timerSpell,GetHandleId(startbattle),2)   ) 
-    
-    call RemoveSavedHandle(HT_timerSpell,GetHandleId(Herou),3)
-    call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call ReleaseTimer(startbattle)
-    set startbattle = null
-endfunction
-
-
-function EndState takes nothing returns nothing
-    local timer startbattle = GetExpiredTimer()
-    local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1) 
-    local integer r4 = LoadInteger(HT_timerSpell,GetHandleId(startbattle),2)  
-        
-        
-    call SetHeroStr(Herou,GetHeroStr(Herou,false)-(r4),false)
-    call SetHeroAgi(Herou,GetHeroAgi(Herou,false)-(r4),false)
-    call SetHeroInt(Herou,GetHeroInt(Herou,false)-(r4),false) 
-
-    call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call ReleaseTimer(startbattle)
-    set startbattle = null
-endfunction
-
-
-function EndStateGrunt takes nothing returns nothing
-    local timer startbattle = GetExpiredTimer()
-    local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1) 
-    local integer r4 = LoadInteger(HT_timerSpell,GetHandleId(startbattle),2)  
-        
-    call BlzSetUnitBaseDamage(Herou,BlzGetUnitBaseDamage(Herou,0)- R2I(r4),0)
-    call SetHeroStr(Herou,GetHeroStr(Herou,false)-(r4),false)
-    call UnitRemoveAbility(Herou, 'A091')
-
-    call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
-    call ReleaseTimer(startbattle)
-    set startbattle = null
-endfunction
-
-
 function FunctionTimerSpell takes nothing returns nothing
     local timer startbattle = GetExpiredTimer()
     local timer nTimer = null
     local timer oTimer = null
     local unit Herou = LoadUnitHandle(HT_timerSpell,GetHandleId(startbattle),1)
-    local boolean urn = LoadBoolean(HT_timerSpell, GetHandleId(startbattle), 4)
+    local integer startType = LoadInteger(HT_timerSpell, GetHandleId(startbattle), 4)
     local integer pid = GetPlayerId(GetOwningPlayer(Herou))
     local real abilLevel = 0
     local real heroLevel = 0
@@ -131,12 +62,15 @@ function FunctionTimerSpell takes nothing returns nothing
         return
     endif
     set heroLevel = GetHeroLevel(Herou)
+
+    call ResetTimeManipulation(Herou, startType)
         
     //Hero Buff
     set abilLevel = GetUnitAbilityLevel(Herou,'A03Q')
     if abilLevel > 0 then
         call ElemFuncStart(Herou,'A03Q')
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,(7 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(7 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
+        call TimeManipulation(Herou, (7 +(heroLevel * 0.09))* ChronusLevel)
     endif
     
     //Temporary Inisibility
@@ -153,7 +87,7 @@ function FunctionTimerSpell takes nothing returns nothing
         
     //Holy Enlightenment
     set abilLevel = GetUnitAbilityLevel(Herou,'A04K')    
-    if abilLevel > 0 and urn == false then
+    if abilLevel > 0 and startType != 6 then
         call ElemFuncStart(Herou,'A04K')
         set r4 = 50 *(heroLevel + 3)*(heroLevel + 4)- 110  
         set r5 = GetHeroXP(Herou)
@@ -234,6 +168,8 @@ function FunctionTimerSpell takes nothing returns nothing
         call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
         call UnitApplyTimedLife(U,'A041',(8 + (heroLevel * 0.09)) * ChronusLevel)
         call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))       
+
+        call TimeManipulation(Herou, (8 + (heroLevel * 0.09)) * ChronusLevel)
     endif
 
     //Magic Blade
@@ -266,6 +202,7 @@ function FunctionTimerSpell takes nothing returns nothing
     if GetUnitTypeId(Herou) == 'H019' then
         call ElemFuncStart(Herou,'H019')
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55 * heroLevel,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,1 +(heroLevel * 0.04),ABILITY_RLF_DURATION_HERO,2 +(heroLevel * 0.08),ABILITY_RLF_DURATION_NORMAL)
+        call TimeManipulation(Herou, 2 +(heroLevel * 0.08))
     endif
             
     //Rapid Recovery
@@ -273,7 +210,7 @@ function FunctionTimerSpell takes nothing returns nothing
     if abilLevel > 0 then
         call ElemFuncStart(Herou,'A03X')
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_MANA_REGEN ,(8 +(heroLevel * 0.2))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(8 +(heroLevel * 0.2))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
-
+        call TimeManipulation(Herou, (8 +(heroLevel * 0.2))* ChronusLevel)
     endif
         
     //Demon Curse
@@ -281,6 +218,12 @@ function FunctionTimerSpell takes nothing returns nothing
     if abilLevel > 0 then
         call ElemFuncStart(Herou,'A042')
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A043',"howlofterror",0,ABILITY_RLF_DAMAGE_INCREASE_PERCENT_ROA1,(10 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_DAMAGE_HBZ2 ,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
+        call TimeManipulation(Herou, (8 +(heroLevel * 0.09))* ChronusLevel)
+    endif
+
+    //Time Manipulation
+    if GetUnitAbilityLevel(Herou, 'A0AS') > 0 then
+        call TimeManipulationStart(Herou)
     endif
     
     call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 
@@ -310,17 +253,13 @@ function StartFunctionSpell takes unit Hero, integer i1 returns nothing
     if i1 != 6 then
         call FixAbilityU (Hero)
     endif    
-        
-    if i1 == 6 then
-        call SaveBoolean(HT_timerSpell,GetHandleId(startbattle),4,true)
-    endif
-
+    
+    call SaveInteger(HT_timerSpell,GetHandleId(startbattle),4, i1)
+    call SaveUnitHandle(HT_timerSpell,GetHandleId(startbattle),1,Hero)     
     if i1 == 2 then
-        call TimerStart(startbattle,4.53 + GetRandomReal(0,.01),false,function FunctionTimerSpell )
-        call SaveUnitHandle(HT_timerSpell,GetHandleId(startbattle),1,Hero)     
+        call TimerStart(startbattle,4.0,false,function FunctionTimerSpell )
     else
-        call TimerStart(startbattle,0.05,false,function FunctionTimerSpell )
-        call SaveUnitHandle(HT_timerSpell,GetHandleId(startbattle),1,Hero)        
+        call TimerStart(startbattle,0.05,false,function FunctionTimerSpell )   
     endif
     set startbattle = null
     //	call DisplayTextToPlayer(GetLocalPlayer(),0,0,"yea"+I2S(i1) )

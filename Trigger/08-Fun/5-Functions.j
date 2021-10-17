@@ -1,7 +1,6 @@
 library Functions requires RandomShit, ExtradimensionalCooperation
     globals 
         hashtable HT_SpellPlayer = InitHashtable()
-        HashTable PlayerSpells
     endglobals
 
     function LoadCountHeroSpell takes unit u,integer list returns integer 
@@ -103,7 +102,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation
             call AbsolutePoisonLearned(GetU)
         endif
 
-        if iDs == 'A05Z' or iDs == 'A05U' and GetUnitAbilityLevel(GetU,iDs) == 1 then
+        if iDs == 'A05Z' or iDs == 'A05U' or iDs == 'A0AS' and GetUnitAbilityLevel(GetU,iDs) == 1 then
             call BlzStartUnitAbilityCooldown(GetU,iDs,60)
         endif
 
@@ -207,6 +206,12 @@ library Functions requires RandomShit, ExtradimensionalCooperation
             call ResetExtraDimensional(u)
         endif
 
+        if GetUnitAbilityLevel(u, 'A0AS') > 0 then
+            set TimeManipulationTable[GetHandleId(u)].boolean[1] = false
+            set TimeManipulationTable[GetHandleId(u)].real[2] = 0
+            call BlzEndUnitAbilityCooldown(u, 'A0AS')
+        endif
+
         set Glory[pid] = Glory[pid] + 200 + GloryRoundBonus[pid]
         call ResourseRefresh(Player(pid)) 
         call AdjustPlayerStateBJ( Income[pid],p,PLAYER_STATE_RESOURCE_GOLD)
@@ -218,6 +223,11 @@ library Functions requires RandomShit, ExtradimensionalCooperation
 
         if ModuloInteger(udg_integer02, 3) == 0 then
             call Hints_DisplayHint(pid)
+        endif
+
+        if Lives[pid] == 0 and (udg_integer02 == 15 or udg_integer02 == 37) then
+            set Lives[pid] = 1
+            call DisplayTextToPlayer(p,0,0,"|cff85ff3eRound: " + I2S(udg_integer02) + "|r: +1 live for having 0 lives.")
         endif
     endfunction
 endlibrary

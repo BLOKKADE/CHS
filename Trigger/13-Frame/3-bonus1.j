@@ -12,6 +12,7 @@ library HeroData initializer init
         call SaveStr(HT_data,'H005',3, "|cffffff00Level Up Bonus|r: Disease Cloud: +40 damage." )
         
         call SaveStr(HT_data,'H006',1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheClaw.blp" )       // druid1
+        //call SaveStr(HT_data,'H006',2, "|cff00ffffPassive|r: Disease Cloud: Damages nearby enemies every second. ")
         call SaveStr(HT_data,'H006',3, "|cffffff00Level Up Bonus|r: +800 summon hit points, +6 summon armor." )
         
         call SaveStr(HT_data,'H002',1, "ReplaceableTextures\\CommandButtons\\BTNHeroPaladin.blp" )       // paladin
@@ -170,7 +171,7 @@ library HeroData initializer init
         call SaveStr(HT_data,'O00C',3, "|cffffff00Level Up Bonus|r: Trickshot: +2% damage. +0.5 evasion." )
 
         call SaveStr(HT_data,'H01F',1, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )       //Murlock
-        call SaveStr(HT_data,'H01F',2, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy, lasts until the end of the fight. ")
+        call SaveStr(HT_data,'H01F',2, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy or takes damage, lasts until the end of the fight. (Max 2 billion)")
         call SaveStr(HT_data,'H01F',3, "|cffffff00Level Up Bonus|r: (Every 10 levels) Fish Hook: +1 stat per attack." )
         
         call SaveStr(HT_data,'H01G',1, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )       //Mediv

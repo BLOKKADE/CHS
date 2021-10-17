@@ -535,7 +535,7 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 0, (I_l + 1) * 20)
             call SetBonus(UnitHero, 1, 50 + ((I_l + 1) * 2))
         elseif TypeHero == 'H01F' then
-            call SetBonus(UnitHero, 0, (I_l + 1) * 1)
+            call SetBonus(UnitHero, 0, ((I_l + 1) / 10) + 1 )
         elseif TypeHero == 'H01H' then
             call SetBonus(UnitHero, 0, (I_l + 1) * 1)
         elseif TypeHero == 'H01I' then

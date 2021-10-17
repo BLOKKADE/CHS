@@ -1,4 +1,4 @@
-library GruntsGrunt requires BuffLevel, RandomShit
+library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
     struct GruntsGruntStruct extends array
         unit source
         integer bonus
@@ -17,6 +17,7 @@ library GruntsGrunt requires BuffLevel, RandomShit
     
         static method create takes unit source, real chronus returns thistype
             local thistype this
+            local real duration
     
             if (recycle == 0) then
                 set instanceCount = instanceCount + 1
@@ -28,6 +29,7 @@ library GruntsGrunt requires BuffLevel, RandomShit
             
             set this.source = source
             set this.bonus = 20 * GetHeroLevel(this.source)
+            set duration = ((9.9 + (0.1 * GetHeroLevel(this.source))) * chronus)
 
             call RegisterBuff(this.source, 'A091')
             if GetBuffLevel(this.source, 'A091') == 1 then
@@ -36,7 +38,8 @@ library GruntsGrunt requires BuffLevel, RandomShit
             call ElemFuncStart(this.source,'H01J')
             call SetHeroStr(this.source,GetHeroStr(this.source,false)+ bonus,false)
             call BlzSetUnitBaseDamage(this.source,BlzGetUnitBaseDamage(this.source,0)+ bonus,0)
-            set this.endTick = T32_Tick + R2I(((9.9 + (0.1 * GetHeroLevel(this.source))) * chronus) * 32)
+            set this.endTick = T32_Tick + R2I(duration * 32)
+            call TimeManipulation(source, duration)
             call this.startPeriodic()
             return this
         endmethod
