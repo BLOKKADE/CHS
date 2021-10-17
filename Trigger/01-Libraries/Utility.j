@@ -37,10 +37,9 @@ library Utility
     endfunction
 
     function CalculateNewCurrentHP takes unit u, real hpBonus returns nothing
-        //call BJDebugMsg("calc new current hp")
-        //call BJDebugMsg("current hp: " + R2S(GetUnitState(u, UNIT_STATE_LIFE)))
-        //call BJDebugMsg("multiplier: (" + I2S(BlzGetUnitMaxHP(u)) + "/" + R2S((BlzGetUnitMaxHP(u) - hpBonus)) + ") = " + R2S((BlzGetUnitMaxHP(u) / (BlzGetUnitMaxHP(u) - hpBonus))))
-        //call BJDebugMsg("result: " + R2S(GetUnitState(u, UNIT_STATE_LIFE) * (BlzGetUnitMaxHP(u) / (BlzGetUnitMaxHP(u) - hpBonus))))
-        call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) * (BlzGetUnitMaxHP(u) / (BlzGetUnitMaxHP(u) - hpBonus)))
+        local real multiplier = (BlzGetUnitMaxHP(u) / (BlzGetUnitMaxHP(u) - hpBonus))
+        if multiplier > 1 then
+        call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) * multiplier)
+        endif
     endfunction
 endlibrary

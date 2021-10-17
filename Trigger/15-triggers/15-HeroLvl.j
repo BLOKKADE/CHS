@@ -129,7 +129,7 @@ library HeroLevel initializer init requires HeroLvlTable
         if abilLvl > 0 then
             set s = GetDesriptionAbility(abilId, abilLvl - 1)
             set s = UpdateAbilityDescription(s, p, abilId, ",s00,", R2I(SpellData[GetHandleId(h)].real[3]), abilLvl)
-            call UpdateAbilityDescription(s, p, abilId, ",s01,", R2I((100 * abilLvl) * (1 + 0.02 * heroLvl)), abilLvl)
+            call UpdateAbilityDescription(s, p, abilId, ",s01,", R2I((300 * abilLvl) * (1 + 0.02 * heroLvl)), abilLvl)
         endif
     endfunction
 

@@ -257,7 +257,7 @@ function StartFunctionSpell takes unit Hero, integer i1 returns nothing
     call SaveInteger(HT_timerSpell,GetHandleId(startbattle),4, i1)
     call SaveUnitHandle(HT_timerSpell,GetHandleId(startbattle),1,Hero)     
     if i1 == 2 then
-        call TimerStart(startbattle,4.0,false,function FunctionTimerSpell )
+        call TimerStart(startbattle,4.25,false,function FunctionTimerSpell )
     else
         call TimerStart(startbattle,0.05,false,function FunctionTimerSpell )   
     endif
