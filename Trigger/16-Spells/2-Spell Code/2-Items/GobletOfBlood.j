@@ -11,6 +11,7 @@ library GobletOfBlood initializer init requires Utility
         unit source
         integer hid
         integer hpBonus
+        integer baseDamage
         integer damageBonus
         integer endTick
     
@@ -20,24 +21,20 @@ library GobletOfBlood initializer init requires Utility
 
         private method update takes nothing returns nothing
             local integer hp = BlzGetUnitMaxHP(this.source)
-            local integer damage = R2I(SpellData[hid].real[7])
-            if this.hpBonus != damage then
-                //call BJDebugMsg("set hp: " + I2S(damage))
-                call BlzSetUnitMaxHP(this.source, damage)
-                set this.hpBonus = damage
-            endif
+            local integer damage = BlzGetUnitBaseDamage(this.source, 0) + (BlzGetUnitDiceNumber(this.source, 0) * BlzGetUnitDiceSides(this.source, 0))
+            set this.baseDamage = BlzGetUnitBaseDamage(this.source, 0)
 
-            if this.damageBonus != hp then
-                //call BJDebugMsg("set dmg: " + I2S(hp))
-                call BlzSetUnitBaseDamage(this.source, hp, 0)
-                set this.damageBonus = hp
-            endif
+            call BlzSetUnitMaxHP(this.source, damage)
+            set this.hpBonus = damage
+
+            call BlzSetUnitBaseDamage(this.source, hp, 0)
+            set this.damageBonus = hp
         endmethod
 
         private method stop takes nothing returns nothing
             call BlzSetUnitMaxHP(this.source, this.damageBonus)
             call CalculateNewCurrentHP(this.source, this.damageBonus - this.hpBonus)
-            call BlzSetUnitBaseDamage(this.source, this.hpBonus, 0)
+            call BlzSetUnitBaseDamage(this.source, BlzGetUnitBaseDamage(this.source, 0) - this.damageBonus + this.baseDamage, 0)
         endmethod
     
         private method periodic takes nothing returns nothing

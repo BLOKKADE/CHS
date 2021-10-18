@@ -140,12 +140,21 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     function LvlHero takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        call SetHeroLevel(udg_units01[pid + 1], 200, true)
+        local string check = SubString(GetEventPlayerChatString(),0,4)
+        local integer pn = S2I(SubString(GetEventPlayerChatString(),5,8))
+        if check == "-lvl" and pn > 1 then 
+        call SetHeroLevel(udg_units01[pid + 1], GetHeroLevel(udg_units01[pid+1]) + pn, true)
+        endif
     endfunction
 
     function AddGlory takes nothing returns nothing
+        local string check = SubString(GetEventPlayerChatString(),0,6)
+        local integer pn = S2I(SubString(GetEventPlayerChatString(),7,13))
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        set Glory[pid] = 5000
+        if check == "-glory" and pn > 1 then 
+            set Glory[pid] = Glory[pid] + pn
+            call ResourseRefresh(GetTriggerPlayer())
+        endif
     endfunction
 
     function StartNextRound takes nothing returns nothing
@@ -208,11 +217,11 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call TriggerAddAction(trg, function SpawnDummy)
 
             set trg = CreateTrigger()
-            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-lvl",true)
+            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-lvl", false)
             call TriggerAddAction(trg, function LvlHero)
 
             set trg = CreateTrigger()
-            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-glory",true)
+            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-glory", false)
             call TriggerAddAction(trg, function AddGlory)
 
             set trg = CreateTrigger()

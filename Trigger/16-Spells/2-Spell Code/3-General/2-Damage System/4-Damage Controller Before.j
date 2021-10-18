@@ -208,7 +208,7 @@ scope DamageControllerBefore initializer init
 
         //Unlimited Agony
         set II = GetUnitAbilityLevel(damageSource, 'A0AQ')
-        if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A0AQ') == 0 then
+        if II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, 'A0AQ') == 0 and (not (IsUnitMagicImmune(damageTarget) or IsUnitDivineBubbled(damageTarget))) then
             call AbilStartCD(damageSource, 'A0AQ', 20.5 - (0.5 * II))
             set unlimitedAgony = true
             set UnlimitedAgonyActivated.boolean[sourceId] = true

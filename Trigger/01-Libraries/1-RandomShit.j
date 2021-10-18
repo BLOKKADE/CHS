@@ -471,7 +471,10 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         if active then
             //Frost Bolt
             if id == 'A07X' then
-                set time = time - GetClassUnitSpell(u,2)
+                set time = time - (0.5 * GetClassUnitSpell(u,2))
+                if time < 2 then
+                    set time = 2
+                endif
             endif
 
             //Spellbane Token

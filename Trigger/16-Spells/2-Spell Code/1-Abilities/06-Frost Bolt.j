@@ -49,7 +49,7 @@ library FrostBolt requires RandomShit
         call SaveUnitHandle(HT,GetHandleId(t),3,u1)
         call SaveUnitHandle(HT,GetHandleId(t),4,u2)
         
-        call TimerStart(t,0.45,true,function realaisFrostBolt)
+        call TimerStart(t,0.1,true,function realaisFrostBolt)
         
         set t = null
     endfunction

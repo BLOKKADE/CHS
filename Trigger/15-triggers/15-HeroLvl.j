@@ -87,7 +87,7 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
         endif   
         
-        set AbilId = 'ANcs'
+        set AbilId = 'A0AT'
         set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
         if AbilLvl > 0 and AbilLvl < 40 then
             call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
