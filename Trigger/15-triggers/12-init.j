@@ -4360,6 +4360,7 @@ endglobals
 
 function EnableDeathTrigger takes nothing returns nothing
     local integer pid = GetTimerData(GetExpiredTimer())
+    set DeathReviveInvul.boolean[pid] = false
     set DisableDeathTrigger[pid] = false
     call ReleaseTimer(GetExpiredTimer())
 endfunction
@@ -4384,6 +4385,7 @@ function Trig_Hero_Dies_Conditions takes nothing returns boolean
         set DisableDeathTrigger[pid] = true
         call TimerStart(NewTimerEx(pid), 1, false, function EnableDeathTrigger)
 
+        set DeathReviveInvul.boolean[pid] = true
         call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
         call FixDeath(GetDyingUnit())
         call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))

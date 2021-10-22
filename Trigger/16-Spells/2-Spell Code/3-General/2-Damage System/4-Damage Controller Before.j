@@ -62,7 +62,7 @@ scope DamageControllerBefore initializer init
         local boolean unlimitedAgony = false
 
         //some abilities like faerie fire start a 0 damage event this negates that
-        if GetEventDamage() == 0 then
+        if GetEventDamage() == 0 or DeathReviveInvul.boolean[PidT] then
             set damageSourceHero = null
             set damageTargetHero = null
             set damageTarget = null

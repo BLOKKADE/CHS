@@ -13,7 +13,7 @@ library AncientStaff requires DummyOrder, RandomShit, CustomState
 
     function AncientStaff takes unit u returns nothing
         local integer abilId = 'A055'
-        local unit target = GetRandomUnit(GetUnitX(u), GetUnitY(u), 900, GetOwningPlayer(u), false, true, false)
+        local unit target = GetRandomUnit(GetUnitX(u), GetUnitY(u), 900, GetOwningPlayer(u), Target_Enemy, true, false)
         local DummyOrder dummy = DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 1)
         //call BJDebugMsg("ancient staff")
         call dummy.addActiveAbility(abilId, 1, 852231)

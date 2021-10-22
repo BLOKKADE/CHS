@@ -18,16 +18,16 @@ library ManaStarvation requires DummyOrder, T32
             local integer currentBonus = 0
             if this.finalStage == false and GetUnitAbilityLevel(this.target, 'B01X') > 0 and IsUnitTarget(this.target) then
                 if mana > this.manaLimit then
-                    set currentBonus = mana - this.manaLimit
+                    set currentBonus = R2I((mana - this.manaLimit) * 0.5)
                     set this.bonus = this.bonus + currentBonus
                     //call BJDebugMsg("ms: " + I2S(this.bonus))
-                    call BlzSetUnitBaseDamage(this.source, BlzGetUnitBaseDamage(this.source, 0) + currentBonus, 0)
+                    call UnitAddAttackDamage(this.source, currentBonus)
                     call SetUnitState(this.target, UNIT_STATE_MANA, this.manaLimit)
                 else
-                    set currentBonus = this.manaLimit - mana
+                    set currentBonus = R2I((this.manaLimit - mana) * 0.5)
                     set this.bonus = this.bonus + currentBonus
                     //call BJDebugMsg("ms: " + I2S(this.bonus))
-                    call BlzSetUnitBaseDamage(this.source, BlzGetUnitBaseDamage(this.source, 0) + currentBonus, 0)
+                    call UnitAddAttackDamage(this.source, currentBonus)
                     set this.manaLimit = mana
                 endif
             elseif this.finalStage == false and ((T32_Tick - this.beginTick > 32 and GetUnitAbilityLevel(this.target, 'B01X') == 0) or T32_Tick > this.endTick) then
@@ -68,7 +68,7 @@ library ManaStarvation requires DummyOrder, T32
         
         method destroy takes nothing returns nothing
             set this.target = null
-            call BlzSetUnitBaseDamage(this.source, BlzGetUnitBaseDamage(this.source, 0) - this.bonus, 0)
+            call UnitAddAttackDamage(this.source, 0 - this.bonus)
             set this.source = null
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
             set recycleNext = recycle

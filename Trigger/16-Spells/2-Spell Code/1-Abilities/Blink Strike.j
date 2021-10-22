@@ -35,20 +35,23 @@ library BlinkStrike initializer init requires RandomShit
         local integer size = 0
         local integer i = 0
 
-        set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), 600 + (20 * level), GetOwningPlayer(caster), false, true, true)
-        /*set size = BlzGroupGetSize(g)
-        loop
-            set target = BlzGroupUnitAt(g, i)
-            set i = i + 1
-            exitwhen i >= size or IsUnitType(target, UNIT_TYPE_HERO)
-        endloop
+        if IsUnitType(caster, UNIT_TYPE_SNARED) == false then
 
-        if i >= size then
-            set target = BlzGroupUnitAt(g, GetRandomInt(0, size - 1))
-        endif */
+            set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), 600 + (20 * level), GetOwningPlayer(caster), Target_Enemy, true, true)
+            /*set size = BlzGroupGetSize(g)
+            loop
+                set target = BlzGroupUnitAt(g, i)
+                set i = i + 1
+                exitwhen i >= size or IsUnitType(target, UNIT_TYPE_HERO)
+            endloop
 
-        if target != null then
-            call BlinkAndStrike(caster, target, level)
+            if i >= size then
+                set target = BlzGroupUnitAt(g, GetRandomInt(0, size - 1))
+            endif */
+
+            if target != null then
+                call BlinkAndStrike(caster, target, level)
+            endif
         endif
 
         //call DestroyGroup(g)

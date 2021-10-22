@@ -37,13 +37,13 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             if target != null then
                 //call BJDebugMsg("target")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(caster, 0, target, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
+                call CastRandomSpell(caster, abilId, target, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             elseif x != 0.00 and y != 0.00 then
                 //call BJDebugMsg("point")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(caster, 0, null, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
+                call CastRandomSpell(caster, abilId, null, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             endif
@@ -161,10 +161,6 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call Urn(caster)
                     endif   
 
-                    if abilId == 'A0AU' then
-                        call CastGobletOfBlood(caster)
-                    endif
-
                     if abilId == 'A09Q' then
                         call StaffOfPowerCast(caster)
                     endif
@@ -186,7 +182,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     endif
 
                     set lvl = GetUnitAbilityLevel(caster, 'A04L')
-                    if lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
+                    if abilId != 'AEim' and abilId != 'ANms' and lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
                         call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
                     endif
 

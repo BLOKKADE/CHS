@@ -112,22 +112,25 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         endmethod
         implement T32x
 
-        method activate takes nothing returns thistype
+        method activate takes nothing returns boolean
             local trigger trg = CreateTrigger()
+            local boolean success = false
             if this.orderType == 1 then //instant
-                call IssueImmediateOrderById(this.dummy, this.order) 
+                set success = IssueImmediateOrderById(this.dummy, this.order) 
             elseif this.orderType == 2 then //target
                 if not IssueTargetOrderById(this.dummy, this.order, this.targetUnit) then
-                    call IssueImmediateOrderById(this.dummy, this.order)
+                    set success = IssueImmediateOrderById(this.dummy, this.order)
+                else
+                    set success = true
                 endif
             elseif this.orderType == 3 then //point
                 //call BJDebugMsg("dummy: " + GetUnitName(this.dummy) + "ordr: " + I2S(this.order) + " x: " + R2S(this.targetX) + " y: " + R2S(this.targetY))
-                call IssuePointOrderById(this.dummy, this.order, this.targetX, this.targetY)
+                set success = IssuePointOrderById(this.dummy, this.order, this.targetX, this.targetY)
             endif
             //call BJDebugMsg("ordered dummy, started timer")
             set this.stopDummy = false
             call this.startPeriodic()
-            return this
+            return success
         endmethod
 
         /*

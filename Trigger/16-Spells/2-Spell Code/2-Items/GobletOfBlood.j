@@ -1,4 +1,4 @@
-library GobletOfBlood initializer init requires Utility
+/*library GobletOfBlood initializer init requires Utility
     globals
         Table GobletOfBloodHashTable
     endglobals
@@ -89,4 +89,4 @@ library GobletOfBlood initializer init requires Utility
     private function init takes nothing returns nothing
         set GobletOfBloodHashTable = Table.create()
     endfunction
-endlibrary
+endlibrary*/

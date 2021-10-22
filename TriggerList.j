@@ -56,6 +56,7 @@
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\15-triggers\AbilityBuyToggle.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\15-triggers\BuildStorage.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\15-triggers\CreepDeath.j"
+//! import "C:\Users\Eigenaar\Projects\CHS\Trigger\15-triggers\DeathInvul.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\15-triggers\DebugCommands.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\15-triggers\Hints.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\15-triggers\Hotkeys.j"

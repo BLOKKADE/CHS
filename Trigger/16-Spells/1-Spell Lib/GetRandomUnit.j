@@ -161,10 +161,11 @@ library GetRandomUnit initializer init requires UnitHelpers
         set RUH = RandomUnitHelper.create(0)
     endfunction
 
-    function GetRandomUnit takes real x, real y, real range, player p, boolean ally, boolean heroPriority, boolean allowMagicImmune returns unit
+    function GetRandomUnit takes real x, real y, real range, player p, integer targetType, boolean heroPriority, boolean allowMagicImmune returns unit
         call RUH.reset()
 
-        if ally then
+        if targetType == 1 then
+            //call BJDebugMsg("ally")
             call RUH.checkAlly()
         endif
 
@@ -176,6 +177,7 @@ library GetRandomUnit initializer init requires UnitHelpers
             call RUH.checkMagicImmune()
         endif
 
+        //call BJDebugMsg("range: " + R2S(range))
         call RUH.EnumUnits(x, y, range, p)
         return RUH.GetRandomUnit(false)
     endfunction

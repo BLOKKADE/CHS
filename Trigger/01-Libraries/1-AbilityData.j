@@ -104,8 +104,8 @@ library AbilityData initializer init requires Table
     endfunction
 
     //Gets the ability target type: none, ally, enemy
-    function GetAbilityTargetType takes integer abilId returns boolean
-        return AbilityData[abilId].boolean[5]
+    function GetAbilityTargetType takes integer abilId returns integer
+        return AbilityData[abilId].integer[5]
     endfunction
 
     //Gets a random ability that can be cast by chaos based on its order and target type
@@ -139,7 +139,7 @@ library AbilityData initializer init requires Table
         set AbilityData[abilId].integer[1] = OrderId(order)
         set AbilityData[abilId].integer[2] = typ
         set AbilityData[abilId].integer[3] = mono
-        set AbilityData[abilId].boolean[5] = targetType == 1
+        set AbilityData[abilId].integer[5] = targetType
 
         if typ != Order_None then
             set AbilityData[abilId].boolean[4] = true
@@ -163,6 +163,11 @@ library AbilityData initializer init requires Table
                 endif
 
                 //list of all chaos abilities
+                set index = ChaosData[0].integer[0] + 1
+                set ChaosData[0].integer[index] = abilId
+                set ChaosData[0].integer[0] = index
+
+                //list of chaos abilities per order type
                 set index = ChaosData[typ].integer[0] + 1
                 set ChaosData[typ].integer[index] = abilId
                 set ChaosData[typ].integer[0] = index
@@ -303,7 +308,7 @@ library AbilityData initializer init requires Table
         call SetLastObjectElement(Element_Light, 1)
 
         //29 - Summon Lava Spawn 
-        call SaveAbilData('ANlm', 'I00T', false, 0, 0, false, Order_Instant, "slimemonster")
+        call SaveAbilData('ANlm', 'I00T', false, 0, 0, false, Order_Instant, "lavamonster")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
 
@@ -359,7 +364,7 @@ library AbilityData initializer init requires Table
         call SetLastObjectElement(Element_Wind, 1)
 
         //42 - Reset Time 
-        call SaveAbilData('A024', 'I04I', false, 0, 0, true, Order_Instant, "scout")
+        call SaveAbilData('A024', 'I04I', false, 0, 0, false, Order_Instant, "scout")
         call SetLastObjectElement(Element_Arcane, 1)
 
         //43 - Acid Bomb 
@@ -877,7 +882,7 @@ library AbilityData initializer init requires Table
         call SetLastObjectElement(Element_Light, 1)
 
         //160 - Sand of Time 
-        call SaveAbilData('A083', 'I09K', false, 0, 0, true, Order_Instant, "slowoff")
+        call SaveAbilData('A083', 'I09K', false, 0, 0, false, Order_Instant, "slowoff")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
@@ -959,7 +964,7 @@ library AbilityData initializer init requires Table
         call SetLastObjectElement(Element_Poison, 1)
 
         //179 - Mana Starvation
-        call SaveAbilData('A09J', 'I0AO', false, 0, 1, true, Order_Target, "ancestralspirit")
+        call SaveAbilData('A09J', 'I0AO', false, 0, 0, true, Order_Target, "ancestralspirit")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Dark, 1)
 

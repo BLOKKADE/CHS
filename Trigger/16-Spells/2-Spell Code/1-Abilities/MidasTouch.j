@@ -2,6 +2,8 @@ library MidasTouch initializer init requires DummyOrder
 
     globals
         Table MidasTouchGold
+        Table MidasTouchCasts
+        Table MidasTouchLastCast
         private real MidasBonus = 0.5
     endglobals
 
@@ -91,23 +93,43 @@ library MidasTouch initializer init requires DummyOrder
     endstruct
 
     function CastMidasTouch takes unit caster, unit target, integer level returns nothing
-        local real abilPower = (GetUnitAbilityLevel(caster, 'Asal') + GetUnitAbilityLevel(caster, 'A02W') + GetUnitAbilityLevel(caster, 'A04K'))
-        local real power = (100 - abilPower) / 100
+        local integer uhid = GetHandleId(caster)
+        local integer hid = GetHandleId(target)
+        local real abilPower = ((GetUnitAbilityLevel(caster, 'Asal') + GetUnitAbilityLevel(caster, 'A02W') + GetUnitAbilityLevel(caster, 'A04K')) * 2)
+        local real power = RMaxBJ((100 - abilPower) / 100, 0)
+        local integer bonus = R2I((499 + (26 * level)) * power)
+        local integer i = MidasTouchCasts[uhid]
         local DummyOrder dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 6)
+        
+        if MidasTouchLastCast[uhid] != udg_integer02 then
+            set MidasTouchCasts[uhid] = 0
+            set i = 0
+            set MidasTouchLastCast[uhid] = udg_integer02
+        endif
+        set MidasTouchCasts[uhid] = MidasTouchCasts[uhid] + 1
+
         call dummy.addActiveAbility('A0A3', 1, 852662)
         call dummy.target(target)
         call dummy.activate()
+
+        loop
+            exitwhen i <= 0
+            set bonus = R2I(bonus * 0.9)
+            set i = i - 1 
+        endloop
         
-        if GetMidasTouch(GetHandleId(target)) == 0 then
+        if GetMidasTouch(hid) == 0 then
             //call BJDebugMsg("midas power:" + R2S(power) + " abilpower: " + R2S(abilPower) +" gold: " + I2S((499 + (26 * level))) + " total: " + I2S(R2I((499 + (26 * level)) * power)))
-            set MidasTouchGold[GetHandleId(target)] = MidasTouch.create(target, R2I((499 + (26 * level)) * power), 10.5)
+            set MidasTouchGold[hid] = MidasTouch.create(target, bonus, 10.5)
         else
-            set GetMidasTouch(GetHandleId(target)).endTick = T32_Tick + R2I(10.5 * 32)
+            set GetMidasTouch(hid).endTick = T32_Tick + R2I(10.5 * 32)
         endif
         //call BJDebugMsg("dh: " + I2S(DousingHexChance.integer[GetHandleId(target)]))
     endfunction
 
     private function init takes nothing returns nothing
         set MidasTouchGold = Table.create()
+        set MidasTouchCasts = Table.create()
+        set MidasTouchLastCast = Table.create()
     endfunction
 endlibrary

@@ -248,41 +248,39 @@ scope LongPeriodCheck initializer init
                     endif
                 endif
                 
-                if GetUnitAbilityLevel(u, 'B026') == 0 then
-                    set HpBonus = 0
-                    //Heart of a Hero
-                    if GetUnitAbilityLevel(u ,'B00N') >= 1 then
-                        set HpBonus = HpBonus + 1
-                    endif
-
-                    //Absolute Light
-                    set i1 = GetUnitAbilityLevel(u ,'A07P')
-                    if i1 >= 1  then
-                        set i1 = i1 * GetClassUnitSpell(u,8)
-                        set HpBonus = HpBonus + 0.005 * I2R(i1)
-                    endif
-
-                    //Divine Gift
-                    set i1 = GetUnitAbilityLevel(u ,'A082')
-                    if i1 >= 1 then
-                        set HpBonus = HpBonus + 0.05 * I2R(i1)
-                    endif
-
-                    call SetUnitProcHp(u,HpBonus)
+                set HpBonus = 0
+                //Heart of a Hero
+                if GetUnitAbilityLevel(u ,'B00N') >= 1 then
+                    set HpBonus = HpBonus + 1
                 endif
 
-                set i2 = LoadInteger(HT,hid,'A0AU')
+                //Absolute Light
+                set i1 = GetUnitAbilityLevel(u ,'A07P')
+                if i1 >= 1  then
+                    set i1 = i1 * GetClassUnitSpell(u,8)
+                    set HpBonus = HpBonus + 0.005 * I2R(i1)
+                endif
+
+                //Divine Gift
+                set i1 = GetUnitAbilityLevel(u ,'A082')
+                if i1 >= 1 then
+                    set HpBonus = HpBonus + 0.05 * I2R(i1)
+                endif
+
+                call SetUnitProcHp(u,HpBonus)
+
+                set i2 = LoadInteger(HT,hid,'B026')
                 //Goblet of Blood
-                if GetUnitAbilityLevel(u, 'A0AU') > 0 then
-                    set i1 = GetHeroStatBJ(GetHeroPrimaryStat(u), u, true)
+                if GetUnitAbilityLevel(u, 'B026') > 0 then
+                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.1)
 
                     if i1 != i2 then
-                        call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) - i2 + i1, 0)
-                        call SaveInteger(HT,hid,'A0AU',i1)
+                        call UnitAddAttackDamage(u, 0 - i2 + i1)
+                        call SaveInteger(HT,hid,'B026',i1)
                     endif
                 elseif i2 != 0 then
-                    call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) - i2, 0)
-                    call SaveInteger(HT,hid,'A0AU',0)
+                    call UnitAddAttackDamage(u, 0 - i2)
+                    call SaveInteger(HT,hid,'B026',0)
                 endif
 
                 if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then

@@ -30,7 +30,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
             
             call RUH.reset().excludeGroup(this.caston)
             
-            if GetAbilityTargetType(this.abilId) then
+            if GetAbilityTargetType(this.abilId) == 1 then
                 call RUH.checkAlly()
             endif
 

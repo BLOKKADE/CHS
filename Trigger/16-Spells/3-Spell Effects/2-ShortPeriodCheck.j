@@ -111,7 +111,7 @@ scope ShortPeriodCheck initializer init
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
                     //War Golem
-                elseif GetUnitTypeId(u) == 'N00C' and GetUnitAbilityLevel(u, 'B026') == 0 then
+                elseif GetUnitTypeId(u) == 'N00C' then
                     set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
