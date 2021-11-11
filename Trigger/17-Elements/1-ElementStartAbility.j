@@ -6,6 +6,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
 
     function ElementStartAbility takes unit u, integer id returns nothing
         local unit U = null
+        local real calc = 0
         local real luck = GetUnitLuck(u)
 
         if GetUnitAbilityLevel(u, 'B01W') > 0 then
@@ -95,7 +96,12 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Fire
         if GetUnitAbilityLevel(u,'A07B') > 0 and IsSpellElement(u,id,1) then
-            call AddStateTemp(u,1,4,10)
+            if GetUnitTypeId(u) == 'O007' then
+                set calc = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
+                call AddStateTemp(u, 1, (4 * (1 + (0.003 * GetHeroLevel(u)))) * calc, 10)
+            else
+                call AddStateTemp(u, 1, 4, 10)
+            endif
         endif
         
         //Absolute Water

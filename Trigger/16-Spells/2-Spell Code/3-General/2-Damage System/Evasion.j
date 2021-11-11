@@ -43,6 +43,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants
             if GetUnitTypeId(damageTarget) == 'O00C' then
                 set TypeDmg_b = 2
                 set DamageIsAttack = true
+                set GLOB_typeDmg = 2
                 call UnitDamageTarget(damageTarget, damageSource, GetAttackDamage(damageTarget) * 1 + (0.02 * GetHeroLevel(damageTarget)), true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_CLAW_HEAVY_SLICE)
             endif
 

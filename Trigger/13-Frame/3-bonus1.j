@@ -54,8 +54,8 @@ library HeroData initializer init
         call SaveStr(HT_data,'O008',3, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: +3% attack speed. (Every 3 levels) increases Faerie Dragon damage." )
             
         call SaveStr(HT_data,'O007',1, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )       // Pit Lord
-        call SaveStr(HT_data,'O007',2, "|cff00ffffPassive|r: Rain of Fire: automatically casts Rain of Fire when it deals damage once every 2 seconds. ")
-        call SaveStr(HT_data,'O007',3, "|cffffff00Level Up Bonus|r: Rain of Fire: +30 initial damage, +10 damage per second." )
+        call SaveStr(HT_data,'O007',2, "|cff00ffffPassive|r: Hellforged: Starts with Absolute Fire. 1 magic power increases physical damage dealt by 1%. |cffc0c0c0Hellforged and Absolute Fire become 25% less effective for every |r [|cff00f7ffWater|r] |cffc0c0c0spell learned.|r")
+        call SaveStr(HT_data,'O007',3, "|cffffff00Level Up Bonus|r: Hellforged: +0.3% Absolute Fire magic power bonus." )
             
         call SaveStr(HT_data,'O001',1, "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp" )       // Thunder Witch
         call SaveStr(HT_data,'O001',2, "|cff00ffffPassive|r: Thunder Bolt: Damages 2 nearby enemies every second. [|cff96ffffStable|r] ")
@@ -178,8 +178,8 @@ library HeroData initializer init
         call SaveStr(HT_data,'H01G',3, "|cffffff00Level Up Bonus|r: +2 magic power." )
         
         call SaveStr(HT_data,'H01H',1, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )       //ghoul
-        call SaveStr(HT_data,'H01H',2, "|cff00ffffPassive|r: Cannibal Frenzy: +1% attack damage and 100% lifesteal on that damage. ")
-        call SaveStr(HT_data,'H01H',3, "|cffffff00Level Up Bonus|r: Cannibal Frenzy: +1% attack damage." )
+        call SaveStr(HT_data,'H01H',2, "|cff00ffffPassive|r: Cannibal Frenzy: +2.5% of the target's maximum hit points in attack damage, this bonus damage has 100% lifesteal on it.")
+        call SaveStr(HT_data,'H01H',3, "|cffffff00Level Up Bonus|r: Cannibal Frenzy: +0.025% attack damage." )
 
         call SaveStr(HT_data,'H01I',1, "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp" )       //banshee
         call SaveStr(HT_data,'H01I',2, "|cff00ffffPassive|r: Banshee's Curse: 75% of the Hero's maximum hit points are added to its mana. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )

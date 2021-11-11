@@ -50,120 +50,124 @@ library Functions requires RandomShit, ExtradimensionalCooperation
         //  call DisplayTextToPlayer(GetLocalPlayer(),0,0,I2S(LoadCountHeroSpell(u) ))
     endfunction
 
-    function FuncEditParam takes integer iDs, unit GetU returns nothing
+    function FuncEditParam takes integer abilId, unit u returns nothing
         local integer i1 = 0
         local integer i2 = 0
         local integer NumAbility
 
-        if IsUnitType(GetU, UNIT_TYPE_HERO) and IsAbsolute(iDs) == false then
-            call AddSpellPlayerInfo(iDs,GetU,0)
+        if IsUnitType(u, UNIT_TYPE_HERO) and IsAbsolute(abilId) == false then
+            call AddSpellPlayerInfo(abilId,u,0)
 
-            call SetChanellOrder(GetU,iDs,GetInfoHeroSpell(GetU,iDs)  )
+            call SetChanellOrder(u,abilId,GetInfoHeroSpell(u,abilId)  )
         endif
 
-        if iDs == 'AEev' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10001) 
-            call AddUnitEvasion(GetU ,   2 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10001,i1)
+        if abilId == 'AEev' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10001) 
+            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10001,i1)
         endif
 
-        if iDs == 'Acdb' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10002) 
-            call AddUnitEvasion(GetU ,   1 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10002,i1)
+        if abilId == 'Acdb' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10002) 
+            call AddUnitEvasion(u ,   1 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10002,i1)
         endif    
 
-        if iDs == 'Assk' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10003) 
-            call AddUnitBlock(GetU ,   50 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10003,i1)
+        if abilId == 'Assk' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10003) 
+            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10003,i1)
         endif 
 
-        if iDs == 'A05S' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10004) 
-            call AddUnitMagicDef(GetU ,   3 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10004,i1)
-            call SetPlayerAbilityAvailable(GetOwningPlayer(GetU), 'A05S', false)
-            call SetPlayerAbilityAvailable(GetOwningPlayer(GetU), 'A05S', true)
+        if abilId == 'A05S' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10004) 
+            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10004,i1)
+            call SetPlayerAbilityAvailable(GetOwningPlayer(u), 'A05S', false)
+            call SetPlayerAbilityAvailable(GetOwningPlayer(u), 'A05S', true)
         endif 
 
-        if iDs == 'A06V' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10005) 
-            call AddUnitLuck(GetU ,   0.01 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10005,i1)
+        if abilId == 'A06V' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10005) 
+            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10005,i1)
         endif 
 
-        if GetUnitAbilityLevel(GetU, 'A0AC') > 0 then
-            call AbsolutePoisonLearned(GetU)
+        if GetUnitAbilityLevel(u, 'A0AC') > 0 then
+            call AbsolutePoisonLearned(u)
         endif
 
-        if iDs == 'A05Z' or iDs == 'A05U' or iDs == 'A0AS' and GetUnitAbilityLevel(GetU,iDs) == 1 then
-            call BlzStartUnitAbilityCooldown(GetU,iDs,60)
+        if abilId == 'A05Z' or abilId == 'A05U' or abilId == 'A0AS' and GetUnitAbilityLevel(u,abilId) == 1 then
+            call BlzStartUnitAbilityCooldown(u,abilId,60)
+        endif
+
+        if abilId == 'A05Z' then
+            call MysteriousTalentUpdateDesc(u)
         endif
 
 
-        if iDs == 'A02O' then     
-            if LoadReal(HT, GetHandleId(GetU),1 ) == 0 then 
-                call SaveReal(HT,GetHandleId(GetU),1, BlzGetUnitAttackCooldown(GetU,0)    )
+        if abilId == 'A02O' then     
+            if LoadReal(HT, GetHandleId(u),1 ) == 0 then 
+                call SaveReal(HT,GetHandleId(u),1, BlzGetUnitAttackCooldown(u,0)    )
             endif
-            call SaveReal(HT,GetHandleId(GetU),'A02O', 0.02 * I2R(GetUnitAbilityLevel(GetU,iDs))   )	
-            //     call BlzSetUnitAttackCooldown(GetU, 0.92 - (0.02*I2R(GetUnitAbilityLevel(GetU,iDs)) ),0  )
+            call SaveReal(HT,GetHandleId(u),'A02O', 0.02 * I2R(GetUnitAbilityLevel(u,abilId))   )	
+            //     call BlzSetUnitAttackCooldown(u, 0.92 - (0.02*I2R(GetUnitAbilityLevel(u,abilId)) ),0  )
         endif
     endfunction
 
-    function FunResetAbility takes integer iDs, unit GetU returns nothing
+    function FunResetAbility takes integer abilId, unit u returns nothing
         local integer i1 = 0
         local integer i2 = 0
 
-        call RemoveInfoHeroSpell(GetU,iDs)
+        call RemoveInfoHeroSpell(u,abilId)
 
-        if iDs == 'AEev' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10001) 
-            call AddUnitEvasion(GetU ,   2 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10001,i1)
+        if abilId == 'AEev' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10001) 
+            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10001,i1)
         endif
 
-        if iDs == 'Acdb' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10002) 
-            call AddUnitEvasion(GetU ,   I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10002,i1)
+        if abilId == 'Acdb' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10002) 
+            call AddUnitEvasion(u ,   I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10002,i1)
         endif 
 
-        if iDs == 'Assk' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10003) 
-            call AddUnitBlock(GetU ,   50 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10003,i1)
+        if abilId == 'Assk' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10003) 
+            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10003,i1)
         endif 
 
-        if iDs == 'A05S' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10004) 
-            call AddUnitMagicDef(GetU ,   3 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10004,i1)
+        if abilId == 'A05S' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10004) 
+            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10004,i1)
         endif 
 
-        if iDs == 'A082' then
-            set i1 = GetUnitAbilityLevel(GetU,iDs)
-            set i2 = LoadInteger(HT,GetHandleId(GetU),- 10005) 
-            call AddUnitLuck(GetU ,   0.01 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(GetU),- 10005,i1)
+        if abilId == 'A082' then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u),- 10005) 
+            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u),- 10005,i1)
         endif 
 
-        if iDs == 'A0AC' then
-            call AbsolutePoisonLearned(GetU)
+        if abilId == 'A0AC' then
+            call AbsolutePoisonLearned(u)
         endif
 
-        if iDs == 'A02O' then
-            if LoadReal(HT, GetHandleId(GetU),1 ) != 0 then
-                //   call BlzSetUnitAttackCooldown(GetU,LoadReal(HT, GetHandleId(GetU),1 ) ,0 ) 
+        if abilId == 'A02O' then
+            if LoadReal(HT, GetHandleId(u),1 ) != 0 then
+                //   call BlzSetUnitAttackCooldown(u,LoadReal(HT, GetHandleId(u),1 ) ,0 ) 
             endif
         endif
     endfunction

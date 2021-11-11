@@ -61,6 +61,10 @@ scope DamageControllerBefore initializer init
         local boolean trueAttack = false
         local boolean unlimitedAgony = false
 
+        if IsUnitType(damageSource, UNIT_TYPE_HERO) then
+            call BJDebugMsg("init dmg: " + R2S(GetEventDamage()))
+        endif
+
         //some abilities like faerie fire start a 0 damage event this negates that
         if GetEventDamage() == 0 or DeathReviveInvul.boolean[PidT] then
             set damageSourceHero = null
@@ -403,13 +407,13 @@ scope DamageControllerBefore initializer init
         endif
         
         //Pit Lord
-        if GetUnitTypeId(damageSource) == 'O007' then
+        /*if GetUnitTypeId(damageSource) == 'O007' then
             if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08V') <= 0 then
                 call AbilStartCD(damageSource, 'A08V', 2)
                 call ElemFuncStart(damageSource,'O007')
                 call UsOrderU2 (damageSource,damageTarget,GetUnitX(damageSource),GetUnitY(damageSource),'A08N',"rainoffire", GetHeroLevel(damageSource)* 40, GetHeroLevel(damageSource)* 20, ABILITY_RLF_DAMAGE_HBZ2, ABILITY_RLF_DAMAGE_PER_SECOND_HBZ5)
             endif
-        endif
+        endif*/
 
         //Lich
         if GetUnitTypeId(damageSource) == 'H018' and DmgType == DAMAGE_TYPE_MAGIC then
@@ -441,6 +445,12 @@ scope DamageControllerBefore initializer init
         if GetUnitAbilityLevel(damageSource  ,'B00L') >= 1 and DmgType == DAMAGE_TYPE_MAGIC then
             set magicPowerDamage = magicPowerDamage + (BlzGetUnitMaxMana(damageTarget) - GetUnitState(damageTarget, UNIT_STATE_MANA)) / 90000
         endif
+
+        //Pit Lord Magic power for phys
+        if GetUnitTypeId(damageSource) == 'O007' and DmgType == DAMAGE_TYPE_NORMAL and (magicPowerDamage != 1 or GetUnitMagicDmg(damageSource) > 0) then
+            set Admg = 1 - RMaxBJ(0.25 * GetClassUnitSpell(damageSource, Element_Water), 0)
+            call BlzSetEventDamage(GetEventDamage()* ((magicPowerDamage + GetUnitMagicDmg(damageSource)/ 100) * Admg))
+        endif   
 
         //Vigour Token
         set II = UnitHasItemI(damageSource, 'I0A2')

@@ -117,11 +117,11 @@ scope DamageControllerAfter initializer init
             call Vamp(damageSource,damageTarget,r2)
             set vampCount = vampCount + 1
         endif	
-        
+
         //Ghoul Passive
         if GetUnitTypeId(damageSource) == 'H01H' and attack then
             set i = GetHeroLevel(damageSource)
-            set r2 = (GetEventDamage() * (i * 0.01))
+            set r2 = (GetEventDamage() + (BlzGetUnitMaxHP(damageTarget) * (0.025 + (0.00025 * i))))
             call Vamp(damageSource,damageTarget,r2)
             set vampCount = vampCount + 1
             call BlzSetEventDamage(   GetEventDamage()+ r2 ) 
@@ -314,6 +314,10 @@ scope DamageControllerAfter initializer init
         //Chest of Greed
         if UnitHasItemS(damageSource, 'I05A') and BlzGetEventDamageType() == DAMAGE_TYPE_NORMAL and GetUnitState(damageTarget, UNIT_STATE_LIFE) - GetEventDamage() <= 0 then
             set ChestOfGreedBonus.boolean[GetHandleId(damageTarget)] = true
+        endif
+
+        if IsUnitType(damageSource, UNIT_TYPE_HERO) then
+            call BJDebugMsg("final dmg: " + R2S(GetEventDamage()))
         endif
 
         set damageSourceHero = null

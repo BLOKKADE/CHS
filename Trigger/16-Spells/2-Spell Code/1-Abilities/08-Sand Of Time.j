@@ -34,9 +34,9 @@ library SandOfTime requires RandomShit
         endif
 
         //Pit Lord
-        if GetUnitTypeId(hero) == 'O007' then
+        /*if GetUnitTypeId(hero) == 'O007' then
             call ResetSpell(hero, 'A08V', time, true)
-        endif
+        endif*/
 
         //Centaur
         if GetUnitTypeId(hero) == 'H01B' then

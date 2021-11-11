@@ -12,8 +12,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		local integer prevCount = 0
 		local integer r = 0
 		
-
-
+		//Mask of Death
 		if itemId == 'I04T' then
 			if UnitHasItemS(u ,itemId ) then
 				call SaveInteger(HTi,GetHandleId(u),1,1)
@@ -22,6 +21,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			endif 	
 		endif
 
+		//Medal of Honour
 		if itemId == 'I04U' then
 			if UnitHasItemS(u ,itemId ) then
 				call SaveInteger(HTi,GetHandleId(u),2,1)
@@ -29,10 +29,8 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 				call SaveInteger(HTi,GetHandleId(u),2,0)
 			endif 
 		endif
-
-
 		
-		
+		//Staff of Absolute Magic
 		if itemId == 'I05E' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -44,7 +42,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),3,i)	
 		endif
 		
-		
+		//Staff of Lightning
 		if itemId == 'I05C' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -56,6 +54,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),4,i)	
 		endif
 		
+		//Robe of the ARchmage
 		if itemId == 'I05B' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -67,8 +66,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),5,i)	
 		endif	
 		
-		
-		
+		//Runic Bracer
 		if itemId == 'I04C' then
 			set i = UnitHasItemI(u ,itemId ) 
 			set prevCount = LoadInteger(HTi,GetHandleId(u),6) 
@@ -76,7 +74,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),6,i)	
 		endif	
 		
-		
+		//Magic Necklace
 		if itemId == 'I05G' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -88,7 +86,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),7,i)	
 		endif	
 		
-		
+		//Legendary Shield
 		if itemId == 'I059' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 

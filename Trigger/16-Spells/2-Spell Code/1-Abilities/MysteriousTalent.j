@@ -1,5 +1,13 @@
 library MysteriousTalent requires RandomShit, AbilityData, CastSpellOnTarget
-    function MysteriousTalent takes unit caster returns nothing
+
+    globals
+        HashTable MysteriousTalentMode
+        //00 = off cooldown & no manifold
+        //01 = off cooldown & manifold
+        //10 = nearby enemy & no manifold
+        //11 = nearby enemy & manifold
+    endglobals
+    function MysteriousTalentActivate takes unit caster returns nothing
         local integer i = 0
         local integer abilId
         local unit target
@@ -16,5 +24,46 @@ library MysteriousTalent requires RandomShit, AbilityData, CastSpellOnTarget
         endloop
 
         set target = null
+    endfunction
+
+    function MysteriousTalentUpdateDesc takes unit caster returns nothing
+        local player p = GetOwningPlayer(caster)
+        local integer abilId = 'A05Z'
+        local integer abilLvl = GetUnitAbilityLevel(caster, 'A05Z')
+        local string s = GetDesriptionAbility(abilId, abilLvl - 1)
+        local string cdModeTxt = ""
+        local string manifoldModeTxt = ""
+        local integer hid = GetHandleId(caster)
+
+        if MysteriousTalentMode[hid].boolean[0] then
+            set cdModeTxt = "enemy nearby"
+        else
+            set cdModeTxt = "instant"
+        endif
+
+        if MysteriousTalentMode[hid].boolean[1] then
+            set manifoldModeTxt = "on"
+        else
+            set manifoldModeTxt = "off"
+        endif
+
+        set s = UpdateAbilityDescriptionString(s, p, abilId, ",0,", cdModeTxt, abilLvl)
+        set s = UpdateAbilityDescriptionString(s, p, abilId, ",1,", manifoldModeTxt, abilLvl)
+
+        set p = null
+    endfunction
+
+    function MysteriousTalentCast takes unit caster returns nothing
+        local integer pid = GetPlayerId(GetOwningPlayer(caster))
+        local boolean shift = HoldCtrl[pid]
+        local integer hid = GetHandleId(caster)
+
+        if shift then
+            set MysteriousTalentMode[hid].boolean[1] = MysteriousTalentMode[hid].boolean[1] != true
+        else
+            set MysteriousTalentMode[hid].boolean[0] = MysteriousTalentMode[hid].boolean[0] != true
+        endif
+
+        call MysteriousTalentUpdateDesc(caster)
     endfunction
 endlibrary

@@ -40,6 +40,31 @@ library HeroLevel initializer init requires HeroLvlTable
 
     endfunction
 
+    struct TinkerData
+        unit u
+        integer xp
+    endstruct
+
+    function TinkerBonus takes nothing returns nothing
+        local timer t = GetExpiredTimer()
+        local TinkerData td = GetTimerData(t)
+        call AddHeroXP(td.u, td.xp, true)
+        set td.u = null
+        call ReleaseTimer(t)
+        call td.destroy()
+        set t = null
+    endfunction
+
+    function TinkerTimer takes unit u, integer xp returns nothing
+        local timer t = NewTimer()
+        local TinkerData td = TinkerData.create()
+        set td.u = u
+        set td.xp = xp
+        call SetTimerData(t, td)
+        call TimerStart(t, 0.1, false, function TinkerBonus)
+        set t = null
+    endfunction
+
 
     function BaraBonus takes unit UnitHero returns nothing
         local integer AbilLvl
@@ -152,6 +177,7 @@ library HeroLevel initializer init requires HeroLvlTable
         endif
 
         if I_l < 250 then
+            call BJDebugMsg("lvl: " + I2S(I_l) + ", prev: " + I2S(LastLvlHero[Pid]) + ", diff: " + I2S(RI))
             if Economic then
                 call AdjustPlayerStateBJ( (I_l + 20)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
                 call AdjustPlayerStateBJ( 8 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
@@ -322,8 +348,7 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 2, 3 * (I_l + 1))
         
         elseif TypeHero == 'O007' then          
-            call SetBonus(UnitHero, 0, (I_l + 1) * 30)
-            call SetBonus(UnitHero, 1, (I_l + 1) * 10)
+            call SetBonus(UnitHero, 0, (I_l + 1) * 0.3)
         elseif TypeHero == 'O001' then      
             call SetBonus(UnitHero, 0, (I_l + 1) * 30)
         elseif TypeHero == 'U000' then       
@@ -362,12 +387,11 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == 'N00I' then   
             call SetBonus(UnitHero, 0, 40 + 1.5 * (I_l + 1))
         elseif TypeHero == 'N00L' then  
-        
-            call TriggerSleepAction(0.1)
+
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l  
                     
-                call AddHeroXP(UnitHero, (LastLvlHero[Pid]+ 1)* 55  ,true)
+                call TinkerTimer(UnitHero, (LastLvlHero[Pid]+ 1)* 55)
                 call UpdateBonus(UnitHero, 0, (LastLvlHero[Pid]+ 1)* 55)
                     
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
@@ -438,25 +462,31 @@ library HeroLevel initializer init requires HeroLvlTable
                 
         elseif TypeHero == 'N00C' then             
             call SetBonus(UnitHero, 0, 49 + ((I_l + 1) * 1))
-        elseif TypeHero == 'O006' then         
-
-            if ModuloInteger(I_l + 1, 15) == 0 then
-                call AddHeroMaxAbsoluteAbility(UnitHero)
-                call UpdateBonus(UnitHero, 0, 1)
-            endif
+        elseif TypeHero == 'O006' then      
+            //TODO?
+            loop
+                exitwhen LastLvlHero[Pid] ==  I_l  
+                
+                if ModuloInteger(LastLvlHero[Pid], 15) == 0 then
+                    call AddHeroMaxAbsoluteAbility(UnitHero)
+                    call UpdateBonus(UnitHero, 0, 1)
+                endif
+    
+                if ModuloInteger(LastLvlHero[Pid], 20) == 0 then
+                    loop
+                        set i = i + 1
+                        exitwhen i > 15
+    
+                        if WitchDoctorHasAbsolute(UnitHero, i) then
+                            call AddWitchDoctorAbsoluteLevel(UnitHero, i)
+                        endif                
+                    endloop
+                endif
+    
+                set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
+            endloop     
 
             
-
-            if ModuloInteger(I_l + 1, 20) == 0 then
-                loop
-                    set i = i + 1
-                    exitwhen i > 15
-
-                    if WitchDoctorHasAbsolute(UnitHero, i) then
-                        call AddWitchDoctorAbsoluteLevel(UnitHero, i)
-                    endif                
-                endloop
-            endif
             
         elseif TypeHero == 'H007' then       
             
@@ -537,7 +567,7 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == 'H01F' then
             call SetBonus(UnitHero, 0, ((I_l + 1) / 10) + 1 )
         elseif TypeHero == 'H01H' then
-            call SetBonus(UnitHero, 0, (I_l + 1) * 1)
+            call SetBonus(UnitHero, 0, (0.025 + (0.00025 * I_l + 1)))
         elseif TypeHero == 'H01I' then
 
         elseif TypeHero == 'H01J' then
@@ -569,6 +599,7 @@ library HeroLevel initializer init requires HeroLvlTable
         
         call UpdateAbilityDesc(UnitHero, Pl, GetHeroLevel(UnitHero))
 
+        call BJDebugMsg("last lvl")
         set LastLvlHero[Pid]  = I_l  
     endfunction
 

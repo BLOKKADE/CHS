@@ -83,8 +83,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr('O008', 1, "|cffd6e049Faerie Dragon damage|r: ,0,")
         call SetBonusStr('O008', 2, "|cff4daed4Faerie Dragon attack speed|r: ,0,%%")
 
-        call SetBonusStr('O007', 0, "|cffe7544aInitial damage|r: ,0,")
-        call SetBonusStr('O007', 1, "|cffd6e049Damage per second|r: ,0,")
+        call SetBonusStr('O007', 0, "|cffe7544aAbsoltue Fire magic power bonus|r: ,0,%%")
 
         call SetBonusStr('O001', 0, "|cffe7544aDamage|r: ,0,")
 

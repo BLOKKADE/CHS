@@ -40,7 +40,7 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, ChannelOrder
                 set range = 600
             endif
 
-            call BJDebugMsg(GetObjectName(abilId) + " : " + I2S(targetType) + " target: " + GetUnitName(target) + " range: " + R2S(range))
+            //call BJDebugMsg(GetObjectName(abilId) + " : " + I2S(targetType) + " target: " + GetUnitName(target) + " range: " + R2S(range))
             if target != null and (targetType == Target_Enemy and IsUnitEnemy(target, GetOwningPlayer(caster))) or (targetType == Target_Ally and IsUnitAlly(target, GetOwningPlayer(caster)) or targetType == Target_Any) then
                 set getNewTarget = false
                 //call BJDebugMsg("no new target")
@@ -55,6 +55,12 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, ChannelOrder
                         set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), range, GetOwningPlayer(caster), targetType, false, true)
                     endif
                 endif
+                
+                /*
+                if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then
+                    call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
+                endif*/
+
                 //call BJDebugMsg(GetUnitName(target))
                 return CastSpell(caster, target, abilId, abilLevel, orderType, GetUnitX(target), GetUnitY(target)).activate()
             else                   

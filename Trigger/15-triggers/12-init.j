@@ -9106,7 +9106,7 @@ function Trig_Victory_Actions takes nothing returns nothing
     call PlaySoundBJ(udg_sound05)
     call DisableTrigger(udg_trigger87)
     call TriggerSleepAction(2.00)
-    call DisplayTimedTextToForce(GetPlayersAll(),26.00,"|cffffcc00Thank you for playing!!|r")
+    call DisplayTimedTextToForce(GetPlayersAll(),26.00,"|cffffcc00Thank you for playing|r" + "|cff7bff00" + VERSION + "|r")
 endfunction
 
 function Trig_Camera_Command_Func001C takes nothing returns boolean

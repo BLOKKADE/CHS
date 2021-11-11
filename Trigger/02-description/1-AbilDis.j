@@ -21,4 +21,14 @@ library AbilityDescription requires RandomShit
         
         return s
     endfunction
+
+    function UpdateAbilityDescriptionString takes string s, player p, integer abilId, string valKey, string value, integer level returns string
+        set s = ReplaceText(valKey, value, s)
+        
+        if GetLocalPlayer() == p then
+            call BlzSetAbilityExtendedTooltip(abilId, s, level - 1)
+        endif
+        
+        return s
+    endfunction
 endlibrary

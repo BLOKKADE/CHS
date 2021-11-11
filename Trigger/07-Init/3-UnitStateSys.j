@@ -1,4 +1,4 @@
-library UnitStateSys initializer init requires RandomShit
+library UnitStateSys initializer init requires RandomShit, Functions
     globals
         integer array SkeletonDefender
         boolean array bnos_a
@@ -284,6 +284,13 @@ library UnitStateSys initializer init requires RandomShit
 
         if GetUnitTypeId(u) == 'H01G' then
             call AddUnitMagicDmg(u,5)
+        endif
+
+        if GetUnitTypeId(u) == 'O007' then
+            call UnitAddAbility(u, 'A07B')
+            call BlzUnitDisableAbility(u,'A07B',false,true)
+            call AddSpellPlayerInfo('A07B',u,1)
+            call FuncEditParam('A07B',u)
         endif
 
 

@@ -43,7 +43,7 @@ scope LongPeriodCheck initializer init
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
             //Mysterious Talent
             if GetUnitAbilityLevel(u,'A05Z') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A05Z') <= 0.001 then
-                call MysteriousTalent(u)
+                call MysteriousTalentActivate(u)
                 call AbilStartCD(u,'A05Z',45 - GetUnitAbilityLevel(u,'A05Z') ) 
             endif
 
@@ -329,7 +329,12 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,'A07B')
                 set i2 = LoadInteger(HT,hid,'A07B')
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,1)
+                    if GetUnitTypeId(u) == 'O007' then
+                        set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
+                        set i1 = R2I((i1 * GetClassUnitSpell(u, Element_Fire)) * (1 + (0.003 * GetHeroLevel(u))) * r1)
+                    else
+                        set i1 = i1 * GetClassUnitSpell(u, Element_Fire)
+                    endif
                     call AddUnitMagicDmg(u ,   0.5 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,'A07B',i1)	
                 endif
