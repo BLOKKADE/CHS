@@ -1,4 +1,4 @@
-library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
+library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, BoneArmor
     globals
         hashtable HT_timerSpell = InitHashtable()
         integer array RoundTimer
@@ -140,14 +140,14 @@ function FunctionTimerSpell takes nothing returns nothing
     if UnitHasItemS(Herou,'I07O') then
         call ElemFuncStart(Herou,'I07O')
         set U = CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
-        call UnitApplyTimedLife(U,'A041',90 * ChronusLevel)
+        call UnitApplyTimedLife(U,'A041',40 * ChronusLevel)
         set U = CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
-        call UnitApplyTimedLife(U,'A041',90 * ChronusLevel)
+        call UnitApplyTimedLife(U,'A041',40 * ChronusLevel)
         set U = CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
-        call UnitApplyTimedLife(U,'A041',90 * ChronusLevel)
+        call UnitApplyTimedLife(U,'A041',40 * ChronusLevel)
         set U = CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
-        call UnitApplyTimedLife(U,'A041',90 * ChronusLevel)
-            
+        call UnitApplyTimedLife(U,'A041',40 * ChronusLevel)
+        call StartBoneArmor(Herou)
     endif
         
     //Fearless Defenders
@@ -269,8 +269,9 @@ function StartFunctionSpell takes unit Hero, integer i1 returns nothing
     call SaveUnitHandle(HT_timerSpell,GetHandleId(startbattle),1,Hero)     
     if i1 == 2 then
         call TimerStart(startbattle,4.25,false,function FunctionTimerSpell )
-        set RoundTimer[GetPlayerId(GetOwningPlayer(Hero))] = T32_Tick + R2I(4 * 32)
+        
     else
+        set RoundTimer[GetPlayerId(GetOwningPlayer(Hero))] = T32_Tick + R2I(0.05 * 32)
         call TimerStart(startbattle,0.05,false,function FunctionTimerSpell )   
     endif
     set startbattle = null

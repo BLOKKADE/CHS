@@ -238,7 +238,7 @@ library HeroLevel initializer init requires HeroLvlTable
             endloop      
             call SetBonus(UnitHero, 1, (I_l + 1) * 0.5)
             call SetBonus(UnitHero, 2, (I_l + 1) * 0.1)
-            call SetBonus(UnitHero, 3, 100 + (I_l + 1))
+            call SetBonus(UnitHero, 3, 149 + (I_l + 1))
         elseif TypeHero == 'O000' then                   
     
             loop
@@ -266,7 +266,7 @@ library HeroLevel initializer init requires HeroLvlTable
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l or LastLvlHero[Pid] == 0
                 
-                if ModuloInteger(LastLvlHero[Pid], 30) == 0 then
+                if ModuloInteger(LastLvlHero[Pid] + 2, 30) == 0 then
                     set ThunderBoltTargets[hid] = ThunderBoltTargets[hid] + 1
                 endif
     
@@ -275,13 +275,14 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 0, (I_l + 1) * 30)
             call SetBonus(UnitHero, 1, ThunderBoltTargets[hid] + 1)
         elseif TypeHero == 'U000' then       
-            call SetBonus(UnitHero, 0, 10 + ((I_l + 1) * 3))
+            call SetBonus(UnitHero, 1, 10 + ((I_l + 1)))
+            call SetBonus(UnitHero, 2, 6 + (0.01 * (I_l + 1)))
         elseif TypeHero == 'N00K' then          
             
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l or LastLvlHero[Pid] == 0
                 
-                if ModuloInteger(LastLvlHero[Pid], 20) == 0 and BladestormAttackLimit.integer[hid] > 1 then
+                if ModuloInteger(LastLvlHero[Pid] + 2, 20) == 0 and BladestormAttackLimit.integer[hid] > 1 then
                     set BladestormAttackLimit[hid] = BladestormAttackLimit[hid] - 1
                 endif
     
@@ -376,14 +377,13 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == 'O006' then      
             //TODO?
             loop
-                exitwhen LastLvlHero[Pid] ==  I_l  
-                
-                if ModuloInteger(LastLvlHero[Pid], 20) == 0 then
+                exitwhen LastLvlHero[Pid] == I_l or LastLvlHero[Pid] == 0
+                if ModuloInteger(LastLvlHero[Pid] +2, 20) == 0 then
                     call AddHeroMaxAbsoluteAbility(UnitHero)
                     call UpdateBonus(UnitHero, 0, 1)
                 endif
     
-                if ModuloInteger(LastLvlHero[Pid], 25) == 0 then
+                if ModuloInteger(LastLvlHero[Pid] + 2, 25) == 0 then
                     loop
                         set i = i + 1
                         exitwhen i > 15

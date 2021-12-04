@@ -316,12 +316,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 set creepLevelPlayerBonus = creepLevelPlayerBonus + 4
 
                 //Life
-            elseif II == 'I07D' then
+            elseif II == 'I07D' and (not maxLevel) then
                 if GetHeroXP(u) >= 100000  then
                     set Lives[pid] = Lives[pid] + 1
                     call DisplayTimedTextToPlayer(p, 0, 0, 5, "|cffffcc00Lives: |r" + I2S(Lives[pid]))
-                    //call UnitAddItemById(u,'I07C')
-                    call SetHeroXP(u, GetHeroXP(u) - 100000, true)
+                    call UnitAddItemById(u,'I07C')
                     call RemoveItem(It)
                 else
                     set ctrl = false

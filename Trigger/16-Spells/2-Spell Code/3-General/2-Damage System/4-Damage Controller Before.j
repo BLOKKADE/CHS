@@ -555,7 +555,7 @@ scope DamageControllerBefore initializer init
         if DmgType == DAMAGE_TYPE_NORMAL then
             set Admg = GetUnitPhysPow(damageSource)
             if Admg != 0 then
-                call BlzSetEventDamage(GetEventDamage() * (1 + Admg))
+                call BlzSetEventDamage(GetEventDamage() * (1 + (Admg * 0.01)))
             endif
         endif
 

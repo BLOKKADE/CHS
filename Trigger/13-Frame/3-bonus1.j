@@ -63,7 +63,7 @@ library HeroData initializer init
         call SaveStr(HT_data,'O001',3, "|cffffff00Level Up Bonus|r: Thunder Bolt: +30 damage. (|cff68eef3Every 30 levels|r) +1 target." )
                 
         call SaveStr(HT_data,'U000',1, "ReplaceableTextures\\CommandButtons\\BTNThrall.blp" )       // Trall
-        call SaveStr(HT_data,'U000',2, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 10 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 50% of its highest stat when they drop lower.")
+        call SaveStr(HT_data,'U000',2, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 6 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 50% of its highest stat when they drop lower.")
         call SaveStr(HT_data,'U000',3, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained." )
                 
         call SaveStr(HT_data,'N00K',1, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )       // Blade master
@@ -93,7 +93,7 @@ library HeroData initializer init
         call SaveStr(HT_data,'N00R',3, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
             
         call SaveStr(HT_data,'N00O',1, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )       // Brute Skelet
-        call SaveStr(HT_data,'N00O',2, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 30% or more of its max hit points in damage at once it cannot take more damage for 1 second. 10 seconds cooldown. [|cff96ffffStable|r]. When one of its summons die the Hero restores 2% of its max hit points and the summon explodes, dealing 50 damage to enemies.")
+        call SaveStr(HT_data,'N00O',2, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 30% or more of its max hit points in damage at once it cannot take damage again for 1 second. 10 seconds cooldown. [|cff96ffffStable|r]. When one of its summons die the Hero restores 2% of its max hit points and the summon explodes, dealing 50 damage to enemies.")
         call SaveStr(HT_data,'N00O',3, "|cffffff00Level Up Bonus|r: Reinforced Bone: +0.01 second invulnerability. +0.05% of maximum hit points restored. +30 explosion damage." )
                 
         call SaveStr(HT_data,'H008',1, "ReplaceableTextures\\CommandButtons\\BTNJaina.blp" )       // Sorser

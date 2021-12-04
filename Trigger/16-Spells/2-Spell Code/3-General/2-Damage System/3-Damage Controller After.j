@@ -12,6 +12,7 @@ scope DamageControllerAfter initializer init
         local unit damageTargetHero = udg_units01[GetConvertedPlayerId(GetOwningPlayer( damageTarget) ) ]
         local integer i = 0
         local real r3 = 0
+        local integer targetPid = GetPlayerId(GetOwningPlayer(damageTarget))
         local real r2 = 0
         local integer vampCount = 0
         local real r1 = 0
@@ -134,11 +135,13 @@ scope DamageControllerAfter initializer init
             set vampCount = vampCount + 1
             call BlzSetEventDamage(   GetEventDamage()+ r2 ) 
         endif
-
         //Bone Armor Skeleton Defender
-        set i = SkeletonDefender[GetPlayerId(GetOwningPlayer(damageTargetHero))]
-        if i > 0 and IsHeroUnitId(GetUnitTypeId(damageTarget )) then
-            call BlzSetEventDamage(   GetEventDamage() - GetEventDamage()* I2R(i)* 0.08 )
+        set i = SkeletonDefender[targetPid]
+        if i > 0 and IsHeroUnitId(GetUnitTypeId(damageTarget)) then
+            if i > 12 then
+                set i = 12
+            endif
+            call BlzSetEventDamage(   GetEventDamage() * (1 - (i * 0.08)))
         endif
         
         //Magic Necklace of Absorption

@@ -69,7 +69,9 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 call this.checkSpell()
                 set this.count = this.count - 1
                 set this.endTick = T32_Tick + MulticastInterval
-            elseif this.count == 0 then
+            endif
+            
+            if this.count == 0 or HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or not UnitAlive(this.caster) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif

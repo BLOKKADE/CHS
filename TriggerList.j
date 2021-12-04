@@ -146,6 +146,7 @@
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Avatar.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Black Arrow.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Blink Strike.j"
+//! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\BoneArmor.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\ChannelingAbilities.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Chaos Magic.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Cyclone.j"

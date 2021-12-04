@@ -1291,24 +1291,46 @@ endfunction
 
 function Trig_Plague_Actions takes nothing returns nothing
     local real bonus = 1
+    local integer corpseLimit = 4
+    local unit caster = GetTriggerUnit()
+    local real x
+    local real y
+    local effect fx
     set udg_integer52 = 1
-    if PoisonBonus.real[GetHandleId(GetTriggerUnit())] != 0 then
-        set bonus = PoisonBonus.real[GetHandleId(GetTriggerUnit())]
+    if PoisonBonus.real[GetHandleId(caster)] != 0 then
+        set bonus = PoisonBonus.real[GetHandleId(caster)]
     endif
     loop
         exitwhen udg_integer52 > 10
-        call CreateNUnitsAtLoc(1,'n01L',GetOwningPlayer(GetTriggerUnit()),OffsetLocation(GetSpellTargetLoc(),GetRandomReal(- 300.00,300.00),GetRandomReal(- 300.00,300.00)),GetRandomDirectionDeg())
+        call CreateNUnitsAtLoc(1,'n01L',GetOwningPlayer(caster),OffsetLocation(GetSpellTargetLoc(),GetRandomReal(- 300.00,300.00),GetRandomReal(- 300.00,300.00)),GetRandomDirectionDeg())
+        set x = GetUnitX(GetLastCreatedUnit())
+        set y = GetUnitY(GetLastCreatedUnit())
         call UnitApplyTimedLifeBJ(14.00,'BTLF',GetLastCreatedUnit())
         call UnitAddAbility(GetLastCreatedUnit(), 'A0AG')
         call IncUnitAbilityLevel(GetLastCreatedUnit(), 'A0AG')
-        call BlzSetAbilityRealLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A0AG'), ABILITY_RLF_DAMAGE_PER_INTERVAL, 0, (60 * GetUnitAbilityLevel(GetTriggerUnit(), 'A017')) * bonus)
+        call BlzSetAbilityRealLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A0AG'), ABILITY_RLF_DAMAGE_PER_INTERVAL, 0, (60 * GetUnitAbilityLevel(caster, 'A017')) * bonus)
         call DecUnitAbilityLevel(GetLastCreatedUnit(), 'A0AG')
-        call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()), 'A0AG', false)
-        call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()), 'A0AG', true)
+        call SetPlayerAbilityAvailable(GetOwningPlayer(caster), 'A0AG', false)
+        call SetPlayerAbilityAvailable(GetOwningPlayer(caster), 'A0AG', true)
         call SetUnitTimeScalePercent(GetLastCreatedUnit(),50.00)
-        call CreateCorpseLocBJ(ChooseRandomCreepBJ(- 1),GetOwningPlayer(GetTriggerUnit()),OffsetLocation(GetSpellTargetLoc(),GetRandomReal(- 300.00,300.00),GetRandomReal(- 300.00,300.00)))
+        if udg_integer52 <= corpseLimit then
+            call CreateCorpseLocBJ(ChooseRandomCreepBJ(- 1),GetOwningPlayer(GetTriggerUnit()),OffsetLocation(GetSpellTargetLoc(),GetRandomReal(- 300.00,300.00),GetRandomReal(- 300.00,300.00)))
+            if GetUnitAbilityLevel(caster, 'A0AW') > 0 then
+                call CastBlackArrow(caster, GetLastCreatedUnit(), GetUnitAbilityLevel(caster, 'A0AW'))
+            endif
+            if GetUnitAbilityLevel(caster, 'A0BA') > 0 then
+                call SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + ( (0.02 + (0.0005 * GetHeroLevel(caster))) * BlzGetUnitMaxHP(caster)))
+                call AreaDamage(caster, x, y, 20 + (30 * GetHeroLevel(caster)), 400, false, 'N00O')
+                set fx = AddSpecialEffect("war3mapImported\\Arcane Explosion.mdx", x, y)
+                call BlzSetSpecialEffectTimeScale(fx, 2)
+                call DestroyEffect(fx)
+            endif
+        endif
         set udg_integer52 = udg_integer52 + 1
     endloop
+
+    set fx = null
+    set caster = null
 endfunction
 
 function Trig_Plague_Remove_Conditions takes nothing returns boolean
@@ -7826,13 +7848,16 @@ function Trig_Start_Level_Func015Func002A takes nothing returns nothing
     call ForGroupBJ(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Start_Level_Func015Func002Func003001002)),function Trig_Start_Level_Func015Func002Func003A)
     call EnumItemsInRectBJ(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
     call SetUnitInvulnerable(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],false)
-    call StartFunctionSpell(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],2) 
     call SetUnitPositionLoc(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],GetRectCenter(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())]))
     set udg_unit01 = udg_units01[GetConvertedPlayerId(GetEnumPlayer())]
     call ConditionalTriggerExecute(udg_trigger82)
     call SelectUnitForPlayerSingle(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetEnumPlayer())]))
     call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())]),0)
     call SetCurrentlyFighting(GetEnumPlayer(), true)
+endfunction
+
+function StartFunctionSpells takes nothing returns nothing
+    call StartFunctionSpell(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],3) 
 endfunction
 
 function Trig_Start_Level_Func015C takes nothing returns boolean
@@ -7916,6 +7941,7 @@ function Trig_Start_Level_Actions takes nothing returns nothing
     endif
     call PlaySoundBJ(udg_sound01)
     call ForGroupBJ(udg_group05,function Trig_Start_Level_Func018A)
+    call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartFunctionSpells)
     call ConditionalTriggerExecute(udg_trigger98)
     set udg_integer39 = 0
     call EnableTrigger(udg_trigger110)
@@ -8089,15 +8115,6 @@ function Trig_Learn_Ability_Func008Func002Func001Func001Func004Func001C takes no
     if((IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
         return true
     endif
-    if((GetUnitTypeId(GetTriggerUnit())=='H004'))then
-        return true
-    endif
-    if((GetUnitTypeId(GetTriggerUnit())=='O005'))then
-        return true
-    endif
-    if((GetUnitTypeId(GetTriggerUnit())=='O001'))then
-        return true
-    endif
     return false
 endfunction
 
@@ -8231,15 +8248,6 @@ function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func001C t
     if((IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
         return true
     endif
-    if((GetUnitTypeId(GetTriggerUnit())=='H004'))then
-        return true
-    endif
-    if((GetUnitTypeId(GetTriggerUnit())=='O005'))then
-        return true
-    endif
-    if((GetUnitTypeId(GetTriggerUnit())=='O001'))then
-        return true
-    endif
     return false
 endfunction
 
@@ -8264,15 +8272,6 @@ function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003C takes no
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004Func001C takes nothing returns boolean
-    if((GetUnitTypeId(GetTriggerUnit())=='H004'))then
-        return true
-    endif
-    if((GetUnitTypeId(GetTriggerUnit())=='O005'))then
-        return true
-    endif
-    if((GetUnitTypeId(GetTriggerUnit())=='O001'))then
-        return true
-    endif
     return false
 endfunction
 
@@ -9732,7 +9731,7 @@ function Trig_PvP_Actions takes nothing returns nothing
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
     call StartTimerBJ(GetLastCreatedTimerBJ(),false,15.00)
-    call DisplayTimedTextToForce(GetPlayersAll(), 15, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r |cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
+    call DisplayTimedTextToForce(GetPlayersAll(), 15, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
     call TriggerSleepAction(15.00)
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
     call ConditionalTriggerExecute(udg_trigger136)

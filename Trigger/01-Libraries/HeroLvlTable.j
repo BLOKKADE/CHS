@@ -91,7 +91,9 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('O001', 0, "|cffe7544aDamage|r: ,0,")
 
-        call SetBonusStr('U000', 0, "|cffe7544aAgility bonus|r: ,0,")
+        call SetBonusStr('U000', 0, "|cffe7544aTotal Agility bonus|r: ,0,")
+        call SetBonusStr('U000', 1, "|cffd6e049Agility bonus per round|r: ,0,")
+        call SetBonusStr('U000', 2, "|cff4daed4Round time limit|r: ,0,")
 
         call SetBonusStr('N00K', 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr('N00K', 1, "|cffd6e049Area of effect|r: ,0,")
