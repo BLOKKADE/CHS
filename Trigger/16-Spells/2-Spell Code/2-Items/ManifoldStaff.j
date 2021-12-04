@@ -14,7 +14,8 @@ library ManifoldStaff requires RandomShit, AbilityData, DummyOrder
         local real mana = BlzGetAbilityManaCost(abilId, lvl - 1) * 0.6
         local real x = GetUnitX(caster)
         local real y = GetUnitY(caster)
-        if GetAbilityOrderType(abilId) == Order_Target then
+        local integer orderType = GetAbilityOrderType(abilId)
+        if orderType == Order_Target or (target != null and orderType == Order_Point) then
             set SpellData[GetHandleId(caster)].boolean[8] = true
             
             call GroupClear(ManifoldGroup)

@@ -1,4 +1,4 @@
-library Functions requires RandomShit, ExtradimensionalCooperation
+library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory
     globals 
         hashtable HT_SpellPlayer = InitHashtable()
     endglobals
@@ -48,6 +48,13 @@ library Functions requires RandomShit, ExtradimensionalCooperation
         endif 
 
         //  call DisplayTextToPlayer(GetLocalPlayer(),0,0,I2S(LoadCountHeroSpell(u) ))
+    endfunction
+
+    function SpellLearnedFunc takes unit u, integer abilId returns nothing
+
+        if GetUnitTypeId(u) == 'O000' then
+            call SpiritTaurenRuneBonus(u, abilId)
+        endif
     endfunction
 
     function FuncEditParam takes integer abilId, unit u returns nothing
@@ -165,6 +172,10 @@ library Functions requires RandomShit, ExtradimensionalCooperation
             call AbsolutePoisonLearned(u)
         endif
 
+        if GetUnitTypeId(u) == 'O000' then
+            call SpiritTaurenRuneBonusReset(u, abilId)
+        endif
+
         if abilId == 'A02O' then
             if LoadReal(HT, GetHandleId(u),1 ) != 0 then
                 //   call BlzSetUnitAttackCooldown(u,LoadReal(HT, GetHandleId(u),1 ) ,0 ) 
@@ -183,7 +194,9 @@ library Functions requires RandomShit, ExtradimensionalCooperation
         local player p = GetOwningPlayer(u)
         local integer pid = GetPlayerId(p)
         local integer i1 = 0 
+        local real gloryBonus = 0
 
+        //Armor of the Ancestors
         set i1 = LoadInteger(HT,GetHandleId(u),54001)
         if i1 != 0 then 
             call BlzSetUnitArmor(u,BlzGetUnitArmor(u)- i1)
@@ -192,6 +205,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation
             set NumberOfUnit[pid] = 0
         endif
 
+        //Murloc Warrior
         set i1 = LoadInteger(HT,GetHandleId(u),54021)
         if i1 != 0 then 
             call SetHeroStr(u,GetHeroStr(u,false)- i1,false)
@@ -200,23 +214,34 @@ library Functions requires RandomShit, ExtradimensionalCooperation
             call SaveInteger(HT,GetHandleId(u),54021,0)
         endif
 
-        set i1 = UnitHasItemI(u,'I07H') 
+        //Golden Armor
+        set i1 = GetValidEndOfRoundItems(u,'I07H') 
         if i1 > 0 then
             call AddUnitBlock(u,15 * i1)
             call AddUnitMagicDef(u,1 * i1)
         endif
 
+        //Extra-dimensional Cooperation
         if GetUnitAbilityLevel(u, 'A08I') > 0 then
             call ResetExtraDimensional(u)
         endif
 
+        //Time Manipulation
         if GetUnitAbilityLevel(u, 'A0AS') > 0 then
             set TimeManipulationTable[GetHandleId(u)].boolean[1] = false
             set TimeManipulationTable[GetHandleId(u)].real[2] = 0
             call BlzEndUnitAbilityCooldown(u, 'A0AS')
         endif
 
-        set Glory[pid] = Glory[pid] + 200 + GloryRoundBonus[pid]
+        //Wolf Rider - Thrall
+        if GetUnitTypeId(u) == 'U000' and (T32_Tick - RoundTimer[pid]) / 32 < 10 then
+            set i1 = R2I(10 + (GetHeroLevel(u) * 1))
+            call DisplayTextToPlayer(p,0,0,"|cfffff56eSpeed Freak|r: |cff88ff00+" + I2S(i1) + " agility.|r")
+            call SetHeroAgi(u, GetHeroAgi(u, false) + i1, true)
+        endif
+
+        //Round glory
+        set Glory[pid] = Glory[pid] + GetPlayerGloryBonus(pid)
         call ResourseRefresh(Player(pid)) 
         call AdjustPlayerStateBJ( Income[pid],p,PLAYER_STATE_RESOURCE_GOLD)
         call DisplayTextToPlayer(p,0,0,"|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " - |cff00aa0eLumber|r: +" + I2S(LumberGained[pid]) + " - |cff7af0f8Glory|r: +" + I2S(R2I((200 + GloryRoundBonus[pid]))))
@@ -229,9 +254,9 @@ library Functions requires RandomShit, ExtradimensionalCooperation
             call Hints_DisplayHint(pid)
         endif
 
-        if Lives[pid] == 0 and (udg_integer02 == 15 or udg_integer02 == 37) then
-            set Lives[pid] = 1
-            call DisplayTextToPlayer(p,0,0,"|cff85ff3eRound: " + I2S(udg_integer02) + "|r: +1 live for having 0 lives.")
+        if (udg_integer02 == 15 or udg_integer02 == 30) then
+            set Lives[pid] = Lives[pid] + 1
+            call DisplayTextToPlayer(p,0,0,"|cff85ff3eRound|r: " + I2S(udg_integer02) + "|r: |cffecff3e+1 life|r for you being you.")
         endif
     endfunction
 endlibrary

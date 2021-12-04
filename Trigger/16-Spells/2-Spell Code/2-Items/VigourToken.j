@@ -1,4 +1,4 @@
-library VigourToken
+library VigourToken requires UnitHelpers
 
     globals
         group VigourTokenGroup = CreateGroup()

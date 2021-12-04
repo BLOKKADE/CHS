@@ -6,9 +6,11 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 	function DestrTimer takes nothing returns nothing
 		local timer t = GetExpiredTimer()
 		local unit u = LoadUnitHandle(HTi,GetHandleId(t),1)
-		local integer itemId = LoadInteger(HTi,GetHandleId(t),2)
+		local item it = LoadItemHandle(HTi,GetHandleId(t),2)
+		local integer itemId = LoadInteger(HTi, GetHandleId(t), 3)
 		local integer pid = GetPlayerId(GetOwningPlayer(u))
 		local integer i = 0
+		local integer i2 = 0
 		local integer prevCount = 0
 		local integer r = 0
 		
@@ -72,6 +74,14 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set prevCount = LoadInteger(HTi,GetHandleId(u),6) 
 			call AddUnitMagicDef(u ,   10 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi,GetHandleId(u),6,i)	
+		endif	
+
+		//Scroll of Transformation
+		if itemId == 'I065' then
+			set i = UnitHasItemI(u ,itemId ) 
+			set prevCount = LoadInteger(HTi,GetHandleId(u), itemId) 
+			call AddUnitMagicDef(u ,   25 * I2R(i - prevCount)  )	
+			call SaveInteger(HTi,GetHandleId(u), itemId,i)	
 		endif	
 		
 		//Magic Necklace
@@ -164,7 +174,13 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u), 39) 
 
-			call AddStrengthLevelBonus(u, 2 *(i - prevCount))
+			if GetUnitTypeId(u) == 'H00A' then
+				set i2 = 4
+			else
+				set i2 = 2
+			endif
+
+			call AddStrengthLevelBonus(u, i2 *(i - prevCount))
 			call AddUnitBlock(u, - 20 *(i - prevCount))
 			call SaveInteger(HTi,GetHandleId(u),39,i)	
 		endif
@@ -174,7 +190,13 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u), 40) 
 
-			call AddIntelligenceLevelBonus(u, 2 *(i - prevCount))
+			if GetUnitTypeId(u) == 'H00A' then
+				set i2 = 4
+			else
+				set i2 = 2
+			endif
+
+			call AddIntelligenceLevelBonus(u, i2 *(i - prevCount))
 			call AddUnitBlock(u, - 20 *(i - prevCount))
 			call SaveInteger(HTi,GetHandleId(u),40,i)	
 		endif
@@ -184,7 +206,13 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u), 41) 
 
-			call AddAgilityLevelBonus(u, 2 *(i - prevCount))
+			if GetUnitTypeId(u) == 'H00A' then
+				set i2 = 4
+			else
+				set i2 = 2
+			endif
+
+			call AddAgilityLevelBonus(u, i2 *(i - prevCount))
 			call AddUnitBlock(u, - 20 *(i - prevCount))
 			call SaveInteger(HTi,GetHandleId(u),41,i)	
 		endif
@@ -194,9 +222,15 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u), 49) 
 
-			set GloryRoundBonus[pid] = GloryRoundBonus[pid] + 100 *(i - prevCount)
+			call RegisterEndOfRoundItem(pid, it)
+
 			call AddUnitBlock(u, - 30 *(i - prevCount))
 			call SaveInteger(HTi,GetHandleId(u),49,i)	
+		endif
+
+		//Golden Armor
+		if itemId == 'I07H' then
+			call RegisterEndOfRoundItem(pid, it)
 		endif
 		
 		if itemId == 'I07A' then
@@ -253,7 +287,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),18,i)	
 		endif
 		
-		
+		//Fishing Rod
 		if itemId == 'I07T' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -265,20 +299,8 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call BlzSetUnitWeaponIntegerField(u,	ConvertUnitWeaponIntegerField('ua1r') ,0,BlzGetUnitWeaponIntegerField(u,	ConvertUnitWeaponIntegerField('ua1r') ,0) + 1128 *(i - prevCount ))
 			call SaveInteger(HTi,GetHandleId(u),19,i)	
 		endif
-		
-		
-		if itemId == 'I07T' then
-			if UnitHasItemS(u ,itemId ) then
-				set i = 1 
-			else
-				set i = 0
-			endif
-			set prevCount = LoadInteger(HTi,GetHandleId(u),19) 
-			call AddUnitEvasion(u ,   10 * I2R(i - prevCount)  )
-			call BlzSetUnitWeaponIntegerField(u,	ConvertUnitWeaponIntegerField('ua1r') ,0,BlzGetUnitWeaponIntegerField(u,	ConvertUnitWeaponIntegerField('ua1r') ,0) + 1128 *(i - prevCount ))
-			call SaveInteger(HTi,GetHandleId(u),19,i)	
-		endif
-		
+
+		//Snowww's wand
 		if itemId == 'I07V' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -291,7 +313,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),20,i)	
 		endif
 		
-
+		//Holy Shield
 		if itemId == 'I07W' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -315,6 +337,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),22,i)	
 		endif
 
+		//Unusual Wooden Shield
 		if itemId == 'I077' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -441,7 +464,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),itemId,i)	
 		endif  
 		
-		
+		//Blaze Staff
 		if itemId == 'I08X' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -453,6 +476,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),34,i)	
 		endif  
 		
+		//Fan
 		if itemId == 'I08Z' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -464,6 +488,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),35,i)	
 		endif     
 		
+		//Stone Helmet
 		if itemId == 'I090' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -475,7 +500,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),36,i)	
 		endif  
 		
-		
+		//Mithril Helmet
 		if itemId == 'I091' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -487,6 +512,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),37,i)	
 		endif  
 		
+		//anti-magic Cape
 		if itemId == 'I092' then
 			if UnitHasItemS(u ,itemId ) then
 				set i = 1 
@@ -499,8 +525,11 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,GetHandleId(u),38,i)	
 		endif  
 		
+		call RemoveSavedHandle(HTi, GetHandleId(t), 2)
 		call FlushChildHashtable(HTi,GetHandleId(t))
 		call ReleaseTimer(t)
+
+		set it = null
 		set t = null
 		set u = null
 	endfunction
@@ -514,17 +543,13 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 		set Time1 = NewTimer()
 
-
 		call SaveUnitHandle(HTi,GetHandleId(Time1),1, GetTriggerUnit() )
-		call SaveInteger(HTi,GetHandleId(Time1),2, GetItemTypeId(GetManipulatedItem())    ) 
+		call SaveItemHandle(HTi, GetHandleId(Time1), 2, GetManipulatedItem())
+		call SaveInteger(HTi, GetHandleId(Time1), 3, GetItemTypeId(GetManipulatedItem()))
 		
 		call TimerStart(Time1,0,false,function DestrTimer )
 
-
-
-
 		set Time1 = null
-
 	endfunction
 	//call SaveInteger(HTi,GetHandleId(GetTriggerUnit()),1,1)	
 	//===========================================================================

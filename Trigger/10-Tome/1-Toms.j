@@ -96,6 +96,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         local integer i = 0
         local integer summonUpgradeBonus = 0
         local real gloryBonus = 0
+        local boolean maxLevel = GetHeroLevel(u) == 600
 
         if HoldCtrl[pid] then
             set ctrl = true
@@ -103,7 +104,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
         loop
             //Agility level bonus
-            if II == 'I05H' then
+            if II == 'I05H' and (not maxLevel) then
                 if GetHeroXP(u) >= 20000  then
                     call AddAgilityLevelBonus(u, 1)
 
@@ -113,7 +114,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set ctrl = false
                 endif
                 //Intelligence level bonus
-            elseif II == 'I05I' then
+            elseif II == 'I05I' and (not maxLevel) then
                 if GetHeroXP(u) >= 20000  then
                     call AddIntelligenceLevelBonus(u, 1)
                     call UnitAddItemById(u,'I05K')
@@ -122,7 +123,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set ctrl = false
                 endif
                 //Strength level bonus
-            elseif II  == 'I05J' then
+            elseif II  == 'I05J' and (not maxLevel) then
                 if GetHeroXP(u) >= 20000  then
                     call AddStrengthLevelBonus(u, 1)
                     call UnitAddItemById(u,'I05K')
@@ -132,6 +133,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set ctrl = false
                 endif
 
+                //Glory armor
             elseif II  == 'I06O' then
                 if Glory[pid] >= 1500 then
                     call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 20)
@@ -141,6 +143,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif
+
+                //Glory damage
             elseif II  == 'I06N' then
                 if Glory[pid] >= 1500 then
                     call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ 100,0)
@@ -150,15 +154,19 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif    
+
+                //Glory hp regen
             elseif II  == 'I06M' then
                 if Glory[pid] >= 1500 then
-                    call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 150)
+                    call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 75)
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
                     set Glory[pid]= Glory[pid]- 1500
                     set gloryBonus = gloryBonus + 150
                 else
                     set ctrl = false
                 endif      
+
+                //glory magic resistance
             elseif II  == 'I06Q' then
                 if Glory[pid] >= 2000 then
 
@@ -169,6 +177,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif    
+
+                //glory magic damage
             elseif II  == 'I06R' then
                 if Glory[pid] >= 2000 then
                     call AddUnitMagicDmg (u,3)
@@ -178,6 +188,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif    
+
+                //glory mana regen
             elseif II  == 'I06T' then
                 if Glory[pid] >= 1500 then
                     call BlzSetUnitRealField(u,ConvertUnitRealField('umpr'),BlzGetUnitRealField(u,ConvertUnitRealField('umpr')) + 100)
@@ -187,6 +199,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif   
+
+                //glory pvp bonus
             elseif II  == 'I06S' then
                 if Glory[pid] >= 2000 then
                     // set PvpBonus[pid] = PvpBonus[pid]+1.5
@@ -197,6 +211,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif  
+
+                //glory hit points
             elseif II  == 'I06P' then
                 if Glory[pid] >= 100 then
                     call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 150)
@@ -207,6 +223,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif      
+
+                //glory mana
             elseif II  == 'I06U' then
                 if Glory[pid] >= 100 then
                     call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + 100)
@@ -216,6 +234,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif  
+
+                //glory strength
             elseif II  == 'I09W' then
                 if Glory[pid] >= 1500 then
                     call SetHeroStr(u, GetHeroStr(u, false) + 30, true)
@@ -225,6 +245,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif  
+
+                //glory agility
             elseif II  == 'I09X' then
                 if Glory[pid] >= 1200 then
                     call SetHeroAgi(u, GetHeroAgi(u, false) + 30, true)
@@ -234,6 +256,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif  
+
+                //glory intelligence
             elseif II  == 'I09U' then
                 if Glory[pid] >= 1000 then
                     call SetHeroInt(u, GetHeroInt(u, false) + 30, true)
@@ -243,6 +267,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif  
+
+                //glory evasion
             elseif II  == 'I09Y' then
                 if Glory[pid] >= 1500 then
                     call AddUnitEvasion(u, 5)
@@ -252,6 +278,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif  
+
+                //glory block
             elseif II  == 'I09V' then
                 if Glory[pid] >= 2000 then
                     call AddUnitBlock(u, 100)
@@ -261,6 +289,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif 
+
+                //glory movespeed
             elseif II  == 'I09T' then
                 if Glory[pid] >= 10000 and GetUnitMoveSpeed(u) < 522 then
                     call SetUnitMoveSpeed(u, 522)
@@ -290,7 +320,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if GetHeroXP(u) >= 100000  then
                     set Lives[pid] = Lives[pid] + 1
                     call DisplayTimedTextToPlayer(p, 0, 0, 5, "|cffffcc00Lives: |r" + I2S(Lives[pid]))
-                    call UnitAddItemById(u,'I07C')
+                    //call UnitAddItemById(u,'I07C')
+                    call SetHeroXP(u, GetHeroXP(u) - 100000, true)
                     call RemoveItem(It)
                 else
                     set ctrl = false
@@ -352,6 +383,15 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if SummonIceArmor[pid] < 30 then
                     set SummonIceArmor[pid] = SummonIceArmor[pid] + 1
                     set summonUpgradeBonus = SummonIceArmor[pid]
+                else
+                    call PlayerReturnLumber(It, II, p)
+                    set ctrl = false
+                endif
+                //Summon Dome of Protection
+            elseif II == 'I0BC' then
+                if SummonDomeProtection[pid] < 30 then
+                    set SummonDomeProtection[pid] = SummonDomeProtection[pid] + 1
+                    set summonUpgradeBonus = SummonDomeProtection[pid]
                 else
                     call PlayerReturnLumber(It, II, p)
                     set ctrl = false

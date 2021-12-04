@@ -28,6 +28,21 @@ library Glory initializer initLState
         set Glory[8] = 0
     endfunction
 
+    function GetPlayerGloryBonus takes integer pid returns real
+        local real gloryBonus = 0
+
+        //Arena Ring
+        set gloryBonus = gloryBonus + (GetRingGloryBonus(udg_units01[pid + 1]) * GetValidEndOfRoundItems(udg_units01[pid + 1], 'I0AF'))
+
+        //Default bonus
+        set gloryBonus = gloryBonus + 200
+
+        //Round bonus (Arena Master)
+        set gloryBonus = gloryBonus + GloryRoundBonus[pid]
+
+        return gloryBonus
+    endfunction
+
     function FunWinner takes unit u returns nothing 
         local integer pid = GetPlayerId(GetOwningPlayer(u))
 

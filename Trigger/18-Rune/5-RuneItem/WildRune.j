@@ -2,7 +2,7 @@ library WildRune requires RandomShit
     function WildRune takes nothing returns boolean
         local player p = GetOwningPlayer(GLOB_RUNE_U)
         local real power = GLOB_RUNE_POWER * 100
-        local integer levels = R2I(power / 150) + 1
+        local integer levels = R2I(power / 75) + 1
         local integer r
         
         loop
