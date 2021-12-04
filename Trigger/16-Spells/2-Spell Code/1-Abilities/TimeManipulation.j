@@ -37,7 +37,7 @@ library TimeManipulation initializer init requires RandomShit
             
         //call BJDebugMsg("spell longest: " + R2S(TimeManipulationTable[hid].real[0]) + " + 10")
         //call BJDebugMsg("count bonus: " + R2S((TimeManipulationTable[hid].real[2])) + ", unit: " + I2S(hid))
-        set TimeManipulationTable[hid].real[0] = TimeManipulationTable[hid].real[0] + 6 + (TimeManipulationTable[hid].real[2] * (10 - ( 0.2 * GetUnitAbilityLevel(source, 'A0AS') )))
+        set TimeManipulationTable[hid].real[0] = TimeManipulationTable[hid].real[0] + 2 + (TimeManipulationTable[hid].real[2] * (10 - ( 0.2 * GetUnitAbilityLevel(source, 'A0AS') )))
         call AbilStartCD(source, 'A0AS', TimeManipulationTable[hid].real[0])
         set TimeManipulationTable[hid].real[0] = 0  
     endfunction

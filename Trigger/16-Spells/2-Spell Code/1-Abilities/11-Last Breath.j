@@ -14,37 +14,32 @@ function LastBreathEnd takes nothing returns nothing
 endfunction
  
  
-function LastBreath takes nothing returns nothing 
-    local timer tim
-    local unit u = GetTriggerUnit()
-    local real lvlAbility = GetUnitAbilityLevel(u ,'A05R')
+function LastBreath takes unit target, integer level returns nothing 
+    local timer t
     local real Hp
-    
-	if lvlAbility > 0 then
-        if LoadInteger(HT,GetHandleId(u),'A05R') == 1 and GetUnitAbilityLevel(u, 'A08B') > 0 then
-            set Hp = GetWidgetLife(u)
-            set Hp = Hp - GetEventDamage()
-            if Hp < 1 then
-                set Hp = 1
-            endif
-            call SetWidgetLife(u,Hp)
-            call BlzSetEventDamage(0)
-        elseif GetWidgetLife(u) <= GetEventDamage()+ 0.405 and BlzGetUnitAbilityCooldownRemaining(u,'A05R') <= 0.501 then
-            set tim = NewTimer()
-            call BlzSetEventDamage(0)
-            call SetWidgetLife(u,1.405)
-            call AbilStartCD(u,'A05R', 60 + BlzGetUnitAbilityCooldownRemaining(u,'A05R') )  
-            call SaveInteger(HT,GetHandleId(u),'A05R',1)	             
-            call SaveUnitHandle(HT,GetHandleId(tim),1,GetTriggerUnit())
-            if GetOwningPlayer(u) != Player(11) then
-                call SaveEffectHandle(HT,GetHandleId(tim),2,AddSpecialEffectTarget( LastBreathAnim , u , "origin" ) ) 
-            endif
-            call UnitAddAbility(u, 'A08B')
-            call TimerStart(tim,0.8 + 0.2 * lvlAbility,false, function LastBreathEnd)
-        
+
+    if LoadInteger(HT,GetHandleId(target),'A05R') == 1 and GetUnitAbilityLevel(target, 'A08B') > 0 then
+        set Hp = GetWidgetLife(target)
+        set Hp = Hp - GetEventDamage()
+        if Hp < 1 then
+            set Hp = 1
         endif
-        
-        
-	endif
-    set tim = null
+        call SetWidgetLife(target,Hp)
+        call BlzSetEventDamage(0)
+    elseif GetWidgetLife(target) <= GetEventDamage()+ 0.405 and BlzGetUnitAbilityCooldownRemaining(target,'A05R') <= 0.501 then
+        set t = NewTimer()
+        call BlzSetEventDamage(0)
+        call SetWidgetLife(target,1.405)
+        call AbilStartCD(target,'A05R', 60 + BlzGetUnitAbilityCooldownRemaining(target,'A05R') )  
+        call SaveInteger(HT,GetHandleId(target),'A05R',1)	             
+        call SaveUnitHandle(HT,GetHandleId(t),1,GetTriggerUnit())
+        if GetOwningPlayer(target) != Player(11) then
+            call SaveEffectHandle(HT,GetHandleId(t),2,AddSpecialEffectTarget( LastBreathAnim , target , "origin" ) ) 
+        endif
+        call UnitAddAbility(target, 'A08B')
+        call TimerStart(t,0.8 + 0.2 * level,false, function LastBreathEnd)
+
+        set t = null
+    endif
+
 endfunction

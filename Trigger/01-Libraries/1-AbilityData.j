@@ -33,7 +33,7 @@ library AbilityData initializer init requires Table
         integer Element_Cold = 9
         integer Element_Poison = 10
         integer Element_Blood = 11
-        integer Element_Divine = 12
+        integer Element_Summon = 12
         integer Element_Arcane = 13
         integer Element_Time = 14
         integer Element_Spirit = 15
@@ -175,6 +175,16 @@ library AbilityData initializer init requires Table
         endif
     endfunction
 
+    function SaveCreepAbilityData takes integer abilId, integer targetType, integer typ, string order returns nothing
+        set AbilityData[abilId].integer[1] = OrderId(order)
+        set AbilityData[abilId].integer[2] = typ
+        set AbilityData[abilId].integer[5] = targetType
+
+        if typ != Order_None then
+            set AbilityData[abilId].boolean[4] = true
+        endif
+    endfunction
+
     function SaveDummyAbilOrder takes integer abilId, string order returns nothing
         set AbilityData[abilId].integer[1] = OrderId(order)
     endfunction
@@ -187,7 +197,7 @@ library AbilityData initializer init requires Table
         set ElementData[element].integer[objectId] = count
     endfunction
 
-    function InitDataA1 takes nothing returns nothing
+    function InitAbilities takes nothing returns nothing
         //1 - Bash 
         call SaveAbilData('A06S', 'I00L', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
@@ -222,6 +232,7 @@ library AbilityData initializer init requires Table
         call SaveAbilData('AOsf', 'I004', false, 0, 0, false, Order_Instant, "spiritwolf")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //10 - Flame Strike 
         call SaveAbilData('AHfs', 'I005', false, 0, 0, true, Order_Point, "flamestrike")
@@ -253,6 +264,7 @@ library AbilityData initializer init requires Table
         call SaveAbilData('AOsw', 'I00E', false, 0, 0, false, Order_Point, "ward")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //17 - Shadow Strike 
         call SaveAbilData('AEsh', 'I00F', false, 0, 0, true, Order_Target, "shadowstrike")
@@ -301,6 +313,7 @@ library AbilityData initializer init requires Table
         call SaveAbilData('AHwe', 'I00S', false, 0, 0, false, Order_Instant, "waterelemental")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //28 - Shockwave 
         call SaveAbilData('AOsh', 'I00R', false, 0, 0, true, Order_Point, "shockwave")
@@ -311,6 +324,7 @@ library AbilityData initializer init requires Table
         call SaveAbilData('ANlm', 'I00T', false, 0, 0, false, Order_Instant, "lavamonster")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //30 - Drain Aura 
         call SaveAbilData('A023', 'I04H', false, 0, 0, false, Order_None, null)
@@ -382,6 +396,11 @@ library AbilityData initializer init requires Table
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
+        //45 - SpiritLink
+        call SaveAbilData('A0B7', 'I035', false, 1, 1, true, Order_Target, "spirtlink")
+        call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Arcane, 1)
+
         //46 - Frost Armor 
         call SaveAbilData('AUfu', 'I01W', false, 1, 1, true, Order_Target, "frostarmor")
         call SetLastObjectElement(Element_Water, 1)
@@ -413,6 +432,7 @@ library AbilityData initializer init requires Table
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //52 - Healing Wave 
         call SaveAbilData('AOhw', 'I029', false, 1, 0, true, Order_Target, "healingwave")
@@ -423,8 +443,9 @@ library AbilityData initializer init requires Table
         call SetLastObjectElement(Element_Arcane, 1)
 
         //54 - Acid Spray 
-        call SaveAbilData('ANhs', 'I028', false, 0, 0, true, Order_Point, "healingspray")
+        call SaveAbilData('A0B3', 'I028', false, 0, 0, true, Order_Point, "healingspray")
         call SetLastObjectElement(Element_Poison, 1)
+        call SaveDummyAbilOrder('ANhs', "healingspray")
 
         //55 - Activate Avatar 
         call SaveAbilData('A0AE', 'I027', false, 0, 0, false, Order_None, "avatar")
@@ -443,6 +464,7 @@ library AbilityData initializer init requires Table
         call SaveAbilData('AEsv', 'I03Y', false, 0, 0, false, Order_Instant, "spiritofvengeance")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //59 - Bloodlust 
         call SaveAbilData('Ablo', 'I02F', false, 1, 1, true, Order_Target, "bloodlust")
@@ -450,6 +472,7 @@ library AbilityData initializer init requires Table
 
         //60 - Pocket Factory 
         call SaveAbilData('ANsy', 'I02G', false, 0, 0, false, Order_Point, "summonfactory")
+        call SetLastObjectElement(Element_Summon, 1)
 
         //61 - Pulverize 
         call SaveAbilData('Awar', 'I02H', false, 0, 0, false, Order_None, null)
@@ -463,6 +486,7 @@ library AbilityData initializer init requires Table
         //63 - Carrion Beetles 
         call SaveAbilData('AUcb', 'I02M', false, 0, 0, false, Order_Instant, "carrionscarabsinstant")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //64 - War Drums 
         call SaveAbilData('Aakb', 'I002', false, 0, 0, false, Order_None, null)
@@ -476,13 +500,15 @@ library AbilityData initializer init requires Table
         call SaveAbilData('AHfa', 'I02P', false, 0, 0, false, Order_None, "flamingarrows")
         call SetLastObjectElement(Element_Fire, 1)
 
-        //67 - Raise Dead 
-        call SaveAbilData('Arai', 'I02Q', false, 0, 0, false, Order_Instant, "instant")
+        //67 - Necromancer's Army 
+        call SaveAbilData('A0B0', 'I02Q', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //68 - Black Arrow 
-        call SaveAbilData('ANba', 'I02R', false, 0, 0, false, Order_None, "blackarrow")
+        call SaveAbilData('A0AW', 'I02R', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //69 - Cold Arrows 
         call SaveAbilData('AHca', 'I02S', false, 0, 0, false, Order_None, "coldarrows")
@@ -496,6 +522,7 @@ library AbilityData initializer init requires Table
         //71 - Parasite 
         call SaveAbilData('ANpa', 'I02U', false, 0, 1, true, Order_Target, "parasite")
         call SetLastObjectElement(Element_Poison, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //72 - Curse 
         call SaveAbilData('Acrs', 'I02V', false, 0, 1, true, Order_Target, "curse")
@@ -517,18 +544,22 @@ library AbilityData initializer init requires Table
         //76 - Summon Hawk 
         call SaveAbilData('ANsw', 'I02Z', false, 0, 0, false, Order_Instant, "summonwareagle")
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //77 - Summon Bear 
         call SaveAbilData('ANsg', 'I030', false, 0, 0, false, Order_Instant, "summongrizzly")
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //78 - Summon Quilbeast 
         call SaveAbilData('Arsq', 'I031', false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //79 - Phoenix 
         call SaveAbilData('AHpx', 'I032', false, 0, 0, false, Order_Instant, "summonphoenix")
         call SetLastObjectElement(Element_Fire, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //80 - Healing Ward 
         call SaveAbilData('Ahwd', 'I033', false, 0, 0, true, Order_Point, "healingward")
@@ -711,7 +742,7 @@ library AbilityData initializer init requires Table
         call SetLastObjectElement(Element_Arcane, 1)
 
         //126 - Death Pact 
-        call SaveAbilData('AUdp', 'I01V', false, 0, 1, false, Order_Target, "deathpact")
+        call SaveAbilData('A00M', 'I01V', false, 0, 1, false, Order_Target, "deathpact")
         call SetLastObjectElement(Element_Dark, 2)
 
         //127 - Big Bad Voodoo 
@@ -938,6 +969,7 @@ library AbilityData initializer init requires Table
         //172 - Absolute Wild
         call SaveAbilData('A07K', 'I093', true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //173 - Absolute Dark
         call SaveAbilData('A07Q', 'I098', true, 0, 0, false, Order_None, null)
@@ -1022,6 +1054,7 @@ library AbilityData initializer init requires Table
         call SetObjectElement('E000', Element_Light, 1)
         call SetObjectElement('O003', Element_Light, 1)
         call SetObjectElement('H018', Element_Cold, 1)
+        call SetObjectElement('O00B', Element_Cold, 1)
         call SetObjectElement('N02K', Element_Cold, 1)
         call SetObjectElement('H007', Element_Blood, 1)
         call SetObjectElement('N00C', Element_Blood, 1)
@@ -1136,71 +1169,24 @@ library AbilityData initializer init requires Table
         */
     endfunction 
 
-    function InitDataRA2 takes nothing returns nothing
+    function InitCreepAbilities takes nothing returns nothing
+        //Hurl Boulder
+        call SaveCreepAbilityData('A00W', Target_Enemy, Order_Target, "creepthunderbolt")
 
-        /*
-        set AbilSpellRA1[0] = 'AHtb'
-        set AbilSpellRA1[1] = 'AHbn'
-        set AbilSpellRA1[2] = 'AOhx'
-        set AbilSpellRA1[3] = 'AOcl'
-        set AbilSpellRA1[4] = 'AUfn'
-        set AbilSpellRA1[5] = 'Auhf'
-        set AbilSpellRA1[6] = 'Acrs'
-        set AbilSpellRA1[7] = 'AEsh'
-        set AbilSpellRA1[8] = 'Afae'
-        set AbilSpellRA1[9] = 'AEer'
-        set AbilSpellRA1[10] = 'ANab'
-        set AbilSpellRA1[11] = 'ANso'
-        set AbilSpellRA1[12] = 'ANdh'
-        set AbilSpellRA1[13] = 'ANfl'  
-        set AbilSpellRA1[14] = 'ACls'  
-        set AbilSpellRA1[15] = 'ANpa'  
-        set AbilSpellRA1[16] = 'ANen' 
-        set AbilSpellRA1[17] = 'ANtm'  
-        set AbilSpellRA1[18] = 'A08E' 
-    
-    
-        set AbilSRA1_count = 18
-        
+        //Rejuvenation
+        call SaveCreepAbilityData('A00X', Target_Ally, Order_Target, "rejuvination")
 
-        set AbilSpellRA2[0] = 'AHfs'
-        set AbilSpellRA2[1] = 'AHbz'
-        set AbilSpellRA2[2] = 'AOsh'
-        set AbilSpellRA2[3] = 'AUim'
-        set AbilSpellRA2[4] = 'AUdd'
-        set AbilSpellRA2[5] = 'AUcs'
-        set AbilSpellRA2[6] = 'ANst'
-        set AbilSpellRA2[7] = 'ANhs'
-        set AbilSpellRA2[8] = 'ANcs'
-        set AbilSpellRA2[9] = 'ANsi'
-        set AbilSpellRA2[10] = 'ANrf'
-        set AbilSpellRA2[11] = 'ANbf'
-        set AbilSpellRA2[12] = 'A046'  
-        set AbilSpellRA2[13] = 'Aclf'  
-        set AbilSpellRA2[14] = 'Asta' 
-        set AbilSpellRA2[15] = 'ANmo' 
-        set AbilSpellRA2[16] = 'A05X' 
-        set AbilSpellRA2[17] = 'A017'      
-        set AbilSpellRA2[18] = 'A046'   
-    
-        set AbilSRA2_count = 18
-    
-        set AbilSpellRA3[0] = 'AHtc'  
-        set AbilSpellRA3[1] = 'AOws'  
-        set AbilSpellRA3[2] = 'AEsf' 
-        set AbilSpellRA3[3] = 'AEfk'      
-        set AbilSpellRA3[4] = 'ANht'      
-        set AbilSRA3_count = 4  
-        */
-    
-    
-    
-    
-    
-    
-    
-    
+        //Faerie Fire
+        call SaveCreepAbilityData('A016', Target_Enemy, Order_Target, "faeriefire")
 
+        //Mana Burn
+        call SaveCreepAbilityData('A00V', Target_Enemy, Order_Target, "manaburn")
+
+        //Shockwave
+        call SaveCreepAbilityData('A00U', Target_Enemy, Order_Point, "shockwave")
+
+        //Thunder Clap
+        call SaveCreepAbilityData('A01B', Target_Enemy, Order_Instant, "thunderclap")
     endfunction
 
 private function init takes nothing returns nothing
@@ -1211,7 +1197,8 @@ private function init takes nothing returns nothing
     set ElementData = HashTable.create()
     set ItemData = Table.create()
     set AbilityIndex = Table.create()
-    call InitDataA1()
+    call InitAbilities()
+    call InitCreepAbilities()
 endfunction
 endlibrary
 

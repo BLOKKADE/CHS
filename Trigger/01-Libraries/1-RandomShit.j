@@ -251,6 +251,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call UnitRemoveAbility(u, 'A09B')
         call UnitRemoveAbility(u, 'A08O')
         call UnitRemoveAbility(u, 'A03V')
+        call UnitRemoveAbility(u, 'B00T')
     endfunction
 
     //0 = all, 1 = negative, 2 = positive
@@ -468,6 +469,19 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local real ResCD = 1
         local integer i = 0
 
+        //Absolute Arcane
+        if GetUnitAbilityLevel(u, 'A0AB') > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
+            set i = GetClassUnitSpell(u, Element_Arcane)
+            loop
+                set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, 'A0AB'))))
+                set i = i - 1
+                exitwhen i <= 0
+            endloop
+            if ResCD < 0.1 then
+                set ResCD = 0.1
+            endif
+        endif
+
         if active then
             //Frost Bolt
             if id == 'A07X' then
@@ -502,23 +516,15 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
                 endif
             endif
         endif
-        
-        //Absolute Arcane
-        if GetUnitAbilityLevel(u, 'A0AB') > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
-            set i = GetClassUnitSpell(u, Element_Arcane)
-            loop
-                set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, 'A0AB'))))
-                set i = i - 1
-                exitwhen i <= 0
-            endloop
-            if ResCD < 0.1 then
-                set ResCD = 0.1
-            endif
-        endif
             
         //Fast Magic
         if GetUnitAbilityLevel(u,'A03P') >= 1 then
             set ResCD = ResCD *(1 - 0.01 * I2R(GetUnitAbilityLevel(u,'A03P'))) 
+        endif
+
+        //Druid of the Claw
+        if GetUnitTypeId(u ) == 'H006' and IsObjectElement(id, 12) then
+            set ResCD = ResCD * 0.5
         endif
         
         //Xesil

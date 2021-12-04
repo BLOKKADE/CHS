@@ -1,4 +1,4 @@
-library UnitPanelInfo requires CustomState, RandomShit, RuneInit
+library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 	globals
 		boolean isReforged
 
@@ -55,13 +55,14 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit
 		local integer pid = GetPlayerId(GetOwningPlayer(u))
 		local string s = ""
 
-		set s = s + "Lives: " + I2S(Lives[pid]) + "\n"
-		set s = s + "Income: " + I2S(Income[pid]) + "\n"
-		set s = s + "Glory per Round: " + I2S(R2I(GloryRoundBonus[pid] + 200)) + "\n"
-		set s = s + "Movespeed: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"
-		set s = s + "Rune Power: " + R2SW(100 + GetUnitPowerRune(u) + GetHeroLevel(u), 1, 1) + "\n"
-		set s = s + "Luck: +" + R2SW(((GetUnitLuck(u) - 1) * 100), 1, 1) + "%%\n"
-		set s = s + "Absolute Slots: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1)
+		set s = s + "|cffb0e74aLives|r: " + I2S(Lives[pid]) + "\n"
+		set s = s + "|cffe7694aIncome|r: " + I2S(Income[pid]) + "\n"
+		set s = s + "|cff4aa8e7Glory per Round|r: " + I2S(R2I(GetPlayerGloryBonus(pid))) + "\n"
+		set s = s + "|cff9b67faMovespeed|r: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"
+		set s = s + "|cffe7e44aPhysical Power|r: " + R2SW(100 + GetUnitPhysPow(u), 1, 1) + "\n"
+		set s = s + "|cffda4ae7Rune Power|r: " + R2SW(100 + GetUnitPowerRune(u) + GetHeroLevel(u), 1, 1) + "\n"
+		set s = s + "|cff5ce74aLuck|r: +" + R2SW(((GetUnitLuck(u) - 1) * 100), 1, 1) + "%%\n"
+		set s = s + "|cff6ac8ffAbsolute Slots|r: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1)
 
 		return s
 	endfunction

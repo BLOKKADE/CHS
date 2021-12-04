@@ -7,7 +7,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
     endglobals
 
     private function RetaliationSourceFilter takes nothing returns boolean
-        return GetOwningPlayer(GetFilterUnit()) != Player(11) and IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(RetaliationUnit)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'A0A9') > 0 and GetRandomInt(1,100) < 40* GetUnitLuck(GetFilterUnit()) and DistanceBetweenUnits(GetFilterUnit(), RetaliationUnit) < 580 + (20 * GetUnitAbilityLevel(GetFilterUnit(), 'A0A9'))
+        return IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(RetaliationUnit)) and GetUnitAbilityLevel(GetFilterUnit(), 'A0A9') > 0 and GetRandomInt(1,100) < 40* GetUnitLuck(GetFilterUnit()) and DistanceBetweenUnits(GetFilterUnit(), RetaliationUnit) < 580 + (20 * GetUnitAbilityLevel(GetFilterUnit(), 'A0A9'))
     endfunction
 
     function CastRetaliation takes unit source, unit target, integer abilId, integer abilLevel returns nothing
@@ -35,6 +35,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
             endif
             //get dummy
             set dummy = CastSpell(caster, spellTarget, abilId, abilLevel, GetAbilityOrderType(abilId), GetUnitX(source), GetUnitY(source))
+            call AddUnitMagicDmg(dummy.dummy, GetUnitMagicDmg(source))
 
             //Set bonus damage
             set RetaliationDamage.real[GetHandleId(dummy.dummy)] = 0.25 + (0.025 * GetUnitAbilityLevel(caster, 'A0A9')) + damage

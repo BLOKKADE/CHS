@@ -24,7 +24,7 @@ scope ShortPeriodCheck initializer init
                 if GetUnitAbilityLevel(u ,'A02Z') >= 1 then
                     if CheckProc(u, 610) then
                         call ElemFuncStart(u,'A02Z')
-                        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", 200 + GetUnitAbilityLevel(u ,'A02Z')* 50 + GetHeroLevel(u)*(0.8 + 0.2 * GetUnitAbilityLevel(u ,'A02Z')), ConvertAbilityRealLevelField('Ocl1') )
+                        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,'A02Z')) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
                     endif
                     
                 endif
@@ -128,20 +128,23 @@ scope ShortPeriodCheck initializer init
 
                     //Yeti
                 elseif GetUnitTypeId(u) == 'O00B' then
-                    if BlzGetUnitArmor(u) <= 50 + (2 * GetHeroLevel(u)) then
+                    if BlzGetUnitArmor(u) <= 50 + (2 * GetHeroLevel(u)) * (1 + (0.1 * GetClassUnitSpell(u, Element_Cold))) then
                         if GetUnitAbilityLevel(u, 'A092') == 0 then
                             call UnitAddAbility(u, 'A092')
                         endif
                         set i1 = LoadInteger(DataUnitHT,hid,542)
-                        set i2 = 20 * GetHeroLevel(u)- i1
+                        set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetClassUnitSpell(u, Element_Cold))) - i1)
                         call SetHeroStr(u,GetHeroStr(u,false)+ i2, false)
-                        call SaveInteger(DataUnitHT,hid,542,20 * GetHeroLevel(u))
+                        call SaveInteger(DataUnitHT,hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetClassUnitSpell(u, Element_Cold)))))
                     else
                         set i1 = LoadInteger(DataUnitHT,hid,542)
                         call SetHeroStr(u,GetHeroStr(u,false)- i1, false)
                         call SaveInteger(DataUnitHT,hid,542,0)
                         call UnitRemoveAbility(u, 'A092')
                     endif
+
+                elseif GetUnitTypeId(u) == 'U000' then
+                    call WolfRiderStatBonus(u, hid)
                 
                     //Rock Golem
                 elseif GetUnitTypeId(u) == 'H017' then

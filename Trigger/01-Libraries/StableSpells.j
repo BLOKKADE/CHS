@@ -26,5 +26,8 @@ library StableSpells initializer init
         set StableSpells.boolean['A0AS'] = true
         set StableSpells.boolean['A06Q'] = true
         set StableSpells.boolean['A06O'] = true
+        set StableSpells.boolean['A0B6'] = true
+        set StableSpells.boolean['A0BA'] = true
+        set StableSpells.boolean['A07T'] = true
     endfunction
 endlibrary

@@ -65,85 +65,6 @@ library HeroLevel initializer init requires HeroLvlTable
         set t = null
     endfunction
 
-
-    function BaraBonus takes unit UnitHero returns nothing
-        local integer AbilLvl
-        local integer AbilId
-
-        set AbilId = 'Aspl'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif
-
-        set AbilId = 'Auhf'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif
-        
-        set AbilId = 'AOsh'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif
-
-        set AbilId = 'AEer'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif
-        
-        set AbilId = 'ANdr'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif
-    
-        set AbilId = 'AEim'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif
-        
-        set AbilId = 'AHtb'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif   
-        
-        set AbilId = 'A0AT'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif   
-        
-        set AbilId = 'ACls'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif 
-        
-        set AbilId = 'A017'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif 
-                
-
-        set AbilId = 'A09X'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif 
-
-        set AbilId = 'AOmi'
-        set AbilLvl = GetUnitAbilityLevel(UnitHero,AbilId)
-        if AbilLvl > 0 and AbilLvl < 40 then
-            call SetUnitAbilityLevel(UnitHero,AbilId,AbilLvl + 1) 
-        endif 
-    endfunction
-
     function UpdateAbilityDesc takes unit h, player p, integer heroLvl returns nothing
         local integer abilLvl
         local integer abilId
@@ -169,6 +90,7 @@ library HeroLevel initializer init requires HeroLvlTable
         local integer RI = I_l - LastLvlHero[Pid]
         local boolean Economic = GetUnitAbilityLevel(UnitHero,'Asal') == 0 and GetUnitAbilityLevel(UnitHero,'A02W') == 0
         local integer i = 0
+        local integer hid = GetHandleId(UnitHero)
 
         if UnitHero == null then
             set UnitHero = null
@@ -177,15 +99,14 @@ library HeroLevel initializer init requires HeroLvlTable
         endif
 
         if I_l < 250 then
-            call BJDebugMsg("lvl: " + I2S(I_l) + ", prev: " + I2S(LastLvlHero[Pid]) + ", diff: " + I2S(RI))
             if Economic then
                 call AdjustPlayerStateBJ( (I_l + 20)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
                 call AdjustPlayerStateBJ( 8 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
-                call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cffc300ffLevel: " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 20)*(RI)) + " gold|r and |cff1eff00+" + I2S(8 *(RI)) + " lumber|r")
+                call DisplayTimedTextToPlayer(Pl, 0, 0, 1, "|cffc300ffLevel: " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 20)*(RI)) + " gold|r and |cff1eff00+" + I2S(8 *(RI)) + " lumber|r")
             else
                 call AdjustPlayerStateBJ( (I_l + 2)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
                 call AdjustPlayerStateBJ( 4 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
-                call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cffc300ffLevel " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4 *(RI)) + " lumber|r")
+                call DisplayTimedTextToPlayer(Pl, 0, 0, 1, "|cffc300ffLevel " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4 *(RI)) + " lumber|r")
             endif
         
         endif
@@ -254,18 +175,7 @@ library HeroLevel initializer init requires HeroLvlTable
             set LastLvlHero[Pid] = I_l
                 
         elseif TypeHero == 'H006' then
-        
-            loop
-                exitwhen LastLvlHero[Pid] ==  I_l    
-                call SetPlayerTechResearchedSwap( 'R002', ( 4 + GetPlayerTechCountSimple('R002', Pl) ), Pl )
-                call SetPlayerTechResearchedSwap( 'R001', ( 6 + GetPlayerTechCountSimple('R001', Pl) ), Pl )
-                call UpdateBonus(UnitHero, 0, 800)
-                call UpdateBonus(UnitHero, 1, 6)
-                set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
-            endloop   
-            
-            
-            
+            call SetBonus(UnitHero, 0, 1 * (I_l + 1))
         elseif TypeHero == 'H002' then  
         
             if ModuloInteger(I_l + 1, 8) == 0 then
@@ -284,7 +194,11 @@ library HeroLevel initializer init requires HeroLvlTable
             endloop  
     
         elseif TypeHero == 'H004' then  
-
+            loop
+                exitwhen LastLvlHero[Pid] ==  I_l
+                call AddUnitPhysPow(UnitHero, 3)
+                set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
+            endloop
             call SetBonus(UnitHero, 0, 3 * (I_l + 1))
         
         elseif TypeHero == 'H003' then     
@@ -322,13 +236,15 @@ library HeroLevel initializer init requires HeroLvlTable
                 call UpdateBonus(UnitHero, 0, 35)
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop      
-                
+            call SetBonus(UnitHero, 1, (I_l + 1) * 0.5)
+            call SetBonus(UnitHero, 2, (I_l + 1) * 0.1)
+            call SetBonus(UnitHero, 3, 100 + (I_l + 1))
         elseif TypeHero == 'O000' then                   
     
             loop
                 exitwhen BRL_BONUS[Pid] ==  I_l / 2 
                     
-                call BaraBonus(UnitHero)      
+                call SpiritTaurenAbilityLevelBonus(UnitHero)      
         
                 set BRL_BONUS[Pid] = BRL_BONUS[Pid] + 1
             endloop   
@@ -343,35 +259,37 @@ library HeroLevel initializer init requires HeroLvlTable
                 call UpdateBonus(UnitHero, 0, 40)
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop   
-        
-            call SetBonus(UnitHero, 1, BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(MysticFaerie[Pid], 'A000'), ABILITY_ILF_ATTACK_BONUS, IMinBJ(GetHeroLevel(UnitHero)/ 3, 50)))
-            call SetBonus(UnitHero, 2, 3 * (I_l + 1))
-        
+            call SetBonus(UnitHero, 1, 3 * (I_l + 1))
         elseif TypeHero == 'O007' then          
-            call SetBonus(UnitHero, 0, (I_l + 1) * 0.3)
+            call SetBonus(UnitHero, 0, (I_l + 1) * 0.5)
         elseif TypeHero == 'O001' then      
-            call SetBonus(UnitHero, 0, (I_l + 1) * 30)
-        elseif TypeHero == 'U000' then       
             loop
-                exitwhen LastLvlHero[Pid] ==  I_l    
-            
-                if GetHeroStr(UnitHero,false)* 2 > GetHeroAgi(UnitHero,false) then
-                    call SetHeroAgi(UnitHero,GetHeroAgi(UnitHero,false) + 20 ,false)
-                    call UpdateBonus(UnitHero, 0, 20)
-                elseif GetHeroStr(UnitHero,false) > GetHeroAgi(UnitHero,false)  then
-                    call SetHeroAgi(UnitHero,GetHeroAgi(UnitHero,false) + 10 ,false)    
-                    call UpdateBonus(UnitHero, 0, 10)       
-                else
-                    call SetHeroAgi(UnitHero,GetHeroAgi(UnitHero,false) + 5 ,false)   
-                    call UpdateBonus(UnitHero, 0, 5)   
+                exitwhen LastLvlHero[Pid] ==  I_l or LastLvlHero[Pid] == 0
+                
+                if ModuloInteger(LastLvlHero[Pid], 30) == 0 then
+                    set ThunderBoltTargets[hid] = ThunderBoltTargets[hid] + 1
                 endif
-            
-            
+    
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
-            endloop  
-        elseif TypeHero == 'N00K' then                   
+            endloop
+            call SetBonus(UnitHero, 0, (I_l + 1) * 30)
+            call SetBonus(UnitHero, 1, ThunderBoltTargets[hid] + 1)
+        elseif TypeHero == 'U000' then       
+            call SetBonus(UnitHero, 0, 10 + ((I_l + 1) * 3))
+        elseif TypeHero == 'N00K' then          
+            
+            loop
+                exitwhen LastLvlHero[Pid] ==  I_l or LastLvlHero[Pid] == 0
+                
+                if ModuloInteger(LastLvlHero[Pid], 20) == 0 and BladestormAttackLimit.integer[hid] > 1 then
+                    set BladestormAttackLimit[hid] = BladestormAttackLimit[hid] - 1
+                endif
+    
+                set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
+            endloop
             call SetBonus(UnitHero, 0, 20 * (I_l + 1))
             call SetBonus(UnitHero, 1, 297 + 3 * (I_l + 1))
+            call SetBonus(UnitHero, 2, BladestormAttackLimit[hid])
         elseif TypeHero == 'N024' then   
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l  
@@ -380,10 +298,10 @@ library HeroLevel initializer init requires HeroLvlTable
                 call BlzSetUnitRealField(UnitHero,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(UnitHero,ConvertUnitRealField('uhpr')) + 6)
                 call BlzSetUnitArmor(UnitHero, BlzGetUnitArmor(UnitHero) + 3 )
                 call UpdateBonus(UnitHero, 0, 3)   
-                call UpdateBonus(UnitHero, 1, 6)   
+                call UpdateBonus(UnitHero, 1, 6)
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop      
-                        
+            call SetBonus(UnitHero, 2 , 20 + (I_l + 1)) 
         elseif TypeHero == 'N00I' then   
             call SetBonus(UnitHero, 0, 40 + 1.5 * (I_l + 1))
         elseif TypeHero == 'N00L' then  
@@ -413,7 +331,7 @@ library HeroLevel initializer init requires HeroLvlTable
             call ResourseRefresh(GetOwningPlayer(UnitHero)) 
         elseif TypeHero == 'N00P' then              
                 
-            call SetBonus(UnitHero, 0, R2I(I_l / 4))   
+            call SetBonus(UnitHero, 0, R2I(I_l / 3))   
             /*
             loop
                 exitwhen BRL_BONUS [Pid] ==  I_l / 2
@@ -436,16 +354,9 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == 'N00R' then         
             call SetBonus(UnitHero, 0, 49.5 + ((I_l + 1) * 0.5))   
         elseif TypeHero == 'N00O' then   
-        
-            loop
-                exitwhen LastLvlHero[Pid] ==  I_l    
-                call SetPlayerTechResearchedSwap( 'R001', ( 2 + GetPlayerTechCountSimple('R001', Pl) ), Pl )
-                call BlzSetUnitArmor(UnitHero, BlzGetUnitArmor(UnitHero) + 2 )
-                call UpdateBonus(UnitHero, 0, 2)   
-                call UpdateBonus(UnitHero, 1, 5)   
-                set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
-            endloop  
-            
+            call SetBonus(UnitHero, 0, 1 + ((I_l + 1) * 0.01))   
+            call SetBonus(UnitHero, 1, 2 + ((I_l + 1) * 0.05))   
+            call SetBonus(UnitHero, 2, 20 + ((I_l + 1) * 30))   
         elseif TypeHero == 'H008' then   
             call SetBonus(UnitHero, 0, (I_l + 1) * 50)   
         
@@ -454,8 +365,8 @@ library HeroLevel initializer init requires HeroLvlTable
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l  
                 
-                call BlzSetUnitBaseDamage(UnitHero, BlzGetUnitBaseDamage(UnitHero,0) + 25 ,0)  
-                call UpdateBonus(UnitHero, 0, 25)           
+                call BlzSetUnitBaseDamage(UnitHero, BlzGetUnitBaseDamage(UnitHero,0) + 10 ,0)  
+                call UpdateBonus(UnitHero, 0, 10)           
     
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop          
@@ -467,12 +378,12 @@ library HeroLevel initializer init requires HeroLvlTable
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l  
                 
-                if ModuloInteger(LastLvlHero[Pid], 15) == 0 then
+                if ModuloInteger(LastLvlHero[Pid], 20) == 0 then
                     call AddHeroMaxAbsoluteAbility(UnitHero)
                     call UpdateBonus(UnitHero, 0, 1)
                 endif
     
-                if ModuloInteger(LastLvlHero[Pid], 20) == 0 then
+                if ModuloInteger(LastLvlHero[Pid], 25) == 0 then
                     loop
                         set i = i + 1
                         exitwhen i > 15
@@ -567,7 +478,7 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == 'H01F' then
             call SetBonus(UnitHero, 0, ((I_l + 1) / 10) + 1 )
         elseif TypeHero == 'H01H' then
-            call SetBonus(UnitHero, 0, (0.025 + (0.00025 * I_l + 1)))
+            call SetBonus(UnitHero, 0, (2.5 + (0.025 * (I_l + 1))))
         elseif TypeHero == 'H01I' then
 
         elseif TypeHero == 'H01J' then
@@ -598,8 +509,6 @@ library HeroLevel initializer init requires HeroLvlTable
         
         
         call UpdateAbilityDesc(UnitHero, Pl, GetHeroLevel(UnitHero))
-
-        call BJDebugMsg("last lvl")
         set LastLvlHero[Pid]  = I_l  
     endfunction
 

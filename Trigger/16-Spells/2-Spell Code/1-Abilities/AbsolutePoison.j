@@ -4,7 +4,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         HashTable PoisonAbilField
         Table PoisonBonus
         Table AbsolutePoisonTable
-        constant real HpReduction = 0.20
+        constant real HpReduction = 0.30
     endglobals
 
     function GetAbsolutePoisonStruct takes unit u returns AbsolutePoisonStruct

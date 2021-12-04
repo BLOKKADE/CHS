@@ -32,6 +32,14 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		Table TooltipYSize
 	endglobals
 
+	function GoldConversionTooltip takes nothing returns string
+		return "Convert |cff96fc77Lumber|r to |cfffcd277Gold|r (|cff77f3fcCtrl+Q|r)"
+	endfunction
+
+	function LumberConversionTooltip takes nothing returns string
+		return "Convert |cfffcd277Gold|r to |cff96fc77Lumber|r (|cff77f3fcCtrl+W|r)"
+	endfunction
+
 	function GetTooltipSize takes string s returns real
 		return (CountNewLines(s) * LINE_SIZE) + DEFAULT_SIZE
 	endfunction
@@ -122,6 +130,18 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
 					//Hero passive
+				elseif NumButton == 36 then
+					if GetLocalPlayer() == GetTriggerPlayer() then
+						call BlzFrameSetText(TooltipTitleFrame, GoldConversionTooltip())
+						call BlzFrameSetSize(Tooltip, 0.29, 0.02)
+						call BlzFrameSetVisible(Tooltip, true)
+					endif
+				elseif NumButton == 37 then
+					if GetLocalPlayer() == GetTriggerPlayer() then
+						call BlzFrameSetText(TooltipTitleFrame, LumberConversionTooltip())
+						call BlzFrameSetSize(Tooltip, 0.29, 0.02)
+						call BlzFrameSetVisible(Tooltip, true)
+					endif
 				elseif NumButton == 100 then
 					set SpellU = udg_units01[NumPlayerLast[PlID] + 1]
 					set temp = GetClassification(SpellU, GetUnitTypeId(SpellU), false)
@@ -213,6 +233,8 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 			//local framehandle GR
 			//local framehandle TT
 			local framehandle TT_text
+
+			call BlzChangeMinimapTerrainTex("minimap.blp")
 
 			call BlzFrameSetSize(TalantB, size , size )
 			call BlzFrameSetPoint(TalantB, FRAMEPOINT_TOPLEFT, gameUI, FRAMEPOINT_TOPLEFT , x, y)

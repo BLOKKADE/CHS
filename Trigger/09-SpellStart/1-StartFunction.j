@@ -1,6 +1,7 @@
 library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit
     globals
         hashtable HT_timerSpell = InitHashtable()
+        integer array RoundTimer
     endglobals
 
     /*function USOrder4fieldTimer takes nothing returns nothing
@@ -68,9 +69,7 @@ function FunctionTimerSpell takes nothing returns nothing
     //Hero Buff
     set abilLevel = GetUnitAbilityLevel(Herou,'A03Q')
     if abilLevel > 0 then
-        call ElemFuncStart(Herou,'A03Q')
-        call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,(7 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(7 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
-        call TimeManipulation(Herou, (7 +(heroLevel * 0.09))* ChronusLevel)
+        call HeroBuffStruct.create(Herou, R2I(abilLevel), R2I(heroLevel), ChronusLevel, (7 +(heroLevel * 0.09)) * ChronusLevel)
     endif
     
     //Temporary Inisibility
@@ -172,6 +171,18 @@ function FunctionTimerSpell takes nothing returns nothing
         call TimeManipulation(Herou, (8 + (heroLevel * 0.09)) * ChronusLevel)
     endif
 
+    //Faerie Dragon
+    if GetUnitTypeId(Herou) == 'O008' then
+        set r4 = GetUnitX(Herou)+ 40 * CosBJ(- 30 + GetUnitFacing(Herou))
+        set r5 = GetUnitY(Herou)+ 40 * SinBJ(- 30 + GetUnitFacing(Herou))
+        call DestroyEffect(AddSpecialEffect(FX_BLINK, r4, r5))
+        set U = CreateUnit(GetOwningPlayer(Herou), 'e001', r4, r5, GetUnitFacing(Herou))
+
+        call BlzSetUnitAttackCooldown(U, BlzGetUnitAttackCooldown(Herou, 0), 0)
+        call SetUnitAbilityLevelSwapped('A000',U,R2I(GetHeroLevel(Herou)/ 3))
+        call UnitSetAttackSpeed(U, GetHeroLevel(Herou) * 0.03)
+    endif
+
     //Magic Blade
     set i1 = UnitHasItemI( Herou,'I06I' )
     if i1 > 0 then
@@ -188,7 +199,7 @@ function FunctionTimerSpell takes nothing returns nothing
         call SaveInteger(HT,GetHandleId(Herou),54001,LoadInteger(HT,GetHandleId(Herou),54001)+ i1 * 20 * NumberOfUnit[pid] ) 
     endif
         
-    //I06J
+    //Book of Necromancy
     set i1 = UnitHasItemI( Herou,'I06J' )
     if i1 > 0 then
         call ElemFuncStart(Herou,'I06J')
@@ -258,6 +269,7 @@ function StartFunctionSpell takes unit Hero, integer i1 returns nothing
     call SaveUnitHandle(HT_timerSpell,GetHandleId(startbattle),1,Hero)     
     if i1 == 2 then
         call TimerStart(startbattle,4.25,false,function FunctionTimerSpell )
+        set RoundTimer[GetPlayerId(GetOwningPlayer(Hero))] = T32_Tick + R2I(4 * 32)
     else
         call TimerStart(startbattle,0.05,false,function FunctionTimerSpell )   
     endif

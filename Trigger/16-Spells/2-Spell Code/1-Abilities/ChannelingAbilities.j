@@ -15,6 +15,7 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
         set AssociatedAbil['A09W'] = 'ANst'//Stampede
         set AssociatedAbil['A09X'] = 'ANvc'//Volcano
         set AssociatedAbil['A0AT'] = 'ANcs'//Cluster Rockets
+        set AssociatedAbil['A0B3'] = 'ANhs'//Acid Spray
     endfunction
 
     function IsChannelAbility takes integer abilId returns boolean

@@ -10,8 +10,11 @@ library CustomState requires TimerUtils
         integer CustomState_RunePow = 6
         integer CustomState_SummonPow = 7
         integer CustomState_PvpBonus = 8
+        integer CustomState_PhysPow = 9
+        integer CustomState_MissChance = 9
     endglobals
 
+    //Magic damage
     function SetUnitMagicDmg takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),1,r)
     endfunction
@@ -24,10 +27,10 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),1,LoadReal(HT_unitstate,GetHandleId(u),1)+ r)
     endfunction
 
+    //Magic resistance
     function SetUnitMagicDef takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),2,r)
     endfunction
-
 
     function GetUnitMagicDef takes unit u returns real
         return LoadReal(HT_unitstate,GetHandleId(u),2)
@@ -37,6 +40,7 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),2,LoadReal(HT_unitstate,GetHandleId(u),2)+ r)
     endfunction
 
+    //Evasion
     function SetUnitEvasion takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),3,r)
     endfunction
@@ -54,8 +58,21 @@ library CustomState requires TimerUtils
         return  1 - (50 /(50 + LoadReal(HT_unitstate,GetHandleId(u),3))) 
     endfunction
 
+    //Miss Chance
+    function SetUnitMissChance takes unit u,real r returns nothing
+        call SaveReal(HT_unitstate,GetHandleId(u),10,r)
+    endfunction
 
+    function AddUnitMissChance takes unit u,real r returns nothing
+        set r = LoadReal(HT_unitstate,GetHandleId(u),10)+ r
+        call SaveReal(HT_unitstate,GetHandleId(u),10,r)    
+    endfunction
 
+    function GetUnitMissChance takes unit u returns real
+        return LoadReal(HT_unitstate,GetHandleId(u),10)
+    endfunction
+
+    //Block
     function SetUnitBlock takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),4,r)
     endfunction
@@ -68,7 +85,7 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),4,LoadReal(HT_unitstate,GetHandleId(u),4)+ r)
     endfunction
 
-
+    //Luck
     function SetUnitLuck takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),1,5)
     endfunction
@@ -81,7 +98,7 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),5,LoadReal(HT_unitstate,GetHandleId(u),5)+ r)
     endfunction
 
-
+    //rune Power
     function SetUnitPowerRune takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),6,r)
     endfunction
@@ -94,8 +111,7 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),6,LoadReal(HT_unitstate,GetHandleId(u),6)+ r)
     endfunction
 
-
-
+    //Summon Power
     function SetUnitSummonStronger takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),7,r)
     endfunction
@@ -108,8 +124,7 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),7,LoadReal(HT_unitstate,GetHandleId(u),7)+ r)
     endfunction
 
-
-
+    //Pvp Bonus
     function SetUnitPvpBonus takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),8,r)
     endfunction
@@ -122,7 +137,20 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),8,LoadReal(HT_unitstate,GetHandleId(u),8)+ r)
     endfunction
 
+    //Physical power
+    function SetUnitPhysPow takes unit u,real r returns nothing
+        call SaveReal(HT_unitstate,GetHandleId(u),9,r)
+    endfunction
 
+    function GetUnitPhysPow takes unit u returns real
+        return LoadReal(HT_unitstate,GetHandleId(u),9)
+    endfunction
+
+    function AddUnitPhysPow takes unit u,real r returns nothing
+        call SaveReal(HT_unitstate,GetHandleId(u),9,LoadReal(HT_unitstate,GetHandleId(u),9)+ r)
+    endfunction
+
+    //Temp edit
     function endTimerState takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local integer i = LoadInteger(HT,GetHandleId(t),1)
@@ -202,6 +230,8 @@ library CustomState requires TimerUtils
         implement T32x
     endstruct
 
+
+    //Absolute limit
     function GetHeroMaxAbsoluteAbility takes unit u returns integer
         return LoadInteger(HT,GetHandleId(u),- 8852352)
     endfunction

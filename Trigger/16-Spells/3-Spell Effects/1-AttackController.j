@@ -69,6 +69,8 @@ scope AttackController initializer init
                 endif 
             endif
         endif
+
+        //Murloc
         if GetUnitTypeId(u2) == 'H01F' then
             set i1 = 1 + GetHeroLevel(u2)/ 10 
             call SaveInteger(HT,GetHandleId(u2),54021,i1 + LoadInteger(HT,GetHandleId(u2),54021))
@@ -77,6 +79,7 @@ scope AttackController initializer init
             call SetHeroInt(u2,GetHeroInt(u2,false)+ i1,false)
         endif
         
+        //Reaction
         if GetUnitAbilityLevel(u,'A06C') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A06C') <= 0.001  then
             set t = NewTimer()
             
@@ -89,12 +92,13 @@ scope AttackController initializer init
             set t = null
         endif
         
+        //
         if GetUnitAbilityLevel(u2,'A07N') > 0 and BlzGetUnitAbilityCooldownRemaining(u2,'A07N') <= 0.001  then
             call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2),100 * GetUnitAbilityLevel(u2,'A07N'),500,'A07N')
             call AbilStartCD(u2,'A07N',2 ) 
         endif
         
-        
+        //
         set i1 = UnitHasItemI( u2,'I06I' )
         if i1 > 0 then
             call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA)- 50 * i1  )
@@ -106,6 +110,11 @@ scope AttackController initializer init
         //Huntress
         if GetUnitTypeId(u2) == 'N00R' then
             call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.495 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
+        endif
+
+        //Pyromancer
+        if GetUnitTypeId(u2) == 'O005' then
+            call PyromancerScorch(u2, u)
         endif
 
 

@@ -53,7 +53,7 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable
             endif
             call SetBonus(u, 1, heroLevel)
 
-            set iBonus = (heroLevel * 35)
+            set iBonus = (heroLevel * 20)
             if iBonus != AvatarMode[hid][2] then
                 call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) - AvatarMode[hid][2] + iBonus, 0)
                 set AvatarMode[hid][2] = iBonus

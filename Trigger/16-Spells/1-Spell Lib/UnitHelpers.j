@@ -1,4 +1,4 @@
-library UnitHelpers initializer init
+library UnitHelpers initializer init requires Utility
     globals
         boolexpr IsUnitSpellTargetFilter
         boolexpr IsUnitTargetFilter
@@ -8,7 +8,7 @@ library UnitHelpers initializer init
     native UnitAlive takes unit id returns boolean
 
     function GetAttackDamage takes unit u returns real
-        return SpellData[GetHandleId(u)].real[7]
+        return GetUnitDamage(u, 0)
     endfunction
 
     function IsUnitMagicImmune takes unit u returns boolean

@@ -98,7 +98,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         if GetUnitAbilityLevel(u,'A07B') > 0 and IsSpellElement(u,id,1) then
             if GetUnitTypeId(u) == 'O007' then
                 set calc = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
-                call AddStateTemp(u, 1, (4 * (1 + (0.003 * GetHeroLevel(u)))) * calc, 10)
+                call AddStateTemp(u, 1, (4 * (1 + (0.005 * GetHeroLevel(u)))) * calc, 10)
             else
                 call AddStateTemp(u, 1, 4, 10)
             endif

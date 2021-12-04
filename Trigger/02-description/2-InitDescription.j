@@ -15,7 +15,7 @@ library ElementTexts initializer init
         set ClassAbil[9] = "[|cff8080ffCold|r]"
         set ClassAbil[10] = "[|cff3bc739Poison|r]"
         set ClassAbil[11] = "[|cff800000Blood|r]"   
-
+        set ClassAbil[12] = "[|cff9e5d07Summon|r]"
         set ClassAbil[13] = "[|cff6f2583Arcane|r]"
         
         /*

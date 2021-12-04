@@ -36,10 +36,14 @@ library Utility
         //return (IsPlayerInForce(p,udg_force03) and udg_boolean02 == false and udg_units03[2] != u and udg_units03[1] != u and PvpPrepare = false) or BattleRoyal = true
     endfunction
 
+    function GetUnitDamage takes unit u, integer weaponIndex returns real
+        return RMaxBJ(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex)), SpellData[GetHandleId(u)].real[7])
+    endfunction
+
     function CalculateNewCurrentHP takes unit u, real hpBonus returns nothing
         local real multiplier = (BlzGetUnitMaxHP(u) / (BlzGetUnitMaxHP(u) - hpBonus))
         if multiplier > 1 then
-        call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) * multiplier)
+            call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) * multiplier)
         endif
     endfunction
 endlibrary

@@ -57,8 +57,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('H005', 0, "|cffe7544aDamage|r: ,0,")
 
-        call SetBonusStr('H006', 0, "|cffe7544aSummon hit point bonus|r: ,0,")
-        call SetBonusStr('H006', 1, "|cffd6e049Summon armor bonus|r: ,0,")
+        call SetBonusStr('H006', 0, "|cffe7544aSummon stat bonus|r: ,0,%%")
 
         call SetBonusStr('H002', 0, "|cffe7544aLight bonus|r: ,0,")
 
@@ -78,14 +77,17 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr('O002', 0, "|cffe7544aLifesteal|r: ,0,%%")
 
         call SetBonusStr('O005', 0, "|cffe7544aAttack damage bonus|r: ,0,")
+        call SetBonusStr('O005', 1, "|cffd6e049Scorched Earth miss chance|r: ,0,%%")
+        call SetBonusStr('O005', 2, "|cff4daed4Scorched Earth crit chance|r: ,0,%%")
+        call SetBonusStr('O005', 3, "|cff51d44dScorched Earth/Attack area|r: ,0,")
 
         call SetBonusStr('O008', 0, "|cffe7544aSummon damage bonus|r: ,0,")
-        call SetBonusStr('O008', 1, "|cffd6e049Faerie Dragon damage|r: ,0,")
-        call SetBonusStr('O008', 2, "|cff4daed4Faerie Dragon attack speed|r: ,0,%%")
+        call SetBonusStr('O008', 1, "|cffd6e049Faerie Dragon attack speed|r: ,0,%%")
 
-        call SetBonusStr('O007', 0, "|cffe7544aAbsoltue Fire magic power bonus|r: ,0,%%")
+        call SetBonusStr('O007', 0, "|cffe7544aAbsolute Fire magic power bonus|r: ,0,%%")
 
         call SetBonusStr('O001', 0, "|cffe7544aDamage|r: ,0,")
+        call SetBonusStr('O001', 1, "|cffd6e049Targets|r: ,0,")
 
         call SetBonusStr('O001', 0, "|cffe7544aDamage|r: ,0,")
 
@@ -93,9 +95,11 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('N00K', 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr('N00K', 1, "|cffd6e049Area of effect|r: ,0,")
+        call SetBonusStr('N00K', 2, "|cff4daed4Attacks required|r: ,0,")
 
         call SetBonusStr('N024', 0, "|cffe7544aArmor bonus|r: ,0,")
         call SetBonusStr('N024', 1, "|cffd6e049hit point regeneration bonus|r: ,0,")
+        call SetBonusStr('N024', 2, "|cff4daed4Strength damage bonus|r: ,0,%%")
 
         call SetBonusStr('N00I', 0, "|cffe7544aRegeneration bonus|r: ,0,%%")
 
@@ -107,8 +111,9 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('N00R', 0, "|cffe7544aChakrum damage|r: ,0,%%")
 
-        call SetBonusStr('N00O', 0, "|cffe7544aArmor bonus|r: ,0,")
-        call SetBonusStr('N00O', 1, "|cffd6e049Summon armor bonus|r: ,0,")
+        call SetBonusStr('N00O', 0, "|cffe7544aDuration|r: ,0, seconds")
+        call SetBonusStr('N00O', 1, "|cffd6e049Hit points restored|r: ,0,%%")
+        call SetBonusStr('N00O', 2, "|cff4daed4Explosion damage|r: ,0,")
 
         call SetBonusStr('H008', 0, "|cffe7544aDamage|r: ,0,")
 

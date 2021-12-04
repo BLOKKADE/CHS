@@ -9,6 +9,11 @@ library Vampirism requires RandomShit
             set vamp = vamp * 0.7
         endif
 
+        set i1 = GetUnitAbilityLevel(u2, 'A0B9')
+        if i1 > 0 then
+            set vamp = vamp * (1 - (0.175 + (0.0175 * i1)))
+        endif
+
         //Bloodstone target & Divine Bubble
         if GetUnitAbilityLevel(u1, 'B01V') > 0 or IsUnitDivineBubbled(u2) or GetUnitAbilityLevel(u1, 'B022') > 0 then
             return

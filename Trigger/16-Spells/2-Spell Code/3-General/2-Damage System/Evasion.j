@@ -26,14 +26,19 @@ library Evasion requires CustomState, RandomShit, LuckyPants
         local real returnDamage = damage
         local integer abilLvl = 0
 
-        if GetRandomReal(0, 100) <= GetUnitRealEvade(damageTarget) * 100 then
-            //Trueshot aura
-            set abilLvl = GetUnitAbilityLevel(damageSource, 'AEar')
-            if abilLvl > 0 then
-                set returnDamage = returnDamage * (0.005 * abilLvl)
-                set TrueDamage = true
-            endif
+        if GetUnitMissChance(damageSource) > 0 and GetRandomReal(0, 100) > GetUnitMissChance(damageSource) then
+            return damage
+        endif
 
+        if GetUnitAbilityLevel(damageSource, 'B027') > 0 then
+            if GetRandomReal(0, 100) > GetHeroLevel(udg_units01[ScorchedEarthSource[GetHandleId(damageSource)] + 1]) * 0.5 then
+                return damage
+            endif
+        endif
+
+        if GetUnitEvasion(damageTarget) > 0 and GetRandomReal(0, 100) > GetUnitRealEvade(damageTarget) * 100 then
+            return damage
+        else
             //Lucky Pants
             if UnitHasItemS(damageTarget, 'I0AJ') then
                 call ActivateLuckyPants(damageTarget)
@@ -46,10 +51,15 @@ library Evasion requires CustomState, RandomShit, LuckyPants
                 set GLOB_typeDmg = 2
                 call UnitDamageTarget(damageTarget, damageSource, GetAttackDamage(damageTarget) * 1 + (0.02 * GetHeroLevel(damageTarget)), true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_CLAW_HEAVY_SLICE)
             endif
-
-            return EvasionCheck(damageSource, damage, returnDamage)
-        else
-            return damage
         endif
+
+        //Trueshot aura
+        set abilLvl = GetUnitAbilityLevel(damageSource, 'AEar')
+        if abilLvl > 0 then
+            set returnDamage = returnDamage * (0.005 * abilLvl)
+            set TrueDamage = true
+        endif
+
+        return EvasionCheck(damageSource, damage, returnDamage)
     endfunction
 endlibrary

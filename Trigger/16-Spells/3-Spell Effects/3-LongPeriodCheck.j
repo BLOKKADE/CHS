@@ -331,7 +331,7 @@ scope LongPeriodCheck initializer init
                 if i1 >= 1 or i2 != 0 then
                     if GetUnitTypeId(u) == 'O007' then
                         set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
-                        set i1 = R2I((i1 * GetClassUnitSpell(u, Element_Fire)) * (1 + (0.003 * GetHeroLevel(u))) * r1)
+                        set i1 = R2I((i1 * GetClassUnitSpell(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
                     else
                         set i1 = i1 * GetClassUnitSpell(u, Element_Fire)
                     endif
@@ -394,9 +394,19 @@ scope LongPeriodCheck initializer init
                 //Thunder Witch
                 if GetUnitTypeId(u) == 'O001' then
                     if BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and CheckProc(u, 610) then
-                        call ElemFuncStart(u,'O001')
-                        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A036',"fanofknives",  30 + GetHeroLevel(u)* 30 , ConvertAbilityRealLevelField('Ocl1') )
-                        call AbilStartCD(u, 'A08P', 1)
+                        call ThunderWitchBolt(u, GetHeroLevel(u), hid)
+                    endif
+                endif
+
+                //Pit Lord
+                if GetUnitTypeId(u) == 'O007' then
+                    set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
+                    set i1 = R2I(GetUnitMagicDmg(u) * r1)
+                    set i2 = LoadInteger(HT,hid,'O007')
+                    if i1 != i2 then
+                        call AddUnitPhysPow(u, 0 - i2)
+                        call AddUnitPhysPow(u, i1)
+                        call SaveInteger(HT,hid,'O007',i1)	
                     endif
                 endif
 
@@ -414,7 +424,7 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //Time Manipulation
-                if GetUnitAbilityLevel(u, 'A0AS') > 0 and TimeManipulationTable[hid].boolean[1] then
+                if GetUnitAbilityLevel(u, 'A0AS') > 0 and CurrentlyFighting[GetPlayerId(GetOwningPlayer(u))] and TimeManipulationTable[hid].boolean[1] then
                     if BlzGetUnitAbilityCooldownRemaining(u, 'A0AS') == 0 then
                         set TimeManipulationTable[hid].real[2] = TimeManipulationTable[hid].real[2] + 1
                         call StartFunctionSpell(u, 6)

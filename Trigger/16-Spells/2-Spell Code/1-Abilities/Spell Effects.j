@@ -72,6 +72,9 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         elseif abilId == 'A097' then
             call AncientDagger(caster)
             return true
+            //Death Pact
+        elseif abilId == 'A00M' then
+            call CastDeathPact(caster, target, lvl)
             //Ancient Staff
         elseif abilId == 'A094' then
             call AncientStaff(caster)
@@ -79,6 +82,10 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             //Reset Time
         elseif abilId == 'A024' then
             call ResetTime(caster)
+            return true
+            //Spirit Link
+        elseif abilId == 'A0B7' then
+            call CastSpiritLink(caster)
             return true
             //Blink Strike
         elseif abilId == 'A08J' then
@@ -104,10 +111,12 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
                 call UnitRemoveAbility(target, 'B01D')
             endif
             
+            //remove Cheater Magic
             if GetUnitAbilityLevel(target, 'A08G') > 0 and IsUnitEnemy(target, GetOwningPlayer(caster)) then
                 call UnitRemoveAbility(target, 'A08G')
                 call UnitRemoveAbility(target, 'B01G')
             endif
+
             return true
             //Purge wait
         elseif abilId == 'A08E' then
@@ -131,7 +140,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local integer ID = 0 
         local integer lvl = 0
 
-        if not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) then
+        if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
             //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
 
             if not DousingHexFailCheck(caster, abilId) then
