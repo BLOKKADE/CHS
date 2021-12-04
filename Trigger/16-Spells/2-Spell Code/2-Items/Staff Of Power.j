@@ -8,4 +8,4 @@ library StaffOfPower requires RandomShit
             call UnitAddItemById(u, 'I080')
         endif
     endfunction
-endlibrary//
+endlibrary
