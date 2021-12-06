@@ -109,7 +109,7 @@ scope DamageControllerAfter initializer init
             endif 
 
             //Mask of Death damage reduction
-            if LoadInteger(HTi,GetHandleId(damageSourceHero),1) == 1
+            if LoadInteger(HTi,GetHandleId(damageSourceHero),1) == 1 then
                 call BlzSetEventDamage(   GetEventDamage()* 0.75 )
             endif
         endif
