@@ -130,7 +130,7 @@ scope DamageControllerAfter initializer init
         //Ghoul Passive
         if GetUnitTypeId(damageSource) == 'H01H' and attack then
             set i = GetHeroLevel(damageSource)
-            set r2 = (GetEventDamage() + (BlzGetUnitMaxHP(damageTarget) * (0.025 + (0.00025 * i))))
+            set r2 = BlzGetUnitMaxHP(damageTarget) * (0.025 + (0.00025 * i))
             call Vamp(damageSource,damageTarget,r2)
             set vampCount = vampCount + 1
             call BlzSetEventDamage(   GetEventDamage()+ r2 ) 
