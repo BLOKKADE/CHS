@@ -328,7 +328,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Absolute Acorn
             elseif II == 'I09D' then
-                if GetHeroXP(u) >= 50000 and AddHeroMaxAbsoluteAbility(u)then
+                if GetHeroXP(u) >= 100000 and AddHeroMaxAbsoluteAbility(u)then
                     call UnitAddItemById(u,'I09E')
                 else
                     call PlayerAddGold( GetOwningPlayer(u),8000)  
