@@ -71,6 +71,7 @@ library BoneArmor initializer init requires Utility
             set this.source = null
             call DestroyGroup(this.boneArmorUnits)
             set this.boneArmorUnits = null
+            set this.groupSize = 0
             //call BJDebugMsg("ba end")
             set recycleNext = recycle
             set recycle = this

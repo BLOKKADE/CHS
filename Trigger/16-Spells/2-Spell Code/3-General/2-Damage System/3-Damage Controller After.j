@@ -136,7 +136,7 @@ scope DamageControllerAfter initializer init
             call BlzSetEventDamage(   GetEventDamage()+ r2 ) 
         endif
         //Bone Armor Skeleton Defender
-        set i = SkeletonDefender[targetPid]
+            set i = GetBoneArmorStruct(GetHandleId(damageTarget)).groupSize
         if i > 0 and IsHeroUnitId(GetUnitTypeId(damageTarget)) then
             if i > 12 then
                 set i = 12
