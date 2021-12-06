@@ -1,4 +1,4 @@
-# CHS 1.9.30
+# CHS 1.9.29-fix2?
 
 This is the map and code of the Warcraft 3 map Custom Hero Survival.
 
