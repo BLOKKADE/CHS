@@ -294,14 +294,6 @@ scope DamageControllerAfter initializer init
             endif
         endif
 
-        //Finishing Blow
-        if GetEventDamage() > 0 and GetUnitAbilityLevel(damageSourceHero ,'A02N') >= 1 then
-            if 100 *(GetWidgetLife(damageTarget)- GetEventDamage())/ GetUnitState(damageTarget,UNIT_STATE_MAX_LIFE)     <= R2I(GetUnitAbilityLevel(damageSourceHero ,'A02N'))  then
-                call BlzSetEventDamage(9999999)
-                call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", damageTarget, "chest"))
-            endif
-        endif
-
         //Murloc Warrior
         if GetUnitTypeId(damageTarget) == 'H01F' and GetHeroStr(damageTarget, true) < 2147483647 then
             set i1 = 1 + GetHeroLevel(damageTarget)/ 10 
@@ -370,6 +362,14 @@ scope DamageControllerAfter initializer init
                     endif
                     call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", damageSource, "chest"))
                 endif
+            endif
+        endif
+
+        //Finishing Blow
+        if GetEventDamage() > 0 and GetUnitAbilityLevel(damageSourceHero ,'A02N') >= 1 then
+            if 100 *(GetWidgetLife(damageTarget)- GetEventDamage())/ GetUnitState(damageTarget,UNIT_STATE_MAX_LIFE)     <= R2I(GetUnitAbilityLevel(damageSourceHero ,'A02N'))  then
+                call BlzSetEventDamage(9999999)
+                call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", damageTarget, "chest"))
             endif
         endif
 
