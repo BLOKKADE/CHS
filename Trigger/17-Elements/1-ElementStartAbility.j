@@ -95,7 +95,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Absolute Fire
-        if GetUnitAbilityLevel(u,'A07B') > 0 and IsSpellElement(u,id,1) then
+        if GetUnitAbilityLevel(u,ABSOLUTE_FIRE_ABILITY_ID) > 0 and IsSpellElement(u,id,1) then
             if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                 set calc = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
                 call AddStateTemp(u, 1, (4 * (1 + (0.005 * GetHeroLevel(u)))) * calc, 10)

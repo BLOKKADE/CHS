@@ -326,8 +326,8 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //Absolute Fire
-                set i1 = GetUnitAbilityLevel(u ,'A07B')
-                set i2 = LoadInteger(HT,hid,'A07B')
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_FIRE_ABILITY_ID)
+                set i2 = LoadInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                         set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
@@ -336,7 +336,7 @@ scope LongPeriodCheck initializer init
                         set i1 = i1 * GetClassUnitSpell(u, Element_Fire)
                     endif
                     call AddUnitMagicDmg(u ,   0.5 * I2R(i1 - i2)  )	
-                    call SaveInteger(HT,hid,'A07B',i1)	
+                    call SaveInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
                 endif
 
                 //Absolute Water

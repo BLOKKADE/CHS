@@ -211,7 +211,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
 
         //4 - Critical Strike 
-        call SaveAbilData('AOcr', 'I00B', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CRITICAL_STRIKE_ABILITY_ID, 'I00B', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //5 - Devotion Aura 
@@ -229,7 +229,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('AEfk', 'I003', false, 0, 0, true, Order_Instant, "fanofknives")
 
         //9 - Feral Spirit 
-        call SaveAbilData('AOsf', 'I004', false, 0, 0, false, Order_Instant, "spiritwolf")
+        call SaveAbilData(FERAL_SPIRIT_ABILITY_ID, 'I004', false, 0, 0, false, Order_Instant, "spiritwolf")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -261,7 +261,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
 
         //16 - Serpent Ward 
-        call SaveAbilData('AOsw', 'I00E', false, 0, 0, false, Order_Point, "ward")
+        call SaveAbilData(SERPANT_WARD_ABILITY_ID, 'I00E', false, 0, 0, false, Order_Point, "ward")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -310,7 +310,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Wild, 1)
 
         //27 - Summon Water Elemental 
-        call SaveAbilData('AHwe', 'I00S', false, 0, 0, false, Order_Instant, "waterelemental")
+        call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID, 'I00S', false, 0, 0, false, Order_Instant, "waterelemental")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -321,7 +321,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Light, 1)
 
         //29 - Summon Lava Spawn 
-        call SaveAbilData('ANlm', 'I00T', false, 0, 0, false, Order_Instant, "lavamonster")
+        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID, 'I00T', false, 0, 0, false, Order_Instant, "lavamonster")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -461,7 +461,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
 
         //58 - Summon Mountain Giant 
-        call SaveAbilData('AEsv', 'I03Y', false, 0, 0, false, Order_Instant, "spiritofvengeance")
+        call SaveAbilData(SUMMON_MOUNTAIN_GIANT_ABILITY_ID, 'I03Y', false, 0, 0, false, Order_Instant, "spiritofvengeance")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -471,7 +471,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Blood, 1)
 
         //60 - Pocket Factory 
-        call SaveAbilData('ANsy', 'I02G', false, 0, 0, false, Order_Point, "summonfactory")
+        call SaveAbilData(POCKET_FACTORY_ABILITY_ID, 'I02G', false, 0, 0, false, Order_Point, "summonfactory")
         call SetLastObjectElement(Element_Summon, 1)
 
         //61 - Pulverize 
@@ -484,7 +484,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Poison, 1)
 
         //63 - Carrion Beetles 
-        call SaveAbilData('AUcb', 'I02M', false, 0, 0, false, Order_Instant, "carrionscarabsinstant")
+        call SaveAbilData(CARRION_BEETLES_ABILITY_ID, 'I02M', false, 0, 0, false, Order_Instant, "carrionscarabsinstant")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
@@ -506,7 +506,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Summon, 1)
 
         //68 - Black Arrow 
-        call SaveAbilData('A0AW', 'I02R', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(BLACK_ARROW_PASSIVE_ABILITY_ID, 'I02R', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
@@ -520,7 +520,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Wild, 1)
 
         //71 - Parasite 
-        call SaveAbilData('ANpa', 'I02U', false, 0, 1, true, Order_Target, "parasite")
+        call SaveAbilData(PARASITE_ABILITY_ID, 'I02U', false, 0, 1, true, Order_Target, "parasite")
         call SetLastObjectElement(Element_Poison, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
@@ -542,22 +542,22 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Fire, 1)
 
         //76 - Summon Hawk 
-        call SaveAbilData('ANsw', 'I02Z', false, 0, 0, false, Order_Instant, "summonwareagle")
+        call SaveAbilData(SUMMON_HAWK_ABILITY_ID, 'I02Z', false, 0, 0, false, Order_Instant, "summonwareagle")
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //77 - Summon Bear 
-        call SaveAbilData('ANsg', 'I030', false, 0, 0, false, Order_Instant, "summongrizzly")
+        call SaveAbilData(SUMMON_BEAR_ABILITY_ID, 'I030', false, 0, 0, false, Order_Instant, "summongrizzly")
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //78 - Summon Quilbeast 
-        call SaveAbilData('Arsq', 'I031', false, 0, 0, false, Order_Instant, "summonquillbeast")
+        call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID, 'I031', false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //79 - Phoenix 
-        call SaveAbilData('AHpx', 'I032', false, 0, 0, false, Order_Instant, "summonphoenix")
+        call SaveAbilData(PHEONIX_ABILITY_ID, 'I032', false, 0, 0, false, Order_Instant, "summonphoenix")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
@@ -806,12 +806,12 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveDummyAbilOrder('ANmo', "monsoon")
 
         //138 - Ice Armor 
-        call SaveAbilData('A053', 'I06L', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ICE_ARMOR_ABILITY_ID, 'I06L', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //139 - Last Breath 
-        call SaveAbilData('A05R', 'I07J', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(LAST_BREATHS_ABILITY_ID, 'I07J', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Light, 1)
 
@@ -905,7 +905,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
 
         //158 - Cutting 
-        call SaveAbilData('A081', 'I09I', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CUTTING_ABILITY_ID, 'I09I', false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //159 - Divine Gift 
@@ -951,7 +951,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Arcane, 1)
 
         //168 - Absolute Fire
-        call SaveAbilData('A07B', 'I08T', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_FIRE_ABILITY_ID, 'I08T', true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
 
         //169 - Absolute Water
@@ -1080,11 +1080,11 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(STORM_BOLT_ABILITY_ID,"thunderbolt",1,0)
         call SaveAbilData('AHbn',"banish",1,1)
         call SaveAbilData('AHfs',"flamestrike",2,0)
-        call SaveAbilData('AHwe',"waterelemental",3,0)
+        call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID,"waterelemental",3,0)
         call SaveAbilData('AHtc',"thunderclap",3,0)
         call SaveAbilData('AHhb',"holybolt",1,0)
         call SaveAbilData('AHbz',"blizzard",2,0)   
-        call SaveAbilData('AHpx',"summonphoenix",3,0)  
+        call SaveAbilData(PHEONIX_ABILITY_ID,"summonphoenix",3,0)  
         call SaveAbilData('Ainf',"innerfire",1,1)
     
     
@@ -1092,7 +1092,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('AOhw',"healingwave",1,0)
         call SaveAbilData('AOws',"stomp",3,0)
         call SaveAbilData('AOls',"Locustswarm",3,0)
-        call SaveAbilData('AOsw',"ward",2,0)
+        call SaveAbilData(SERPANT_WARD_ABILITY_ID,"ward",2,0)
         call SaveAbilData('AOhx',"hex",3,1)
         call SaveAbilData('AOvd',"voodoo",3,0)
         call SaveAbilData('AOwk',"windwalk",3,0)
@@ -1107,7 +1107,7 @@ library AbilityData initializer init requires Table, IdLibrary
         
         
         call SaveAbilData('AUfn',"frostnova",1,0)  
-        call SaveAbilData('AUcb',"Carrionscarabs",3,0)
+        call SaveAbilData(CARRION_BEETLES_ABILITY_ID,"Carrionscarabs",3,0)
         call SaveAbilData('AUin',"dreadlordinferno",2,0)
         call SaveAbilData('AUfu',"frostarmor",1,1)
         call SaveAbilData('AUim',"impale",2,0)
@@ -1115,13 +1115,13 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('AUdd',"deathanddecay",2,0)
         call SaveAbilData('AUcs',"carrionswarm",2,0)
         call SaveAbilData('Aam2',"antimagicshell",1,1)
-        call SaveAbilData('Arai',"raisedead",3,0)
+        call SaveAbilData(RAISE_DEAD_ABILITY_ID,"raisedead",3,0)
         call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID,"unholyfrenzy",1,1)
         call SaveAbilData('Acrs',"curse",1,1)
     
         
         
-        call SaveAbilData('AEsv',"spiritofvengeance",3,0)       
+        call SaveAbilData(SUMMON_MOUNTAIN_GIANT_ABILITY_ID,"spiritofvengeance",3,0)       
         call SaveAbilData('AEfk',"fanofknives",3,0)
         call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID,"entanglingroots",1,1)
         call SaveAbilData('AEsf',"starfall",3,0)
@@ -1143,25 +1143,25 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('ANsi',"silence",2,0)
         call SaveAbilData('ANrf',"rainoffire",2,0)
         call SaveAbilData('ANbf',"breathoffire",2,0)
-        call SaveAbilData('ANsy',"summonfactory",2,0)
+        call SaveAbilData(POCKET_FACTORY_ABILITY_ID,"summonfactory",2,0)
         
         
-        call SaveAbilData('Arsq',"summonquillbeast",3,0)    
-        call SaveAbilData('ANsg',"summongrizzly",3,0)  
-        call SaveAbilData('ANlm',"slimemonster",3,0)  
-        call SaveAbilData('ANsw',"summonwareagle",3,0)  
+        call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID,"summonquillbeast",3,0)    
+        call SaveAbilData(SUMMON_BEAR_ABILITY_ID,"summongrizzly",3,0)  
+        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID,"slimemonster",3,0)  
+        call SaveAbilData(SUMMON_HAWK_ABILITY_ID,"summonwareagle",3,0)  
         call SaveAbilData('ANfl',"forkedlightning",1,0)  
         call SaveAbilData('ANso',"soulburn",1,1)  
         call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID,"lightningshield",1,0)  
 
         call SaveAbilData('ANdh',"drunkenhaze",1,1)    
         call SaveAbilData('A046',"breathoffrost",2,0)  
-        call SaveAbilData('ANpa',"parasite",1,1)  
+        call SaveAbilData(PARASITE_ABILITY_ID,"parasite",1,1)  
         call SaveAbilData('ANen',"ensnare",1,1)
         call SaveAbilData('ANht',"howlofterror",3,0)  
 
         call SaveAbilData('ANmo',"monsoon",2,0)
-        call SaveAbilData('AOsf',"spiritwolf",3,0) 
+        call SaveAbilData(FERAL_SPIRIT_ABILITY_ID,"spiritwolf",3,0) 
         
         call SaveAbilData('A05X',"channel",2,0)
         call SaveAbilData(PLAGUE_ABILITY_ID,"channel",2,0) 

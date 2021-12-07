@@ -20,19 +20,19 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	/*set udg_integers08[1]='A06S'
 	set udg_integers08[2]= 'ANms'
 	set udg_integers08[3]= 'AUcs'
-	set udg_integers08[4]= 'AOcr'
+	set udg_integers08[4]= CRITICAL_STRIKE_ABILITY_ID
 	set udg_integers08[5]= 'AHad'
 	set udg_integers08[6]= 'AOae'
 	set udg_integers08[7]= 'AEev'
 	set udg_integers08[8]= 'AEfk'
-	set udg_integers08[9]= 'AOsf'
+	set udg_integers08[9]= FERAL_SPIRIT_ABILITY_ID
 	set udg_integers08[10]= 'AHfs'
 	set udg_integers08[11]= 'ANfl'
 	set udg_integers08[12]= 'AUfn'
 	set udg_integers08[13]= 'A06M'
 	set udg_integers08[14]= 'AHhb'
 	set udg_integers08[15]= 'AUim'
-	set udg_integers08[16]= 'AOsw'
+	set udg_integers08[16]= SERPANT_WARD_ABILITY_ID
 	set udg_integers08[17]= 'AEsh'
 	set udg_integers08[18]= 'A08F'
 	set udg_integers08[19]= 'AHtc'
@@ -43,9 +43,9 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers08[24]= 'ANca'
 	set udg_integers08[25]= 'AUts'
 	set udg_integers08[26]= ENTAGLING_ROOTS_ABILITY_ID
-	set udg_integers08[27]= 'AHwe'
+	set udg_integers08[27]= SUMMON_WATER_ELEMENTAL_ABILITY_ID
 	set udg_integers08[28]= SHOCKWAVE_ABILITY_ID
-	set udg_integers08[29]= 'ANlm'
+	set udg_integers08[29]= SUMMON_LAVA_SPAWN_ABILITY_ID
 	set udg_integers08[30]= 'A023'
 	set udg_integers08[31]= 'AEar'
 	set udg_integers08[32]= IMMOLATION_ABILITY_ID
@@ -74,28 +74,28 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers08[55]= 'AHav'
 	set udg_integers08[56]= 'ANbr'
 	set udg_integers08[57]= 'AUdd'
-	set udg_integers08[58]= 'AEsv'
+	set udg_integers08[58]= SUMMON_MOUNTAIN_GIANT_ABILITY_ID
 	set udg_integers08[59]= 'Ablo'
-	set udg_integers08[60]= 'ANsy'
+	set udg_integers08[60]= POCKET_FACTORY_ABILITY_ID
 	set udg_integers08[61]= 'Awar'
 	set udg_integers08[62]= 'A00Q'
-	set udg_integers08[63]= 'AUcb'
+	set udg_integers08[63]= CARRION_BEETLES_ABILITY_ID
 	set udg_integers08[64]= 'Aakb'
 	set udg_integers08[65]= 'Assk'
 	set udg_integers08[66]= 'AHfa'
-	set udg_integers08[67]= 'Arai'
-	set udg_integers08[68]= 'ANba'
+	set udg_integers08[67]= RAISE_DEAD_ABILITY_ID
+	set udg_integers08[68]= BLACK_ARROW_ABILITY_ID
 	set udg_integers08[69]= 'AHca'
 	set udg_integers08[70]= 'Afae'
-	set udg_integers08[71]= 'ANpa'
+	set udg_integers08[71]= PARASITE_ABILITY_ID
 	set udg_integers08[72]= 'Acrs'
 	set udg_integers08[73]= 'Ainf'
 	set udg_integers08[74]= 'ACac'
 	set udg_integers08[75]= 'A050'
-	set udg_integers08[76]= 'ANsw'
-	set udg_integers08[77]= 'ANsg'
-	set udg_integers08[78]= 'Arsq'
-	set udg_integers08[79]= 'AHpx'
+	set udg_integers08[76]= SUMMON_HAWK_ABILITY_ID
+	set udg_integers08[77]= SUMMON_BEAR_ABILITY_ID
+	set udg_integers08[78]= SUMMON_QUILBEAST_ABILITY_ID
+	set udg_integers08[79]= PHEONIX_ABILITY_ID
 	set udg_integers08[80]= 'Ahwd'
 	set udg_integers08[81]= UNHOLY_FRENZY_ABILITY_ID
 	set udg_integers08[82]= 'Absk'
@@ -314,11 +314,11 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers08[137]= 'ANmo' 
 	set udg_integers09[137]= 'I06G' 
 
-	set udg_integers08[138]= 'A053' 
+	set udg_integers08[138]= ICE_ARMOR_ABILITY_ID 
 	set udg_integers09[138]= 'I06L' 
 
 
-	set udg_integers08[139]= 'A05R' 
+	set udg_integers08[139]= LAST_BREATHS_ABILITY_ID 
 	set udg_integers09[139]= 'I07J' 
     
 	set udg_integers08[140]= 'A05S' 
@@ -354,7 +354,7 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers08[148]= 'A06V' 
 	set udg_integers09[148]= 'I085'  
  
-	set udg_integers08[149]= 'A06X' 
+	set udg_integers08[149]= WILD_DEFENSE_ABILITY_ID 
 	set udg_integers09[149]= 'I087'  
     
     
@@ -379,7 +379,7 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers08[157]= 'A080' 
 	set udg_integers09[157]= 'I09H'   
     
-	set udg_integers08[158]= 'A081' 
+	set udg_integers08[158]= CUTTING_ABILITY_ID 
 	set udg_integers09[158]= 'I09I'       
     
 	set udg_integers08[159]= 'A082' 
@@ -411,7 +411,7 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	call SaveItemAbility('A07R','I099')
 	call SaveItemAbility('A07Q','I098')    
 	call SaveItemAbility('A07D','I08V')    
-	call SaveItemAbility('A07B','I08T')    
+	call SaveItemAbility(ABSOLUTE_FIRE_ABILITY_ID,'I08T')    
 	call SaveItemAbility('A07P','I097')    
 	call SaveItemAbility('A07C','I08U')    
 	call SaveItemAbility('A07K','I093')      

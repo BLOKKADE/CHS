@@ -2,7 +2,7 @@ function LastBreathEnd takes nothing returns nothing
     local timer tim = GetExpiredTimer()
     local unit u = LoadUnitHandle(HT,GetHandleId(tim),1)
     local effect eff = LoadEffectHandle(HT,GetHandleId(tim),2)
-    call SaveInteger(HT,GetHandleId(u),'A05R',0) 
+    call SaveInteger(HT,GetHandleId(u),LAST_BREATHS_ABILITY_ID,0) 
     call DestroyEffect(eff)
     call UnitRemoveAbility(u, 'A08B')
     call UnitRemoveAbility(u, 'B01D')
@@ -18,7 +18,7 @@ function LastBreath takes unit target, integer level returns nothing
     local timer t
     local real Hp
 
-    if LoadInteger(HT,GetHandleId(target),'A05R') == 1 and GetUnitAbilityLevel(target, 'A08B') > 0 then
+    if LoadInteger(HT,GetHandleId(target),LAST_BREATHS_ABILITY_ID) == 1 and GetUnitAbilityLevel(target, 'A08B') > 0 then
         set Hp = GetWidgetLife(target)
         set Hp = Hp - GetEventDamage()
         if Hp < 1 then
@@ -26,12 +26,12 @@ function LastBreath takes unit target, integer level returns nothing
         endif
         call SetWidgetLife(target,Hp)
         call BlzSetEventDamage(0)
-    elseif GetWidgetLife(target) <= GetEventDamage()+ 0.405 and BlzGetUnitAbilityCooldownRemaining(target,'A05R') <= 0.501 then
+    elseif GetWidgetLife(target) <= GetEventDamage()+ 0.405 and BlzGetUnitAbilityCooldownRemaining(target,LAST_BREATHS_ABILITY_ID) <= 0.501 then
         set t = NewTimer()
         call BlzSetEventDamage(0)
         call SetWidgetLife(target,1.405)
-        call AbilStartCD(target,'A05R', 60 + BlzGetUnitAbilityCooldownRemaining(target,'A05R') )  
-        call SaveInteger(HT,GetHandleId(target),'A05R',1)	             
+        call AbilStartCD(target,LAST_BREATHS_ABILITY_ID, 60 + BlzGetUnitAbilityCooldownRemaining(target,LAST_BREATHS_ABILITY_ID) )  
+        call SaveInteger(HT,GetHandleId(target),LAST_BREATHS_ABILITY_ID,1)	             
         call SaveUnitHandle(HT,GetHandleId(t),1,GetTriggerUnit())
         if GetOwningPlayer(target) != Player(11) then
             call SaveEffectHandle(HT,GetHandleId(t),2,AddSpecialEffectTarget( LastBreathAnim , target , "origin" ) ) 

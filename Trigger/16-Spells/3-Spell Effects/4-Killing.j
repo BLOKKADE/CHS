@@ -44,7 +44,7 @@ scope Killing initializer init
         endif
         
         //Black Arrow
-        set i = GetUnitAbilityLevel(killingHero, 'A0AW')
+        set i = GetUnitAbilityLevel(killingHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
         if i > 0 and killer != null and IsUnitEnemy(killer, targetPlayer) then
             call CastBlackArrow(killingHero, target, i)
         endif   

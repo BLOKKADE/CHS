@@ -9,7 +9,7 @@ library Vampirism requires RandomShit
             set vamp = vamp * 0.7
         endif
 
-        set i1 = GetUnitAbilityLevel(u2, 'A0B9')
+        set i1 = GetUnitAbilityLevel(u2, DOME_OF_PROTECTION_ABILITY_ID)
         if i1 > 0 then
             set vamp = vamp * (1 - (0.175 + (0.0175 * i1)))
         endif

@@ -25,7 +25,7 @@ library AbsoluteElements initializer init requires Table
         set ElementAbsolutes = Table.create()
         set AbsoluteElements = Table.create()
 
-        call InitializeAbsolute(1, 'A07B')
+        call InitializeAbsolute(1, ABSOLUTE_FIRE_ABILITY_ID)
         call InitializeAbsolute(2, 'A07C')
         call InitializeAbsolute(3, 'A07E')
         call InitializeAbsolute(4, 'A07D')

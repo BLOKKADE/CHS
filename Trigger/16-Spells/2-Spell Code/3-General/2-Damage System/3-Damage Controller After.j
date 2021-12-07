@@ -374,7 +374,7 @@ scope DamageControllerAfter initializer init
         endif
 
         //Last Breath
-        set i = GetUnitAbilityLevel(damageTarget, 'A05R')
+        set i = GetUnitAbilityLevel(damageTarget, LAST_BREATHS_ABILITY_ID)
         if i > 0 and GetEventDamage() > 0 then
             call LastBreath(damageTarget, i)
         else
@@ -382,7 +382,7 @@ scope DamageControllerAfter initializer init
             if GetUnitState(damageTarget, UNIT_STATE_LIFE) - GetEventDamage() <= 0 then
 
                 //Skeleton Battlemaster (Black Arrow)
-                set i = GetUnitAbilityLevel(damageTargetHero, 'A0AW')
+                set i = GetUnitAbilityLevel(damageTargetHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
                 if i > 0 and GetUnitAbilityLevel(damageTarget, 'A0AX') > 0 /*and GetRandomInt(1,100) < (i + 10) * GetUnitLuck(damageTargetHero)*/ then
                     call SetUnitState(damageTarget, UNIT_STATE_LIFE, GetUnitState(damageTarget, UNIT_STATE_MAX_LIFE))
                     call BlzSetEventDamage(0)

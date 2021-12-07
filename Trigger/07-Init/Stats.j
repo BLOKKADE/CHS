@@ -8,11 +8,11 @@ library Stats initializer init requires EditAbilityInfo
     endglobals
 
     function GetUnitStatAbility takes unit u returns ability
-        if GetUnitAbilityLevel(u, 'A0B4') == 0 then
-            call UnitAddAbility(u, 'A0B4')
+        if GetUnitAbilityLevel(u, STAT_BONUS_ABILITY_ID) == 0 then
+            call UnitAddAbility(u, STAT_BONUS_ABILITY_ID)
         endif
 
-        return BlzGetUnitAbility(u, 'A0B4')
+        return BlzGetUnitAbility(u, STAT_BONUS_ABILITY_ID)
     endfunction
 
     function UnitGetStat takes unit u, integer stat returns integer
@@ -20,11 +20,11 @@ library Stats initializer init requires EditAbilityInfo
     endfunction
 
     function UnitSetStat takes unit u, integer stat, integer bonus returns nothing
-        call SetAbilityIntegerField(u, 'A0B4', 1, StatField[stat], bonus)
+        call SetAbilityIntegerField(u, STAT_BONUS_ABILITY_ID, 1, StatField[stat], bonus)
     endfunction
     
     function UnitAddStat takes unit u, integer stat, integer bonus returns nothing
-        call SetAbilityIntegerField(u, 'A0B4', 1, StatField[stat], UnitGetStat(u, stat) + bonus)
+        call SetAbilityIntegerField(u, STAT_BONUS_ABILITY_ID, 1, StatField[stat], UnitGetStat(u, stat) + bonus)
     endfunction
 
     private function init takes nothing returns nothing

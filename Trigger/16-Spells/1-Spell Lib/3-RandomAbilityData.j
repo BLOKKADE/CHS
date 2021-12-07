@@ -60,7 +60,7 @@ function InitDataRA4 takes nothing returns nothing
     set AbilSpellRB1[12] = 'ANdh'
     set AbilSpellRB1[13] = 'ANfl'  
     set AbilSpellRB1[14] = LIGHTNING_SHIELD_ABILITY_ID  
-    set AbilSpellRB1[15] = 'ANpa'  
+    set AbilSpellRB1[15] = PARASITE_ABILITY_ID  
     set AbilSpellRB1[16] = 'ANen' 
    
    
@@ -93,9 +93,9 @@ function InitDataRA4 takes nothing returns nothing
     set AbilSpellRB3[2] = 'AEsf' 
     set AbilSpellRB3[3] = 'AEfk'      
     set AbilSpellRB3[4] = 'ANht'      
-    set AbilSpellRB3[5] = 'AOsw'   
-    set AbilSpellRB3[6] = 'AOsf' 
-    set AbilSpellRB3[7] = 'AHwe'
+    set AbilSpellRB3[5] = SERPANT_WARD_ABILITY_ID   
+    set AbilSpellRB3[6] = FERAL_SPIRIT_ABILITY_ID 
+    set AbilSpellRB3[7] = SUMMON_WATER_ELEMENTAL_ABILITY_ID
       
     set AbilSRB3_count = 7  
    

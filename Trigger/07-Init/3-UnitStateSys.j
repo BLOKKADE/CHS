@@ -51,34 +51,34 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call AddUnitMagicDef(u,10 * SummonWildDefense[pid])
             call AddUnitEvasion(u,1 * SummonWildDefense[pid])
             call AddUnitBlock(u,10 * SummonWildDefense[pid])
-            call AddSummonAbility(u, 'A06X', SummonWildDefense[pid])
+            call AddSummonAbility(u, WILD_DEFENSE_ABILITY_ID, SummonWildDefense[pid])
         endif
 
         if SummonCrit[pid] > 0 and i != PHOENIX_1_UNIT_ID then
-            call AddSummonAbility(u, 'AOcr', SummonCrit[pid])
+            call AddSummonAbility(u, CRITICAL_STRIKE_ABILITY_ID, SummonCrit[pid])
         endif
 
         if SummonCutting[pid] > 0 then
-            call AddSummonAbility(u, 'A081', SummonCutting[pid])
+            call AddSummonAbility(u, CUTTING_ABILITY_ID, SummonCutting[pid])
         endif
 
         if SummonLastBreath[pid] > 0 then
-            call AddSummonAbility(u, 'A05R', SummonLastBreath[pid])
+            call AddSummonAbility(u, LAST_BREATHS_ABILITY_ID, SummonLastBreath[pid])
         endif
 
         if SummonIceArmor[pid] > 0 then
-            call AddSummonAbility(u, 'A053', SummonIceArmor[pid])
+            call AddSummonAbility(u, ICE_ARMOR_ABILITY_ID, SummonIceArmor[pid])
         endif
 
         if SummonDomeProtection[pid] > 0 then
-            call AddSummonAbility(u, 'A0B9', SummonDomeProtection[pid])
+            call AddSummonAbility(u, DOME_OF_PROTECTION_ABILITY_ID, SummonDomeProtection[pid])
         endif
 
         call AddUnitPvpBonus(u, GetUnitPvpBonus(hero))
 
         //Water Elemental
         if WATER_ELEMENTALS.contains(i) then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AHwe'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SUMMON_WATER_ELEMENTAL_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
             call AddUnitMagicDef(u,15 * i2)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
@@ -88,13 +88,13 @@ library UnitStateSys initializer init requires RandomShit, Functions
         
             //Feral Spirit Wolf
         elseif FERAL_SPIRIT_WOLVES.contains(i) then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AOsf'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,FERAL_SPIRIT_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
             call AddUnitEvasion(u,15 * i2)
-            if GetUnitAbilityLevel(u, 'AOcr') > 0 then
-                call SetUnitAbilityLevel(u, 'AOcr', GetUnitAbilityLevel(u, 'AOcr') + 1)
+            if GetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID) > 0 then
+                call SetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID, GetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID) + 1)
             else
-                call UnitAddAbility(u, 'AOcr')
+                call UnitAddAbility(u, CRITICAL_STRIKE_ABILITY_ID)
             endif
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
             call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
@@ -103,7 +103,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Serpent Ward 
         elseif SERPENT_WARDS.contains(i) then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AOsw'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SERPANT_WARD_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(10.1 + I2R(i2)))  ,0)
             call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 300)
@@ -112,7 +112,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
         
             //Skeleton Warrior Skeleton Mage
         elseif i == SKELETON_WARRIOR_1_UNIT_ID or i == SKELETON_MAGE_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'Arai'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,RAISE_DEAD_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 100,0)
             call AddUnitEvasion(u,15 * i2)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
@@ -122,7 +122,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Summon Mountain Giant
         elseif i == MOUNTAIN_GIANT_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AEsv'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SUMMON_MOUNTAIN_GIANT_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 50,0)
             call AddUnitBlock(u,500 * i2)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
@@ -132,7 +132,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Summon Quilbeast
         elseif QUILBEASTS.contains(i) then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'Arsq'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SUMMON_QUILBEAST_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 50,0)
             call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 25 * i2)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
@@ -142,7 +142,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Summon Bear
         elseif BEARS.contains(i) then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsg'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SUMMON_BEAR_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
             call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 20 * i2)
@@ -152,7 +152,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Summon Hawk
         elseif HAWKS.contains(i) then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsw'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SUMMON_HAWK_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(7 /(12.1 + I2R(i2)))  ,0)
             call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
@@ -161,7 +161,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
         
             //Phoenix
         elseif i == PHOENIX_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AHpx'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,PHEONIX_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 400,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(7 /(12.1 + I2R(i2)))  ,0)
             call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 5000)
@@ -170,7 +170,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
         
             //Lava Spawn
         elseif LAVA_SPAWNS.contains(i) then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANlm'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SUMMON_LAVA_SPAWN_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 15,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(10.1 + I2R(i2)))  ,0)
             call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 700)
@@ -191,7 +191,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Pocket Factory
         elseif i == CLOCKWORK_GOBLIN_1_UNIT_ID or i == POCKET_FACTORY_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsy'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,POCKET_FACTORY_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call AddUnitMagicDmg(u,45 * i2)
             call AddUnitMagicDef(u,15 * i2)
@@ -204,7 +204,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
         
             //??? Priest?
         elseif i == PRIEST_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANba'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,BLACK_ARROW_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call AddUnitMagicDef(u,5 * i2)
             call AddUnitEvasion(u,5 * i2)
@@ -215,7 +215,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Parasite
         elseif i == PARASITE_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANpa'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,PARASITE_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call AddUnitMagicDef(u,5 * i2)
             call AddUnitEvasion(u,5 * i2)
@@ -226,7 +226,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Carrion Beetle
         elseif i == CARRION_BEETLE_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AUcb'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,CARRION_BEETLES_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 35,0)
             call AddUnitMagicDef(u,5 * i2)
             call AddUnitEvasion(u,5 * i2)
@@ -251,7 +251,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Black Arrow Skeleton Battlemaster
         elseif i == SKELETON_BATTLEMASTER_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'A0AW'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,BLACK_ARROW_PASSIVE_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 100,0)
             call AddUnitMagicDef(u,5 * i2)
             call AddUnitEvasion(u,5 * i2)
@@ -265,7 +265,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Black Arrow Skeleton Warmage
         elseif i == SKELETON_WARMAGE_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'A0AW'),hero) + UpgradeU
+            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,BLACK_ARROW_PASSIVE_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 60,0)
             call AddUnitMagicDmg(u,10 * i2)
             call AddUnitMagicDef(u,5 * i2)
@@ -335,11 +335,11 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
         //Pit Lord
         if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
-            call UnitAddAbility(u, 'A07B')
-            call BlzUnitDisableAbility(u,'A07B',false,true)
+            call UnitAddAbility(u, ABSOLUTE_FIRE_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_FIRE_ABILITY_ID,false,true)
             call SaveInteger(HT,GetHandleId(u),941561, 1)
-            call AddSpellPlayerInfo('A07B',u,1)
-            call FuncEditParam('A07B',u)
+            call AddSpellPlayerInfo(ABSOLUTE_FIRE_ABILITY_ID,u,1)
+            call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID,u)
             call AddHeroMaxAbsoluteAbility(u)
         endif
 

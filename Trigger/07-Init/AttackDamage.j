@@ -1,10 +1,10 @@
 library AttackDamage requires EditAbilityInfo
     function GetUnitAttackDamageAbility takes unit u returns ability
-        if GetUnitAbilityLevel(u, 'A0A8') == 0 then
-            call UnitAddAbility(u, 'A0A8')
+        if GetUnitAbilityLevel(u, DAMAGE_BONUS_ABILITY_ID) == 0 then
+            call UnitAddAbility(u, DAMAGE_BONUS_ABILITY_ID)
         endif
 
-        return BlzGetUnitAbility(u, 'A0A8')
+        return BlzGetUnitAbility(u, DAMAGE_BONUS_ABILITY_ID)
     endfunction
 
     function UnitGetAttackDamage takes unit u returns integer
@@ -12,10 +12,10 @@ library AttackDamage requires EditAbilityInfo
     endfunction
 
     function UnitSetAttackDamage takes unit u, integer bonus returns nothing
-        call SetAbilityIntegerField(u, 'A0A8', 1, ABILITY_ILF_ATTACK_BONUS, bonus)
+        call SetAbilityIntegerField(u, DAMAGE_BONUS_ABILITY_ID, 1, ABILITY_ILF_ATTACK_BONUS, bonus)
     endfunction
     
     function UnitAddAttackDamage takes unit u, integer bonus returns nothing
-        call SetAbilityIntegerField(u, 'A0A8', 1, ABILITY_ILF_ATTACK_BONUS, UnitGetAttackDamage(u) + bonus)
+        call SetAbilityIntegerField(u, DAMAGE_BONUS_ABILITY_ID, 1, ABILITY_ILF_ATTACK_BONUS, UnitGetAttackDamage(u) + bonus)
     endfunction
 endlibrary

@@ -80,7 +80,7 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
     endif
     
     //Critical Strike
-    set i = GetUnitAbilityLevel(damageSource,'AOcr') //Critical Strike 
+    set i = GetUnitAbilityLevel(damageSource,CRITICAL_STRIKE_ABILITY_ID) //Critical Strike 
     if i > 0 and GetRandomReal(0,100) <= 20 * luck + BaseChCr then
         set CritDmg = CritDmg + Dmg *(1.7 + 0.3 * I2R(i))
     endif

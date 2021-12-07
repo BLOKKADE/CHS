@@ -156,7 +156,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         endif
 
         //Parasite
-        set abilId = 'ANpa'
+        set abilId = PARASITE_ABILITY_ID
         set abilLevel = GetUnitAbilityLevel(u, abilId)
         if abilLevel > 0 then
             call UpdateAbilityField(u, abilId, ABILITY_RLF_DAMAGE_PER_SECOND_POI1, abilLevel, bonus)

@@ -12,7 +12,7 @@ library StableSpells initializer init
 
         set StableSpells.boolean['AHds'] = true
         set StableSpells.boolean['A07S'] = true
-        set StableSpells.boolean['A05R'] = true
+        set StableSpells.boolean[LAST_BREATHS_ABILITY_ID] = true
         set StableSpells.boolean['A0AB'] = true
         set StableSpells.boolean['A0AM'] = true
         set StableSpells.boolean['A08P'] = true

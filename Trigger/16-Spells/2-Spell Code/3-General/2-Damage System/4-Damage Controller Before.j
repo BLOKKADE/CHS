@@ -242,7 +242,7 @@ scope DamageControllerBefore initializer init
 
         //Cutting
         set GLOB_cuttting = false
-        set II = GetUnitAbilityLevel(damageSource,'A081')
+        set II = GetUnitAbilityLevel(damageSource,CUTTING_ABILITY_ID)
         if II > 0 and attack and GetRandomReal(1,100) < 20 * luckSource then
             call BlzSetEventDamage(GetEventDamage()+ II * 100)
             set GLOB_cuttting = true
@@ -431,10 +431,10 @@ scope DamageControllerBefore initializer init
 
         if not unlimitedAgony then
             //Ice Armor
-            if GetUnitAbilityLevel(damageTarget,'A053')> 0 and BlzGetUnitAbilityCooldownRemaining(damageTarget,'A053') <= 0    then
+            if GetUnitAbilityLevel(damageTarget,ICE_ARMOR_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(damageTarget,ICE_ARMOR_ABILITY_ID) <= 0    then
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", damageTarget, "chest"))
                 call BlzSetEventDamage( GetEventDamage()/ 5) 
-                call AbilStartCD(damageTarget,'A053', 2.05 - 0.05 * I2R(GetUnitAbilityLevel(damageTarget,'A053')) )
+                call AbilStartCD(damageTarget,ICE_ARMOR_ABILITY_ID, 2.05 - 0.05 * I2R(GetUnitAbilityLevel(damageTarget,ICE_ARMOR_ABILITY_ID)) )
             endif  
 
             //Blessed Protection
@@ -596,7 +596,7 @@ scope DamageControllerBefore initializer init
             endif
 
             //Skeleton Warmage
-            set II = GetUnitAbilityLevel(damageSourceHero, 'A0AW')
+            set II = GetUnitAbilityLevel(damageSourceHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
             if II > 0 and GetUnitAbilityLevel(damageSource, 'A0AY') > 0 and GetRandomInt(1,100) < ((II + 10) * 0.5) * luckSource then
                 set blockDamage = 0
             endif

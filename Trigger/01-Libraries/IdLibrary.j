@@ -162,7 +162,32 @@ library IdLibrary initializer init
         constant integer YETI_UNIT_ID                                   = 'O00B'
 
         // Abilities
-
+        constant integer ABSOLUTE_FIRE_ABILITY_ID                       = 'A07B'
+        constant integer ATTACK_SPEED_BONUS_ABILITY_ID                  = 'A0A5'
+        constant integer BLACK_ARROW_ABILITY_ID                         = 'ANba'
+        constant integer BLACK_ARROW_PASSIVE_ABILITY_ID                 = 'A0AW'
+        constant integer CARRION_BEETLES_ABILITY_ID                     = 'AUcb'
+        constant integer CRITICAL_STRIKE_ABILITY_ID                     = 'AOcr'
+        constant integer CUTTING_ABILITY_ID                             = 'A081'
+        constant integer DAMAGE_BONUS_ABILITY_ID                        = 'A0A8'
+        constant integer DOME_OF_PROTECTION_ABILITY_ID                  = 'A0B9'
+        constant integer FERAL_SPIRIT_ABILITY_ID                        = 'AOsf'
+        constant integer ICE_ARMOR_ABILITY_ID                           = 'A053'
+        constant integer LAST_BREATHS_ABILITY_ID                        = 'A05R'
+        constant integer PARASITE_ABILITY_ID                            = 'ANpa'
+        constant integer PHEONIX_ABILITY_ID                             = 'AHpx'
+        constant integer POCKET_FACTORY_ABILITY_ID                      = 'ANsy'
+        constant integer RAISE_DEAD_ABILITY_ID                          = 'Arai'
+        constant integer SERPANT_WARD_ABILITY_ID                        = 'AOsw'
+        constant integer STAT_BONUS_ABILITY_ID                          = 'A0B4'
+        constant integer SUMMON_BEAR_ABILITY_ID                         = 'ANsg'
+        constant integer SUMMON_HAWK_ABILITY_ID                         = 'ANsw'
+        constant integer SUMMON_LAVA_SPAWN_ABILITY_ID                   = 'ANlm'
+        constant integer SUMMON_MOUNTAIN_GIANT_ABILITY_ID               = 'AEsv'
+        constant integer SUMMON_QUILBEAST_ABILITY_ID                    = 'Arsq'
+        constant integer SUMMON_WATER_ELEMENTAL_ABILITY_ID              = 'AHwe'
+        constant integer WILD_DEFENSE_ABILITY_ID                        = 'A06X'
+        
         // Tauren Abilities
         StaticIdGroup TAUREN_ABILITIES
         constant integer SPIRIT_LINK_ABILITY_ID                         = 'A0B7'
