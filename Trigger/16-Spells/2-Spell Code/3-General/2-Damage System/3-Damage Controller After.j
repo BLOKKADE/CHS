@@ -127,6 +127,13 @@ scope DamageControllerAfter initializer init
             set vampCount = vampCount + 1
         endif
 
+        //Soul Reaper
+        if UnitHasItemS(damageSource, 'I01C') then
+            set r2 = GetEventDamage() * 0.5
+            call Vamp(damageSource, damageTarget, r2)
+            set vampCount = vampCount + 1
+        endif
+
         //Dreadlord Passive
         if GetUnitTypeId(damageSourceHero) == 'O002' then
             set r2 = GetEventDamage()*(0.02 * I2R(GetHeroLevel(damageSourceHero)) )
