@@ -21,8 +21,8 @@ function Trig_EffectInit_Actions takes nothing returns nothing
 
     call DataEffect('AHds',0,'ahdu')
 
-    call DataEffect('AHtb',0,'Htb1')
-    call DataEffect('AHtb',1,'ahdu')
+    call DataEffect(STORM_BOLT_ABILITY_ID,0,'Htb1')
+    call DataEffect(STORM_BOLT_ABILITY_ID,1,'ahdu')
 
     call DataEffect('AHbn',0,'ahdu')
 
@@ -52,7 +52,7 @@ function Trig_EffectInit_Actions takes nothing returns nothing
     call DataEffect('AOws',1,'ahdu')
     call DataEffect('AOws',2,'aduu')
 
-    call DataEffect('AOsh',0,'Osh1')
+    call DataEffect(SHOCKWAVE_ABILITY_ID,0,'Osh1')
 
     call DataEffect('AOcl',0,'Ocl1')
 

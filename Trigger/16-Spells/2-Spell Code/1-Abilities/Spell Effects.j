@@ -84,7 +84,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             call ResetTime(caster)
             return true
             //Spirit Link
-        elseif abilId == 'A0B7' then
+        elseif abilId == SPIRIT_LINK_ABILITY_ID then
             call CastSpiritLink(caster)
             return true
             //Blink Strike
@@ -195,7 +195,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     endif
 
                     set lvl = GetUnitAbilityLevel(caster, 'A04L')
-                    if abilId != 'AEim' and abilId != 'ANms' and lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
+                    if abilId != IMMOLATION_ABILITY_ID and abilId != 'ANms' and lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
                         call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
                     endif
 

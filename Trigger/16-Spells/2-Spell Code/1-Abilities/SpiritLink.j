@@ -31,7 +31,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
         private thistype recycleNext
 
         private method updateDescription takes nothing returns nothing
-            call UpdateAbilityDescription(GetDesriptionAbility('A0B7', this.level - 1), Player(this.pid), 'A0B7', "000", R2I((1 - this.damageReduction) * 100), level)
+            call UpdateAbilityDescription(GetDesriptionAbility(SPIRIT_LINK_ABILITY_ID, this.level - 1), Player(this.pid), SPIRIT_LINK_ABILITY_ID, "000", R2I((1 - this.damageReduction) * 100), level)
         endmethod
 
         private method refreshGroup takes nothing returns nothing
@@ -39,7 +39,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
             local real oldRed = this.damageReduction
 
             set this.groupSize = BlzGroupGetSize(this.spiritLinkedUnits)
-            set this.level = GetUnitAbilityLevel(this.source, 'A0B7')
+            set this.level = GetUnitAbilityLevel(this.source, SPIRIT_LINK_ABILITY_ID)
             set this.damageReduction = 1
 
             //call BJDebugMsg("size: " + I2S(this.groupSize))

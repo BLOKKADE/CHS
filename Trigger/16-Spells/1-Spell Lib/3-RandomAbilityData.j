@@ -45,21 +45,21 @@ endfunction
 
 function InitDataRA4 takes nothing returns nothing
 
-    set AbilSpellRB1[0] = 'AHtb'
+    set AbilSpellRB1[0] = STORM_BOLT_ABILITY_ID
     set AbilSpellRB1[1] = 'AHbn'
     set AbilSpellRB1[2] = 'AOhx'
     set AbilSpellRB1[3] = 'AOcl'
     set AbilSpellRB1[4] = 'AUfn'
-    set AbilSpellRB1[5] = 'Auhf'
+    set AbilSpellRB1[5] = UNHOLY_FRENZY_ABILITY_ID
     set AbilSpellRB1[6] = 'Acrs'
     set AbilSpellRB1[7] = 'AEsh'
     set AbilSpellRB1[8] = 'Afae'
-    set AbilSpellRB1[9] = 'AEer'
+    set AbilSpellRB1[9] = ENTAGLING_ROOTS_ABILITY_ID
     set AbilSpellRB1[10] = 'ANab'
     set AbilSpellRB1[11] = 'ANso'
     set AbilSpellRB1[12] = 'ANdh'
     set AbilSpellRB1[13] = 'ANfl'  
-    set AbilSpellRB1[14] = 'ACls'  
+    set AbilSpellRB1[14] = LIGHTNING_SHIELD_ABILITY_ID  
     set AbilSpellRB1[15] = 'ANpa'  
     set AbilSpellRB1[16] = 'ANen' 
    
@@ -69,7 +69,7 @@ function InitDataRA4 takes nothing returns nothing
 
     set AbilSpellRB2[0] = 'AHfs'
     set AbilSpellRB2[1] = 'AHbz'
-    set AbilSpellRB2[2] = 'AOsh'
+    set AbilSpellRB2[2] = SHOCKWAVE_ABILITY_ID
     set AbilSpellRB2[3] = 'AUim'
     set AbilSpellRB2[4] = 'AUdd'
     set AbilSpellRB2[5] = 'AUcs'
@@ -84,7 +84,7 @@ function InitDataRA4 takes nothing returns nothing
     set AbilSpellRB2[14] = 'Asta' 
     set AbilSpellRB2[15] = 'ANmo' 
     set AbilSpellRB2[16] = 'A05X' 
-    set AbilSpellRB2[17] = 'A017'
+    set AbilSpellRB2[17] = PLAGUE_ABILITY_ID
     set AbilSpellRB2[18] = 'A046'   
     set AbilSRB2_count = 18
    

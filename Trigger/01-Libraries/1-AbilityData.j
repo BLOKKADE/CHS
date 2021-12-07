@@ -294,7 +294,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Energy, 1)
 
         //23 - Life Drain 
-        call SaveAbilData('ANdr', 'I00M', false, 0, 0, true, Order_Target, "drain")
+        call SaveAbilData(LIFE_DRAIN_ABILITY_ID, 'I00M', false, 0, 0, true, Order_Target, "drain")
         call SetLastObjectElement(Element_Dark, 1)
 
         //24 - Cleaving Attack 
@@ -305,7 +305,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
 
         //26 - Entangling Roots 
-        call SaveAbilData('AEer', 'I00Q', false, 0, 1, true, Order_Target, "entanglingroots")
+        call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID, 'I00Q', false, 0, 1, true, Order_Target, "entanglingroots")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
 
@@ -316,7 +316,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Summon, 1)
 
         //28 - Shockwave 
-        call SaveAbilData('AOsh', 'I00R', false, 0, 0, true, Order_Point, "shockwave")
+        call SaveAbilData(SHOCKWAVE_ABILITY_ID, 'I00R', false, 0, 0, true, Order_Point, "shockwave")
         call SetLastObjectElement(Element_Earth, 2)
         call SetLastObjectElement(Element_Light, 1)
 
@@ -335,16 +335,16 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('AEar', 'I00W', false, 0, 0, false, Order_None, null)
 
         //32 - Activate Immolation 
-        call SaveAbilData('AEim', 'I00V', false, 0, 0, false, Order_None, "immolation")
+        call SaveAbilData(IMMOLATION_ABILITY_ID, 'I00V', false, 0, 0, false, Order_None, "immolation")
         call SetLastObjectElement(Element_Fire, 2)
 
         //33 - Storm Bolt 
-        call SaveAbilData('AHtb', 'I00X', false, 0, 0, true, Order_Target, "thunderbolt")
+        call SaveAbilData(STORM_BOLT_ABILITY_ID, 'I00X', false, 0, 0, true, Order_Target, "thunderbolt")
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Energy, 1)
 
         //34 - Mirror Image 
-        call SaveAbilData('AOmi', 'I00Z', false, 0, 0, false, Order_None, "mirrorimage")
+        call SaveAbilData(MIRROR_IMAGE_ABILITY_ID, 'I00Z', false, 0, 0, false, Order_None, "mirrorimage")
         call SetLastObjectElement(Element_Arcane, 1)
 
         //35 - Chain Lightning 
@@ -358,7 +358,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveDummyAbilOrder('AEtq', "tranquility")
 
         //37 - Cluster Rockets 
-        call SaveAbilData('A0AT', 'I01A', false, 0, 0, true, Order_Point, "clusterrockets")
+        call SaveAbilData(CLUSTER_ROCKETS_ABILITY_ID, 'I01A', false, 0, 0, true, Order_Point, "clusterrockets")
         call SaveDummyAbilOrder('ANcs', "clusterrockets")
 
         //38 - Wind Walk 
@@ -397,7 +397,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Arcane, 1)
 
         //45 - SpiritLink
-        call SaveAbilData('A0B7', 'I035', false, 1, 1, true, Order_Target, "spirtlink")
+        call SaveAbilData(SPIRIT_LINK_ABILITY_ID, 'I035', false, 1, 1, true, Order_Target, "spirtlink")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
@@ -566,7 +566,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Light, 2)
 
         //81 - Unholy Frenzy 
-        call SaveAbilData('Auhf', 'I034', false, 0, 1, true, Order_Target, "unholyfrenzy")
+        call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID, 'I034', false, 0, 1, true, Order_Target, "unholyfrenzy")
         call SetLastObjectElement(Element_Dark, 1)
 
         //82 - Berserk 
@@ -579,11 +579,11 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Light, 1)
 
         //84 - Lightning Shield 
-        call SaveAbilData('ACls', 'I038', false, 0, 1, false, Order_None, "lightningshield")
+        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, 'I038', false, 0, 1, false, Order_None, "lightningshield")
         call SetLastObjectElement(Element_Wind, 2)
 
         //85 - Volcano 
-        call SaveAbilData('A09X', 'I039', false, 0, 0, true, Order_Point, "volcano")
+        call SaveAbilData(VOLCANO_ABILITY_ID, 'I039', false, 0, 0, true, Order_Point, "volcano")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
         call SaveDummyAbilOrder('ANvc', "volcano")
@@ -596,7 +596,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Fire, 1)
 
         //88 - Plague 
-        call SaveAbilData('A017', 'I03V', false, 0, 0, true, Order_Point, "channel")
+        call SaveAbilData(PLAGUE_ABILITY_ID, 'I03V', false, 0, 0, true, Order_Point, "channel")
         call SetLastObjectElement(Element_Poison, 2)
 
         //89 - Pillage 
@@ -1077,7 +1077,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('A08E',"purge",1,1)
         call SaveAbilData('ANtm',"transmute",1,1)
         call SaveAbilData('Aclf',"cloudoffog",2,0)
-        call SaveAbilData('AHtb',"thunderbolt",1,0)
+        call SaveAbilData(STORM_BOLT_ABILITY_ID,"thunderbolt",1,0)
         call SaveAbilData('AHbn',"banish",1,1)
         call SaveAbilData('AHfs',"flamestrike",2,0)
         call SaveAbilData('AHwe',"waterelemental",3,0)
@@ -1096,7 +1096,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('AOhx',"hex",3,1)
         call SaveAbilData('AOvd',"voodoo",3,0)
         call SaveAbilData('AOwk',"windwalk",3,0)
-        call SaveAbilData('AOsh',"shockwave",2,0)
+        call SaveAbilData(SHOCKWAVE_ABILITY_ID,"shockwave",2,0)
         call SaveAbilData('AOcl',"chainlightning",1,0)
         call SaveAbilData('Absk',"berserk",3,0)
         call SaveAbilData('Aspl',"spiritlink",1,1)
@@ -1116,16 +1116,16 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('AUcs',"carrionswarm",2,0)
         call SaveAbilData('Aam2',"antimagicshell",1,1)
         call SaveAbilData('Arai',"raisedead",3,0)
-        call SaveAbilData('Auhf',"unholyfrenzy",1,1)
+        call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID,"unholyfrenzy",1,1)
         call SaveAbilData('Acrs',"curse",1,1)
     
         
         
         call SaveAbilData('AEsv',"spiritofvengeance",3,0)       
         call SaveAbilData('AEfk',"fanofknives",3,0)
-        call SaveAbilData('AEer',"entanglingroots",1,1)
+        call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID,"entanglingroots",1,1)
         call SaveAbilData('AEsf',"starfall",3,0)
-        call SaveAbilData('AEim',"immolation",3,0)
+        call SaveAbilData(IMMOLATION_ABILITY_ID,"immolation",3,0)
         call SaveAbilData('AHfa',"flamingarrows",1,0)
         call SaveAbilData('AEtq',"tranquility",3,0)   
         call SaveAbilData('AEsh',"shadowstrike",1,0)       
@@ -1152,7 +1152,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('ANsw',"summonwareagle",3,0)  
         call SaveAbilData('ANfl',"forkedlightning",1,0)  
         call SaveAbilData('ANso',"soulburn",1,1)  
-        call SaveAbilData('ACls',"lightningshield",1,0)  
+        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID,"lightningshield",1,0)  
 
         call SaveAbilData('ANdh',"drunkenhaze",1,1)    
         call SaveAbilData('A046',"breathoffrost",2,0)  
@@ -1164,7 +1164,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData('AOsf',"spiritwolf",3,0) 
         
         call SaveAbilData('A05X',"channel",2,0)
-        call SaveAbilData('A017',"channel",2,0) 
+        call SaveAbilData(PLAGUE_ABILITY_ID,"channel",2,0) 
         call SaveAbilData('ANsi',"silence",2,0) 
         */
     endfunction 

@@ -161,6 +161,23 @@ library IdLibrary initializer init
         constant integer WITCH_DOCTOR_UNIT_ID                           = 'O006'
         constant integer YETI_UNIT_ID                                   = 'O00B'
 
+        // Abilities
+
+        // Tauren Abilities
+        StaticIdGroup TAUREN_ABILITIES
+        constant integer SPIRIT_LINK_ABILITY_ID                         = 'A0B7'
+        constant integer UNHOLY_FRENZY_ABILITY_ID                       = 'Auhf'
+        constant integer SHOCKWAVE_ABILITY_ID                           = 'AOsh'
+        constant integer ENTAGLING_ROOTS_ABILITY_ID                     = 'AEer'
+        constant integer LIFE_DRAIN_ABILITY_ID                          = 'ANdr'
+        constant integer IMMOLATION_ABILITY_ID                          = 'AEim'
+        constant integer STORM_BOLT_ABILITY_ID                          = 'AHtb'
+        constant integer CLUSTER_ROCKETS_ABILITY_ID                     = 'A0AT'
+        constant integer LIGHTNING_SHIELD_ABILITY_ID                    = 'ACls'
+        constant integer PLAGUE_ABILITY_ID                              = 'A017'
+        constant integer VOLCANO_ABILITY_ID                             = 'A09X'
+        constant integer MIRROR_IMAGE_ABILITY_ID                        = 'AOmi'
+
         // --- Groupings ---
 
         // --- Groupings ---
@@ -177,6 +194,9 @@ library IdLibrary initializer init
         private integer BeginIndex
         private integer EndIndex
 
+        // Store how many elements are in this group
+        private integer Size
+
         // Parent group used when slicing
         StaticIdGroup ParentIdGroup = ID_NOT_FOUND
 
@@ -185,13 +205,15 @@ library IdLibrary initializer init
 			
 			set this.BeginIndex = FirstUnusedUnitIdIndex
 			set this.EndIndex = FirstUnusedUnitIdIndex
-			
+			set this.Size = 0
+
 			return this
 		endmethod
 
         public method add takes integer unitId returns nothing
             // Set the unit id
             set UnitIds[FirstUnusedUnitIdIndex] = unitId
+            set this.Size = this.Size + 1
 
             // Update the indexes
             set FirstUnusedUnitIdIndex = FirstUnusedUnitIdIndex + 1
@@ -249,11 +271,16 @@ library IdLibrary initializer init
             return this.EndIndex - 1
         endmethod
 
+        public method size takes nothing returns integer
+            return this.Size
+        endmethod
+
         public method slice takes integer minIndex, integer maxIndex returns thistype
             local thistype that = thistype.create()
 
             set that.BeginIndex = minIndex
 			set that.EndIndex = maxIndex + 1
+            set that.Size = maxIndex - minIndex
             set that.ParentIdGroup = this
 
             return that
@@ -355,6 +382,23 @@ library IdLibrary initializer init
         endmethod
     endstruct
 
+    private function SetupAbilities takes nothing returns nothing
+        // Tauren Abilities
+        set TAUREN_ABILITIES = StaticIdGroup.create()
+        call TAUREN_ABILITIES.add(SPIRIT_LINK_ABILITY_ID)
+        call TAUREN_ABILITIES.add(UNHOLY_FRENZY_ABILITY_ID)
+        call TAUREN_ABILITIES.add(SHOCKWAVE_ABILITY_ID)
+        call TAUREN_ABILITIES.add(ENTAGLING_ROOTS_ABILITY_ID)
+        call TAUREN_ABILITIES.add(LIFE_DRAIN_ABILITY_ID)
+        call TAUREN_ABILITIES.add(IMMOLATION_ABILITY_ID)
+        call TAUREN_ABILITIES.add(STORM_BOLT_ABILITY_ID)
+        call TAUREN_ABILITIES.add(CLUSTER_ROCKETS_ABILITY_ID)
+        call TAUREN_ABILITIES.add(LIGHTNING_SHIELD_ABILITY_ID)
+        call TAUREN_ABILITIES.add(PLAGUE_ABILITY_ID)
+        call TAUREN_ABILITIES.add(VOLCANO_ABILITY_ID)
+        call TAUREN_ABILITIES.add(MIRROR_IMAGE_ABILITY_ID)
+    endfunction
+
     private function SetupSummons takes nothing returns nothing
         // Bears
         set BEARS = StaticIdGroup.create()
@@ -446,8 +490,9 @@ library IdLibrary initializer init
 
     private function InitTriggers takes nothing returns nothing
         // Groups
+        call SetupAbilities()
         call SetupSummons()
-        
+
         // Groupings
         call SetupGroupings()
     endfunction

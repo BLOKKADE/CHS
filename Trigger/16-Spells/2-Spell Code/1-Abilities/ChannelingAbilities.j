@@ -13,8 +13,8 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
         set AssociatedAbil['A0A0'] = 'ANmo'//Monsoon
         set AssociatedAbil['A09V'] = 'ANrf'//Rain of Fire
         set AssociatedAbil['A09W'] = 'ANst'//Stampede
-        set AssociatedAbil['A09X'] = 'ANvc'//Volcano
-        set AssociatedAbil['A0AT'] = 'ANcs'//Cluster Rockets
+        set AssociatedAbil[VOLCANO_ABILITY_ID] = 'ANvc'//Volcano
+        set AssociatedAbil[CLUSTER_ROCKETS_ABILITY_ID] = 'ANcs'//Cluster Rockets
         set AssociatedAbil['A0B3'] = 'ANhs'//Acid Spray
     endfunction
 

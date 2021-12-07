@@ -30,7 +30,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
         
 
         //Check if caster has multicast
-        if abilId == 'AOmi' then
+        if abilId == MIRROR_IMAGE_ABILITY_ID then
             set caster = null
             set target = null
             return
