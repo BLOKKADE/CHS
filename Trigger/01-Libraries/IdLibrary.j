@@ -188,6 +188,14 @@ library IdLibrary initializer init
         constant integer SUMMON_WATER_ELEMENTAL_ABILITY_ID              = 'AHwe'
         constant integer WILD_DEFENSE_ABILITY_ID                        = 'A06X'
         
+        // Creep Abilities
+        constant integer FAERIE_FIRE_ABILITY_ID                         = 'A016'
+        constant integer HURL_BOULDER_ABILITY_ID                        = 'A00W'
+        constant integer MANA_BURN_ABILITY_ID                           = 'A00V'
+        constant integer REJUVENATION_ABILITY_ID                        = 'A00X'
+        constant integer SHOCKWAVE_ABILITY_ID                           = 'A00U'
+        constant integer THUNDER_CLAP_ABILITY_ID                        = 'A01B'
+
         // Tauren Abilities
         StaticIdGroup TAUREN_ABILITIES
         constant integer SPIRIT_LINK_ABILITY_ID                         = 'A0B7'

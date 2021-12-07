@@ -1171,22 +1171,22 @@ library AbilityData initializer init requires Table, IdLibrary
 
     function InitCreepAbilities takes nothing returns nothing
         //Hurl Boulder
-        call SaveCreepAbilityData('A00W', Target_Enemy, Order_Target, "creepthunderbolt")
+        call SaveCreepAbilityData(HURL_BOULDER_ABILITY_ID, Target_Enemy, Order_Target, "creepthunderbolt")
 
         //Rejuvenation
-        call SaveCreepAbilityData('A00X', Target_Ally, Order_Target, "rejuvination")
+        call SaveCreepAbilityData(REJUVENATION_ABILITY_ID, Target_Ally, Order_Target, "rejuvination")
 
         //Faerie Fire
-        call SaveCreepAbilityData('A016', Target_Enemy, Order_Target, "faeriefire")
+        call SaveCreepAbilityData(FAERIE_FIRE_ABILITY_ID, Target_Enemy, Order_Target, "faeriefire")
 
         //Mana Burn
-        call SaveCreepAbilityData('A00V', Target_Enemy, Order_Target, "manaburn")
+        call SaveCreepAbilityData(MANA_BURN_ABILITY_ID, Target_Enemy, Order_Target, "manaburn")
 
         //Shockwave
-        call SaveCreepAbilityData('A00U', Target_Enemy, Order_Point, "shockwave")
+        call SaveCreepAbilityData(SHOCKWAVE_ABILITY_ID, Target_Enemy, Order_Point, "shockwave")
 
         //Thunder Clap
-        call SaveCreepAbilityData('A01B', Target_Enemy, Order_Instant, "thunderclap")
+        call SaveCreepAbilityData(THUNDER_CLAP_ABILITY_ID, Target_Enemy, Order_Instant, "thunderclap")
     endfunction
 
 private function init takes nothing returns nothing
