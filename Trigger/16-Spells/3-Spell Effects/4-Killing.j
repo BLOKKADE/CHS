@@ -52,9 +52,9 @@ scope Killing initializer init
         if IsHeroUnitId(GetUnitTypeId(target)) == false then
 
             //Skeleton Brute
-            if GetUnitTypeId(targetHero) == 'N00O' then
+            if GetUnitTypeId(targetHero) == SKELETON_BRUTE_UNIT_ID then
                 call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + ( (0.02 + (0.0005 * GetHeroLevel(targetHero))) * BlzGetUnitMaxHP(targetHero)))
-                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), 20 + (30 * GetHeroLevel(targetHero)), 400, false, 'N00O')
+                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), 20 + (30 * GetHeroLevel(targetHero)), 400, false, SKELETON_BRUTE_UNIT_ID)
                 set fx = AddSpecialEffect("war3mapImported\\Arcane Explosion.mdx", GetUnitX(target), GetUnitY(target))
                 call BlzSetSpecialEffectTimeScale(fx, 2)
                 call DestroyEffect(fx)

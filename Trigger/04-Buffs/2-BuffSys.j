@@ -2,7 +2,7 @@ library BuffSystem initializer init requires TimerUtils
     globals
         constant integer IdBuffAbility = 'A06H'
         constant integer IdDeBuffAbility = 'A06I'
-        constant integer IdBuffUnit = 'h015'
+        constant integer IdBuffUnit = PRIEST_1_UNIT_ID
         
         integer array BufLvl
         integer array DeBufLvl

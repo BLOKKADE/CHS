@@ -52,7 +52,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
 
     function SpellLearnedFunc takes unit u, integer abilId returns nothing
 
-        if GetUnitTypeId(u) == 'O000' then
+        if GetUnitTypeId(u) == TAUREN_UNIT_ID then
             call SpiritTaurenRuneBonus(u, abilId)
         endif
     endfunction
@@ -172,7 +172,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call AbsolutePoisonLearned(u)
         endif
 
-        if GetUnitTypeId(u) == 'O000' then
+        if GetUnitTypeId(u) == TAUREN_UNIT_ID then
             call SpiritTaurenRuneBonusReset(u, abilId)
         endif
 

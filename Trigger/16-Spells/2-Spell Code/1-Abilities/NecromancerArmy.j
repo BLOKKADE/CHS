@@ -21,11 +21,11 @@ library NecromancerArmy initializer init requires CustomState
         call GroupEnumUnitsOfPlayer(NecroArmyGroup, p, Filter(function NecroSummonFilter))
 
         if BlzGroupGetSize(NecroArmyGroup) < level then
-            if GetUnitTypeId(dyingUnit) == 'h009' then
+            if GetUnitTypeId(dyingUnit) == PHOENIX_1_UNIT_ID then
                 set summon = CreateUnit(p, 'u006', GetUnitX(dyingUnit), GetUnitY(dyingUnit), GetUnitFacing(dyingUnit))
-            elseif GetUnitTypeId(dyingUnit) == 'nwe1' or GetUnitTypeId(dyingUnit) == 'nwe2' or GetUnitTypeId(dyingUnit) == 'nwe3' then
+            elseif HAWKS.contains(GetUnitTypeId(dyingUnit)) then
                 set summon = CreateUnit(p, 'u007', GetUnitX(dyingUnit), GetUnitY(dyingUnit), GetUnitFacing(dyingUnit))
-            elseif GetUnitTypeId(dyingUnit) == 'osp1' or GetUnitTypeId(dyingUnit) == 'osp2' or GetUnitTypeId(dyingUnit) == 'osp3' then
+            elseif SERPENT_WARDS.contains(GetUnitTypeId(dyingUnit)) then
                 set summon = CreateUnit(p, 'o00D', GetUnitX(dyingUnit), GetUnitY(dyingUnit), GetUnitFacing(dyingUnit))
             else
                 if IsUnitType(dyingUnit, UNIT_TYPE_RANGED_ATTACKER) then

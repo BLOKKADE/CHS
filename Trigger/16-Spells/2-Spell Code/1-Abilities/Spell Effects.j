@@ -4,7 +4,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
 
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
         
-        if GetUnitTypeId(caster) ==  'h00T' or GetUnitTypeId(caster) == 'h014' or GetUnitTypeId(caster) == 'h015' then
+        if GetUnitTypeId(caster) ==  'h00T' or GetUnitTypeId(caster) == 'h014' or GetUnitTypeId(caster) == PRIEST_1_UNIT_ID then
             set caster = udg_units01[GetConvertedPlayerId(GetOwningPlayer( caster ) ) ]
         endif
 
@@ -190,7 +190,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call MaskOfVitality(caster)
                     endif
 
-                    if GetUnitAbilityLevel(caster, 'A04F') > 0 or GetUnitTypeId(caster) == 'H01E' or UnitHasItemS(caster, 'I08X')  and abilId != 'A024' then
+                    if GetUnitAbilityLevel(caster, 'A04F') > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X')  and abilId != 'A024' then
                         call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                     endif
 

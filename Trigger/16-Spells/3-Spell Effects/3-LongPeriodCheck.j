@@ -25,7 +25,7 @@ scope LongPeriodCheck initializer init
             set r2 = r2 * 0.8
         endif
 
-        if GetUnitTypeId(u) == 'O00A' then
+        if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID then
 
             set r2 = r2 * 100 /(I2R(100 + GetHeroLevel(u))) 
         endif
@@ -297,12 +297,12 @@ scope LongPeriodCheck initializer init
                 call AABfunction(u)
 
                 //Banshee
-                if GetUnitTypeId(u) == 'H01I' then
+                if GetUnitTypeId(u) == BANSHEE_UNIT_ID then
                     set i1 = (BlzGetUnitMaxHP(u)* 3)/ 4
-                    set i2 = LoadInteger(HT,hid,'H01I')
+                    set i2 = LoadInteger(HT,hid,BANSHEE_UNIT_ID)
 
                     call BlzSetUnitMaxMana(u,BlzGetUnitMaxMana(u)+ i1 - i2   )
-                    call SaveInteger(HT,hid,'H01I',i1  )
+                    call SaveInteger(HT,hid,BANSHEE_UNIT_ID,i1  )
 
                 endif
 
@@ -329,7 +329,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,'A07B')
                 set i2 = LoadInteger(HT,hid,'A07B')
                 if i1 >= 1 or i2 != 0 then
-                    if GetUnitTypeId(u) == 'O007' then
+                    if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                         set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
                         set i1 = R2I((i1 * GetClassUnitSpell(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
                     else
@@ -392,21 +392,21 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //Thunder Witch
-                if GetUnitTypeId(u) == 'O001' then
+                if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID then
                     if BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and CheckProc(u, 610) then
                         call ThunderWitchBolt(u, GetHeroLevel(u), hid)
                     endif
                 endif
 
                 //Pit Lord
-                if GetUnitTypeId(u) == 'O007' then
+                if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                     set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
                     set i1 = R2I(GetUnitMagicDmg(u) * r1)
-                    set i2 = LoadInteger(HT,hid,'O007')
+                    set i2 = LoadInteger(HT,hid,PIT_LORD_UNIT_ID)
                     if i1 != i2 then
                         call AddUnitPhysPow(u, 0 - i2)
                         call AddUnitPhysPow(u, i1)
-                        call SaveInteger(HT,hid,'O007',i1)	
+                        call SaveInteger(HT,hid,PIT_LORD_UNIT_ID,i1)	
                     endif
                 endif
 

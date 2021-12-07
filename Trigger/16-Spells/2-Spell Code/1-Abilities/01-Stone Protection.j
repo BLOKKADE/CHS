@@ -17,7 +17,7 @@ endfunction
 
 function UsOrderU1 takes unit u1, unit u2, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield REALF returns boolean
     local boolean BL
-    local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
+    local unit Caster1 = CreateUnit(GetOwningPlayer(u1),PRIEST_1_UNIT_ID,x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
     
     call UnitAddAbility(Caster1,idsp ) 
     call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),REALF,0,life_1)

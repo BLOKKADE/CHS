@@ -31,7 +31,7 @@ scope DamageControllerAfter initializer init
             set OnHitDamage = false
         endif
 
-        if CuId == 'h015' or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
+        if CuId == PRIEST_1_UNIT_ID or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
             set damageSource = damageSourceHero
             set CrUnitS = damageSourceHero
         endif
@@ -121,14 +121,14 @@ scope DamageControllerAfter initializer init
         endif
 
         //Dreadlord Passive
-        if GetUnitTypeId(damageSourceHero) == 'O002' then
+        if GetUnitTypeId(damageSourceHero) == DEADLORD_UNIT_ID then
             set r2 = GetEventDamage()*(0.02 * I2R(GetHeroLevel(damageSourceHero)) )
             call Vamp(damageSource,damageTarget,r2)
             set vampCount = vampCount + 1
         endif	
 
         //Ghoul Passive
-        if GetUnitTypeId(damageSource) == 'H01H' and attack then
+        if GetUnitTypeId(damageSource) == GHOUL_UNIT_ID and attack then
             set i = GetHeroLevel(damageSource)
             set r2 = (GetEventDamage() + (BlzGetUnitMaxHP(damageTarget) * (0.025 + (0.00025 * i))))
             call Vamp(damageSource,damageTarget,r2)
@@ -254,12 +254,12 @@ scope DamageControllerAfter initializer init
         endif
 
         //Blademaster
-        if GetUnitTypeId(damageSource) == 'N00K' and BladestormReady(damageSource) and attack then
+        if GetUnitTypeId(damageSource) == BLADE_MASTER_UNIT_ID and BladestormReady(damageSource) and attack then
             call BladestormDamage(damageSource, GetEventDamage(), dmgType ==  DAMAGE_TYPE_MAGIC)
         endif
         
         //Banshee passive
-        if GetUnitTypeId(damageTarget) == 'H01I' then
+        if GetUnitTypeId(damageTarget) == BANSHEE_UNIT_ID then
             if GetEventDamage() >= GetUnitState(damageTarget,UNIT_STATE_MANA) then
                 call SetUnitState(damageTarget,UNIT_STATE_MANA,0)
                 call BlzSetEventDamage(GetUnitState(damageTarget,UNIT_STATE_MAX_LIFE)+ 1)
@@ -283,7 +283,7 @@ scope DamageControllerAfter initializer init
         endif
 
         //Skeleton Brute
-        if GetUnitTypeId(damageTarget) == 'N00O' then
+        if GetUnitTypeId(damageTarget) == SKELETON_BRUTE_UNIT_ID then
             if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A0BA') == 0 and BlzGetUnitMaxHP(damageTarget) * 0.3 <= GetEventDamage() and GetUnitAbilityLevel(damageTarget, 'A0BB') == 0 then
                 call SkeletonBrute(damageTarget)
             endif

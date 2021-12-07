@@ -114,7 +114,7 @@ library ExtradimensionalCooperation requires RandomShit
     endfunction
 
     function ExtradimensionalCooperation takes unit caster, integer abilId returns nothing
-        local unit u = CreateUnit(GetOwningPlayer(caster), 'h015', GetUnitX(caster), GetUnitY(caster), 0)
+        local unit u = CreateUnit(GetOwningPlayer(caster), PRIEST_1_UNIT_ID, GetUnitX(caster), GetUnitY(caster), 0)
         call UnitAddAbility(u, 'A08K')
         call IssueTargetOrderById(u, 852101, caster)
         call UnitApplyTimedLife(u,'BTLF', 3) 

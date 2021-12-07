@@ -92,7 +92,7 @@ scope ShortPeriodCheck initializer init
                 endif
                 
                 //Blood Elf Mage
-                if GetUnitTypeId(u) == 'H001' then
+                if GetUnitTypeId(u) == BLOOD_MAGE_UNIT_ID then
                     set i1 = R2I(GetUnitState(u, UNIT_STATE_MAX_MANA))
                     set i1 = R2I((i1 - ModuloInteger(i1, 1000)) / 1000)
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
@@ -103,7 +103,7 @@ scope ShortPeriodCheck initializer init
                     endif
 
                     //Head Hunter
-                elseif GetUnitTypeId(u) == 'N00I' then
+                elseif GetUnitTypeId(u) == TROLL_HEADHUNTER_UNIT_ID then
                     set i1 = R2I(GetHeroStr(u, true) * (0.4 + (0.015 * GetHeroLevel(u))))
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
@@ -111,7 +111,7 @@ scope ShortPeriodCheck initializer init
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
                     //War Golem
-                elseif GetUnitTypeId(u) == 'N00C' then
+                elseif GetUnitTypeId(u) == WAR_GOLEM_UNIT_ID then
                     set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
@@ -121,13 +121,13 @@ scope ShortPeriodCheck initializer init
                     endif
 
                     //Abomination
-                elseif GetUnitTypeId(u) == 'H005' then
+                elseif GetUnitTypeId(u) == ABOMINATION_UNIT_ID then
                     if CheckProc(u, 350) then
-                        call ElemFuncStart(u,'H005')
+                        call ElemFuncStart(u,ABOMINATION_UNIT_ID)
                     endif
 
                     //Yeti
-                elseif GetUnitTypeId(u) == 'O00B' then
+                elseif GetUnitTypeId(u) == YETI_UNIT_ID then
                     if BlzGetUnitArmor(u) <= 50 + (2 * GetHeroLevel(u)) * (1 + (0.1 * GetClassUnitSpell(u, Element_Cold))) then
                         if GetUnitAbilityLevel(u, 'A092') == 0 then
                             call UnitAddAbility(u, 'A092')
@@ -147,7 +147,7 @@ scope ShortPeriodCheck initializer init
                     call WolfRiderStatBonus(u, hid)
                 
                     //Rock Golem
-                elseif GetUnitTypeId(u) == 'H017' then
+                elseif GetUnitTypeId(u) == ROCK_GOLEM_UNIT_ID then
                     set i1 = LoadInteger(DataUnitHT,hid,542)
                     set i2 = R2I((GetUnitBlock(u) - i1) * (0.01 * GetHeroLevel(u)))
                     if i1 != i2 then
@@ -157,7 +157,7 @@ scope ShortPeriodCheck initializer init
                     endif
                 
                     //Dark Avatar
-                elseif GetUnitTypeId(u) == 'O003' then
+                elseif GetUnitTypeId(u) == AVATAR_SPIRIT_UNIT_ID then
                     call SetAvatarMode(u, GetHeroLevel(u))
                 endif
             endif

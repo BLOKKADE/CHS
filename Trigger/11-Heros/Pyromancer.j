@@ -29,7 +29,7 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
         local real yBonus = (area * 0.75) * Sin(GetAngleToTarget(source, target))
         local unit p
         
-        call ElemFuncStart(source,'O005')
+        call ElemFuncStart(source,PYROMANCER_UNIT_ID)
 
         call GroupClear(PyromancerDamage)
         call GroupClear(PyromancerTemp)

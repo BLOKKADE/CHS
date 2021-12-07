@@ -20,7 +20,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
     local abilityreallevelfield RealField3 = ConvertAbilityRealLevelField(LoadInteger(HT,i,12))
     local real Field4 = LoadReal(HT,i,13)
     local abilityreallevelfield RealField4 = ConvertAbilityRealLevelField(LoadInteger(HT,i,14))
-    local unit CasteabilLevel = CreateUnit(GetOwningPlayer(u1),'h015',x,y, 0  )
+    local unit CasteabilLevel = CreateUnit(GetOwningPlayer(u1),PRIEST_1_UNIT_ID,x,y, 0  )
         
     call FlushChildHashtable(HT,i)
     call ReleaseTimer(t)
@@ -132,7 +132,7 @@ function FunctionTimerSpell takes nothing returns nothing
     endif
         
     //Grunt
-    if GetUnitTypeId(Herou) == 'H01J' then
+    if GetUnitTypeId(Herou) == GRUNT_UNIT_ID then
         call GruntsGruntStruct.create(Herou, ChronusLevel)
     endif
         
@@ -172,7 +172,7 @@ function FunctionTimerSpell takes nothing returns nothing
     endif
 
     //Faerie Dragon
-    if GetUnitTypeId(Herou) == 'O008' then
+    if GetUnitTypeId(Herou) == MYSTIC_UNIT_ID then
         set r4 = GetUnitX(Herou)+ 40 * CosBJ(- 30 + GetUnitFacing(Herou))
         set r5 = GetUnitY(Herou)+ 40 * SinBJ(- 30 + GetUnitFacing(Herou))
         call DestroyEffect(AddSpecialEffect(FX_BLINK, r4, r5))
@@ -210,8 +210,8 @@ function FunctionTimerSpell takes nothing returns nothing
     endif 
 
     //Gnome
-    if GetUnitTypeId(Herou) == 'H019' then
-        call ElemFuncStart(Herou,'H019')
+    if GetUnitTypeId(Herou) == GNOME_MASTER_UNIT_ID then
+        call ElemFuncStart(Herou,GNOME_MASTER_UNIT_ID)
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55 * heroLevel,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,1 +(heroLevel * 0.04),ABILITY_RLF_DURATION_HERO,2 +(heroLevel * 0.08),ABILITY_RLF_DURATION_NORMAL)
         call TimeManipulation(Herou, 2 +(heroLevel * 0.08))
     endif

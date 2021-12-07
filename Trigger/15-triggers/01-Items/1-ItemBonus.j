@@ -174,7 +174,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u), 39) 
 
-			if GetUnitTypeId(u) == 'H00A' then
+			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
 				set i2 = 4
 			else
 				set i2 = 2
@@ -190,7 +190,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u), 40) 
 
-			if GetUnitTypeId(u) == 'H00A' then
+			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
 				set i2 = 4
 			else
 				set i2 = 2
@@ -206,7 +206,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u), 41) 
 
-			if GetUnitTypeId(u) == 'H00A' then
+			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
 				set i2 = 4
 			else
 				set i2 = 2

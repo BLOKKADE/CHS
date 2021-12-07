@@ -45,9 +45,9 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
         local real manaCost = BlzGetAbilityManaCost(abilId, GetUnitAbilityLevel(caster, abilId))
         //call BJDebugMsg("channel: " + GetObjectName(abilId) + " : " + GetUnitName(caster) + " : " + I2S(order))
         if abilId != 'AEtq' and abilId != 'AEsf'then
-            call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(caster),PolarProjectionBJ(spellLoc,256.00,AngleBetweenPoints(spellLoc,GetUnitLoc(caster))),bj_UNIT_FACING)
+            call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(caster),PolarProjectionBJ(spellLoc,256.00,AngleBetweenPoints(spellLoc,GetUnitLoc(caster))),bj_UNIT_FACING)
         else
-            call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(caster),GetUnitLoc(caster),bj_UNIT_FACING)
+            call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(caster),GetUnitLoc(caster),bj_UNIT_FACING)
         endif
 
         call UnitApplyTimedLifeBJ(60.00,'BTLF',GetLastCreatedUnit())

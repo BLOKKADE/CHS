@@ -18,7 +18,7 @@ library AoeDamage requires Vampirism
 
 
     function DamageRealase takes nothing returns boolean
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and GetUnitTypeId(GetFilterUnit()) != 'h015' then
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and GetUnitTypeId(GetFilterUnit()) != PRIEST_1_UNIT_ID then
             if OnHit then
                 set TypeDmg_b = 2
             endif

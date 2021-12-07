@@ -35,7 +35,7 @@ library AllowCastCheck
         if(not(GetUnitTypeId(u)!='n00V'))then
             return false
         endif
-        if(not(GetUnitTypeId(u)!='h015'))then
+        if(not(GetUnitTypeId(u)!=PRIEST_1_UNIT_ID))then
             return false
         endif	
         if(not(GetUnitTypeId(u)!='h014'))then

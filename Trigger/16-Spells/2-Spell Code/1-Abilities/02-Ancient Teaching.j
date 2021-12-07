@@ -37,7 +37,7 @@ library AncientTeaching initializer init requires RandomShit, StableSpells
 
 
 
-        if GetUnitTypeId(GetTriggerUnit() ) == 'H008' then
+        if GetUnitTypeId(GetTriggerUnit() ) == SORCERER_UNIT_ID then
             call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A037',"fanofknives",  GetHeroLevel(GetTriggerUnit())* 50 , ConvertAbilityRealLevelField('Ocl1') )
         endif
 

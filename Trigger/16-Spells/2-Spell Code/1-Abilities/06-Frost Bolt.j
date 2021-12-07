@@ -3,7 +3,7 @@ library FrostBolt requires RandomShit
         local real x = GetUnitX(u1)
         local real y = GetUnitY(u1)
         local boolean check = false
-        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, 0  )
+        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),PRIEST_1_UNIT_ID,x,y, 0  )
         call UnitAddAbility(Caster1,'A07Y' ) 
 
         call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,'A07Y'),ABILITY_RLF_DAMAGE_CTB1,0,dmg)

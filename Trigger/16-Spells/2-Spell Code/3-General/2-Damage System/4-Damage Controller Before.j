@@ -18,7 +18,7 @@ scope DamageControllerBefore initializer init
             endif
 
             //Seer
-            if GetUnitTypeId(u) == 'H01L' then
+            if GetUnitTypeId(u) == SEER_UNIT_ID then
                 if BlzGetEventDamageType() == DAMAGE_TYPE_NORMAL then
                     call BlzSetEventDamageType(DAMAGE_TYPE_MAGIC)
                 else
@@ -26,7 +26,7 @@ scope DamageControllerBefore initializer init
                 endif
             else
                 //Staff of Power
-                if UnitHasItemS( GetEventDamageSource() ,'I080') or GetUnitTypeId(u) == 'n00W' or GetUnitTypeId(u) == 'n01H'  or GetUnitTypeId(u) == 'u004' then
+                if UnitHasItemS( GetEventDamageSource() ,'I080') or GetUnitTypeId(u) == 'n00W' or GetUnitTypeId(u) == 'n01H'  or GetUnitTypeId(u) == SKELETON_WARMAGE_1_UNIT_ID then
                     call BlzSetEventDamageType(DAMAGE_TYPE_MAGIC)
                 endif
             endif
@@ -134,7 +134,7 @@ scope DamageControllerBefore initializer init
         endif
 
         //modified damage source after this, so can't detect dummy units, those need to go ^^^
-        if CuId == 'h015' or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
+        if CuId == PRIEST_1_UNIT_ID or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
             set damageSource = damageSourceHero
         endif
 
@@ -345,10 +345,10 @@ scope DamageControllerBefore initializer init
         endif
 
         //Centuar Archer passive
-        if GetUnitTypeId(damageSource) == 'H01B' and attack then
+        if GetUnitTypeId(damageSource) == CENTAUR_ARCHER_UNIT_ID and attack then
             if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08T') <= 0 then
                 call AbilStartCD(damageSource, 'A08T', 2)
-                call ElemFuncStart(damageSource,'H01B')
+                call ElemFuncStart(damageSource,CENTAUR_ARCHER_UNIT_ID)
                 call BlzSetEventDamage(GetEventDamage() + (BlzGetUnitMaxHP(damageTarget) * 0.06) + (GetEventDamage() * (1 + (0.05 * GetHeroLevel(damageSource)))) )
                 call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", damageTarget, "chest"))
             endif
@@ -405,7 +405,7 @@ scope DamageControllerBefore initializer init
         endif
 
         //Ursa Warrior
-        if GetUnitTypeId(damageSource) == 'N00Q' and attack then
+        if GetUnitTypeId(damageSource) == URSA_WARRIOR_UNIT_ID and attack then
             //call CastUrsaBleed(damageSource, damageTarget, GetEventDamage(), DmgType !=  DAMAGE_TYPE_NORMAL)
             call SetBuff(damageTarget,4,3)
             call PeriodicDamage.create(damageSource, damageTarget, GetEventDamage()/ 3, DmgType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, 'B01I').addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1)
@@ -417,10 +417,10 @@ scope DamageControllerBefore initializer init
         endif 
 
         //Ogre Warrior
-        if GetUnitTypeId(damageSource) == 'H01C' and DmgType ==  DAMAGE_TYPE_NORMAL then
+        if GetUnitTypeId(damageSource) == OGRE_WARRIOR_UNIT_ID and DmgType ==  DAMAGE_TYPE_NORMAL then
             if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08U') <= 0 then
                 call AbilStartCD(damageSource, 'A08U', 6)
-                call ElemFuncStart(damageSource,'H01C')
+                call ElemFuncStart(damageSource,OGRE_WARRIOR_UNIT_ID)
                 call USOrder4field(damageSource,GetUnitX(damageTarget),GetUnitY(damageTarget),'A047',"stomp",GetHeroStr(damageSource,true) + 60 * GetHeroLevel(damageSource) ,ABILITY_RLF_DAMAGE_INCREASE,300,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,1,ABILITY_RLF_DURATION_NORMAL)
             endif
         endif  
@@ -449,19 +449,19 @@ scope DamageControllerBefore initializer init
         endif
         
         //Pit Lord
-        /*if GetUnitTypeId(damageSource) == 'O007' then
+        /*if GetUnitTypeId(damageSource) == PIT_LORD_UNIT_ID then
             if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08V') <= 0 then
                 call AbilStartCD(damageSource, 'A08V', 2)
-                call ElemFuncStart(damageSource,'O007')
+                call ElemFuncStart(damageSource,PIT_LORD_UNIT_ID)
                 call UsOrderU2 (damageSource,damageTarget,GetUnitX(damageSource),GetUnitY(damageSource),'A08N',"rainoffire", GetHeroLevel(damageSource)* 40, GetHeroLevel(damageSource)* 20, ABILITY_RLF_DAMAGE_HBZ2, ABILITY_RLF_DAMAGE_PER_SECOND_HBZ5)
             endif
         endif*/
 
         //Lich
-        if GetUnitTypeId(damageSource) == 'H018' and DmgType == DAMAGE_TYPE_MAGIC then
+        if GetUnitTypeId(damageSource) == LICH_UNIT_ID and DmgType == DAMAGE_TYPE_MAGIC then
             if BlzGetUnitAbilityCooldownRemaining(damageSource, 'A08W') <= 0 then
                 call AbilStartCD(damageSource, 'A08W', 6)
-                call ElemFuncStart(damageSource,'H018')
+                call ElemFuncStart(damageSource,LICH_UNIT_ID)
                 call UsOrderU2 (damageSource,damageTarget,GetUnitX(damageSource),GetUnitY(damageSource),'A03J',"frostnova", GetHeroInt(damageSource, true) + (GetHeroLevel(damageSource)* 60), GetHeroInt(damageSource, true) + (GetHeroLevel(damageSource)* 60), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
             endif
         endif
@@ -478,7 +478,7 @@ scope DamageControllerBefore initializer init
         endif
 
         //Grom Hellscream
-        if GetUnitTypeId(damageSourceHero) == 'N024' then
+        if GetUnitTypeId(damageSourceHero) == ORC_CHAMPION_UNIT_ID then
             call BlzSetEventDamage(GetEventDamage() + GetHeroStr(damageSourceHero, true) * 0.1 + (0.01 * GetHeroLevel(damageSourceHero)))
             call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", damageTarget, "chest"))		
         endif
@@ -489,7 +489,7 @@ scope DamageControllerBefore initializer init
         endif
 
         /*//Pit Lord Magic power for phys
-        if GetUnitTypeId(damageSource) == 'O007' and DmgType == DAMAGE_TYPE_NORMAL and (magicPowerDamage != 1 or GetUnitMagicDmg(damageSource) > 0) then
+        if GetUnitTypeId(damageSource) == PIT_LORD_UNIT_ID and DmgType == DAMAGE_TYPE_NORMAL and (magicPowerDamage != 1 or GetUnitMagicDmg(damageSource) > 0) then
             set Admg = 1 - RMaxBJ(0.25 * GetClassUnitSpell(damageSource, Element_Water), 0)
             call BlzSetEventDamage(GetEventDamage()* ((magicPowerDamage + GetUnitMagicDmg(damageSource)/ 100) * Admg))
         endif   */
@@ -539,9 +539,9 @@ scope DamageControllerBefore initializer init
         endif
 
         //Rock Golem
-        if GetUnitTypeId(damageTarget) == 'H017' and BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A0AH') == 0 then
+        if GetUnitTypeId(damageTarget) == ROCK_GOLEM_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A0AH') == 0 then
             call AbilStartCD(damageTarget, 'A0AH', 1)
-            call ElementStartAbility(damageTarget, 'H017')
+            call ElementStartAbility(damageTarget, ROCK_GOLEM_UNIT_ID)
             call DestroyEffect(AddSpecialEffectFix("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(damageTarget), GetUnitY(damageTarget)))
             call AreaDamagePhys(damageTarget, GetUnitX(damageTarget), GetUnitY(damageTarget), GetUnitBlock(damageTarget) * (0.49 + (0.01 * GetHeroLevel(damageTarget))), 400, 'A0AH')
         endif

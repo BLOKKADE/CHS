@@ -33,12 +33,12 @@ library UnitStateSys initializer init requires RandomShit, Functions
         local real r1
 
         //Beastmaster
-        if GetUnitTypeId(hero) == 'N00P' then
+        if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
             set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.3)
         endif
 
         //Druid of the Claw
-        if GetUnitTypeId(hero) == 'H006' then
+        if GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
             set r1 = GetHeroLevel(hero) * 0.01
             call AddUnitMagicDmg(u, (GetUnitMagicDmg(hero) * r1))
             call AddUnitMagicDef(u, (GetUnitMagicDef(hero) * r1))
@@ -54,7 +54,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call AddSummonAbility(u, 'A06X', SummonWildDefense[pid])
         endif
 
-        if SummonCrit[pid] > 0 and i != 'h009' then
+        if SummonCrit[pid] > 0 and i != PHOENIX_1_UNIT_ID then
             call AddSummonAbility(u, 'AOcr', SummonCrit[pid])
         endif
 
@@ -77,7 +77,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
         call AddUnitPvpBonus(u, GetUnitPvpBonus(hero))
 
         //Water Elemental
-        if i == 'hwt3' or i == 'hwt2' or i == 'hwat' then
+        if WATER_ELEMENTALS.contains(i) then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AHwe'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
             call AddUnitMagicDef(u,15 * i2)
@@ -87,7 +87,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
         
             //Feral Spirit Wolf
-        elseif i == 'osw3' or i == 'osw2' or i == 'osw1' then
+        elseif FERAL_SPIRIT_WOLVES.contains(i) then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AOsf'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
             call AddUnitEvasion(u,15 * i2)
@@ -102,7 +102,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Serpent Ward 
-        elseif i == 'osp3' or i == 'osp2' or i == 'osp1' then
+        elseif SERPENT_WARDS.contains(i) then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AOsw'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(10.1 + I2R(i2)))  ,0)
@@ -111,7 +111,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
         
             //Skeleton Warrior Skeleton Mage
-        elseif i == 'uske' or i == 'uskm' then
+        elseif i == SKELETON_WARRIOR_1_UNIT_ID or i == SKELETON_MAGE_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'Arai'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 100,0)
             call AddUnitEvasion(u,15 * i2)
@@ -121,7 +121,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Summon Mountain Giant
-        elseif i == 'e00N' then
+        elseif i == MOUNTAIN_GIANT_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AEsv'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 50,0)
             call AddUnitBlock(u,500 * i2)
@@ -131,7 +131,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Summon Quilbeast
-        elseif i == 'nqb4' or i == 'nqb3' or i == 'nqb2' or i == 'nqb1' then
+        elseif QUILBEASTS.contains(i) then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'Arsq'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 50,0)
             call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 25 * i2)
@@ -141,7 +141,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Summon Bear
-        elseif i == 'ngz3' or i == 'ngz2' or i == 'ngz1'  then
+        elseif BEARS.contains(i) then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsg'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
@@ -151,7 +151,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Summon Hawk
-        elseif i == 'nwe3' or i == 'nwe2' or i == 'nwe1'  then
+        elseif HAWKS.contains(i) then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsw'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(7 /(12.1 + I2R(i2)))  ,0)
@@ -160,7 +160,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
         
             //Phoenix
-        elseif i == 'h009' then
+        elseif i == PHOENIX_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AHpx'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 400,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(7 /(12.1 + I2R(i2)))  ,0)
@@ -169,7 +169,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
         
             //Lava Spawn
-        elseif i == 'nlv3' or i == 'nlv2' or i == 'nlv1' then
+        elseif LAVA_SPAWNS.contains(i) then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANlm'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 15,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(10.1 + I2R(i2)))  ,0)
@@ -178,7 +178,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Inferno
-        elseif i == 'n01E' or (i >= 'n01O' and i <= 'n01Z') or (i >= 'n020' and i <= 'n02G') then
+        elseif INFERNALS.contains(i) then
             set i2 = UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 500,0)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(20 /(20 + I2R(i2)))  ,0)
@@ -190,7 +190,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             endif
 
             //Pocket Factory
-        elseif i == 'n011' or i == 'n010' then
+        elseif i == CLOCKWORK_GOBLIN_1_UNIT_ID or i == POCKET_FACTORY_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsy'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call AddUnitMagicDmg(u,45 * i2)
@@ -203,7 +203,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
         
             //??? Priest?
-        elseif i == 'h015' then
+        elseif i == PRIEST_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANba'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call AddUnitMagicDef(u,5 * i2)
@@ -214,7 +214,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Parasite
-        elseif i == 'ncfs' then
+        elseif i == PARASITE_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANpa'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call AddUnitMagicDef(u,5 * i2)
@@ -225,7 +225,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Carrion Beetle
-        elseif i == 'u001' then
+        elseif i == CARRION_BEETLE_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AUcb'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 35,0)
             call AddUnitMagicDef(u,5 * i2)
@@ -236,7 +236,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Raise Dead
-        elseif i == 'n02S' or i == 'n02R' or i == 'h01A' or i == 'u003' then
+        elseif RAISE_DEAD_SPAWNS.contains(i) then
             set i2 = UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
             call AddUnitMagicDef(u,5 * i2)
@@ -250,7 +250,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             endif
 
             //Black Arrow Skeleton Battlemaster
-        elseif i == 'n015' then
+        elseif i == SKELETON_BATTLEMASTER_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'A0AW'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 100,0)
             call AddUnitMagicDef(u,5 * i2)
@@ -264,7 +264,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             endif
 
             //Black Arrow Skeleton Warmage
-        elseif i == 'u004' then
+        elseif i == SKELETON_WARMAGE_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'A0AW'),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 60,0)
             call AddUnitMagicDmg(u,10 * i2)
@@ -323,18 +323,18 @@ library UnitStateSys initializer init requires RandomShit, Functions
         endif
 
         //Rock Golem
-        if GetUnitTypeId(u) == 'H017' then
+        if GetUnitTypeId(u) == ROCK_GOLEM_UNIT_ID then
             call AddUnitBlock(u,50)
             call AddUnitMagicDef(u,15)
         endif
 
         //Medivh
-        if GetUnitTypeId(u) == 'H01G' then
+        if GetUnitTypeId(u) == MEDIVH_UNIT_ID then
             call AddUnitMagicDmg(u,5)
         endif
 
         //Pit Lord
-        if GetUnitTypeId(u) == 'O007' then
+        if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
             call UnitAddAbility(u, 'A07B')
             call BlzUnitDisableAbility(u,'A07B',false,true)
             call SaveInteger(HT,GetHandleId(u),941561, 1)
@@ -344,23 +344,23 @@ library UnitStateSys initializer init requires RandomShit, Functions
         endif
 
         //Satyr Trickster
-        if GetUnitTypeId(u) == 'O00C' then
+        if GetUnitTypeId(u) == SATYR_TRICKSTER_UNIT_ID then
             call AddUnitEvasion(u,10)
         endif
 
         //Witch Doctor
-        if GetUnitTypeId(u) == 'O006' then
+        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
             call AddHeroMaxAbsoluteAbility(u)
             call SetBonus(u, 0, 1)
         endif
 
         //Blademaster
-        if GetUnitTypeId(u) == 'N00K' then
+        if GetUnitTypeId(u) == BLADE_MASTER_UNIT_ID then
             set BladestormAttackLimit[GetHandleId(u)] = 9
         endif
 
         //Thunder Witch
-        if GetUnitTypeId(u) == 'O001' then
+        if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID then
             set ThunderBoltTargets[GetHandleId(u)] = 1
         endif
 

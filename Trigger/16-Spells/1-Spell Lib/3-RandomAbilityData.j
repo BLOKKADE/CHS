@@ -11,7 +11,7 @@ globals
 endglobals
 
 function PreloadRA takes nothing returns nothing
-    local unit u = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h015', 0, 0, 0)
+    local unit u = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), PRIEST_1_UNIT_ID, 0, 0, 0)
     local integer i = 0
     
     loop

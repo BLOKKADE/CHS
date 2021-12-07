@@ -152,7 +152,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
                 set recycle = recycle.recycleNext
             endif
 
-            set this.dummy = CreateUnit(p, 'h015', x, y, facing) 
+            set this.dummy = CreateUnit(p, PRIEST_1_UNIT_ID, x, y, facing) 
             set DummyInfo[GetHandleId(this.dummy)] = this
             set this.pid = GetPlayerId(p)
             set this.source = source

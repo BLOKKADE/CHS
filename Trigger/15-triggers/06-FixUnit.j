@@ -1,10 +1,10 @@
 library FixUnit initializer init
     function Trig_FixUnit_Actions takes nothing returns nothing
-        if GetUnitTypeId(GetTriggerUnit()) == 'N02K' then
+        if GetUnitTypeId(GetTriggerUnit()) == COLD_KNIGHT_UNIT_ID then
             call BlzSetUnitSkin(GetTriggerUnit(),'nrvs')
         endif
 
-        if GetUnitTypeId(GetTriggerUnit()) == 'N00Q' then
+        if GetUnitTypeId(GetTriggerUnit()) == URSA_WARRIOR_UNIT_ID then
             call BlzSetUnitSkin(GetTriggerUnit(),'nfrl')
         endif
     endfunction

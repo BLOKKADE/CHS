@@ -7,6 +7,7 @@
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\Absolutes.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\AllowAbilityCheck.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\HeroLvlTable.j"
+//! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\IdLibrary.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\Math.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\MathRound.j"
 //! import "C:\Users\Eigenaar\Projects\CHS\Trigger\01-Libraries\OrderIds.j"

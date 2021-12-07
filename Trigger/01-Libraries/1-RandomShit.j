@@ -1,4 +1,4 @@
-library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpells
+library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpells, IdLibrary
     globals
 
         integer array SpellCP
@@ -277,7 +277,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local string ordstr = LoadStr(HT,i,6)
         local real life_1 = LoadReal(HT,i,7)
         local abilityreallevelfield REALF = ConvertAbilityRealLevelField(LoadInteger(HT,i,8))
-        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
+        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),PRIEST_1_UNIT_ID,x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         set t = null
@@ -333,7 +333,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local abilityreallevelfield REALF1 = ConvertAbilityRealLevelField(LoadInteger(HT,i,8))
         local real life_2 = LoadReal(HT,i,9)
         local abilityreallevelfield REALF2 = ConvertAbilityRealLevelField(LoadInteger(HT,i,10))
-        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
+        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),PRIEST_1_UNIT_ID,x,y, Rad2Deg(Atan2(GetUnitY(u2)- y, GetUnitX(u2)- x))  )
         
         
         call UnitAddAbility(Caster1,idsp ) 
@@ -432,7 +432,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endloop
 
         //Mauler passive
-        if GetUnitTypeId(u) == 'H002' and (id == Element_Light or (id == Element_Dark and UnitHasItemS(u, 'I0AM'))) then
+        if GetUnitTypeId(u) == MAULER_UNIT_ID and (id == Element_Light or (id == Element_Dark and UnitHasItemS(u, 'I0AM'))) then
             set elementCount = elementCount + R2I(GetHeroLevel(u) / 8)
         endif
 
@@ -445,7 +445,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endif
 
         //Witch Doctor passive
-        if GetUnitTypeId(u) == 'O006' then
+        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
             set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
         endif
         
@@ -523,17 +523,17 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endif
 
         //Druid of the Claw
-        if GetUnitTypeId(u ) == 'H006' and IsObjectElement(id, 12) then
+        if GetUnitTypeId(u ) == DRUID_OF_THE_CLAY_UNIT_ID and IsObjectElement(id, 12) then
             set ResCD = ResCD * 0.5
         endif
         
         //Xesil
-        if (GetUnitTypeId(u ) == 'H01D') then
+        if (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID) then
             set xesilChance = 15 + (0.1 * GetHeroLevel(u) )
         endif
 
         //Xesil's Legacy
-        if (GetUnitTypeId(u ) != 'H01D' and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (xesilChance <= 25 * luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance * luck) and IsSpellResettable(id) then
+        if (GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (xesilChance <= 25 * luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance * luck) and IsSpellResettable(id) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
@@ -637,7 +637,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local string ordstr = LoadStr(HT,i,6)
         local real life_1 = LoadReal(HT,i,7)
         local abilityreallevelfield REALF = ConvertAbilityRealLevelField(LoadInteger(HT,i,8))
-        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),'h015',x,y, 0  )
+        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),PRIEST_1_UNIT_ID,x,y, 0  )
 
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)

@@ -55,7 +55,7 @@ scope AttackController initializer init
         endif
         
         //Demon Hunter
-        if GetUnitTypeId(u2) == 'O004' then
+        if GetUnitTypeId(u2) == DEMON_HUNTER_UNIT_ID then
             set r1 = GetHeroLevel(   attackerHero   )* 20
             set r2 = GetUnitState(u, UNIT_STATE_MANA)
             set r3 = r2 - r1
@@ -113,7 +113,7 @@ scope AttackController initializer init
         endif
 
         //Pyromancer
-        if GetUnitTypeId(u2) == 'O005' then
+        if GetUnitTypeId(u2) == PYROMANCER_UNIT_ID then
             call PyromancerScorch(u2, u)
         endif
 

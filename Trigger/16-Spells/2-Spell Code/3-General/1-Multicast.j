@@ -61,7 +61,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             endif
 
             //Ogre Mage multicast chances
-            if GetUnitTypeId(caster) == 'H01E' then
+            if GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID then
                 set OGRE_i = 15 + GetHeroLevel(caster) * 2
                 set OGRE_i2 = OGRE_i / 100 
                 set OGRE_i = OGRE_i - OGRE_i2 * 100

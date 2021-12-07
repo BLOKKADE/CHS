@@ -78,7 +78,7 @@ library CreepDeath initializer init requires RandomShit
         //Golden Ring
         set itemCount = UnitHasItemI(killingHero, 'I04R')
         if itemCount > 0 then
-            if GetUnitTypeId(killingHero) == 'H00A' then
+            if GetUnitTypeId(killingHero) == ARENA_MASTER_UNIT_ID then
                 set RingBonus = RingBonus + 20 * itemCount
             else
                 set RingBonus = RingBonus + 10 * itemCount
