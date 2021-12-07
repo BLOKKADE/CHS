@@ -21,7 +21,6 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
         integer groupSize
         integer level
         real damageReduction
-        integer level
         integer pid
         integer tick
         integer endTick
