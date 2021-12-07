@@ -21,6 +21,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
         integer groupSize
         integer level
         real damageReduction
+        integer level
         integer pid
         integer tick
         integer endTick
@@ -39,7 +40,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
             local real oldRed = this.damageReduction
 
             set this.groupSize = BlzGroupGetSize(this.spiritLinkedUnits)
-            set this.level = GetUnitAbilityLevel(this.source, 'A0B7')
+            set this.level = IMaxBJ(GetUnitAbilityLevel(this.source, 'A0B7'), this.level)
             set this.damageReduction = 1
 
             //call BJDebugMsg("size: " + I2S(this.groupSize))
@@ -105,7 +106,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
             endif
         endmethod 
     
-        static method create takes unit source returns thistype
+        static method create takes unit source, integer level returns thistype
             local thistype this
     
             if (recycle == 0) then
@@ -119,6 +120,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
             set this.source = source
             set this.spiritLinkedUnits = CreateGroup()
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
+            set this.level = level
 
             call this.updateGroup()
 
@@ -149,10 +151,10 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
         return damage * GetSpiritLinkStruct(GetHandleId(hero)).damageReduction
     endfunction
 
-    function CastSpiritLink takes unit caster returns nothing
+    function CastSpiritLink takes unit caster, integer level returns nothing
         local integer hid = GetHandleId(caster)
         if GetSpiritLinkStruct(hid).enabled == false then
-            set SpiritLinkTable[hid] = SpiritLinkStruct.create(caster)
+            set SpiritLinkTable[hid] = SpiritLinkStruct.create(caster, level)
         elseif GetSpiritLinkStruct(hid).enabled then
             //call BJDebugMsg("sl dur update")
             call GetSpiritLinkStruct(hid).updateGroup()

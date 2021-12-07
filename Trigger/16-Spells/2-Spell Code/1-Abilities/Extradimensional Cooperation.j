@@ -113,12 +113,12 @@ library ExtradimensionalCooperation requires RandomShit
         endif
     endfunction
 
-    function ExtradimensionalCooperation takes unit caster, integer abilId returns nothing
+    function ExtradimensionalCooperation takes unit caster, integer abilId, integer level returns nothing
         local unit u = CreateUnit(GetOwningPlayer(caster), 'h015', GetUnitX(caster), GetUnitY(caster), 0)
         call UnitAddAbility(u, 'A08K')
         call IssueTargetOrderById(u, 852101, caster)
         call UnitApplyTimedLife(u,'BTLF', 3) 
-        set SpellData[GetHandleId(caster)].integer[6] = SpellData[GetHandleId(caster)].integer[6] + 2 + GetUnitAbilityLevel(caster, abilId)
+        set SpellData[GetHandleId(caster)].integer[6] = SpellData[GetHandleId(caster)].integer[6] + 2 + level
         //call BJDebugMsg("edc: " + I2S(SpellData[GetHandleId(caster)].integer[6]))
         set u = null
     endfunction

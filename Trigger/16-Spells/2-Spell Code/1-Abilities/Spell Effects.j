@@ -37,13 +37,13 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             if target != null then
                 //call BJDebugMsg("target")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(caster, abilId, target, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
+                call CastRandomSpell(caster, abilId, target, RandomSpellLoc, true, lvl)
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             elseif x != 0.00 and y != 0.00 then
                 //call BJDebugMsg("point")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(caster, abilId, null, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
+                call CastRandomSpell(caster, abilId, null, RandomSpellLoc, true, lvl)
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             endif
@@ -85,7 +85,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             return true
             //Spirit Link
         elseif abilId == 'A0B7' then
-            call CastSpiritLink(caster)
+            call CastSpiritLink(caster, lvl)
             return true
             //Blink Strike
         elseif abilId == 'A08J' then
@@ -93,15 +93,15 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             return true
             //Extra dimensional cooperation
         elseif abilId == 'A08I' then
-            call ExtradimensionalCooperation(caster, abilId)
+            call ExtradimensionalCooperation(caster, abilId, lvl)
             return true
             //Frost Bolt
         elseif abilId == 'A07X' then
-            call UsFrostBolt(caster,target,120 * GetUnitAbilityLevel(caster,'A07X')*(1 + 0.25 * R2I(GetClassUnitSpell(caster,7))), GetClassUnitSpell(caster,9))
+            call UsFrostBolt(caster,target,120 * lvl * (1 + 0.25 * R2I(GetClassUnitSpell(caster,7))), GetClassUnitSpell(caster,9))
             return true
             //Sand of time
         elseif abilId == 'A083' then
-            call SandRefreshAbility(caster,1.75 + 0.25 * I2R(GetUnitAbilityLevel(caster,'A083')))
+            call SandRefreshAbility(caster,1.75 + 0.25 * lvl)
             return true
             //Purge dummy
         elseif abilId == 'A08A' then
