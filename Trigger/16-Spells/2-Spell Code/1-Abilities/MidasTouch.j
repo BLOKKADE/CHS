@@ -95,7 +95,7 @@ library MidasTouch initializer init requires DummyOrder
     function CastMidasTouch takes unit caster, unit target, integer level returns nothing
         local integer uhid = GetHandleId(caster)
         local integer hid = GetHandleId(target)
-        local real abilPower = ((GetUnitAbilityLevel(caster, 'Asal') + GetUnitAbilityLevel(caster, 'A02W') + GetUnitAbilityLevel(caster, 'A04K')) * 2)
+        local real abilPower = ((GetUnitAbilityLevel(caster, PILLAGE_ABILITY_ID) + GetUnitAbilityLevel(caster, LEARNABILITY_ABILITY_ID) + GetUnitAbilityLevel(caster, HOLY_ENLIGHTENMENT_ABILITY_ID)) * 2)
         local real power = RMaxBJ((100 - abilPower) / 100, 0)
         local integer bonus = R2I((499 + (26 * level)) * power)
         local integer i = MidasTouchCasts[uhid]

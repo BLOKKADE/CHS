@@ -52,23 +52,23 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
 
             //call SpellsLearnedDebug("pre nl", u, 0)
 
-            if GetUnitAbilityLevel(u, 'Asal') > 0 then
-                call RemoveSpell(pid, u, 'Asal')
+            if GetUnitAbilityLevel(u, PILLAGE_ABILITY_ID) > 0 then
+                call RemoveSpell(pid, u, PILLAGE_ABILITY_ID)
                 set count = 1
             endif
 
-            if GetUnitAbilityLevel(u, 'A02W') > 0 then
-                call RemoveSpell(pid, u, 'A02W')
+            if GetUnitAbilityLevel(u, LEARNABILITY_ABILITY_ID) > 0 then
+                call RemoveSpell(pid, u, LEARNABILITY_ABILITY_ID)
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(u, 'A04K') > 0 then
-                call RemoveSpell(pid, u, 'A04K')
+            if GetUnitAbilityLevel(u, HOLY_ENLIGHTENMENT_ABILITY_ID) > 0 then
+                call RemoveSpell(pid, u, HOLY_ENLIGHTENMENT_ABILITY_ID)
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(u, 'A0A2') > 0 then
-                call RemoveSpell(pid, u, 'A0A2')
+            if GetUnitAbilityLevel(u, MIDAS_TOUCH_ABILITY_ID) > 0 then
+                call RemoveSpell(pid, u, MIDAS_TOUCH_ABILITY_ID)
                 set count = count + 1
             endif
 

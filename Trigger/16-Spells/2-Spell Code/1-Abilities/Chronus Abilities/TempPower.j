@@ -27,12 +27,12 @@ library TempPower requires BuffLevel, RandomShit, TimeManipulation
             endif
             
             set this.source = source
-            set this.bonus = R2I(40 * GetUnitAbilityLevel(this.source, 'A04E')*(1 + 0.02 * GetHeroLevel(this.source)))
+            set this.bonus = R2I(40 * GetUnitAbilityLevel(this.source, TEMPORARY_POWER_ABILITY_ID)*(1 + 0.02 * GetHeroLevel(this.source)))
 
             call SetHeroStr(this.source, GetHeroStr(this.source, false) + this.bonus, false)
             call SetHeroAgi(this.source, GetHeroAgi(this.source, false) + this.bonus, false)
             call SetHeroInt(this.source, GetHeroInt(this.source, false) + this.bonus, false)
-            call ElemFuncStart(this.source,'A04E')
+            call ElemFuncStart(this.source,TEMPORARY_POWER_ABILITY_ID)
             call TimeManipulation(source, duration)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()

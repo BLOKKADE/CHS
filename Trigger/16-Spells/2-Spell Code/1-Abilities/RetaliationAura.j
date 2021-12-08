@@ -7,7 +7,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
     endglobals
 
     private function RetaliationSourceFilter takes nothing returns boolean
-        return IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(RetaliationUnit)) and GetUnitAbilityLevel(GetFilterUnit(), 'A0A9') > 0 and GetRandomInt(1,100) < 40* GetUnitLuck(GetFilterUnit()) and DistanceBetweenUnits(GetFilterUnit(), RetaliationUnit) < 580 + (20 * GetUnitAbilityLevel(GetFilterUnit(), 'A0A9'))
+        return IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(RetaliationUnit)) and GetUnitAbilityLevel(GetFilterUnit(), RETALIATION_AUR_ABILITY_ID) > 0 and GetRandomInt(1,100) < 40* GetUnitLuck(GetFilterUnit()) and DistanceBetweenUnits(GetFilterUnit(), RetaliationUnit) < 580 + (20 * GetUnitAbilityLevel(GetFilterUnit(), RETALIATION_AUR_ABILITY_ID))
     endfunction
 
     function CastRetaliation takes unit source, unit target, integer abilId, integer abilLevel returns nothing
@@ -38,7 +38,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
             call AddUnitMagicDmg(dummy.dummy, GetUnitMagicDmg(source))
 
             //Set bonus damage
-            set RetaliationDamage.real[GetHandleId(dummy.dummy)] = 0.25 + (0.025 * GetUnitAbilityLevel(caster, 'A0A9')) + damage
+            set RetaliationDamage.real[GetHandleId(dummy.dummy)] = 0.25 + (0.025 * GetUnitAbilityLevel(caster, RETALIATION_AUR_ABILITY_ID)) + damage
             //call BJDebugMsg("retdmg: " + R2S(RetaliationDamage.real[GetHandleId(dummy.dummy)]) + " hid: " + I2S(GetHandleId(dummy.dummy)))
             call DestroyEffect(AddSpecialEffectTargetFix("war3mapImported\\Shiva'sWrath.mdx", caster, "origin"))
             call dummy.activate()

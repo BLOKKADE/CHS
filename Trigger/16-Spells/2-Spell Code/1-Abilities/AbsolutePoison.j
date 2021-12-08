@@ -125,14 +125,14 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
     endfunction
 
     function AbsolutePoisonLearned takes unit u returns nothing
-        local integer poisonLevel = GetUnitAbilityLevel(u, 'A0AC')
+        local integer poisonLevel = GetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID)
         local real bonus = 1 + ((poisonLevel * 0.01) * GetClassUnitSpell(u, Element_Poison))
         local integer abilId = 0
         local integer abilLevel = 0
 
         set PoisonBonus.real[GetHandleId(u)] = bonus
         //Shadow Strike
-        set abilId = 'AEsh'
+        set abilId = SHADOW_STRIKE_ABILITY_ID
         set abilLevel = GetUnitAbilityLevel(u, abilId)
         if abilLevel > 0 then
             call UpdateAbilityField(u, abilId, ABILITY_RLF_DECAYING_DAMAGE, abilLevel, bonus)
@@ -140,7 +140,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         endif
 
         //Acid Bomb
-        set abilId = 'ANab'
+        set abilId = ACID_BOMB_ABILITY_ID
         set abilLevel = GetUnitAbilityLevel(u, abilId)
         if abilLevel > 0 then
             call UpdateAbilityField(u, abilId, ABILITY_RLF_PRIMARY_DAMAGE, abilLevel, bonus)
@@ -148,7 +148,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         endif
 
         //Acid Spray
-        set abilId = 'ANhs'
+        set abilId = ACID_SPRAY_DUMMY_ABILITY_ID
         set abilLevel = GetUnitAbilityLevel(u, abilId)
         if abilLevel > 0 then
             call UpdateAbilityField(u, abilId, ABILITY_RLF_DAMAGE_AMOUNT_NCS1, abilLevel, bonus)

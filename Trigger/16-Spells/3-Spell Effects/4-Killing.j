@@ -62,7 +62,7 @@ scope Killing initializer init
             endif
 
             //Necromancer's Army
-            set i = GetUnitAbilityLevel(targetHero, 'A0B0')
+            set i = GetUnitAbilityLevel(targetHero, NECROMANCERS_ARMY_ABILITY_ID)
             if i > 0 and IsUnitType(target, UNIT_TYPE_UNDEAD) == false then
                 call ActivateNecromancerArmy(targetHero, target, i)
             endif

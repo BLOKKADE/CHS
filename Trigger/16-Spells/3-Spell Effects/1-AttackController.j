@@ -80,22 +80,22 @@ scope AttackController initializer init
         endif
         
         //Reaction
-        if GetUnitAbilityLevel(u,'A06C') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A06C') <= 0.001  then
+        if GetUnitAbilityLevel(u,REACTION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u,REACTION_ABILITY_ID) <= 0.001  then
             set t = NewTimer()
             
             call SaveUnitHandle(HT,GetHandleId(t),1,u)
-            call SaveInteger(HT,GetHandleId(t),2,GetUnitAbilityLevel(u,'A06C')* 10)
-            call AddUnitEvasion(u,10 * GetUnitAbilityLevel(u,'A06C'))
-            call AbilStartCD(u,'A06C',8)
+            call SaveInteger(HT,GetHandleId(t),2,GetUnitAbilityLevel(u,REACTION_ABILITY_ID)* 10)
+            call AddUnitEvasion(u,10 * GetUnitAbilityLevel(u,REACTION_ABILITY_ID))
+            call AbilStartCD(u,REACTION_ABILITY_ID,8)
             call UnitAddAbility(u, 'A08D')
             call TimerStart(t,2.5,false,function EndEvasionTimer )
             set t = null
         endif
         
         //
-        if GetUnitAbilityLevel(u2,'A07N') > 0 and BlzGetUnitAbilityCooldownRemaining(u2,'A07N') <= 0.001  then
-            call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2),100 * GetUnitAbilityLevel(u2,'A07N'),500,'A07N')
-            call AbilStartCD(u2,'A07N',2 ) 
+        if GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u2,COLD_WIND_ABILITY_ID) <= 0.001  then
+            call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2),100 * GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID),500,COLD_WIND_ABILITY_ID)
+            call AbilStartCD(u2,COLD_WIND_ABILITY_ID,2 ) 
         endif
         
         //
@@ -118,8 +118,8 @@ scope AttackController initializer init
         endif
 
 
-        if (GetUnitAbilityLevel(GetTriggerUnit(),'A02U' ) >= 1)  and (GetRandomReal(1,100)<= 12 * luck) then
-            call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A02V',"fanofknives",  GetHeroStr(GetTriggerUnit(),true)*(60 + 20 * I2R(GetUnitAbilityLevel(u,'A02U' )))/ 100, ConvertAbilityRealLevelField('Ocl1') )
+        if (GetUnitAbilityLevel(GetTriggerUnit(),FIRE_FORCE_ABILITY_ID ) >= 1)  and (GetRandomReal(1,100)<= 12 * luck) then
+            call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A02V',"fanofknives",  GetHeroStr(GetTriggerUnit(),true)*(60 + 20 * I2R(GetUnitAbilityLevel(u,FIRE_FORCE_ABILITY_ID )))/ 100, ConvertAbilityRealLevelField('Ocl1') )
         endif
         set u = null
         set u2 = null

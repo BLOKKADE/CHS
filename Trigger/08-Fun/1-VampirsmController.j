@@ -20,7 +20,7 @@ library Vampirism requires RandomShit
         endif
 
         //Ancient Blood
-        set i1 = GetUnitAbilityLevel(u1,'A07R')
+        set i1 = GetUnitAbilityLevel(u1,ABSOLUTE_BLOOD_ABILITY_ID)
         if i1 > 0 then
         
             set V1 = LoadReal(HT,GetHandleId(u1),- 93000)

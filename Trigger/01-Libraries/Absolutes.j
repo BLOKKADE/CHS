@@ -26,16 +26,16 @@ library AbsoluteElements initializer init requires Table
         set AbsoluteElements = Table.create()
 
         call InitializeAbsolute(1, ABSOLUTE_FIRE_ABILITY_ID)
-        call InitializeAbsolute(2, 'A07C')
-        call InitializeAbsolute(3, 'A07E')
-        call InitializeAbsolute(4, 'A07D')
-        call InitializeAbsolute(5, 'A07K')
+        call InitializeAbsolute(2, ABSOLUTE_WATER_ABILITY_ID)
+        call InitializeAbsolute(3, ABSOLUTE_WIND_ABILITY_ID)
+        call InitializeAbsolute(4, ABSOLUTE_EARTH_ABILITY_ID)
+        call InitializeAbsolute(5, ABSOLUTE_WILD_ABILITY_ID)
 
-        call InitializeAbsolute(7, 'A07Q')
-        call InitializeAbsolute(8, 'A07P')
-        call InitializeAbsolute(9, 'A07V')
-        call InitializeAbsolute(11, 'A07R')
-        call InitializeAbsolute(Element_Arcane, 'A0AB')
-        call InitializeAbsolute(Element_Poison, 'A0AC')
+        call InitializeAbsolute(7, ABSOLUTE_DARK_ABILITY_ID)
+        call InitializeAbsolute(8, ABSOLUTE_LIGHT_ABILITY_ID)
+        call InitializeAbsolute(9, ABSOLUTE_COLD_ABILITY_ID)
+        call InitializeAbsolute(11, ABSOLUTE_BLOOD_ABILITY_ID)
+        call InitializeAbsolute(Element_Arcane, ABSOLUTE_ARCANE_ABILITY_ID)
+        call InitializeAbsolute(Element_Poison, ABSOLUTE_POISON_ABILITY_ID)
     endfunction
 endlibrary

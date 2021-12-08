@@ -199,592 +199,592 @@ library AbilityData initializer init requires Table, IdLibrary
 
     function InitAbilities takes nothing returns nothing
         //1 - Bash 
-        call SaveAbilData('A06S', 'I00L', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(BASH_ABILITY_ID, BASH_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
 
         //2 - Mana Shield 
-        call SaveAbilData('ANms', 'I03F', false, 0, 0, false, Order_None, "manashieldon")
+        call SaveAbilData(MANA_SHIELD_ABILITY_ID, MANA_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, "manashieldon")
         call SetLastObjectElement(Element_Water, 1)
 
         //3 - Carrion Swarm 
-        call SaveAbilData('AUcs', 'I008', false, 0, 0, true, Order_Point, "carrionswarm")
+        call SaveAbilData(CARRION_SWARM_ABILITY_ID, CARRION_SWARM_ITEM_ID, false, 0, 0, true, Order_Point, "carrionswarm")
         call SetLastObjectElement(Element_Dark, 1)
 
         //4 - Critical Strike 
-        call SaveAbilData(CRITICAL_STRIKE_ABILITY_ID, 'I00B', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CRITICAL_STRIKE_ABILITY_ID, CRITICAL_STRIKE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //5 - Devotion Aura 
-        call SaveAbilData('AHad', 'I009', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DEVOTION_AURA_ABILITY_ID, DEVOTION_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 2)
 
         //6 - Endurance Aura 
-        call SaveAbilData('AOae', 'I000', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ENDURANCE_AURA_ABILITY_ID, ENDURANCE_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //7 - Evasion 
-        call SaveAbilData('AEev', 'I00A', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(EVASION_ABILITY_ID, EVASION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
         //8 - Fan of Knives 
-        call SaveAbilData('AEfk', 'I003', false, 0, 0, true, Order_Instant, "fanofknives")
+        call SaveAbilData(FAN_OF_KNIVES_ABILITY_ID, FAN_OF_KNIVES_ITEM_ID, false, 0, 0, true, Order_Instant, "fanofknives")
 
         //9 - Feral Spirit 
-        call SaveAbilData(FERAL_SPIRIT_ABILITY_ID, 'I004', false, 0, 0, false, Order_Instant, "spiritwolf")
+        call SaveAbilData(FERAL_SPIRIT_ABILITY_ID, FERAL_SPIRIT_ITEM_ID, false, 0, 0, false, Order_Instant, "spiritwolf")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //10 - Flame Strike 
-        call SaveAbilData('AHfs', 'I005', false, 0, 0, true, Order_Point, "flamestrike")
+        call SaveAbilData(FLAME_STRIKE_ABILITY_ID, FLAME_STRIKE_ITEM_ID, false, 0, 0, true, Order_Point, "flamestrike")
         call SetLastObjectElement(Element_Fire, 2)
 
         //11 - Forked Lightning 
-        call SaveAbilData('ANfl', 'I001', false, 0, 0, true, Order_Target, "forkedlightning")
+        call SaveAbilData(FORKED_LIGHTNING_ABILITY_ID, FORKED_LIGHTNING_ITEM_ID, false, 0, 0, true, Order_Target, "forkedlightning")
         call SetLastObjectElement(Element_Wind, 1)
 
         //12 - Frost Nova 
-        call SaveAbilData('AUfn', 'I00C', false, 0, 0, true, Order_Target, "frostnova")
+        call SaveAbilData(FROST_NOVA_ABILITY_ID, FROST_NOVA_ITEM_ID, false, 0, 0, true, Order_Target, "frostnova")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //13 - Incinerate 
-        call SaveAbilData('A06M', 'I045', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(INCINERATE_ABILITY_ID, INCINERATE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
 
         //14 - Holy Light 
-        call SaveAbilData('AHhb', 'I00D', false, 1, 0, true, Order_Target, "holybolt")
+        call SaveAbilData(HOLY_LIGHT_ABILITY_ID, HOLY_LIGHT_ITEM_ID, false, 1, 0, true, Order_Target, "holybolt")
         call SetLastObjectElement(Element_Light, 1)
 
         //15 - Impale 
-        call SaveAbilData('AUim', 'I006', false, 0, 0, true, Order_Point, "impale")
+        call SaveAbilData(IMPALE_ABILITY_ID, IMPALE_ITEM_ID, false, 0, 0, true, Order_Point, "impale")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Dark, 1)
 
         //16 - Serpent Ward 
-        call SaveAbilData(SERPANT_WARD_ABILITY_ID, 'I00E', false, 0, 0, false, Order_Point, "ward")
+        call SaveAbilData(SERPANT_WARD_ABILITY_ID, SERPANT_WARD_ITEM_ID, false, 0, 0, false, Order_Point, "ward")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //17 - Shadow Strike 
-        call SaveAbilData('AEsh', 'I00F', false, 0, 0, true, Order_Target, "shadowstrike")
+        call SaveAbilData(SHADOW_STRIKE_ABILITY_ID, SHADOW_STRIKE_ITEM_ID, false, 0, 0, true, Order_Target, "shadowstrike")
         call SetLastObjectElement(Element_Poison, 1)
 
         //18 - Thorns Aura 
-        call SaveAbilData('A08F', 'I00H', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(THORNS_AURA_ABILITY_ID, THORNS_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
 
         //19 - Thunder Clap 
-        call SaveAbilData('AHtc', 'I00I', false, 0, 0, true, Order_Instant, "thunderclap")
+        call SaveAbilData(THUNDER_CLAP_ABILITY_ID, THUNDER_CLAP_ITEM_ID, false, 0, 0, true, Order_Instant, "thunderclap")
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Earth, 1)
 
         //20 - Unholy Aura 
-        call SaveAbilData('AUau', 'I007', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(UNHOLY_AURA_ABILITY_ID, UNHOLY_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
 
         //21 - Vampirism 
-        call SaveAbilData('AUav', 'I00J', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(VAMPIRISM_ABILITY_ID, VAMPIRISM_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //22 - War Stomp 
-        call SaveAbilData('AOws', 'I00K', false, 0, 0, true, Order_Instant, "stomp")
+        call SaveAbilData(WAR_STOMP_ABILITY_ID, WAR_STOMP_ITEM_ID, false, 0, 0, true, Order_Instant, "stomp")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Energy, 1)
 
         //23 - Life Drain 
-        call SaveAbilData(LIFE_DRAIN_ABILITY_ID, 'I00M', false, 0, 0, true, Order_Target, "drain")
+        call SaveAbilData(LIFE_DRAIN_ABILITY_ID, LIFE_DRAIN_ITEM_ID, false, 0, 0, true, Order_Target, "drain")
         call SetLastObjectElement(Element_Dark, 1)
 
         //24 - Cleaving Attack 
-        call SaveAbilData('ANca', 'I00N', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CLEAVING_ATTACK_ABILITY_ID, CLEAVING_ATTACK_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //25 - Spiked Carapace 
-        call SaveAbilData('AUts', 'I00O', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(SPIKED_CARAPACE_ABILITY_ID, SPIKED_CARAPACE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
 
         //26 - Entangling Roots 
-        call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID, 'I00Q', false, 0, 1, true, Order_Target, "entanglingroots")
+        call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID, ENTANGLING_ROOTS_ITEM_ID, false, 0, 1, true, Order_Target, "entanglingroots")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
 
         //27 - Summon Water Elemental 
-        call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID, 'I00S', false, 0, 0, false, Order_Instant, "waterelemental")
+        call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID, SUMMON_WATER_ELEMENTAL_ITEM_ID, false, 0, 0, false, Order_Instant, "waterelemental")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //28 - Shockwave 
-        call SaveAbilData(SHOCKWAVE_ABILITY_ID, 'I00R', false, 0, 0, true, Order_Point, "shockwave")
+        call SaveAbilData(SHOCKWAVE_ABILITY_ID, SHOCKWAVE_ITEM_ID, false, 0, 0, true, Order_Point, "shockwave")
         call SetLastObjectElement(Element_Earth, 2)
         call SetLastObjectElement(Element_Light, 1)
 
         //29 - Summon Lava Spawn 
-        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID, 'I00T', false, 0, 0, false, Order_Instant, "lavamonster")
+        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID, SUMMON_LAVA_SPAWN_ITEM_ID, false, 0, 0, false, Order_Instant, "lavamonster")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //30 - Drain Aura 
-        call SaveAbilData('A023', 'I04H', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DRAIN_AURA_ABILITY_ID, DRAIN_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Blood, 1)
 
         //31 - Trueshot Aura 
-        call SaveAbilData('AEar', 'I00W', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(TRUESHOT_AURA_ABILITY_ID, TRUESHOT_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //32 - Activate Immolation 
-        call SaveAbilData(IMMOLATION_ABILITY_ID, 'I00V', false, 0, 0, false, Order_None, "immolation")
+        call SaveAbilData(IMMOLATION_ABILITY_ID, IMMOLATION_ITEM_ID, false, 0, 0, false, Order_None, "immolation")
         call SetLastObjectElement(Element_Fire, 2)
 
         //33 - Storm Bolt 
-        call SaveAbilData(STORM_BOLT_ABILITY_ID, 'I00X', false, 0, 0, true, Order_Target, "thunderbolt")
+        call SaveAbilData(STORM_BOLT_ABILITY_ID, STORM_BOLT_ITEM_ID, false, 0, 0, true, Order_Target, "thunderbolt")
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Energy, 1)
 
         //34 - Mirror Image 
-        call SaveAbilData(MIRROR_IMAGE_ABILITY_ID, 'I00Z', false, 0, 0, false, Order_None, "mirrorimage")
+        call SaveAbilData(MIRROR_IMAGE_ABILITY_ID, MIRROR_IMAGE_ITEM_ID, false, 0, 0, false, Order_None, "mirrorimage")
         call SetLastObjectElement(Element_Arcane, 1)
 
         //35 - Chain Lightning 
-        call SaveAbilData('AOcl', 'I010', false, 0, 0, true, Order_Target, "chainlightning")
+        call SaveAbilData(CHAIN_LIGHTNING_ABILITY_ID, CHAIN_LIGHTNING_ITEM_ID, false, 0, 0, true, Order_Target, "chainlightning")
         call SetLastObjectElement(Element_Wind, 1)
 
         //36 - Tranquility 
-        call SaveAbilData('A09Y', 'I042', false, 0, 0, true, Order_Instant, "tranquility")
+        call SaveAbilData(TRANQUILITY_ABILITY_ID, TRANQUILITY_ITEM_ID, false, 0, 0, true, Order_Instant, "tranquility")
         call SetLastObjectElement(Element_Wild, 2)
         call SetLastObjectElement(Element_Light, 1)
-        call SaveDummyAbilOrder('AEtq', "tranquility")
+        call SaveDummyAbilOrder(TRANQUILITY_DUMMY_ABILITY_ID, "tranquility")
 
         //37 - Cluster Rockets 
-        call SaveAbilData(CLUSTER_ROCKETS_ABILITY_ID, 'I01A', false, 0, 0, true, Order_Point, "clusterrockets")
-        call SaveDummyAbilOrder('ANcs', "clusterrockets")
+        call SaveAbilData(CLUSTER_ROCKETS_ABILITY_ID, CLUSTER_ROCKETS_ITEM_ID, false, 0, 0, true, Order_Point, "clusterrockets")
+        call SaveDummyAbilOrder(CLUSTER_ROCKETS_DUMMY_ABILITY_ID, "clusterrockets")
 
         //38 - Wind Walk 
-        call SaveAbilData('AOwk', 'I01R', false, 0, 0, false, Order_None, "windwalk")
+        call SaveAbilData(WIND_WALK_ABILITY_ID, WIND_WALK_ITEM_ID, false, 0, 0, false, Order_None, "windwalk")
         call SetLastObjectElement(Element_Wind, 1)
 
         //39 - Drunken Haze 
-        call SaveAbilData('ANdh', 'I01S', false, 0, 1, true, Order_Target, "drunkenhaze")
+        call SaveAbilData(DRUNKEN_HAZE_ABILITY_ID, DRUNKEN_HAZE_ITEM_ID, false, 0, 1, true, Order_Target, "drunkenhaze")
         call SetLastObjectElement(Element_Poison, 2)
 
         //40 - Breath of Fire 
-        call SaveAbilData('ANbf', 'I01T', false, 0, 0, true, Order_Point, "breathoffire")
+        call SaveAbilData(BREATH_OF_FIRE_ABILITY_ID, BREATH_OF_FIRE_ITEM_ID, false, 0, 0, true, Order_Point, "breathoffire")
         call SetLastObjectElement(Element_Fire, 1)
 
         //41 - Whirlwind 
-        call SaveAbilData('A025', 'I02B', false, 0, 0, true, Order_Instant, "creepthunderclap")
+        call SaveAbilData(WHIRLWIND_ABILITY_ID, WHIRLWIND_ITEM_ID, false, 0, 0, true, Order_Instant, "creepthunderclap")
         call SetLastObjectElement(Element_Wind, 1)
 
         //42 - Reset Time 
-        call SaveAbilData('A024', 'I04I', false, 0, 0, false, Order_Instant, "scout")
+        call SaveAbilData(RESET_TIME_ABILITY_ID, RESET_TIME_ITEM_ID, false, 0, 0, false, Order_Instant, "scout")
         call SetLastObjectElement(Element_Arcane, 1)
 
         //43 - Acid Bomb 
-        call SaveAbilData('ANab', 'I01Z', false, 0, 1, true, Order_Target, "acidbomb")
+        call SaveAbilData(ACID_BOMB_ABILITY_ID, ACID_BOMB_ITEM_ID, false, 0, 1, true, Order_Target, "acidbomb")
         call SetLastObjectElement(Element_Poison, 1)
 
         //44 - Starfall 
-        call SaveAbilData('A0A1', 'I01Y', false, 0, 0, true, Order_Instant, "starfall")
+        call SaveAbilData(STARFALL_ABILITY_ID, STARFALL_ITEM_ID, false, 0, 0, true, Order_Instant, "starfall")
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
-        call SaveDummyAbilOrder('AEsf', "starfall")
+        call SaveDummyAbilOrder(STARFALL_DUMMY_ABILITY_ID, "starfall")
 
         //45 - Anti-magic shell
-        call SaveAbilData('Aam2', 'I03S', false, 1, 1, true, Order_Target, "antimagicshell")
+        call SaveAbilData(ANTI_MAGIC_SHEL_ABILITY_ID, ANTI_MAGIC_SHEL_ITEM_ID, false, 1, 1, true, Order_Target, "antimagicshell")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //45 - SpiritLink
-        call SaveAbilData(SPIRIT_LINK_ABILITY_ID, 'I035', false, 1, 1, true, Order_Target, "spirtlink")
+        call SaveAbilData(SPIRIT_LINK_ABILITY_ID, SPIRIT_LINK_ITEM_ID, false, 1, 1, true, Order_Target, "spirtlink")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //46 - Frost Armor 
-        call SaveAbilData('AUfu', 'I01W', false, 1, 1, true, Order_Target, "frostarmor")
+        call SaveAbilData(FROST_ARMOR_ABILITY_ID, FROST_ARMOR_ITEM_ID, false, 1, 1, true, Order_Target, "frostarmor")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //47 - Blizzard 
-        call SaveAbilData('A09U', 'I024', false, 0, 0, true, Order_Point, "blizzard")
+        call SaveAbilData(BLIZZARD_ABILITY_ID, BLIZZARD_ITEM_ID, false, 0, 0, true, Order_Point, "blizzard")
         call SetLastObjectElement(Element_Water, 2)
         call SetLastObjectElement(Element_Cold, 2)
-        call SaveDummyAbilOrder('AHbz', "blizzard")
+        call SaveDummyAbilOrder(BLIZZARD_DUMMY_ABILITY_ID, "blizzard")
 
         //48 - Rain of Fire 
-        call SaveAbilData('A09V', 'I025', false, 0, 0, true, Order_Point, "rainoffire")
+        call SaveAbilData(RAIN_OF_FIRE_ABILITY_ID, RAIN_OF_FIRE_ITEM_ID, false, 0, 0, true, Order_Point, "rainoffire")
         call SetLastObjectElement(Element_Fire, 1)
-        call SaveDummyAbilOrder('ANrf', "rainoffire")
+        call SaveDummyAbilOrder(RAIN_OF_FIRE_DUMMY_ABILITY_ID, "rainoffire")
 
         //49 - Stampede 
-        call SaveAbilData('A09W', 'I026', false, 0, 0, true, Order_Point, "uncorporealform")
+        call SaveAbilData(STAMPEDE_ABILITY_ID, STAMPEDE_ITEM_ID, false, 0, 0, true, Order_Point, "uncorporealform")
         call SetLastObjectElement(Element_Wild, 1)
-        call SaveDummyAbilOrder('ANst', "stampede")
+        call SaveDummyAbilOrder(STAMPEDE_DUMMY_ABILITY_ID, "stampede")
 
         //50 - Howl of Terror 
-        call SaveAbilData('ANht', 'I040', false, 0, 0, true, Order_Instant, "howlofterror")
+        call SaveAbilData(HOWL_OF_TERROR_ABILITY_ID, HOWL_OF_TERROR_ITEM_ID, false, 0, 0, true, Order_Instant, "howlofterror")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //51 - Inferno 
-        call SaveAbilData('AUin', 'I02A', false, 0, 0, false, Order_Point, "dreadlordinferno")
+        call SaveAbilData(INFERNO_ABILITY_ID, INFERNO_ITEM_ID, false, 0, 0, false, Order_Point, "dreadlordinferno")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //52 - Healing Wave 
-        call SaveAbilData('AOhw', 'I029', false, 1, 0, true, Order_Target, "healingwave")
+        call SaveAbilData(HEALING_WAVE_ABILITY_ID, HEALING_WAVE_ITEM_ID, false, 1, 0, true, Order_Target, "healingwave")
         call SetLastObjectElement(Element_Light, 1)
 
         //53 - Banish 
-        call SaveAbilData('AHbn', 'I02C', false, 0, 1, true, Order_Target, "banish")
+        call SaveAbilData(BANISH_ABILITY_ID, BANISH_ITEM_ID, false, 0, 1, true, Order_Target, "banish")
         call SetLastObjectElement(Element_Arcane, 1)
 
         //54 - Acid Spray 
-        call SaveAbilData('A0B3', 'I028', false, 0, 0, true, Order_Point, "healingspray")
+        call SaveAbilData(ACID_SPRAY_ABILITY_ID, ACID_SPRAY_ITEM_ID, false, 0, 0, true, Order_Point, "healingspray")
         call SetLastObjectElement(Element_Poison, 1)
-        call SaveDummyAbilOrder('ANhs', "healingspray")
+        call SaveDummyAbilOrder(ACID_SPRAY_DUMMY_ABILITY_ID, "healingspray")
 
         //55 - Activate Avatar 
-        call SaveAbilData('A0AE', 'I027', false, 0, 0, false, Order_None, "avatar")
+        call SaveAbilData(ACTIVATE_AVATAR_ABILITY_ID, ACTIVATE_AVATAR_ITEM_ID, false, 0, 0, false, Order_None, "avatar")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Energy, 1)
 
         //56 - Battle Roar 
-        call SaveAbilData('ANbr', 'I02D', false, 1, 0, true, Order_Instant, "battleroar")
+        call SaveAbilData(BATTLE_ROAR_ABILITY_ID, BATTLE_ROAR_ITEM_ID, false, 1, 0, true, Order_Instant, "battleroar")
         call SetLastObjectElement(Element_Wild, 1)
 
         //57 - Death And Decay 
-        call SaveAbilData('AUdd', 'I02E', false, 0, 0, true, Order_Point, "deathanddecay")
+        call SaveAbilData(DEATH_AND_DECAY_ABILITY_ID, DEATH_AND_DECAY_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")
         call SetLastObjectElement(Element_Dark, 1)
 
         //58 - Summon Mountain Giant 
-        call SaveAbilData(SUMMON_MOUNTAIN_GIANT_ABILITY_ID, 'I03Y', false, 0, 0, false, Order_Instant, "spiritofvengeance")
+        call SaveAbilData(SUMMON_MOUNTAIN_GIANT_ABILITY_ID, SUMMON_MOUNTAIN_GIANT_ITEM_ID, false, 0, 0, false, Order_Instant, "spiritofvengeance")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //59 - Bloodlust 
-        call SaveAbilData('Ablo', 'I02F', false, 1, 1, true, Order_Target, "bloodlust")
+        call SaveAbilData(BLOODLUST_ABILITY_ID, BLOODLUST_ITEM_ID, false, 1, 1, true, Order_Target, "bloodlust")
         call SetLastObjectElement(Element_Blood, 1)
 
         //60 - Pocket Factory 
-        call SaveAbilData(POCKET_FACTORY_ABILITY_ID, 'I02G', false, 0, 0, false, Order_Point, "summonfactory")
+        call SaveAbilData(POCKET_FACTORY_ABILITY_ID, POCKET_FACTORY_ITEM_ID, false, 0, 0, false, Order_Point, "summonfactory")
         call SetLastObjectElement(Element_Summon, 1)
 
         //61 - Pulverize 
-        call SaveAbilData('Awar', 'I02H', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(PULVERIZE_ABILITY_ID, PULVERIZE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Energy, 1)
 
         //62 - Corrosive Skin 
-        call SaveAbilData('A00Q', 'I02I', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CORROSIVE_SKIN_ABILITY_ID, CORROSIVE_SKIN_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Poison, 1)
 
         //63 - Carrion Beetles 
-        call SaveAbilData(CARRION_BEETLES_ABILITY_ID, 'I02M', false, 0, 0, false, Order_Instant, "carrionscarabsinstant")
+        call SaveAbilData(CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, false, Order_Instant, "carrionscarabsinstant")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //64 - War Drums 
-        call SaveAbilData('Aakb', 'I002', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(WAR_DRUMS_ABILITY_ID, WAR_DRUMS_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
 
         //65 - Hardened Skin 
-        call SaveAbilData('Assk', 'I02O', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(HARDENED_SKIN_ABILITY_ID, HARDENED_SKIN_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Earth, 1)
 
         //66 - Searing Arrows 
-        call SaveAbilData('AHfa', 'I02P', false, 0, 0, false, Order_None, "flamingarrows")
+        call SaveAbilData(SEARING_ARROWS_ABILITY_ID, SEARING_ARROWS_ITEM_ID, false, 0, 0, false, Order_None, "flamingarrows")
         call SetLastObjectElement(Element_Fire, 1)
 
         //67 - Necromancer's Army 
-        call SaveAbilData('A0B0', 'I02Q', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(NECROMANCERS_ARMY_ABILITY_ID, NECROMANCERS_ARMY_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //68 - Black Arrow 
-        call SaveAbilData(BLACK_ARROW_PASSIVE_ABILITY_ID, 'I02R', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(BLACK_ARROW_PASSIVE_ABILITY_ID, BLACK_ARROW_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //69 - Cold Arrows 
-        call SaveAbilData('AHca', 'I02S', false, 0, 0, false, Order_None, "coldarrows")
+        call SaveAbilData(COLD_ARROWS_ABILITY_ID, COLD_ARROWS_ITEM_ID, false, 0, 0, false, Order_None, "coldarrows")
         call SetLastObjectElement(Element_Cold, 1)
 
         //70 - Faerie Fire 
-        call SaveAbilData('Afae', 'I02T', false, 0, 1, true, Order_Target, "faeriefire")
+        call SaveAbilData(FAERIE_FIRE_ABILITY_ID, FAERIE_FIRE_ITEM_ID, false, 0, 1, true, Order_Target, "faeriefire")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
 
         //71 - Parasite 
-        call SaveAbilData(PARASITE_ABILITY_ID, 'I02U', false, 0, 1, true, Order_Target, "parasite")
+        call SaveAbilData(PARASITE_ABILITY_ID, PARASITE_ITEM_ID, false, 0, 1, true, Order_Target, "parasite")
         call SetLastObjectElement(Element_Poison, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //72 - Curse 
-        call SaveAbilData('Acrs', 'I02V', false, 0, 1, true, Order_Target, "curse")
+        call SaveAbilData(CURSE_ABILITY_ID, CURSE_ITEM_ID, false, 0, 1, true, Order_Target, "curse")
         call SetLastObjectElement(Element_Dark, 1)
 
         //73 - Inner Fire 
-        call SaveAbilData('Ainf', 'I02W', false, 1, 1, true, Order_Target, "innerfire")
+        call SaveAbilData(INNER_FIRE_ABILITY_ID, INNER_FIRE_ITEM_ID, false, 1, 1, true, Order_Target, "innerfire")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Light, 1)
 
         //74 - Command Aura 
-        call SaveAbilData('ACac', 'I02X', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(COMMAND_AURA_ABILITY_ID, COMMAND_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
 
         //75 - Devastating Blow 
-        call SaveAbilData('A050', 'I03X', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DEVASTATING_BLOW_ABILITY_ID, DEVASTATING_BLOW_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
 
         //76 - Summon Hawk 
-        call SaveAbilData(SUMMON_HAWK_ABILITY_ID, 'I02Z', false, 0, 0, false, Order_Instant, "summonwareagle")
+        call SaveAbilData(SUMMON_HAWK_ABILITY_ID, SUMMON_HAWK_ITEM_ID, false, 0, 0, false, Order_Instant, "summonwareagle")
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //77 - Summon Bear 
-        call SaveAbilData(SUMMON_BEAR_ABILITY_ID, 'I030', false, 0, 0, false, Order_Instant, "summongrizzly")
+        call SaveAbilData(SUMMON_BEAR_ABILITY_ID, SUMMON_BEAR_ITEM_ID, false, 0, 0, false, Order_Instant, "summongrizzly")
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //78 - Summon Quilbeast 
-        call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID, 'I031', false, 0, 0, false, Order_Instant, "summonquillbeast")
+        call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID, SUMMON_QUILBEAST_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //79 - Phoenix 
-        call SaveAbilData(PHEONIX_ABILITY_ID, 'I032', false, 0, 0, false, Order_Instant, "summonphoenix")
+        call SaveAbilData(PHEONIX_ABILITY_ID, PHOENIX_ITEM_ID, false, 0, 0, false, Order_Instant, "summonphoenix")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //80 - Healing Ward 
-        call SaveAbilData('Ahwd', 'I033', false, 0, 0, true, Order_Point, "healingward")
+        call SaveAbilData(HEALING_WARD_ABILITY_ID, HEALING_WARD_ITEM_ID, false, 0, 0, true, Order_Point, "healingward")
         call SetLastObjectElement(Element_Light, 2)
 
         //81 - Unholy Frenzy 
-        call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID, 'I034', false, 0, 1, true, Order_Target, "unholyfrenzy")
+        call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID, UNHOLY_FRENZY_ITEM_ID, false, 0, 1, true, Order_Target, "unholyfrenzy")
         call SetLastObjectElement(Element_Dark, 1)
 
         //82 - Berserk 
-        call SaveAbilData('Absk', 'I036', false, 0, 0, false, Order_None, "berserk")
+        call SaveAbilData(BERSERK_ABILITY_ID, BERSERK_ITEM_ID, false, 0, 0, false, Order_None, "berserk")
         call SetLastObjectElement(Element_Blood, 1)
 
         //83 - Rejuvenation 
-        call SaveAbilData('Arej', 'I037', false, 1, 1, true, Order_Target, "rejuvination")
+        call SaveAbilData(REJUVENATION_ABILITY_ID, REJUVENATION_ITEM_ID, false, 1, 1, true, Order_Target, "rejuvination")
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Light, 1)
 
         //84 - Lightning Shield 
-        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, 'I038', false, 0, 1, false, Order_None, "lightningshield")
+        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, LIGHTNING_SHIELD_ITEM_ID, false, 0, 1, false, Order_None, "lightningshield")
         call SetLastObjectElement(Element_Wind, 2)
 
         //85 - Volcano 
-        call SaveAbilData(VOLCANO_ABILITY_ID, 'I039', false, 0, 0, true, Order_Point, "volcano")
+        call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
-        call SaveDummyAbilOrder('ANvc', "volcano")
+        call SaveDummyAbilOrder(VOLCANO_DUMMY_ABILITY_ID, "volcano")
 
         //86 - Ensnare 
-        call SaveAbilData('ANen', 'I03A', false, 0, 1, true, Order_Target, "ensnare")
+        call SaveAbilData(ENSNARE_ABILITY_ID, ENSNARE_ITEM_ID, false, 0, 1, true, Order_Target, "ensnare")
 
         //87 - Liquid Fire 
-        call SaveAbilData('A06Q', 'I03B', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(LIQUID_FIRE_ABILITY_ID, LIQUID_FIRE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
 
         //88 - Plague 
-        call SaveAbilData(PLAGUE_ABILITY_ID, 'I03V', false, 0, 0, true, Order_Point, "channel")
+        call SaveAbilData(PLAGUE_ABILITY_ID, PLAGUE_ITEM_ID, false, 0, 0, true, Order_Point, "channel")
         call SetLastObjectElement(Element_Poison, 2)
 
         //89 - Pillage 
-        call SaveAbilData('Asal', 'I03D', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(PILLAGE_ABILITY_ID, PILLAGE_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //90 - Envenomed Weapons 
-        call SaveAbilData('A06O', 'I03E', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ENVENOMED_WEAPONS_ABILITY_ID, ENVENOMED_WEAPONS_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Poison, 1)
 
         //91 - Multishot 
-        call SaveAbilData('Aroc', 'I03N', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(MULTISHOT_ABILITY_ID, MULTISHOT_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //92 - Slow Aura 
-        call SaveAbilData('AOr2', 'I03G', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(SLOW_AURA_ABILITY_ID, SLOW_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //93 - Blink 
-        call SaveAbilData('AEbl', 'I03M', false, 0, 0, false, Order_None, "blink")
+        call SaveAbilData(BLINK_ABILITY_ID, BLINK_ITEM_ID, false, 0, 0, false, Order_None, "blink")
 
         //94 - Phase Shift 
-        call SaveAbilData('Apsh', 'I03U', false, 0, 0, false, Order_None, "phaseshiftinstant")
+        call SaveAbilData(PHASE_SHIFT_ABILITY_ID, PHASE_SHIFT_ITEM_ID, false, 0, 0, false, Order_None, "phaseshiftinstant")
 
         //95 - Finger of Death 
-        call SaveAbilData('Afod', 'I03Q', false, 0, 0, true, Order_Target, "fingerofdeath")
+        call SaveAbilData(FINGER_OF_DEATH_ABILITY_ID, FINGER_OF_DEATH_ITEM_ID, false, 0, 0, true, Order_Target, "fingerofdeath")
         call SetLastObjectElement(Element_Dark, 1)
 
         //96 - Aura of immortality 
-        call SaveAbilData('A02L', 'I04X', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(AURA_OF_IMMORTALITY_ABILITY_ID, AURA_OF_IMMORTALITY_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //97 - Aura of Fear 
-        call SaveAbilData('A02K', 'I04Y', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(AURA_OF_FEAR_ABILITY_ID, AURA_OF_FEAR_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Blood, 1)
 
         //98 - Aura of Vulnerability 
-        call SaveAbilData('A02M', 'I04Z', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(AURA_OF_VULNERABILITY_ABILITY_ID, AURA_OF_VULNERABILITY_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
 
         //99 - Finishing Blow 
-        call SaveAbilData('A02N', 'I050', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(FINISHING_BLOW_ABILITY_ID, FINISHING_BLOW_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //100 - Mega Speed 
-        call SaveAbilData('A02O', 'I051', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(MEGA_SPEED_ABILITY_ID, MEGA_SPEED_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
         //101 - Thunder Force 
-        call SaveAbilData('A02S', 'I053', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(THUNDER_FORCE_ABILITY_ID, THUNDER_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
         //102 - Air Force 
-        call SaveAbilData('A02T', 'I054', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(AIR_FORCE_ABILITY_ID, AIR_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
         //103 - Fire Force 
-        call SaveAbilData('A02U', 'I055', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(FIRE_FORCE_ABILITY_ID, FIRE_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
 
         //104 - Learnability 
-        call SaveAbilData('A02W', 'I056', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(LEARNABILITY_ABILITY_ID, LEARNABILITY_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //105 - Mana Bonus 
-        call SaveAbilData('A02X', 'I057', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(MANA_BONUS_ABILITY_ID, MANA_BONUS_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Energy, 1)
 
         //106 - Power of Ice 
-        call SaveAbilData('A02Z', 'I058', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(POWER_OF_ICE_ABILITY_ID, POWER_OF_ICE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //107 - Brilliance Aura 
-        call SaveAbilData('AHab', 'I00U', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(BRILLIANCE_AURA_ABILITY_ID, BRILLIANCE_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
 
         //108 - Fast Magic 
-        call SaveAbilData('A03P', 'I05M', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(FAST_MAGIC_ABILITY_ID, FAST_MAGIC_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //109 - Hero Buff 
-        call SaveAbilData('A03Q', 'I05N', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(HERO_BUFF_ABILITY_ID, HERO_BUFF_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //110 - Temporary Invisibility 
-        call SaveAbilData('A03U', 'I05O', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(TEMPORARY_INVISIBILITY_ABILITY_ID, TEMPORARY_INVISIBILITY_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
         //111 - Rapid Recovery 
-        call SaveAbilData('A03X', 'I05P', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(RAPID_RECOVERY_ABILITY_ID, RAPID_RECOVERY_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //112 - Сhronus Wizard 
-        call SaveAbilData('A03Y', 'I05Q', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CHRONUS_WIZARD_ABILITY_ID, CHRONUS_WIZARD_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
 
         //113 - Cheater Magic 
-        call SaveAbilData('A040', 'I05R', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CHEATER_MAGIC_ABILITY_ID, CHEATER_MAGIC_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
 
         //114 - Fearless Defenders 
-        call SaveAbilData('A041', 'I05S', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(FEARLESS_DEFENDERS_ABILITY_ID, FEARLESS_DEFENDERS_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //115 - Demon's Curse 
-        call SaveAbilData('A042', 'I05T', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DEMONS_CURSE_ABILITY_ID, DEMONS_CURSE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
 
         //116 - Blessed Protection
-        call SaveAbilData('A045', 'I05V', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(BLESSED_PROTECTIO_ABILITY_ID, BLESSED_PROTECTIO_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //117 - Reincarnation 
-        call SaveAbilData('ANr2', 'I00Y', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(REINCARNATION_ABILITY_ID, REINCARNATION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Light, 1)
 
         //118 - Drunken Master 
-        call SaveAbilData('Acdb', 'I05W', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DRUNKEN_MASTER_ABILITY_ID, DRUNKEN_MASTER_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //119 - Demolish 
-        call SaveAbilData('ANde', 'I05X', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DEMOLISH_ABILITY_ID, DEMOLISH_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //120 - Destruction
-        call SaveAbilData('ACpv', 'I05Y', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DESTRUCTION_ABILITY_ID, DESTRUCTION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
 
         //122 - Divine Shield 
-        call SaveAbilData('AHds', 'I011', false, 0, 0, false, Order_None, "divineshield")
+        call SaveAbilData(DIVINE_SHIELD_ABILITY_ID, DIVINE_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, "divineshield")
         call SetLastObjectElement(Element_Light, 1)
 
         //123 - Midas Touch 
-        call SaveAbilData('A0A2', 'I00G', false, 0, 1, true, Order_Target, "transmute")
+        call SaveAbilData(MIDAS_TOUCH_ABILITY_ID, MIDAS_TOUCH_ITEM_ID, false, 0, 1, true, Order_Target, "transmute")
 
         //124 - Silence 
-        call SaveAbilData('ANsi', 'I03C', false, 0, 1, true, Order_Point, "silence")
+        call SaveAbilData(SILENCE_ABILITY_ID, SILENCE_ITEM_ID, false, 0, 1, true, Order_Point, "silence")
         call SetLastObjectElement(Element_Dark, 1)
 
         //125 - Stasis Trap 
-        call SaveAbilData('Asta', 'I044', false, 0, 0, true, Order_Point, "stasistrap")
+        call SaveAbilData(STASIS_TRAP_ABILITY_ID, STASIS_TRAP_ITEM_ID, false, 0, 0, true, Order_Point, "stasistrap")
         call SetLastObjectElement(Element_Arcane, 1)
 
         //126 - Death Pact 
-        call SaveAbilData('A00M', 'I01V', false, 0, 1, false, Order_Target, "deathpact")
+        call SaveAbilData(DEATH_PACT_ABILITY_ID, DEATH_PACT_ITEM_ID, false, 0, 1, false, Order_Target, "deathpact")
         call SetLastObjectElement(Element_Dark, 2)
 
         //127 - Big Bad Voodoo 
-        call SaveAbilData('AOvd', 'I03Z', false, 0, 0, false, Order_None, "voodoo")
+        call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID, BIG_BAD_VOODOO_ITEM_ID, false, 0, 0, false, Order_None, "voodoo")
         call SetLastObjectElement(Element_Arcane, 2)
         call SetLastObjectElement(Element_Dark, 2)
 
         //128 - Icy Breath 
-        call SaveAbilData('A046', 'I05Z', false, 0, 1, true, Order_Point, "breathoffrost")
+        call SaveAbilData(ICY_BREATH_ABILITY_ID, ICY_BREATH_ITEM_ID, false, 0, 1, true, Order_Point, "breathoffrost")
         call SetLastObjectElement(Element_Cold, 1)
 
         //129 - Soul Burn 
-        call SaveAbilData('ANso', 'I062', false, 0, 1, true, Order_Target, "soulburn")
+        call SaveAbilData(SOUL_BURN_ABILITY_ID, SOUL_BURN_ITEM_ID, false, 0, 1, true, Order_Target, "soulburn")
         call SetLastObjectElement(Element_Fire, 1)
 
         //130 - Fog 
-        call SaveAbilData('A09Z', 'I063', false, 0, 1, true, Order_Point, "cloudoffog")
+        call SaveAbilData(FOG_ABILITY_ID, FOG_ITEM_ID, false, 0, 1, true, Order_Point, "cloudoffog")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Wind, 1)
-        call SaveDummyAbilOrder('Aclf', "cloudoffog")
+        call SaveDummyAbilOrder(CLOUD_DUMMY_ABILITY_ID, "cloudoffog")
 
         //131 - Temporary Power 
-        call SaveAbilData('A04E', 'I067', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(TEMPORARY_POWER_ABILITY_ID, TEMPORARY_POWER_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //132 - Multicast 
-        call SaveAbilData('A04F', 'I068', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(MULTICAST_ABILITY_ID, MULTICAST_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //133 - Heavy Blow 
-        call SaveAbilData('A04G', 'I069', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(HEAVY_BLOW_ABILITY_ID, HEAVY_BLOW_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //134 - Combustion 
-        call SaveAbilData('A04H', 'I06A', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(COMBUSTION_ABILITY_ID, COMBUSTION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
 
         //135 - Holy Enlightenment 
-        call SaveAbilData('A04K', 'I06C', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(HOLY_ENLIGHTENMENT_ABILITY_ID, HOLY_ENLIGHTENMENT_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //136 - Chaos Magic 
-        call SaveAbilData('A04L', 'I06D', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CHAOS_MAGIC_ABILITY_ID, CHAOS_MAGIC_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Wind, 1)
@@ -800,77 +800,77 @@ library AbilityData initializer init requires Table, IdLibrary
         //call SetLastObjectElement(Element_Time, 1)
 
         //137 - Monsoon 
-        call SaveAbilData('A0A0', 'I06G', false, 0, 0, true, Order_Point, "monsoon")
+        call SaveAbilData(MONSOON_ABILITY_ID, MONSOON_ITEM_ID, false, 0, 0, true, Order_Point, "monsoon")
         call SetLastObjectElement(Element_Water, 2)
         call SetLastObjectElement(Element_Wind, 2)
-        call SaveDummyAbilOrder('ANmo', "monsoon")
+        call SaveDummyAbilOrder(MONSOON_DUMMY_ABILITY_ID, "monsoon")
 
         //138 - Ice Armor 
-        call SaveAbilData(ICE_ARMOR_ABILITY_ID, 'I06L', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ICE_ARMOR_ABILITY_ID, ICE_ARMOR_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //139 - Last Breath 
-        call SaveAbilData(LAST_BREATHS_ABILITY_ID, 'I07J', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(LAST_BREATHS_ABILITY_ID, LAST_BREATHS_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Light, 1)
 
         //140 - Fire Shield 
-        call SaveAbilData('A05S', 'I07L', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(FIRE_SHIELD_ABILITY_ID, FIRE_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
 
         //141 - Ancient Teaching 
-        call SaveAbilData('A05U', 'I07N', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ANCIENT_TEACHING_ABILITY_ID, ANCIENT_TEACHING_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //142 - Cyclone 
-        call SaveAbilData('A05X', 'I07Q', false, 0, 0, true, Order_Point, "creepanimatedead")
+        call SaveAbilData(CYCLONE_ABILITY_ID, CYCLONE_ITEM_ID, false, 0, 0, true, Order_Point, "creepanimatedead")
         call SetLastObjectElement(Element_Wind, 1)
 
         //143 - Mysterious Talent 
-        call SaveAbilData('A05Z', 'I07R', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(MYSTERIOUS_TALENT_ABILITY_ID, MYSTERIOUS_TALENT_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //144 - Stone Protection 
-        call SaveAbilData('A060', 'I07S', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(STONE_PROTECTION_ABILITY_ID, STONE_PROTECTION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Earth, 1)
 
         //145 - Cruelty 
-        call SaveAbilData('A067', 'I07X', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CRUELTY_ABILITY_ID, CRUELTY_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //146 - Reaction 
-        call SaveAbilData('A06C', 'I07Z', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(REACTION_ABILITY_ID, REACTION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
         //147 - Magic Critical Hit 
-        call SaveAbilData('A06U', 'I081', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(MAGIC_CRITICAL_HIT_ABILITY_ID, MAGIC_CRITICAL_HIT_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //148 - Mega Luck 
-        call SaveAbilData('A06V', 'I085', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(MEGA_LUCK_ABILITY_ID, MEGA_LUCK_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //149 - Dousing Hex
-        call SaveAbilData('A09I', 'I0AN', false, 0, 1, true, Order_Target, "ancestralspirittarget")
+        call SaveAbilData(DOUSING_HE_ABILITY_ID, DOUSING_HE_ITEM_ID, false, 0, 1, true, Order_Target, "ancestralspirittarget")
         call SetLastObjectElement(Element_Water, 1)
 
         //150 - Ancient Runes 
-        call SaveAbilData('A09O', 'I08K', false, 0, 0, false, Order_Instant, "animatedead")
+        call SaveAbilData(ANCIENT_RUNES_ABILITY_ID, ANCIENT_RUNES_ITEM_ID, false, 0, 0, false, Order_Instant, "animatedead")
         call SetLastObjectElement(Element_Arcane, 1)
 
         //151 - Earthquake 
-        call SaveAbilData('A07L', 'I094', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(EARTHQUAKE_ABILITY_ID, EARTHQUAKE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Earth, 1)
 
         //152 - Cold Wind 
-        call SaveAbilData('A07N', 'I096', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(COLD_WIND_ABILITY_ID, COLD_WIND_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //153 - Random Spell 
-        call SaveAbilData('A07U', 'I09C', false, 0, 0, true, Order_Target, "slow")
+        call SaveAbilData(RANDOM_SPELL_ABILITY_ID, RANDOM_SPELL_ITEM_ID, false, 0, 0, true, Order_Target, "slow")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Wind, 1)
@@ -886,133 +886,133 @@ library AbilityData initializer init requires Table, IdLibrary
         //call SetLastObjectElement(Element_Time, 1)
 
         //154 - Divine Bubble 
-        call SaveAbilData('A07S', 'I09A', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DIVINE_BUBBLE_ABILITY_ID, DIVINE_BUBBLE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //155 - Ancient Blood 
-        call SaveAbilData('A07T', 'I09B', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ANCIENT_BLOOD_ABILITY_ID, ANCIENT_BLOOD_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //156 - Frost Bolt 
-        call SaveAbilData('A07X', 'I09G', false, 0, 0, true, Order_Target, "slowon")
+        call SaveAbilData(FROST_BOLT_ABILITY_ID, FROST_BOLT_ITEM_ID, false, 0, 0, true, Order_Target, "slowon")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Cold, 1)
 
         //157 - Frostbite of the Soul 
-        call SaveAbilData('A080', 'I09H', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(FROSTBITE_OF_THE_SOUL_ABILITY_ID, FROSTBITE_OF_THE_SOUL_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Cold, 1)
         call SetLastObjectElement(Element_Dark, 1)
 
         //158 - Cutting 
-        call SaveAbilData(CUTTING_ABILITY_ID, 'I09I', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(CUTTING_ABILITY_ID, CUTTING_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //159 - Divine Gift 
-        call SaveAbilData('A082', 'I09J', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DIVINE_GIFT_ABILITY_ID, DIVINE_GIFT_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //160 - Sand of Time 
-        call SaveAbilData('A083', 'I09K', false, 0, 0, false, Order_Instant, "slowoff")
+        call SaveAbilData(SAND_OF_TIME_ABILITY_ID, SAND_OF_TIME_ITEM_ID, false, 0, 0, false, Order_Instant, "slowoff")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
 
         //161 - Wizardbane Aura 
-        call SaveAbilData('A088', 'I09M', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(WIZARDBANE_AURA_ABILITY_ID, WIZARDBANE_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //162 - Martial Retribution 
-        call SaveAbilData('A089', 'I09L', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(MARTIAL_RETRIBUTION_ABILITY_ID, MARTIAL_RETRIBUTION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Energy, 1)
 
         //163 - Purge 
-        call SaveAbilData('A08E', 'I09N', false, 0, 1, true, Order_Target, "purge")
+        call SaveAbilData(PURGE_ABILITY_ID, PURGE_ITEM_ID, false, 0, 1, true, Order_Target, "purge")
         //call SetLastObjectElement(Element_Spirit, 1)
         call SetLastObjectElement(Element_Dark, 1)
 
         //164 - Blink Strike 
-        call SaveAbilData('A08J', 'I09P', false, 0, 0, true, Order_Instant, "acolyteharvest")
+        call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //165 - Extradimensional Co-operation
-        call SaveAbilData('A08I', 'I09Q', false, 0, 0, true, Order_Instant, "absorb")
+        call SaveAbilData(EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, EXTRADIMENSIONAL_CO_OPERATIO_ITEM_ID, false, 0, 0, true, Order_Instant, "absorb")
         call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
         //call SetLastObjectElement(Element_Spirit, 1)
 
         //166 - Reflection Aura
-        call SaveAbilData('A093', 'I09S', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(REFLECTION_AUR_ABILITY_ID, REFLECTION_AUR_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //167 - Arcane Assault
-        call SaveAbilData('A098', 'I09Z', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ARCANE_ASSAUL_ABILITY_ID, ARCANE_ASSAUL_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //168 - Absolute Fire
-        call SaveAbilData(ABSOLUTE_FIRE_ABILITY_ID, 'I08T', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_FIRE_ABILITY_ID, ABSOLUTE_FIRE_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Fire, 1)
 
         //169 - Absolute Water
-        call SaveAbilData('A07C', 'I08U', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_WATER_ABILITY_ID, ABSOLUTE_WATER_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
 
         //170 - Absolute Wind
-        call SaveAbilData('A07E', 'I08W', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_WIND_ABILITY_ID, ABSOLUTE_WIND_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
         //171 - Absolute Earth
-        call SaveAbilData('A07D', 'I08V', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_EARTH_ABILITY_ID, ABSOLUTE_EARTH_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Earth, 1)
 
         //172 - Absolute Wild
-        call SaveAbilData('A07K', 'I093', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_WILD_ABILITY_ID, ABSOLUTE_WILD_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //173 - Absolute Dark
-        call SaveAbilData('A07Q', 'I098', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_DARK_ABILITY_ID, ABSOLUTE_DARK_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
 
         //174 - Absolute Light
-        call SaveAbilData('A07P', 'I097', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_LIGHT_ABILITY_ID, ABSOLUTE_LIGHT_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //175 - Absolute Cold
-        call SaveAbilData('A07V', 'I09F', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_COLD_ABILITY_ID, ABSOLUTE_COLD_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Cold, 1)
 
         //176 - Absolute Blood
-        call SaveAbilData('A07R', 'I099', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_BLOOD_ABILITY_ID, ABSOLUTE_BLOOD_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //177 - Absolute Arcane
-        call SaveAbilData('A0AB', 'I0B2', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_ARCANE_ABILITY_ID, ABSOLUTE_ARCANE_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //178 - Absolute Poison
-        call SaveAbilData('A0AC', 'I0B3', true, 0, 0, false, Order_None, null)
+        call SaveAbilData(ABSOLUTE_POISON_ABILITY_ID, ABSOLUTE_POISON_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Poison, 1)
 
         //179 - Mana Starvation
-        call SaveAbilData('A09J', 'I0AO', false, 0, 0, true, Order_Target, "ancestralspirit")
+        call SaveAbilData(MANA_STARVATIO_ABILITY_ID, MANA_STARVATIO_ITEM_ID, false, 0, 0, true, Order_Target, "ancestralspirit")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Dark, 1)
 
         //180 - Fatal Flaw
-        call SaveAbilData('A0AA', 'I0B0', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(FATAL_FLA_ABILITY_ID, FATAL_FLA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //181 - Retaliation Aura
-        call SaveAbilData('A0A9', 'I0B1', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(RETALIATION_AUR_ABILITY_ID, RETALIATION_AUR_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //182 - Unlimited Agony
-        call SaveAbilData('A0AQ', 'I0BB', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(UNLIMITED_AGON_ABILITY_ID, UNLIMITED_AGON_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //183 - Time Manipulation
-        call SaveAbilData('A0AS', 'I0BA', false, 0, 0, false, Order_None, null)
+        call SaveAbilData(TIME_MANIPULATION_ABILITY_ID, TIME_MANIPULATION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Light, 1)
 
@@ -1072,77 +1072,77 @@ library AbilityData initializer init requires Table, IdLibrary
 
 
         /*
-        call SaveAbilData('Aclf', 'I063')
+        call SaveAbilData(CLOUD_DUMMY_ABILITY_ID, FOG_ITEM_ID)
 
-        call SaveAbilData('A08E',"purge",1,1)
+        call SaveAbilData(PURGE_ABILITY_ID,"purge",1,1)
         call SaveAbilData('ANtm',"transmute",1,1)
-        call SaveAbilData('Aclf',"cloudoffog",2,0)
+        call SaveAbilData(CLOUD_DUMMY_ABILITY_ID,"cloudoffog",2,0)
         call SaveAbilData(STORM_BOLT_ABILITY_ID,"thunderbolt",1,0)
-        call SaveAbilData('AHbn',"banish",1,1)
-        call SaveAbilData('AHfs',"flamestrike",2,0)
+        call SaveAbilData(BANISH_ABILITY_ID,"banish",1,1)
+        call SaveAbilData(FLAME_STRIKE_ABILITY_ID,"flamestrike",2,0)
         call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID,"waterelemental",3,0)
-        call SaveAbilData('AHtc',"thunderclap",3,0)
-        call SaveAbilData('AHhb',"holybolt",1,0)
-        call SaveAbilData('AHbz',"blizzard",2,0)   
+        call SaveAbilData(THUNDER_CLAP_ABILITY_ID,"thunderclap",3,0)
+        call SaveAbilData(HOLY_LIGHT_ABILITY_ID,"holybolt",1,0)
+        call SaveAbilData(BLIZZARD_DUMMY_ABILITY_ID,"blizzard",2,0)   
         call SaveAbilData(PHEONIX_ABILITY_ID,"summonphoenix",3,0)  
-        call SaveAbilData('Ainf',"innerfire",1,1)
+        call SaveAbilData(INNER_FIRE_ABILITY_ID,"innerfire",1,1)
     
     
         call SaveAbilData('AOww',"whirlwind",3,0)
-        call SaveAbilData('AOhw',"healingwave",1,0)
-        call SaveAbilData('AOws',"stomp",3,0)
+        call SaveAbilData(HEALING_WAVE_ABILITY_ID,"healingwave",1,0)
+        call SaveAbilData(WAR_STOMP_ABILITY_ID,"stomp",3,0)
         call SaveAbilData('AOls',"Locustswarm",3,0)
         call SaveAbilData(SERPANT_WARD_ABILITY_ID,"ward",2,0)
         call SaveAbilData('AOhx',"hex",3,1)
-        call SaveAbilData('AOvd',"voodoo",3,0)
-        call SaveAbilData('AOwk',"windwalk",3,0)
+        call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID,"voodoo",3,0)
+        call SaveAbilData(WIND_WALK_ABILITY_ID,"windwalk",3,0)
         call SaveAbilData(SHOCKWAVE_ABILITY_ID,"shockwave",2,0)
-        call SaveAbilData('AOcl',"chainlightning",1,0)
-        call SaveAbilData('Absk',"berserk",3,0)
+        call SaveAbilData(CHAIN_LIGHTNING_ABILITY_ID,"chainlightning",1,0)
+        call SaveAbilData(BERSERK_ABILITY_ID,"berserk",3,0)
         call SaveAbilData('Aspl',"spiritlink",1,1)
-        call SaveAbilData('Ablo',"bloodlust",1,1)
-        call SaveAbilData('Ahwd',"healingward",2,0)
-        call SaveAbilData('Asta',"stasistrap",2,0)   
+        call SaveAbilData(BLOODLUST_ABILITY_ID,"bloodlust",1,1)
+        call SaveAbilData(HEALING_WARD_ABILITY_ID,"healingward",2,0)
+        call SaveAbilData(STASIS_TRAP_ABILITY_ID,"stasistrap",2,0)   
         
         
         
-        call SaveAbilData('AUfn',"frostnova",1,0)  
+        call SaveAbilData(FROST_NOVA_ABILITY_ID,"frostnova",1,0)  
         call SaveAbilData(CARRION_BEETLES_ABILITY_ID,"Carrionscarabs",3,0)
-        call SaveAbilData('AUin',"dreadlordinferno",2,0)
-        call SaveAbilData('AUfu',"frostarmor",1,1)
-        call SaveAbilData('AUim',"impale",2,0)
+        call SaveAbilData(INFERNO_ABILITY_ID,"dreadlordinferno",2,0)
+        call SaveAbilData(FROST_ARMOR_ABILITY_ID,"frostarmor",1,1)
+        call SaveAbilData(IMPALE_ABILITY_ID,"impale",2,0)
         call SaveAbilData('AUdp',"deathpact",1,1)
-        call SaveAbilData('AUdd',"deathanddecay",2,0)
-        call SaveAbilData('AUcs',"carrionswarm",2,0)
-        call SaveAbilData('Aam2',"antimagicshell",1,1)
+        call SaveAbilData(DEATH_AND_DECAY_ABILITY_ID,"deathanddecay",2,0)
+        call SaveAbilData(CARRION_SWARM_ABILITY_ID,"carrionswarm",2,0)
+        call SaveAbilData(ANTI_MAGIC_SHEL_ABILITY_ID,"antimagicshell",1,1)
         call SaveAbilData(RAISE_DEAD_ABILITY_ID,"raisedead",3,0)
         call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID,"unholyfrenzy",1,1)
-        call SaveAbilData('Acrs',"curse",1,1)
+        call SaveAbilData(CURSE_ABILITY_ID,"curse",1,1)
     
         
         
         call SaveAbilData(SUMMON_MOUNTAIN_GIANT_ABILITY_ID,"spiritofvengeance",3,0)       
-        call SaveAbilData('AEfk',"fanofknives",3,0)
+        call SaveAbilData(FAN_OF_KNIVES_ABILITY_ID,"fanofknives",3,0)
         call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID,"entanglingroots",1,1)
-        call SaveAbilData('AEsf',"starfall",3,0)
+        call SaveAbilData(STARFALL_DUMMY_ABILITY_ID,"starfall",3,0)
         call SaveAbilData(IMMOLATION_ABILITY_ID,"immolation",3,0)
-        call SaveAbilData('AHfa',"flamingarrows",1,0)
-        call SaveAbilData('AEtq',"tranquility",3,0)   
-        call SaveAbilData('AEsh',"shadowstrike",1,0)       
-        call SaveAbilData('Afae',"faeriefire",1,1)
-        call SaveAbilData('Arej',"rejuvination",1,1)
+        call SaveAbilData(SEARING_ARROWS_ABILITY_ID,"flamingarrows",1,0)
+        call SaveAbilData(TRANQUILITY_DUMMY_ABILITY_ID,"tranquility",3,0)   
+        call SaveAbilData(SHADOW_STRIKE_ABILITY_ID,"shadowstrike",1,0)       
+        call SaveAbilData(FAERIE_FIRE_ABILITY_ID,"faeriefire",1,1)
+        call SaveAbilData(REJUVENATION_ABILITY_ID,"rejuvination",1,1)
         
         
         
-        call SaveAbilData('ANhs',"healingspray",2,0)
-        call SaveAbilData('ANbr',"battleroar",3,0)
-        call SaveAbilData('ANvc',"volcano",2,0)
-        call SaveAbilData('ANst',"stampede",2,0) 
-        call SaveAbilData('ANcs',"clusterrockets",2,0)       
-        call SaveAbilData('ANab',"acidbomb",1,1)
-        call SaveAbilData('ANsi',"silence",2,0)
-        call SaveAbilData('ANrf',"rainoffire",2,0)
-        call SaveAbilData('ANbf',"breathoffire",2,0)
+        call SaveAbilData(ACID_SPRAY_DUMMY_ABILITY_ID,"healingspray",2,0)
+        call SaveAbilData(BATTLE_ROAR_ABILITY_ID,"battleroar",3,0)
+        call SaveAbilData(VOLCANO_DUMMY_ABILITY_ID,"volcano",2,0)
+        call SaveAbilData(STAMPEDE_DUMMY_ABILITY_ID,"stampede",2,0) 
+        call SaveAbilData(CLUSTER_ROCKETS_DUMMY_ABILITY_ID,"clusterrockets",2,0)       
+        call SaveAbilData(ACID_BOMB_ABILITY_ID,"acidbomb",1,1)
+        call SaveAbilData(SILENCE_ABILITY_ID,"silence",2,0)
+        call SaveAbilData(RAIN_OF_FIRE_DUMMY_ABILITY_ID,"rainoffire",2,0)
+        call SaveAbilData(BREATH_OF_FIRE_ABILITY_ID,"breathoffire",2,0)
         call SaveAbilData(POCKET_FACTORY_ABILITY_ID,"summonfactory",2,0)
         
         
@@ -1150,22 +1150,22 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(SUMMON_BEAR_ABILITY_ID,"summongrizzly",3,0)  
         call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID,"slimemonster",3,0)  
         call SaveAbilData(SUMMON_HAWK_ABILITY_ID,"summonwareagle",3,0)  
-        call SaveAbilData('ANfl',"forkedlightning",1,0)  
-        call SaveAbilData('ANso',"soulburn",1,1)  
+        call SaveAbilData(FORKED_LIGHTNING_ABILITY_ID,"forkedlightning",1,0)  
+        call SaveAbilData(SOUL_BURN_ABILITY_ID,"soulburn",1,1)  
         call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID,"lightningshield",1,0)  
 
-        call SaveAbilData('ANdh',"drunkenhaze",1,1)    
-        call SaveAbilData('A046',"breathoffrost",2,0)  
+        call SaveAbilData(DRUNKEN_HAZE_ABILITY_ID,"drunkenhaze",1,1)    
+        call SaveAbilData(ICY_BREATH_ABILITY_ID,"breathoffrost",2,0)  
         call SaveAbilData(PARASITE_ABILITY_ID,"parasite",1,1)  
-        call SaveAbilData('ANen',"ensnare",1,1)
-        call SaveAbilData('ANht',"howlofterror",3,0)  
+        call SaveAbilData(ENSNARE_ABILITY_ID,"ensnare",1,1)
+        call SaveAbilData(HOWL_OF_TERROR_ABILITY_ID,"howlofterror",3,0)  
 
-        call SaveAbilData('ANmo',"monsoon",2,0)
+        call SaveAbilData(MONSOON_DUMMY_ABILITY_ID,"monsoon",2,0)
         call SaveAbilData(FERAL_SPIRIT_ABILITY_ID,"spiritwolf",3,0) 
         
-        call SaveAbilData('A05X',"channel",2,0)
+        call SaveAbilData(CYCLONE_ABILITY_ID,"channel",2,0)
         call SaveAbilData(PLAGUE_ABILITY_ID,"channel",2,0) 
-        call SaveAbilData('ANsi',"silence",2,0) 
+        call SaveAbilData(SILENCE_ABILITY_ID,"silence",2,0) 
         */
     endfunction 
 
@@ -1183,7 +1183,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveCreepAbilityData(MANA_BURN_CREEP_ABILITY_ID, Target_Enemy, Order_Target, "manaburn")
 
         //Shockwave
-        call SaveCreepAbilityData(SHOCKWAVE_ABILITY_CREEP_ID, Target_Enemy, Order_Point, "shockwave")
+        call SaveCreepAbilityData(SHOCKWAVE_CREEP_ABILITY_ID, Target_Enemy, Order_Point, "shockwave")
 
         //Thunder Clap
         call SaveCreepAbilityData(THUNDER_CLAP_CREEP_ABILITY_ID, Target_Enemy, Order_Instant, "thunderclap")

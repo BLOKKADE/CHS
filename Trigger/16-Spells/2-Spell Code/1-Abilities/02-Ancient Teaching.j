@@ -1,7 +1,7 @@
 library AncientTeaching initializer init requires RandomShit, StableSpells
     function ResetAbility_A05U takes unit u,integer id returns nothing
-        if BlzGetUnitAbilityCooldownRemaining(u,'A05U')<= 0.001 and GetUnitAbilityLevel(u,'A05U') > 0 and IsSpellResettable(id) then
-            call AbilStartCD(u,'A05U',BlzGetUnitAbilityCooldownRemaining(u,id)*(4 - 0.1 * I2R(GetUnitAbilityLevel(u,'A05U')))) 
+        if BlzGetUnitAbilityCooldownRemaining(u,ANCIENT_TEACHING_ABILITY_ID)<= 0.001 and GetUnitAbilityLevel(u,ANCIENT_TEACHING_ABILITY_ID) > 0 and IsSpellResettable(id) then
+            call AbilStartCD(u,ANCIENT_TEACHING_ABILITY_ID,BlzGetUnitAbilityCooldownRemaining(u,id)*(4 - 0.1 * I2R(GetUnitAbilityLevel(u,ANCIENT_TEACHING_ABILITY_ID)))) 
             call BlzEndUnitAbilityCooldown(u,id)
         
         endif
@@ -41,8 +41,8 @@ library AncientTeaching initializer init requires RandomShit, StableSpells
             call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A037',"fanofknives",  GetHeroLevel(GetTriggerUnit())* 50 , ConvertAbilityRealLevelField('Ocl1') )
         endif
 
-        if Id != 'A024' then
-            if GetUnitAbilityLevel(U,'A05U')> 0 and BlzGetUnitAbilityCooldownRemaining(U,'A05U')<= 0.001 then
+        if Id != RESET_TIME_ABILITY_ID then
+            if GetUnitAbilityLevel(U,ANCIENT_TEACHING_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(U,ANCIENT_TEACHING_ABILITY_ID)<= 0.001 then
                 set t = NewTimer()
                 call SaveInteger(HT,GetHandleId(t),1,Id)
                 call SaveUnitHandle(HT,GetHandleId(t),2, U)

@@ -49,7 +49,7 @@ library ChannelOrder initializer FreeInitChannel
         set OrderString[39] = "sacrifice"
         
         // InitSpellChanell
-        call SaveInteger(HT,'A05X',4,1)
+        call SaveInteger(HT,CYCLONE_ABILITY_ID,4,1)
         
         
     endfunction

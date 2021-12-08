@@ -31,7 +31,7 @@ library TempInvis requires BuffLevel, RandomShit, TimeManipulation
             if GetBuffLevel(this.source, 'A03V') == 1 then
                 call UnitAddAbility(this.source, 'A03V')
             endif
-            call ElemFuncStart(this.source,'A03U')
+            call ElemFuncStart(this.source,TEMPORARY_INVISIBILITY_ABILITY_ID)
             call TimeManipulation(source, duration)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()

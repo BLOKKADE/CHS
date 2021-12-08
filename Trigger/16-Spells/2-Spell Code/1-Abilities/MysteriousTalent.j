@@ -28,8 +28,8 @@ library MysteriousTalent requires RandomShit, AbilityData, CastSpellOnTarget
 
     function MysteriousTalentUpdateDesc takes unit caster returns nothing
         local player p = GetOwningPlayer(caster)
-        local integer abilId = 'A05Z'
-        local integer abilLvl = GetUnitAbilityLevel(caster, 'A05Z')
+        local integer abilId = MYSTERIOUS_TALENT_ABILITY_ID
+        local integer abilLvl = GetUnitAbilityLevel(caster, MYSTERIOUS_TALENT_ABILITY_ID)
         local string s = GetDesriptionAbility(abilId, abilLvl - 1)
         local string cdModeTxt = ""
         local string manifoldModeTxt = ""

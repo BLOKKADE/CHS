@@ -19,26 +19,26 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
     if AbilA then
 
         //Pulverize
-        set i = GetUnitAbilityLevel(damageSource,'Awar')
+        set i = GetUnitAbilityLevel(damageSource,PULVERIZE_ABILITY_ID)
         if i > 0 and GetRandomReal(0,100) <= 20 * luck then
             call DestroyEffect(AddSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(damageTarget),GetUnitY(damageTarget) ))
-            set area = BlzGetAbilityRealLevelField(BlzGetUnitAbility(damageSource,'Awar'), ABILITY_RLF_AREA_OF_EFFECT,i - 1)
-            call AreaDamage(damageSource,GetUnitX(damageTarget),GetUnitY(damageTarget),100 * i,area, true, 'Awar')
+            set area = BlzGetAbilityRealLevelField(BlzGetUnitAbility(damageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1)
+            call AreaDamage(damageSource,GetUnitX(damageTarget),GetUnitY(damageTarget),100 * i,area, true, PULVERIZE_ABILITY_ID)
 
         endif
 
         //Destruction
-        set i = GetUnitAbilityLevel(damageSource,'ACpv') 
+        set i = GetUnitAbilityLevel(damageSource,DESTRUCTION_ABILITY_ID) 
         if i > 0 and GetRandomReal(0,100) <= 15 * luck then
             call DestroyEffect(AddSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(damageTarget),GetUnitY(damageTarget) ))
-            set area = BlzGetAbilityRealLevelField(BlzGetUnitAbility(damageSource,'ACpv'), ABILITY_RLF_AREA_OF_EFFECT,i - 1)
+            set area = BlzGetAbilityRealLevelField(BlzGetUnitAbility(damageSource,DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1)
 
-            call AreaDamage(damageSource,GetUnitX(damageTarget),GetUnitY(damageTarget),400 * i,area, true, 'ACpv')
+            call AreaDamage(damageSource,GetUnitX(damageTarget),GetUnitY(damageTarget),400 * i,area, true, DESTRUCTION_ABILITY_ID)
 
         endif
         
         //Bash
-        set i = GetUnitAbilityLevel(damageSource,'A06S')  
+        set i = GetUnitAbilityLevel(damageSource,BASH_ABILITY_ID)  
         if i > 0 and GetRandomReal(0,100) <= I2R(i)* luck and GetUnitAbilityLevel(damageTarget,'BSTN') == 0 then
             call UsOrderU(damageSource,damageTarget,GetUnitX(damageTarget),GetUnitY(damageTarget),'A06T',"thunderbolt",  i * 100 + GetHeroStr(damageSource,true)/ 2, ABILITY_RLF_DAMAGE_HTB1 )
         endif
@@ -57,7 +57,7 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
     endif
 
     //Blink Strike
-    set i = GetUnitAbilityLevel(damageSource,'A08J') //Blink Strike
+    set i = GetUnitAbilityLevel(damageSource,BLINK_STRIKE_ABILITY_ID) //Blink Strike
     if i > 0 and BlinkStrikeEnabled.boolean[GetHandleId(damageSource)] then
         set CritDmg = CritDmg + (Dmg * (0.45 + (0.05 * i)))
         set BaseChCr = BaseChCr + 100
@@ -86,7 +86,7 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
     endif
     
     //Drunken Haze
-    set i = GetUnitAbilityLevel(damageSource,'Acdb') //Drink
+    set i = GetUnitAbilityLevel(damageSource,DRUNKEN_MASTER_ABILITY_ID) //Drink
     if i > 0 and GetRandomReal(0,100) <= 30 * luck + BaseChCr then
         set CritDmg = CritDmg + ((i * 100) * (1 + 0.02 * GetHeroLevel(damageSource)))
     endif

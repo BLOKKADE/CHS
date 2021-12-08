@@ -40,7 +40,7 @@ function stoneProtectA takes nothing returns nothing
     call ReleaseTimer(t)
     call FlushChildHashtable(HT,i)
 
-    if BlzGetUnitAbilityCooldownRemaining(u1,'A060') <= 0.001 and IsUnitEnemy(u2, GetOwningPlayer(u1)) then    
+    if BlzGetUnitAbilityCooldownRemaining(u1,STONE_PROTECTION_ABILITY_ID) <= 0.001 and IsUnitEnemy(u2, GetOwningPlayer(u1)) then    
         
         if LoadBoolean(ShateHT,GetHandleId(u2),GetHandleId(u1)) == false and IsUnitVisible(u2,GetOwningPlayer(u1) ) == false then
             call UnitShareVision(u2,GetOwningPlayer(u1),true)
@@ -51,7 +51,7 @@ function stoneProtectA takes nothing returns nothing
             call SaveBoolean(ShateHT,GetHandleId(u2),GetHandleId(u1),true)
             
         endif
-        set Bil = UsOrderU1(u1,u2,GetUnitX(u1),GetUnitY(u1),'A061',"creepthunderbolt",200 * GetUnitAbilityLevel(u1,'A060'),ABILITY_RLF_DAMAGE_CTB1)
+        set Bil = UsOrderU1(u1,u2,GetUnitX(u1),GetUnitY(u1),'A061',"creepthunderbolt",200 * GetUnitAbilityLevel(u1,STONE_PROTECTION_ABILITY_ID),ABILITY_RLF_DAMAGE_CTB1)
 
     endif
 
@@ -60,9 +60,9 @@ function stoneProtectA takes nothing returns nothing
     if Bil == true then
 
         if IsHeroUnitId(GetUnitTypeId(u2)) then
-            call AbilStartCD(u1,'A060',9)
+            call AbilStartCD(u1,STONE_PROTECTION_ABILITY_ID,9)
         else
-            call AbilStartCD(u1,'A060',0.9)
+            call AbilStartCD(u1,STONE_PROTECTION_ABILITY_ID,0.9)
         endif
     else
 

@@ -70,7 +70,7 @@ library HeroLevel initializer init requires HeroLvlTable
         local integer abilId
         local string s
         
-        set abilId = 'A089'
+        set abilId = MARTIAL_RETRIBUTION_ABILITY_ID
         set abilLvl = GetUnitAbilityLevel(h, abilId)
         if abilLvl > 0 then
             set s = GetDesriptionAbility(abilId, abilLvl - 1)
@@ -88,7 +88,7 @@ library HeroLevel initializer init requires HeroLvlTable
         local player Pl = GetOwningPlayer(UnitHero)
         local integer Pid = GetPlayerId(Pl)
         local integer RI = I_l - LastLvlHero[Pid]
-        local boolean Economic = GetUnitAbilityLevel(UnitHero,'Asal') == 0 and GetUnitAbilityLevel(UnitHero,'A02W') == 0
+        local boolean Economic = GetUnitAbilityLevel(UnitHero,PILLAGE_ABILITY_ID) == 0 and GetUnitAbilityLevel(UnitHero,LEARNABILITY_ABILITY_ID) == 0
         local integer i = 0
         local integer hid = GetHandleId(UnitHero)
 

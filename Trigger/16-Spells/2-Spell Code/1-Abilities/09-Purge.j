@@ -29,7 +29,7 @@ library Purge requires RandomShit
 
     function Purge takes unit source, unit target returns nothing
         local timer t = NewTimer()
-        local real delay = 4.2 - (0.14 * GetUnitAbilityLevel(source, 'A08E'))
+        local real delay = 4.2 - (0.14 * GetUnitAbilityLevel(source, PURGE_ABILITY_ID))
         call SaveUnitHandle(HT,GetHandleId(t),1,source)
         call SaveUnitHandle(HT,GetHandleId(t),2,target)
         call TimerStart(t, delay, false, function PurgeCast)    

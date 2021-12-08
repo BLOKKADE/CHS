@@ -21,18 +21,18 @@ scope ShortPeriodCheck initializer init
                 endif
 
                 //Power of Ice
-                if GetUnitAbilityLevel(u ,'A02Z') >= 1 then
+                if GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID) >= 1 then
                     if CheckProc(u, 610) then
-                        call ElemFuncStart(u,'A02Z')
-                        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,'A02Z')) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
+                        call ElemFuncStart(u,POWER_OF_ICE_ABILITY_ID)
+                        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
                     endif
                     
                 endif
                 
                 //Absolute Blood
-                set i1 = GetUnitAbilityLevel(u,'A07R')
+                set i1 = GetUnitAbilityLevel(u,ABSOLUTE_BLOOD_ABILITY_ID)
                 if i1 > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
-                    set s = GetDesriptionAbility('A07R',i1 - 1)
+                    set s = GetDesriptionAbility(ABSOLUTE_BLOOD_ABILITY_ID,i1 - 1)
                     if LoadReal(HT,hid,- 93001) == 0 then
                         set s2 = "50"
                     else
@@ -42,15 +42,15 @@ scope ShortPeriodCheck initializer init
                     set s3 = ReplaceText("2000",s2,s)
                     set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,- 93000) ) ,s3)
                     if GetLocalPlayer() == GetOwningPlayer(u) then
-                        call BlzSetAbilityExtendedTooltip('A07R',s3  , i1 - 1  ) 
+                        call BlzSetAbilityExtendedTooltip(ABSOLUTE_BLOOD_ABILITY_ID,s3  , i1 - 1  ) 
                     endif
                 
                 endif
                 
                 //Ancient Blood
-                set i1 = GetUnitAbilityLevel(u,'A07T')
+                set i1 = GetUnitAbilityLevel(u,ANCIENT_BLOOD_ABILITY_ID)
                 if i1 > 0 then
-                    set s = GetDesriptionAbility('A07T',i1 - 1)
+                    set s = GetDesriptionAbility(ANCIENT_BLOOD_ABILITY_ID,i1 - 1)
                     if LoadReal(HT,hid,82341) == 0 then
                         set s2 = "20000"
                     else
@@ -61,32 +61,32 @@ scope ShortPeriodCheck initializer init
                     set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,82340) ) ,s3)
                         
                     if GetLocalPlayer() == GetOwningPlayer(u) then
-                        call BlzSetAbilityExtendedTooltip('A07T',s3  , i1 - 1  ) 
+                        call BlzSetAbilityExtendedTooltip(ANCIENT_BLOOD_ABILITY_ID,s3  , i1 - 1  ) 
                     endif
                 
                 endif
                         
                 //Absolute Cold
-                set i1 = GetUnitAbilityLevel(u,'A07V')
+                set i1 = GetUnitAbilityLevel(u,ABSOLUTE_COLD_ABILITY_ID)
                 if i1 > 0 and GetUnitAbilityLevel(u, 'B01W') == 0  then
-                    if BlzGetUnitAbilityCooldownRemaining(u,'A07V') == 0 and CheckProc(u, 500) then
-                        call AbilStartCD(u, 'A07V', 20.5 - (0.5 * i1))
+                    if BlzGetUnitAbilityCooldownRemaining(u,ABSOLUTE_COLD_ABILITY_ID) == 0 and CheckProc(u, 500) then
+                        call AbilStartCD(u, ABSOLUTE_COLD_ABILITY_ID, 20.5 - (0.5 * i1))
                         call AbsoluteCold(u,GetClassUnitSpell(u,9)* 20 * i1 )
                     endif
                 endif
                 
                 //Divine Gift
-                set i1 = GetUnitAbilityLevel(u,'A082')
+                set i1 = GetUnitAbilityLevel(u,DIVINE_GIFT_ABILITY_ID)
                 if i1 > 0 then
-                    if BlzGetUnitAbilityCooldownRemaining(u,'A082') == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
-                        call AbilStartCD(u, 'A082', 8)
+                    if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
+                        call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
                         call SetWidgetLife(u,GetWidgetLife(u)+ 2500 * i1)
                         call AddSpecialEffectTargetTimer( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
                         call RemoveDebuff( u, 1)
                     endif
                 endif     
 
-                set i1 = GetUnitAbilityLevel(u, 'A0AB')
+                set i1 = GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID)
                 if i1 > 0 then
                     call AbsoluteArcaneDrain(u)
                 endif

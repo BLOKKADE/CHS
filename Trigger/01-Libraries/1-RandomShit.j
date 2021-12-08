@@ -470,10 +470,10 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local integer i = 0
 
         //Absolute Arcane
-        if GetUnitAbilityLevel(u, 'A0AB') > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
+        if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
             set i = GetClassUnitSpell(u, Element_Arcane)
             loop
-                set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, 'A0AB'))))
+                set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))))
                 set i = i - 1
                 exitwhen i <= 0
             endloop
@@ -484,7 +484,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
         if active then
             //Frost Bolt
-            if id == 'A07X' then
+            if id == FROST_BOLT_ABILITY_ID then
                 set time = time - (0.5 * GetClassUnitSpell(u,2))
                 if time < 2 then
                     set time = 2
@@ -498,7 +498,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             endif
 
             //Fishing Rod and Blink Strike
-            if UnitHasItemS(u, 'I07T') and id == 'A08J' then
+            if UnitHasItemS(u, 'I07T') and id == BLINK_STRIKE_ABILITY_ID then
                 set ResCD = ResCD * 0.5
             endif
 
@@ -518,8 +518,8 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endif
             
         //Fast Magic
-        if GetUnitAbilityLevel(u,'A03P') >= 1 then
-            set ResCD = ResCD *(1 - 0.01 * I2R(GetUnitAbilityLevel(u,'A03P'))) 
+        if GetUnitAbilityLevel(u,FAST_MAGIC_ABILITY_ID) >= 1 then
+            set ResCD = ResCD *(1 - 0.01 * I2R(GetUnitAbilityLevel(u,FAST_MAGIC_ABILITY_ID))) 
         endif
 
         //Druid of the Claw
@@ -564,7 +564,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call ElemFuncStart(u,id)
         call BlzStartUnitAbilityCooldown(u,id, newCooldown)
 
-        if id != 'A05U' then
+        if id != ANCIENT_TEACHING_ABILITY_ID then
             set Global_i = id
             set Global_u = u
             call ExecuteFunc("ResetAbilit_Ec")

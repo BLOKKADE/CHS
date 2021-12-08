@@ -32,36 +32,36 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         endif
 
         //Random Spell
-        if abilId == 'A07U' then
+        if abilId == RANDOM_SPELL_ABILITY_ID then
             //call BJDebugMsg("random spell: " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
             if target != null then
                 //call BJDebugMsg("target")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(caster, abilId, target, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
+                call CastRandomSpell(caster, abilId, target, RandomSpellLoc, true, GetUnitAbilityLevel(caster, RANDOM_SPELL_ABILITY_ID))
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             elseif x != 0.00 and y != 0.00 then
                 //call BJDebugMsg("point")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(caster, abilId, null, RandomSpellLoc, true, GetUnitAbilityLevel(caster, 'A07U'))
+                call CastRandomSpell(caster, abilId, null, RandomSpellLoc, true, GetUnitAbilityLevel(caster, RANDOM_SPELL_ABILITY_ID))
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             endif
             return true
             //Mana Starvation
-        elseif abilId == 'A09J' then
+        elseif abilId == MANA_STARVATIO_ABILITY_ID then
             call CastManaStarvation(caster, target, lvl)
             return true
             //Midas Touch
-        elseif abilId == 'A0A2' and SuddenDeathEnabled == false then
+        elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false then
             call CastMidasTouch(caster, target, lvl)
             return true
             //Dousing Hex
-        elseif abilId == 'A09I' then
+        elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(caster, target, lvl)
             return true
             //Cyclone
-        elseif abilId == 'A05X' then
+        elseif abilId == CYCLONE_ABILITY_ID then
             call Cyclone(caster, x, y)
             return true
             //Ancient Axe
@@ -73,14 +73,14 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             call AncientDagger(caster)
             return true
             //Death Pact
-        elseif abilId == 'A00M' then
+        elseif abilId == DEATH_PACT_ABILITY_ID then
             call CastDeathPact(caster, target, lvl)
             //Ancient Staff
         elseif abilId == 'A094' then
             call AncientStaff(caster)
             return true
             //Reset Time
-        elseif abilId == 'A024' then
+        elseif abilId == RESET_TIME_ABILITY_ID then
             call ResetTime(caster)
             return true
             //Spirit Link
@@ -88,20 +88,20 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             call CastSpiritLink(caster)
             return true
             //Blink Strike
-        elseif abilId == 'A08J' then
+        elseif abilId == BLINK_STRIKE_ABILITY_ID then
             call BlinkStrike(caster, lvl)
             return true
             //Extra dimensional cooperation
-        elseif abilId == 'A08I' then
+        elseif abilId == EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
             call ExtradimensionalCooperation(caster, abilId)
             return true
             //Frost Bolt
-        elseif abilId == 'A07X' then
-            call UsFrostBolt(caster,target,120 * GetUnitAbilityLevel(caster,'A07X')*(1 + 0.25 * R2I(GetClassUnitSpell(caster,7))), GetClassUnitSpell(caster,9))
+        elseif abilId == FROST_BOLT_ABILITY_ID then
+            call UsFrostBolt(caster,target,120 * GetUnitAbilityLevel(caster,FROST_BOLT_ABILITY_ID)*(1 + 0.25 * R2I(GetClassUnitSpell(caster,7))), GetClassUnitSpell(caster,9))
             return true
             //Sand of time
-        elseif abilId == 'A083' then
-            call SandRefreshAbility(caster,1.75 + 0.25 * I2R(GetUnitAbilityLevel(caster,'A083')))
+        elseif abilId == SAND_OF_TIME_ABILITY_ID then
+            call SandRefreshAbility(caster,1.75 + 0.25 * I2R(GetUnitAbilityLevel(caster,SAND_OF_TIME_ABILITY_ID)))
             return true
             //Purge dummy
         elseif abilId == 'A08A' then
@@ -119,7 +119,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
 
             return true
             //Purge wait
-        elseif abilId == 'A08E' then
+        elseif abilId == PURGE_ABILITY_ID then
             call Purge(caster, target)    
             return true  
         endif
@@ -150,7 +150,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                 if not Trig_Disable_Abilities_Func001C(caster) then
                     call ElementStartAbility(caster, abilId)
 
-                    if GetUnitAbilityLevel(caster, 'A0AC') > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
+                    if GetUnitAbilityLevel(caster, ABSOLUTE_POISON_ABILITY_ID) > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
                         call PoisonSpellCast(caster, target)
                     endif
 
@@ -162,7 +162,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
                     endif
 
-                    if abilId == 'A0AE' then
+                    if abilId == ACTIVATE_AVATAR_ABILITY_ID then
                         call CastAvatar(caster, abilLvl)
                     endif
 
@@ -170,7 +170,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call Urn(caster)
                     endif   
 
-                    if abilId == 'A05Z' then
+                    if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
                         call MysteriousTalentCast(caster)
                     endif
 
@@ -178,7 +178,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call StaffOfPowerCast(caster)
                     endif
 
-                    if abilId == 'A09O' then
+                    if abilId == ANCIENT_RUNES_ABILITY_ID then
                         call CastAncientRunes(caster)
                     endif
 
@@ -190,12 +190,12 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call MaskOfVitality(caster)
                     endif
 
-                    if GetUnitAbilityLevel(caster, 'A04F') > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X')  and abilId != 'A024' then
+                    if GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X')  and abilId != RESET_TIME_ABILITY_ID then
                         call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                     endif
 
-                    set lvl = GetUnitAbilityLevel(caster, 'A04L')
-                    if abilId != IMMOLATION_ABILITY_ID and abilId != 'ANms' and lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
+                    set lvl = GetUnitAbilityLevel(caster, CHAOS_MAGIC_ABILITY_ID)
+                    if abilId != IMMOLATION_ABILITY_ID and abilId != MANA_SHIELD_ABILITY_ID and lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
                         call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
                     endif
 

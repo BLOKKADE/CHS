@@ -9,7 +9,7 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
     endfunction
 
     function ArcaneAssault takes unit damageSource, unit damageTarget, real damage returns nothing
-        local real fullValue = 0.7 + (GetUnitAbilityLevel(damageSource, 'A098') * 0.3)
+        local real fullValue = 0.7 + (GetUnitAbilityLevel(damageSource, ARCANE_ASSAUL_ABILITY_ID) * 0.3)
         local real fullDamageCount = MathRound_floor(fullValue)
         local real damageBonus = fullValue - fullDamageCount
         local integer targets = MathRound_round(fullDamageCount)
@@ -18,8 +18,8 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
         local real x = GetUnitX(damageSource)
         local real y = GetUnitY(damageSource)
 
-        call ElemFuncStart(damageSource, 'A098')
-        if GetUnitAbilityLevel(damageSource, 'ANca') > 0 or GetUnitAbilityLevel(damageSource, 'Aroc') > 0 then
+        call ElemFuncStart(damageSource, ARCANE_ASSAUL_ABILITY_ID)
+        if GetUnitAbilityLevel(damageSource, CLEAVING_ATTACK_ABILITY_ID) > 0 or GetUnitAbilityLevel(damageSource, MULTISHOT_ABILITY_ID) > 0 then
             set p = null
             return
         endif

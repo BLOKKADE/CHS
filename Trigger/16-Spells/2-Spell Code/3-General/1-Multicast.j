@@ -2,7 +2,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
     function MultiBonusCast takes unit caster, unit target, integer abilId, integer abilOrder, location spellLoc returns nothing
         local real targetX
         local real targetY
-        local real multicastLvl = GetUnitAbilityLevel(caster,'A04F')
+        local real multicastLvl = GetUnitAbilityLevel(caster,MULTICAST_ABILITY_ID)
         local integer orderType = 0
         local integer amount = 0
         local integer OGRE_i

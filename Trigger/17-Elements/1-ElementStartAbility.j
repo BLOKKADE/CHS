@@ -105,43 +105,43 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Absolute Water
-        if GetUnitAbilityLevel(u,'A07C') > 0 and IsSpellElement(u,id,2) then
+        if GetUnitAbilityLevel(u,ABSOLUTE_WATER_ABILITY_ID) > 0 and IsSpellElement(u,id,2) then
             call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .02    )
         endif      
         
         //Absolute Wind
-        if GetUnitAbilityLevel(u,'A07E') > 0 and IsSpellElement(u,id,3) then
+        if GetUnitAbilityLevel(u,ABSOLUTE_WIND_ABILITY_ID) > 0 and IsSpellElement(u,id,3) then
             call AddHeroTempAgi(u,25,9)
             call AddStateTemp(u,3,5,9)
         endif   
         
         //Absolute Earth
-        if GetUnitAbilityLevel(u,'A07D') > 0 and IsSpellElement(u,id,4) then
+        if GetUnitAbilityLevel(u,ABSOLUTE_EARTH_ABILITY_ID) > 0 and IsSpellElement(u,id,4) then
             call AddStateTemp(u,4, 50,15)
         endif     
         
         //Absolute Dark
-        if GetUnitAbilityLevel(u,'A07Q') > 0 and IsSpellElement(u,id,7) then
+        if GetUnitAbilityLevel(u,ABSOLUTE_DARK_ABILITY_ID) > 0 and IsSpellElement(u,id,7) then
             call AoeDrainAura2(u,8,500,false)
         endif           
         
         //Absolute Cold
-        if GetUnitAbilityLevel(u,'A07V') > 0 and IsSpellElement(u,id,9) then
+        if GetUnitAbilityLevel(u,ABSOLUTE_COLD_ABILITY_ID) > 0 and IsSpellElement(u,id,9) then
             call AbsoluteColdCooldown(u)
         endif           
         
         //Absolute Light
-        if GetUnitAbilityLevel(u,'A07P') > 0 and IsSpellElement(u,id,8) then
+        if GetUnitAbilityLevel(u,ABSOLUTE_LIGHT_ABILITY_ID) > 0 and IsSpellElement(u,id,8) then
             call SetUnitState(u,UNIT_STATE_LIFE,GetUnitState(u,UNIT_STATE_LIFE) + (GetUnitState(u,UNIT_STATE_LIFE))* .04)
         endif 
 
         //Absolute Wild
-        if GetUnitAbilityLevel(u,'A07K') > 0 and IsSpellElement(u,id,5) then
+        if GetUnitAbilityLevel(u,ABSOLUTE_WILD_ABILITY_ID) > 0 and IsSpellElement(u,id,5) then
             set U = CreateUnit( GetOwningPlayer(u),'h01N',GetUnitX(u)+ 40 * CosBJ(- 30 + GetUnitFacing(u)),GetUnitY(u)+ 40 * SinBJ(- 30 + GetUnitFacing(u)),GetUnitFacing(u) )
             call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 1000 + GetHeroLevel(u)*(1000))
             call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 150 + (50)* GetHeroLevel(u) ,0)
             call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
-            call UnitApplyTimedLife(U,'A041',15)
+            call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,15)
         endif   
         
         //Stone Helmet
@@ -152,7 +152,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
                 call AddUnitBlock(U,100 + 50 * GetHeroLevel(u) )
                 call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 200 + (50 + GetHeroLevel(u))* GetHeroLevel(u) ,0)
                 call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
-                call UnitApplyTimedLife(U,'A041',30)
+                call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,30)
         
             endif
         endif

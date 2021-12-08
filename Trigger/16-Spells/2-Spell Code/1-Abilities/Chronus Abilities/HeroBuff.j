@@ -31,7 +31,7 @@ library HeroBuff requires BuffLevel, RandomShit, TimeManipulation
 
             call AddUnitMagicDmg(this.source, this.bonus)
             call AddUnitMagicDef(this.source, this.bonus * 0.5)
-            call ElemFuncStart(this.source,'A03Q')
+            call ElemFuncStart(this.source,HERO_BUFF_ABILITY_ID)
             call USOrder4field(this.source,GetUnitX(this.source),GetUnitY(this.source),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,duration * chronusLevel,ABILITY_RLF_DURATION_HERO, duration * chronusLevel,ABILITY_RLF_DURATION_NORMAL)
             call TimeManipulation(this.source, duration * chronusLevel)
             set this.endTick = T32_Tick + R2I((duration * chronusLevel) * 32)

@@ -38,7 +38,7 @@ function TakeMagickDmg takes unit damageSource ,unit damageTarget, boolean AbilA
     endif
     
     //Magic Critical Strike
-    set i = GetUnitAbilityLevel(damageSource,'A06U')
+    set i = GetUnitAbilityLevel(damageSource,MAGIC_CRITICAL_HIT_ABILITY_ID)
     if i > 0 and GetRandomReal(0,100) <= 20 * luck + BaseChCr then
         set CritDmg = CritDmg + Dmg *(1.9 + 0.17 * I2R(i))
     endif

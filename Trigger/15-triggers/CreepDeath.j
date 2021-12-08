@@ -51,8 +51,8 @@ library CreepDeath initializer init requires RandomShit
         
         //Greedy Goblin
         if GetUnitTypeId(killingHero) == 'N02P' then
-            set goldBounty = goldBounty + (((22 + GetHeroLevel(killingHero) * 3) * 70) / (70 + GetUnitAbilityLevel(killingHero,'Asal')))
-            set expBounty = expBounty + (((21 + GetHeroLevel(killingHero) * 4) * 70) / (70 + GetUnitAbilityLevel(killingHero,'Asal')))
+            set goldBounty = goldBounty + (((22 + GetHeroLevel(killingHero) * 3) * 70) / (70 + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID)))
+            set expBounty = expBounty + (((21 + GetHeroLevel(killingHero) * 4) * 70) / (70 + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID)))
             set RemBon = 20
         endif
 
@@ -63,16 +63,16 @@ library CreepDeath initializer init requires RandomShit
         endif
 
         //Pillage
-        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('Asal',killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
+        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
             if GetRandomReal(0,100) <= 65 * luck then
-                set PilageBonus = PilageBonus + (((GetUnitAbilityLevelSwapped('Asal',killingHero) * 18) * 70)/( 70 + RemBon + GetUnitAbilityLevelSwapped('A02W',killingHero))  )
+                set PilageBonus = PilageBonus + (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero) * 18) * 70)/( 70 + RemBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero))  )
                 call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitY(dyingUnit)))
             endif
         endif
         
         //Learnability
-        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('A02W',killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
-            set expBounty = expBounty + ( 35 * GetUnitAbilityLevel(killingHero,'A02W') * 70 )/(70 + RemBon + GetUnitAbilityLevel(killingHero,'Asal'))	
+        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
+            set expBounty = expBounty + ( 35 * GetUnitAbilityLevel(killingHero,LEARNABILITY_ABILITY_ID) * 70 )/(70 + RemBon + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID))	
         endif	
         
         //Golden Ring

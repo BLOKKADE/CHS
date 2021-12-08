@@ -1,6 +1,6 @@
 library Whirlwind initializer init requires RandomShit
     function Trig_Whirlwind_Conditions takes nothing returns boolean
-        return GetSpellAbilityId() == 'A025'
+        return GetSpellAbilityId() == WHIRLWIND_ABILITY_ID
     endfunction
 
     function Trig_Whirlwind_Damage_Func012C takes nothing returns boolean
@@ -11,14 +11,14 @@ library Whirlwind initializer init requires RandomShit
     endfunction
 
     function Whirlwind_Description takes unit source, real damage returns nothing
-        local integer lvl = GetUnitAbilityLevel(source, 'A025')
+        local integer lvl = GetUnitAbilityLevel(source, WHIRLWIND_ABILITY_ID)
         local real totalDamage = RMaxBJ(damage * (0.45 + (0.05 * lvl)), lvl * 50)
-        local string s = GetDesriptionAbility('A025' , lvl - 1)
+        local string s = GetDesriptionAbility(WHIRLWIND_ABILITY_ID , lvl - 1)
         
         set s = ReplaceText(",w00,", I2S(R2I(totalDamage)), s)
         
         if GetLocalPlayer() == GetOwningPlayer(source) then
-            call BlzSetAbilityExtendedTooltip('A025', s, lvl - 1)
+            call BlzSetAbilityExtendedTooltip(WHIRLWIND_ABILITY_ID, s, lvl - 1)
         endif
     endfunction
 

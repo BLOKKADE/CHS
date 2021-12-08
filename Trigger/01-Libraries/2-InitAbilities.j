@@ -17,406 +17,406 @@ function GetItemAbility takes integer itemId returns integer
 endfunction
 
 function Trig_Spell_Initialization_Actions takes nothing returns nothing
-	/*set udg_integers08[1]='A06S'
-	set udg_integers08[2]= 'ANms'
-	set udg_integers08[3]= 'AUcs'
+	/*set udg_integers08[1]=BASH_ABILITY_ID
+	set udg_integers08[2]= MANA_SHIELD_ABILITY_ID
+	set udg_integers08[3]= CARRION_SWARM_ABILITY_ID
 	set udg_integers08[4]= CRITICAL_STRIKE_ABILITY_ID
-	set udg_integers08[5]= 'AHad'
-	set udg_integers08[6]= 'AOae'
-	set udg_integers08[7]= 'AEev'
-	set udg_integers08[8]= 'AEfk'
+	set udg_integers08[5]= DEVOTION_AURA_ABILITY_ID
+	set udg_integers08[6]= ENDURANCE_AURA_ABILITY_ID
+	set udg_integers08[7]= EVASION_ABILITY_ID
+	set udg_integers08[8]= FAN_OF_KNIVES_ABILITY_ID
 	set udg_integers08[9]= FERAL_SPIRIT_ABILITY_ID
-	set udg_integers08[10]= 'AHfs'
-	set udg_integers08[11]= 'ANfl'
-	set udg_integers08[12]= 'AUfn'
-	set udg_integers08[13]= 'A06M'
-	set udg_integers08[14]= 'AHhb'
-	set udg_integers08[15]= 'AUim'
+	set udg_integers08[10]= FLAME_STRIKE_ABILITY_ID
+	set udg_integers08[11]= FORKED_LIGHTNING_ABILITY_ID
+	set udg_integers08[12]= FROST_NOVA_ABILITY_ID
+	set udg_integers08[13]= INCINERATE_ABILITY_ID
+	set udg_integers08[14]= HOLY_LIGHT_ABILITY_ID
+	set udg_integers08[15]= IMPALE_ABILITY_ID
 	set udg_integers08[16]= SERPANT_WARD_ABILITY_ID
-	set udg_integers08[17]= 'AEsh'
-	set udg_integers08[18]= 'A08F'
-	set udg_integers08[19]= 'AHtc'
-	set udg_integers08[20]= 'AUau'
-	set udg_integers08[21]= 'AUav'
-	set udg_integers08[22]= 'AOws'
+	set udg_integers08[17]= SHADOW_STRIKE_ABILITY_ID
+	set udg_integers08[18]= THORNS_AURA_ABILITY_ID
+	set udg_integers08[19]= THUNDER_CLAP_ABILITY_ID
+	set udg_integers08[20]= UNHOLY_AURA_ABILITY_ID
+	set udg_integers08[21]= VAMPIRISM_ABILITY_ID
+	set udg_integers08[22]= WAR_STOMP_ABILITY_ID
 	set udg_integers08[23]= LIFE_DRAIN_ABILITY_ID
-	set udg_integers08[24]= 'ANca'
-	set udg_integers08[25]= 'AUts'
+	set udg_integers08[24]= CLEAVING_ATTACK_ABILITY_ID
+	set udg_integers08[25]= SPIKED_CARAPACE_ABILITY_ID
 	set udg_integers08[26]= ENTAGLING_ROOTS_ABILITY_ID
 	set udg_integers08[27]= SUMMON_WATER_ELEMENTAL_ABILITY_ID
 	set udg_integers08[28]= SHOCKWAVE_ABILITY_ID
 	set udg_integers08[29]= SUMMON_LAVA_SPAWN_ABILITY_ID
-	set udg_integers08[30]= 'A023'
-	set udg_integers08[31]= 'AEar'
+	set udg_integers08[30]= DRAIN_AURA_ABILITY_ID
+	set udg_integers08[31]= TRUESHOT_AURA_ABILITY_ID
 	set udg_integers08[32]= IMMOLATION_ABILITY_ID
 	set udg_integers08[33]= STORM_BOLT_ABILITY_ID
 	set udg_integers08[34]= MIRROR_IMAGE_ABILITY_ID
-	set udg_integers08[35]= 'AOcl'
-	set udg_integers08[36]= 'AEtq'
-	set udg_integers08[37]= 'ANcs'
-	set udg_integers08[38]= 'AOwk'
-	set udg_integers08[39]= 'ANdh'
-	set udg_integers08[40]= 'ANbf'
-	set udg_integers08[41]= 'A025'
-	set udg_integers08[42]= 'A024'
-	set udg_integers08[43]= 'ANab'
-	set udg_integers08[44]= 'AEsf'
-	set udg_integers08[45]= 'Aam2'
-	set udg_integers08[46]= 'AUfu'
-	set udg_integers08[47]= 'AHbz'
-	set udg_integers08[48]= 'ANrf'
-	set udg_integers08[49]= 'ANst'
-	set udg_integers08[50]= 'ANht'
-	set udg_integers08[51]= 'AUin'
-	set udg_integers08[52]= 'AOhw'
-	set udg_integers08[53]= 'AHbn'
-	set udg_integers08[54]= 'ANhs'
+	set udg_integers08[35]= CHAIN_LIGHTNING_ABILITY_ID
+	set udg_integers08[36]= TRANQUILITY_DUMMY_ABILITY_ID
+	set udg_integers08[37]= CLUSTER_ROCKETS_DUMMY_ABILITY_ID
+	set udg_integers08[38]= WIND_WALK_ABILITY_ID
+	set udg_integers08[39]= DRUNKEN_HAZE_ABILITY_ID
+	set udg_integers08[40]= BREATH_OF_FIRE_ABILITY_ID
+	set udg_integers08[41]= WHIRLWIND_ABILITY_ID
+	set udg_integers08[42]= RESET_TIME_ABILITY_ID
+	set udg_integers08[43]= ACID_BOMB_ABILITY_ID
+	set udg_integers08[44]= STARFALL_DUMMY_ABILITY_ID
+	set udg_integers08[45]= ANTI_MAGIC_SHEL_ABILITY_ID
+	set udg_integers08[46]= FROST_ARMOR_ABILITY_ID
+	set udg_integers08[47]= BLIZZARD_DUMMY_ABILITY_ID
+	set udg_integers08[48]= RAIN_OF_FIRE_DUMMY_ABILITY_ID
+	set udg_integers08[49]= STAMPEDE_DUMMY_ABILITY_ID
+	set udg_integers08[50]= HOWL_OF_TERROR_ABILITY_ID
+	set udg_integers08[51]= INFERNO_ABILITY_ID
+	set udg_integers08[52]= HEALING_WAVE_ABILITY_ID
+	set udg_integers08[53]= BANISH_ABILITY_ID
+	set udg_integers08[54]= ACID_SPRAY_DUMMY_ABILITY_ID
 	set udg_integers08[55]= 'AHav'
-	set udg_integers08[56]= 'ANbr'
-	set udg_integers08[57]= 'AUdd'
+	set udg_integers08[56]= BATTLE_ROAR_ABILITY_ID
+	set udg_integers08[57]= DEATH_AND_DECAY_ABILITY_ID
 	set udg_integers08[58]= SUMMON_MOUNTAIN_GIANT_ABILITY_ID
-	set udg_integers08[59]= 'Ablo'
+	set udg_integers08[59]= BLOODLUST_ABILITY_ID
 	set udg_integers08[60]= POCKET_FACTORY_ABILITY_ID
-	set udg_integers08[61]= 'Awar'
-	set udg_integers08[62]= 'A00Q'
+	set udg_integers08[61]= PULVERIZE_ABILITY_ID
+	set udg_integers08[62]= CORROSIVE_SKIN_ABILITY_ID
 	set udg_integers08[63]= CARRION_BEETLES_ABILITY_ID
-	set udg_integers08[64]= 'Aakb'
-	set udg_integers08[65]= 'Assk'
-	set udg_integers08[66]= 'AHfa'
+	set udg_integers08[64]= WAR_DRUMS_ABILITY_ID
+	set udg_integers08[65]= HARDENED_SKIN_ABILITY_ID
+	set udg_integers08[66]= SEARING_ARROWS_ABILITY_ID
 	set udg_integers08[67]= RAISE_DEAD_ABILITY_ID
 	set udg_integers08[68]= BLACK_ARROW_ABILITY_ID
-	set udg_integers08[69]= 'AHca'
-	set udg_integers08[70]= 'Afae'
+	set udg_integers08[69]= COLD_ARROWS_ABILITY_ID
+	set udg_integers08[70]= FAERIE_FIRE_ABILITY_ID
 	set udg_integers08[71]= PARASITE_ABILITY_ID
-	set udg_integers08[72]= 'Acrs'
-	set udg_integers08[73]= 'Ainf'
-	set udg_integers08[74]= 'ACac'
-	set udg_integers08[75]= 'A050'
+	set udg_integers08[72]= CURSE_ABILITY_ID
+	set udg_integers08[73]= INNER_FIRE_ABILITY_ID
+	set udg_integers08[74]= COMMAND_AURA_ABILITY_ID
+	set udg_integers08[75]= DEVASTATING_BLOW_ABILITY_ID
 	set udg_integers08[76]= SUMMON_HAWK_ABILITY_ID
 	set udg_integers08[77]= SUMMON_BEAR_ABILITY_ID
 	set udg_integers08[78]= SUMMON_QUILBEAST_ABILITY_ID
 	set udg_integers08[79]= PHEONIX_ABILITY_ID
-	set udg_integers08[80]= 'Ahwd'
+	set udg_integers08[80]= HEALING_WARD_ABILITY_ID
 	set udg_integers08[81]= UNHOLY_FRENZY_ABILITY_ID
-	set udg_integers08[82]= 'Absk'
-	set udg_integers08[83]= 'Arej'
+	set udg_integers08[82]= BERSERK_ABILITY_ID
+	set udg_integers08[83]= REJUVENATION_ABILITY_ID
 	set udg_integers08[84]= LIGHTNING_SHIELD_ABILITY_ID
-	set udg_integers08[85]= 'ANvc'
-	set udg_integers08[86]= 'ANen'
-	set udg_integers08[87]= 'A06Q'
+	set udg_integers08[85]= VOLCANO_DUMMY_ABILITY_ID
+	set udg_integers08[86]= ENSNARE_ABILITY_ID
+	set udg_integers08[87]= LIQUID_FIRE_ABILITY_ID
 	set udg_integers08[88]= PLAGUE_ABILITY_ID
-	set udg_integers08[89]= 'Asal'
-	set udg_integers08[90]= 'A06O'
-	set udg_integers08[91]= 'Aroc'
-	set udg_integers08[92]= 'AOr2'
-	set udg_integers08[93]= 'AEbl'
-	set udg_integers08[94]= 'Apsh'
-	set udg_integers08[95]= 'Afod'
-	set udg_integers08[96]= 'A02L'	
-	set udg_integers08[97]= 'A02K'
-	set udg_integers08[98]= 'A02M'
-	set udg_integers08[99]= 'A02N'
-	set udg_integers08[100]= 'A02O'
-	set udg_integers08[101]= 'A02S'
-	set udg_integers08[102]= 'A02T'
-	set udg_integers08[103]= 'A02U'    
-	set udg_integers08[104]= 'A02W'  
-	set udg_integers08[105]= 'A02X'    
-	set udg_integers08[106]= 'A02Z'  
-	set udg_integers08[107]= 'AHab' 
-	set udg_integers08[108]= 'A03P'
-	set udg_integers08[109]= 'A03Q'
-	set udg_integers08[110]= 'A03U'  
-	set udg_integers08[111]= 'A03X'  
-	set udg_integers08[112]= 'A03Y'     
-	set udg_integers08[113]= 'A040'  
-	set udg_integers08[114]= 'A041' 
-	set udg_integers08[115]= 'A042'     
-	set udg_integers08[116]= 'A045' 
-	set udg_integers08[117]= 'ANr2' 
-	set udg_integers08[118]= 'Acdb' 
-	set udg_integers08[119]= 'ANde'    
-	set udg_integers08[120]= 'ACpv' 
-	set udg_integers08[121]= 'AHab' 
+	set udg_integers08[89]= PILLAGE_ABILITY_ID
+	set udg_integers08[90]= ENVENOMED_WEAPONS_ABILITY_ID
+	set udg_integers08[91]= MULTISHOT_ABILITY_ID
+	set udg_integers08[92]= SLOW_AURA_ABILITY_ID
+	set udg_integers08[93]= BLINK_ABILITY_ID
+	set udg_integers08[94]= PHASE_SHIFT_ABILITY_ID
+	set udg_integers08[95]= FINGER_OF_DEATH_ABILITY_ID
+	set udg_integers08[96]= AURA_OF_IMMORTALITY_ABILITY_ID	
+	set udg_integers08[97]= AURA_OF_FEAR_ABILITY_ID
+	set udg_integers08[98]= AURA_OF_VULNERABILITY_ABILITY_ID
+	set udg_integers08[99]= FINISHING_BLOW_ABILITY_ID
+	set udg_integers08[100]= MEGA_SPEED_ABILITY_ID
+	set udg_integers08[101]= THUNDER_FORCE_ABILITY_ID
+	set udg_integers08[102]= AIR_FORCE_ABILITY_ID
+	set udg_integers08[103]= FIRE_FORCE_ABILITY_ID    
+	set udg_integers08[104]= LEARNABILITY_ABILITY_ID  
+	set udg_integers08[105]= MANA_BONUS_ABILITY_ID    
+	set udg_integers08[106]= POWER_OF_ICE_ABILITY_ID  
+	set udg_integers08[107]= BRILLIANCE_AURA_ABILITY_ID 
+	set udg_integers08[108]= FAST_MAGIC_ABILITY_ID
+	set udg_integers08[109]= HERO_BUFF_ABILITY_ID
+	set udg_integers08[110]= TEMPORARY_INVISIBILITY_ABILITY_ID  
+	set udg_integers08[111]= RAPID_RECOVERY_ABILITY_ID  
+	set udg_integers08[112]= CHRONUS_WIZARD_ABILITY_ID     
+	set udg_integers08[113]= CHEATER_MAGIC_ABILITY_ID  
+	set udg_integers08[114]= FEARLESS_DEFENDERS_ABILITY_ID 
+	set udg_integers08[115]= DEMONS_CURSE_ABILITY_ID     
+	set udg_integers08[116]= BLESSED_PROTECTIO_ABILITY_ID 
+	set udg_integers08[117]= REINCARNATION_ABILITY_ID 
+	set udg_integers08[118]= DRUNKEN_MASTER_ABILITY_ID 
+	set udg_integers08[119]= DEMOLISH_ABILITY_ID    
+	set udg_integers08[120]= DESTRUCTION_ABILITY_ID 
+	set udg_integers08[121]= BRILLIANCE_AURA_ABILITY_ID 
 
                                           	
-	set udg_integers09[1]= 'I00L'
-	set udg_integers09[2]= 'I03F'
-	set udg_integers09[3]= 'I008'
-	set udg_integers09[4]= 'I00B'
-	set udg_integers09[5]= 'I009'
-	set udg_integers09[6]= 'I000'
-	set udg_integers09[7]= 'I00A'
-	set udg_integers09[8]= 'I003'
-	set udg_integers09[9]= 'I004'
-	set udg_integers09[10]= 'I005'
-	set udg_integers09[11]= 'I001'
-	set udg_integers09[12]= 'I00C'
-	set udg_integers09[13]= 'I045'
-	set udg_integers09[14]= 'I00D'
-	set udg_integers09[15]= 'I006'
-	set udg_integers09[16]= 'I00E'
-	set udg_integers09[17]= 'I00F'
-	set udg_integers09[18]= 'I00H'
-	set udg_integers09[19]= 'I00I'
-	set udg_integers09[20]= 'I007'
-	set udg_integers09[21]= 'I00J'
-	set udg_integers09[22]= 'I00K'
-	set udg_integers09[23]= 'I00M'
-	set udg_integers09[24]= 'I00N'
-	set udg_integers09[25]= 'I00O'
-	set udg_integers09[26]= 'I00Q'
-	set udg_integers09[27]= 'I00S'
-	set udg_integers09[28]= 'I00R'
-	set udg_integers09[29]= 'I00T'
-	set udg_integers09[30]= 'I04H'
-	set udg_integers09[31]= 'I00W'
-	set udg_integers09[32]= 'I00V'
-	set udg_integers09[33]= 'I00X'
-	set udg_integers09[34]= 'I00Z'
-	set udg_integers09[35]= 'I010'
-	set udg_integers09[36]= 'I042'
-	set udg_integers09[37]= 'I01A'
-	set udg_integers09[38]= 'I01R'
-	set udg_integers09[39]= 'I01S'
-	set udg_integers09[40]= 'I01T'
-	set udg_integers09[41]= 'I02B'
-	set udg_integers09[42]= 'I04I'
-	set udg_integers09[43]= 'I01Z'
-	set udg_integers09[44]= 'I01Y'
-	set udg_integers09[45]= 'I03S'
-	set udg_integers09[46]= 'I01W'
-	set udg_integers09[47]= 'I024'
-	set udg_integers09[48]= 'I025'
-	set udg_integers09[49]= 'I026'
-	set udg_integers09[50]= 'I040'
-	set udg_integers09[51]= 'I02A'
-	set udg_integers09[52]= 'I029'
-	set udg_integers09[53]= 'I02C'
-	set udg_integers09[54]= 'I028'
-	set udg_integers09[55]= 'I027'
-	set udg_integers09[56]= 'I02D'
-	set udg_integers09[57]= 'I02E'
-	set udg_integers09[58]= 'I03Y'
-	set udg_integers09[59]= 'I02F'
-	set udg_integers09[60]= 'I02G'
-	set udg_integers09[61]= 'I02H'
-	set udg_integers09[62]= 'I02I'
-	set udg_integers09[63]= 'I02M'
-	set udg_integers09[64]= 'I002'
-	set udg_integers09[65]= 'I02O'
-	set udg_integers09[66]= 'I02P'
-	set udg_integers09[67]= 'I02Q'
-	set udg_integers09[68]= 'I02R'
-	set udg_integers09[69]= 'I02S'
-	set udg_integers09[70]= 'I02T'
-	set udg_integers09[71]= 'I02U'
-	set udg_integers09[72]= 'I02V'
-	set udg_integers09[73]= 'I02W'
-	set udg_integers09[74]= 'I02X'
-	set udg_integers09[75]= 'I03X'
-	set udg_integers09[76]= 'I02Z'
-	set udg_integers09[77]= 'I030'
-	set udg_integers09[78]= 'I031'
-	set udg_integers09[79]= 'I032'
-	set udg_integers09[80]= 'I033'
-	set udg_integers09[81]= 'I034'
-	set udg_integers09[82]= 'I036'
-	set udg_integers09[83]= 'I037'
-	set udg_integers09[84]= 'I038'
-	set udg_integers09[85]= 'I039'
-	set udg_integers09[86]= 'I03A'
-	set udg_integers09[87]= 'I03B'
-	set udg_integers09[88]= 'I03V'
-	set udg_integers09[89]= 'I03D'
-	set udg_integers09[90]= 'I03E'
-	set udg_integers09[91]= 'I03N'
-	set udg_integers09[92]= 'I03G'
-	set udg_integers09[93]= 'I03M'
-	set udg_integers09[94]= 'I03U'
-	set udg_integers09[95]= 'I03Q'
-	set udg_integers09[96]= 'I04X'
-	set udg_integers09[97]= 'I04Y'
-	set udg_integers09[98]= 'I04Z'
-	set udg_integers09[99]= 'I050'
-	set udg_integers09[100]= 'I051'
-	set udg_integers09[101]= 'I053'
-	set udg_integers09[102]= 'I054'
-	set udg_integers09[103]= 'I055'
-	set udg_integers09[104]= 'I056'   
-	set udg_integers09[105]= 'I057'      
-	set udg_integers09[106]= 'I058'      	
-	set udg_integers09[107]= 'I00U'
-	set udg_integers09[108]= 'I05M'  
-	set udg_integers09[109]= 'I05N'  
-	set udg_integers09[110]= 'I05O'		
-	set udg_integers09[111]= 'I05P'	
-	set udg_integers09[112]= 'I05Q'
-	set udg_integers09[113]= 'I05R'    
-	set udg_integers09[114]= 'I05S'  
-	set udg_integers09[115]= 'I05T' 
-	set udg_integers09[116]= 'I05V' 
-	set udg_integers09[117]= 'I00Y' 
-	set udg_integers09[118]= 'I05W' 
-	set udg_integers09[119]= 'I05X' 
-	set udg_integers09[120]= 'I05Y' 
-	set udg_integers09[121]= 'ANms'    
+	set udg_integers09[1]= BASH_ITEM_ID
+	set udg_integers09[2]= MANA_SHIELD_ITEM_ID
+	set udg_integers09[3]= CARRION_SWARM_ITEM_ID
+	set udg_integers09[4]= CRITICAL_STRIKE_ITEM_ID
+	set udg_integers09[5]= DEVOTION_AURA_ITEM_ID
+	set udg_integers09[6]= ENDURANCE_AURA_ITEM_ID
+	set udg_integers09[7]= EVASION_ITEM_ID
+	set udg_integers09[8]= FAN_OF_KNIVES_ITEM_ID
+	set udg_integers09[9]= FERAL_SPIRIT_ITEM_ID
+	set udg_integers09[10]= FLAME_STRIKE_ITEM_ID
+	set udg_integers09[11]= FORKED_LIGHTNING_ITEM_ID
+	set udg_integers09[12]= FROST_NOVA_ITEM_ID
+	set udg_integers09[13]= INCINERATE_ITEM_ID
+	set udg_integers09[14]= HOLY_LIGHT_ITEM_ID
+	set udg_integers09[15]= IMPALE_ITEM_ID
+	set udg_integers09[16]= SERPANT_WARD_ITEM_ID
+	set udg_integers09[17]= SHADOW_STRIKE_ITEM_ID
+	set udg_integers09[18]= THORNS_AURA_ITEM_ID
+	set udg_integers09[19]= THUNDER_CLAP_ITEM_ID
+	set udg_integers09[20]= UNHOLY_AURA_ITEM_ID
+	set udg_integers09[21]= VAMPIRISM_ITEM_ID
+	set udg_integers09[22]= WAR_STOMP_ITEM_ID
+	set udg_integers09[23]= LIFE_DRAIN_ITEM_ID
+	set udg_integers09[24]= CLEAVING_ATTACK_ITEM_ID
+	set udg_integers09[25]= SPIKED_CARAPACE_ITEM_ID
+	set udg_integers09[26]= ENTANGLING_ROOTS_ITEM_ID
+	set udg_integers09[27]= SUMMON_WATER_ELEMENTAL_ITEM_ID
+	set udg_integers09[28]= SHOCKWAVE_ITEM_ID
+	set udg_integers09[29]= SUMMON_LAVA_SPAWN_ITEM_ID
+	set udg_integers09[30]= DRAIN_AURA_ITEM_ID
+	set udg_integers09[31]= TRUESHOT_AURA_ITEM_ID
+	set udg_integers09[32]= IMMOLATION_ITEM_ID
+	set udg_integers09[33]= STORM_BOLT_ITEM_ID
+	set udg_integers09[34]= MIRROR_IMAGE_ITEM_ID
+	set udg_integers09[35]= CHAIN_LIGHTNING_ITEM_ID
+	set udg_integers09[36]= TRANQUILITY_ITEM_ID
+	set udg_integers09[37]= CLUSTER_ROCKETS_ITEM_ID
+	set udg_integers09[38]= WIND_WALK_ITEM_ID
+	set udg_integers09[39]= DRUNKEN_HAZE_ITEM_ID
+	set udg_integers09[40]= BREATH_OF_FIRE_ITEM_ID
+	set udg_integers09[41]= WHIRLWIND_ITEM_ID
+	set udg_integers09[42]= RESET_TIME_ITEM_ID
+	set udg_integers09[43]= ACID_BOMB_ITEM_ID
+	set udg_integers09[44]= STARFALL_ITEM_ID
+	set udg_integers09[45]= ANTI_MAGIC_SHEL_ITEM_ID
+	set udg_integers09[46]= FROST_ARMOR_ITEM_ID
+	set udg_integers09[47]= BLIZZARD_ITEM_ID
+	set udg_integers09[48]= RAIN_OF_FIRE_ITEM_ID
+	set udg_integers09[49]= STAMPEDE_ITEM_ID
+	set udg_integers09[50]= HOWL_OF_TERROR_ITEM_ID
+	set udg_integers09[51]= INFERNO_ITEM_ID
+	set udg_integers09[52]= HEALING_WAVE_ITEM_ID
+	set udg_integers09[53]= BANISH_ITEM_ID
+	set udg_integers09[54]= ACID_SPRAY_ITEM_ID
+	set udg_integers09[55]= ACTIVATE_AVATAR_ITEM_ID
+	set udg_integers09[56]= BATTLE_ROAR_ITEM_ID
+	set udg_integers09[57]= DEATH_AND_DECAY_ITEM_ID
+	set udg_integers09[58]= SUMMON_MOUNTAIN_GIANT_ITEM_ID
+	set udg_integers09[59]= BLOODLUST_ITEM_ID
+	set udg_integers09[60]= POCKET_FACTORY_ITEM_ID
+	set udg_integers09[61]= PULVERIZE_ITEM_ID
+	set udg_integers09[62]= CORROSIVE_SKIN_ITEM_ID
+	set udg_integers09[63]= CARRION_BEETLES_ITEM_ID
+	set udg_integers09[64]= WAR_DRUMS_ITEM_ID
+	set udg_integers09[65]= HARDENED_SKIN_ITEM_ID
+	set udg_integers09[66]= SEARING_ARROWS_ITEM_ID
+	set udg_integers09[67]= NECROMANCERS_ARMY_ITEM_ID
+	set udg_integers09[68]= BLACK_ARROW_ITEM_ID
+	set udg_integers09[69]= COLD_ARROWS_ITEM_ID
+	set udg_integers09[70]= FAERIE_FIRE_ITEM_ID
+	set udg_integers09[71]= PARASITE_ITEM_ID
+	set udg_integers09[72]= CURSE_ITEM_ID
+	set udg_integers09[73]= INNER_FIRE_ITEM_ID
+	set udg_integers09[74]= COMMAND_AURA_ITEM_ID
+	set udg_integers09[75]= DEVASTATING_BLOW_ITEM_ID
+	set udg_integers09[76]= SUMMON_HAWK_ITEM_ID
+	set udg_integers09[77]= SUMMON_BEAR_ITEM_ID
+	set udg_integers09[78]= SUMMON_QUILBEAST_ITEM_ID
+	set udg_integers09[79]= PHOENIX_ITEM_ID
+	set udg_integers09[80]= HEALING_WARD_ITEM_ID
+	set udg_integers09[81]= UNHOLY_FRENZY_ITEM_ID
+	set udg_integers09[82]= BERSERK_ITEM_ID
+	set udg_integers09[83]= REJUVENATION_ITEM_ID
+	set udg_integers09[84]= LIGHTNING_SHIELD_ITEM_ID
+	set udg_integers09[85]= VOLCANO_ITEM_ID
+	set udg_integers09[86]= ENSNARE_ITEM_ID
+	set udg_integers09[87]= LIQUID_FIRE_ITEM_ID
+	set udg_integers09[88]= PLAGUE_ITEM_ID
+	set udg_integers09[89]= PILLAGE_ITEM_ID
+	set udg_integers09[90]= ENVENOMED_WEAPONS_ITEM_ID
+	set udg_integers09[91]= MULTISHOT_ITEM_ID
+	set udg_integers09[92]= SLOW_AURA_ITEM_ID
+	set udg_integers09[93]= BLINK_ITEM_ID
+	set udg_integers09[94]= PHASE_SHIFT_ITEM_ID
+	set udg_integers09[95]= FINGER_OF_DEATH_ITEM_ID
+	set udg_integers09[96]= AURA_OF_IMMORTALITY_ITEM_ID
+	set udg_integers09[97]= AURA_OF_FEAR_ITEM_ID
+	set udg_integers09[98]= AURA_OF_VULNERABILITY_ITEM_ID
+	set udg_integers09[99]= FINISHING_BLOW_ITEM_ID
+	set udg_integers09[100]= MEGA_SPEED_ITEM_ID
+	set udg_integers09[101]= THUNDER_FORCE_ITEM_ID
+	set udg_integers09[102]= AIR_FORCE_ITEM_ID
+	set udg_integers09[103]= FIRE_FORCE_ITEM_ID
+	set udg_integers09[104]= LEARNABILITY_ITEM_ID   
+	set udg_integers09[105]= MANA_BONUS_ITEM_ID      
+	set udg_integers09[106]= POWER_OF_ICE_ITEM_ID      	
+	set udg_integers09[107]= BRILLIANCE_AURA_ITEM_ID
+	set udg_integers09[108]= FAST_MAGIC_ITEM_ID  
+	set udg_integers09[109]= HERO_BUFF_ITEM_ID  
+	set udg_integers09[110]= TEMPORARY_INVISIBILITY_ITEM_ID		
+	set udg_integers09[111]= RAPID_RECOVERY_ITEM_ID	
+	set udg_integers09[112]= CHRONUS_WIZARD_ITEM_ID
+	set udg_integers09[113]= CHEATER_MAGIC_ITEM_ID    
+	set udg_integers09[114]= FEARLESS_DEFENDERS_ITEM_ID  
+	set udg_integers09[115]= DEMONS_CURSE_ITEM_ID 
+	set udg_integers09[116]= BLESSED_PROTECTIO_ITEM_ID 
+	set udg_integers09[117]= REINCARNATION_ITEM_ID 
+	set udg_integers09[118]= DRUNKEN_MASTER_ITEM_ID 
+	set udg_integers09[119]= DEMOLISH_ITEM_ID 
+	set udg_integers09[120]= DESTRUCTION_ITEM_ID 
+	set udg_integers09[121]= MANA_SHIELD_ABILITY_ID    
     
     
-	set udg_integers08[122]= 'AHds' 
-	set udg_integers09[122]= 'I011'    
+	set udg_integers08[122]= DIVINE_SHIELD_ABILITY_ID 
+	set udg_integers09[122]= DIVINE_SHIELD_ITEM_ID    
     
 	set udg_integers08[123]= 'ANtm' 
-	set udg_integers09[123]= 'I00G'
+	set udg_integers09[123]= MIDAS_TOUCH_ITEM_ID
     
-	set udg_integers08[124]= 'ANsi' 
-	set udg_integers09[124]= 'I03C' 
+	set udg_integers08[124]= SILENCE_ABILITY_ID 
+	set udg_integers09[124]= SILENCE_ITEM_ID 
     
-	set udg_integers08[125]= 'Asta' 
-	set udg_integers09[125]= 'I044'     
+	set udg_integers08[125]= STASIS_TRAP_ABILITY_ID 
+	set udg_integers09[125]= STASIS_TRAP_ITEM_ID     
        
 
 	set udg_integers08[126]= 'AUdp' 
-	set udg_integers09[126]= 'I01V'
+	set udg_integers09[126]= DEATH_PACT_ITEM_ID
     
-	set udg_integers08[127]= 'AOvd' 
-	set udg_integers09[127]= 'I03Z'        
+	set udg_integers08[127]= BIG_BAD_VOODOO_ABILITY_ID 
+	set udg_integers09[127]= BIG_BAD_VOODOO_ITEM_ID        
   
-	set udg_integers08[128]= 'A046' 
-	set udg_integers09[128]= 'I05Z'
+	set udg_integers08[128]= ICY_BREATH_ABILITY_ID 
+	set udg_integers09[128]= ICY_BREATH_ITEM_ID
  
-	set udg_integers08[129]= 'ANso' 
-	set udg_integers09[129]= 'I062'  
+	set udg_integers08[129]= SOUL_BURN_ABILITY_ID 
+	set udg_integers09[129]= SOUL_BURN_ITEM_ID  
         
-	set udg_integers08[130]= 'Aclf' 
-	set udg_integers09[130]= 'I063'    
+	set udg_integers08[130]= CLOUD_DUMMY_ABILITY_ID 
+	set udg_integers09[130]= FOG_ITEM_ID    
     
-	set udg_integers08[131]= 'A04E' 
-	set udg_integers09[131]= 'I067'    
+	set udg_integers08[131]= TEMPORARY_POWER_ABILITY_ID 
+	set udg_integers09[131]= TEMPORARY_POWER_ITEM_ID    
                    
-	set udg_integers08[132]= 'A04F' 
-	set udg_integers09[132]= 'I068'  
+	set udg_integers08[132]= MULTICAST_ABILITY_ID 
+	set udg_integers09[132]= MULTICAST_ITEM_ID  
 
-	set udg_integers08[133]= 'A04G' 
-	set udg_integers09[133]= 'I069' 
+	set udg_integers08[133]= HEAVY_BLOW_ABILITY_ID 
+	set udg_integers09[133]= HEAVY_BLOW_ITEM_ID 
  
-	set udg_integers08[134]= 'A04H' 
-	set udg_integers09[134]= 'I06A'  
+	set udg_integers08[134]= COMBUSTION_ABILITY_ID 
+	set udg_integers09[134]= COMBUSTION_ITEM_ID  
 
-	set udg_integers08[135]= 'A04K' 
-	set udg_integers09[135]= 'I06C' 
+	set udg_integers08[135]= HOLY_ENLIGHTENMENT_ABILITY_ID 
+	set udg_integers09[135]= HOLY_ENLIGHTENMENT_ITEM_ID 
 
 
 
-	set udg_integers08[136]= 'A04L' 
-	set udg_integers09[136]= 'I06D' 
+	set udg_integers08[136]= CHAOS_MAGIC_ABILITY_ID 
+	set udg_integers09[136]= CHAOS_MAGIC_ITEM_ID 
 
-	set udg_integers08[137]= 'ANmo' 
-	set udg_integers09[137]= 'I06G' 
+	set udg_integers08[137]= MONSOON_DUMMY_ABILITY_ID 
+	set udg_integers09[137]= MONSOON_ITEM_ID 
 
 	set udg_integers08[138]= ICE_ARMOR_ABILITY_ID 
-	set udg_integers09[138]= 'I06L' 
+	set udg_integers09[138]= ICE_ARMOR_ITEM_ID 
 
 
 	set udg_integers08[139]= LAST_BREATHS_ABILITY_ID 
-	set udg_integers09[139]= 'I07J' 
+	set udg_integers09[139]= LAST_BREATHS_ITEM_ID 
     
-	set udg_integers08[140]= 'A05S' 
-	set udg_integers09[140]= 'I07L' 
-    
-    
-    
-	set udg_integers08[141]= 'A05U' 
-	set udg_integers09[141]= 'I07N' 
+	set udg_integers08[140]= FIRE_SHIELD_ABILITY_ID 
+	set udg_integers09[140]= FIRE_SHIELD_ITEM_ID 
     
     
-	set udg_integers08[142]= 'A05X' 
-	set udg_integers09[142]= 'I07Q' 
+    
+	set udg_integers08[141]= ANCIENT_TEACHING_ABILITY_ID 
+	set udg_integers09[141]= ANCIENT_TEACHING_ITEM_ID 
+    
+    
+	set udg_integers08[142]= CYCLONE_ABILITY_ID 
+	set udg_integers09[142]= CYCLONE_ITEM_ID 
  
  
-	set udg_integers08[143]= 'A05Z' 
-	set udg_integers09[143]= 'I07R' 
+	set udg_integers08[143]= MYSTERIOUS_TALENT_ABILITY_ID 
+	set udg_integers09[143]= MYSTERIOUS_TALENT_ITEM_ID 
     
     
-	set udg_integers08[144]= 'A060' 
-	set udg_integers09[144]= 'I07S'     
+	set udg_integers08[144]= STONE_PROTECTION_ABILITY_ID 
+	set udg_integers09[144]= STONE_PROTECTION_ITEM_ID     
     
     
-	set udg_integers08[145]= 'A067' 
-	set udg_integers09[145]= 'I07X' 
+	set udg_integers08[145]= CRUELTY_ABILITY_ID 
+	set udg_integers09[145]= CRUELTY_ITEM_ID 
   
-	set udg_integers08[146]= 'A06C' 
-	set udg_integers09[146]= 'I07Z' 
+	set udg_integers08[146]= REACTION_ABILITY_ID 
+	set udg_integers09[146]= REACTION_ITEM_ID 
     
-	set udg_integers08[147]= 'A06U' 
-	set udg_integers09[147]= 'I081'     
+	set udg_integers08[147]= MAGIC_CRITICAL_HIT_ABILITY_ID 
+	set udg_integers09[147]= MAGIC_CRITICAL_HIT_ITEM_ID     
     
-	set udg_integers08[148]= 'A06V' 
-	set udg_integers09[148]= 'I085'  
+	set udg_integers08[148]= MEGA_LUCK_ABILITY_ID 
+	set udg_integers09[148]= MEGA_LUCK_ITEM_ID  
  
 	set udg_integers08[149]= WILD_DEFENSE_ABILITY_ID 
 	set udg_integers09[149]= 'I087'  
     
     
 	set udg_integers08[150]= 'A06Z' 
-	set udg_integers09[150]= 'I08K'  
+	set udg_integers09[150]= ANCIENT_RUNES_ITEM_ID  
 
     
-	set udg_integers08[151]= 'A07L' 
-	set udg_integers09[151]= 'I094'     
-	set udg_integers08[152]= 'A07N' 
-	set udg_integers09[152]= 'I096'  
-	set udg_integers08[153]= 'A07U' 
-	set udg_integers09[153]= 'I09C'  
-	set udg_integers08[154]= 'A07S' 
-	set udg_integers09[154]= 'I09A'  
-	set udg_integers08[155]= 'A07T' 
-	set udg_integers09[155]= 'I09B'      
+	set udg_integers08[151]= EARTHQUAKE_ABILITY_ID 
+	set udg_integers09[151]= EARTHQUAKE_ITEM_ID     
+	set udg_integers08[152]= COLD_WIND_ABILITY_ID 
+	set udg_integers09[152]= COLD_WIND_ITEM_ID  
+	set udg_integers08[153]= RANDOM_SPELL_ABILITY_ID 
+	set udg_integers09[153]= RANDOM_SPELL_ITEM_ID  
+	set udg_integers08[154]= DIVINE_BUBBLE_ABILITY_ID 
+	set udg_integers09[154]= DIVINE_BUBBLE_ITEM_ID  
+	set udg_integers08[155]= ANCIENT_BLOOD_ABILITY_ID 
+	set udg_integers09[155]= ANCIENT_BLOOD_ITEM_ID      
    
-	set udg_integers08[156]= 'A07X' 
-	set udg_integers09[156]= 'I09G'   
+	set udg_integers08[156]= FROST_BOLT_ABILITY_ID 
+	set udg_integers09[156]= FROST_BOLT_ITEM_ID   
     
-	set udg_integers08[157]= 'A080' 
-	set udg_integers09[157]= 'I09H'   
+	set udg_integers08[157]= FROSTBITE_OF_THE_SOUL_ABILITY_ID 
+	set udg_integers09[157]= FROSTBITE_OF_THE_SOUL_ITEM_ID   
     
 	set udg_integers08[158]= CUTTING_ABILITY_ID 
-	set udg_integers09[158]= 'I09I'       
+	set udg_integers09[158]= CUTTING_ITEM_ID       
     
-	set udg_integers08[159]= 'A082' 
-	set udg_integers09[159]= 'I09J'   
+	set udg_integers08[159]= DIVINE_GIFT_ABILITY_ID 
+	set udg_integers09[159]= DIVINE_GIFT_ITEM_ID   
  
  
-	set udg_integers08[160]= 'A083' 
-	set udg_integers09[160]= 'I09K'   
+	set udg_integers08[160]= SAND_OF_TIME_ABILITY_ID 
+	set udg_integers09[160]= SAND_OF_TIME_ITEM_ID   
     
-	set udg_integers08[161]= 'A088' 
-	set udg_integers09[161]= 'I09M'  
+	set udg_integers08[161]= WIZARDBANE_AURA_ABILITY_ID 
+	set udg_integers09[161]= WIZARDBANE_AURA_ITEM_ID  
     
-	set udg_integers08[162]= 'A089' 
-	set udg_integers09[162]= 'I09L'  
+	set udg_integers08[162]= MARTIAL_RETRIBUTION_ABILITY_ID 
+	set udg_integers09[162]= MARTIAL_RETRIBUTION_ITEM_ID  
     
-	set udg_integers08[163]= 'A08E' 
-	set udg_integers09[163]= 'I09N'
+	set udg_integers08[163]= PURGE_ABILITY_ID 
+	set udg_integers09[163]= PURGE_ITEM_ID
 
-	set udg_integers08[164]= 'A08J' 
-	set udg_integers09[164]= 'I09P'
+	set udg_integers08[164]= BLINK_STRIKE_ABILITY_ID 
+	set udg_integers09[164]= BLINK_STRIKE_ITEM_ID
 
-	set udg_integers08[165]= 'A08I' 
-	set udg_integers09[165]= 'I09Q'
+	set udg_integers08[165]= EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID 
+	set udg_integers09[165]= EXTRADIMENSIONAL_CO_OPERATIO_ITEM_ID
     
 	set udg_integer26 = 165
     
     
     
-	call SaveItemAbility('A07R','I099')
-	call SaveItemAbility('A07Q','I098')    
-	call SaveItemAbility('A07D','I08V')    
-	call SaveItemAbility(ABSOLUTE_FIRE_ABILITY_ID,'I08T')    
-	call SaveItemAbility('A07P','I097')    
-	call SaveItemAbility('A07C','I08U')    
-	call SaveItemAbility('A07K','I093')      
-	call SaveItemAbility('A07E','I08W')    
-	call SaveItemAbility('A07V','I09F')    
+	call SaveItemAbility(ABSOLUTE_BLOOD_ABILITY_ID,ABSOLUTE_BLOOD_ITEM_ID)
+	call SaveItemAbility(ABSOLUTE_DARK_ABILITY_ID,ABSOLUTE_DARK_ITEM_ID)    
+	call SaveItemAbility(ABSOLUTE_EARTH_ABILITY_ID,ABSOLUTE_EARTH_ITEM_ID)    
+	call SaveItemAbility(ABSOLUTE_FIRE_ABILITY_ID,ABSOLUTE_FIRE_ITEM_ID)    
+	call SaveItemAbility(ABSOLUTE_LIGHT_ABILITY_ID,ABSOLUTE_LIGHT_ITEM_ID)    
+	call SaveItemAbility(ABSOLUTE_WATER_ABILITY_ID,ABSOLUTE_WATER_ITEM_ID)    
+	call SaveItemAbility(ABSOLUTE_WILD_ABILITY_ID,ABSOLUTE_WILD_ITEM_ID)      
+	call SaveItemAbility(ABSOLUTE_WIND_ABILITY_ID,ABSOLUTE_WIND_ITEM_ID)    
+	call SaveItemAbility(ABSOLUTE_COLD_ABILITY_ID,ABSOLUTE_COLD_ITEM_ID)    
 	*/
     
   
