@@ -13,14 +13,14 @@ library WisdomChestplate initializer init requires BuffSystem, CustomState, Rand
         local real bonus = damage * 0.4
         call SetBuff(target, 9, 5)
         if GetCustomStateBonus(handleId) == 0 or GetCustomStateBonus(handleId).stop then
-            //set it = GetItemOfTypeFromUnitBJ(target, 'I0AH')
+            //set it = GetItemOfTypeFromUnitBJ(target, WISDOM_CHESTPLATE_ITEM_ID)
             set WisdomChestplateTable[handleId] = CustomStateBonus.create(target, CustomState_Block, damage * 0.4, 5)
             call DestroyEffect(AddSpecialEffectFix("war3mapImported\\Flicker.mdx", GetUnitX(target), GetUnitY(target)))
             //call BlzSetItemExtendedTooltip(it, ReplaceText("000", I2S(R2I(bonus)), BlzGetItemExtendedTooltip(it)))
         else
             if GetCustomStateBonus(handleId).bonus < bonus then
                 set GetCustomStateBonus(handleId).stop = true
-                //set it = GetItemOfTypeFromUnitBJ(target, 'I0AH')
+                //set it = GetItemOfTypeFromUnitBJ(target, WISDOM_CHESTPLATE_ITEM_ID)
                 set WisdomChestplateTable[handleId] = CustomStateBonus.create(target, CustomState_Block, damage * 0.4, 5)
                 call DestroyEffect(AddSpecialEffectFix("war3mapImported\\Flicker.mdx", GetUnitX(target), GetUnitY(target)))
                 //call BlzSetItemExtendedTooltip(it, ReplaceText("000", I2S(R2I(bonus)), BlzGetItemExtendedTooltip(it)))

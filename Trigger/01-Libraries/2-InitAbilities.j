@@ -355,7 +355,7 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers09[148]= MEGA_LUCK_ITEM_ID  
  
 	set udg_integers08[149]= WILD_DEFENSE_ABILITY_ID 
-	set udg_integers09[149]= 'I087'  
+	set udg_integers09[149]= SUMMON_WILD_DEFENSE_ITEM_ID  
     
     
 	set udg_integers08[150]= 'A06Z' 

@@ -1,10 +1,10 @@
 library SummonUpgrade initializer init
     function Trig_It_Conditions takes nothing returns boolean
-        if GetItemTypeId(GetManipulatedItem()) == 'I04K' then
+        if GetItemTypeId(GetManipulatedItem()) == SUMMON_ATTACK_BONUS_ITEM_ID then
             call SetPlayerTechResearchedSwap( 'R000', ( 1 + GetPlayerTechCountSimple('R000', GetOwningPlayer(GetTriggerUnit())) ), GetOwningPlayer(GetTriggerUnit()) )
-        elseif GetItemTypeId(GetManipulatedItem()) == 'I04M' then
+        elseif GetItemTypeId(GetManipulatedItem()) == SUMMON_HP_BONUS_ITEM_ID then
             call SetPlayerTechResearchedSwap( 'R002', ( 1 + GetPlayerTechCountSimple('R002', GetOwningPlayer(GetTriggerUnit())) ), GetOwningPlayer(GetTriggerUnit()) )
-        elseif GetItemTypeId(GetManipulatedItem()) == 'I04L' then
+        elseif GetItemTypeId(GetManipulatedItem()) == SUMMON_ARMOR_BONUS_ITEM_ID then
             call SetPlayerTechResearchedSwap( 'R001', ( 1 + GetPlayerTechCountSimple('R001', GetOwningPlayer(GetTriggerUnit())) ), GetOwningPlayer(GetTriggerUnit()) )
         endif
         return false

@@ -40,7 +40,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants
             return damage
         else
             //Lucky Pants
-            if UnitHasItemS(damageTarget, 'I0AJ') then
+            if UnitHasItemS(damageTarget, LUCKY_PANTS_ITEM_ID) then
                 call ActivateLuckyPants(damageTarget)
             endif
 

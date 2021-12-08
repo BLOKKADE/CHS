@@ -109,7 +109,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		endif	
 
 		//Sword of Bloodthirst
-		if itemId == 'I0AI' then
+		if itemId == SWORD_OF_BLOODTHRIST_ITEM_ID then
 			set i = UnitHasItemI(u, itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), 47)
 			set r = GetHeroPrimaryStat(u)
@@ -118,7 +118,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		endif
 
 		//Wisdom Chestplate
-		if itemId == 'I0AH' then
+		if itemId == WISDOM_CHESTPLATE_ITEM_ID then
 			set i = UnitHasItemI(u, itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), 48)
 			call AddUnitBlock(u, 800 * (i - prevCount))
@@ -126,7 +126,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		endif
 		
 		//Mask of Protection
-		if itemId == 'I0AE' then
+		if itemId == MASK_OF_PROTECTION_ITEM_ID then
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u),45) 
 			call AddUnitMagicDmg(u ,   75 * I2R(i - prevCount)  )	
@@ -134,7 +134,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		endif	
 
 		//Mask of Elusion
-		if itemId == 'I0AD' then
+		if itemId == MASK_OF_ELUSION_ITEM_ID then
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u),46) 
 			call AddUnitEvasion(u, 40 * I2R(i - prevCount))
@@ -142,7 +142,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		endif		
 		
 		//Ancient Dagger
-		if itemId == 'I06X' then
+		if itemId == ANCIENT_DAGGER_ITEM_ID then
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u),43) 
 			
@@ -156,7 +156,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		endif	
 		
 		//Ancient Axe
-		if itemId == 'I06Y' then
+		if itemId == ANCIENT_AXE_ITEM_ID then
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi,GetHandleId(u),42) 
 			
@@ -362,7 +362,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		endif
 		
 		//Ancient Staff
-		if itemId == 'I06V' then
+		if itemId == ANCIENT_STAFF_ITEM_ID then
 			set i = UnitHasItemI(u ,itemId ) 
 			set prevCount = LoadInteger(HTi,GetHandleId(u),44) 
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*(i-prevCount)

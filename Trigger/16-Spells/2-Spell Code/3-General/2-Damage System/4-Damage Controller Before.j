@@ -228,7 +228,7 @@ scope DamageControllerBefore initializer init
 
 
         //Sword of Bloodthirst
-        set II = UnitHasItemI(damageSource, 'I0AI')
+        set II = UnitHasItemI(damageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
         if II > 0 and DmgType == DAMAGE_TYPE_NORMAL then
             call BlzSetEventDamage(GetEventDamage() + 900 * II)
         endif
@@ -495,19 +495,19 @@ scope DamageControllerBefore initializer init
         endif   */
 
         //Vigour Token
-        set II = UnitHasItemI(damageSource, 'I0A2')
+        set II = UnitHasItemI(damageSource, VIGOUR_TOKEN_ITEM_ID)
         if II > 0 and BlzGetUnitMaxHP(damageSource) < BlzGetUnitMaxHP(damageTarget) then
             call BlzSetEventDamage(GetEventDamage() * 1 + (0.5 * II))
         endif
 
         //Flimsy Token
-        set II = UnitHasItemI(damageSource, 'I0A3')
+        set II = UnitHasItemI(damageSource, FLIMSY_TOKEN_ITEM_ID)
         if II > 0 and BlzGetUnitArmor(damageSource) < BlzGetUnitArmor(damageTarget) then
             call BlzSetEventDamage(GetEventDamage() * 1 + (0.5 * II))
         endif
 
         //Spellbane Token
-        set II = UnitHasItemI(damageSource, 'I0A1')
+        set II = UnitHasItemI(damageSource, SPELL_BANE_TOKEN_ITEM_ID)
         if II > 0 and BlzGetUnitMaxMana(damageSource) < BlzGetUnitMaxMana(damageTarget) then
             call BlzSetEventDamage(GetEventDamage() * 1 + (0.5 * II))
         endif
@@ -584,7 +584,7 @@ scope DamageControllerBefore initializer init
             set blockDamage = GetUnitBlock(damageTarget)
 
             //Sword of Bloodthirst
-            if UnitHasItemS(damageSource, 'I0AI') and attack then
+            if UnitHasItemS(damageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) and attack then
                 set blockDamage = blockDamage * 0.7
             endif
 
@@ -611,7 +611,7 @@ scope DamageControllerBefore initializer init
         endif
 
         //Wisdom Chestplate
-        if DmgType == DAMAGE_TYPE_MAGIC and UnitHasItemS(damageTarget, 'I0AH') then 
+        if DmgType == DAMAGE_TYPE_MAGIC and UnitHasItemS(damageTarget, WISDOM_CHESTPLATE_ITEM_ID) then 
             call ActivateWisdomChestplate(damageTarget, GetEventDamage())
         endif
 
