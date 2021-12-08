@@ -21,7 +21,7 @@ library FlimsyToken initializer init requires BuffSystem
         endmethod
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or GetUnitAbilityLevel(this.source, 'B01Q') == 0 or not UnitAlive(this.source) then
+            if T32_Tick > this.endTick or GetUnitAbilityLevel(this.source, FLIMSY_TOKEN_BUFF_ID) == 0 or not UnitAlive(this.source) then
                 call this.disable()
                 call this.stopPeriodic()
                 call this.destroy()

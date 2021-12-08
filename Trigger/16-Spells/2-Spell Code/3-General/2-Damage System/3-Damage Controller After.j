@@ -312,7 +312,7 @@ scope DamageControllerAfter initializer init
         endif
 
         //Flimsy Token
-        if UnitHasItemS(damageTarget, 'I0A3') and GetUnitAbilityLevel(damageSource, 'B01Q') == 0 then
+        if UnitHasItemS(damageTarget, 'I0A3') and GetUnitAbilityLevel(damageSource, FLIMSY_TOKEN_BUFF_ID) == 0 then
             call FlimsyToken(damageTarget, damageSource)
         endif
 

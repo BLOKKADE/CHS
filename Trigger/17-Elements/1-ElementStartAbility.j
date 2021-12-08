@@ -9,7 +9,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         local real calc = 0
         local real luck = GetUnitLuck(u)
 
-        if GetUnitAbilityLevel(u, 'B01W') > 0 then
+        if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
             return
         endif
         

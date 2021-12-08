@@ -26,11 +26,11 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         private method countBuffs takes nothing returns real
             local integer count = 0
             local real regen = BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction
-            if GetUnitAbilityLevel(this.target, 'BNpa') > 0 then
+            if GetUnitAbilityLevel(this.target, PARASITE_BUFF_ID) > 0 then
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(this.target, 'BNab') > 0 then
+            if GetUnitAbilityLevel(this.target, ACID_BOMB_BUFF_ID) > 0 then
                 set count = count + 1
             endif
 
@@ -38,15 +38,15 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(this.target, 'BEsh') > 0 then
+            if GetUnitAbilityLevel(this.target, SHADOW_STRIKE_BUFF_ID) > 0 then
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(this.target, 'BNdh') > 0 then
+            if GetUnitAbilityLevel(this.target, DRUNKEN_HAZE_BUFF_ID) > 0 then
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(this.target, 'BNdh') > 0 then
+            if GetUnitAbilityLevel(this.target, DRUNKEN_HAZE_BUFF_ID) > 0 then
                 set count = count + 1
             endif
 
@@ -54,7 +54,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(this.target, 'B015') > 0 then
+            if GetUnitAbilityLevel(this.target, POISON_NON_STACKING_CUSTOM_BUFF_ID) > 0 then
                 set count = count + 1
             endif
             set this.buffCount = count

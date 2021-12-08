@@ -40,7 +40,7 @@ scope Killing initializer init
         //Incinerate
         if LoadInteger(HT,GetHandleId(target),- 300004)+ 160 > T32_Tick then
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", target, "head"))
-            call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, 'B014')
+            call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, INCINERATE_CUSTOM_BUFF_ID)
         endif
         
         //Black Arrow

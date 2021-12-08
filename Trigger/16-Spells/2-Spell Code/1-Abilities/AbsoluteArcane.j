@@ -14,7 +14,7 @@ library AbsoluteArcane requires CustomState, DivineBubble
         private thistype recycleNext
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or IsUnitDivineBubbled(this.target) or IsUnitSpellTargetCheck(this.target, GetOwningPlayer(this.source)) == false or GetUnitAbilityLevel(this.source, 'B01W') > 0  then
+            if T32_Tick > this.endTick or IsUnitDivineBubbled(this.target) or IsUnitSpellTargetCheck(this.target, GetOwningPlayer(this.source)) == false or GetUnitAbilityLevel(this.source, NULL_VOID_ORB_BUFF_ID) > 0  then
                 call this.stopPeriodic()
                 call this.destroy()
             endif

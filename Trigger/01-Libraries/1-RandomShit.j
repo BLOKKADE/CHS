@@ -149,109 +149,109 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
     endfunction
 
     function PositiveBuffs takes unit u returns nothing
-        call UnitRemoveAbility(u, 'Bvul')
-        call UnitRemoveAbility(u, 'Bam2')
-        call UnitRemoveAbility(u, 'BHav')
-        call UnitRemoveAbility(u, 'BNbr')
-        call UnitRemoveAbility(u, 'Bbsk')
-        call UnitRemoveAbility(u, 'BUfa')
-        call UnitRemoveAbility(u, 'Binf')
-        call UnitRemoveAbility(u, 'Blsh')
-        call UnitRemoveAbility(u, 'Brej')
-        call UnitRemoveAbility(u, 'Bdef')
-        call UnitRemoveAbility(u, 'B002')
-        call UnitRemoveAbility(u, 'Bspl')
+        call UnitRemoveAbility(u, INVULNERABLE_BUFF_ID)
+        call UnitRemoveAbility(u, ANTI_MAGIC_SHELL_BUFF_ID)
+        call UnitRemoveAbility(u, AVATAR_BUFF_ID)
+        call UnitRemoveAbility(u, BATTLE_ROAR_BUFF_ID)
+        call UnitRemoveAbility(u, BERSERK_BUFF_ID)
+        call UnitRemoveAbility(u, FROST_ARMOR_BUFF_ID)
+        call UnitRemoveAbility(u, INNER_FIRE_BUFF_ID)
+        call UnitRemoveAbility(u, LIGHTNING_SHIELD_BUFF_ID)
+        call UnitRemoveAbility(u, REJUVENATION_BUFF_ID)
+        call UnitRemoveAbility(u, SCROLL_OF_PROTECTION_BUFF_ID)
+        call UnitRemoveAbility(u, SENSATUS_SHIELD_OF_HONOR_BUFF_ID)
+        call UnitRemoveAbility(u, SPIRIT_LINK_BUFF_ID)
         call UnitRemoveAbility(u, 'A09H')
         call UnitRemoveAbility(u, 'A09R')
         call UnitRemoveAbility(u, 'A09S')
-        call UnitRemoveAbility(u, 'B01H')
-        call UnitRemoveAbility(u, 'B01S')
-        call UnitRemoveAbility(u, 'B01Z')
-        call UnitRemoveAbility(u, 'B020')
+        call UnitRemoveAbility(u, EXTRADIMENSIONAL_COOPERATION_BUFF_ID)
+        call UnitRemoveAbility(u, LUCKY_PANTS_BUFF_ID)
+        call UnitRemoveAbility(u, MANA_STARVATION_BUFF_ID)
+        call UnitRemoveAbility(u, WISDOM_CHESTPLATE_BUFF_ID)
         call UnitRemoveAbility(u, 'A08G')
-        call UnitRemoveAbility(u, 'B01G')
+        call UnitRemoveAbility(u, CHEATER_MAGIC_BUFF_ID)
     endfunction
 
     function NegativeBuffs takes unit u returns nothing
-        call UnitRemoveAbility(u, 'Bclf')
-        call UnitRemoveAbility(u, 'Bply')
-        call UnitRemoveAbility(u, 'Bslo')
-        call UnitRemoveAbility(u, 'BHbd')
-        call UnitRemoveAbility(u, 'BHfs')
-        call UnitRemoveAbility(u, 'BHbn')
-        call UnitRemoveAbility(u, 'Bbof')
-        call UnitRemoveAbility(u, 'Bliq')
-        call UnitRemoveAbility(u, 'Bens')
-        call UnitRemoveAbility(u, 'BOhx')
-        call UnitRemoveAbility(u, 'BOeq')
-        call UnitRemoveAbility(u, 'Bcri')
-        call UnitRemoveAbility(u, 'Bweb')
-        call UnitRemoveAbility(u, 'Bwea')
-        call UnitRemoveAbility(u, 'Bapl')
-        call UnitRemoveAbility(u, 'BUsl')
-        call UnitRemoveAbility(u, 'BUdd')
-        call UnitRemoveAbility(u, 'Bssd')
-        call UnitRemoveAbility(u, 'Bspo')
-        call UnitRemoveAbility(u, 'Bcor')
-        call UnitRemoveAbility(u, 'Bfae')
-        call UnitRemoveAbility(u, 'BEer')
-        call UnitRemoveAbility(u, 'BEsh')
-        call UnitRemoveAbility(u, 'Bpsd')
-        call UnitRemoveAbility(u, 'Bpoi')
-        call UnitRemoveAbility(u, 'BNba')
-        call UnitRemoveAbility(u, 'BNdh')
-        call UnitRemoveAbility(u, 'BNht')
-        call UnitRemoveAbility(u, 'Basl')
-        call UnitRemoveAbility(u, 'BNdo')
-        call UnitRemoveAbility(u, 'BNbf')
-        call UnitRemoveAbility(u, 'BNrd')
-        call UnitRemoveAbility(u, 'BSTN')
-        call UnitRemoveAbility(u, 'BNpm')
-        call UnitRemoveAbility(u, 'BPpa')
-        call UnitRemoveAbility(u, 'BNrd')
-        call UnitRemoveAbility(u, 'BPSE')
-        call UnitRemoveAbility(u, 'BNsi')
-        call UnitRemoveAbility(u, 'Bcsd')
-        call UnitRemoveAbility(u, 'BHca')
-        call UnitRemoveAbility(u, 'BNht')
-        call UnitRemoveAbility(u, 'BCbf')
-        call UnitRemoveAbility(u, 'Bfro')
+        call UnitRemoveAbility(u, CLOUD_BUFF_ID)
+        call UnitRemoveAbility(u, POLYMORPH_BUFF_ID)
+        call UnitRemoveAbility(u, SLOW_BUFF_ID)
+        call UnitRemoveAbility(u, BLIZZARD_BUFF_ID)
+        call UnitRemoveAbility(u, FLAME_STRIKE_BUFF_ID)
+        call UnitRemoveAbility(u, BANISH_BUFF_ID)
+        call UnitRemoveAbility(u, BURNING_OIL_BUFF_ID)
+        call UnitRemoveAbility(u, LIQUID_FIRE_BUFF_ID)
+        call UnitRemoveAbility(u, ENSNARE_GENERAL_BUFF_ID)
+        call UnitRemoveAbility(u, HEX_BUFF_ID)
+        call UnitRemoveAbility(u, EARTHQUAKE_BUFF_ID)
+        call UnitRemoveAbility(u, CRIPPLE_BUFF_ID)
+        call UnitRemoveAbility(u, WEB_GROUND_BUFF_ID)
+        call UnitRemoveAbility(u, WEB_AIR_BUFF_ID)
+        call UnitRemoveAbility(u, DISEASE_BUFF_ID)
+        call UnitRemoveAbility(u, SLEEP_BUFF_ID)
+        call UnitRemoveAbility(u, DEATH_AND_DECAY_BUFF_ID)
+        call UnitRemoveAbility(u, SLOW_POISON_STACKING_BUFF_ID)
+        call UnitRemoveAbility(u, SLOW_POISON_NON_STACKING_BUFF_ID)
+        call UnitRemoveAbility(u, CORROSIZE_BREATH_BUFF_ID)
+        call UnitRemoveAbility(u, FAERIE_FIRE_BUFF_ID)
+        call UnitRemoveAbility(u, ENTANGLING_ROOTS_BUFF_ID)
+        call UnitRemoveAbility(u, SHADOW_STRIKE_BUFF_ID)
+        call UnitRemoveAbility(u, POISON_STACKING_BUFF_ID)
+        call UnitRemoveAbility(u, POISON_NON_STACKING_BUFF_ID)
+        call UnitRemoveAbility(u, BLACK_ARROW_BUFF_ID)
+        call UnitRemoveAbility(u, DRUNKEN_HAZE_BUFF_ID)
+        call UnitRemoveAbility(u, HOWL_OF_TERROR_BUFF_ID)
+        call UnitRemoveAbility(u, TORNADO_SLOW_AURA_BUFF_ID)
+        call UnitRemoveAbility(u, DOOM_BUFF_ID)
+        call UnitRemoveAbility(u, BREATH_OF_FIRE_BUFF_ID)
+        call UnitRemoveAbility(u, RAIN_OF_FIRE_BUFF_ID)
+        call UnitRemoveAbility(u, STUNNED_BUFF_ID)
+        call UnitRemoveAbility(u, PARASITE_MINION_BUFF_ID)
+        // call UnitRemoveAbility(u, 'BPpa') Does not exist
+        call UnitRemoveAbility(u, RAIN_OF_FIRE_BUFF_ID)
+        call UnitRemoveAbility(u, STUNNED_PAUSE_BUFF_ID)
+        call UnitRemoveAbility(u, SILENCE_BUFF_ID)
+        call UnitRemoveAbility(u, COLD_ARROWS_STACKING_BUFF_ID)
+        call UnitRemoveAbility(u, COLD_ARROWS_NON_STACKING_BUFF_ID)
+        call UnitRemoveAbility(u, HOWL_OF_TERROR_BUFF_ID)
+        call UnitRemoveAbility(u, BREATH_OF_FROST_BUFF_ID)
+        call UnitRemoveAbility(u, SLOWED_BUFF_ID)
         call UnitRemoveAbility(u, 'Blcb')
-        call UnitRemoveAbility(u, 'BNso')
-        call UnitRemoveAbility(u, 'BNab')
-        call UnitRemoveAbility(u, 'BNic')
-        call UnitRemoveAbility(u, 'BNvc')
-        call UnitRemoveAbility(u, 'B00J')
-        call UnitRemoveAbility(u, 'B00H')
-        call UnitRemoveAbility(u, 'B001')
-        call UnitRemoveAbility(u, 'B005')
-        call UnitRemoveAbility(u, 'B00V')
-        call UnitRemoveAbility(u, 'B017')
+        call UnitRemoveAbility(u, SOUL_BURN_BUFF_ID)
+        call UnitRemoveAbility(u, ACID_BOMB_BUFF_ID)
+        call UnitRemoveAbility(u, INCINERATE_BUFF_ID)
+        call UnitRemoveAbility(u, VOLCANO_BUFF_ID)
+        call UnitRemoveAbility(u, STUNNED_CUSTOM_BUFF_ID)
+        call UnitRemoveAbility(u, FEAR_AURA_BUFF_ID)
+        call UnitRemoveAbility(u, SLOW_AURA_BUFF_ID)
+        call UnitRemoveAbility(u, WHIRLWIND_BUFF_ID)
+        call UnitRemoveAbility(u, THE_CURSE_OF_DEMONS_BUFF_ID)
+        call UnitRemoveAbility(u, IMMOBILITY_BUFF_ID)
         call UnitRemoveAbility(u, 'A06L')
         call UnitRemoveAbility(u, 'A06P')
         call UnitRemoveAbility(u, 'A06R')
-        call UnitRemoveAbility(u, 'B014')
-        call UnitRemoveAbility(u, 'B015')
-        call UnitRemoveAbility(u, 'B016')
-        call UnitRemoveAbility(u, 'Bplg')
-        call UnitRemoveAbility(u, 'Bena')
-        call UnitRemoveAbility(u, 'Beng')
-        call UnitRemoveAbility(u, 'BHtc')
-        call UnitRemoveAbility(u, 'BUhf')
-        call UnitRemoveAbility(u, 'B01I')
-        call UnitRemoveAbility(u, 'B01W')
-        call UnitRemoveAbility(u, 'B01N')
-        call UnitRemoveAbility(u, 'B01Q')
-        call UnitRemoveAbility(u, 'B01R')
-        call UnitRemoveAbility(u, 'B01P')
-        call UnitRemoveAbility(u, 'B01V')
-        call UnitRemoveAbility(u, 'B01Y')
-        call UnitRemoveAbility(u, 'B01X')
-        call UnitRemoveAbility(u, 'B021')
+        call UnitRemoveAbility(u, INCINERATE_CUSTOM_BUFF_ID)
+        call UnitRemoveAbility(u, POISON_NON_STACKING_CUSTOM_BUFF_ID)
+        call UnitRemoveAbility(u, LIQUID_FIRE_CUSTOM_BUFF_ID)
+        call UnitRemoveAbility(u, DISEASE_CLOUD_BUFF_ID)
+        call UnitRemoveAbility(u, ENSNARE_AIR_BUFF_ID)
+        call UnitRemoveAbility(u, ENSNARE_GROUND_BUFF_ID)
+        call UnitRemoveAbility(u, THUNDER_CLAP_BUFF_ID)
+        call UnitRemoveAbility(u, UNHOLY_FRENZY_BUFF_ID)
+        call UnitRemoveAbility(u, BLEED_BUFF_ID)
+        call UnitRemoveAbility(u, NULL_VOID_ORB_BUFF_ID)
+        call UnitRemoveAbility(u, ANCIENT_KNIFE_OF_THE_GODS_BUFF_ID)
+        call UnitRemoveAbility(u, FLIMSY_TOKEN_BUFF_ID)
+        call UnitRemoveAbility(u, SPELLBANE_TOKEN_BUFF_ID)
+        call UnitRemoveAbility(u, VIGOUR_TOKEN_BUFF_ID)
+        call UnitRemoveAbility(u, BLOODSTONE_BUFF_ID)
+        call UnitRemoveAbility(u, DOUSING_HEX_BUFF_ID)
+        call UnitRemoveAbility(u, MANA_STARVATION_NERF_BUFF_ID)
+        call UnitRemoveAbility(u, MIDAS_TOUCH_BUFF_ID)
         call UnitRemoveAbility(u, 'A09B')
         call UnitRemoveAbility(u, 'A08O')
         call UnitRemoveAbility(u, 'A03V')
-        call UnitRemoveAbility(u, 'B00T')
+        call UnitRemoveAbility(u, HERO_BUFF_ID)
     endfunction
 
     //0 = all, 1 = negative, 2 = positive
@@ -286,7 +286,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),REALF,0,life_1)
         endif
         call IssueTargetOrder(Caster1,ordstr,u2)
-        call UnitApplyTimedLife(Caster1,'B000',6)
+        call UnitApplyTimedLife(Caster1,RAPIER_OF_THE_GODS_BUFF_ID,6)
         set Caster1 = null
         set u1 = null
         set u2 = null
@@ -340,7 +340,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),REALF1,0,life_1)
         call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),REALF2,0,life_2)
         call IssueTargetOrder(Caster1,ordstr,u2)
-        call UnitApplyTimedLife(Caster1,'B000',6)
+        call UnitApplyTimedLife(Caster1,RAPIER_OF_THE_GODS_BUFF_ID,6)
         
         
         call ReleaseTimer(t)
@@ -375,7 +375,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
     function IsSpellElement takes unit u, integer abilId, integer id returns boolean
 
         //Null Void Orb
-        if GetUnitAbilityLevel(u, 'B01W') > 0 then
+        if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
             return false
         endif
 
@@ -413,7 +413,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local integer elementCount = 0
 
         //Null Void Orb
-        if GetUnitAbilityLevel(u, 'B01W') > 0 then
+        if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
             return 0
         endif
 
@@ -470,7 +470,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local integer i = 0
 
         //Absolute Arcane
-        if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, 'B01W') == 0 then
+        if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
             set i = GetClassUnitSpell(u, Element_Arcane)
             loop
                 set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))))
@@ -551,7 +551,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endif  
 
         //Dousing Hex
-        if GetUnitAbilityLevel(u, 'B01Y') > 0 then
+        if GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 then
             //call BJDebugMsg("cd bonus: " + R2S(DousingHexCooldown.real[GetHandleId(u)]))
             set ResCD = ResCD * DousingHexCooldown.real[GetHandleId(u)]
         endif
@@ -648,7 +648,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
 
         call IssueImmediateOrder( Caster1, ordstr )
-        call UnitApplyTimedLife(Caster1,'B000',9)
+        call UnitApplyTimedLife(Caster1,RAPIER_OF_THE_GODS_BUFF_ID,9)
 
 
         set Caster1 = null

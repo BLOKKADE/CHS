@@ -41,7 +41,7 @@ library CheaterMagic requires BuffLevel, RandomShit, TimeManipulation
         method destroy takes nothing returns nothing
             call RemoveBuff(this.source, 'A08G')
             if GetBuffLevel(this.source, 'A08G') == 0 then
-                call UnitRemoveAbility(this.source, 'B01G')
+                call UnitRemoveAbility(this.source, CHEATER_MAGIC_BUFF_ID)
             endif
             set this.source = null
             set recycleNext = recycle

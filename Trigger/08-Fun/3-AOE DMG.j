@@ -135,7 +135,7 @@ library AoeDamage requires Vampirism
     function DrainRealase takes nothing returns boolean
         local real hp
         local real dmg
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'B01V') == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0 then
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), BLOODSTONE_BUFF_ID) == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0 then
             set hp = GetWidgetLife(GetFilterUnit())
             set dmg = Dmg_ef
             if GLOB_LIFESTEAL then
@@ -178,7 +178,7 @@ library AoeDamage requires Vampirism
     function DrainRealase2 takes nothing returns boolean
         local real hp
         local real dmg
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'B01V') == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0  then
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), BLOODSTONE_BUFF_ID) == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0  then
 
             set hp = GetWidgetLife(GetFilterUnit())
             set dmg = Dmg_ef * hp / 100

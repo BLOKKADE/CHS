@@ -114,7 +114,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             //remove Cheater Magic
             if GetUnitAbilityLevel(target, 'A08G') > 0 and IsUnitEnemy(target, GetOwningPlayer(caster)) then
                 call UnitRemoveAbility(target, 'A08G')
-                call UnitRemoveAbility(target, 'B01G')
+                call UnitRemoveAbility(target, CHEATER_MAGIC_BUFF_ID)
             endif
 
             return true
@@ -203,7 +203,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
                     endif
 
-                    if GetUnitAbilityLevel(caster, 'B01R') > 0 then
+                    if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
                         call SpellbaneSpellCast(caster, abilId, abilLvl)
                     endif
                 

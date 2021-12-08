@@ -4,7 +4,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
     endglobals
 
     private function SpiritLinkFilter takes nothing returns boolean
-        return GetUnitAbilityLevel(GetFilterUnit(), 'Bspl') > 0 and UnitAlive(GetFilterUnit()) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0 and BlzIsUnitInvulnerable(GetFilterUnit()) == false
+        return GetUnitAbilityLevel(GetFilterUnit(), SPIRIT_LINK_BUFF_ID) > 0 and UnitAlive(GetFilterUnit()) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0 and BlzIsUnitInvulnerable(GetFilterUnit()) == false
     endfunction
 
     private function AllUnitsFilter takes nothing returns boolean

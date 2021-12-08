@@ -6,7 +6,7 @@ library DousingHex initializer init requires DummyOrder, RandomShit
     endglobals
 
     function DousingHexFailCheck takes unit u, integer abilId returns boolean
-        if IsSpellElement(u, abilId, Element_Fire) and GetUnitAbilityLevel(u, 'B01Y') > 0 and GetRandomInt(0, 100) < DousingHexChance.integer[GetHandleId(u)] then
+        if IsSpellElement(u, abilId, Element_Fire) and GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 and GetRandomInt(0, 100) < DousingHexChance.integer[GetHandleId(u)] then
             //call BJDebugMsg("Dousing hex fail")
             call DestroyEffect(AddSpecialEffect("Objects\\Spawnmodels\\Naga\\NagaDeath\\NagaDeath.mdl", GetUnitX(u), GetUnitY(u)))
             call IssueImmediateOrderById(u, 851972)

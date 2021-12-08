@@ -15,7 +15,7 @@ library Vampirism requires RandomShit
         endif
 
         //Bloodstone target & Divine Bubble
-        if vamp <= 0 or GetUnitAbilityLevel(u1, 'B01V') > 0 or IsUnitDivineBubbled(u2) or GetUnitAbilityLevel(u1, 'B022') > 0 then
+        if vamp <= 0 or GetUnitAbilityLevel(u1, BLOODSTONE_BUFF_ID) > 0 or IsUnitDivineBubbled(u2) or GetUnitAbilityLevel(u1, 'B022') > 0 then
             return
         endif
 

@@ -9,7 +9,7 @@ library FrostBolt requires RandomShit
         call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,'A07Y'),ABILITY_RLF_DAMAGE_CTB1,0,dmg)
         set check = IssueTargetOrder(Caster1,"thunderbolt",u2)
         
-        call UnitApplyTimedLife(Caster1,'B000',3)
+        call UnitApplyTimedLife(Caster1,RAPIER_OF_THE_GODS_BUFF_ID,3)
         
         set Caster1 = null
         set u1 = null

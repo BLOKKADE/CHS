@@ -180,11 +180,11 @@ scope DamageControllerBefore initializer init
         endif
 
         //Extradimensional Cooperation
-        if GetUnitAbilityLevel(damageSource, 'B01H') > 0 and notOnHit and IsDamageExtradimensional(damageSource) == false then
+        if GetUnitAbilityLevel(damageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and notOnHit and IsDamageExtradimensional(damageSource) == false then
             call CastExtradimensionalCoop(damageSource, damageTarget, GetEventDamage(), DmgType == DAMAGE_TYPE_MAGIC)
         endif
 
-        if (GetUnitAbilityLevel(damageTarget, 'B028') > 0 or GetUnitAbilityLevel(damageTarget, 'BHbn') > 0) and DmgType == DAMAGE_TYPE_NORMAL then
+        if (GetUnitAbilityLevel(damageTarget, 'B028') > 0 or GetUnitAbilityLevel(damageTarget, BANISH_BUFF_ID) > 0) and DmgType == DAMAGE_TYPE_NORMAL then
             call BlzSetEventDamage(0)
             set damageSourceHero = null
             set damageTargetHero = null
@@ -408,7 +408,7 @@ scope DamageControllerBefore initializer init
         if GetUnitTypeId(damageSource) == URSA_WARRIOR_UNIT_ID and attack then
             //call CastUrsaBleed(damageSource, damageTarget, GetEventDamage(), DmgType !=  DAMAGE_TYPE_NORMAL)
             call SetBuff(damageTarget,4,3)
-            call PeriodicDamage.create(damageSource, damageTarget, GetEventDamage()/ 3, DmgType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, 'B01I').addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1)
+            call PeriodicDamage.create(damageSource, damageTarget, GetEventDamage()/ 3, DmgType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1)
         endif
 
         //Pvp Bonus
@@ -425,7 +425,7 @@ scope DamageControllerBefore initializer init
             endif
         endif  
 
-        if GetUnitAbilityLevel(damageTarget, 'BHbn') > 0 and DmgType == DAMAGE_TYPE_MAGIC then
+        if GetUnitAbilityLevel(damageTarget, BANISH_BUFF_ID) > 0 and DmgType == DAMAGE_TYPE_MAGIC then
             call BlzSetEventDamage( GetEventDamage() * 1.5)
         endif
 
@@ -468,7 +468,7 @@ scope DamageControllerBefore initializer init
 
         //Air Force
         if GetUnitAbilityLevel(damageSourceHero  ,AIR_FORCE_ABILITY_ID) >= 1 then
-            if GetUnitAbilityLevel(damageTarget,'Bams') > 0 or GetUnitAbilityLevel(damageTarget,'Bam2') > 0  then
+            if GetUnitAbilityLevel(damageTarget,'Bams') > 0 or GetUnitAbilityLevel(damageTarget,ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
 
                 call BlzSetEventDamage(  GetEventDamage()  + (I2R(GetUnitAbilityLevel(damageSourceHero  ,AIR_FORCE_ABILITY_ID))* GetHeroAgi(damageSourceHero,true))/ 40  )
             else
@@ -513,7 +513,7 @@ scope DamageControllerBefore initializer init
         endif
 
         //Absolute Poison
-        if GetUnitAbilityLevel(damageSource, ABSOLUTE_POISON_ABILITY_ID) > 0 and GetUnitAbilityLevel(damageSource, 'B01W') == 0  then
+        if GetUnitAbilityLevel(damageSource, ABSOLUTE_POISON_ABILITY_ID) > 0 and GetUnitAbilityLevel(damageSource, NULL_VOID_ORB_BUFF_ID) == 0  then
             call PoisonSpellCast(damageSource, damageTarget)
         endif
 
@@ -521,7 +521,7 @@ scope DamageControllerBefore initializer init
             //Incinerate
             set II = GetUnitAbilityLevel(damageSource,INCINERATE_ABILITY_ID)
             if II > 0 then
-                if GetUnitAbilityLevel(damageTarget,'B014') > 0 then
+                if GetUnitAbilityLevel(damageTarget,INCINERATE_CUSTOM_BUFF_ID) > 0 then
                     set Admg = II * 5 + LoadInteger(HT,GetHandleId(damageTarget),- 300001)
                 else
                     set Admg = II * 5
@@ -547,7 +547,7 @@ scope DamageControllerBefore initializer init
         endif
 
         //Spirit Link
-        if GetUnitAbilityLevel(damageTarget, 'Bspl') > 0 and spiritLink == false then
+        if GetUnitAbilityLevel(damageTarget, SPIRIT_LINK_BUFF_ID) > 0 and spiritLink == false then
             call BlzSetEventDamage(DistributeSpiritLink(damageTargetHero, GetEventDamage()))
         endif
 
@@ -591,7 +591,7 @@ scope DamageControllerBefore initializer init
             //call BJDebugMsg(GetUnitName(damageTarget) + ", block:  " + R2S(GetUnitBlock(damageTarget)) + ", calc: " + R2S(blockDamage))
             //Absolute Dark
             set II = GetUnitAbilityLevel(damageSourceHero, ABSOLUTE_DARK_ABILITY_ID)
-            if II > 0 and GetUnitAbilityLevel(damageSourceHero, 'B01W') == 0 then
+            if II > 0 and GetUnitAbilityLevel(damageSourceHero, NULL_VOID_ORB_BUFF_ID) == 0 then
                 set blockDamage = blockDamage * (1 - ((0.009 + (0.001 * II)) * GetClassUnitSpell(damageSourceHero, Element_Dark)))
             endif
 
@@ -627,8 +627,8 @@ scope DamageControllerBefore initializer init
             if DmgType == DAMAGE_TYPE_NORMAL and II > 0 and BlzGetUnitAbilityCooldownRemaining(damageSource, LIQUID_FIRE_ABILITY_ID) == 0 then
 
                 call SetBuff(damageTarget,3,3)
-                //call PerodicDmg(damageSource,damageTarget,40*II +  GetUnitMagicDmg(damageSource)*5,0,1,3.01,'B016',Bfirst)
-                call PeriodicDamage.create(damageSource, damageTarget, 40 * II + GetUnitMagicDmg(damageSource)* 5, true, 1., 3, 0, false, 'B016').addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1)
+                //call PerodicDmg(damageSource,damageTarget,40*II +  GetUnitMagicDmg(damageSource)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
+                call PeriodicDamage.create(damageSource, damageTarget, 40 * II + GetUnitMagicDmg(damageSource)* 5, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1)
             endif
 
             //Envenomed Weapons
@@ -637,12 +637,12 @@ scope DamageControllerBefore initializer init
 
                 //Absolute Poison
                 set Admg = PoisonBonus.real[sourceId]
-                if Admg == 0 or GetUnitAbilityLevel(damageSourceHero, 'B01W') == 0 then
+                if Admg == 0 or GetUnitAbilityLevel(damageSourceHero, NULL_VOID_ORB_BUFF_ID) == 0 then
                     set Admg = 1
                 endif
                 call SetBuff(damageTarget,2,8)
-                //call PerodicDmg(damageSource,damageTarget,10*II,0.5,1,8.01,'B015',Bfirst)
-                call PeriodicDamage.create(damageSource, damageTarget, 30 * II * Admg, true, 1., 8, 1, false, 'B015').addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
+                //call PerodicDmg(damageSource,damageTarget,10*II,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
+                call PeriodicDamage.create(damageSource, damageTarget, 30 * II * Admg, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
             endif
         endif
 

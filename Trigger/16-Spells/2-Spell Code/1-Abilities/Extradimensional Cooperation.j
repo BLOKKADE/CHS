@@ -10,7 +10,7 @@ library ExtradimensionalCooperation requires RandomShit
 
     function ResetExtraDimensional takes unit u returns nothing
         set SpellData[GetHandleId(u)].integer[6] = 0
-        call UnitRemoveAbility(u, 'B01H')
+        call UnitRemoveAbility(u, EXTRADIMENSIONAL_COOPERATION_BUFF_ID)
     endfunction
 
     struct ExtraDimensionalCoop extends array
@@ -108,7 +108,7 @@ library ExtradimensionalCooperation requires RandomShit
             call ExtraDimensionalCoop.create(caster, target, damage, magic)
             set SpellData[GetHandleId(caster)].integer[6] = i - 1
             if i - 1 == 0 then
-                call UnitRemoveAbility(caster, 'B01H')
+                call UnitRemoveAbility(caster, EXTRADIMENSIONAL_COOPERATION_BUFF_ID)
             endif
         endif
     endfunction

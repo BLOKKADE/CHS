@@ -564,6 +564,98 @@ library IdLibrary initializer init
         
         // --- Item IDs ---
 
+        // --- Buff IDs ---
+        constant integer ACID_BOMB_BUFF_ID                              = 'BNab'
+        constant integer ANCIENT_KNIFE_OF_THE_GODS_BUFF_ID              = 'B01N'
+        constant integer ANTI_MAGIC_SHELL_BUFF_ID                       = 'Bam2'
+        constant integer AVATAR_BUFF_ID                                 = 'BHav'
+        constant integer BANISH_BUFF_ID                                 = 'BHbn'
+        constant integer BATTLE_ROAR_BUFF_ID                            = 'BNbr'
+        constant integer BERSERK_BUFF_ID                                = 'Bbsk'
+        constant integer BLACK_ARROW_BUFF_ID                            = 'BNba'
+        constant integer BLEED_BUFF_ID                                  = 'B01I'
+        constant integer BLIZZARD_BUFF_ID                               = 'BHbd'
+        constant integer BLOODSTONE_BUFF_ID                             = 'B01V'
+        constant integer BREATH_OF_FIRE_BUFF_ID                         = 'BNbf'
+        constant integer BREATH_OF_FROST_BUFF_ID                        = 'BCbf'
+        constant integer BURNING_OIL_BUFF_ID                            = 'Bbof'
+        constant integer CHEATER_MAGIC_BUFF_ID                          = 'B01G'
+        constant integer CLOUD_BUFF_ID                                  = 'Bclf'
+        constant integer COLD_ARROWS_NON_STACKING_BUFF_ID               = 'BHca'
+        constant integer COLD_ARROWS_STACKING_BUFF_ID                   = 'Bcsd'
+        constant integer CORROSIZE_BREATH_BUFF_ID                       = 'Bcor'
+        constant integer CRIPPLE_BUFF_ID                                = 'Bcri'
+        constant integer DEATH_AND_DECAY_BUFF_ID                        = 'BUdd'
+        constant integer DISEASE_BUFF_ID                                = 'Bapl'
+        constant integer DISEASE_CLOUD_BUFF_ID                          = 'Bplg'
+        constant integer DOOM_BUFF_ID                                   = 'BNdo'
+        constant integer DOUSING_HEX_BUFF_ID                            = 'B01Y'
+        constant integer DRUNKEN_HAZE_BUFF_ID                           = 'BNdh'
+        constant integer EARTHQUAKE_BUFF_ID                             = 'BOeq'
+        constant integer ENSNARE_AIR_BUFF_ID                            = 'Bena'
+        constant integer ENSNARE_GENERAL_BUFF_ID                        = 'Bens'
+        constant integer ENSNARE_GROUND_BUFF_ID                         = 'Beng'
+        constant integer ENTANGLING_ROOTS_BUFF_ID                       = 'BEer'
+        constant integer EXTRADIMENSIONAL_COOPERATION_BUFF_ID           = 'B01H'
+        constant integer FAERIE_FIRE_BUFF_ID                            = 'Bfae'
+        constant integer FEAR_AURA_BUFF_ID                              = 'B00H'
+        constant integer FLAME_STRIKE_BUFF_ID                           = 'BHfs'
+        constant integer FLIMSY_TOKEN_BUFF_ID                           = 'B01Q'
+        constant integer FROST_ARMOR_BUFF_ID                            = 'BUfa'
+        constant integer HERO_BUFF_ID                                   = 'B00T'
+        constant integer HEX_BUFF_ID                                    = 'BOhx'
+        constant integer HOWL_OF_TERROR_BUFF_ID                         = 'BNht'
+        constant integer IMMOBILITY_BUFF_ID                             = 'B017'
+        constant integer INCINERATE_BUFF_ID                             = 'BNic' // Completely vanilla
+        constant integer INCINERATE_CUSTOM_BUFF_ID                      = 'B014' // Custom
+        constant integer INNER_FIRE_BUFF_ID                             = 'Binf'
+        constant integer INVULNERABLE_BUFF_ID                           = 'Bvul'
+        constant integer LIGHTNING_SHIELD_BUFF_ID                       = 'Blsh'
+        constant integer LIQUID_FIRE_BUFF_ID                            = 'Bliq' // Almost vanilla. Has custom target
+        constant integer LIQUID_FIRE_CUSTOM_BUFF_ID                     = 'B016' // Custom
+        constant integer LUCKY_PANTS_BUFF_ID                            = 'B01S'
+        constant integer MANA_STARVATION_BUFF_ID                        = 'B01Z'
+        constant integer MANA_STARVATION_NERF_BUFF_ID                   = 'B01X'
+        constant integer MIDAS_TOUCH_BUFF_ID                            = 'B021'
+        constant integer NULL_VOID_ORB_BUFF_ID                          = 'B01W'
+        constant integer PARASITE_BUFF_ID                               = 'BNpa'
+        constant integer PARASITE_MINION_BUFF_ID                        = 'BNpm'
+        constant integer POISON_NON_STACKING_BUFF_ID                    = 'Bpoi' // Completely vanilla
+        constant integer POISON_NON_STACKING_CUSTOM_BUFF_ID             = 'B015' // Custom
+        constant integer POISON_STACKING_BUFF_ID                        = 'Bpsd'
+        constant integer POLYMORPH_BUFF_ID                              = 'Bply'
+        constant integer RAIN_OF_FIRE_BUFF_ID                           = 'BNrd'
+        constant integer RAPIER_OF_THE_GODS_BUFF_ID                     = 'B000'
+        constant integer REJUVENATION_BUFF_ID                           = 'Brej'
+        constant integer SCROLL_OF_PROTECTION_BUFF_ID                   = 'Bdef'
+        constant integer SENSATUS_SHIELD_OF_HONOR_BUFF_ID               = 'B002'
+        constant integer SHADOW_STRIKE_BUFF_ID                          = 'BEsh'
+        constant integer SILENCE_BUFF_ID                                = 'BNsi'
+        constant integer SLEEP_BUFF_ID                                  = 'BUsl'
+        constant integer SLOWED_BUFF_ID                                 = 'Bfro'
+        constant integer SLOW_AURA_BUFF_ID                              = 'B001'
+        constant integer SLOW_BUFF_ID                                   = 'Bslo'
+        constant integer SLOW_POISON_NON_STACKING_BUFF_ID               = 'Bspo'
+        constant integer SLOW_POISON_STACKING_BUFF_ID                   = 'Bssd'
+        constant integer SOUL_BURN_BUFF_ID                              = 'BNso'
+        constant integer SPELLBANE_TOKEN_BUFF_ID                        = 'B01R'
+        constant integer SPIRIT_LINK_BUFF_ID                            = 'Bspl'
+        constant integer STUNNED_BUFF_ID                                = 'BSTN' // Completely vanilla
+        constant integer STUNNED_CUSTOM_BUFF_ID                         = 'B00J' // Custom
+        constant integer STUNNED_PAUSE_BUFF_ID                          = 'BPSE'
+        constant integer THE_CURSE_OF_DEMONS_BUFF_ID                    = 'B00V'
+        constant integer THUNDER_CLAP_BUFF_ID                           = 'BHtc'
+        constant integer TORNADO_SLOW_AURA_BUFF_ID                      = 'Basl'
+        constant integer UNHOLY_FRENZY_BUFF_ID                          = 'BUhf'
+        constant integer VIGOUR_TOKEN_BUFF_ID                           = 'B01P'
+        constant integer VOLCANO_BUFF_ID                                = 'BNvc'
+        constant integer WEB_AIR_BUFF_ID                                = 'Bwea'
+        constant integer WEB_GROUND_BUFF_ID                             = 'Bweb'
+        constant integer WHIRLWIND_BUFF_ID                              = 'B005'
+        constant integer WISDOM_CHESTPLATE_BUFF_ID                      = 'B020'
+
+        // --- Buff IDs ---
+
         // --- Groups --- A place for groups that contains IDs from random places
 
         StaticIdGroup ECONOMIC_ABILITIES

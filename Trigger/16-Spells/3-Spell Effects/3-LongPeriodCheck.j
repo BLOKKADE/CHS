@@ -17,7 +17,7 @@ scope LongPeriodCheck initializer init
 
         set r2 = r2 + i2 * 1.4
 
-        if GetUnitAbilityLevel(u, 'B01Q') > 0 then
+        if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
             set r2 = r2 + 0.4
         endif
 

@@ -22,7 +22,7 @@ function UsOrderU1 takes unit u1, unit u2, real x, real y,integer idsp, string o
     call UnitAddAbility(Caster1,idsp ) 
     call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,idsp),REALF,0,life_1)
     set BL = IssueTargetOrder(Caster1,ordstr,u2)
-    call UnitApplyTimedLife(Caster1,'B000',6)
+    call UnitApplyTimedLife(Caster1,RAPIER_OF_THE_GODS_BUFF_ID,6)
     set Caster1 = null
     return BL
 endfunction

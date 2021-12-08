@@ -39,7 +39,7 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
         
         //Bash
         set i = GetUnitAbilityLevel(damageSource,BASH_ABILITY_ID)  
-        if i > 0 and GetRandomReal(0,100) <= I2R(i)* luck and GetUnitAbilityLevel(damageTarget,'BSTN') == 0 then
+        if i > 0 and GetRandomReal(0,100) <= I2R(i)* luck and GetUnitAbilityLevel(damageTarget,STUNNED_BUFF_ID) == 0 then
             call UsOrderU(damageSource,damageTarget,GetUnitX(damageTarget),GetUnitY(damageTarget),'A06T',"thunderbolt",  i * 100 + GetHeroStr(damageSource,true)/ 2, ABILITY_RLF_DAMAGE_HTB1 )
         endif
     endif

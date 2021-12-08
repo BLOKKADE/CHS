@@ -16,7 +16,7 @@ library ManaStarvation requires DummyOrder, T32
         private method periodic takes nothing returns nothing
             local integer mana = R2I(GetUnitState(this.target, UNIT_STATE_MANA))
             local integer currentBonus = 0
-            if this.finalStage == false and GetUnitAbilityLevel(this.target, 'B01X') > 0 and IsUnitTarget(this.target) then
+            if this.finalStage == false and GetUnitAbilityLevel(this.target, MANA_STARVATION_NERF_BUFF_ID) > 0 and IsUnitTarget(this.target) then
                 if mana > this.manaLimit then
                     set currentBonus = R2I((mana - this.manaLimit) * 0.5)
                     set this.bonus = this.bonus + currentBonus
@@ -30,7 +30,7 @@ library ManaStarvation requires DummyOrder, T32
                     call UnitAddAttackDamage(this.source, currentBonus)
                     set this.manaLimit = mana
                 endif
-            elseif this.finalStage == false and ((T32_Tick - this.beginTick > 32 and GetUnitAbilityLevel(this.target, 'B01X') == 0) or T32_Tick > this.endTick) then
+            elseif this.finalStage == false and ((T32_Tick - this.beginTick > 32 and GetUnitAbilityLevel(this.target, MANA_STARVATION_NERF_BUFF_ID) == 0) or T32_Tick > this.endTick) then
                 //call BJDebugMsg("final stage")
                 set this.finalStage = true
                 set this.endTick = T32_Tick + (8 * 32)

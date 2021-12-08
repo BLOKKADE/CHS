@@ -33,7 +33,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
     call BlzSetAbilityRealLevelField( BlzGetUnitAbility(CasteabilLevel,idsp),RealField4,0,Field4)
 
     call IssueImmediateOrder( CasteabilLevel, ordstr )
-    call UnitApplyTimedLife(CasteabilLevel,'B000',2)
+    call UnitApplyTimedLife(CasteabilLevel,RAPIER_OF_THE_GODS_BUFF_ID,2)
 
 
     set CasteabilLevel = null
