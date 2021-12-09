@@ -134,6 +134,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
             set this.damageReduction = 1
             call this.updateDescription()
             set this.enabled = false
+            set SpiritLinkTable[GetHandleId(this.source)] = 0
             set this.source = null
             call DestroyGroup(this.spiritLinkedUnits)
             set this.spiritLinkedUnits = null

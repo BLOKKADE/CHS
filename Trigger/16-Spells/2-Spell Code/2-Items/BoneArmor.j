@@ -28,7 +28,7 @@ library BoneArmor initializer init requires Utility
             call GroupClear(this.boneArmorUnits)
             call GroupEnumUnitsOfPlayer(this.boneArmorUnits, Player(this.pid), Condition(function BoneArmorFilter))
             set this.groupSize = BlzGroupGetSize(this.boneArmorUnits)
-            //call BJDebugMsg("ba size: " + I2S(this.groupSize))
+            //call BJDebugMsg(I2S(this.pid) + " ba size: " + I2S(this.groupSize))
         endmethod
     
         private method periodic takes nothing returns nothing
@@ -52,10 +52,11 @@ library BoneArmor initializer init requires Utility
                 set this = recycle
                 set recycle = recycle.recycleNext
             endif
-            //call BJDebugMsg("ba start")
+            
             set this.source = source
             set this.boneArmorUnits = CreateGroup()
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
+            //call BJDebugMsg(I2S(this.pid) + " ba start")
 
             call this.refreshGroup()
 
@@ -68,6 +69,7 @@ library BoneArmor initializer init requires Utility
         
         method destroy takes nothing returns nothing
             set this.enabled = false
+            set BoneArmorTable[GetHandleId(this.source)] = 0
             set this.source = null
             call DestroyGroup(this.boneArmorUnits)
             set this.boneArmorUnits = null
