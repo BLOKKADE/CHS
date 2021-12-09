@@ -10397,6 +10397,27 @@ function Trig_PvP_Battle_Func001C takes nothing returns boolean
     return true
 endfunction
 
+function TempDuelDebug takes nothing returns string
+    local integer i = 0
+    local string debugText = "DL"
+    loop
+        if BlzForceHasPlayer(DuelLosers, Player(i)) then
+            set debugText = debugText + I2S(i)
+        endif
+        set i = i + 1
+        exitwhen i >= 8
+    endloop
+
+    set debugText = debugText + " GP"
+    loop
+        set debugText = debugText + I2S(GetPlayerId(GetOwningPlayer(BlzGroupUnitAt(udg_group01, i))))
+        set i = i - 1
+        exitwhen i < 0
+    endloop
+
+    return debugText
+endfunction
+
 function Trig_PvP_Battle_Actions takes nothing returns nothing
     if(Trig_PvP_Battle_Func001C())then
         set udg_units03[1]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
@@ -10407,7 +10428,8 @@ function Trig_PvP_Battle_Actions takes nothing returns nothing
             set udg_units03[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
         endif
         //shitty attempt at making sure it doesnt fuck up
-        if udg_units03[2] == udg_units03[2] or udg_units03[2] == null then
+        if udg_units03[2] == udg_units03[1] or udg_units03[2] == null then
+            call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: " + GetPlayerName(GetOwningPlayer(udg_units03[1])) + " will fight any random player.\nPlease send this code in the bug-report channel on discord: " + TempDuelDebug() )
             set udg_units03[2] = GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function GetPvpEnemy)))
         endif
         call GroupRemoveUnitSimple(udg_units03[2],udg_group01)
