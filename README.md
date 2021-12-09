@@ -6,14 +6,16 @@ WARNING: CHS.W3X is readable in the World Editor but cannot be saved without fir
 
 Setup the map:
 1. Download the project and save it in a directory
-2. Open "CHS.w3x" in the Warcraft 3 World Editor
-3. Go to the trigger editor and open the "Import" trigger in the "JASS" category.
-4. Replace the path in 
+2. Open command line to the project directory (With explorer open to the project directory, Right Click > Open in Windows Terminal)
+3. Copy paste: ./CreateImportFile.exe "Trigger" "TriggerList.j" and press enter. Close the command line.
+4. Open "CHS.w3x" in the Warcraft 3 World Editor
+5. Go to the trigger editor and open the "Import" trigger in the "JASS" category.
+6. Replace the path in 
 //! import "C:\Users\Eigenaar\Projects\CHS\TriggerList.j"
 with the path of the TriggerList.j file in the project you saved.
 5. Save the map, if it doesn't give an error you're done.
 
-To include new .j files (jass code fileS) in the map you can use one of these 3 methods:
+To include new .j files (jass code files) in the map you can use one of these 3 methods:
 
 Manually:
 1. Get the path of the file you created.
@@ -27,7 +29,7 @@ Automatically (with VS Code)
 2. Run the "Create Import File" task (or press Ctrl+B)
 3. Success
 
-Automatically (without VS CodE)
+Automatically (without VS Code)
 1. Ensure you have all the code you want to be imported in (sub)folders of one big folder.
 2. Open command line and start CreateImportFile.exe. To do that it requires 2 arguments:
   2a. Argument 1: The folder of files you want to import. For example "C:/Warcraft/CHS/Trigger"
