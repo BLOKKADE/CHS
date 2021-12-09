@@ -153,12 +153,14 @@ scope DamageControllerAfter initializer init
         if not unlimitedAgony then
 
             //Bone Armor Skeleton Defender
-            set i = GetBoneArmorStruct(GetHandleId(damageTarget)).groupSize
-            if i > 0 and IsHeroUnitId(GetUnitTypeId(damageTarget)) then
-                if i > 12 then
-                    set i = 12
+            if UnitHasItemS(damageTarget, 'I07O') then
+                set i = GetBoneArmorStruct(GetHandleId(damageTarget)).groupSize
+                if i > 0 and IsHeroUnitId(GetUnitTypeId(damageTarget)) then
+                    if i > 12 then
+                        set i = 12
+                    endif
+                    call BlzSetEventDamage(   GetEventDamage() * (1 - (i * 0.08)))
                 endif
-                call BlzSetEventDamage(   GetEventDamage() * (1 - (i * 0.08)))
             endif
 
             //Wild Runestone
