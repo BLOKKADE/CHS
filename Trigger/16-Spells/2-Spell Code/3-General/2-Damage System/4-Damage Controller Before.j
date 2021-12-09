@@ -134,7 +134,7 @@ scope DamageControllerBefore initializer init
         endif
 
         //modified damage source after this, so can't detect dummy units, those need to go ^^^
-        if CuId == PRIEST_1_UNIT_ID or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' then
+        if CuId == PRIEST_1_UNIT_ID or CuId == 'h014' or CuId == 'h00T' or CuId == 'n00V' or CuId == 'n01L' then
             set damageSource = damageSourceHero
         endif
 

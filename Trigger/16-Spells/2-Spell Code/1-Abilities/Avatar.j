@@ -76,6 +76,7 @@ library Avatar initializer init requires AttackDamage
         method destroy takes nothing returns nothing
             call this.removeBonuses()
             set this.enabled = false
+            set AvatarBonus[GetHandleId(this.source)] = 0
             set this.source = null
             //call BJDebugMsg("db end")
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
@@ -87,10 +88,10 @@ library Avatar initializer init requires AttackDamage
     endstruct
 
     function CastAvatar takes unit caster, integer level returns nothing
-        if GetAvatar(GetHandleId(caster)).enabled == false then
+        if GetAvatar(GetHandleId(caster)) == 0 then
             //call BJDebugMsg("midas power:" + R2S(power) + " abilpower: " + R2S(abilPower) +" gold: " + I2S((499 + (26 * level))) + " total: " + I2S(R2I((499 + (26 * level)) * power)))
             set AvatarBonus[GetHandleId(caster)] = AvatarStruct.create(caster, level)
-        elseif GetAvatar(GetHandleId(caster)).enabled then
+        else
             call GetAvatar(GetHandleId(caster)).removeBonuses()
             call GetAvatar(GetHandleId(caster)).setBonuses(level)
             call GetAvatar(GetHandleId(caster)).updateBonuses()

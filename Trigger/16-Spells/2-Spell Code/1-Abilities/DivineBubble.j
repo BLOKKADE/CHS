@@ -57,6 +57,7 @@ library DivineBubble initializer init requires T32, RandomShit
             call UnitRemoveAbility(this.source, 'A08C')
             call UnitRemoveAbility(this.source, 'B01E')
             call DestroyEffect(this.fx)
+            set DivineBubbles[GetHandleId(this.source)] = 0
             set this.fx = null
             set this.enabled = false
             set this.source = null

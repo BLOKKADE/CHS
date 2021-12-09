@@ -94,29 +94,43 @@ scope DamageControllerAfter initializer init
             endif
         endif
 
-        //Medal of Honor
-        if LoadInteger(HTi,GetHandleId(damageTargetHero),2) == 1 then 
-            call BlzSetEventDamage(   GetEventDamage()* 0.66 )
-        endif 
+        //Mask of Death lifesteal
+        if LoadInteger(HTi,GetHandleId(damageSourceHero),1) == 1 then
+            set r2 = (GetEventDamage()/ 4)
+            call Vamp(damageSource,damageTarget,r2)
+            set vampCount = vampCount + 1	
+        endif
+
+        if not unlimitedAgony then
+
+            //Medal of Honor
+            if LoadInteger(HTi,GetHandleId(damageTargetHero),2) == 1 then 
+                call BlzSetEventDamage(   GetEventDamage()* 0.66 )
+            endif 
+
+            //Mask of Death damage reduction
+            if LoadInteger(HTi,GetHandleId(damageSourceHero),1) == 1 then
+                call BlzSetEventDamage(   GetEventDamage()* 0.75 )
+            endif
+        endif
 
         //Medal of Honor
         if LoadInteger(HTi,GetHandleId(damageSourceHero),2) == 1 then 
             call BlzSetEventDamage(   GetEventDamage()* 0.66 )
         endif 
 
-        //Mask of Death
-        if LoadInteger(HTi,GetHandleId(damageSourceHero),1) == 1 then
-            set r2 = (GetEventDamage()/ 4)
-            call Vamp(damageSource,damageTarget,r2)
-            set vampCount = vampCount + 1	
-            call BlzSetEventDamage(   GetEventDamage()* 0.75 )
-        endif
-
         //Vampirism
         set r1 = GetUnitAbilityLevel(damageSource,VAMPIRISM_ABILITY_ID)
         if r1 > 0 then
             set r2 = GetEventDamage()*(0.005 + 0.005 * r1 + GetClassUnitSpell(damageSource,11)* 0.02 )
             call Vamp(damageSource,damageTarget,r2)
+            set vampCount = vampCount + 1
+        endif
+
+        //Soul Reaper
+        if UnitHasItemS(damageSource, 'I01C') then
+            set r2 = GetEventDamage() * 0.5
+            call Vamp(damageSource, damageTarget, r2)
             set vampCount = vampCount + 1
         endif
 
@@ -130,18 +144,30 @@ scope DamageControllerAfter initializer init
         //Ghoul Passive
         if GetUnitTypeId(damageSource) == GHOUL_UNIT_ID and attack then
             set i = GetHeroLevel(damageSource)
-            set r2 = (GetEventDamage() + (BlzGetUnitMaxHP(damageTarget) * (0.025 + (0.00025 * i))))
+            set r2 = BlzGetUnitMaxHP(damageTarget) * (0.025 + (0.00025 * i))
             call Vamp(damageSource,damageTarget,r2)
             set vampCount = vampCount + 1
             call BlzSetEventDamage(   GetEventDamage()+ r2 ) 
         endif
-        //Bone Armor Skeleton Defender
-        set i = SkeletonDefender[targetPid]
-        if i > 0 and IsHeroUnitId(GetUnitTypeId(damageTarget)) then
-            if i > 12 then
-                set i = 12
+
+        if not unlimitedAgony then
+
+            //Bone Armor Skeleton Defender
+            if UnitHasItemS(damageTarget, 'I07O') then
+                set i = GetBoneArmorStruct(GetHandleId(damageTarget)).groupSize
+                if i > 0 and IsHeroUnitId(GetUnitTypeId(damageTarget)) then
+                    if i > 12 then
+                        set i = 12
+                    endif
+                    call BlzSetEventDamage(   GetEventDamage() * (1 - (i * 0.08)))
+                endif
             endif
-            call BlzSetEventDamage(   GetEventDamage() * (1 - (i * 0.08)))
+
+            //Wild Runestone
+            if UnitHasItemS(damageTargetHero, 'I0B6') and IsUnitType(damageTarget, UNIT_TYPE_HERO) == false and (not unlimitedAgony) then
+                call BlzSetEventDamage( GetEventDamage() * 0.7)
+            endif
+
         endif
         
         //Magic Necklace of Absorption
@@ -248,11 +274,6 @@ scope DamageControllerAfter initializer init
             call SaveReal(HT,GetHandleId(damageTarget),82341,r2)
         endif
 
-        //Wild Runestone
-        if UnitHasItemS(damageTargetHero, 'I0B6') and IsUnitType(damageTarget, UNIT_TYPE_HERO) == false and (not unlimitedAgony) then
-            call BlzSetEventDamage( GetEventDamage() * 0.7)
-        endif
-
         //Blademaster
         if GetUnitTypeId(damageSource) == BLADE_MASTER_UNIT_ID and BladestormReady(damageSource) and attack then
             call BladestormDamage(damageSource, GetEventDamage(), dmgType ==  DAMAGE_TYPE_MAGIC)
@@ -269,36 +290,31 @@ scope DamageControllerAfter initializer init
             endif 
         endif
 
-        //Holy Chain Mail
-        if UnitHasItemS(damageTarget,'I07U') and (not unlimitedAgony) then   
-            if BlzGetUnitMaxHP(damageTarget) > BlzGetUnitMaxMana(damageTarget) then
-                if GetEventDamage() > BlzGetUnitMaxHP(damageTarget)/ 5 then
-                    call BlzSetEventDamage(  BlzGetUnitMaxHP(damageTarget)/ 5 ) 
+        if not unlimitedAgony then
+            
+            //Holy Chain Mail
+            if UnitHasItemS(damageTarget,'I07U') then   
+                if BlzGetUnitMaxHP(damageTarget) > BlzGetUnitMaxMana(damageTarget) then
+                    if GetEventDamage() > BlzGetUnitMaxHP(damageTarget)/ 5 then
+                        call BlzSetEventDamage(  BlzGetUnitMaxHP(damageTarget)/ 5 ) 
+                    endif
+                else
+                    if GetEventDamage() > BlzGetUnitMaxMana(damageTarget)/ 5 then
+                        call BlzSetEventDamage(  BlzGetUnitMaxMana(damageTarget)/ 5 ) 
+                    endif
                 endif
-            else
-                if GetEventDamage() > BlzGetUnitMaxMana(damageTarget)/ 5 then
-                    call BlzSetEventDamage(  BlzGetUnitMaxMana(damageTarget)/ 5 ) 
+            endif
+
+            //Skeleton Brute
+            if GetUnitTypeId(damageTarget) == SKELETON_BRUTE_UNIT_ID then
+                if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A0BA') == 0 and BlzGetUnitMaxHP(damageTarget) * 0.3 <= GetEventDamage() and GetUnitAbilityLevel(damageTarget, 'A0BB') == 0 then
+                    call SkeletonBrute(damageTarget)
                 endif
-            endif
-        endif
 
-        //Skeleton Brute
-        if GetUnitTypeId(damageTarget) == SKELETON_BRUTE_UNIT_ID then
-            if BlzGetUnitAbilityCooldownRemaining(damageTarget, 'A0BA') == 0 and BlzGetUnitMaxHP(damageTarget) * 0.3 <= GetEventDamage() and GetUnitAbilityLevel(damageTarget, 'A0BB') == 0 then
-                call SkeletonBrute(damageTarget)
-            endif
-
-            //Invul
-            if GetUnitAbilityLevel(damageTarget, 'A0BB') > 0 then
-                call BlzSetEventDamage(0)
-            endif
-        endif
-
-        //Finishing Blow
-        if GetEventDamage() > 0 and GetUnitAbilityLevel(damageSourceHero ,FINISHING_BLOW_ABILITY_ID) >= 1 then
-            if 100 *(GetWidgetLife(damageTarget)- GetEventDamage())/ GetUnitState(damageTarget,UNIT_STATE_MAX_LIFE)     <= R2I(GetUnitAbilityLevel(damageSourceHero ,FINISHING_BLOW_ABILITY_ID))  then
-                call BlzSetEventDamage(9999999)
-                call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", damageTarget, "chest"))
+                //Invul
+                if GetUnitAbilityLevel(damageTarget, 'A0BB') > 0 then
+                    call BlzSetEventDamage(0)
+                endif
             endif
         endif
 
@@ -370,6 +386,14 @@ scope DamageControllerAfter initializer init
                     endif
                     call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", damageSource, "chest"))
                 endif
+            endif
+        endif
+
+        //Finishing Blow
+        if GetEventDamage() > 0 and GetUnitAbilityLevel(damageSourceHero , FINISHING_BLOW_ABILITY_ID) >= 1 then
+            if 100 *(GetWidgetLife(damageTarget)- GetEventDamage())/ GetUnitState(damageTarget,UNIT_STATE_MAX_LIFE)     <= R2I(GetUnitAbilityLevel(damageSourceHero , FINISHING_BLOW_ABILITY_ID))  then
+                call BlzSetEventDamage(9999999)
+                call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", damageTarget, "chest"))
             endif
         endif
 

@@ -246,7 +246,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         set Glory[pid] = Glory[pid] + GetPlayerGloryBonus(pid)
         call ResourseRefresh(Player(pid)) 
         call AdjustPlayerStateBJ( Income[pid],p,PLAYER_STATE_RESOURCE_GOLD)
-        call DisplayTextToPlayer(p,0,0,"|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " - |cff00aa0eLumber|r: +" + I2S(LumberGained[pid]) + " - |cff7af0f8Glory|r: +" + I2S(R2I((200 + GloryRoundBonus[pid]))))
+        call DisplayTextToPlayer(p,0,0,"|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " - |cff00aa0eLumber|r: +" + I2S(LumberGained[pid]) + " - |cff7af0f8Glory|r: +" + I2S(R2I((GetPlayerGloryBonus(pid)))))
 
         if Income[pid] == 0 then 
             call DisplayTextToPlayer(p,0,0,"You can increase your income in Power Ups Shop II")       

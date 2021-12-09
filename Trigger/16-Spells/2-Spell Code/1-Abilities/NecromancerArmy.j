@@ -6,7 +6,7 @@ library NecromancerArmy initializer init requires CustomState
     endglobals
 
     function NecroSummonFilter takes nothing returns boolean
-        if NecroArmySummons.boolean[GetHandleId(GetFilterUnit())] then
+        if UnitAlive(GetFilterUnit()) and NecroArmySummons.boolean[GetHandleId(GetFilterUnit())] then
             return true
         endif
         return false

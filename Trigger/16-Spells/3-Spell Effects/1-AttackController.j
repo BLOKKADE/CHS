@@ -92,13 +92,13 @@ scope AttackController initializer init
             set t = null
         endif
         
-        //
+        //Cold Wind
         if GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u2,COLD_WIND_ABILITY_ID) <= 0.001  then
             call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2),100 * GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID),500,COLD_WIND_ABILITY_ID)
             call AbilStartCD(u2,COLD_WIND_ABILITY_ID,2 ) 
         endif
         
-        //
+        //Magical Blade
         set i1 = UnitHasItemI( u2,'I06I' )
         if i1 > 0 then
             call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA)- 50 * i1  )

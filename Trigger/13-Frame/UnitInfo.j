@@ -78,6 +78,10 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		return ""
 	endfunction
 
+	function DmgInfo takes unit u returns string
+		return "|cff5ce74aRange|r: "+ R2SW(BlzGetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, 0), 1, 1) +"\nThe amount of damage the unit's basic attack deals."
+	endfunction
+
 	function StrInfo takes unit u returns string
 		local string s = PrimaryAttributeDmg(u, 0)
 		set s = s + "Each point increases hit points by 26. (" + statColour[0] + "+" + I2S(GetHeroStr(u, true) * 26) + " total|r)\n" 
@@ -128,6 +132,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		set CustomInfoT1[6] = StrInfo(u)
 		set CustomInfoT1[7] = AgiInfo(u)
 		set CustomInfoT1[8] = IntInfo(u)
+		set CustomInfoT1[9] = DmgInfo(u)
 
 		/*
 		set ToolTipS = ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(SpellU)) + "\n"
@@ -191,10 +196,10 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 
 	function GameUINewPanel takes nothing returns nothing
 		local framehandle NewPanel = BlzCreateSimpleFrame("CustomUnitInfoPanel3x4", BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0), 0)
-		call InitDataInfoPanel(1 , "Damage: " , "ReplaceableTextures\\CommandButtons\\BTNAttack.blp" , "The amount of damage the unit's basic attack deals")
+		call InitDataInfoPanel(1 , "Damage: " , "ReplaceableTextures\\CommandButtons\\BTNAttack.blp" , "")
 		call InitDataInfoPanel(2 , "Attack cooldown: " , "ReplaceableTextures\\CommandButtons\\BTNHoldPosition.blp" , "Time between the unit's attacks / Time to start the effect of a spell.\nAbilities and items can affect these values making them inaccurate.")
 		call InitDataInfoPanel(3 , "Armor: " , "ReplaceableTextures\\CommandButtons\\BTNStop.blp" , "")
-		call InitDataInfoPanel(4 , "Block: " , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , "Damage reduction applied to all damage taken.")
+		call InitDataInfoPanel(4 , "Block: " , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , "Flat Damage reduction applied to all damage taken.")
 		call InitDataInfoPanel(5 , "Pvp bonus: " , "BTNHUHoldPosition.blp" , "Increases damage dealt to enemy heroes\nReduces damage taken from enemy heroes. ")
 		call InitDataInfoPanel(6 , "Strength: " , "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower" , "")
 		call InitDataInfoPanel(7 , "Agility: " , "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility" , "")
@@ -222,6 +227,8 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 				set ToolTipA = DataLabel[loopA] + BlzFrameGetText(TextUI[loopA]) + "\n------------------------------\n" + DataDesc[loopA]
 				if loopA == 3 then
 					set ToolTipA = ToolTipA + CustomInfoT1[2] + "%%|r."
+				elseif loopA == 1 then
+					set ToolTipA = ToolTipA + CustomInfoT1[9]
 				elseif loopA == 6 then
 					set ToolTipA = ToolTipA + CustomInfoT1[6]
 				elseif loopA == 7 then

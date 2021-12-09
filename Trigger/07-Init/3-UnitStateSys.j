@@ -285,12 +285,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitMaxHP(u,R2I(I2R(BlzGetUnitMaxHP(u))* wild))
             call SetWidgetLife(u,BlzGetUnitMaxHP(u))
         endif
-
-        //Skeleton Defender
-        if i == 'u003' then
-            set SkeletonDefender[pid] = SkeletonDefender[pid] + 1
-        endif 
-
+        
         set u = null
         set hero = null
     endfunction

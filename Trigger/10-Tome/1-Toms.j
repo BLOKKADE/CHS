@@ -161,7 +161,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 75)
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
                     set Glory[pid]= Glory[pid]- 1500
-                    set gloryBonus = gloryBonus + 150
+                    set gloryBonus = gloryBonus + 75
                 else
                     set ctrl = false
                 endif      
@@ -328,7 +328,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Absolute Acorn
             elseif II == ABSOLUTE_ACORN_TOME_ITEM_ID then
-                if GetHeroXP(u) >= 50000 and AddHeroMaxAbsoluteAbility(u)then
+                if GetHeroXP(u) >= 100000 and AddHeroMaxAbsoluteAbility(u)then
                     call UnitAddItemById(u,EXPERIENCE_50000_TOME_ITEM_ID)
                 else
                     call PlayerAddGold( GetOwningPlayer(u),8000)  
