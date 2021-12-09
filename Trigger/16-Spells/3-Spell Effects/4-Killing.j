@@ -27,7 +27,7 @@ scope Killing initializer init
         local timer t
         local effect fx
 
-        if GetUnitAbilityLevel(target, 'Aloc') > 0 or GetUnitTypeId(target) == 'uplg' or (killingPlayer != Player(11) and HasPlayerFinishedLevel(killer, killingPlayer)) or (killingPlayer == Player(11) and HasPlayerFinishedLevel(target, targetPlayer)) then
+        if GetUnitAbilityLevel(target, 'Aloc') > 0 or GetUnitTypeId(target) == 'uplg' or (killingPlayer != Player(11) and HasPlayerFinishedLevel(killer, killingPlayer)) or (targetPlayer != Player(11) and HasPlayerFinishedLevel(target, targetPlayer)) then
             set target = null
             set killer = null
             set killingHero = null
