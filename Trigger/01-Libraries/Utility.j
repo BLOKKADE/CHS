@@ -18,14 +18,24 @@ library Utility
         return (i == 1 and stat == 0) or (i == 2 and stat == 2) or (i == 3 and stat == 1)
     endfunction
 
+    function B2S takes boolean b returns string
+        if b then
+            return "true"
+        else
+            return "false"
+        endif
+    endfunction
+
     function SetCurrentlyFighting takes player p, boolean b returns nothing
         set CurrentlyFighting[GetPlayerId(p)] = b
+        //call BJDebugMsg(GetPlayerName(p) + ", currently fighting: " + B2S(b))
     endfunction
 
     function SetAllCurrentlyFighting takes boolean b returns nothing
         local integer i = 0
         loop
             set CurrentlyFighting[i] = b
+            //call BJDebugMsg(GetPlayerName(Player(i)) + ", currently fighting: " + B2S(b))
             set i = i + 1
             exitwhen i > 8
         endloop
