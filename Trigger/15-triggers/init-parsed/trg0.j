@@ -15,7 +15,7 @@ library trg0 initializer init requires RandomShit
 
 
     private function init takes nothing returns nothing
-        local trigger trg0 = CreateTrigger()
+        local trigger trg = CreateTrigger()
         call TriggerRegisterDialogEventBJ(trg,udg_dialog03)
         call TriggerAddCondition(trg,Condition(function Trig_Draft_Abilities_Conditions))
         call TriggerAddAction(trg,function Trig_Draft_Abilities_Actions)

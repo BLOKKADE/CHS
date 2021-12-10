@@ -15,7 +15,7 @@ library trg3 initializer init requires RandomShit
 
 
     private function init takes nothing returns nothing
-        local trigger trg3 = CreateTrigger()
+        local trigger trg = CreateTrigger()
         call TriggerRegisterDialogEventBJ(trg,IncomeDialog)
         call TriggerAddCondition(trg,Condition(function Trig_No_Income_Conditions))
         call TriggerAddAction(trg,function Trig_No_Income_Actions)
