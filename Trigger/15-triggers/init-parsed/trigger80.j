@@ -43,24 +43,6 @@ library trigger80 initializer init requires RandomShit
     endfunction
 
 
-    function Trig_Hero_Dies_Func024Func001Func001A111a takes nothing returns nothing
-    
-    
-    
-        //	call DisableTrigger(udg_trigger107)
-        //	call KillUnit(GetEnumUnit())
-        //	call EnableTrigger(udg_trigger107)
-    
-    endfunction
-
-
-    function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns boolean
-    
-        call KillUnit(GetFilterUnit())
-        return false
-    endfunction
-
-
     function Trig_Hero_Dies_Conditions takes nothing returns boolean
         local integer pid = GetPlayerId(GetOwningPlayer(GetDyingUnit()))
         if(not Trig_Hero_Dies_Func026C()) or DisableDeathTrigger[pid] then

@@ -350,36 +350,6 @@ library trigger111 initializer init requires RandomShit
     endfunction
 
 
-    function BuyLevels takes player p, unit u, integer abil, boolean maxBuy, boolean new returns nothing
-        local integer i = GetUnitAbilityLevel(u, abil) + 1
-        local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
-        local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
-        if maxBuy then
-            loop
-                if lumber - cost < 0 then
-                    exitwhen true
-                endif
-                set lumber = lumber - cost
-                set i = i + 1
-                exitwhen i >= 30
-            endloop
-            call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, lumber)
-        endif
-    
-        if new then
-            call UnitAddAbility(u, abil)
-            call SpellLearnedFunc(u, abil)
-        endif
-        if i > 1 then
-            call SetUnitAbilityLevel(u, udg_integer01, i)
-        endif
-        call FuncEditParam(abil,u)
-        call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
-        call DestroyEffectBJ(GetLastCreatedEffectBJ())
-        call DisplayTimedTextToPlayer(p, 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(abil, GetUnitAbilityLevel(u, abil) - 1))
-    endfunction
-
-
     function Trig_Learn_Ability_Func008Func002Func003Func001C takes nothing returns boolean
         if(not(udg_boolean06==false))then
             return false

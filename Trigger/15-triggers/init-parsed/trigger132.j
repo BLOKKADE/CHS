@@ -17,69 +17,6 @@ library trigger132 initializer init requires RandomShit
     endfunction
 
 
-    function KickPlayer takes player p returns nothing
-        set udg_boolean17 = true
-        call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayerSimple(p,udg_force07)
-        call CustomDefeatBJ(p,"Kicked!")
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
-    endfunction
-
-
-    function KickPlayer takes player p returns nothing
-        set udg_boolean17 = true
-        call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayerSimple(p,udg_force07)
-        call CustomDefeatBJ(p,"Kicked!")
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
-    endfunction
-
-
-    function KickPlayer takes player p returns nothing
-        set udg_boolean17 = true
-        call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayerSimple(p,udg_force07)
-        call CustomDefeatBJ(p,"Kicked!")
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
-    endfunction
-
-
-    function KickPlayer takes player p returns nothing
-        set udg_boolean17 = true
-        call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayerSimple(p,udg_force07)
-        call CustomDefeatBJ(p,"Kicked!")
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
-    endfunction
-
-
-    function KickPlayer takes player p returns nothing
-        set udg_boolean17 = true
-        call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayerSimple(p,udg_force07)
-        call CustomDefeatBJ(p,"Kicked!")
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
-    endfunction
-
-
-    function KickPlayer takes player p returns nothing
-        set udg_boolean17 = true
-        call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayerSimple(p,udg_force07)
-        call CustomDefeatBJ(p,"Kicked!")
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
-    endfunction
-
-
-    function KickPlayer takes player p returns nothing
-        set udg_boolean17 = true
-        call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayerSimple(p,udg_force07)
-        call CustomDefeatBJ(p,"Kicked!")
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
-    endfunction
-
-
     function Trig_Kick_Player_Command_Func002001001001001 takes nothing returns boolean
         return(IsPlayerInForce(GetFilterPlayer(),udg_force07)!=true)
     endfunction

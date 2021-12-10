@@ -93,16 +93,6 @@ library trigger136 initializer init requires RandomShit
     endfunction
 
 
-    function RemoveNonHeroUnitFilter takes nothing returns boolean
-        return UnitAlive(GetFilterUnit()) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0 and (IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false or IsUnitIllusion(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != 'h00C' and GetUnitTypeId(GetFilterUnit()) != 'h00D' 
-    endfunction
-
-
-    function RemoveNonHeroUnits takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
-    endfunction
-
-
     function Trig_PvP_Battle_Func001Func019A takes nothing returns nothing
         call RemoveItem(GetEnumItem())
     endfunction

@@ -113,11 +113,6 @@ library trigger109 initializer init requires RandomShit
     endfunction
 
 
-    function Trig_Start_Level_Func015Func002001001001001 takes nothing returns boolean
-        return(GetFilterPlayer()!=Player(8))
-    endfunction
-
-
     function StartLevelRoundOne takes nothing returns nothing
         call StartFunctionSpell(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],3) 
         call SetCurrentlyFighting(GetEnumPlayer(), true)
@@ -129,11 +124,6 @@ library trigger109 initializer init requires RandomShit
         call SetUnitInvulnerable(GetEnumUnit(),false)
         //call StartFunctionSpell(GetEnumUnit(),3 ) 
         call PauseUnitBJ(false,GetEnumUnit())
-    endfunction
-
-
-    function Trig_Start_Level_Func015Func002001001001001 takes nothing returns boolean
-        return(GetFilterPlayer()!=Player(8))
     endfunction
 
 

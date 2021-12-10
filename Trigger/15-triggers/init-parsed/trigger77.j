@@ -294,11 +294,6 @@ library trigger77 initializer init requires RandomShit
     endfunction
 
 
-    function Trig_Dialog_Complete_Func010Func004A takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
-    endfunction
-
-
     function Trig_Dialog_Complete_Func012C takes nothing returns boolean
         if(not(udg_integers07[14]> udg_integers07[13]))then
             return false
