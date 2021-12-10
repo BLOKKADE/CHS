@@ -140,7 +140,6 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
         call CreateTextTagTimerColor( I2S(R2I(Dmg + CritDmg)) + "!",1,GetUnitX(damageTarget),GetUnitY(damageTarget),50,1,177,0,0)
         if lifesteal > 0 then
             call SetWidgetLife(damageSource, GetWidgetLife(damageSource) + GetEventDamage()* lifesteal )
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", damageSource, "chest")) 
         endif
     endif
     
