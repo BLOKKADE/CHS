@@ -60,6 +60,136 @@ library trigger79 initializer init requires RandomShit
     endfunction
 
 
+    function CreateNeutralPassiveBuildings2 takes nothing returns nothing
+        local player p = Player(PLAYER_NEUTRAL_PASSIVE)
+        local unit u
+        local integer unitID
+        local trigger t
+        local real life
+    
+        set udg_unit06 = CreateUnit(p,'ncop',0.0,- 256.0,270.000)
+        set udg_unit07 = CreateUnit(p,'ncop',- 256.0,- 256.0,270.000)
+        set udg_unit08 = CreateUnit(p,'ncop',- 256.0,0.0,270.000)
+        set udg_unit09 = CreateUnit(p,'ncop',0.0,0.0,270.000)
+        set udg_unit10 = CreateUnit(p,'ncop',256.0,0.0,270.000)
+        set udg_unit11 = CreateUnit(p,'ncop',256.0,- 256.0,270.000)
+        set udg_unit12 = CreateUnit(p,'ncop',256.0,- 512.0,270.000)
+        set udg_unit13 = CreateUnit(p,'ncop',0.0,- 512.0,270.000)
+        set udg_unit14 = CreateUnit(p,'ncop',- 256.0,- 512.0,270.000)
+        set udg_unit15 = CreateUnit(p,'ncop',- 256.0,- 768.0,270.000)
+        set udg_unit16 = CreateUnit(p,'ncop',0.0,- 768.0,270.000)
+        set udg_unit17 = CreateUnit(p,'ncop',256.0,- 768.0,270.000)
+        set udg_unit18 = CreateUnit(p,'ncop',512.0,- 768.0,270.000)
+        set udg_unit19 = CreateUnit(p,'ncop',512.0,- 512.0,270.000)
+        set udg_unit20 = CreateUnit(p,'ncop',512.0,- 256.0,270.000)
+        set udg_unit21 = CreateUnit(p,'ncop',512.0,0.0,270.000)
+        set udg_unit22 = CreateUnit(p,'ncop',256.0,256.0,270.000)
+        set udg_unit23 = CreateUnit(p,'ncop',0.0,256.0,270.000)
+        set udg_unit24 = CreateUnit(p,'ncop',- 256.0,256.0,270.000)
+        set udg_unit25 = CreateUnit(p,'ncop',- 512.0,256.0,270.000)
+        set udg_unit26 = CreateUnit(p,'ncop',- 512.0,0.0,270.000)
+        set udg_unit27 = CreateUnit(p,'ncop',- 512.0,- 256.0,270.000)
+        set udg_unit28 = CreateUnit(p,'ncop',- 512.0,- 512.0,270.000)
+        set udg_unit29 = CreateUnit(p,'ncop',- 512.0,- 768.0,270.000)
+        set udg_unit30 = CreateUnit(p,'ncop',0.0,- 1024.0,270.000)
+        set udg_unit31 = CreateUnit(p,'ncop',- 768.0,- 256.0,270.000)
+        set udg_unit32 = CreateUnit(p,'ncop',768.0,- 256.0,270.000)
+        set CicrleUnit[0]= CreateUnit(p,'ncop',256,512.0,270.000)
+        set CicrleUnit[1]= CreateUnit(p,'ncop',- 256,512.0,270.000)
+        set CicrleUnit[2]= CreateUnit(p,'ncop',512,512.0,270.000)
+        set CicrleUnit[3]= CreateUnit(p,'ncop',- 512,512.0,270.000)
+        set CicrleUnit[4]= CreateUnit(p,'ncop',- 768.0,- 768.0,270.000)
+        set CicrleUnit[5]= CreateUnit(p,'ncop',- 768.0,- 512.0,270.000)
+        set CicrleUnit[6]= CreateUnit(p,'ncop',- 768.0,0.6,270.000)
+        set CicrleUnit[7]= CreateUnit(p,'ncop',- 768.3,256,270.000)
+        set CicrleUnit[8]= CreateUnit(p,'ncop',- 768.3,513,270.000)
+        set CicrleUnit[9]= CreateUnit(p,'ncop',768.0,- 512.4,270.000)
+        set CicrleUnit[10]= CreateUnit(p,'ncop',768.0,- 768.0,270.000)
+        set CicrleUnit[11]= CreateUnit(p,'ncop',768.0,513,270.000)
+        set CicrleUnit[12]= CreateUnit(p,'ncop',768.0,256,270.000)	
+        set CicrleUnit[13]= CreateUnit(p,'ncop',768.0,0,270.000)	
+        set CicrleUnit[14]= CreateUnit(p,'ncop',- 256,- 1024.0,270.000)
+        set CicrleUnit[15]= CreateUnit(p,'ncop',256,- 1024.0,270.000)	
+        set CicrleUnit[16]= CreateUnit(p,'ncop',512,- 1024.0,270.000)	
+        set CicrleUnit[17]= CreateUnit(p,'ncop',- 512,- 1024.0,270.000)		
+        set CicrleUnit[18]= CreateUnit(p,'ncop',- 768,- 1024.0,270.000)	
+        set CicrleUnit[19]= CreateUnit(p,'ncop',768,- 1024.0,270.000)
+        set CicrleUnit[20]= CreateUnit(p,'ncop',1024,- 1024.0,270.000)
+        set udg_unit33 = CreateUnit(p,'ncop',0.0,512.0,270.000)
+        set udg_unit34 = CreateUnit(p,'ncop',512.0,256.0,270.000)
+        //	set u=CreateUnit(p,'n00A',-960.0,-604.0,270.000)
+        //	set u=CreateUnit(p,'n00M',960.0,-604.0,270.000)
+        if(udg_boolean05==false) and AbilityMode == 1 then
+    
+    
+    
+    
+            //	 set u=CreateUnit(p,'n012',-124,707,270.000)
+            //	 set u=CreateUnit(p,'n014',-372,707,270.000)
+            //	 set u=CreateUnit(p,'n003',-620,707,270.000)     
+            //	 set u=CreateUnit(p,'n00U',-868,707,270.000)   
+    
+            //	 set u=CreateUnit(p,'n001',124,707,270.000)
+            //	 set u=CreateUnit(p,'n013',372,707,270.000)
+            //	 set u=CreateUnit(p,'n00D',620,707,270.000)     
+            //  set u=CreateUnit(p,'n00Y',868,707,270.000)  
+            //  set u=CreateUnit(p,'n00S',1116,707,270.000)           
+    
+    
+            set u = CreateUnit(p,'n00Y',- 124,707,270.000)
+            set u = CreateUnit(p,'n00U',- 372,707,270.000)
+            set u = CreateUnit(p,'n003',- 620,707,270.000) 
+            set u = CreateUnit(p,'n033',- 620,707 + 248,270.000) 
+            set u = CreateUnit(p,'n00D',- 868,707,270.000)   
+            set u = CreateUnit(p,'n02O',- 868,707 + 248,270.000)     	 	 
+            set u = CreateUnit(p,'n02M',- 1116,707,270.000) 
+    
+    
+            set u = CreateUnit(p,'n013',124,707,270.000)
+            set u = CreateUnit(p,'n014',372,707,270.000)
+            set u = CreateUnit(p,'n001',620,707,270.000)     
+            set u = CreateUnit(p,'n012',868,707,270.000)  
+            set u = CreateUnit(p,'n00S',1116,707,270.000)  
+            set u = CreateUnit(p,'n02N',1116,707 + 248,270.000)  
+            set u = CreateUnit(p,'n032',372,707 + 248,270.000)  
+            set u = CreateUnit(p,'n02X',868,707 + 248,270.000) 
+            set u = CreateUnit(p,'n031',620,707 + 248,270.000) 
+    
+    
+            //		set u=CreateUnit(p,'n001',384.0,576.0,270.000)
+            //		set u=CreateUnit(p,'n003',960.0,0.0,270.000)
+            //		set u=CreateUnit(p,'n00D',-960.0,0.0,270.000)
+            //		set u=CreateUnit(p,'n012',-384.0,576.0,270.000)
+            //		set u=CreateUnit(p,'n004',000.0,650.0,270.000)
+            //		set u=CreateUnit(p,'n00Y',384.0,-1024.0,270.000)
+            //	set u=CreateUnit(p,'n00U',-384.0,-1024.0,270.000)
+            //		set u=CreateUnit(p,'n013',640.0,320.0,270.000)
+            //	set u=CreateUnit(p,'n014',-640.0,320.0,270.000)
+    
+            //		set u=CreateUnit(p,'n00S',0,-1160,270.000)
+        else
+            set u = CreateUnit(p, 'n031', 0, 750, 270) 
+            //	set u=CreateUnit(p,'n004',0.0,640.0,270.000)
+            //	set u=CreateUnit(p,'n016',-960.0,-256.0,270.000)
+            //	set u=CreateUnit(p,'n016',0.0,-1152.0,270.000)
+            //	set u=CreateUnit(p,'n016',960.0,-256.0,270.000)
+        endif
+    
+        set u = CreateUnit(p,'n02H',- 868,- 1152,270.000) 
+        set u = CreateUnit(p,'n00Z',- 620,- 1152,270.000) 
+        set u = CreateUnit(p,'n01D',- 372,- 1152,270.000) 
+        set u = CreateUnit(p,'n02V',- 124,- 1152,270.000) 
+        set u = CreateUnit(p,'n02W',- 124,- 1152 - 256,270.000)
+        set u = CreateUnit(p,'n02I',124,- 1152,270.000) 
+        set u = CreateUnit(p,'n02Z',124,- 1152 - 256,270.000) 
+        set u = CreateUnit(p,'n02J',372,- 1152,270.000) 
+        set u = CreateUnit(p,'n030',372,- 1152 - 256,270.000) 
+        set u = CreateUnit(p,'n02Q',620,- 1152,270.000) 
+        set u = CreateUnit(p,'n02Y',868,- 1152,270.000)
+        call ForGroupBJ( GetUnitsOfTypeIdAll('ncop'), function Trig_Untitled_Trigger_001_Func001A )
+    endfunction
+
+
     function Trig_Spawn_Hero_Func019Func001C takes nothing returns boolean
         if(not(udg_integer02==1))then
             return false

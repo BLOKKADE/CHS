@@ -62,7 +62,6 @@ library trigger86 initializer init requires RandomShit
         call TriggerRegisterAnyUnitEventBJ(udg_trigger86,EVENT_PLAYER_UNIT_DROP_ITEM)
         call TriggerAddCondition(udg_trigger86,Condition(function Trig_Pandaren_Dies_Conditions))
         call TriggerAddAction(udg_trigger86,function Trig_Pandaren_Dies_Actions)
-        /*
     endfunction
 
 

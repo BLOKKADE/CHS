@@ -31,6 +31,28 @@ library trigger136 initializer init requires RandomShit
     endfunction
 
 
+    function TempDuelDebug takes nothing returns string
+        local integer i = 0
+        local string debugText = "DL"
+        loop
+            if BlzForceHasPlayer(DuelLosers, Player(i)) then
+                set debugText = debugText + I2S(i)
+            endif
+            set i = i + 1
+            exitwhen i >= 8
+        endloop
+    
+        set debugText = debugText + " GP"
+        loop
+            set debugText = debugText + I2S(GetPlayerId(GetOwningPlayer(BlzGroupUnitAt(udg_group01, i))))
+            set i = i - 1
+            exitwhen i < 0
+        endloop
+    
+        return debugText
+    endfunction
+
+
     function GetPvpEnemy takes nothing returns boolean
         return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and UnitAlive(GetFilterUnit()) and GetFilterUnit() != udg_units03[1] and GetOwningPlayer(GetFilterUnit()) != Player(8) and GetOwningPlayer(GetFilterUnit()) != Player(11) 
     endfunction
@@ -43,6 +65,11 @@ library trigger136 initializer init requires RandomShit
 
     function Trig_PvP_Battle_Func001Func018001002001 takes nothing returns boolean
         return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+
+
+    function Trig_Start_Level_Func015Func002Func003Func001001 takes unit u returns boolean
+        return GetUnitTypeId(u)=='h009' or GetUnitTypeId(u)=='h014' or GetUnitTypeId(u)=='h015' or GetUnitTypeId(u)=='h00B'
     endfunction
 
 

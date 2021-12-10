@@ -8,6 +8,17 @@ library trigger103 initializer init requires RandomShit
     endfunction
 
 
+    function ResetRoundAbilities takes nothing returns nothing
+        local integer index = roundAbilities.integer[0]
+        loop
+            set roundAbilities.integer[index] = 0
+            set index = index - 1
+            exitwhen index <= 0
+        endloop
+        set roundAbilities.integer[0] = 0
+    endfunction
+
+
     function Trig_Generate_Next_Level_Func012C takes nothing returns boolean
         if(not((udg_integer02 + 1)> 1))then
             return false
@@ -24,6 +35,309 @@ library trigger103 initializer init requires RandomShit
     endfunction
 
 
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function AddRoundAbility takes integer abilityId returns nothing
+        local integer index = roundAbilities.integer[0] + 1
+        set roundAbilities[index] = abilityId
+        set roundAbilities.integer[0] = index
+    endfunction
+
+
+    function CheckUnitAbilities takes nothing returns nothing
+        local string s = ""
+    
+        if udg_integer10 == 1 then
+            set s = s + "Bash "
+            call AddRoundAbility('ACbh')
+        endif
+    
+        if udg_integer24 == 1 then
+            set s = s + "Hurl Boulder "
+            call AddRoundAbility('A00W')
+        endif
+    
+        if udg_integer25 == 1 then
+            set s = s + "Rejuvenation "
+            call AddRoundAbility('A00X')
+        endif
+    
+        if udg_integer50 == 1 then
+            set s = s + "Big Bad Voodoo "
+            call AddRoundAbility('A018')
+        endif
+    
+        if udg_integer54 == 1 then
+            set s = s + "Blink "
+            call AddRoundAbility('A01A')
+        endif
+    
+        if udg_integer11 == 1 then
+            set s = s + "Critical Strike "
+            call AddRoundAbility('AOcr')
+        endif
+    
+        if udg_integer12 == 1 then
+            set s = s + "Evasion "
+        endif
+    
+        if udg_integer51 == 1 then
+            set s = s + "Faerie Fire "
+            call AddRoundAbility('A016')
+        endif
+    
+        if udg_integer18 == 1 then
+            set s = s + "Lifesteal "
+            call AddRoundAbility('SCva')
+        endif
+    
+        if udg_integer23 == 1 then
+            set s = s + "Mana Burn "
+            call AddRoundAbility('A00V')
+        endif
+    
+        if udg_integer21 == 1 then
+            set s = s + "Shockwave "
+            call AddRoundAbility('A00U')
+        endif
+    
+        if udg_integer49 == 1 then
+            set s = s + "Slow "
+            call AddRoundAbility('A013')
+        endif
+    
+        if udg_integer17 == 1 then
+            set s = s + "Cleave "
+            call AddRoundAbility('ACce')
+        endif
+    
+        if udg_integer20 == 1 then
+            set s = s + "Thorns Aura "
+            call AddRoundAbility('A08F')
+        endif
+    
+        if udg_integer55 == 1 then
+            set s = s + "Thunder Clap "
+            call AddRoundAbility('A01B')
+        endif
+    
+        if ReflectionAuraChance == 1 then
+            set s = s + "Reflection Aura "
+            call AddRoundAbility('A093')
+        endif
+    
+        if WizardbaneAuraChance == 1 then
+            set s = s + "Wizardbane Aura  "
+            call AddRoundAbility('A088')
+        endif
+    
+        if DrunkenMasterchance == 1 then
+            set s = s + "Drunken Master "
+            call AddRoundAbility('Acdb')
+        endif
+    
+        if SlowAuraChance == 1 then
+            set s = s + "Slow Aura "
+            call AddRoundAbility('AOr2')
+        endif
+    
+        if PulverizeChance == 1 then
+            set s = s + "Pulverize "
+            call AddRoundAbility('Awar')
+        endif
+    
+        if LastBreathChance == 1 then
+            set s = s + "Last Breath "
+            call AddRoundAbility('A05R')
+        endif
+    
+        if FireshieldChance == 1 then
+            set s = s + "Fire Shield "
+            call AddRoundAbility('A05S')
+        endif
+    
+        if CorrosiveSkinChance == 1 then
+            set s = s + "Corrosive Skin "
+            call AddRoundAbility('A00Q')
+        endif
+    
+        if MulticastChance == 1 then
+            set s = s + "Multicast "
+            call AddRoundAbility('A04F')
+        endif
+    
+        if FastMagicChance == 1 then
+            set s = s + "Fast Magic "
+            call AddRoundAbility('A03P')
+        endif
+    
+        if s == "" then
+            set RoundAbilities = "|cff77fc94No abilities|r "
+        else
+            set RoundAbilities = "|cff77fc94" + s + "|r"
+        endif
+    endfunction
+
+
     function Trig_Generate_Next_Level_Func018A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction
@@ -37,6 +351,65 @@ library trigger103 initializer init requires RandomShit
             return false
         endif
         return true
+    endfunction
+
+
+    function UnitAddNewAbilities takes unit u returns nothing
+        if udg_integer11 == 1 then
+            call SetUnitAbilityLevel(u, 'AOcr', IMinBJ(R2I(udg_integer02 * 0.2), 30))
+        endif
+    
+        if DrunkenMasterchance == 1 then
+            call UnitAddAbility(u, 'Acdb')
+            call FuncEditParam('Acdb',u)
+            call SetUnitAbilityLevel(u, 'Acdb', IMinBJ(R2I(udg_integer02 * 0.3), 30))
+        endif
+    
+        if ReflectionAuraChance == 1 then
+            call UnitAddAbility(u, 'A093')
+            call SetUnitAbilityLevel(u, 'A093', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+        endif
+    
+        if WizardbaneAuraChance == 1 then
+            call UnitAddAbility(u, 'A088')
+            call SetUnitAbilityLevel(u, 'A088', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+        endif
+    
+        if SlowAuraChance == 1 then
+            call UnitAddAbility(u, 'AOr2')
+            call SetUnitAbilityLevel(u, 'AOr2', IMinBJ(R2I(udg_integer02 * 0.75), 30))
+        endif
+    
+        if PulverizeChance == 1 then
+            call UnitAddAbility(u, 'Awar')
+            call SetUnitAbilityLevel(u, 'Awar', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+        endif
+    
+        if LastBreathChance == 1 then
+            call UnitAddAbility(u, 'A05R')
+            call FuncEditParam('A05R', u)
+            call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(udg_integer02 * 0.2), 30))
+        endif
+    
+        if FireshieldChance == 1 then
+            call UnitAddAbility(u, 'A05S')
+            call SetUnitAbilityLevel(u, 'A05S', IMinBJ(R2I(udg_integer02 * 0.3), 30))
+        endif
+    
+        if CorrosiveSkinChance == 1 then
+            call UnitAddAbility(u, 'A00Q')
+            call SetUnitAbilityLevel(u, 'A00Q', IMinBJ(R2I(udg_integer02 * 0.6), 30))
+        endif
+    
+        if MulticastChance == 1 then
+            call UnitAddAbility(u, 'A04F')
+            call SetUnitAbilityLevel(u, 'A04F', IMinBJ(R2I(udg_integer02 * 0.5), 30))
+        endif
+    
+        if FastMagicChance == 1 then
+            call UnitAddAbility(u, 'A03P')
+            call SetUnitAbilityLevel(u, 'A03P', IMinBJ(R2I(udg_integer02 * 0.6), 30))
+        endif
     endfunction
 
 

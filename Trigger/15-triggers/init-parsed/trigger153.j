@@ -77,6 +77,23 @@ library trigger153 initializer init requires RandomShit
     endfunction
 
 
+    function ShowDraftBuildings takes boolean b returns nothing
+        local integer i = 0
+        if AbilityMode == 2 then
+            loop
+                call ShowUnit(circle1, b)
+                call ShowUnit(circle2, b)
+                call ShowUnit(udg_Draft_DraftBuildings[i], b)
+                call ShowUnit(udg_Draft_UpgradeBuildings[i], b)
+                call SetTextTagVisibility(FloatingTextBuy, b)
+                call SetTextTagVisibility(FloatingTextUpgrade, b)
+                set i = i + 1
+                exitwhen i > 9
+            endloop
+        endif
+    endfunction
+
+
     function Trig_Hero_Dies_Elimination_Func030001002001 takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())!=Player(8))
     endfunction
@@ -182,12 +199,6 @@ library trigger153 initializer init requires RandomShit
         call TriggerRegisterAnyUnitEventBJ(udg_trigger153,EVENT_PLAYER_UNIT_DEATH)
         call TriggerAddCondition(udg_trigger153,Condition(function Trig_Hero_Dies_Elimination_Conditions))
         call TriggerAddAction(udg_trigger153,function Trig_Hero_Dies_Elimination_Actions)
-        call ConditionalTriggerExecute(udg_trigger08)
-        call ConditionalTriggerExecute(udg_trigger89)
-        call ConditionalTriggerExecute(udg_trigger91)
-        call ConditionalTriggerExecute(udg_trigger92)
-        call ConditionalTriggerExecute(udg_trigger103)
-    endfunction
     endfunction
 
 

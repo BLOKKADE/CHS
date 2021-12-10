@@ -258,6 +258,37 @@ library trigger77 initializer init requires RandomShit
     endfunction
 
 
+    function CheckIncomeVotes takes nothing returns nothing
+        if udg_integers07[15] > udg_integers07[16] and udg_integers07[15] > udg_integers07[17] then
+            set IncomeMode = 0
+        elseif udg_integers07[16] > udg_integers07[15] and udg_integers07[16] > udg_integers07[17] then
+            set IncomeMode = 1
+        else
+            set IncomeMode = 2	
+        endif
+    endfunction
+
+
+    function CheckAbilityVotes takes nothing returns nothing
+        //random
+        if udg_integers07[7] > udg_integers07[6] and udg_integers07[7] > udg_integers07[19] then
+            set AbilityMode = 0
+    
+            //pick
+        elseif udg_integers07[6] > udg_integers07[7] and udg_integers07[6] > udg_integers07[19] then
+            set AbilityMode = 1
+    
+            //draft
+        elseif udg_integers07[19] > udg_integers07[6] and udg_integers07[19] > udg_integers07[7] then
+            set AbilityMode = 2
+    
+            //if tie just do ap
+        else
+            set AbilityMode = 1
+        endif
+    endfunction
+
+
     function Trig_Dialog_Complete_Func010Func004A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction

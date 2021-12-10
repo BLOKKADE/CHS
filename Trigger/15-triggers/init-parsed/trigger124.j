@@ -21,7 +21,6 @@ library trigger124 initializer init requires RandomShit
         call TriggerRegisterPlayerChatEvent(udg_trigger124,Player(6),"-clear",true)
         call TriggerRegisterPlayerChatEvent(udg_trigger124,Player(7),"-clear",true)
         call TriggerAddAction(udg_trigger124,function Trig_Clear_Command_Actions)
-        /*
     endfunction
 
 

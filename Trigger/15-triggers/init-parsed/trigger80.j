@@ -17,13 +17,6 @@ library trigger80 initializer init requires RandomShit
     endfunction
 
 
-    function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns boolean
-    
-        call KillUnit(GetFilterUnit())
-        return false
-    endfunction
-
-
     function Trig_Hero_Dies_Func024Func001Func001A111a takes nothing returns nothing
     
     
@@ -32,6 +25,13 @@ library trigger80 initializer init requires RandomShit
         //	call KillUnit(GetEnumUnit())
         //	call EnableTrigger(udg_trigger107)
     
+    endfunction
+
+
+    function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns boolean
+    
+        call KillUnit(GetFilterUnit())
+        return false
     endfunction
 
 
@@ -43,13 +43,6 @@ library trigger80 initializer init requires RandomShit
     endfunction
 
 
-    function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns boolean
-    
-        call KillUnit(GetFilterUnit())
-        return false
-    endfunction
-
-
     function Trig_Hero_Dies_Func024Func001Func001A111a takes nothing returns nothing
     
     
@@ -58,6 +51,13 @@ library trigger80 initializer init requires RandomShit
         //	call KillUnit(GetEnumUnit())
         //	call EnableTrigger(udg_trigger107)
     
+    endfunction
+
+
+    function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns boolean
+    
+        call KillUnit(GetFilterUnit())
+        return false
     endfunction
 
 

@@ -76,6 +76,11 @@ library trigger109 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Start_Level_Func015Func002Func003Func001001 takes unit u returns boolean
+        return GetUnitTypeId(u)=='h009' or GetUnitTypeId(u)=='h014' or GetUnitTypeId(u)=='h015' or GetUnitTypeId(u)=='h00B'
+    endfunction
+
+
     function Trig_Start_Level_Func015Func002Func003A takes nothing returns nothing
         if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' then
             if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit()))then
