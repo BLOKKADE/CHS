@@ -128,7 +128,7 @@ scope DamageControllerAfter initializer init
         endif
 
         //Soul Reaper
-        if UnitHasItemS(damageSource, 'I01C') then
+        if UnitHasItemS(damageSource, 'I01C') and attack then
             set r2 = GetEventDamage() * 0.5
             call Vamp(damageSource, damageTarget, r2)
             set vampCount = vampCount + 1
