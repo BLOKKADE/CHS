@@ -547,9 +547,6 @@ function CreateUnitsForPlayer8 takes nothing returns nothing
     set u = CreateUnit(p,'O007',2.1,- 0.9,270.000)
     set u = CreateUnit(p,'O001',- 512.8,- 766.9,270.000)
 endfunction
-function Trig_Untitled_Trigger_001_Func001A takes nothing returns nothing
-    call DeleteUnit( GetEnumUnit() )
-endfunction
 function CreateNeutralPassiveBuildings3 takes nothing returns nothing
     local player p = Player(PLAYER_NEUTRAL_PASSIVE)
     local unit u

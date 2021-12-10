@@ -60,6 +60,11 @@ library trigger79 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Untitled_Trigger_001_Func001A takes nothing returns nothing
+        call DeleteUnit( GetEnumUnit() )
+    endfunction
+
+
     function CreateNeutralPassiveBuildings2 takes nothing returns nothing
         local player p = Player(PLAYER_NEUTRAL_PASSIVE)
         local unit u

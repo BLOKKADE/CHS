@@ -1,4 +1,4 @@
-library SharedLibrary initializer init requires RandomShit
+library SharedLibrary requires RandomShit
 
     function ShowDraftBuildings takes boolean b returns nothing
         local integer i = 0
