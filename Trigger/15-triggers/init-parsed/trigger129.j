@@ -32,6 +32,14 @@ library trigger129 initializer init requires RandomShit
     function Trig_Player_Leaves_Func007Func001Func002001001002001 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
     endfunction
+    
+    function Trig_Player_Leaves_Func007Func001Func002001001002002 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_Player_Leaves_Func007Func001Func002001001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Player_Leaves_Func007Func001Func002001001002001(),Trig_Player_Leaves_Func007Func001Func002001001002002())
+    endfunction
 
 
     function Trig_Player_Leaves_Func007Func001C takes nothing returns boolean

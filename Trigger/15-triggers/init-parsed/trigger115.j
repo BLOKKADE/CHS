@@ -1,4 +1,4 @@
-library trigger115 initializer init requires RandomShit
+library trigger115 initializer init requires RandomShit, Functions, SpellsLearned
 
     function Trig_Unlearn_Ability_Conditions takes nothing returns boolean
         if(not('I00P'==GetItemTypeId(GetManipulatedItem())))then

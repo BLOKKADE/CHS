@@ -3,6 +3,30 @@ library trigger137 initializer init requires RandomShit
     function Trig_PvP_No_Player_Func001Func001001002001001 takes nothing returns boolean
         return(IsUnitAliveBJ(GetFilterUnit())==true)
     endfunction
+    
+    function Trig_PvP_No_Player_Func001Func001001002001002 takes nothing returns boolean
+        return(IsUnitInGroup(GetFilterUnit(),udg_group02)==true)
+    endfunction
+    
+    function Trig_PvP_No_Player_Func001Func001001002001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_No_Player_Func001Func001001002001001(),Trig_PvP_No_Player_Func001Func001001002001002())
+    endfunction
+    
+    function Trig_PvP_No_Player_Func001Func001001002002001 takes nothing returns boolean
+        return(GetPlayerSlotState(GetOwningPlayer(GetFilterUnit()))!=PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_PvP_No_Player_Func001Func001001002002002 takes nothing returns boolean
+        return(GetPlayerController(GetOwningPlayer(GetFilterUnit()))==MAP_CONTROL_COMPUTER)
+    endfunction
+    
+    function Trig_PvP_No_Player_Func001Func001001002002 takes nothing returns boolean
+        return GetBooleanOr(Trig_PvP_No_Player_Func001Func001001002002001(),Trig_PvP_No_Player_Func001Func001001002002002())
+    endfunction
+    
+    function Trig_PvP_No_Player_Func001Func001001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_No_Player_Func001Func001001002001(),Trig_PvP_No_Player_Func001Func001001002002())
+    endfunction
 
 
     function Trig_PvP_No_Player_Func001Func001Func001C takes nothing returns boolean

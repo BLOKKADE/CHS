@@ -1,4 +1,4 @@
-library trigger132 initializer init requires RandomShit
+/*library trigger132 initializer init requires RandomShit
 
     function Trig_Kick_Player_Command_Conditions takes nothing returns boolean
         if(not(GetTriggerPlayer()==udg_player03))then
@@ -84,8 +84,9 @@ library trigger132 initializer init requires RandomShit
         call TriggerRegisterPlayerChatEvent(udg_trigger132,Player(6),"-kick",false)
         call TriggerRegisterPlayerChatEvent(udg_trigger132,Player(7),"-kick",false)
         call TriggerAddCondition(udg_trigger132,Condition(function Trig_Kick_Player_Command_Conditions))
-        call TriggerAddAction(udg_trigger132,function Trig_Kick_Player_Command_Actions)*/
+        call TriggerAddAction(udg_trigger132,function Trig_Kick_Player_Command_Actions)
     endfunction
 
 
 endlibrary
+*/

@@ -1,4 +1,4 @@
-library trigger103 initializer init requires RandomShit
+library trigger103 initializer init requires RandomShit, Functions
 
     function Trig_Generate_Next_Level_Conditions takes nothing returns boolean
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then

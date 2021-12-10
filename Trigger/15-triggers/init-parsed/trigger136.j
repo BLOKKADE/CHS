@@ -1,4 +1,4 @@
-library trigger136 initializer init requires RandomShit
+library trigger136 initializer init requires RandomShit, StartFunction
 
     function Trig_PvP_Battle_Func001C takes nothing returns boolean
         if(not(CountUnitsInGroup(udg_group01)>= 1))then
@@ -10,6 +10,38 @@ library trigger136 initializer init requires RandomShit
 
     function Trig_PvP_Battle_Func001Func008002001002001 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func008002001002002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func008002001002002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func008002001002002002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func008002001002002002002002 takes nothing returns boolean
+        return(IsUnitInGroup(GetFilterUnit(),udg_group01)==true)
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func008002001002002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func008002001002002002002001(),Trig_PvP_Battle_Func001Func008002001002002002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func008002001002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func008002001002002002001(),Trig_PvP_Battle_Func001Func008002001002002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func008002001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func008002001002002001(),Trig_PvP_Battle_Func001Func008002001002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func008002001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func008002001002001(),Trig_PvP_Battle_Func001Func008002001002002())
     endfunction
 
 
@@ -24,10 +56,74 @@ library trigger136 initializer init requires RandomShit
     function Trig_PvP_Battle_Func001Func010Func003002001002001 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
     endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func003002001002002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func003002001002002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func003002001002002002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func003002001002002002002002 takes nothing returns boolean
+        return(IsUnitInGroup(GetFilterUnit(),udg_group01)==true) and GetFilterUnit() != udg_units03[1]
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func003002001002002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func003002001002002002002001(),Trig_PvP_Battle_Func001Func010Func003002001002002002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func003002001002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func003002001002002002001(),Trig_PvP_Battle_Func001Func010Func003002001002002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func003002001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func003002001002002001(),Trig_PvP_Battle_Func001Func010Func003002001002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func003002001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func003002001002001(),Trig_PvP_Battle_Func001Func010Func003002001002002())
+    endfunction
 
 
     function Trig_PvP_Battle_Func001Func010Func001002001002001 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func001002001002002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func001002001002002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func001002001002002002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func001002001002002002002002 takes nothing returns boolean
+        return IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DuelLosers) and GetFilterUnit() != udg_units03[1]
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func001002001002002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func001002001002002002002001(),Trig_PvP_Battle_Func001Func010Func001002001002002002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func001002001002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func001002001002002002001(),Trig_PvP_Battle_Func001Func010Func001002001002002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func001002001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func001002001002002001(),Trig_PvP_Battle_Func001Func010Func001002001002002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func010Func001002001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func001002001002001(),Trig_PvP_Battle_Func001Func010Func001002001002002())
     endfunction
 
 
@@ -66,10 +162,13 @@ library trigger136 initializer init requires RandomShit
     function Trig_PvP_Battle_Func001Func018001002001 takes nothing returns boolean
         return(IsUnitAliveBJ(GetFilterUnit())==true)
     endfunction
-
-
-    function Trig_Start_Level_Func015Func002Func003Func001001 takes unit u returns boolean
-        return GetUnitTypeId(u)=='h009' or GetUnitTypeId(u)=='h014' or GetUnitTypeId(u)=='h015' or GetUnitTypeId(u)=='h00B'
+    
+    function Trig_PvP_Battle_Func001Func018001002002 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)!=true)
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func018001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func018001002001(),Trig_PvP_Battle_Func001Func018001002002())
     endfunction
 
 
@@ -116,6 +215,22 @@ library trigger136 initializer init requires RandomShit
 
     function Trig_PvP_Battle_Func001Func031Func006001001001 takes nothing returns boolean
         return(GetOwningPlayer(udg_units03[1])!=GetFilterPlayer())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func031Func006001001002001 takes nothing returns boolean
+        return(GetOwningPlayer(udg_units03[2])!=GetFilterPlayer())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func031Func006001001002002 takes nothing returns boolean
+        return(IsPlayerInForce(GetFilterPlayer(),udg_force02)!=true)
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func031Func006001001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func031Func006001001002001(),Trig_PvP_Battle_Func001Func031Func006001001002002())
+    endfunction
+    
+    function Trig_PvP_Battle_Func001Func031Func006001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func031Func006001001001(),Trig_PvP_Battle_Func001Func031Func006001001002())
     endfunction
 
 

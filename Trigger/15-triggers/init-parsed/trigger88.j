@@ -1,4 +1,4 @@
-library trigger88 initializer init requires RandomShit
+/*library trigger88 initializer init requires RandomShit
 
     function Trig_Hint_Initialization_Func019C takes nothing returns boolean
         if(not(udg_boolean08==true))then
@@ -38,8 +38,9 @@ library trigger88 initializer init requires RandomShit
     private function init takes nothing returns nothing
         set udg_trigger88 = CreateTrigger()
         call TriggerRegisterTimerEventSingle(udg_trigger88,30.00)
-        call TriggerAddAction(udg_trigger88,function Trig_Hint_Initialization_Actions)*/
+        call TriggerAddAction(udg_trigger88,function Trig_Hint_Initialization_Actions)
     endfunction
 
 
 endlibrary
+*/

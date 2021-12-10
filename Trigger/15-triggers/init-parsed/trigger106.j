@@ -1,4 +1,4 @@
-library trigger106 initializer init requires RandomShit
+library trigger106 initializer init requires RandomShit, Functions
 
     function Trig_Complete_Level_Move_Conditions takes nothing returns boolean
         if(not(IsUnitInGroup(GetTriggerUnit(),udg_group08)==true))then

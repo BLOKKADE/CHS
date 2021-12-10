@@ -19,7 +19,7 @@ library trg3 initializer init requires RandomShit
         call TriggerRegisterDialogEventBJ(trg,IncomeDialog)
         call TriggerAddCondition(trg,Condition(function Trig_No_Income_Conditions))
         call TriggerAddAction(trg,function Trig_No_Income_Actions)
-        set trg3 = null
+        set trg = null
     endfunction
 
 

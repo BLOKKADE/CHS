@@ -124,6 +124,10 @@ library trigger134 initializer init requires RandomShit
         return true
     endfunction
 
+    function Trig_PvP_Func002001002 takes nothing returns boolean
+        return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and UnitAlive(GetFilterUnit()) and GetOwningPlayer(GetFilterUnit())!=Player(11) and GetOwningPlayer(GetFilterUnit())!=Player(8)
+    endfunction
+
 
     function Trig_PvP_Actions takes nothing returns nothing
         call TriggerSleepAction(5.00)

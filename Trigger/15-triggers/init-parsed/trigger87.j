@@ -1,4 +1,4 @@
-library trigger87 initializer init requires RandomShit
+/*library trigger87 initializer init requires RandomShit
 
     function Trig_Display_Hint_Func001C takes nothing returns boolean
         if(not(udg_boolean04==true))then
@@ -53,3 +53,4 @@ library trigger87 initializer init requires RandomShit
 
 
 endlibrary
+*/

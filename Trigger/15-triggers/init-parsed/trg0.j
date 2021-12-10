@@ -19,7 +19,7 @@ library trg0 initializer init requires RandomShit
         call TriggerRegisterDialogEventBJ(trg,udg_dialog03)
         call TriggerAddCondition(trg,Condition(function Trig_Draft_Abilities_Conditions))
         call TriggerAddAction(trg,function Trig_Draft_Abilities_Actions)
-        set trg0 = null
+        set trg = null
     endfunction
 
 

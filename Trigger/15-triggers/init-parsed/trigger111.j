@@ -1,4 +1,4 @@
-library trigger111 initializer init requires RandomShit
+library trigger111 initializer init requires RandomShit, Functions
 
     function Trig_Learn_Ability_Conditions takes nothing returns boolean
         if(not('I00P'!=GetItemTypeId(GetManipulatedItem())))then

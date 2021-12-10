@@ -53,6 +53,30 @@ library trigger135 initializer init requires RandomShit
     function Trig_End_PvP_Func026Func007001002001 takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())!=Player(8))
     endfunction
+    
+    function Trig_End_PvP_Func026Func007001002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())==Player(11))
+    endfunction
+    
+    function Trig_End_PvP_Func026Func007001002002002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_End_PvP_Func026Func007001002002002002 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+    
+    function Trig_End_PvP_Func026Func007001002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_End_PvP_Func026Func007001002002002001(),Trig_End_PvP_Func026Func007001002002002002())
+    endfunction
+    
+    function Trig_End_PvP_Func026Func007001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_End_PvP_Func026Func007001002002001(),Trig_End_PvP_Func026Func007001002002002())
+    endfunction
+    
+    function Trig_End_PvP_Func026Func007001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_End_PvP_Func026Func007001002001(),Trig_End_PvP_Func026Func007001002002())
+    endfunction
 
 
     function Trig_End_PvP_Func026Func007A takes nothing returns nothing

@@ -1,4 +1,4 @@
-library trigger05 initializer init requires RandomShit
+library trigger05 initializer init requires RandomShit, DummyOrder, AbsolutePoison
 
     function Trig_Corrosive_Skin_Conditions takes nothing returns boolean
         if(not(GetUnitAbilityLevelSwapped('A00Q',GetAttackedUnitBJ())> 0))then

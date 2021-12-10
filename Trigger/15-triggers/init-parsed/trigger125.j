@@ -1,4 +1,4 @@
-library trigger125 initializer init requires RandomShit
+/*library trigger125 initializer init requires RandomShit
 
     function Trig_Hint_Command_Func001C takes nothing returns boolean
         if(not(IsPlayerInForce(GetTriggerPlayer(),udg_force06)==true))then
@@ -39,8 +39,9 @@ library trigger125 initializer init requires RandomShit
         call TriggerRegisterPlayerChatEvent(udg_trigger125,Player(5),"-hint",true)
         call TriggerRegisterPlayerChatEvent(udg_trigger125,Player(6),"-hint",true)
         call TriggerRegisterPlayerChatEvent(udg_trigger125,Player(7),"-hint",true)
-        call TriggerAddAction(udg_trigger125,function Trig_Hint_Command_Actions)*/
+        call TriggerAddAction(udg_trigger125,function Trig_Hint_Command_Actions)
     endfunction
 
 
 endlibrary
+*/

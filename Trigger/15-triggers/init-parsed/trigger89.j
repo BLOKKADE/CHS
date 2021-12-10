@@ -3,6 +3,30 @@ library trigger89 initializer init requires RandomShit
     function Trig_Map_Initialization_Func010001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
+    
+    function Trig_Map_Initialization_Func010001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Map_Initialization_Func010001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Map_Initialization_Func010001001001001(),Trig_Map_Initialization_Func010001001001002())
+    endfunction
+    
+    function Trig_Map_Initialization_Func010001001002001 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Map_Initialization_Func010001001002002 takes nothing returns boolean
+        return(IsPlayerInForce(GetFilterPlayer(),udg_force07)==true)
+    endfunction
+    
+    function Trig_Map_Initialization_Func010001001002 takes nothing returns boolean
+        return GetBooleanOr(Trig_Map_Initialization_Func010001001002001(),Trig_Map_Initialization_Func010001001002002())
+    endfunction
+    
+    function Trig_Map_Initialization_Func010001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Map_Initialization_Func010001001001(),Trig_Map_Initialization_Func010001001002())
+    endfunction
 
 
     function Trig_Map_Initialization_Func010A takes nothing returns nothing
@@ -33,6 +57,30 @@ library trigger89 initializer init requires RandomShit
 
     function Trig_Map_Initialization_Func018001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
+    endfunction
+    
+    function Trig_Map_Initialization_Func018001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Map_Initialization_Func018001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Map_Initialization_Func018001001001001(),Trig_Map_Initialization_Func018001001001002())
+    endfunction
+    
+    function Trig_Map_Initialization_Func018001001002001 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Map_Initialization_Func018001001002002 takes nothing returns boolean
+        return(IsPlayerInForce(GetFilterPlayer(),udg_force07)==true)
+    endfunction
+    
+    function Trig_Map_Initialization_Func018001001002 takes nothing returns boolean
+        return GetBooleanOr(Trig_Map_Initialization_Func018001001002001(),Trig_Map_Initialization_Func018001001002002())
+    endfunction
+    
+    function Trig_Map_Initialization_Func018001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Map_Initialization_Func018001001001(),Trig_Map_Initialization_Func018001001002())
     endfunction
 
 

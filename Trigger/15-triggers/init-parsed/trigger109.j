@@ -1,4 +1,4 @@
-library trigger109 initializer init requires RandomShit
+library trigger109 initializer init requires RandomShit, StartFunction
 
     function Trig_Start_Level_Conditions takes nothing returns boolean
         if(not(udg_boolean09==false))then
@@ -69,17 +69,34 @@ library trigger109 initializer init requires RandomShit
     function Trig_Start_Level_Func015Func002001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
-
+    
+    function Trig_Start_Level_Func015Func002001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Start_Level_Func015Func002001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Start_Level_Func015Func002001001001001(),Trig_Start_Level_Func015Func002001001001002())
+    endfunction
+    
+    function Trig_Start_Level_Func015Func002001001002 takes nothing returns boolean
+        return(IsPlayerInForce(GetFilterPlayer(),udg_force02)!=true)
+    endfunction
+    
+    function Trig_Start_Level_Func015Func002001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Start_Level_Func015Func002001001001(),Trig_Start_Level_Func015Func002001001002())
+    endfunction
 
     function Trig_Start_Level_Func015Func002Func003001002001 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)!=true)
     endfunction
 
-
-    function Trig_Start_Level_Func015Func002Func003Func001001 takes unit u returns boolean
-        return GetUnitTypeId(u)=='h009' or GetUnitTypeId(u)=='h014' or GetUnitTypeId(u)=='h015' or GetUnitTypeId(u)=='h00B'
+    function Trig_Start_Level_Func015Func002Func003001002002 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
     endfunction
-
+    
+    function Trig_Start_Level_Func015Func002Func003001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Start_Level_Func015Func002Func003001002001(),Trig_Start_Level_Func015Func002Func003001002002())
+    endfunction
 
     function Trig_Start_Level_Func015Func002Func003A takes nothing returns nothing
         if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' then

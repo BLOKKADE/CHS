@@ -1,4 +1,4 @@
-library trigger23 initializer init requires RandomShit
+library trigger23 initializer init requires RandomShit, AoeDamage
 
     function Trig_Plague_Func002Func001Func001C takes nothing returns boolean
         if((udg_boolean02==true))then

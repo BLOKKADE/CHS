@@ -7,9 +7,32 @@ library trigger108 initializer init requires RandomShit
         return true
     endfunction
 
-
     function Trig_Level_Completed_Func001Func001001001 takes nothing returns boolean
         return(IsTriggerEnabled(udg_trigger119)!=true)
+    endfunction
+    
+    function Trig_Level_Completed_Func001Func001001002001 takes nothing returns boolean
+        return(udg_boolean11!=true)
+    endfunction
+    
+    function Trig_Level_Completed_Func001Func001001002002001 takes nothing returns boolean
+        return(IsTriggerEnabled(udg_trigger118)!=true)
+    endfunction
+    
+    function Trig_Level_Completed_Func001Func001001002002002 takes nothing returns boolean
+        return(udg_integer13!=1)
+    endfunction
+    
+    function Trig_Level_Completed_Func001Func001001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Level_Completed_Func001Func001001002002001(),Trig_Level_Completed_Func001Func001001002002002())
+    endfunction
+    
+    function Trig_Level_Completed_Func001Func001001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Level_Completed_Func001Func001001002001(),Trig_Level_Completed_Func001Func001001002002())
+    endfunction
+    
+    function Trig_Level_Completed_Func001Func001001 takes nothing returns boolean
+        return GetBooleanOr(Trig_Level_Completed_Func001Func001001001(),Trig_Level_Completed_Func001Func001001002())
     endfunction
 
 

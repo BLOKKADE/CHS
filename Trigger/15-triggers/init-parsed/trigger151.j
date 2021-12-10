@@ -1,4 +1,4 @@
-library trigger151 initializer init requires RandomShit
+library trigger151 initializer init requires RandomShit, DebugCommands
 
     function Trig_Hero_Dies_Death_Match_PvP_Func019C takes nothing returns boolean
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then

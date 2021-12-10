@@ -1,4 +1,4 @@
-library trigger92 initializer init requires RandomShit
+/*library trigger92 initializer init requires RandomShit
 
 
     private function init takes nothing returns nothing
@@ -8,3 +8,4 @@ library trigger92 initializer init requires RandomShit
 
 
 endlibrary
+*/

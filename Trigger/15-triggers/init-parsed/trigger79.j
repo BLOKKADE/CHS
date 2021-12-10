@@ -1,4 +1,4 @@
-library trigger79 initializer init requires RandomShit
+library trigger79 initializer init requires RandomShit, Functions
 
     function Trig_Spawn_Hero_Func005C takes nothing returns boolean
         if(not(udg_boolean16==false))then

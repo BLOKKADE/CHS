@@ -1,4 +1,4 @@
-library trigger153 initializer init requires RandomShit
+library trigger153 initializer init requires RandomShit, DebugCommands
 
     function Trig_Hero_Dies_Elimination_Func039C takes nothing returns boolean
         if(not(udg_boolean03==true))then
@@ -65,6 +65,30 @@ library trigger153 initializer init requires RandomShit
     function Trig_Hero_Dies_Elimination_Func018Func001001002001 takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())!=Player(8))
     endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func018Func001001002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func018Func001001002002002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func018Func001001002002002002 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func018Func001001002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func018Func001001002002002001(),Trig_Hero_Dies_Elimination_Func018Func001001002002002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func018Func001001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func018Func001001002002001(),Trig_Hero_Dies_Elimination_Func018Func001001002002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func018Func001001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func018Func001001002001(),Trig_Hero_Dies_Elimination_Func018Func001001002002())
+    endfunction
 
 
     function Trig_Hero_Dies_Elimination_Func018Func001A takes nothing returns nothing
@@ -76,26 +100,32 @@ library trigger153 initializer init requires RandomShit
         return(udg_integer06==1)
     endfunction
 
-
-    function ShowDraftBuildings takes boolean b returns nothing
-        local integer i = 0
-        if AbilityMode == 2 then
-            loop
-                call ShowUnit(circle1, b)
-                call ShowUnit(circle2, b)
-                call ShowUnit(udg_Draft_DraftBuildings[i], b)
-                call ShowUnit(udg_Draft_UpgradeBuildings[i], b)
-                call SetTextTagVisibility(FloatingTextBuy, b)
-                call SetTextTagVisibility(FloatingTextUpgrade, b)
-                set i = i + 1
-                exitwhen i > 9
-            endloop
-        endif
-    endfunction
-
-
     function Trig_Hero_Dies_Elimination_Func030001002001 takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())!=Player(8))
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func030001002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func030001002002002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func030001002002002002 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func030001002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func030001002002002001(),Trig_Hero_Dies_Elimination_Func030001002002002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func030001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func030001002002001(),Trig_Hero_Dies_Elimination_Func030001002002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func030001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func030001002001(),Trig_Hero_Dies_Elimination_Func030001002002())
     endfunction
 
 
@@ -112,6 +142,46 @@ library trigger153 initializer init requires RandomShit
     function Trig_Hero_Dies_Elimination_Func031001002001001 takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())!=Player(8))
     endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002001002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002001002002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002001002002002001 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)!=true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002001002002002002 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)!=true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002001002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func031001002001002002002001(),Trig_Hero_Dies_Elimination_Func031001002001002002002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func031001002001002002001(),Trig_Hero_Dies_Elimination_Func031001002001002002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func031001002001002001(),Trig_Hero_Dies_Elimination_Func031001002001002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func031001002001001(),Trig_Hero_Dies_Elimination_Func031001002001002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002002 takes nothing returns boolean
+        return(IsUnitIllusionBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func031001002 takes nothing returns boolean
+        return GetBooleanOr(Trig_Hero_Dies_Elimination_Func031001002001(),Trig_Hero_Dies_Elimination_Func031001002002())
+    endfunction
 
 
     function Trig_Hero_Dies_Elimination_Func031A takes nothing returns nothing
@@ -121,6 +191,30 @@ library trigger153 initializer init requires RandomShit
 
     function Trig_Hero_Dies_Elimination_Func032001002001 takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())!=Player(8))
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func032001002002001 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func032001002002002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func032001002002002002 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func032001002002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func032001002002002001(),Trig_Hero_Dies_Elimination_Func032001002002002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func032001002002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func032001002002001(),Trig_Hero_Dies_Elimination_Func032001002002002())
+    endfunction
+    
+    function Trig_Hero_Dies_Elimination_Func032001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Elimination_Func032001002001(),Trig_Hero_Dies_Elimination_Func032001002002())
     endfunction
 
 

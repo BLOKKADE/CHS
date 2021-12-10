@@ -1,4 +1,4 @@
-library trg4 initializer init requires RandomShit
+/*library trg4 initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         local trigger trg = CreateTrigger()
@@ -7,3 +7,4 @@ library trg4 initializer init requires RandomShit
 
 
 endlibrary
+*/

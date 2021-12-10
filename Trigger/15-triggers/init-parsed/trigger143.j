@@ -1,4 +1,4 @@
-library trigger143 initializer init requires RandomShit
+library trigger143 initializer init requires RandomShit, MouseHoverInfo
 
     function Trig_Enter_Shop_Mode_Conditions takes nothing returns boolean
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
@@ -10,6 +10,14 @@ library trigger143 initializer init requires RandomShit
 
     function Trig_Enter_Shop_Mode_Func036001002001 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)==true)
+    endfunction
+    
+    function Trig_Enter_Shop_Mode_Func036001002002 takes nothing returns boolean
+        return(GetUnitTypeId(GetFilterUnit())!='ncop')
+    endfunction
+    
+    function Trig_Enter_Shop_Mode_Func036001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Enter_Shop_Mode_Func036001002001(),Trig_Enter_Shop_Mode_Func036001002002())
     endfunction
 
 

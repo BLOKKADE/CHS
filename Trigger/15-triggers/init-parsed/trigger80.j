@@ -1,4 +1,4 @@
-library trigger80 initializer init requires RandomShit
+library trigger80 initializer init requires RandomShit, DebugCommands
 
     function Trig_Hero_Dies_Func026C takes nothing returns boolean
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
@@ -14,24 +14,6 @@ library trigger80 initializer init requires RandomShit
             return false
         endif
         return true
-    endfunction
-
-
-    function Trig_Hero_Dies_Func024Func001Func001A111a takes nothing returns nothing
-    
-    
-    
-        //	call DisableTrigger(udg_trigger107)
-        //	call KillUnit(GetEnumUnit())
-        //	call EnableTrigger(udg_trigger107)
-    
-    endfunction
-
-
-    function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns boolean
-    
-        call KillUnit(GetFilterUnit())
-        return false
     endfunction
 
 
@@ -110,6 +92,22 @@ library trigger80 initializer init requires RandomShit
     function Trig_Hero_Dies_Func013Func002001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
+    
+    function Trig_Hero_Dies_Func013Func002001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Hero_Dies_Func013Func002001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Func013Func002001001001001(),Trig_Hero_Dies_Func013Func002001001001002())
+    endfunction
+    
+    function Trig_Hero_Dies_Func013Func002001001002 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Hero_Dies_Func013Func002001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Func013Func002001001001(),Trig_Hero_Dies_Func013Func002001001002())
+    endfunction
 
 
     function Trig_Hero_Dies_Func013Func002A takes nothing returns nothing
@@ -138,6 +136,14 @@ library trigger80 initializer init requires RandomShit
     function Trig_Hero_Dies_Func014Func001Func003001001 takes nothing returns boolean
         return(udg_integer06==2)
     endfunction
+    
+    function Trig_Hero_Dies_Func014Func001Func003001002 takes nothing returns boolean
+        return(udg_integer06==3)
+    endfunction
+    
+    function Trig_Hero_Dies_Func014Func001Func003001 takes nothing returns boolean
+        return GetBooleanOr(Trig_Hero_Dies_Func014Func001Func003001001(),Trig_Hero_Dies_Func014Func001Func003001002())
+    endfunction
 
 
     function Trig_Hero_Dies_Func014Func001Func004001 takes nothing returns boolean
@@ -148,6 +154,14 @@ library trigger80 initializer init requires RandomShit
     function Trig_Hero_Dies_Func014Func001Func001001001 takes nothing returns boolean
         return(udg_integer06==2)
     endfunction
+    
+    function Trig_Hero_Dies_Func014Func001Func001001002 takes nothing returns boolean
+        return(udg_integer06==3)
+    endfunction
+    
+    function Trig_Hero_Dies_Func014Func001Func001001 takes nothing returns boolean
+        return GetBooleanOr(Trig_Hero_Dies_Func014Func001Func001001001(),Trig_Hero_Dies_Func014Func001Func001001002())
+    endfunction
 
 
     function Trig_Hero_Dies_Func014Func001Func002001 takes nothing returns boolean
@@ -157,6 +171,22 @@ library trigger80 initializer init requires RandomShit
 
     function Trig_Hero_Dies_Func014Func002001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
+    endfunction
+    
+    function Trig_Hero_Dies_Func014Func002001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Hero_Dies_Func014Func002001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Func014Func002001001001001(),Trig_Hero_Dies_Func014Func002001001001002())
+    endfunction
+    
+    function Trig_Hero_Dies_Func014Func002001001002 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Hero_Dies_Func014Func002001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Hero_Dies_Func014Func002001001001(),Trig_Hero_Dies_Func014Func002001001002())
     endfunction
 
 
@@ -182,24 +212,15 @@ library trigger80 initializer init requires RandomShit
         return true
     endfunction
 
-
-    function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns boolean
-    
-        call KillUnit(GetFilterUnit())
-        return false
+    function Trig_Hero_Dies_Func024Func001Func001001002 takes nothing returns boolean
+        return(GetOwningPlayer(GetFilterUnit())==Player(11))
     endfunction
 
-
-    function Trig_Hero_Dies_Func024Func001Func001A111a takes nothing returns nothing
-    
-    
-    
-        //	call DisableTrigger(udg_trigger107)
-        //	call KillUnit(GetEnumUnit())
-        //	call EnableTrigger(udg_trigger107)
-    
+    function Trig_Hero_Dies_Func024Func001Func001A takes nothing returns nothing
+        call DisableTrigger(udg_trigger107)
+        call KillUnit(GetEnumUnit())
+        call EnableTrigger(udg_trigger107)
     endfunction
-
 
     function Trig_Hero_Dies_Actions takes nothing returns nothing
         call StopSoundBJ(udg_sound13,false)

@@ -62,6 +62,22 @@ library trigger77 initializer init requires RandomShit
     function Trig_Dialog_Complete_Func006Func009001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
+    
+    function Trig_Dialog_Complete_Func006Func009001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Dialog_Complete_Func006Func009001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func006Func009001001001001(),Trig_Dialog_Complete_Func006Func009001001001002())
+    endfunction
+    
+    function Trig_Dialog_Complete_Func006Func009001001002 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Dialog_Complete_Func006Func009001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func006Func009001001001(),Trig_Dialog_Complete_Func006Func009001001002())
+    endfunction
 
 
     function Trig_Dialog_Complete_Func006Func009A takes nothing returns nothing
@@ -180,6 +196,22 @@ library trigger77 initializer init requires RandomShit
     function Trig_Dialog_Complete_Func006Func004Func006001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
+    
+    function Trig_Dialog_Complete_Func006Func004Func006001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Dialog_Complete_Func006Func004Func006001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func006Func004Func006001001001001(),Trig_Dialog_Complete_Func006Func004Func006001001001002())
+    endfunction
+    
+    function Trig_Dialog_Complete_Func006Func004Func006001001002 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Dialog_Complete_Func006Func004Func006001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func006Func004Func006001001001(),Trig_Dialog_Complete_Func006Func004Func006001001002())
+    endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func006A takes nothing returns nothing
@@ -232,6 +264,22 @@ library trigger77 initializer init requires RandomShit
     function Trig_Dialog_Complete_Func008Func003Func014001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
+    
+    function Trig_Dialog_Complete_Func008Func003Func014001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Dialog_Complete_Func008Func003Func014001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func008Func003Func014001001001001(),Trig_Dialog_Complete_Func008Func003Func014001001001002())
+    endfunction
+    
+    function Trig_Dialog_Complete_Func008Func003Func014001001002 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Dialog_Complete_Func008Func003Func014001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func008Func003Func014001001001(),Trig_Dialog_Complete_Func008Func003Func014001001002())
+    endfunction
 
 
     function Trig_Dialog_Complete_Func008Func003Func014A takes nothing returns nothing
@@ -248,6 +296,22 @@ library trigger77 initializer init requires RandomShit
 
     function Trig_Dialog_Complete_Func008Func003Func008001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
+    endfunction
+    
+    function Trig_Dialog_Complete_Func008Func003Func008001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Dialog_Complete_Func008Func003Func008001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func008Func003Func008001001001001(),Trig_Dialog_Complete_Func008Func003Func008001001001002())
+    endfunction
+    
+    function Trig_Dialog_Complete_Func008Func003Func008001001002 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Dialog_Complete_Func008Func003Func008001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func008Func003Func008001001001(),Trig_Dialog_Complete_Func008Func003Func008001001002())
     endfunction
 
 
@@ -361,6 +425,38 @@ library trigger77 initializer init requires RandomShit
 
     function Trig_Dialog_Complete_Func025001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
+    endfunction
+    
+    function Trig_Dialog_Complete_Func025001001001002 takes nothing returns boolean
+        return(GetFilterPlayer()!=Player(11))
+    endfunction
+    
+    function Trig_Dialog_Complete_Func025001001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func025001001001001(),Trig_Dialog_Complete_Func025001001001002())
+    endfunction
+    
+    function Trig_Dialog_Complete_Func025001001002001001 takes nothing returns boolean
+        return(GetPlayerSlotState(GetFilterPlayer())==PLAYER_SLOT_STATE_PLAYING)
+    endfunction
+    
+    function Trig_Dialog_Complete_Func025001001002001002 takes nothing returns boolean
+        return(IsPlayerInForce(GetFilterPlayer(),udg_force07)==true)
+    endfunction
+    
+    function Trig_Dialog_Complete_Func025001001002001 takes nothing returns boolean
+        return GetBooleanOr(Trig_Dialog_Complete_Func025001001002001001(),Trig_Dialog_Complete_Func025001001002001002())
+    endfunction
+    
+    function Trig_Dialog_Complete_Func025001001002002 takes nothing returns boolean
+        return(IsPlayerInForce(GetFilterPlayer(),udg_force01)!=true)
+    endfunction
+    
+    function Trig_Dialog_Complete_Func025001001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func025001001002001(),Trig_Dialog_Complete_Func025001001002002())
+    endfunction
+    
+    function Trig_Dialog_Complete_Func025001001 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Dialog_Complete_Func025001001001(),Trig_Dialog_Complete_Func025001001002())
     endfunction
 
 

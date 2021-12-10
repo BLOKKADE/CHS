@@ -28,7 +28,7 @@ library trigger131 initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set udg_trigger131 = CreateTrigger()
-        call TriggerAddAction(udg_trigger131,function Trig_Select_Game_Master_Actions)/*
+        call TriggerAddAction(udg_trigger131,function Trig_Select_Game_Master_Actions)
     endfunction
 
 

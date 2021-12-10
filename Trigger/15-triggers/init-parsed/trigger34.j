@@ -50,6 +50,14 @@ library trigger34 initializer init requires RandomShit
     function Trig_Ward_Location_Func001Func002Func003Func001001001002001 takes nothing returns boolean
         return(IsUnitAliveBJ(GetFilterUnit())==true)
     endfunction
+    
+    function Trig_Ward_Location_Func001Func002Func003Func001001001002002 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+    
+    function Trig_Ward_Location_Func001Func002Func003Func001001001002 takes nothing returns boolean
+        return GetBooleanAnd(Trig_Ward_Location_Func001Func002Func003Func001001001002001(),Trig_Ward_Location_Func001Func002Func003Func001001001002002())
+    endfunction
 
 
     function Trig_Ward_Location_Func001Func002Func003C takes nothing returns boolean
