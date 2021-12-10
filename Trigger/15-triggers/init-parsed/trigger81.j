@@ -1,5 +1,19 @@
 library trigger81 initializer init requires RandomShit
 
+    function Trig_Hero_Dies_After_Victory_Func008C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(8)))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Hero_Dies_After_Victory_Conditions takes nothing returns boolean
         if(not Trig_Hero_Dies_After_Victory_Func008C())then
             return false
@@ -10,6 +24,22 @@ library trigger81 initializer init requires RandomShit
 
     function Trig_Hero_Dies_After_Victory_Func004A takes nothing returns nothing
         call KillUnit(GetEnumUnit())
+    endfunction
+
+
+    function Trig_Hero_Dies_After_Victory_Func007C takes nothing returns boolean
+        if(not(udg_integer06==0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Hero_Dies_After_Victory_Func007Func006C takes nothing returns boolean
+        if(not(udg_integer13 > 1))then
+            return false
+        endif
+        return true
     endfunction
 
 

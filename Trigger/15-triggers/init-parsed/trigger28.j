@@ -1,5 +1,16 @@
 library trigger28 initializer init requires RandomShit
 
+    function Trig_Raise_Dead_Func001C takes nothing returns boolean
+        if((GetUnitTypeId(GetTriggerUnit())=='uske'))then
+            return true
+        endif
+        if((GetUnitTypeId(GetTriggerUnit())=='uskm'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Raise_Dead_Conditions takes nothing returns boolean
         if(not Trig_Raise_Dead_Func001C())then
             return false

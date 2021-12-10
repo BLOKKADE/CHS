@@ -8,6 +8,35 @@ library trigger129 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Player_Leaves_Func005001 takes nothing returns boolean
+        return(GetTriggerPlayer()==udg_player03)
+    endfunction
+
+
+    function Trig_Player_Leaves_Func007Func001Func002001001002001 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+
+
+    function Trig_Player_Leaves_Func007Func001C takes nothing returns boolean
+        if(not(udg_integer02==0))then
+            return false
+        endif
+        if(not(CountUnitsInGroup(GetUnitsOfPlayerMatching(GetTriggerPlayer(),Condition(function Trig_Player_Leaves_Func007Func001Func002001001002)))==0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Player_Leaves_Func007C takes nothing returns boolean
+        if(not Trig_Player_Leaves_Func007Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Player_Leaves_Func007Func003002001001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
     endfunction

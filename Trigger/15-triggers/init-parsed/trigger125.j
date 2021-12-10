@@ -1,5 +1,13 @@
 library trigger125 initializer init requires RandomShit
 
+    function Trig_Hint_Command_Func001C takes nothing returns boolean
+        if(not(IsPlayerInForce(GetTriggerPlayer(),udg_force06)==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Hint_Command_Func001Func004001001 takes nothing returns boolean
         return(GetFilterPlayer()==GetTriggerPlayer())
     endfunction

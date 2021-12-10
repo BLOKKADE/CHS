@@ -8,6 +8,65 @@ library trigger106 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Complete_Level_Move_Func003C takes nothing returns boolean
+        if(not(IsPlayerInForce(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),udg_force02)!=true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Complete_Level_Move_Func005Func001C takes nothing returns boolean
+        if((udg_boolean04==true))then
+            return true
+        endif
+        if((udg_boolean08==true))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Complete_Level_Move_Func005C takes nothing returns boolean
+        if(not Trig_Complete_Level_Move_Func005Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Complete_Level_Move_Func005Func003C takes nothing returns boolean
+        if(not(udg_integer02 <= 1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Complete_Level_Move_Func005Func003Func001C takes nothing returns boolean
+        if(not(udg_integer02 < 4))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Complete_Level_Move_Func005Func002C takes nothing returns boolean
+        if(not(udg_integer02 <= 1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Complete_Level_Move_Func005Func002Func001C takes nothing returns boolean
+        if(not(udg_integer02 < 8))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Complete_Level_Move_Actions takes nothing returns nothing
         local integer pid = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
     

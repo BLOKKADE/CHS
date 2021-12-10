@@ -1,5 +1,13 @@
 library trigger88 initializer init requires RandomShit
 
+    function Trig_Hint_Initialization_Func019C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Hint_Initialization_Actions takes nothing returns nothing
         set udg_strings01[1]= "There are hints showing in-game!"
         set udg_strings01[2]= "Wait a minute or two if you get stuck! The anti-stuck system is slow, but it'll get you out of there sooner or later."

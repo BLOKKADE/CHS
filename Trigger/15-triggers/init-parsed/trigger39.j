@@ -1,7 +1,35 @@
 library trigger39 initializer init requires RandomShit
 
+    function Trig_Drop_Item_Func001C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)!=true))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())!='n00V'))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())!='h015'))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then
+            return false
+        endif
+        if(not(GetItemType(GetManipulatedItem())!=ITEM_TYPE_POWERUP))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Drop_Item_Conditions takes nothing returns boolean
         if(not Trig_Drop_Item_Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Drop_Item_Func002C takes nothing returns boolean
+        if(not(GetItemUserData(GetManipulatedItem())==0))then
             return false
         endif
         return true

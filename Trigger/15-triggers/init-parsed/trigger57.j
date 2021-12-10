@@ -8,6 +8,19 @@ library trigger57 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Game_Master_Selects_Func001Func001C takes nothing returns boolean
+        if(not(GetClickedButtonBJ()==udg_buttons04[GetForLoopIndexA()]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Game_Master_Selects_Func005001 takes nothing returns boolean
+        return(udg_integer13==1)
+    endfunction
+
+
     function Trig_Game_Master_Selects_Func007001001 takes nothing returns boolean
         return(GetFilterPlayer()!=udg_player03)
     endfunction

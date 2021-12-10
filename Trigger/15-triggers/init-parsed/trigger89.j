@@ -23,6 +23,14 @@ library trigger89 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Map_Initialization_Func011C takes nothing returns boolean
+        if(not(udg_integer06==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Map_Initialization_Func018001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction

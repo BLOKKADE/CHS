@@ -1,7 +1,23 @@
 library trigger87 initializer init requires RandomShit
 
+    function Trig_Display_Hint_Func001C takes nothing returns boolean
+        if(not(udg_boolean04==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Display_Hint_Func001Func003001001001 takes nothing returns boolean
         return(IsPlayerInForce(GetFilterPlayer(),udg_force06)!=true)
+    endfunction
+
+
+    function Trig_Display_Hint_Func001Func001C takes nothing returns boolean
+        if(not(udg_boolean07==true))then
+            return false
+        endif
+        return true
     endfunction
 
 

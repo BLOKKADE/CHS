@@ -1,5 +1,13 @@
 library trigger110 initializer init requires RandomShit
 
+    function Trig_Sudden_Death_Timer_Func002C takes nothing returns boolean
+        if(not(udg_integer39 >= 240))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Sudden_Death_Timer_Func002Func001A takes nothing returns nothing
         call SetUnitMoveSpeed(GetEnumUnit(),(GetUnitMoveSpeed(GetEnumUnit())+ 25.00))
         if GetUnitAbilityLevel(GetEnumUnit(), 'AOcr') == 0 then
@@ -7,6 +15,14 @@ library trigger110 initializer init requires RandomShit
         elseif GetUnitAbilityLevel(GetEnumUnit(), 'AOcr') < 10 then
             call SetUnitAbilityLevel(GetEnumUnit(), 'AOcr', 10)
         endif
+    endfunction
+
+
+    function Trig_Sudden_Death_Timer_Func002Func002C takes nothing returns boolean
+        if(not(udg_integer39 >= 480))then
+            return false
+        endif
+        return true
     endfunction
 
 
@@ -20,6 +36,14 @@ library trigger110 initializer init requires RandomShit
             endif
             call UnitSetAttackDamage(GetEnumUnit(), R2I(UnitGetAttackDamage(GetEnumUnit()) * 1.1) + 1)
         endif
+    endfunction
+
+
+    function Trig_Sudden_Death_Timer_Func002Func002Func002C takes nothing returns boolean
+        if(not(udg_integer39 >= 720))then
+            return false
+        endif
+        return true
     endfunction
 
 

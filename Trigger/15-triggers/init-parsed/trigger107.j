@@ -1,7 +1,69 @@
 library trigger107 initializer init requires RandomShit
 
+    function Trig_Complete_Level_Player_Func006Func002001001002001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+
+
+    function Trig_Complete_Level_Player_Func006C takes nothing returns boolean
+        if(not(GetOwningPlayer(GetTriggerUnit())==Player(11)))then
+            return false
+        endif
+        if(not(CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Complete_Level_Player_Func006Func002001001002)))==0))then
+            return false
+        endif
+        if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),udg_force02)!=true))then
+            return false
+        endif
+        if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),udg_force03)!=true))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetKillingUnitBJ())!=Player(11)))then
+            return false
+        endif
+        if(not(GetKillingUnitBJ()!=null))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Complete_Level_Player_Conditions takes nothing returns boolean
         if(not Trig_Complete_Level_Player_Func006C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Complete_Level_Player_Func001001 takes nothing returns boolean
+        return(udg_integer02==5)
+    endfunction
+
+
+    function Trig_Complete_Level_Player_Func004001 takes nothing returns boolean
+        return(udg_integer56 > 3)
+    endfunction
+
+
+    function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
+        if(not(CountPlayersInForceBJ(udg_force03)< udg_integer56))then
+            return false
+        endif
+        //	if(not(GetUnitTypeId(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])!='N00K'))then
+        //		return false
+        //	endif
+        return true
+    endfunction
+
+
+    function Trig_Complete_Level_Player_Func005Func004001 takes nothing returns boolean
+        return(udg_boolean08==false)
+    endfunction
+
+
+    function Trig_Complete_Level_Player_Func010C takes nothing returns boolean
+        if(not(udg_integer48==0))then
             return false
         endif
         return true

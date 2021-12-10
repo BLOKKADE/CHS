@@ -42,6 +42,14 @@ library trigger152 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Elimination_Func037C takes nothing returns boolean
+        if(not(udg_integer29==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Elimination_Actions takes nothing returns nothing
         call DisableTrigger(udg_trigger149)
         call KillUnit(udg_unit03)

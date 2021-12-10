@@ -1,5 +1,16 @@
 library trigger131 initializer init requires RandomShit
 
+    function Trig_Select_Game_Master_Func001Func001C takes nothing returns boolean
+        if(not(GetPlayerController(ConvertedPlayer(GetForLoopIndexA()))==MAP_CONTROL_USER))then
+            return false
+        endif
+        if(not(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA()))==PLAYER_SLOT_STATE_PLAYING))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Select_Game_Master_Actions takes nothing returns nothing
         set bj_forLoopAIndex = 1
         set bj_forLoopAIndexEnd = 8

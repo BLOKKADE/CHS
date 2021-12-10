@@ -1,10 +1,31 @@
 library trigger49 initializer init requires RandomShit
 
+    function Trig_Place_Bet_Lumber_Func002C takes nothing returns boolean
+        if(not(GetClickedButtonBJ()==udg_buttons02[5]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Place_Bet_Lumber_Conditions takes nothing returns boolean
         if(not Trig_Place_Bet_Lumber_Func002C())then
             return false
         endif
         return true
+    endfunction
+
+
+    function Trig_Place_Bet_Lumber_Func001C takes nothing returns boolean
+        if(not(GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER)> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Place_Bet_Lumber_Func001Func001001 takes nothing returns boolean
+        return(udg_boolean18!=true)
     endfunction
 
 

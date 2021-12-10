@@ -8,6 +8,14 @@ library trigger40 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Give_Item_Func002C takes nothing returns boolean
+        if(not(RectContainsItem(GetManipulatedItem(),GetPlayableMapRect())==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Give_Item_Actions takes nothing returns nothing
         call TriggerSleepAction(0.00)
         if(Trig_Give_Item_Func002C())then

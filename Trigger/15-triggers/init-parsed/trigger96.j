@@ -11,6 +11,14 @@ library trigger96 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Volcanic_Armor_Func003C takes nothing returns boolean
+        if(not(udg_integer14 <= 15))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Volcanic_Armor_Actions takes nothing returns nothing
         set udg_integer14 = GetRandomInt(1,100)
         if(Trig_Volcanic_Armor_Func003C())then
@@ -25,6 +33,14 @@ library trigger96 initializer init requires RandomShit
 
     function Trig_Xesils_Legacy_Conditions takes nothing returns boolean
         if(not(UnitHasItemOfTypeBJ(GetTriggerUnit(),'I03P')==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Xesils_Legacy_Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
             return false
         endif
         return true

@@ -1,5 +1,16 @@
 library trigger77 initializer init requires RandomShit
 
+    function Trig_Dialog_Complete_Func026C takes nothing returns boolean
+        if((udg_boolean15==false))then
+            return true
+        endif
+        if((udg_integer63==udg_integer06))then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Dialog_Complete_Conditions takes nothing returns boolean
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
             return false
@@ -8,6 +19,43 @@ library trigger77 initializer init requires RandomShit
             return false
         endif
         return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func001C takes nothing returns boolean
+        if(not(udg_integers07[5]> udg_integers07[4]))then
+            return false
+        endif
+        if(not(udg_integers07[5]> udg_integers07[8]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006C takes nothing returns boolean
+        if(not Trig_Dialog_Complete_Func006Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func008C takes nothing returns boolean
+        if(not(udg_integers07[1]>= udg_integers07[2]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func008Func011001 takes nothing returns boolean
+        return(udg_integer13==1)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func008Func006001 takes nothing returns boolean
+        return(udg_integer13==1)
     endfunction
 
 
@@ -23,6 +71,112 @@ library trigger77 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Dialog_Complete_Func006Func004C takes nothing returns boolean
+        if(not(udg_integers07[8]> udg_integers07[4]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005C takes nothing returns boolean
+        if(not(udg_integers07[1]>= udg_integers07[2]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func020001 takes nothing returns boolean
+        return(udg_integer13==1)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func022001 takes nothing returns boolean
+        return(udg_integer06==1)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func023001 takes nothing returns boolean
+        return(udg_integer06==2)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func024001 takes nothing returns boolean
+        return(udg_integer06==3)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func025001 takes nothing returns boolean
+        return(udg_integer06==4)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func026001 takes nothing returns boolean
+        return(udg_integer06==5)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func027001 takes nothing returns boolean
+        return(udg_integer06==6)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func028001 takes nothing returns boolean
+        return(udg_integer06==7)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func029001 takes nothing returns boolean
+        return(udg_integer06==8)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func006001 takes nothing returns boolean
+        return(udg_integer13==1)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func008001 takes nothing returns boolean
+        return(udg_integer06==1)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func009001 takes nothing returns boolean
+        return(udg_integer06==2)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func010001 takes nothing returns boolean
+        return(udg_integer06==3)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func011001 takes nothing returns boolean
+        return(udg_integer06==4)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func012001 takes nothing returns boolean
+        return(udg_integer06==5)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func013001 takes nothing returns boolean
+        return(udg_integer06==6)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func014001 takes nothing returns boolean
+        return(udg_integer06==7)
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func006Func004Func005Func015001 takes nothing returns boolean
+        return(udg_integer06==8)
+    endfunction
+
+
     function Trig_Dialog_Complete_Func006Func004Func006001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
@@ -35,6 +189,46 @@ library trigger77 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Dialog_Complete_Func008Func001C takes nothing returns boolean
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        if(not(udg_boolean07==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func008C takes nothing returns boolean
+        if(not Trig_Dialog_Complete_Func008Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func008Func002C takes nothing returns boolean
+        if(not(udg_integers07[1]>= udg_integers07[2]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func008Func003C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func008Func003Func012001 takes nothing returns boolean
+        return(udg_integer13==1)
+    endfunction
+
+
     function Trig_Dialog_Complete_Func008Func003Func014001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
@@ -44,6 +238,11 @@ library trigger77 initializer init requires RandomShit
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,25)
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,25)
         call ResourseRefresh(GetEnumPlayer()) 
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func008Func003Func006001 takes nothing returns boolean
+        return(udg_integer13==1)
     endfunction
 
 
@@ -66,6 +265,71 @@ library trigger77 initializer init requires RandomShit
 
     function Trig_Dialog_Complete_Func010Func004A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func012C takes nothing returns boolean
+        if(not(udg_integers07[14]> udg_integers07[13]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func014Func001Func003C takes nothing returns boolean
+        if(not(udg_integers07[11]> udg_integers07[9]))then
+            return false
+        endif
+        if(not(udg_integers07[11]> udg_integers07[10]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func014Func001C takes nothing returns boolean
+        if((udg_boolean04==true))then
+            return true
+        endif
+        if((udg_integer13 <= 2))then
+            return true
+        endif
+        if(Trig_Dialog_Complete_Func014Func001Func003C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func014C takes nothing returns boolean
+        if(not Trig_Dialog_Complete_Func014Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func014Func007Func011C takes nothing returns boolean
+        if(not(udg_integers07[10]> udg_integers07[9]))then
+            return false
+        endif
+        if(not(udg_integers07[10]> udg_integers07[11]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func014Func007C takes nothing returns boolean
+        if(not Trig_Dialog_Complete_Func014Func007Func011C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Complete_Func023001 takes nothing returns boolean
+        return(udg_boolean16==false)
     endfunction
 
 

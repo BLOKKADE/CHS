@@ -1,5 +1,13 @@
 library trigger120 initializer init requires RandomShit
 
+    function Trig_Playtime_Func002C takes nothing returns boolean
+        if(not(udg_integers06[2]> 59))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Playtime_Actions takes nothing returns nothing
         set udg_integers06[2]=(udg_integers06[2]+ 1)
         if(Trig_Playtime_Func002C())then

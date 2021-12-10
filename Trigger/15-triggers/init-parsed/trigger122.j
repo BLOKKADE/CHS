@@ -1,7 +1,107 @@
 library trigger122 initializer init requires RandomShit
 
+    function Trig_Victory_Func001Func001C takes nothing returns boolean
+        if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
+            return false
+        endif
+        if(not(udg_integer13 > 1))then
+            return false
+        endif
+        if(not(udg_integer06==1))then
+            return false
+        endif
+        if(not(udg_boolean11==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Victory_Func001Func002Func003Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        if(not(udg_integer02==25))then
+            return false
+        endif
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Victory_Func001Func002Func003Func002C takes nothing returns boolean
+        if(not(udg_boolean08==false))then
+            return false
+        endif
+        if(not(udg_integer02==50))then
+            return false
+        endif
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Victory_Func001Func002Func003C takes nothing returns boolean
+        if(Trig_Victory_Func001Func002Func003Func001C())then
+            return true
+        endif
+        if(Trig_Victory_Func001Func002Func003Func002C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Victory_Func001Func002C takes nothing returns boolean
+        if(not(udg_integer13==1))then
+            return false
+        endif
+        if(not(udg_integer06==1))then
+            return false
+        endif
+        if(not Trig_Victory_Func001Func002Func003C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Victory_Func001C takes nothing returns boolean
+        if(Trig_Victory_Func001Func001C())then
+            return true
+        endif
+        if(Trig_Victory_Func001Func002C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Victory_Conditions takes nothing returns boolean
         if(not Trig_Victory_Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Victory_Func006C takes nothing returns boolean
+        if(not(udg_boolean02==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Victory_Func012C takes nothing returns boolean
+        if(not(udg_integer13==1))then
+            return false
+        endif
+        if(not(udg_integer06==1))then
             return false
         endif
         return true

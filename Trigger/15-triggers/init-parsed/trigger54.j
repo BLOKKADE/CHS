@@ -8,6 +8,90 @@ library trigger54 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Betting_Complete_Func002Func001Func002C takes nothing returns boolean
+        if((udg_integers15[GetConvertedPlayerId(GetEnumPlayer())]> 0))then
+            return true
+        endif
+        if((udg_integers16[GetConvertedPlayerId(GetEnumPlayer())]> 0))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Betting_Complete_Func002Func001C takes nothing returns boolean
+        if(not Trig_Betting_Complete_Func002Func001Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Betting_Complete_Func002Func001Func001Func001Func001C takes nothing returns boolean
+        if(not(udg_units03[1]==udg_unit05))then
+            return false
+        endif
+        if(not(IsPlayerInForce(GetEnumPlayer(),udg_force04)==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Betting_Complete_Func002Func001Func001Func001Func002C takes nothing returns boolean
+        if(not(udg_units03[2]==udg_unit05))then
+            return false
+        endif
+        if(not(IsPlayerInForce(GetEnumPlayer(),udg_force05)==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Betting_Complete_Func002Func001Func001Func001C takes nothing returns boolean
+        if(Trig_Betting_Complete_Func002Func001Func001Func001Func001C())then
+            return true
+        endif
+        if(Trig_Betting_Complete_Func002Func001Func001Func001Func002C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Betting_Complete_Func002Func001Func001C takes nothing returns boolean
+        if(not Trig_Betting_Complete_Func002Func001Func001Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Betting_Complete_Func002Func001Func001Func006C takes nothing returns boolean
+        if(not(udg_booleans04[GetConvertedPlayerId(GetEnumPlayer())]==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Betting_Complete_Func002Func001Func001Func006Func003C takes nothing returns boolean
+        if(not(udg_booleans05[GetConvertedPlayerId(GetEnumPlayer())]==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Betting_Complete_Func002Func001Func001Func007C takes nothing returns boolean
+        if(not(udg_booleans05[GetConvertedPlayerId(GetEnumPlayer())]==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Betting_Complete_Func002A takes nothing returns nothing
         if(Trig_Betting_Complete_Func002Func001C())then
             if(Trig_Betting_Complete_Func002Func001Func001C())then

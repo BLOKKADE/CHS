@@ -11,6 +11,14 @@ library trigger105 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Bonus_Exp_Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Bonus_Exp_Func001Func002001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
     endfunction

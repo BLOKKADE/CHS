@@ -1,5 +1,52 @@
 library trigger23 initializer init requires RandomShit
 
+    function Trig_Plague_Func002Func001Func001C takes nothing returns boolean
+        if((udg_boolean02==true))then
+            return true
+        endif
+        if((udg_boolean03==true))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Plague_Func002Func001C takes nothing returns boolean
+        if(not Trig_Plague_Func002Func001Func001C())then
+            return false
+        endif
+        if(not(RectContainsUnit(udg_rect09,GetTriggerUnit())==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Plague_Func002Func002C takes nothing returns boolean
+        if(not(udg_boolean02==false))then
+            return false
+        endif
+        if(not(udg_boolean03==false))then
+            return false
+        endif
+        if(not(RectContainsUnit(udg_rect09,GetTriggerUnit())!=true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Plague_Func002C takes nothing returns boolean
+        if(Trig_Plague_Func002Func001C())then
+            return true
+        endif
+        if(Trig_Plague_Func002Func002C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Plague_Conditions takes nothing returns boolean
         if(not(GetSpellAbilityId()=='A017'))then
             return false

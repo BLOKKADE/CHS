@@ -1,5 +1,22 @@
 library trigger153 initializer init requires RandomShit
 
+    function Trig_Hero_Dies_Elimination_Func039C takes nothing returns boolean
+        if(not(udg_boolean03==true))then
+            return false
+        endif
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(8)))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Hero_Dies_Elimination_Conditions takes nothing returns boolean
         if(not Trig_Hero_Dies_Elimination_Func039C())then
             return false
@@ -37,6 +54,14 @@ library trigger153 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Hero_Dies_Elimination_Func012C takes nothing returns boolean
+        if(not(GetPlayerController(GetOwningPlayer(GetTriggerUnit()))==MAP_CONTROL_USER))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Hero_Dies_Elimination_Func018Func001001002001 takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())!=Player(8))
     endfunction
@@ -44,6 +69,11 @@ library trigger153 initializer init requires RandomShit
 
     function Trig_Hero_Dies_Elimination_Func018Func001A takes nothing returns nothing
         call SetPlayerAllianceStateBJ(GetOwningPlayer(GetEnumUnit()),ConvertedPlayer(udg_integer47),bj_ALLIANCE_UNALLIED)
+    endfunction
+
+
+    function Trig_Hero_Dies_Elimination_Func021001 takes nothing returns boolean
+        return(udg_integer06==1)
     endfunction
 
 

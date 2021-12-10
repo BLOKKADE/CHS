@@ -1,5 +1,16 @@
 library trigger30 initializer init requires RandomShit
 
+    function Trig_Summon_Bear_Func001C takes nothing returns boolean
+        if(not(GetUnitTypeId(GetTriggerUnit())=='ngz3'))then
+            return false
+        endif
+        if(not(GetUnitAbilityLevelSwapped('ANsg',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 3))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Summon_Bear_Conditions takes nothing returns boolean
         if(not Trig_Summon_Bear_Func001C())then
             return false

@@ -22,6 +22,11 @@ library trigger132 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Kick_Player_Command_Func003001 takes nothing returns boolean
+        return(udg_boolean17==true)
+    endfunction
+
+
     function Trig_Kick_Player_Command_Func004001001 takes nothing returns boolean
         return(GetFilterPlayer()==GetTriggerPlayer())
     endfunction

@@ -1,7 +1,47 @@
 library trigger101 initializer init requires RandomShit
 
+    function Trig_Creep_AutoCast_Func001Func001C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A00V',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func001Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func001Func002Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Creep_AutoCast_Func001Func001Func002Func002003001003001001 takes nothing returns boolean
         return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func002C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A01A',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func002Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
     endfunction
 
 
@@ -10,8 +50,56 @@ library trigger101 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Creep_AutoCast_Func001Func003C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A00U',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func003Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func003Func002Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Creep_AutoCast_Func001Func003Func002Func002003001001003001001 takes nothing returns boolean
         return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func004C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A00W',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func004Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func004Func002Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
     endfunction
 
 
@@ -20,8 +108,48 @@ library trigger101 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Creep_AutoCast_Func001Func005C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A00X',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func005Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func005Func002Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Creep_AutoCast_Func001Func005Func002Func002003001003001001 takes nothing returns boolean
         return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func006C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A013',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func006Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
     endfunction
 
 
@@ -30,8 +158,109 @@ library trigger101 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Creep_AutoCast_Func001Func007C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A018',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func007Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func007Func002Func001Func001Func002001001003001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func007Func002Func001Func001C takes nothing returns boolean
+        if(not(UnitHasBuffBJ(GetEnumUnit(),'BOvd')!=true))then
+            return false
+        endif
+        if(not(CountUnitsInGroup(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func007Func002Func001Func001Func002001001003)))> 1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func007Func002Func001C takes nothing returns boolean
+        if(not Trig_Creep_AutoCast_Func001Func007Func002Func001Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func008C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A016',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func008Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func008Func002Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Creep_AutoCast_Func001Func008Func002Func002003001003001001 takes nothing returns boolean
         return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func009C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped('A01B',GetEnumUnit())> 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func009Func002C takes nothing returns boolean
+        if(not(udg_integer14==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func009Func002Func001Func001001001003001001 takes nothing returns boolean
+        return(IsUnitAliveBJ(GetFilterUnit())==true)
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func009Func002Func001C takes nothing returns boolean
+        if(not(CountUnitsInGroup(GetUnitsInRangeOfLocMatching(250.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func009Func002Func001Func001001001003)))>= 1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Creep_AutoCast_Func001Func009Func002Func001Func002C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
     endfunction
 
 

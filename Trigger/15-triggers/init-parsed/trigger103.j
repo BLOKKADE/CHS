@@ -8,8 +8,35 @@ library trigger103 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Generate_Next_Level_Func012C takes nothing returns boolean
+        if(not((udg_integer02 + 1)> 1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Generate_Next_Level_Func014C takes nothing returns boolean
+        if(not((udg_integer02 + 1)<= 8))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Generate_Next_Level_Func018A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
+    endfunction
+
+
+    function Trig_Generate_Next_Level_Func021Func001Func001C takes nothing returns boolean
+        if(not(GetPlayerSlotState(ConvertedPlayer(udg_integer40))!=PLAYER_SLOT_STATE_EMPTY))then
+            return false
+        endif
+        if(not(IsPlayerInForce(ConvertedPlayer(udg_integer40),udg_force02)!=true))then
+            return false
+        endif
+        return true
     endfunction
 
 

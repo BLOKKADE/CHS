@@ -1,5 +1,295 @@
 library trigger100 initializer init requires RandomShit
 
+    function Trig_Add_Unit_Power_Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002C takes nothing returns boolean
+        if(not(udg_integer02 <= 5))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func003001 takes nothing returns boolean
+        return(udg_integer03==1)
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func001C takes nothing returns boolean
+        if(not(udg_integer02 <= 10))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func001Func004001 takes nothing returns boolean
+        return(udg_integer03==1)
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func001Func001C takes nothing returns boolean
+        if(not(udg_integer02 <= 15))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func001Func001Func004001 takes nothing returns boolean
+        return(udg_integer03==1)
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002C takes nothing returns boolean
+        if(not(udg_integer02 <= 20))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func002001 takes nothing returns boolean
+        return(udg_integer03==1)
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003C takes nothing returns boolean
+        if(not(udg_integer02 <= 25))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003Func003001 takes nothing returns boolean
+        return(udg_integer03==1)
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func002C takes nothing returns boolean
+        if(not(udg_integer02 > 1))then
+            return false
+        endif
+        if(not(udg_integer02 <= 10))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009C takes nothing returns boolean
+        if(not Trig_Add_Unit_Power_Func001Func009Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func003Func002C takes nothing returns boolean
+        if(not(udg_integer02 >= 4))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func003Func003C takes nothing returns boolean
+        if(not(udg_integer02 >= 8))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func001Func002C takes nothing returns boolean
+        if(not(udg_integer02 > 10))then
+            return false
+        endif
+        if(not(udg_integer02 <= 20))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func001C takes nothing returns boolean
+        if(not Trig_Add_Unit_Power_Func001Func009Func001Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func001Func001Func002C takes nothing returns boolean
+        if(not(udg_integer02 > 20))then
+            return false
+        endif
+        if(not(udg_integer02 <= 25))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func001Func001C takes nothing returns boolean
+        if(not Trig_Add_Unit_Power_Func001Func009Func001Func001Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func001Func001Func001Func001C takes nothing returns boolean
+        if(not(udg_integer02 > 25))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func009Func001Func001Func001C takes nothing returns boolean
+        if(not Trig_Add_Unit_Power_Func001Func009Func001Func001Func001Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func004C takes nothing returns boolean
+        if(not(udg_integer02 <= 30))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func004Func004001 takes nothing returns boolean
+        return(udg_integer03==1)
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func004Func002C takes nothing returns boolean
+        if(not(udg_integer02 <= 40))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func004Func002Func002001 takes nothing returns boolean
+        return(udg_integer03==1)
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func004Func002Func003C takes nothing returns boolean
+        if(not(udg_integer02 <= 50))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func004Func002Func003Func003001 takes nothing returns boolean
+        return(udg_integer03==1)
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func002C takes nothing returns boolean
+        if(not(udg_integer02 > 1))then
+            return false
+        endif
+        if(not(udg_integer02 <= 20))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006C takes nothing returns boolean
+        if(not Trig_Add_Unit_Power_Func001Func006Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func003Func002C takes nothing returns boolean
+        if(not(udg_integer02 >= 8))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func003Func003C takes nothing returns boolean
+        if(not(udg_integer02 >= 16))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func001Func002C takes nothing returns boolean
+        if(not(udg_integer02 > 20))then
+            return false
+        endif
+        if(not(udg_integer02 <= 40))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func001C takes nothing returns boolean
+        if(not Trig_Add_Unit_Power_Func001Func006Func001Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func001Func001Func002C takes nothing returns boolean
+        if(not(udg_integer02 > 40))then
+            return false
+        endif
+        if(not(udg_integer02 <= 50))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func001Func001C takes nothing returns boolean
+        if(not Trig_Add_Unit_Power_Func001Func006Func001Func001Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func001Func001Func001Func001C takes nothing returns boolean
+        if(not(udg_integer02 > 50))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Add_Unit_Power_Func001Func006Func001Func001Func001C takes nothing returns boolean
+        if(not Trig_Add_Unit_Power_Func001Func006Func001Func001Func001Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Add_Unit_Power_Actions takes nothing returns nothing
         local unit u = GetLastCreatedUnit()
         if(Trig_Add_Unit_Power_Func001C())then

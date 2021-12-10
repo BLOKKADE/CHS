@@ -1,7 +1,43 @@
 library trigger32 initializer init requires RandomShit
 
+    function Trig_Summon_Quilbeast_Func001C takes nothing returns boolean
+        if((GetUnitTypeId(GetTriggerUnit())=='nqb1'))then
+            return true
+        endif
+        if((GetUnitTypeId(GetTriggerUnit())=='nqb2'))then
+            return true
+        endif
+        if((GetUnitTypeId(GetTriggerUnit())=='nqb3'))then
+            return true
+        endif
+        if((GetUnitTypeId(GetTriggerUnit())=='nqb4'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Summon_Quilbeast_Conditions takes nothing returns boolean
         if(not Trig_Summon_Quilbeast_Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Summon_Quilbeast_Func003Func001C takes nothing returns boolean
+        if(not(GetUnitTypeId(GetTriggerUnit())=='nqb4'))then
+            return false
+        endif
+        if(not(GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 4))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Summon_Quilbeast_Func003C takes nothing returns boolean
+        if(not Trig_Summon_Quilbeast_Func003Func001C())then
             return false
         endif
         return true

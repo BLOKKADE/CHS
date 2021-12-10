@@ -5,6 +5,14 @@ library trigger137 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_PvP_No_Player_Func001Func001Func001C takes nothing returns boolean
+        if(not(RectContainsUnit(udg_rects01[udg_integer45],GetEnumUnit())==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_PvP_No_Player_Func001Func001A takes nothing returns nothing
         if(Trig_PvP_No_Player_Func001Func001Func001C())then
             call IssuePointOrderLocBJ(GetEnumUnit(),"attack",GetRandomLocInRect(udg_rects01[udg_integer45]))

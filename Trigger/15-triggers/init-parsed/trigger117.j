@@ -1,5 +1,41 @@
 library trigger117 initializer init requires RandomShit
 
+    function Trig_Countdown_Func001Func001C takes nothing returns boolean
+        if(not(udg_integer19 > 0))then
+            return false
+        endif
+        if(not(udg_integer02==1))then
+            return false
+        endif
+        if(not(udg_integer07 < udg_integer06))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Countdown_Func001Func002C takes nothing returns boolean
+        if(not(udg_integer19 > 0))then
+            return false
+        endif
+        if(not(udg_boolean09==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Countdown_Func001C takes nothing returns boolean
+        if(Trig_Countdown_Func001Func001C())then
+            return true
+        endif
+        if(Trig_Countdown_Func001Func002C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Countdown_Conditions takes nothing returns boolean
         if(not Trig_Countdown_Func001C())then
             return false

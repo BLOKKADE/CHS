@@ -1,5 +1,43 @@
 library trigger148 initializer init requires RandomShit
 
+    function Trig_Unhide_Shops_Func001Func001Func001Func002C takes nothing returns boolean
+        if(not(udg_boolean05!=true))then
+            return false
+        endif
+        if(not(udg_integers10[udg_integer36]!='n016'))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Unhide_Shops_Func001Func001Func001C takes nothing returns boolean
+        if((udg_boolean05==true))then
+            return true
+        endif
+        if(Trig_Unhide_Shops_Func001Func001Func001Func002C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Unhide_Shops_Func001Func001C takes nothing returns boolean
+        if(not Trig_Unhide_Shops_Func001Func001Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Unhide_Shops_Func001Func001Func003C takes nothing returns boolean
+        if(not(GetUnitTypeId(GetLastCreatedUnit())=='n012'))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Unhide_Shops_Actions takes nothing returns nothing
         set udg_integer36 = 1
         loop

@@ -1,5 +1,25 @@
 library trigger151 initializer init requires RandomShit
 
+    function Trig_Hero_Dies_Death_Match_PvP_Func019C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(8)))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
+            return false
+        endif
+        if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)==true))then
+            return false
+        endif
+        if(not(udg_boolean07==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Hero_Dies_Death_Match_PvP_Conditions takes nothing returns boolean
         if(not Trig_Hero_Dies_Death_Match_PvP_Func019C())then
             return false
@@ -24,6 +44,14 @@ library trigger151 initializer init requires RandomShit
     
         call KillUnit(u)
         set u = null
+    endfunction
+
+
+    function Trig_Hero_Dies_Death_Match_PvP_Func011C takes nothing returns boolean
+        if(not(GetPlayerController(GetOwningPlayer(GetTriggerUnit()))==MAP_CONTROL_USER))then
+            return false
+        endif
+        return true
     endfunction
 
 

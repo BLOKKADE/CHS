@@ -1,12 +1,81 @@
 library trigger79 initializer init requires RandomShit
 
+    function Trig_Spawn_Hero_Func005C takes nothing returns boolean
+        if(not(udg_boolean16==false))then
+            return false
+        endif
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Spawn_Hero_Func005Func001002001001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
     endfunction
 
 
+    function Trig_Spawn_Hero_Func013001 takes nothing returns boolean
+        return(GetUnitTypeId(udg_units01[GetConvertedPlayerId(udg_player02)])=='O008')
+    endfunction
+
+
+    function Trig_Spawn_Hero_Func014Func001001 takes nothing returns boolean
+        return(GetUnitTypeId(udg_units01[GetConvertedPlayerId(udg_player02)])=='H008')
+    endfunction
+
+
+    function Trig_Spawn_Hero_Func014Func002001 takes nothing returns boolean
+        return(GetUnitTypeId(udg_units01[GetConvertedPlayerId(udg_player02)])=='H008')
+    endfunction
+
+
+    function Trig_Spawn_Hero_Func015001 takes nothing returns boolean
+        return(udg_integer06==1)
+    endfunction
+
+
     function Trig_Spawn_Hero_Func016A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
+    endfunction
+
+
+    function Trig_Spawn_Hero_Func017Func008C takes nothing returns boolean
+        if(not(udg_integer02==1))then
+            return false
+        endif
+        if(not(udg_integer07 >= udg_integer06))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Spawn_Hero_Func017C takes nothing returns boolean
+        if(not Trig_Spawn_Hero_Func017Func008C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Spawn_Hero_Func019Func001C takes nothing returns boolean
+        if(not(udg_integer02==1))then
+            return false
+        endif
+        if(not(udg_integer07 >= udg_integer06))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Spawn_Hero_Func019C takes nothing returns boolean
+        if(not Trig_Spawn_Hero_Func019Func001C())then
+            return false
+        endif
+        return true
     endfunction
 
 

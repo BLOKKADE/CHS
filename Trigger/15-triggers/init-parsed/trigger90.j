@@ -8,8 +8,64 @@ library trigger90 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Melee_Initialization_Func004C takes nothing returns boolean
+        if(not(udg_integer07 < udg_integer06))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Melee_Initialization_Func004Func001001 takes nothing returns boolean
+        return(udg_boolean16==true)
+    endfunction
+
+
+    function Trig_Melee_Initialization_Func010Func004C takes nothing returns boolean
+        if(not(udg_integer02==1))then
+            return false
+        endif
+        if(not(udg_integer07 < udg_integer06))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Melee_Initialization_Func010C takes nothing returns boolean
+        if(not Trig_Melee_Initialization_Func010Func004C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Melee_Initialization_Func010Func003001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
+    endfunction
+
+
+    function Trig_Melee_Initialization_Func010Func003Func001Func003Func002001001002001 takes nothing returns boolean
+        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+
+
+    function Trig_Melee_Initialization_Func010Func003Func001Func003C takes nothing returns boolean
+        if(not(udg_booleans03[GetConvertedPlayerId(GetEnumPlayer())]==false))then
+            return false
+        endif
+        if(not(CountUnitsInGroup(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Melee_Initialization_Func010Func003Func001Func003Func002001001002)))==0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Melee_Initialization_Func010Func003Func001C takes nothing returns boolean
+        if(not Trig_Melee_Initialization_Func010Func003Func001Func003C())then
+            return false
+        endif
+        return true
     endfunction
 
 

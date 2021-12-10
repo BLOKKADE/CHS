@@ -61,6 +61,14 @@ library trigger42 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Battle_Royal_Func034C takes nothing returns boolean
+        if(not(udg_integer16==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Battle_Royal_Actions takes nothing returns nothing
         call DisableTrigger(udg_trigger149)
         call KillUnit(udg_unit03)

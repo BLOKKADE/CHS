@@ -1,7 +1,66 @@
 library trigger51 initializer init requires RandomShit
 
+    function Trig_Place_Bet_Func001C takes nothing returns boolean
+        if((GetClickedButtonBJ()==udg_buttons02[8]))then
+            return true
+        endif
+        if((GetClickedButtonBJ()==udg_buttons02[9]))then
+            return true
+        endif
+        if((GetClickedButtonBJ()==udg_buttons02[10]))then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Place_Bet_Conditions takes nothing returns boolean
         if(not Trig_Place_Bet_Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Place_Bet_Func002C takes nothing returns boolean
+        if(not(GetClickedButtonBJ()==udg_buttons02[8]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Place_Bet_Func002Func001C takes nothing returns boolean
+        if(not(GetClickedButtonBJ()==udg_buttons02[9]))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Place_Bet_Func004C takes nothing returns boolean
+        if(not(udg_booleans04[GetConvertedPlayerId(GetTriggerPlayer())]==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Place_Bet_Func005C takes nothing returns boolean
+        if(not(udg_booleans05[GetConvertedPlayerId(GetTriggerPlayer())]==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Place_Bet_Func007001 takes nothing returns boolean
+        return(udg_boolean14==false)
+    endfunction
+
+
+    function Trig_Place_Bet_Func008C takes nothing returns boolean
+        if(not(IsPlayerInForce(GetTriggerPlayer(),udg_force04)==true))then
             return false
         endif
         return true

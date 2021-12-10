@@ -1,5 +1,13 @@
 library trigger141 initializer init requires RandomShit
 
+    function Trig_Sudden_Death_Timer_PvP_Func002C takes nothing returns boolean
+        if(not(udg_integer39 >= 240))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Sudden_Death_Timer_PvP_Actions takes nothing returns nothing
         set udg_integer39 =(udg_integer39 + 1)
         if(Trig_Sudden_Death_Timer_PvP_Func002C())then

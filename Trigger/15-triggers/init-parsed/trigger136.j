@@ -1,7 +1,23 @@
 library trigger136 initializer init requires RandomShit
 
+    function Trig_PvP_Battle_Func001C takes nothing returns boolean
+        if(not(CountUnitsInGroup(udg_group01)>= 1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_PvP_Battle_Func001Func008002001002001 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+    endfunction
+
+
+    function Trig_PvP_Battle_Func001Func010C takes nothing returns boolean
+        if(not(CountUnitsInGroup(udg_group01)>= 1))then
+            return false
+        endif
+        return true
     endfunction
 
 
@@ -65,8 +81,43 @@ library trigger136 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_PvP_Battle_Func001Func031C takes nothing returns boolean
+        if(not(udg_boolean13==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_PvP_Battle_Func001Func031Func003Func001C takes nothing returns boolean
+        if(not(GetForLoopIndexA()==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_PvP_Battle_Func001Func031Func006001001001 takes nothing returns boolean
         return(GetOwningPlayer(udg_units03[1])!=GetFilterPlayer())
+    endfunction
+
+
+    function Trig_PvP_Battle_Func001Func031Func006Func001Func001C takes nothing returns boolean
+        if((GetPlayerState(GetEnumPlayer(),PLAYER_STATE_RESOURCE_GOLD)> 0))then
+            return true
+        endif
+        if((GetPlayerState(GetEnumPlayer(),PLAYER_STATE_RESOURCE_LUMBER)> 0))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_PvP_Battle_Func001Func031Func006Func001C takes nothing returns boolean
+        if(not Trig_PvP_Battle_Func001Func031Func006Func001Func001C())then
+            return false
+        endif
+        return true
     endfunction
 
 
@@ -86,6 +137,11 @@ library trigger136 initializer init requires RandomShit
             call DialogDisplayBJ(false,udg_dialogs01[GetForLoopIndexA()],GetEnumPlayer())
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
+    endfunction
+
+
+    function Trig_PvP_Battle_Func001Func001001 takes nothing returns boolean
+        return(IsTriggerEnabled(udg_trigger119)==false)
     endfunction
 
 

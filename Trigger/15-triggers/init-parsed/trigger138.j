@@ -8,6 +8,25 @@ library trigger138 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Receive_Prize_Func002Func003Func001C takes nothing returns boolean
+        if(not(udg_integer56 > 0))then
+            return false
+        endif
+        if(not(IsUnitAliveBJ(GetEnumUnit())==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Receive_Prize_Func002Func003C takes nothing returns boolean
+        if(not Trig_Receive_Prize_Func002Func003Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Receive_Prize_Func002A takes nothing returns nothing
         if(Trig_Receive_Prize_Func002Func003C())then
             call SetPlayerState(GetOwningPlayer(GetEnumUnit()), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(GetEnumUnit()), PLAYER_STATE_RESOURCE_GOLD) + udg_integer15)

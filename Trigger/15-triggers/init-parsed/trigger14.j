@@ -19,6 +19,30 @@ library trigger14 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Faerie_Dragon_Func001Func001C takes nothing returns boolean
+        if(not(GetOwningPlayer(GetEnumUnit())==GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Faerie_Dragon_Func001Func001Func002C takes nothing returns boolean
+        if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 900.00))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Faerie_Dragon_Func001Func001Func003C takes nothing returns boolean
+        if(not(GetUnitStateSwap(UNIT_STATE_MANA,GetEnumUnit())==GetUnitStateSwap(UNIT_STATE_MAX_MANA,GetEnumUnit())))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Faerie_Dragon_Func001A takes nothing returns nothing
         if(Trig_Faerie_Dragon_Func001Func001C())then
             if(Trig_Faerie_Dragon_Func001Func001Func002C())then

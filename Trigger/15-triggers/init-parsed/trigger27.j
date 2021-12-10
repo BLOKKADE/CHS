@@ -1,5 +1,22 @@
 library trigger27 initializer init requires RandomShit
 
+    function Trig_Pulverize_Add_Func003C takes nothing returns boolean
+        if(not(GetUnitTypeId(GetTriggerUnit())!='ohwd'))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())!='osp1'))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())!='osp2'))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())!='osp3'))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Pulverize_Add_Conditions takes nothing returns boolean
         if(not(IsUnitInGroup(GetTriggerUnit(),udg_group04)!=true))then
             return false

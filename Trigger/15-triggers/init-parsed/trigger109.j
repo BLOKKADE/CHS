@@ -8,6 +8,25 @@ library trigger109 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Start_Level_Func003Func001C takes nothing returns boolean
+        if(not(udg_boolean12==false))then
+            return false
+        endif
+        if(not(udg_integer02==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Start_Level_Func003C takes nothing returns boolean
+        if(not Trig_Start_Level_Func003Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Start_Level_Func003Func006A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction
@@ -17,6 +36,33 @@ library trigger109 initializer init requires RandomShit
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,udg_integer02)
         set ShowCreepAbilButton[GetPlayerId(GetEnumPlayer())] = false
         call ResourseRefresh(GetEnumPlayer()) 
+    endfunction
+
+
+    function Trig_Start_Level_Func013Func001C takes nothing returns boolean
+        if((udg_boolean04==true))then
+            return true
+        endif
+        if((udg_boolean08==true))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Start_Level_Func013C takes nothing returns boolean
+        if(not Trig_Start_Level_Func013Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Start_Level_Func015C takes nothing returns boolean
+        if(not(udg_integer02 > 1))then
+            return false
+        endif
+        return true
     endfunction
 
 

@@ -8,6 +8,25 @@ library trigger115 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Unlearn_Ability_Func001C takes nothing returns boolean
+        if(not(udg_boolean05==false))then
+            return false
+        endif
+        if(not(udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]!='Amnz'))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Unlearn_Ability_Func001Func003C takes nothing returns boolean
+        if(not(udg_boolean05==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Unlearn_Ability_Actions takes nothing returns nothing 
         local integer CountS = 0 
         local integer lastLearned = 0

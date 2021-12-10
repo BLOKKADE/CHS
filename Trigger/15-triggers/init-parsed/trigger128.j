@@ -1,5 +1,62 @@
 library trigger128 initializer init requires RandomShit
 
+    function Trig_Playtime_Command_Func002Func003C takes nothing returns boolean
+        if(not(udg_integers06[1]==1))then
+            return false
+        endif
+        if(not(udg_integers06[2]==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Playtime_Command_Func002C takes nothing returns boolean
+        if(not Trig_Playtime_Command_Func002Func003C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Playtime_Command_Func002Func001Func003C takes nothing returns boolean
+        if(not(udg_integers06[1]==1))then
+            return false
+        endif
+        if(not(udg_integers06[2]!=1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Playtime_Command_Func002Func001C takes nothing returns boolean
+        if(not Trig_Playtime_Command_Func002Func001Func003C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Playtime_Command_Func002Func001Func001Func003C takes nothing returns boolean
+        if(not(udg_integers06[1]!=1))then
+            return false
+        endif
+        if(not(udg_integers06[2]==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Playtime_Command_Func002Func001Func001C takes nothing returns boolean
+        if(not Trig_Playtime_Command_Func002Func001Func001Func003C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Playtime_Command_Actions takes nothing returns nothing
         call ForceAddPlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
         if(Trig_Playtime_Command_Func002C())then

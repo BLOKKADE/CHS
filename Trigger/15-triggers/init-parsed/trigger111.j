@@ -8,6 +8,366 @@ library trigger111 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Learn_Ability_Func008C takes nothing returns boolean
+        if(not(udg_boolean05==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())==0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func002Func002C takes nothing returns boolean
+        if((udg_integer01=='ANba'))then
+            return true
+        endif
+        if((udg_integer01=='AHca'))then
+            return true
+        endif
+        if((udg_integer01=='AHfa'))then
+            return true
+        endif
+        if((udg_integer01=='Aliq'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func002C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
+            return false
+        endif
+        if(not Trig_Learn_Ability_Func008Func002Func001Func001Func002Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func003Func002C takes nothing returns boolean
+        if((udg_integer01=='ANca'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func003C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_RANGED_ATTACKER)==true))then
+            return false
+        endif
+        if(not Trig_Learn_Ability_Func008Func002Func001Func001Func003Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func004Func001C takes nothing returns boolean
+        if((IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func004Func002C takes nothing returns boolean
+        if((udg_integer01=='ANba'))then
+            return true
+        endif
+        if((udg_integer01=='Aroc'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func004C takes nothing returns boolean
+        if(not Trig_Learn_Ability_Func008Func002Func001Func001Func004Func001C())then
+            return false
+        endif
+        if(not Trig_Learn_Ability_Func008Func002Func001Func001Func004Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func005Func001C takes nothing returns boolean
+        if((GetUnitTypeId(GetTriggerUnit())=='H004'))then
+            return true
+        endif
+        if((GetUnitTypeId(GetTriggerUnit())=='O005'))then
+            return true
+        endif
+        if((GetUnitTypeId(GetTriggerUnit())=='O001'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func005Func002C takes nothing returns boolean
+        if((udg_integer01=='ACvs'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001Func005C takes nothing returns boolean
+        if(not Trig_Learn_Ability_Func008Func002Func001Func001Func005Func001C())then
+            return false
+        endif
+        if(not Trig_Learn_Ability_Func008Func002Func001Func001Func005Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func001C takes nothing returns boolean
+        if((udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]>= 10))then
+            return true
+        endif
+        if(Trig_Learn_Ability_Func008Func002Func001Func001Func002C())then
+            return true
+        endif
+        if(Trig_Learn_Ability_Func008Func002Func001Func001Func003C())then
+            return true
+        endif
+        if(Trig_Learn_Ability_Func008Func002Func001Func001Func004C())then
+            return true
+        endif
+        if(Trig_Learn_Ability_Func008Func002Func001Func001Func005C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001C takes nothing returns boolean
+        if(not Trig_Learn_Ability_Func008Func002Func001Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001Func002C takes nothing returns boolean
+        if((udg_integer01=='ANba'))then
+            return true
+        endif
+        if((udg_integer01=='AHca'))then
+            return true
+        endif
+        if((udg_integer01=='AHfa'))then
+            return true
+        endif
+        if((udg_integer01=='Aliq'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
+            return false
+        endif
+        if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func002Func002C takes nothing returns boolean
+        if((udg_integer01=='ANca'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func002C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_RANGED_ATTACKER)==true))then
+            return false
+        endif
+        if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002Func002Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func001C takes nothing returns boolean
+        if((IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func002C takes nothing returns boolean
+        if((udg_integer01=='ANba'))then
+            return true
+        endif
+        if((udg_integer01=='Aroc'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003C takes nothing returns boolean
+        if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func001C())then
+            return false
+        endif
+        if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004Func001C takes nothing returns boolean
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004Func002C takes nothing returns boolean
+        if((udg_integer01=='ACvs'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004C takes nothing returns boolean
+        if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004Func001C())then
+            return false
+        endif
+        if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func002C takes nothing returns boolean
+        if(Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001C())then
+            return true
+        endif
+        if(Trig_Learn_Ability_Func008Func002Func001Func007Func002Func002C())then
+            return true
+        endif
+        if(Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003C())then
+            return true
+        endif
+        if(Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007C takes nothing returns boolean
+        if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func001C takes nothing returns boolean
+        if(not(udg_boolean06==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func007Func001Func001C takes nothing returns boolean
+        if(not(udg_boolean06==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func001Func008C takes nothing returns boolean
+        if(not(udg_boolean06==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func003C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())< 30))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func002Func003Func001C takes nothing returns boolean
+        if(not(udg_boolean06==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func001C takes nothing returns boolean
+        if(not(udg_boolean05==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func001Func002C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())>= 0))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func001Func002Func001C takes nothing returns boolean
+        if(not(udg_boolean06==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func001Func002Func002C takes nothing returns boolean
+        if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())< 30))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Learn_Ability_Func008Func001Func002Func002Func001C takes nothing returns boolean
+        if(not(udg_boolean06==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Learn_Ability_Actions takes nothing returns nothing
         local integer abilLevel
         local boolean maxAbil = false

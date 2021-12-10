@@ -8,13 +8,45 @@ library trigger135 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_End_PvP_Func001C takes nothing returns boolean
+        if(not(udg_units03[1]==GetTriggerUnit()))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_End_PvP_Func019A takes nothing returns nothing
         call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(udg_rect09),0.20)
     endfunction
 
 
+    function Trig_End_PvP_Func021C takes nothing returns boolean
+        if(not(udg_boolean07==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_End_PvP_Func021Func001Func001C takes nothing returns boolean
+        if(not(udg_units03[1]==udg_unit05))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_End_PvP_Func024Func001A takes nothing returns nothing
         call RemoveItem(GetEnumItem())
+    endfunction
+
+
+    function Trig_End_PvP_Func026C takes nothing returns boolean
+        if(not(CountUnitsInGroup(udg_group01)==0))then
+            return false
+        endif
+        return true
     endfunction
 
 
@@ -25,6 +57,30 @@ library trigger135 initializer init requires RandomShit
 
     function Trig_End_PvP_Func026Func007A takes nothing returns nothing
         call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(udg_rect09))
+    endfunction
+
+
+    function Trig_End_PvP_Func026Func008C takes nothing returns boolean
+        if(not(udg_integer06 > 1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_End_PvP_Func026Func016C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_End_PvP_Func026Func018C takes nothing returns boolean
+        if(not(udg_boolean07==false))then
+            return false
+        endif
+        return true
     endfunction
 
 

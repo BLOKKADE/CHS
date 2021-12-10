@@ -1,5 +1,19 @@
 library trigger47 initializer init requires RandomShit
 
+    function Trig_Skip_Bet_Func004C takes nothing returns boolean
+        if((GetClickedButtonBJ()==udg_buttons02[3]))then
+            return true
+        endif
+        if((GetClickedButtonBJ()==udg_buttons02[7]))then
+            return true
+        endif
+        if((GetClickedButtonBJ()==udg_buttons02[11]))then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Skip_Bet_Conditions takes nothing returns boolean
         if(not Trig_Skip_Bet_Func004C())then
             return false

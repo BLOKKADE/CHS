@@ -10,6 +10,23 @@ library trigger36 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Cast_Channeling_Ability_Func001Func002C takes nothing returns boolean
+        local integer abilId = GetSpellAbilityId()
+        return abilId == 'AHbz' or abilId == 'ANrf' or abilId == 'ANst' or abilId == 'ANvc' or abilId == 'AEtq' or abilId == 'Aclf' or abilId == 'ANmo' or abilId == 'AEsf'
+    endfunction
+
+
+    function Trig_Cast_Channeling_Ability_Func001C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
+            return false
+        endif
+        if(not Trig_Cast_Channeling_Ability_Func001Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Cast_Channeling_Ability_Conditions takes nothing returns boolean
         if(not Trig_Cast_Channeling_Ability_Func001C())then
             return false

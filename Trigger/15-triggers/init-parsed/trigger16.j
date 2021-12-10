@@ -1,5 +1,16 @@
 library trigger16 initializer init requires RandomShit
 
+    function Trig_Faerie_Dragon_or_Wisp_Dies_Func002C takes nothing returns boolean
+        /*if((GetUnitTypeId(GetTriggerUnit())=='e001'))then
+            return true
+        endif*/
+        if((GetUnitTypeId(GetTriggerUnit())=='e003'))then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Faerie_Dragon_or_Wisp_Dies_Conditions takes nothing returns boolean
         if(not Trig_Faerie_Dragon_or_Wisp_Dies_Func002C())then
             return false

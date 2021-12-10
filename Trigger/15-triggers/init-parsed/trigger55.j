@@ -1,5 +1,21 @@
 library trigger55 initializer init requires RandomShit
 
+    function Trig_Dialog_Initialization_Func047Func001C takes nothing returns boolean
+        if(not(udg_integer13 > 1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Dialog_Initialization_Func047Func001Func001C takes nothing returns boolean
+        if(not(udg_boolean15==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Dialog_Initialization_Func047A takes nothing returns nothing
         if(Trig_Dialog_Initialization_Func047Func001C())then
             if(Trig_Dialog_Initialization_Func047Func001Func001C())then
@@ -13,6 +29,16 @@ library trigger55 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Dialog_Initialization_Func049001 takes nothing returns boolean
+        return(IsTriggerEnabled(udg_trigger77)!=true)
+    endfunction
+
+
+    function Trig_Dialog_Initialization_Func054001 takes nothing returns boolean
+        return(IsTriggerEnabled(udg_trigger77)!=true)
+    endfunction
+
+
     function Trig_Dialog_Initialization_Func055A takes nothing returns nothing
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call DialogDisplayBJ(false,udg_dialog01,GetEnumPlayer())
@@ -22,6 +48,14 @@ library trigger55 initializer init requires RandomShit
         call DialogDisplayBJ(false,udg_dialog07,GetEnumPlayer())
         call DialogDisplayBJ(false,udg_dialog05,GetEnumPlayer())
         call DialogDisplayBJ(false,udg_dialog06,GetEnumPlayer())
+    endfunction
+
+
+    function Trig_Dialog_Initialization_Func056C takes nothing returns boolean
+        if(not(IsTriggerEnabled(udg_trigger77)==true))then
+            return false
+        endif
+        return true
     endfunction
 
 

@@ -1,5 +1,253 @@
 library trigger108 initializer init requires RandomShit
 
+    function Trig_Level_Completed_Func001C takes nothing returns boolean
+        if(not(udg_integer08 >= udg_integer06))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func001001001 takes nothing returns boolean
+        return(IsTriggerEnabled(udg_trigger119)!=true)
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func014C takes nothing returns boolean
+        if(not(udg_boolean04==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func014Func001Func001Func002C takes nothing returns boolean
+        if((udg_integer02==5))then
+            return true
+        endif
+        if((udg_integer02==10))then
+            return true
+        endif
+        if((udg_integer02==15))then
+            return true
+        endif
+        if((udg_integer02==20))then
+            return true
+        endif
+        if((udg_integer02==25))then
+            return true
+        endif
+        if((udg_integer02==30))then
+            return true
+        endif
+        if((udg_integer02==35))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func014Func001Func001C takes nothing returns boolean
+        if(not(udg_integer06 > 1))then
+            return false
+        endif
+        if(not Trig_Level_Completed_Func001Func014Func001Func001Func002C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func014Func001C takes nothing returns boolean
+        if(not Trig_Level_Completed_Func001Func014Func001Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func018C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func018Func002Func004Func001C takes nothing returns boolean
+        if((udg_integer02==5))then
+            return true
+        endif
+        if((udg_integer02==10))then
+            return true
+        endif
+        if((udg_integer02==15))then
+            return true
+        endif
+        if((udg_integer02==20))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func018Func002Func004C takes nothing returns boolean
+        if(not Trig_Level_Completed_Func001Func018Func002Func004Func001C())then
+            return false
+        endif
+        if(not(udg_integer06 > 1))then
+            return false
+        endif
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func018Func002C takes nothing returns boolean
+        if(not Trig_Level_Completed_Func001Func018Func002Func004C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func018Func001Func004Func001C takes nothing returns boolean
+    
+        if MorePvp == 0 then
+            if((udg_integer02==10))then
+                return true
+            endif
+            if((udg_integer02==20))then
+                return true
+            endif
+            if((udg_integer02==30))then
+                return true
+            endif
+            if((udg_integer02==40))then
+                return true
+            endif
+        else
+    
+            if((udg_integer02==5))then
+                return true
+            endif
+            if((udg_integer02==10))then
+                return true
+            endif
+            if((udg_integer02==15))then
+                return true
+            endif
+            if((udg_integer02==20))then
+                return true
+            endif
+            if((udg_integer02==25))then
+                return true
+            endif
+            if((udg_integer02==30))then
+                return true
+            endif	
+            if((udg_integer02==35))then
+                return true
+            endif	
+            if((udg_integer02==40))then
+                return true
+            endif	
+            if((udg_integer02==45))then
+                return true
+            endif	
+    
+    
+        endif
+    
+    
+        return false
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func018Func001Func004C takes nothing returns boolean
+        if(not Trig_Level_Completed_Func001Func018Func001Func004Func001C())then
+            return false
+        endif
+        if(not(udg_integer06 > 1))then
+            return false
+        endif
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func018Func001C takes nothing returns boolean
+        if(not Trig_Level_Completed_Func001Func018Func001Func004C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func023C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func023Func002C takes nothing returns boolean
+        if(not(udg_integer02==25))then
+            return false
+        endif
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func023Func002Func003C takes nothing returns boolean
+        if(not(udg_integer06==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func023Func001C takes nothing returns boolean
+        if(not(udg_integer02==50))then
+            return false
+        endif
+        if(not(udg_boolean04==false))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func023Func001Func003C takes nothing returns boolean
+        if(not(udg_integer06==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Level_Completed_Func001Func028C takes nothing returns boolean
+        if(not(udg_integer02 <= 3))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Level_Completed_Actions takes nothing returns nothing
         local integer round = udg_integer02 + 1
         if(Trig_Level_Completed_Func001C())then

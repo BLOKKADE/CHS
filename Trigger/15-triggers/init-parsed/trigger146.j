@@ -1,7 +1,42 @@
 library trigger146 initializer init requires RandomShit
 
+    function Trig_Update_Items_Func001Func001C takes nothing returns boolean
+        if((udg_boolean04==true))then
+            return true
+        endif
+        if((udg_boolean08==true))then
+            return true
+        endif
+        return false
+    endfunction
+
+
+    function Trig_Update_Items_Func001C takes nothing returns boolean
+        if(not Trig_Update_Items_Func001Func001C())then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Update_Items_Func001Func002Func001C takes nothing returns boolean
+        if(not(udg_integer02==10))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Update_Items_Func001Func002Func001Func001A takes nothing returns nothing
         call ReplaceUnitBJ(GetEnumUnit(),'n017',bj_UNIT_STATE_METHOD_RELATIVE)
+    endfunction
+
+
+    function Trig_Update_Items_Func001Func003Func001C takes nothing returns boolean
+        if(not(udg_integer02==20))then
+            return false
+        endif
+        return true
     endfunction
 
 

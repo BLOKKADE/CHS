@@ -1,5 +1,32 @@
 library trigger123 initializer init requires RandomShit
 
+    function Trig_Camera_Command_Func001C takes nothing returns boolean
+        if(not(SubStringBJ(StringCase(GetEventPlayerChatString(),false),2,7)=="camera"))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Camera_Command_Func002C takes nothing returns boolean
+        if(not(S2I(SubStringBJ(GetEventPlayerChatString(),udg_integer56,StringLength(GetEventPlayerChatString())))>= 1650))then
+            return false
+        endif
+        if(not(S2I(SubStringBJ(GetEventPlayerChatString(),udg_integer56,StringLength(GetEventPlayerChatString())))<= 2800))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Camera_Command_Func002Func001C takes nothing returns boolean
+        if(not(S2I(SubStringBJ(GetEventPlayerChatString(),udg_integer56,StringLength(GetEventPlayerChatString())))> 2800))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Camera_Command_Actions takes nothing returns nothing
         if(Trig_Camera_Command_Func001C())then
             set udg_integer56 = 9

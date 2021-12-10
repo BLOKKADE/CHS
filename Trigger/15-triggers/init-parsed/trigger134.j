@@ -10,6 +10,59 @@ library trigger134 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_PvP_Func004Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_PvP_Func004Func001Func004001 takes nothing returns boolean
+        return(udg_integer02==10)
+    endfunction
+
+
+    function Trig_PvP_Func004Func001Func005001 takes nothing returns boolean
+        return(udg_integer02==15)
+    endfunction
+
+
+    function Trig_PvP_Func004Func001Func006001 takes nothing returns boolean
+        return(udg_integer02==20)
+    endfunction
+
+
+    function Trig_PvP_Func004Func001Func001001 takes nothing returns boolean
+        return(udg_integer02==20)
+    endfunction
+
+
+    function Trig_PvP_Func004Func001Func002001 takes nothing returns boolean
+        return(udg_integer02==30)
+    endfunction
+
+
+    function Trig_PvP_Func004Func001Func003001 takes nothing returns boolean
+        return(udg_integer02==40)
+    endfunction
+
+
+    function Trig_PvP_Func004Func002001 takes nothing returns boolean
+        return(udg_integer15=='I01D')
+    endfunction
+
+
+    function Trig_PvP_Func004Func003001 takes nothing returns boolean
+        return(udg_integer15=='I01C')
+    endfunction
+
+
+    function Trig_PvP_Func004Func004001 takes nothing returns boolean
+        return(udg_integer15=='I01E')
+    endfunction
+
+
     function Trig_PvP_Func004A takes nothing returns nothing
         if(Trig_PvP_Func004Func001C())then
             if(Trig_PvP_Func004Func001Func004001())then
@@ -61,6 +114,14 @@ library trigger134 initializer init requires RandomShit
         endif
     
         call ResourseRefresh(GetOwningPlayer(GetEnumUnit()) )
+    endfunction
+
+
+    function Trig_PvP_Func007C takes nothing returns boolean
+        if(not(udg_boolean07==true))then
+            return false
+        endif
+        return true
     endfunction
 
 

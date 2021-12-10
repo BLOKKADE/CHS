@@ -1,5 +1,47 @@
 library trigger86 initializer init requires RandomShit
 
+    function Trig_Pandaren_Dies_Func001Func001C takes nothing returns boolean
+        if(not(IsUnitDeadBJ(GetTriggerUnit())==true))then
+            return false
+        endif
+        if(not(IsUnitIllusionBJ(GetTriggerUnit())!=true))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())=='N00R'))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Pandaren_Dies_Func001Func002C takes nothing returns boolean
+        if(not(IsUnitDeadBJ(GetTriggerUnit())==true))then
+            return false
+        endif
+        if(not(IsUnitIllusionBJ(GetTriggerUnit())!=true))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())=='N00R'))then
+            return false
+        endif
+        if(not(GetItemTypeId(GetManipulatedItem())=='ankh'))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Pandaren_Dies_Func001C takes nothing returns boolean
+        if(Trig_Pandaren_Dies_Func001Func001C())then
+            return true
+        endif
+        if(Trig_Pandaren_Dies_Func001Func002C())then
+            return true
+        endif
+        return false
+    endfunction
+
+
     function Trig_Pandaren_Dies_Conditions takes nothing returns boolean
         if(not Trig_Pandaren_Dies_Func001C())then
             return false

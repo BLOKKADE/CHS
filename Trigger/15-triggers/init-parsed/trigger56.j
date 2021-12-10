@@ -1,5 +1,32 @@
 library trigger56 initializer init requires RandomShit
 
+    function Trig_Voting_Rights_Initialization_Func003C takes nothing returns boolean
+        if(not(udg_integer13==1))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Voting_Rights_Initialization_Func007Func001C takes nothing returns boolean
+        if(not(GetPlayerController(ConvertedPlayer(GetForLoopIndexA()))==MAP_CONTROL_USER))then
+            return false
+        endif
+        if(not(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA()))==PLAYER_SLOT_STATE_PLAYING))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Voting_Rights_Initialization_Func016C takes nothing returns boolean
+        if(not(IsTriggerEnabled(udg_trigger55)!=true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Voting_Rights_Initialization_Actions takes nothing returns nothing
         call ConditionalTriggerExecute(udg_trigger131)
         if(Trig_Voting_Rights_Initialization_Func003C())then

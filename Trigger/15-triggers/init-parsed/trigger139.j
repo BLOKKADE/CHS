@@ -8,6 +8,14 @@ library trigger139 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Drop_Prize_Item_Func001C takes nothing returns boolean
+        if(not(udg_items01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]==GetManipulatedItem()))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Drop_Prize_Item_Actions takes nothing returns nothing
         if(Trig_Drop_Prize_Item_Func001C())then
             call UnitDropItemPointLoc(GetTriggerUnit(),GetManipulatedItem(),GetUnitLoc(GetTriggerUnit()))

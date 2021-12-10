@@ -1,5 +1,22 @@
 library trigger80 initializer init requires RandomShit
 
+    function Trig_Hero_Dies_Func026C takes nothing returns boolean
+        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(8)))then
+            return false
+        endif
+        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
+            return false
+        endif
+        if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)!=true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
     function Trig_Hero_Dies_Func024Func001Func0010010025551 takes nothing returns boolean
     
         call KillUnit(GetFilterUnit())
@@ -87,6 +104,27 @@ library trigger80 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Hero_Dies_Func011C takes nothing returns boolean
+        if(not(GetPlayerController(GetOwningPlayer(GetTriggerUnit()))==MAP_CONTROL_USER))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Hero_Dies_Func013C takes nothing returns boolean
+        if(not(udg_boolean04==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Hero_Dies_Func013Func001001 takes nothing returns boolean
+        return((udg_integer31 - 5)>= udg_integer02)
+    endfunction
+
+
     function Trig_Hero_Dies_Func013Func002001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
@@ -99,6 +137,42 @@ library trigger80 initializer init requires RandomShit
     endfunction
 
 
+    function Trig_Hero_Dies_Func014C takes nothing returns boolean
+        if(not(udg_boolean07==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Hero_Dies_Func014Func001C takes nothing returns boolean
+        if(not(udg_boolean08==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Hero_Dies_Func014Func001Func003001001 takes nothing returns boolean
+        return(udg_integer06==2)
+    endfunction
+
+
+    function Trig_Hero_Dies_Func014Func001Func004001 takes nothing returns boolean
+        return(udg_integer06 >= 4)
+    endfunction
+
+
+    function Trig_Hero_Dies_Func014Func001Func001001001 takes nothing returns boolean
+        return(udg_integer06==2)
+    endfunction
+
+
+    function Trig_Hero_Dies_Func014Func001Func002001 takes nothing returns boolean
+        return(udg_integer06 >= 4)
+    endfunction
+
+
     function Trig_Hero_Dies_Func014Func002001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
@@ -108,6 +182,22 @@ library trigger80 initializer init requires RandomShit
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,udg_integer31)
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,udg_integer31)
         call ResourseRefresh(GetEnumPlayer()) 
+    endfunction
+
+
+    function Trig_Hero_Dies_Func016C takes nothing returns boolean
+        if(not(udg_boolean02==true))then
+            return false
+        endif
+        return true
+    endfunction
+
+
+    function Trig_Hero_Dies_Func024Func001C takes nothing returns boolean
+        if(not(RectContainsUnit(udg_rects01[udg_integer42],GetTriggerUnit())==true))then
+            return false
+        endif
+        return true
     endfunction
 
 
