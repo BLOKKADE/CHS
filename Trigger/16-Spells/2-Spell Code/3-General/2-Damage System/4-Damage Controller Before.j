@@ -425,6 +425,7 @@ scope DamageControllerBefore initializer init
             endif
         endif  
 
+        //Banish magic damage bonus
         if GetUnitAbilityLevel(damageTarget, BANISH_BUFF_ID) > 0 and DmgType == DAMAGE_TYPE_MAGIC then
             call BlzSetEventDamage( GetEventDamage() * 1.5)
         endif

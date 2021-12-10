@@ -89,7 +89,7 @@ scope DamageControllerAfter initializer init
         //Aura of Vulnerability
         if GetUnitAbilityLevel(damageTarget ,'B00E') >= 1 then
             if GetRandomReal(0,100) <= 5 * luck then
-                call BlzSetEventDamage(  GetEventDamage()  +   (GetEventDamage()*(GetUnitAbilityLevel(damageSourceHero  ,AURA_OF_VULNERABILITY_ABILITY_ID)/ 2))  )
+                call BlzSetEventDamage(GetEventDamage() * (1 + (0.5 * GetUnitAbilityLevel(damageSourceHero  ,AURA_OF_VULNERABILITY_ABILITY_ID))))
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", damageTarget, "chest"))
             endif
         endif
