@@ -26,7 +26,7 @@ Manually:
 Automatically (with VS Code)
 1. Open the project in vscode
 2. Ensure the file you've created is somewhere in the "Trigger" directory in the project
-2. Run the "Create Import File" task (or press Ctrl+B)
+2. Run the "Create Import File" task (or press Ctrl+Shift+B)
 3. Success
 
 Automatically (without VS Code)
