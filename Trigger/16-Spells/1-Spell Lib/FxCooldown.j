@@ -22,7 +22,7 @@ library FxCooldown initializer init requires Table
     endstruct
 
     function SetFxCooldown takes unit u, integer id, real duration returns nothing
-        local timer t = CreateTimer()
+        local timer t = NewTimer()
         local FxData data = FxData.create()
         set data.unitId = GetHandleId(u)
         set data.fxId = id
