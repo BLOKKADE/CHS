@@ -78,12 +78,14 @@ scope LongPeriodCheck initializer init
         if unitId != 0 then
             if GetLocalPlayer() == Pl then
                 set textureS = LoadStr(HT_data, unitId, 1)
-                call BlzFrameSetVisible(SpellUP[100], true)
+                call BlzFrameSetVisible(SpellUP[38], true) // Element count
+                call BlzFrameSetVisible(SpellUP[100], true) // Hero passive/description
                 call BlzFrameSetTexture(SpellFR[100], textureS, 0, true)
             endif
         else
             if GetLocalPlayer() == Pl then
-                call BlzFrameSetVisible(SpellUP[100], false)
+                call BlzFrameSetVisible(SpellUP[38], false) // Element count
+                call BlzFrameSetVisible(SpellUP[100], false) // Hero passive/description
             endif
         endif
 

@@ -142,6 +142,28 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						call BlzFrameSetSize(Tooltip, 0.29, 0.02)
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
+				elseif NumButton == 38 then
+					set SpellU = udg_units01[NumPlayerLast[PlID] + 1]
+					set i1 = 1
+					set ToolTipS = "|cffd0ff00Element Counts|r"
+
+					loop
+						set i2 = GetClassUnitSpell(SpellU, i1)
+
+						// Don't include empty elements in the list
+						if i2 > 0 then
+							set ToolTipS = ToolTipS + "|n" + ClassAbil[i1] + " : " + I2S(i2)
+						endif
+
+						set i1 = i1 + 1
+						exitwhen i1 > 13 // Based off the amount of elements in ClassAbil array. 2-InitDescription.j
+					endloop
+
+					if GetLocalPlayer() == GetTriggerPlayer() then
+						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+						call BlzFrameSetSize(Tooltip, 0.125, GetTooltipSize(ToolTipS))
+						call BlzFrameSetVisible(Tooltip, true)
+					endif
 				elseif NumButton == 100 then
 					set SpellU = udg_units01[NumPlayerLast[PlID] + 1]
 					set temp = GetClassification(SpellU, GetUnitTypeId(SpellU), false)
@@ -270,6 +292,8 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 			call BlzFrameSetVisible(SpellUP[36], true)
 			call CreateIconWorld(37 , "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp" , 0.43 + 0.05 , - 0.024 , 0.025)
 			call BlzFrameSetVisible(SpellUP[37], true)
+			call CreateIconWorld(38 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - 2 * sizeAbil , sizeAbil)
+			call BlzFrameSetTexture(SpellFR[38] , "ReplaceableTextures\\PassiveButtons\\PASElements.blp" , 0, true)
 			call CreateIconWorld(100 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - sizeAbil , sizeAbil)
 			call CreateIconWorld(101 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + sizeAbil , - sizeAbil , sizeAbil)
 			call CreateIconWorld(102 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 2 * sizeAbil , - sizeAbil  , sizeAbil)
