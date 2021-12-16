@@ -8,14 +8,14 @@ OddPlayer = set to a player number if there's an odd amount of player
 
 
 Run UpdatePlayerCount() before duels to update the PlayerList and make sure only surviving player ids are in it
-Run MoveRoundRobin() after duels to move the ids in PlayerList around
+Run MoveRoundRobin() before duels after ^ (except first duels round) to move the ids in PlayerList around
 refer to GetNextDuel to get the DuelGame struct for the next duel
 */
 
     globals
         private boolean initialised = false
         IntegerList PlayerList
-        public IntegerList DuelGameList
+        IntegerList DuelGameList
         integer OddPlayer = -1
 
         //has to be either 1 2 or 4 TODO: support 3
@@ -29,18 +29,20 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
     endfunction
 
     struct DuelGame extends array
-        IntegerList team1
-        IntegerList team2
+        force team1
+        force team2
 
         private static thistype recycle = 0
         private static integer instanceCount = 0
         private thistype next
 
+        /*
         static method GetDuelGame takes integer id returns thistype
             return thistype[id]
         endmethod
+        */
 
-        static method create takes IntegerList team1, IntegerList team2 returns thistype
+        static method create takes force team1, force team2 returns thistype
             local thistype this
 
             if (recycle == 0) then
@@ -58,6 +60,11 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         endmethod
 
         method destroy takes nothing returns nothing
+            //call BJDebugMsg("destroy duelgame")
+            call DestroyForce(team1)
+            call DestroyForce(team2)
+            set this.team1 = null
+            set this.team2 = null
             set next = recycle
             set recycle = this
         endmethod
@@ -70,19 +77,19 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         local integer tempBack
         local integer tempFront
         local IntegerList tempPlayerList = IntegerList[PlayerList]
-        local IntegerList team1
-        local IntegerList team2
+        local force team1
+        local force team2
 
         call DuelGameList.clear()
 
         loop
-            set team1 = IntegerList.create()
-            set team2 = IntegerList.create()
+            set team1 = CreateForce()
+            set team2 = CreateForce()
 
             set j = TeamPlayerLimit
             loop
-                call team1.push(tempPlayerList.front())
-                call team2.push(tempPlayerList.back())
+                call ForceAddPlayer(team1, Player(tempPlayerList.front()))
+                call ForceAddPlayer(team1, Player(tempPlayerList.back()))
 
                 call tempPlayerList.pop()
                 call tempPlayerList.shift()
@@ -90,9 +97,6 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
                 exitwhen j <= 0
             endloop
             call DuelGameList.push(DuelGame.create(team1, team2))
-            
-            call ListT_print(team1, "t1: ")
-            call ListT_print(team2, "t2: ")
             set i = i + 1
             exitwhen i >= limit
         endloop
@@ -105,6 +109,9 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
         call PlayerList.unshift(tempBack)
         call PlayerList.unshift(tempFront)
+
+        set team1 = null
+        set team2 = null
     endfunction
 
 
@@ -122,6 +129,8 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         if ModuloInteger(PlayerList.size(), 2) != 0 then
             set OddPlayer = PlayerList.back()
             call PlayerList.pop()
+        else
+            set OddPlayer = -1
         endif
     endfunction
 
