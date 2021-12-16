@@ -1,4 +1,4 @@
-library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
+library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyRecycler
  
     //============================================================================
 
@@ -24,6 +24,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         integer endTick
         integer orderType
         boolean stopDummy
+        boolean destroyDummy
 
         unit targetUnit
 
@@ -105,9 +106,17 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         endmethod
 
         method periodic takes nothing returns nothing
-            if T32_Tick >= this.endTick or this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0 then
-                call this.stopPeriodic()
-                call this.destroy()
+            if this.destroyDummy then
+                if T32_Tick >= this.endTick then
+                    call this.stopPeriodic()
+                    call this.destroy()
+                endif
+            else
+                if T32_Tick >= this.endTick or this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0 then
+                    set this.destroyDummy = true
+                    set this.endTick = T32_Tick + (5 * 32)
+                    call this.resetDummy()
+                endif
             endif
         endmethod
         implement T32x
@@ -152,31 +161,39 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
                 set recycle = recycle.recycleNext
             endif
 
-            set this.dummy = CreateUnit(p, PRIEST_1_UNIT_ID, x, y, facing) 
+            set this.dummy = GetRecycledDummyAnyAngle(x, y, 0.) 
+            call PauseUnit(this.dummy, false)
+            call BlzSetUnitFacingEx(this.dummy, facing)
             set DummyInfo[GetHandleId(this.dummy)] = this
+            call SetUnitOwner(this.dummy, p, true)
             set this.pid = GetPlayerId(p)
             set this.source = source
+            set this.destroyDummy = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             set this.endTick = T32_Tick + R2I((duration * 32))
             //call BJDebugMsg("created dummy")
             return this
         endmethod
+
+        method resetDummy takes nothing returns nothing
+            set DummyInfo[GetHandleId(this.dummy)] = 0
+        endmethod
         
         method destroy takes nothing returns nothing
             //call UnitRemoveAbility(this.dummy, this.abil)
 
-            set DummyInfo[GetHandleId(this.dummy)] = 0
+            
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             ///set DummyInfo[GetUnitId(this.dummy)].boolean[2] = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[3] = false
 
-            call UnitApplyTimedLife(this.dummy, 'BTLF', 5)
+            call BlzSetUnitFacingEx(this.dummy, 0)
+            call RecycleDummy(this.dummy) 
             //call RemoveUnit(this.dummy)
             //set this.callback = null
             set this.dummy = null
             set this.source = null
             set this.targetUnit = null
-            //call BJDebugMsg("dummy destroyed")
             set recycleNext = recycle
             set recycle = this
         endmethod
