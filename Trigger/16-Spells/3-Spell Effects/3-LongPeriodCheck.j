@@ -346,7 +346,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     set i1 = i1 * GetClassUnitSpell(u,2)
-                    call BlzSetUnitMaxMana(u,BlzGetUnitMaxMana(u) + 100 *(i1 - i2)    )
+                    call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)))
                     call SaveInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID,i1)	
                 endif
 
@@ -374,7 +374,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     set i1 = i1 * GetClassUnitSpell(u,11)
-                    call SetHeroStr(u,GetHeroStr(u,false)+ 12 *(i1 - i2),false     )
+                    call SetHeroStr(u,GetHeroStr(u,false)+ 10 *(i1 - i2),false     )
                     call SaveInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID,i1)	
                 endif
 
