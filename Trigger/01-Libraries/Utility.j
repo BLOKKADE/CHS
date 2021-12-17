@@ -1,4 +1,4 @@
-library Utility
+library Utility requires AttackDamage
     globals
         boolean array CurrentlyFighting
     endglobals
@@ -48,7 +48,7 @@ library Utility
 
     function GetUnitDamage takes unit u, integer weaponIndex returns real
         //call BJDebugMsg(GetUnitName(u) + " attack dmg: " + R2S(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))))
-        return RMaxBJ(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex)), SpellData[GetHandleId(u)].real[7])
+        return I2R((BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))) + UnitGetAttackDamage(u))
     endfunction
 
     function CalculateNewCurrentHP takes unit u, real hpBonus returns nothing

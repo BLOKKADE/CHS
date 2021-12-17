@@ -8,6 +8,8 @@ scope ShortPeriodCheck initializer init
         local string s3 = null
         local unit u
         local integer hid = 0
+        local real r1 = 0
+        local real r2 = 0
         
         loop
             exitwhen II > 8
@@ -86,6 +88,40 @@ scope ShortPeriodCheck initializer init
                     endif
                 endif     
 
+                //Trueshot Aura
+                set i1 = GetUnitAbilityLevel(u ,TRUESHOT_AURA_ABILITY_ID)
+                set r1 = LoadReal(HT,hid,TRUESHOT_AURA_ABILITY_ID)
+                if i1 > 0 or r1 != 0 then
+                    set r2 = (BlzGetUnitBaseDamage(u, 0) * (0.05 * (i1)))
+                    if r2 != r1 then
+                        call UnitAddAttackDamage(u, R2I(r2 - r1))
+                        call SaveReal(HT, hid, TRUESHOT_AURA_ABILITY_ID, r2)	
+                    endif
+                endif
+
+                //Command Aura
+                set i1 = GetUnitAbilityLevel(u ,COMMAND_AURA_ABILITY_ID)
+                set r1 = LoadReal(HT,hid,COMMAND_AURA_ABILITY_ID)
+                if i1 > 0 or r1 != 0 then
+                    set r2 = (BlzGetUnitBaseDamage(u, 0) * (0.05 * (i1)))
+                    if r2 != r1 then
+                        call UnitAddAttackDamage(u, R2I(r2 - r1))
+                        call SaveReal(HT, hid, COMMAND_AURA_ABILITY_ID, r2)	
+                    endif
+                endif
+
+                //Frostmourne
+                set i1 = GetUnitAbilityLevel(u , 'A02B')
+                set r1 = LoadReal(HT,hid,'A02B')
+                if i1 > 0 or r1 != 0 then
+                    set r2 = (BlzGetUnitBaseDamage(u, 0) * (3.5 * i1))
+                    if r1 != r2 then
+                        call UnitAddAttackDamage(u, R2I(r2 - r1))
+                        call SaveReal(HT, hid, 'A02B', r2)	
+                    endif
+                endif
+
+                //Absolute Arcane Drain
                 set i1 = GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID)
                 if i1 > 0 then
                     call AbsoluteArcaneDrain(u)

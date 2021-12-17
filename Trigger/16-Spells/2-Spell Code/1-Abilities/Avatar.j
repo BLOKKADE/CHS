@@ -1,4 +1,4 @@
-library Avatar initializer init requires AttackDamage
+library Avatar initializer init requires AttackDamage, Utility
 
     globals
         Table AvatarBonus

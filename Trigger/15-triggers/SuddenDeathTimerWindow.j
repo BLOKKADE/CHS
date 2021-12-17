@@ -1,4 +1,4 @@
-library SuddenDeathTimerWindow requires TimerUtils
+library SuddenDeathTimerWindow requires TimerUtils, Utility
     globals
         private timer SuddenDeathTimer = null
         private timerdialog SuddenDeathDialog = null

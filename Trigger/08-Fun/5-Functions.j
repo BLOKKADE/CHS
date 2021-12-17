@@ -1,4 +1,4 @@
-library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory
+library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent
     globals 
         hashtable HT_SpellPlayer = InitHashtable()
     endglobals

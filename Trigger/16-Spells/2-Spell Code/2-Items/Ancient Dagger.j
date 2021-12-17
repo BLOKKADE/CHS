@@ -1,4 +1,4 @@
-library AncientDagger requires DummyOrder, RandomShit, BuffSystem
+library AncientDagger requires DummyOrder, RandomShit, BuffSystem, GetRandomUnit
     private function CalculateDamage takes real startingValue, integer count returns real
         local integer i = 1
         local real dmg = startingValue

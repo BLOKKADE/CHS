@@ -1,4 +1,4 @@
-library ManaStarvation requires DummyOrder, T32
+library ManaStarvation requires DummyOrder, T32, UnitHelpers, AttackDamage
     struct ManaStarvationStruct extends array
         integer sourceId
         unit source

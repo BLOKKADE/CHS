@@ -1,4 +1,4 @@
-library ManifoldStaff requires RandomShit, AbilityData, DummyOrder
+library ManifoldStaff requires RandomShit, AbilityData, DummyOrder, CastSpellOnTarget
 
     globals
         private group ManifoldGroup = CreateGroup()

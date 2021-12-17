@@ -1,4 +1,4 @@
-library BlinkStrike initializer init requires RandomShit
+library BlinkStrike initializer init requires RandomShit, GetRandomUnit
     globals
         private integer OwnerId
         Table BlinkStrikeEnabled

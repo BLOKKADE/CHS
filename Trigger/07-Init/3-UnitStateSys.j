@@ -306,6 +306,18 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitMaxHP(u,R2I(I2R(BlzGetUnitMaxHP(u))* wild))
             call SetWidgetLife(u,BlzGetUnitMaxHP(u))
         endif
+
+        //Trueshot Aura
+        set i2 = GetUnitAbilityLevel(hero, TRUESHOT_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call UnitAddAttackDamage(u, R2I(BlzGetUnitBaseDamage(u, 0) * (0.05 * i2)))
+        endif
+
+        //Command Aura
+        set i2 = GetUnitAbilityLevel(hero, COMMAND_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call UnitAddAttackDamage(u, R2I(BlzGetUnitBaseDamage(u, 0) * (0.1 * i2)))
+        endif
         
         set u = null
         set hero = null

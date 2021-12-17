@@ -163,10 +163,12 @@ scope DamageControllerBefore initializer init
             endif
         endif
 
-        if IsUnitType(damageSource, UNIT_TYPE_HERO) and attack and IsDamageWhirlwind(damageSource) == false then
+        //Extradimensional Cooperation
+        if GetUnitAbilityLevel(damageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and notOnHit and IsDamageExtradimensional(damageSource) == false then
+            call CastExtradimensionalCoop(damageSource, damageTarget, GetEventDamage(), DmgType == DAMAGE_TYPE_MAGIC)
+        endif
 
-            //set attack damage for skills based on it
-            set SpellData[sourceId].real[7] = GetEventDamage()
+        if attack and IsDamageWhirlwind(damageSource) == false then
 
             //Whirlwind update description
             if GetUnitAbilityLevel(damageSource, WHIRLWIND_ABILITY_ID) > 0 then
@@ -177,14 +179,19 @@ scope DamageControllerBefore initializer init
             if GetUnitAbilityLevel(damageSource, ARCANE_ASSAUL_ABILITY_ID) > 0 and IsDamageArcaneAssault(damageSource) == false then
                 call ArcaneAssault(damageSource, damageTarget, GetEventDamage())
             endif
+
+            //Cloak of Sorrow
+            if GetUnitAbilityLevel(damageSource, 'B007') > 0 then
+                call BlzSetEventDamage(GetEventDamage() - RMinBJ(BlzGetUnitBaseDamage(damageSource, 0), 4000))
+            endif
+
+            //Cloak of Sorrow
+            if GetUnitAbilityLevel(damageSource, 'B00W') > 0 then
+                call BlzSetEventDamage(GetEventDamage() - 100)
+            endif
         endif
 
-        //Extradimensional Cooperation
-        if GetUnitAbilityLevel(damageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and notOnHit and IsDamageExtradimensional(damageSource) == false then
-            call CastExtradimensionalCoop(damageSource, damageTarget, GetEventDamage(), DmgType == DAMAGE_TYPE_MAGIC)
-        endif
-
-        if (GetUnitAbilityLevel(damageTarget, 'B028') > 0 or GetUnitAbilityLevel(damageTarget, BANISH_BUFF_ID) > 0) and DmgType == DAMAGE_TYPE_NORMAL then
+        if GetEventDamage() <= 0 or ((GetUnitAbilityLevel(damageTarget, 'B028') > 0 or GetUnitAbilityLevel(damageTarget, BANISH_BUFF_ID) > 0) and DmgType == DAMAGE_TYPE_NORMAL) then
             call BlzSetEventDamage(0)
             set damageSourceHero = null
             set damageTargetHero = null

@@ -1,4 +1,4 @@
-library AncientStaff requires DummyOrder, RandomShit, CustomState
+library AncientStaff requires DummyOrder, RandomShit, CustomState, GetRandomUnit
     private function CalculateReduction takes integer count returns real
         local integer i = 1
         local real mr = 0.3
