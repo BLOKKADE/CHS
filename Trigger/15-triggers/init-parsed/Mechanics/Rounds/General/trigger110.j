@@ -53,7 +53,11 @@ library trigger110 initializer init requires RandomShit
 
 
     function Trig_Sudden_Death_Timer_Func002Func002Func002Func001A takes nothing returns nothing
-        call SetUnitLifeBJ(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],(GetUnitStateSwap(UNIT_STATE_LIFE,udg_units01[GetConvertedPlayerId(GetEnumPlayer())])- 1))
+        local unit u = udg_units01[GetPlayerId(GetEnumPlayer()) + 1]
+        if GetUnitState(u, UNIT_STATE_LIFE) > 1 then
+            call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) - GetUnitState(u, UNIT_STATE_LIFE) * 0.8)
+        endif
+        set u = null
     endfunction
 
 
