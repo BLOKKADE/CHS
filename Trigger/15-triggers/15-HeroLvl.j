@@ -254,8 +254,8 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == MYSTIC_UNIT_ID then  
         
             loop
-                exitwhen LastLvlHero[Pid] ==  I_l    
-                call SetPlayerTechResearchedSwap( 'R000', ( 2 + GetPlayerTechCountSimple('R000', Pl) ), Pl )
+                exitwhen LastLvlHero[Pid] ==  I_l
+                set SummonDamage[Pid] = SummonDamage[Pid] + 2
                 call UpdateBonus(UnitHero, 0, 40)
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop   

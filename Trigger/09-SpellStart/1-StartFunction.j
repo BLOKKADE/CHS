@@ -203,10 +203,9 @@ function FunctionTimerSpell takes nothing returns nothing
     set i1 = UnitHasItemI( Herou,'I06J' )
     if i1 > 0 then
         call ElemFuncStart(Herou,'I06J')
-        call SetPlayerTechResearchedSwap( 'R000', ( i1 + GetPlayerTechCountSimple('R000', GetOwningPlayer(Herou)) ), GetOwningPlayer(Herou) )
-        call SetPlayerTechResearchedSwap( 'R001', ( i1 + GetPlayerTechCountSimple('R001', GetOwningPlayer(Herou)) ), GetOwningPlayer(Herou) )    
-        call SetPlayerTechResearchedSwap( 'R002', ( i1 + GetPlayerTechCountSimple('R002', GetOwningPlayer(Herou)) ), GetOwningPlayer(Herou) )
-                
+        set SummonDamage[pid] = SummonDamage[pid] + i1
+        set SummonArmor[pid] = SummonArmor[pid] + i1
+        set SummonHitPoints[pid] = SummonHitPoints[pid] + i1  
     endif 
 
     //Gnome
