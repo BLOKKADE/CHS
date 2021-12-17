@@ -1,5 +1,9 @@
 library trigger79 initializer init requires RandomShit, Functions
 
+    globals
+        unit SellingShop
+    endglobals
+
     function Trig_Spawn_Hero_Func005C takes nothing returns boolean
         if(not(udg_boolean16==false))then
             return false
@@ -183,7 +187,7 @@ library trigger79 initializer init requires RandomShit, Functions
         set u = CreateUnit(p,'n02H',- 868,- 1152,270.000) 
         set u = CreateUnit(p,'n00Z',- 620,- 1152,270.000) 
         set u = CreateUnit(p,'n01D',- 372,- 1152,270.000) 
-        set u = CreateUnit(p,'n02V',- 124,- 1152,270.000) 
+        set SellingShop = CreateUnit(p,'n02V',- 124,- 1152,270.000) 
         set u = CreateUnit(p,'n02W',- 124,- 1152 - 256,270.000)
         set u = CreateUnit(p,'n02I',124,- 1152,270.000) 
         set u = CreateUnit(p,'n02Z',124,- 1152 - 256,270.000) 
