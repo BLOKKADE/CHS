@@ -346,7 +346,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     set i1 = i1 * GetClassUnitSpell(u,2)
-                    call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)))
+                    call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)), false)
                     call SaveInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID,i1)	
                 endif
 

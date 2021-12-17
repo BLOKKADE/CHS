@@ -143,6 +143,7 @@ scope DamageControllerAfter initializer init
 
         //Ghoul Passive
         if GetUnitTypeId(damageSource) == GHOUL_UNIT_ID and attack then
+            //call BJDebugMsg(GetUnitName(damageSource) + " attack " + GetUnitName(damageTarget) + ": " + I2S(GetHandleId(damageTarget)))
             set i = GetHeroLevel(damageSource)
             set r2 = BlzGetUnitMaxHP(damageTarget) * (0.025 + (0.00025 * i))
             call Vamp(damageSource,damageTarget,r2)

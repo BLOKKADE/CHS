@@ -47,6 +47,7 @@ library Utility
     endfunction
 
     function GetUnitDamage takes unit u, integer weaponIndex returns real
+        //call BJDebugMsg(GetUnitName(u) + " attack dmg: " + R2S(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))))
         return RMaxBJ(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex)), SpellData[GetHandleId(u)].real[7])
     endfunction
 
