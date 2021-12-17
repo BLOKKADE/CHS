@@ -1,4 +1,4 @@
-library trigger144 initializer init requires RandomShit
+/*library trigger144 initializer init requires RandomShit
 
     function Trig_Remove_Power_Ups_Conditions takes nothing returns boolean
         if(not(GetItemType(GetManipulatedItem())==ITEM_TYPE_POWERUP))then
@@ -22,3 +22,4 @@ library trigger144 initializer init requires RandomShit
 
 
 endlibrary
+*/

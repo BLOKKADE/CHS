@@ -338,7 +338,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Summon Attack
             elseif II == SUMMON_ATTACK_BONUS_ITEM_ID then
                 set SummonDamage[pid] = SummonDamage[pid] + 1
-                set summonUpgradeBonus = summonDamage[pid]
+                set summonUpgradeBonus = SummonDamage[pid]
                 //Summon Armor
             elseif II == SUMMON_ARMOR_BONUS_ITEM_ID then
                 set SummonArmor[pid] = SummonArmor[pid] + 1
@@ -568,6 +568,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             //Non-Lucrative Tome
         elseif II == NON_LUCRATIVE_TOME_ITEM_ID then
             call NonLucrativeTomeBought(u)
+        endif
+
+        if GetItemType(It) == ITEM_TYPE_POWERUP then
+            call RemoveItem(It)
         endif
 
         call ResourseRefresh(GetOwningPlayer(u)) 
