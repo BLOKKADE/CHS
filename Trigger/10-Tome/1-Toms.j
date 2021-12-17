@@ -337,28 +337,16 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Summon Attack
             elseif II == SUMMON_ATTACK_BONUS_ITEM_ID then
-                if GetPlayerTechCount(p, 'R000', true) < 9999 then
-                    call SetPlayerTechResearched(p, 'R000', GetPlayerTechCount(p, 'R000', true) + 1)
-                    set summonUpgradeBonus = GetPlayerTechCount(p, 'R000', true)
-                else
-                    set ctrl = false
-                endif
+                set SummonDamage[pid] = SummonDamage[pid] + 1
+                set summonUpgradeBonus = summonDamage[pid]
                 //Summon Armor
             elseif II == SUMMON_ARMOR_BONUS_ITEM_ID then
-                if GetPlayerTechCount(p, 'R001', true) < 9999 then
-                    call SetPlayerTechResearched(p, 'R001', GetPlayerTechCount(p, 'R001', true) + 1)
-                    set summonUpgradeBonus = GetPlayerTechCount(p, 'R001', true)
-                else
-                    set ctrl = false
-                endif
+                set SummonArmor[pid] = SummonArmor[pid] + 1
+                set summonUpgradeBonus = SummonArmor[pid]
                 //Summon hit points
             elseif II == SUMMON_HP_BONUS_ITEM_ID then
-                if GetPlayerTechCount(p, 'R002', true) < 9999 then
-                    call SetPlayerTechResearched(p, 'R002', GetPlayerTechCount(p, 'R002', true) + 1)
-                    set summonUpgradeBonus = GetPlayerTechCount(p, 'R002', true)
-                else
-                    set ctrl = false
-                endif
+                set SummonHitPoints[pid] = SummonHitPoints[pid] + 1
+                set summonUpgradeBonus = SummonHitPoints[pid]
                 //Summon Crit
             elseif II == SUMMON_CRITICAL_STRIKE_ITEM_ID then
                 if SummonCrit[pid] < 30 then

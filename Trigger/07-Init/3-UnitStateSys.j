@@ -9,6 +9,9 @@ library UnitStateSys initializer init requires RandomShit, Functions
         integer array SummonIceArmor
         integer array SummonWildDefense
         integer array SummonDomeProtection
+        integer array SummonHitPoints
+        integer array SummonDamage
+        integer array SummonArmor
     endglobals
 
     function RandomAbilityLevel takes integer id, unit hero returns integer
@@ -72,6 +75,19 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
         if SummonDomeProtection[pid] > 0 then
             call AddSummonAbility(u, DOME_OF_PROTECTION_ABILITY_ID, SummonDomeProtection[pid])
+        endif
+
+        if SummonHitPoints[pid] > 0 then
+            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
+            call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
+        endif
+
+        if SummonArmor[pid] > 0 then
+            call BlzSetUnitArmor(u, SummonArmor[pid] * 2)
+        endif
+
+        if SummonDamage[pid] > 0 then
+            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
 
         call AddUnitPvpBonus(u, GetUnitPvpBonus(hero))
@@ -267,7 +283,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
         elseif i == SKELETON_WARMAGE_1_UNIT_ID then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,BLACK_ARROW_PASSIVE_ABILITY_ID),hero) + UpgradeU
             call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 60,0)
-            call AddUnitMagicDmg(u,10 * i2)
+            call AddUnitMagicDmg(u,2 * i2)
             call AddUnitMagicDef(u,5 * i2)
             call AddUnitEvasion(u,5 * i2)
             call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8 + I2R(i2)))  ,0)
