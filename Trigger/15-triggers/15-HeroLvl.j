@@ -469,7 +469,7 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == OGRE_WARRIOR_UNIT_ID then
             call SetBonus(UnitHero, 0, (I_l + 1) * 60)
         elseif TypeHero == OGRE_MAGE_UNIT_ID then
-            call SetBonus(UnitHero, 0, (I_l + 1) * 2)
+            call SetBonus(UnitHero, 0, 15 + ((I_l + 1) * 2))
         elseif TypeHero == TROLL_BERSERKER_UNIT_ID then
             call SetBonus(UnitHero, 0, (I_l + 1) * 1)
         elseif TypeHero == YETI_UNIT_ID then

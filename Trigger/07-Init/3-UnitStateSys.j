@@ -40,6 +40,11 @@ library UnitStateSys initializer init requires RandomShit, Functions
             set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.3)
         endif
 
+        //Mortar Team
+        if GetUnitTypeId(hero) == 'H004' then
+            call AddUnitPhysPow(u, 3 * GetHeroLevel(hero))  
+        endif
+
         //Druid of the Claw
         if GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
             set r1 = GetHeroLevel(hero) * 0.01
