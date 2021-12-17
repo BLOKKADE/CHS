@@ -28,7 +28,7 @@ library EndOfRoundItem
 
     function RegisterEndOfRoundItem takes integer pid, item it returns nothing
         if it != null then
-            if CurrentlyFighting[pid] then
+            if CurrentlyFighting[pid] or RectContainsUnit(udg_rect09, udg_units01[pid + 1]) == false then
                 call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Your |cff68eef3" + GetItemName(it) + "|r will start working |cff6cff40next round|r.")
                 call SetItemUserData(it, udg_integer02)
             else
