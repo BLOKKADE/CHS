@@ -158,17 +158,23 @@ library trigger135 initializer init requires RandomShit
                 exitwhen udg_integer32 > 6
                 call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
                 call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
-                call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
-                if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
-                    //call BJDebugMsg("1a item move success")
-                else
-                    //call BJDebugMsg("1a item move fail")
+
+                if GetPlayerSlotState(GetOwningPlayer(udg_units03[1])) != PLAYER_SLOT_STATE_LEFT then
+                    call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
+                    if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
+                        //call BJDebugMsg("1a item move success")
+                    else
+                        //call BJDebugMsg("1a item move fail")
+                    endif
                 endif
-                call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
-                if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
-                    //call BJDebugMsg("2a item move success")
-                else
-                    //call BJDebugMsg("2a item move fail")
+
+                if GetPlayerSlotState(GetOwningPlayer(udg_units03[2])) != PLAYER_SLOT_STATE_LEFT then
+                    call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
+                    if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
+                        //call BJDebugMsg("2a item move success")
+                    else
+                        //call BJDebugMsg("2a item move fail")
+                    endif
                 endif
                 set udg_integer32 = udg_integer32 + 1
             endloop
