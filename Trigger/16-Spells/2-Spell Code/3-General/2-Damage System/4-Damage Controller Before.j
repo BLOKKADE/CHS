@@ -585,7 +585,7 @@ scope DamageControllerBefore initializer init
             set blockDamage = GetUnitBlock(damageTarget)
 
             //Sword of Bloodthirst
-            if UnitHasItemS(damageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) and attack then
+            if UnitHasItemS(damageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) then
                 set blockDamage = blockDamage * 0.7
             endif
 
