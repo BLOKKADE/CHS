@@ -242,9 +242,9 @@ scope DamageControllerBefore initializer init
 
         //Crits
         if DmgType ==  DAMAGE_TYPE_NORMAL then
-            call TakePhysDmg(damageSource,damageTarget, notOnHit)
+            call TakePhysDmg(damageSource,damageTarget, damageSourceHero, damageTargetHero, notOnHit)
         elseif DmgType == DAMAGE_TYPE_MAGIC then
-            call TakeMagickDmg(damageSource,damageTarget, notOnHit)
+            call TakeMagickDmg(damageSource,damageTarget, damageSourceHero, damageTargetHero, notOnHit)
         endif
 
         //Cutting
@@ -446,13 +446,9 @@ scope DamageControllerBefore initializer init
             endif  
 
             //Blessed Protection
-            set II = GetBuffLevel(damageTarget, 'A0AF')
+            set II = GetUnitAbilityLevel(damageTarget, 'A0AF')
             if II > 0 then
-                loop
-                    call BlzSetEventDamage(  GetEventDamage()/ 10) 
-                    set II = II - 1
-                    exitwhen II <= 0
-                endloop
+                call BlzSetEventDamage(  GetEventDamage()/ 10) 
             endif
         endif
         

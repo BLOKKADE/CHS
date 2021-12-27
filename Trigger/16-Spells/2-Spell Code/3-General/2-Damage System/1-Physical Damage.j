@@ -1,7 +1,7 @@
 
 
 
-function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA returns nothing
+function TakePhysDmg takes unit damageSource ,unit damageTarget, unit damageSourceHero, unit damageTargetHero, boolean AbilA returns nothing
     local integer i = 0
     local real luck = 1
     local real BaseCrit = 0
@@ -54,7 +54,7 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
     //Aura of Vulnerability
     if GetUnitAbilityLevel(damageTarget ,'B00E') > 0 then
         if GetRandomReal(0,100) <= 5 * luck then
-            set CritDmg = CritDmg + (Dmg * 1 + (0.5 * GetUnitAbilityLevel(damageSourceHero  ,AURA_OF_VULNERABILITY_ABILITY_ID))))
+            set CritDmg = CritDmg + (Dmg * 1 + (0.5 * GetUnitAbilityLevel(damageSourceHero  ,AURA_OF_VULNERABILITY_ABILITY_ID)))
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", damageTarget, "chest"))
         endif
     endif
