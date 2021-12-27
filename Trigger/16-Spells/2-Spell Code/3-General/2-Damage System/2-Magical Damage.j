@@ -21,6 +21,14 @@ function TakeMagickDmg takes unit damageSource ,unit damageTarget, boolean AbilA
     if i > 0 then
         set BaseCrit = BaseCrit + 0.05 * I2R(GetHeroLevel(damageSource))
     endif
+
+    //Aura of Vulnerability
+    if GetUnitAbilityLevel(damageTarget ,'B00E') > 0 then
+        if GetRandomReal(0,100) <= 5 * luck then
+            set CritDmg = CritDmg + (Dmg * 1 + (0.5 * GetUnitAbilityLevel(damageSourceHero  ,AURA_OF_VULNERABILITY_ABILITY_ID))))
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", damageTarget, "chest"))
+        endif
+    endif
     
     //Wanderers Cape
     if UnitHasItemS(damageSource,'I082') then

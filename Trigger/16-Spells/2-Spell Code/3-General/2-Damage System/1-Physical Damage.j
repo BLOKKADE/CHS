@@ -51,6 +51,14 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
         set CritDmg = CritDmg + Dmg
     endif
 
+    //Aura of Vulnerability
+    if GetUnitAbilityLevel(damageTarget ,'B00E') > 0 then
+        if GetRandomReal(0,100) <= 5 * luck then
+            set CritDmg = CritDmg + (Dmg * 1 + (0.5 * GetUnitAbilityLevel(damageSourceHero  ,AURA_OF_VULNERABILITY_ABILITY_ID))))
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", damageTarget, "chest"))
+        endif
+    endif
+
     //PYromancer Scorched Earth
     if GetUnitAbilityLevel(damageTarget, 'B027') > 0 then
         set BaseChCr = BaseChCr + (0.1 * GetHeroLevel(udg_units01[ScorchedEarthSource[GetHandleId(damageSource)] + 1]))
@@ -58,10 +66,10 @@ function TakePhysDmg takes unit damageSource ,unit damageTarget, boolean AbilA r
 
     //Blink Strike
     set i = GetUnitAbilityLevel(damageSource,BLINK_STRIKE_ABILITY_ID) //Blink Strike
-    if i > 0 and BlinkStrikeEnabled.boolean[GetHandleId(damageSource)] then
+    if i > 0 then
         set CritDmg = CritDmg + (Dmg * (0.45 + (0.05 * i)))
-        set BaseChCr = BaseChCr + 100
     endif
+    
 
     //Ranger passive
     set i = GetUnitAbilityLevel(damageSource,'A033') //HeroPassive
