@@ -32,7 +32,6 @@ library CheaterMagic requires BuffLevel, RandomShit, TimeManipulation
                 call UnitAddAbility(this.source, 'A08G')
             endif
             call ElemFuncStart(this.source,CHEATER_MAGIC_ABILITY_ID)
-            call TimeManipulation(source, duration)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this

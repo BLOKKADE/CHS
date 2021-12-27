@@ -39,7 +39,6 @@ library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
             call SetHeroStr(this.source,GetHeroStr(this.source,false)+ bonus,false)
             call BlzSetUnitBaseDamage(this.source,BlzGetUnitBaseDamage(this.source,0)+ bonus,0)
             set this.endTick = T32_Tick + R2I(duration * 32)
-            call TimeManipulation(source, duration)
             call this.startPeriodic()
             return this
         endmethod
