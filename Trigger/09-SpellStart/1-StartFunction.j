@@ -167,8 +167,6 @@ function FunctionTimerSpell takes nothing returns nothing
         call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
         call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,(8 + (heroLevel * 0.09)) * ChronusLevel)
         call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))       
-
-        call TimeManipulation(Herou, (8 + (heroLevel * 0.09)) * ChronusLevel)
     endif
 
     //Faerie Dragon
@@ -212,7 +210,7 @@ function FunctionTimerSpell takes nothing returns nothing
     if GetUnitTypeId(Herou) == GNOME_MASTER_UNIT_ID then
         call ElemFuncStart(Herou,GNOME_MASTER_UNIT_ID)
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55 * heroLevel,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,1 +(heroLevel * 0.04),ABILITY_RLF_DURATION_HERO,2 +(heroLevel * 0.08),ABILITY_RLF_DURATION_NORMAL)
-        call TimeManipulation(Herou, 2 +(heroLevel * 0.08))
+
     endif
             
     //Rapid Recovery
@@ -220,7 +218,6 @@ function FunctionTimerSpell takes nothing returns nothing
     if abilLevel > 0 then
         call ElemFuncStart(Herou,RAPID_RECOVERY_ABILITY_ID)
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_MANA_REGEN ,(8 +(heroLevel * 0.2))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(8 +(heroLevel * 0.2))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
-        call TimeManipulation(Herou, (8 +(heroLevel * 0.2))* ChronusLevel)
     endif
         
     //Demon Curse
@@ -228,7 +225,6 @@ function FunctionTimerSpell takes nothing returns nothing
     if abilLevel > 0 then
         call ElemFuncStart(Herou,DEMONS_CURSE_ABILITY_ID)
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A043',"howlofterror",0,ABILITY_RLF_DAMAGE_INCREASE_PERCENT_ROA1,(10 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_DAMAGE_HBZ2 ,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
-        call TimeManipulation(Herou, (8 +(heroLevel * 0.09))* ChronusLevel)
     endif
 
     //Time Manipulation
