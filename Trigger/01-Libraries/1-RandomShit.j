@@ -170,6 +170,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call UnitRemoveAbility(u, WISDOM_CHESTPLATE_BUFF_ID)
         call UnitRemoveAbility(u, 'A08G')
         call UnitRemoveAbility(u, CHEATER_MAGIC_BUFF_ID)
+        call UnitRemoveAbility(u, HERO_BUFF_ID)
     endfunction
 
     function NegativeBuffs takes unit u returns nothing
@@ -251,7 +252,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call UnitRemoveAbility(u, 'A09B')
         call UnitRemoveAbility(u, 'A08O')
         call UnitRemoveAbility(u, 'A03V')
-        call UnitRemoveAbility(u, HERO_BUFF_ID)
     endfunction
 
     //0 = all, 1 = negative, 2 = positive
