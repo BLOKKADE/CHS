@@ -1009,7 +1009,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Arcane, 1)
 
         //182 - Unlimited Agony
-        call SaveAbilData(UNLIMITED_AGON_ABILITY_ID, UNLIMITED_AGON_ITEM_ID, false, 0, 0, false, Order_None, null)
+        //call SaveAbilData(UNLIMITED_AGON_ABILITY_ID, UNLIMITED_AGON_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //183 - Time Manipulation
         call SaveAbilData(TIME_MANIPULATION_ABILITY_ID, TIME_MANIPULATION_ITEM_ID, false, 0, 0, false, Order_None, null)
