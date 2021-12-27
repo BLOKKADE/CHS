@@ -1,15 +1,26 @@
-library HeroBuff requires BuffLevel, RandomShit, TimeManipulation
+library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulation
+
+    globals
+        Table HbStruct
+    endglobals
+
+    function GetHbStruct takes integer id returns HeroBuffStruct
+        return HbStruct[id]
+    endfunction
+
     struct HeroBuffStruct extends array
         unit source
         integer endTick
-        integer bonus
+        integer startTick
+        integer bonus1
+        integer bonus2
 
         private static integer instanceCount = 0
         private static thistype recycle = 0
         private thistype recycleNext
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
+            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or (not UnitAlive(this.source)) or (T32_Tick - this.startTick > 32 and GetUnitAbilityLevel(this.source, 'B00T') > 0) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -27,21 +38,23 @@ library HeroBuff requires BuffLevel, RandomShit, TimeManipulation
             endif
             
             set this.source = source
-            set this.bonus = R2I(3 * abilLevel*(1 + 0.009 * heroLevel))
+            set this.bonus1 = R2I(1.2 * abilLevel*(1 + 0.009 * heroLevel))
+            set this.bonus1 = R2I(1 * abilLevel*(1 + 0.009 * heroLevel))
 
-            call AddUnitMagicDmg(this.source, this.bonus)
-            call AddUnitMagicDef(this.source, this.bonus * 0.5)
-            call ElemFuncStart(this.source,HERO_BUFF_ABILITY_ID)
+            call AddUnitMagicDmg(this.source, this.bonus1)
+            call AddUnitMagicDef(this.source, this.bonus2)
+            call ElemFuncStart(this.source, HERO_BUFF_ABILITY_ID)
             call USOrder4field(this.source,GetUnitX(this.source),GetUnitY(this.source),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,duration * chronusLevel,ABILITY_RLF_DURATION_HERO, duration * chronusLevel,ABILITY_RLF_DURATION_NORMAL)
             call TimeManipulation(this.source, duration * chronusLevel)
             set this.endTick = T32_Tick + R2I((duration * chronusLevel) * 32)
+            set this.startTick = T32_Tick
             call this.startPeriodic()
             return this
         endmethod
         
         method destroy takes nothing returns nothing
-            call AddUnitMagicDmg(this.source, 0 - this.bonus)
-            call AddUnitMagicDef(this.source, 0 - (this.bonus * 0.5))
+            call AddUnitMagicDmg(this.source, 0 - (this.bonus1))
+            call AddUnitMagicDef(this.source, 0 - (this.bonus2))
             set this.source = null
             set recycleNext = recycle
             set recycle = this
@@ -49,4 +62,17 @@ library HeroBuff requires BuffLevel, RandomShit, TimeManipulation
     
         implement T32x
     endstruct
+
+    function HeroBuffCast takes unit u, integer abilLevel, integer heroLevel, real chronusLevel, real duration returns nothing
+        if GetHbStruct(GetHandleId(u)) == 0 then
+            set HbStruct[GetHandleId(u)] = HeroBuffStruct.create(u, abilLevel, heroLevel, chronusLevel, duration)
+        else
+            call GetHbStruct(GetHandleId(u)).destroy()
+            set HbStruct[GetHandleId(u)] = HeroBuffStruct.create(u, abilLevel, heroLevel, chronusLevel, duration)
+        endif
+    endfunction
+
+    private function init takes nothing returns nothing
+        set HbStruct = Table.create()
+    endfunction
 endlibrary

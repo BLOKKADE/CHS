@@ -1,4 +1,13 @@
-library TempPower requires BuffLevel, RandomShit, TimeManipulation
+library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulation
+
+    globals
+        Table TpStruct
+    endglobals
+
+    function GetTpStruct takes integer id returns TempPowerStruct
+        return TpStruct[id]
+    endfunction
+
     struct TempPowerStruct extends array
         unit source
         integer endTick
@@ -50,4 +59,17 @@ library TempPower requires BuffLevel, RandomShit, TimeManipulation
     
         implement T32x
     endstruct
+
+    function TempPowerCast takes unit u, real duration returns nothing
+        if GetTpStruct(GetHandleId(u)) == 0 then
+            set TpStruct[GetHandleId(u)] = TempPowerStruct.create(u, duration)
+        else
+            call GetTpStruct(GetHandleId(u)).destroy()
+            set TpStruct[GetHandleId(u)] = TempPowerStruct.create(u, duration)
+        endif
+    endfunction
+
+    private function init takes nothing returns nothing
+        set TpStruct = Table.create()
+    endfunction
 endlibrary

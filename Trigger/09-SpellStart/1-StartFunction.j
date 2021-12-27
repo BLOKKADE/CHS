@@ -69,7 +69,7 @@ function FunctionTimerSpell takes nothing returns nothing
     //Hero Buff
     set abilLevel = GetUnitAbilityLevel(Herou,HERO_BUFF_ABILITY_ID)
     if abilLevel > 0 then
-        call HeroBuffStruct.create(Herou, R2I(abilLevel), R2I(heroLevel), ChronusLevel, (7 +(heroLevel * 0.09)) * ChronusLevel)
+        call HeroBuffCast(Herou, R2I(abilLevel), R2I(heroLevel), ChronusLevel, (7 +(heroLevel * 0.09)) * ChronusLevel)
     endif
     
     //Temporary Inisibility
@@ -81,7 +81,7 @@ function FunctionTimerSpell takes nothing returns nothing
     //Temporary Power
     set abilLevel = GetUnitAbilityLevel(Herou,TEMPORARY_POWER_ABILITY_ID)    
     if abilLevel > 0 then
-        call TempPowerStruct.create(Herou, (8 + (0.02 * heroLevel)) * ChronusLevel)
+        call TempPowerCast(Herou, (8 + (0.02 * heroLevel)) * ChronusLevel)
     endif
         
     //Holy Enlightenment
