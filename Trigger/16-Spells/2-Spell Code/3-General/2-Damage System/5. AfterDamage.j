@@ -15,10 +15,10 @@ scope AfterDamage initializer init
             endif
         endif
 
-        if DamageSourceAbility != 0 then
-            call BJDebugMsg("abil: " + GetObjectName(DamageSourceAbility) + " src: " + GetUnitName(DamageSource) + " tgt: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
-        else
-            call BJDebugMsg(" src: " + GetUnitName(DamageSource) + " tgt: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
+        if ShowDmgText then
+            if GetOwningPlayer(DamageTarget) == GetLocalPlayer() then
+                call DamageText()
+            endif
         endif
     endfunction
 

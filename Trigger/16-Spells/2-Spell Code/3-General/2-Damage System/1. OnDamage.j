@@ -59,10 +59,6 @@ scope OnDamage initializer init
             set DamageIsOnHit = false
         endif
 
-        if Damage.index.isAttack then
-            call BJDebugMsg("attack")
-        endif
-
         //some abilities like faerie fire start a 0 damage event this negates that
         if Damage.index.damage == 0 or DeathReviveInvul.boolean[DamageTargetPid] then
             return
@@ -90,6 +86,7 @@ scope OnDamage initializer init
             set DamageSourceHero = null
         endif
 
+        //set damage source ability
         if unitId == PRIEST_1_UNIT_ID then
             set DamageSourceId = GetDummyId(DamageSource)
             set DamageSourceAbility = DummyAbilitySource[DamageSourceId]
@@ -138,9 +135,10 @@ scope OnDamage initializer init
         endif
 
         //modified damage source after this, so can't detect dummy units, those need to go ^^^
-        if unitId == PRIEST_1_UNIT_ID or unitId == 'h014' or unitId == 'h00T' or unitId == 'n00V' or unitId == 'n01L' then
+        if unitId == PRIEST_1_UNIT_ID or unitId == 'h014' or unitId == 'n00V' or unitId == 'n01L' then
             set DamageSource = DamageSourceHero
             set unitId = GetUnitTypeId(DamageSource)
+            set DamageSourceId = GetHandleId(DamageSource)
         endif
 
         set DamageSourceLuck = GetUnitLuck(DamageSource)
