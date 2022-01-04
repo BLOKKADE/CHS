@@ -396,7 +396,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
     function GetSpellElementCount takes unit u, integer abilId, integer id returns integer
 
         //Pretty Bright Gem : Light to Dark and Dark to Light
-        if UnitHasItemS(u, 'I0AM') then
+        if (id == Element_Light or id == Element_Dark) and UnitHasItemS(u, 'I0AM') then
             if (id == Element_Light and IsObjectElement(abilId, Element_Dark)) then
                 return GetObjectElementCount(abilId, Element_Dark)
             elseif (id == Element_Dark and IsObjectElement(abilId, Element_Light)) then

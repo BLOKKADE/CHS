@@ -19,7 +19,7 @@ library DummyRecycler /*
 //      because retrieving Dummy units does not cause that event to run.
 
 
-    */ requires /*
+    */ requires TimerUtils /*
         nothing
         
     */ optional Table/*
@@ -466,12 +466,12 @@ library DummyRecycler /*
             call RecycleDummy(LoadUnitHandle(S.hash, id, 0))
             call FlushChildHashtable(S.hash, id)
         endif
-        call DestroyTimer(t)
+        call ReleaseTimer(t)
         set t = null
     endfunction
 
     function DummyAddRecycleTimer takes unit u, real time returns nothing
-        local timer t = CreateTimer()
+        local timer t = NewTimer()
         static if LIBRARY_Table then
             set S.tb.unit[GetHandleId(t)] = u
         else

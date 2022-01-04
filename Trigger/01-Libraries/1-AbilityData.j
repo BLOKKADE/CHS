@@ -298,7 +298,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
 
         //24 - Cleaving Attack 
-        call SaveAbilData(CLEAVING_ATTACK_ABILITY_ID, CLEAVING_ATTACK_ITEM_ID, false, 0, 0, false, Order_None, null)
+        //call SaveAbilData(CLEAVING_ATTACK_ABILITY_ID, CLEAVING_ATTACK_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //25 - Spiked Carapace 
         call SaveAbilData(SPIKED_CARAPACE_ABILITY_ID, SPIKED_CARAPACE_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -607,7 +607,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Poison, 1)
 
         //91 - Multishot 
-        call SaveAbilData(MULTISHOT_ABILITY_ID, MULTISHOT_ITEM_ID, false, 0, 0, false, Order_None, null)
+        //call SaveAbilData(MULTISHOT_ABILITY_ID, MULTISHOT_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //92 - Slow Aura 
         call SaveAbilData(SLOW_AURA_ABILITY_ID, SLOW_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)

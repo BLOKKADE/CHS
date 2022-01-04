@@ -1,4 +1,4 @@
-library trigger109 initializer init requires RandomShit, StartFunction
+library trigger109 initializer init requires RandomShit, StartFunction, SellItems
 
     globals
         private integer RectPid
@@ -115,19 +115,7 @@ library trigger109 initializer init requires RandomShit, StartFunction
 
 
     function Trig_Start_Level_Func015Func002Func004A takes nothing returns nothing
-        local item it = GetEnumItem()
-        local unit u = GetRecycledDummyAnyAngle(GetItemX(it), GetItemY(it), 0)
-        
-        call SetUnitOwner(u, Player(RectPid - 1), false)
-        call PauseUnit(u, false)
-
-        call UnitAddItem(u, it)
-        call UnitDropItemTarget(u, it, SellingShop)
-
-        call RecycleDummy(u)
-        call BJDebugMsg("sold!")
-        set it = null
-        set u = null
+        call SellItem(RectPid - 1, GetEnumItem())
     endfunction
 
 

@@ -1,4 +1,4 @@
-library ChannelOrder initializer FreeInitChannel
+/*library ChannelOrder initializer FreeInitChannel
     globals 
         string array OrderString
         hashtable HTInfoSpell = InitHashtable()
@@ -63,4 +63,4 @@ library ChannelOrder initializer FreeInitChannel
         
         endif
     endfunction
-endlibrary
+endlibrary*/

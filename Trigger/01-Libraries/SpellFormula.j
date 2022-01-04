@@ -1,4 +1,4 @@
-/*library SpellFormula initializer init requires AbilityData
+library SpellFormula initializer init requires AbilityData
 
     globals
         private HashTable SpellValueHashTable
@@ -29,21 +29,22 @@
     //============================================================================
     //calculates ability damage and other values using the world editor object editor formula
     //stores calculated values in a table so it doesnt need to be recalculated
-        function GetSpellValue takes integer abilId, integer valueKey, real initDamage, real factor, real level returns real
+        function GetSpellValue takes integer abilId, integer valueKey, real initDamage, real factor, integer level returns integer
             local real damage
             local real damageNext
-            local integer levelRounded = floor(level)
-            local real levelDecimals = level - levelRounded
+            //local integer levelRounded = MathRound_floor(level)
+            //local real levelDecimals = level - levelRounded
             local integer i = 2
 
-            if levelDecimals == 0 then
-                if HasAbilityKeyLevelValue(abilId, valueKey, levelRounded) then
-                    return GetAbilityKeyLevelValue(abilId, valueKey, levelRounded)
+            //if levelDecimals == 0 then
+                if HasAbilityKeyLevelValue(abilId, valueKey, level) then
+                    return R2I(GetAbilityKeyLevelValue(abilId, valueKey, level))
                 else
-                    set damage = CalculateValue(GetAbilityKeyLevelValue(abilId, valueKey, levelRounded -1), initDamage, factor, levelRounded)
-                    call SetAbilityKeyLevelValue(abilId, valueKey, levelRounded, damage)
-                    return damage
+                    set damage = CalculateValue(GetAbilityKeyLevelValue(abilId, valueKey, level -1), initDamage, factor, level)
+                    call SetAbilityKeyLevelValue(abilId, valueKey, level, damage)
+                    return R2I(damage)
                 endif
+                /*
             else
                 if HasAbilityKeyLevelValue(abilId, valueKey, levelRounded) then
                     set damage = GetAbilityKeyLevelValue(abilId, valueKey, levelRounded)
@@ -60,10 +61,10 @@
                 endif
 
                 return damage + ((damageNext - damage) * levelDecimals)
-            endif
+            endif*/
         endfunction
 
         private function init takes nothing returns nothing
             set SpellValueHashTable = HashTable.create()
         endfunction
-    endlibrary*/
+    endlibrary
