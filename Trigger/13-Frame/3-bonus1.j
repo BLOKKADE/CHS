@@ -47,8 +47,8 @@ library HeroData initializer init
         call SaveStr(HT_data,PYROMANCER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +35 maximum attack damage. Scorched Earth: +0.5% miss chance, +0.1% crit chance. +1 area of effect." )  
         
         call SaveStr(HT_data,TAUREN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSpiritWalker.blp" )       // tauren
-        call SaveStr(HT_data,TAUREN_UNIT_ID,2, "|cff00ffffPassive|r: Spirit Mage: Spells in the Active Spells I shop give +30 Rune Power each and can go up to level 40 through its level up bonus.")
-        call SaveStr(HT_data,TAUREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 2 levels|r) Increases the level of all spells from Active Spells I by 1." )
+        call SaveStr(HT_data,TAUREN_UNIT_ID,2, "|cff00ffffPassive|r: Spirit Mage: Gains +5 Rune Power for every active spell it has. All [Element] damage deals 5% bonus damage based on how many of the [Element] the Hero has.")
+        call SaveStr(HT_data,TAUREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Spirit Mage: +0.25 Rune Power per active spell. +0.05% damage per [Element]")
         
         call SaveStr(HT_data,MYSTIC_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )       // Mystic
         call SaveStr(HT_data,MYSTIC_UNIT_ID,2, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons an invulnerable Faerie Dragon to aid it in battle.")
@@ -117,7 +117,7 @@ library HeroData initializer init
         call SaveStr(HT_data,RANGER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +5% base damage to all critical hits.")       
         
         call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNUnbroken.blp" )       // void
-        call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,2, "|cff00ffffPassive|r: Void Bash: 18% chance on attacks to deal 25 bonus |cffff00ffmagical damage|r and stun for 0.17 seconds. ")
+        call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,2, "|cff00ffffPassive|r: Void Bash: When the Hero damages an enemy it has a 20% chance to deal 50 bonus |cffff00ffmagical damage|r and stun it for 0.2 seconds. ")
         call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Void Bash: +50 damage" )     
                 
         call SaveStr(HT_data,DOOM_GUARD_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDoomGuard.blp" )       // DOOMguard

@@ -3,7 +3,7 @@ library UrsaBleed requires TimerUtils
     globals
         string FX_Bleed = "Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl"
     endglobals
-
+/*
     struct UrsaBleed extends array
         real dmg
         unit target
@@ -73,5 +73,5 @@ library UrsaBleed requires TimerUtils
 
     function CastUrsaBleed takes unit caster, unit target, real damage, boolean magic returns nothing
         call UrsaBleed.create(caster, target, damage, magic)
-    endfunction
+    endfunction*/
 endlibrary

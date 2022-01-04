@@ -65,7 +65,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if IsUnitType(u, UNIT_TYPE_HERO) and IsAbsolute(abilId) == false then
             call AddSpellPlayerInfo(abilId,u,0)
 
-            call SetChanellOrder(u,abilId,GetInfoHeroSpell(u,abilId)  )
+            //call SetChanellOrder(u,abilId,GetInfoHeroSpell(u,abilId)  )
         endif
 
         if abilId == EVASION_ABILITY_ID then

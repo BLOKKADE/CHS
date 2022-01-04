@@ -404,12 +404,8 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 0, (I_l + 1) * 5)
             
         elseif TypeHero == DARK_HUNTER_UNIT_ID then         
-            call SetUnitAbilityLevel(UnitHero,'A034',2)
-            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(UnitHero,'A034'),ABILITY_RLF_DAMAGE_BONUS_HBH3 ,0,1 + I2R(I_l + 1)* 50 )
-            call SetBonus(UnitHero, 0, 25 + (I2R(I_l + 1)* 50))
-            call SetUnitAbilityLevel(UnitHero,'A034',1)
+            call SetBonus(UnitHero, 0, (I2R(I_l + 1)* 50))
             set LastLvlHero[Pid] = I_l     
-                            
                             
         elseif TypeHero == DOOM_GUARD_UNIT_ID then     
         
