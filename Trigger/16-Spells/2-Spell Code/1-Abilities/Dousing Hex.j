@@ -1,19 +1,9 @@
 library DousingHex initializer init requires DummyOrder, RandomShit
 
     globals
-        Table DousingHexChance
+        Table DousingHexReduction
         Table DousingHexCooldown
     endglobals
-
-    function DousingHexFailCheck takes unit u, integer abilId returns boolean
-        if IsSpellElement(u, abilId, Element_Fire) and GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 and GetRandomInt(0, 100) < DousingHexChance.integer[GetHandleId(u)] then
-            //call BJDebugMsg("Dousing hex fail")
-            call DestroyEffect(AddSpecialEffect("Objects\\Spawnmodels\\Naga\\NagaDeath\\NagaDeath.mdl", GetUnitX(u), GetUnitY(u)))
-            call IssueImmediateOrderById(u, 851972)
-            return true
-        endif
-        return false
-    endfunction
 
     function CastDousingHex takes unit caster, unit target, integer level returns nothing
         local integer i = 1
@@ -23,7 +13,7 @@ library DousingHex initializer init requires DummyOrder, RandomShit
         call dummy.addActiveAbility('A09K', 1, 852189)
         call dummy.target(target)
         call dummy.activate()
-        set DousingHexChance.integer[GetHandleId(target)] = level
+        set DousingHexReduction.real[GetHandleId(target)] = 0.1250 + (0.0125 * level)
         set DousingHexCooldown.real[GetHandleId(target)] = 1.17 + (0.03 * level)
         
         loop
@@ -40,6 +30,6 @@ library DousingHex initializer init requires DummyOrder, RandomShit
 
     private function init takes nothing returns nothing
         set DousingHexCooldown = Table.create()
-        set DousingHexChance = Table.create()
+        set DousingHexReduction = Table.create()
     endfunction
 endlibrary

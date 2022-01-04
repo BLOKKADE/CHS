@@ -57,9 +57,58 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         endif
     endfunction
 
-    function FuncEditParam takes integer abilId, unit u returns nothing
+    function SetSkillParameters takes unit u, integer abilId returns nothing
         local integer i1 = 0
         local integer i2 = 0
+
+        if abilId == EVASION_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+        endif
+
+        if abilId == DRUNKEN_MASTER_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            call AddUnitEvasion(u ,   I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+        endif 
+
+        if abilId == HARDENED_SKIN_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+        endif 
+
+        if abilId == FIRE_SHIELD_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+        endif 
+
+        if abilId == MEGA_LUCK_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+        endif 
+
+        if abilId == ABSOLUTE_POISON_ABILITY_ID then
+            call AbsolutePoisonLearned(u)
+        endif
+
+        if abilId == DEMOLISH_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u, abilId)
+            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            call AddUnitPhysPow(u, 3 * I2R(i1 - i2))
+            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+        endif
+    endfunction
+
+    function FuncEditParam takes integer abilId, unit u returns nothing
         local integer NumAbility
 
         if IsUnitType(u, UNIT_TYPE_HERO) and IsAbsolute(abilId) == false then
@@ -68,46 +117,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             //call SetChanellOrder(u,abilId,GetInfoHeroSpell(u,abilId)  )
         endif
 
-        if abilId == EVASION_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10001) 
-            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10001,i1)
-        endif
-
-        if abilId == DRUNKEN_MASTER_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10002) 
-            call AddUnitEvasion(u ,   1 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10002,i1)
-        endif    
-
-        if abilId == HARDENED_SKIN_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10003) 
-            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10003,i1)
-        endif 
-
-        if abilId == FIRE_SHIELD_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10004) 
-            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10004,i1)
-            call SetPlayerAbilityAvailable(GetOwningPlayer(u), FIRE_SHIELD_ABILITY_ID, false)
-            call SetPlayerAbilityAvailable(GetOwningPlayer(u), FIRE_SHIELD_ABILITY_ID, true)
-        endif 
-
-        if abilId == MEGA_LUCK_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10005) 
-            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10005,i1)
-        endif 
-
-        if GetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID) > 0 then
-            call AbsolutePoisonLearned(u)
-        endif
+        call SetSkillParameters(u, abilId)
 
         if abilId == MYSTERIOUS_TALENT_ABILITY_ID or abilId == ANCIENT_TEACHING_ABILITY_ID or abilId == TIME_MANIPULATION_ABILITY_ID and GetUnitAbilityLevel(u,abilId) == 1 then
             call BlzStartUnitAbilityCooldown(u,abilId,60)
@@ -116,7 +126,6 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
             call MysteriousTalentUpdateDesc(u)
         endif
-
 
         if abilId == MEGA_SPEED_ABILITY_ID then     
             if LoadReal(HT, GetHandleId(u),1 ) == 0 then 
@@ -128,59 +137,20 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
     endfunction
 
     function FunResetAbility takes integer abilId, unit u returns nothing
-        local integer i1 = 0
-        local integer i2 = 0
 
         call RemoveInfoHeroSpell(u,abilId)
 
-        if abilId == EVASION_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10001) 
-            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10001,i1)
-        endif
-
-        if abilId == DRUNKEN_MASTER_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10002) 
-            call AddUnitEvasion(u ,   I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10002,i1)
-        endif 
-
-        if abilId == HARDENED_SKIN_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10003) 
-            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10003,i1)
-        endif 
-
-        if abilId == FIRE_SHIELD_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10004) 
-            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10004,i1)
-        endif 
-
-        if abilId == DIVINE_GIFT_ABILITY_ID then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10005) 
-            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10005,i1)
-        endif 
-
-        if abilId == ABSOLUTE_POISON_ABILITY_ID then
-            call AbsolutePoisonLearned(u)
-        endif
+        call SetSkillParameters(u, abilId)
 
         if GetUnitTypeId(u) == TAUREN_UNIT_ID then
             call SpiritTaurenRuneBonusReset(u, abilId)
         endif
 
-        if abilId == MEGA_SPEED_ABILITY_ID then
+        /*if abilId == MEGA_SPEED_ABILITY_ID then
             if LoadReal(HT, GetHandleId(u),1 ) != 0 then
                 //   call BlzSetUnitAttackCooldown(u,LoadReal(HT, GetHandleId(u),1 ) ,0 ) 
             endif
-        endif
+        endif*/
     endfunction
 
     function FunctionStartUnit takes unit U returns nothing

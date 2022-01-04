@@ -9,14 +9,15 @@ scope ModifyDamageBeforeArmor initializer init
         local real r1 = 0
         local integer i1 = 0
 
+        call ElementalDamage()
+
         //Evasion & miss TODO: clean this up
         if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0) and (GetUnitEvasion(DamageTarget) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitMissChance(DamageSource) > 0) then
-            set r1 = Evade(DamageSource, DamageTarget, Damage.index.damage)
-            if r1 == 0 then
-                set Damage.index.damage = 0
+            call Evade()
+            
+            if Damage.index.damage == 0 then
                 return
             endif
-            set Damage.index.damage = r1
         endif
 
         //Extradimensional Cooperation
@@ -349,7 +350,7 @@ scope ModifyDamageBeforeArmor initializer init
             call AbilStartCD(DamageTarget, 'A0AH', 1)
             call ElementStartAbility(DamageTarget, ROCK_GOLEM_UNIT_ID)
             call DestroyEffect(AddSpecialEffectFix("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
-            call AreaDamagePhys(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitBlock(DamageTarget) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, 'A0AH')
+            call AreaDamagePhys(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitBlock(DamageTarget) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, ROCK_GOLEM_UNIT_ID)
         endif
 
         //Spirit Link
@@ -414,6 +415,12 @@ scope ModifyDamageBeforeArmor initializer init
             else
                 set Damage.index.damage = blockDamage
             endif
+        endif
+
+        //Demolish
+        set i1 = GetUnitAbilityLevel(DamageSourceHero, DEMOLISH_ABILITY_ID)
+        if i1 > 0 and Damage.index.damageType == DAMAGE_TYPE_NORMAL then
+            set udg_DamageEventArmorPierced = BlzGetUnitArmor(DamageTarget) * (0.05 + (0.005 * i1))
         endif
 
         //Wisdom Chestplate

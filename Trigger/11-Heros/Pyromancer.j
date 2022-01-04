@@ -37,9 +37,6 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
         loop
             set x = x + xBonus
             set y = y + yBonus
-            if BlzGetUnitAbilityCooldownRemaining(source, 'A0B6') == 0 then
-                call CreateScorches(source, x, y, area)
-            endif
             call GroupEnumUnitsInRange(PyromancerTemp, x, y, area, Filter(function PyromancerFilter))
             call GroupAddGroup(PyromancerTemp, PyromancerDamage)
             set i = i - 1

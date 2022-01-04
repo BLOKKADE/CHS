@@ -1,17 +1,17 @@
 library Evasion requires CustomState, RandomShit, LuckyPants
 
-    function EvasionCheck takes unit damageSource, real originalDamage, real returnDamage returns real
-        local real percentage = (1 - (returnDamage / originalDamage)) * 100
+    function EvasionCheck takes real returnDamage returns nothing
+        local real percentage = (1 - (returnDamage / Damage.index.damage)) * 100
         local texttag tx = CreateTextTag()
 
-        if returnDamage != originalDamage then
+        if returnDamage != Damage.index.damage then
             call SetTextTagText(tx,R2SW(percentage, 1, 0) + "%% miss", TEXT_SIZE)
         else
             call SetTextTagText(tx, "miss", TEXT_SIZE)
             set returnDamage = 0
             call BlzSetEventWeaponType(WEAPON_TYPE_WHOKNOWS)
         endif
-        call SetTextTagPosUnit(tx, damageSource, - 15)
+        call SetTextTagPosUnit(tx, DamageSource, - 15)
         call SetTextTagColor(tx, 255, 0, 0, 255)
         call SetTextTagLifespan(tx, 1.5)
         call SetTextTagFadepoint(tx, 1.2)
@@ -19,50 +19,50 @@ library Evasion requires CustomState, RandomShit, LuckyPants
         call SetTextTagPermanent(tx, false)
 
         set tx = null
-        return returnDamage
+        set Damage.index.damage = returnDamage
     endfunction
 
-    function Evade takes unit damageSource, unit damageTarget, real damage returns real
-        local real returnDamage = damage
+    function Evade takes nothing returns nothing
+        local real returnDamage = Damage.index.damage
         local integer abilLvl = 0
 
-        if GetUnitMissChance(damageSource) > 0 and GetRandomReal(0, 100) > GetUnitMissChance(damageSource) then
-            return damage
+        if GetUnitMissChance(DamageSource) > 0 and GetRandomReal(0, 100) > GetUnitMissChance(DamageSource) then
+            return
         endif
 
-        if GetUnitAbilityLevel(damageSource, 'B027') > 0 then
-            if GetRandomReal(0, 100) > GetHeroLevel(udg_units01[ScorchedEarthSource[GetHandleId(damageSource)] + 1]) * 0.5 then
-                return damage
+        if GetUnitAbilityLevel(DamageSource, 'B027') > 0 then
+            if GetRandomReal(0, 100) > GetHeroLevel(udg_units01[ScorchedEarthSource[GetHandleId(DamageSource)] + 1]) * 0.5 then
+                return
             endif
         endif
 
-        if GetUnitEvasion(damageTarget) > 0 and GetRandomReal(0, 100) > GetUnitRealEvade(damageTarget) * 100 then
-            return damage
+        if GetUnitEvasion(DamageTarget) > 0 and GetRandomReal(0, 100) > GetUnitRealEvade(DamageTarget) * 100 then
+            return
         else
             //Lucky Pants
-            if UnitHasItemS(damageTarget, LUCKY_PANTS_ITEM_ID) then
-                call ActivateLuckyPants(damageTarget)
+            if UnitHasItemS(DamageTarget, LUCKY_PANTS_ITEM_ID) then
+                call ActivateLuckyPants(DamageTarget)
             endif
 
             //Trickster
-            if GetUnitTypeId(damageTarget) == SATYR_TRICKSTER_UNIT_ID then
+            if GetUnitTypeId(DamageTarget) == SATYR_TRICKSTER_UNIT_ID then
                 //set TypeDmg_b = 2
                 //set DamageIsAttack = true
                 //set GLOB_typeDmg = 2
                 //set udg_NextDamageIsAttack = true
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = SATYR_TRICKSTER_UNIT_ID
-                call Damage.applyAttack(damageTarget, damageSource, GetAttackDamage(damageTarget) * 1 + (0.02 * GetHeroLevel(damageTarget)), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                call Damage.applyAttack(DamageTarget, DamageSource, GetAttackDamage(DamageTarget) * 1 + (0.02 * GetHeroLevel(DamageTarget)), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
             endif
         endif
 
         //Trueshot aura
-        set abilLvl = GetUnitAbilityLevel(damageSource, TRUESHOT_AURA_ABILITY_ID)
+        set abilLvl = GetUnitAbilityLevel(DamageSource, TRUESHOT_AURA_ABILITY_ID)
         if abilLvl > 0 then
             set returnDamage = returnDamage * (0.005 * abilLvl)
             set DamageIsTrue = true
         endif
 
-        return EvasionCheck(damageSource, damage, returnDamage)
+        call EvasionCheck(returnDamage)
     endfunction
 endlibrary
