@@ -89,7 +89,8 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr(THUNDER_WITCH_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr(THUNDER_WITCH_UNIT_ID, 1, "|cffd6e049Targets|r: ,0,")
 
-        call SetBonusStr(THUNDER_WITCH_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
+        call SetBonusStr(TAUREN_UNIT_ID, 0, "|cffe7544aRune power per active spell|r: ,0,")
+        call SetBonusStr(TAUREN_UNIT_ID, 1, "|cffd6e049[Element] damage bonus|r: ,0,")
 
         call SetBonusStr('U000', 0, "|cffe7544aTotal Agility bonus|r: ,0,")
         call SetBonusStr('U000', 1, "|cffd6e049Agility bonus per round|r: ,0,")

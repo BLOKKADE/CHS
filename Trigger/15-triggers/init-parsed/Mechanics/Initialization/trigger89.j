@@ -41,7 +41,6 @@ library trigger89 initializer init requires RandomShit
         endloop
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,0)
         call ResourseRefresh(GetEnumPlayer()) 
-        call SetPlayerAbilityAvailableBJ(false,'A00S',GetEnumPlayer())
         call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_VISIBLE,GetPlayableMapRect())
         call CameraSetupApplyForPlayer(true,udg_camerasetup01,GetEnumPlayer(),0.00)
     endfunction

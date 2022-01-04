@@ -43,7 +43,7 @@ library HeroData initializer init
         call SaveStr(HT_data,DEADLORD_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Vampire: +0.5% lifesteal" )  
         
         call SaveStr(HT_data,PYROMANCER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNChaosSpaceOrc.blp" )       // Pyromancer
-        call SaveStr(HT_data,PYROMANCER_UNIT_ID,2, "|cff00ffffPassive|r: Scorched Earth: Once every second, the Hero's attacks set the ground on fire for 2 seconds. Units within the fire have a chance to miss any damage dealt and have a higher chance to get hit by crits. [|cff96ffffStable|r] The Pyromancer's attacks deal damage in a line.")
+        call SaveStr(HT_data,PYROMANCER_UNIT_ID,2, "|cff00ffffPassive|r: Scorched Earth: Once every second when the Hero deals [|cffff0000Fire|r] damage it sets the ground on fire for 2 seconds. Units within the fire have a chance to miss any damage dealt and have a higher chance to get hit by crits. [|cff96ffffStable|r] The Pyromancer's attacks deal damage in a line.")
         call SaveStr(HT_data,PYROMANCER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +35 maximum attack damage. Scorched Earth: +0.5% miss chance, +0.1% crit chance. +1 area of effect." )  
         
         call SaveStr(HT_data,TAUREN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSpiritWalker.blp" )       // tauren

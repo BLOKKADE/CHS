@@ -1,4 +1,4 @@
-globals
+/*globals
 
 
     integer array AbilSpellRB1
@@ -131,3 +131,4 @@ function InitTrig_RandomAbilityData takes nothing returns nothing
     call InitDataRA4()
 endfunction
 
+*/

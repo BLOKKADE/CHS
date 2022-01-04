@@ -335,6 +335,7 @@ library trigger111 initializer init requires RandomShit, Functions
         if i > 1 then
             call SetUnitAbilityLevel(u, udg_integer01, i)
         endif
+        call SetupDummySpell(u, abil, i, new)
         call FuncEditParam(abil,u)
         call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())

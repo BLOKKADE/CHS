@@ -240,17 +240,8 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 2, (I_l + 1) * 0.1)
             call SetBonus(UnitHero, 3, 149 + (I_l + 1))
         elseif TypeHero == TAUREN_UNIT_ID then                   
-    
-            loop
-                exitwhen BRL_BONUS[Pid] ==  I_l / 2 
-                    
-                call SpiritTaurenAbilityLevelBonus(UnitHero)      
-        
-                set BRL_BONUS[Pid] = BRL_BONUS[Pid] + 1
-            endloop   
-                        
-                        
-                            
+            call SetBonus(UnitHero, 0, 5 + (0.25 * (I_l + 1)))
+            call SetBonus(UnitHero, 1, 5 + (0.05 * (I_l + 1)))
         elseif TypeHero == MYSTIC_UNIT_ID then  
         
             loop
