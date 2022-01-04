@@ -40,7 +40,7 @@ scope Killing initializer init
         //Incinerate
         if LoadInteger(HT,GetHandleId(target),- 300004)+ 160 > T32_Tick then
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", target, "head"))
-            call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, INCINERATE_CUSTOM_BUFF_ID)
+            call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, INCINERATE_ABILITY_ID)
         endif
         
         //Black Arrow
@@ -78,12 +78,7 @@ scope Killing initializer init
             set i = UnitHasItemI( killingHero,'I07E') 
             if i > 0 and GetOwningPlayer(target) == Player(11) then
 
-                call AddUnitMagicDmg(killingHero,i * 15)
-
-                set t = NewTimer()
-                call SaveUnitHandle(HT,GetHandleId(t),1,killingHero)
-                call SaveInteger(HT,GetHandleId(t),2,i)
-                call TimerStart(t,10,false,function TimerMagDmg )
+                call AddStateTemp(killingHero, CustomState_MagicPow, i * 15, 10)
             endif
 
             //Not sure what this is for

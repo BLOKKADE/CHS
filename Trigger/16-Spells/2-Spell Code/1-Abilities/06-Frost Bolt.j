@@ -1,19 +1,9 @@
 library FrostBolt requires RandomShit
     function UsOrderUTimer51 takes unit u1, unit u2, real dmg returns nothing
-        local real x = GetUnitX(u1)
-        local real y = GetUnitY(u1)
-        local boolean check = false
-        local unit Caster1 = CreateUnit(GetOwningPlayer(u1),PRIEST_1_UNIT_ID,x,y, 0  )
-        call UnitAddAbility(Caster1,'A07Y' ) 
-
-        call BlzSetAbilityRealLevelField( BlzGetUnitAbility(Caster1,'A07Y'),ABILITY_RLF_DAMAGE_CTB1,0,dmg)
-        set check = IssueTargetOrder(Caster1,"thunderbolt",u2)
-        
-        call UnitApplyTimedLife(Caster1,RAPIER_OF_THE_GODS_BUFF_ID,3)
-        
-        set Caster1 = null
-        set u1 = null
-        set u2 = null
+        local DummyOrder dummy = DummyOrder.create(u1, GetUnitX(u1), GetUnitY(u1), GetUnitFacing(u1), 6)
+        call dummy.addActiveAbility('A07Y', 1, 852095)
+        call dummy.setAbilityRealField('A07Y', ABILITY_RLF_DAMAGE_CTB1, dmg)
+        call dummy.target(u2)
     endfunction
 
     function realaisFrostBolt takes nothing returns nothing 

@@ -4,7 +4,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
 
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
         
-        if GetUnitTypeId(caster) ==  'h00T' or GetUnitTypeId(caster) == 'h014' or GetUnitTypeId(caster) == PRIEST_1_UNIT_ID then
+        if GetUnitTypeId(caster) == 'h014' or GetUnitTypeId(caster) == PRIEST_1_UNIT_ID then
             set caster = udg_units01[GetConvertedPlayerId(GetOwningPlayer( caster ) ) ]
         endif
 
@@ -155,78 +155,73 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                 call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
             endif
 
-            if not DousingHexFailCheck(caster, abilId) then
-            
-                set abilityChanneled = AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
-            
-                if not Trig_Disable_Abilities_Func001C(caster) then
-                    call ElementStartAbility(caster, abilId)
-
-                    if (not abilityChanneled) and dummyAbilId != 0 then
-                        call CastSpell(caster, target, dummyAbilId, abilLvl, GetAbilityOrderType(dummyAbilId), targetX, targetY).activate()
-                    endif
-
-                    if GetUnitAbilityLevel(caster, ABSOLUTE_POISON_ABILITY_ID) > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
-                        call PoisonSpellCast(caster, target)
-                    endif
-
-                    if GetUnitAbilityLevel(caster, 'B024') > 0 then
-                        call GetRetaliationSource(caster, target, abilId, abilLvl)
-                    endif
-
-                    if UnitHasItemS(caster, 'I0B7') then
-                        call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
-                    endif
-
-                    if abilId == ACTIVATE_AVATAR_ABILITY_ID then
-                        call CastAvatar(caster, abilLvl)
-                    endif
-
-                    if abilId == 'A044' then
-                        call Urn(caster)
-                    endif   
-
-                    if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
-                        call MysteriousTalentCast(caster)
-                    endif
-
-                    if abilId == 'A09Q' then
-                        call StaffOfPowerCast(caster)
-                    endif
-
-                    if abilId == ANCIENT_RUNES_ABILITY_ID then
-                        call CastAncientRunes(caster)
-                    endif
-
-                    if abilId == 'A09D' then
-                        call MaskOfProtectionCast(caster)
-                    endif
+            set abilityChanneled = AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
         
-                    if abilId == 'A09F' then
-                        call MaskOfVitality(caster)
-                    endif
+            if not Trig_Disable_Abilities_Func001C(caster) then
+                call ElementStartAbility(caster, abilId)
 
-                    if GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X')  and abilId != RESET_TIME_ABILITY_ID then
-                        call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
-                    endif
-
-                    set lvl = GetUnitAbilityLevel(caster, CHAOS_MAGIC_ABILITY_ID)
-                    if abilId != IMMOLATION_ABILITY_ID and abilId != MANA_SHIELD_ABILITY_ID and lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
-                        call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
-                    endif
-
-                    if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then
-                        call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
-                    endif
-
-                    if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
-                        call SpellbaneSpellCast(caster, abilId, abilLvl)
-                    endif
-                
-                    call SetCooldown(caster, abilId, false) 
+                if (not abilityChanneled) and dummyAbilId != 0 then
+                    call CastSpell(caster, target, abilId, abilLvl, GetAbilityOrderType(dummyAbilId), targetX, targetY).activate()
                 endif
-            else
-                call SetCooldown(caster, abilId, true) 
+
+                if GetUnitAbilityLevel(caster, ABSOLUTE_POISON_ABILITY_ID) > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
+                    call PoisonSpellCast(caster, target)
+                endif
+
+                if GetUnitAbilityLevel(caster, 'B024') > 0 then
+                    call GetRetaliationSource(caster, target, abilId, abilLvl)
+                endif
+
+                if UnitHasItemS(caster, 'I0B7') then
+                    call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
+                endif
+
+                if abilId == ACTIVATE_AVATAR_ABILITY_ID then
+                    call CastAvatar(caster, abilLvl)
+                endif
+
+                if abilId == 'A044' then
+                    call Urn(caster)
+                endif   
+
+                if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
+                    call MysteriousTalentCast(caster)
+                endif
+
+                if abilId == 'A09Q' then
+                    call StaffOfPowerCast(caster)
+                endif
+
+                if abilId == ANCIENT_RUNES_ABILITY_ID then
+                    call CastAncientRunes(caster)
+                endif
+
+                if abilId == 'A09D' then
+                    call MaskOfProtectionCast(caster)
+                endif
+    
+                if abilId == 'A09F' then
+                    call MaskOfVitality(caster)
+                endif
+
+                if GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X')  and abilId != RESET_TIME_ABILITY_ID then
+                    call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
+                endif
+
+                set lvl = GetUnitAbilityLevel(caster, CHAOS_MAGIC_ABILITY_ID)
+                if abilId != IMMOLATION_ABILITY_ID and abilId != MANA_SHIELD_ABILITY_ID and lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
+                    call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
+                endif
+
+                if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then
+                    call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
+                endif
+
+                if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
+                    call SpellbaneSpellCast(caster, abilId, abilLvl)
+                endif
+            
+                call SetCooldown(caster, abilId, false) 
             endif
         endif
 

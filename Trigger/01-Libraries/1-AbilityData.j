@@ -261,7 +261,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
 
         //16 - Serpent Ward 
-        call SaveAbilData(SERPANT_WARD_ABILITY_ID, SERPANT_WARD_ITEM_ID, false, 0, 0, false, Order_Point, "ward")
+        call SaveAbilData(SERPANT_WARD_ABILITY_ID, SERPANT_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -471,7 +471,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Blood, 1)
 
         //60 - Pocket Factory 
-        call SaveAbilData(POCKET_FACTORY_ABILITY_ID, POCKET_FACTORY_ITEM_ID, false, 0, 0, false, Order_Point, "summonfactory")
+        call SaveAbilData(POCKET_FACTORY_ABILITY_ID, POCKET_FACTORY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "summonfactory")
         call SetLastObjectElement(Element_Summon, 1)
 
         //61 - Pulverize 
@@ -562,7 +562,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Summon, 1)
 
         //80 - Healing Ward 
-        call SaveAbilData(HEALING_WARD_ABILITY_ID, HEALING_WARD_ITEM_ID, false, 0, 0, true, Order_Point, "healingward")
+        call SaveAbilData(HEALING_WARD_ABILITY_ID, HEALING_WARD_ITEM_ID, false, Target_Any, 0, true, Order_Point, "healingward")
         call SetLastObjectElement(Element_Light, 2)
 
         //81 - Unholy Frenzy 
@@ -1080,8 +1080,11 @@ library AbilityData initializer init requires Table, IdLibrary
         //Earth Rune
         call SetObjectElement('A074', Element_Earth, 1)
 
-        //Fire Rune & Fire Force
+        //Fire Rune
         call SetObjectElement('A02V', Element_Fire, 1)
+
+        //Fire Force
+        call SetObjectElement('A0C0', Element_Fire, 1)
 
         //Wind Rune
         call SetObjectElement('A075', Element_Wind, 1)

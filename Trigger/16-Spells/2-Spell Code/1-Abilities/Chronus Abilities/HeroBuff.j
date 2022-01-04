@@ -20,7 +20,7 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
         private thistype recycleNext
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or (not UnitAlive(this.source)) or (T32_Tick - this.startTick > 32 and GetUnitAbilityLevel(this.source, 'B00T') > 0) then
+            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or (not UnitAlive(this.source)) or (T32_Tick - this.startTick > 32 and GetUnitAbilityLevel(this.source, 'B00T') == 0) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif

@@ -139,9 +139,9 @@ scope AttackController initializer init
             call PyromancerScorch(u2, u)
         endif
 
-
+        //Fire Force
         if (GetUnitAbilityLevel(GetTriggerUnit(),FIRE_FORCE_ABILITY_ID ) >= 1)  and (GetRandomReal(1,100)<= 12 * luck) then
-            call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A02V',"fanofknives",  GetHeroStr(GetTriggerUnit(),true)*(60 + 20 * I2R(GetUnitAbilityLevel(u,FIRE_FORCE_ABILITY_ID )))/ 100, ConvertAbilityRealLevelField('Ocl1') )
+            call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A0C0',"fanofknives",  GetHeroStr(GetTriggerUnit(),true)*(60 + 20 * I2R(GetUnitAbilityLevel(u,FIRE_FORCE_ABILITY_ID )))/ 100, ConvertAbilityRealLevelField('Ocl1') )
         endif
         set u = null
         set u2 = null
