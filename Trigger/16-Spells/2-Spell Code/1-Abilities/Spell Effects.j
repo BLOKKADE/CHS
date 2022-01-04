@@ -91,6 +91,10 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         elseif abilId == BLINK_STRIKE_ABILITY_ID then
             call BlinkStrike(caster, lvl)
             return true
+            //Whirlwind
+        elseif abilId == 'A025' then
+            call CastWhirlwind(caster, x, y, lvl)
+            return true
             //Extra dimensional cooperation
         elseif abilId == EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
             call ExtradimensionalCooperation(caster, abilId, lvl)
@@ -128,7 +132,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
     endfunction
 endlibrary
 
-library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, AbilityChannel, Cooldown, AncientRunes
+library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, AbilityChannel, Cooldown, AncientRunes, DummyActiveSpell
     function SpellEffectActions takes nothing returns nothing
         local unit caster = GetTriggerUnit()
         local unit target = GetSpellTargetUnit()
@@ -137,18 +141,30 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local integer abilId = GetSpellAbilityId()
         local integer abilLvl = GetUnitAbilityLevel(caster, abilId)
         local location spelLLoc = GetSpellTargetLoc()
-        local integer ID = 0 
+        local integer dummyAbilId = 0
         local integer lvl = 0
+        local boolean abilityChanneled = false
 
         if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
             //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
 
+            set dummyAbilId = GetAssociatedSpell(caster, abilId)
+            if GetAssociatedSpell(caster, abilId) != 0 then
+                set abilId = dummyAbilId
+                set abilLvl = GetUnitAbilityLevel(caster, abilId)
+                call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
+            endif
+
             if not DousingHexFailCheck(caster, abilId) then
             
-                call AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
+                set abilityChanneled = AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
             
                 if not Trig_Disable_Abilities_Func001C(caster) then
                     call ElementStartAbility(caster, abilId)
+
+                    if (not abilityChanneled) and dummyAbilId != 0 then
+                        call CastSpell(caster, target, dummyAbilId, abilLvl, GetAbilityOrderType(dummyAbilId), targetX, targetY).activate()
+                    endif
 
                     if GetUnitAbilityLevel(caster, ABSOLUTE_POISON_ABILITY_ID) > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
                         call PoisonSpellCast(caster, target)

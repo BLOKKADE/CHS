@@ -2,14 +2,13 @@ scope LongPeriodCheck initializer init
     function FunctionAttackSpeedA takes unit u returns nothing
         local real r1 = LoadReal(HT, GetHandleId(u),- 1001 )
         local real r2 = 0
-        local real i1 = I2R(GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID))
+        local integer i1 = GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID)
         local real i2 = UnitHasItemI(u,'I066')
 
 
 
         if i1 > 0 then
-            set r2 = 0.92 - 0.02 * i1
-
+            set r2 = r1 - MegaSpeedBonus(u, i1, r1)
         else
 
             set r2 = r1 
@@ -274,7 +273,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,'B026')
                 //Goblet of Blood
                 if GetUnitAbilityLevel(u, 'B026') > 0 then
-                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.1)
+                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.01)
 
                     if i1 != i2 then
                         call UnitAddAttackDamage(u, 0 - i2 + i1)

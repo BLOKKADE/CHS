@@ -53,6 +53,28 @@ scope AttackController initializer init
             set u2 = null
             return
         endif
+
+        //Mega Speed
+
+        if GetUnitAbilityLevel(u2, MEGA_SPEED_ABILITY_ID) > 0 then
+            if T32_Tick - MegaSpeedLastAttack[GetHandleId(u2)] > 4 * 32 then
+                set MegaSpeedStartTimer[GetHandleId(u2)] = T32_Tick
+            endif
+
+            set MegaSpeedLastAttack[GetHandleId(u2)] = T32_Tick
+        endif
+
+        //Corrosive Skin
+
+        set i1 = GetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID)
+        if i1 > 0 and GetRandomReal(0,100) <= 35 * luck then
+            set r1 = PoisonBonus[GetHandleId(attackerHero)]
+            if r1 == 0 then
+                set r1 = 1
+            endif
+            call DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * i1) * r1).target(u2).activate()
+            call PoisonSpellCast(u, u2)
+        endif
         
         //Demon Hunter
         if GetUnitTypeId(u2) == DEMON_HUNTER_UNIT_ID then
