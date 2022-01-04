@@ -20,9 +20,10 @@ library AoeDamage requires Vampirism
     function DamageRealase takes nothing returns boolean
         if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and GetUnitTypeId(GetFilterUnit()) != PRIEST_1_UNIT_ID then
             if OnHit then
-                set TypeDmg_b = 2
+                set udg_NextDamageType = DamageType_Onhit
             endif
-            call UnitDamageTarget(Sourse_unit,GetFilterUnit(),Dmg_ef,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS)
+            set udg_NextDamageAbilitySource = ABILGLOB
+            call Damage.applySpell(Sourse_unit,GetFilterUnit(),Dmg_ef, DAMAGE_TYPE_MAGIC)
         endif
 
         return false
@@ -78,9 +79,10 @@ library AoeDamage requires Vampirism
 
     function DamageRealasePhys takes nothing returns boolean
         if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 then
-            set Attack_AbilId = ABILGLOB 
-            set GLOB_typeDmg = 2
-            call UnitDamageTarget(Sourse_unit,GetFilterUnit(),Dmg_ef,true,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL,WEAPON_TYPE_WHOKNOWS)
+            //set Attack_AbilId = ABILGLOB 
+            //set GLOB_typeDmg = 2
+            set udg_NextDamageAbilitySource = ABILGLOB
+            call Damage.applyAttack(Sourse_unit,GetFilterUnit(),Dmg_ef, false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
         endif
 
         return false

@@ -15,7 +15,8 @@ library MaskOfVitality requires UnitHelpers
         loop
             set p = FirstOfGroup(MaskOfVitalityGroup)
             exitwhen p == null
-            call UnitDamageTarget(u, p, damage, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, null)
+            set udg_NextDamageAbilitySource = MASK_OF_VITALITY_ITEM_ID
+            call Damage.applySpell(u, p, damage, DAMAGE_TYPE_MAGIC)
             call GroupRemoveUnit(MaskOfVitalityGroup, p)
         endloop
     endfunction

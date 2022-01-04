@@ -1,4 +1,4 @@
-library ExtradimensionalCooperation requires RandomShit
+library ExtradimensionalCooperation requires RandomShit, DamageEngine
     globals
         constant string FX_BLINK = "Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl"
         constant string FX_BLINK_TARGET = "Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl"
@@ -33,11 +33,12 @@ library ExtradimensionalCooperation requires RandomShit
             if T32_Tick > this.endTick then
                 set SpellData[GetHandleId(this.caster)].boolean[5] = true
 
+                set udg_NextDamageAbilitySource = EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID
                 if magic then
-                    call UnitDamageTarget(this.caster, this.target, this.dmg, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, null)
+                    call Damage.applySpell(this.caster, this.target, this.dmg, DAMAGE_TYPE_MAGIC)
                 else
-                    set GLOB_typeDmg = 2
-                    call UnitDamageTarget(this.caster, this.target, this.dmg, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
+                    //set GLOB_typeDmg = 2
+                    call Damage.applyAttack(this.caster, this.target, this.dmg, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 endif
 
                 set SpellData[GetHandleId(this.caster)].boolean[5] = false

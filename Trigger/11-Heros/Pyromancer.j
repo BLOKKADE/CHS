@@ -13,7 +13,7 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
 
     function CreateScorches takes unit u, real x, real y, real area returns nothing
         local DummyOrder dummy = DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 4)
-        set ScorchedEarthSource.boolean[GetHandleId(dummy.dummy)] = true
+        set ScorchedEarthSource.boolean[GetDummyId(dummy.dummy)] = true
         call dummy.addActiveAbility('A0B5', 1, OrderId("flamestrike"))
         call dummy.setAbilityRealField('A0B5', ABILITY_RLF_AREA_OF_EFFECT, area)
         call dummy.point(x, y).activate()
@@ -55,9 +55,10 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
             set p = FirstOfGroup(PyromancerDamage)
             exitwhen p == null
             if p != target and IsUnitEnemy(p, GetOwningPlayer(source)) then
-                set GLOB_typeDmg = 2
-                set DamageIsAttack = true
-                call UnitDamageTarget(source, p, GetUnitDamage(source, 0), true, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
+                //set GLOB_typeDmg = 2
+                //set DamageIsAttack = true
+                set udg_NextDamageAbilitySource = PYROMANCER_UNIT_ID
+                call Damage.applyAttack(source, p, GetUnitDamage(source, 0), true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
             endif
             call GroupRemoveUnit(PyromancerDamage, p)
         endloop

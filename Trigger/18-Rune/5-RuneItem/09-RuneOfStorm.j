@@ -11,7 +11,8 @@ library StormRune requires RandomShit
             call SetUnitX(GetFilterUnit(),GetUnitX(GLOB_RUNE_U)+ GetRandomReal(- 50,50))
             call SetUnitY(GetFilterUnit(),GetUnitY(GLOB_RUNE_U)+ GetRandomReal(- 50,50))  
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\CrushingWave\\CrushingWaveMissile.mdl", GetFilterUnit(), "chest"))  
-            call UnitDamageTarget(GLOB_RUNE_U,GetFilterUnit(),1000 * GLOB_RUNE_POWER,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS)
+            set udg_NextDamageAbilitySource = 'I08I'
+            call Damage.applySpell(GLOB_RUNE_U, GetFilterUnit(), 1000 * GLOB_RUNE_POWER, DAMAGE_TYPE_MAGIC)
         endif
         return false
     endfunction

@@ -46,10 +46,13 @@ library Evasion requires CustomState, RandomShit, LuckyPants
 
             //Trickster
             if GetUnitTypeId(damageTarget) == SATYR_TRICKSTER_UNIT_ID then
-                set TypeDmg_b = 2
-                set DamageIsAttack = true
-                set GLOB_typeDmg = 2
-                call UnitDamageTarget(damageTarget, damageSource, GetAttackDamage(damageTarget) * 1 + (0.02 * GetHeroLevel(damageTarget)), true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_CLAW_HEAVY_SLICE)
+                //set TypeDmg_b = 2
+                //set DamageIsAttack = true
+                //set GLOB_typeDmg = 2
+                //set udg_NextDamageIsAttack = true
+                set udg_NextDamageType = DamageType_Onhit
+                set udg_NextDamageAbilitySource = SATYR_TRICKSTER_UNIT_ID
+                call Damage.applyAttack(damageTarget, damageSource, GetAttackDamage(damageTarget) * 1 + (0.02 * GetHeroLevel(damageTarget)), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
             endif
         endif
 
@@ -57,7 +60,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants
         set abilLvl = GetUnitAbilityLevel(damageSource, TRUESHOT_AURA_ABILITY_ID)
         if abilLvl > 0 then
             set returnDamage = returnDamage * (0.005 * abilLvl)
-            set TrueDamage = true
+            set DamageIsTrue = true
         endif
 
         return EvasionCheck(damageSource, damage, returnDamage)
