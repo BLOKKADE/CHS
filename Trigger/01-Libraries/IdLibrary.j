@@ -375,6 +375,20 @@ library IdLibrary initializer init
         constant integer SHOCKWAVE_CREEP_ABILITY_ID                     = 'A00U'
         constant integer THUNDER_CLAP_CREEP_ABILITY_ID                  = 'A01B'
 
+        // Active Spell Dummy Abilities
+
+        StaticIdGroup ACTIVE_SPELL_DUMMY_ABILITIES
+        constant integer ACTIVE_SPELL_DUMMY_0                           = 'A0BJ'
+        constant integer ACTIVE_SPELL_DUMMY_1                           = 'A0BO'
+        constant integer ACTIVE_SPELL_DUMMY_2                           = 'A0BN'
+        constant integer ACTIVE_SPELL_DUMMY_3                           = 'A0BM'
+        constant integer ACTIVE_SPELL_DUMMY_4                           = 'A0BG'
+        constant integer ACTIVE_SPELL_DUMMY_5                           = 'A0BH'
+        constant integer ACTIVE_SPELL_DUMMY_6                           = 'A0BI'
+        constant integer ACTIVE_SPELL_DUMMY_7                           = 'A0BP'
+        constant integer ACTIVE_SPELL_DUMMY_8                           = 'A0BK'
+        constant integer ACTIVE_SPELL_DUMMY_9                           = 'A0BL'
+
         // --- Ability IDs ---
 
         // --- Item IDs ---
@@ -960,6 +974,18 @@ library IdLibrary initializer init
         call TAUREN_ABILITIES.add(PLAGUE_ABILITY_ID)
         call TAUREN_ABILITIES.add(VOLCANO_ABILITY_ID)
         call TAUREN_ABILITIES.add(MIRROR_IMAGE_ABILITY_ID)
+
+        set ACTIVE_SPELL_DUMMY_ABILITIES = StaticIdGroup.create()
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_0)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_1)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_2)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_3)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_4)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_5)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_6)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_7)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_8)
+        call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_9)
     endfunction
 
     private function SetupSummons takes nothing returns nothing

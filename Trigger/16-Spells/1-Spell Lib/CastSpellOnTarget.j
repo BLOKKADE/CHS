@@ -1,4 +1,4 @@
-library CastSpellOnTarget requires UnitHelpers, AbilityData, ChannelOrder, GetRandomUnit
+library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
 
     function GetAbilityRange takes unit u, integer abilityId returns real
         return BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, abilityId), ABILITY_RLF_CAST_RANGE, GetUnitAbilityLevel(u, abilityId) - 1)
