@@ -1016,6 +1016,10 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Light, 1)
 
+    endfunction
+
+    function InitHeroElements takes nothing returns nothing
+
         //Unit and item elements
         call SetObjectElement(DOOM_GUARD_UNIT_ID, Element_Fire, 1)
         call SetObjectElement(PYROMANCER_UNIT_ID, Element_Fire, 1)
@@ -1069,105 +1073,63 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetObjectElement(TIME_WARRIOR_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(BANSHEE_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(ABOMINATION_UNIT_ID, Element_Poison, 1)
-
-
-        /*
-        call SaveAbilData(CLOUD_DUMMY_ABILITY_ID, FOG_ITEM_ID)
-
-        call SaveAbilData(PURGE_ABILITY_ID,"purge",1,1)
-        call SaveAbilData('ANtm',"transmute",1,1)
-        call SaveAbilData(CLOUD_DUMMY_ABILITY_ID,"cloudoffog",2,0)
-        call SaveAbilData(STORM_BOLT_ABILITY_ID,"thunderbolt",1,0)
-        call SaveAbilData(BANISH_ABILITY_ID,"banish",1,1)
-        call SaveAbilData(FLAME_STRIKE_ABILITY_ID,"flamestrike",2,0)
-        call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID,"waterelemental",3,0)
-        call SaveAbilData(THUNDER_CLAP_ABILITY_ID,"thunderclap",3,0)
-        call SaveAbilData(HOLY_LIGHT_ABILITY_ID,"holybolt",1,0)
-        call SaveAbilData(BLIZZARD_DUMMY_ABILITY_ID,"blizzard",2,0)   
-        call SaveAbilData(PHEONIX_ABILITY_ID,"summonphoenix",3,0)  
-        call SaveAbilData(INNER_FIRE_ABILITY_ID,"innerfire",1,1)
-    
-    
-        call SaveAbilData('AOww',"whirlwind",3,0)
-        call SaveAbilData(HEALING_WAVE_ABILITY_ID,"healingwave",1,0)
-        call SaveAbilData(WAR_STOMP_ABILITY_ID,"stomp",3,0)
-        call SaveAbilData('AOls',"Locustswarm",3,0)
-        call SaveAbilData(SERPANT_WARD_ABILITY_ID,"ward",2,0)
-        call SaveAbilData('AOhx',"hex",3,1)
-        call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID,"voodoo",3,0)
-        call SaveAbilData(WIND_WALK_ABILITY_ID,"windwalk",3,0)
-        call SaveAbilData(SHOCKWAVE_ABILITY_ID,"shockwave",2,0)
-        call SaveAbilData(CHAIN_LIGHTNING_ABILITY_ID,"chainlightning",1,0)
-        call SaveAbilData(BERSERK_ABILITY_ID,"berserk",3,0)
-        call SaveAbilData('Aspl',"spiritlink",1,1)
-        call SaveAbilData(BLOODLUST_ABILITY_ID,"bloodlust",1,1)
-        call SaveAbilData(HEALING_WARD_ABILITY_ID,"healingward",2,0)
-        call SaveAbilData(STASIS_TRAP_ABILITY_ID,"stasistrap",2,0)   
-        
-        
-        
-        call SaveAbilData(FROST_NOVA_ABILITY_ID,"frostnova",1,0)  
-        call SaveAbilData(CARRION_BEETLES_ABILITY_ID,"Carrionscarabs",3,0)
-        call SaveAbilData(INFERNO_ABILITY_ID,"dreadlordinferno",2,0)
-        call SaveAbilData(FROST_ARMOR_ABILITY_ID,"frostarmor",1,1)
-        call SaveAbilData(IMPALE_ABILITY_ID,"impale",2,0)
-        call SaveAbilData('AUdp',"deathpact",1,1)
-        call SaveAbilData(DEATH_AND_DECAY_ABILITY_ID,"deathanddecay",2,0)
-        call SaveAbilData(CARRION_SWARM_ABILITY_ID,"carrionswarm",2,0)
-        call SaveAbilData(ANTI_MAGIC_SHEL_ABILITY_ID,"antimagicshell",1,1)
-        call SaveAbilData(RAISE_DEAD_ABILITY_ID,"raisedead",3,0)
-        call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID,"unholyfrenzy",1,1)
-        call SaveAbilData(CURSE_ABILITY_ID,"curse",1,1)
-    
-        
-        
-        call SaveAbilData(SUMMON_MOUNTAIN_GIANT_ABILITY_ID,"spiritofvengeance",3,0)       
-        call SaveAbilData(FAN_OF_KNIVES_ABILITY_ID,"fanofknives",3,0)
-        call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID,"entanglingroots",1,1)
-        call SaveAbilData(STARFALL_DUMMY_ABILITY_ID,"starfall",3,0)
-        call SaveAbilData(IMMOLATION_ABILITY_ID,"immolation",3,0)
-        call SaveAbilData(SEARING_ARROWS_ABILITY_ID,"flamingarrows",1,0)
-        call SaveAbilData(TRANQUILITY_DUMMY_ABILITY_ID,"tranquility",3,0)   
-        call SaveAbilData(SHADOW_STRIKE_ABILITY_ID,"shadowstrike",1,0)       
-        call SaveAbilData(FAERIE_FIRE_ABILITY_ID,"faeriefire",1,1)
-        call SaveAbilData(REJUVENATION_ABILITY_ID,"rejuvination",1,1)
-        
-        
-        
-        call SaveAbilData(ACID_SPRAY_DUMMY_ABILITY_ID,"healingspray",2,0)
-        call SaveAbilData(BATTLE_ROAR_ABILITY_ID,"battleroar",3,0)
-        call SaveAbilData(VOLCANO_DUMMY_ABILITY_ID,"volcano",2,0)
-        call SaveAbilData(STAMPEDE_DUMMY_ABILITY_ID,"stampede",2,0) 
-        call SaveAbilData(CLUSTER_ROCKETS_DUMMY_ABILITY_ID,"clusterrockets",2,0)       
-        call SaveAbilData(ACID_BOMB_ABILITY_ID,"acidbomb",1,1)
-        call SaveAbilData(SILENCE_ABILITY_ID,"silence",2,0)
-        call SaveAbilData(RAIN_OF_FIRE_DUMMY_ABILITY_ID,"rainoffire",2,0)
-        call SaveAbilData(BREATH_OF_FIRE_ABILITY_ID,"breathoffire",2,0)
-        call SaveAbilData(POCKET_FACTORY_ABILITY_ID,"summonfactory",2,0)
-        
-        
-        call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID,"summonquillbeast",3,0)    
-        call SaveAbilData(SUMMON_BEAR_ABILITY_ID,"summongrizzly",3,0)  
-        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID,"slimemonster",3,0)  
-        call SaveAbilData(SUMMON_HAWK_ABILITY_ID,"summonwareagle",3,0)  
-        call SaveAbilData(FORKED_LIGHTNING_ABILITY_ID,"forkedlightning",1,0)  
-        call SaveAbilData(SOUL_BURN_ABILITY_ID,"soulburn",1,1)  
-        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID,"lightningshield",1,0)  
-
-        call SaveAbilData(DRUNKEN_HAZE_ABILITY_ID,"drunkenhaze",1,1)    
-        call SaveAbilData(ICY_BREATH_ABILITY_ID,"breathoffrost",2,0)  
-        call SaveAbilData(PARASITE_ABILITY_ID,"parasite",1,1)  
-        call SaveAbilData(ENSNARE_ABILITY_ID,"ensnare",1,1)
-        call SaveAbilData(HOWL_OF_TERROR_ABILITY_ID,"howlofterror",3,0)  
-
-        call SaveAbilData(MONSOON_DUMMY_ABILITY_ID,"monsoon",2,0)
-        call SaveAbilData(FERAL_SPIRIT_ABILITY_ID,"spiritwolf",3,0) 
-        
-        call SaveAbilData(CYCLONE_ABILITY_ID,"channel",2,0)
-        call SaveAbilData(PLAGUE_ABILITY_ID,"channel",2,0) 
-        call SaveAbilData(SILENCE_ABILITY_ID,"silence",2,0) 
-        */
     endfunction 
+
+    function InitDummyAbilElements takes nothing returns nothing
+
+        //Earth Rune
+        call SetObjectElement('A074', Element_Earth, 1)
+
+        //Fire Rune & Fire Force
+        call SetObjectElement('A02V', Element_Fire, 1)
+
+        //Wind Rune
+        call SetObjectElement('A075', Element_Wind, 1)
+
+        //Corrosive Skin
+        call SetObjectElement('A00R', Element_Poison, 1)
+
+        //Power of Ice
+        call SetObjectElement('A02Y', Element_Water, 1)
+        call SetObjectElement('A02Y', Element_Cold, 1)
+
+        //Earthquake
+        call SetObjectElement('A07M', Element_Earth, 1)
+
+        //Bash
+        call SetObjectElement('A06T', Element_Energy, 1)
+
+        //Thunder Force
+        call SetObjectElement('A02R', Element_Wind, 1)
+
+        //Lich Frost Nova
+        call SetObjectElement('A03J', Element_Water, 1)
+        call SetObjectElement('A03J', Element_Cold, 1)
+        call SetObjectElement('A03J', Element_Dark, 1)
+
+        //Ogre Warrior
+        call SetObjectElement('A047', Element_Earth, 1)
+
+        //Staff of Lightning
+        call SetObjectElement('A03B', Element_Wind, 1)
+
+        //Frost Bolt
+        call SetObjectElement('A07Y', Element_Water, 1)
+        call SetObjectElement('A07Y', Element_Cold, 1)
+        call SetObjectElement('A07Y', Element_Dark, 1)
+
+        //Absolute cold
+        call SetObjectElement('A07W', Element_Cold, 1)
+
+        //Stone Protection
+        call SetObjectElement('A061', Element_Earth, 1)
+
+        //Thunder Witch Thunderbolt
+        call SetObjectElement('A036', Element_Wind, 1)
+
+        //Gnome Gnome Stomp
+        call SetObjectElement('A03Z', Element_Earth, 1)
+    endfunction
 
     function InitCreepAbilities takes nothing returns nothing
         //Hurl Boulder
@@ -1189,16 +1151,18 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveCreepAbilityData(THUNDER_CLAP_CREEP_ABILITY_ID, Target_Enemy, Order_Instant, "thunderclap")
     endfunction
 
-private function init takes nothing returns nothing
-    set ChaosData = HashTable.create()
-    set ChaosDataEnemy = HashTable.create()
-    set ChaosDataAlly = HashTable.create()
-    set AbilityData = HashTable.create()
-    set ElementData = HashTable.create()
-    set ItemData = Table.create()
-    set AbilityIndex = Table.create()
-    call InitAbilities()
-    call InitCreepAbilities()
-endfunction
+    private function init takes nothing returns nothing
+        set ChaosData = HashTable.create()
+        set ChaosDataEnemy = HashTable.create()
+        set ChaosDataAlly = HashTable.create()
+        set AbilityData = HashTable.create()
+        set ElementData = HashTable.create()
+        set ItemData = Table.create()
+        set AbilityIndex = Table.create()
+        call InitAbilities()
+        call InitCreepAbilities()
+        call InitDummyAbilElements()
+        call InitHeroElements()
+    endfunction
 endlibrary
 

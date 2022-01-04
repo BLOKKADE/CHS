@@ -64,7 +64,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Func008A takes nothing returns nothing
-        call KillUnit(GetEnumUnit())
+        call DeleteUnit(GetEnumUnit())
     endfunction
 
 
@@ -218,7 +218,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
     function Trig_Hero_Dies_Func024Func001Func001A takes nothing returns nothing
         call DisableTrigger(udg_trigger107)
-        call KillUnit(GetEnumUnit())
+        call DeleteUnit(GetEnumUnit())
         call EnableTrigger(udg_trigger107)
     endfunction
 

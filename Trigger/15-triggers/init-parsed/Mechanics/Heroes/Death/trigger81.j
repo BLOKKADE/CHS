@@ -23,7 +23,7 @@ library trigger81 initializer init requires RandomShit
 
 
     function Trig_Hero_Dies_After_Victory_Func004A takes nothing returns nothing
-        call KillUnit(GetEnumUnit())
+        call DeleteUnit(GetEnumUnit())
     endfunction
 
 

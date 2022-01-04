@@ -84,12 +84,12 @@ library trigger42 initializer init requires RandomShit, StartFunction
 
 
     function Trig_Battle_Royal_Func018002 takes nothing returns nothing
-        call KillUnit(GetEnumUnit())
+        call DeleteUnit(GetEnumUnit())
     endfunction
 
 
     function Trig_Battle_Royal_Func019002 takes nothing returns nothing
-        call KillUnit(GetEnumUnit())
+        call DeleteUnit(GetEnumUnit())
     endfunction
 
 

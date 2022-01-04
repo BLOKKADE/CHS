@@ -1,9 +1,10 @@
-library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyRecycler
+library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyRecycler, DummyId
  
     //============================================================================
 
     globals
         Table DummyInfo
+        Table DummyAbilitySource
     endglobals
 
     function GetDummyOrder takes integer id returns DummyOrder
@@ -91,6 +92,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             call SetUnitAbilityLevel(dummy, abilityId, level)
             set this.order = order
             set this.abil = abilityId
+            set DummyAbilitySource[GetDummyId(this.dummy)] = abilityId
 
             //call BJDebugMsg("dummy added active")
             return this
@@ -162,9 +164,10 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             endif
 
             set this.dummy = GetRecycledDummyAnyAngle(x, y, 0.) 
+            call SetDummyId(this.dummy)
             call PauseUnit(this.dummy, false)
             call BlzSetUnitFacingEx(this.dummy, facing)
-            set DummyInfo[GetHandleId(this.dummy)] = this
+            set DummyInfo[GetDummyId(this.dummy)] = this
             call SetUnitOwner(this.dummy, p, true)
             set this.pid = GetPlayerId(p)
             set this.source = source
@@ -177,6 +180,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
 
         method resetDummy takes nothing returns nothing
             set DummyInfo[GetHandleId(this.dummy)] = 0
+            call IssueImmediateOrderById(this.dummy, 851972)
         endmethod
         
         method destroy takes nothing returns nothing
@@ -201,5 +205,6 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
 
     private function Init takes nothing returns nothing
         set DummyInfo = Table.create()
+        set DummyAbilitySource = Table.create()
     endfunction
 endlibrary

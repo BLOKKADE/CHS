@@ -1,4 +1,4 @@
-library FixDeleteUnit
+library FixDeleteUnit requires DummyOrder
 //Not sure of the exact purpose of these
     function FixUnit takes unit u returns nothing
         if IsUnitIllusion(u) then
@@ -7,6 +7,10 @@ library FixDeleteUnit
 
         if IsHeroUnitId(GetUnitTypeId(GetTriggerUnit())) == false then
             call FlushChildHashtable(HT,GetHandleId(GetTriggerUnit())) 
+        endif
+
+        if GetUnitTypeId(u) == PRIEST_1_UNIT_ID then
+            set GetDummyOrder(GetDummyId(u)).stopDummy = true
         endif
     endfunction
 

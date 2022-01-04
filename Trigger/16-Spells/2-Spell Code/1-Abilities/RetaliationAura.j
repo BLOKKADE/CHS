@@ -38,7 +38,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
             call AddUnitMagicDmg(dummy.dummy, GetUnitMagicDmg(source))
 
             //Set bonus damage
-            set RetaliationDamage.real[GetHandleId(dummy.dummy)] = 0.25 + (0.025 * GetUnitAbilityLevel(caster, RETALIATION_AUR_ABILITY_ID)) + damage
+            set RetaliationDamage.real[GetDummyId(dummy.dummy)] = 0.25 + (0.025 * GetUnitAbilityLevel(caster, RETALIATION_AUR_ABILITY_ID)) + damage
             //call BJDebugMsg("retdmg: " + R2S(RetaliationDamage.real[GetHandleId(dummy.dummy)]) + " hid: " + I2S(GetHandleId(dummy.dummy)))
             call DestroyEffect(AddSpecialEffectTargetFix("war3mapImported\\Shiva'sWrath.mdx", caster, "origin"))
             call dummy.activate()

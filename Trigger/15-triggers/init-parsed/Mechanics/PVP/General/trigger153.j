@@ -185,7 +185,7 @@ library trigger153 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Elimination_Func031A takes nothing returns nothing
-        call KillUnit(GetEnumUnit())
+        call DeleteUnit(GetEnumUnit())
     endfunction
 
 
