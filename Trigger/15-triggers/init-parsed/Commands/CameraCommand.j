@@ -3,10 +3,10 @@ library CameraCommand initializer init uses Command, RandomShit
     private function Camera takes Args args returns nothing
         local integer distance = S2I(args[1])
 
-        if (distance > 2800) then
+        if (distance > 3000) then
             call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,2800.00,0.50)
-        elseif (distance < 1650) then
-            call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,1650.00,0.50)
+        elseif (distance < 1700) then
+            call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,1700.00,0.50)
         else 
             call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,I2R(distance),0.50)
         endif

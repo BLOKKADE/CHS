@@ -23,7 +23,7 @@ library Hints initializer init
             endif
     endfunction
 
-    private function DisableHintCommand takes nothing returns nothing
+    function DisableHintCommand takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         set DisableHint[pid] = DisableHint[pid] == false
         if DisableHint[pid] then
@@ -34,14 +34,7 @@ library Hints initializer init
     endfunction
 
     private function HintDisableInit takes nothing returns nothing
-        local integer i = 0
-        local trigger trg = CreateTrigger()
-        loop
-            call TriggerRegisterPlayerChatEvent(trg, Player(i), "-hint", true)
-            set i = i + 1
-            exitwhen i > 8
-        endloop
-        call TriggerAddAction(trg, function DisableHintCommand)
+        call Command.create(CommandHandler.DisableHintCommand).name("hints").handles("hints").help("hints", "Toggles hint messages on or off.")
     endfunction
 
     private function init takes nothing returns nothing

@@ -208,7 +208,7 @@ library Command initializer init uses DelayedPrinter, StringHashEx
             set commandMapping = Table.create()
             
             // Create a help command if we really want this
-            // call Command.create(CommandHandler.printHelpMessage).name("help").handles("help").help("help <command name>", "Prints the help text for the given command")
+            call Command.create(CommandHandler.printHelpMessage).name("help").handles("help").help("help <command name>", "Prints the help text for the given command")
             call Command.create(CommandHandler.printCommandList).name("list").handles("list").help("list", "Prints the list of all commands you have access to")
         endmethod
         

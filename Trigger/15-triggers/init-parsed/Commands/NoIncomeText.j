@@ -3,7 +3,7 @@ scope NoIncomeCommand initializer init
     globals
         boolean array IncomeSpamDisabled
     endglobals
-    function NoIncomeSpam takes nothing returns nothing
+    function NoIncomeSpam takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         set IncomeSpamDisabled[pid] = not IncomeSpamDisabled[pid]
         if IncomeSpamDisabled[pid] then
@@ -15,19 +15,6 @@ scope NoIncomeCommand initializer init
     
     //===========================================================================
     private function init takes nothing returns nothing
-        local trigger trg = CreateTrigger()
-        local integer i = 0
-        
-        loop
-            call TriggerRegisterPlayerChatEvent(trg,Player(i),"-nis",true)
-            call TriggerRegisterPlayerChatEvent(trg,Player(i),"-noincomespam",true)
-            set i = i + 1
-            exitwhen i > 11
-        endloop
-        
-        call TriggerAddAction(trg, function NoIncomeSpam)
-        set i = 0
-
-        set trg = null
+        call Command.create(CommandHandler.NoIncomeSpam).name("NoIncomeSpam").handles("NoIncomeSpam").handles("nis").handles("noincomespam").help("NoIncomeSpam", "Toggles income spam on or off.")
     endfunction
 endscope

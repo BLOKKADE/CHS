@@ -57,6 +57,7 @@ library trigger32 initializer init requires RandomShit
             endloop
         else
         endif
+        //32 & 27
     endfunction
 
 
