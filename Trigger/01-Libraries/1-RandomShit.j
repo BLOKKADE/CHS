@@ -597,7 +597,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
     function EffectEndTimer takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local effect fx = LoadEffectHandle(HT,GetHandleId(t),1)
-        
+
         if LoadBoolean(HT, GetHandleId(t), 2) then
             call BlzSetSpecialEffectX(fx, 0)
             call BlzSetSpecialEffectY(fx, 10000)
@@ -610,7 +610,20 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         set t = null
     endfunction
 
-
+    function AddSpecialEffectTimer takes string s1, real x, real y,real time, boolean skipDeath returns nothing
+        local string EffectString = ""
+        local timer t = NewTimer()
+        local effect e 
+        if EffectVisible then
+            set EffectString = s1
+        endif
+        set e = AddSpecialEffect(EffectString, x, y)
+        call SaveEffectHandle(HT,GetHandleId(t),1,e)
+        call SaveBoolean(HT, GetHandleId(t), 2, skipDeath)
+        call TimerStart(t,time,false,function EffectEndTimer)
+        set e = null
+        set t = null
+    endfunction
 
     function AddSpecialEffectTargetTimer takes string s1, unit u, string s2,real time, boolean skipDeath returns nothing
         local string EffectString = ""

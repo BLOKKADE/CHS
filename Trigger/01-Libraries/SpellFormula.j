@@ -26,24 +26,33 @@ library SpellFormula initializer init requires AbilityData
             return initDamage
         endif
     endfunction
+
+    function CalculateValues takes integer abilId, integer valueKey, real initDamage, real factor returns nothing
+        local integer i = 1
+
+        loop
+            call SetAbilityKeyLevelValue(abilId, valueKey, i, CalculateValue(GetAbilityKeyLevelValue(abilId, valueKey, i - 1), initDamage, factor, i))
+            set i = i + 1
+            exitwhen i > 30
+        endloop
+    endfunction
     //============================================================================
     //calculates ability damage and other values using the world editor object editor formula
     //stores calculated values in a table so it doesnt need to be recalculated
         function GetSpellValue takes integer abilId, integer valueKey, real initDamage, real factor, integer level returns integer
             local real damage
-            local real damageNext
+            local real prevDamage
+            //local real damageNext
             //local integer levelRounded = MathRound_floor(level)
             //local real levelDecimals = level - levelRounded
             local integer i = 2
 
             //if levelDecimals == 0 then
-                if HasAbilityKeyLevelValue(abilId, valueKey, level) then
-                    return R2I(GetAbilityKeyLevelValue(abilId, valueKey, level))
-                else
-                    set damage = CalculateValue(GetAbilityKeyLevelValue(abilId, valueKey, level -1), initDamage, factor, level)
-                    call SetAbilityKeyLevelValue(abilId, valueKey, level, damage)
-                    return R2I(damage)
-                endif
+            if not HasAbilityKeyLevelValue(abilId, valueKey, level) then
+                call CalculateValues(abilId, valueKey, initDamage, factor)
+            endif
+
+            return R2I(GetAbilityKeyLevelValue(abilId, valueKey, level))
                 /*
             else
                 if HasAbilityKeyLevelValue(abilId, valueKey, levelRounded) then

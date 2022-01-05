@@ -12,27 +12,19 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         if abilId == 'A072' then
             call CastMysteriousRunestone(caster)
             return true
-        endif
-
-        if IsChannelAbility(abilId) and not Trig_Disable_Abilities_Func001C(caster) then
+        elseif IsChannelAbility(abilId) and not Trig_Disable_Abilities_Func001C(caster) then
             call CastChannelAbility(caster, abilId, x, y, lvl)
             return true
-        endif
-
         //Scroll of Transformation
-        if abilId == 'A049' then
+        elseif abilId == 'A049' then
             call CastScrollOfTransformation(caster)
             return true
-        endif
-
         //Staff of Lightning
-        if abilId == 'A09T' then
+        elseif abilId == 'A09T' then
             call CastStaffOfLightning(caster, target)
             return true
-        endif
-
         //Random Spell
-        if abilId == RANDOM_SPELL_ABILITY_ID then
+        elseif abilId == RANDOM_SPELL_ABILITY_ID then
             //call BJDebugMsg("random spell: " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
             if target != null then
                 //call BJDebugMsg("target")
@@ -60,6 +52,13 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(caster, target, lvl)
             return true
+            //Inner Fire
+        elseif abilId == INNER_FIRE_ABILITY_ID then
+            call CastInnerFire(caster, target, lvl)
+            return true
+            //Battle Roar
+        elseif abilId == BATTLE_ROAR_ABILITY_ID then
+            call CastBattleRoar(caster, abilId, lvl)
             //Cyclone
         elseif abilId == CYCLONE_ABILITY_ID then
             call Cyclone(caster, x, y)
@@ -146,7 +145,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local boolean abilityChanneled = false
 
         if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
-            //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
+            call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
 
             set dummyAbilId = GetAssociatedSpell(caster, abilId)
             if GetAssociatedSpell(caster, abilId) != 0 then
