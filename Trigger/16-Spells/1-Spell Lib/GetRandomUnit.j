@@ -33,7 +33,7 @@ library GetRandomUnit initializer init requires UnitHelpers
 
             if exclude then
                 if this.exclusionGroup == null then
-                    set this.exclusionGroup = CreateGroup()
+                    set this.exclusionGroup = NewGroup()
                     set this.createdExclusionGroup = true
                 endif
                 //call BJDebugMsg("ruh excl add")
@@ -79,7 +79,7 @@ library GetRandomUnit initializer init requires UnitHelpers
 
         method doHeroPriority takes nothing returns thistype
             set this.heroPriority = true
-            set this.heroGroup = CreateGroup()
+            set this.heroGroup = NewGroup()
             return this
         endmethod
 
@@ -105,13 +105,13 @@ library GetRandomUnit initializer init requires UnitHelpers
 
         method destroyGroups takes nothing returns nothing
             if this.heroGroup != null then
-                call DestroyGroup(this.heroGroup)
+                call ReleaseGroup(this.heroGroup)
             endif
             if this.createdExclusionGroup then
-                call DestroyGroup(this.exclusionGroup)
+                call ReleaseGroup(this.exclusionGroup)
             endif
             if this.RandomUnitHelperGroup != null then
-                call DestroyGroup(this.RandomUnitHelperGroup)
+                call ReleaseGroup(this.RandomUnitHelperGroup)
             endif
         endmethod
 
@@ -125,7 +125,7 @@ library GetRandomUnit initializer init requires UnitHelpers
             set this.allowMagicImmune = false
             set this.heroPriority = false
             set this.ally = false
-            set this.RandomUnitHelperGroup = CreateGroup()
+            set this.RandomUnitHelperGroup = NewGroup()
             return this
         endmethod
         

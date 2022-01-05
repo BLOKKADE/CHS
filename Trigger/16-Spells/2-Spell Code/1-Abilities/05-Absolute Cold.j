@@ -15,7 +15,8 @@ library AbsoluteCold requires RandomShit, DivineBubble
         set GLOB_ABSOLUTE_COLD_U = u 
         set GLOB_ABSOLUTE_COLD_DMG = dmg
         set VisibilityOwner = GetOwningPlayer(u)
-        call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),500,AbsoluteIceFuncBool )
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),500,AbsoluteIceFuncBool )
         return false
     endfunction
 
@@ -28,7 +29,8 @@ library AbsoluteCold requires RandomShit, DivineBubble
 
     function AbsoluteColdCooldown takes unit u returns boolean
         set GLOB_ABSOLUTE_COLD_U = u 
-        call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),500,AbsoluteColdBool )
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),500,AbsoluteColdBool )
         return false
     endfunction
 endlibrary

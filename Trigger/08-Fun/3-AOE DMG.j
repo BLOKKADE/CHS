@@ -1,6 +1,5 @@
 library AoeDamage requires Vampirism
     globals
-        group Area_group = CreateGroup()
         unit Sourse_unit = null
         real Dmg_ef = 0
         damagetype DmgType
@@ -46,7 +45,8 @@ library AoeDamage requires Vampirism
         set Sourse_unit = Sourse
         set Dmg_ef = Dmg
         set ABILGLOB = AbilId
-        call GroupEnumUnitsInRange(Area_group,x1,y1,Area,BoolArray[0])    
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,x1,y1,Area,BoolArray[0])    
         
         set t = null
         set Sourse = null
@@ -104,7 +104,8 @@ library AoeDamage requires Vampirism
         set Sourse_unit = Sourse
         set Dmg_ef = Dmg
         set ABILGLOB = AbilId
-        call GroupEnumUnitsInRange(Area_group,x1,y1,Area,BoolArray[103])    
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,x1,y1,Area,BoolArray[103])    
         
         set t = null
         set Sourse = null
@@ -171,7 +172,8 @@ library AoeDamage requires Vampirism
         set Sourse_unit = u
         set Dmg_ef = hp
         set GLOB_LIFESTEAL = lifesteal
-        call GroupEnumUnitsInRange(Area_group,GetUnitX(u),GetUnitY(u),Area,BoolArray[104])    
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),Area,BoolArray[104])    
     endfunction
 
 
@@ -211,7 +213,8 @@ library AoeDamage requires Vampirism
         set Sourse_unit = u
         set Dmg_ef = hp
         set GLOB_LIFESTEAL = lifesteal
-        call GroupEnumUnitsInRange(Area_group,GetUnitX(u),GetUnitY(u),Area,BoolArray[105])    
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),Area,BoolArray[105])    
     endfunction
 
 

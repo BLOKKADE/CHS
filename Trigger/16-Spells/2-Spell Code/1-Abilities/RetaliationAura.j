@@ -1,7 +1,6 @@
 library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
 
     globals
-        private group RetaliationGroup = CreateGroup()
         private unit RetaliationUnit = null
         Table RetaliationDamage
     endglobals
@@ -17,7 +16,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
         local integer lvl = 0
         local DummyOrder dummy = 0
         loop
-            set caster = FirstOfGroup(RetaliationGroup)
+            set caster = FirstOfGroup(ENUM_GROUP)
             exitwhen caster == null
             
             //cast on caster if spell is used on allies
@@ -42,7 +41,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
             //call BJDebugMsg("retdmg: " + R2S(RetaliationDamage.real[GetHandleId(dummy.dummy)]) + " hid: " + I2S(GetHandleId(dummy.dummy)))
             call DestroyEffect(AddSpecialEffectTargetFix("war3mapImported\\Shiva'sWrath.mdx", caster, "origin"))
             call dummy.activate()
-            call GroupRemoveUnit(RetaliationGroup, caster)
+            call GroupRemoveUnit(ENUM_GROUP, caster)
         endloop
 
         set spellTarget = null
@@ -50,11 +49,11 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
     endfunction
 
     function GetRetaliationSource takes unit source, unit target, integer abilId, integer abilLevel returns nothing
-        call GroupClear(RetaliationGroup)
+        call GroupClear(ENUM_GROUP)
         set RetaliationUnit = source
-        call GroupEnumUnitsInRange(RetaliationGroup, GetUnitX(source), GetUnitY(source), 1200, Condition(function RetaliationSourceFilter))
+        call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(source), GetUnitY(source), 1200, Condition(function RetaliationSourceFilter))
         //call BJDebugMsg("rag: " + I2S(BlzGroupGetSize(RetaliationGroup)))
-        if BlzGroupGetSize(RetaliationGroup) > 0 then
+        if BlzGroupGetSize(ENUM_GROUP) > 0 then
             call CastRetaliation(source, target, abilId, abilLevel)
         endif
     endfunction

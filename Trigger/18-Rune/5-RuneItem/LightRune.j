@@ -12,7 +12,9 @@ library LightRune requires RandomShit
     function LightRune takes nothing returns boolean
         local unit u = GLOB_RUNE_U
         local real power = GLOB_RUNE_POWER 
-        call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),300 + 100 * power,Condition(function CastLightRune) )
+
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),300 + 100 * power,Condition(function CastLightRune) )
 
         set u = null
         return false

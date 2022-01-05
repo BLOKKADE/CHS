@@ -54,7 +54,7 @@ library BoneArmor initializer init requires Utility
             endif
             
             set this.source = source
-            set this.boneArmorUnits = CreateGroup()
+            set this.boneArmorUnits = NewGroup()
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
             //call BJDebugMsg(I2S(this.pid) + " ba start")
 
@@ -71,7 +71,7 @@ library BoneArmor initializer init requires Utility
             set this.enabled = false
             set BoneArmorTable[GetHandleId(this.source)] = 0
             set this.source = null
-            call DestroyGroup(this.boneArmorUnits)
+            call ReleaseGroup(this.boneArmorUnits)
             set this.boneArmorUnits = null
             set this.groupSize = 0
             //call BJDebugMsg("ba end")

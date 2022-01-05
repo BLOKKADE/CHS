@@ -3,8 +3,8 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
     globals
         Table ScorchedEarthDummy
         Table ScorchedEarthSource
-        group PyromancerDamage = CreateGroup()
-        group PyromancerTemp = CreateGroup()
+        group PyromancerDamage
+        group PyromancerTemp
     endglobals
 
     function PyromancerFilter takes nothing returns boolean
@@ -31,13 +31,13 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
         
         call ElemFuncStart(source,PYROMANCER_UNIT_ID)
 
-        call GroupClear(PyromancerDamage)
-        call GroupClear(PyromancerTemp)
+        set PyromancerDamage = NewGroup()
+        set PyromancerTemp = NewGroup()
 
         loop
             set x = x + xBonus
             set y = y + yBonus
-            call GroupEnumUnitsInRange(PyromancerTemp, x, y, area, Filter(function PyromancerFilter))
+            call GroupEnumUnitsInArea(PyromancerTemp, x, y, area, Filter(function PyromancerFilter))
             call GroupAddGroup(PyromancerTemp, PyromancerDamage)
             set i = i - 1
             exitwhen i <= 0
@@ -60,6 +60,10 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
             call GroupRemoveUnit(PyromancerDamage, p)
         endloop
 
+        call ReleaseGroup(PyromancerDamage)
+        call ReleaseGroup(PyromancerTemp)
+        set PyromancerDamage = null
+        set PyromancerTemp = null
         set p = null
     endfunction
 

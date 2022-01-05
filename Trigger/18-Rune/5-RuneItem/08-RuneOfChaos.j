@@ -1,10 +1,8 @@
 library ChaosRune requires ChaosMagic
     globals
-        group GL_GR = CreateGroup()
         boolexpr RuneOfChaos_b
         integer GLOB_LVL_abil = 0
         integer unitsHit
-        boolexpr BOOLEXPR_TRUE = null
     endglobals
 
 
@@ -17,7 +15,7 @@ library ChaosRune requires ChaosMagic
             set RandomSpellLoc = null
         endif
             
-        call GroupRemoveUnit(GL_GR, u)
+        call GroupRemoveUnit(ENUM_GROUP, u)
         return false
     endfunction
 
@@ -34,11 +32,11 @@ library ChaosRune requires ChaosMagic
         
         loop
             set GLOB_LVL_abil = lvl
-            call GroupClear(GL_GR)
-            call EnumTargettableUnitsInRange(GL_GR, GetUnitX(u), GetUnitY(u), 400 + 75 * power, GetOwningPlayer(u), false)
-            call CastRuneOfChaos(BlzGroupUnitAt(GL_GR, GetRandomInt(0, BlzGroupGetSize(GL_GR))))
-            call CastRuneOfChaos(BlzGroupUnitAt(GL_GR, GetRandomInt(0, BlzGroupGetSize(GL_GR))))
-            call CastRuneOfChaos(BlzGroupUnitAt(GL_GR, GetRandomInt(0, BlzGroupGetSize(GL_GR))))
+            call GroupClear(ENUM_GROUP)
+            call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 400 + 75 * power, GetOwningPlayer(u), false)
+            call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
+            call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
+            call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
             set i = i + 1
             exitwhen i >= lp
         endloop

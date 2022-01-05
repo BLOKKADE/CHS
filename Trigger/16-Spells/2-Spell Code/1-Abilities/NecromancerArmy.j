@@ -2,7 +2,6 @@ library NecromancerArmy initializer init requires CustomState
 
     globals
         Table NecroArmySummons
-        group NecroArmyGroup = CreateGroup()
     endglobals
 
     function NecroSummonFilter takes nothing returns boolean
@@ -17,10 +16,10 @@ library NecromancerArmy initializer init requires CustomState
         local integer pid = GetPlayerId(p)
         local unit summon
 
-        call GroupClear(NecroArmyGroup)
-        call GroupEnumUnitsOfPlayer(NecroArmyGroup, p, Filter(function NecroSummonFilter))
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsOfPlayer(ENUM_GROUP, p, Filter(function NecroSummonFilter))
 
-        if BlzGroupGetSize(NecroArmyGroup) < level then
+        if BlzGroupGetSize(ENUM_GROUP) < level then
             if GetUnitTypeId(dyingUnit) == PHOENIX_1_UNIT_ID then
                 set summon = CreateUnit(p, 'u006', GetUnitX(dyingUnit), GetUnitY(dyingUnit), GetUnitFacing(dyingUnit))
             elseif HAWKS.contains(GetUnitTypeId(dyingUnit)) then

@@ -1,9 +1,5 @@
 library ManifoldStaff requires RandomShit, AbilityData, DummyOrder, CastSpellOnTarget
 
-    globals
-        private group ManifoldGroup = CreateGroup()
-    endglobals
-
     function ManifoldStaff takes unit caster, unit target, integer abilId, integer lvl returns nothing
         local integer i = 0
         local unit p = null
@@ -18,33 +14,33 @@ library ManifoldStaff requires RandomShit, AbilityData, DummyOrder, CastSpellOnT
         if orderType == Order_Target or (target != null and orderType == Order_Point) then
             set SpellData[GetHandleId(caster)].boolean[8] = true
             
-            call GroupClear(ManifoldGroup)
-            call GroupAddUnit(ManifoldGroup, target)
-            call RUH.reset().excludeGroup(ManifoldGroup)
+            call GroupClear(ENUM_GROUP)
+            call GroupAddUnit(ENUM_GROUP, target)
+            call RUH.reset().excludeGroup(ENUM_GROUP)
             
             if IsUnitAlly(target, owner) then
                 call RUH.checkAlly()
             endif
 
             call RUH.EnumUnits(x, y, range, owner)
-            call GroupRemoveUnit(ManifoldGroup, target)
+            call GroupRemoveUnit(ENUM_GROUP, target)
 
             loop
                 set p = RUH.GetRandomUnit(false)
                 exitwhen p == null or limit == 0
-                if not IsUnitInGroup(p, ManifoldGroup) then
+                if not IsUnitInGroup(p, ENUM_GROUP) then
                     set limit = limit - 1
-                    call GroupAddUnit(ManifoldGroup, p)
+                    call GroupAddUnit(ENUM_GROUP, p)
                 endif
             endloop
 
             //call BJDebugMsg("mana cost: " + R2S(mana))
             loop
-                set p = FirstOfGroup(ManifoldGroup)
+                set p = FirstOfGroup(ENUM_GROUP)
                 //call BJDebugMsg("new mana: " + R2S(GetUnitState(caster, UNIT_STATE_MANA) - mana))
                 exitwhen p == null or GetUnitState(caster, UNIT_STATE_MANA) - mana <= 0
                 call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) - mana)
-                call GroupRemoveUnit(ManifoldGroup, p)
+                call GroupRemoveUnit(ENUM_GROUP, p)
                 call CastSpell(caster, p, abilId, lvl, Order_Target, x, y).activate()
             endloop
 

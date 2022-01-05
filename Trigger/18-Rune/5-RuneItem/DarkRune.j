@@ -10,7 +10,9 @@ library DarkRune requires RandomShit
         local unit u = GLOB_RUNE_U
         local real power = GLOB_RUNE_POWER 
         //call BJDebugMsg("dark rune: " + R2S((1 * GLOB_RUNE_POWER)))
-        call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),400 + 100 * power, Condition(function CastDarkRune) )
+
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),400 + 100 * power, Condition(function CastDarkRune) )
 
         set u = null
         return false

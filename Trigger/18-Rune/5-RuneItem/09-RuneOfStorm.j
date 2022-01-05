@@ -21,7 +21,8 @@ library StormRune requires RandomShit
         local unit u = GLOB_RUNE_U
         local real power = GLOB_RUNE_POWER 
 
-        call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),300 + 100 * power,RuneOfStorm_b )
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),300 + 100 * power,RuneOfStorm_b )
 
 
         set u = null

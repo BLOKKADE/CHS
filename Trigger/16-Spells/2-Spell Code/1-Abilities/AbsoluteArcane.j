@@ -1,8 +1,5 @@
 library AbsoluteArcane requires CustomState, DivineBubble
-    globals
-        group AbsoluteArcaneGroup = CreateGroup()
-    endglobals
-
+    
     struct AbsoluteArcaneStruct extends array
         unit source
         unit target
@@ -63,17 +60,17 @@ library AbsoluteArcane requires CustomState, DivineBubble
 
     function AbsoluteArcaneDrain takes unit caster returns nothing
         local unit p = null
-        call GroupClear(AbsoluteArcaneGroup)
+        call GroupClear(ENUM_GROUP)
 
-        call GroupEnumUnitsInRange(AbsoluteArcaneGroup, GetUnitX(caster), GetUnitY(caster), 400, null)
+        call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(caster), GetUnitY(caster), 400, null)
 
         loop
-            set p = FirstOfGroup(AbsoluteArcaneGroup)
+            set p = FirstOfGroup(ENUM_GROUP)
             exitwhen p == null
             if IsUnitEnemy(p, GetOwningPlayer(caster)) and IsUnitSpellTargetCheck(p, GetOwningPlayer(caster)) then
                 call AbsoluteArcaneStruct.create(caster, p)
             endif
-            call GroupRemoveUnit(AbsoluteArcaneGroup, p)
+            call GroupRemoveUnit(ENUM_GROUP, p)
         endloop
     endfunction
 endlibrary

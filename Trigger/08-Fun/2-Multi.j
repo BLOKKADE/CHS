@@ -24,7 +24,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
         private method GetNewTarget takes real range returns nothing
             if this.caston == null then
-                set this.caston = CreateGroup()
+                set this.caston = NewGroup()
                 call GroupAddUnit(this.caston, this.target)
             endif
             
@@ -118,7 +118,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
             set this.target = null
 
             if this.caston != null then
-                call DestroyGroup(this.caston)
+                call ReleaseGroup(this.caston)
                 set this.caston = null
             endif
             set recycleNext = recycle

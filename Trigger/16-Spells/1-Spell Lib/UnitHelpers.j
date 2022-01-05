@@ -42,9 +42,9 @@ library UnitHelpers initializer init requires Utility
     function EnumTargettableUnitsInRange takes group g, real x, real y, real range, player owner, boolean allowMagicImmune returns nothing
         set VisibilityOwner = owner
         if allowMagicImmune then
-            call GroupEnumUnitsInRange(g, x, y, range, IsUnitTargetFilter)
+            call GroupEnumUnitsInArea(g, x, y, range, IsUnitTargetFilter)
         else
-            call GroupEnumUnitsInRange(g, x, y, range, IsUnitSpellTargetFilter)
+            call GroupEnumUnitsInArea(g, x, y, range, IsUnitSpellTargetFilter)
         endif
     endfunction
 

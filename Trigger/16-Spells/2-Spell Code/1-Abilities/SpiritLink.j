@@ -117,7 +117,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
             endif
             //call BJDebugMsg("sl start")
             set this.source = source
-            set this.spiritLinkedUnits = CreateGroup()
+            set this.spiritLinkedUnits = NewGroup()
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
             set this.level = level
 
@@ -136,7 +136,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
             set this.enabled = false
             set SpiritLinkTable[GetHandleId(this.source)] = 0
             set this.source = null
-            call DestroyGroup(this.spiritLinkedUnits)
+            call ReleaseGroup(this.spiritLinkedUnits)
             set this.spiritLinkedUnits = null
             //call BJDebugMsg("sl end")
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
