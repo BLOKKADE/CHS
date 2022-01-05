@@ -178,7 +178,7 @@ function FunctionTimerSpell takes nothing returns nothing
 
         call BlzSetUnitAttackCooldown(U, BlzGetUnitAttackCooldown(Herou, 0), 0)
         call SetUnitAbilityLevelSwapped('A000',U,R2I(GetHeroLevel(Herou)/ 3))
-        call UnitSetAttackSpeed(U, GetHeroLevel(Herou) * 0.03)
+        call SetUnitBonusReal(U, BONUS_ATTACK_SPEED, GetHeroLevel(Herou) * 0.03)
     endif
 
     //Magic Blade

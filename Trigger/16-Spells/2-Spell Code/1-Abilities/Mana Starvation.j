@@ -1,4 +1,4 @@
-library ManaStarvation requires DummyOrder, T32, UnitHelpers, AttackDamage
+library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
     struct ManaStarvationStruct extends array
         integer sourceId
         unit source
@@ -21,13 +21,13 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, AttackDamage
                     set currentBonus = R2I((mana - this.manaLimit) * 0.5)
                     set this.bonus = this.bonus + currentBonus
                     //call BJDebugMsg("ms: " + I2S(this.bonus))
-                    call UnitAddAttackDamage(this.source, currentBonus)
+                    call AddUnitBonus(this.source, BONUS_DAMAGE, currentBonus)
                     call SetUnitState(this.target, UNIT_STATE_MANA, this.manaLimit)
                 else
                     set currentBonus = R2I((this.manaLimit - mana) * 0.5)
                     set this.bonus = this.bonus + currentBonus
                     //call BJDebugMsg("ms: " + I2S(this.bonus))
-                    call UnitAddAttackDamage(this.source, currentBonus)
+                    call AddUnitBonus(this.source, BONUS_DAMAGE, currentBonus)
                     set this.manaLimit = mana
                 endif
             elseif this.finalStage == false and ((T32_Tick - this.beginTick > 32 and GetUnitAbilityLevel(this.target, MANA_STARVATION_NERF_BUFF_ID) == 0) or T32_Tick > this.endTick) then
@@ -68,7 +68,7 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, AttackDamage
         
         method destroy takes nothing returns nothing
             set this.target = null
-            call UnitAddAttackDamage(this.source, 0 - this.bonus)
+            call AddUnitBonus(this.source, BONUS_DAMAGE, 0 - this.bonus)
             set this.source = null
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
             set recycleNext = recycle

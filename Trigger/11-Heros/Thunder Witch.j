@@ -1,4 +1,4 @@
-library ThunderWitch initializer init requires Stats, ElementalAbility, RandomShit
+library ThunderWitch initializer init requires ElementalAbility, RandomShit
     globals
         Table ThunderBoltTargets
         Table ThunderBoltSource

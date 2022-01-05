@@ -1,4 +1,4 @@
-library Avatar initializer init requires AttackDamage, Utility
+library Avatar initializer init requires NewBonus, Utility
 
     globals
         Table AvatarBonus
@@ -30,7 +30,7 @@ library Avatar initializer init requires AttackDamage, Utility
 
         method removeBonuses takes nothing returns nothing
             call UnitRemoveAbility(this.source, 'A0AD')
-            call UnitAddAttackDamage(this.source,0 - this.damageBonus)
+            call AddUnitBonus(this.source, BONUS_DAMAGE, 0 - this.damageBonus)
             call BlzSetUnitArmor(this.source, BlzGetUnitArmor(this.source) - this.armorBonus)
             call BlzSetUnitMaxHP(this.source, BlzGetUnitMaxHP(this.source) - this.hpBonus)
         endmethod
@@ -44,7 +44,7 @@ library Avatar initializer init requires AttackDamage, Utility
         
         method updateBonuses takes nothing returns nothing
             call UnitAddAbility(this.source, 'A0AD')
-            call UnitAddAttackDamage(this.source, this.damageBonus)
+            call AddUnitBonus(this.source, BONUS_DAMAGE, this.damageBonus)
             call BlzSetUnitArmor(this.source, BlzGetUnitArmor(this.source) + this.armorBonus)
             call BlzSetUnitMaxHP(this.source, BlzGetUnitMaxHP(this.source) + this.hpBonus)
             call CalculateNewCurrentHP(this.source, this.hpBonus)

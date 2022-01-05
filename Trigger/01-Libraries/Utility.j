@@ -1,4 +1,4 @@
-library Utility requires AttackDamage
+library Utility requires NewBonus
     globals
         boolean array CurrentlyFighting
     endglobals
@@ -47,8 +47,8 @@ library Utility requires AttackDamage
     endfunction
 
     function GetUnitDamage takes unit u, integer weaponIndex returns real
-        //call BJDebugMsg(GetUnitName(u) + " attack dmg: " + R2S(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))))
-        return I2R((BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))) + UnitGetAttackDamage(u))
+        call BJDebugMsg(GetUnitName(u) + " attack dmg: " + R2S(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex)) + GetUnitBonus(u, BONUS_DAMAGE)))
+        return I2R((BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))) + GetUnitBonus(u, BONUS_DAMAGE))
     endfunction
 
     function CalculateNewCurrentHP takes unit u, real hpBonus returns nothing

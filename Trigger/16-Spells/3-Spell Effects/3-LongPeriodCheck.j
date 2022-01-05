@@ -276,11 +276,11 @@ scope LongPeriodCheck initializer init
                     set i1 = R2I(BlzGetUnitMaxHP(u) * 0.01)
 
                     if i1 != i2 then
-                        call UnitAddAttackDamage(u, 0 - i2 + i1)
+                        call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2 + i1)
                         call SaveInteger(HT,hid,'B026',i1)
                     endif
                 elseif i2 != 0 then
-                    call UnitAddAttackDamage(u, 0 - i2)
+                    call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2)
                     call SaveInteger(HT,hid,'B026',0)
                 endif
 

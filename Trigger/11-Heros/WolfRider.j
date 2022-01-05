@@ -1,4 +1,4 @@
-library WolfRider initializer init requires Stats
+library WolfRider initializer init requires NewBonus
     globals
         real SpeedFreakLimit = 0.5
         HashTable SpeedFreakBonus
@@ -8,9 +8,9 @@ library WolfRider initializer init requires Stats
         local integer bonus
         local integer hid = GetHandleId(u)
         if value < highest * SpeedFreakLimit then
-            call UnitAddStat(u, stat, 0 - SpeedFreakBonus[hid][stat])
+            call AddUnitBonus(u, stat, 0 - SpeedFreakBonus[hid][stat])
             set bonus = R2I(highest * SpeedFreakLimit - (value - SpeedFreakBonus[hid][stat]))
-            call UnitAddStat(u, stat, bonus)
+            call AddUnitBonus(u, stat, bonus)
             set SpeedFreakBonus[hid][stat] = bonus
         endif
     endfunction
@@ -21,14 +21,14 @@ library WolfRider initializer init requires Stats
         local integer int = GetHeroInt(u, true)
 
         if str > agi and str > int then
-            call StatCheck(u, 1, agi, str)
-            call StatCheck(u, 2, int, str)
+            call StatCheck(u, BONUS_AGILITY, agi, str)
+            call StatCheck(u, BONUS_INTELLIGENCE, int, str)
         elseif agi > str and agi > int then
-            call StatCheck(u, 0, str, agi)
-            call StatCheck(u, 2, int, agi)
+            call StatCheck(u, BONUS_STRENGTH, str, agi)
+            call StatCheck(u, BONUS_INTELLIGENCE, int, agi)
         elseif int > str and int > agi then
-            call StatCheck(u, 0, str, int)
-            call StatCheck(u, 1, agi, int)
+            call StatCheck(u, BONUS_STRENGTH, str, int)
+            call StatCheck(u, BONUS_AGILITY, agi, int)
         endif
     endfunction
 

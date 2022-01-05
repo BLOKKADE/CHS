@@ -153,14 +153,8 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Summon Quilbeast
         elseif QUILBEASTS.contains(i) then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SUMMON_QUILBEAST_ABILITY_ID),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 50,0)
-            call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 25 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 300)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
+            call QuilbeastStats(u, GetUnitAbilityLevel(hero,SUMMON_QUILBEAST_ABILITY_ID), UpgradeU)
+            
             //Summon Bear
         elseif BEARS.contains(i) then
             set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,SUMMON_BEAR_ABILITY_ID),hero) + UpgradeU
@@ -310,13 +304,13 @@ library UnitStateSys initializer init requires RandomShit, Functions
         //Trueshot Aura
         set i2 = GetUnitAbilityLevel(hero, TRUESHOT_AURA_ABILITY_ID)
         if i2 > 0 then
-            call UnitAddAttackDamage(u, R2I(BlzGetUnitBaseDamage(u, 0) * (0.05 * i2)))
+            call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * (0.05 * i2)))
         endif
 
         //Command Aura
         set i2 = GetUnitAbilityLevel(hero, COMMAND_AURA_ABILITY_ID)
         if i2 > 0 then
-            call UnitAddAttackDamage(u, R2I(BlzGetUnitBaseDamage(u, 0) * (0.1 * i2)))
+            call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * (0.1 * i2)))
         endif
         
         set u = null

@@ -1,4 +1,4 @@
-library SpiritTauren requires Stats, IdLibrary
+library SpiritTauren requires IdLibrary
 
     globals
         integer RuneBonus = 30

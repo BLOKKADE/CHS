@@ -94,7 +94,7 @@ scope ShortPeriodCheck initializer init
                 if i1 > 0 or r1 != 0 then
                     set r2 = (BlzGetUnitBaseDamage(u, 0) * (0.05 * (i1)))
                     if r2 != r1 then
-                        call UnitAddAttackDamage(u, R2I(r2 - r1))
+                        call AddUnitBonus(u, BONUS_DAMAGE, R2I(r2 - r1))
                         call SaveReal(HT, hid, TRUESHOT_AURA_ABILITY_ID, r2)	
                     endif
                 endif
@@ -105,7 +105,7 @@ scope ShortPeriodCheck initializer init
                 if i1 > 0 or r1 != 0 then
                     set r2 = (BlzGetUnitBaseDamage(u, 0) * (0.05 * (i1)))
                     if r2 != r1 then
-                        call UnitAddAttackDamage(u, R2I(r2 - r1))
+                        call AddUnitBonus(u, BONUS_DAMAGE, R2I(r2 - r1))
                         call SaveReal(HT, hid, COMMAND_AURA_ABILITY_ID, r2)	
                     endif
                 endif
@@ -116,7 +116,7 @@ scope ShortPeriodCheck initializer init
                 if i1 > 0 or r1 != 0 then
                     set r2 = (BlzGetUnitBaseDamage(u, 0) * (3.5 * i1))
                     if r1 != r2 then
-                        call UnitAddAttackDamage(u, R2I(r2 - r1))
+                        call AddUnitBonus(u, BONUS_DAMAGE, R2I(r2 - r1))
                         call SaveReal(HT, hid, 'A02B', r2)	
                     endif
                 endif

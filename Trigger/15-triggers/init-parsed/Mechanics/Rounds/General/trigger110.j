@@ -30,11 +30,11 @@ library trigger110 initializer init requires RandomShit
         call UnitAddAbilityBJ('Atru',GetEnumUnit())
         call UnitAddAbilityBJ('A00W',GetEnumUnit())
         call UnitAddAbilityBJ('A01B',GetEnumUnit())
-        if UnitGetAttackDamage(GetEnumUnit()) < 1000000 then
-            if UnitGetAttackDamage(GetEnumUnit()) == 0 then
-                call UnitSetAttackDamage(GetEnumUnit(), R2I(BlzGetUnitBaseDamage(GetEnumUnit(), 0) * 0.1) + 1)
+        if GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) < 1000000 then
+            if GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) == 0 then
+                call SetUnitBonus(GetEnumUnit(), BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(GetEnumUnit(), 0) * 0.1) + 1)
             endif
-            call UnitSetAttackDamage(GetEnumUnit(), R2I(UnitGetAttackDamage(GetEnumUnit()) * 1.1) + 1)
+            call SetUnitBonus(GetEnumUnit(), BONUS_DAMAGE, R2I(GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) * 1.1) + 1)
         endif
     endfunction
 

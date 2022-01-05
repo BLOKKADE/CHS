@@ -78,7 +78,7 @@ scope Killing initializer init
             set i = UnitHasItemI( killingHero,'I07E') 
             if i > 0 and GetOwningPlayer(target) == Player(11) then
 
-                call AddStateTemp(killingHero, CustomState_MagicPow, i * 15, 10)
+                call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 15, 10)
             endif
 
             //Not sure what this is for

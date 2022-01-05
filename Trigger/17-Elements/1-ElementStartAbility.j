@@ -98,9 +98,9 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         if GetUnitAbilityLevel(u,ABSOLUTE_FIRE_ABILITY_ID) > 0 and IsSpellElement(u,id,1) then
             if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                 set calc = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
-                call AddStateTemp(u, 1, (4 * (1 + (0.005 * GetHeroLevel(u)))) * calc, 10)
+                call TempBonus.create(u, BONUS_MAGICPOW, (4 * (1 + (0.005 * GetHeroLevel(u)))) * calc, 10)
             else
-                call AddStateTemp(u, 1, 4, 10)
+                call TempBonus.create(u, BONUS_MAGICPOW, 4, 10)
             endif
         endif
         
@@ -111,13 +111,13 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Wind
         if GetUnitAbilityLevel(u,ABSOLUTE_WIND_ABILITY_ID) > 0 and IsSpellElement(u,id,3) then
-            call AddHeroTempAgi(u,25,9)
-            call AddStateTemp(u,3,5,9)
+            call TempBonus.create(u, BONUS_AGILITY,25,9)
+            call TempBonus.create(u, BONUS_EVASION,5,9)
         endif   
         
         //Absolute Earth
         if GetUnitAbilityLevel(u,ABSOLUTE_EARTH_ABILITY_ID) > 0 and IsSpellElement(u,id,4) then
-            call AddStateTemp(u,4, 50,15)
+            call TempBonus.create(u,BONUS_BLOCK, 50,15)
         endif     
         
         //Absolute Dark

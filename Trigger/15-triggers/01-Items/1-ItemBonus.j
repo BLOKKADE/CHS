@@ -288,7 +288,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			endif
 			set prevCount = LoadInteger(HTi,GetHandleId(u),19) 
 			call AddUnitEvasion(u ,   10 * I2R(i - prevCount)  )
-			call UnitAddAttackDamage(u, 800 * i - prevCount)
+			call AddUnitBonus(u, BONUS_DAMAGE, 800 * i - prevCount)
 			call BlzSetUnitWeaponIntegerField(u,	ConvertUnitWeaponIntegerField('ua1r') ,0,BlzGetUnitWeaponIntegerField(u,	ConvertUnitWeaponIntegerField('ua1r') ,0) + 1128 *(i - prevCount ))
 			call SaveInteger(HTi,GetHandleId(u),19,i)	
 		
@@ -522,98 +522,98 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		elseif itemId == 'I04V' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 150 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 150 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 			//Heart of Darkness
 		elseif itemId == 'I04V' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 150 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 150 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 			//Heart of Darkness
 		elseif itemId == 'I04V' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 150 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 150 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Hammer of the Gods
 		elseif itemId == 'I066' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 10000 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 10000 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Hammer of Chaos
 		elseif itemId == 'I06H' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, -300 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, -300 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Titanium Armor
 		elseif itemId == 'I07M' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, -500 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, -500 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Heavy Mace
 		elseif itemId == 'I07I' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 350 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 350 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Speed Blade
 		elseif itemId == 'I06B' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 750 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 750 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Bloody Axe
 		elseif itemId == 'I078' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 100 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 100 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Battle Axe
 		elseif itemId == 'I075' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 30 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 30 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Reaver's Axe
 		elseif itemId == 'I04A' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 150 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 150 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 			//Aduxxors Blade
 		elseif itemId == 'I015' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 34 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 34 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 			//Soul Reaper
 		elseif itemId == 'I01C' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 80 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 80 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 
 		//Rapier of the Gods
 		elseif itemId == 'I01E' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, GetHandleId(u), itemId) 
-			call UnitAddAttackDamage(u, 120 * (i - prevCount))
+			call AddUnitBonus(u, BONUS_DAMAGE, 120 * (i - prevCount))
 			call SaveInteger(HTi, GetHandleId(u), itemId, i)	
 		endif  
 		
