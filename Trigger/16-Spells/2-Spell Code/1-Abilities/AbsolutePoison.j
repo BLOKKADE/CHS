@@ -19,9 +19,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         integer buffCount
         real reduction
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         private method countBuffs takes nothing returns real
             local integer count = 0
@@ -78,15 +76,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         endmethod 
 
         static method create takes unit source, unit target returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             set this.target = target
             set this.source = source
             set this.reduction = 0
@@ -103,11 +93,11 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
             set this.target = null
             set this.source = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function UpdateAbilityField takes unit u, integer abilId, abilityreallevelfield arlf, integer level, real bonus returns nothing

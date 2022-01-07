@@ -9,9 +9,7 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
         integer beginTick
         integer endTick
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
     
         private method periodic takes nothing returns nothing
             local integer mana = R2I(GetUnitState(this.target, UNIT_STATE_MANA))
@@ -43,15 +41,7 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
         endmethod  
     
         static method create takes unit source, unit target, real duration returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set this.finalStage = false
             set this.source = source
@@ -71,11 +61,11 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
             call AddUnitBonus(this.source, BONUS_DAMAGE, 0 - this.bonus)
             set this.source = null
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function CastManaStarvation takes unit caster, unit target, integer level returns nothing

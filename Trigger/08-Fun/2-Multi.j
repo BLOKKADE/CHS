@@ -18,9 +18,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
         real x
         real y
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         private method GetNewTarget takes real range returns nothing
             if this.caston == null then
@@ -78,15 +76,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
         endmethod  
 
         static method create takes unit caster, unit target, integer abilId, integer abilLvl, integer abilOrder, integer orderType, real x, real y, integer count returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set this.caster = caster
             set this.target = target
@@ -121,10 +111,10 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 call ReleaseGroup(this.caston)
                 set this.caston = null
             endif
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
 
         implement T32x
+        implement Recycle
     endstruct
 endlibrary

@@ -11,25 +11,13 @@ library SaveBuild requires Table, RandomShit, CustomState
     struct BuildItem extends array
         integer id
         integer num
-        
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
 
         method export takes nothing returns string
             return GetObjectName(this.id)
         endmethod
 
         static method create takes integer itemId, integer itemNum returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set this.id = itemId
             set this.num = itemNum
@@ -37,9 +25,10 @@ library SaveBuild requires Table, RandomShit, CustomState
         endmethod
         
         method destroy takes nothing returns nothing
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
+
+        implement Recycle
     endstruct
 
     struct BuildAbil extends array 
@@ -47,25 +36,13 @@ library SaveBuild requires Table, RandomShit, CustomState
         integer level
         integer num
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
-
         method export takes nothing returns string
             //call BJDebugMsg("export: " + GetObjectName(this.id) + ", lvl: " + I2S(this.level) + ", id: " + I2S(this.num))
             return GetObjectName(this.id) + ": " + I2S(this.level)
         endmethod
 
         static method create takes integer abilityId, integer lvl, integer num returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             //call BJDebugMsg("create: " + GetObjectName(abilityId) + ", lvl: " + I2S(lvl) + ", id: " + I2S(num))
             set this.id = abilityId
             set this.level = lvl
@@ -73,18 +50,15 @@ library SaveBuild requires Table, RandomShit, CustomState
         endmethod
         
         method destroy takes nothing returns nothing
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
+
+        implement Recycle
     endstruct
 
     struct BuildObjects extends array 
         Table objects
         integer nCount
-
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
 
         method getItem takes integer num returns BuildItem
             return this.objects[num]
@@ -152,15 +126,7 @@ library SaveBuild requires Table, RandomShit, CustomState
         endmethod
 
         static method create takes nothing returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set objects = Table.create()
 
@@ -168,9 +134,10 @@ library SaveBuild requires Table, RandomShit, CustomState
         endmethod
         
         method destroy takes nothing returns nothing
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
+
+        implement Recycle
     endstruct
 
     struct PlayerBuild extends array
@@ -179,10 +146,6 @@ library SaveBuild requires Table, RandomShit, CustomState
         HashTable heroInfo
         Table abilities
         Table items
-
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
 
         method GetHeroInfo takes integer round returns string
             local string s = ""
@@ -273,15 +236,7 @@ library SaveBuild requires Table, RandomShit, CustomState
         endmethod
     
         static method create takes unit hero returns thistype
-            local thistype this 
-            
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             
             //call BJDebugMsg(GetUnitName(hero))
             set this.hero = hero
@@ -293,9 +248,10 @@ library SaveBuild requires Table, RandomShit, CustomState
         endmethod
         
         method destroy takes nothing returns nothing
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
+
+        implement Recycle
     endstruct
 
     function StoreBuildTimer takes nothing returns nothing

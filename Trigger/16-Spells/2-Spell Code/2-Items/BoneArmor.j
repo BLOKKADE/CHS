@@ -20,9 +20,7 @@ library BoneArmor initializer init requires Utility
         integer pid
         boolean enabled
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         private method refreshGroup takes nothing returns nothing
             call GroupClear(this.boneArmorUnits)
@@ -43,15 +41,7 @@ library BoneArmor initializer init requires Utility
         endmethod 
     
         static method create takes unit source returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             
             set this.source = source
             set this.boneArmorUnits = NewGroup()
@@ -75,11 +65,11 @@ library BoneArmor initializer init requires Utility
             set this.boneArmorUnits = null
             set this.groupSize = 0
             //call BJDebugMsg("ba end")
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function StartBoneArmor takes unit caster returns nothing

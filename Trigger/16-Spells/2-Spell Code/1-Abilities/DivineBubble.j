@@ -17,9 +17,7 @@ library DivineBubble initializer init requires T32, RandomShit
         integer endTick
         boolean enabled
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
     
         private method periodic takes nothing returns nothing
             call RemoveDebuff(this.source, 1)
@@ -30,15 +28,7 @@ library DivineBubble initializer init requires T32, RandomShit
         endmethod  
     
         static method create takes unit source, real duration, integer abilId returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             set this.source = source
             set this.fx = AddSpecialEffectTarget( "RighteousGuard.mdx" , this.source , "origin" )
             call UnitAddAbility(this.source, 'A08C')
@@ -63,11 +53,11 @@ library DivineBubble initializer init requires T32, RandomShit
             set this.source = null
             //call BJDebugMsg("db end")
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     private function init takes nothing returns nothing

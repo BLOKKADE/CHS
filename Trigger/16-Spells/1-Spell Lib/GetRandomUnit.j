@@ -11,14 +11,12 @@ library GetRandomUnit initializer init requires UnitHelpers
         unit exclusionTarget
         boolean createdExclusionGroup
         boolean heroPriority
-        boolean ally
+        integer targetType
         boolean allowMagicImmune
         unit pickedUnit
         integer endTick
         
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         method GetRandomUnit takes boolean exclude returns unit
             if this.heroPriority and BlzGroupGetSize(this.heroGroup) > 0 then
@@ -102,6 +100,7 @@ library GetRandomUnit initializer init requires UnitHelpers
             endif
         endmethod
         implement T32x
+        implement Recycle
 
         method destroyGroups takes nothing returns nothing
             if this.heroGroup != null then
@@ -130,15 +129,7 @@ library GetRandomUnit initializer init requires UnitHelpers
         endmethod
         
         static method create takes real duration returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             
             call this.reset()
 
@@ -152,8 +143,7 @@ library GetRandomUnit initializer init requires UnitHelpers
         method destroy takes nothing returns nothing
             call this.reset()
             //call BJDebugMsg("dummy destroyed")
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     endstruct
 

@@ -36,10 +36,6 @@ library TempStateBonus requires CustomState, NewBonus
         boolean buffLink
         integer buffId
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
-
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop or (this.buffLink and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
                 call this.stopPeriodic()
@@ -65,15 +61,7 @@ library TempStateBonus requires CustomState, NewBonus
         endmethod
 
         static method create takes unit source, integer state, real bonus, real duration returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set this.buffLink = false
             set this.buffId = 0
@@ -95,10 +83,10 @@ library TempStateBonus requires CustomState, NewBonus
             set this.source = null
             set this.stop = true
             set this.bonus = 0
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
 
+        implement Recycle
         implement T32x
     endstruct
 endlibrary

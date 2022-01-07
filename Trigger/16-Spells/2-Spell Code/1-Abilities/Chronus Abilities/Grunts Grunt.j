@@ -4,9 +4,7 @@ library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
         integer bonus
         integer endTick
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
     
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
@@ -16,16 +14,8 @@ library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
         endmethod  
     
         static method create takes unit source, real chronus returns thistype
-            local thistype this
+            local thistype this = thistype.setup()
             local real duration
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
             
             set this.source = source
             set this.bonus = 20 * GetHeroLevel(this.source)
@@ -51,10 +41,10 @@ library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
                 call UnitRemoveAbility(this.source, 'B01K')
             endif
             set this.source = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 endlibrary

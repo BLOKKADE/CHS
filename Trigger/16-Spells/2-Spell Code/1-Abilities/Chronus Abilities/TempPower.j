@@ -13,9 +13,7 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
         integer endTick
         integer bonus
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
     
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
@@ -25,15 +23,7 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
         endmethod  
     
         static method create takes unit source, real duration returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             
             set this.source = source
             set this.bonus = R2I(40 * GetUnitAbilityLevel(this.source, TEMPORARY_POWER_ABILITY_ID)*(1 + 0.02 * GetHeroLevel(this.source)))
@@ -52,11 +42,11 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
             call SetHeroAgi(this.source, GetHeroAgi(this.source, false) - this.bonus, false)
             call SetHeroInt(this.source, GetHeroInt(this.source, false) - this.bonus, false)
             set this.source = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function TempPowerCast takes unit u, real duration returns nothing

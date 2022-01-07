@@ -32,9 +32,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         real targetX
         real targetY
         
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         method stop takes nothing returns nothing
             set this.stopDummy = true
@@ -122,6 +120,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             endif
         endmethod
         implement T32x
+        implement Recycle
 
         method activate takes nothing returns boolean
             local trigger trg = CreateTrigger()
@@ -152,16 +151,8 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         */
         
         static method create takes unit source, real x, real y, real facing, real duration returns thistype
-            local thistype this
+            local thistype this = thistype.setup()
             local player p = GetOwningPlayer(source)
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
 
             set this.dummy = GetRecycledDummyAnyAngle(x, y, 0.) 
             call SetDummyId(this.dummy)
@@ -198,8 +189,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             set this.dummy = null
             set this.source = null
             set this.targetUnit = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     endstruct
 

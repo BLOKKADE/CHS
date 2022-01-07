@@ -26,9 +26,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
         integer endTick
         boolean enabled
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         private method updateDescription takes nothing returns nothing
             call UpdateAbilityDescription(GetDesriptionAbility(SPIRIT_LINK_ABILITY_ID, this.level - 1), Player(this.pid), SPIRIT_LINK_ABILITY_ID, "000", R2I((1 - this.damageReduction) * 100), level)
@@ -106,15 +104,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
         endmethod 
     
         static method create takes unit source, integer level returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             //call BJDebugMsg("sl start")
             set this.source = source
             set this.spiritLinkedUnits = NewGroup()
@@ -140,11 +130,11 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
             set this.spiritLinkedUnits = null
             //call BJDebugMsg("sl end")
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function DistributeSpiritLink takes unit hero, real damage returns real

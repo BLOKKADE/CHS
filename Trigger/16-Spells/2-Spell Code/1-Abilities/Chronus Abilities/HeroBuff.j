@@ -15,9 +15,7 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
         integer bonus1
         integer bonus2
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
     
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or (not UnitAlive(this.source)) or (T32_Tick - this.startTick > 32 and GetUnitAbilityLevel(this.source, 'B00T') == 0) then
@@ -27,15 +25,7 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
         endmethod  
     
         static method create takes unit source, integer abilLevel, integer heroLevel, real chronusLevel, real duration returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             
             set this.source = source
             set this.bonus1 = R2I(1.2 * abilLevel*(1 + 0.009 * heroLevel))
@@ -55,11 +45,11 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
             call AddUnitMagicDmg(this.source, 0 - (this.bonus1))
             call AddUnitMagicDef(this.source, 0 - (this.bonus2))
             set this.source = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function HeroBuffCast takes unit u, integer abilLevel, integer heroLevel, real chronusLevel, real duration returns nothing

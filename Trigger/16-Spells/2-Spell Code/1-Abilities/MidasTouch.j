@@ -23,9 +23,7 @@ library MidasTouch initializer init requires DummyOrder
         integer dmgBonus
         integer endTick
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         method updateStats takes boolean negative returns nothing
             local real multiplier = 1
@@ -48,15 +46,7 @@ library MidasTouch initializer init requires DummyOrder
         endmethod  
 
         static method create takes unit target, integer bonus, real duration returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set this.target = target
             set this.bonus = bonus
@@ -85,11 +75,11 @@ library MidasTouch initializer init requires DummyOrder
             set MidasTouchGold[GetHandleId(this.target)] = 0
             call this.updateStats(true)
             set this.target = null  
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
 
         implement T32x
+        implement Recycle
     endstruct
 
     function CastMidasTouch takes unit caster, unit target, integer level returns nothing

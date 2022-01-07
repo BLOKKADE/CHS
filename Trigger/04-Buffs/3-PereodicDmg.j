@@ -18,10 +18,6 @@ library PeriodicDamage initializer init requires RandomShit
         real lifeDamage
         boolean allowRecursion
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
-
         private method damage takes nothing returns nothing
             if GetWidgetLife(this.target) > 0.405 and ((this.buffId != 0 and GetUnitAbilityLevel(this.target, this.buffId) > 0) or this.buffId == 0) then
                 if this.allowRecursion == false then
@@ -75,15 +71,7 @@ library PeriodicDamage initializer init requires RandomShit
         endmethod
 
         static method create takes unit caster, unit target, real intervalDmg, boolean magic, real interval, real duration, real lifeDamage, boolean allowRecursion, integer buffId, integer abilId returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             
             set this.abilId = abilId
             set this.limitAbilId = 0
@@ -113,11 +101,11 @@ library PeriodicDamage initializer init requires RandomShit
             set this.caster = null
             set this.target = null
 
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
 
         implement T32x
+        implement Recycle
     endstruct
 
     private function init takes nothing returns nothing

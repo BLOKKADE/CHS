@@ -17,9 +17,7 @@ library ConversionHotkeys initializer init requires Table
         integer pid
         integer endTick
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         method update takes nothing returns nothing
             set this.endTick = T32_Tick + 12
@@ -33,15 +31,7 @@ library ConversionHotkeys initializer init requires Table
         endmethod 
 
         static method create takes integer pid returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             set this.pid = pid
 
             set this.endTick = T32_Tick + 12
@@ -54,11 +44,11 @@ library ConversionHotkeys initializer init requires Table
                 set HoldCtrl[this.pid] = false
             endif
             set HoldShiftStructTable[this.pid] = 0
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     globals

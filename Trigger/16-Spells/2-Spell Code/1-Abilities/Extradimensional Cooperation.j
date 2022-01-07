@@ -24,9 +24,7 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
         boolean magic
         integer endTick
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         private method periodic takes nothing returns nothing
 
@@ -50,7 +48,7 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
         endmethod  
 
         static method create takes unit caster, unit target, real damage, boolean magic returns ExtraDimensionalCoop
-            local thistype this
+            local thistype this = thistype.setup()
 
             local real targetX = GetUnitX(target)
             local real targetY = GetUnitY(target)
@@ -58,14 +56,6 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
             local real casterY = GetUnitY(caster)
             local real distance = GetRandomReal(100,200)
             local real angle = Deg2Rad(GetRandomReal(0,360))
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
 
             set this.dmg = damage
             if IsUnitType(caster, UNIT_TYPE_MELEE_ATTACKER) then
@@ -96,11 +86,11 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
             set this.caster = null
             set this.ssdummy = null
             set this.target = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
 
         implement T32x
+        implement Recycle
     endstruct
 
     function CastExtradimensionalCoop takes unit caster, unit target, real damage, boolean magic returns nothing
