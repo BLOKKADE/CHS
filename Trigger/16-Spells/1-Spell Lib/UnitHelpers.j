@@ -2,7 +2,8 @@ library UnitHelpers initializer init requires Utility
     globals
         boolexpr IsUnitSpellTargetFilter
         boolexpr IsUnitTargetFilter
-        player VisibilityOwner
+        private player Owner
+        private integer TargetType
     endglobals
 
     native UnitAlive takes unit id returns boolean
@@ -31,16 +32,21 @@ library UnitHelpers initializer init requires Utility
         return IsUnitTargettable(u) and UnitAlive(u) and IsUnitVisible(u, p) and not IsUnitMagicImmune(u)
     endfunction
 
+    function IsUnitAllyOrEnemy takes unit u, player p, integer targetType returns boolean
+        return ((targetType == Target_Any) or (targetType == Target_Ally and IsUnitAlly(GetFilterUnit(), p)) or (targetType == Target_Enemy and IsUnitEnemy(GetFilterUnit(), p)))
+    endfunction
+
     function IsUnitTargetFilterFunc takes nothing returns boolean
-        return IsUnitTargetCheck(GetFilterUnit(), VisibilityOwner)
+        return IsUnitTargetCheck(GetFilterUnit(), Owner) and IsUnitAllyOrEnemy(GetFilterUnit(), Owner, TargetType)
     endfunction
 
     function IsUnitSpellTargetFilterFunc takes nothing returns boolean
-        return IsUnitSpellTargetCheck(GetFilterUnit(), VisibilityOwner)
+        return IsUnitSpellTargetCheck(GetFilterUnit(), Owner) and IsUnitAllyOrEnemy(GetFilterUnit(), Owner, TargetType) 
     endfunction
 
-    function EnumTargettableUnitsInRange takes group g, real x, real y, real range, player owner, boolean allowMagicImmune returns nothing
-        set VisibilityOwner = owner
+    function EnumTargettableUnitsInRange takes group g, real x, real y, real range, player owner, boolean allowMagicImmune, integer targetType returns nothing
+        set Owner = owner
+        set TargetType = targetType
         if allowMagicImmune then
             call GroupEnumUnitsInArea(g, x, y, range, IsUnitTargetFilter)
         else

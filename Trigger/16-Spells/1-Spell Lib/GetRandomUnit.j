@@ -44,12 +44,12 @@ library GetRandomUnit initializer init requires UnitHelpers
         method EnumUnits takes real x, real y, real range, player p returns thistype
             local unit temp
             call GroupClear(ENUM_GROUP1)
-            call EnumTargettableUnitsInRange(ENUM_GROUP1, x, y, range, p, this.allowMagicImmune)
+            call EnumTargettableUnitsInRange(ENUM_GROUP1, x, y, range, p, this.allowMagicImmune, this.targetType)
             loop
                 set temp = FirstOfGroup(ENUM_GROUP1)
                 //call BJDebugMsg("gru" + GetUnitName(temp) + " : " + I2S(GetHandleId(temp)))
                 exitwhen temp == null
-                if ((this.ally and IsUnitAlly(temp, p)) or (not this.ally and IsUnitEnemy(temp, p))) and temp != this.exclusionTarget and IsUnitInGroup(temp, this.RandomUnitHelperGroup) == false then
+                if temp != this.exclusionTarget and IsUnitInGroup(temp, this.RandomUnitHelperGroup) == false then
                     //call BJDebugMsg("ruh ally excl double check")
                     if (this.exclusionGroup != null and IsUnitInGroup(temp, this.exclusionGroup) == false) or this.exclusionGroup == null then
                         call GroupAddUnit(this.RandomUnitHelperGroup, temp)
@@ -70,8 +70,8 @@ library GetRandomUnit initializer init requires UnitHelpers
             return this
         endmethod
 
-        method checkAlly takes nothing returns thistype
-            set this.ally = true
+        method checkAlly takes integer targetType returns thistype
+            set this.targetType = targetType
             return this
         endmethod
 
@@ -123,7 +123,7 @@ library GetRandomUnit initializer init requires UnitHelpers
             set this.exclusionGroup = null
             set this.allowMagicImmune = false
             set this.heroPriority = false
-            set this.ally = false
+            set this.targetType = Target_Any
             set this.RandomUnitHelperGroup = NewGroup()
             return this
         endmethod
@@ -154,10 +154,7 @@ library GetRandomUnit initializer init requires UnitHelpers
     function GetRandomUnit takes real x, real y, real range, player p, integer targetType, boolean heroPriority, boolean allowMagicImmune returns unit
         call RUH.reset()
 
-        if targetType == 1 then
-            //call BJDebugMsg("ally")
-            call RUH.checkAlly()
-        endif
+        call RUH.checkAlly(targetType)
 
         if heroPriority then
             call RUH.doHeroPriority()

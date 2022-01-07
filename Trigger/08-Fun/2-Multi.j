@@ -28,9 +28,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
             
             call RUH.reset().excludeGroup(this.caston)
             
-            if GetAbilityTargetType(this.abilId) == 1 then
-                call RUH.checkAlly()
-            endif
+            call RUH.checkAlly(GetAbilityTargetType(this.abilId))
 
             call RUH.EnumUnits(GetUnitX(this.caster), GetUnitY(this.caster), range, GetOwningPlayer(this.caster))
 

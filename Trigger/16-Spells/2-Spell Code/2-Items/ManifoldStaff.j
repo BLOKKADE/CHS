@@ -18,9 +18,7 @@ library ManifoldStaff requires RandomShit, AbilityData, DummyOrder, CastSpellOnT
             call GroupAddUnit(ENUM_GROUP, target)
             call RUH.reset().excludeGroup(ENUM_GROUP)
             
-            if IsUnitAlly(target, owner) then
-                call RUH.checkAlly()
-            endif
+            call RUH.checkAlly(GetAbilityTargetType(abilId))
 
             call RUH.EnumUnits(x, y, range, owner)
             call GroupRemoveUnit(ENUM_GROUP, target)

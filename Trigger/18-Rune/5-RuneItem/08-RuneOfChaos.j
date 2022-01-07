@@ -33,7 +33,7 @@ library ChaosRune requires ChaosMagic
         loop
             set GLOB_LVL_abil = lvl
             call GroupClear(ENUM_GROUP)
-            call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 400 + 75 * power, GetOwningPlayer(u), false)
+            call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 400 + 75 * power, GetOwningPlayer(u), false, Target_Any)
             call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
             call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
             call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
