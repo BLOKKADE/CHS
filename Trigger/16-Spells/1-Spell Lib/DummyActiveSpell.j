@@ -59,16 +59,18 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
 
     function RemoveDummyspell takes unit u, integer abilityId returns nothing
         local integer dummyAbilId = UnitDummySpells[GetHandleId(u)].integer[abilityId]
-        call UnitRemoveAbility(u, dummyAbilId)
+        if dummyAbilId != 0 then
+            call UnitRemoveAbility(u, dummyAbilId)
 
-        if GetAbilityOrderType(abilityId) == Order_Target then
-            call AddDummySpellToList(u, dummyAbilId, 1)
-        else
-            call AddDummySpellToList(u, dummyAbilId, 0)
+            if GetAbilityOrderType(abilityId) == Order_Target then
+                call AddDummySpellToList(u, dummyAbilId, 1)
+            else
+                call AddDummySpellToList(u, dummyAbilId, 0)
+            endif
+
+            set UnitDummySpells[GetHandleId(u)].integer[abilityId] = 0
+            set UnitDummySpells[GetHandleId(u)].integer[dummyAbilId] = 0
         endif
-
-        set UnitDummySpells[GetHandleId(u)].integer[abilityId] = 0
-        set UnitDummySpells[GetHandleId(u)].integer[dummyAbilId] = 0
     endfunction
 
     function UpdateDummySpells takes unit u, integer abilityId, integer level returns nothing

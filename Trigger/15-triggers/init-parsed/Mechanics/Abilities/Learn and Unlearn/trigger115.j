@@ -47,6 +47,7 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
                 call DestroyEffectBJ(GetLastCreatedEffectBJ())
                 call UnitRemoveAbilityBJ(udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())
                 call FunResetAbility (udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())
+                call RemoveDummyspell(GetTriggerUnit(), udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])
             endif
     
         else

@@ -270,7 +270,7 @@ library IdLibrary initializer init
         constant integer HOWL_OF_TERROR_ABILITY_ID                      = 'ANht'
         constant integer ICE_ARMOR_ABILITY_ID                           = 'A053'
         constant integer ICY_BREATH_ABILITY_ID                          = 'A046'
-        constant integer IMMOLATION_ABILITY_ID                          = 'AEim'
+        constant integer IMMOLATION_ABILITY_ID                          = 'A01J'
         constant integer IMPALE_ABILITY_ID                              = 'AUim'
         constant integer INCINERATE_ABILITY_ID                          = 'A06M'
         constant integer INFERNO_ABILITY_ID                             = 'AUin'

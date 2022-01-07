@@ -167,6 +167,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call PoisonSpellCast(caster, target)
                 endif
 
+                if abilId == IMMOLATION_ABILITY_ID then
+                    call ToggleImmolation(caster)
+                endif
+
                 if GetUnitAbilityLevel(caster, 'B024') > 0 then
                     call GetRetaliationSource(caster, target, abilId, abilLvl)
                 endif
