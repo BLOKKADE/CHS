@@ -25,7 +25,6 @@ scope ShortPeriodCheck initializer init
                 //Power of Ice
                 if GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID) >= 1 then
                     if CheckProc(u, 610) then
-                        call ElemFuncStart(u,POWER_OF_ICE_ABILITY_ID)
                         call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
                     endif
                     
@@ -34,7 +33,7 @@ scope ShortPeriodCheck initializer init
                 //Absolute Blood
                 set i1 = GetUnitAbilityLevel(u,ABSOLUTE_BLOOD_ABILITY_ID)
                 if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
-                    set s = GetDesriptionAbility(ABSOLUTE_BLOOD_ABILITY_ID,i1 - 1)
+                    set s = GetAbilityDescription(ABSOLUTE_BLOOD_ABILITY_ID,i1 - 1)
                     if LoadReal(HT,hid,- 93001) == 0 then
                         set s2 = "50"
                     else
@@ -52,7 +51,7 @@ scope ShortPeriodCheck initializer init
                 //Ancient Blood
                 set i1 = GetUnitAbilityLevel(u,ANCIENT_BLOOD_ABILITY_ID)
                 if i1 > 0 then
-                    set s = GetDesriptionAbility(ANCIENT_BLOOD_ABILITY_ID,i1 - 1)
+                    set s = GetAbilityDescription(ANCIENT_BLOOD_ABILITY_ID,i1 - 1)
                     if LoadReal(HT,hid,82341) == 0 then
                         set s2 = "20000"
                     else

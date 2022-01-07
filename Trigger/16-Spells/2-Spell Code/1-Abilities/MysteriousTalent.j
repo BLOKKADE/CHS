@@ -30,7 +30,7 @@ library MysteriousTalent requires RandomShit, AbilityData, CastSpellOnTarget
         local player p = GetOwningPlayer(caster)
         local integer abilId = MYSTERIOUS_TALENT_ABILITY_ID
         local integer abilLvl = GetUnitAbilityLevel(caster, MYSTERIOUS_TALENT_ABILITY_ID)
-        local string s = GetDesriptionAbility(abilId, abilLvl - 1)
+        local string s = GetAbilityDescription(abilId, abilLvl - 1)
         local string cdModeTxt = ""
         local string manifoldModeTxt = ""
         local integer hid = GetHandleId(caster)

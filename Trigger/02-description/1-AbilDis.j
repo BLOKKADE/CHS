@@ -4,12 +4,14 @@ library AbilityDescription requires RandomShit
 
     endglobals
 
-
-    function GetDesriptionAbility takes integer id, integer lvl returns string
-        if LoadStr(HT_des,id,lvl) == null then
-            //call BJDebugMsg("saved string")
-            call SaveStr(HT_des,id,lvl,BlzGetAbilityExtendedTooltip(id,lvl))
+    function SaveAbilityDescription takes integer abilId, integer lvl returns nothing
+        if LoadStr(HT_des, abilId, lvl) == null then
+            call SaveStr(HT_des, abilId, lvl, BlzGetAbilityExtendedTooltip(abilId, lvl))
         endif
+    endfunction
+
+    function GetAbilityDescription takes integer id, integer lvl returns string
+        call SaveAbilityDescription(id, lvl)
         
         //call BJDebugMsg("loaded string")
         return LoadStr(HT_des,id,lvl)
@@ -35,5 +37,11 @@ library AbilityDescription requires RandomShit
 
         //call BJDebugMsg(s)
         return s
+    endfunction
+
+    function ResetAbilityDescription takes player p, integer abilId, integer level returns nothing
+        if GetLocalPlayer() == p then
+            call BlzSetAbilityExtendedTooltip(abilId, GetAbilityDescription(abilId, level), level - 1)
+        endif
     endfunction
 endlibrary

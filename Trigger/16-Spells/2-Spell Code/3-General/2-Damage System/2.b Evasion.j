@@ -57,7 +57,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants
         endif
 
         //Trueshot aura
-        set abilLvl = GetUnitAbilityLevel(DamageSource, TRUESHOT_AURA_ABILITY_ID)
+        set abilLvl = GetUnitAbilityLevel(DamageSourceHero, TRUESHOT_AURA_ABILITY_ID)
         if abilLvl > 0 then
             set returnDamage = returnDamage * (0.005 * abilLvl)
             set DamageIsTrue = true

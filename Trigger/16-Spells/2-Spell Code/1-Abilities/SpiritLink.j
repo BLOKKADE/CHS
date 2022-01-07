@@ -29,7 +29,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
         
 
         private method updateDescription takes nothing returns nothing
-            call UpdateAbilityDescription(GetDesriptionAbility(SPIRIT_LINK_ABILITY_ID, this.level - 1), Player(this.pid), SPIRIT_LINK_ABILITY_ID, "000", R2I((1 - this.damageReduction) * 100), level)
+            call UpdateAbilityDescription(GetAbilityDescription(SPIRIT_LINK_ABILITY_ID, this.level - 1), Player(this.pid), SPIRIT_LINK_ABILITY_ID, "000", R2I((1 - this.damageReduction) * 100), level)
         endmethod
 
         private method refreshGroup takes nothing returns nothing
