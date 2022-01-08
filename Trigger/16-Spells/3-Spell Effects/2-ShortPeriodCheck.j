@@ -17,75 +17,90 @@ scope ShortPeriodCheck initializer init
             set hid = GetHandleId(u)
             if GetWidgetLife(u) > 0.405 then
 
-                //Vigour token
-                if GetUnitAbilityLevel(u, 'A09A') > 0 then
-                    call VigourTokenHpLoss(u)
-                endif
+                if not HasPlayerFinishedLevel(u, Player(II - 1)) then
+                    
+                    //Fire Shield
+                    set i1 = GetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID)
+                    if i1 > 0 then
+                        call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 300, false, FIRE_SHIELD_ABILITY_ID)
+                    endif
 
-                //Power of Ice
-                if GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID) >= 1 then
-                    if CheckProc(u, 610) then
-                        call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
+                    //Absolute Arcane Drain
+                    set i1 = GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID)
+                    if i1 > 0 then
+                        call AbsoluteArcaneDrain(u)
+                    endif
+
+                    //Vigour token
+                    if GetUnitAbilityLevel(u, 'A09A') > 0 then
+                        call VigourTokenHpLoss(u)
+                    endif
+
+                    //Power of Ice
+                    if GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID) >= 1 then
+                        if CheckProc(u, 610) then
+                            call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
+                        endif
+                        
                     endif
                     
-                endif
-                
-                //Absolute Blood
-                set i1 = GetUnitAbilityLevel(u,ABSOLUTE_BLOOD_ABILITY_ID)
-                if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
-                    set s = GetAbilityDescription(ABSOLUTE_BLOOD_ABILITY_ID,i1 - 1)
-                    if LoadReal(HT,hid,- 93001) == 0 then
-                        set s2 = "50"
-                    else
-                        set s2 = I2S(R2I(LoadReal(HT,hid,- 93001)))
-                    endif
-                        
-                    set s3 = ReplaceText("2000",s2,s)
-                    set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,- 93000) ) ,s3)
-                    if GetLocalPlayer() == GetOwningPlayer(u) then
-                        call BlzSetAbilityExtendedTooltip(ABSOLUTE_BLOOD_ABILITY_ID,s3  , i1 - 1  ) 
-                    endif
-                
-                endif
-                
-                //Ancient Blood
-                set i1 = GetUnitAbilityLevel(u,ANCIENT_BLOOD_ABILITY_ID)
-                if i1 > 0 then
-                    set s = GetAbilityDescription(ANCIENT_BLOOD_ABILITY_ID,i1 - 1)
-                    if LoadReal(HT,hid,82341) == 0 then
-                        set s2 = "20000"
-                    else
-                        set s2 = I2S(R2I(LoadReal(HT,hid,82341)*(1 - I2R(i1)* 0.01 ) ))
+                    //Absolute Blood
+                    set i1 = GetUnitAbilityLevel(u,ABSOLUTE_BLOOD_ABILITY_ID)
+                    if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
+                        set s = GetAbilityDescription(ABSOLUTE_BLOOD_ABILITY_ID,i1 - 1)
+                        if LoadReal(HT,hid,- 93001) == 0 then
+                            set s2 = "50"
+                        else
+                            set s2 = I2S(R2I(LoadReal(HT,hid,- 93001)))
+                        endif
+                            
+                        set s3 = ReplaceText("2000",s2,s)
+                        set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,- 93000) ) ,s3)
+                        if GetLocalPlayer() == GetOwningPlayer(u) then
+                            call BlzSetAbilityExtendedTooltip(ABSOLUTE_BLOOD_ABILITY_ID,s3  , i1 - 1  ) 
+                        endif
+                    
                     endif
                     
-                    set s3 = ReplaceText("20,000",s2,s) 
-                    set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,82340) ) ,s3)
+                    //Ancient Blood
+                    set i1 = GetUnitAbilityLevel(u,ANCIENT_BLOOD_ABILITY_ID)
+                    if i1 > 0 then
+                        set s = GetAbilityDescription(ANCIENT_BLOOD_ABILITY_ID,i1 - 1)
+                        if LoadReal(HT,hid,82341) == 0 then
+                            set s2 = "20000"
+                        else
+                            set s2 = I2S(R2I(LoadReal(HT,hid,82341)*(1 - I2R(i1)* 0.01 ) ))
+                        endif
                         
-                    if GetLocalPlayer() == GetOwningPlayer(u) then
-                        call BlzSetAbilityExtendedTooltip(ANCIENT_BLOOD_ABILITY_ID,s3  , i1 - 1  ) 
+                        set s3 = ReplaceText("20,000",s2,s) 
+                        set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,82340) ) ,s3)
+                            
+                        if GetLocalPlayer() == GetOwningPlayer(u) then
+                            call BlzSetAbilityExtendedTooltip(ANCIENT_BLOOD_ABILITY_ID,s3  , i1 - 1  ) 
+                        endif
+                    
                     endif
-                
+                            
+                    //Absolute Cold
+                    set i1 = GetUnitAbilityLevel(u,ABSOLUTE_COLD_ABILITY_ID)
+                    if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0  then
+                        if BlzGetUnitAbilityCooldownRemaining(u,ABSOLUTE_COLD_ABILITY_ID) == 0 and CheckProc(u, 500) then
+                            call AbilStartCD(u, ABSOLUTE_COLD_ABILITY_ID, 20.5 - (0.5 * i1))
+                            call AbsoluteCold(u,GetClassUnitSpell(u,9)* 20 * i1 )
+                        endif
+                    endif
+                    
+                    //Divine Gift
+                    set i1 = GetUnitAbilityLevel(u,DIVINE_GIFT_ABILITY_ID)
+                    if i1 > 0 then
+                        if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
+                            call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
+                            call SetWidgetLife(u,GetWidgetLife(u)+ 2500 * i1)
+                            call AddSpecialEffectTargetTimer( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
+                            call RemoveDebuff( u, 1)
+                        endif
+                    endif
                 endif
-                        
-                //Absolute Cold
-                set i1 = GetUnitAbilityLevel(u,ABSOLUTE_COLD_ABILITY_ID)
-                if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0  then
-                    if BlzGetUnitAbilityCooldownRemaining(u,ABSOLUTE_COLD_ABILITY_ID) == 0 and CheckProc(u, 500) then
-                        call AbilStartCD(u, ABSOLUTE_COLD_ABILITY_ID, 20.5 - (0.5 * i1))
-                        call AbsoluteCold(u,GetClassUnitSpell(u,9)* 20 * i1 )
-                    endif
-                endif
-                
-                //Divine Gift
-                set i1 = GetUnitAbilityLevel(u,DIVINE_GIFT_ABILITY_ID)
-                if i1 > 0 then
-                    if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
-                        call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
-                        call SetWidgetLife(u,GetWidgetLife(u)+ 2500 * i1)
-                        call AddSpecialEffectTargetTimer( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
-                        call RemoveDebuff( u, 1)
-                    endif
-                endif     
 
                 //Trueshot Aura
                 set i1 = GetUnitAbilityLevel(u ,TRUESHOT_AURA_ABILITY_ID)
@@ -119,12 +134,6 @@ scope ShortPeriodCheck initializer init
                         call SaveReal(HT, hid, 'A02B', r2)	
                     endif
                 endif
-
-                //Absolute Arcane Drain
-                set i1 = GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID)
-                if i1 > 0 then
-                    call AbsoluteArcaneDrain(u)
-                endif
                 
                 //Blood Elf Mage
                 if GetUnitTypeId(u) == BLOOD_MAGE_UNIT_ID then
@@ -145,6 +154,7 @@ scope ShortPeriodCheck initializer init
                         call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
+                    
                     //War Golem
                 elseif GetUnitTypeId(u) == WAR_GOLEM_UNIT_ID then
                     set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))

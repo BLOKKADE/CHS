@@ -48,6 +48,15 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false then
             call CastMidasTouch(caster, target, lvl)
             return true
+            //Holy Light
+        elseif abilId == HOLY_LIGHT_ABILITY_ID then
+            call CastHolyLight(caster, target, lvl)
+            //Parasite
+        elseif abilId == PARASITE_ABILITY_ID then
+            call CastParasite(caster, target, lvl)
+            //Lightning Shield
+        elseif abilId == LIGHTNING_SHIELD_ABILITY_ID then
+            call CastLightningShield(caster, target, lvl)
             //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(caster, target, lvl)

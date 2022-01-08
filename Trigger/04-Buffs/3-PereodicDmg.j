@@ -1,7 +1,9 @@
 library PeriodicDamage initializer init requires RandomShit
+    
     globals
         HashTable PeriodicCounter
     endglobals
+
     struct PeriodicDamage extends array
         real dmg
         unit target

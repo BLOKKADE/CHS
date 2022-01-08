@@ -151,7 +151,7 @@ library trigger103 initializer init requires RandomShit, Functions
     
         if FireshieldChance == 1 then
             set s = s + "Fire Shield "
-            call AddRoundAbility('A05S')
+            call AddRoundAbility(FIRE_SHIELD_ABILITY_ID)
         endif
     
         if CorrosiveSkinChance == 1 then
@@ -231,8 +231,8 @@ library trigger103 initializer init requires RandomShit, Functions
         endif
     
         if FireshieldChance == 1 then
-            call UnitAddAbility(u, 'A05S')
-            call SetUnitAbilityLevel(u, 'A05S', IMinBJ(R2I(udg_integer02 * 0.3), 30))
+            call UnitAddAbility(u, FIRE_SHIELD_ABILITY_ID)
+            call SetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID, IMinBJ(R2I(udg_integer02 * 0.3), 30))
         endif
     
         if CorrosiveSkinChance == 1 then
