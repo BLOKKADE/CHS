@@ -276,7 +276,8 @@ scope ModifyDamageBeforeArmor initializer init
         //Searing Arrows
         set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)
         if i1 > 0 and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
-            call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - )
+            //TODO set correct value
+            call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - 0)
             set Damage.index.damage = Damage.index.damage + GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)
         endif
 
