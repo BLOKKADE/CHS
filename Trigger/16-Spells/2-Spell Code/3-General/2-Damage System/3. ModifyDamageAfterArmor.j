@@ -14,6 +14,7 @@ scope ModifyDamageAfterArmor initializer init
         local integer i2 = 0
 
         local integer vampCount = 0
+        local real vampAmount = 0
 
         //Titanium Armor
         if UnitHasItemS(DamageTarget,'I07M') then
@@ -49,7 +50,7 @@ scope ModifyDamageAfterArmor initializer init
         //Mask of Death lifesteal
         if LoadInteger(HTi,GetHandleId(DamageSourceHero),1) == 1 then
             set r2 = (Damage.index.amount/ 4)
-            call Vamp(DamageSource,DamageTarget,r2)
+            set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1	
         endif
 
@@ -72,21 +73,21 @@ scope ModifyDamageAfterArmor initializer init
         set r1 = GetUnitAbilityLevel(DamageSource,VAMPIRISM_ABILITY_ID)
         if r1 > 0 then
             set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetClassUnitSpell(DamageSource,11)* 0.02 )
-            call Vamp(DamageSource,DamageTarget,r2)
+            set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
 
         //Soul Reaper
         if UnitHasItemS(DamageSource, 'I01C') and Damage.index.isAttack then
             set r2 = Damage.index.amount * 0.5
-            call Vamp(DamageSource, DamageTarget, r2)
+            set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
 
         //Dreadlord Passive
         if GetUnitTypeId(DamageSourceHero) == DEADLORD_UNIT_ID then
             set r2 = Damage.index.amount * (0.02 * I2R(GetHeroLevel(DamageSourceHero)) )
-            call Vamp(DamageSource,DamageTarget,r2)
+            set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif	
 
@@ -95,7 +96,7 @@ scope ModifyDamageAfterArmor initializer init
             //call BJDebugMsg(GetUnitName(DamageSource) + " Damage.index.isAttack " + GetUnitName(DamageTarget) + ": " + I2S(DamageTargetId))
             set i = GetHeroLevel(DamageSource)
             set r2 = BlzGetUnitMaxHP(DamageTarget) * (0.025 + (0.00025 * i))
-            call Vamp(DamageSource,DamageTarget,r2)
+            set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
             set Damage.index.amount = Damage.index.amount + r2 
         endif
@@ -126,7 +127,7 @@ scope ModifyDamageAfterArmor initializer init
             set i = UnitHasItemI( DamageSource,'I078') 
             if i > 0 then
                 set r2 = Damage.index.amount * (0.25 * I2R(i))
-                call Vamp(DamageSource,DamageTarget,r2)
+                set vampAmount = vampAmount + r2
                 set vampCount = vampCount + 1  
             endif
         endif
@@ -134,7 +135,7 @@ scope ModifyDamageAfterArmor initializer init
         //Staff of Absolute Magic
         if GetUnitAbilityLevel(DamageSourceHero  ,'B00O') >= 1 and Damage.index.isSpell then
             set r2 = Damage.index.amount * 0.33 
-            call Vamp(DamageSource,DamageTarget,r2)
+            set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
 
@@ -158,7 +159,8 @@ scope ModifyDamageAfterArmor initializer init
 
         //Frostmourne
         if GetUnitAbilityLevel(DamageSourceHero ,'B008') >= 1 then
-            call Vamp(DamageSourceHero,DamageTarget, (Damage.index.amount / 4))	
+            set r2 = (Damage.index.amount / 4)	
+            set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1 
         endif
         
@@ -166,20 +168,22 @@ scope ModifyDamageAfterArmor initializer init
         set i = UnitHasItemI( DamageSource,'I07I') 
         if i > 0 and IsUnitType(DamageSource,UNIT_TYPE_MELEE_ATTACKER) then
             set r1 =  (GetWidgetLife(DamageTarget)/ 100)* 1.5 * I2R(i)  
-            call Vamp(DamageSource,DamageTarget,r1)
+            set vampAmount = vampAmount + r1
             set Damage.index.amount = Damage.index.amount + r1
             set vampCount = vampCount + 1
         endif
         
         //Cutting
         if DamageIsCutting then
-            call Vamp(DamageSource,DamageTarget, Damage.index.amount / 2)
+            set r2 = Damage.index.amount / 2
+            set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1 
             call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Other\\PandarenBrewmasterBlood\\PandarenBrewmasterBlood.mdl", DamageTarget, "chest"))
         endif 
 
         if vampCount > 0 and IsFxOnCooldown(DamageSource, 0) == false then
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
+            call Vamp(DamageSource, DamageTarget, vampAmount)
             call SetFxCooldown(DamageSource, 0, 1)
         endif
 
