@@ -1,4 +1,4 @@
-library LightningShield
+library LightningShield requires UnitHelpers, RandomShit, SpellFormula
     struct LightningShieldStruct extends array
         unit source
         unit target
@@ -6,6 +6,7 @@ library LightningShield
         integer pid
         effect fx
         integer tick
+        integer endTick
         boolean enabled
         
         private method damage takes nothing returns nothing
@@ -46,14 +47,17 @@ library LightningShield
             set this.endTick = T32_Tick + (8 * 32)
             set this.tick = T32_Tick + 32
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
-            set this.fx = AddSpecialEffectTarget("Abilities\Spells\Orc\LightningShield\LightningShieldTarget.mdl", this.target, "origin")
+            set this.fx = AddSpecialEffectTarget("Abilities\\Spells\\Orc\\LightningShield\\LightningShieldTarget.mdl", this.target, "origin")
 
             call this.startPeriodic()
             return this
         endmethod
         
         method destroy takes nothing returns nothing
+            set this.source = null
+            set this.target = null
             call DestroyEffect(this.fx)
+            set this.fx = null
             call this.recycle()
         endmethod
 
@@ -62,6 +66,6 @@ library LightningShield
     endstruct
 
     function CastLightningShield takes unit caster, unit target, integer level returns nothing
-        call LightningShieldStruct.create(this.caster, this.target, this.level)
+        call LightningShieldStruct.create(caster, target, level)
     endfunction
 endlibrary

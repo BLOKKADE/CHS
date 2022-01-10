@@ -1,4 +1,4 @@
-library trigger24 initializer init requires RandomShit
+/*library trigger24 initializer init requires RandomShit
 
     function Trig_Plague_Remove_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='n01L'))then
@@ -23,3 +23,4 @@ library trigger24 initializer init requires RandomShit
 
 
 endlibrary
+*/

@@ -57,6 +57,9 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             //Lightning Shield
         elseif abilId == LIGHTNING_SHIELD_ABILITY_ID then
             call CastLightningShield(caster, target, lvl)
+            //Plague
+        elseif abilId == PLAGUE_ABILITY_ID then
+            call CastPlague(caster, x, y, lvl)
             //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(caster, target, lvl)

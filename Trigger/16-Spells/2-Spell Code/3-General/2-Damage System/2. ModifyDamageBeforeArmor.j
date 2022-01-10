@@ -273,6 +273,13 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        //Searing Arrows
+        set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)
+        if i1 > 0 and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
+            call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - )
+            set Damage.index.damage = Damage.index.damage + GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)
+        endif
+
         //Air Force
         if GetUnitAbilityLevel(DamageSourceHero  ,AIR_FORCE_ABILITY_ID) >= 1 then
             if GetUnitAbilityLevel(DamageTarget,'Bams') > 0 or GetUnitAbilityLevel(DamageTarget,ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
