@@ -7142,8 +7142,8 @@ endfunction
 
 function Trig_Bonus_Exp_Func001Func001A takes nothing returns nothing
     local real bonus = 1
-    if MacigNecklaceBonus.boolean[GetHandleId(GetTriggerUnit())] and UnitHasItemOfTypeBJ(GetEnumUnit(), 'I05G') then
-        set bonus = MnBonus
+    if MagicNecklaceBonus.boolean[GetHandleId(GetTriggerUnit())] and UnitHasItemOfTypeBJ(GetEnumUnit(), 'I05G') then
+        set bonus = MagicNecklaceBonus
     endif
     call AddHeroXPSwapped(R2I(((udg_real01)* 35) * bonus),GetEnumUnit(),true)
 endfunction
@@ -7154,8 +7154,8 @@ endfunction
 
 function Trig_Bonus_Exp_Func001Func002A takes nothing returns nothing
     local real bonus = 1
-    if MacigNecklaceBonus.boolean[GetHandleId(GetTriggerUnit())] and UnitHasItemOfTypeBJ(GetEnumUnit(), 'I05G') then
-        set bonus = MnBonus
+    if MagicNecklaceBonus.boolean[GetHandleId(GetTriggerUnit())] and UnitHasItemOfTypeBJ(GetEnumUnit(), 'I05G') then
+        set bonus = MagicNecklaceBonus
     endif
     call AddHeroXPSwapped(R2I(((udg_real01)* 55) * bonus),GetEnumUnit(),true)
 endfunction

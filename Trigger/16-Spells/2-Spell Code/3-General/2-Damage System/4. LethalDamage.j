@@ -16,7 +16,7 @@ scope LethalDamage initializer init
 
         //Magic Necklace
         if UnitHasItemS(DamageSourceHero, 'I05G') and Damage.index.isSpell then
-            set MacigNecklaceBonus.boolean[GetHandleId(DamageTarget)] = true
+            set MagicNecklaceBonus.boolean[GetHandleId(DamageTarget)] = true
         endif
 
         //Chest of Greed

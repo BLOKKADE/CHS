@@ -80,7 +80,12 @@ scope ModifyDamageBeforeArmor initializer init
                 endif
             endif
         endif
-
+/*
+        //Damage Spread
+        if 
+            call PeriodicDamage.create(DamageSource, DamageTarget, 0.0333 * Damage.index.damage, true, 0.1, 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
+        endif
+*/
 
         //Sword of Bloodthirst
         set i1 = UnitHasItemI(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)

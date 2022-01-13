@@ -88,7 +88,7 @@ library HeroLevel initializer init requires HeroLvlTable
         local player Pl = GetOwningPlayer(UnitHero)
         local integer Pid = GetPlayerId(Pl)
         local integer RI = I_l - LastLvlHero[Pid]
-        local boolean Economic = GetUnitAbilityLevel(UnitHero,PILLAGE_ABILITY_ID) == 0 and GetUnitAbilityLevel(UnitHero,LEARNABILITY_ABILITY_ID) == 0
+        local boolean Economic = GetUnitAbilityLevel(UnitHero,PILLAGE_ABILITY_ID) == 0 and GetUnitAbilityLevel(UnitHero, MIDAS_TOUCH_ABILITY_ID) == 0
         local integer i = 0
         local integer hid = GetHandleId(UnitHero)
 
@@ -98,22 +98,17 @@ library HeroLevel initializer init requires HeroLvlTable
             return
         endif
 
-        if I_l < 250 then
-            if Economic then
-                call AdjustPlayerStateBJ( (I_l + 20)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
-                call AdjustPlayerStateBJ( 8 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
-                call DisplayTimedTextToPlayer(Pl, 0, 0, 1, "|cffc300ffLevel: " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 20)*(RI)) + " gold|r and |cff1eff00+" + I2S(8 *(RI)) + " lumber|r")
-            else
+        if not Economic then
+            if I_l < 250 then
                 call AdjustPlayerStateBJ( (I_l + 2)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
                 call AdjustPlayerStateBJ( 4 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
                 call DisplayTimedTextToPlayer(Pl, 0, 0, 1, "|cffc300ffLevel " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4 *(RI)) + " lumber|r")
             endif
-        
-        endif
-        
-        if ModuloInteger(I_l + 1, 25) == 0 then
-            call AdjustPlayerStateBJ( I_l + 1, Pl, PLAYER_STATE_RESOURCE_LUMBER) 
-            call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cff1eff00+" + I2S(I_l + 1) + " bonus lumber|r for reaching |cffbda546level " + I2S(I_l + 1) + "!|r")
+
+            if ModuloInteger(I_l + 1, 25) == 0 then
+                call AdjustPlayerStateBJ( I_l + 1, Pl, PLAYER_STATE_RESOURCE_LUMBER) 
+                call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cff1eff00+" + I2S(I_l + 1) + " bonus lumber|r for reaching |cffbda546level " + I2S(I_l + 1) + "!|r")
+            endif
         endif
 
         /*

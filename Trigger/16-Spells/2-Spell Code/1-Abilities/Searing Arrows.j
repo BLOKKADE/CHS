@@ -14,7 +14,6 @@ library SearingArrows initializer init requires ToggleAbility
         method enable takes nothing returns nothing
             set this.enabled = true
             call BJDebugMsg("enabled")
-            set this.tick = T32_Tick + 32
             call ToggleAbility(this.source, SEARING_ARROWS_ABILITY_ID, GetUnitAbilityLevel(this.source, SEARING_ARROWS_ABILITY_ID))
             call this.startPeriodic()
         endmethod
@@ -27,7 +26,7 @@ library SearingArrows initializer init requires ToggleAbility
         endmethod
 
         private method periodic takes nothing returns nothing
-            if this.level == 0 or IsAbilityEnabled(this.source, SEARING_ARROWS_ABILITY_ID) == false then
+            if GetUnitAbilityLevel(this.source, SEARING_ARROWS_ABILITY_ID) == 0 or IsAbilityEnabled(this.source, SEARING_ARROWS_ABILITY_ID) == false then
                 call this.disable()
             endif
         endmethod 
@@ -49,7 +48,7 @@ library SearingArrows initializer init requires ToggleAbility
         implement Recycle
     endstruct
 
-    function ToggleImmolation takes unit caster returns nothing
+    function ToggleSearingArrows takes unit caster returns nothing
         local integer hid = GetHandleId(caster)
         if GetSearingArrowsStruct(hid) == 0 then
             set SearingArrowsTable[hid] = SearingArrowsStruct.create(caster)

@@ -58,42 +58,43 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
     endfunction
 
     function SetSkillParameters takes unit u, integer abilId returns nothing
+        local integer hid = GetHandleId(u)
         local integer i1 = 0
         local integer i2 = 0
 
         if abilId == EVASION_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            set i2 = LoadInteger(HT,hid, abilId) 
             call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+            call SaveInteger(HT,hid, abilId,i1)
         endif
 
         if abilId == DRUNKEN_MASTER_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            set i2 = LoadInteger(HT,hid, abilId) 
             call AddUnitEvasion(u ,   I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+            call SaveInteger(HT,hid, abilId,i1)
         endif 
 
         if abilId == HARDENED_SKIN_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            set i2 = LoadInteger(HT,hid, abilId) 
             call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+            call SaveInteger(HT,hid, abilId,i1)
         endif 
 
         if abilId == FIRE_SHIELD_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            set i2 = LoadInteger(HT,hid, abilId) 
             call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+            call SaveInteger(HT,hid, abilId,i1)
         endif 
 
         if abilId == MEGA_LUCK_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            set i2 = LoadInteger(HT,hid, abilId) 
             call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+            call SaveInteger(HT,hid, abilId,i1)
         endif 
 
         if abilId == ABSOLUTE_POISON_ABILITY_ID then
@@ -102,9 +103,16 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
 
         if abilId == DEMOLISH_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u), abilId) 
+            set i2 = LoadInteger(HT,hid, abilId) 
             call AddUnitPhysPow(u, 3 * I2R(i1 - i2))
-            call SaveInteger(HT,GetHandleId(u), abilId,i1)
+            call SaveInteger(HT,hid, abilId,i1)
+        endif
+
+        if abilId == LEARNABILITY_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u, abilId)
+            set i2 = LoadInteger(HT,hid, abilId) 
+            set LearnabilityBonus.real[hid] = 0.045 + (0.005 * I2R(i1 - i2))
+            call SaveInteger(HT,hid, abilId,i1)
         endif
     endfunction
 
