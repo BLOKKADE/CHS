@@ -111,7 +111,7 @@ scope OnDamage initializer init
         */
 
         set ChestOfGreedBonus.boolean[DamageTargetId] = false
-        set MacigNecklaceBonus.boolean[DamageTargetId] = false
+        set MagicNecklaceBonus.boolean[DamageTargetId] = false
 
         //call BJDebugMsg("hid: " + I2S(DamageSourceId) + " retdmg: " + R2S(RetaliationDamage.real[DamageSourceId]))
         //Retaliation Aura damage calculation
