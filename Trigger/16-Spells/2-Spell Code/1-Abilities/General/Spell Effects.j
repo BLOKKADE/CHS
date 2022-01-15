@@ -158,6 +158,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
         if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
             call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
+            call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
 
             set dummyAbilId = GetAssociatedSpell(caster, abilId)
             if GetAssociatedSpell(caster, abilId) != 0 then
@@ -172,6 +173,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                 call ElementStartAbility(caster, abilId)
 
                 if (not abilityChanneled) and dummyAbilId != 0 then
+                    call BJDebugMsg("channel")
                     call CastSpell(caster, target, abilId, abilLvl, GetAbilityOrderType(dummyAbilId), targetX, targetY).activate()
                 endif
 

@@ -12,11 +12,10 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
         unit source
         integer endTick
         integer bonus
-
-        
+        boolean enabled
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
+            if this.enabled == false or T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -27,6 +26,7 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
             
             set this.source = source
             set this.bonus = R2I(40 * GetUnitAbilityLevel(this.source, TEMPORARY_POWER_ABILITY_ID)*(1 + 0.02 * GetHeroLevel(this.source)))
+            set this.enabled = true
 
             call SetHeroStr(this.source, GetHeroStr(this.source, false) + this.bonus, false)
             call SetHeroAgi(this.source, GetHeroAgi(this.source, false) + this.bonus, false)
@@ -53,7 +53,7 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
         if GetTpStruct(GetHandleId(u)) == 0 then
             set TpStruct[GetHandleId(u)] = TempPowerStruct.create(u, duration)
         else
-            call GetTpStruct(GetHandleId(u)).destroy()
+            set GetTpStruct(GetHandleId(u)).enabled = false
             set TpStruct[GetHandleId(u)] = TempPowerStruct.create(u, duration)
         endif
     endfunction

@@ -153,7 +153,7 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
             //Summon Quilbeast
         elseif QUILBEASTS.contains(i) then
-            call QuilbeastStats(u, GetUnitAbilityLevel(hero,SUMMON_QUILBEAST_ABILITY_ID), UpgradeU)
+            //call QuilbeastStats(u, GetUnitAbilityLevel(hero,SUMMON_QUILBEAST_ABILITY_ID), UpgradeU)
             
             //Summon Bear
         elseif BEARS.contains(i) then

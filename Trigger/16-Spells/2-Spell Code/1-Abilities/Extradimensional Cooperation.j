@@ -2,6 +2,7 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
     globals
         constant string FX_BLINK = "Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl"
         constant string FX_BLINK_TARGET = "Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl"
+        Table ExtraDimLastTime
     endglobals
 
     function IsDamageExtradimensional takes unit u returns boolean
@@ -23,8 +24,38 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
         unit caster
         boolean magic
         integer endTick
+        boolean dummyEnabled
 
-        
+        private method createDummy takes nothing returns nothing
+            local real targetX = GetUnitX(target)
+            local real targetY = GetUnitY(target)
+            local real casterX = GetUnitX(caster)
+            local real casterY = GetUnitY(caster)
+            local real distance = GetRandomReal(100,200)
+            local real angle = Deg2Rad(GetRandomReal(0,360))
+
+            if IsUnitType(caster, UNIT_TYPE_MELEE_ATTACKER) then
+                set this.newX = targetX + distance * Cos(angle)
+                set this.newY = targetY + distance * Sin(angle)
+            else
+                set this.newX = casterX + distance * Cos(angle)
+                set this.newY = casterY + distance * Sin(angle)
+            endif
+
+            set angle = Atan2(targetY - this.newY, targetX - this.newX)*(180.00 / 3.14159)
+
+            set this.ssdummy = CreateUnit(GetOwningPlayer(caster), 'h00B', this.newX, this.newY, angle)
+            call SetUnitVertexColor(this.ssdummy, 100, 100, 150, 100)
+            call DestroyEffect(AddSpecialEffect(FX_BLINK, this.newX, this.newY))
+            call SetUnitAnimation(this.ssdummy, "attack")
+            call UnitApplyTimedLife(this.ssdummy, 'BTLF', 0.3)
+            call SetUnitTimeScale(this.ssdummy, 3.)
+        endmethod
+
+        private method endDummy takes nothing returns nothing
+            call ShowUnit(this.ssdummy, false)
+            call RemoveUnit(this.ssdummy)
+        endmethod
 
         private method periodic takes nothing returns nothing
 
@@ -40,8 +71,9 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
                 endif
 
                 set SpellData[GetHandleId(this.caster)].boolean[5] = false
-                call ShowUnit(this.ssdummy, false)
-                call RemoveUnit(this.ssdummy)
+                if this.dummyEnabled then
+                    call this.endDummy()
+                endif
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -50,32 +82,18 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
         static method create takes unit caster, unit target, real damage, boolean magic returns ExtraDimensionalCoop
             local thistype this = thistype.setup()
 
-            local real targetX = GetUnitX(target)
-            local real targetY = GetUnitY(target)
-            local real casterX = GetUnitX(caster)
-            local real casterY = GetUnitY(caster)
-            local real distance = GetRandomReal(100,200)
-            local real angle = Deg2Rad(GetRandomReal(0,360))
-
             set this.dmg = damage
-            if IsUnitType(caster, UNIT_TYPE_MELEE_ATTACKER) then
-                set this.newX = targetX + distance * Cos(angle)
-                set this.newY = targetY + distance * Sin(angle)
-            else
-                set this.newX = casterX + distance * Cos(angle)
-                set this.newY = casterY + distance * Sin(angle)
-            endif
             set this.target = target
             set this.magic = magic
             set this.caster = caster
-            set angle = Atan2(targetY - this.newY, targetX - this.newX)*(180.00 / 3.14159)
 
-            set this.ssdummy = CreateUnit(GetOwningPlayer(caster), 'h00B', this.newX, this.newY, angle)
-            call SetUnitVertexColor(this.ssdummy, 100, 100, 150, 100)
-            call DestroyEffect(AddSpecialEffect(FX_BLINK, this.newX, this.newY))
-            call SetUnitAnimation(this.ssdummy, "attack")
-            call UnitApplyTimedLife(this.ssdummy, 'BTLF', 0.3)
-            call SetUnitTimeScale(this.ssdummy, 3.)
+            if T32_Tick - ExtraDimLastTime[GetHandleId(caster)]  < 12 then
+                set this.dummyEnabled = false
+            else
+                set this.dummyEnabled = true
+                call this.createDummy()
+            endif
+            
             set this.endTick = T32_Tick + GetRandomInt(5,15)
             call this.startPeriodic()
             
@@ -112,5 +130,9 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
         set SpellData[GetHandleId(caster)].integer[6] = SpellData[GetHandleId(caster)].integer[6] + 2 + level
         //call BJDebugMsg("edc: " + I2S(SpellData[GetHandleId(caster)].integer[6]))
         set u = null
+    endfunction
+
+    private function init takes nothing returns nothing
+        set ExtraDimLastTime = Table.create()
     endfunction
 endlibrary
