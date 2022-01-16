@@ -30,7 +30,7 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
 
         set HeroAvailableDummySpells[dummySpellType][GetHandleId(u)] = dummySpellList
 
-        call ListT_print(dummySpellList, "dummy spell list")
+        //call ListT_print(dummySpellList, "dummy spell list")
 
         return dummySpellList
     endfunction
@@ -47,12 +47,12 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
             set dummySpellList = CreateDummySpellList(u, dummySpellType) 
         endif
 
-        call BJDebugMsg("dummy spell list: " + I2S(dummySpellList))
+        //call BJDebugMsg("dummy spell list: " + I2S(dummySpellList))
 
         set dummyAbilId = dummySpellList.back()
         call dummySpellList.pop()
 
-        call BJDebugMsg("dummy spell: " + I2S(dummyAbilId))
+        //call BJDebugMsg("dummy spell: " + I2S(dummyAbilId))
 
         return dummyAbilId
     endfunction
@@ -79,13 +79,15 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
         local ability learnedAbil = BlzGetUnitAbility(u, abilityId)
         local integer orderType = GetAbilityOrderType(abilityId)
 
-        call BlzSetUnitAbilityManaCost(u, dummyAbilId, level, BlzGetUnitAbilityManaCost(u, abilityId, level))
-        call BlzSetAbilityRealLevelField(dummyAbil, ABILITY_RLF_COOLDOWN, level, BlzGetAbilityRealLevelField(learnedAbil, ABILITY_RLF_COOLDOWN, level))
-        call BlzSetAbilityRealLevelField(dummyAbil, ABILITY_RLF_CAST_RANGE, level, BlzGetAbilityRealLevelField(learnedAbil, ABILITY_RLF_CAST_RANGE, level))
-        call BlzSetAbilityRealLevelField(dummyAbil, ABILITY_RLF_AREA_OF_EFFECT, level, BlzGetAbilityRealLevelField(learnedAbil, ABILITY_RLF_AREA_OF_EFFECT, level))
+        //call BJDebugMsg("dabilid: " + I2S(dummyAbilId) + " dabil: " + I2S(GetHandleId(dummyAbil)) + " labil:" + I2S(GetHandleId(learnedAbil)) + " order: " + I2S(orderType))
+
+        call BlzSetUnitAbilityManaCost(u, dummyAbilId, 0, BlzGetUnitAbilityManaCost(u, abilityId, level))
+        call BlzSetAbilityRealLevelField(dummyAbil, ABILITY_RLF_COOLDOWN, 0, BlzGetAbilityRealLevelField(learnedAbil, ABILITY_RLF_COOLDOWN, level))
+        call BlzSetAbilityRealLevelField(dummyAbil, ABILITY_RLF_CAST_RANGE, 0, BlzGetAbilityRealLevelField(learnedAbil, ABILITY_RLF_CAST_RANGE, level))
+        call BlzSetAbilityRealLevelField(dummyAbil, ABILITY_RLF_AREA_OF_EFFECT, 0, BlzGetAbilityRealLevelField(learnedAbil, ABILITY_RLF_AREA_OF_EFFECT, level))
 
         if orderType == Order_Point then
-            call BlzSetAbilityIntegerLevelField(dummyAbil, ABILITY_ILF_TARGET_TYPE, level, 2)
+            call BlzSetAbilityIntegerLevelField(dummyAbil, ABILITY_ILF_TARGET_TYPE, 0, 2)
         endif
 
         call SetUnitAbilityLevel(u, dummyAbilId, 2)
@@ -122,6 +124,7 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
                 set orderType = 1
             endif
 
+            //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(lvl - 1) + "new: " + B2S(new) + " ordertype: " + I2S(orderType))
             if new then
                 call AddDummySpell(u, abilId, lvl - 1, orderType)
             else
