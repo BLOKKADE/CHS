@@ -125,13 +125,13 @@ scope ShortPeriodCheck initializer init
                 endif
 
                 //Frostmourne
-                set i1 = GetUnitAbilityLevel(u , 'A02B')
-                set r1 = LoadReal(HT,hid,'A02B')
+                set i1 = GetUnitAbilityLevel(u , 'A02C')
+                set r1 = LoadReal(HT,hid,'A02C')
                 if i1 > 0 or r1 != 0 then
                     set r2 = (BlzGetUnitBaseDamage(u, 0) * (3.5 * i1))
                     if r1 != r2 then
                         call AddUnitBonus(u, BONUS_DAMAGE, R2I(r2 - r1))
-                        call SaveReal(HT, hid, 'A02B', r2)	
+                        call SaveReal(HT, hid, 'A02C', r2)	
                     endif
                 endif
 
