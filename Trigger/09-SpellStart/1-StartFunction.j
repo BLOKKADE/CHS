@@ -56,6 +56,7 @@ function FunctionTimerSpell takes nothing returns nothing
     local integer i = 0
     local integer i1 = 0
     local unit U = null
+    local integer hid = GetHandleId(Herou)
         
     if Herou != null and (IsPlayerInForce(GetOwningPlayer(Herou), udg_force07) or GetPlayerSlotState(GetOwningPlayer(Herou)) != PLAYER_SLOT_STATE_PLAYING) then
         call SetUnitInvulnerable(Herou, false)
@@ -194,7 +195,7 @@ function FunctionTimerSpell takes nothing returns nothing
         call ElemFuncStart(Herou,'I07G')
         call BlzSetUnitArmor(Herou,BlzGetUnitArmor(Herou)+ i1 * 20 * NumberOfUnit[pid] )
         call AddUnitBlock(Herou,i1 * 20 * NumberOfUnit[pid])
-        call SaveInteger(HT,GetHandleId(Herou),54001,LoadInteger(HT,GetHandleId(Herou),54001)+ i1 * 20 * NumberOfUnit[pid] ) 
+        call SaveInteger(HT,hid,54001,LoadInteger(HT,hid,54001)+ i1 * 20 * NumberOfUnit[pid] ) 
     endif
         
     //Book of Necromancy
@@ -205,6 +206,17 @@ function FunctionTimerSpell takes nothing returns nothing
         set SummonArmor[pid] = SummonArmor[pid] + i1
         set SummonHitPoints[pid] = SummonHitPoints[pid] + i1  
     endif 
+
+    if UnitHasItemS(Herou, 'I0BD') then
+        if startType != 6 then
+            set BlokShieldCharges[hid] = 6
+            set BlokShieldStartTick[hid] = T32_Tick
+            set BlokShieldAttackCount[hid] = 0
+        else
+            set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 6
+        endif
+        call SetBlokShieldCharges(Herou, hid)
+    endif
 
     //Gnome
     if GetUnitTypeId(Herou) == GNOME_MASTER_UNIT_ID then
@@ -252,7 +264,12 @@ function FixAbilityU takes unit u returns nothing
         call SaveInteger(HT,GetHandleId(u),54021,0)
     endif
 endfunction
-
+//i1 = 1 = battle royale
+//i1 = 2 = unused
+//i1 = 3 = pve round start
+//i1 = 4 = duels
+//i1 = 5 = elimination
+//i1 = 6 = urn/time manipulation
 function StartFunctionSpell takes unit Hero, integer i1 returns nothing
     local timer startbattle = NewTimer()
         
