@@ -1,6 +1,6 @@
 library WolfRider initializer init requires NewBonus
     globals
-        real SpeedFreakLimit = 0.5
+        real SpeedFreakLimit = 0.35
         HashTable SpeedFreakBonus
     endglobals
 
