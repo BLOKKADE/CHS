@@ -162,7 +162,6 @@ library trigger79 initializer init requires RandomShit, Functions
             set u = CreateUnit(p,'n02N',1116,707 + 248,270.000)  
             set u = CreateUnit(p,'n032',372,707 + 248,270.000)  
             set u = CreateUnit(p,'n02X',868,707 + 248,270.000) 
-            set u = CreateUnit(p,'n031',620,707 + 248,270.000) 
     
     
             //		set u=CreateUnit(p,'n001',384.0,576.0,270.000)
@@ -177,17 +176,17 @@ library trigger79 initializer init requires RandomShit, Functions
     
             //		set u=CreateUnit(p,'n00S',0,-1160,270.000)
         else
-            set u = CreateUnit(p, 'n031', 0, 750, 270) 
             //	set u=CreateUnit(p,'n004',0.0,640.0,270.000)
             //	set u=CreateUnit(p,'n016',-960.0,-256.0,270.000)
             //	set u=CreateUnit(p,'n016',0.0,-1152.0,270.000)
             //	set u=CreateUnit(p,'n016',960.0,-256.0,270.000)
         endif
-    
-        set u = CreateUnit(p,'n02H',- 868,- 1152,270.000) 
+        set SellingShop = CreateUnit(p,'n02V',- 124,- 1224,270.000) 
+
+        /*set u = CreateUnit(p,'n02H',- 868,- 1152,270.000) 
         set u = CreateUnit(p,'n00Z',- 620,- 1152,270.000) 
         set u = CreateUnit(p,'n01D',- 372,- 1152,270.000) 
-        set SellingShop = CreateUnit(p,'n02V',- 124,- 1152,270.000) 
+        
         set u = CreateUnit(p,'n02W',- 124,- 1152 - 256,270.000)
         set u = CreateUnit(p,'n02I',124,- 1152,270.000) 
         set u = CreateUnit(p,'n02Z',124,- 1152 - 256,270.000) 
@@ -195,6 +194,8 @@ library trigger79 initializer init requires RandomShit, Functions
         set u = CreateUnit(p,'n030',372,- 1152 - 256,270.000) 
         set u = CreateUnit(p,'n02Q',620,- 1152,270.000) 
         set u = CreateUnit(p,'n02Y',868,- 1152,270.000)
+        set u = CreateUnit(p,'n02Y',868,- 1152,270.000)
+        set u = CreateUnit(p,'n03A',1116,- 1152,270.000)*/
         call ForGroupBJ( GetUnitsOfTypeIdAll('ncop'), function Trig_Untitled_Trigger_001_Func001A )
     endfunction
 

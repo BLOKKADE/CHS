@@ -111,7 +111,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if abilId == LEARNABILITY_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            set LearnabilityBonus.real[hid] = 0.045 + (0.005 * I2R(i1 - i2))
+            set LearnabilityBonus.real[hid] = 0.05 + (0.005 * I2R(i1 - i2))
             call SaveInteger(HT,hid, abilId,i1)
         endif
     endfunction

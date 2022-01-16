@@ -64,26 +64,30 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         set floatingText = null
     endfunction
 
-    function UnitHasItemS takes unit u, integer id returns boolean 
+    function GetUnitItem takes unit u, integer id returns item 
+        local integer i = 0
 
-        if GetItemTypeId(UnitItemInSlot( u,0)) == id then
-            return true
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,1)) == id then
-            return true
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,2)) == id then
-            return true
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,3)) == id then
-            return true
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,4)) == id then
-            return true
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,5)) == id then
-            return true
-        endif
+        loop
+            if GetItemTypeId(UnitItemInSlot(u, i)) == id then
+                return UnitItemInSlot(u, i)
+            endif
+            set i = i + 1
+            exitwhen i > 5
+        endloop
+
+        return null
+    endfunction
+
+    function UnitHasItemS takes unit u, integer id returns boolean 
+        local integer i = 0
+
+        loop
+            if GetItemTypeId(UnitItemInSlot(u, i)) == id then
+                return true
+            endif
+            set i = i + 1
+            exitwhen i > 5
+        endloop
 
         return false
     endfunction
@@ -91,27 +95,17 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
     function UnitHasItemI takes unit u, integer id returns integer
         local integer i = 0
-        if GetItemTypeId(UnitItemInSlot( u,0)) == id then
-            set i = i + 1
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,1)) == id then
-            set i = i + 1
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,2)) == id then
-            set i = i + 1
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,3)) == id then
-            set i = i + 1
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,4)) == id then
-            set i = i + 1
-        endif
-        if GetItemTypeId(UnitItemInSlot( u,5)) == id then
-            set i = i + 1
-        endif
+        local integer count = 0
 
-        return i
+        loop
+            if GetItemTypeId(UnitItemInSlot(u, i)) == id then
+                set count = count + 1
+            endif
+            set i = i + 1
+            exitwhen i > 5
+        endloop
 
+        return count
     endfunction
 
 
