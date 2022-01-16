@@ -146,6 +146,15 @@ scope ShortPeriodCheck initializer init
                     endif
                 endif
 
+                //Blokkades Shield
+                if UnitHasItemS(u, 'I0BD') then
+                    if T32_Tick - BlokShieldStartTick[hid] > 32 * 6 then
+                        set BlokShieldStartTick[hid] = T32_Tick
+                        set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 1
+                        call SetBlokShieldCharges(u, hid)
+                    endif
+                endif
+
                 //Blood Elf Mage
                 if GetUnitTypeId(u) == BLOOD_MAGE_UNIT_ID then
                     set i1 = R2I(GetUnitState(u, UNIT_STATE_MAX_MANA))

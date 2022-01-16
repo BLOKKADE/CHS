@@ -69,6 +69,28 @@ scope ModifyDamageAfterArmor initializer init
             set Damage.index.amount = Damage.index.amount * 0.66
         endif 
 
+        //Blokkades Shield damage reduction
+        if GetUnitAbilityLevel(DamageTarget, 'A01X') > 0 then
+
+            //attack ignore
+            if Damage.index.isAttack then
+                set BlokShieldAttackCount[DamageTargetId] = BlokShieldAttackCount[DamageTargetId] + 1
+                call BJDebugMsg("bs ac: " + I2S(BlokShieldAttackCount[DamageTargetId]))
+                if BlokShieldAttackCount[DamageTargetId] >= 3 then
+                    set BlokShieldAttackCount[DamageTargetId] = 0
+                    set Damage.index.damage = 0
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
+                    return
+                endif
+            endif
+            
+            //damage reduction
+            if T32_Tick - BlokShieldDmgReductionTick[DamageTargetId] < 32 then
+                call BJDebugMsg("bs dmg red")
+                set Damage.index.amount = Damage.index.amount * 0.2
+            endif
+        endif
+
         //Vampirism
         set r1 = GetUnitAbilityLevel(DamageSource,VAMPIRISM_ABILITY_ID)
         if r1 > 0 then

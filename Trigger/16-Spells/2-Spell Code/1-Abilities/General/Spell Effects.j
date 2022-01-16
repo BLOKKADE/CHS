@@ -181,6 +181,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call PoisonSpellCast(caster, target)
                 endif
 
+                if GetUnitAbilityLevel(caster, 'A01X') > 0 then
+                    call ActivateBlokkadeShield(caster)
+                endif
+
                 if abilId == IMMOLATION_ABILITY_ID then
                     call ToggleImmolation(caster)
                 endif
