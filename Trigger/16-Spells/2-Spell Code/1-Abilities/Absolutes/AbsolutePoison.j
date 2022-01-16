@@ -23,7 +23,13 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
 
         private method countBuffs takes nothing returns real
             local integer count = 0
-            local real regen = BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction
+            local integer hid = GetHandleId(this.target)
+            local real regen = BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE)
+
+            if GloryRegenLevel[hid] > 0 then
+               set regen = regen + ((GloryRegenLevel[hid] * 0.3) * regen)
+            endif
+
             if GetUnitAbilityLevel(this.target, PARASITE_BUFF_ID) > 0 then
                 set count = count + 1
             endif
