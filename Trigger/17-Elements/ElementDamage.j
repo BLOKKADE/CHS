@@ -13,6 +13,12 @@ library ElementDamage requires RandomShit, Pyromancer
             set Damage.index.damage = Damage.index.damage * DousingHexReduction.real[DamageSourceId]
         endif
 
+        //Absolute Poison
+        set i = GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID)
+        if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison) then
+            set Damage.index.damage = Damage.index.damage * (1 + ((i * 0.01) * GetClassUnitSpell(DamageSource, Element_Poison)))
+        endif
+
         //Tauren
         if unitTypeId == TAUREN_UNIT_ID then
             
@@ -27,7 +33,7 @@ library ElementDamage requires RandomShit, Pyromancer
 
             set Damage.index.damage = Damage.index.damage * (1 + r1)
         
-            //Pyromancer
+        //Pyromancer
         elseif unitTypeId == PYROMANCER_UNIT_ID  and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A0B6') == 0 then
                 call CreateScorches(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 149 + (1 * GetHeroLevel(DamageSource)))

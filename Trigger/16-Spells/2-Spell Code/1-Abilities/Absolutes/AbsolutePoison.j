@@ -2,7 +2,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
 
     globals
         HashTable PoisonAbilField
-        Table PoisonBonus
+        //Table PoisonBonus
         Table AbsolutePoisonTable
         constant real HpReduction = 0.30
     endglobals
@@ -65,9 +65,11 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             if this.reduction != currentBonus then
                 //call BJDebugMsg("absolute poison: " + I2S(GetHandleId(this.target)) + " : " + GetUnitName(this.target))
                 //call BJDebugMsg("current:" + R2S(this.reduction) + " count: " + I2S(this.buffCount) + " percent: " + R2S(this.buffCount * 0.12) + " val: " + R2S(currentBonus))
-                call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
+                call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)
+                //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
                 set this.reduction = currentBonus
-                call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) - this.reduction)
+                call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, 0 - this.reduction)
+                //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) - this.reduction)
             endif
             if T32_Tick > this.endTick or (T32_Tick - this.startTick > 32 and this.buffCount == 0) or IsUnitDivineBubbled(this.target) or IsUnitSpellTargetCheck(this.target, GetOwningPlayer(this.source)) == false then
                 call this.stopPeriodic()
@@ -90,7 +92,8 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         
         method destroy takes nothing returns nothing
             set AbsolutePoisonTable[GetHandleId(this.target)] = 0
-            call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
+            call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)
+            //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
             set this.target = null
             set this.source = null
             call this.recycle()
@@ -115,7 +118,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
     endfunction
 
     function AbsolutePoisonLearned takes unit u returns nothing
-        local integer poisonLevel = GetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID)
+        /*local integer poisonLevel = GetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID)
         local real bonus = 1 + ((poisonLevel * 0.01) * GetClassUnitSpell(u, Element_Poison))
         local integer abilId = 0
         local integer abilLevel = 0
@@ -150,12 +153,12 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         set abilLevel = GetUnitAbilityLevel(u, abilId)
         if abilLevel > 0 then
             call UpdateAbilityField(u, abilId, ABILITY_RLF_DAMAGE_PER_SECOND_POI1, abilLevel, bonus)
-        endif
+        endif*/
     endfunction
 
     private function init takes nothing returns nothing
         set PoisonAbilField = HashTable.create()
-        set PoisonBonus = Table.create()
+        //set PoisonBonus = Table.create()
         set AbsolutePoisonTable = Table.create()
     endfunction
 endlibrary

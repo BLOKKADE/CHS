@@ -68,11 +68,7 @@ scope AttackController initializer init
 
         set i1 = GetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID)
         if i1 > 0 and GetRandomReal(0,100) <= 35 * luck then
-            set r1 = PoisonBonus[GetHandleId(attackerHero)]
-            if r1 == 0 then
-                set r1 = 1
-            endif
-            call DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * i1) * r1).target(u2).activate()
+            call DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * i1)).target(u2).activate()
             call PoisonSpellCast(u, u2)
         endif
         

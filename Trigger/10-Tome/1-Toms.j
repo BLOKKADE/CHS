@@ -1,4 +1,9 @@
 library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTome
+
+    globals
+        Table GloryRegenLevel
+    endglobals
+
     function PlayerAddGold takes player p, integer i returns nothing
 
         call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,  GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD) + i )
@@ -158,10 +163,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Glory hp regen
             elseif II  == GLORY_HIT_POINT_REGENERATION_TOME_ITEM_ID then
                 if Glory[pid] >= 1500 then
-                    call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 75)
+                    set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
+                    call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 30)
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
                     set Glory[pid]= Glory[pid]- 1500
-                    set gloryBonus = gloryBonus + 75
+                    set gloryBonus = gloryBonus + 30 
                 else
                     set ctrl = false
                 endif      
@@ -587,5 +593,6 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         call TriggerRegisterAnyUnitEventBJ( trg, EVENT_PLAYER_UNIT_PICKUP_ITEM )
         call TriggerAddAction( trg, function Trig_Toms_Actions )
         set trg = null
+        set GloryRegenLevel = Table.create()
     endfunction
 endlibrary

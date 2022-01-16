@@ -8,11 +8,7 @@ library Plague requires AoeDamage
         local unit dummy
         local real dummyX
         local real dummyY
-
-        if PoisonBonus.real[GetHandleId(caster)] != 0 then
-            set bonus = PoisonBonus.real[GetHandleId(caster)]
-        endif
-
+        
         loop
             set dummyX = x + (GetRandomReal(-300, 300))
             set dummyY = y + (GetRandomReal(-300, 300))

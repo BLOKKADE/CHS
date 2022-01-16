@@ -461,11 +461,6 @@ scope ModifyDamageBeforeArmor initializer init
             set i1 = GetUnitAbilityLevel(DamageSource,ENVENOMED_WEAPONS_ABILITY_ID) + PoisonRuneBonus[DamageSourcePid]
             if (Damage.index.damageType == DAMAGE_TYPE_NORMAL or PoisonRuneBonus[DamageSourcePid] > 0) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
 
-                //Absolute Poison
-                set r1 = PoisonBonus.real[DamageSourceId]
-                if r1 == 0 or GetUnitAbilityLevel(DamageSourceHero, NULL_VOID_ORB_BUFF_ID) == 0 then
-                    set r1 = 1
-                endif
                 call SetBuff(DamageTarget,2,8)
                 //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
                 call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1 * r1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
