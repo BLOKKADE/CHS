@@ -11,7 +11,8 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
     struct TempPowerStruct extends array
         unit source
         integer endTick
-        integer bonus
+        integer bonus1
+        integer bonus2
         boolean enabled
     
         private method periodic takes nothing returns nothing
@@ -25,12 +26,15 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
             local thistype this = thistype.setup()
             
             set this.source = source
-            set this.bonus = R2I(40 * GetUnitAbilityLevel(this.source, TEMPORARY_POWER_ABILITY_ID)*(1 + 0.02 * GetHeroLevel(this.source)))
+            set this.bonus1 = R2I(40 * GetUnitAbilityLevel(this.source, TEMPORARY_POWER_ABILITY_ID)*(1 + 0.02 * GetHeroLevel(this.source)))
+            set this.bonus2 = R2I(10 * GetUnitAbilityLevel(this.source, TEMPORARY_POWER_ABILITY_ID)*(1 + 0.02 * GetHeroLevel(this.source)))
             set this.enabled = true
 
-            call SetHeroStr(this.source, GetHeroStr(this.source, false) + this.bonus, false)
-            call SetHeroAgi(this.source, GetHeroAgi(this.source, false) + this.bonus, false)
-            call SetHeroInt(this.source, GetHeroInt(this.source, false) + this.bonus, false)
+            call SetHeroStr(this.source, GetHeroStr(this.source, false) + this.bonus1, false)
+            call SetHeroAgi(this.source, GetHeroAgi(this.source, false) + this.bonus1, false)
+            call SetHeroInt(this.source, GetHeroInt(this.source, false) + this.bonus1, false)
+
+            call SetHeroStat(this.source, GetHeroPrimaryStat(this.source), GetHeroStatBJ(GetHeroPrimaryStat(this.source), this.source, false) + this.bonus2)
             call ElemFuncStart(this.source,TEMPORARY_POWER_ABILITY_ID)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
@@ -38,9 +42,10 @@ library TempPower initializer init requires BuffLevel, RandomShit, TimeManipulat
         endmethod
         
         method destroy takes nothing returns nothing
-            call SetHeroStr(this.source, GetHeroStr(this.source, false) - this.bonus, false)
-            call SetHeroAgi(this.source, GetHeroAgi(this.source, false) - this.bonus, false)
-            call SetHeroInt(this.source, GetHeroInt(this.source, false) - this.bonus, false)
+            call SetHeroStr(this.source, GetHeroStr(this.source, false) - this.bonus1, false)
+            call SetHeroAgi(this.source, GetHeroAgi(this.source, false) - this.bonus1, false)
+            call SetHeroInt(this.source, GetHeroInt(this.source, false) - this.bonus1, false)
+            call SetHeroStat(this.source, GetHeroPrimaryStat(this.source), GetHeroStatBJ(GetHeroPrimaryStat(this.source), this.source, false) - this.bonus2)
             set this.source = null
             call this.recycle()
         endmethod
