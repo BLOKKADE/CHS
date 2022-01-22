@@ -3,7 +3,6 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
     function AbilityChannel takes unit caster, unit target, real x, real y, integer abilId, integer lvl returns boolean
 
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
-        
         if GetUnitTypeId(caster) == 'h014' or GetUnitTypeId(caster) == PRIEST_1_UNIT_ID then
             set caster = udg_units01[GetConvertedPlayerId(GetOwningPlayer( caster ) ) ]
         endif
@@ -51,15 +50,19 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             //Holy Light
         elseif abilId == HOLY_LIGHT_ABILITY_ID then
             call CastHolyLight(caster, target, lvl)
+            return true
             //Parasite
         elseif abilId == PARASITE_ABILITY_ID then
             call CastParasite(caster, target, lvl)
+            return true
             //Lightning Shield
         elseif abilId == LIGHTNING_SHIELD_ABILITY_ID then
             call CastLightningShield(caster, target, lvl)
+            return true
             //Plague
         elseif abilId == PLAGUE_ABILITY_ID then
             call CastPlague(caster, x, y, lvl)
+            return true
             //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(caster, target, lvl)
@@ -71,6 +74,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             //Battle Roar
         elseif abilId == BATTLE_ROAR_ABILITY_ID then
             call CastBattleRoar(caster, abilId, lvl)
+            return true
             //Cyclone
         elseif abilId == CYCLONE_ABILITY_ID then
             call Cyclone(caster, x, y)
@@ -86,6 +90,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             //Death Pact
         elseif abilId == DEATH_PACT_ABILITY_ID then
             call CastDeathPact(caster, target, lvl)
+            return true
             //Ancient Staff
         elseif abilId == 'A094' then
             call AncientStaff(caster)
@@ -93,6 +98,10 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             //Reset Time
         elseif abilId == RESET_TIME_ABILITY_ID then
             call ResetTime(caster)
+            return true
+            //Energy Trap
+        elseif abilId == ENERGY_TRAP_ABILITY_ID then
+            call CastEnergyTrap(caster, x, y, lvl)
             return true
             //Spirit Link
         elseif abilId == SPIRIT_LINK_ABILITY_ID then
@@ -189,6 +198,13 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call ToggleImmolation(caster)
                 endif
 
+                if abilId == SEARING_ARROWS_ABILITY_ID then
+                    call ToggleSearingArrows(caster)
+                endif
+                
+                if abilId == COLD_ARROWS_ABILITY_ID then
+                    call ToggleColdArrows(caster)
+                endif
 
                 if abilId == MAGNET_OSC_ABILITY_ID then
                     call ToggleMagnetOsc(caster)
