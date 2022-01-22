@@ -54,7 +54,13 @@ library Multicast requires T32, RandomShit, AbilityChannel
         private method checkSpell takes nothing returns nothing
             if this.orderType == 1 and this.mono then
                 call GetNewTarget(GetAbilityRange(this.caster, this.abilId))
+                if this.target == null then
+                    call this.stopPeriodic()
+                    call this.destroy()
+                    return
+                endif
             endif
+
             if not AbilityChannel(this.caster, this.target, this.x, this.y, this.abilId, this.abilLevel) then
                 call this.castSpell()
             endif
@@ -67,7 +73,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 set this.endTick = T32_Tick + MulticastInterval
             endif
             
-            if this.count == 0 or HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or not UnitAlive(this.caster) then
+            if this.count == 0 or HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or (not UnitAlive(this.caster)) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif

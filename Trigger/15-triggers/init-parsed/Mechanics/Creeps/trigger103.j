@@ -1,5 +1,19 @@
 library trigger103 initializer init requires RandomShit, Functions
 
+    globals
+        integer ReflectionAuraChance = 0
+        integer WizardbaneAuraChance = 0
+        integer DrunkenMasterchance = 0
+        integer SlowAuraChance = 0
+        integer PulverizeChance = 0 
+        integer LastBreathChance = 0
+        integer FireshieldChance = 0
+        integer CorrosiveSkinChance = 0 
+        integer MulticastChance = 0
+        integer FastMagicChance = 0
+        integer ImmortalityAuraChance = 0
+    endglobals
+
     function Trig_Generate_Next_Level_Conditions takes nothing returns boolean
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
             return false
@@ -149,11 +163,6 @@ library trigger103 initializer init requires RandomShit, Functions
             call AddRoundAbility('A05R')
         endif
     
-        if FireshieldChance == 1 then
-            set s = s + "Fire Shield "
-            call AddRoundAbility(FIRE_SHIELD_ABILITY_ID)
-        endif
-    
         if CorrosiveSkinChance == 1 then
             set s = s + "Corrosive Skin "
             call AddRoundAbility('A00Q')
@@ -167,6 +176,11 @@ library trigger103 initializer init requires RandomShit, Functions
         if FastMagicChance == 1 then
             set s = s + "Fast Magic "
             call AddRoundAbility('A03P')
+        endif
+
+        if ImmortalityAuraChance == 1 then
+            set s = s + "Aura of Immortality"
+            call AddRoundAbility('A02L')
         endif
     
         if s == "" then
@@ -230,11 +244,6 @@ library trigger103 initializer init requires RandomShit, Functions
             call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(udg_integer02 * 0.2), 30))
         endif
     
-        if FireshieldChance == 1 then
-            call UnitAddAbility(u, FIRE_SHIELD_ABILITY_ID)
-            call SetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID, IMinBJ(R2I(udg_integer02 * 0.3), 30))
-        endif
-    
         if CorrosiveSkinChance == 1 then
             call UnitAddAbility(u, 'A00Q')
             call SetUnitAbilityLevel(u, 'A00Q', IMinBJ(R2I(udg_integer02 * 0.6), 30))
@@ -248,6 +257,11 @@ library trigger103 initializer init requires RandomShit, Functions
         if FastMagicChance == 1 then
             call UnitAddAbility(u, 'A03P')
             call SetUnitAbilityLevel(u, 'A03P', IMinBJ(R2I(udg_integer02 * 0.6), 30))
+        endif
+
+        if ImmortalityAuraChance == 1 then
+            call UnitAddAbility(u, 'A02L')
+            call SetUnitAbilityLevel(u, 'A02L', IMinBJ(R2I(udg_integer02 * 0.6), 30))
         endif
     endfunction
 
@@ -291,8 +305,9 @@ library trigger103 initializer init requires RandomShit, Functions
             set udg_integer10 = GetRandomInt(1,20)
             set udg_integer24 = GetRandomInt(1,20)
             set udg_integer25 = GetRandomInt(1,20)
-            set udg_integer49 = GetRandomInt(1,oldAbilChance)
-            set SlowAuraChance = GetRandomInt(1,newAbilChance)
+            set udg_integer49 = GetRandomInt(1, oldAbilChance)
+            set SlowAuraChance = GetRandomInt(1, newAbilChance)
+            set ImmortalityAuraChance = GetRandomInt(1, newAbilChance)
         endif
         if(Trig_Generate_Next_Level_Func012C())then
             set udg_integer50 = GetRandomInt(1,oldAbilChance)
