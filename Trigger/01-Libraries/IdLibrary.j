@@ -405,7 +405,7 @@ library IdLibrary initializer init
         constant integer MARTIAL_THEFT_ITEM_ID                          = 'I0BL'
         constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'
         constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'
-        constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BC'
+        constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BE'
         constant integer ABSOLUTE_ACORN_TOME_ITEM_ID                    = 'I09D'
         constant integer ABSOLUTE_ARCANE_ITEM_ID                        = 'I0B2'
         constant integer ABSOLUTE_BLOOD_ITEM_ID                         = 'I099'
