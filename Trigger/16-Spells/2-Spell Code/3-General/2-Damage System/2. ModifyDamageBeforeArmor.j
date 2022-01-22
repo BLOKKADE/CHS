@@ -433,7 +433,10 @@ scope ModifyDamageBeforeArmor initializer init
         //Demolish
         set i1 = GetUnitAbilityLevel(DamageSourceHero, DEMOLISH_ABILITY_ID)
         if i1 > 0 and Damage.index.damageType == DAMAGE_TYPE_NORMAL then
-            set udg_DamageEventArmorPierced = BlzGetUnitArmor(DamageTarget) * (0.05 + (0.005 * i1))
+
+        //Titanium Spike
+        if GetUnitAbilityLevel(DamageSource, TITANIUM_SPIKE_ABIL_ID) > 0 and GetUnitAbilityLevel(DamageTarget, TITANIUM_SPIKE_IMMUN_ABIL_ID) == 0 and Damage.index.damageType == DAMAGE_TYPE_NORMAL then
+            set udg_DamageEventArmorPierced = udg_DamageEventArmorPierced + (BlzGetUnitArmor(DamageTarget) * 0.3)
         endif
 
         //Wisdom Chestplate

@@ -135,6 +135,17 @@ scope ShortPeriodCheck initializer init
                     endif
                 endif
 
+                //Titanium Armor
+                set i1 = GetUnitAbilityLevel(u , 'A05T')
+                set i2 = LoadInteger(HT,hid,'A05T')
+                if i1 > 0 or i2 != 0 then
+                    set i1 = R2I(GetHeroStr(u, true) * 0.25)
+                    if i1 != i2 then
+                        call AddUnitBlock(u, i2)
+                        call SaveInteger(HT, hid, 'A05T', i1)	
+                    endif
+                endif
+
                 //glory hp regen
                 if GloryRegenLevel[hid] > 0 then
                     set r1 = (GloryRegenLevel[hid] * 0.3) * BlzGetUnitRealField(u, ConvertUnitRealField('uhpr'))
@@ -147,7 +158,7 @@ scope ShortPeriodCheck initializer init
                 endif
 
                 //Blokkades Shield
-                if UnitHasItemS(u, 'I0BD') then
+                if GetUnitAbilityLevel(u, BLOKKADE_SHIELD_ABIL_ID) > 0 then
                     if T32_Tick - BlokShieldStartTick[hid] > 32 * 6 then
                         set BlokShieldStartTick[hid] = T32_Tick
                         set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 1

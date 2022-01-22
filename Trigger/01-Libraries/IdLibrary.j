@@ -389,10 +389,14 @@ library IdLibrary initializer init
         constant integer ACTIVE_SPELL_DUMMY_8                           = 'A0BK'
         constant integer ACTIVE_SPELL_DUMMY_9                           = 'A0BL'
 
-        // --- Ability IDs ---
+        constant integer BLOKKADE_SHIELD_ABIL_ID                        = 'A01X'
+        constant integer TITANIUM_SPIKE_ABIL_ID                         = 'A01Y'
+        constant integer TITANIUM_SPIKE_IMMUN_ABIL_ID                   = 'A032'
 
         // --- Item IDs ---
 
+        constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'
+        constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BC'
         constant integer ABSOLUTE_ACORN_TOME_ITEM_ID                    = 'I09D'
         constant integer ABSOLUTE_ARCANE_ITEM_ID                        = 'I0B2'
         constant integer ABSOLUTE_BLOOD_ITEM_ID                         = 'I099'

@@ -260,10 +260,17 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,hid, itemId,i)	
 
 			//Blokkades Shield
-		elseif itemId == 'I0BD' then
+		elseif itemId == BLOKKADE_SHIELD_ITEM_ID then
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitBlock(u ,   1000 * I2R(i - prevCount)  )		
+			call SaveInteger(HTi,hid, itemId,i)	
+
+			//Contract of the Living
+		elseif itemId == CONTRACT_LIVING_ITEM_ID then
+			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set prevCount = LoadInteger(HTi,hid, itemId) 
+			call AddUnitMagicDef(u ,   50 * I2R(i - prevCount)  )		
 			call SaveInteger(HTi,hid, itemId,i)	
 			
 			//Fishing Rod
@@ -501,6 +508,13 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, -500 * (i - prevCount))
+			call SaveInteger(HTi, hid, itemId, i)	
+
+		//Titanium Spike
+		elseif itemId == TITANIUM_SPIKE_ITEM_ID then
+			set i = UnitHasItemI(u , itemId)
+			set prevCount = LoadInteger(HTi, hid, itemId) 
+			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (1000 * (i - prevCount)), 0)
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Heavy Mace

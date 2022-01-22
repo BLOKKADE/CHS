@@ -207,7 +207,8 @@ function FunctionTimerSpell takes nothing returns nothing
         set SummonHitPoints[pid] = SummonHitPoints[pid] + i1  
     endif 
 
-    if UnitHasItemS(Herou, 'I0BD') then
+    //Blokkade's Shield
+    if GetUnitAbilityLevel(Herou, BLOKKADE_SHIELD_ABIL_ID) > 0 then
         if startType != 6 then
             set BlokShieldCharges[hid] = 6
             set BlokShieldStartTick[hid] = T32_Tick
