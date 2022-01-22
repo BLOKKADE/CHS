@@ -16,6 +16,8 @@ scope ModifyDamageAfterArmor initializer init
         local integer vampCount = 0
         local real vampAmount = 0
 
+        //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
+
         //Titanium Armor
         if UnitHasItemS(DamageTarget,'I07M') then
             set r1 = I2R(GetHeroStr(DamageTarget,true))* 0.08
@@ -249,6 +251,29 @@ scope ModifyDamageAfterArmor initializer init
         //Blademaster
         if GetUnitTypeId(DamageSource) == BLADE_MASTER_UNIT_ID and BladestormReady(DamageSource) and Damage.index.isAttack then
             call BladestormDamage(DamageSource, Damage.index.amount , Damage.index.isSpell)
+        endif
+
+        //Magnetic Oscillation
+        set i = GetUnitAbilityLevel(DamageTarget, MAGNET_OSC_ABILITY_ID)
+        if i > 0 then
+            //call BJDebugMsg("dmg sourceid: " + I2S(DamageSourceId) + " time: " + I2S(T32_Tick - MagnetOscHitTick[DamageSourceId]))
+            if T32_Tick - MagnetOscHitTick[DamageSourceId] > ((8 - (0.2 * i)) * 32) then
+                //call SetUnitVertexColor(DamageSource, 0, 255, 0, 255)
+                set r1 = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
+                if r1 < 600 then
+                    //call BJDebugMsg("mosc")
+                    set MagnetOscHitTick[DamageSourceId] = T32_Tick
+                    set udg_NextDamageAbilitySource = MAGNET_OSC_ABILITY_ID
+                    call Damage.apply(DamageTarget, DamageSource, GetSpellValue(MAGNET_OSC_ABILITY_ID, 0, 30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                    if IsAbilityEnabled(DamageTarget, MAGNET_OSC_ABILITY_ID) then
+                        call KnockbackTarget(DamageTarget, DamageSource, GetAngleToTarget(DamageTarget, DamageSource) * bj_RADTODEG, RAbsBJ(700 - r1), 600, false, false, false, false)
+                    else
+                        if r1 > 150 then
+                            call MoveToPoint(DamageTarget, DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget))
+                        endif
+                    endif
+                endif
+            endif
         endif
 
         if not DamageIsOnHit and Damage.index.amount > 0 then

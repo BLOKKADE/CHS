@@ -189,6 +189,11 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call ToggleImmolation(caster)
                 endif
 
+
+                if abilId == MAGNET_OSC_ABILITY_ID then
+                    call ToggleMagnetOsc(caster)
+                endif
+
                 if GetUnitAbilityLevel(caster, 'B024') > 0 then
                     call GetRetaliationSource(caster, target, abilId, abilLvl)
                 endif

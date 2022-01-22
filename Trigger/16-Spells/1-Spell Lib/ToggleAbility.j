@@ -19,6 +19,10 @@ library ToggleAbility initializer init requires AbilityDescription
         endif
     endfunction
 
+    function ToggleUpdateDescription takes player p, integer abilId, integer lvl returns nothing
+        call UpdateAbilityDescriptionString(GetAbilityDescription(abilId, lvl - 1), p, abilId, "Disabled", "Enabled", lvl)
+    endfunction
+
     function FirstTimeSetup takes integer abilId returns nothing
         set AbilityStorage[abilId].boolean[0] = true
         set AbilityStorage[abilId].string[2] = BlzGetAbilityIcon(abilId)
@@ -32,14 +36,14 @@ library ToggleAbility initializer init requires AbilityDescription
         if AbilityStorage[abilId].boolean[0] == false then
             call FirstTimeSetup(abilId)
         endif
-        
+
         if CurrentAbilitySetting[hid].boolean[abilId] then
             set CurrentAbilitySetting[hid].boolean[abilId] = false
-            call ResetAbilityDescription(p, abilId, lvl)
+            call ResetAbilityDescription(p, abilId, lvl - 1)
             call SetAbilityIcon(p, abilId, true)
         else
             set CurrentAbilitySetting[hid].boolean[abilId] = true
-            call UpdateAbilityDescriptionString(GetAbilityDescription(abilId, lvl), p, abilId, "Disabled", "Enabled", lvl)
+            call ToggleUpdateDescription(p, abilId, lvl)
             call SetAbilityIcon(p, abilId, false)
         endif
 

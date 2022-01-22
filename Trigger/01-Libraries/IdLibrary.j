@@ -412,6 +412,7 @@ library IdLibrary initializer init
         constant integer AIR_FORCE_ITEM_ID                              = 'I054'
         constant integer ANCIENT_AXE_ITEM_ID                            = 'I06Y'
         constant integer ANCIENT_AXE_TOME_ITEM_ID                       = 'I06Z'
+        constant integer MAGNET_OSC_ITEM_ID                             = 'I0BK'
         constant integer ANCIENT_BLOOD_ITEM_ID                          = 'I09B'
         constant integer ANCIENT_DAGGER_ITEM_ID                         = 'I06X'
         constant integer ANCIENT_DAGGER_TOME_ITEM_ID                    = 'I070'

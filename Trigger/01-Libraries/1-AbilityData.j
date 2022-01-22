@@ -1016,6 +1016,11 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Light, 1)
 
+
+        //186 - Magnetic Oscillation 
+        call SaveAbilData(MAGNET_OSC_ABILITY_ID, MAGNET_OSC_ITEM_ID, false, 0, 0, true, Order_None, "hex")
+        call SetLastObjectElement(Element_Energy, 1)
+        call SetLastObjectElement(Element_Earth, 1)
     endfunction
 
     function InitHeroElements takes nothing returns nothing
