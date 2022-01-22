@@ -41,7 +41,7 @@ library AbilityDescription requires RandomShit
 
     function ResetAbilityDescription takes player p, integer abilId, integer level returns nothing
         if GetLocalPlayer() == p then
-            call BlzSetAbilityExtendedTooltip(abilId, GetAbilityDescription(abilId, level), level - 1)
+            call BlzSetAbilityExtendedTooltip(abilId, GetAbilityDescription(abilId, level), level)
         endif
     endfunction
 endlibrary
