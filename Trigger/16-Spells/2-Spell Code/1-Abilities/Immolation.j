@@ -40,7 +40,7 @@ library Immolation initializer init requires ToggleAbility
             call BJDebugMsg("dmg")
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(this.source), GetUnitY(this.source), 245 + (5 * this.level), Player(pid), false, Target_Enemy)
-
+            call SetUnitState(this.source, UNIT_STATE_MANA, GetUnitState(this.source, UNIT_STATE_MANA) - GetSpellValue(IMMOLATION_ABILITY_ID, 0, 5, 1, this.level))
             loop
                 set p = FirstOfGroup(ENUM_GROUP)
                 exitwhen p == null
@@ -57,9 +57,6 @@ library Immolation initializer init requires ToggleAbility
                 set this.tick = T32_Tick + 32
                 call this.damage()
             endif
-            if this.level == 0 or IsAbilityEnabled(this.source, IMMOLATION_ABILITY_ID) == false then
-                call this.disable()
-            endif
         endmethod 
 
         static method create takes unit source returns thistype
@@ -73,6 +70,7 @@ library Immolation initializer init requires ToggleAbility
         endmethod
         
         method destroy takes nothing returns nothing
+            call this.disable()
             call this.recycle()
         endmethod
 

@@ -116,6 +116,18 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         endif
     endfunction
 
+    function RemoveSkillStruct takes unit u, integer abilId returns nothing
+        local integer hid = GetHandleId(u)
+        
+        if abilId == SEARING_ARROWS_ABILITY_ID then
+            call GetSearingArrowsStruct(hid).destroy()
+        endif
+
+        if abilId == IMMOLATION_ABILITY_ID then
+            call GetImmolationStruct(hid).destroy()
+        endif
+    endfunction
+
     function FuncEditParam takes integer abilId, unit u returns nothing
         local integer NumAbility
 
@@ -123,6 +135,10 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call AddSpellPlayerInfo(abilId,u,0)
 
             //call SetChanellOrder(u,abilId,GetInfoHeroSpell(u,abilId)  )
+        endif
+
+        if IsAbilityEnabled(u, abilId) then
+            call ToggleUpdateDescription(GetOwningPlayer(u), abilId, GetUnitAbilityLevel(u, abilId))
         endif
 
         call SetSkillParameters(u, abilId)
@@ -150,6 +166,8 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
 
         call SetSkillParameters(u, abilId)
 
+        call RemoveSkillStruct(u, abilId)
+
         if GetUnitTypeId(u) == TAUREN_UNIT_ID then
             call SpiritTaurenRuneBonusReset(u, abilId)
         endif
@@ -173,6 +191,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         local integer pid = GetPlayerId(p)
         local integer i1 = 0 
         local real gloryBonus = 0
+        local integer hid = GetHandleId(u)
 
         //Armor of the Ancestors
         set i1 = LoadInteger(HT,GetHandleId(u),54001)
@@ -190,6 +209,13 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call SetHeroAgi(u,GetHeroAgi(u,false)- i1,false)
             call SetHeroInt(u,GetHeroInt(u,false)- i1,false)
             call SaveInteger(HT,GetHandleId(u),54021,0)
+        endif
+        
+        //Ankh
+        if AnkhLimitReached.boolean[hid] then
+            if GetItemCharges(GetUnitItem(u, 'ankh')) != 2 then
+                set AnkhLimitReached.boolean[hid] = false
+            endif
         endif
 
         //Golden Armor

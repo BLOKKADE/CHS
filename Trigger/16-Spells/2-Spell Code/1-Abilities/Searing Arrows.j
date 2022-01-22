@@ -15,21 +15,13 @@ library SearingArrows initializer init requires ToggleAbility
             set this.enabled = true
             call BJDebugMsg("enabled")
             call ToggleAbility(this.source, SEARING_ARROWS_ABILITY_ID, GetUnitAbilityLevel(this.source, SEARING_ARROWS_ABILITY_ID))
-            call this.startPeriodic()
         endmethod
 
         method disable takes nothing returns nothing
             call BJDebugMsg("disabled")
-            call this.stopPeriodic()
             set this.enabled = false
             call ToggleAbility(this.source, SEARING_ARROWS_ABILITY_ID, GetUnitAbilityLevel(this.source, SEARING_ARROWS_ABILITY_ID))
         endmethod
-
-        private method periodic takes nothing returns nothing
-            if GetUnitAbilityLevel(this.source, SEARING_ARROWS_ABILITY_ID) == 0 or IsAbilityEnabled(this.source, SEARING_ARROWS_ABILITY_ID) == false then
-                call this.disable()
-            endif
-        endmethod 
 
         static method create takes unit source returns thistype
             local thistype this = thistype.setup()
@@ -41,10 +33,10 @@ library SearingArrows initializer init requires ToggleAbility
         endmethod
         
         method destroy takes nothing returns nothing
+            call this.disable()
             call this.recycle()
         endmethod
-
-        implement T32x
+        
         implement Recycle
     endstruct
 
@@ -64,6 +56,6 @@ library SearingArrows initializer init requires ToggleAbility
 
     private function init takes nothing returns nothing
         set SearingArrowsTable = Table.create()
-        call SetupToggleAbility(SEARING_ARROWS_ABILITY_ID, "ReplaceableTextures\\CommandButtons\\TNStrengthOfTheMoon.blp")
+        call SetupToggleAbility(SEARING_ARROWS_ABILITY_ID, "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheMoon.blp")
     endfunction
 endlibrary

@@ -87,6 +87,20 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 */
 
+
+        //Searing Arrows
+        set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)
+        if i1 > 0 and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
+            set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.08
+            if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
+                call BJDebugMsg("sa: " + I2S(GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)))
+                set DamageSourceAbility = SEARING_ARROWS_ABILITY_ID
+                set Damage.index.damageType = DAMAGE_TYPE_MAGIC
+                call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
+                set Damage.index.damage = Damage.index.damage + GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)
+            endif
+        endif
+
         //Sword of Bloodthirst
         set i1 = UnitHasItemI(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
         if i1 > 0 and Damage.index.damageType == DAMAGE_TYPE_NORMAL then
@@ -276,14 +290,6 @@ scope ModifyDamageBeforeArmor initializer init
                 call ElemFuncStart(DamageSource,LICH_UNIT_ID)
                 call UsOrderU2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
             endif
-        endif
-
-        //Searing Arrows
-        set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)
-        if i1 > 0 and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
-            //TODO set correct value
-            call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - 0)
-            set Damage.index.damage = Damage.index.damage + GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)
         endif
 
         //Air Force
