@@ -196,6 +196,7 @@ library IdLibrary initializer init
         constant integer BLACK_ARROW_ABILITY_ID                         = 'ANba'
         constant integer BLACK_ARROW_PASSIVE_ABILITY_ID                 = 'A0AW'
         constant integer BLESSED_PROTECTIO_ABILITY_ID                   = 'A045'
+        constant integer CRUSHING_WAVE_ABILITY_ID                       = 'A04Z'
         constant integer BLINK_ABILITY_ID                               = 'AEbl'
         constant integer BLINK_STRIKE_ABILITY_ID                        = 'A08J'
         constant integer BLIZZARD_ABILITY_ID                            = 'A09U'
@@ -210,7 +211,7 @@ library IdLibrary initializer init
         constant integer CHRONUS_WIZARD_ABILITY_ID                      = 'A03Y'
         constant integer CLEAVING_ATTACK_ABILITY_ID                     = 'ANca'
         constant integer CLUSTER_ROCKETS_ABILITY_ID                     = 'A0AT'
-        constant integer COLD_ARROWS_ABILITY_ID                         = 'AHca'
+        constant integer COLD_ARROWS_ABILITY_ID                         = 'A03S'
         constant integer COLD_WIND_ABILITY_ID                           = 'A07N'
         constant integer COMBUSTION_ABILITY_ID                          = 'A04H'
         constant integer COMMAND_AURA_ABILITY_ID                        = 'ACac'
@@ -278,7 +279,7 @@ library IdLibrary initializer init
         constant integer LAST_BREATHS_ABILITY_ID                        = 'A05R'
         constant integer LEARNABILITY_ABILITY_ID                        = 'A02W'
         constant integer LIFE_DRAIN_ABILITY_ID                          = 'ANdr'
-        constant integer LIGHTNING_SHIELD_ABILITY_ID                    = 'ACls'
+        constant integer LIGHTNING_SHIELD_ABILITY_ID                    = 'A057'
         constant integer LIQUID_FIRE_ABILITY_ID                         = 'A06Q'
         constant integer MAGIC_CRITICAL_HIT_ABILITY_ID                  = 'A06U'
         constant integer MANA_BONUS_ABILITY_ID                          = 'A02X'
@@ -292,6 +293,7 @@ library IdLibrary initializer init
         constant integer MONSOON_ABILITY_ID                             = 'A0A0'
         constant integer MULTICAST_ABILITY_ID                           = 'A04F'
         constant integer MULTISHOT_ABILITY_ID                           = 'Aroc'
+        constant integer MAGNET_OSC_ABILITY_ID                          = 'A054'
         constant integer MYSTERIOUS_TALENT_ABILITY_ID                   = 'A05Z'
         constant integer NECROMANCERS_ARMY_ABILITY_ID                   = 'A0B0'
         constant integer PARASITE_ABILITY_ID                            = 'ANpa'
@@ -312,9 +314,10 @@ library IdLibrary initializer init
         constant integer REINCARNATION_ABILITY_ID                       = 'ANr2'
         constant integer REJUVENATION_ABILITY_ID                        = 'Arej'
         constant integer RESET_TIME_ABILITY_ID                          = 'A024'
+        constant integer ENERGY_TRAP_ABILITY_ID                         = 'A052'
         constant integer RETALIATION_AUR_ABILITY_ID                     = 'A0A9'
         constant integer SAND_OF_TIME_ABILITY_ID                        = 'A083'
-        constant integer SEARING_ARROWS_ABILITY_ID                      = 'AHfa'
+        constant integer SEARING_ARROWS_ABILITY_ID                      = 'A034'
         constant integer SERPANT_WARD_ABILITY_ID                        = 'AOsw'
         constant integer SHADOW_STRIKE_ABILITY_ID                       = 'AEsh'
         constant integer SHOCKWAVE_ABILITY_ID                           = 'AOsh'
@@ -389,12 +392,16 @@ library IdLibrary initializer init
         constant integer ACTIVE_SPELL_DUMMY_8                           = 'A0BK'
         constant integer ACTIVE_SPELL_DUMMY_9                           = 'A0BL'
 
+        // --- Item Ability IDs ---
+
+        constant integer CONTRACT_LIVING_ABIL_ID                        = 'A02P'
         constant integer BLOKKADE_SHIELD_ABIL_ID                        = 'A01X'
         constant integer TITANIUM_SPIKE_ABIL_ID                         = 'A01Y'
         constant integer TITANIUM_SPIKE_IMMUN_ABIL_ID                   = 'A032'
 
         // --- Item IDs ---
 
+        constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'
         constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'
         constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BC'
         constant integer ABSOLUTE_ACORN_TOME_ITEM_ID                    = 'I09D'
@@ -416,6 +423,7 @@ library IdLibrary initializer init
         constant integer AIR_FORCE_ITEM_ID                              = 'I054'
         constant integer ANCIENT_AXE_ITEM_ID                            = 'I06Y'
         constant integer ANCIENT_AXE_TOME_ITEM_ID                       = 'I06Z'
+        constant integer ENERGY_TRAP_ITEM_ID                            = 'I0BJ'
         constant integer MAGNET_OSC_ITEM_ID                             = 'I0BK'
         constant integer ANCIENT_BLOOD_ITEM_ID                          = 'I09B'
         constant integer ANCIENT_DAGGER_ITEM_ID                         = 'I06X'
@@ -651,6 +659,7 @@ library IdLibrary initializer init
         constant integer WISDOM_CHESTPLATE_ITEM_ID                      = 'I0AH'
         constant integer WISDOM_CHESTPLATE_TOME_ITEM_ID                 = 'I0AA'
         constant integer WIZARDBANE_AURA_ITEM_ID                        = 'I09M'
+        constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
         
         // --- Item IDs ---
 

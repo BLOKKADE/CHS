@@ -12,16 +12,6 @@ library OldInitialization initializer main3
         string RoundCreepTitle
         string array RoundCreepInfo
         string RoundAbilities = ""
-        integer ReflectionAuraChance = 0
-        integer WizardbaneAuraChance = 0
-        integer DrunkenMasterchance = 0
-        integer SlowAuraChance = 0
-        integer PulverizeChance = 0 
-        integer LastBreathChance = 0
-        integer FireshieldChance = 0
-        integer CorrosiveSkinChance = 0 
-        integer MulticastChance = 0
-        integer FastMagicChance = 0
         boolean SuddenDeathEnabled = false
         boolean array RoundLiveLost
         player WinningPlayer

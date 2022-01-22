@@ -87,6 +87,12 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 */
 
+        //Crushing Wave
+        set i1 = GetUnitAbilityLevel(DamageSource, CRUSHING_WAVE_ABILITY_ID)
+        if i1 > 0 then
+            set Damage.index.damageType = DAMAGE_TYPE_NORMAL
+            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * i1))))
+        endif
 
         //Searing Arrows
         set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)

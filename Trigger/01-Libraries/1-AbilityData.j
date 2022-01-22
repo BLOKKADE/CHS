@@ -1040,6 +1040,14 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Light, 1)
 
+        //184 - Crushing Wave 
+        call SaveAbilData(CRUSHING_WAVE_ABILITY_ID, CRUSHING_WAVE_ITEM_ID, false, 0, 0, true, Order_Point, "carrionswarm")
+        call SetLastObjectElement(Element_Energy, 1)
+        call SetLastObjectElement(Element_Water, 1)
+
+        //185 - Energy Trap 
+        call SaveAbilData(ENERGY_TRAP_ABILITY_ID, ENERGY_TRAP_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
+        call SetLastObjectElement(Element_Energy, 1)
 
         //186 - Magnetic Oscillation 
         call SaveAbilData(MAGNET_OSC_ABILITY_ID, MAGNET_OSC_ITEM_ID, false, 0, 0, true, Order_None, "hex")
