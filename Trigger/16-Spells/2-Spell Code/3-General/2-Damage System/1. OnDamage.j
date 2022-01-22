@@ -34,7 +34,7 @@ scope OnDamage initializer init
         set DamageSource = Damage.index.sourceUnit
         set DamageTarget = Damage.index.targetUnit
 
-        set DamageSourceId = GetHandleId(DamageTarget)
+        set DamageSourceId = GetHandleId(DamageSource)
         set DamageTargetId = GetHandleId(DamageTarget)
 
         set DamageSourcePid = GetPlayerId(GetOwningPlayer(DamageSource))
@@ -90,6 +90,7 @@ scope OnDamage initializer init
         if unitId == PRIEST_1_UNIT_ID then
             set DamageSourceId = GetDummyId(DamageSource)
             set DamageSourceAbility = DummyAbilitySource[DamageSourceId]
+            set DamageSourceMagicPower = DamageSourceMagicPower + (GetUnitMagicDmg(DamageSource) / 100)
         else
             set DamageSourceAbility = Damage.index.abilitySource
         endif
@@ -119,7 +120,6 @@ scope OnDamage initializer init
             //call BJDebugMsg("ra dmg: " + R2S(RetaliationDamage.real[DamageSourceId]) + " new: " + R2S(GetEventDamage() * RetaliationDamage.real[DamageSourceId]))
             set Damage.index.damage = (Damage.index.damage * RetaliationDamage.real[DamageSourceId])
             set RetaliationDamage.real[DamageSourceId] = 0
-            set DamageSourceMagicPower = DamageSourceMagicPower + (GetUnitMagicDmg(DamageSource) / 100)
         endif
 
         //Scorched Earth
@@ -127,11 +127,6 @@ scope OnDamage initializer init
             set ScorchedEarthSource[DamageTargetId] = DamageSourcePid
             set Damage.index.damage = 0
             return
-        endif
-
-        //Thunderwitch passive
-        if ThunderBoltSource.boolean[DamageSourceId] then
-            set DamageSourceMagicPower = DamageSourceMagicPower + (GetUnitMagicDmg(DamageSourceHero) / 100)
         endif
 
         //modified damage source after this, so can't detect dummy units, those need to go ^^^
