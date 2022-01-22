@@ -7,5 +7,6 @@ library StaffOfPower requires RandomShit
             call RemoveItem(GetItemOfTypeFromUnitBJ(u, 'I0AT'))
             call UnitAddItemById(u, 'I080')
         endif
+        call BlzStartUnitAbilityCooldown(u, 'A09Q', 20)
     endfunction
 endlibrary

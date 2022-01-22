@@ -9,6 +9,12 @@ scope ModifyDamageBeforeArmor initializer init
         local real r1 = 0
         local integer i1 = 0
 
+        //Contract of the Living no damage
+        if GetUnitAbilityLevel(DamageSource, CONTRACT_LIVING_BUFF_ID) > 0 or GetUnitAbilityLevel(DamageTarget, CONTRACT_LIVING_BUFF_ID) > 0 then
+            set Damage.index.damage = 0
+            return
+        endif
+
         call ElementalDamage()
 
         //Evasion & miss TODO: clean this up
@@ -96,7 +102,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Searing Arrows
         set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)
-        if i1 > 0 and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
+        if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
             set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.08
             if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
                 call BJDebugMsg("sa: " + I2S(GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)))
@@ -104,6 +110,20 @@ scope ModifyDamageBeforeArmor initializer init
                 set Damage.index.damageType = DAMAGE_TYPE_MAGIC
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
                 set Damage.index.damage = Damage.index.damage + GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)
+            endif
+        endif
+
+        //Cold Arrows
+        set i1 = GetUnitAbilityLevel(DamageSource, COLD_ARROWS_ABILITY_ID)
+        if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID) then
+            set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.04
+            if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
+                call BJDebugMsg("ca: " + I2S(GetSpellValue(COLD_ARROWS_ABILITY_ID, 0, 20, 10, i1)))
+                set DamageSourceAbility = COLD_ARROWS_ABILITY_ID
+                set Damage.index.damageType = DAMAGE_TYPE_MAGIC
+                call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
+                set Damage.index.damage = Damage.index.damage + GetSpellValue(COLD_ARROWS_ABILITY_ID, 0, 20, 10, i1)
+                call DummyOrder.create(DamageSource, GetUnitX(DamageSource), GetUnitY(DamageSource), GetUnitFacing(DamageSource), 4).addActiveAbility('A04X', 1, 852662).setAbilityRealField('A04X', ABILITY_RLF_DURATION_NORMAL, 2.8 + (0.2 * i1)).target(DamageTarget).activate()
             endif
         endif
 
@@ -326,6 +346,13 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = Damage.index.damage* ((DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100) * r1))
         endif   */
 
+        //Cold Arrow
+        set i1 = GetUnitAbilityLevel(DamageTarget, COLD_ARROWS_STACKING_BUFF_ID)
+        if i1 > 0 and GetRandomInt(1, 100) < 20 then
+            set Damage.index.damage = Damage.index.damage * 2
+            call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\FrostArmor\\FrostArmorDamage.mdl", DamageTarget, "chest"))
+        endif
+
         //Vigour Token
         set i1 = UnitHasItemI(DamageSource, VIGOUR_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitMaxHP(DamageSource) < BlzGetUnitMaxHP(DamageTarget) then
@@ -445,6 +472,8 @@ scope ModifyDamageBeforeArmor initializer init
         //Demolish
         set i1 = GetUnitAbilityLevel(DamageSourceHero, DEMOLISH_ABILITY_ID)
         if i1 > 0 and Damage.index.damageType == DAMAGE_TYPE_NORMAL then
+            set udg_DamageEventArmorPierced = udg_DamageEventArmorPierced + BlzGetUnitArmor(DamageTarget) * (0.05 + (0.005 * i1))
+        endif
 
         //Titanium Spike
         if GetUnitAbilityLevel(DamageSource, TITANIUM_SPIKE_ABIL_ID) > 0 and GetUnitAbilityLevel(DamageTarget, TITANIUM_SPIKE_IMMUN_ABIL_ID) == 0 and Damage.index.damageType == DAMAGE_TYPE_NORMAL then

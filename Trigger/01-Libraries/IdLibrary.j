@@ -357,6 +357,7 @@ library IdLibrary initializer init
         constant integer WILD_DEFENSE_ABILITY_ID                        = 'A06X'
         constant integer WIND_WALK_ABILITY_ID                           = 'AOwk'
         constant integer WIZARDBANE_AURA_ABILITY_ID                     = 'A088'
+        constant integer MARTIAL_THEFT_ABILITY_ID                       = 'A05S'
         
         // Dummy Abilities
         constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'
@@ -401,6 +402,7 @@ library IdLibrary initializer init
 
         // --- Item IDs ---
 
+        constant integer MARTIAL_THEFT_ITEM_ID                          = 'I0BL'
         constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'
         constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'
         constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BC'
@@ -664,6 +666,7 @@ library IdLibrary initializer init
         // --- Item IDs ---
 
         // --- Buff IDs ---
+        constant integer CONTRACT_LIVING_BUFF_ID                        = 'A059'
         constant integer ACID_BOMB_BUFF_ID                              = 'BNab'
         constant integer ANCIENT_KNIFE_OF_THE_GODS_BUFF_ID              = 'B01N'
         constant integer ANTI_MAGIC_SHELL_BUFF_ID                       = 'Bam2'
@@ -681,7 +684,7 @@ library IdLibrary initializer init
         constant integer CHEATER_MAGIC_BUFF_ID                          = 'B01G'
         constant integer CLOUD_BUFF_ID                                  = 'Bclf'
         constant integer COLD_ARROWS_NON_STACKING_BUFF_ID               = 'BHca'
-        constant integer COLD_ARROWS_STACKING_BUFF_ID                   = 'Bcsd'
+        constant integer COLD_ARROWS_STACKING_BUFF_ID                   = 'B02A'
         constant integer CORROSIZE_BREATH_BUFF_ID                       = 'Bcor'
         constant integer CRIPPLE_BUFF_ID                                = 'Bcri'
         constant integer DEATH_AND_DECAY_BUFF_ID                        = 'BUdd'

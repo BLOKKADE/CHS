@@ -191,7 +191,7 @@ library HeroData initializer init
         call SaveStr(HT_data,GRUNT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Grunt's Grunt: +20 attack damage and strength, +0.1 seconds duration." )
         
         call SaveStr(HT_data,SEER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )       //seer
-        call SaveStr(HT_data,SEER_UNIT_ID,2, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0This means most spells are affected by enemy armor and not affected by the Hero's magic power.|r" )
+        call SaveStr(HT_data,SEER_UNIT_ID,2, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0This means most spells are affected by enemy armor and not affected by the Hero's magic power.|nSeer's passive can be disabled by the Staff of Power.|r" )
     
         call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )       //Arena master
         call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Passionate Student: All Rings in PVE Shop I are twice as effective.")

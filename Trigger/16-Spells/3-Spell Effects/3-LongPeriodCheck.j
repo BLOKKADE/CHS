@@ -307,7 +307,6 @@ scope LongPeriodCheck initializer init
 
                 endif
 
-
                 //Robes of the Archmage
                 if GetUnitAbilityLevel(u ,'B00L') >= 1 then
 
@@ -324,6 +323,11 @@ scope LongPeriodCheck initializer init
                 elseif LoadReal(HT,hid,291) != 0 then
                     call BlzSetUnitArmor(u, BlzGetUnitArmor(u) - LoadReal(HT,hid,291)   )
                     call SaveReal(HT,hid,291,0)
+                endif
+
+                //Contract of the Living
+                if IsContractLivingAvailable(u) then
+                    call ActivateContractLiving(u)
                 endif
 
                 //Absolute Fire

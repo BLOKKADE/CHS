@@ -13,17 +13,17 @@ scope OnDamage initializer init
             endif
 
             //Seer
-            if unitId == SEER_UNIT_ID then
+            if unitId == SEER_UNIT_ID and GetUnitAbilityLevel(u, 'A09Q') == 0 then
                 if Damage.index.damageType == DAMAGE_TYPE_NORMAL then
                     set Damage.index.damageType = DAMAGE_TYPE_MAGIC
                 else
                     set Damage.index.damageType = DAMAGE_TYPE_NORMAL
                 endif
-            else
-                //Staff of Power
-                if UnitHasItemS(u, 'I080') or unitId == 'n00W' or unitId == 'n01H' or unitId == SKELETON_WARMAGE_1_UNIT_ID then
-                    set Damage.index.damageType = DAMAGE_TYPE_MAGIC
-                endif
+            endif
+
+            //Staff of Power
+            if UnitHasItemS(u, 'I080') or unitId == 'n00W' or unitId == 'n01H' or unitId == SKELETON_WARMAGE_1_UNIT_ID then
+                set Damage.index.damageType = DAMAGE_TYPE_MAGIC
             endif
         endif
     endfunction

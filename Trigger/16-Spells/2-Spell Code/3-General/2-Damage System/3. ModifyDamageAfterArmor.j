@@ -426,6 +426,12 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Contract of the Living
+        if IsContractLivingAvailable(DamageTarget) then
+            call ActivateContractLiving(DamageTarget)
+            set Damage.index.amount = 0
+        endif
+
         //Last Breath
         set i = GetUnitAbilityLevel(DamageTarget, LAST_BREATHS_ABILITY_ID)
         if i > 0 then

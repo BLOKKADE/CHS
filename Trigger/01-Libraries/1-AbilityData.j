@@ -1053,6 +1053,10 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(MAGNET_OSC_ABILITY_ID, MAGNET_OSC_ITEM_ID, false, 0, 0, true, Order_None, "hex")
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Earth, 1)
+
+        //187 - Martial Theft 
+        call SaveAbilData(MARTIAL_THEFT_ABILITY_ID, MARTIAL_THEFT_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Energy, 1)
     endfunction
 
     function InitHeroElements takes nothing returns nothing
