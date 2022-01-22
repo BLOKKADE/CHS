@@ -108,6 +108,15 @@ library AbilityData initializer init requires Table, IdLibrary
         return AbilityData[abilId].integer[5]
     endfunction
 
+    function IsAbilityReplaceable takes integer abilId returns boolean
+        if AbilityData[abilId].boolean[6] == false then
+            call BJDebugMsg("true")
+        else
+            call BJDebugMsg("false")
+        endif
+        return AbilityData[abilId].boolean[6] == false
+    endfunction
+
     //Gets a random ability that can be cast by chaos based on its order and target type
     function GetRandomChaosAbility takes integer typ, integer targetType returns integer
         if targetType == Target_Ally then
@@ -193,6 +202,10 @@ library AbilityData initializer init requires Table, IdLibrary
         set ElementData[element].integer[LastObject] = count
     endfunction
 
+    function SetLastAbilityNotReplaceable takes nothing returns nothing
+        set AbilityData[LastObject].boolean[6] = true
+    endfunction
+
     function SetObjectElement takes integer objectId, integer element, integer count returns nothing
         set ElementData[element].integer[objectId] = count
     endfunction
@@ -205,6 +218,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //2 - Mana Shield 
         call SaveAbilData(MANA_SHIELD_ABILITY_ID, MANA_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, "manashieldon")
         call SetLastObjectElement(Element_Water, 1)
+        call SetLastAbilityNotReplaceable()
 
         //3 - Carrion Swarm 
         call SaveAbilData(CARRION_SWARM_ABILITY_ID, CARRION_SWARM_ITEM_ID, false, 0, 0, true, Order_Point, "carrionswarm")
@@ -364,6 +378,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //38 - Wind Walk 
         call SaveAbilData(WIND_WALK_ABILITY_ID, WIND_WALK_ITEM_ID, false, 0, 0, false, Order_None, "windwalk")
         call SetLastObjectElement(Element_Wind, 1)
+        call SetLastAbilityNotReplaceable()
 
         //39 - Drunken Haze 
         call SaveAbilData(DRUNKEN_HAZE_ABILITY_ID, DRUNKEN_HAZE_ITEM_ID, false, 0, 1, true, Order_Target, "drunkenhaze")
@@ -441,6 +456,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //53 - Banish 
         call SaveAbilData(BANISH_ABILITY_ID, BANISH_ITEM_ID, false, 0, 1, true, Order_Target, "banish")
         call SetLastObjectElement(Element_Arcane, 1)
+        call SetLastAbilityNotReplaceable()
 
         //54 - Acid Spray 
         call SaveAbilData(ACID_SPRAY_ABILITY_ID, ACID_SPRAY_ITEM_ID, false, 0, 0, true, Order_Point, "healingspray")
@@ -469,6 +485,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //59 - Bloodlust 
         call SaveAbilData(BLOODLUST_ABILITY_ID, BLOODLUST_ITEM_ID, false, 1, 1, true, Order_Target, "bloodlust")
         call SetLastObjectElement(Element_Blood, 1)
+        call SetLastAbilityNotReplaceable()
 
         //60 - Pocket Factory 
         call SaveAbilData(POCKET_FACTORY_ABILITY_ID, POCKET_FACTORY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "summonfactory")
@@ -518,20 +535,24 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(FAERIE_FIRE_ABILITY_ID, FAERIE_FIRE_ITEM_ID, false, 0, 1, true, Order_Target, "faeriefire")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastAbilityNotReplaceable()
 
         //71 - Parasite 
         call SaveAbilData(PARASITE_ABILITY_ID, PARASITE_ITEM_ID, false, 0, 1, true, Order_Target, "parasite")
         call SetLastObjectElement(Element_Poison, 1)
         call SetLastObjectElement(Element_Summon, 1)
+        call SetLastAbilityNotReplaceable()
 
         //72 - Curse 
         call SaveAbilData(CURSE_ABILITY_ID, CURSE_ITEM_ID, false, 0, 1, true, Order_Target, "curse")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastAbilityNotReplaceable()
 
         //73 - Inner Fire 
         call SaveAbilData(INNER_FIRE_ABILITY_ID, INNER_FIRE_ITEM_ID, false, 1, 1, true, Order_Target, "innerfire")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Light, 1)
+        call SetLastAbilityNotReplaceable()
 
         //74 - Command Aura 
         call SaveAbilData(COMMAND_AURA_ABILITY_ID, COMMAND_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -581,6 +602,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //84 - Lightning Shield 
         call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, LIGHTNING_SHIELD_ITEM_ID, false, 0, 1, false, Order_None, "lightningshield")
         call SetLastObjectElement(Element_Wind, 2)
+        call SetLastAbilityNotReplaceable()
 
         //85 - Volcano 
         call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
@@ -614,6 +636,7 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //93 - Blink 
         call SaveAbilData(BLINK_ABILITY_ID, BLINK_ITEM_ID, false, 0, 0, false, Order_None, "blink")
+        call SetLastAbilityNotReplaceable()
 
         //94 - Phase Shift 
         call SaveAbilData(PHASE_SHIFT_ABILITY_ID, PHASE_SHIFT_ITEM_ID, false, 0, 0, false, Order_None, "phaseshiftinstant")
@@ -883,6 +906,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Poison, 1)
         call SetLastObjectElement(Element_Blood, 1)
         call SetLastObjectElement(Element_Arcane, 1)
+        call SetLastAbilityNotReplaceable()
         //call SetLastObjectElement(Element_Time, 1)
 
         //154 - Divine Bubble 
