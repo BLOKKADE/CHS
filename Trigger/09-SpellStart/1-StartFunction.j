@@ -41,6 +41,20 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
     set u1 = null
 endfunction */
 
+function OnRoundStart takes unit hero, integer hid returns nothing
+    local item it 
+
+    //Ankh limit
+    set it = GetUnitItem(hero, 'ankh')
+    if it != null then
+        if GetItemCharges(it) == 2 then
+            set AnkhLimitReached.boolean[hid] = true
+        endif
+    endif
+
+    set it = null
+endfunction
+
 function FunctionTimerSpell takes nothing returns nothing
     local timer startbattle = GetExpiredTimer()
     local timer nTimer = null
@@ -64,6 +78,10 @@ function FunctionTimerSpell takes nothing returns nothing
         return
     endif
     set heroLevel = GetHeroLevel(Herou)
+
+    if startType != 6 then
+        call OnRoundStart(Herou, hid)
+    endif
 
     call ResetTimeManipulation(Herou, startType)
         

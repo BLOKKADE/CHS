@@ -571,6 +571,20 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call PlayerAddGold( GetOwningPlayer(u),20000)
                     
             endif	
+            //Ankh of Reincarnation
+        elseif II == 'I0BH' then
+            if not AnkhLimitReached.boolean[GetHandleId(u)] then
+                set It = GetUnitItem(u, 'ankh')
+                if It != null then
+                    call SetItemCharges(It, GetItemCharges(It) + 1)
+                    set AnkhLimitReached.boolean[GetHandleId(u)] = true
+                else
+                    call UnitAddItemById(u, 'ankh')
+                endif
+            else
+                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Cannot buy more |cffdf9432" + GetObjectName(II) + "|r")
+                call PlayerAddGold(GetOwningPlayer(u), 400)
+            endif
             //Non-Lucrative Tome
         elseif II == NON_LUCRATIVE_TOME_ITEM_ID then
             call NonLucrativeTomeBought(u)
