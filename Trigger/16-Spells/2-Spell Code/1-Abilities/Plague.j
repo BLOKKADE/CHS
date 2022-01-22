@@ -3,6 +3,7 @@ library Plague requires AoeDamage
     function CastPlague takes unit caster, real x, real y, integer level returns nothing
         local real bonus = 1
         local integer corpseLimit = 4
+        local integer blackArrowLimit = 2
         local effect fx
         local integer i = 0
         local unit dummy
@@ -16,10 +17,10 @@ library Plague requires AoeDamage
             call UnitApplyTimedLifeBJ(14.00, 'BTLF', dummy)
             call SetAbilityRealField(dummy, 'A0AG', 1, ABILITY_RLF_DAMAGE_PER_INTERVAL, (60 * level) * bonus)
             call SetUnitTimeScalePercent(dummy, 50.00)
-            if i <= corpseLimit then
+            if i < corpseLimit then
                 call CreateCorpse(GetOwningPlayer(caster), ChooseRandomCreepBJ(- 1), dummyX, dummyY, GetRandomReal(0, 360))
-    
-                if GetUnitAbilityLevel(caster, BLACK_ARROW_ABILITY_ID) > 0 then
+
+                if i < blackArrowLimit and GetUnitAbilityLevel(caster, BLACK_ARROW_PASSIVE_ABILITY_ID) > 0 then
                     call CastBlackArrow(caster, dummy, GetUnitAbilityLevel(caster, 'A0AW'))
                 endif
 

@@ -11,16 +11,15 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula
         
         private method damage takes nothing returns nothing
             local unit p
-            set this.level = GetUnitAbilityLevel(this.source, IMMOLATION_ABILITY_ID)
-            call BJDebugMsg("dmg")
+            set this.level = GetUnitAbilityLevel(this.source, LIGHTNING_SHIELD_ABILITY_ID)
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(this.target), GetUnitY(this.target), 150 + (10 * this.level), Player(this.pid), false, Target_Enemy)
-
+            //call BJDebugMsg("dmg: " + I2S(GetSpellValue(LIGHTNING_SHIELD_ABILITY_ID, 0, 20, 10, this.level)) + " grp: " + I2S(BlzGroupGetSize(ENUM_GROUP)))
             loop
                 set p = FirstOfGroup(ENUM_GROUP)
                 exitwhen p == null
                 set udg_NextDamageAbilitySource = LIGHTNING_SHIELD_ABILITY_ID
-                call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Orc\\LightningShield\\LightningShieldBuff.mdl", p, "origin"))
+                call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Orc\\LightningShield\\LightningShieldBuff.mdl", p, "chest"))
                 call Damage.applySpell(this.source, p, GetSpellValue(LIGHTNING_SHIELD_ABILITY_ID, 0, 20, 10, this.level), DAMAGE_TYPE_MAGIC)
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
@@ -32,7 +31,7 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula
                 set this.tick = T32_Tick + 32
                 call this.damage()
             endif
-            if T32_Tick > this.endTick or GetUnitAbilityLevel(this.target, LIGHTNING_SHIELD_BUFF_ID) == 0 then
+            if T32_Tick > this.endTick then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
