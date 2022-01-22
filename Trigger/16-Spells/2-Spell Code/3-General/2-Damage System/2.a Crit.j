@@ -118,10 +118,13 @@ library CritDamage requires RandomShit
             endif 
 
             //Mithril Helmet
-            if UnitHasItemS(DamageTarget,'I091') and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A07J') <= 0.001  then
-                call AbilStartCD(DamageTarget,'A07J',8 ) 
-                set Dmg = 0
-                set critDmg = 0
+            if UnitHasItemS(DamageTarget, 'I091') then
+                if T32_Tick - MithrilHelmetCooldown[DamageTargetId] > 32 then
+                    set MithrilHelmetCooldown[DamageTargetId] = T32_Tick
+                else
+                    set Dmg = 0
+                    set critDmg = 0
+                endif
             endif
 
             set Damage.index.damage = Dmg + critDmg
