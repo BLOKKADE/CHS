@@ -216,17 +216,6 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
             call SetWidgetLife(u,BlzGetUnitMaxHP(u))
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-        
-            //??? Priest?
-        elseif i == PRIEST_1_UNIT_ID then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,BLACK_ARROW_ABILITY_ID),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
-            call AddUnitMagicDef(u,5 * i2)
-            call AddUnitEvasion(u,5 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + i2))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 175)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
 
             //Parasite
         elseif i == PARASITE_1_UNIT_ID then

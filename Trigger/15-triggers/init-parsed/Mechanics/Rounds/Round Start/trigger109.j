@@ -104,12 +104,11 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
     function Trig_Start_Level_Func015Func002Func003A takes nothing returns nothing
         if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' then
-            if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit()))then
+            if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit())) then
                 call DeleteUnit(GetEnumUnit())
             else
-                call DoNothing()
+                call ExplodeUnitBJ(GetEnumUnit())
             endif
-            call ExplodeUnitBJ(GetEnumUnit())
         endif
     endfunction
 
