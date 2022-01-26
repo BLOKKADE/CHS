@@ -273,15 +273,6 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = Damage.index.damage+  (Damage.index.damage*(GetUnitPvpBonus(DamageSource)- GetUnitPvpBonus(DamageTarget)  )/ 100)
         endif 
 
-        //Ogre Warrior
-        if GetUnitTypeId(DamageSource) == OGRE_WARRIOR_UNIT_ID and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
-            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08U') <= 0 then
-                call AbilStartCD(DamageSource, 'A08U', 6)
-                call ElemFuncStart(DamageSource,OGRE_WARRIOR_UNIT_ID)
-                call USOrder4field(DamageSource,GetUnitX(DamageTarget),GetUnitY(DamageTarget),'A047',"stomp",GetHeroStr(DamageSource,true) + 60 * GetHeroLevel(DamageSource) ,ABILITY_RLF_DAMAGE_INCREASE,300,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,1,ABILITY_RLF_DURATION_NORMAL)
-            endif
-        endif  
-
         //Banish magic damage bonus
         if GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0 and Damage.index.damageType == DAMAGE_TYPE_MAGIC then
             set Damage.index.damage =  Damage.index.damage * 1.5
@@ -309,14 +300,19 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif*/
 
+        //Ogre Warrior Stomp block ignore
+        if DamageSourceAbility == 'A047' then
+            call TempBonus.create(DamageTarget, BONUS_BLOCK, GetUnitBlock(DamageTarget) * 0.2, 1)
+        endif
+
         //Lich
-        if GetUnitTypeId(DamageSource) == LICH_UNIT_ID and Damage.index.damageType == DAMAGE_TYPE_MAGIC then
+        /*if GetUnitTypeId(DamageSource) == LICH_UNIT_ID and Damage.index.damageType == DAMAGE_TYPE_MAGIC then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08W') <= 0 then
                 call AbilStartCD(DamageSource, 'A08W', 6)
                 call ElemFuncStart(DamageSource,LICH_UNIT_ID)
                 call UsOrderU2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
             endif
-        endif
+        endif*/
 
         //Air Force
         if GetUnitAbilityLevel(DamageSourceHero  ,AIR_FORCE_ABILITY_ID) >= 1 then

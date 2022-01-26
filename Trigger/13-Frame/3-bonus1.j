@@ -117,7 +117,7 @@ library HeroData initializer init
         call SaveStr(HT_data,RANGER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +5% base damage to all critical hits.")       
         
         call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNUnbroken.blp" )       // void
-        call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,2, "|cff00ffffPassive|r: Void Bash: When the Hero damages an enemy it has a 20% chance to deal 50 bonus |cffff00ffmagical damage|r and stun it for 0.2 seconds. ")
+        call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,2, "|cff00ffffPassive|r: Void Bash: When the Hero damages an enemy it has a 20% chance to deal 50 bonus |cffff00ffmagical damage|r and stun it for 0.2 seconds. [|cff80ff80Luck|r]")
         call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Void Bash: +50 damage" )     
                 
         call SaveStr(HT_data,DOOM_GUARD_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDoomGuard.blp" )       // DOOMguard
@@ -134,8 +134,8 @@ library HeroData initializer init
         call SaveStr(HT_data,COLD_KNIGHT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Frost Aura: +6% attack speed reduction . +0.5% movespeed reduction (max 95%)" )  
 
         call SaveStr(HT_data,LICH_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroLich.blp" )       // Lich
-        call SaveStr(HT_data,LICH_UNIT_ID,2, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals |cffff00ffmagic damage|r it uses Flash Freeze on the enemy, dealing |cffff00ffmagical damage|r in an area around the target based on 100% of its intelligence once every 6 seconds. ")
-        call SaveStr(HT_data,LICH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Flash Freeze: +60 damage." ) 
+        call SaveStr(HT_data,LICH_UNIT_ID,2, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals [|cff00f7ffWater|r], [|cff8080ffCold|r], or [|cff000000Dark|r] damage it has a 25% chance to use Flash Freeze on the enemy, dealing |cffff00ffmagical damage|r in an area around the target based on 100% of its intelligence. [|cff80ff80Luck|r]")
+        call SaveStr(HT_data,LICH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         
         call SaveStr(HT_data,GNOME_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )       // Gnome master
         call SaveStr(HT_data,GNOME_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Gnome Stomp: At the start of every fight it deals |cffff00ffmagical damage|r and stuns all nearby heroes for 1 second and creeps for 2 seconds. ")
@@ -150,7 +150,7 @@ library HeroData initializer init
         call SaveStr(HT_data,CENTAUR_ARCHER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Horsepower: +5% damage." )
 
         call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNOgre.blp" )       // ogre
-        call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Ogre Stomp: Once every 6 seconds when the Hero deals |cffff8080physical damage|r it damages nearby enemies for 100% of its strength in |cffff00ffmagic damage|r and stuns them for 1 second.")
+        call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Ogre Stomp: Once every 6 seconds when the Hero deals [|cffd45e19Earth|r] or |cffff8080physical damage|r it damages nearby enemies for 100% of its strength in |cffff00ffmagic damage|r and stuns and reduces their block by 20% for 1 second. Cooldown is reduced by 0.5 seconds for every unit hit.")
         call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )       //Xesil
@@ -187,7 +187,7 @@ library HeroData initializer init
         call SaveStr(HT_data,BANSHEE_UNIT_ID,2, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 75% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
         
         call SaveStr(HT_data,GRUNT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp" )       //grunt
-        call SaveStr(HT_data,GRUNT_UNIT_ID,2, "|cff00ffffPassive|r: The Grunt's Grunt: At the start of every fight the Hero gains 20 bonus attack damage and strength for 10 seconds. ")
+        call SaveStr(HT_data,GRUNT_UNIT_ID,2, "|cff00ffffPassive|r: The Grunt's Grunt: When the Hero is dealt a killing blow it ignores it and returns the damage back to the source, 20 seconds cooldown. ")
         call SaveStr(HT_data,GRUNT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Grunt's Grunt: +20 attack damage and strength, +0.1 seconds duration." )
         
         call SaveStr(HT_data,SEER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )       //seer

@@ -38,6 +38,23 @@ library ElementDamage requires RandomShit, Pyromancer
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A0B6') == 0 then
                 call CreateScorches(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 149 + (1 * GetHeroLevel(DamageSource)))
             endif
+        
+        //Ogre Warrior
+        elseif unitTypeId == OGRE_WARRIOR_UNIT_ID and DamageSourceAbility != 'A047' and (Damage.index.damageType == DAMAGE_TYPE_NORMAL or IsSpellElement(DamageSource, DamageSourceAbility, Element_Earth)) then
+            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08U') <= 0 then
+                call ElemFuncStart(DamageSource,OGRE_WARRIOR_UNIT_ID)
+                call CheckProc(DamageSource, 400)
+                set r1 = 6 - (0.5 * GetProcCheckCount())
+                if r1 > 0 then
+                    call AbilStartCD(DamageSource, 'A08U', 6)
+                endif
+                call USOrder4field(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A047', "stomp", GetHeroStr(DamageSource,true) + (60 * GetHeroLevel(DamageSource)), ABILITY_RLF_DAMAGE_INCREASE, 400, ABILITY_RLF_CAST_RANGE, 1, ABILITY_RLF_DURATION_HERO, 1, ABILITY_RLF_DURATION_NORMAL)
+            endif
+
+        //Lich
+        elseif unitTypeId == LICH_UNIT_ID  and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < 25 * DamageSourceLuck then
+            call ElemFuncStart(DamageSource,LICH_UNIT_ID)
+            call UsOrderU2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
     endfunction
 endlibrary

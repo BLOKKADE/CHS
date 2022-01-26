@@ -14,6 +14,10 @@ library CheckProcc requires GroupUtils
         return false
     endfunction
 
+    function GetProcCheckCount takes nothing returns integer
+        return ProcCount
+    endfunction
+
     function CheckProc takes unit u, real area returns boolean
         local real x = GetUnitX(u)
         local real y = GetUnitY(u)
