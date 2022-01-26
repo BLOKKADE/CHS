@@ -194,6 +194,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call ActivateBlokkadeShield(caster)
                 endif
 
+                if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID then
+                    call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + BlzGetAbilityManaCost(abilId, abilLvl - 1))
+                endif
+
                 if abilId == IMMOLATION_ABILITY_ID then
                     call ToggleImmolation(caster)
                 endif

@@ -154,7 +154,7 @@ library HeroData initializer init
         call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )       //Xesil
-        call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Xesil's Legacy: 15% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name if stronger and is overriden if weaker. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r[|cff80ff80Luck|r]")
+        call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r[|cff80ff80Luck|r]")
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
 
         call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )       //OGRE MAGE

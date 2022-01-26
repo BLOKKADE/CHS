@@ -523,11 +523,11 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         
         //Xesil
         if (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID) then
-            set xesilChance = 15 + (0.1 * GetHeroLevel(u) )
+            set xesilChance = 20 + (0.1 * GetHeroLevel(u) )
         endif
 
         //Xesil's Legacy
-        if (GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (xesilChance <= 25 * luck and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (UnitHasItemS(u,'I03P') == false and GetRandomReal(0,100) <= xesilChance * luck) and IsSpellResettable(id) then
+        if IsSpellResettable(id) and (GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemS(u,'I03P')) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= xesilChance * luck) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
