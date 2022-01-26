@@ -11,9 +11,9 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         if abilId == 'A072' then
             call CastMysteriousRunestone(caster)
             return true
-        elseif IsChannelAbility(abilId) and not Trig_Disable_Abilities_Func001C(caster) then
+        /*elseif IsChannelAbility(abilId) and not Trig_Disable_Abilities_Func001C(caster) then
             call CastChannelAbility(caster, abilId, x, y, lvl)
-            return true
+            return true*/
         //Scroll of Transformation
         elseif abilId == 'A049' then
             call CastScrollOfTransformation(caster)

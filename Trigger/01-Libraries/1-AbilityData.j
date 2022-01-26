@@ -369,11 +369,11 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(TRANQUILITY_ABILITY_ID, TRANQUILITY_ITEM_ID, false, 0, 0, true, Order_Instant, "tranquility")
         call SetLastObjectElement(Element_Wild, 2)
         call SetLastObjectElement(Element_Light, 1)
-        call SaveDummyAbilOrder(TRANQUILITY_DUMMY_ABILITY_ID, "tranquility")
+        //call SaveDummyAbilOrder(TRANQUILITY_DUMMY_ABILITY_ID, "tranquility")
 
         //37 - Cluster Rockets 
         call SaveAbilData(CLUSTER_ROCKETS_ABILITY_ID, CLUSTER_ROCKETS_ITEM_ID, false, 0, 0, true, Order_Point, "clusterrockets")
-        call SaveDummyAbilOrder(CLUSTER_ROCKETS_DUMMY_ABILITY_ID, "clusterrockets")
+        //call SaveDummyAbilOrder(CLUSTER_ROCKETS_DUMMY_ABILITY_ID, "clusterrockets")
 
         //38 - Wind Walk 
         call SaveAbilData(WIND_WALK_ABILITY_ID, WIND_WALK_ITEM_ID, false, 0, 0, false, Order_None, "windwalk")
@@ -404,7 +404,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(STARFALL_ABILITY_ID, STARFALL_ITEM_ID, false, 0, 0, true, Order_Instant, "starfall")
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
-        call SaveDummyAbilOrder(STARFALL_DUMMY_ABILITY_ID, "starfall")
+        //call SaveDummyAbilOrder(STARFALL_DUMMY_ABILITY_ID, "starfall")
 
         //45 - Anti-magic shell
         call SaveAbilData(ANTI_MAGIC_SHEL_ABILITY_ID, ANTI_MAGIC_SHEL_ITEM_ID, false, 1, 1, true, Order_Target, "antimagicshell")
@@ -425,17 +425,17 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(BLIZZARD_ABILITY_ID, BLIZZARD_ITEM_ID, false, 0, 0, true, Order_Point, "blizzard")
         call SetLastObjectElement(Element_Water, 2)
         call SetLastObjectElement(Element_Cold, 2)
-        call SaveDummyAbilOrder(BLIZZARD_DUMMY_ABILITY_ID, "blizzard")
+        //call SaveDummyAbilOrder(BLIZZARD_DUMMY_ABILITY_ID, "blizzard")
 
         //48 - Rain of Fire 
         call SaveAbilData(RAIN_OF_FIRE_ABILITY_ID, RAIN_OF_FIRE_ITEM_ID, false, 0, 0, true, Order_Point, "rainoffire")
         call SetLastObjectElement(Element_Fire, 1)
-        call SaveDummyAbilOrder(RAIN_OF_FIRE_DUMMY_ABILITY_ID, "rainoffire")
+        //call SaveDummyAbilOrder(RAIN_OF_FIRE_DUMMY_ABILITY_ID, "rainoffire")
 
         //49 - Stampede 
-        call SaveAbilData(STAMPEDE_ABILITY_ID, STAMPEDE_ITEM_ID, false, 0, 0, true, Order_Point, "uncorporealform")
+        call SaveAbilData(STAMPEDE_ABILITY_ID, STAMPEDE_ITEM_ID, false, 0, 0, true, Order_Point, "stampede")
         call SetLastObjectElement(Element_Wild, 1)
-        call SaveDummyAbilOrder(STAMPEDE_DUMMY_ABILITY_ID, "stampede")
+        //call SaveDummyAbilOrder(STAMPEDE_DUMMY_ABILITY_ID, "stampede")
 
         //50 - Howl of Terror 
         call SaveAbilData(HOWL_OF_TERROR_ABILITY_ID, HOWL_OF_TERROR_ITEM_ID, false, 0, 0, true, Order_Instant, "howlofterror")
@@ -461,7 +461,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //54 - Acid Spray 
         call SaveAbilData(ACID_SPRAY_ABILITY_ID, ACID_SPRAY_ITEM_ID, false, 0, 0, true, Order_Point, "healingspray")
         call SetLastObjectElement(Element_Poison, 1)
-        call SaveDummyAbilOrder(ACID_SPRAY_DUMMY_ABILITY_ID, "healingspray")
+        //call SaveDummyAbilOrder(ACID_SPRAY_DUMMY_ABILITY_ID, "healingspray")
 
         //55 - Activate Avatar 
         call SaveAbilData(ACTIVATE_AVATAR_ABILITY_ID, ACTIVATE_AVATAR_ITEM_ID, false, 0, 0, false, Order_None, "avatar")
@@ -608,7 +608,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
-        call SaveDummyAbilOrder(VOLCANO_DUMMY_ABILITY_ID, "volcano")
+        //call SaveDummyAbilOrder(VOLCANO_DUMMY_ABILITY_ID, "volcano")
 
         //86 - Ensnare 
         call SaveAbilData(ENSNARE_ABILITY_ID, ENSNARE_ITEM_ID, false, 0, 1, true, Order_Target, "ensnare")
@@ -785,7 +785,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(FOG_ABILITY_ID, FOG_ITEM_ID, false, 0, 1, true, Order_Point, "cloudoffog")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Wind, 1)
-        call SaveDummyAbilOrder(CLOUD_DUMMY_ABILITY_ID, "cloudoffog")
+        //call SaveDummyAbilOrder(CLOUD_DUMMY_ABILITY_ID, "cloudoffog")
 
         //131 - Temporary Power 
         call SaveAbilData(TEMPORARY_POWER_ABILITY_ID, TEMPORARY_POWER_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -826,7 +826,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(MONSOON_ABILITY_ID, MONSOON_ITEM_ID, false, 0, 0, true, Order_Point, "monsoon")
         call SetLastObjectElement(Element_Water, 2)
         call SetLastObjectElement(Element_Wind, 2)
-        call SaveDummyAbilOrder(MONSOON_DUMMY_ABILITY_ID, "monsoon")
+        //call SaveDummyAbilOrder(MONSOON_DUMMY_ABILITY_ID, "monsoon")
 
         //138 - Ice Armor 
         call SaveAbilData(ICE_ARMOR_ABILITY_ID, ICE_ARMOR_ITEM_ID, false, 0, 0, false, Order_None, null)
