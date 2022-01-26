@@ -301,6 +301,8 @@ library trigger79 initializer init requires RandomShit, Functions
             call ConditionalTriggerExecute(udg_trigger143)
             if AbilityMode == 2 and DraftInitialised == false then
                 call ConditionalTriggerExecute( gg_trg_DraftInit )
+            elseif AbilityMode == 1 then
+                call InitUpgradeShop()
             endif
             call CreateNeutralPassiveBuildings2()
         else

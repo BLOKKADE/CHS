@@ -2,18 +2,22 @@ library SharedLibrary requires RandomShit
 
     function ShowDraftBuildings takes boolean b returns nothing
         local integer i = 0
-        if AbilityMode == 2 then
+        if AbilityMode != 0 then
             loop
-                call ShowUnit(circle1, b)
+                if AbilityMode == 2 then
+                    call ShowUnit(circle1, b)
+                    call ShowUnit(udg_Draft_DraftBuildings[i], b)
+                    call SetTextTagVisibility(FloatingTextBuy, b)
+                endif
+                
                 call ShowUnit(circle2, b)
-                call ShowUnit(udg_Draft_DraftBuildings[i], b)
                 call ShowUnit(udg_Draft_UpgradeBuildings[i], b)
-                call SetTextTagVisibility(FloatingTextBuy, b)
                 call SetTextTagVisibility(FloatingTextUpgrade, b)
                 set i = i + 1
                 exitwhen i > 9
             endloop
         endif
+
     endfunction
 
 

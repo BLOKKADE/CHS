@@ -54,21 +54,33 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
 
             if GetUnitAbilityLevel(u, PILLAGE_ABILITY_ID) > 0 then
                 call RemoveSpell(pid, u, PILLAGE_ABILITY_ID)
+                if AbilityMode != 0 then
+                    call RemoveItemFromUpgradeShop(pid, PILLAGE_ITEM_ID)
+                endif
                 set count = 1
             endif
 
             if GetUnitAbilityLevel(u, LEARNABILITY_ABILITY_ID) > 0 then
                 call RemoveSpell(pid, u, LEARNABILITY_ABILITY_ID)
+                if AbilityMode != 0 then
+                    call RemoveItemFromUpgradeShop(pid, LEARNABILITY_ITEM_ID)
+                endif
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(u, HOLY_ENLIGHTENMENT_ABILITY_ID) > 0 then
                 call RemoveSpell(pid, u, HOLY_ENLIGHTENMENT_ABILITY_ID)
+                if AbilityMode != 0 then
+                    call RemoveItemFromUpgradeShop(pid, HOLY_ENLIGHTENMENT_ITEM_ID)
+                endif
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(u, MIDAS_TOUCH_ABILITY_ID) > 0 then
                 call RemoveSpell(pid, u, MIDAS_TOUCH_ABILITY_ID)
+                if AbilityMode != 0 then
+                    call RemoveItemFromUpgradeShop(pid, MIDAS_TOUCH_ITEM_ID)
+                endif
                 set count = count + 1
             endif
 

@@ -331,6 +331,9 @@ library trigger111 initializer init requires RandomShit, Functions
         if new then
             call UnitAddAbility(u, abil)
             call SpellLearnedFunc(u, abil)
+            if AbilityMode == 1 then
+                call AddItemToUpgradeShop(GetPlayerId(p), GetItemTypeId(GetManipulatedItem()))
+            endif
         endif
         if i > 1 then
             call SetUnitAbilityLevel(u, udg_integer01, i)
