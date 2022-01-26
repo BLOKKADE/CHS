@@ -269,11 +269,11 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
         local boolean b  = true
         
         if override == false then
-            if BlzIsUnitInvulnerable(targ) then
+            if BlzIsUnitInvulnerable(targ) or GetUnitAbilityLevel(targ, HARDENED_SKIN_ABILITY_ID) > 0 or UnitHasItemS(targ, 'I090') then
                 return false
             endif
         endif
-        if GetUnitTypeId(targ) == 'h005' then
+        if GetUnitTypeId(targ) == PRIEST_1_UNIT_ID then
             return false
         endif
         

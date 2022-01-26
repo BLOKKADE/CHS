@@ -20,7 +20,9 @@ library EnergyTrap requires UnitHelpers, RandomShit, SpellFormula, KnockbackHelp
                 exitwhen p == null
                 set udg_NextDamageAbilitySource = ENERGY_TRAP_ABILITY_ID
                 call MoveToPoint(this.source, p, GetUnitX(this.source), GetUnitY(this.source))
-                call Lightning.unitToUnit(this.source, p, 0., 0., true, 0.8, "LEAS", 0)
+                if not IsKnockedBack(p) then
+                    call Lightning.unitToUnit(this.source, p, 0., 0., true, 0.8, "LEAS", 0)
+                endif
                 call Damage.apply(this.source, p, GetSpellValue(ENERGY_TRAP_ABILITY_ID, 0, 50, 25, this.level), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
