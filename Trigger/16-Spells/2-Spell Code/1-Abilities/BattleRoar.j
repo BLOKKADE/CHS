@@ -10,8 +10,8 @@ library BattleRoar requires RuneInit
             set p = FirstOfGroup(ENUM_GROUP)
             exitwhen p == null
 
-            call TempBonus.create(p, BONUS_DAMAGE, GetSpellValue(abilId, 0, 50, 20, lvl), 10).addBuffLink('BNbr')
-            call TempBonus.create(p, BONUS_ARMOR, GetSpellValue(abilId, 1, 5, 1, lvl), 10).addBuffLink('BNbr')
+            call TempBonus.create(p, BONUS_DAMAGE, GetSpellValue(50, 20, lvl), 10).addBuffLink('BNbr')
+            call TempBonus.create(p, BONUS_ARMOR, GetSpellValue(5, 1, lvl), 10).addBuffLink('BNbr')
 
             call GroupRemoveUnit(ENUM_GROUP, p)
         endloop

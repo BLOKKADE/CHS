@@ -40,13 +40,13 @@ library Immolation initializer init requires ToggleAbility
             call BJDebugMsg("dmg")
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(this.source), GetUnitY(this.source), 245 + (5 * this.level), Player(pid), false, Target_Enemy)
-            call SetUnitState(this.source, UNIT_STATE_MANA, GetUnitState(this.source, UNIT_STATE_MANA) - GetSpellValue(IMMOLATION_ABILITY_ID, 0, 5, 1, this.level))
+            call SetUnitState(this.source, UNIT_STATE_MANA, GetUnitState(this.source, UNIT_STATE_MANA) - GetSpellValue(5, 1, this.level))
             loop
                 set p = FirstOfGroup(ENUM_GROUP)
                 exitwhen p == null
                 set udg_NextDamageAbilitySource = IMMOLATION_ABILITY_ID
                 call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\NightElf\\Immolation\\ImmolationDamage.mdl", p, "head"))
-                call Damage.applySpell(this.source, p, GetSpellValue(IMMOLATION_ABILITY_ID, 0, 30, 12, this.level), DAMAGE_TYPE_MAGIC)
+                call Damage.applySpell(this.source, p, GetSpellValue(30, 12, this.level), DAMAGE_TYPE_MAGIC)
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
         endmethod

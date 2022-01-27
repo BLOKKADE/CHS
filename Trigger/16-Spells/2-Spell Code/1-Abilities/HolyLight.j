@@ -1,6 +1,6 @@
 library HolyLight requires SpellFormula
     function CastHolyLight takes unit caster, unit target, integer level returns nothing
-        local real value = GetSpellValue(HOLY_LIGHT_ABILITY_ID, 0, 200, 100, level)
+        local real value = GetSpellValue(200, 100, level)
 
         call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl", GetUnitX(target), GetUnitY(target)))
         if IsUnitEnemy(target, GetOwningPlayer(caster)) then

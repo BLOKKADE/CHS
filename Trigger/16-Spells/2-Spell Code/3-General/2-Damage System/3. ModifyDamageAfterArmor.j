@@ -264,7 +264,7 @@ scope ModifyDamageAfterArmor initializer init
                     //call BJDebugMsg("mosc")
                     set MagnetOscHitTick[DamageSourceId] = T32_Tick
                     set udg_NextDamageAbilitySource = MAGNET_OSC_ABILITY_ID
-                    call Damage.apply(DamageTarget, DamageSource, GetSpellValue(MAGNET_OSC_ABILITY_ID, 0, 30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                    call Damage.apply(DamageTarget, DamageSource, GetSpellValue(30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                     if IsAbilityEnabled(DamageTarget, MAGNET_OSC_ABILITY_ID) then
                         call KnockbackTarget(DamageTarget, DamageSource, GetAngleToTarget(DamageTarget, DamageSource) * bj_RADTODEG, RAbsBJ(700 - r1), 600, false, false, false, false)
                     else

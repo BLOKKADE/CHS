@@ -105,11 +105,11 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
             set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.08
             if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
-                call BJDebugMsg("sa: " + I2S(GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)))
+                call BJDebugMsg("sa: " + I2S(GetSpellValue(60, 30, i1)))
                 set DamageSourceAbility = SEARING_ARROWS_ABILITY_ID
                 set Damage.index.damageType = DAMAGE_TYPE_MAGIC
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
-                set Damage.index.damage = Damage.index.damage + GetSpellValue(SEARING_ARROWS_ABILITY_ID, 0, 60, 30, i1)
+                set Damage.index.damage = Damage.index.damage + GetSpellValue(60, 30, i1)
             endif
         endif
 
@@ -118,11 +118,11 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID) then
             set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.04
             if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
-                call BJDebugMsg("ca: " + I2S(GetSpellValue(COLD_ARROWS_ABILITY_ID, 0, 20, 10, i1)))
+                call BJDebugMsg("ca: " + I2S(GetSpellValue(20, 10, i1)))
                 set DamageSourceAbility = COLD_ARROWS_ABILITY_ID
                 set Damage.index.damageType = DAMAGE_TYPE_MAGIC
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
-                set Damage.index.damage = Damage.index.damage + GetSpellValue(COLD_ARROWS_ABILITY_ID, 0, 20, 10, i1)
+                set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
                 call DummyOrder.create(DamageSource, GetUnitX(DamageSource), GetUnitY(DamageSource), GetUnitFacing(DamageSource), 4).addActiveAbility('A04X', 1, 852662).setAbilityRealField('A04X', ABILITY_RLF_DURATION_NORMAL, 2.8 + (0.2 * i1)).target(DamageTarget).activate()
             endif
         endif
