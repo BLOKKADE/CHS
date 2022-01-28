@@ -1,4 +1,4 @@
-library trigger122 initializer init requires RandomShit
+library trigger122 initializer init requires RandomShit, PlayerTracking
 
     function Trig_Victory_Func001Func001C takes nothing returns boolean
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
@@ -123,6 +123,9 @@ library trigger122 initializer init requires RandomShit
             call DisplayTimedTextToForce(GetPlayersAll(),30,("|cffffcc00" +("You survived all levels! Congratulations!!")))
         else
             call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
+            
+            // Update the player's stats that they won a BR
+            call PlayerStats.forPlayer(WinningPlayer).addBRWin()
         endif
         call EndThematicMusicBJ()
         call SetMusicVolumeBJ(0.00)

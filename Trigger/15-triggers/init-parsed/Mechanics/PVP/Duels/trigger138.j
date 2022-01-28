@@ -1,4 +1,4 @@
-library trigger138 initializer init requires RandomShit
+library trigger138 initializer init requires RandomShit, PlayerTracking
 
     function Trig_Receive_Prize_Conditions takes nothing returns boolean
         if(not(CountUnitsInGroup(udg_group03)> 0))then
@@ -31,6 +31,9 @@ library trigger138 initializer init requires RandomShit
         if(Trig_Receive_Prize_Func002Func003C())then
             call SetPlayerState(GetOwningPlayer(GetEnumUnit()), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(GetEnumUnit()), PLAYER_STATE_RESOURCE_GOLD) + udg_integer15)
             call GroupRemoveUnitSimple(GetEnumUnit(),udg_group03)
+
+            // Update the player's stats that they won a pvp match
+            call PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit())).addPVPWin()
         else
         endif
     endfunction
