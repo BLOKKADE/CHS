@@ -22,6 +22,26 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         local PlayerStats ps = PlayerStats.forPlayer(GetTriggerPlayer())
         set SaveCount = -1 // This must get set to -1 every time we generate a new code
 
+        /*
+        // Testing only
+        call ps.setDraftPVPSeasonWins(ps.getDraftPVPSeasonWins() + 1)
+        call ps.setDraftBRSeasonWins(ps.getDraftBRSeasonWins() + 2)
+        call ps.setDraftPVPAllWins(ps.getDraftPVPAllWins() + 3)
+        call ps.setDraftBRAllWins(ps.getDraftBRAllWins() + 4)
+
+        // All Random Save Values
+        call ps.setARPVPSeasonWins(ps.getARPVPSeasonWins() + 5)
+        call ps.setARBRSeasonWins(ps.getARBRSeasonWins() + 6)
+        call ps.setARPVPAllWins(ps.getARPVPAllWins() + 7)
+        call ps.setARBRAllWins(ps.getARBRAllWins() + 8)
+
+        // All Pick Save Values
+        call ps.setAPPVPSeasonWins(ps.getAPPVPSeasonWins() + 9)
+        call ps.setAPBRSeasonWins(ps.getAPBRSeasonWins() + 10)
+        call ps.setAPPVPAllWins(ps.getAPPVPAllWins() + 11)
+        call ps.setAPBRAllWins(ps.getAPBRAllWins() + 12)
+        */
+
         // All Pick Save Values
         call SaveNextBasicValue(ps.getAPBRAllWins())
         call SaveNextBasicValue(ps.getAPPVPAllWins())

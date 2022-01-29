@@ -1,4 +1,4 @@
-library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData
+library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking
 	globals
 		framehandle gameUI
 		framehandle SkillFrame
@@ -63,6 +63,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		local integer i2
 		local integer i3
 		local unit SpellU
+		local PlayerStats ps
 
 		if BlzGetTriggerFrameEvent() ==  FRAMEEVENT_CONTROL_CLICK then
 			
@@ -162,6 +163,32 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 					if GetLocalPlayer() == GetTriggerPlayer() then
 						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
 						call BlzFrameSetSize(Tooltip, 0.125, GetTooltipSize(ToolTipS))
+						call BlzFrameSetVisible(Tooltip, true)
+					endif
+				elseif NumButton == 39 then
+					set SpellU = udg_units01[NumPlayerLast[PlID] + 1]
+					set ps = PlayerStats.forPlayer(GetOwningPlayer(SpellU))
+					set ToolTipS = "|cffd0ff00All Pick Stats|r"
+					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getAPBRAllWins())
+					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getAPBRSeasonWins())
+					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getAPPVPAllWins())
+					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getAPPVPSeasonWins())
+
+					set ToolTipS = ToolTipS + "|n|cffd0ff00All Random Stats|r"
+					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getARBRAllWins())
+					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getARBRSeasonWins())
+					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getARPVPAllWins())
+					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getARPVPSeasonWins())
+
+					set ToolTipS = ToolTipS + "|n|cffd0ff00Draft Stats|r"
+					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getDraftBRAllWins())
+					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getDraftBRSeasonWins())
+					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getDraftPVPAllWins())
+					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins())
+
+					if GetLocalPlayer() == GetTriggerPlayer() then
+						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+						call BlzFrameSetSize(Tooltip, 0.21, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
 				elseif NumButton == 100 then
@@ -294,6 +321,8 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 			call BlzFrameSetVisible(SpellUP[37], true)
 			call CreateIconWorld(38 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - 2 * sizeAbil , sizeAbil)
 			call BlzFrameSetTexture(SpellFR[38] , "ReplaceableTextures\\PassiveButtons\\PASElements.blp" , 0, true)
+			call CreateIconWorld(39 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.018 , - sizeAbil , sizeAbil)
+			call BlzFrameSetTexture(SpellFR[39] , "ReplaceableTextures\\PassiveButtons\\PASElements.blp" , 0, true)
 			call CreateIconWorld(100 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - sizeAbil , sizeAbil)
 			call CreateIconWorld(101 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + sizeAbil , - sizeAbil , sizeAbil)
 			call CreateIconWorld(102 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 2 * sizeAbil , - sizeAbil  , sizeAbil)
