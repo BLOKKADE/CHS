@@ -54,6 +54,13 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
     // We must load the values in the REVERSE order as we saved them
     private function LoadCodeValues takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(SaveLoadEvent_Player)
+        
+        // Don't load anything if the player has already loaded. A player should only need to load once
+        if (ps.hasLoaded()) then
+            call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "You have already loaded your Save Code.")
+            return
+        endif
+
         set SaveCount = -1
         set SaveTempInt = integer(Savecode.create())
 
@@ -88,13 +95,13 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         // The camera setting should be saved correct already, but validate against bad values to prevent errors
         if (ps.getCameraZoom() > 0) then
             if (ps.getCameraZoom() > 3000) then
-                call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,3000.00,0.50)
+                call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,3000.00,0.50)
                 call ps.setCameraZoom(3000)
             elseif (ps.getCameraZoom() < 1700) then
-                call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,1700.00,0.50)
+                call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,1700.00,0.50)
                 call ps.setCameraZoom(1700)
             else 
-                call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,I2R(ps.getCameraZoom()),0.50)
+                call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,I2R(ps.getCameraZoom()),0.50)
             endif
         else
             call ps.setCameraZoom(0)
@@ -117,6 +124,9 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setAPBRSeasonWins(LoadNextBasicValue())
         call ps.setAPPVPAllWins(LoadNextBasicValue())
         call ps.setAPBRAllWins(LoadNextBasicValue())
+
+        // Flag that the player finished loading
+        call ps.finishedLoading()
 
         call Savecode(SaveTempInt).destroy()
 

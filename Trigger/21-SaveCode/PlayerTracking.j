@@ -40,6 +40,14 @@ library PlayerTracking initializer init requires OldInitialization
             return thistype(GetPlayerId(p) + 1) // First struct created is 1, not 0
         endmethod
 
+        public method hasLoaded takes nothing returns boolean
+            return this.HasLoaded
+        endmethod
+
+        public method finishedLoading takes nothing returns nothing
+            set this.HasLoaded = true
+        endmethod
+
         public method getAllBRWins takes nothing returns integer
             // Random
             if (AbilityMode == 0) then
@@ -210,7 +218,6 @@ library PlayerTracking initializer init requires OldInitialization
 
         public method setMapVersion takes integer value returns nothing
             set this.MapVersion = value
-            set this.HasLoaded = true
         endmethod
 
         private method tryIncrementValue takes integer currentValue, string valueName returns integer 
@@ -258,16 +265,16 @@ library PlayerTracking initializer init requires OldInitialization
 
         public method resetSeasonStats takes nothing returns nothing
             // All Pick Season Save Values
-            set APBRSeasonWins = 0
-            set APPVPSeasonWins = 0
+            set this.APBRSeasonWins = 0
+            set this.APPVPSeasonWins = 0
 
             // All Random Season Save Values
-            set ARBRSeasonWins = 0
-            set ARPVPSeasonWins = 0
+            set this.ARBRSeasonWins = 0
+            set this.ARPVPSeasonWins = 0
 
             // Draft Season Save Values
-            set DraftBRSeasonWins = 0
-            set DraftPVPSeasonWins = 0
+            set this.DraftBRSeasonWins = 0
+            set this.DraftPVPSeasonWins = 0
         endmethod
     endstruct
 
