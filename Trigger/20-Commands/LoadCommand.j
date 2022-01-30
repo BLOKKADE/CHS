@@ -2,9 +2,10 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
     // This is responsible for parsing the input and determining how to load the code
     // An event is fired from the savecode library once it is done loading
-    private function LoadCode takes Args args returns nothing
+    private function LoadRawCode takes Args args returns nothing
         set SaveTempString = SubStringBJ(GetEventPlayerChatString(), 7, 999)
         set SaveTempInt = S2I(SaveTempString)
+
         if (StringLength(SaveTempString) == 1) then
             // Do nothing?
         else
@@ -26,6 +27,21 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call LoadSaveSlot(GetTriggerPlayer(), SaveTempInt)
     endfunction
 	
+    // This is responsible for trying to autoload the player's save file
+    // An event is fired from the savecode library once it is done loading
+    private function AutoLoadPlayerSaveCode takes nothing returns nothing
+        if (GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING) then
+            set SaveTempInt = -1
+            set SaveLoadEvent_Player = GetEnumPlayer()
+        
+            call LoadSaveSlot(GetEnumPlayer(), SaveTempInt)
+        endif
+    endfunction
+
+    private function AutoLoadPlayerSaveCodes takes nothing returns nothing
+        call ForForce(GetPlayersAll(), function AutoLoadPlayerSaveCode)
+    endfunction
+
     private function LoadNextBasicValue takes nothing returns integer 
         set SaveCount = SaveCount + 1
         set SaveMaxValue[SaveCount] = MAX_SAVE_VALUE
@@ -70,14 +86,18 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setCameraZoom(LoadNextBasicValue())
 
         // The camera setting should be saved correct already, but validate against bad values to prevent errors
-        if (ps.getCameraZoom() > 3000) then
-            call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,3000.00,0.50)
-            call ps.setCameraZoom(3000)
-        elseif (ps.getCameraZoom() < 1700) then
-            call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,1700.00,0.50)
-            call ps.setCameraZoom(1700)
-        else 
-            call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,I2R(ps.getCameraZoom()),0.50)
+        if (ps.getCameraZoom() > 0) then
+            if (ps.getCameraZoom() > 3000) then
+                call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,3000.00,0.50)
+                call ps.setCameraZoom(3000)
+            elseif (ps.getCameraZoom() < 1700) then
+                call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,1700.00,0.50)
+                call ps.setCameraZoom(1700)
+            else 
+                call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,I2R(ps.getCameraZoom()),0.50)
+            endif
+        else
+            call ps.setCameraZoom(0)
         endif
 
         // Draft Save Values
@@ -99,6 +119,8 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setAPBRAllWins(LoadNextBasicValue())
 
         call Savecode(SaveTempInt).destroy()
+
+        call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "Successfully loaded your Save Code")
     endfunction
 
 	private function init takes nothing returns nothing
@@ -107,7 +129,9 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call TriggerAddAction(syncEventTrigger, function LoadCodeValues)
         set syncEventTrigger = null
 
-		call Command.create(CommandHandler.LoadCode).name("load").handles("load").help("load <code>", "loads your progress from your save code")
+        call TimerStart(CreateTimer(), 1.00, false, function AutoLoadPlayerSaveCodes)
+
+		call Command.create(CommandHandler.LoadRawCode).name("load").handles("load").help("load <code>", "loads your progress from your save code")
 	endfunction
 
 endlibrary

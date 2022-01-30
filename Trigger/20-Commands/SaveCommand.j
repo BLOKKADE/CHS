@@ -17,9 +17,9 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         set SaveValue[SaveCount] = value
     endfunction
 
-    private function SaveCode takes Args args returns nothing
+    public function SaveCodeForPlayer takes player p returns nothing
         local integer saveIndex = 0
-        local PlayerStats ps = PlayerStats.forPlayer(GetTriggerPlayer())
+        local PlayerStats ps = PlayerStats.forPlayer(p)
         set SaveCount = -1 // This must get set to -1 every time we generate a new code
 
         /*
@@ -72,20 +72,24 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         endloop
 
         set SaveTempString = ""
-        set SaveTempString = Savecode(SaveTempInt).Save(GetTriggerPlayer(), 1)
-        call SaveFile.create(GetTriggerPlayer(), "", -1, SaveTempString)
+        set SaveTempString = Savecode(SaveTempInt).Save(p, 1)
+        call SaveFile.create(p, "", -1, SaveTempString)
         
         if (SaveShowCode) then
             set SaveCodeColored = Savecode_colorize(SaveTempString)
 
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,SaveCodeColored)
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"Your Save Code has been saved to:")
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"Documents//Warcraft III//CustomMapData//CHS")
+            call DisplayTimedTextToPlayer(p,0,0,30,SaveCodeColored)
+            call DisplayTimedTextToPlayer(p,0,0,30,"Your Save Code has been saved to:")
+            call DisplayTimedTextToPlayer(p,0,0,30,"Documents//Warcraft III//CustomMapData//CHS")
         endif
 	endfunction
 	
+    private function SaveCodeCommandActions takes Args args returns nothing
+        call SaveCodeForPlayer(GetTriggerPlayer())
+    endfunction
+    
 	private function init takes nothing returns nothing
-		call Command.create(CommandHandler.SaveCode).name("save").handles("save").help("save", "saves your current progress")
+		call Command.create(CommandHandler.SaveCodeCommandActions).name("save").handles("save").help("save", "saves your current progress")
 	endfunction
 
 endlibrary

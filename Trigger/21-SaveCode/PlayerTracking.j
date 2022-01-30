@@ -30,7 +30,7 @@ library PlayerTracking initializer init requires OldInitialization
         private integer DraftPVPSeasonWins = 0
 
         // Misc Save Values
-        private integer CameraZoom = 2800
+        private integer CameraZoom = 0
         private integer MapVersion = 0
 
         // Other
@@ -38,6 +38,66 @@ library PlayerTracking initializer init requires OldInitialization
 
         public static method forPlayer takes player p returns thistype
             return thistype(GetPlayerId(p) + 1) // First struct created is 1, not 0
+        endmethod
+
+        public method getAllBRWins takes nothing returns integer
+            // Random
+            if (AbilityMode == 0) then
+                return this.ARBRAllWins
+            // Pick
+            elseif (AbilityMode == 1) then
+                return this.APBRAllWins
+            // Draft
+            elseif (AbilityMode == 2) then
+                return this.DraftBRAllWins
+            endif
+
+            return 0 // Shouldn't ever happen?
+        endmethod
+
+        public method getSeasonBRWins takes nothing returns integer
+            // Random
+            if (AbilityMode == 0) then
+                return this.APBRSeasonWins
+            // Pick
+            elseif (AbilityMode == 1) then
+                return this.APBRSeasonWins
+            // Draft
+            elseif (AbilityMode == 2) then
+                return this.DraftBRSeasonWins
+            endif
+
+            return 0 // Shouldn't ever happen?
+        endmethod
+
+        public method getAllPVPWins takes nothing returns integer
+            // Random
+            if (AbilityMode == 0) then
+                return this.ARPVPAllWins
+            // Pick
+            elseif (AbilityMode == 1) then
+                return this.APPVPAllWins
+            // Draft
+            elseif (AbilityMode == 2) then
+                return this.DraftPVPAllWins
+            endif
+
+            return 0 // Shouldn't ever happen?
+        endmethod
+
+        public method getSeasonPVPWins takes nothing returns integer
+            // Random
+            if (AbilityMode == 0) then
+                return this.APPVPSeasonWins
+            // Pick
+            elseif (AbilityMode == 1) then
+                return this.APPVPSeasonWins
+            // Draft
+            elseif (AbilityMode == 2) then
+                return this.DraftPVPSeasonWins
+            endif
+
+            return 0 // Shouldn't ever happen?
         endmethod
 
         public method getAPBRAllWins takes nothing returns integer

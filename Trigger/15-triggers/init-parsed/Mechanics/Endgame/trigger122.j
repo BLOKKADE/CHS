@@ -1,4 +1,4 @@
-library trigger122 initializer init requires RandomShit, PlayerTracking
+library trigger122 initializer init requires RandomShit, SaveCommand
 
     function Trig_Victory_Func001Func001C takes nothing returns boolean
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
@@ -107,8 +107,15 @@ library trigger122 initializer init requires RandomShit, PlayerTracking
         return true
     endfunction
 
+    private function AutoSaveForPlayer takes nothing returns nothing
+        if (GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING) then
+            call SaveCommand_SaveCodeForPlayer(GetEnumPlayer())
+        endif
+    endfunction
 
     function Trig_Victory_Actions takes nothing returns nothing
+        local PlayerStats winningPlayer
+
         set udg_boolean11 = true
         call DisableTrigger(GetTriggeringTrigger())
         call DisableTrigger(udg_trigger118)
@@ -125,7 +132,11 @@ library trigger122 initializer init requires RandomShit, PlayerTracking
             call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
             
             // Update the player's stats that they won a BR
-            call PlayerStats.forPlayer(WinningPlayer).addBRWin()
+            set winningPlayer = PlayerStats.forPlayer(WinningPlayer)
+            call winningPlayer.addBRWin()
+
+            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(WinningPlayer)+(" has |cffc2154f" + I2S(winningPlayer.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(winningPlayer.getAllBRWins()) + "|r all time for this game mode"))))
+
         endif
         call EndThematicMusicBJ()
         call SetMusicVolumeBJ(0.00)
@@ -133,6 +144,9 @@ library trigger122 initializer init requires RandomShit, PlayerTracking
         call DisableTrigger(udg_trigger87)
         call TriggerSleepAction(2.00)
         call DisplayTimedTextToForce(GetPlayersAll(),26.00,"|cffffcc00Thank you for playing|r " + "|cff7bff00" + VERSION + "|r")
+
+        // Save everyones codes
+        call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
     endfunction
 
 

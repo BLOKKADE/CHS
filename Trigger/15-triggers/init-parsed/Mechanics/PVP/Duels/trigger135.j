@@ -1,4 +1,4 @@
-library trigger135 initializer init requires RandomShit
+library trigger135 initializer init requires RandomShit, PlayerTracking
 
     function Trig_End_PvP_Conditions takes nothing returns boolean
         if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)==true))then
@@ -116,6 +116,8 @@ library trigger135 initializer init requires RandomShit
 
     function Trig_End_PvP_Actions takes nothing returns nothing
         local real bonus = 1
+        local PlayerStats winningPlayer
+
         if(Trig_End_PvP_Func001C())then
             set udg_unit05 = udg_units03[2]
         else
@@ -124,7 +126,14 @@ library trigger135 initializer init requires RandomShit
         call DisableTrigger(udg_trigger140)
         call DisableTrigger(udg_trigger141)
         call PvpStopSuddenDeathTimer()
+        
+        // Update the player's stats that they won a pvp match
+        set winningPlayer = PlayerStats.forPlayer(GetOwningPlayer(udg_unit05))
+        call winningPlayer.addPVPWin()
+
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" |cffffcc00has defeated |r" +(GetPlayerNameColour(GetOwningPlayer(GetDyingUnit()))+ "|cffffcc00!!|r")))))
+        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" has |cffc2154f" + I2S(winningPlayer.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(winningPlayer.getAllPVPWins()) + "|r all time for this game mode"))))
+
         call SetUnitInvulnerable(udg_unit05,true)
     
         //Midas Touch

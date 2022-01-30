@@ -13,7 +13,7 @@ library Savecode requires BigNum
     endfunction
 
     private function player_charset takes nothing returns string
-        return "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        return "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#"
     endfunction
 
     private function player_charsetlen takes nothing returns integer
