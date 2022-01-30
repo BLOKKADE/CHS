@@ -54,7 +54,8 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
     // We must load the values in the REVERSE order as we saved them
     private function LoadCodeValues takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(SaveLoadEvent_Player)
-        
+        local boolean resetSeasonStats = false
+
         // Don't load anything if the player has already loaded. A player should only need to load once
         if (ps.hasLoaded()) then
             call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "You have already loaded your Save Code.")
@@ -77,16 +78,16 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         if (ps.getMapVersion() != CURRENT_GAME_VERSION) then
             // Trying to load a code that is older than the curret version
             if (ps.getMapVersion() < CURRENT_GAME_VERSION) then
-                call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Save Code is for an older version of CHS. Resetting Map Version wins.")
+                call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Save Code is for an older version of CHS. Resetting Season wins.")
             else
                 // Trying to load a code that is newer than the curret version
-                call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Save Code is for a newer version of CHS. Resetting Map Version wins.")
+                call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Save Code is for a newer version of CHS. Resetting Season wins.")
             endif
 
             call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Current Map Version: " + GetMapVersionName(CURRENT_GAME_VERSION))
             call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Map Version: " + GetMapVersionName(ps.getMapVersion()))
-            call ps.resetSeasonStats()
             call ps.setMapVersion(CURRENT_GAME_VERSION)
+            set resetSeasonStats = true
         endif
 
         // Load camera settings
@@ -124,6 +125,10 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setAPBRSeasonWins(LoadNextBasicValue())
         call ps.setAPPVPAllWins(LoadNextBasicValue())
         call ps.setAPBRAllWins(LoadNextBasicValue())
+
+        if (resetSeasonStats) then
+            call ps.resetSeasonStats()
+        endif
 
         // Flag that the player finished loading
         call ps.finishedLoading()
