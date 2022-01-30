@@ -66,7 +66,7 @@ library PlayerTracking initializer init requires OldInitialization
         public method getSeasonBRWins takes nothing returns integer
             // Random
             if (AbilityMode == 0) then
-                return this.APBRSeasonWins
+                return this.ARBRSeasonWins
             // Pick
             elseif (AbilityMode == 1) then
                 return this.APBRSeasonWins
@@ -96,7 +96,7 @@ library PlayerTracking initializer init requires OldInitialization
         public method getSeasonPVPWins takes nothing returns integer
             // Random
             if (AbilityMode == 0) then
-                return this.APPVPSeasonWins
+                return this.ARPVPSeasonWins
             // Pick
             elseif (AbilityMode == 1) then
                 return this.APPVPSeasonWins
