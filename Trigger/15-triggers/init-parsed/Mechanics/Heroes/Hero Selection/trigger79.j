@@ -1,4 +1,4 @@
-library trigger79 initializer init requires RandomShit, Functions
+library trigger79 initializer init requires RandomShit, Functions, LoadCommand
 
     globals
         unit SellingShop
@@ -234,8 +234,8 @@ library trigger79 initializer init requires RandomShit, Functions
             call ResourseRefresh( udg_player02   )
         endif
     
-    
-    
+        // Try to load the code for the player
+        call LoadCommand_AutoLoadPlayerSaveCode(udg_player02)
                     
     
         if GetLocalPlayer() == GetOwningPlayer(GetLastCreatedUnit()) then

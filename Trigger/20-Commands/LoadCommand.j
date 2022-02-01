@@ -29,17 +29,13 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
 	
     // This is responsible for trying to autoload the player's save file
     // An event is fired from the savecode library once it is done loading
-    private function AutoLoadPlayerSaveCode takes nothing returns nothing
-        if (GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING) then
+    public function AutoLoadPlayerSaveCode takes player p returns nothing
+        if (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING) then
             set SaveTempInt = -1
-            set SaveLoadEvent_Player = GetEnumPlayer()
+            set SaveLoadEvent_Player = p
         
-            call LoadSaveSlot(GetEnumPlayer(), SaveTempInt)
+            call LoadSaveSlot(p, SaveTempInt)
         endif
-    endfunction
-
-    private function AutoLoadPlayerSaveCodes takes nothing returns nothing
-        call ForForce(GetPlayersAll(), function AutoLoadPlayerSaveCode)
     endfunction
 
     private function LoadNextBasicValue takes nothing returns integer 
@@ -143,8 +139,6 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call TriggerRegisterVariableEvent(syncEventTrigger, "SaveLoadEvent", EQUAL, 1.00)
         call TriggerAddAction(syncEventTrigger, function LoadCodeValues)
         set syncEventTrigger = null
-
-        call TimerStart(CreateTimer(), 1.00, false, function AutoLoadPlayerSaveCodes)
 
 		call Command.create(CommandHandler.LoadRawCode).name("load").handles("load").help("load <code>", "loads your progress from your save code")
 	endfunction
