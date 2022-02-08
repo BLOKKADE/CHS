@@ -12,8 +12,8 @@ library DraftModeFunctions requires TimerUtils
         unit circle1 = null
         unit circle2 = null
         boolean DraftInitialised = false
-        texttag FloatingTextBuy
-        texttag FloatingTextUpgrade
+        texttag FloatingTextBuy = null
+        texttag FloatingTextUpgrade = null
     endglobals
 
     function RemoveDraftSpells takes integer playerNumber, integer NOSpells returns nothing
