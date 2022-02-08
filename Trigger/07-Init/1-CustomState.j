@@ -87,7 +87,7 @@ library CustomState requires TimerUtils
 
     //Luck
     function SetUnitLuck takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),1,5)
+        call SaveReal(HT_unitstate,GetHandleId(u),5, 1)
     endfunction
 
     //function GetUnitLuck takes unit u returns real
