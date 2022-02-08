@@ -434,15 +434,11 @@ library trigger103 initializer init requires RandomShit, Functions
     
                     call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0) + damageBonus,0)
     
-                    call AddUnitMagicDmg(GetLastCreatedUnit(), magicPowerBonus)
-                    call AddUnitMagicDef(GetLastCreatedUnit(), magicDefBonus)
-                    call AddUnitEvasion(GetLastCreatedUnit(), evasionBonus)	
-                    call AddUnitBlock(GetLastCreatedUnit(), blockBonus)			
+                    call SetUnitMagicDmg(GetLastCreatedUnit(), magicPowerBonus)
+                    call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.25 *(udg_integer02)))
+                    call SetUnitEvasion(GetLastCreatedUnit(), evasionBonus)	
+                    call SetUnitBlock(GetLastCreatedUnit(), blockBonus)			
     
-    
-    
-    
-                    call AddUnitMagicDef(GetLastCreatedUnit(),0.25 *(udg_integer02))
                     if udg_integer02 < 3 then
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)- 3,0)
     
