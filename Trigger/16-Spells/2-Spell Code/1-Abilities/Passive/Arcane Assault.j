@@ -30,7 +30,7 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
 
         call GroupClear(ENUM_GROUP)
         call GroupAddUnit(ENUM_GROUP, damageTarget)
-        call RUH.reset().excludeGroup(ENUM_GROUP).EnumUnits(x, y, 600, p)
+        call RUH.reset().excludeGroup(ENUM_GROUP).EnumUnits(x, y, 600, Target_Enemy, p)
 
         loop
             set target = RUH.GetRandomUnit(false)
