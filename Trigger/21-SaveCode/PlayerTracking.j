@@ -8,6 +8,7 @@ library PlayerTracking initializer init requires OldInitialization
         constant integer CURRENT_GAME_VERSION = 1 // This value needs to have an index value in the game version string lookup
         constant integer MAX_SAVE_VALUE = 9999
         private string array MapVersionLookup
+        private boolean SaveEnabled
     endglobals
 
     struct PlayerStats
@@ -286,20 +287,32 @@ library PlayerTracking initializer init requires OldInitialization
         return "Unknown Map Version: " + I2S(gameVersion)
     endfunction
 
+    function IsSavingEnabled takes nothing returns boolean
+        return SaveEnabled
+    endfunction
+
     private function SetupMapVersionLookups takes nothing returns nothing
         set MapVersionLookup[0] = "Invalid Map Version" // Placeholder for default map version
         set MapVersionLookup[1] = "CHS_v1.9.30-beta1" // The first game version that supports save codes
     endfunction
 
     private function init takes nothing returns nothing
-        // Initialize the PlayerStats for each player. Even if they aren't in the game
         local PlayerStats ps = 0
+        local force computerPlayers = GetPlayersByMapControl(MAP_CONTROL_COMPUTER)
 
+        // Initialize the PlayerStats for each player. Even if they aren't in the game
         loop
             set ps = PlayerStats.create()
             exitwhen ps == 12 // A static variable that we should be avoiding
         endloop
 
+        set SaveEnabled = CountPlayersInForceBJ(computerPlayers) == 2 // Players 9 and 12 are Computer AI
+
+        // Map version stuff
         call SetupMapVersionLookups()
+
+        // Cleanup
+        call DestroyForce(computerPlayers)
+        set computerPlayers = null
     endfunction
 endlibrary
