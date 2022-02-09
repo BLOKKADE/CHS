@@ -344,10 +344,11 @@ library trigger111 initializer init requires RandomShit, Functions
                 call AddItemToUpgradeShop(GetPlayerId(p), GetItemTypeId(GetManipulatedItem()))
             endif
         endif
-        if i > 1 then
+        if i > 1 and i < 32 then
             call SetUnitAbilityLevel(u, udg_integer01, i)
+            call SetupDummySpell(u, abil, i, new)
         endif
-        call SetupDummySpell(u, abil, i, new)
+        
         call FuncEditParam(abil,u)
         call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
