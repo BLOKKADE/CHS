@@ -22,6 +22,11 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         local PlayerStats ps = PlayerStats.forPlayer(p)
         set SaveCount = -1 // This must get set to -1 every time we generate a new code
 
+        if (not IsSavingEnabled()) then
+            call DisplayTimedTextToPlayer(p,0,0,30,"Saving is disabled since there are computer players")
+            return
+        endif
+
         /*
         // Testing only
         call ps.setDraftPVPSeasonWins(ps.getDraftPVPSeasonWins() + 1)
