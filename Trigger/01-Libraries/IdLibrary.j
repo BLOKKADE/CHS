@@ -14,6 +14,47 @@ library IdLibrary initializer init
         constant integer ID_NOT_FOUND                                   = -1
 
         // --- Unit IDs ---
+
+        // --- Shops ---
+
+        constant integer ABSOLUTE_SHOP_UNIT_ID                          = 'n031'
+        constant integer AUTOCAST_TOGGLE_SPELLS_UNIT_ID                 = 'n013'
+        constant integer CHRONUS_SPELLS_UNIT_ID                         = 'n02M'
+        constant integer SUMMON_SPELLS_UNIT_ID                          = 'n014'
+
+        constant integer ACTIVE_SPELLS_I_UNIT_ID                        = 'n00D'
+        constant integer ACTIVE_SPELLS_II_UNIT_ID                       = 'n003'
+        constant integer ACTIVE_SPELLS_III_UNIT_ID                      = 'n00U'
+        constant integer ACTIVE_SPELLS_IV_UNIT_ID                       = 'n00Y'
+        constant integer ACTIVE_SPELLS_V_UNIT_ID                        = 'n02O'
+        constant integer ACTIVE_SPELLS_VI_UNIT_ID                       = 'n033'
+
+        constant integer PASSIVE_SPELLS_I_UNIT_ID                       = 'n001'
+        constant integer PASSIVE_SPELLS_II_UNIT_ID                      = 'n012'
+        constant integer PASSIVE_SPELLS_III_UNIT_ID                     = 'n00S'
+        constant integer PASSIVE_SPELLS_IV_UNIT_ID                      = 'n02N'
+        constant integer PASSIVE_SPELLS_V_UNIT_ID                       = 'n02X'
+        constant integer PASSIVE_SPELLS_VI_UNIT_ID                      = 'n032'
+
+        constant integer ITEM_SHOP_I_UNIT_ID                            = 'n00Z'
+        constant integer ITEM_SHOP_II_UNIT_ID                           = 'n01D'
+        constant integer ITEM_SHOP_III_UNIT_ID                          = 'n02I'
+        constant integer ITEM_SHOP_IV_UNIT_ID                           = 'n02J'
+        constant integer ITEM_SHOP_V_UNIT_ID                            = 'n02Q'
+        constant integer ITEM_SHOP_VI_UNIT_ID                           = 'n02Y'
+        constant integer ITEM_SHOP_VII_UNIT_ID                          = 'n03A'
+
+        constant integer RUNESTONE_SHOP_UNIT_ID                         = 'n02Z'
+        constant integer ELEMENTAL_ITEM_SHOP_UNIT_ID                    = 'n030'
+        constant integer GLORY_SHOP_UNIT_ID                             = 'n02U'
+        constant integer SUMMON_BUFFS_SHOP_UNIT_ID                      = 'n02H'
+        
+        constant integer ARENA_BUFFS_SHOP_I_UNIT_ID                     = 'n02T'
+        constant integer ARENA_BUFFS_SHOP_II_UNIT_ID                    = 'n036'
+
+        constant integer PVE_SHOP_I_UNIT_ID                             = 'n02V'
+        constant integer PVE_SHOP_II_UNIT_ID                            = 'n02W'
+
         // --- Summons ---
 
         // Single Summons

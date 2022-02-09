@@ -311,6 +311,10 @@ library trigger111 initializer init requires RandomShit, Functions
         return true
     endfunction
 
+    function EconomicModeAbility takes integer abilId returns boolean
+        return ECONOMIC_ABILITIES.contains(abilId) and EconomyMode
+    endfunction
+
 
     function BuyLevels takes player p, unit u, integer abil, boolean maxBuy, boolean new returns nothing
         local integer i = GetUnitAbilityLevel(u, abil) + 1
@@ -414,11 +418,29 @@ library trigger111 initializer init requires RandomShit, Functions
         if HoldCtrl[GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] then
             set maxAbil = true
         endif
+
+        if EconomicModeAbility(udg_integer01) then
+            if udg_boolean06 then
+                call ConditionalTriggerExecute(udg_trigger114)
+                return
+            else
+                call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
+                
+                if AbilityMode == 1 then
+                    call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
+                    call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "[|cffffc896Economic|r] spells are |cffff0000unavailable in Economy mode|r: instead you get bonus gold and experience by default.")
+                endif
+
+                return
+            endif
+        endif
+
         if(Trig_Learn_Ability_Func008C())then
             if(Trig_Learn_Ability_Func008Func002C())then
                 if(Trig_Learn_Ability_Func008Func002Func001C())then
                     if(Trig_Learn_Ability_Func008Func002Func001Func007C())then
-                        if(Trig_Learn_Ability_Func008Func002Func001Func007Func001C())then
+                        if(Trig_Learn_Ability_Func008Func002Func001Func007Func001C()) then
                             call ConditionalTriggerExecute(udg_trigger114)
                             return
                         else

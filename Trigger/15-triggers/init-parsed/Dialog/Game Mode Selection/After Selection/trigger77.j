@@ -1,5 +1,9 @@
 library trigger77 initializer init requires RandomShit
 
+    globals
+        boolean EconomyMode = false
+    endglobals
+
     function Trig_Dialog_Complete_Func026C takes nothing returns boolean
         if((udg_boolean15==false))then
             return true
@@ -470,164 +474,30 @@ library trigger77 initializer init requires RandomShit
         call DisableTrigger(GetTriggeringTrigger())
         set udg_strings02[0]= ""
         call ClearTextMessagesBJ(GetPlayersAll())
-        if(Trig_Dialog_Complete_Func006C())then
-            call DisableTrigger(GetTriggeringTrigger())
-            set udg_boolean04 = true
-            set udg_integer31 =(udg_integer06 * 5)
-            set udg_integer31 =(udg_integer31 - 5)
-            if(Trig_Dialog_Complete_Func006Func008C())then
-                set udg_strings02[1]= "Mode: Elimination (Hard)|r"
-                call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-                set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-                set udg_strings02[1]= "PvP: Every 5th Level|r"
-                if(Trig_Dialog_Complete_Func006Func008Func011001())then
-                    set udg_strings02[1]= "PvP: None|r"
-                else
-                    call DoNothing()
-                endif
-                call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-            else
-                set udg_strings02[1]= "Mode: Elimination (Normal)|r"
-                call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-                set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-                set udg_strings02[1]= "PvP: Every 5th Level|r"
-                if(Trig_Dialog_Complete_Func006Func008Func006001())then
-                    set udg_strings02[1]= "PvP: None|r"
-                else
-                    call DoNothing()
-                endif
-                call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-            endif
-            call DisplayTimedTextToForce(GetPlayersAll(),15,"|c00ff2c2cElimination mode will likely be removed in the future! Let us know on discord if you disagree.|r")
-            call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func006Func009001001)),function Trig_Dialog_Complete_Func006Func009A)
-        else
-            set udg_boolean04 = false
-            if(Trig_Dialog_Complete_Func006Func004C())then
-                call DisableTrigger(GetTriggeringTrigger())
-                set udg_boolean07 = true
-                if(Trig_Dialog_Complete_Func006Func004Func005C())then
-                    set udg_strings02[1]= "Mode: Death Match (Hard)|r"
-                    call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-                    set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-                    set udg_strings02[1]= "PvP: Every 5th Level|r"
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func020001())then
-                        set udg_strings02[1]= "PvP: None|r"
-                    else
-                        call DoNothing()
-                    endif
-                    call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func022001())then
-                        set udg_integer31 = 0
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func023001())then
-                        set udg_integer31 = 5
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func024001())then
-                        set udg_integer31 = 5
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func025001())then
-                        set udg_integer31 = 10
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func026001())then
-                        set udg_integer31 = 10
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func027001())then
-                        set udg_integer31 = 10
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func028001())then
-                        set udg_integer31 = 10
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func029001())then
-                        set udg_integer31 = 15
-                    else
-                        call DoNothing()
-                    endif
-                    set udg_boolean08 = true
-                else
-                    set udg_strings02[1]= "Mode: Death Match (Normal)|r"
-                    call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-                    set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-                    set udg_strings02[1]= "PvP: Every 10th Level|r"
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func006001())then
-                        set udg_strings02[1]= "PvP: None|r"
-                    else
-                        call DoNothing()
-                    endif
-                    call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func008001())then
-                        set udg_integer31 = 0
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func009001())then
-                        set udg_integer31 = 10
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func010001())then
-                        set udg_integer31 = 10
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func011001())then
-                        set udg_integer31 = 20
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func012001())then
-                        set udg_integer31 = 20
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func013001())then
-                        set udg_integer31 = 20
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func014001())then
-                        set udg_integer31 = 20
-                    else
-                        call DoNothing()
-                    endif
-                    if(Trig_Dialog_Complete_Func006Func004Func005Func015001())then
-                        set udg_integer31 = 30
-                    else
-                        call DoNothing()
-                    endif
-                    set udg_boolean08 = false
-                endif
-                call DisplayTimedTextToForce(GetPlayersAll(),15,"|c00ff2c2cDeath Match mode will likely be removed in the future! Let us know on discord if you disagree.|r")
-                call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func006Func004Func006001001)),function Trig_Dialog_Complete_Func006Func004Func006A)
-            else
-                set udg_boolean07 = false
-            endif
-        endif
+        set udg_boolean04 = false
+        set udg_boolean07 = false
+        
         if(Trig_Dialog_Complete_Func008C())then
             if(Trig_Dialog_Complete_Func008Func002C())then
                 call DisableTrigger(GetTriggeringTrigger())
+                call BJDebugMsg("25 lvls")
                 set udg_boolean08 = true
             else
                 call DisableTrigger(GetTriggeringTrigger())
+                call BJDebugMsg("50 lvls")
                 set udg_boolean08 = false
+            endif
+
+            if Trig_Dialog_Complete_Func006Func004C() then
+                set EconomyMode = true
+                set udg_strings02[1]= "Mode: Economy|r"
+            else
+                set udg_strings02[1]= "Mode: Normal|r"
             endif
     
             //boolean08
             if(Trig_Dialog_Complete_Func008Func003C())then
-                set udg_strings02[1]= "Mode: Normal (25 Levels)|r"
+                set udg_strings02[1] = udg_strings02[1] + " (25 Levels)|r"
                 call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
                 call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
                 set Lives[0] = 1
@@ -639,6 +509,7 @@ library trigger77 initializer init requires RandomShit
                 set Lives[6] = 1
                 set Lives[7] = 1
                 set Lives[8] = 1
+                set BattleRoyalRound = 25
                 set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
                 set udg_strings02[1]= "PvP: Every 5th Level|r"
                 if(Trig_Dialog_Complete_Func008Func003Func012001())then
@@ -649,7 +520,8 @@ library trigger77 initializer init requires RandomShit
                 call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
                 call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func014001001)),function Trig_Dialog_Complete_Func008Func003Func014A)
             else
-                set udg_strings02[1]= "Mode: Normal (50 Levels)|r"
+                set BattleRoyalRound = 50
+                set udg_strings02[1] = udg_strings02[1] + " (50 Levels)|r"
                 call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
                 call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
                 set Lives[0] = 1

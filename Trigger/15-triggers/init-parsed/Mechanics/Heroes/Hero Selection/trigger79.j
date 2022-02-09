@@ -1,9 +1,4 @@
-library trigger79 initializer init requires RandomShit, Functions, LoadCommand
-
-    globals
-        unit SellingShop
-    endglobals
-
+library trigger79 initializer init requires RandomShit, Functions, LoadCommand, ShopIndex, EconomyMode
     function Trig_Spawn_Hero_Func005C takes nothing returns boolean
         if(not(udg_boolean16==false))then
             return false
@@ -145,23 +140,23 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand
             //  set u=CreateUnit(p,'n00S',1116,707,270.000)           
     
     
-            set u = CreateUnit(p,'n00Y',- 124,707,270.000)
-            set u = CreateUnit(p,'n00U',- 372,707,270.000)
-            set u = CreateUnit(p,'n003',- 620,707,270.000) 
-            set u = CreateUnit(p,'n033',- 620,707 + 248,270.000) 
-            set u = CreateUnit(p,'n00D',- 868,707,270.000)   
-            set u = CreateUnit(p,'n02O',- 868,707 + 248,270.000)     	 	 
-            set u = CreateUnit(p,'n02M',- 1116,707,270.000) 
+            call SetShopIndex(CreateUnit(p,ACTIVE_SPELLS_IV_UNIT_ID,- 124,707,270.000))
+            call SetShopIndex(CreateUnit(p,ACTIVE_SPELLS_III_UNIT_ID,- 372,707,270.000))
+            call SetShopIndex(CreateUnit(p,ACTIVE_SPELLS_II_UNIT_ID,- 620,707,270.000) )
+            call SetShopIndex(CreateUnit(p,ACTIVE_SPELLS_VI_UNIT_ID,- 620,707 + 248,270.000) )
+            call SetShopIndex(CreateUnit(p,ACTIVE_SPELLS_I_UNIT_ID,- 868,707,270.000)   )
+            call SetShopIndex(CreateUnit(p,ACTIVE_SPELLS_V_UNIT_ID,- 868,707 + 248,270.000)   )  	 	 
+            call SetShopIndex(CreateUnit(p,CHRONUS_SPELLS_UNIT_ID,- 1116,707,270.000) )
     
     
-            set u = CreateUnit(p,'n013',124,707,270.000)
-            set u = CreateUnit(p,'n014',372,707,270.000)
-            set u = CreateUnit(p,'n001',620,707,270.000)     
-            set u = CreateUnit(p,'n012',868,707,270.000)  
-            set u = CreateUnit(p,'n00S',1116,707,270.000)  
-            set u = CreateUnit(p,'n02N',1116,707 + 248,270.000)  
-            set u = CreateUnit(p,'n032',372,707 + 248,270.000)  
-            set u = CreateUnit(p,'n02X',868,707 + 248,270.000) 
+            call SetShopIndex(CreateUnit(p,AUTOCAST_TOGGLE_SPELLS_UNIT_ID,124,707,270.000))
+            call SetShopIndex(CreateUnit(p,SUMMON_SPELLS_UNIT_ID,372,707,270.000))
+            call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_I_UNIT_ID,620,707,270.000)    ) 
+            call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_II_UNIT_ID,868,707,270.000)  )
+            call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_III_UNIT_ID,1116,707,270.000)  )
+            call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_IV_UNIT_ID,1116,707 + 248,270.000)  )
+            call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_V_UNIT_ID,372,707 + 248,270.000)  )
+            call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_VI_UNIT_ID,620,707 + 248,270.000) )
     
     
             //		set u=CreateUnit(p,'n001',384.0,576.0,270.000)
@@ -182,17 +177,17 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand
             //	set u=CreateUnit(p,'n016',960.0,-256.0,270.000)
         endif
         
-        set u = CreateUnit(p,'n02H',- 868,- 1152,270.000) 
-        set u = CreateUnit(p,'n00Z',- 620,- 1152,270.000) 
-        set u = CreateUnit(p,'n01D',- 372,- 1152,270.000) 
-        set SellingShop = CreateUnit(p,'n02V',- 124,- 1152,270.000) 
-        set u = CreateUnit(p,'n02W',- 124,- 1152 - 256,270.000)
-        set u = CreateUnit(p,'n02I',124,- 1152,270.000) 
-        set u = CreateUnit(p,'n02Z',124,- 1152 - 256,270.000) 
-        set u = CreateUnit(p,'n02J',372,- 1152,270.000) 
-        set u = CreateUnit(p,'n030',372,- 1152 - 256,270.000) 
-        set u = CreateUnit(p,'n02Q',620,- 1152,270.000) 
-        set u = CreateUnit(p,'n02Y',868,- 1152,270.000)
+        call SetShopIndex(CreateUnit(p,SUMMON_BUFFS_SHOP_UNIT_ID,- 868,- 1152,270.000))
+        call SetShopIndex(CreateUnit(p,ITEM_SHOP_I_UNIT_ID,- 620,- 1152,270.000) )
+        call SetShopIndex(CreateUnit(p,ITEM_SHOP_II_UNIT_ID,- 372,- 1152,270.000) )
+        call SetShopIndex(CreateUnit(p,PVE_SHOP_I_UNIT_ID,- 124,- 1152,270.000) )
+        call SetShopIndex(CreateUnit(p,PVE_SHOP_II_UNIT_ID,- 124,- 1152 - 256,270.000))
+        call SetShopIndex(CreateUnit(p,ITEM_SHOP_III_UNIT_ID,124,- 1152,270.000) )
+        call SetShopIndex(CreateUnit(p,RUNESTONE_SHOP_UNIT_ID,124,- 1152 - 256,270.000) )
+        call SetShopIndex(CreateUnit(p,ITEM_SHOP_IV_UNIT_ID,372,- 1152,270.000) )
+        call SetShopIndex(CreateUnit(p,ELEMENTAL_ITEM_SHOP_UNIT_ID,372,- 1152 - 256,270.000) )
+        call SetShopIndex(CreateUnit(p,ITEM_SHOP_V_UNIT_ID,620,- 1152,270.000) )
+        call SetShopIndex(CreateUnit(p,ITEM_SHOP_VI_UNIT_ID,868,- 1152,270.000))
         call ForGroupBJ( GetUnitsOfTypeIdAll('ncop'), function Trig_Untitled_Trigger_001_Func001A )
     endfunction
 
@@ -305,6 +300,10 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand
                 call InitUpgradeShop()
             endif
             call CreateNeutralPassiveBuildings2()
+
+            if EconomyMode and AbilityMode == 1 then
+                call RemoveEconomySpells()
+            endif
         else
         endif
         call TriggerSleepAction(2)

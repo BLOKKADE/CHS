@@ -79,14 +79,11 @@ library trigger55 initializer init requires RandomShit
         call DialogAddButtonBJ(udg_dialog02,"Normal (Recommended)")
         set udg_buttons01[4]= GetLastCreatedButtonBJ()	
     
-        call DialogAddButtonBJ(udg_dialog02,"Immortal: easy mode")
+        call DialogAddButtonBJ(udg_dialog02,"Immortal: Easy")
         set udg_buttons01[18]= GetLastCreatedButtonBJ()
     
-        call DialogAddButtonBJ(udg_dialog02,"Death Match")
+        call DialogAddButtonBJ(udg_dialog02,"Economy")
         set udg_buttons01[10]= GetLastCreatedButtonBJ()
-    
-        call DialogAddButtonBJ(udg_dialog02,"Elimination")	
-        set udg_buttons01[5]= GetLastCreatedButtonBJ()
     
         call DialogAddButtonBJ(udg_dialog02,"Doesn't Matter")
         set udg_buttons01[6]= GetLastCreatedButtonBJ()

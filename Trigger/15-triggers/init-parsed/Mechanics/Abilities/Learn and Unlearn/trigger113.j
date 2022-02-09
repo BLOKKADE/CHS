@@ -14,6 +14,7 @@ library trigger113 initializer init requires RandomShit
             set udg_unit01 = GetTriggerUnit()
             call ConditionalTriggerExecute(udg_trigger114)
         else
+            call AdjustPlayerStateBJ(5, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_LUMBER)
             call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "Random is unavailable in Draft mode")
         endif
     endfunction
