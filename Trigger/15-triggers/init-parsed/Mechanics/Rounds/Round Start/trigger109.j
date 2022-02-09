@@ -114,7 +114,9 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
 
     function Trig_Start_Level_Func015Func002Func004A takes nothing returns nothing
-        call SellItem(RectPid - 1, GetEnumItem())
+        if GetItemType(GetEnumItem()) != ITEM_TYPE_POWERUP then
+            call SellItem(RectPid - 1, GetEnumItem())
+        endif
     endfunction
 
 

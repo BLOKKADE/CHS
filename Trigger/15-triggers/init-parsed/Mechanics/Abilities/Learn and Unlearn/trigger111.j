@@ -1,5 +1,9 @@
 library trigger111 initializer init requires RandomShit, Functions
 
+    globals
+        unit BuyingUnit = null
+    endglobals
+
     function Trig_Learn_Ability_Conditions takes nothing returns boolean
         if(not('I00P'!=GetItemTypeId(GetManipulatedItem())))then
             return false
@@ -17,7 +21,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())==0))then
+        if(not(GetUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)==0))then
             return false
         endif
         return true
@@ -42,7 +46,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func002C takes nothing returns boolean
-        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
+        if(not(IsUnitType(BuyingUnit,UNIT_TYPE_MELEE_ATTACKER)==true))then
             return false
         endif
         if(not Trig_Learn_Ability_Func008Func002Func001Func001Func002Func002C())then
@@ -61,7 +65,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func003C takes nothing returns boolean
-        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_RANGED_ATTACKER)==true))then
+        if(not(IsUnitType(BuyingUnit,UNIT_TYPE_RANGED_ATTACKER)==true))then
             return false
         endif
         if(not Trig_Learn_Ability_Func008Func002Func001Func001Func003Func002C())then
@@ -72,7 +76,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func004Func001C takes nothing returns boolean
-        if((IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
+        if((IsUnitType(BuyingUnit,UNIT_TYPE_MELEE_ATTACKER)==true))then
             return true
         endif
         return false
@@ -102,13 +106,13 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func005Func001C takes nothing returns boolean
-        if((GetUnitTypeId(GetTriggerUnit())=='H004'))then
+        if((GetUnitTypeId(BuyingUnit)=='H004'))then
             return true
         endif
-        if((GetUnitTypeId(GetTriggerUnit())=='O005'))then
+        if((GetUnitTypeId(BuyingUnit)=='O005'))then
             return true
         endif
-        if((GetUnitTypeId(GetTriggerUnit())=='O001'))then
+        if((GetUnitTypeId(BuyingUnit)=='O001'))then
             return true
         endif
         return false
@@ -135,7 +139,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001C takes nothing returns boolean
-        if((udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]>= 10))then
+        if((udg_integers01[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]>= 10))then
             return true
         endif
         if(Trig_Learn_Ability_Func008Func002Func001Func001Func002C())then
@@ -180,7 +184,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001C takes nothing returns boolean
-        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
+        if(not(IsUnitType(BuyingUnit,UNIT_TYPE_MELEE_ATTACKER)==true))then
             return false
         endif
         if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001Func002C())then
@@ -199,7 +203,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func002C takes nothing returns boolean
-        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_RANGED_ATTACKER)==true))then
+        if(not(IsUnitType(BuyingUnit,UNIT_TYPE_RANGED_ATTACKER)==true))then
             return false
         endif
         if(not Trig_Learn_Ability_Func008Func002Func001Func007Func002Func002Func002C())then
@@ -210,7 +214,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func001C takes nothing returns boolean
-        if((IsUnitType(GetTriggerUnit(),UNIT_TYPE_MELEE_ATTACKER)==true))then
+        if((IsUnitType(BuyingUnit,UNIT_TYPE_MELEE_ATTACKER)==true))then
             return true
         endif
         return false
@@ -320,6 +324,7 @@ library trigger111 initializer init requires RandomShit, Functions
         local integer i = GetUnitAbilityLevel(u, abil) + 1
         local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
         local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
+        call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
         if maxBuy then
             loop
                 if lumber - cost < 0 then
@@ -351,7 +356,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func003C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())< 30))then
+        if(not(GetUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)< 30))then
             return false
         endif
         return true
@@ -375,7 +380,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func001Func002C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())>= 0))then
+        if(not(GetUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)>= 0))then
             return false
         endif
         return true
@@ -391,7 +396,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func001Func002Func002C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())< 30))then
+        if(not(GetUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)< 30))then
             return false
         endif
         return true
@@ -409,13 +414,14 @@ library trigger111 initializer init requires RandomShit, Functions
     function Trig_Learn_Ability_Actions takes nothing returns nothing
         local integer abilLevel
         local boolean maxAbil = false
+        set BuyingUnit = udg_units01[GetPlayerId(GetOwningPlayer(BuyingUnit)) + 1]
         set udg_integer01 = GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
         //call ConditionalTriggerExecute(udg_trigger112)
         if udg_integer01 == 0 or IsAbsolute(udg_integer01) then
             return
         endif
-        set abilLevel = GetUnitAbilityLevel(GetTriggerUnit(), udg_integer01)
-        if HoldCtrl[GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] then
+        set abilLevel = GetUnitAbilityLevel(BuyingUnit, udg_integer01)
+        if HoldCtrl[GetPlayerId(GetOwningPlayer(BuyingUnit))] then
             set maxAbil = true
         endif
 
@@ -424,12 +430,12 @@ library trigger111 initializer init requires RandomShit, Functions
                 call ConditionalTriggerExecute(udg_trigger114)
                 return
             else
-                call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
+                call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
                 
                 if AbilityMode == 1 then
-                    call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                    call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "[|cffffc896Economic|r] spells are |cffff0000unavailable in Economy mode|r: instead you get bonus gold and experience by default.")
+                    call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                    call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "[|cffffc896Economic|r] spells are |cffff0000unavailable in Economy mode|r: instead you get bonus gold and experience by default.")
                 endif
 
                 return
@@ -446,49 +452,49 @@ library trigger111 initializer init requires RandomShit, Functions
                         else
                             if(Trig_Learn_Ability_Func008Func002Func001Func007Func001Func001C())then
     
-                                call AdjustPlayerStateBJ(   BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ) ,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
+                                call AdjustPlayerStateBJ(   BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ) ,GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
     
-                                call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
-                                //	call AdjustPlayerStateBJ((GetItemLevel(GetManipulatedItem())*10),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
+                                call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
+                                //	call AdjustPlayerStateBJ((GetItemLevel(GetManipulatedItem())*10),GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
                             else
-                                call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                                call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                                call AdjustPlayerStateBJ(5,GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                                call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                             endif
                             //call BJDebugMsg("failed?1")
-                            call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
+                            call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
                             return
                         endif
                     endif
                     if(Trig_Learn_Ability_Func008Func002Func001Func008C())then
-                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                        call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                     else
-                        call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                        call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                        call AdjustPlayerStateBJ(5,GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                     endif
                     //call BJDebugMsg("failed?2")
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffffe600Failed to learn|r")
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r")
                     return
                 else
-                    set udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+ 1)
-                    set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= udg_integer01
-                    call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), udg_integer01, maxAbil, true)
+                    set udg_integers01[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]=(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]+ 1)
+                    set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]= udg_integer01
+                    call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, udg_integer01, maxAbil, true)
                 endif
             else
                 //increase level ap
                 if(Trig_Learn_Ability_Func008Func002Func003C())then
-                    call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), udg_integer01, maxAbil, false)
+                    call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, udg_integer01, maxAbil, false)
                 else
                     //max level reached
                     if(Trig_Learn_Ability_Func008Func002Func003Func001C())then
-                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                        call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                     else
-                        call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                        call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                        call AdjustPlayerStateBJ(5,GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                     endif
                     //call BJDebugMsg("max lvl ap")
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffffe600Failed to learn|r: Maximum ability level")
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r: Maximum ability level")
                     return
                 endif
             endif
@@ -497,32 +503,32 @@ library trigger111 initializer init requires RandomShit, Functions
                 if(Trig_Learn_Ability_Func008Func001Func002C())then
                     //failed ar
                     if(Trig_Learn_Ability_Func008Func001Func002Func001C())then
-                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                        call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                     else
-                        call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                        call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                        call AdjustPlayerStateBJ(5,GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                     endif
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffffe600Failed to learn|r: (Random mode) 3")
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r: (Random mode) 3")
                     return
                 else
                     //increase level ap
                     if(Trig_Learn_Ability_Func008Func001Func002Func002C())then
-                        call IncUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())
-                        call FuncEditParam(udg_integer01,GetTriggerUnit())
-                        call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
+                        call IncUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)
+                        call FuncEditParam(udg_integer01,BuyingUnit)
+                        call AddSpecialEffectLocBJ(GetUnitLoc(BuyingUnit),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
                         call DestroyEffectBJ(GetLastCreatedEffectBJ())
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(udg_integer01, abilLevel))
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(udg_integer01, abilLevel))
                     else
                         if(Trig_Learn_Ability_Func008Func001Func002Func002Func001C())then
-                            call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                            call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                            call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                            call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                         else
-                            call AdjustPlayerStateBJ(5,GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
-                            call ResourseRefresh(GetOwningPlayer(GetTriggerUnit()) )
+                            call AdjustPlayerStateBJ(5,GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                            call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                         endif
                         //call BJDebugMsg("inc f ap")
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffffe600Failed to learn|r: 4")
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r: 4")
                         return
                     endif
                 endif
