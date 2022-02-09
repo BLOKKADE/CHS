@@ -414,7 +414,7 @@ library trigger111 initializer init requires RandomShit, Functions
     function Trig_Learn_Ability_Actions takes nothing returns nothing
         local integer abilLevel
         local boolean maxAbil = false
-        set BuyingUnit = udg_units01[GetPlayerId(GetOwningPlayer(BuyingUnit)) + 1]
+        set BuyingUnit = udg_units01[GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1]
         set udg_integer01 = GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
         //call ConditionalTriggerExecute(udg_trigger112)
         if udg_integer01 == 0 or IsAbsolute(udg_integer01) then
