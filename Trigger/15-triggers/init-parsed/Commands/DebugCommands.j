@@ -1,8 +1,8 @@
 library DebugCommands initializer init requires CustomState, RandomShit, Functions
     globals
+        boolean DebugModeEnabled = false
         boolean array NextRound
         real RoundTime = 20
-        boolean Waiting
         integer dummyId = 'H00E'
         unit array PlayerDummy
         boolean array dummyEnabled
@@ -127,7 +127,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         set trg = null
     endfunction
 
-    function SpawnDummy takes nothing returns nothing
+    function SpawnDummy takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(udg_units01[pid + 1]), GetUnitY(udg_units01[pid + 1]), 0)
         set CreatedDummies[pid] = CreatedDummies[pid] + 1
@@ -138,26 +138,24 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
-    function LvlHero takes nothing returns nothing
+    function LvlHero takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        local string check = SubString(GetEventPlayerChatString(),0,4)
-        local integer pn = S2I(SubString(GetEventPlayerChatString(),5,8))
-        if check == "-lvl" and pn > 1 then 
+        local integer pn = S2I(args[1])
+        if pn > 1 then 
         call SetHeroLevel(udg_units01[pid + 1], GetHeroLevel(udg_units01[pid+1]) + pn, true)
         endif
     endfunction
 
-    function AddGlory takes nothing returns nothing
-        local string check = SubString(GetEventPlayerChatString(),0,6)
-        local integer pn = S2I(SubString(GetEventPlayerChatString(),7,13))
+    function AddGlory takes Args args returns nothing
+        local integer pn = S2I(args[1])
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        if check == "-glory" and pn > 1 then 
+        if pn > 1 then 
             set Glory[pid] = Glory[pid] + pn
             call ResourseRefresh(GetTriggerPlayer())
         endif
     endfunction
 
-    function StartNextRound takes nothing returns nothing
+    function StartNextRound takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer()) 
         if NextRound[udg_integer02] then
             set NextRound[udg_integer02] = false
@@ -166,12 +164,19 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
-    function SetRoundTime takes nothing returns nothing
-        local string check = SubString(GetEventPlayerChatString(),0,3)
-        local integer pn = S2I(SubString(GetEventPlayerChatString(),4,8))
-        if check == "-rt" and pn > 1 then
+    function SetRoundTime takes Args args returns nothing
+        local integer pn = S2I(args[1])
+        if pn > 1 then
             set RoundTime = pn
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Time between rounds set to: " + I2S(pn))
+        endif
+    endfunction
+
+    function SetBattleRoyale takes Args args returns nothing
+        local integer pn = S2I(args[1])
+        if pn > udg_integer02 then
+            set BattleRoyalRound = pn
+            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Battle Royal will start after round: " + I2S(pn))
         endif
     endfunction
     
@@ -180,15 +185,12 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local trigger trg = CreateTrigger()
         local integer i = 0
         local trigger trg2 = CreateTrigger()
-        if udg_integer06 == 1 then
+        if udg_integer06 == 1 and (not DebugModeEnabled) then
             loop
                 if UnitAlive(udg_units01[i + 1]) then
                     call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Single player commands have been enabled")
-                    call TriggerRegisterPlayerChatEvent(trg,Player(i),"-nx",true)
-                    call TriggerAddAction(trg, function StartNextRound)
-
-                    call TriggerRegisterPlayerChatEvent(trg2,Player(i),"-rt",false)
-                    call TriggerAddAction(trg2, function SetRoundTime)
+                    call Command.create(CommandHandler.StartNextRound).name("nx").handles("nx").help("nx", "Starts the next round if used inbetween rounds.")
+                    call Command.create(CommandHandler.SetRoundTime).name("rt").handles("rt").help("rt <value>", "Starting next round, sets the time between rounds to <value>.")
                     exitwhen true
                 endif
                 set i = i + 1
@@ -211,26 +213,14 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endloop
         
         if pc == 1 then
+            set DebugModeEnabled = true
+            call Command.create(CommandHandler.SpawnDummy).name("dummy").handles("dummy").help("dummy", "Spawns an enemy dummy at your Hero's location")
+            call Command.create(CommandHandler.LvlHero).name("lvl").handles("lvl").help("lvl <value>", "Adds <value> to your hero's level")
+            call Command.create(CommandHandler.AddGlory).name("glory").handles("glory").help("glory <value>", "Gives you <value> bonus glory.")
+            call Command.create(CommandHandler.StartNextRound).name("nx").handles("nx").help("nx", "Starts the next round if used inbetween rounds.")
+            call Command.create(CommandHandler.SetRoundTime).name("rt").handles("rt").help("rt <value>", "Starting next round, sets the time between rounds to <value>.")
+            call Command.create(CommandHandler.SetRoundTime).name("sbr").handles("sbr").help("sbr <value>", "The Battle Royal starts after round <value>.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
-            set trg = CreateTrigger()
-            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-dummy",true)
-            call TriggerAddAction(trg, function SpawnDummy)
-
-            set trg = CreateTrigger()
-            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-lvl", false)
-            call TriggerAddAction(trg, function LvlHero)
-
-            set trg = CreateTrigger()
-            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-glory", false)
-            call TriggerAddAction(trg, function AddGlory)
-
-            set trg = CreateTrigger()
-            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-nx",true)
-            call TriggerAddAction(trg, function StartNextRound)
-
-            set trg = CreateTrigger()
-            call TriggerRegisterPlayerChatEvent(trg,Player(0),"-rt",false)
-            call TriggerAddAction(trg, function SetRoundTime)
         endif
 
         set trg = null

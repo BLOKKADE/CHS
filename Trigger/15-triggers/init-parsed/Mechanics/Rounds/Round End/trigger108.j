@@ -1,5 +1,9 @@
 library trigger108 initializer init requires RandomShit
 
+    globals
+        integer BattleRoyalRound = 50
+    endglobals
+
     function Trig_Level_Completed_Func001C takes nothing returns boolean
         if(not(udg_integer08 >= udg_integer06))then
             return false
@@ -226,7 +230,7 @@ library trigger108 initializer init requires RandomShit
 
 
     function Trig_Level_Completed_Func001Func023Func002C takes nothing returns boolean
-        if(not(udg_integer02==25))then
+        if(not(udg_integer02==BattleRoyalRound))then
             return false
         endif
         if(not(udg_boolean04==false))then
@@ -245,7 +249,7 @@ library trigger108 initializer init requires RandomShit
 
 
     function Trig_Level_Completed_Func001Func023Func001C takes nothing returns boolean
-        if(not(udg_integer02==50))then
+        if(not(udg_integer02==BattleRoyalRound))then
             return false
         endif
         if(not(udg_boolean04==false))then
