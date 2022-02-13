@@ -57,6 +57,8 @@ library IdLibrary initializer init
 
         // --- Summons ---
 
+        StaticIdGroup SUMMONS
+
         // Single Summons
         constant integer CARRION_BEETLE_1_UNIT_ID                       = 'u001'
         constant integer CLOCKWORK_GOBLIN_1_UNIT_ID                     = 'n011'
@@ -136,11 +138,11 @@ library IdLibrary initializer init
         constant integer QUILBEAST_4_UNIT_ID                            = 'nqb4'
 
         // Raise Dead Units
-        StaticIdGroup RAISE_DEAD_SPAWNS
-        constant integer RAISE_DEAD_WARRIOR_1_UNIT_ID                   = 'n02S'
-        constant integer RAISE_DEAD_ARCHER_1_UNIT_ID                    = 'n02R'
-        constant integer RAISE_DEAD_CAPTAIN_1_UNIT_ID                   = 'h01A'
-        constant integer RAISE_DEAD_SKELETON_1_UNIT_ID                  = 'u003'
+        StaticIdGroup SKELLIESCAPTAINS
+        constant integer NECRO_BOOK_WARRIOR_1_UNIT_ID                   = 'n02S'
+        constant integer NECRO_BOOK_ARCHER_1_UNIT_ID                    = 'n02R'
+        constant integer FEARLESS_DEFENDER_CAPTAIN_UNIT_ID              = 'h01A'
+        constant integer BONE_ARMOR_SKELETON_UNIT_ID                    = 'u003'
 
         // Serpant Wards
         StaticIdGroup SERPENT_WARDS
@@ -244,7 +246,7 @@ library IdLibrary initializer init
         constant integer BLOODLUST_ABILITY_ID                           = 'Ablo'
         constant integer BREATH_OF_FIRE_ABILITY_ID                      = 'ANbf'
         constant integer BRILLIANCE_AURA_ABILITY_ID                     = 'AHab'
-        constant integer CARRION_BEETLES_ABILITY_ID                     = 'AUcb'
+        constant integer CARRION_BEETLES_ABILITY_ID                     = 'A06N'
         constant integer CARRION_SWARM_ABILITY_ID                       = 'AUcs'
         constant integer CHAIN_LIGHTNING_ABILITY_ID                     = 'AOcl'
         constant integer CHAOS_MAGIC_ABILITY_ID                         = 'A04L'
@@ -375,7 +377,7 @@ library IdLibrary initializer init
         constant integer STORM_BOLT_ABILITY_ID                          = 'AHtb'
         constant integer SUMMON_BEAR_ABILITY_ID                         = 'ANsg'
         constant integer SUMMON_HAWK_ABILITY_ID                         = 'ANsw'
-        constant integer SUMMON_LAVA_SPAWN_ABILITY_ID                   = 'ANlm'
+        constant integer SUMMON_LAVA_SPAWN_ABILITY_ID                   = 'A06K'
         constant integer SUMMON_MOUNTAIN_GIANT_ABILITY_ID               = 'AEsv'
         constant integer SUMMON_QUILBEAST_ABILITY_ID                    = 'Arsq'
         constant integer SUMMON_WATER_ELEMENTAL_ABILITY_ID              = 'AHwe'
@@ -443,6 +445,7 @@ library IdLibrary initializer init
 
         // --- Item IDs ---
 
+        constant integer ARCANE_INFUSED_SWORD_ITEM_ID                   = 'I0BN'
         constant integer MARTIAL_THEFT_ITEM_ID                          = 'I0BL'
         constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'
         constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'
@@ -1047,6 +1050,27 @@ library IdLibrary initializer init
     endfunction
 
     private function SetupSummons takes nothing returns nothing
+        //SUMMONS
+        set SUMMONS = StaticIdGroup.create()
+        call SUMMONS.add(BEAR_1_UNIT_ID)
+        call SUMMONS.add(FERAL_SPIRIT_WOLF_1_UNIT_ID)
+        call SUMMONS.add(HAWK_1_UNIT_ID)
+        call SUMMONS.add(INFERNAL_1_UNIT_ID)
+        call SUMMONS.add(LAVA_SPAWN_1_UNIT_ID)
+        call SUMMONS.add(QUILBEAST_1_UNIT_ID)
+        call SUMMONS.add(SERPENT_WARD_1_UNIT_ID)
+        call SUMMONS.add(WATER_ELEMENTAL_1_UNIT_ID)
+        call SUMMONS.add(SKELETON_BATTLEMASTER_1_UNIT_ID)
+        call SUMMONS.add(SKELETON_WARMAGE_1_UNIT_ID)
+        call SUMMONS.add(CARRION_BEETLE_1_UNIT_ID)
+        call SUMMONS.add(PARASITE_1_UNIT_ID)
+        call SUMMONS.add(CLOCKWORK_GOBLIN_1_UNIT_ID)
+        call SUMMONS.add(POCKET_FACTORY_1_UNIT_ID)
+        call SUMMONS.add(PHOENIX_1_UNIT_ID)
+        call SUMMONS.add(MOUNTAIN_GIANT_1_UNIT_ID)
+        call SUMMONS.add(SKELETON_WARRIOR_1_UNIT_ID)
+        call SUMMONS.add(SKELETON_MAGE_1_UNIT_ID)
+
         // Bears
         set BEARS = StaticIdGroup.create()
         call BEARS.add(BEAR_1_UNIT_ID)
@@ -1112,11 +1136,11 @@ library IdLibrary initializer init
         call QUILBEASTS.add(QUILBEAST_4_UNIT_ID)
 
         // Raise Dead Units
-        set RAISE_DEAD_SPAWNS = StaticIdGroup.create()
-        call RAISE_DEAD_SPAWNS.add(RAISE_DEAD_WARRIOR_1_UNIT_ID)
-        call RAISE_DEAD_SPAWNS.add(RAISE_DEAD_ARCHER_1_UNIT_ID)
-        call RAISE_DEAD_SPAWNS.add(RAISE_DEAD_CAPTAIN_1_UNIT_ID)
-        call RAISE_DEAD_SPAWNS.add(RAISE_DEAD_SKELETON_1_UNIT_ID)
+        set SKELLIESCAPTAINS = StaticIdGroup.create()
+        call SKELLIESCAPTAINS.add(NECRO_BOOK_WARRIOR_1_UNIT_ID)
+        call SKELLIESCAPTAINS.add(NECRO_BOOK_ARCHER_1_UNIT_ID)
+        call SKELLIESCAPTAINS.add(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID)
+        call SKELLIESCAPTAINS.add(BONE_ARMOR_SKELETON_UNIT_ID)
 
         // Serpant Wards
         set SERPENT_WARDS = StaticIdGroup.create()

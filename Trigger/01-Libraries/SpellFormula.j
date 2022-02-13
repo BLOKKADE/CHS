@@ -1,53 +1,56 @@
 library SpellFormula initializer init requires AbilityData
 
     globals
-        private HashTable SpellValueHashTable
+        private HashTable SpellValueTable
     endglobals
 
-    function HasAbilityKeyLevelValue takes integer valueInit, integer valueFactor, integer level returns boolean
-        return SpellValueHashTable[valueInit][valueFactor] != 0 and SpellValueHashTable[valueInit][valueFactor].real[level] != 0
+    function HasAbilityKeyLevelValue takes integer valueFactor, integer level returns boolean
+        call BJDebugMsg("has? fctr: " + I2S(valueFactor) + " lvl: " + I2S(level) + " bool: " + B2S(SpellValueTable[valueFactor].integer[level] != 0))
+        return level == 0 or SpellValueTable[valueFactor].integer[level] != 0
     endfunction
 
-    function GetAbilityKeyLevelValue takes integer valueInit, integer valueFactor, integer level returns real
-        return SpellValueHashTable[valueInit][valueFactor].real[level]
+    function GetAbilityKeyLevelValue takes integer valueFactor, integer level returns integer
+        call BJDebugMsg("get fctr: " + I2S(valueFactor) + " lvl: " + I2S(level) + " value: " + R2S(SpellValueTable[valueFactor].integer[level]))
+        return SpellValueTable[valueFactor].integer[level]
     endfunction
 
-    function SetAbilityKeyLevelValue takes integer valueInit, integer valueFactor, integer level, real value returns nothing
-        if SpellValueHashTable[valueInit][valueFactor] == 0 then
-            set SpellValueHashTable[valueInit][valueFactor] = Table.create()
-        endif
-        set SpellValueHashTable[valueInit][valueFactor].real[level] = value
+    function SetAbilityKeyLevelValue takes integer valueFactor, integer level, integer value returns nothing
+        set SpellValueTable[valueFactor].integer[level] = value
+        call BJDebugMsg("set fctr: " + I2S(valueFactor) + " lvl: " + I2S(level) + " value: " + I2S(SpellValueTable[valueFactor].integer[level]))
     endfunction
 
-    function CalculateValue takes real prevValue, real valueInit, real valueFactor, integer level returns real
-        if prevValue != 0 then
-            return prevValue + (valueFactor * level)
-        else
-            return valueInit
-        endif
+    function CalculateValue takes integer prevValue, integer valueFactor, integer level returns integer
+        return prevValue + (valueFactor * level)
     endfunction
 
-    function CalculateValues takes integer valueInit, integer valueFactor returns nothing
+    function CalculateValues takes integer valueFactor, integer level returns nothing
         local integer i = 1
 
-        loop
-            call SetAbilityKeyLevelValue(valueInit, valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueInit, valueFactor, i - 1), valueInit, valueFactor, i))
-            set i = i + 1
-            exitwhen i > 30
-        endloop
+        if HasAbilityKeyLevelValue(valueFactor, level - 1) then
+            call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))
+        else
+
+            loop
+                if not HasAbilityKeyLevelValue(valueFactor, i) then
+                    call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))
+                endif
+                set i = i + 1
+                exitwhen i > level
+            endloop
+        endif
     endfunction
     //============================================================================
     //calculates ability damage and other values using the world editor object editor formula
     //stores calculated values in a table so it doesnt need to be recalculated
         function GetSpellValue takes integer valueInit, integer valueFactor, integer level returns integer
-            if not HasAbilityKeyLevelValue(valueInit, valueFactor, level) then
-                call CalculateValues(valueInit, valueFactor)
+            if not HasAbilityKeyLevelValue(valueFactor, level) then
+                call CalculateValues(valueFactor, level)
             endif
 
-            return R2I(GetAbilityKeyLevelValue(valueInit, valueFactor, level))
+            return (GetAbilityKeyLevelValue(valueFactor, level)) + valueInit
         endfunction
 
         private function init takes nothing returns nothing
-            set SpellValueHashTable = HashTable.create()
+            set SpellValueTable = HashTable.create()
         endfunction
     endlibrary
