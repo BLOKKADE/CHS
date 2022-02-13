@@ -199,7 +199,13 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call BlzSetUnitArmor(u,BlzGetUnitArmor(u)- i1)
             call AddUnitBlock(u,- i1)
             call SaveInteger(HT,GetHandleId(u),54001,0)
-            set NumberOfUnit[pid] = 0
+        endif
+
+        //Arcane Infused Sword
+        set i1 = LoadInteger(HT,GetHandleId(u),ARCANE_INFUSED_SWORD_ITEM_ID)
+        if i1 != 0 then 
+            call AddUnitBonus(u, BONUS_DAMAGE, 0 - i1)
+            call SaveInteger(HT,GetHandleId(u),ARCANE_INFUSED_SWORD_ITEM_ID,0)
         endif
 
         //Murloc Warrior
@@ -258,7 +264,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
                 set i1 = udg_integer02 - 14
                 set Income[pid] = Income[pid] + (i1 * 90)
                 set BonusNeutralPlayer[pid] = BonusNeutralPlayer[pid] + i1
-                call DisplayTextToPlayer(p,0,0, "+" + I2S(i1) + "|cffffb23dCreep levels|r and + " + I2S(i1 * 90) + "|cffffee00income|r")       
+                call DisplayTextToPlayer(p,0,0, "+" + I2S(i1) + "|cffffb23dCreep levels|r ( " + I2S(BonusNeutralPlayer[pid]) + " total) and + " + I2S(i1 * 90) + "|cffffee00income|r")       
             endif
         else
             if Income[pid] == 0 then 

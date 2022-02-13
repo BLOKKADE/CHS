@@ -384,17 +384,7 @@ library trigger103 initializer init requires RandomShit, Functions
         if udg_integer02 > 0 then
             call CheckUnitAbilities()
         endif
-    
-        set NumberOfUnit[0] = 0 
-        set NumberOfUnit[1] = 0 
-        set NumberOfUnit[2] = 0 
-        set NumberOfUnit[3] = 0 
-        set NumberOfUnit[4] = 0 
-        set NumberOfUnit[5] = 0 
-        set NumberOfUnit[6] = 0
-        set NumberOfUnit[7] = 0 
-        set NumberOfUnit[8] = 0 
-    
+
         set udg_integer02 =(udg_integer02 + 1)
         call ForGroupBJ(udg_group05,function Trig_Generate_Next_Level_Func018A)
         call GroupClear(udg_group05)
@@ -430,7 +420,6 @@ library trigger103 initializer init requires RandomShit, Functions
                     call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group05)
                     //call UnitAddAbility(GetLastCreatedUnit(),'A057')
                     //call BlzUnitDisableAbility(GetLastCreatedUnit(),'A057',false,true)
-                    set NumberOfUnit[udg_integer40 - 1] = NumberOfUnit[udg_integer40 - 1] + 1
     
                     call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0) + damageBonus,0)
     

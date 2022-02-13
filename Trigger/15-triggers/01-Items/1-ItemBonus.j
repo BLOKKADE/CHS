@@ -120,6 +120,20 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set prevCount = LoadInteger(HTi,hid,46) 
 			call AddUnitEvasion(u, 40 * I2R(i - prevCount))
 			call SaveInteger(HTi,hid,46,i)	
+
+			//Flimsy Token
+		elseif itemId == FLIMSY_TOKEN_ITEM_ID then
+			set i = UnitHasItemI(u ,itemId )
+			set prevCount = LoadInteger(HTi,hid, itemId) 
+			call AddUnitEvasion(u, 30 * I2R(i - prevCount))
+			call SaveInteger(HTi,hid,itemId,i)	
+
+			//Spellbane Token
+		elseif itemId == SPELL_BANE_TOKEN_ITEM_ID then
+			set i = UnitHasItemI(u ,itemId )
+			set prevCount = LoadInteger(HTi,hid,itemId) 
+			call AddUnitMagicDef(u, 40 * I2R(i - prevCount))
+			call SaveInteger(HTi,hid,itemId,i)	
 				
 		
 			//Ancient Dagger
@@ -263,7 +277,8 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		elseif itemId == BLOKKADE_SHIELD_ITEM_ID then
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid, itemId) 
-			call AddUnitBlock(u ,   1000 * I2R(i - prevCount)  )		
+			call AddUnitBlock(u ,   1000 * I2R(i - prevCount)  )	
+			call AddUnitMagicDef(u ,   30 * I2R(i - prevCount)  )		
 			call SaveInteger(HTi,hid, itemId,i)	
 
 			//Contract of the Living
@@ -565,6 +580,13 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 80 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
+
+			//Null Void Orb
+		elseif itemId == 'I0AL' then
+			set i = UnitHasItemI(u , itemId)
+			set prevCount = LoadInteger(HTi, hid, itemId) 
+			call AddUnitMagicDef(u ,   40 * I2R(i - prevCount)  )
+			call SaveInteger(HTi, hid, itemId, i)
 
 		//Rapier of the Gods
 		elseif itemId == 'I01E' then

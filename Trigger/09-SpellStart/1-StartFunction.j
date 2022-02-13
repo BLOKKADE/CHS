@@ -211,9 +211,17 @@ function FunctionTimerSpell takes nothing returns nothing
     set i1 = UnitHasItemI( Herou,'I07G' )
     if i1 > 0 then
         call ElemFuncStart(Herou,'I07G')
-        call BlzSetUnitArmor(Herou,BlzGetUnitArmor(Herou)+ i1 * 20 * NumberOfUnit[pid] )
-        call AddUnitBlock(Herou,i1 * 20 * NumberOfUnit[pid])
-        call SaveInteger(HT,hid,54001,LoadInteger(HT,hid,54001)+ i1 * 20 * NumberOfUnit[pid] ) 
+        call BlzSetUnitArmor(Herou,BlzGetUnitArmor(Herou)+ i1 * 20 * udg_integer03 )
+        call AddUnitBlock(Herou,i1 * 20 * udg_integer03)
+        call SaveInteger(HT,hid,54001,LoadInteger(HT,hid,54001)+ i1 * 20 * udg_integer03) 
+    endif
+
+    //Arcane Infused Sword
+    set i1 = UnitHasItemI( Herou, ARCANE_INFUSED_SWORD_ITEM_ID )
+    if i1 > 0 then
+        set i = R2I((GetUnitDamage(Herou, 0) - LoadInteger(HT,hid,ARCANE_INFUSED_SWORD_ITEM_ID))* 0.05 * udg_integer03)
+        call AddUnitBonus(Herou, BONUS_DAMAGE, i)
+        call SaveInteger(HT,hid, ARCANE_INFUSED_SWORD_ITEM_ID ,LoadInteger(HT,hid,ARCANE_INFUSED_SWORD_ITEM_ID) + i) 
     endif
         
     //Book of Necromancy
