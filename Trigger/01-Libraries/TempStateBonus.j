@@ -27,6 +27,10 @@ library TempStateBonus requires CustomState, NewBonus
     endglobals
     */
 
+    function GetTempBonus takes integer id returns TempBonus
+        return id
+    endfunction
+
     struct TempBonus extends array
         unit source
         real bonus
