@@ -250,6 +250,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call MaskOfVitality(caster)
                 endif
 
+                if UnitHasItemS(caster, 'I03O') then
+                    call ActivateMoonstone(caster)
+                endif
+
                 if GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X')  and abilId != RESET_TIME_ABILITY_ID then
                     call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                 endif

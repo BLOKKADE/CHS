@@ -1,4 +1,4 @@
-library trigger96 initializer init requires RandomShit
+/*library trigger96 initializer init requires RandomShit
 
     function Trig_Volcanic_Armor_Conditions takes nothing returns boolean
         if(not(UnitHasItemOfTypeBJ(GetTriggerUnit(),'I03T')==true))then
@@ -21,7 +21,7 @@ library trigger96 initializer init requires RandomShit
 
     function Trig_Volcanic_Armor_Actions takes nothing returns nothing
         set udg_integer14 = GetRandomInt(1,100)
-        if(Trig_Volcanic_Armor_Func003C())then
+        if udg_integer14 < 15 * GetUnitLuck(GetTriggerUnit()) then
             call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
             call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
             call UnitAddAbilityBJ('A015',GetLastCreatedUnit())
@@ -40,3 +40,4 @@ library trigger96 initializer init requires RandomShit
 
 
 endlibrary
+*/

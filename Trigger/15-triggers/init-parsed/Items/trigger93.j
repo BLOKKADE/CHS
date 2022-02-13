@@ -1,4 +1,4 @@
-library trigger93 initializer init requires RandomShit
+/*library trigger93 initializer init requires RandomShit
 
     function Trig_Moonstone_Conditions takes nothing returns boolean
         if(not(UnitHasItemOfTypeBJ(GetTriggerUnit(),'I03O')==true))then
@@ -28,3 +28,4 @@ library trigger93 initializer init requires RandomShit
 
 
 endlibrary
+*/

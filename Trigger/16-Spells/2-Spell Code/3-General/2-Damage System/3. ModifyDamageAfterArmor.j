@@ -296,7 +296,11 @@ scope ModifyDamageAfterArmor initializer init
                 //Bash
                 set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)  
                 if i > 0 and GetRandomReal(0, 100) <= I2R(i) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
-                    call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSource,true) / 2, ABILITY_RLF_DAMAGE_HTB1 )
+                    call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) / 2, ABILITY_RLF_DAMAGE_HTB1 )
+                endif
+
+                if UnitHasItemS(DamageSource, 'I03T') and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
+                    call ActivateVolcanicArmor(DamageSource, DamageTarget)
                 endif
 
                 //Thorns
