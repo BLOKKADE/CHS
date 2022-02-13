@@ -8,7 +8,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
     endglobals
 
     function GetDummyOrder takes integer id returns DummyOrder
-        return id
+        return DummyInfo[id]
     endfunction
 
     function GetDummyOrderSource takes integer id returns unit
