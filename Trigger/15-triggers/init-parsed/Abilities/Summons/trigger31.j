@@ -1,4 +1,4 @@
-library trigger31 initializer init requires RandomShit
+/*library trigger31 initializer init requires RandomShit
 
     function Trig_Summon_Hawk_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='nwe3'))then
@@ -32,3 +32,4 @@ library trigger31 initializer init requires RandomShit
 
 
 endlibrary
+*/

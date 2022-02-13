@@ -1,4 +1,4 @@
-library trigger19 initializer init requires RandomShit
+/*library trigger19 initializer init requires RandomShit
 
     function Trig_Mountain_Giant_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='e002'))then
@@ -31,3 +31,4 @@ library trigger19 initializer init requires RandomShit
 
 
 endlibrary
+*/

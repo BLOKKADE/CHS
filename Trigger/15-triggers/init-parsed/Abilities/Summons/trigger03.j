@@ -1,4 +1,4 @@
-library trigger03 initializer init requires RandomShit
+/*library trigger03 initializer init requires RandomShit
 
     function Trig_Carrion_Beetles_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='u001'))then
@@ -32,3 +32,4 @@ library trigger03 initializer init requires RandomShit
 
 
 endlibrary
+*/

@@ -1,4 +1,4 @@
-library trigger30 initializer init requires RandomShit
+/*library trigger30 initializer init requires RandomShit
 
     function Trig_Summon_Bear_Func001C takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='ngz3'))then
@@ -40,3 +40,4 @@ library trigger30 initializer init requires RandomShit
 
 
 endlibrary
+*/

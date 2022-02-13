@@ -1,4 +1,4 @@
-library trigger32 initializer init requires RandomShit
+/*library trigger32 initializer init requires RandomShit
 
     function Trig_Summon_Quilbeast_Func001C takes nothing returns boolean
         if((GetUnitTypeId(GetTriggerUnit())=='nqb1'))then
@@ -70,3 +70,4 @@ library trigger32 initializer init requires RandomShit
 
 
 endlibrary
+*/

@@ -1,4 +1,4 @@
-library trigger25 initializer init requires RandomShit
+/*library trigger25 initializer init requires RandomShit
 
     function Trig_Pocket_Factory_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='n010'))then
@@ -30,3 +30,4 @@ library trigger25 initializer init requires RandomShit
 
 
 endlibrary
+*/

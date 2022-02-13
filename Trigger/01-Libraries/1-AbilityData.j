@@ -335,7 +335,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Light, 1)
 
         //29 - Summon Lava Spawn 
-        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID, SUMMON_LAVA_SPAWN_ITEM_ID, false, 0, 0, false, Order_Instant, "lavamonster")
+        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID, SUMMON_LAVA_SPAWN_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -501,7 +501,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Poison, 1)
 
         //63 - Carrion Beetles 
-        call SaveAbilData(CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, false, Order_Instant, "carrionscarabsinstant")
+        call SaveAbilData(CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
@@ -582,9 +582,9 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
-        //80 - Healing Ward 
+        /*//80 - Healing Ward 
         call SaveAbilData(HEALING_WARD_ABILITY_ID, HEALING_WARD_ITEM_ID, false, Target_Any, 0, true, Order_Point, "healingward")
-        call SetLastObjectElement(Element_Light, 2)
+        call SetLastObjectElement(Element_Light, 2)*/
 
         //81 - Unholy Frenzy 
         call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID, UNHOLY_FRENZY_ITEM_ID, false, 0, 1, true, Order_Target, "unholyfrenzy")

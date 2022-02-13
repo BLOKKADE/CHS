@@ -1,4 +1,4 @@
-library trigger20 initializer init requires RandomShit
+/*library trigger20 initializer init requires RandomShit
 
     function Trig_Parasite_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='ncfs'))then
@@ -25,3 +25,4 @@ library trigger20 initializer init requires RandomShit
 
 
 endlibrary
+*/

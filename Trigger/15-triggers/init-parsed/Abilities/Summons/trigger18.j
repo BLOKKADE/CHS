@@ -1,4 +1,4 @@
-library trigger18 initializer init requires RandomShit
+/*library trigger18 initializer init requires RandomShit
 
     function Trig_Inferno_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='n005'))then
@@ -31,3 +31,4 @@ library trigger18 initializer init requires RandomShit
 
 
 endlibrary
+*/

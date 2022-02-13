@@ -1,4 +1,4 @@
-library trigger04 initializer init requires RandomShit
+/*library trigger04 initializer init requires RandomShit
 
     function Trig_Clockwerk_Goblin_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='n011'))then
@@ -32,3 +32,4 @@ library trigger04 initializer init requires RandomShit
 
 
 endlibrary
+*/

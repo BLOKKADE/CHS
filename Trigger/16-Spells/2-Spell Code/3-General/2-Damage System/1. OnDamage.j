@@ -20,9 +20,8 @@ scope OnDamage initializer init
                     set Damage.index.damageType = DAMAGE_TYPE_NORMAL
                 endif
             endif
-
             //Staff of Power
-            if UnitHasItemS(u, 'I080') or unitId == 'n00W' or unitId == 'n01H' or unitId == SKELETON_WARMAGE_1_UNIT_ID then
+            if UnitHasItemS(u, 'I080') or unitId == 'n00W' or unitId == 'n01H' or unitId == SERPENT_WARD_1_UNIT_ID or unitId == SKELETON_WARMAGE_1_UNIT_ID then
                 set Damage.index.damageType = DAMAGE_TYPE_MAGIC
             endif
         endif

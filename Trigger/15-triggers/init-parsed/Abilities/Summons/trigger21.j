@@ -1,4 +1,4 @@
-library trigger21 initializer init requires RandomShit
+/*library trigger21 initializer init requires RandomShit
 
     function Trig_Phoenix_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='hphx'))then
@@ -29,3 +29,4 @@ library trigger21 initializer init requires RandomShit
 
 
 endlibrary
+*/
