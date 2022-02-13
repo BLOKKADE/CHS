@@ -209,7 +209,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 
 					set ToolTipS = ToolTipS + GetPassiveStr(SpellU)
 
-					if IncomeMode != 2 then
+					if EconomyMode or IncomeMode != 2 then
 						set ToolTipS = ToolTipS + "|n|n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
 					endif
 

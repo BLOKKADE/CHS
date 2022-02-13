@@ -98,17 +98,15 @@ library HeroLevel initializer init requires HeroLvlTable
             return
         endif
 
-        if not Economic then
-            if I_l < 250 then
-                call AdjustPlayerStateBJ( (I_l + 2)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
-                call AdjustPlayerStateBJ( 4 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
-                call DisplayTimedTextToPlayer(Pl, 0, 0, 1, "|cffc300ffLevel " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4 *(RI)) + " lumber|r")
-            endif
+        if I_l < 250 then
+            call AdjustPlayerStateBJ( (I_l + 2)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
+            call AdjustPlayerStateBJ( 4 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
+            call DisplayTimedTextToPlayer(Pl, 0, 0, 1, "|cffc300ffLevel " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4 *(RI)) + " lumber|r")
+        endif
 
-            if ModuloInteger(I_l + 1, 25) == 0 then
-                call AdjustPlayerStateBJ( I_l + 1, Pl, PLAYER_STATE_RESOURCE_LUMBER) 
-                call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cff1eff00+" + I2S(I_l + 1) + " bonus lumber|r for reaching |cffbda546level " + I2S(I_l + 1) + "!|r")
-            endif
+        if ModuloInteger(I_l + 1, 25) == 0 then
+            call AdjustPlayerStateBJ( I_l + 1, Pl, PLAYER_STATE_RESOURCE_LUMBER) 
+            call DisplayTimedTextToPlayer(Pl, 0, 0, 10, "|cff1eff00+" + I2S(I_l + 1) + " bonus lumber|r for reaching |cffbda546level " + I2S(I_l + 1) + "!|r")
         endif
 
         /*
