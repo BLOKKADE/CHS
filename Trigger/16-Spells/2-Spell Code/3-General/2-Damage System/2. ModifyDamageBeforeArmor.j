@@ -34,8 +34,12 @@ scope ModifyDamageBeforeArmor initializer init
         if Damage.index.isAttack then
 
             //Arcane Assault
-            if GetUnitAbilityLevel(DamageSource, ARCANE_ASSAUL_ABILITY_ID) > 0 and IsDamageArcaneAssault(DamageSource) == false then
-                call ArcaneAssault(DamageSource, DamageTarget, Damage.index.damage)
+            set i1 = GetUnitAbilityLevel(DamageSource, ARCANE_ASSAUL_ABILITY_ID)
+            if i1 > 0 and IsDamageArcaneAssault(DamageSource) == false then
+                call ArcaneAssault(DamageSource, DamageTarget, Damage.index.damage, i1)
+            //arcane infused sword
+            elseif i1 == 0 and IsDamageArcaneAssault(DamageSource) == false and UnitHasItemS(DamageSource, 'I0BN') then
+                call ArcaneAssault(DamageSource, DamageTarget, Damage.index.damage, 8)
             endif
 
             //Cloak of Sorrow
@@ -95,7 +99,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Crushing Wave
         set i1 = GetUnitAbilityLevel(DamageSource, CRUSHING_WAVE_ABILITY_ID)
-        if i1 > 0 then
+        if i1 > 0 and DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
             set Damage.index.damageType = DAMAGE_TYPE_NORMAL
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * i1))))
         endif
@@ -365,6 +369,12 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = UnitHasItemI(DamageSource, SPELL_BANE_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitMaxMana(DamageSource) < BlzGetUnitMaxMana(DamageTarget) then
             set Damage.index.damage = Damage.index.damage * 1 + (0.5 * i1)
+        endif
+
+        //Martial Theft
+        set i1 = GetUnitAbilityLevel(DamageSource, MARTIAL_THEFT_ABILITY_ID)
+        if i1 > 0 and Damage.index.isAttack then
+            call CastMartialTheft(DamageSource, DamageTarget, i1)
         endif
 
         //Absolute Poison

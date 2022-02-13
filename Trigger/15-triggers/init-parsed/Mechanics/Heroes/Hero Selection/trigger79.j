@@ -155,7 +155,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
             call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_II_UNIT_ID,868,707,270.000)  )
             call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_III_UNIT_ID,1116,707,270.000)  )
             call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_IV_UNIT_ID,1116,707 + 248,270.000)  )
-            call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_V_UNIT_ID,372,707 + 248,270.000)  )
+            call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_V_UNIT_ID,868,707 + 248,270.000)  )
             call SetShopIndex(CreateUnit(p,PASSIVE_SPELLS_VI_UNIT_ID,620,707 + 248,270.000) )
     
     

@@ -7,8 +7,8 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
         return SpellData[GetHandleId(damageSource)].boolean[8]
     endfunction
 
-    function ArcaneAssault takes unit damageSource, unit damageTarget, real damage returns nothing
-        local real fullValue = 0.7 + (GetUnitAbilityLevel(damageSource, ARCANE_ASSAUL_ABILITY_ID) * 0.3)
+    function ArcaneAssault takes unit damageSource, unit damageTarget, real damage, integer level returns nothing
+        local real fullValue = 0.7 + (level * 0.3)
         local real fullDamageCount = MathRound_floor(fullValue)
         local real damageBonus = fullValue - fullDamageCount
         local integer targets = MathRound_round(fullDamageCount)
