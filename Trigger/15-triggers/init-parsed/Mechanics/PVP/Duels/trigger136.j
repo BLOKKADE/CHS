@@ -1,5 +1,10 @@
 library trigger136 initializer init requires RandomShit, StartFunction
 
+    globals
+        integer array ItemStacksP1
+        integer array ItemStacksP2
+    endglobals
+
     function Trig_PvP_Battle_Func001C takes nothing returns boolean
         if(not(CountUnitsInGroup(udg_group01)>= 1))then
             return false
@@ -320,8 +325,10 @@ library trigger136 initializer init requires RandomShit, StartFunction
             loop
                 exitwhen udg_integer33 > 6
                 set udg_integers03[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(udg_units03[1],udg_integer33))
+                set ItemStacksP1[udg_integer33] = GetItemCharges(UnitItemInSlotBJ(udg_units03[1],udg_integer33))
                 call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer33), false)
                 set udg_integers04[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(udg_units03[2],udg_integer33))
+                set ItemStacksP2[udg_integer33] = GetItemCharges(UnitItemInSlotBJ(udg_units03[2],udg_integer33))
                 call SetItemPawnable(UnitItemInSlotBJ(udg_units03[2],udg_integer33), false)
                 set udg_integer33 = udg_integer33 + 1
             endloop

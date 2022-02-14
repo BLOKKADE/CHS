@@ -116,6 +116,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
 
     function Trig_End_PvP_Actions takes nothing returns nothing
         local real bonus = 1
+        local item tempItem = null
         local PlayerStats winningPlayer
 
         if(Trig_End_PvP_Func001C())then
@@ -169,7 +170,12 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
                 call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
 
                 if GetPlayerSlotState(GetOwningPlayer(udg_units03[1])) != PLAYER_SLOT_STATE_LEFT then
-                    call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
+                    set tempItem = UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
+
+                    if ItemStacksP1[udg_integer32] > 1 then
+                        call SetItemCharges(tempItem, ItemStacksP1[udg_integer32])
+                    endif
+                    
                     if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
                         //call BJDebugMsg("1a item move success")
                     else
@@ -178,7 +184,12 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
                 endif
 
                 if GetPlayerSlotState(GetOwningPlayer(udg_units03[2])) != PLAYER_SLOT_STATE_LEFT then
-                    call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
+                    set tempItem = UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
+
+                    if ItemStacksP2[udg_integer32] > 1 then
+                        call SetItemCharges(tempItem, ItemStacksP2[udg_integer32])
+                    endif
+
                     if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
                         //call BJDebugMsg("2a item move success")
                     else
