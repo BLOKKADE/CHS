@@ -263,7 +263,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
                 endif
 
-                if GetUnitAbilityLevel(caster, 'A099') > 0 and target != null and SpellData[GetHandleId(caster)].boolean[8] == false then
+                if GetUnitAbilityLevel(caster, 'A099') > 0 and (target != null or IsAbilityManifoldable(abilId)) and SpellData[GetHandleId(caster)].boolean[8] == false then
                     call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
                 endif
 

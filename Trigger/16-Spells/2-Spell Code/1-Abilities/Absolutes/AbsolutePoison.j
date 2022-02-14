@@ -47,11 +47,11 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             endif
 
             if GetUnitAbilityLevel(this.target, DRUNKEN_HAZE_BUFF_ID) > 0 then
-                set count = count + 1
+                set count = count + 2
             endif
 
-            if GetUnitAbilityLevel(this.target, DRUNKEN_HAZE_BUFF_ID) > 0 then
-                set count = count + 1
+            if GetUnitAbilityLevel(this.target, 'Bapl') > 0 then
+                set count = count + 2
             endif
 
             if GetUnitAbilityLevel(this.target, 'B01J') > 0 then

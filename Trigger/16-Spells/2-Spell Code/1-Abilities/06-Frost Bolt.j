@@ -3,7 +3,7 @@ library FrostBolt requires RandomShit
         local DummyOrder dummy = DummyOrder.create(u1, GetUnitX(u1), GetUnitY(u1), GetUnitFacing(u1), 6)
         call dummy.addActiveAbility('A07Y', 1, 852095)
         call dummy.setAbilityRealField('A07Y', ABILITY_RLF_DAMAGE_CTB1, dmg)
-        call dummy.target(u2)
+        call dummy.target(u2).activate()
     endfunction
 
     function realaisFrostBolt takes nothing returns nothing 
