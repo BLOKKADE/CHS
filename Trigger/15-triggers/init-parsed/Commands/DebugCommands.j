@@ -219,7 +219,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.AddGlory).name("glory").handles("glory").help("glory <value>", "Gives you <value> bonus glory.")
             call Command.create(CommandHandler.StartNextRound).name("nx").handles("nx").help("nx", "Starts the next round if used inbetween rounds.")
             call Command.create(CommandHandler.SetRoundTime).name("rt").handles("rt").help("rt <value>", "Starting next round, sets the time between rounds to <value>.")
-            call Command.create(CommandHandler.SetRoundTime).name("sbr").handles("sbr").help("sbr <value>", "The Battle Royal starts after round <value>.")
+            call Command.create(CommandHandler.SetBattleRoyale).name("sbr").handles("sbr").help("sbr <value>", "The Battle Royal starts after round <value>.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
 
