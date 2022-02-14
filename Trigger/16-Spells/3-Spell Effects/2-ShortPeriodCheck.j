@@ -148,7 +148,8 @@ scope ShortPeriodCheck initializer init
 
                 //glory hp regen
                 if GloryRegenLevel[hid] > 0 then
-                    set r1 = (GloryRegenLevel[hid] * 0.3) * BlzGetUnitRealField(u, ConvertUnitRealField('uhpr'))
+                    set r1 = BlzGetUnitRealField(u, ConvertUnitRealField('uhpr')) + GetSpellValue(10, 5, GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID)) + (UnitHasItemI(u, 'I04N') * 1500)
+                    set r1 = r1 * (GloryRegenLevel[hid] * 0.3)
                     set r2 = LoadReal(DataUnitHT, hid, 1000)
                     if r1 != r2 then
                         call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - r2 + r1)
