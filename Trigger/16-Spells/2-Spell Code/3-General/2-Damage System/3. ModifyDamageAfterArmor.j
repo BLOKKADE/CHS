@@ -36,9 +36,19 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Fishing Rod
-        if (not DamageIsOnHit) and UnitHasItemS(DamageSource,'I07T') and (not Damage.index.isSpell) and DistanceBetweenUnits(DamageSource, DamageTarget) < 1200 then
-            call SetUnitX(DamageSource,GetUnitX(DamageTarget) )
-            call SetUnitY(DamageSource,GetUnitY(DamageTarget) )
+        
+        if (not DamageIsOnHit) and UnitHasItemS(DamageSource,'I07T') and (not Damage.index.isSpell) then
+            call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))
+            if DistanceBetweenUnits(DamageSource, DamageTarget) < 1200 and DistanceBetweenUnits(DamageSource, DamageTarget) > 80 then
+                set r1 = (bj_RADTODEG * GetAngleToTarget(DamageSource, DamageTarget)) + 180
+                set r2 = CalcX(GetUnitX(DamageTarget), r1, 120)
+                set r3 = CalcY(GetUnitY(DamageTarget), r1, 120)
+                call BJDebugMsg("dist 2: " + R2S(CalculateDistance(GetUnitX(DamageSource), r2, GetUnitY(DamageSource), r3)))
+                if CalculateDistance(GetUnitX(DamageSource), r2, GetUnitY(DamageSource), r3) > 60 then
+                    call SetUnitX(DamageSource, r2)
+                    call SetUnitY(DamageSource, r3)
+                endif
+            endif
         endif
 
         /*//Aura of Vulnerability

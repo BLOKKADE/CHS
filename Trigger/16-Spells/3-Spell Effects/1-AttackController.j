@@ -55,9 +55,8 @@ scope AttackController initializer init
         endif
 
         //Mega Speed
-
         if GetUnitAbilityLevel(u2, MEGA_SPEED_ABILITY_ID) > 0 then
-            if T32_Tick - MegaSpeedLastAttack[GetHandleId(u2)] > 4 * 32 then
+            if T32_Tick - MegaSpeedLastAttack[GetHandleId(u2)] > 6 * 32 then
                 set MegaSpeedStartTimer[GetHandleId(u2)] = T32_Tick
             endif
 

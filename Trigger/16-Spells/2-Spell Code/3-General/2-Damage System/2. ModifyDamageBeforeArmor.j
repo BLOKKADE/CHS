@@ -295,6 +295,15 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage =   Damage.index.damage / 10
         endif
         
+        //Mega Speed
+        if GetUnitAbilityLevel(DamageTarget, MEGA_SPEED_ABILITY_ID) > 0 then
+            if T32_Tick - MegaSpeedLastAttack[DamageTargetId] > 6 * 32 then
+                set MegaSpeedStartTimer[DamageTargetId] = T32_Tick
+            endif
+
+            set MegaSpeedLastAttack[DamageTargetId] = T32_Tick
+        endif
+
         //Pit Lord
         /*if GetUnitTypeId(DamageSource) == PIT_LORD_UNIT_ID then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08V') <= 0 then
