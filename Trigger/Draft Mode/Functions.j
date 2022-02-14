@@ -88,7 +88,7 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), udg_Draft_DraftBuilding, 0 - OffsetX, OffsetY, 0)
         set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), udg_Draft_UpgradeBuilding, OffsetX, OffsetY, 0)
 
-        if EconomyMode then
+        if IncomeMode == 3 then
             call GenerateDraftSpells(pid, udg_Draft_NODraftSpells)
         else
             call GenerateInitialDraftSpells(pid, udg_Draft_NODraftSpells)

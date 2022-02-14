@@ -258,18 +258,8 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         call AdjustPlayerStateBJ( Income[pid],p,PLAYER_STATE_RESOURCE_GOLD)
         call DisplayTextToPlayer(p,0,0,"|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " - |cff00aa0eLumber|r: +" + I2S(LumberGained[pid]) + " - |cff7af0f8Glory|r: +" + I2S(R2I((GetPlayerGloryBonus(pid)))))
 
-        //Economy mode creep levelup
-        if EconomyMode then
-            if udg_integer02 > 14 and udg_integer02 < 36 then
-                set i1 = udg_integer02 - 14
-                set Income[pid] = Income[pid] + (i1 * 90)
-                set BonusNeutralPlayer[pid] = BonusNeutralPlayer[pid] + i1
-                call DisplayTextToPlayer(p,0,0, "+" + I2S(i1) + "|cffffb23dCreep levels|r ( " + I2S(BonusNeutralPlayer[pid]) + " total) and + " + I2S(i1 * 90) + "|cffffee00income|r")       
-            endif
-        else
-            if Income[pid] == 0 then 
-                call DisplayTextToPlayer(p,0,0,"You can increase your income in Power Ups Shop II")       
-            endif
+        if IncomeMode < 2 and Income[pid] == 0 then 
+            call DisplayTextToPlayer(p,0,0,"You can increase your income in Power Ups Shop II")       
         endif
         
 

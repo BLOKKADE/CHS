@@ -1,4 +1,4 @@
-library trigger108 initializer init requires RandomShit
+library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
     globals
         integer BattleRoyalRound = 50
@@ -338,6 +338,10 @@ library trigger108 initializer init requires RandomShit
             else
                 call StartTimerBJ(GetLastCreatedTimerBJ(),false,RoundTime * 0.75)
                 call TriggerSleepAction(RoundTime * 0.75)
+            endif
+
+            if IncomeMode == 3 then
+                call SetEconomyCreepBonus()
             endif
     
             if NextRound[round] then

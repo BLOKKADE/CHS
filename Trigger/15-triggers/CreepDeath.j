@@ -62,11 +62,10 @@ library CreepDeath initializer init requires RandomShit
             set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
         endif
 
-        if EconomyMode then
+        if IncomeMode == 3 then
             if udg_integer02 > 5 then
                 set pillageBonus = IMinBJ(udg_integer02, 15) * 13
-                set expBounty = IMinBJ(udg_integer02, 15) * 30
-                call BJDebugMsg("gold bonus: " + I2S(IMinBJ(udg_integer02, 15) * 13) + " exp bonus: " + I2S(IMinBJ(udg_integer02, 15) * 30))
+                set expBounty = expBounty + IMinBJ(udg_integer02, 15) * 30
             endif
         else
             //Pillage

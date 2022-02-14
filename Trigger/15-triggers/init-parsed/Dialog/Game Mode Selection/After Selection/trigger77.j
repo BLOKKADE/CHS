@@ -26,25 +26,6 @@ library trigger77 initializer init requires RandomShit
     endfunction
 
 
-    function Trig_Dialog_Complete_Func006Func001C takes nothing returns boolean
-        if(not(udg_integers07[5]> udg_integers07[4]))then
-            return false
-        endif
-        if(not(udg_integers07[5]> udg_integers07[8]))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Dialog_Complete_Func006C takes nothing returns boolean
-        if(not Trig_Dialog_Complete_Func006Func001C())then
-            return false
-        endif
-        return true
-    endfunction
-
-
     function Trig_Dialog_Complete_Func006Func008C takes nothing returns boolean
         if(not(udg_integers07[1]>= udg_integers07[2]))then
             return false
@@ -327,10 +308,12 @@ library trigger77 initializer init requires RandomShit
 
 
     function CheckIncomeVotes takes nothing returns nothing
-        if udg_integers07[15] > udg_integers07[16] and udg_integers07[15] > udg_integers07[17] then
+        if udg_integers07[15] > udg_integers07[16] and udg_integers07[15] > udg_integers07[17] and udg_integers07[15] > udg_integers07[20] then
             set IncomeMode = 0
-        elseif udg_integers07[16] > udg_integers07[15] and udg_integers07[16] > udg_integers07[17] then
+        elseif udg_integers07[16] > udg_integers07[15] and udg_integers07[16] > udg_integers07[17] and udg_integers07[16] > udg_integers07[20] then
             set IncomeMode = 1
+        elseif udg_integers07[20] > udg_integers07[15] and udg_integers07[20] > udg_integers07[16] and udg_integers07[20] > udg_integers07[17] then
+            set IncomeMode = 3
         else
             set IncomeMode = 2	
         endif
@@ -489,8 +472,7 @@ library trigger77 initializer init requires RandomShit
             endif
 
             if Trig_Dialog_Complete_Func006Func004C() then
-                set EconomyMode = true
-                set udg_strings02[1]= "Mode: Economy|r"
+                set udg_strings02[1]= "Mode: Immortal|r"
             else
                 set udg_strings02[1]= "Mode: Normal|r"
             endif
@@ -552,6 +534,9 @@ library trigger77 initializer init requires RandomShit
         elseif IncomeMode == 1 then
             set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
             set udg_strings02[1]= "Creep Upgrades: Individual"
+        elseif IncomeMode == 3 then
+            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
+            set udg_strings02[1]= "Creep Upgrades: Economy"
         else
             set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
             set udg_strings02[1]= "Creep Upgrades: Disabled"

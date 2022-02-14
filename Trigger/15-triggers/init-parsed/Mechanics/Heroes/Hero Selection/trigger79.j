@@ -300,10 +300,6 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
                 call InitUpgradeShop()
             endif
             call CreateNeutralPassiveBuildings2()
-
-            if EconomyMode and AbilityMode == 1 then
-                call RemoveEconomySpells()
-            endif
         else
         endif
         call TriggerSleepAction(2)

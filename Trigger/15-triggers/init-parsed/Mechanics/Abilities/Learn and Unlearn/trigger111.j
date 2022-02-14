@@ -316,7 +316,7 @@ library trigger111 initializer init requires RandomShit, Functions
     endfunction
 
     function EconomicModeAbility takes integer abilId returns boolean
-        return ECONOMIC_ABILITIES.contains(abilId) and EconomyMode
+        return ECONOMIC_ABILITIES.contains(abilId) and IncomeMode == 3
     endfunction
 
 
