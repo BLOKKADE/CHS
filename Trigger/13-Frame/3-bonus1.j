@@ -187,11 +187,11 @@ library HeroData initializer init
         call SaveStr(HT_data,BANSHEE_UNIT_ID,2, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 75% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
         
         call SaveStr(HT_data,GRUNT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp" )       //grunt
-        call SaveStr(HT_data,GRUNT_UNIT_ID,2, "|cff00ffffPassive|r: The Grunt's Grunt: When the Hero is dealt a killing blow it ignores it and returns the damage back to the source, 20 seconds cooldown. ")
+        call SaveStr(HT_data,GRUNT_UNIT_ID,2, "|cff00ffffPassive|r: The Grunt's Grunt: At the start of every fight the Hero gains 20 bonus attack damage and strength for 10 seconds. ")
         call SaveStr(HT_data,GRUNT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Grunt's Grunt: +20 attack damage and strength, +0.1 seconds duration." )
         
         call SaveStr(HT_data,SEER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )       //seer
-        call SaveStr(HT_data,SEER_UNIT_ID,2, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0This means most spells are affected by enemy armor and not affected by the Hero's magic power. Seer's passive can be disabled by the Staff of Power.|r" )
+        call SaveStr(HT_data,SEER_UNIT_ID,2, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0Most spells are affected by enemy armor, and not the Hero's magic power. Seer's passive can be disabled by the Staff of Power.|r" )
     
         call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )       //Arena master
         call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Passionate Student: All Rings in PVE Shop I are twice as effective.")

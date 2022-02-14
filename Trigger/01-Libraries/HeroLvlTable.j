@@ -139,7 +139,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr(COLD_KNIGHT_UNIT_ID, 0, "|cffe7544aAttack speed reduction|r: ,0,%%")
         call SetBonusStr(COLD_KNIGHT_UNIT_ID, 1, "|cffd6e049Movespeed reduction|r: ,0,%%")
 
-        call SetBonusStr(LICH_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
+        call SetBonusStr(LICH_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,%")
 
         call SetBonusStr('N02P', 0, "|cffe7544aExperience per kill|r: ,0,")
         call SetBonusStr('N02P', 1, "|cffd6e049Gold per kill|r: ,0,")

@@ -5,18 +5,15 @@ library SpellFormula initializer init requires AbilityData
     endglobals
 
     function HasAbilityKeyLevelValue takes integer valueFactor, integer level returns boolean
-        call BJDebugMsg("has? fctr: " + I2S(valueFactor) + " lvl: " + I2S(level) + " bool: " + B2S(SpellValueTable[valueFactor].integer[level] != 0))
         return level == 0 or SpellValueTable[valueFactor].integer[level] != 0
     endfunction
 
     function GetAbilityKeyLevelValue takes integer valueFactor, integer level returns integer
-        call BJDebugMsg("get fctr: " + I2S(valueFactor) + " lvl: " + I2S(level) + " value: " + R2S(SpellValueTable[valueFactor].integer[level]))
         return SpellValueTable[valueFactor].integer[level]
     endfunction
 
     function SetAbilityKeyLevelValue takes integer valueFactor, integer level, integer value returns nothing
         set SpellValueTable[valueFactor].integer[level] = value
-        call BJDebugMsg("set fctr: " + I2S(valueFactor) + " lvl: " + I2S(level) + " value: " + I2S(SpellValueTable[valueFactor].integer[level]))
     endfunction
 
     function CalculateValue takes integer prevValue, integer valueFactor, integer level returns integer

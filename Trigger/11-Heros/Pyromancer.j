@@ -23,10 +23,10 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
         local real x = GetUnitX(source)
         local real y = GetUnitY(source)
         local integer i = 3
-        local real angle = Atan2(GetUnitY(target) - y, GetUnitX(target) - x)
+        local real angle = GetAngleToTarget(source, target)
         local real area = 149 + (1 * GetHeroLevel(source))
-        local real xBonus = (area * 0.75) * Cos(GetAngleToTarget(source, target))
-        local real yBonus = (area * 0.75) * Sin(GetAngleToTarget(source, target))
+        local real xBonus = (area * 0.75) * Cos(angle)
+        local real yBonus = (area * 0.75) * Sin(angle)
         local unit p
         
         call ElemFuncStart(source,PYROMANCER_UNIT_ID)
