@@ -435,7 +435,7 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 1, (I_l + 1) * 0.5)
             
         elseif TypeHero == LICH_UNIT_ID then
-            call SetBonus(UnitHero, 0, (I_l + 1) * 60)
+            call SetBonus(UnitHero, 0, 100 + (I_l + 1))
         elseif TypeHero == GNOME_MASTER_UNIT_ID then
             call SetBonus(UnitHero, 0, (I_l + 1) * 55)
             call SetBonus(UnitHero, 1, (I_l + 1) * 0.04)
