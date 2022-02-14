@@ -1,6 +1,6 @@
 scope Quests initializer init
     globals
-        string VERSION = "CHS 1.9.30"
+        string VERSION = "CHS 1.9.30 TEST"
     endglobals
 
     function AddQuest takes string title, string description, string icon, boolean required, boolean discovered, boolean completed returns nothing
@@ -20,7 +20,7 @@ scope Quests initializer init
     endfunction
     
     function QuestSetUp takes nothing returns nothing
-        call AddQuest("General Information", "Continuation of Custom Hero Survival 1.9.xx by Snowww & BLOKKADE.\nThanks to everyone on the Discord for feedback and suggestions.", "ReplaceableTextures\\PassiveButtons\\PASTimeEclipse3.blp", true, true, false)
+        call AddQuest("General Information", "Continuation of Custom Hero Survival 1.9.xx by Snowww & BLOKKADE.\nDevelopers: BLOKKADE, A Black Death.\nThanks to Barebacker for working on the descriptions.\nThanks to everyone on the Discord for feedback and suggestions.\n", "ReplaceableTextures\\PassiveButtons\\PASTimeEclipse3.blp", true, true, false)
         call AddQuestItem(bj_lastCreatedQuest, "Visit the discord to join our community!", false)
         call AddQuestItem(bj_lastCreatedQuest, "customherosurvival.com or discord.gg/dtTcyMGTyu", false)
         call AddQuestItem(bj_lastCreatedQuest, "Current version: " + VERSION, false)
