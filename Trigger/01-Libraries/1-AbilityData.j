@@ -109,12 +109,12 @@ library AbilityData initializer init requires Table, IdLibrary
     endfunction
 
     function IsAbilityReplaceable takes integer abilId returns boolean
-        if AbilityData[abilId].boolean[6] == false then
-            call BJDebugMsg("true")
-        else
-            call BJDebugMsg("false")
-        endif
         return AbilityData[abilId].boolean[6] == false
+    endfunction
+
+    //Checks if the ability can be cast by Manifold staff or not
+    function IsAbilityManifoldable takes integer abilId returns boolean
+        return AbilityData[abilId].boolean[7]
     endfunction
 
     //Gets a random ability that can be cast by chaos based on its order and target type
@@ -206,6 +206,10 @@ library AbilityData initializer init requires Table, IdLibrary
         set AbilityData[LastObject].boolean[6] = true
     endfunction
 
+    function SetLastAbilityManifoldable takes nothing returns nothing
+        set AbilityData[LastObject].boolean[7] = true
+    endfunction
+
     function SetObjectElement takes integer objectId, integer element, integer count returns nothing
         set ElementData[element].integer[objectId] = count
     endfunction
@@ -223,6 +227,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //3 - Carrion Swarm 
         call SaveAbilData(CARRION_SWARM_ABILITY_ID, CARRION_SWARM_ITEM_ID, false, 0, 0, true, Order_Point, "carrionswarm")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastAbilityManifoldable()
 
         //4 - Critical Strike 
         call SaveAbilData(CRITICAL_STRIKE_ABILITY_ID, CRITICAL_STRIKE_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -273,6 +278,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(IMPALE_ABILITY_ID, IMPALE_ITEM_ID, false, 0, 0, true, Order_Point, "impale")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastAbilityManifoldable()
 
         //16 - Serpent Ward 
         call SaveAbilData(SERPANT_WARD_ABILITY_ID, SERPANT_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
@@ -333,6 +339,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(SHOCKWAVE_ABILITY_ID, SHOCKWAVE_ITEM_ID, false, 0, 0, true, Order_Point, "shockwave")
         call SetLastObjectElement(Element_Earth, 2)
         call SetLastObjectElement(Element_Light, 1)
+        call SetLastAbilityManifoldable()
 
         //29 - Summon Lava Spawn 
         call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID, SUMMON_LAVA_SPAWN_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
@@ -387,6 +394,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //40 - Breath of Fire 
         call SaveAbilData(BREATH_OF_FIRE_ABILITY_ID, BREATH_OF_FIRE_ITEM_ID, false, 0, 0, true, Order_Point, "breathoffire")
         call SetLastObjectElement(Element_Fire, 1)
+        call SetLastAbilityManifoldable()
 
         //41 - Whirlwind 
         call SaveAbilData(WHIRLWIND_ABILITY_ID, WHIRLWIND_ITEM_ID, false, 0, 0, true, Order_Instant, "creepthunderclap")
@@ -776,6 +784,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //128 - Icy Breath 
         call SaveAbilData(ICY_BREATH_ABILITY_ID, ICY_BREATH_ITEM_ID, false, 0, 1, true, Order_Point, "breathoffrost")
         call SetLastObjectElement(Element_Cold, 1)
+        call SetLastAbilityManifoldable()
 
         //129 - Soul Burn 
         call SaveAbilData(SOUL_BURN_ABILITY_ID, SOUL_BURN_ITEM_ID, false, 0, 1, true, Order_Target, "soulburn")
@@ -1044,6 +1053,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(CRUSHING_WAVE_ABILITY_ID, CRUSHING_WAVE_ITEM_ID, false, 0, 0, true, Order_Point, "carrionswarm")
         call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Water, 1)
+        call SetLastAbilityManifoldable()
 
         //185 - Energy Trap 
         call SaveAbilData(ENERGY_TRAP_ABILITY_ID, ENERGY_TRAP_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")

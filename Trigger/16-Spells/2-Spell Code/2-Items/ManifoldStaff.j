@@ -11,7 +11,7 @@ library ManifoldStaff requires RandomShit, AbilityData, DummyOrder, CastSpellOnT
         local real x = GetUnitX(caster)
         local real y = GetUnitY(caster)
         local integer orderType = GetAbilityOrderType(abilId)
-        if orderType == Order_Target or (target != null and orderType == Order_Point) then
+        if orderType == Order_Target or IsAbilityManifoldable(abilId) then
             set SpellData[GetHandleId(caster)].boolean[8] = true
             
             call GroupClear(ENUM_GROUP)
