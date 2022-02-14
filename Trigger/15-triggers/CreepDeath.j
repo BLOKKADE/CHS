@@ -71,7 +71,7 @@ library CreepDeath initializer init requires RandomShit
             //Pillage
             if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
                 if GetRandomReal(0,100) <= 65 * luck then
-                    set pillageBonus = pillageBonus + (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero) * 12) * 70)/( 70 + remBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero))  )
+                    set pillageBonus = pillageBonus + (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero) * 18) * 70)/( 70 + remBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero))  )
                     call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitY(dyingUnit)))
                 endif
             endif
@@ -123,7 +123,7 @@ library CreepDeath initializer init requires RandomShit
             set goldBounty = goldBounty + udg_integer59
         endif
 
-        set expBounty = R2I(expBounty * (1 + (GetMagicNecklaceBonus(dyingUnit, killingHero) + GetLearnabilityBonus(killingHero))))
+        set expBounty = R2I(expBounty * (1 + (GetMagicNecklaceBonus(killingHero, dyingUnit) + GetLearnabilityBonus(killingHero))))
 
         if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05A') then
             set goldBounty = R2I(goldBounty * CgBonus)
