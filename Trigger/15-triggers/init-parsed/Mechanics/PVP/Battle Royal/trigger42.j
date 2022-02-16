@@ -76,6 +76,7 @@ library trigger42 initializer init requires RandomShit, StartFunction
 
     function Trig_Battle_Royal_Func017A takes nothing returns nothing
         set udg_unit01 = GetEnumUnit()
+        call PauseUnit(udg_unit01, true)
         call ConditionalTriggerExecute(udg_trigger82)
         call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),750.00,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
         call SelectUnitForPlayerSingle(GetEnumUnit(),GetOwningPlayer(GetEnumUnit()))
@@ -128,6 +129,7 @@ library trigger42 initializer init requires RandomShit, StartFunction
 
 
     function Trig_Battle_Royal_Func033A takes nothing returns nothing
+        call PauseUnit(GetEnumUnit(), false)
         call SetUnitInvulnerable(GetEnumUnit(),false)
         call StartFunctionSpell(GetEnumUnit(),1)
     endfunction
@@ -154,7 +156,7 @@ library trigger42 initializer init requires RandomShit, StartFunction
         
         call PlaySoundBJ(udg_sound10)
         call DisplayTextToForce(GetPlayersAll(),"|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL")
-        call PauseAllUnitsBJ(true)
+        //call PauseAllUnitsBJ(true)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call ShowDraftBuildings(false)
         call ForGroupBJ(GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE),Condition(function Trig_Battle_Royal_Func015001002)),function Trig_Battle_Royal_Func015A)
@@ -188,7 +190,7 @@ library trigger42 initializer init requires RandomShit, StartFunction
             call ConditionalTriggerExecute(udg_trigger122)
         else
         endif
-        call PauseAllUnitsBJ(false)
+        //call PauseAllUnitsBJ(false)
     endfunction
 
 

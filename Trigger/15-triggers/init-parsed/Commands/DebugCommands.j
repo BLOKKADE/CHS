@@ -174,7 +174,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     function SetBattleRoyale takes Args args returns nothing
         local integer pn = S2I(args[1])
-        if pn > udg_integer02 then
+        if pn >= udg_integer02 then
             set BattleRoyalRound = pn
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Battle Royal will start after round: " + I2S(pn))
         endif

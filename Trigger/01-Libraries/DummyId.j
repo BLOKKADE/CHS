@@ -1,8 +1,12 @@
 library DummyId initializer init
     globals
         Table DummyId
-        integer dummyIndex = 0
+        integer dummyIndex = 1
     endglobals
+
+    function ResetDummyId takes unit u returns nothing
+        set DummyId[GetHandleId(u)] = 0
+    endfunction
 
     function SetDummyId takes unit u returns nothing
         set DummyId[GetHandleId(u)] = dummyIndex

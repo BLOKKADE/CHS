@@ -170,7 +170,8 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         endmethod
 
         method resetDummy takes nothing returns nothing
-            set DummyInfo[GetHandleId(this.dummy)] = 0
+            set DummyInfo[GetDummyId(this.dummy)] = 0
+            call ResetDummyId(this.dummy)
             call IssueImmediateOrderById(this.dummy, 851972)
         endmethod
         
