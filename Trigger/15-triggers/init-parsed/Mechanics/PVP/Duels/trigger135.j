@@ -267,6 +267,8 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
             call ConditionalTriggerExecute(udg_trigger136)
         endif
+
+        set tempItem = null
     endfunction
 
 
