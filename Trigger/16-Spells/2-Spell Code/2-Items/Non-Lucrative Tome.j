@@ -86,11 +86,16 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
 
             if count > 0 then
                 call MoveSpellList(u)
-
+                call RefreshUpgradeShop(pid, u)
+                
                 if AbilityMode == 2 then
                     set udg_Draft_NOSpellsLearned[pid+1] = udg_Draft_NOSpellsLearned[pid+1] - count
-                    call GenerateDraftSpells(pid+1, udg_Draft_NODraftSpells) 
                 endif
+            endif
+
+            if AbilityMode == 2 then
+                
+                call GenerateDraftSpells(pid+1, udg_Draft_NODraftSpells) 
             endif
 
             //call SpellsLearnedDebug("post nl", u, 0)
