@@ -7,7 +7,7 @@ scope ToggleDmgTxt initializer init
     function DamageText takes nothing returns nothing
         local string colour = "|ccffdde31"
         local string aType = ""
-        if Damage.index.damageType == DAMAGE_TYPE_MAGIC then
+        if IsMagicDamage() then
             set colour = "|ccf31d4fd"
         endif
 
