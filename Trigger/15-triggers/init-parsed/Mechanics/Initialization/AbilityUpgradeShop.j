@@ -1,4 +1,4 @@
-library AbilityUpgradeShop requires DraftModeFunctions
+library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
 
     //globals used from draft mode: circle2 FloatingTextUpgrade udg_Draft_UpgradeBuildings[]
 
@@ -7,6 +7,22 @@ library AbilityUpgradeShop requires DraftModeFunctions
         private constant integer upgradeShopX = 1200
         private constant integer upgradeShopY = 200
     endglobals
+
+    function RefreshUpgradeShop takes integer pid, unit u returns nothing
+        local integer itemId = 0
+        local integer i = 0
+        loop
+            set itemId = GetItemFromAbility(GetInfoHeroSpell(u, i))
+
+            if itemId != 0 then
+                call RemoveItemFromStock(udg_Draft_UpgradeBuildings[pid + 1], itemId)
+                call AddItemToStock(udg_Draft_UpgradeBuildings[pid + 1], itemId, 1, 1)
+            endif
+
+            set i = i + 1
+            exitwhen i > 10
+        endloop
+    endfunction
 
     function RemoveItemFromUpgradeShop takes integer pid, integer itemId returns nothing
         call RemoveItemFromStock(udg_Draft_UpgradeBuildings[pid + 1], itemId)

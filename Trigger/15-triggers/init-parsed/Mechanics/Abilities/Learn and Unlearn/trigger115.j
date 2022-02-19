@@ -53,6 +53,7 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
 
                 if AbilityMode == 1 then
                     call RemoveItemFromUpgradeShop(Pid - 1, GetItemFromAbility(udg_integers05[Pid]))
+                    call RefreshUpgradeShop(Pid - 1, u)
                 endif
             endif
     
