@@ -123,7 +123,9 @@ library CreepDeath initializer init requires RandomShit
             set goldBounty = goldBounty + udg_integer59
         endif
 
+        call BJDebugMsg("cd xp bonus pre: " + I2S(expBounty))
         set expBounty = R2I(expBounty * (1 + (GetMagicNecklaceBonus(killingHero, dyingUnit) + GetLearnabilityBonus(killingHero))))
+        call BJDebugMsg("cd xp bonus post: " + I2S(expBounty))
 
         if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05A') then
             set goldBounty = R2I(goldBounty * CgBonus)
