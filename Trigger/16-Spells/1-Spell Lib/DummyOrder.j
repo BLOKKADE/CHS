@@ -26,6 +26,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         integer orderType
         boolean stopDummy
         boolean destroyDummy
+        boolean abilSet
 
         unit targetUnit
 
@@ -84,18 +85,22 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             return this
         endmethod 
 
+        //do not use more than once per dummy
         method addActiveAbility takes integer abilityId, integer level, integer order returns thistype
-            call UnitAddAbility(dummy, abilityId)
-            call UnitMakeAbilityPermanent(this.dummy, true, abilityId)
-            call SetUnitAbilityLevel(dummy, abilityId, level)
-            set this.order = order
-            set this.abil = abilityId
-            set DummyAbilitySource[GetDummyId(this.dummy)] = abilityId
-
+            if not this.abilSet then
+                call UnitAddAbility(dummy, abilityId)
+                call UnitMakeAbilityPermanent(this.dummy, true, abilityId)
+                call SetUnitAbilityLevel(dummy, abilityId, level)
+                set this.order = order
+                set this.abil = abilityId
+                set DummyAbilitySource[GetDummyId(this.dummy)] = abilityId
+                set this.abilSet = true
+            endif
             //call BJDebugMsg("dummy added active")
             return this
         endmethod
 
+        /*if implemented add way of making sure all abilities are removed before recycling
         method addPassiveAbility takes integer abilityId, integer level returns thistype
             call UnitAddAbility(dummy, abilityId)
             call UnitMakeAbilityPermanent(this.dummy, true, abilityId)
@@ -103,7 +108,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             
             //call BJDebugMsg("dummy added passive")
             return this
-        endmethod
+        endmethod*/
 
         method periodic takes nothing returns nothing
             if this.destroyDummy then
@@ -163,6 +168,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             set this.pid = GetPlayerId(p)
             set this.source = source
             set this.destroyDummy = false
+            set this.abilSet = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             set this.endTick = T32_Tick + R2I((duration * 32))
             //call BJDebugMsg("created dummy")
@@ -176,7 +182,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         endmethod
         
         method destroy takes nothing returns nothing
-            //call UnitRemoveAbility(this.dummy, this.abil)
+            call UnitRemoveAbility(this.dummy, this.abil)
 
             
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
