@@ -153,7 +153,7 @@ library trigger42 initializer init requires RandomShit, StartFunction
         call DisplayTextToForce(GetPlayersAll(),"Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
         call TriggerSleepAction(60.00)
         set udg_boolean02 = true
-        
+        call SetVersion()
         call PlaySoundBJ(udg_sound10)
         call DisplayTextToForce(GetPlayersAll(),"|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL")
         //call PauseAllUnitsBJ(true)

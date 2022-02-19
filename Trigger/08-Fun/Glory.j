@@ -6,11 +6,15 @@ library Glory initializer initLState
         integer array WinCount
     endglobals
 
+    function SetVersion takes nothing returns nothing
+        call BlzFrameSetText(ResPlayer, VERSION)
+    endfunction
+
     function ResourseRefresh takes player Pl returns nothing 
         local integer pid = GetPlayerId(Pl)
         local string S = "Glory:  " + I2S(R2I(Glory[pid]))
 
-        if GetLocalPlayer() == Pl then
+        if (not udg_boolean02) and GetLocalPlayer() == Pl then
             call BlzFrameSetText(ResPlayer ,S)
         endif
     endfunction
