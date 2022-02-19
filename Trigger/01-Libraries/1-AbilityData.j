@@ -513,9 +513,9 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
-        //64 - War Drums 
+        /*//64 - War Drums 
         call SaveAbilData(WAR_DRUMS_ABILITY_ID, WAR_DRUMS_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        call SetLastObjectElement(Element_Energy, 1)*/
 
         //65 - Hardened Skin 
         call SaveAbilData(HARDENED_SKIN_ABILITY_ID, HARDENED_SKIN_ITEM_ID, false, 0, 0, false, Order_None, null)

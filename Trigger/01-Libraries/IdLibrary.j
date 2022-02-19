@@ -413,6 +413,7 @@ library IdLibrary initializer init
         constant integer STARFALL_DUMMY_ABILITY_ID                      = 'AEsf'
         constant integer TRANQUILITY_DUMMY_ABILITY_ID                   = 'AEtq'
         constant integer VOLCANO_DUMMY_ABILITY_ID                       = 'ANvc'
+        constant integer STUN_ABILITY_ID                                = 'A0C2'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
@@ -442,6 +443,13 @@ library IdLibrary initializer init
         constant integer BLOKKADE_SHIELD_ABIL_ID                        = 'A01X'
         constant integer TITANIUM_SPIKE_ABIL_ID                         = 'A01Y'
         constant integer TITANIUM_SPIKE_IMMUN_ABIL_ID                   = 'A032'
+
+        constant integer FROST_CIRCLET_ABILITY_ID                       = 'A0C3'
+        constant integer DECAYING_SCYTHE_ABILITY_ID                     = 'A0C4'
+        constant integer DECAYING_SCYTHE_DUMMY_ABILITY_ID               = 'A0C5'
+        constant integer DECAYING_SCYTHE_DUMMY2_ABILITY_ID              = 'A0C6'
+        constant integer SCORCHED_SCIMITAR_ABILITY_ID                   = 'A032'
+        constant integer SPIKED_SHIELD_ABILITY_ID                       = 'A0C7'
 
         // --- Item IDs ---
 
@@ -706,6 +714,7 @@ library IdLibrary initializer init
         constant integer WISDOM_CHESTPLATE_TOME_ITEM_ID                 = 'I0AA'
         constant integer WIZARDBANE_AURA_ITEM_ID                        = 'I09M'
         constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
+        constant integer SCORCHED_SCIMITAR_ITEM_ID                      = 'I0BO'
         
         // --- Item IDs ---
 
@@ -799,6 +808,8 @@ library IdLibrary initializer init
         constant integer WEB_GROUND_BUFF_ID                             = 'Bweb'
         constant integer WHIRLWIND_BUFF_ID                              = 'B005'
         constant integer WISDOM_CHESTPLATE_BUFF_ID                      = 'B020'
+        constant integer DECAYING_SCYTHE_BUFF_ID                        = 'B02D'
+        constant integer DECAYING_SCYTHE_BUFF2_ID                        = 'B02E'
 
         // --- Buff IDs ---
 

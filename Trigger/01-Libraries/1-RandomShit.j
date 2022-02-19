@@ -430,10 +430,12 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             set elementCount = elementCount + R2I(GetHeroLevel(u) / 8)
         endif
 
+        //Poison Runestone
         if id == Element_Poison and UnitHasItemS(u, 'I0B8') then
             set elementCount = elementCount + 2
         endif
 
+        //Goblet of Blood
         if id == Element_Blood and UnitHasItemS(u, 'I0B9') then
             set elementCount = elementCount + 2
         endif
@@ -519,6 +521,11 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         //Druid of the Claw
         if GetUnitTypeId(u ) == DRUID_OF_THE_CLAY_UNIT_ID and IsObjectElement(id, 12) then
             set ResCD = ResCD * 0.5
+        endif
+
+        //Frost Circlet
+        if IsObjectElement(id, Element_Cold) and GetUnitAbilityLevel(u, FROST_CIRCLET_ABILITY_ID) > 0 then
+            set ResCD = ResCD * 0.85
         endif
         
         //Xesil

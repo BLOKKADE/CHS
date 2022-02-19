@@ -1,4 +1,4 @@
-library trigger17 initializer init requires RandomShit
+/*library trigger17 initializer init requires RandomShit
 
     function Trig_Healing_Ward_Conditions takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())=='ohwd'))then
@@ -22,3 +22,4 @@ library trigger17 initializer init requires RandomShit
 
 
 endlibrary
+*/

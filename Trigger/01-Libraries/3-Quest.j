@@ -39,7 +39,7 @@ scope Quests initializer init
 
         call AddQuest("Hotkeys", "|cff3cff00CTRL + Q|r to convert all lumber to gold. |cff3cff00CTRL + W|r to convert all gold to lumber.\nWhen buying an ability, creep upgrade, glory buff or time hold |cffeeff00SHIFT|r to buy as much of it as you can (does not convert resources).", "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", false, true, false)
 
-        call AddQuest("Credits", "Code\nBribe, Vexorian, Jesus4Lyf \n\nIcons\nPeeKay, Marcos DAB, Dentothor, Darkfang, Kola, Mr. Goblin, JollyD, The Panda, Blood Raven, -Berz-,bu3ny \n\nModels\nJesusHipster, nGy, exfyre, Mythic, Hermit, xyzier_24, JetFangInferno", "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp" , false, true, false)
+        call AddQuest("Credits", "Code\nBribe, Vexorian, Jesus4Lyf \n\nIcons\nPeeKay, Marcos DAB, Nightcrime, Dentothor, Darkfang, Kola, Mr. Goblin, JollyD, The Panda, Blood Raven, -Berz-,bu3ny \n\nModels\nJesusHipster, nGy, exfyre, Mythic, Hermit, xyzier_24, JetFangInferno", "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp" , false, true, false)
         call AddQuestItem(bj_lastCreatedQuest, "Thanks to N1 for making the ability draft mode.", false)
         call AddQuestItem(bj_lastCreatedQuest, "Thanks to Komoset for making the loading screen.", false)
         call AddQuestItem(bj_lastCreatedQuest, "This list is incomplete. Is your name missing? Let us know.", false)

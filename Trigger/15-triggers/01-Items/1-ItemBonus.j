@@ -96,7 +96,6 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set r = GetHeroPrimaryStat(u)
 			call SetHeroStat(u, r, GetHeroStatBJ(r, u, false) + 300 * (i - prevCount))
 			call SaveInteger(HTi,hid,47,i)	
-		
 
 			//Wisdom Chestplate
 		elseif itemId == WISDOM_CHESTPLATE_ITEM_ID then
@@ -312,9 +311,9 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid,21) 
 			
-			call AddUnitMagicDef(u ,   25 * I2R(i - prevCount)  )	
-			call AddUnitBlock(u ,   50 * I2R(i - prevCount)  )
-			call AddUnitEvasion(u ,   15 * I2R(i - prevCount)  )
+			call AddUnitMagicDef(u ,   50 * I2R(i - prevCount)  )	
+			call AddUnitBlock(u ,   500 * I2R(i - prevCount)  )
+			call AddUnitEvasion(u ,   30 * I2R(i - prevCount)  )
 			call SaveInteger(HTi,hid,21,i)	
 		
 		
@@ -482,6 +481,15 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call AddUnitMagicDmg(u ,   - 50 * I2R(i - prevCount)  )
 			call AddUnitMagicDef(u ,   200 * I2R(i - prevCount)  )
 			call SaveInteger(HTi,hid,38,i)	
+
+			//Hero's hammer
+		elseif itemId == 'I092' then
+			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set prevCount = LoadInteger(HTi,hid,itemId) 
+			call AddUnitPhysPow(u ,   60 * I2R(i - prevCount)  )
+			set r = GetHeroPrimaryStat(u)
+			call SetHeroStat(u, r, GetHeroStatBJ(r, u, false) + 400 * (i - prevCount))
+			call SaveInteger(HTi,hid,itemId,i)	
 		
 			//Heart of Darkness
 		elseif itemId == 'I04V' then
@@ -594,6 +602,14 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 120 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
+
+		//Scorched Scimitar
+		elseif itemId == SCORCHED_SCIMITAR_ITEM_ID then
+			set i = UnitHasItemI(u , itemId)
+			set prevCount = LoadInteger(HTi, hid, itemId) 
+			call AddUnitMagicDmg(u , 40 * I2R(i - prevCount))
+			call AddUnitPhysPow(u, 40 * I2R(i - prevCount))
+			call SaveInteger(HTi, hid, itemId, i)
 		endif  
 		
 		call RemoveSavedHandle(HTi, GetHandleId(t), 2)
