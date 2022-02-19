@@ -1,7 +1,7 @@
 library CritDamage requires RandomShit
 
     function SetCritDamage takes nothing returns nothing
-        local boolean magicDmgType = Damage.index.damageType == DAMAGE_TYPE_MAGIC
+        local boolean magicDmgType = IsMagicDamage()
 
         local integer i = 0
 
@@ -116,6 +116,10 @@ library CritDamage requires RandomShit
             if critHalved then
                 set critDmg = critDmg / 2
             endif 
+
+            if DamageSourceTypeId != SEER_UNIT_ID and StaffOfPowerCritNegate then
+                set critDmg = critDmg / 2
+            endif
 
             //Mithril Helmet
             if UnitHasItemS(DamageTarget, 'I091') then

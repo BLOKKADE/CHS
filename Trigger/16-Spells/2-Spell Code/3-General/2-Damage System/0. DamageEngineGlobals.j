@@ -3,6 +3,9 @@ globals
     unit DamageSource = null
     unit DamageTarget = null
 
+    integer DamageSourceTypeId = 0
+    integer DamageTargetTypeId = 0
+
     // Damage units handle ids
     integer DamageSourceId = 0
     integer DamageTargetId = 0

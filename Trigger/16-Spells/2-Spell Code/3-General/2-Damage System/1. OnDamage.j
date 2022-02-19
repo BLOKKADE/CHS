@@ -4,37 +4,41 @@ scope OnDamage initializer init
         trigger TrgOnDamage
     endglobals
 
-    private function SetTypeDamage takes unit u, integer unitId returns nothing
+    private function SetTypeDamage takes unit u returns nothing
         if Damage.index.damageType != DAMAGE_TYPE_SPIRIT_LINK then
-            if Damage.index.isAttack then
+
+            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
                 set Damage.index.damageType = DAMAGE_TYPE_NORMAL
-            else 
-                set Damage.index.damageType = DAMAGE_TYPE_MAGIC
             endif
 
             //Seer
-            if unitId == SEER_UNIT_ID and GetUnitAbilityLevel(u, 'A09Q') == 0 then
-                if Damage.index.damageType == DAMAGE_TYPE_NORMAL then
+            if DamageSourceTypeId == SEER_UNIT_ID and GetUnitAbilityLevel(u, 'A09Q') == 0 then
+                if IsPhysDamage() then
                     set Damage.index.damageType = DAMAGE_TYPE_MAGIC
-                else
+                elseif IsMagicDamage() then
                     set Damage.index.damageType = DAMAGE_TYPE_NORMAL
                 endif
             endif
             //Staff of Power
-            if UnitHasItemS(u, 'I080') or unitId == 'n00W' or unitId == 'n01H' or unitId == SERPENT_WARD_1_UNIT_ID or unitId == SKELETON_WARMAGE_1_UNIT_ID then
+            if UnitHasItemS(u, 'I080') and Damage.index.damageType != DAMAGE_TYPE_MAGIC then
+                set StaffOfPowerCritNegate = true
+                set Damage.index.damageType = DAMAGE_TYPE_MAGIC
+            elseif DamageSourceTypeId == 'n00W' or DamageSourceTypeId == 'n01H' or DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or DamageSourceTypeId == SKELETON_WARMAGE_1_UNIT_ID or (Damage.index.isAttack and (IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) or IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID))) then
                 set Damage.index.damageType = DAMAGE_TYPE_MAGIC
             endif
         endif
     endfunction
 
     private function OnDamage takes nothing returns nothing
-        local integer unitId = GetUnitTypeId(Damage.index.source)
 
         set DamageSource = Damage.index.sourceUnit
         set DamageTarget = Damage.index.targetUnit
 
         set DamageSourceId = GetHandleId(DamageSource)
         set DamageTargetId = GetHandleId(DamageTarget)
+
+        set DamageSourceTypeId = GetUnitTypeId(DamageSource)
+        set DamageTargetTypeId = GetUnitTypeId(DamageTarget)
 
         set DamageSourcePid = GetPlayerId(GetOwningPlayer(DamageSource))
         set DamageTargetPid = GetPlayerId(GetOwningPlayer(DamageTarget))
@@ -43,13 +47,13 @@ scope OnDamage initializer init
         set DamageTargetHero = udg_units01[DamageTargetPid + 1]
 
         set DamageSourceMagicPower = 1
-        set DamageTargetMagicRes = 0
+        set DamageTargetMagicRes = 1
 
         set DamageSourcePhysPower = 1
 
         set DamageIsTrue = false
         set DamageIsCutting = false
-
+        set StaffOfPowerCritNegate = false
         set DamageShowText = false
 
         if Damage.index.userType == DamageType_Onhit then
@@ -86,7 +90,7 @@ scope OnDamage initializer init
         endif
 
         //set damage source ability
-        if unitId == PRIEST_1_UNIT_ID then
+        if DamageSourceTypeId == PRIEST_1_UNIT_ID then
             set DamageSourceId = GetDummyId(DamageSource)
             set DamageSourceAbility = DummyAbilitySource[DamageSourceId]
             set DamageSourceMagicPower = DamageSourceMagicPower + (GetUnitMagicDmg(DamageSource) / 100)
@@ -129,16 +133,24 @@ scope OnDamage initializer init
         endif
 
         //modified damage source after this, so can't detect dummy units, those need to go ^^^
-        if unitId == PRIEST_1_UNIT_ID or unitId == 'h014' or unitId == 'n00V' or unitId == 'n01L' then
+        if DamageSourceTypeId == PRIEST_1_UNIT_ID or DamageSourceTypeId == 'h014' or DamageSourceTypeId == 'n00V' or DamageSourceTypeId == 'n01L' then
             set DamageSource = DamageSourceHero
-            set unitId = GetUnitTypeId(DamageSource)
+            set DamageSourceTypeId = GetUnitTypeId(DamageSource)
             set DamageSourceId = GetHandleId(DamageSource)
         endif
 
         set DamageSourceLuck = GetUnitLuck(DamageSource)
         set DamageTargetLuck = GetUnitLuck(DamageTarget)
 
-        call SetTypeDamage(DamageSource, unitId)
+        call SetTypeDamage(DamageSource)
+
+        if Damage.index.isAttack then
+            call BJDebugMsg("post attack dmg: " + I2S(GetHandleId(Damage.index.damageType)))
+        elseif Damage.index.isSpell then
+            call BJDebugMsg("post spell dmg: " + I2S(GetHandleId(Damage.index.damageType)))
+        else
+            call BJDebugMsg("post dmg, phys:" + B2S(IsPhysDamage()) + "magic:" + B2S(IsMagicDamage()))
+        endif
 
         //call BJDebugMsg("MOD1.0 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
     endfunction

@@ -6,9 +6,9 @@ scope AfterDamage initializer init
 
     private function AfterDamage takes nothing returns nothing
         if DamageShowText and Damage.index.damage > 0 then
-            if Damage.index.damageType == DAMAGE_TYPE_NORMAL then
+            if IsPhysDamage() then
                 call CreateTextTagTimerColor( I2S(R2I(Damage.index.damage)) + "!", 1, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 50, 1, 177, 0, 0)
-            elseif Damage.index.damageType == DAMAGE_TYPE_MAGIC then
+            elseif IsMagicDamage() then
                 call CreateTextTagTimerColor( I2S(R2I(Damage.index.damage)) + "!", 1, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 50, 1, 0, 0, 177)
             else
                 call CreateTextTagTimerColor( I2S(R2I(Damage.index.damage)) + "!", 1, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 50, 1, 0, 177, 0)

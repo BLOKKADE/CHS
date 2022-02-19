@@ -45,7 +45,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants
             endif
 
             //Trickster
-            if GetUnitTypeId(DamageTarget) == SATYR_TRICKSTER_UNIT_ID then
+            if DamageTargetTypeId == SATYR_TRICKSTER_UNIT_ID then
                 //set TypeDmg_b = 2
                 //set DamageIsAttack = true
                 //set GLOB_typeDmg = 2

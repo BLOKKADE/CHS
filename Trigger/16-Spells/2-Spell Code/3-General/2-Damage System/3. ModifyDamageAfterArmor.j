@@ -31,13 +31,17 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Strong Chest Mail
-        if UnitHasItemS(DamageTarget,'I07P') and IsHeroUnitId(GetUnitTypeId(DamageSource)) == false and (not Damage.index.isSpell) then   
+        if UnitHasItemS(DamageTarget,'I07P') and IsPhysDamage() and IsHeroUnitId(DamageSourceTypeId) == false then   
             set Damage.index.amount = Damage.index.amount / 2
         endif
 
+        //Dousing Hex
+        if GetUnitAbilityLevel(DamageSource, DOUSING_HEX_BUFF_ID) > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
+            set Damage.index.damage = Damage.index.damage * DousingHexReduction.real[DamageSourceId]
+        endif
+
         //Fishing Rod
-        
-        if (not DamageIsOnHit) and UnitHasItemS(DamageSource,'I07T') and (not Damage.index.isSpell) then
+        if (not DamageIsOnHit) and UnitHasItemS(DamageSource,'I07T') and IsPhysDamage() then
             call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))
             if DistanceBetweenUnits(DamageSource, DamageTarget) < 1200 and DistanceBetweenUnits(DamageSource, DamageTarget) > 80 then
                 set r1 = (bj_RADTODEG * GetAngleToTarget(DamageSource, DamageTarget)) + 180
@@ -131,7 +135,7 @@ scope ModifyDamageAfterArmor initializer init
         endif	
 
         //Ghoul Passive
-        if GetUnitTypeId(DamageSource) == GHOUL_UNIT_ID and Damage.index.isAttack then
+        if DamageSourceTypeId == GHOUL_UNIT_ID and Damage.index.isAttack then
             //call BJDebugMsg(GetUnitName(DamageSource) + " Damage.index.isAttack " + GetUnitName(DamageTarget) + ": " + I2S(DamageTargetId))
             set i = GetHeroLevel(DamageSource)
             set r2 = BlzGetUnitMaxHP(DamageTarget) * (0.025 + (0.00025 * i))
@@ -143,7 +147,7 @@ scope ModifyDamageAfterArmor initializer init
         //Bone Armor Skeleton Defender
         if UnitHasItemS(DamageTarget, 'I07O') then
             set i = GetBoneArmorStruct(GetHandleId(DamageTargetHero)).groupSize
-            if i > 0 and IsHeroUnitId(GetUnitTypeId(DamageTarget)) then
+            if i > 0 and IsHeroUnitId(DamageTargetTypeId) then
                 if i > 12 then
                     set i = 12
                 endif
@@ -157,12 +161,12 @@ scope ModifyDamageAfterArmor initializer init
         endif
         
         //Magic Necklace of Absorption
-        if GetUnitAbilityLevel(DamageTarget  ,'B00R') >= 1 and Damage.index.isSpell then
+        if GetUnitAbilityLevel(DamageTarget  ,'B00R') >= 1 and IsMagicDamage() then
             call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.75 )
         endif
 
         //Bloody Axe
-        if (not Damage.index.isSpell) and IsHeroUnitId(GetUnitTypeId(DamageTarget)) == false then
+        if IsPhysDamage() and IsHeroUnitId(DamageTargetTypeId) == false then
             set i = UnitHasItemI( DamageSource,'I078') 
             if i > 0 then
                 set r2 = Damage.index.amount * (0.25 * I2R(i))
@@ -172,14 +176,14 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Staff of Absolute Magic
-        if GetUnitAbilityLevel(DamageSourceHero  ,'B00O') >= 1 and Damage.index.isSpell then
+        if GetUnitAbilityLevel(DamageSourceHero  ,'B00O') >= 1 and IsMagicDamage() then
             set r2 = Damage.index.amount * 0.33 
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
 
         //Heavy Blow
-        if GetUnitAbilityLevel(DamageSource  ,HEAVY_BLOW_ABILITY_ID) > 0 and (not Damage.index.isSpell) and (BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 or CheckTimerZero(DamageSourceHero,HEAVY_BLOW_ABILITY_ID)) then
+        if GetUnitAbilityLevel(DamageSource  ,HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and (BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 or CheckTimerZero(DamageSourceHero,HEAVY_BLOW_ABILITY_ID)) then
             if ZetoTimerStart(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) then
                 call AbilStartCD(DamageSource,HEAVY_BLOW_ABILITY_ID,0.3)
             endif
@@ -188,7 +192,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
         
         //Combustion
-        if GetUnitAbilityLevel(DamageSourceHero   ,COMBUSTION_ABILITY_ID) > 0 and Damage.index.isSpell and (BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 or CheckTimerZero(DamageSourceHero,COMBUSTION_ABILITY_ID)) then
+        if GetUnitAbilityLevel(DamageSourceHero   ,COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and (BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 or CheckTimerZero(DamageSourceHero,COMBUSTION_ABILITY_ID)) then
             if ZetoTimerStart(DamageSourceHero,COMBUSTION_ABILITY_ID) then
                 call AbilStartCD(DamageSourceHero,COMBUSTION_ABILITY_ID,0.3)
             endif
@@ -264,8 +268,33 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Blademaster
-        if GetUnitTypeId(DamageSource) == BLADE_MASTER_UNIT_ID and BladestormReady(DamageSource) and Damage.index.isAttack then
-            call BladestormDamage(DamageSource, Damage.index.amount , Damage.index.isSpell)
+        if DamageSourceTypeId == BLADE_MASTER_UNIT_ID and BladestormReady(DamageSource) and Damage.index.isAttack then
+            call BladestormDamage(DamageSource, Damage.index.amount , IsMagicDamage())
+        endif
+
+        //Pyromancer
+        if DamageSourceTypeId == PYROMANCER_UNIT_ID  and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
+            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A0B6') == 0 then
+                call CreateScorches(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 149 + (1 * GetHeroLevel(DamageSource)))
+            endif
+        endif
+        
+        //Ogre Warrior
+        if DamageSourceTypeId == OGRE_WARRIOR_UNIT_ID and DamageSourceAbility != 'A047' and (IsPhysDamage() or IsSpellElement(DamageSource, DamageSourceAbility, Element_Earth)) then
+            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08U') <= 0 then
+                call ElemFuncStart(DamageSource,OGRE_WARRIOR_UNIT_ID)
+                call CheckProc(DamageSource, 400)
+                set r1 = 6 - (0.5 * GetProcCheckCount())
+                call AbilStartCD(DamageSource, 'A08U', RMaxBJ(r1, 0))
+                call BJDebugMsg("ow cd" + R2S(r1))
+                call USOrder4field(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A047', "stomp", GetHeroStr(DamageSource,true) + (60 * GetHeroLevel(DamageSource)), ABILITY_RLF_DAMAGE_INCREASE, 400, ABILITY_RLF_CAST_RANGE, 1, ABILITY_RLF_DURATION_HERO, 1, ABILITY_RLF_DURATION_NORMAL)
+            endif
+        endif
+
+        //Lich
+        if DamageSourceTypeId == LICH_UNIT_ID  and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < 25 * DamageSourceLuck then
+            call ElemFuncStart(DamageSource,LICH_UNIT_ID)
+            call UsOrderU2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
 
         //Magnetic Oscillation
@@ -291,8 +320,23 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Spiked Shield bonus dmg
+        set i1 = GetUnitAbilityLevel(DamageSource, SPIKED_SHIELD_ABILITY_ID)
+        if i1 > 0 then
+            set r3 = 0
+            if IsPhysDamage() then
+                set r2 = 1 + (BlzGetUnitArmor(DamageSource) * 0.01)
+            endif
+
+            if IsMagicDamage() then
+                set r2 = 1 + (GetUnitMagicDef(DamageSource) * 0.01)
+            endif
+        else
+            set r2 = 1
+        endif
+
         if not DamageIsOnHit and Damage.index.amount > 0 then
-            if (not Damage.index.isSpell) then
+            if IsPhysDamage() then
 
                  //Pulverize
                 set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
@@ -314,22 +358,26 @@ scope ModifyDamageAfterArmor initializer init
                     call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) / 2, ABILITY_RLF_DAMAGE_HTB1 )
                 endif
 
+                //Volcanic Armor
                 if UnitHasItemS(DamageSource, 'I03T') and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
                     call ActivateVolcanicArmor(DamageSource, DamageTarget)
-                endif
+                endif    
 
                 //Thorns
                 if (GetUnitAbilityLevel(DamageTarget, 'B01C') > 0 and IsUnitType(DamageSource, UNIT_TYPE_MELEE_ATTACKER)) then
-
+                    
                     set r1 = 1 - (0.01 * GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID + GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID)))
                     //call BJDebugMsg("thorns: r1:" + R2S(r1) + " ttl: " + R2S((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.01)) * r1))
                     set udg_NextDamageType = DamageType_Onhit
                     set udg_NextDamageAbilitySource = THORNS_AURA_ABILITY_ID
+                    
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
-                        call Damage.applySpell(DamageTarget, DamageSource, (Damage.index.amount * ( 0.12 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1, DAMAGE_TYPE_MAGIC)
+                        set r3 = ((Damage.index.amount * ( 0.12 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
+                        call Damage.applyMagic(DamageTarget, DamageSource, r3, DAMAGE_TYPE_MAGIC)
                         //call MagicDamage(DamageTarget,DamageSource, , true)
                     else
-                        call Damage.applySpell(DamageTarget,DamageSource, (Damage.index.amount * ( 0.18 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.045))) * r1, DAMAGE_TYPE_MAGIC)
+                        set r3 = ((Damage.index.amount * ( 0.18 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
+                        call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     endif
                 endif
 
@@ -340,9 +388,11 @@ scope ModifyDamageAfterArmor initializer init
                     set udg_NextDamageType = DamageType_Onhit
                     set udg_NextDamageAbilitySource = REFLECTION_AUR_ABILITY_ID
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
-                        call Damage.applySpell(DamageTarget,DamageSource, (Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.03))) * r1, DAMAGE_TYPE_MAGIC)
+                        set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.03))) * r1) * r2
+                        call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     else
-                        call Damage.applySpell(DamageTarget,DamageSource, (Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.045))) * r1, DAMAGE_TYPE_MAGIC)
+                        set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.045))) * r1) * r2
+                        call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     endif
                 endif
 
@@ -350,11 +400,12 @@ scope ModifyDamageAfterArmor initializer init
                 if GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID) > 0 and Damage.index.isAttack then
                     set udg_NextDamageType = DamageType_Onhit
                     set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
-                    call Damage.applySpell(DamageTarget,DamageSource, Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009)), DAMAGE_TYPE_MAGIC)
+                    set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
+                    call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                 endif
             endif
 
-            if Damage.index.isSpell then
+            if IsMagicDamage() then
 
                 //Wizardbane
                 if GetUnitAbilityLevel(DamageTarget, 'B01B') > 0 then
@@ -363,22 +414,29 @@ scope ModifyDamageAfterArmor initializer init
                     set udg_NextDamageType = DamageType_Onhit
                     set udg_NextDamageAbilitySource = WIZARDBANE_AURA_ABILITY_ID
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
-                        call Damage.applySpell(DamageTarget,DamageSource, (Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.03)) * r1, DAMAGE_TYPE_MAGIC)
+                        set r3 = ((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.03)) * r1) * r2
+                        call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     else
-                        call Damage.applySpell(DamageTarget,DamageSource, (Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.05)) * r1, DAMAGE_TYPE_MAGIC)
+                        set r3 = ((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.05)) * r1) * r2
+                        call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     endif
                     call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", DamageSource, "chest"))
                 endif
             endif
 
+            //Spiked Shield heal
+            if i1 > 0 and r3 != 0 then
+                call SetUnitState(DamageSource, UNIT_STATE_LIFE, GetUnitState(DamageSource, UNIT_STATE_LIFE) + r3)
+            endif
+
             //Dark Hunter Bash
-            if GetUnitTypeId(DamageSource) == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+            if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                 call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", 50 * GetHeroLevel(DamageSource), ABILITY_RLF_DAMAGE_HTB1 )
             endif
         endif
         
         //Banshee passive
-        if GetUnitTypeId(DamageTarget) == BANSHEE_UNIT_ID then
+        if DamageTargetTypeId == BANSHEE_UNIT_ID then
             if Damage.index.amount >= GetUnitState(DamageTarget,UNIT_STATE_MANA) then
                 call SetUnitState(DamageTarget,UNIT_STATE_MANA,0)
                 set Damage.index.amount = GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) + 1
@@ -402,7 +460,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Skeleton Brute
-        if GetUnitTypeId(DamageTarget) == SKELETON_BRUTE_UNIT_ID then
+        if DamageTargetTypeId == SKELETON_BRUTE_UNIT_ID then
             if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0BA') == 0 and Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) * 0.3 and GetUnitAbilityLevel(DamageTarget, 'A0BB') == 0 then
                 call SkeletonBrute(DamageTarget)
             endif
@@ -414,12 +472,18 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Murloc Warrior
-        if GetUnitTypeId(DamageTarget) == 'H01F' and GetHeroStr(DamageTarget, true) < 2147483647 then
+        if DamageTargetTypeId == 'H01F' and GetHeroStr(DamageTarget, true) < 2147483647 then
             set i1 = 1 + GetHeroLevel(DamageTarget)/ 10 
             call SaveInteger(HT,DamageTargetId,54021,i1 + LoadInteger(HT,DamageTargetId,54021))
             call SetHeroStr(DamageTarget,GetHeroStr(DamageTarget,false)+ i1,false)
             call SetHeroAgi(DamageTarget,GetHeroAgi(DamageTarget,false)+ i1,false)
             call SetHeroInt(DamageTarget,GetHeroInt(DamageTarget,false)+ i1,false)
+        endif
+
+        //Decaying Scythe
+        if GetUnitAbilityLevel(DamageSource, DECAYING_SCYTHE_ABILITY_ID) > 0 and GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID) == 0 and T32_Tick - DecayingScytheTick[DamageTargetId] > 96 then
+            call DummyOrder.create(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitFacing(DamageSource), 2).addActiveAbility(DECAYING_SCYTHE_DUMMY_ABILITY_ID, 1, 852189).target(DamageTarget).activate()
+            call TempBonus.create(DamageTarget, BONUS_HEALTH_REGEN, 0 - (BlzGetUnitRealField(DamageTarget, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + GetUnitBonus(DamageTarget, BONUS_HEALTH_REGEN)) * 0.75, 7).addBuffLink(DECAYING_SCYTHE_BUFF_ID)
         endif
 
         //Flimsy Token
