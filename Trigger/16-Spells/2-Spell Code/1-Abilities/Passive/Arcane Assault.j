@@ -7,7 +7,7 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
         return SpellData[GetHandleId(damageSource)].boolean[8]
     endfunction
 
-    function ArcaneAssault takes unit damageSource, unit damageTarget, real damage, integer level returns nothing
+    function ArcaneAssault takes unit damageSource, unit damageTarget, integer damageSourceAbility, real damage, integer level returns nothing
         local real fullValue = 0.7 + (level * 0.3)
         local real fullDamageCount = MathRound_floor(fullValue)
         local real damageBonus = fullValue - fullDamageCount
@@ -53,14 +53,16 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
                 set targets = targets - 1
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
-                set udg_NextDamageAbilitySource = ARCANE_ASSAUL_ABILITY_ID
-                call Damage.applyAttack(damageSource, target, damage, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                set udg_NextDamageAbilitySource = damageSourceAbility
+                set udg_NextDamageIsAttack = true
+                call Damage.applyPhys(damageSource, target, damage, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 //call BJDebugMsg("full aa" + I2S(GetHandleId(target)) + " targets: " + I2S(targets))
             elseif damageBonus != 0 then
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
-                set udg_NextDamageAbilitySource = ARCANE_ASSAUL_ABILITY_ID
-                call Damage.applyAttack(damageSource, target, damage * damageBonus, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                set udg_NextDamageAbilitySource = damageSourceAbility
+                set udg_NextDamageIsAttack = true
+                call Damage.applyPhys(damageSource, target, damage * damageBonus, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 //call BJDebugMsg("db aa" + I2S(GetHandleId(target)) + " dmg: " + R2S(damage * damageBonus) + " targets: " + I2S(targets))
                 call GroupClear(ENUM_GROUP)
             endif

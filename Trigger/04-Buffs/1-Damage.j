@@ -13,9 +13,9 @@ function DamageTimer takes nothing returns nothing
     set udg_NextDamageAbilitySource = abilId
     if physDmg then
         //set GLOB_typeDmg = 2
-        call Damage.applyAttack(u1,u2,dmg,false,ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+        call Damage.applyPhys(u1,u2,dmg,false,ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
     else
-        call Damage.applySpell(u1,u2,dmg,DAMAGE_TYPE_MAGIC)
+        call Damage.applyMagic(u1,u2,dmg,DAMAGE_TYPE_MAGIC)
     endif
 
     call FlushChildHashtable(HT,GetHandleId(t))

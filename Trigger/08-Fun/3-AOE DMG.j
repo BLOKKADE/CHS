@@ -17,7 +17,7 @@ library AoeDamage requires Vampirism
                 set udg_NextDamageType = DamageType_Onhit
             endif
             set udg_NextDamageAbilitySource = Aoe_AbilitySource
-            call Damage.applySpell(Aoe_Source,GetFilterUnit(),Aoe_DamageAmount, DAMAGE_TYPE_MAGIC)
+            call Damage.applyMagic(Aoe_Source,GetFilterUnit(),Aoe_DamageAmount, DAMAGE_TYPE_MAGIC)
         endif
 
         return false
@@ -77,7 +77,7 @@ library AoeDamage requires Vampirism
             //set Attack_AbilId = Aoe_AbilitySource 
             //set GLOB_typeDmg = 2
             set udg_NextDamageAbilitySource = Aoe_AbilitySource
-            call Damage.applyAttack(Aoe_Source,GetFilterUnit(),Aoe_DamageAmount, false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+            call Damage.applyPhys(Aoe_Source,GetFilterUnit(),Aoe_DamageAmount, false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
         endif
 
         return false

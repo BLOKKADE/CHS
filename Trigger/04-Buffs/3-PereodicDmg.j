@@ -27,10 +27,10 @@ library PeriodicDamage initializer init requires RandomShit
                 endif
                 set udg_NextDamageAbilitySource = this.abilId
                 if magic then
-                    call Damage.applySpell(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), DAMAGE_TYPE_MAGIC)
+                    call Damage.applyMagic(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), DAMAGE_TYPE_MAGIC)
                 else
                     //set GLOB_typeDmg = 2
-                    call Damage.applyAttack(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                    call Damage.applyPhys(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 endif
                 if this.fx != null then
                     call DestroyEffect(AddSpecialEffectTargetFix(this.fx, this.target, attachPoint))

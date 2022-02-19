@@ -64,10 +64,10 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
 
                 set udg_NextDamageAbilitySource = EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID
                 if magic then
-                    call Damage.applySpell(this.caster, this.target, this.dmg, DAMAGE_TYPE_MAGIC)
+                    call Damage.applyMagic(this.caster, this.target, this.dmg, DAMAGE_TYPE_MAGIC)
                 else
                     //set GLOB_typeDmg = 2
-                    call Damage.applyAttack(this.caster, this.target, this.dmg, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                    call Damage.applyPhys(this.caster, this.target, this.dmg, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 endif
 
                 set SpellData[GetHandleId(this.caster)].boolean[5] = false

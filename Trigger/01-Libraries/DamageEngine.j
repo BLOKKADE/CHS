@@ -43,9 +43,9 @@ JASS API (work in progress - I have a lot of documentation to go through):
         - Same arguments as "UnitDamageTarget" but has the benefit of being performance-friendly during recursive events.
         - Will automatically cause the damage to be registered as Code damage.
      
-        static method applySpell takes unit src, unit tgt, real amt, damagetype dt returns Damage
+        static method applyMagic takes unit src, unit tgt, real amt, damagetype dt returns Damage
         - A simplified version of the above function that autofills in the booleans, attack type and weapon type.
-        static method applyAttack takes unit src, unit tgt, real amt, boolean ranged, attacktype at, weapontype wt returns Damage
+        static method applyPhys takes unit src, unit tgt, real amt, boolean ranged, attacktype at, weapontype wt returns Damage
         - A different variation of the above which autofills the "attack" boolean and sets the damagetype to DAMAGE_TYPE_NORMAL.
     struct DamageTrigger extends array
         method operator filter= takes integer filter returns nothing
@@ -1101,11 +1101,10 @@ endif// \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ /
         call clearNexts()
         return d
     endmethod
-    static method applySpell takes unit src, unit tgt, real amt, damagetype dt returns Damage
+    static method applyMagic takes unit src, unit tgt, real amt, damagetype dt returns Damage
         return apply(src, tgt, amt, false, false, null, dt, null)
     endmethod
-    static method applyAttack takes unit src, unit tgt, real amt, boolean ranged, attacktype at, weapontype wt returns Damage
-        set udg_NextDamageIsAttack = true
+    static method applyPhys takes unit src, unit tgt, real amt, boolean ranged, attacktype at, weapontype wt returns Damage
         return apply(src, tgt, amt, true, ranged, at, DAMAGE_TYPE_NORMAL, wt)
     endmethod
     //===========================================================================
