@@ -58,6 +58,10 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
                 set count = count + 1
             endif
 
+            if GetUnitAbilityLevel(this.source, DECAYING_SCYTHE_ABILITY_ID) > 0 then
+                set count = count + 3
+            endif
+
             if GetUnitAbilityLevel(this.target, POISON_NON_STACKING_CUSTOM_BUFF_ID) > 0 then
                 set count = count + 1
             endif

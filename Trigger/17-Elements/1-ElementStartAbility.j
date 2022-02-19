@@ -12,9 +12,14 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
             return
         endif
+
+        //Decaying Scythe
+        if GetUnitAbilityLevel(u, DECAYING_SCYTHE_ABILITY_ID) > 0 and IsSpellElement(u, id, Element_Poison) then
+            call DummyOrder.create(DamageSource, GetUnitX(DamageSource), GetUnitY(DamageSource), GetUnitFacing(DamageSource), 2).addActiveAbility(DECAYING_SCYTHE_DUMMY2_ABILITY_ID, 1, 852588).instant().activate()
+        endif
         
         //Fire Runestone
-        if UnitHasItemS(u,'I08P') and IsSpellElement(u,id,1) then            
+        if UnitHasItemS(u,'I08P') and IsSpellElement(u,id, Element_Fire) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A076') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,3)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
@@ -23,7 +28,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Water Runestone
-        if UnitHasItemS(u,'I08Q') and IsSpellElement(u,id,2) then            
+        if UnitHasItemS(u,'I08Q') and IsSpellElement(u,id,Element_Water) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A077') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,9)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
@@ -32,7 +37,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Earth Runestone
-        if UnitHasItemS(u,'I08R') and IsSpellElement(u,id,4) then            
+        if UnitHasItemS(u,'I08R') and IsSpellElement(u,id,Element_Earth) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A078') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,8)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
@@ -41,7 +46,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Wind Runestone
-        if UnitHasItemS(u,'I08S') and IsSpellElement(u,id,3) then            
+        if UnitHasItemS(u,'I08S') and IsSpellElement(u,id,Element_Wind) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A079') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 500 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,10)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 500)

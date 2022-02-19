@@ -81,6 +81,11 @@ scope ModifyDamageAfterArmor initializer init
             set Damage.index.amount = Damage.index.amount * 0.66
         endif 
 
+        //Decaying Scythe
+        if GetUnitAbilityLevel(DamageSource, DECAYING_SCYTHE_BUFF2_ID) > 0 then
+            set Damage.index.damage = Damage.index.damage * 0.5
+        endif
+
         //Blokkades Shield damage reduction
         if GetUnitAbilityLevel(DamageTarget, 'A01X') > 0 then
 

@@ -350,7 +350,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WATER_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,2)
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Water)
                     call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)), false)
                     call SaveInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID,i1)	
                 endif
@@ -359,7 +359,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WIND_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,3)
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Wind)
                     call AddUnitEvasion(u ,   0.5 * I2R(i1 - i2)  )
                     call SetHeroAgi(u,GetHeroAgi(u,false)+ 10 *(i1 - i2),false     )
                     call SaveInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID,i1)	
@@ -369,7 +369,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_EARTH_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,4)
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Earth)
                     call AddUnitBlock(u ,   20 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID,i1)	
                 endif
@@ -378,9 +378,19 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_BLOOD_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,11)
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Blood)
                     call SetHeroStr(u,GetHeroStr(u,false)+ 10 *(i1 - i2),false     )
                     call SaveInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID,i1)	
+                endif
+
+                //Decaying Scythe
+                if GetUnitAbilityLevel(u, DECAYING_SCYTHE_ABILITY_ID) > 0 then
+                    set i1 = GetClassUnitSpell(u, Element_Poison)
+                    set i2 = LoadInteger(HT, hid, DECAYING_SCYTHE_ABILITY_ID)
+                    if i1 != i2 then
+                        call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + ((i1 - i2) * 300))
+                        call SaveInteger(HT,hid,DECAYING_SCYTHE_ABILITY_ID,i1)
+                    endif
                 endif
 
                 //Brilliance Aura
@@ -393,7 +403,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WILD_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,5)
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Wild)
                     call AddUnitSummonStronger(u ,   1 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID,i1)	
                 endif
