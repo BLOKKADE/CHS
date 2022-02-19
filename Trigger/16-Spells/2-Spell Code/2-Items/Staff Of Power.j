@@ -1,4 +1,8 @@
 library StaffOfPower requires RandomShit
+    globals
+        boolean StaffOfPowerCritNegate = false
+    endglobals
+
     function StaffOfPowerCast takes unit u returns nothing
         if UnitHasItemS(u, 'I080') then
             call RemoveItem(GetItemOfTypeFromUnitBJ(u, 'I080'))
