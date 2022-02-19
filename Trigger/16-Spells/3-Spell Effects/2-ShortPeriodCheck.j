@@ -19,6 +19,15 @@ scope ShortPeriodCheck initializer init
 
                 if not HasPlayerFinishedLevel(u, Player(II - 1)) then
                     
+                    //Blokkades Shield
+                    if GetUnitAbilityLevel(u, BLOKKADE_SHIELD_ABIL_ID) > 0 then
+                        if T32_Tick - BlokShieldStartTick[hid] > 32 * 6 then
+                            set BlokShieldStartTick[hid] = T32_Tick
+                            set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 1
+                            call SetBlokShieldCharges(u, hid)
+                        endif
+                    endif
+                    
                     //Fire Shield
                     set i1 = GetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID)
                     if i1 > 0 then
@@ -155,15 +164,6 @@ scope ShortPeriodCheck initializer init
                         call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - r2 + r1)
                         //call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
                         call SaveReal(DataUnitHT, hid, 1000, r1)
-                    endif
-                endif
-
-                //Blokkades Shield
-                if GetUnitAbilityLevel(u, BLOKKADE_SHIELD_ABIL_ID) > 0 then
-                    if T32_Tick - BlokShieldStartTick[hid] > 32 * 6 then
-                        set BlokShieldStartTick[hid] = T32_Tick
-                        set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 1
-                        call SetBlokShieldCharges(u, hid)
                     endif
                 endif
 
