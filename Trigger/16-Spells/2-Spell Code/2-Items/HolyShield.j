@@ -7,7 +7,7 @@ library HolyShield initializer init requires RandomShit, AbilityData, CastSpellO
     private function init takes nothing returns nothing
 
         set HolyShieldS[0] = HOLY_LIGHT_ABILITY_ID
-        set HolyShieldS[1] = HEALING_WARD_ABILITY_ID
+        set HolyShieldS[1] = TRANQUILITY_ABILITY_ID
         set HolyShieldS[2] = HEALING_WAVE_ABILITY_ID
         set HolyShieldS[3] = REJUVENATION_ABILITY_ID
         
