@@ -448,7 +448,7 @@ library IdLibrary initializer init
         constant integer DECAYING_SCYTHE_ABILITY_ID                     = 'A0C4'
         constant integer DECAYING_SCYTHE_DUMMY_ABILITY_ID               = 'A0C5'
         constant integer DECAYING_SCYTHE_DUMMY2_ABILITY_ID              = 'A0C6'
-        constant integer SCORCHED_SCIMITAR_ABILITY_ID                   = 'A032'
+        constant integer SCORCHED_SCIMITAR_ABILITY_ID                   = 'A0C1'
         constant integer SPIKED_SHIELD_ABILITY_ID                       = 'A0C7'
 
         // --- Item IDs ---
