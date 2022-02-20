@@ -9,11 +9,13 @@ library trigger110 initializer init requires RandomShit
 
 
     function Trig_Sudden_Death_Timer_Func002Func001A takes nothing returns nothing
-        call SetUnitMoveSpeed(GetEnumUnit(),(GetUnitMoveSpeed(GetEnumUnit())+ 25.00))
-        if GetUnitAbilityLevel(GetEnumUnit(), 'AOcr') == 0 then
-            call UnitAddAbility(GetEnumUnit(), 'AOcr')
-        elseif GetUnitAbilityLevel(GetEnumUnit(), 'AOcr') < 10 then
-            call SetUnitAbilityLevel(GetEnumUnit(), 'AOcr', 10)
+        if GetUnitTypeId(GetEnumUnit()) != dummyId then
+            call SetUnitMoveSpeed(GetEnumUnit(),(GetUnitMoveSpeed(GetEnumUnit())+ 25.00))
+            if GetUnitAbilityLevel(GetEnumUnit(), 'AOcr') == 0 then
+                call UnitAddAbility(GetEnumUnit(), 'AOcr')
+            elseif GetUnitAbilityLevel(GetEnumUnit(), 'AOcr') < 10 then
+                call SetUnitAbilityLevel(GetEnumUnit(), 'AOcr', 10)
+            endif
         endif
     endfunction
 
@@ -27,14 +29,16 @@ library trigger110 initializer init requires RandomShit
 
 
     function Trig_Sudden_Death_Timer_Func002Func002Func001A takes nothing returns nothing
-        call UnitAddAbilityBJ('Atru',GetEnumUnit())
-        call UnitAddAbilityBJ('A00W',GetEnumUnit())
-        call UnitAddAbilityBJ('A01B',GetEnumUnit())
-        if GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) < 1000000 then
-            if GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) == 0 then
-                call SetUnitBonus(GetEnumUnit(), BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(GetEnumUnit(), 0) * 0.1) + 1)
+        if GetUnitTypeId(GetEnumUnit()) != dummyId then
+            call UnitAddAbilityBJ('Atru',GetEnumUnit())
+            call UnitAddAbilityBJ('A00W',GetEnumUnit())
+            call UnitAddAbilityBJ('A01B',GetEnumUnit())
+            if GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) < 1000000 then
+                if GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) == 0 then
+                    call SetUnitBonus(GetEnumUnit(), BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(GetEnumUnit(), 0) * 0.1) + 1)
+                endif
+                call SetUnitBonus(GetEnumUnit(), BONUS_DAMAGE, R2I(GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) * 1.1) + 1)
             endif
-            call SetUnitBonus(GetEnumUnit(), BONUS_DAMAGE, R2I(GetUnitBonus(GetEnumUnit(), BONUS_DAMAGE) * 1.1) + 1)
         endif
     endfunction
 
