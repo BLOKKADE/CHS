@@ -41,6 +41,16 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
     set u1 = null
 endfunction */
 
+function PreRoundStart takes unit hero, integer hid returns nothing
+    //Blokkade's Shield
+    if GetUnitAbilityLevel(hero, BLOKKADE_SHIELD_ABIL_ID) > 0 then
+        set BlokShieldCharges[hid] = 6
+        set BlokShieldStartTick[hid] = T32_Tick
+        set BlokShieldAttackCount[hid] = 0
+        call SetBlokShieldCharges(hero, hid)
+    endif
+endfunction
+
 function OnRoundStart takes unit hero, integer hid returns nothing
     local item it 
 
@@ -235,13 +245,7 @@ function FunctionTimerSpell takes nothing returns nothing
 
     //Blokkade's Shield
     if GetUnitAbilityLevel(Herou, BLOKKADE_SHIELD_ABIL_ID) > 0 then
-        if startType != 6 then
-            set BlokShieldCharges[hid] = 6
-            set BlokShieldStartTick[hid] = T32_Tick
-            set BlokShieldAttackCount[hid] = 0
-        else
-            set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 6
-        endif
+        set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 6
         call SetBlokShieldCharges(Herou, hid)
     endif
 
@@ -303,6 +307,10 @@ function StartFunctionSpell takes unit Hero, integer i1 returns nothing
     if i1 != 6 then
         call FixAbilityU (Hero)
     endif    
+
+    if i1 == 3 then
+        call PreRoundStart(Hero, GetHandleId(Hero))
+    endif
     
     call SaveInteger(HT_timerSpell,GetHandleId(startbattle),4, i1)
     call SaveUnitHandle(HT_timerSpell,GetHandleId(startbattle),1,Hero)     
