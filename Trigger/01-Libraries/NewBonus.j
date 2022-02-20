@@ -163,7 +163,7 @@ library NewBonus
             elseif bonus_type == BONUS_INTELLIGENCE then
                 return BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(u, STATS_ABILITY), INTELLIGENCE_FIELD, 0)
             else
-                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "Invalid Bonus Type")
+                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "I: Invalid Bonus Type: " + I2S(bonus_type))
             endif
             
             return -1
@@ -193,7 +193,7 @@ library NewBonus
             elseif bonus_type == BONUS_INTELLIGENCE then
                 return SetUnitAbilityBonusI(u, STATS_ABILITY, INTELLIGENCE_FIELD, amount)
             else
-                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "Invalid Bonus Type")
+                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "I: Invalid Bonus Type: " + I2S(bonus_type))
             endif
 
             return -1
@@ -224,7 +224,7 @@ library NewBonus
             elseif bonus_type == BONUS_ATTACK_SPEED then
                 return BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, ATTACKSPEED_ABILITY), ATTACKSPEED_FIELD, 0)
             else
-                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "Invalid Bonus Type")
+                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "R: Invalid Bonus Type: " + I2S(bonus_type))
             endif
             
             return -1.0
@@ -238,7 +238,7 @@ library NewBonus
             elseif bonus_type == BONUS_ATTACK_SPEED then
                 call SetUnitAbilityBonusR(u, ATTACKSPEED_ABILITY, ATTACKSPEED_FIELD, amount)
             else
-                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "Invalid Bonus Type")
+                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "R: Invalid Bonus Type: " + I2S(bonus_type))
             endif
         endmethod
 
@@ -250,7 +250,7 @@ library NewBonus
             elseif bonus_type == BONUS_ATTACK_SPEED then
                 call SetUnitBonusR(u, bonus_type, GetUnitBonusR(u, bonus_type) + amount)
             else
-                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "Invalid Bonus Type")
+                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "R: Invalid Bonus Type: " + I2S(bonus_type))
             endif
         endmethod
     endstruct

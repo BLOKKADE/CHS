@@ -4,7 +4,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         HashTable PoisonAbilField
         //Table PoisonBonus
         Table AbsolutePoisonTable
-        constant real HpReduction = 0.30
+        constant real HpReduction = 0.20
     endglobals
 
     function GetAbsolutePoisonStruct takes unit u returns AbsolutePoisonStruct
@@ -24,8 +24,8 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         private method countBuffs takes nothing returns real
             local integer count = 0
             local integer hid = GetHandleId(this.target)
-            local real regen = BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE)
-
+            local real regen = BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + (GetHeroStr(DamageTarget, true) * 0.075)
+            local real newRegen = 0
             if GloryRegenLevel[hid] > 0 then
                set regen = regen + ((GloryRegenLevel[hid] * 0.3) * regen)
             endif
@@ -58,7 +58,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(this.source, DECAYING_SCYTHE_ABILITY_ID) > 0 then
+            if GetUnitAbilityLevel(this.target, DECAYING_SCYTHE_BUFF_ID) > 0 then
                 set count = count + 3
             endif
 
@@ -66,7 +66,15 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
                 set count = count + 1
             endif
             set this.buffCount = count
-            return ((count * HpReduction) * regen)
+
+            set newRegen = ((count * HpReduction) * regen)
+            set regen = GetUnitTotalHpRegen(this.target) + this.reduction
+            //make sure regen doesnt go below 0
+            if regen - newRegen < 0 then
+                return RMaxBJ(newRegen + (regen - newRegen), 0)
+            else
+                return newRegen
+            endif 
         endmethod
     
         private method periodic takes nothing returns nothing

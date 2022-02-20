@@ -12,6 +12,10 @@ library UnitHelpers initializer init requires Utility
         return GetUnitDamage(u, 0)
     endfunction
 
+    function GetUnitTotalHpRegen takes unit u returns real
+        return (BlzGetUnitRealField(u, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + (GetHeroStr(u, true) * 0.075) + GetUnitBonusReal(u, BONUS_HEALTH_REGEN))
+    endfunction
+
     function IsUnitMagicImmune takes unit u returns boolean
         return IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE)
     endfunction

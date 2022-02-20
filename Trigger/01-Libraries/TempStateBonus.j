@@ -37,11 +37,12 @@ library TempStateBonus requires CustomState, NewBonus
         boolean stop
         integer state
         integer endTick
+        integer startTick
         boolean buffLink
         integer buffId
 
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop or (this.buffLink and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
+            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -73,6 +74,7 @@ library TempStateBonus requires CustomState, NewBonus
             set this.source = source
             set this.bonus = bonus
             set this.state = state
+            set this.startTick = T32_Tick
 
             call this.updateState()
             

@@ -384,13 +384,16 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //Decaying Scythe
+                set i2 = LoadInteger(HT, hid, DECAYING_SCYTHE_ABILITY_ID)
                 if GetUnitAbilityLevel(u, DECAYING_SCYTHE_ABILITY_ID) > 0 then
                     set i1 = GetClassUnitSpell(u, Element_Poison)
-                    set i2 = LoadInteger(HT, hid, DECAYING_SCYTHE_ABILITY_ID)
                     if i1 != i2 then
                         call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + ((i1 - i2) * 300))
                         call SaveInteger(HT,hid,DECAYING_SCYTHE_ABILITY_ID,i1)
                     endif
+                elseif i2 != 0 then
+                    call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) - i2 * 300)
+                    call SaveInteger(HT,hid,DECAYING_SCYTHE_ABILITY_ID,0)
                 endif
 
                 //Brilliance Aura

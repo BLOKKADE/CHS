@@ -481,9 +481,20 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Decaying Scythe
-        if GetUnitAbilityLevel(DamageSource, DECAYING_SCYTHE_ABILITY_ID) > 0 and GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID) == 0 and T32_Tick - DecayingScytheTick[DamageTargetId] > 96 then
+        if GetUnitAbilityLevel(DamageSource, DECAYING_SCYTHE_ABILITY_ID) > 0 and T32_Tick - DecayingScytheTick[DamageTargetId] > 192 then
+            
             call DummyOrder.create(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitFacing(DamageSource), 2).addActiveAbility(DECAYING_SCYTHE_DUMMY_ABILITY_ID, 1, 852189).target(DamageTarget).activate()
-            call TempBonus.create(DamageTarget, BONUS_HEALTH_REGEN, 0 - (BlzGetUnitRealField(DamageTarget, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + GetUnitBonus(DamageTarget, BONUS_HEALTH_REGEN)) * 0.75, 7).addBuffLink(DECAYING_SCYTHE_BUFF_ID)
+            set DecayingScytheTick[DamageTargetId] = T32_Tick
+            if GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID) == 0 then
+                set r3 = 0 - ((BlzGetUnitRealField(DamageTarget, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + (GetHeroStr(DamageTarget, true) * 0.075) + GetUnitBonusReal(DamageTarget, BONUS_HEALTH_REGEN)) * 0.6)
+                set r2 = GetUnitTotalHpRegen(DamageTarget)
+
+                if r2 - r3 < 0 then
+                    set r3 = RMaxBJ(r3 + (r2 - r3), 0)
+                endif
+                call TempBonus.create(DamageTarget, BONUS_HEALTH_REGEN, r3, 7).addBuffLink(DECAYING_SCYTHE_BUFF_ID)
+                call BJDebugMsg("regen red: " + R2S(r3))
+            endif
         endif
 
         //Flimsy Token
