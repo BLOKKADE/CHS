@@ -309,15 +309,15 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Spiked Shield bonus dmg
-        set i1 = GetUnitAbilityLevel(DamageSource, SPIKED_SHIELD_ABILITY_ID)
+        set i1 = GetUnitAbilityLevel(DamageTarget, SPIKED_SHIELD_ABILITY_ID)
         if i1 > 0 then
             set r3 = 0
             if IsPhysDamage() then
-                set r2 = 1 + (BlzGetUnitArmor(DamageSource) * 0.01)
+                set r2 = 1 + (BlzGetUnitArmor(DamageTarget) * 0.01)
             endif
 
             if IsMagicDamage() then
-                set r2 = 1 + (GetUnitMagicDef(DamageSource) * 0.01)
+                set r2 = 1 + (GetUnitMagicDef(DamageTarget) * 0.01)
             endif
         else
             set r2 = 1
@@ -414,7 +414,7 @@ scope ModifyDamageAfterArmor initializer init
 
             //Spiked Shield heal
             if i1 > 0 and r3 != 0 then
-                call SetUnitState(DamageSource, UNIT_STATE_LIFE, GetUnitState(DamageSource, UNIT_STATE_LIFE) + r3)
+                call SetUnitState(DamageSource, UNIT_STATE_LIFE, GetUnitState(DamageSource, UNIT_STATE_LIFE) + (r3 * 0.1))
             endif
 
             //Dark Hunter Bash
