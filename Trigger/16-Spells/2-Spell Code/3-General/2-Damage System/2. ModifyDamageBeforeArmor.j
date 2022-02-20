@@ -301,7 +301,8 @@ scope ModifyDamageBeforeArmor initializer init
             set DamageTargetMagicRes = DamageTargetMagicRes * 0.7
 
             if IsPhysDamage() then
-                set udg_DamageEventArmorPierced = udg_DamageEventArmorPierced + (udg_DamageEventArmorPierced * 0.3)
+                set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.3)
+                //call BJDebugMsg("ss armor pierce: " + R2S(Damage.index.armorPierced))
             endif
         endif
 
@@ -527,12 +528,14 @@ scope ModifyDamageBeforeArmor initializer init
         //Demolish
         set i1 = GetUnitAbilityLevel(DamageSourceHero, DEMOLISH_ABILITY_ID)
         if i1 > 0 and IsPhysDamage() then
-            set udg_DamageEventArmorPierced = udg_DamageEventArmorPierced + BlzGetUnitArmor(DamageTarget) * (0.05 + (0.005 * i1))
+            set Damage.index.armorPierced = Damage.index.armorPierced + GetUnitEffectiveArmor(DamageTarget) * (0.05 + (0.005 * i1))
+            //call BJDebugMsg("d armor pierce: " + R2S(Damage.index.armorPierced))
         endif
 
         //Titanium Spike
         if GetUnitAbilityLevel(DamageSource, TITANIUM_SPIKE_ABIL_ID) > 0 and GetUnitAbilityLevel(DamageTarget, TITANIUM_SPIKE_IMMUN_ABIL_ID) == 0 and IsPhysDamage() then
-            set udg_DamageEventArmorPierced = udg_DamageEventArmorPierced + (BlzGetUnitArmor(DamageTarget) * 0.3)
+            set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.3)
+            //call BJDebugMsg("ts armor pierce: " + R2S(Damage.index.armorPierced))
         endif
 
         //Wisdom Chestplate

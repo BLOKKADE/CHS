@@ -629,7 +629,7 @@ static if USE_ARMOR_MOD then// \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \
             set at     =  udg_DamageEventArmorT
             set dt     =  udg_DamageEventDefenseT
         endif
-        if pierce != 0.00 then
+        if pierce != 0.00 and pierce != -0.00 then
             call BlzSetUnitArmor(udg_DamageEventTarget, BlzGetUnitArmor(udg_DamageEventTarget) + pierce)
         endif
         if Damage.index.prevArmorT != udg_DamageEventArmorT then
