@@ -483,7 +483,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,hid,38,i)	
 
 			//Hero's hammer
-		elseif itemId == 'I092' then
+		elseif itemId == 'I064' then
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid,itemId) 
 			call AddUnitPhysPow(u ,   60 * I2R(i - prevCount)  )
@@ -491,20 +491,6 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SetHeroStat(u, r, GetHeroStatBJ(r, u, false) + 400 * (i - prevCount))
 			call SaveInteger(HTi,hid,itemId,i)	
 		
-			//Heart of Darkness
-		elseif itemId == 'I04V' then
-			set i = UnitHasItemI(u , itemId)
-			set prevCount = LoadInteger(HTi, hid, itemId) 
-			call AddUnitBonus(u, BONUS_DAMAGE, 150 * (i - prevCount))
-			call SaveInteger(HTi, hid, itemId, i)	
-
-			//Heart of Darkness
-		elseif itemId == 'I04V' then
-			set i = UnitHasItemI(u , itemId)
-			set prevCount = LoadInteger(HTi, hid, itemId) 
-			call AddUnitBonus(u, BONUS_DAMAGE, 150 * (i - prevCount))
-			call SaveInteger(HTi, hid, itemId, i)	
-
 			//Heart of Darkness
 		elseif itemId == 'I04V' then
 			set i = UnitHasItemI(u , itemId)
