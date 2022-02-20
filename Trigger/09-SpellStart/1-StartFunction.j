@@ -44,7 +44,7 @@ endfunction */
 function PreRoundStart takes unit hero, integer hid returns nothing
     //Blokkade's Shield
     if GetUnitAbilityLevel(hero, BLOKKADE_SHIELD_ABIL_ID) > 0 then
-        set BlokShieldCharges[hid] = 6
+        set BlokShieldCharges[hid] = 0
         set BlokShieldStartTick[hid] = T32_Tick
         set BlokShieldAttackCount[hid] = 0
         call SetBlokShieldCharges(hero, hid)
