@@ -1,9 +1,5 @@
 library trigger109 initializer init requires RandomShit, StartFunction, SellItems
 
-    globals
-        private integer RectPid
-    endglobals
-
     function Trig_Start_Level_Conditions takes nothing returns boolean
         if(not(udg_boolean09==false))then
             return false
@@ -114,16 +110,13 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
 
     function Trig_Start_Level_Func015Func002Func004A takes nothing returns nothing
-        if GetItemType(GetEnumItem()) != ITEM_TYPE_POWERUP then
-            call SellItem(RectPid - 1, GetEnumItem())
-        endif
+        call RemoveItem(GetEnumItem())
     endfunction
 
 
     function Trig_Start_Level_Func015Func002A takes nothing returns nothing
         set udg_booleans02[GetConvertedPlayerId(GetEnumPlayer())]= false
         set udg_booleans01[GetConvertedPlayerId(GetEnumPlayer())]= false
-        set RectPid = GetPlayerId(GetEnumPlayer()) + 1
         call ForGroupBJ(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Start_Level_Func015Func002Func003001002)),function Trig_Start_Level_Func015Func002Func003A)
         call EnumItemsInRectBJ(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
         call SetUnitInvulnerable(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],false)

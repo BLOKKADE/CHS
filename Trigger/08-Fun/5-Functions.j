@@ -1,6 +1,7 @@
 library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows
     globals 
         hashtable HT_SpellPlayer = InitHashtable()
+        integer RectPid
     endglobals
 
     function LoadCountHeroSpell takes unit u,integer list returns integer 
@@ -186,12 +187,20 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         endif
     endfunction
 
+    function SellItemsOnGround takes nothing returns nothing
+        call SellItem(RectPid, GetEnumItem())
+    endfunction
+
     function Func_completeLevel takes unit u returns nothing
         local player p = GetOwningPlayer(u)
         local integer pid = GetPlayerId(p)
         local integer i1 = 0 
         local real gloryBonus = 0
         local integer hid = GetHandleId(u)
+
+        //cleanup items
+        set RectPid = pid
+        call EnumItemsInRectBJ(udg_rects01[pid + 1],function SellItemsOnGround)
 
         //Armor of the Ancestors
         set i1 = LoadInteger(HT,GetHandleId(u),54001)

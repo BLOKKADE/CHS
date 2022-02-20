@@ -7,10 +7,10 @@ library SellItems requires DummyRecycler
             call PauseUnit(u, false)
     
             call UnitAddItem(u, it)
-            set success = UnitDropItemTarget(u, it, GetShopById(GLORY_SHOP_UNIT_ID))
+            set success = UnitDropItemTarget(u, it, GetShopById(ITEM_SHOP_I_UNIT_ID))
     
             call DummyAddRecycleTimer(u, 1)
-
+            
             set u = null
             return success
     endfunction
