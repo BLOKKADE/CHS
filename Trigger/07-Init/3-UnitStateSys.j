@@ -51,8 +51,8 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
             set r1 = GetHeroLevel(hero) * 0.01
             call AddUnitMagicDmg(u, (GetUnitMagicDmg(hero) * r1))
             call AddUnitMagicDef(u, (GetUnitMagicDef(hero) * r1))
-            call BlzSetUnitBaseDamage(u, R2I(BlzGetUnitBaseDamage(u, 0) + (GetUnitDamage(hero, 0) * r1)), 0)
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (BlzGetUnitArmor(hero) * r1))
+            call AddUnitBonus(u, BONUS_DAMAGE, R2I((GetUnitDamage(hero, 0) * r1)))
+            call AddUnitBonus(u, BONUS_ARMOR, R2I((BlzGetUnitArmor(hero) * r1)))
         endif
 
         //Wild Defense
