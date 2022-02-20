@@ -49,7 +49,7 @@ scope OnDamage initializer init
         set DamageSourceMagicPower = 1
         set DamageTargetMagicRes = 1
 
-        set DamageSourcePhysPower = 1
+        set DamageSourcePhysPower = 0
 
         set DamageIsTrue = false
         set DamageIsCutting = false

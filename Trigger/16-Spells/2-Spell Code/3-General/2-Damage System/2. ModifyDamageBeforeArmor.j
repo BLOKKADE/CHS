@@ -218,10 +218,10 @@ scope ModifyDamageBeforeArmor initializer init
 
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, FROST_CIRCLET_ABILITY_ID) == 0 and T32_Tick - ElementHitTick[DamageTargetId].integer[Element_Cold] < 64 then
                 set Damage.index.damage = Damage.index.damage * 3
-                
                 call AbilStartCD(DamageSource, FROST_CIRCLET_ABILITY_ID, 2)
+                call DummyOrder.create(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitFacing(DamageSource), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 0.2).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 0.2).target(DamageTarget).activate()
             endif
-            call DummyOrder.create(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitFacing(DamageSource), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 0.1).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 0.1).target(DamageTarget).activate()
+
             if IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) then
                 set ElementHitTick[DamageTargetId].integer[Element_Cold] = T32_Tick
             endif
@@ -469,7 +469,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Physical Power
         if IsPhysDamage() then
             set DamageSourcePhysPower = DamageSourcePhysPower + GetUnitPhysPow(DamageSource)
-            if r1 != 0 then
+            if DamageSourcePhysPower != 0 then
                 set Damage.index.damage = Damage.index.damage * (1 + (DamageSourcePhysPower * 0.01))
             endif
         endif
@@ -490,7 +490,9 @@ scope ModifyDamageBeforeArmor initializer init
                     call AbilStartCD(DamageSource, FATAL_FLA_ABILITY_ID, 3)
                 endif
 
-                set Damage.index.damage =   Damage.index.damage*( 50 /(50 + (GetUnitMagicDef(DamageTarget) * DamageTargetMagicRes)) )   
+                //call BJDebugMsg("magic dmg pre prot: " + R2S(Damage.index.damage))
+                set Damage.index.damage =   Damage.index.damage*( 50 /(50 + (GetUnitMagicDef(DamageTarget) * DamageTargetMagicRes)) )
+                //call BJDebugMsg("magic dmg post prot: " + R2S(Damage.index.damage))
             endif
         endif
 
