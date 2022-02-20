@@ -18,18 +18,6 @@ scope ModifyDamageAfterArmor initializer init
 
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
-        //Titanium Armor
-        if UnitHasItemS(DamageTarget,'I07M') then
-            set r1 = I2R(GetHeroStr(DamageTarget,true))* 0.08
-            
-            if r1 >= Damage.index.amount then
-                set Damage.index.amount = 0
-                return
-            else
-                set Damage.index.amount =  Damage.index.amount - r1
-            endif
-        endif
-
         //Strong Chest Mail
         if UnitHasItemS(DamageTarget,'I07P') and IsPhysDamage() and IsHeroUnitId(DamageSourceTypeId) == false then   
             set Damage.index.amount = Damage.index.amount / 2

@@ -150,7 +150,7 @@ scope ShortPeriodCheck initializer init
                 if i1 > 0 or i2 != 0 then
                     set i1 = R2I(GetHeroStr(u, true) * 0.25)
                     if i1 != i2 then
-                        call AddUnitBlock(u, i2)
+                        call AddUnitBlock(u, i1 - i2)
                         call SaveInteger(HT, hid, 'A05T', i1)	
                     endif
                 endif

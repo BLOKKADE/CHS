@@ -526,12 +526,12 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call AddUnitBonus(u, BONUS_DAMAGE, -300 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
-		//Titanium Armor
+		/*//Titanium Armor
 		elseif itemId == 'I07M' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, -500 * (i - prevCount))
-			call SaveInteger(HTi, hid, itemId, i)	
+			call SaveInteger(HTi, hid, itemId, i)	*/
 
 		//Titanium Spike
 		elseif itemId == TITANIUM_SPIKE_ITEM_ID then
