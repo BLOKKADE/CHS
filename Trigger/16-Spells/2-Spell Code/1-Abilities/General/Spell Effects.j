@@ -108,7 +108,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             call CastSpiritLink(caster, lvl)
             return true
             //Blink Strike
-        elseif abilId == BLINK_STRIKE_ABILITY_ID then
+        elseif abilId == BLINK_STRIKE_ABILITY_ID or abilId == 'A06I' then
             call BlinkStrike(caster, lvl)
             return true
             //Whirlwind
@@ -195,7 +195,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     set abilLvl = GetUnitAbilityLevel(caster, abilId)
                     //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
                 endif
-
+                
                 //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
                 set abilityChanneled = AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
             
