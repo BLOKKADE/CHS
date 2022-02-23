@@ -14,12 +14,12 @@ library MagnetOscillation initializer init requires ToggleAbility
 
         method enable takes nothing returns nothing
             set this.enabled = true
-            call BJDebugMsg("enabled")
+            //call BJDebugMsg("enabled")
             call ToggleAbility(this.source, MAGNET_OSC_ABILITY_ID, GetUnitAbilityLevel(this.source, MAGNET_OSC_ABILITY_ID))
         endmethod
 
         method disable takes nothing returns nothing
-            call BJDebugMsg("disabled")
+            //call BJDebugMsg("disabled")
             set this.enabled = false
             call ToggleAbility(this.source, MAGNET_OSC_ABILITY_ID, GetUnitAbilityLevel(this.source, MAGNET_OSC_ABILITY_ID))
         endmethod

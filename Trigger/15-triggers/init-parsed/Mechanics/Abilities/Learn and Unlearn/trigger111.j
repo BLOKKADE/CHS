@@ -324,7 +324,7 @@ library trigger111 initializer init requires RandomShit, Functions
         local integer i = GetUnitAbilityLevel(u, abil) + 1
         local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
         local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
-        call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
+        //call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
         if maxBuy then
             loop
                 if lumber - cost < 0 then

@@ -463,11 +463,11 @@ library trigger77 initializer init requires RandomShit
         if(Trig_Dialog_Complete_Func008C())then
             if(Trig_Dialog_Complete_Func008Func002C())then
                 call DisableTrigger(GetTriggeringTrigger())
-                call BJDebugMsg("25 lvls")
+                //call BJDebugMsg("25 lvls")
                 set udg_boolean08 = true
             else
                 call DisableTrigger(GetTriggeringTrigger())
-                call BJDebugMsg("50 lvls")
+                //call BJDebugMsg("50 lvls")
                 set udg_boolean08 = false
             endif
 

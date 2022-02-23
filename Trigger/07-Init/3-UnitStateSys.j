@@ -101,55 +101,55 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         if SUMMONS.contains(i) then
             set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(i)) + UpgradeU
             if i == WATER_ELEMENTAL_1_UNIT_ID then
-                call BJDebugMsg("we")
+                //call BJDebugMsg("we")
                 call WaterElementalStats(u, totalLevel)
             elseif i == FERAL_SPIRIT_WOLF_1_UNIT_ID then
-                call BJDebugMsg("fw")
+                //call BJDebugMsg("fw")
                 call SpiritWolfStats(u, totalLevel)
             elseif i == SERPENT_WARD_1_UNIT_ID then
-                call BJDebugMsg("sw")
+                //call BJDebugMsg("sw")
                 call SerpentWardStats(u, totalLevel)
             elseif i == MOUNTAIN_GIANT_1_UNIT_ID then
-                call BJDebugMsg("mg")
+                //call BJDebugMsg("mg")
                 call MountainGiantStats(u, totalLevel)
             elseif i == BEAR_1_UNIT_ID then
-                call BJDebugMsg("be")
+                //call BJDebugMsg("be")
                 call BearStats(u, totalLevel)
             elseif i == HAWK_1_UNIT_ID then
-                call BJDebugMsg("ha")
+                //call BJDebugMsg("ha")
                 call HawkStats(u, totalLevel)
             elseif i == QUILBEAST_1_UNIT_ID then
-                call BJDebugMsg("qu")
+                //call BJDebugMsg("qu")
                 call QuilbeastStats(u, totalLevel)
             elseif i == PHOENIX_1_UNIT_ID then
-                call BJDebugMsg("ph")
+                //call BJDebugMsg("ph")
                 call PhoenixStats(u, totalLevel)
             elseif i == INFERNAL_1_UNIT_ID then
-                call BJDebugMsg("in")
+                //call BJDebugMsg("in")
                 call InfernoStats(u, totalLevel)
             elseif i == LAVA_SPAWN_1_UNIT_ID then
-                call BJDebugMsg("ls")
+                //call BJDebugMsg("ls")
                 call LavaSpawnStats(u, totalLevel)
             elseif i == POCKET_FACTORY_1_UNIT_ID then
-                call BJDebugMsg("pf")
+                //call BJDebugMsg("pf")
                 call PocketFactoryStats(u, totalLevel)
             elseif i == CLOCKWORK_GOBLIN_1_UNIT_ID then
-                call BJDebugMsg("cg")
+                //call BJDebugMsg("cg")
                 call ClockwerkGoblinStats(u, totalLevel)
             elseif i == PARASITE_1_UNIT_ID then
-                call BJDebugMsg("pa")
+                //call BJDebugMsg("pa")
                 call ParasiteStats(u, totalLevel)
             elseif i == CARRION_BEETLE_1_UNIT_ID then
-                call BJDebugMsg("cb")
+                //call BJDebugMsg("cb")
                 call CarrionBeetleStats(u, totalLevel)
             elseif i == SKELETON_BATTLEMASTER_1_UNIT_ID then
-                call BJDebugMsg("basb")
+                //call BJDebugMsg("basb")
                 call BlackArrowMeleeSkeletonStats(u, totalLevel)
             elseif i == SKELETON_WARMAGE_1_UNIT_ID then
-                call BJDebugMsg("basw")
+                //call BJDebugMsg("basw")
                 call BlackArrowRangedSkeletonStats(u, totalLevel)
             elseif SKELLIESCAPTAINS.contains(i) then
-                call BJDebugMsg("rest")
+                //call BJDebugMsg("rest")
                 call SkeletonStats(u, totalLevel)
             endif
 

@@ -80,7 +80,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         private method periodic takes nothing returns nothing
             local real hp = GetUnitState(this.target, UNIT_STATE_LIFE)
             local real currentBonus = this.countBuffs()
-            if this.reduction != currentBonus then
+                //call BJDebugMsg("ap old: " + R2S(this.reduction) + " new: " + R2S(currentBonus))
                 //call BJDebugMsg("absolute poison: " + I2S(GetHandleId(this.target)) + " : " + GetUnitName(this.target))
                 //call BJDebugMsg("current:" + R2S(this.reduction) + " count: " + I2S(this.buffCount) + " percent: " + R2S(this.buffCount * 0.12) + " val: " + R2S(currentBonus))
                 call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)

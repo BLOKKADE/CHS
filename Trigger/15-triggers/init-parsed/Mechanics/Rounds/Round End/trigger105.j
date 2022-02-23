@@ -26,9 +26,9 @@ library trigger105 initializer init requires RandomShit
 
     function Trig_Bonus_Exp_Func001Func002A takes nothing returns nothing
         local real bonus = 1
-        call BJDebugMsg("be xp bonus pre: " + R2S(bonus))
+        //call BJDebugMsg("be xp bonus pre: " + R2S(bonus))
         set bonus = bonus + GetLearnabilityBonus(GetEnumUnit()) + GetMagicNecklaceBonus(GetEnumUnit(), GetTriggerUnit())
-        call BJDebugMsg("be xp bonus post: " + R2S(bonus))
+        //call BJDebugMsg("be xp bonus post: " + R2S(bonus))
 
         call AddHeroXPSwapped(R2I(((udg_real01)* 55) * bonus),GetEnumUnit(),true)
     endfunction
@@ -41,9 +41,9 @@ library trigger105 initializer init requires RandomShit
 
     function Trig_Bonus_Exp_Func001Func001A takes nothing returns nothing
         local real bonus = 1 
-        call BJDebugMsg("be xp bonus pre: " + R2S(bonus))
+        //call BJDebugMsg("be xp bonus pre: " + R2S(bonus))
         set bonus = bonus + GetLearnabilityBonus(GetEnumUnit()) + GetMagicNecklaceBonus(GetEnumUnit(), GetTriggerUnit())
-        call BJDebugMsg("be xp bonus post: " + R2S(bonus))
+        //call BJDebugMsg("be xp bonus post: " + R2S(bonus))
 
         call AddHeroXPSwapped(R2I(((udg_real01)* 35) * bonus),GetEnumUnit(),true)
     endfunction

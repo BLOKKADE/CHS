@@ -30,12 +30,12 @@ scope ModifyDamageAfterArmor initializer init
 
         //Fishing Rod
         if (not DamageIsOnHit) and UnitHasItemS(DamageSource,'I07T') and IsPhysDamage() then
-            call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))
+            //call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))
             if DistanceBetweenUnits(DamageSource, DamageTarget) < 1200 and DistanceBetweenUnits(DamageSource, DamageTarget) > 80 then
                 set r1 = (bj_RADTODEG * GetAngleToTarget(DamageSource, DamageTarget)) + 180
                 set r2 = CalcX(GetUnitX(DamageTarget), r1, 120)
                 set r3 = CalcY(GetUnitY(DamageTarget), r1, 120)
-                call BJDebugMsg("dist 2: " + R2S(CalculateDistance(GetUnitX(DamageSource), r2, GetUnitY(DamageSource), r3)))
+                //call BJDebugMsg("dist 2: " + R2S(CalculateDistance(GetUnitX(DamageSource), r2, GetUnitY(DamageSource), r3)))
                 if CalculateDistance(GetUnitX(DamageSource), r2, GetUnitY(DamageSource), r3) > 60 then
                     call SetUnitX(DamageSource, r2)
                     call SetUnitY(DamageSource, r3)
@@ -84,7 +84,7 @@ scope ModifyDamageAfterArmor initializer init
             //attack ignore
             if Damage.index.isAttack then
                 set BlokShieldAttackCount[DamageTargetId] = BlokShieldAttackCount[DamageTargetId] + 1
-                call BJDebugMsg("bs ac: " + I2S(BlokShieldAttackCount[DamageTargetId]))
+                //call BJDebugMsg("bs ac: " + I2S(BlokShieldAttackCount[DamageTargetId]))
                 if BlokShieldAttackCount[DamageTargetId] >= 3 then
                     set BlokShieldAttackCount[DamageTargetId] = 0
                     set Damage.index.damage = 0
@@ -95,7 +95,7 @@ scope ModifyDamageAfterArmor initializer init
             
             //damage reduction
             if T32_Tick - BlokShieldDmgReductionTick[DamageTargetId] < 32 then
-                call BJDebugMsg("bs dmg red")
+                //call BJDebugMsg("bs dmg red")
                 set Damage.index.amount = Damage.index.amount * 0.2
             endif
         endif
@@ -244,12 +244,12 @@ scope ModifyDamageAfterArmor initializer init
                         set i2 = GetInfoHeroSpell(DamageTarget ,i1)
                         if i2 != 0 and IsSpellResettable(i2) then
                             call ResetSpell(DamageTarget, i2, 1 + 0.25 * I2R(GetUnitAbilityLevel(DamageTarget,ANCIENT_BLOOD_ABILITY_ID)), false)
-                        endif
+                        endif   
                         set i1 = i1 + 1
                     endloop
                 endif
                 
-                call RemoveDebuff(DamageTarget, 1)
+                //call RemoveDebuff(DamageTarget, 1)
             endloop
             call SaveReal(HT,DamageTargetId,82340,r1)
             call SaveReal(HT,DamageTargetId,82341,r2)
@@ -274,7 +274,7 @@ scope ModifyDamageAfterArmor initializer init
                 call CheckProc(DamageSource, 400)
                 set r1 = 6 - (0.5 * GetProcCheckCount())
                 call AbilStartCD(DamageSource, 'A08U', RMaxBJ(r1, 0))
-                call BJDebugMsg("ow cd" + R2S(r1))
+                //call BJDebugMsg("ow cd" + R2S(r1))
                 call USOrder4field(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A047', "stomp", GetHeroStr(DamageSource,true) + (60 * GetHeroLevel(DamageSource)), ABILITY_RLF_DAMAGE_INCREASE, 400, ABILITY_RLF_CAST_RANGE, 1, ABILITY_RLF_DURATION_HERO, 1, ABILITY_RLF_DURATION_NORMAL)
             endif
         endif
@@ -480,8 +480,10 @@ scope ModifyDamageAfterArmor initializer init
                 if r2 - r3 < 0 then
                     set r3 = RMaxBJ(r3 + (r2 - r3), 0)
                 endif
-                call TempBonus.create(DamageTarget, BONUS_HEALTH_REGEN, r3, 7).addBuffLink(DECAYING_SCYTHE_BUFF_ID)
-                call BJDebugMsg("regen red: " + R2S(r3))
+                if r3 > 0 then
+                    call TempBonus.create(DamageTarget, BONUS_HEALTH_REGEN, r3, 7).addBuffLink(DECAYING_SCYTHE_BUFF_ID)
+                endif
+                //call BJDebugMsg("regen red: " + R2S(r3))
             endif
         endif
 

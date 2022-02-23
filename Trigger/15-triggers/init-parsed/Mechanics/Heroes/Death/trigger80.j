@@ -27,6 +27,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
     function Trig_Hero_Dies_Conditions takes nothing returns boolean
         local integer pid = GetPlayerId(GetOwningPlayer(GetDyingUnit()))
+        //call BJDebugMsg(GetUnitName(GetDyingUnit()))
         if(not Trig_Hero_Dies_Func026C()) or DisableDeathTrigger[pid] then
             return false
         endif

@@ -19,7 +19,7 @@ library Immolation initializer init requires ToggleAbility
         method enable takes nothing returns nothing
             set this.fx = AddSpecialEffectTarget("Abilities\\Spells\\NightElf\\Immolation\\ImmolationTarget.mdl", this.source, "origin")
             set this.enabled = true
-            call BJDebugMsg("enabled")
+            //call BJDebugMsg("enabled")
             set this.level = GetUnitAbilityLevel(this.source, IMMOLATION_ABILITY_ID)
             set this.tick = T32_Tick + 32
             call ToggleAbility(this.source, IMMOLATION_ABILITY_ID, this.level)
@@ -27,7 +27,7 @@ library Immolation initializer init requires ToggleAbility
         endmethod
 
         method disable takes nothing returns nothing
-            call BJDebugMsg("disabled")
+            //call BJDebugMsg("disabled")
             call this.stopPeriodic()
             set this.enabled = false
             call ToggleAbility(this.source, IMMOLATION_ABILITY_ID, this.level)
@@ -37,7 +37,7 @@ library Immolation initializer init requires ToggleAbility
         private method damage takes nothing returns nothing
             local unit p
             set this.level = GetUnitAbilityLevel(this.source, IMMOLATION_ABILITY_ID)
-            call BJDebugMsg("dmg")
+            //call BJDebugMsg("dmg")
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(this.source), GetUnitY(this.source), 245 + (5 * this.level), Player(pid), false, Target_Enemy)
             call SetUnitState(this.source, UNIT_STATE_MANA, GetUnitState(this.source, UNIT_STATE_MANA) - GetSpellValue(5, 1, this.level))

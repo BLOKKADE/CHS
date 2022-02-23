@@ -90,7 +90,7 @@ library GroupUtils initializer Init requires optional xebasic
     
     private function HookDestroyGroup takes group g returns nothing
         if g == ENUM_GROUP then
-            call BJDebugMsg(SCOPE_PREFIX+"Warning: ENUM_GROUP destroyed")
+            //call BJDebugMsg(SCOPE_PREFIX+"Warning: ENUM_GROUP destroyed")
         endif
     endfunction
     

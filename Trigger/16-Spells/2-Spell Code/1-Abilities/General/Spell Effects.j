@@ -186,23 +186,24 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
         if not ToggleSpell(caster, abilId) then
             if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
-                call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
-                call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
+                
+                //call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
 
                 set dummyAbilId = GetAssociatedSpell(caster, abilId)
                 if GetAssociatedSpell(caster, abilId) != 0 then
                     set abilId = dummyAbilId
                     set abilLvl = GetUnitAbilityLevel(caster, abilId)
-                    call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
+                    //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
                 endif
 
+                //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
                 set abilityChanneled = AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
             
                 if not Trig_Disable_Abilities_Func001C(caster) then
                     call ElementStartAbility(caster, abilId)
 
                     if (not abilityChanneled) and dummyAbilId != 0 then
-                        call BJDebugMsg("channel")
+                        //call BJDebugMsg("channel")
                         call CastSpell(caster, target, abilId, abilLvl, GetAbilityOrderType(dummyAbilId), targetX, targetY).activate()
                     endif
 

@@ -13,12 +13,12 @@ library SearingArrows initializer init requires ToggleAbility
 
         method enable takes nothing returns nothing
             set this.enabled = true
-            call BJDebugMsg("enabled")
+            //call BJDebugMsg("enabled")
             call ToggleAbility(this.source, SEARING_ARROWS_ABILITY_ID, GetUnitAbilityLevel(this.source, SEARING_ARROWS_ABILITY_ID))
         endmethod
 
         method disable takes nothing returns nothing
-            call BJDebugMsg("disabled")
+            //call BJDebugMsg("disabled")
             set this.enabled = false
             call ToggleAbility(this.source, SEARING_ARROWS_ABILITY_ID, GetUnitAbilityLevel(this.source, SEARING_ARROWS_ABILITY_ID))
         endmethod
