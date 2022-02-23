@@ -292,7 +292,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid,19) 
 			call AddUnitEvasion(u ,   10 * I2R(i - prevCount)  )
-			call AddUnitBonus(u, BONUS_DAMAGE, 800 * i - prevCount)
+			call AddUnitBonus(u, BONUS_DAMAGE, 800 * (i - prevCount))
 			call BlzSetUnitWeaponIntegerField(u,	ConvertUnitWeaponIntegerField('ua1r') ,0,BlzGetUnitWeaponIntegerField(u,	ConvertUnitWeaponIntegerField('ua1r') ,0) + 1128 *(i - prevCount ))
 			call SaveInteger(HTi,hid,19,i)	
 		
