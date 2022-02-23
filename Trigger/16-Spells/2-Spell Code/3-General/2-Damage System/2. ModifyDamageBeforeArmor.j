@@ -119,7 +119,7 @@ scope ModifyDamageBeforeArmor initializer init
             set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.08
             if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
                 set DamageSourceAbility = SEARING_ARROWS_ABILITY_ID
-                call BJDebugMsg("sa: " + I2S(GetSpellValue(60, 30, i1)))
+                //call BJDebugMsg("sa: " + I2S(GetSpellValue(60, 30, i1)))
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
                 set Damage.index.damage = Damage.index.damage + GetSpellValue(60, 30, i1)
             endif
@@ -130,7 +130,7 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID) then
             set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.04
             if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
-                call BJDebugMsg("ca: " + I2S(GetSpellValue(20, 10, i1)))
+                //call BJDebugMsg("ca: " + I2S(GetSpellValue(20, 10, i1)))
                 set DamageSourceAbility = COLD_ARROWS_ABILITY_ID
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
                 set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
@@ -434,7 +434,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         if IsPhysDamage() and (not DamageIsOnHit) then
             //Incinerate
-            set i1 = GetUnitAbilityLevel(DamageSource,INCINERATE_ABILITY_ID)
+            set i1 = GetUnitAbilityLevel(DamageSource,INCINERATE_ABILITY_ID) + GetUnitAbilityLevel(DamageSource, 'A0C8')
             if i1 > 0 then
                 if GetUnitAbilityLevel(DamageTarget,INCINERATE_CUSTOM_BUFF_ID) > 0 then
                     set r1 = i1 * 5 + LoadInteger(HT,DamageTargetId,- 300001)
@@ -443,7 +443,7 @@ scope ModifyDamageBeforeArmor initializer init
                 endif
                 call SaveInteger(HT,DamageTargetId,- 300001, R2I(r1))
                 call SaveInteger(HT,DamageTargetId,- 300002,i1 * 100)
-                call SaveUnitHandle(HT,DamageTargetId,- 300003,DamageSource)
+                call SaveUnitHandle(HT,DamageTargetId,- 300003, DamageSourceHero)
                 call SaveInteger(HT,DamageTargetId,- 300004,T32_Tick)
                 call SetBuff(DamageTarget,1,5)
 

@@ -8,7 +8,7 @@ library LavaSpawn requires CustomState, SpellFormula
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 800)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
 
-        /*call UnitAddAbility(u, 'A06I')
-        call SetUnitAbilityLevel(u, 'A06I', IMinBJ(R2I(totalLevel / 3), 60))*/
+        call UnitAddAbility(u, 'A0C8')
+        call SetUnitAbilityLevel(u, 'A0C8', IMinBJ(R2I(totalLevel / 3), 60))
     endfunction
 endlibrary
