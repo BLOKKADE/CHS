@@ -121,7 +121,7 @@ library trigger55 initializer init requires RandomShit
         call DialogAddButtonBJ(IncomeDialog,"Individual (Recommended)")
         set udg_buttons01[20]= GetLastCreatedButtonBJ()
 
-        call DialogAddButtonBJ(IncomeDialog,"Economy")
+        call DialogAddButtonBJ(IncomeDialog,"Auto-Eco (Recommended)")
         set udg_buttons01[10]= GetLastCreatedButtonBJ()
     
         call DialogAddButtonBJ(IncomeDialog,"Disabled")
