@@ -9,7 +9,6 @@ library MountainGiant requires CustomState, SpellFormula
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + GetSpellValue(0, 100, abilityLevel) + (summonLevel * 2000))
         call AddUnitBlock(u, GetSpellValue(200, 20, abilityLevel) + (500 * summonLevel))
 
-        /*call UnitAddAbility(u, 'A06I')
-        call SetUnitAbilityLevel(u, 'A06I', IMinBJ(R2I(totalLevel / 3), 60))*/
+        call SetUnitAbilityLevel(u, 'A06H', IMinBJ(R2I(totalLevel / 3), 60))
     endfunction
 endlibrary
