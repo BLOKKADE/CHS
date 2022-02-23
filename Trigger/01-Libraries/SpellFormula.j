@@ -20,19 +20,20 @@ library SpellFormula initializer init requires AbilityData
         return prevValue + (valueFactor * level)
     endfunction
 
+    //TODO optimise this
     function CalculateValues takes integer valueFactor, integer level returns nothing
         local integer i = 1
-
-        if HasAbilityKeyLevelValue(valueFactor, level - 1) then
-            call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))
-        else
-
+        if level < 30 then
             loop
-                if not HasAbilityKeyLevelValue(valueFactor, i) then
-                    call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))
-                endif
+                call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))
                 set i = i + 1
-                exitwhen i > level
+                exitwhen i > 30
+            endloop
+        else
+            loop
+                call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))
+                set i = i + 1
+                exitwhen i > 120
             endloop
         endif
     endfunction
