@@ -25,6 +25,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         integer endTick
         integer orderType
         boolean stopDummy
+        boolean noEarlyStop
         boolean destroyDummy
         boolean abilSet
 
@@ -95,6 +96,11 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
                 set this.abil = abilityId
                 set DummyAbilitySource[GetDummyId(this.dummy)] = abilityId
                 set this.abilSet = true
+
+                if IsSpellDot(abilityId) then
+                    set this.endTick = T32_Tick + R2I(BlzGetAbilityRealLevelField(BlzGetUnitAbility(this.dummy, abilityId), ABILITY_RLF_DURATION_NORMAL, level - 1) * 32)
+                    set this.noEarlyStop = true
+                endif
             endif
             //call BJDebugMsg("dummy added active")
             return this
@@ -117,7 +123,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
                     call this.destroy()
                 endif
             else
-                if T32_Tick >= this.endTick or this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0 then
+                if T32_Tick > this.endTick or ((not this.noEarlyStop) and (this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0)) then
                     set this.destroyDummy = true
                     set this.endTick = T32_Tick + (5 * 32)
                     call this.resetDummy()
@@ -169,6 +175,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             set this.source = source
             set this.destroyDummy = false
             set this.abilSet = false
+            set this.noEarlyStop = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             set this.endTick = T32_Tick + R2I((duration * 32))
             //call BJDebugMsg("created dummy")
