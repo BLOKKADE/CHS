@@ -35,10 +35,19 @@ library PlayerTracking initializer init requires OldInitialization
         private integer MapVersion = 0
 
         // Other
+        private boolean DebugEnabled = false
         private boolean HasLoaded = false
 
         public static method forPlayer takes player p returns thistype
             return thistype(GetPlayerId(p) + 1) // First struct created is 1, not 0
+        endmethod
+
+        public method isDebugEnabled takes nothing returns boolean
+            return this.DebugEnabled
+        endmethod
+
+        public method setDebugEnabled takes boolean status returns nothing
+            set this.DebugEnabled = status
         endmethod
 
         public method hasLoaded takes nothing returns boolean

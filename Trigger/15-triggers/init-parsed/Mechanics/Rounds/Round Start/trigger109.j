@@ -1,4 +1,4 @@
-library trigger109 initializer init requires RandomShit, StartFunction, SellItems
+library trigger109 initializer init requires RandomShit, StartFunction, SellItems, DebugCode
 
     function Trig_Start_Level_Conditions takes nothing returns boolean
         if(not(udg_boolean09==false))then
@@ -147,7 +147,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call StartFunctionSpell(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],3) 
     endfunction
 
-
     function Trig_Start_Level_Actions takes nothing returns nothing
         local timerdialog td
         local timer t
@@ -155,6 +154,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         if(Trig_Start_Level_Func003C())then
             set udg_boolean12 = true
             set udg_boolean09 = true
+
             call DisplayTextToForce(GetPlayersAll(),("|c00F08000Level " +(I2S(udg_integer02)+ "|r")))
             call ConditionalTriggerExecute(udg_trigger143)
             call ForGroupBJ(GetUnitsOfTypeIdAll('n00E'),function Trig_Start_Level_Func003Func006A)
@@ -195,6 +195,10 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         else
             call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartLevelRoundOne)
         endif
+
+        // Save debug codes
+        call DebugCode_SavePlayerDebugEveryone()
+
         call PlaySoundBJ(udg_sound01)
         call ForGroupBJ(udg_group05,function Trig_Start_Level_Func018A)
         call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartFunctionSpells)
