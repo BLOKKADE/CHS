@@ -1,4 +1,4 @@
-library trigger136 initializer init requires RandomShit, StartFunction
+library trigger136 initializer init requires RandomShit, StartFunction, DebugCode
 
     globals
         integer array ItemStacksP1
@@ -296,6 +296,11 @@ library trigger136 initializer init requires RandomShit, StartFunction
                 call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: " + GetPlayerName(GetOwningPlayer(udg_units03[1])) + " will fight any random player.\nPlease send this code in the bug-report channel on discord: " + TempDuelDebug() )
                 set udg_units03[2] = GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function GetPvpEnemy)))
             endif
+
+            // Save debug logs for each player before the fight
+            call DebugCode_SavePlayerDebug(GetOwningPlayer(udg_units03[1]))
+            call DebugCode_SavePlayerDebug(GetOwningPlayer(udg_units03[2]))
+
             call GroupRemoveUnitSimple(udg_units03[2],udg_group01)
             call PlaySoundBJ(udg_sound08)
             call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[1]))+(" vs " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[2])))))))

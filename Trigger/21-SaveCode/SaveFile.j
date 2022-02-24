@@ -14,16 +14,12 @@ library SaveFile requires FileIO, SaveCore
         endmethod
 
         static method getPath takes player p, integer slot returns string
-            /*if (slot == 0) then
-                return .Folder + "\\SaveSlot_" + .InvalidPath + ".pld" 
-            elseif (slot > 0 and (slot < .MIN or slot > .MAX)) then
-                return .Folder + "\\SaveSlot_" + .InvalidPath + ".pld" 
-            elseif (slot < 0) then
+            if (slot == 0) then
                 return .Folder + "\\SaveSlot_" + GetPlayerName(p) + ".pld"
+            elseif (slot == 1) then
+                return .Folder + "\\SaveSlot_" + GetPlayerName(p) + "_Debug.pld"
             endif
-            return .Folder + "\\SaveSlot_" + I2S(slot) + ".pld"*/
-
-            return .Folder + "\\SaveSlot_" + GetPlayerName(p) + ".pld"
+            return "Unknown slot: " + I2S(slot)
         endmethod
         
         static method create takes player p, string title, integer slot, string data returns thistype

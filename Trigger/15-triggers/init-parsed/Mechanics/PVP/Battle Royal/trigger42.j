@@ -1,4 +1,4 @@
-library trigger42 initializer init requires RandomShit, StartFunction
+library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
 
     function Trig_Battle_Royal_Func015001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)==true)
@@ -190,6 +190,9 @@ library trigger42 initializer init requires RandomShit, StartFunction
             call ConditionalTriggerExecute(udg_trigger122)
         else
         endif
+
+        // Save debug codes
+        call DebugCode_SavePlayerDebugEveryone()
         //call PauseAllUnitsBJ(false)
     endfunction
 

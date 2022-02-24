@@ -78,7 +78,7 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
         set SaveTempString = ""
         set SaveTempString = Savecode(SaveTempInt).Save(p, 1)
-        call SaveFile.create(p, "", -1, SaveTempString)
+        call SaveFile.create(p, "", 0, SaveTempString)
         
         if (SaveShowCode) then
             set SaveCodeColored = Savecode_colorize(SaveTempString)

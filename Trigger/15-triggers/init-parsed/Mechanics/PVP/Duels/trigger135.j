@@ -131,7 +131,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
         // Update the player's stats that they won a pvp match, and save
         set winningPlayer = PlayerStats.forPlayer(GetOwningPlayer(udg_unit05))
         call winningPlayer.addPVPWin()
-        call SaveCommand_SaveCodeForPlayer(winningPlayer)
+        call SaveCommand_SaveCodeForPlayer(GetOwningPlayer(udg_unit05))
 
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" |cffffcc00has defeated |r" +(GetPlayerNameColour(GetOwningPlayer(GetDyingUnit()))+ "|cffffcc00!!|r")))))
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" has |cffc2154f" + I2S(winningPlayer.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(winningPlayer.getAllPVPWins()) + "|r all time for this game mode"))))
