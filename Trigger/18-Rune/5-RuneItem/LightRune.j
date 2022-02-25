@@ -1,4 +1,4 @@
-library LightRune requires RandomShit
+library LightRune requires RandomShit, UnitHelpers
 
     function CastLightRune takes nothing returns boolean
         if IsUnitEnemy(GLOB_RUNE_U,GetOwningPlayer(GetFilterUnit())) and IsUnitTarget(GetFilterUnit()) then

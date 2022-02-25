@@ -1,4 +1,4 @@
-library UnitHelpers initializer init requires Utility
+library UnitHelpers initializer init requires Utility, RandomShit
     globals
         boolexpr IsUnitSpellTargetFilter
         boolexpr IsUnitTargetFilter
@@ -13,7 +13,7 @@ library UnitHelpers initializer init requires Utility
     endfunction
 
     function GetUnitTotalHpRegen takes unit u returns real
-        return (BlzGetUnitRealField(u, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + (GetHeroStr(u, true) * 0.075) + GetUnitBonusReal(u, BONUS_HEALTH_REGEN))
+        return (BlzGetUnitRealField(u, ConvertUnitRealField('uhpr')) + GetUnitBonusReal(u, BONUS_HEALTH_REGEN) + (GetHeroStr(u, true) * 0.075) + GetSpellValue(0, 5, GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID)) + (UnitHasItemI(u, 'I04N') * 1500))
     endfunction
 
     function IsUnitMagicImmune takes unit u returns boolean

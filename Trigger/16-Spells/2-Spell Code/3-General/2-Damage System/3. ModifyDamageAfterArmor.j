@@ -474,8 +474,8 @@ scope ModifyDamageAfterArmor initializer init
             call DummyOrder.create(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitFacing(DamageSource), 2).addActiveAbility(DECAYING_SCYTHE_DUMMY_ABILITY_ID, 1, 852189).target(DamageTarget).activate()
             set DecayingScytheTick[DamageTargetId] = T32_Tick
             if GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID) == 0 then
-                set r3 = 0 - ((BlzGetUnitRealField(DamageTarget, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + (GetHeroStr(DamageTarget, true) * 0.075) + GetUnitBonusReal(DamageTarget, BONUS_HEALTH_REGEN)) * 0.6)
                 set r2 = GetUnitTotalHpRegen(DamageTarget)
+                set r3 = r2 * 0.6
 
                 if r2 - r3 < 0 then
                     set r3 = RMaxBJ(r3 + (r2 - r3), 0)

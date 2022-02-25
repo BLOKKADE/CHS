@@ -1,4 +1,4 @@
-library Evasion requires CustomState, RandomShit, LuckyPants
+library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers
 
     function EvasionCheck takes real returnDamage returns nothing
         local real percentage = (1 - (returnDamage / Damage.index.damage)) * 100

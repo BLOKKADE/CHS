@@ -18,17 +18,12 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         integer endTick
         integer buffCount
         real reduction
-    
-        
 
         private method countBuffs takes nothing returns real
             local integer count = 0
             local integer hid = GetHandleId(this.target)
-            local real regen = BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + (GetHeroStr(DamageTarget, true) * 0.075)
+            local real regen = GetUnitTotalHpRegen(this.target) + this.reduction
             local real newRegen = 0
-            if GloryRegenLevel[hid] > 0 then
-               set regen = regen + ((GloryRegenLevel[hid] * 0.3) * regen)
-            endif
 
             if GetUnitAbilityLevel(this.target, PARASITE_BUFF_ID) > 0 then
                 set count = count + 1
@@ -68,7 +63,6 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             set this.buffCount = count
 
             set newRegen = ((count * HpReduction) * regen)
-            set regen = GetUnitTotalHpRegen(this.target) + this.reduction
             //make sure regen doesnt go below 0
             if regen - newRegen < 0 then
                 return RMaxBJ(newRegen + (regen - newRegen), 0)
@@ -80,7 +74,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         private method periodic takes nothing returns nothing
             local real hp = GetUnitState(this.target, UNIT_STATE_LIFE)
             local real currentBonus = this.countBuffs()
-            if this.reduction != currentBonus and currentBonus != 0 then
+            if this.reduction != currentBonus then
                 //call BJDebugMsg("ap old: " + R2S(this.reduction) + " new: " + R2S(currentBonus))
                 //call BJDebugMsg("absolute poison: " + I2S(GetHandleId(this.target)) + " : " + GetUnitName(this.target))
                 //call BJDebugMsg("current:" + R2S(this.reduction) + " count: " + I2S(this.buffCount) + " percent: " + R2S(this.buffCount * 0.12) + " val: " + R2S(currentBonus))
