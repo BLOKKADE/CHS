@@ -348,7 +348,7 @@ scope ModifyDamageAfterArmor initializer init
                 endif
 
                 //Volcanic Armor
-                if UnitHasItemS(DamageSource, 'I03T') and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
+                if UnitHasItemS(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
                     call ActivateVolcanicArmor(DamageSource, DamageTarget)
                 endif    
 
