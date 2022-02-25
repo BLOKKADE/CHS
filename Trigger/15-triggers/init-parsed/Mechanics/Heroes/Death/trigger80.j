@@ -19,47 +19,49 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
     function EnableDeathTrigger takes nothing returns nothing
         local integer pid = GetTimerData(GetExpiredTimer())
-        set DeathReviveInvul.boolean[pid] = false
-        set DisableDeathTrigger[pid] = false
+        local unit u = udg_units01[pid+1]
+
+        call ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)
+        call FixDeath(u)
+        call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
         call ReleaseTimer(GetExpiredTimer())
+
+        set u = null
     endfunction
 
 
     function Trig_Hero_Dies_Conditions takes nothing returns boolean
-        local integer pid = GetPlayerId(GetOwningPlayer(GetDyingUnit()))
-        //call BJDebugMsg(GetUnitName(GetDyingUnit()))
-        if(not Trig_Hero_Dies_Func026C()) or DisableDeathTrigger[pid] then
+        local unit u = GetDyingUnit()
+        local integer pid = GetPlayerId(GetOwningPlayer(u))
+        //call BJDebugMsg(GetUnitName(u))
+        if(not Trig_Hero_Dies_Func026C()) then
             return false
         endif
         //udg_boolean07
-        if ModeNoDeath == true and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
-            call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
-            call FixDeath(GetDyingUnit())
-            call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
+        if ModeNoDeath == true and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
+            call ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)
+            call FixDeath(u)
+            call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
     
             call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
-    
+            
+            set u = null
             return false
         endif
     
-        if Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] > 0 and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
-            set DisableDeathTrigger[pid] = true
+        if Lives[GetPlayerId(GetOwningPlayer(u))] > 0 and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
             call TimerStart(NewTimerEx(pid), 1, false, function EnableDeathTrigger)
             set RoundLiveLost[pid] = true
-    
-            set DeathReviveInvul.boolean[pid] = true
-            call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
-            call FixDeath(GetDyingUnit())
-            call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
             call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
     
             set Lives[pid] = Lives[pid] - 1
-            call DisplayTextToPlayer(GetOwningPlayer(GetDyingUnit()) ,0,0,"You have " + I2S(Lives[pid]) + " lives left")
-    
+            call DisplayTextToPlayer(GetOwningPlayer(u) ,0,0,"You have " + I2S(Lives[pid]) + " lives left")
+            
+            set u = null
             return false
         endif
     
-    
+        set u = null
         return true
     endfunction
 
