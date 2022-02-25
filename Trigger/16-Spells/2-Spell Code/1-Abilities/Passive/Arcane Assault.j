@@ -23,7 +23,6 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
             return
         endif
 
-        //call BJDebugMsg("aa: targets: " + I2S(targets) + " fd: " + R2S(fullDamageCount) + " fv: " + R2S(fullValue) + " dmgb: " + R2S(damageBonus))
         if damageBonus != 0 then
             set targets = targets + 1
         endif
@@ -44,6 +43,7 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
         call GroupRemoveUnit(ENUM_GROUP, damageTarget)
         set targets = MathRound_round(fullDamageCount)
         set SpellData[GetHandleId(damageSource)].boolean[8] = true
+        //call BJDebugMsg("aa: targets: " + I2S(targets) + " fd: " + R2S(fullDamageCount) + " fv: " + R2S(fullValue) + " dmgb: " + R2S(damageBonus))
         loop
             set target = FirstOfGroup(ENUM_GROUP)
             exitwhen target == null
@@ -53,14 +53,14 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
                 set targets = targets - 1
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
-                set udg_NextDamageAbilitySource = damageSourceAbility
+                set udg_NextDamageAbilitySource = ARCANE_ASSAUL_ABILITY_ID
                 set udg_NextDamageIsAttack = true
                 call Damage.applyPhys(damageSource, target, damage, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 //call BJDebugMsg("full aa" + I2S(GetHandleId(target)) + " targets: " + I2S(targets))
             elseif damageBonus != 0 then
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
-                set udg_NextDamageAbilitySource = damageSourceAbility
+                set udg_NextDamageAbilitySource = ARCANE_ASSAUL_ABILITY_ID
                 set udg_NextDamageIsAttack = true
                 call Damage.applyPhys(damageSource, target, damage * damageBonus, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 //call BJDebugMsg("db aa" + I2S(GetHandleId(target)) + " dmg: " + R2S(damage * damageBonus) + " targets: " + I2S(targets))

@@ -34,10 +34,10 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Arcane Assault
             set i1 = GetUnitAbilityLevel(DamageSource, ARCANE_ASSAUL_ABILITY_ID)
-            if i1 > 0 and IsDamageArcaneAssault(DamageSource) == false then
+            if i1 > 0 and DamageSourceAbility != ARCANE_ASSAUL_ABILITY_ID then
                 call ArcaneAssault(DamageSource, DamageTarget, DamageSourceAbility, Damage.index.damage, i1)
             //arcane infused sword
-            elseif i1 == 0 and IsDamageArcaneAssault(DamageSource) == false and UnitHasItemS(DamageSource, 'I0BN') then
+            elseif i1 == 0 and DamageSourceAbility != ARCANE_ASSAUL_ABILITY_ID and UnitHasItemS(DamageSource, 'I0BN') then
                 call ArcaneAssault(DamageSource, DamageTarget, DamageSourceAbility, Damage.index.damage, 8)
             endif
 
