@@ -248,7 +248,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(FAN_OF_KNIVES_ABILITY_ID, FAN_OF_KNIVES_ITEM_ID, false, 0, 0, true, Order_Instant, "fanofknives")
 
         //9 - Feral Spirit 
-        call SaveAbilData(FERAL_SPIRIT_ABILITY_ID, FERAL_SPIRIT_ITEM_ID, false, 0, 0, false, Order_Instant, "spiritwolf")
+        call SaveAbilData(FERAL_SPIRIT_ABILITY_ID, FERAL_SPIRIT_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -771,13 +771,14 @@ library AbilityData initializer init requires Table, IdLibrary
         //125 - Stasis Trap 
         call SaveAbilData(STASIS_TRAP_ABILITY_ID, STASIS_TRAP_ITEM_ID, false, 0, 0, true, Order_Point, "stasistrap")
         call SetLastObjectElement(Element_Arcane, 1)
+        call SetLastAbilityNotReplaceable()
 
         //126 - Death Pact 
         call SaveAbilData(DEATH_PACT_ABILITY_ID, DEATH_PACT_ITEM_ID, false, 0, 1, false, Order_Target, "deathpact")
         call SetLastObjectElement(Element_Dark, 2)
 
         //127 - Big Bad Voodoo 
-        call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID, BIG_BAD_VOODOO_ITEM_ID, false, 0, 0, false, Order_None, "voodoo")
+        call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID, BIG_BAD_VOODOO_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 2)
         call SetLastObjectElement(Element_Dark, 2)
 

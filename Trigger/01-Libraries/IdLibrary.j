@@ -292,7 +292,7 @@ library IdLibrary initializer init
         constant integer FAST_MAGIC_ABILITY_ID                          = 'A03P'
         constant integer FATAL_FLA_ABILITY_ID                           = 'A0AA'
         constant integer FEARLESS_DEFENDERS_ABILITY_ID                  = 'A041'
-        constant integer FERAL_SPIRIT_ABILITY_ID                        = 'AOsf'
+        constant integer FERAL_SPIRIT_ABILITY_ID                        = 'A0CA'
         constant integer FINGER_OF_DEATH_ABILITY_ID                     = 'Afod'
         constant integer FINISHING_BLOW_ABILITY_ID                      = 'A02N'
         constant integer FIRE_FORCE_ABILITY_ID                          = 'A02U'
