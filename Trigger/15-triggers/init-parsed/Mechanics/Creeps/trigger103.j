@@ -12,6 +12,7 @@ library trigger103 initializer init requires RandomShit, Functions
         integer MulticastChance = 0
         integer FastMagicChance = 0
         integer ImmortalityAuraChance = 0
+        boolean wizardbaneDebug = false
     endglobals
 
     function Trig_Generate_Next_Level_Conditions takes nothing returns boolean
@@ -332,28 +333,31 @@ library trigger103 initializer init requires RandomShit, Functions
             set udg_integer17 = GetRandomInt(1,oldAbilChance)
             set udg_integer20 = 0
             set ReflectionAuraChance = 0
+            if wizardbaneDebug then
+                set WizardbaneAuraChance = 1
+            else
             set WizardbaneAuraChance = 0
-            if GetRandomInt(1, oldAbilChance) == 1 then
-                set temp = GetRandomInt(1,4)
-                if temp == 1 then
-                    set udg_integer20 = 1
-                elseif temp == 2 then
-                    set ReflectionAuraChance = 1
-                elseif temp == 3 then
-                    set WizardbaneAuraChance = 1
-                elseif udg_integer02 > 20 then
-                    if udg_integer02 > 40 then
-                        set udg_integer20 = GetRandomInt(1,2)
-                        set ReflectionAuraChance = GetRandomInt(1,2)
-                        set WizardbaneAuraChance = GetRandomInt(1,2)
-                    else
-                        set udg_integer20 = GetRandomInt(1,3)
-                        set ReflectionAuraChance = GetRandomInt(1,3)
-                        set WizardbaneAuraChance = GetRandomInt(1,3)
+                if GetRandomInt(1, oldAbilChance) == 1 then
+                    set temp = GetRandomInt(1,4)
+                    if temp == 1 then
+                        set udg_integer20 = 1
+                    elseif temp == 2 then
+                        set ReflectionAuraChance = 1
+                    elseif temp == 3 then
+                        set WizardbaneAuraChance = 1
+                    elseif udg_integer02 > 20 then
+                        if udg_integer02 > 40 then
+                            set udg_integer20 = GetRandomInt(1,2)
+                            set ReflectionAuraChance = GetRandomInt(1,2)
+                            set WizardbaneAuraChance = GetRandomInt(1,2)
+                        else
+                            set udg_integer20 = GetRandomInt(1,3)
+                            set ReflectionAuraChance = GetRandomInt(1,3)
+                            set WizardbaneAuraChance = GetRandomInt(1,3)
+                        endif
                     endif
                 endif
             endif
-            
             
         endif
         if udg_integer02 > 10 then
@@ -427,6 +431,10 @@ library trigger103 initializer init requires RandomShit, Functions
                     call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.25 *(udg_integer02)))
                     call SetUnitEvasion(GetLastCreatedUnit(), evasionBonus)	
                     call SetUnitBlock(GetLastCreatedUnit(), blockBonus)			
+
+                    if wizardbaneDebug then
+                        call SetUnitMagicDmg(GetLastCreatedUnit(), 5000)
+                    endif
     
                     if udg_integer02 < 3 then
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)- 3,0)

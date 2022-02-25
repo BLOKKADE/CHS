@@ -179,6 +179,15 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Battle Royal will start after round: " + I2S(pn))
         endif
     endfunction
+
+    function SetWizardbaneDebug takes Args args returns nothing
+        set wizardbaneDebug = wizardbaneDebug != true
+        if wizardbaneDebug then
+            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creeps will have 100% wizardbane chance in 1 or 2 rounds")
+        else
+            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creeps will have their regular wizardbane chance in 1 or 2 rounds")
+        endif
+    endfunction
     
     //===========================================================================
     function AllowSinglePlayerCommands takes nothing returns nothing
@@ -220,6 +229,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.StartNextRound).name("nx").handles("nx").help("nx", "Starts the next round if used inbetween rounds.")
             call Command.create(CommandHandler.SetRoundTime).name("rt").handles("rt").help("rt <value>", "Starting next round, sets the time between rounds to <value>.")
             call Command.create(CommandHandler.SetBattleRoyale).name("sbr").handles("sbr").help("sbr <value>", "The Battle Royal starts after round <value>.")
+            call Command.create(CommandHandler.SetWizardbaneDebug).name("wbd").handles("wbd").help("wbd", "Wizardbane debug.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
 
