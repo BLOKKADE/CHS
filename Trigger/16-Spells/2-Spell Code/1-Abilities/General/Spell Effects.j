@@ -167,6 +167,8 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         elseif abilId == MAGNET_OSC_ABILITY_ID then
             call ToggleMagnetOsc(caster)
             return true
+        elseif abilId == MANA_SHIELD_ABILITY_ID then
+            return true
         endif
 
         return false
@@ -183,11 +185,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local integer dummyAbilId = 0
         local integer lvl = 0
         local boolean abilityChanneled = false
+        //call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
 
         if not ToggleSpell(caster, abilId) then
             if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
-                
-                //call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
 
                 set dummyAbilId = GetAssociatedSpell(caster, abilId)
                 if GetAssociatedSpell(caster, abilId) != 0 then
@@ -200,6 +201,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                 set abilityChanneled = AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
             
                 if not Trig_Disable_Abilities_Func001C(caster) then
+                    //call BJDebugMsg("caster: " + GetUnitName(caster))
                     call ElementStartAbility(caster, abilId)
 
                     if (not abilityChanneled) and dummyAbilId != 0 then
@@ -216,7 +218,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     endif
 
                     if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID then
-                        call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + BlzGetAbilityManaCost(abilId, abilLvl - 1))
+                        call ActivateXesilManaCostNegation(caster, abilId, abilLvl)
                     endif
 
                     if GetUnitAbilityLevel(caster, 'B024') > 0 then
@@ -264,7 +266,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     endif
 
                     set lvl = GetUnitAbilityLevel(caster, CHAOS_MAGIC_ABILITY_ID)
-                    if abilId != IMMOLATION_ABILITY_ID and abilId != MANA_SHIELD_ABILITY_ID and lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
+                    if lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
                         call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
                     endif
 
@@ -275,7 +277,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
                         call SpellbaneSpellCast(caster, abilId, abilLvl)
                     endif
-                
+                    //call BJDebugMsg("cd")
                     call SetCooldown(caster, abilId, false) 
                 endif
             endif
