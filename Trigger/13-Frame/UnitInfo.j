@@ -89,7 +89,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		set s = s + "Each point increases hit point regeneration by 0.075. (" + statColour[0] + "+" + R2SW(BlzGetUnitRealField(u, ConvertUnitRealField('uhpr')) + GetUnitBonusReal(u, BONUS_HEALTH_REGEN) + (GetHeroStr(u, true) * 0.075) + GetSpellValue(0, 5, GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID)) + (UnitHasItemI(u, 'I04N') * 1500), 1, 1) + " total|r)\n"
 		
 		if gloryRegen > 0 then
-			set s = s + statColour[0] + I2S(R2I(gloryRegen + (30 * GloryRegenLevel[GetHandleId(u)]))) + "|r of that is from glory HP regen.\n"
+			set s = s + statColour[0] + I2S(R2I(gloryRegen + (50 * GloryRegenLevel[GetHandleId(u)]))) + "|r of that is from glory HP regen.\n"
 		endif
 		
 		return s + "Strength per level: " + statColour[0] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(u)) + "|r"

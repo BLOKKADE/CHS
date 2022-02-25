@@ -164,10 +164,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_HIT_POINT_REGENERATION_TOME_ITEM_ID then
                 if Glory[pid] >= 1500 then
                     set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
-                    call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 30)
+                    call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 50)
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
                     set Glory[pid]= Glory[pid]- 1500
-                    set gloryBonus = gloryBonus + 30 
+                    set gloryBonus = gloryBonus + 50 
                 else
                     set ctrl = false
                 endif      
