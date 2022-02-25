@@ -9,17 +9,18 @@ library Plague requires AoeDamage
         local unit dummy
         local real dummyX
         local real dummyY
+        local player p = GetOwningPlayer(caster)
         
         loop
             set dummyX = x + (GetRandomReal(-300, 300))
             set dummyY = y + (GetRandomReal(-300, 300))
-            set dummy = CreateUnit(GetOwningPlayer(caster), 'n01L', dummyX, dummyY, GetRandomDirectionDeg())
+            set dummy = CreateUnit(p, 'n01L', dummyX, dummyY, GetRandomDirectionDeg())
             call UnitApplyTimedLifeBJ(14.00, 'BTLF', dummy)
             call SetAbilityRealField(dummy, 'A0AG', 1, ABILITY_RLF_DAMAGE_PER_INTERVAL, (60 * level) * bonus)
             call SetUnitTimeScalePercent(dummy, 50.00)
+            call SetPlayerAbilityAvailable(p, 'A0AG', false)
+            call SetPlayerAbilityAvailable(p, 'A0AG', true)
             if i < corpseLimit then
-                call CreateCorpse(GetOwningPlayer(caster), ChooseRandomCreepBJ(- 1), dummyX, dummyY, GetRandomReal(0, 360))
-
                 if i < blackArrowLimit and GetUnitAbilityLevel(caster, BLACK_ARROW_PASSIVE_ABILITY_ID) > 0 then
                     call CastBlackArrow(caster, dummy, GetUnitAbilityLevel(caster, 'A0AW'))
                 endif
@@ -36,6 +37,7 @@ library Plague requires AoeDamage
             exitwhen i > 10
         endloop
     
+        set p = null
         set fx = null
         set dummy = null
     endfunction
