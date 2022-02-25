@@ -325,7 +325,7 @@ library trigger111 initializer init requires RandomShit, Functions
         local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
         local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
         //call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
-        if maxBuy then
+        if maxBuy and i < 30 then
             loop
                 if lumber - cost < 0 then
                     exitwhen true
@@ -336,7 +336,7 @@ library trigger111 initializer init requires RandomShit, Functions
             endloop
             call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, lumber)
         endif
-    
+        //call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
         if new then
             call UnitAddAbility(u, abil)
             call SpellLearnedFunc(u, abil)
@@ -344,7 +344,7 @@ library trigger111 initializer init requires RandomShit, Functions
                 call AddItemToUpgradeShop(GetPlayerId(p), GetItemTypeId(GetManipulatedItem()))
             endif
         endif
-        if i > 1 and i < 32 then
+        if i > 1 and i < 31 then
             call SetUnitAbilityLevel(u, udg_integer01, i)
         endif
 
@@ -418,7 +418,7 @@ library trigger111 initializer init requires RandomShit, Functions
         set BuyingUnit = udg_units01[GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1]
         set udg_integer01 = GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
         //call ConditionalTriggerExecute(udg_trigger112)
-        if udg_integer01 == 0 or IsAbsolute(udg_integer01) then
+        if udg_integer01 == 0 or IsAbsolute(udg_integer01) or GetTriggerUnit() != BuyingUnit then
             return
         endif
         set abilLevel = GetUnitAbilityLevel(BuyingUnit, udg_integer01)
