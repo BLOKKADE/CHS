@@ -95,6 +95,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
                 set this.order = order
                 set this.abil = abilityId
                 set DummyAbilitySource[GetDummyId(this.dummy)] = abilityId
+                //call BJDebugMsg("set das: " + "dummy id: " + I2S(GetDummyId(this.dummy)) + GetObjectName(DummyAbilitySource[GetDummyId(this.dummy)]))
                 set this.abilSet = true
 
                 if IsSpellDot(abilityId) then
@@ -123,7 +124,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
                     call this.destroy()
                 endif
             else
-                if T32_Tick > this.endTick or ((not this.noEarlyStop) and (this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0)) then
+                if T32_Tick > this.endTick then
                     set this.destroyDummy = true
                     set this.endTick = T32_Tick + (5 * 32)
                     call this.resetDummy()
