@@ -478,6 +478,7 @@ scope ModifyDamageBeforeArmor initializer init
             //Magic Power
             if DamageSourceMagicPower != 1 or GetUnitMagicDmg(DamageSource) > 0 then
                 set Damage.index.damage =   Damage.index.damage*(DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100 )
+                //call BJDebugMsg("src: " + GetUnitName(DamageSource) + "dmg: " + R2S(Damage.index.damage) + "magic pow: " + R2S((DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100 )))
             endif   
 
             //Magic Resistance

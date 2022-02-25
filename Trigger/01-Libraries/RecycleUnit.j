@@ -370,6 +370,7 @@ library DummyRecycler /*
             endif
         else
             set bj_lastCreatedUnit = CreateUnit(OWNER, DUMMY_ID, x, y, facing)
+            //call BJDebugMsg("create dummy")
             call PauseUnit(bj_lastCreatedUnit, true)
             call SetUnitFlyHeight(bj_lastCreatedUnit, z, 0)
             if dummyCount < MAX_DUMMY_COUNT then
@@ -386,6 +387,7 @@ library DummyRecycler /*
             endif
             set dummyCount = dummyCount + 1
         endif
+        //call BJDebugMsg("dummy count: " + I2S(dummyCount))
 
         return bj_lastCreatedUnit
     endfunction
@@ -449,6 +451,7 @@ library DummyRecycler /*
                 set upper = count[head]
             endif
         elseif this == 0 then
+            //call BJDebugMsg("remove unit")
             call RemoveUnit(u)
         debug elseif next[this] != -1 then
             debug call BJDebugMsg("|cffffcc00[DummyRecycler]:|r Attempted to recycle a pending/free Dummy Unit.")

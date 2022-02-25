@@ -1,4 +1,4 @@
-library ORDER
+/*library ORDER
     globals
         //strange ones at bottom
         public constant integer OFFSET = 851970
@@ -374,4 +374,4 @@ library ORDER
         public constant integer instant3 = 851975      //?
         public constant integer instant4 = 852019      //?
     endglobals
-endlibrary
+endlibrary*/

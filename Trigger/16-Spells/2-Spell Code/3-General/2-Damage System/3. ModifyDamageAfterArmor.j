@@ -280,7 +280,8 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Lich
-        if DamageSourceTypeId == LICH_UNIT_ID  and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < 25 * DamageSourceLuck then
+        //call BJDebugMsg("dmg source ability:" + GetObjectName(DamageSourceAbility))
+        if DamageSourceTypeId == LICH_UNIT_ID and DamageSourceAbility != 'A03J' and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < 25 * DamageSourceLuck then
             call ElemFuncStart(DamageSource,LICH_UNIT_ID)
             call UsOrderU2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
@@ -408,6 +409,7 @@ scope ModifyDamageAfterArmor initializer init
                         set r3 = ((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.05)) * r1) * r2
                         call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     endif
+                    //call BJDebugMsg("wb damage: " + R2S(r3) + " mult: " + R2S(r2) + " reduce: " + R2S(r1))
                     call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", DamageSource, "chest"))
                 endif
             endif

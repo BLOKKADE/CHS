@@ -100,6 +100,7 @@ scope OnDamage initializer init
         if DamageSourceTypeId == PRIEST_1_UNIT_ID then
             set DamageSourceId = GetDummyId(DamageSource)
             set DamageSourceAbility = DummyAbilitySource[DamageSourceId]
+            //call BJDebugMsg("get das: " + GetObjectName(DummyAbilitySource[DamageSourceId]))
             set DamageSourceMagicPower = DamageSourceMagicPower + (GetUnitMagicDmg(DamageSource) / 100)
         else
             set DamageSourceAbility = Damage.index.abilitySource

@@ -58,7 +58,7 @@ library Cooldown requires RandomShit
                 call BlzStartUnitAbilityCooldown(u, GetAssociatedSpell(u, Aid), cd)
             endif
         endif
-
+        //call BJDebugMsg("cdset")
         set u = null
     endfunction
 endlibrary
