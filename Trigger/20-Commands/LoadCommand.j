@@ -16,7 +16,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
                 set SaveLoadEvent = 0.00
                 return
             else
-                set SaveTempInt = -1
+                set SaveTempInt = 0
             endif
         endif
 
@@ -31,7 +31,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
     // An event is fired from the savecode library once it is done loading
     public function AutoLoadPlayerSaveCode takes player p returns nothing
         if (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING) then
-            set SaveTempInt = -1
+            set SaveTempInt = 0
             set SaveLoadEvent_Player = p
         
             call LoadSaveSlot(p, SaveTempInt)

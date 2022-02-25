@@ -4,12 +4,20 @@ library DebugCode requires RandomShit, OldInitialization
         local string debugCode = ""
         local integer index = 0
         local string name
-        local unit playerHero = udg_units01[GetPlayerId(p) + 1] // Get player's hero
-        local PlayerStats ps = PlayerStats.forPlayer(p)
+        local unit playerHero
+        local PlayerStats ps
+
+        if (not (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING)) then
+            return
+        endif
+
+        set ps = PlayerStats.forPlayer(p)
 
         if (not ps.isDebugEnabled()) then
             return
         endif
+
+        set playerHero = udg_units01[GetPlayerId(p) + 1] // Get player's hero
 
         // Make sure the hero was found
         if (playerHero == null) then
@@ -60,9 +68,7 @@ library DebugCode requires RandomShit, OldInitialization
     endfunction
 
     private function SavePlayerDebugEveryoneEnum takes nothing returns nothing
-        if (GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING) then
-            call SavePlayerDebug(GetEnumPlayer())
-        endif
+        call SavePlayerDebug(GetEnumPlayer())
     endfunction
 
     public function SavePlayerDebugEveryone takes nothing returns nothing
