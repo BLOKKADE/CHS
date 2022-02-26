@@ -200,7 +200,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                 //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
                 set abilityChanneled = AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
             
-                if not Trig_Disable_Abilities_Func001C(caster) then
+                if GetUnitTypeId(caster) != PRIEST_1_UNIT_ID and (not Trig_Disable_Abilities_Func001C(caster)) then
                     //call BJDebugMsg("caster: " + GetUnitName(caster))
                     call ElementStartAbility(caster, abilId)
 
