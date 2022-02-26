@@ -5,7 +5,7 @@ library HolyLight requires SpellFormula
         call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl", GetUnitX(target), GetUnitY(target)))
         if IsUnitEnemy(target, GetOwningPlayer(caster)) then
             set udg_NextDamageAbilitySource = HOLY_LIGHT_ABILITY_ID
-            call Damage.applyMagic(caster, target, value, DAMAGE_TYPE_MAGIC)
+            call Damage.applyMagic(caster, target, value * 0.5, DAMAGE_TYPE_MAGIC)
         else
             call SetUnitState(target, UNIT_STATE_LIFE, GetUnitState(target, UNIT_STATE_LIFE) + value)
         endif
