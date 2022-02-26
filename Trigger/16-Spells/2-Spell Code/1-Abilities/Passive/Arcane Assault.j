@@ -3,10 +3,6 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
         string FX_AA = "war3mapImported\\Climax Teal.mdx"
     endglobals
 
-    function IsDamageArcaneAssault takes unit damageSource returns boolean
-        return SpellData[GetHandleId(damageSource)].boolean[8]
-    endfunction
-
     function ArcaneAssault takes unit damageSource, unit damageTarget, integer damageSourceAbility, real damage, integer level returns nothing
         local real fullValue = 0.7 + (level * 0.3)
         local real fullDamageCount = MathRound_floor(fullValue)
@@ -42,7 +38,6 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
 
         call GroupRemoveUnit(ENUM_GROUP, damageTarget)
         set targets = MathRound_round(fullDamageCount)
-        set SpellData[GetHandleId(damageSource)].boolean[8] = true
         //call BJDebugMsg("aa: targets: " + I2S(targets) + " fd: " + R2S(fullDamageCount) + " fv: " + R2S(fullValue) + " dmgb: " + R2S(damageBonus))
         loop
             set target = FirstOfGroup(ENUM_GROUP)
@@ -68,7 +63,6 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
             endif
             call GroupRemoveUnit(ENUM_GROUP, target)
         endloop
-        set SpellData[GetHandleId(damageSource)].boolean[8] = false
         set p = null
     endfunction
 endlibrary
