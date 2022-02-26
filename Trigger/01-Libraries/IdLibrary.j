@@ -340,6 +340,7 @@ library IdLibrary initializer init
         constant integer MYSTERIOUS_TALENT_ABILITY_ID                   = 'A05Z'
         constant integer NECROMANCERS_ARMY_ABILITY_ID                   = 'A0B0'
         constant integer PARASITE_ABILITY_ID                            = 'ANpa'
+        constant integer PARASITE_2_ABILITY_ID                          = 'A0CB'
         constant integer PHASE_SHIFT_ABILITY_ID                         = 'Apsh'
         constant integer PHEONIX_ABILITY_ID                             = 'AHpx'
         constant integer PILLAGE_ABILITY_ID                             = 'Asal'
