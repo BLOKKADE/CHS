@@ -20,10 +20,11 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
         
 
-        private method GetNewTarget takes real range returns nothing
+        private method GetNewTarget takes real range returns boolean
             if this.caston == null then
                 set this.caston = NewGroup()
                 call GroupAddUnit(this.caston, this.target)
+               // call BJDebugMsg("create group: " + I2S(GetHandleId(this.caston)))
             endif
             
             call RUH.reset().excludeGroup(this.caston)
@@ -31,7 +32,14 @@ library Multicast requires T32, RandomShit, AbilityChannel
             call RUH.EnumUnits(GetUnitX(this.caster), GetUnitY(this.caster), range, GetAbilityTargetType(this.abilId), GetOwningPlayer(this.caster))
 
             set this.target = RUH.GetRandomUnit(false)
-            call GroupAddUnit(this.caston, this.target)
+            if this.target == null then
+                //call BJDebugMsg("no valid enemy")
+                return false
+            else
+                //call BJDebugMsg("valid enemy: " + GetUnitName(this.target) + ": " + I2S(GetHandleId(this.target)))
+                call GroupAddUnit(this.caston, this.target)
+                return true
+            endif
         endmethod
 
         private method castSpell takes nothing returns nothing
@@ -49,26 +57,33 @@ library Multicast requires T32, RandomShit, AbilityChannel
             call dummy.activate()
         endmethod
 
-        private method checkSpell takes nothing returns nothing
+        private method checkSpell takes nothing returns boolean
             if this.orderType == 1 and this.mono then
-                call GetNewTarget(GetAbilityRange(this.caster, this.abilId))
-                if this.target == null then
-                    call this.stopPeriodic()
-                    call this.destroy()
-                    return
+                //call BJDebugMsg("new trgt: " + GetUnitName(this.target) + " count: " + I2S(this.count))
+                if not GetNewTarget(GetAbilityRange(this.caster, this.abilId)) then
+                    //call BJDebugMsg("end")
+                    return false
                 endif
             endif
 
             if not AbilityChannel(this.caster, this.target, this.x, this.y, this.abilId, this.abilLevel) then
                 call this.castSpell()
             endif
+
+            return true
         endmethod
 
         private method periodic takes nothing returns nothing
             if T32_Tick >= this.endTick and this.count > 0 then
-                call this.checkSpell()
-                set this.count = this.count - 1
-                set this.endTick = T32_Tick + MulticastInterval
+                if this.checkSpell() then
+                    set this.count = this.count - 1
+                    set this.endTick = T32_Tick + MulticastInterval
+                else
+                    //call BJDebugMsg("stop")
+                    call this.stopPeriodic()
+                    call this.destroy()
+                    return
+                endif
             endif
             
             if this.count == 0 or HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or (not UnitAlive(this.caster)) then
@@ -111,6 +126,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
             if this.caston != null then
                 call ReleaseGroup(this.caston)
+                //call BJDebugMsg("release group" + I2S(GetHandleId(this.caston)))
                 set this.caston = null
             endif
             call this.recycle()

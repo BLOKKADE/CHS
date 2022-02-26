@@ -43,16 +43,17 @@ library GetRandomUnit initializer init requires UnitHelpers
         method EnumUnits takes real x, real y, real range, integer targetType, player p returns thistype
             local unit temp
             call GroupClear(ENUM_GROUP1)
+            //call BJDebugMsg("trgtp: " + I2S(targetType) + " p: " + I2S(GetPlayerId(p)))
             call EnumTargettableUnitsInRange(ENUM_GROUP1, x, y, range, p, this.allowMagicImmune, targetType)
             loop
                 set temp = FirstOfGroup(ENUM_GROUP1)
                 //call BJDebugMsg("gru" + GetUnitName(temp) + " : " + I2S(GetHandleId(temp)))
                 exitwhen temp == null
-                if temp != this.exclusionTarget and IsUnitInGroup(temp, this.RandomUnitHelperGroup) == false then
+                if temp != this.exclusionTarget and IsUnitInGroup(temp, this.RandomUnitHelperGroup) == false and GetUnitAbilityLevel(temp, 'Aloc') == 0 then
                     //call BJDebugMsg("ruh ally excl double check")
                     if (this.exclusionGroup != null and IsUnitInGroup(temp, this.exclusionGroup) == false) or this.exclusionGroup == null then
                         call GroupAddUnit(this.RandomUnitHelperGroup, temp)
-                        //call BJDebugMsg("ruh u add")
+                        //call BJDebugMsg("ruh u add: " + GetUnitName(temp) + " : " + I2S(GetHandleId(temp)))
                         if this.heroPriority and IsUnitType(temp, UNIT_TYPE_HERO) and IsUnitInGroup(temp, this.heroGroup) == false then  
                             call GroupAddUnit(this.heroGroup, temp)
                             //call BJDebugMsg("ruh hp add")
