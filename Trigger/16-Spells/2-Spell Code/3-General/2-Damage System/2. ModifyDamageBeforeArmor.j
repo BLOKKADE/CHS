@@ -26,7 +26,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Extradimensional Cooperation
-        if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not DamageIsOnHit) and IsDamageExtradimensional(DamageSource) == false then
+        if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not DamageIsOnHit) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
             call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, IsMagicDamage())
         endif
 

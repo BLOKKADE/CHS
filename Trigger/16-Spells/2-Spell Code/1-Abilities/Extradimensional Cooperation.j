@@ -1,13 +1,9 @@
-library ExtradimensionalCooperation requires RandomShit, DamageEngine
+library ExtradimensionalCooperation initializer init requires RandomShit, DamageEngine
     globals
         constant string FX_BLINK = "Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl"
         constant string FX_BLINK_TARGET = "Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl"
         Table ExtraDimLastTime
     endglobals
-
-    function IsDamageExtradimensional takes unit u returns boolean
-        return SpellData[GetHandleId(u)].boolean[5]
-    endfunction
 
     function ResetExtraDimensional takes unit u returns nothing
         set SpellData[GetHandleId(u)].integer[6] = 0
@@ -60,8 +56,6 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
         private method periodic takes nothing returns nothing
 
             if T32_Tick > this.endTick then
-                set SpellData[GetHandleId(this.caster)].boolean[5] = true
-
                 set udg_NextDamageAbilitySource = EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID
                 if magic then
                     call Damage.applyMagic(this.caster, this.target, this.dmg, DAMAGE_TYPE_MAGIC)
@@ -69,8 +63,6 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
                     //set GLOB_typeDmg = 2
                     call Damage.applyPhys(this.caster, this.target, this.dmg, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 endif
-
-                set SpellData[GetHandleId(this.caster)].boolean[5] = false
                 if this.dummyEnabled then
                     call this.endDummy()
                 endif
@@ -87,10 +79,11 @@ library ExtradimensionalCooperation requires RandomShit, DamageEngine
             set this.magic = magic
             set this.caster = caster
 
-            if T32_Tick - ExtraDimLastTime[GetHandleId(caster)]  < 12 then
+            if T32_Tick - ExtraDimLastTime[GetHandleId(caster)]  < 16 then
                 set this.dummyEnabled = false
             else
                 set this.dummyEnabled = true
+                set ExtraDimLastTime[GetHandleId(caster)] = T32_Tick
                 call this.createDummy()
             endif
             
