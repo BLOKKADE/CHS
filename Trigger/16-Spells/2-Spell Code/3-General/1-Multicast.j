@@ -9,7 +9,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
         local integer OGRE_i2
 
         local real luck = GetUnitLuck(caster)
-        
+
         if target == null then
             set orderType = 1
             if spellLoc == null then
@@ -27,10 +27,8 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             set targetY = GetUnitY(target)
         endif
 
-        
-
         //Check if caster has multicast
-        if abilId == MIRROR_IMAGE_ABILITY_ID then
+        if GetAbilityOrderType(abilId) == 0 then
             set caster = null
             set target = null
             return
