@@ -4,6 +4,7 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
         return BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, abilityId), ABILITY_RLF_CAST_RANGE, GetUnitAbilityLevel(u, abilityId) - 1)
     endfunction
 
+    //make sure to .activate() after calling this
     function CastSpell takes unit caster, unit target, integer abilId, integer level, integer orderType, real targetX, real targetY returns DummyOrder
         local integer order = GetAbilityOrder(abilId)
         local integer pid = GetPlayerId(GetOwningPlayer(caster))
