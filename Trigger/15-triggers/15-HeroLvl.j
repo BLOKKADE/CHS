@@ -99,8 +99,8 @@ library HeroLevel initializer init requires HeroLvlTable
         endif
 
         if I_l < 250 then
-            call AdjustPlayerStateBJ( (I_l + 2)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
-            call AdjustPlayerStateBJ( 4 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
+            call AdjustPlayerStateBJ( (I_l + 20)*(RI), Pl, PLAYER_STATE_RESOURCE_GOLD )
+            call AdjustPlayerStateBJ( 8 *(RI), Pl, PLAYER_STATE_RESOURCE_LUMBER)
             call DisplayTimedTextToPlayer(Pl, 0, 0, 1, "|cffc300ffLevel " + I2S(I_l + 1) + "|r: |cffffcc00+" + I2S((I_l + 2)*(RI)) + " gold|r and |cff1eff00+" + I2S(4 *(RI)) + " lumber|r")
         endif
 
@@ -428,7 +428,7 @@ library HeroLevel initializer init requires HeroLvlTable
 
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop 
-            call SetBonus(UnitHero, 0, 15 + (0.1 * (I_l + 1)))
+            call SetBonus(UnitHero, 0, 20 + (0.1 * (I_l + 1)))
         elseif TypeHero == ROCK_GOLEM_UNIT_ID then
         
             call SetBonus(UnitHero, 0, 49 + (I_l + 1))
