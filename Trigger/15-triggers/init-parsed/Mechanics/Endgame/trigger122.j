@@ -109,7 +109,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
 
     private function AutoSaveForPlayer takes nothing returns nothing
         if (GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING) then
-            call SaveCommand_SaveCodeForPlayer(GetEnumPlayer())
+            call SaveCommand_SaveCodeForPlayer(GetEnumPlayer(), false)
         endif
     endfunction
 

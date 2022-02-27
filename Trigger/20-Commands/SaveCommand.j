@@ -17,12 +17,12 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         set SaveValue[SaveCount] = value
     endfunction
 
-    public function SaveCodeForPlayer takes player p returns nothing
+    public function SaveCodeForPlayer takes player p, boolean showMessage returns nothing
         local integer saveIndex = 0
         local PlayerStats ps = PlayerStats.forPlayer(p)
         set SaveCount = -1 // This must get set to -1 every time we generate a new code
 
-        if (not IsSavingEnabled()) then
+        if (showMessage and (not IsSavingEnabled())) then
             call DisplayTimedTextToPlayer(p,0,0,30,"Saving is disabled since there are computer players")
             return
         endif
@@ -80,7 +80,7 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         set SaveTempString = Savecode(SaveTempInt).Save(p, 1)
         call SaveFile.create(p, "", 0, SaveTempString)
         
-        if (SaveShowCode) then
+        if (showMessage) then
             set SaveCodeColored = Savecode_colorize(SaveTempString)
 
             call DisplayTimedTextToPlayer(p,0,0,30,SaveCodeColored)
@@ -90,7 +90,7 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
 	endfunction
 	
     private function SaveCodeCommandActions takes Args args returns nothing
-        call SaveCodeForPlayer(GetTriggerPlayer())
+        call SaveCodeForPlayer(GetTriggerPlayer(), true)
     endfunction
     
 	private function init takes nothing returns nothing
