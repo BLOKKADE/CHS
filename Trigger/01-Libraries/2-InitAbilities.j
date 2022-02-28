@@ -404,7 +404,7 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers08[165]= EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID 
 	set udg_integers09[165]= EXTRADIMENSIONAL_CO_OPERATIO_ITEM_ID
     
-	set udg_integer26 = 165
+	
     
     
     

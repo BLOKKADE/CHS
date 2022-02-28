@@ -13,7 +13,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008C takes nothing returns boolean
-        if(not(udg_boolean05==false))then
+        if(not(ArNotLearningAbil==false))then
             return false
         endif
         return true
@@ -293,7 +293,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func001C takes nothing returns boolean
-        if(not(udg_boolean06==true))then
+        if(not(ARLearningAbil==true))then
             return false
         endif
         return true
@@ -301,7 +301,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func001Func001C takes nothing returns boolean
-        if(not(udg_boolean06==false))then
+        if(not(ARLearningAbil==false))then
             return false
         endif
         return true
@@ -309,7 +309,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func008C takes nothing returns boolean
-        if(not(udg_boolean06==false))then
+        if(not(ARLearningAbil==false))then
             return false
         endif
         return true
@@ -365,7 +365,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func003Func001C takes nothing returns boolean
-        if(not(udg_boolean06==false))then
+        if(not(ARLearningAbil==false))then
             return false
         endif
         return true
@@ -373,7 +373,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func001C takes nothing returns boolean
-        if(not(udg_boolean05==true))then
+        if(not(ArNotLearningAbil==true))then
             return false
         endif
         return true
@@ -389,7 +389,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func001Func002Func001C takes nothing returns boolean
-        if(not(udg_boolean06==false))then
+        if(not(ARLearningAbil==false))then
             return false
         endif
         return true
@@ -405,7 +405,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func001Func002Func002Func001C takes nothing returns boolean
-        if(not(udg_boolean06==false))then
+        if(not(ARLearningAbil==false))then
             return false
         endif
         return true
@@ -427,7 +427,7 @@ library trigger111 initializer init requires RandomShit, Functions
         endif
 
         if EconomicModeAbility(BoughtAbility) then
-            if udg_boolean06 then
+            if ARLearningAbil then
                 call ConditionalTriggerExecute(udg_trigger114)
                 return
             else
@@ -478,7 +478,7 @@ library trigger111 initializer init requires RandomShit, Functions
                     return
                 else
                     set HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]=(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]+ 1)
-                    set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]= BoughtAbility
+                    set PlayerLastLearnedSpell[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]= BoughtAbility
                     call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, BoughtAbility, maxAbil, true)
                 endif
             else

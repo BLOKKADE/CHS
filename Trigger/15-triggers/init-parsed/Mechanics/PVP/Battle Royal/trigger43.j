@@ -1,7 +1,7 @@
 library trigger43 initializer init requires RandomShit
 
     function Trig_Hero_Dies_Battle_Royal_Func007C takes nothing returns boolean
-        if(not(udg_boolean02==true))then
+        if(not(BrStarted==true))then
             return false
         endif
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then

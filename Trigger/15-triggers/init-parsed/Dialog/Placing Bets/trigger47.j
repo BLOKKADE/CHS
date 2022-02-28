@@ -1,13 +1,13 @@
 library trigger47 initializer init requires RandomShit
 
     function Trig_Skip_Bet_Func004C takes nothing returns boolean
-        if((GetClickedButtonBJ()==udg_buttons02[3]))then
+        if((GetClickedButtonBJ()==DialogButtons[3]))then
             return true
         endif
-        if((GetClickedButtonBJ()==udg_buttons02[7]))then
+        if((GetClickedButtonBJ()==DialogButtons[7]))then
             return true
         endif
-        if((GetClickedButtonBJ()==udg_buttons02[11]))then
+        if((GetClickedButtonBJ()==DialogButtons[11]))then
             return true
         endif
         return false
@@ -29,7 +29,7 @@ library trigger47 initializer init requires RandomShit
         set bj_forLoopAIndexEnd = 3
         loop
             exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-            call DialogDisplayBJ(false,udg_dialogs01[GetForLoopIndexA()],GetTriggerPlayer())
+            call DialogDisplayBJ(false,Dialogs[GetForLoopIndexA()],GetTriggerPlayer())
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
     endfunction
@@ -37,7 +37,7 @@ library trigger47 initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set udg_trigger47 = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(udg_trigger47,udg_dialogs01[1])
+        call TriggerRegisterDialogEventBJ(udg_trigger47,Dialogs[1])
         call TriggerAddCondition(udg_trigger47,Condition(function Trig_Skip_Bet_Conditions))
         call TriggerAddAction(udg_trigger47,function Trig_Skip_Bet_Actions)
     endfunction

@@ -24,7 +24,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(not(RoundNumber==25))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true
@@ -38,7 +38,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(not(RoundNumber==50))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true
@@ -90,7 +90,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
 
 
     function Trig_Victory_Func006C takes nothing returns boolean
-        if(not(udg_boolean02==false))then
+        if(not(BrStarted==false))then
             return false
         endif
         return true

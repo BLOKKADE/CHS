@@ -22,7 +22,7 @@ library trigger107 initializer init requires RandomShit
         if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),DefeatedPlayers)!=true))then
             return false
         endif
-        if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),udg_force03)!=true))then
+        if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),RoundPlayersCompleted)!=true))then
             return false
         endif
         if(not(GetOwningPlayer(GetKillingUnitBJ())!=Player(11)))then
@@ -54,7 +54,7 @@ library trigger107 initializer init requires RandomShit
 
 
     function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
-        if(not(CountPlayersInForceBJ(udg_force03)< udg_integer56))then
+        if(not(CountPlayersInForceBJ(RoundPlayersCompleted)< udg_integer56))then
             return false
         endif
         //	if(not(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])!='N00K'))then
@@ -93,7 +93,7 @@ library trigger107 initializer init requires RandomShit
             call DoNothing()
         endif
         if(Trig_Complete_Level_Player_Func005C())then
-            set udg_integer48 =((PlayerCount -(1 + CountPlayersInForceBJ(udg_force03)))*(RoundNumber * 5))
+            set udg_integer48 =((PlayerCount -(1 + CountPlayersInForceBJ(RoundPlayersCompleted)))*(RoundNumber * 5))
             set udg_integer48 =(udg_integer48 * RoundNumber)
             if(Trig_Complete_Level_Player_Func005Func004001())then
                 set udg_integer48 =(udg_integer48 / 2)
@@ -103,7 +103,7 @@ library trigger107 initializer init requires RandomShit
         else
             set udg_integer48 = 0
         endif
-        call ForceAddPlayerSimple(p,udg_force03)
+        call ForceAddPlayerSimple(p,RoundPlayersCompleted)
         call SetCurrentlyFighting(p, false)
         set RoundFinishedCount =(RoundFinishedCount + 1)
         call SetUnitInvulnerable(PlayerHeroes[pid + 1],true)

@@ -123,7 +123,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         set udg_unit34 = CreateUnit(p,'ncop',512.0,256.0,270.000)
         //	set u=CreateUnit(p,'n00A',-960.0,-604.0,270.000)
         //	set u=CreateUnit(p,'n00M',960.0,-604.0,270.000)
-        if(udg_boolean05==false) and AbilityMode == 1 then
+        if(ArNotLearningAbil==false) and AbilityMode == 1 then
     
     
     
@@ -212,8 +212,8 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
 
 
     function Trig_Spawn_Hero_Actions takes nothing returns nothing
-        call ForceAddPlayerSimple(udg_player02,udg_force01)
-        set udg_booleans03[GetConvertedPlayerId(udg_player02)]= true
+        call ForceAddPlayerSimple(udg_player02,PlayersWithHero)
+        set PlayerHeroPicked[GetConvertedPlayerId(udg_player02)]= true
         set SpawnedHeroCount =(SpawnedHeroCount + 1)
     
         if(Trig_Spawn_Hero_Func005C())then

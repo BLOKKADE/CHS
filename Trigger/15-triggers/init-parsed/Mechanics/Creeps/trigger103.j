@@ -289,9 +289,9 @@ library trigger103 initializer init requires RandomShit, Functions
         call ConditionalTriggerExecute(udg_trigger104)
         call ResetRoundAbilities()
         if RoundNumber < 15 then
-            set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,udg_integer22 - 2)]
+            set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,MaxCreepUnitTypes - 2)]
         else
-            set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,udg_integer22)]
+            set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,MaxCreepUnitTypes)]
         endif
         set RoundCreepMoveSpeed = GetRandomInt(GetRandomInt(150, 150 + RoundNumber * 2),400)
         set RoundCreepMaxAttackSpeed = GetRandomInt(1,RoundNumber)
@@ -392,11 +392,11 @@ library trigger103 initializer init requires RandomShit, Functions
         set RoundNumber =(RoundNumber + 1)
         call ForGroupBJ(udg_group05,function Trig_Generate_Next_Level_Func018A)
         call GroupClear(udg_group05)
-        set udg_integer28 = 1
+        set RoundGenCreepIndex = 1
         loop
-            exitwhen udg_integer28 > RoundCreepNumber
+            exitwhen RoundGenCreepIndex > RoundCreepNumber
             set udg_integer40 = 1
-            if udg_integer28 > 4 then
+            if RoundGenCreepIndex > 4 then
                 set RoundCreepChanceBigBadV = 2
             endif
             loop
@@ -556,7 +556,7 @@ library trigger103 initializer init requires RandomShit, Functions
                 endif
                 set udg_integer40 = udg_integer40 + 1
             endloop
-            set udg_integer28 = udg_integer28 + 1
+            set RoundGenCreepIndex = RoundGenCreepIndex + 1
         endloop
     endfunction
 

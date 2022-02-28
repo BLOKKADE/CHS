@@ -17,7 +17,7 @@ library trigger106 initializer init requires RandomShit, Functions
 
 
     function Trig_Complete_Level_Move_Func005Func001C takes nothing returns boolean
-        if((udg_boolean04==true))then
+        if((ElimModeEnabled==true))then
             return true
         endif
         if((udg_boolean08==true))then

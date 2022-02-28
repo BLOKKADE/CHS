@@ -1,7 +1,7 @@
 library trigger153 initializer init requires RandomShit, DebugCommands
 
     function Trig_Hero_Dies_Elimination_Func039C takes nothing returns boolean
-        if(not(udg_boolean03==true))then
+        if(not(ElimPvpStarted==true))then
             return false
         endif
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
@@ -242,18 +242,18 @@ library trigger153 initializer init requires RandomShit, DebugCommands
         else
             call CustomDefeatBJ(GetOwningPlayer(GetTriggerUnit()),"Defeat!")
         endif
-        set udg_integer30 = 1
+        set ElimDmHeroDeathFxIndex = 1
         loop
-            exitwhen udg_integer30 > 5
+            exitwhen ElimDmHeroDeathFxIndex > 5
             call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Human\\HumanLargeDeathExplode\\HumanLargeDeathExplode.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
             call AddSpecialEffectTargetUnitBJ("chest",GetTriggerUnit(),"Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
             call TriggerSleepAction(0.10)
-            set udg_integer30 = udg_integer30 + 1
+            set ElimDmHeroDeathFxIndex = ElimDmHeroDeathFxIndex + 1
         endloop
         call TriggerSleepAction(3.00)
-        set udg_boolean03 = false
+        set ElimPvpStarted = false
         set udg_integer47 = 1
         loop
             exitwhen udg_integer47 > 8

@@ -7,7 +7,7 @@ library OldInitialization initializer main3
         integer IncomeMode = 0
         integer AbilityMode = 0
         integer array LumberGained
-        dialog IncomeDialog
+        dialog IncomeModeDialog
         Table roundAbilities
         string RoundCreepTitle
         string array RoundCreepInfo
@@ -48,56 +48,52 @@ library OldInitialization initializer main3
         group DuelingHeroGroup= null
         group DuelWinners= null
         integer udg_integer15= 0
-        integer udg_integer16= 0
+        integer BrPlayerCount= 0
         boolean array udg_booleans01
-        boolean udg_boolean02= false
-        integer array udg_integers05
+        boolean BrStarted= false
+        integer array PlayerLastLearnedSpell
         boolean array udg_booleans02
         integer RoundCreepChanceCleave= 0
         integer RoundCreepChanceLifesteal= 0
         item array udg_items01
-        boolean array udg_booleans03
-        force udg_force03= null
+        boolean array PlayerHeroPicked
+        force PlayersWithHero = null
+        force RoundPlayersCompleted= null
         location udg_location01= null
-        integer udg_integer19= 0
+        integer CountdownCount= 0
         integer RoundCreepChanceThorns= 0
-        real udg_real02= 0
         unit udg_unit01= null
-        integer array udg_integers06
-        dialog udg_dialog01= null
+        integer array Playtime
+        dialog GameDurDialog= null
         button array udg_buttons01
-        integer array udg_integers07
+        integer array ModeVotesCount
         integer RoundCreepChanceShockwave= 0
-        integer udg_integer22= 0
+        integer MaxCreepUnitTypes= 0
         integer RoundCreepChanceManaBurn= 0
         integer RoundCreepChanceHurlBoulder= 0
         integer RoundCreepChanceRejuv= 0
-        integer array udg_integers08
-        integer array udg_integers09
-        integer udg_integer26= 0
-        integer udg_integer27= 0
-        integer udg_integer28= 0
-        group udg_group04= null
-        integer udg_integer29= 0
-        integer udg_integer30= 0
-        boolean udg_boolean03= false
-        boolean udg_boolean04= false
-        dialog udg_dialog02= null
-        integer udg_integer31= 0
-        boolean udg_boolean05= false
-        dialog udg_dialog03= null
+        integer AntiStuckPlayerId= 0
+        integer RoundGenCreepIndex= 0
+        integer ElimPlayerCount= 0
+        integer ElimDmHeroDeathFxIndex= 0
+        boolean ElimPvpStarted= false
+        boolean ElimModeEnabled= false
+        dialog GameModeDialog= null
+        integer UnknownInteger01= 0
+        boolean ArNotLearningAbil= false
+        dialog AbilModeDialog= null
         player udg_player02= null
-        integer udg_integer32= 0
-        integer udg_integer33= 0
+        integer PvpEndIndex= 0
+        integer PvpStartIndex= 0
         integer udg_integer34= 0
-        boolean udg_boolean06= false
+        boolean ARLearningAbil= false
         location array udg_locations01
-        integer udg_integer35= 0
-        integer array udg_integers10
-        integer udg_integer36= 0
-        integer udg_integer37= 0
-        dialog array udg_dialogs01
-        button array udg_buttons02
+        integer HideShopsCount= 0
+        integer array ShopIds
+        integer HideShopsIndex= 0
+        integer UnknownInteger02= 0
+        dialog array Dialogs
+        button array DialogButtons
         force udg_force04= null
         force udg_force05= null
         boolean array udg_booleans04
@@ -151,14 +147,14 @@ library OldInitialization initializer main3
         integer udg_integer59= 0
         integer udg_integer60= 0
         integer udg_integer61= 0
-        dialog udg_dialog05= null
+        dialog BettingModeDialog= null
         boolean udg_boolean13= false
         boolean udg_boolean14= false
         dialog udg_dialog06= null
         button array udg_buttons04
         boolean udg_boolean15= false
         player udg_player03= null
-        dialog udg_dialog07= null
+        dialog HeroModeDialog= null
         boolean udg_boolean16= false
         integer array udg_integers15
         integer array udg_integers16
@@ -319,7 +315,6 @@ library OldInitialization initializer main3
         trigger udg_trigger109= null
         trigger udg_trigger110= null
         trigger udg_trigger111= null
-        trigger udg_trigger112= null
         trigger udg_trigger113= null
         trigger udg_trigger114= null
         trigger udg_trigger115= null
@@ -458,7 +453,7 @@ library OldInitialization initializer main3
         set RoundCreepChanceCritStrike = 0
         set RoundCreepChanceEvasion = 0
         set InitialPlayerCount = 0
-        set udg_force01 = CreateForce()
+        set PlayersWithHero = CreateForce()
         
         set DefeatedPlayers = CreateForce()
         set PotentialDuelHeroes = CreateGroup()
@@ -478,24 +473,24 @@ library OldInitialization initializer main3
         set DuelingHeroGroup = CreateGroup()
         set DuelWinners = CreateGroup()
         set udg_integer15 = 0
-        set udg_integer16 = 0
+        set BrPlayerCount = 0
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans01[i]= false
+            
             set i = i + 1
         endloop
-        set udg_boolean02 = false
+        set BrStarted = false
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers05[i]= 0
+            set PlayerLastLearnedSpell[i]= 0
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans02[i]= false
+            
             set i = i + 1
         endloop
         set RoundCreepChanceCleave = 0
@@ -503,73 +498,60 @@ library OldInitialization initializer main3
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans03[i]= false
+            set PlayerHeroPicked[i]= false
             set i = i + 1
         endloop
-        set udg_force03 = CreateForce()
-        set udg_integer19 = 0
+        set RoundPlayersCompleted = CreateForce()
+        set CountdownCount = 0
         set RoundCreepChanceThorns = 0
-        set udg_real02 = 0
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers06[i]= 0
+            set Playtime[i]= 0
             set i = i + 1
         endloop
-        set udg_dialog01 = DialogCreate()
-        set IncomeDialog = DialogCreate()
+        set GameDurDialog = DialogCreate()
+        set IncomeModeDialog = DialogCreate()
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers07[i]= 0
+            set ModeVotesCount[i]= 0
             set i = i + 1
         endloop
         set RoundCreepChanceShockwave = 0
-        set udg_integer22 = 0
+        set MaxCreepUnitTypes = 0
         set RoundCreepChanceManaBurn = 0
         set RoundCreepChanceHurlBoulder = 0
         set RoundCreepChanceRejuv = 0
+
+        set AntiStuckPlayerId = 0
+        set RoundGenCreepIndex = 0
+        
+        set ElimPlayerCount = 0
+        set ElimDmHeroDeathFxIndex = 0
+        set ElimPvpStarted = false
+        set ElimModeEnabled = false
+        set GameModeDialog = DialogCreate()
+        set UnknownInteger01 = 0
+        set ArNotLearningAbil = false
+        set AbilModeDialog = DialogCreate()
+        set PvpEndIndex = 0
+        set PvpStartIndex = 0
+        
+        set ARLearningAbil = false
+        set HideShopsCount = 0
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers08[i]= 0
+            set ShopIds[i]= 0
             set i = i + 1
         endloop
+        set HideShopsIndex = 0
+        set UnknownInteger02 = 0
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers09[i]= 0
-            set i = i + 1
-        endloop
-        set udg_integer26 = 0
-        set udg_integer27 = 0
-        set udg_integer28 = 0
-        set udg_group04 = CreateGroup()
-        set udg_integer29 = 0
-        set udg_integer30 = 0
-        set udg_boolean03 = false
-        set udg_boolean04 = false
-        set udg_dialog02 = DialogCreate()
-        set udg_integer31 = 0
-        set udg_boolean05 = false
-        set udg_dialog03 = DialogCreate()
-        set udg_integer32 = 0
-        set udg_integer33 = 0
-        set udg_integer34 = 0
-        set udg_boolean06 = false
-        set udg_integer35 = 0
-        set i = 0
-        loop
-            exitwhen(i > 1)
-            set udg_integers10[i]= 0
-            set i = i + 1
-        endloop
-        set udg_integer36 = 0
-        set udg_integer37 = 0
-        set i = 0
-        loop
-            exitwhen(i > 1)
-            set udg_dialogs01[i]= DialogCreate()
+            set Dialogs[i]= DialogCreate()
             set i = i + 1
         endloop
         set udg_force04 = CreateForce()
@@ -655,12 +637,12 @@ library OldInitialization initializer main3
         set udg_integer59 = 0
         set udg_integer60 = 0
         set udg_integer61 = 0
-        set udg_dialog05 = DialogCreate()
+        set BettingModeDialog = DialogCreate()
         set udg_boolean13 = false
         set udg_boolean14 = false
         set udg_dialog06 = DialogCreate()
         set udg_boolean15 = false
-        set udg_dialog07 = DialogCreate()
+        set HeroModeDialog = DialogCreate()
         set udg_boolean16 = false
         set i = 0
         loop
@@ -707,80 +689,68 @@ library OldInitialization initializer main3
         set RoundCreepChanceCritStrike = 0
         set RoundCreepChanceEvasion = 0
         set InitialPlayerCount = 0
-        set udg_force01 = CreateForce()
+        set PlayersWithHero = CreateForce()
         
         set DefeatedPlayers = CreateForce()
         set PotentialDuelHeroes = CreateGroup()
         set RoundCreepAbilCastChance = 0
         set DuelingHeroGroup = CreateGroup()
         set DuelWinners = CreateGroup()
-        set udg_integer16 = 0
-        set i = 0
-        loop
-            exitwhen(i > 1)
-            set udg_booleans01[i]= false
-            set i = i + 1
-        endloop
-        set udg_boolean02 = false
-        set i = 0
-        loop
-            exitwhen(i > 1)
-            set udg_booleans02[i]= false
-            set i = i + 1
-        endloop
+        set BrPlayerCount = 0
+
+        set BrStarted = false
         set RoundCreepChanceCleave = 0
         set RoundCreepChanceLifesteal = 0
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans03[i]= false
+            set PlayerHeroPicked[i]= false
             set i = i + 1
         endloop
-        set udg_force03 = CreateForce()
-        set udg_integer19 = 0
+        set RoundPlayersCompleted = CreateForce()
+        set CountdownCount = 0
         set RoundCreepChanceThorns = 0
-        set udg_real02 = 0
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers06[i]= 0
+            set Playtime[i]= 0
             set i = i + 1
         endloop
-        set udg_dialog01 = DialogCreate()
+        set GameDurDialog = DialogCreate()
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers07[i]= 0
+            set ModeVotesCount[i]= 0
             set i = i + 1
         endloop
         set RoundCreepChanceShockwave = 0
-        set udg_integer22 = 0
+        set MaxCreepUnitTypes = 0
         set RoundCreepChanceManaBurn = 0
         set RoundCreepChanceHurlBoulder = 0
         set RoundCreepChanceRejuv = 0
-        set udg_integer26 = 0
-        set udg_integer27 = 0
-        set udg_integer28 = 0
-        set udg_group04 = CreateGroup()
-        set udg_integer29 = 0
-        set udg_integer30 = 0
-        set udg_boolean03 = false
-        set udg_boolean04 = false
-        set udg_dialog02 = DialogCreate()
-        set udg_integer31 = 0
-        set udg_boolean05 = false
-        set udg_dialog03 = DialogCreate()
-        set udg_integer32 = 0
-        set udg_integer33 = 0
-        set udg_integer34 = 0
-        set udg_boolean06 = false
-        set udg_integer35 = 0
-        set udg_integer36 = 0
-        set udg_integer37 = 0
+        
+        set AntiStuckPlayerId = 0
+        set RoundGenCreepIndex = 0
+        
+        set ElimPlayerCount = 0
+        set ElimDmHeroDeathFxIndex = 0
+        set ElimPvpStarted = false
+        set ElimModeEnabled = false
+        set GameModeDialog = DialogCreate()
+        set UnknownInteger01 = 0
+        set ArNotLearningAbil = false
+        set AbilModeDialog = DialogCreate()
+        set PvpEndIndex = 0
+        set PvpStartIndex = 0
+        
+        set ARLearningAbil = false
+        set HideShopsCount = 0
+        set HideShopsIndex = 0
+        set UnknownInteger02 = 0
         set i = 0
         loop
             exitwhen(i > 4)
-            set udg_dialogs01[i]= DialogCreate()
+            set Dialogs[i]= DialogCreate()
             set i = i + 1
         endloop
         set udg_force04 = CreateForce()
@@ -860,12 +830,12 @@ library OldInitialization initializer main3
         set udg_integer59 = 0
         set udg_integer60 = 0
         set udg_integer61 = 0
-        set udg_dialog05 = DialogCreate()
+        set BettingModeDialog = DialogCreate()
         set udg_boolean13 = false
         set udg_boolean14 = false
         set udg_dialog06 = DialogCreate()
         set udg_boolean15 = false
-        set udg_dialog07 = DialogCreate()
+        set HeroModeDialog = DialogCreate()
         set udg_boolean16 = false
         set i = 0
         loop

@@ -260,7 +260,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
     function Trig_PvP_Battle_Func001Func031Func006A takes nothing returns nothing
         if(Trig_PvP_Battle_Func001Func031Func006Func001C())then
-            call DialogDisplayBJ(true,udg_dialogs01[1],GetEnumPlayer())
+            call DialogDisplayBJ(true,Dialogs[1],GetEnumPlayer())
         else
         endif
     endfunction
@@ -271,7 +271,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
         set bj_forLoopAIndexEnd = 3
         loop
             exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-            call DialogDisplayBJ(false,udg_dialogs01[GetForLoopIndexA()],GetEnumPlayer())
+            call DialogDisplayBJ(false,Dialogs[GetForLoopIndexA()],GetEnumPlayer())
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
     endfunction
@@ -326,43 +326,43 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
             endloop
             call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
             call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
-            set udg_integer33 = 1
+            set PvpStartIndex = 1
             loop
-                exitwhen udg_integer33 > 6
-                set DuelHeroItemIds1[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33))
-                set ItemStacksP1[udg_integer33] = GetItemCharges(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33))
-                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33), false)
-                set DuelHeroItemIds2[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33))
-                set ItemStacksP2[udg_integer33] = GetItemCharges(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33))
-                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33), false)
-                set udg_integer33 = udg_integer33 + 1
+                exitwhen PvpStartIndex > 6
+                set DuelHeroItemIds1[PvpStartIndex]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[1],PvpStartIndex))
+                set ItemStacksP1[PvpStartIndex] = GetItemCharges(UnitItemInSlotBJ(DuelingHeroes[1],PvpStartIndex))
+                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],PvpStartIndex), false)
+                set DuelHeroItemIds2[PvpStartIndex]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[2],PvpStartIndex))
+                set ItemStacksP2[PvpStartIndex] = GetItemCharges(UnitItemInSlotBJ(DuelingHeroes[2],PvpStartIndex))
+                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],PvpStartIndex), false)
+                set PvpStartIndex = PvpStartIndex + 1
             endloop
             call TriggerSleepAction(0.20)
             set udg_boolean18 = true
             if(Trig_PvP_Battle_Func001Func031C())then
-                call DialogClearBJ(udg_dialogs01[1])
-                call DialogSetMessageBJ(udg_dialogs01[1],"Betting Menu")
+                call DialogClearBJ(Dialogs[1])
+                call DialogSetMessageBJ(Dialogs[1],"Betting Menu")
                 set bj_forLoopAIndex = 1
                 set bj_forLoopAIndexEnd = 2
                 loop
                     exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
                     if(Trig_PvP_Battle_Func001Func031Func003Func001C())then
-                        call DialogAddButtonBJ(udg_dialogs01[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r   ")))
+                        call DialogAddButtonBJ(Dialogs[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r   ")))
                     else
-                        call DialogAddButtonBJ(udg_dialogs01[1],("   " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r >>")))
+                        call DialogAddButtonBJ(Dialogs[1],("   " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r >>")))
                     endif
-                    set udg_buttons02[GetForLoopIndexA()]= GetLastCreatedButtonBJ()
+                    set DialogButtons[GetForLoopIndexA()]= GetLastCreatedButtonBJ()
                     set bj_forLoopAIndex = bj_forLoopAIndex + 1
                 endloop
-                call DialogAddButtonBJ(udg_dialogs01[1],"Skip")
-                set udg_buttons02[3]= GetLastCreatedButtonBJ()
+                call DialogAddButtonBJ(Dialogs[1],"Skip")
+                set DialogButtons[3]= GetLastCreatedButtonBJ()
                 call ForForce(GetPlayersMatching(Condition(function Trig_PvP_Battle_Func001Func031Func006001001)),function Trig_PvP_Battle_Func001Func031Func006A)
             endif
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Prepare ...")
             call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
             call TriggerSleepAction(4.50)
-            set udg_integer19 = 5
+            set CountdownCount = 5
             call ConditionalTriggerExecute(udg_trigger117)
             call TriggerSleepAction(5.50)
             set udg_boolean18 = false

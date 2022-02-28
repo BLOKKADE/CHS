@@ -52,7 +52,7 @@ library trigger110 initializer init requires RandomShit
 
 
     function Trig_Sudden_Death_Timer_Func002Func002Func002Func001001001 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),udg_force03)!=true)
+        return(IsPlayerInForce(GetFilterPlayer(),RoundPlayersCompleted)!=true)
     endfunction
 
 

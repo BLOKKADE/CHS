@@ -1,7 +1,7 @@
 library trigger117 initializer init requires RandomShit
 
     function Trig_Countdown_Func001Func001C takes nothing returns boolean
-        if(not(udg_integer19 > 0))then
+        if(not(CountdownCount > 0))then
             return false
         endif
         if(not(RoundNumber==1))then
@@ -15,7 +15,7 @@ library trigger117 initializer init requires RandomShit
 
 
     function Trig_Countdown_Func001Func002C takes nothing returns boolean
-        if(not(udg_integer19 > 0))then
+        if(not(CountdownCount > 0))then
             return false
         endif
         if(not(udg_boolean09==false))then
@@ -45,12 +45,12 @@ library trigger117 initializer init requires RandomShit
 
 
     function Trig_Countdown_Actions takes nothing returns nothing
-        call CreateTextTagLocBJ((I2S(udg_integer19)+ " ..."),udg_location01,0.00,40.00,100,I2R((udg_integer19 * 20)),I2R((udg_integer19 * 20)),0)
+        call CreateTextTagLocBJ((I2S(CountdownCount)+ " ..."),udg_location01,0.00,40.00,100,I2R((CountdownCount * 20)),I2R((CountdownCount * 20)),0)
         call SetTextTagPermanentBJ(GetLastCreatedTextTag(),false)
         call SetTextTagFadepointBJ(GetLastCreatedTextTag(),0.80)
         call SetTextTagLifespanBJ(GetLastCreatedTextTag(),1.00)
         call PlaySoundBJ(udg_sound09)
-        set udg_integer19 =(udg_integer19 - 1)
+        set CountdownCount =(CountdownCount - 1)
         call TriggerSleepAction(1.00)
         call ConditionalTriggerExecute(GetTriggeringTrigger())
     endfunction

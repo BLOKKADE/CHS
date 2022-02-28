@@ -1,4 +1,4 @@
-library trigger112 initializer init requires RandomShit
+/*library trigger112 initializer init requires RandomShit
 
     function Trig_Set_Ability_Func001Func001001 takes nothing returns boolean
         return(GetItemTypeId(GetManipulatedItem())==udg_integers09[udg_integer44])
@@ -39,3 +39,4 @@ library trigger112 initializer init requires RandomShit
 
 
 endlibrary
+*/

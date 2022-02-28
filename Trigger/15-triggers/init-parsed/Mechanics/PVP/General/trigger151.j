@@ -62,7 +62,7 @@ library trigger151 initializer init requires RandomShit, DebugCommands
         call SetCurrentlyFighting(GetOwningPlayer(GetTriggerUnit()), false)
         set PlayerCount =(PlayerCount - 1)
         call AllowSinglePlayerCommands()
-        set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= true
+        
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
         call DisableTrigger(udg_trigger16)
         call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_Death_Match_PvP_Func008A)
@@ -73,15 +73,15 @@ library trigger151 initializer init requires RandomShit, DebugCommands
         else
             call CustomDefeatBJ(GetOwningPlayer(GetTriggerUnit()),"Defeat!")
         endif
-        set udg_integer30 = 1
+        set ElimDmHeroDeathFxIndex = 1
         loop
-            exitwhen udg_integer30 > 5
+            exitwhen ElimDmHeroDeathFxIndex > 5
             call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Human\\HumanLargeDeathExplode\\HumanLargeDeathExplode.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
             call AddSpecialEffectTargetUnitBJ("chest",GetTriggerUnit(),"Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
             call TriggerSleepAction(0.10)
-            set udg_integer30 = udg_integer30 + 1
+            set ElimDmHeroDeathFxIndex = ElimDmHeroDeathFxIndex + 1
         endloop
         call TriggerSleepAction(0.50)
         call StopSoundBJ(udg_sound13,true)

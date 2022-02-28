@@ -10,7 +10,7 @@ library trigger113 initializer init requires RandomShit
 
     function Trig_Random_Ability_Actions takes nothing returns nothing
         if AbilityMode != 2 then
-            set udg_integer37 = 0
+            set UnknownInteger02 = 0
             set udg_unit01 = GetTriggerUnit()
             call ConditionalTriggerExecute(udg_trigger114)
         else

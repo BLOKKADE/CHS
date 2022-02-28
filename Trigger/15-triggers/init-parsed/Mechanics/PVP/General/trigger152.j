@@ -64,7 +64,7 @@ library trigger152 initializer init requires RandomShit, StartFunction
 
 
     function Trig_Elimination_Func020A takes nothing returns nothing
-        set udg_integer29 =(udg_integer29 + 1)
+        set ElimPlayerCount =(ElimPlayerCount + 1)
         set udg_unit01 = GetEnumUnit()
         call ConditionalTriggerExecute(udg_trigger82)
         call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),750.00,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
@@ -115,7 +115,7 @@ library trigger152 initializer init requires RandomShit, StartFunction
 
 
     function Trig_Elimination_Func037C takes nothing returns boolean
-        if(not(udg_integer29==1))then
+        if(not(ElimPlayerCount==1))then
             return false
         endif
         return true
@@ -133,7 +133,7 @@ library trigger152 initializer init requires RandomShit, StartFunction
         call TriggerSleepAction(2.00)
         call PlaySoundBJ(udg_sound16)
         call TriggerSleepAction(12.50)
-        set udg_boolean03 = true
+        set ElimPvpStarted = true
         call DisplayTextToForce(GetPlayersAll(),"|cffffcc00Elimination - Survive to advance to the next level!")
         call PauseAllUnitsBJ(true)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
@@ -145,7 +145,7 @@ library trigger152 initializer init requires RandomShit, StartFunction
             call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Elimination_Func018Func001001002)),function Trig_Elimination_Func018Func001A)
             set udg_integer46 = udg_integer46 + 1
         endloop
-        set udg_integer29 = 0
+        set ElimPlayerCount = 0
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Elimination_Func020001002)),function Trig_Elimination_Func020A)
         call EnumItemsInRectBJ(GetPlayableMapRect(),function Trig_Elimination_Func021A)
         call DisableTrigger(udg_trigger142)
@@ -156,7 +156,7 @@ library trigger152 initializer init requires RandomShit, StartFunction
         call EnableTrigger(udg_trigger153)
         call TriggerSleepAction(2)
         set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
-        set udg_integer19 = 5
+        set CountdownCount = 5
         call ConditionalTriggerExecute(udg_trigger117)
         call TriggerSleepAction(5.00)
         call ResumeMusicBJ()

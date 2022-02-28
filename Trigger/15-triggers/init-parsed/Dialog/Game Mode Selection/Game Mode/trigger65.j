@@ -9,14 +9,14 @@ library trigger65 initializer init requires RandomShit
 
 
     function Trig_Immortal_Mode_Actions takes nothing returns nothing
-        set udg_integers07[8]=(udg_integers07[8]+ 1)
-        call DialogDisplayBJ(true,udg_dialog03,GetTriggerPlayer())
+        set ModeVotesCount[8]=(ModeVotesCount[8]+ 1)
+        call DialogDisplayBJ(true,AbilModeDialog,GetTriggerPlayer())
     endfunction
 
 
     private function init takes nothing returns nothing
         set udg_trigger65 = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(udg_trigger65,udg_dialog02)
+        call TriggerRegisterDialogEventBJ(udg_trigger65,GameModeDialog)
         call TriggerAddCondition(udg_trigger65,Condition(function Trig_Immortal_Mode_Conditions))
         call TriggerAddAction(udg_trigger65,function Trig_Immortal_Mode_Actions)
     endfunction

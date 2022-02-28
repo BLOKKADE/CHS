@@ -9,10 +9,10 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
 
 
     function Trig_Unlearn_Ability_Func001C takes nothing returns boolean
-        if(not(udg_boolean05==false))then
+        if(not(ArNotLearningAbil==false))then
             return false
         endif
-        if(not(udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]!='Amnz'))then
+        if(not(PlayerLastLearnedSpell[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]!='Amnz'))then
             return false
         endif
         return true
@@ -20,7 +20,7 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
 
 
     function Trig_Unlearn_Ability_Func001Func003C takes nothing returns boolean
-        if(not(udg_boolean05==false))then
+        if(not(ArNotLearningAbil==false))then
             return false
         endif
         return true
@@ -40,19 +40,19 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
             if CountS > 0 then
     
                 set HeroAbilityCount[Pid]=(HeroAbilityCount[Pid]- 1)
-                set udg_integers05[Pid] = GetLastLearnedSpell(u, SpellList_Normal, true)
+                set PlayerLastLearnedSpell[Pid] = GetLastLearnedSpell(u, SpellList_Normal, true)
                 call SetInfoHeroSpell(u,CountS,0 )
                 call SaveCountHeroSpell(u ,CountS - 1,0 ) 
     
-                call DisplayTimedTextToPlayer(p, 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(udg_integers05[Pid], GetUnitAbilityLevel(u, udg_integers05[Pid]) - 1))
+                call DisplayTimedTextToPlayer(p, 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[Pid], GetUnitAbilityLevel(u, PlayerLastLearnedSpell[Pid]) - 1))
                 call AddSpecialEffectTargetUnitBJ("origin",u,"Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl")
                 call DestroyEffectBJ(GetLastCreatedEffectBJ())
-                call UnitRemoveAbilityBJ(udg_integers05[Pid],u)
-                call FunResetAbility (udg_integers05[Pid],u)
-                call RemoveDummyspell(u, udg_integers05[Pid])
+                call UnitRemoveAbilityBJ(PlayerLastLearnedSpell[Pid],u)
+                call FunResetAbility (PlayerLastLearnedSpell[Pid],u)
+                call RemoveDummyspell(u, PlayerLastLearnedSpell[Pid])
 
                 if AbilityMode == 1 then
-                    call RemoveItemFromUpgradeShop(Pid - 1, GetItemFromAbility(udg_integers05[Pid]))
+                    call RemoveItemFromUpgradeShop(Pid - 1, GetItemFromAbility(PlayerLastLearnedSpell[Pid]))
                     call RefreshUpgradeShop(Pid - 1, u)
                 endif
             endif

@@ -1,13 +1,13 @@
 library trigger51 initializer init requires RandomShit
 
     function Trig_Place_Bet_Func001C takes nothing returns boolean
-        if((GetClickedButtonBJ()==udg_buttons02[8]))then
+        if((GetClickedButtonBJ()==DialogButtons[8]))then
             return true
         endif
-        if((GetClickedButtonBJ()==udg_buttons02[9]))then
+        if((GetClickedButtonBJ()==DialogButtons[9]))then
             return true
         endif
-        if((GetClickedButtonBJ()==udg_buttons02[10]))then
+        if((GetClickedButtonBJ()==DialogButtons[10]))then
             return true
         endif
         return false
@@ -23,7 +23,7 @@ library trigger51 initializer init requires RandomShit
 
 
     function Trig_Place_Bet_Func002C takes nothing returns boolean
-        if(not(GetClickedButtonBJ()==udg_buttons02[8]))then
+        if(not(GetClickedButtonBJ()==DialogButtons[8]))then
             return false
         endif
         return true
@@ -31,7 +31,7 @@ library trigger51 initializer init requires RandomShit
 
 
     function Trig_Place_Bet_Func002Func001C takes nothing returns boolean
-        if(not(GetClickedButtonBJ()==udg_buttons02[9]))then
+        if(not(GetClickedButtonBJ()==DialogButtons[9]))then
             return false
         endif
         return true
@@ -110,7 +110,7 @@ library trigger51 initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set udg_trigger51 = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(udg_trigger51,udg_dialogs01[3])
+        call TriggerRegisterDialogEventBJ(udg_trigger51,Dialogs[3])
         call TriggerAddCondition(udg_trigger51,Condition(function Trig_Place_Bet_Conditions))
         call TriggerAddAction(udg_trigger51,function Trig_Place_Bet_Actions)
     endfunction

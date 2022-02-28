@@ -3,7 +3,7 @@ library AllowCastCheck
         if(not(IsUnitInGroup(u,DuelingHeroGroup)!=true))then
             return false
         endif
-        if(not(IsPlayerInForce(GetOwningPlayer(u),udg_force03)==true))then
+        if(not(IsPlayerInForce(GetOwningPlayer(u),RoundPlayersCompleted)==true))then
             return false
         endif
         return true
@@ -23,10 +23,10 @@ library AllowCastCheck
     endfunction
     
     function CheckIfCastAllowed takes unit u returns boolean
-        if(not(udg_boolean02==false))then
+        if(not(BrStarted==false))then
             return false
         endif
-        if(not(udg_boolean03==false))then
+        if(not(ElimPvpStarted==false))then
             return false
         endif
         if(not CheckUnit(u))then

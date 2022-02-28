@@ -27,7 +27,7 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func006Func008C takes nothing returns boolean
-        if(not(udg_integers07[1]>= udg_integers07[2]))then
+        if(not(ModeVotesCount[1]>= ModeVotesCount[2]))then
             return false
         endif
         return true
@@ -66,14 +66,14 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func006Func009A takes nothing returns nothing
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,udg_integer31)
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,udg_integer31)
+        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
+        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
         call ResourseRefresh(GetEnumPlayer()) 
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004C takes nothing returns boolean
-        if(not(udg_integers07[8]> udg_integers07[4]))then
+        if(not(ModeVotesCount[8]> ModeVotesCount[4]))then
             return false
         endif
         return true
@@ -81,7 +81,7 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func006Func004Func005C takes nothing returns boolean
-        if(not(udg_integers07[1]>= udg_integers07[2]))then
+        if(not(ModeVotesCount[1]>= ModeVotesCount[2]))then
             return false
         endif
         return true
@@ -200,14 +200,14 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func006Func004Func006A takes nothing returns nothing
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,udg_integer31)
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,udg_integer31)
+        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
+        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
         call ResourseRefresh(GetEnumPlayer()) 
     endfunction
 
 
     function Trig_Dialog_Complete_Func008Func001C takes nothing returns boolean
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         if(not(udg_boolean07==false))then
@@ -226,7 +226,7 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func008Func002C takes nothing returns boolean
-        if(not(udg_integers07[1]>= udg_integers07[2]))then
+        if(not(ModeVotesCount[1]>= ModeVotesCount[2]))then
             return false
         endif
         return true
@@ -308,11 +308,11 @@ library trigger77 initializer init requires RandomShit
 
 
     function CheckIncomeVotes takes nothing returns nothing
-        if udg_integers07[15] > udg_integers07[16] and udg_integers07[15] > udg_integers07[17] and udg_integers07[15] > udg_integers07[20] then
+        if ModeVotesCount[15] > ModeVotesCount[16] and ModeVotesCount[15] > ModeVotesCount[17] and ModeVotesCount[15] > ModeVotesCount[20] then
             set IncomeMode = 0
-        elseif udg_integers07[16] > udg_integers07[15] and udg_integers07[16] > udg_integers07[17] and udg_integers07[16] > udg_integers07[20] then
+        elseif ModeVotesCount[16] > ModeVotesCount[15] and ModeVotesCount[16] > ModeVotesCount[17] and ModeVotesCount[16] > ModeVotesCount[20] then
             set IncomeMode = 1
-        elseif udg_integers07[20] > udg_integers07[15] and udg_integers07[20] > udg_integers07[16] and udg_integers07[20] > udg_integers07[17] then
+        elseif ModeVotesCount[20] > ModeVotesCount[15] and ModeVotesCount[20] > ModeVotesCount[16] and ModeVotesCount[20] > ModeVotesCount[17] then
             set IncomeMode = 3
         else
             set IncomeMode = 2	
@@ -322,15 +322,15 @@ library trigger77 initializer init requires RandomShit
 
     function CheckAbilityVotes takes nothing returns nothing
         //random
-        if udg_integers07[7] > udg_integers07[6] and udg_integers07[7] > udg_integers07[19] then
+        if ModeVotesCount[7] > ModeVotesCount[6] and ModeVotesCount[7] > ModeVotesCount[19] then
             set AbilityMode = 0
     
             //pick
-        elseif udg_integers07[6] > udg_integers07[7] and udg_integers07[6] > udg_integers07[19] then
+        elseif ModeVotesCount[6] > ModeVotesCount[7] and ModeVotesCount[6] > ModeVotesCount[19] then
             set AbilityMode = 1
     
             //draft
-        elseif udg_integers07[19] > udg_integers07[6] and udg_integers07[19] > udg_integers07[7] then
+        elseif ModeVotesCount[19] > ModeVotesCount[6] and ModeVotesCount[19] > ModeVotesCount[7] then
             set AbilityMode = 2
     
             //if tie just do ap
@@ -346,7 +346,7 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func012C takes nothing returns boolean
-        if(not(udg_integers07[14]> udg_integers07[13]))then
+        if(not(ModeVotesCount[14]> ModeVotesCount[13]))then
             return false
         endif
         return true
@@ -354,10 +354,10 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func014Func001Func003C takes nothing returns boolean
-        if(not(udg_integers07[11]> udg_integers07[9]))then
+        if(not(ModeVotesCount[11]> ModeVotesCount[9]))then
             return false
         endif
-        if(not(udg_integers07[11]> udg_integers07[10]))then
+        if(not(ModeVotesCount[11]> ModeVotesCount[10]))then
             return false
         endif
         return true
@@ -365,7 +365,7 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func014Func001C takes nothing returns boolean
-        if((udg_boolean04==true))then
+        if((ElimModeEnabled==true))then
             return true
         endif
         if((InitialPlayerCount <= 2))then
@@ -387,10 +387,10 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func014Func007Func011C takes nothing returns boolean
-        if(not(udg_integers07[10]> udg_integers07[9]))then
+        if(not(ModeVotesCount[10]> ModeVotesCount[9]))then
             return false
         endif
-        if(not(udg_integers07[10]> udg_integers07[11]))then
+        if(not(ModeVotesCount[10]> ModeVotesCount[11]))then
             return false
         endif
         return true
@@ -435,7 +435,7 @@ library trigger77 initializer init requires RandomShit
     endfunction
     
     function Trig_Dialog_Complete_Func025001001002002 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),udg_force01)!=true)
+        return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
     endfunction
     
     function Trig_Dialog_Complete_Func025001001002 takes nothing returns boolean
@@ -457,7 +457,7 @@ library trigger77 initializer init requires RandomShit
         call DisableTrigger(GetTriggeringTrigger())
         set udg_strings02[0]= ""
         call ClearTextMessagesBJ(GetPlayersAll())
-        set udg_boolean04 = false
+        set ElimModeEnabled = false
         set udg_boolean07 = false
         
         if(Trig_Dialog_Complete_Func008C())then
@@ -543,18 +543,18 @@ library trigger77 initializer init requires RandomShit
         endif
         call CheckAbilityVotes()
         if AbilityMode == 0 then
-            set udg_boolean05 = true
+            set ArNotLearningAbil = true
             set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
             set udg_strings02[1]= "Type: Random Abilities"
         elseif AbilityMode == 1 then
-            set udg_boolean05 = false
+            set ArNotLearningAbil = false
             set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
             set udg_strings02[1]= "Type: Pick Abilities"
             call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
     
             //Draft mode
         elseif AbilityMode == 2 then
-            set udg_boolean05 = false
+            set ArNotLearningAbil = false
             set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
             set udg_strings02[1]= "Type: Draft Abilities"
             call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)

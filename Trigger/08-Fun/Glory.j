@@ -14,7 +14,7 @@ library Glory initializer initLState
         local integer pid = GetPlayerId(Pl)
         local string S = "Glory:  " + I2S(R2I(Glory[pid]))
 
-        if (not udg_boolean02) and GetLocalPlayer() == Pl then
+        if (not BrStarted) and GetLocalPlayer() == Pl then
             call BlzFrameSetText(ResPlayer ,S)
         endif
     endfunction

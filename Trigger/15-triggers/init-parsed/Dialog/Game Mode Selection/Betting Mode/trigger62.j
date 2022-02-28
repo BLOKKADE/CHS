@@ -1,10 +1,10 @@
 library trigger62 initializer init requires RandomShit
 
     function Trig_Skip_Betting_Menu_Func001Func003Func002C takes nothing returns boolean
-        if(not(udg_integers07[5]> udg_integers07[4]))then
+        if(not(ModeVotesCount[5]> ModeVotesCount[4]))then
             return false
         endif
-        if(not(udg_integers07[5]> udg_integers07[8]))then
+        if(not(ModeVotesCount[5]> ModeVotesCount[8]))then
             return false
         endif
         if(not(udg_boolean15==false))then
@@ -38,7 +38,7 @@ library trigger62 initializer init requires RandomShit
             set udg_integer63 =(udg_integer63 + 1)
             call ConditionalTriggerExecute(udg_trigger77)
         else
-            call DialogDisplayBJ(true,udg_dialog05,GetTriggerPlayer())
+            call DialogDisplayBJ(true,BettingModeDialog,GetTriggerPlayer())
         endif
     endfunction
 

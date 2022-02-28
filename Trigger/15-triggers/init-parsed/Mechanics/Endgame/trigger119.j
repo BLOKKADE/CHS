@@ -15,7 +15,7 @@ library trigger119 initializer init requires RandomShit
         if((udg_boolean07==true))then
             return true
         endif
-        if((udg_boolean04==true))then
+        if((ElimModeEnabled==true))then
             return true
         endif
         return false
@@ -29,7 +29,7 @@ library trigger119 initializer init requires RandomShit
         if(not(RoundNumber==25))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true
@@ -43,7 +43,7 @@ library trigger119 initializer init requires RandomShit
         if(not(RoundNumber==50))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true

@@ -9,7 +9,7 @@ library trigger75 initializer init requires RandomShit
 
 
     function Trig_Disable_Betting_Menu_Actions takes nothing returns nothing
-        set udg_integers07[11]=(udg_integers07[11]+ 1)
+        set ModeVotesCount[11]=(ModeVotesCount[11]+ 1)
         set udg_integer63 =(udg_integer63 + 1)
         call ConditionalTriggerExecute(udg_trigger77)
     endfunction
@@ -17,7 +17,7 @@ library trigger75 initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set udg_trigger75 = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(udg_trigger75,udg_dialog05)
+        call TriggerRegisterDialogEventBJ(udg_trigger75,BettingModeDialog)
         call TriggerAddCondition(udg_trigger75,Condition(function Trig_Disable_Betting_Menu_Conditions))
         call TriggerAddAction(udg_trigger75,function Trig_Disable_Betting_Menu_Actions)
     endfunction

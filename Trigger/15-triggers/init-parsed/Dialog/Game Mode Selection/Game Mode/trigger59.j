@@ -9,14 +9,14 @@ library trigger59 initializer init requires RandomShit
 
 
     function Trig_Dialog_25_Actions takes nothing returns nothing
-        set udg_integers07[1]=(udg_integers07[1]+ 1)
-        call DialogDisplayBJ(true,IncomeDialog,GetTriggerPlayer())
+        set ModeVotesCount[1]=(ModeVotesCount[1]+ 1)
+        call DialogDisplayBJ(true,IncomeModeDialog,GetTriggerPlayer())
     endfunction
 
 
     private function init takes nothing returns nothing
         set udg_trigger59 = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(udg_trigger59,udg_dialog01)
+        call TriggerRegisterDialogEventBJ(udg_trigger59,GameDurDialog)
         call TriggerAddCondition(udg_trigger59,Condition(function Trig_Dialog_25_Conditions))
         call TriggerAddAction(udg_trigger59,function Trig_Dialog_25_Actions)
     endfunction

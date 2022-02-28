@@ -9,14 +9,14 @@ library trg3 initializer init requires RandomShit
 
 
     function Trig_No_Income_Actions takes nothing returns nothing
-        set udg_integers07[17] = udg_integers07[17] + 1
+        set ModeVotesCount[17] = ModeVotesCount[17] + 1
         call ConditionalTriggerExecute(udg_trigger62)
     endfunction
 
 
     private function init takes nothing returns nothing
         local trigger trg = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(trg,IncomeDialog)
+        call TriggerRegisterDialogEventBJ(trg,IncomeModeDialog)
         call TriggerAddCondition(trg,Condition(function Trig_No_Income_Conditions))
         call TriggerAddAction(trg,function Trig_No_Income_Actions)
         set trg = null

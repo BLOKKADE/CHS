@@ -56,7 +56,7 @@ library trigger114 initializer init requires RandomShit
 
 
     function Trig_Learn_Random_Ability_Func004Func002C takes nothing returns boolean
-        if(not(udg_boolean05==true))then
+        if(not(ArNotLearningAbil==true))then
             return false
         endif
         return true
@@ -106,7 +106,7 @@ library trigger114 initializer init requires RandomShit
         if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),udg_unit01)< 30))then
             return false
         endif
-        if(not(udg_integer37 <= 500))then
+        if(not(UnknownInteger02 <= 500))then
             return false
         endif
         return true
@@ -122,7 +122,7 @@ library trigger114 initializer init requires RandomShit
 
 
     function Trig_Learn_Random_Ability_Func004Func001Func002C takes nothing returns boolean
-        if(not(udg_boolean05==true))then
+        if(not(ArNotLearningAbil==true))then
             return false
         endif
         return true
@@ -130,7 +130,7 @@ library trigger114 initializer init requires RandomShit
 
 
     function Trig_Learn_Random_Ability_Func004Func001Func001C takes nothing returns boolean
-        if(not(udg_integer37 > 500))then
+        if(not(UnknownInteger02 > 500))then
             return false
         endif
         return true
@@ -142,22 +142,22 @@ library trigger114 initializer init requires RandomShit
         set RoundCreepAbilCastChance = GetItemFromAbility(GetRandomAbility())
         if(Trig_Learn_Random_Ability_Func004C())then
             if(Trig_Learn_Random_Ability_Func004Func002C())then
-                set udg_boolean05 = false
-                set udg_boolean06 = true
+                set ArNotLearningAbil = false
+                set ARLearningAbil = true
                 call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
-                set udg_boolean06 = false
-                set udg_boolean05 = true
+                set ARLearningAbil = false
+                set ArNotLearningAbil = true
             else
                 call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
             endif
         else
             if(Trig_Learn_Random_Ability_Func004Func001C())then
                 if(Trig_Learn_Random_Ability_Func004Func001Func002C())then
-                    set udg_boolean05 = false
-                    set udg_boolean06 = true
+                    set ArNotLearningAbil = false
+                    set ARLearningAbil = true
                     call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
-                    set udg_boolean06 = false
-                    set udg_boolean05 = true
+                    set ARLearningAbil = false
+                    set ArNotLearningAbil = true
                 else
                     call AdjustPlayerStateBJ(5,GetOwningPlayer(udg_unit01),PLAYER_STATE_RESOURCE_LUMBER)
     
@@ -178,7 +178,7 @@ library trigger114 initializer init requires RandomShit
                     return
                 else
                 endif
-                set udg_integer37 =(udg_integer37 + 1)
+                set UnknownInteger02 =(UnknownInteger02 + 1)
                 call ConditionalTriggerExecute(GetTriggeringTrigger())
             endif
         endif

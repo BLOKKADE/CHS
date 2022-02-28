@@ -40,7 +40,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
 
     function Trig_Start_Level_Func013Func001C takes nothing returns boolean
-        if((udg_boolean04==true))then
+        if((ElimModeEnabled==true))then
             return true
         endif
         if((udg_boolean08==true))then
@@ -115,8 +115,8 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
 
     function Trig_Start_Level_Func015Func002A takes nothing returns nothing
-        set udg_booleans02[GetConvertedPlayerId(GetEnumPlayer())]= false
-        set udg_booleans01[GetConvertedPlayerId(GetEnumPlayer())]= false
+        
+        
         call ForGroupBJ(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Start_Level_Func015Func002Func003001002)),function Trig_Start_Level_Func015Func002Func003A)
         call EnumItemsInRectBJ(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
         call SetUnitInvulnerable(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],false)
@@ -160,7 +160,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
             call ForGroupBJ(GetUnitsOfTypeIdAll('n00E'),function Trig_Start_Level_Func003Func006A)
         else
         endif
-        call ForceClear(udg_force03)
+        call ForceClear(RoundPlayersCompleted)
         
         set RoundFinishedCount = 0
         call ConditionalTriggerExecute(udg_trigger146)

@@ -6,16 +6,16 @@ library trigger147 initializer init requires RandomShit
 
 
     function Trig_Hide_Shops_Func002A takes nothing returns nothing
-        set udg_integer35 =(udg_integer35 + 1)
-        set udg_locations01[udg_integer35]= GetUnitLoc(GetEnumUnit())
-        set udg_integers10[udg_integer35]= GetUnitTypeId(GetEnumUnit())
+        set HideShopsCount =(HideShopsCount + 1)
+        set udg_locations01[HideShopsCount]= GetUnitLoc(GetEnumUnit())
+        set ShopIds[HideShopsCount]= GetUnitTypeId(GetEnumUnit())
         call SetUnitPositionLoc(GetEnumUnit(),OffsetLocation(GetRectCenter(GetEntireMapRect()),0,1000000000.00))
         call DeleteUnit(GetEnumUnit())
     endfunction
 
 
     function Trig_Hide_Shops_Actions takes nothing returns nothing
-        set udg_integer35 = 0
+        set HideShopsCount = 0
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Hide_Shops_Func002001002)),function Trig_Hide_Shops_Func002A)
     endfunction
 

@@ -1,7 +1,7 @@
 library trigger146 initializer init requires RandomShit
 
     function Trig_Update_Items_Func001Func001C takes nothing returns boolean
-        if((udg_boolean04==true))then
+        if((ElimModeEnabled==true))then
             return true
         endif
         if((udg_boolean08==true))then

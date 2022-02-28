@@ -6,7 +6,7 @@ globals
     integer IncomeMode = 0
     integer AbilityMode = 0
     integer array LumberGained
-    dialog IncomeDialog
+    dialog IncomeModeDialog
     Table roundAbilities
     string RoundCreepTitle
     string array RoundCreepInfo
@@ -56,7 +56,7 @@ function InitGlobals3 takes nothing returns nothing
     set RoundCreepChanceCritStrike = 0
     set RoundCreepChanceEvasion = 0
     set InitialPlayerCount = 0
-    set udg_force01 = CreateForce()
+    set PlayersWithHero = CreateForce()
     
     set DefeatedPlayers = CreateForce()
     set PotentialDuelHeroes = CreateGroup()
@@ -76,24 +76,24 @@ function InitGlobals3 takes nothing returns nothing
     set DuelingHeroGroup = CreateGroup()
     set DuelWinners = CreateGroup()
     set udg_integer15 = 0
-    set udg_integer16 = 0
+    set BrPlayerCount = 0
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_booleans01[i]= false
+        
         set i = i + 1
     endloop
-    set udg_boolean02 = false
+    set BrStarted = false
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers05[i]= 0
+        set PlayerLastLearnedSpell[i]= 0
         set i = i + 1
     endloop
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_booleans02[i]= false
+        
         set i = i + 1
     endloop
     set RoundCreepChanceCleave = 0
@@ -101,29 +101,29 @@ function InitGlobals3 takes nothing returns nothing
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_booleans03[i]= false
+        set PlayerHeroPicked[i]= false
         set i = i + 1
     endloop
-    set udg_force03 = CreateForce()
-    set udg_integer19 = 0
+    set RoundPlayersCompleted = CreateForce()
+    set CountdownCount = 0
     set RoundCreepChanceThorns = 0
     set udg_real02 = 0
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers06[i]= 0
+        set Playtime[i]= 0
         set i = i + 1
     endloop
-    set udg_dialog01 = DialogCreate()
-    set IncomeDialog = DialogCreate()
+    set GameDurDialog = DialogCreate()
+    set IncomeModeDialog = DialogCreate()
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers07[i]= 0
+        set ModeVotesCount[i]= 0
         set i = i + 1
     endloop
     set RoundCreepChanceShockwave = 0
-    set udg_integer22 = 0
+    set MaxCreepUnitTypes = 0
     set RoundCreepChanceManaBurn = 0
     set RoundCreepChanceHurlBoulder = 0
     set RoundCreepChanceRejuv = 0
@@ -139,35 +139,35 @@ function InitGlobals3 takes nothing returns nothing
         set udg_integers09[i]= 0
         set i = i + 1
     endloop
-    set udg_integer26 = 0
-    set udg_integer27 = 0
-    set udg_integer28 = 0
-    set udg_group04 = CreateGroup()
-    set udg_integer29 = 0
-    set udg_integer30 = 0
-    set udg_boolean03 = false
-    set udg_boolean04 = false
-    set udg_dialog02 = DialogCreate()
-    set udg_integer31 = 0
-    set udg_boolean05 = false
-    set udg_dialog03 = DialogCreate()
-    set udg_integer32 = 0
-    set udg_integer33 = 0
-    set udg_integer34 = 0
-    set udg_boolean06 = false
-    set udg_integer35 = 0
+    
+    set AntiStuckPlayerId = 0
+    set RoundGenCreepIndex = 0
+    
+    set ElimPlayerCount = 0
+    set ElimDmHeroDeathFxIndex = 0
+    set ElimPvpStarted = false
+    set ElimModeEnabled = false
+    set GameModeDialog = DialogCreate()
+    set UnknownInteger01 = 0
+    set ArNotLearningAbil = false
+    set AbilModeDialog = DialogCreate()
+    set PvpEndIndex = 0
+    set PvpStartIndex = 0
+    
+    set ARLearningAbil = false
+    set HideShopsCount = 0
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers10[i]= 0
+        set ShopIds[i]= 0
         set i = i + 1
     endloop
-    set udg_integer36 = 0
-    set udg_integer37 = 0
+    set HideShopsIndex = 0
+    set UnknownInteger02 = 0
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_dialogs01[i]= DialogCreate()
+        set Dialogs[i]= DialogCreate()
         set i = i + 1
     endloop
     set udg_force04 = CreateForce()
@@ -253,12 +253,12 @@ function InitGlobals3 takes nothing returns nothing
     set udg_integer59 = 0
     set udg_integer60 = 0
     set udg_integer61 = 0
-    set udg_dialog05 = DialogCreate()
+    set BettingModeDialog = DialogCreate()
     set udg_boolean13 = false
     set udg_boolean14 = false
     set udg_dialog06 = DialogCreate()
     set udg_boolean15 = false
-    set udg_dialog07 = DialogCreate()
+    set HeroModeDialog = DialogCreate()
     set udg_boolean16 = false
     set i = 0
     loop
@@ -306,25 +306,25 @@ function InitGlobals2 takes nothing returns nothing
     set RoundCreepChanceCritStrike = 0
     set RoundCreepChanceEvasion = 0
     set InitialPlayerCount = 0
-    set udg_force01 = CreateForce()
+    set PlayersWithHero = CreateForce()
     
     set DefeatedPlayers = CreateForce()
     set PotentialDuelHeroes = CreateGroup()
     set RoundCreepAbilCastChance = 0
     set DuelingHeroGroup = CreateGroup()
     set DuelWinners = CreateGroup()
-    set udg_integer16 = 0
+    set BrPlayerCount = 0
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_booleans01[i]= false
+        
         set i = i + 1
     endloop
-    set udg_boolean02 = false
+    set BrStarted = false
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_booleans02[i]= false
+        
         set i = i + 1
     endloop
     set RoundCreepChanceCleave = 0
@@ -332,54 +332,54 @@ function InitGlobals2 takes nothing returns nothing
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_booleans03[i]= false
+        set PlayerHeroPicked[i]= false
         set i = i + 1
     endloop
-    set udg_force03 = CreateForce()
-    set udg_integer19 = 0
+    set RoundPlayersCompleted = CreateForce()
+    set CountdownCount = 0
     set RoundCreepChanceThorns = 0
     set udg_real02 = 0
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers06[i]= 0
+        set Playtime[i]= 0
         set i = i + 1
     endloop
-    set udg_dialog01 = DialogCreate()
+    set GameDurDialog = DialogCreate()
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers07[i]= 0
+        set ModeVotesCount[i]= 0
         set i = i + 1
     endloop
     set RoundCreepChanceShockwave = 0
-    set udg_integer22 = 0
+    set MaxCreepUnitTypes = 0
     set RoundCreepChanceManaBurn = 0
     set RoundCreepChanceHurlBoulder = 0
     set RoundCreepChanceRejuv = 0
-    set udg_integer26 = 0
-    set udg_integer27 = 0
-    set udg_integer28 = 0
-    set udg_group04 = CreateGroup()
-    set udg_integer29 = 0
-    set udg_integer30 = 0
-    set udg_boolean03 = false
-    set udg_boolean04 = false
-    set udg_dialog02 = DialogCreate()
-    set udg_integer31 = 0
-    set udg_boolean05 = false
-    set udg_dialog03 = DialogCreate()
-    set udg_integer32 = 0
-    set udg_integer33 = 0
-    set udg_integer34 = 0
-    set udg_boolean06 = false
-    set udg_integer35 = 0
-    set udg_integer36 = 0
-    set udg_integer37 = 0
+    
+    set AntiStuckPlayerId = 0
+    set RoundGenCreepIndex = 0
+    
+    set ElimPlayerCount = 0
+    set ElimDmHeroDeathFxIndex = 0
+    set ElimPvpStarted = false
+    set ElimModeEnabled = false
+    set GameModeDialog = DialogCreate()
+    set UnknownInteger01 = 0
+    set ArNotLearningAbil = false
+    set AbilModeDialog = DialogCreate()
+    set PvpEndIndex = 0
+    set PvpStartIndex = 0
+    
+    set ARLearningAbil = false
+    set HideShopsCount = 0
+    set HideShopsIndex = 0
+    set UnknownInteger02 = 0
     set i = 0
     loop
         exitwhen(i > 4)
-        set udg_dialogs01[i]= DialogCreate()
+        set Dialogs[i]= DialogCreate()
         set i = i + 1
     endloop
     set udg_force04 = CreateForce()
@@ -459,12 +459,12 @@ function InitGlobals2 takes nothing returns nothing
     set udg_integer59 = 0
     set udg_integer60 = 0
     set udg_integer61 = 0
-    set udg_dialog05 = DialogCreate()
+    set BettingModeDialog = DialogCreate()
     set udg_boolean13 = false
     set udg_boolean14 = false
     set udg_dialog06 = DialogCreate()
     set udg_boolean15 = false
-    set udg_dialog07 = DialogCreate()
+    set HeroModeDialog = DialogCreate()
     set udg_boolean16 = false
     set i = 0
     loop
@@ -680,7 +680,7 @@ function CreateNeutralPassiveBuildings2 takes nothing returns nothing
     set udg_unit34 = CreateUnit(p,'ncop',512.0,256.0,270.000)
     //	set u=CreateUnit(p,'n00A',-960.0,-604.0,270.000)
     //	set u=CreateUnit(p,'n00M',960.0,-604.0,270.000)
-    if(udg_boolean05==false) and AbilityMode == 1 then
+    if(ArNotLearningAbil==false) and AbilityMode == 1 then
 
 
 
@@ -1237,10 +1237,10 @@ function Trig_Pillage_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Plague_Func002Func001Func001C takes nothing returns boolean
-    if((udg_boolean02==true))then
+    if((BrStarted==true))then
         return true
     endif
-    if((udg_boolean03==true))then
+    if((ElimPvpStarted==true))then
         return true
     endif
     return false
@@ -1257,10 +1257,10 @@ function Trig_Plague_Func002Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Plague_Func002Func002C takes nothing returns boolean
-    if(not(udg_boolean02==false))then
+    if(not(BrStarted==false))then
         return false
     endif
-    if(not(udg_boolean03==false))then
+    if(not(ElimPvpStarted==false))then
         return false
     endif
     if(not(RectContainsUnit(udg_rect09,GetTriggerUnit())!=true))then
@@ -1830,7 +1830,7 @@ function Trig_Disable_Abilities_Func001Func003Func003Func003C takes nothing retu
     if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)!=true))then
         return false
     endif
-    if(not(IsPlayerInForce(GetOwningPlayer(GetTriggerUnit()),udg_force03)==true))then
+    if(not(IsPlayerInForce(GetOwningPlayer(GetTriggerUnit()),RoundPlayersCompleted)==true))then
         return false
     endif
     return true
@@ -1850,10 +1850,10 @@ function Trig_Disable_Abilities_Func001Func003Func003C takes nothing returns boo
 endfunction
 
 function Trig_Disable_Abilities_Func001Func003C takes nothing returns boolean
-    if(not(udg_boolean02==false))then
+    if(not(BrStarted==false))then
         return false
     endif
-    if(not(udg_boolean03==false))then
+    if(not(ElimPvpStarted==false))then
         return false
     endif
     if(not Trig_Disable_Abilities_Func001Func003Func003C())then
@@ -2137,7 +2137,7 @@ function Trig_Battle_Royal_Func016Func001001002 takes nothing returns boolean
 endfunction
 
 function Trig_Battle_Royal_Func016Func001A takes nothing returns nothing
-    set udg_integer16 =(udg_integer16 + 1)
+    set BrPlayerCount =(BrPlayerCount + 1)
     call SetPlayerAllianceStateBJ(GetOwningPlayer(GetEnumUnit()),ConvertedPlayer(GetForLoopIndexA()),bj_ALLIANCE_UNALLIED)
 endfunction
 
@@ -2223,7 +2223,7 @@ function Trig_Battle_Royal_Func033A takes nothing returns nothing
 endfunction
 
 function Trig_Battle_Royal_Func034C takes nothing returns boolean
-    if(not(udg_integer16==1))then
+    if(not(BrPlayerCount==1))then
         return false
     endif
     return true
@@ -2254,7 +2254,7 @@ function Trig_Battle_Royal_Actions takes nothing returns nothing
     call StartTimerBJ(GetLastCreatedTimerBJ(),false,60.00)
     call DisplayTextToForce(GetPlayersAll(),"Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
     call TriggerSleepAction(60.00)
-    set udg_boolean02 = true
+    set BrStarted = true
     
     call PlaySoundBJ(udg_sound10)
     call DisplayTextToForce(GetPlayersAll(),"|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL")
@@ -2280,7 +2280,7 @@ function Trig_Battle_Royal_Actions takes nothing returns nothing
     call EnableTrigger(udg_trigger43)
     call TriggerSleepAction(2)
     set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
-    set udg_integer19 = 5
+    set CountdownCount = 5
     call ConditionalTriggerExecute(udg_trigger117)
     call TriggerSleepAction(5.00)
     call PlaySoundBJ(udg_sound08)
@@ -2296,7 +2296,7 @@ function Trig_Battle_Royal_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Hero_Dies_Battle_Royal_Func007C takes nothing returns boolean
-    if(not(udg_boolean02==true))then
+    if(not(BrStarted==true))then
         return false
     endif
     if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
@@ -2353,60 +2353,60 @@ function Trig_Betting_Initialization_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Betting_Initialization_Actions takes nothing returns nothing
-    call DialogSetMessageBJ(udg_dialogs01[2],"Betting Menu")
-    call DialogAddButtonBJ(udg_dialogs01[2],"Gold")
-    set udg_buttons02[4]= GetLastCreatedButtonBJ()
-    call DialogAddButtonBJ(udg_dialogs01[2],"Lumber")
-    set udg_buttons02[5]= GetLastCreatedButtonBJ()
-    call DialogAddButtonBJ(udg_dialogs01[2],"Gold & Lumber")
-    set udg_buttons02[6]= GetLastCreatedButtonBJ()
-    call DialogAddButtonBJ(udg_dialogs01[2],"Cancel")
-    set udg_buttons02[7]= GetLastCreatedButtonBJ()
-    call DialogSetMessageBJ(udg_dialogs01[3],"Betting Menu")
-    call DialogAddButtonBJ(udg_dialogs01[3],"25%")
-    set udg_buttons02[8]= GetLastCreatedButtonBJ()
-    call DialogAddButtonBJ(udg_dialogs01[3],"50%")
-    set udg_buttons02[9]= GetLastCreatedButtonBJ()
-    call DialogAddButtonBJ(udg_dialogs01[3],"100%")
-    set udg_buttons02[10]= GetLastCreatedButtonBJ()
-    call DialogAddButtonBJ(udg_dialogs01[3],"Cancel")
-    set udg_buttons02[11]= GetLastCreatedButtonBJ()
+    call DialogSetMessageBJ(Dialogs[2],"Betting Menu")
+    call DialogAddButtonBJ(Dialogs[2],"Gold")
+    set DialogButtons[4]= GetLastCreatedButtonBJ()
+    call DialogAddButtonBJ(Dialogs[2],"Lumber")
+    set DialogButtons[5]= GetLastCreatedButtonBJ()
+    call DialogAddButtonBJ(Dialogs[2],"Gold & Lumber")
+    set DialogButtons[6]= GetLastCreatedButtonBJ()
+    call DialogAddButtonBJ(Dialogs[2],"Cancel")
+    set DialogButtons[7]= GetLastCreatedButtonBJ()
+    call DialogSetMessageBJ(Dialogs[3],"Betting Menu")
+    call DialogAddButtonBJ(Dialogs[3],"25%")
+    set DialogButtons[8]= GetLastCreatedButtonBJ()
+    call DialogAddButtonBJ(Dialogs[3],"50%")
+    set DialogButtons[9]= GetLastCreatedButtonBJ()
+    call DialogAddButtonBJ(Dialogs[3],"100%")
+    set DialogButtons[10]= GetLastCreatedButtonBJ()
+    call DialogAddButtonBJ(Dialogs[3],"Cancel")
+    set DialogButtons[11]= GetLastCreatedButtonBJ()
 endfunction
 
 function Trig_Place_Bet_PvP1_Conditions takes nothing returns boolean
-    if(not(GetClickedButtonBJ()==udg_buttons02[1]))then
+    if(not(GetClickedButtonBJ()==DialogButtons[1]))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Place_Bet_PvP1_Actions takes nothing returns nothing
-    call DialogSetMessageBJ(udg_dialogs01[2],"Betting Menu")
-    call DialogDisplayBJ(true,udg_dialogs01[2],GetTriggerPlayer())
+    call DialogSetMessageBJ(Dialogs[2],"Betting Menu")
+    call DialogDisplayBJ(true,Dialogs[2],GetTriggerPlayer())
     call ForceAddPlayerSimple(GetTriggerPlayer(),udg_force04)
 endfunction
 
 function Trig_Place_Bet_PvP2_Conditions takes nothing returns boolean
-    if(not(GetClickedButtonBJ()==udg_buttons02[2]))then
+    if(not(GetClickedButtonBJ()==DialogButtons[2]))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Place_Bet_PvP2_Actions takes nothing returns nothing
-    call DialogSetMessageBJ(udg_dialogs01[2],"Betting Menu")
-    call DialogDisplayBJ(true,udg_dialogs01[2],GetTriggerPlayer())
+    call DialogSetMessageBJ(Dialogs[2],"Betting Menu")
+    call DialogDisplayBJ(true,Dialogs[2],GetTriggerPlayer())
     call ForceAddPlayerSimple(GetTriggerPlayer(),udg_force05)
 endfunction
 
 function Trig_Skip_Bet_Func004C takes nothing returns boolean
-    if((GetClickedButtonBJ()==udg_buttons02[3]))then
+    if((GetClickedButtonBJ()==DialogButtons[3]))then
         return true
     endif
-    if((GetClickedButtonBJ()==udg_buttons02[7]))then
+    if((GetClickedButtonBJ()==DialogButtons[7]))then
         return true
     endif
-    if((GetClickedButtonBJ()==udg_buttons02[11]))then
+    if((GetClickedButtonBJ()==DialogButtons[11]))then
         return true
     endif
     return false
@@ -2426,13 +2426,13 @@ function Trig_Skip_Bet_Actions takes nothing returns nothing
     set bj_forLoopAIndexEnd = 3
     loop
         exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-        call DialogDisplayBJ(false,udg_dialogs01[GetForLoopIndexA()],GetTriggerPlayer())
+        call DialogDisplayBJ(false,Dialogs[GetForLoopIndexA()],GetTriggerPlayer())
         set bj_forLoopAIndex = bj_forLoopAIndex + 1
     endloop
 endfunction
 
 function Trig_Place_Bet_Gold_Func002C takes nothing returns boolean
-    if(not(GetClickedButtonBJ()==udg_buttons02[4]))then
+    if(not(GetClickedButtonBJ()==DialogButtons[4]))then
         return false
     endif
     return true
@@ -2458,8 +2458,8 @@ endfunction
 
 function Trig_Place_Bet_Gold_Actions takes nothing returns nothing
     if(Trig_Place_Bet_Gold_Func001C())then
-        call DialogSetMessageBJ(udg_dialogs01[3],"Betting Menu")
-        call DialogDisplayBJ(true,udg_dialogs01[3],GetTriggerPlayer())
+        call DialogSetMessageBJ(Dialogs[3],"Betting Menu")
+        call DialogDisplayBJ(true,Dialogs[3],GetTriggerPlayer())
         set udg_booleans04[GetConvertedPlayerId(GetTriggerPlayer())]= true
         set udg_booleans05[GetConvertedPlayerId(GetTriggerPlayer())]= false
     else
@@ -2468,12 +2468,12 @@ function Trig_Place_Bet_Gold_Actions takes nothing returns nothing
         else
             call DoNothing()
         endif
-        call DialogDisplayBJ(true,udg_dialogs01[2],GetTriggerPlayer())
+        call DialogDisplayBJ(true,Dialogs[2],GetTriggerPlayer())
     endif
 endfunction
 
 function Trig_Place_Bet_Lumber_Func002C takes nothing returns boolean
-    if(not(GetClickedButtonBJ()==udg_buttons02[5]))then
+    if(not(GetClickedButtonBJ()==DialogButtons[5]))then
         return false
     endif
     return true
@@ -2499,8 +2499,8 @@ endfunction
 
 function Trig_Place_Bet_Lumber_Actions takes nothing returns nothing
     if(Trig_Place_Bet_Lumber_Func001C())then
-        call DialogSetMessageBJ(udg_dialogs01[3],"Betting Menu")
-        call DialogDisplayBJ(true,udg_dialogs01[3],GetTriggerPlayer())
+        call DialogSetMessageBJ(Dialogs[3],"Betting Menu")
+        call DialogDisplayBJ(true,Dialogs[3],GetTriggerPlayer())
         set udg_booleans04[GetConvertedPlayerId(GetTriggerPlayer())]= false
         set udg_booleans05[GetConvertedPlayerId(GetTriggerPlayer())]= true
     else
@@ -2509,12 +2509,12 @@ function Trig_Place_Bet_Lumber_Actions takes nothing returns nothing
         else
             call DoNothing()
         endif
-        call DialogDisplayBJ(true,udg_dialogs01[2],GetTriggerPlayer())
+        call DialogDisplayBJ(true,Dialogs[2],GetTriggerPlayer())
     endif
 endfunction
 
 function Trig_Place_Bet_GoldLumber_Func002C takes nothing returns boolean
-    if(not(GetClickedButtonBJ()==udg_buttons02[6]))then
+    if(not(GetClickedButtonBJ()==DialogButtons[6]))then
         return false
     endif
     return true
@@ -2550,8 +2550,8 @@ endfunction
 
 function Trig_Place_Bet_GoldLumber_Actions takes nothing returns nothing
     if(Trig_Place_Bet_GoldLumber_Func001C())then
-        call DialogSetMessageBJ(udg_dialogs01[3],"Betting Menu")
-        call DialogDisplayBJ(true,udg_dialogs01[3],GetTriggerPlayer())
+        call DialogSetMessageBJ(Dialogs[3],"Betting Menu")
+        call DialogDisplayBJ(true,Dialogs[3],GetTriggerPlayer())
         set udg_booleans04[GetConvertedPlayerId(GetTriggerPlayer())]= true
         set udg_booleans05[GetConvertedPlayerId(GetTriggerPlayer())]= true
     else
@@ -2560,18 +2560,18 @@ function Trig_Place_Bet_GoldLumber_Actions takes nothing returns nothing
         else
             call DoNothing()
         endif
-        call DialogDisplayBJ(true,udg_dialogs01[2],GetTriggerPlayer())
+        call DialogDisplayBJ(true,Dialogs[2],GetTriggerPlayer())
     endif
 endfunction
 
 function Trig_Place_Bet_Func001C takes nothing returns boolean
-    if((GetClickedButtonBJ()==udg_buttons02[8]))then
+    if((GetClickedButtonBJ()==DialogButtons[8]))then
         return true
     endif
-    if((GetClickedButtonBJ()==udg_buttons02[9]))then
+    if((GetClickedButtonBJ()==DialogButtons[9]))then
         return true
     endif
-    if((GetClickedButtonBJ()==udg_buttons02[10]))then
+    if((GetClickedButtonBJ()==DialogButtons[10]))then
         return true
     endif
     return false
@@ -2585,14 +2585,14 @@ function Trig_Place_Bet_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Place_Bet_Func002Func001C takes nothing returns boolean
-    if(not(GetClickedButtonBJ()==udg_buttons02[9]))then
+    if(not(GetClickedButtonBJ()==DialogButtons[9]))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Place_Bet_Func002C takes nothing returns boolean
-    if(not(GetClickedButtonBJ()==udg_buttons02[8]))then
+    if(not(GetClickedButtonBJ()==DialogButtons[8]))then
         return false
     endif
     return true
@@ -2834,12 +2834,12 @@ endfunction
 function Trig_Dialog_Initialization_Func047A takes nothing returns nothing
     if(Trig_Dialog_Initialization_Func047Func001C())then
         if(Trig_Dialog_Initialization_Func047Func001Func001C())then
-            call DialogDisplayBJ(true,udg_dialog02,GetEnumPlayer())
+            call DialogDisplayBJ(true,GameModeDialog,GetEnumPlayer())
         else
-            call DialogDisplayBJ(true,udg_dialog02,udg_player03)
+            call DialogDisplayBJ(true,GameModeDialog,udg_player03)
         endif
     else
-        call DialogDisplayBJ(true,udg_dialog03,GetEnumPlayer())
+        call DialogDisplayBJ(true,AbilModeDialog,GetEnumPlayer())
     endif
 endfunction
 
@@ -2853,12 +2853,12 @@ endfunction
 
 function Trig_Dialog_Initialization_Func055A takes nothing returns nothing
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-    call DialogDisplayBJ(false,udg_dialog01,GetEnumPlayer())
-    call DialogDisplayBJ(false,IncomeDialog,GetEnumPlayer())
-    call DialogDisplayBJ(false,udg_dialog02,GetEnumPlayer())
-    call DialogDisplayBJ(false,udg_dialog03,GetEnumPlayer())
-    call DialogDisplayBJ(false,udg_dialog07,GetEnumPlayer())
-    call DialogDisplayBJ(false,udg_dialog05,GetEnumPlayer())
+    call DialogDisplayBJ(false,GameDurDialog,GetEnumPlayer())
+    call DialogDisplayBJ(false,IncomeModeDialog,GetEnumPlayer())
+    call DialogDisplayBJ(false,GameModeDialog,GetEnumPlayer())
+    call DialogDisplayBJ(false,AbilModeDialog,GetEnumPlayer())
+    call DialogDisplayBJ(false,HeroModeDialog,GetEnumPlayer())
+    call DialogDisplayBJ(false,BettingModeDialog,GetEnumPlayer())
     call DialogDisplayBJ(false,udg_dialog06,GetEnumPlayer())
 endfunction
 
@@ -2873,86 +2873,86 @@ function Trig_Dialog_Initialization_Actions takes nothing returns nothing
     call EnableTrigger(GetTriggeringTrigger())
 
     //rounds
-    call DialogSetMessageBJ(udg_dialog01,"Game Duration/Difficulty")
-    call DialogAddButtonBJ(udg_dialog01,"Fast/Easy: 25 rounds, 45 min")
+    call DialogSetMessageBJ(GameDurDialog,"Game Duration/Difficulty")
+    call DialogAddButtonBJ(GameDurDialog,"Fast/Easy: 25 rounds, 45 min")
     set udg_buttons01[1]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog01,"Long/Medium: 50 rounds, 90 min")
+    call DialogAddButtonBJ(GameDurDialog,"Long/Medium: 50 rounds, 90 min")
     set udg_buttons01[2]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog01,"Doesn't Matter")
+    call DialogAddButtonBJ(GameDurDialog,"Doesn't Matter")
     set udg_buttons01[3]= GetLastCreatedButtonBJ()
 
     //game mode
-    call DialogSetMessageBJ(udg_dialog02,"Game Mode")
+    call DialogSetMessageBJ(GameModeDialog,"Game Mode")
 
-    call DialogAddButtonBJ(udg_dialog02,"Normal (Recommended)")
+    call DialogAddButtonBJ(GameModeDialog,"Normal (Recommended)")
     set udg_buttons01[4]= GetLastCreatedButtonBJ()	
 
-    call DialogAddButtonBJ(udg_dialog02,"Immortal: easy mode")
+    call DialogAddButtonBJ(GameModeDialog,"Immortal: easy mode")
     set udg_buttons01[18]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog02,"Death Match")
+    call DialogAddButtonBJ(GameModeDialog,"Death Match")
     set udg_buttons01[10]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog02,"Elimination")	
+    call DialogAddButtonBJ(GameModeDialog,"Elimination")	
     set udg_buttons01[5]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog02,"Doesn't Matter")
+    call DialogAddButtonBJ(GameModeDialog,"Doesn't Matter")
     set udg_buttons01[6]= GetLastCreatedButtonBJ()
 
     //abilities
-    call DialogSetMessageBJ(udg_dialog03,"Ability Options")
+    call DialogSetMessageBJ(AbilModeDialog,"Ability Options")
 
-    call DialogAddButtonBJ(udg_dialog03,"Pick Abilities (Recommended)")
+    call DialogAddButtonBJ(AbilModeDialog,"Pick Abilities (Recommended)")
     set udg_buttons01[7]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog03,"Random Abilities")
+    call DialogAddButtonBJ(AbilModeDialog,"Random Abilities")
     set udg_buttons01[8]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog03,"Draft Abilities")
+    call DialogAddButtonBJ(AbilModeDialog,"Draft Abilities")
     set udg_buttons01[22]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog03,"Doesn't Matter")
+    call DialogAddButtonBJ(AbilModeDialog,"Doesn't Matter")
     set udg_buttons01[9]= GetLastCreatedButtonBJ()
 
     //heroes
-    call DialogSetMessageBJ(udg_dialog07,"Hero Options")
+    call DialogSetMessageBJ(HeroModeDialog,"Hero Options")
 
-    call DialogAddButtonBJ(udg_dialog07,"Pick Hero (Recommended)")
+    call DialogAddButtonBJ(HeroModeDialog,"Pick Hero (Recommended)")
     set udg_buttons01[15]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog07,"Random Hero")
+    call DialogAddButtonBJ(HeroModeDialog,"Random Hero")
     set udg_buttons01[16]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog07,"Doesn't Matter")
+    call DialogAddButtonBJ(HeroModeDialog,"Doesn't Matter")
     set udg_buttons01[17]= GetLastCreatedButtonBJ()
 
     //income
-    call DialogSetMessageBJ(IncomeDialog,"Creep Upgrade Options")
+    call DialogSetMessageBJ(IncomeModeDialog,"Creep Upgrade Options")
 
-    call DialogAddButtonBJ(IncomeDialog,"Global")
+    call DialogAddButtonBJ(IncomeModeDialog,"Global")
     set udg_buttons01[19]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(IncomeDialog,"Individual (Recommended)")
+    call DialogAddButtonBJ(IncomeModeDialog,"Individual (Recommended)")
     set udg_buttons01[20]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(IncomeDialog,"Disabled")
+    call DialogAddButtonBJ(IncomeModeDialog,"Disabled")
     set udg_buttons01[21]= GetLastCreatedButtonBJ()
 
     //betting
-    call DialogSetMessageBJ(udg_dialog05,"Betting Options")
+    call DialogSetMessageBJ(BettingModeDialog,"Betting Options")
 
-    call DialogAddButtonBJ(udg_dialog05,"Enable: Show votes")
+    call DialogAddButtonBJ(BettingModeDialog,"Enable: Show votes")
     set udg_buttons01[11]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog05,"Enable: Hide votes")
+    call DialogAddButtonBJ(BettingModeDialog,"Enable: Hide votes")
     set udg_buttons01[12]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog05,"Disabled (Recommended)")
+    call DialogAddButtonBJ(BettingModeDialog,"Disabled (Recommended)")
     set udg_buttons01[13]= GetLastCreatedButtonBJ()
 
-    call DialogAddButtonBJ(udg_dialog05,"Doesn't Matter")
+    call DialogAddButtonBJ(BettingModeDialog,"Doesn't Matter")
     set udg_buttons01[14]= GetLastCreatedButtonBJ()
 
     call ForForce(GetPlayersAll(),function Trig_Dialog_Initialization_Func047A)
@@ -3099,8 +3099,8 @@ function Trig_Dialog_25_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_25_Actions takes nothing returns nothing
-    set udg_integers07[1]=(udg_integers07[1]+ 1)
-    call DialogDisplayBJ(true,IncomeDialog,GetTriggerPlayer())
+    set ModeVotesCount[1]=(ModeVotesCount[1]+ 1)
+    call DialogDisplayBJ(true,IncomeModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Dialog_50_Conditions takes nothing returns boolean
@@ -3111,8 +3111,8 @@ function Trig_Dialog_50_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_50_Actions takes nothing returns nothing
-    set udg_integers07[2]=(udg_integers07[2]+ 1)
-    call DialogDisplayBJ(true,IncomeDialog,GetTriggerPlayer())
+    set ModeVotesCount[2]=(ModeVotesCount[2]+ 1)
+    call DialogDisplayBJ(true,IncomeModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Doesnt_Matter_Conditions takes nothing returns boolean
@@ -3123,15 +3123,15 @@ function Trig_Doesnt_Matter_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Doesnt_Matter_Actions takes nothing returns nothing
-    set udg_integers07[3]=(udg_integers07[3]+ 1)
-    call DialogDisplayBJ(true,IncomeDialog,GetTriggerPlayer())
+    set ModeVotesCount[3]=(ModeVotesCount[3]+ 1)
+    call DialogDisplayBJ(true,IncomeModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Skip_Betting_Menu_Func001Func003Func002C takes nothing returns boolean
-    if(not(udg_integers07[5]> udg_integers07[4]))then
+    if(not(ModeVotesCount[5]> ModeVotesCount[4]))then
         return false
     endif
-    if(not(udg_integers07[5]> udg_integers07[8]))then
+    if(not(ModeVotesCount[5]> ModeVotesCount[8]))then
         return false
     endif
     if(not(udg_boolean15==false))then
@@ -3162,20 +3162,20 @@ function Trig_Skip_Betting_Menu_Actions takes nothing returns nothing
         set udg_integer63 =(udg_integer63 + 1)
         call ConditionalTriggerExecute(udg_trigger77)
     else
-        call DialogDisplayBJ(true,udg_dialog05,GetTriggerPlayer())
+        call DialogDisplayBJ(true,BettingModeDialog,GetTriggerPlayer())
     endif
 endfunction
 
 function Trig_Normal_Mode_Conditions takes nothing returns boolean
     if (GetClickedButtonBJ()==udg_buttons01[4])  then
 
-        set udg_integers07[4]=(udg_integers07[4]+ 1)
+        set ModeVotesCount[4]=(ModeVotesCount[4]+ 1)
         return true
 
     elseif GetClickedButtonBJ()==udg_buttons01[18] then
         set ModeNoDeath = true
-        set udg_integers07[4]=(udg_integers07[4]+ 1)
-        set udg_integers07[18]=(udg_integers07[18]+ 1)
+        set ModeVotesCount[4]=(ModeVotesCount[4]+ 1)
+        set ModeVotesCount[18]=(ModeVotesCount[18]+ 1)
         return true	
 
     endif
@@ -3186,8 +3186,8 @@ endfunction
 
 function Trig_Normal_Mode_Actions takes nothing returns nothing
 
-    //	set udg_integers07[4]=(udg_integers07[4]+1)
-    call DialogDisplayBJ(true,udg_dialog03,GetTriggerPlayer())
+    //	set ModeVotesCount[4]=(ModeVotesCount[4]+1)
+    call DialogDisplayBJ(true,AbilModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Elimination_Mode_Conditions takes nothing returns boolean
@@ -3198,8 +3198,8 @@ function Trig_Elimination_Mode_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Elimination_Mode_Actions takes nothing returns nothing
-    set udg_integers07[5]=(udg_integers07[5]+ 1)
-    call DialogDisplayBJ(true,udg_dialog03,GetTriggerPlayer())
+    set ModeVotesCount[5]=(ModeVotesCount[5]+ 1)
+    call DialogDisplayBJ(true,AbilModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Death_Match_Mode_Conditions takes nothing returns boolean
@@ -3210,8 +3210,8 @@ function Trig_Death_Match_Mode_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Death_Match_Mode_Actions takes nothing returns nothing
-    set udg_integers07[8]=(udg_integers07[8]+ 1)
-    call DialogDisplayBJ(true,udg_dialog03,GetTriggerPlayer())
+    set ModeVotesCount[8]=(ModeVotesCount[8]+ 1)
+    call DialogDisplayBJ(true,AbilModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Doesnt_Matter_Mode_Conditions takes nothing returns boolean
@@ -3222,7 +3222,7 @@ function Trig_Doesnt_Matter_Mode_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Doesnt_Matter_Mode_Actions takes nothing returns nothing
-    call DialogDisplayBJ(true,udg_dialog03,GetTriggerPlayer())
+    call DialogDisplayBJ(true,AbilModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Pick_Abilities_Conditions takes nothing returns boolean
@@ -3233,8 +3233,8 @@ function Trig_Pick_Abilities_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Pick_Abilities_Actions takes nothing returns nothing
-    set udg_integers07[6]=(udg_integers07[6]+ 1)
-    call DialogDisplayBJ(true,udg_dialog07,GetTriggerPlayer())
+    set ModeVotesCount[6]=(ModeVotesCount[6]+ 1)
+    call DialogDisplayBJ(true,HeroModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Random_Abilities_Conditions takes nothing returns boolean
@@ -3245,8 +3245,8 @@ function Trig_Random_Abilities_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Random_Abilities_Actions takes nothing returns nothing
-    set udg_integers07[7]=(udg_integers07[7]+ 1)
-    call DialogDisplayBJ(true,udg_dialog07,GetTriggerPlayer())
+    set ModeVotesCount[7]=(ModeVotesCount[7]+ 1)
+    call DialogDisplayBJ(true,HeroModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Draft_Abilities_Conditions takes nothing returns boolean
@@ -3257,8 +3257,8 @@ function Trig_Draft_Abilities_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Draft_Abilities_Actions takes nothing returns nothing
-    set udg_integers07[19]=(udg_integers07[19]+ 1)
-    call DialogDisplayBJ(true,udg_dialog07,GetTriggerPlayer())
+    set ModeVotesCount[19]=(ModeVotesCount[19]+ 1)
+    call DialogDisplayBJ(true,HeroModeDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Doesnt_Matter_Abilities_Conditions takes nothing returns boolean
@@ -3269,7 +3269,7 @@ function Trig_Doesnt_Matter_Abilities_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Doesnt_Matter_Abilities_Actions takes nothing returns nothing
-    call DialogDisplayBJ(true,udg_dialog07,GetTriggerPlayer())
+    call DialogDisplayBJ(true,HeroModeDialog,GetTriggerPlayer())
 endfunction
 
 //income
@@ -3282,7 +3282,7 @@ function Trig_Income_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Income_Actions takes nothing returns nothing
-    set udg_integers07[15] = udg_integers07[15] + 1
+    set ModeVotesCount[15] = ModeVotesCount[15] + 1
     call ConditionalTriggerExecute(udg_trigger62)
 endfunction
 
@@ -3294,7 +3294,7 @@ function Trig_Individual_Income_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Individual_Income_Actions takes nothing returns nothing
-    set udg_integers07[16] = udg_integers07[16] + 1
+    set ModeVotesCount[16] = ModeVotesCount[16] + 1
     call ConditionalTriggerExecute(udg_trigger62)
 endfunction
 
@@ -3306,7 +3306,7 @@ function Trig_No_Income_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_No_Income_Actions takes nothing returns nothing
-    set udg_integers07[17] = udg_integers07[17] + 1
+    set ModeVotesCount[17] = ModeVotesCount[17] + 1
     call ConditionalTriggerExecute(udg_trigger62)
 endfunction
 
@@ -3319,8 +3319,8 @@ function Trig_Pick_Hero_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Pick_Hero_Actions takes nothing returns nothing
-    set udg_integers07[13]=(udg_integers07[13]+ 1)
-    call DialogDisplayBJ(true,udg_dialog01,GetTriggerPlayer())
+    set ModeVotesCount[13]=(ModeVotesCount[13]+ 1)
+    call DialogDisplayBJ(true,GameDurDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Random_Hero_Conditions takes nothing returns boolean
@@ -3331,8 +3331,8 @@ function Trig_Random_Hero_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Random_Hero_Actions takes nothing returns nothing
-    set udg_integers07[14]=(udg_integers07[14]+ 1)
-    call DialogDisplayBJ(true,udg_dialog01,GetTriggerPlayer())
+    set ModeVotesCount[14]=(ModeVotesCount[14]+ 1)
+    call DialogDisplayBJ(true,GameDurDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Doesnt_Matter_Hero_Conditions takes nothing returns boolean
@@ -3343,7 +3343,7 @@ function Trig_Doesnt_Matter_Hero_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Doesnt_Matter_Hero_Actions takes nothing returns nothing
-    call DialogDisplayBJ(true,udg_dialog01,GetTriggerPlayer())
+    call DialogDisplayBJ(true,GameDurDialog,GetTriggerPlayer())
 endfunction
 
 function Trig_Show_Betting_Menu_Conditions takes nothing returns boolean
@@ -3354,7 +3354,7 @@ function Trig_Show_Betting_Menu_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Show_Betting_Menu_Actions takes nothing returns nothing
-    set udg_integers07[9]=(udg_integers07[9]+ 1)
+    set ModeVotesCount[9]=(ModeVotesCount[9]+ 1)
     set udg_integer63 =(udg_integer63 + 1)
     call ConditionalTriggerExecute(udg_trigger77)
 endfunction
@@ -3367,7 +3367,7 @@ function Trig_Hide_Betting_Menu_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Hide_Betting_Menu_Actions takes nothing returns nothing
-    set udg_integers07[10]=(udg_integers07[10]+ 1)
+    set ModeVotesCount[10]=(ModeVotesCount[10]+ 1)
     set udg_integer63 =(udg_integer63 + 1)
     call ConditionalTriggerExecute(udg_trigger77)
 endfunction
@@ -3380,7 +3380,7 @@ function Trig_Disable_Betting_Menu_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Disable_Betting_Menu_Actions takes nothing returns nothing
-    set udg_integers07[11]=(udg_integers07[11]+ 1)
+    set ModeVotesCount[11]=(ModeVotesCount[11]+ 1)
     set udg_integer63 =(udg_integer63 + 1)
     call ConditionalTriggerExecute(udg_trigger77)
 endfunction
@@ -3393,7 +3393,7 @@ function Trig_Doesnt_Matter_Betting_Menu_Conditions takes nothing returns boolea
 endfunction
 
 function Trig_Doesnt_Matter_Betting_Menu_Actions takes nothing returns nothing
-    set udg_integers07[12]=(udg_integers07[12]+ 1)
+    set ModeVotesCount[12]=(ModeVotesCount[12]+ 1)
     set udg_integer63 =(udg_integer63 + 1)
     call ConditionalTriggerExecute(udg_trigger77)
 endfunction
@@ -3419,10 +3419,10 @@ function Trig_Dialog_Complete_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func006Func001C takes nothing returns boolean
-    if(not(udg_integers07[5]> udg_integers07[4]))then
+    if(not(ModeVotesCount[5]> ModeVotesCount[4]))then
         return false
     endif
-    if(not(udg_integers07[5]> udg_integers07[8]))then
+    if(not(ModeVotesCount[5]> ModeVotesCount[8]))then
         return false
     endif
     return true
@@ -3501,7 +3501,7 @@ function Trig_Dialog_Complete_Func006Func004Func005Func029001 takes nothing retu
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005C takes nothing returns boolean
-    if(not(udg_integers07[1]>= udg_integers07[2]))then
+    if(not(ModeVotesCount[1]>= ModeVotesCount[2]))then
         return false
     endif
     return true
@@ -3528,13 +3528,13 @@ function Trig_Dialog_Complete_Func006Func004Func006001001 takes nothing returns 
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func006A takes nothing returns nothing
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,udg_integer31)
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,udg_integer31)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
     call ResourseRefresh(GetEnumPlayer()) 
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004C takes nothing returns boolean
-    if(not(udg_integers07[8]> udg_integers07[4]))then
+    if(not(ModeVotesCount[8]> ModeVotesCount[4]))then
         return false
     endif
     return true
@@ -3549,7 +3549,7 @@ function Trig_Dialog_Complete_Func006Func008Func011001 takes nothing returns boo
 endfunction
 
 function Trig_Dialog_Complete_Func006Func008C takes nothing returns boolean
-    if(not(udg_integers07[1]>= udg_integers07[2]))then
+    if(not(ModeVotesCount[1]>= ModeVotesCount[2]))then
         return false
     endif
     return true
@@ -3576,8 +3576,8 @@ function Trig_Dialog_Complete_Func006Func009001001 takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func006Func009A takes nothing returns nothing
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,udg_integer31)
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,udg_integer31)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
     call ResourseRefresh(GetEnumPlayer()) 
 endfunction
 
@@ -3589,7 +3589,7 @@ function Trig_Dialog_Complete_Func006C takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func008Func001C takes nothing returns boolean
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     if(not(udg_boolean07==false))then
@@ -3599,7 +3599,7 @@ function Trig_Dialog_Complete_Func008Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func008Func002C takes nothing returns boolean
-    if(not(udg_integers07[1]>= udg_integers07[2]))then
+    if(not(ModeVotesCount[1]>= ModeVotesCount[2]))then
         return false
     endif
     return true
@@ -3685,15 +3685,15 @@ endfunction
 
 function CheckAbilityVotes takes nothing returns nothing
     //random
-    if udg_integers07[7] > udg_integers07[6] and udg_integers07[7] > udg_integers07[19] then
+    if ModeVotesCount[7] > ModeVotesCount[6] and ModeVotesCount[7] > ModeVotesCount[19] then
         set AbilityMode = 0
 
         //pick
-    elseif udg_integers07[6] > udg_integers07[7] and udg_integers07[6] > udg_integers07[19] then
+    elseif ModeVotesCount[6] > ModeVotesCount[7] and ModeVotesCount[6] > ModeVotesCount[19] then
         set AbilityMode = 1
 
         //draft
-    elseif udg_integers07[19] > udg_integers07[6] and udg_integers07[19] > udg_integers07[7] then
+    elseif ModeVotesCount[19] > ModeVotesCount[6] and ModeVotesCount[19] > ModeVotesCount[7] then
         set AbilityMode = 2
 
         //if tie just do ap
@@ -3703,24 +3703,24 @@ function CheckAbilityVotes takes nothing returns nothing
 endfunction
 
 function Trig_Dialog_Complete_Func012C takes nothing returns boolean
-    if(not(udg_integers07[14]> udg_integers07[13]))then
+    if(not(ModeVotesCount[14]> ModeVotesCount[13]))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Dialog_Complete_Func014Func001Func003C takes nothing returns boolean
-    if(not(udg_integers07[11]> udg_integers07[9]))then
+    if(not(ModeVotesCount[11]> ModeVotesCount[9]))then
         return false
     endif
-    if(not(udg_integers07[11]> udg_integers07[10]))then
+    if(not(ModeVotesCount[11]> ModeVotesCount[10]))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Dialog_Complete_Func014Func001C takes nothing returns boolean
-    if((udg_boolean04==true))then
+    if((ElimModeEnabled==true))then
         return true
     endif
     if((InitialPlayerCount <= 2))then
@@ -3733,10 +3733,10 @@ function Trig_Dialog_Complete_Func014Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func014Func007Func011C takes nothing returns boolean
-    if(not(udg_integers07[10]> udg_integers07[9]))then
+    if(not(ModeVotesCount[10]> ModeVotesCount[9]))then
         return false
     endif
-    if(not(udg_integers07[10]> udg_integers07[11]))then
+    if(not(ModeVotesCount[10]> ModeVotesCount[11]))then
         return false
     endif
     return true
@@ -3785,7 +3785,7 @@ function Trig_Dialog_Complete_Func025001001002001 takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func025001001002002 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force01)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
 endfunction
 
 function Trig_Dialog_Complete_Func025001001002 takes nothing returns boolean
@@ -3810,9 +3810,9 @@ function SetIncomeMode takes nothing returns nothing
 endfunction
 
 function CheckIncomeVotes takes nothing returns nothing
-    if udg_integers07[15] > udg_integers07[16] and udg_integers07[15] > udg_integers07[17] then
+    if ModeVotesCount[15] > ModeVotesCount[16] and ModeVotesCount[15] > ModeVotesCount[17] then
         set IncomeMode = 0
-    elseif udg_integers07[16] > udg_integers07[15] and udg_integers07[16] > udg_integers07[17] then
+    elseif ModeVotesCount[16] > ModeVotesCount[15] and ModeVotesCount[16] > ModeVotesCount[17] then
         set IncomeMode = 1
     else
         set IncomeMode = 2	
@@ -3825,9 +3825,9 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
     call ClearTextMessagesBJ(GetPlayersAll())
     if(Trig_Dialog_Complete_Func006C())then
         call DisableTrigger(GetTriggeringTrigger())
-        set udg_boolean04 = true
-        set udg_integer31 =(PlayerCount * 5)
-        set udg_integer31 =(udg_integer31 - 5)
+        set ElimModeEnabled = true
+        set UnknownInteger01 =(PlayerCount * 5)
+        set UnknownInteger01 =(UnknownInteger01 - 5)
         if(Trig_Dialog_Complete_Func006Func008C())then
             set udg_strings02[1]= "Mode: Elimination (Hard)|r"
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
@@ -3854,7 +3854,7 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
         call DisplayTimedTextToForce(GetPlayersAll(),15,"|c00ff2c2cElimination mode will likely be removed in the future! Let us know on discord if you disagree.|r")
         call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func006Func009001001)),function Trig_Dialog_Complete_Func006Func009A)
     else
-        set udg_boolean04 = false
+        set ElimModeEnabled = false
         if(Trig_Dialog_Complete_Func006Func004C())then
             call DisableTrigger(GetTriggeringTrigger())
             set udg_boolean07 = true
@@ -3870,42 +3870,42 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
                 endif
                 call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
                 if(Trig_Dialog_Complete_Func006Func004Func005Func022001())then
-                    set udg_integer31 = 0
+                    set UnknownInteger01 = 0
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func023001())then
-                    set udg_integer31 = 5
+                    set UnknownInteger01 = 5
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func024001())then
-                    set udg_integer31 = 5
+                    set UnknownInteger01 = 5
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func025001())then
-                    set udg_integer31 = 10
+                    set UnknownInteger01 = 10
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func026001())then
-                    set udg_integer31 = 10
+                    set UnknownInteger01 = 10
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func027001())then
-                    set udg_integer31 = 10
+                    set UnknownInteger01 = 10
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func028001())then
-                    set udg_integer31 = 10
+                    set UnknownInteger01 = 10
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func029001())then
-                    set udg_integer31 = 15
+                    set UnknownInteger01 = 15
                 else
                     call DoNothing()
                 endif
@@ -3922,42 +3922,42 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
                 endif
                 call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
                 if(Trig_Dialog_Complete_Func006Func004Func005Func008001())then
-                    set udg_integer31 = 0
+                    set UnknownInteger01 = 0
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func009001())then
-                    set udg_integer31 = 10
+                    set UnknownInteger01 = 10
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func010001())then
-                    set udg_integer31 = 10
+                    set UnknownInteger01 = 10
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func011001())then
-                    set udg_integer31 = 20
+                    set UnknownInteger01 = 20
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func012001())then
-                    set udg_integer31 = 20
+                    set UnknownInteger01 = 20
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func013001())then
-                    set udg_integer31 = 20
+                    set UnknownInteger01 = 20
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func014001())then
-                    set udg_integer31 = 20
+                    set UnknownInteger01 = 20
                 else
                     call DoNothing()
                 endif
                 if(Trig_Dialog_Complete_Func006Func004Func005Func015001())then
-                    set udg_integer31 = 30
+                    set UnknownInteger01 = 30
                 else
                     call DoNothing()
                 endif
@@ -4039,18 +4039,18 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
     endif
     call CheckAbilityVotes()
     if AbilityMode == 0 then
-        set udg_boolean05 = true
+        set ArNotLearningAbil = true
         set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
         set udg_strings02[1]= "Type: Random Abilities"
     elseif AbilityMode == 1 then
-        set udg_boolean05 = false
+        set ArNotLearningAbil = false
         set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
         set udg_strings02[1]= "Type: Pick Abilities"
         call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
 
         //Draft mode
     elseif AbilityMode == 2 then
-        set udg_boolean05 = false
+        set ArNotLearningAbil = false
         set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
         set udg_strings02[1]= "Type: Draft Abilities"
         call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
@@ -4110,7 +4110,7 @@ function Trig_Choose_Hero_Func002Func004C takes nothing returns boolean
 endfunction
 
 function Trig_Choose_Hero_Func002C takes nothing returns boolean
-    if(not(udg_booleans03[GetConvertedPlayerId(GetTriggerPlayer())]==false))then
+    if(not(PlayerHeroPicked[GetConvertedPlayerId(GetTriggerPlayer())]==false))then
         return false
     endif
     if(not(GetOwningPlayer(GetTriggerUnit())==Player(8)))then
@@ -4253,8 +4253,8 @@ function Trig_Spawn_Hero_Func019C takes nothing returns boolean
 endfunction
 
 function Trig_Spawn_Hero_Actions takes nothing returns nothing
-    call ForceAddPlayerSimple(udg_player02,udg_force01)
-    set udg_booleans03[GetConvertedPlayerId(udg_player02)]= true
+    call ForceAddPlayerSimple(udg_player02,PlayersWithHero)
+    set PlayerHeroPicked[GetConvertedPlayerId(udg_player02)]= true
     set SpawnedHeroCount =(SpawnedHeroCount + 1)
 
     if(Trig_Spawn_Hero_Func005C())then
@@ -4401,7 +4401,7 @@ function Trig_Hero_Dies_Conditions takes nothing returns boolean
         return false
     endif
     //udg_boolean07
-    if ModeNoDeath == true and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
+    if ModeNoDeath == true and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
         call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
         call FixDeath(GetDyingUnit())
         call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
@@ -4411,7 +4411,7 @@ function Trig_Hero_Dies_Conditions takes nothing returns boolean
         return false
     endif
 
-    if Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] > 0 and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
+    if Lives[GetPlayerId(GetOwningPlayer(GetDyingUnit()))] > 0 and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
         set DisableDeathTrigger[pid] = true
         call TimerStart(NewTimerEx(pid), 1, false, function EnableDeathTrigger)
         set RoundLiveLost[pid] = true
@@ -4444,7 +4444,7 @@ function Trig_Hero_Dies_Func011C takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func013Func001001 takes nothing returns boolean
-    return((udg_integer31 - 5)>= RoundNumber)
+    return((UnknownInteger01 - 5)>= RoundNumber)
 endfunction
 
 function Trig_Hero_Dies_Func013Func002001001001001 takes nothing returns boolean
@@ -4468,13 +4468,13 @@ function Trig_Hero_Dies_Func013Func002001001 takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func013Func002A takes nothing returns nothing
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,udg_integer31)
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,udg_integer31)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
     call ResourseRefresh(GetEnumPlayer()) 
 endfunction
 
 function Trig_Hero_Dies_Func013C takes nothing returns boolean
-    if(not(udg_boolean04==true))then
+    if(not(ElimModeEnabled==true))then
         return false
     endif
     return true
@@ -4540,8 +4540,8 @@ function Trig_Hero_Dies_Func014Func002001001 takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func014Func002A takes nothing returns nothing
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,udg_integer31)
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,udg_integer31)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
     call ResourseRefresh(GetEnumPlayer()) 
 endfunction
 
@@ -4553,7 +4553,7 @@ function Trig_Hero_Dies_Func014C takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func016C takes nothing returns boolean
-    if(not(udg_boolean02==true))then
+    if(not(BrStarted==true))then
         return false
     endif
     return true
@@ -4582,7 +4582,7 @@ function Trig_Hero_Dies_Actions takes nothing returns nothing
     call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
     set PlayerCount =(PlayerCount - 1)
     call AllowSinglePlayerCommands()
-    set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= true
+    
     call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
     call DisableTrigger(udg_trigger16)
     call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_Func008A)
@@ -4597,7 +4597,7 @@ function Trig_Hero_Dies_Actions takes nothing returns nothing
 
     if(Trig_Hero_Dies_Func013C())then
         if(Trig_Hero_Dies_Func013Func001001())then
-            set udg_integer31 =(udg_integer31 - 5)
+            set UnknownInteger01 =(UnknownInteger01 - 5)
         else
             call DoNothing()
         endif
@@ -4607,23 +4607,23 @@ function Trig_Hero_Dies_Actions takes nothing returns nothing
     if(Trig_Hero_Dies_Func014C())then
         if(Trig_Hero_Dies_Func014Func001C())then
             if(Trig_Hero_Dies_Func014Func001Func003001())then
-                set udg_integer31 =(5 *(udg_integer41 + 1))
+                set UnknownInteger01 =(5 *(udg_integer41 + 1))
             else
                 call DoNothing()
             endif
             if(Trig_Hero_Dies_Func014Func001Func004001())then
-                set udg_integer31 =(5 *(udg_integer41 + 2))
+                set UnknownInteger01 =(5 *(udg_integer41 + 2))
             else
                 call DoNothing()
             endif
         else
             if(Trig_Hero_Dies_Func014Func001Func001001())then
-                set udg_integer31 =(10 *(udg_integer41 + 1))
+                set UnknownInteger01 =(10 *(udg_integer41 + 1))
             else
                 call DoNothing()
             endif
             if(Trig_Hero_Dies_Func014Func001Func002001())then
-                set udg_integer31 =(10 *(udg_integer41 + 2))
+                set UnknownInteger01 =(10 *(udg_integer41 + 2))
             else
                 call DoNothing()
             endif
@@ -4847,7 +4847,7 @@ function Trig_Display_Hint_Func001Func001Func001001001001 takes nothing returns 
 endfunction
 
 function Trig_Display_Hint_Func001Func001Func001001001002001 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force03)==true)
+    return(IsPlayerInForce(GetFilterPlayer(),RoundPlayersCompleted)==true)
 endfunction
 
 function Trig_Display_Hint_Func001Func001Func001001001002002 takes nothing returns boolean
@@ -4867,7 +4867,7 @@ function Trig_Display_Hint_Func001Func001Func002001001001 takes nothing returns 
 endfunction
 
 function Trig_Display_Hint_Func001Func001Func002001001002001 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force03)==true)
+    return(IsPlayerInForce(GetFilterPlayer(),RoundPlayersCompleted)==true)
 endfunction
 
 function Trig_Display_Hint_Func001Func001Func002001001002002 takes nothing returns boolean
@@ -4894,7 +4894,7 @@ function Trig_Display_Hint_Func001Func003001001001 takes nothing returns boolean
 endfunction
 
 function Trig_Display_Hint_Func001Func003001001002001 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force03)==true)
+    return(IsPlayerInForce(GetFilterPlayer(),RoundPlayersCompleted)==true)
 endfunction
 
 function Trig_Display_Hint_Func001Func003001001002002 takes nothing returns boolean
@@ -4910,7 +4910,7 @@ function Trig_Display_Hint_Func001Func003001001 takes nothing returns boolean
 endfunction
 
 function Trig_Display_Hint_Func001C takes nothing returns boolean
-    if(not(udg_boolean04==true))then
+    if(not(ElimModeEnabled==true))then
         return false
     endif
     return true
@@ -5112,7 +5112,7 @@ function Trig_Melee_Initialization_Func010Func003001001002001 takes nothing retu
 endfunction
 
 function Trig_Melee_Initialization_Func010Func003001001002002 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force01)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
 endfunction
 
 function Trig_Melee_Initialization_Func010Func003001001002 takes nothing returns boolean
@@ -5136,7 +5136,7 @@ function Trig_Melee_Initialization_Func010Func003Func001Func003Func002001001002 
 endfunction
 
 function Trig_Melee_Initialization_Func010Func003Func001Func003C takes nothing returns boolean
-    if(not(udg_booleans03[GetConvertedPlayerId(GetEnumPlayer())]==false))then
+    if(not(PlayerHeroPicked[GetConvertedPlayerId(GetEnumPlayer())]==false))then
         return false
     endif
     if(not(CountUnitsInGroup(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Melee_Initialization_Func010Func003Func001Func003Func002001001002)))==0))then
@@ -5197,7 +5197,7 @@ function Trig_Melee_Initialization_Actions takes nothing returns nothing
     endif
     call TriggerSleepAction(24.50)
     set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
-    set udg_integer19 = 5
+    set CountdownCount = 5
     call ConditionalTriggerExecute(udg_trigger117)
     call TriggerSleepAction(5.00)
     if(Trig_Melee_Initialization_Func010C())then
@@ -6821,9 +6821,9 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
     call ConditionalTriggerExecute(udg_trigger104)
     call ResetRoundAbilities()
     if RoundNumber < 15 then
-        set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,udg_integer22 - 2)]
+        set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,MaxCreepUnitTypes - 2)]
     else
-        set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,udg_integer22)]
+        set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,MaxCreepUnitTypes)]
     endif
     set RoundCreepMoveSpeed = GetRandomInt(GetRandomInt(150, 150 + RoundNumber * 2),400)
     set RoundCreepMaxAttackSpeed = GetRandomInt(1,RoundNumber)
@@ -6930,11 +6930,11 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
     set RoundNumber =(RoundNumber + 1)
     call ForGroupBJ(udg_group05,function Trig_Generate_Next_Level_Func018A)
     call GroupClear(udg_group05)
-    set udg_integer28 = 1
+    set RoundGenCreepIndex = 1
     loop
-        exitwhen udg_integer28 > RoundCreepNumber
+        exitwhen RoundGenCreepIndex > RoundCreepNumber
         set udg_integer40 = 1
-        if udg_integer28 > 4 then
+        if RoundGenCreepIndex > 4 then
             set RoundCreepChanceBigBadV = 2
         endif
         loop
@@ -7095,7 +7095,7 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
             endif
             set udg_integer40 = udg_integer40 + 1
         endloop
-        set udg_integer28 = udg_integer28 + 1
+        set RoundGenCreepIndex = RoundGenCreepIndex + 1
     endloop
 endfunction
 
@@ -7123,7 +7123,7 @@ function Trig_Unit_Type_Actions takes nothing returns nothing
     set CreepUnitTypeIds[21]= 'n01G'
     set CreepUnitTypeIds[22]= 'n00W'
     set CreepUnitTypeIds[23]= 'n01H'
-    set udg_integer22 = 23
+    set MaxCreepUnitTypes = 23
 endfunction
 
 function Trig_Bonus_Exp_Conditions takes nothing returns boolean
@@ -7190,7 +7190,7 @@ function Trig_Complete_Level_Move_Func003C takes nothing returns boolean
 endfunction
 
 function Trig_Complete_Level_Move_Func005Func001C takes nothing returns boolean
-    if((udg_boolean04==true))then
+    if((ElimModeEnabled==true))then
         return true
     endif
     if((udg_boolean08==true))then
@@ -7307,7 +7307,7 @@ function Trig_Complete_Level_Player_Func006C takes nothing returns boolean
     if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),DefeatedPlayers)!=true))then
         return false
     endif
-    if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),udg_force03)!=true))then
+    if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),RoundPlayersCompleted)!=true))then
         return false
     endif
     if(not(GetOwningPlayer(GetKillingUnitBJ())!=Player(11)))then
@@ -7339,7 +7339,7 @@ function Trig_Complete_Level_Player_Func005Func004001 takes nothing returns bool
 endfunction
 
 function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
-    if(not(CountPlayersInForceBJ(udg_force03)< udg_integer56))then
+    if(not(CountPlayersInForceBJ(RoundPlayersCompleted)< udg_integer56))then
         return false
     endif
     //	if(not(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])!='N00K'))then
@@ -7379,7 +7379,7 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
         call DoNothing()
     endif
     if(Trig_Complete_Level_Player_Func005C())then
-        set udg_integer48 =((PlayerCount -(1 + CountPlayersInForceBJ(udg_force03)))*(RoundNumber * 5))
+        set udg_integer48 =((PlayerCount -(1 + CountPlayersInForceBJ(RoundPlayersCompleted)))*(RoundNumber * 5))
         set udg_integer48 =(udg_integer48 * RoundNumber)
         if(Trig_Complete_Level_Player_Func005Func004001())then
             set udg_integer48 =(udg_integer48 / 2)
@@ -7389,7 +7389,7 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
     else
         set udg_integer48 = 0
     endif
-    call ForceAddPlayerSimple(p,udg_force03)
+    call ForceAddPlayerSimple(p,RoundPlayersCompleted)
     call SetCurrentlyFighting(p, false)
     set RoundFinishedCount =(RoundFinishedCount + 1)
     call SetUnitInvulnerable(PlayerHeroes[pid + 1],true)
@@ -7480,7 +7480,7 @@ function Trig_Level_Completed_Func001Func014Func001C takes nothing returns boole
 endfunction
 
 function Trig_Level_Completed_Func001Func014C takes nothing returns boolean
-    if(not(udg_boolean04==true))then
+    if(not(ElimModeEnabled==true))then
         return false
     endif
     return true
@@ -7545,7 +7545,7 @@ function Trig_Level_Completed_Func001Func018Func001Func004C takes nothing return
     if(not(PlayerCount > 1))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -7581,7 +7581,7 @@ function Trig_Level_Completed_Func001Func018Func002Func004C takes nothing return
     if(not(PlayerCount > 1))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -7598,7 +7598,7 @@ function Trig_Level_Completed_Func001Func018C takes nothing returns boolean
     if(not(udg_boolean08==true))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -7615,7 +7615,7 @@ function Trig_Level_Completed_Func001Func023Func001C takes nothing returns boole
     if(not(RoundNumber==50))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -7632,7 +7632,7 @@ function Trig_Level_Completed_Func001Func023Func002C takes nothing returns boole
     if(not(RoundNumber==25))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -7642,7 +7642,7 @@ function Trig_Level_Completed_Func001Func023C takes nothing returns boolean
     if(not(udg_boolean08==true))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -7770,7 +7770,7 @@ function Trig_Start_Level_Func011A takes nothing returns nothing
 endfunction
 
 function Trig_Start_Level_Func013Func001C takes nothing returns boolean
-    if((udg_boolean04==true))then
+    if((ElimModeEnabled==true))then
         return true
     endif
     if((udg_boolean08==true))then
@@ -7843,8 +7843,8 @@ function StartLevelRoundOne takes nothing returns nothing
 endfunction
 
 function Trig_Start_Level_Func015Func002A takes nothing returns nothing
-    set udg_booleans02[GetConvertedPlayerId(GetEnumPlayer())]= false
-    set udg_booleans01[GetConvertedPlayerId(GetEnumPlayer())]= false
+    
+    
     call ForGroupBJ(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Start_Level_Func015Func002Func003001002)),function Trig_Start_Level_Func015Func002Func003A)
     call EnumItemsInRectBJ(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
     call SetUnitInvulnerable(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],false)
@@ -7904,7 +7904,7 @@ function Trig_Start_Level_Actions takes nothing returns nothing
         call ForGroupBJ(GetUnitsOfTypeIdAll('n00E'),function Trig_Start_Level_Func003Func006A)
     else
     endif
-    call ForceClear(udg_force03)
+    call ForceClear(RoundPlayersCompleted)
     
     set RoundFinishedCount = 0
     call ConditionalTriggerExecute(udg_trigger146)
@@ -7972,7 +7972,7 @@ function Trig_Sudden_Death_Timer_Func002Func002Func001A takes nothing returns no
 endfunction
 
 function Trig_Sudden_Death_Timer_Func002Func002Func002Func001001001 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force03)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),RoundPlayersCompleted)!=true)
 endfunction
 
 function Trig_Sudden_Death_Timer_Func002Func002Func002Func001A takes nothing returns nothing
@@ -8034,14 +8034,14 @@ function Trig_Learn_Ability_Func006C takes nothing returns boolean
 endfunction
 
 function Trig_Learn_Ability_Func008Func001Func002Func001C takes nothing returns boolean
-    if(not(udg_boolean06==false))then
+    if(not(ARLearningAbil==false))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Learn_Ability_Func008Func001Func002Func002Func001C takes nothing returns boolean
-    if(not(udg_boolean06==false))then
+    if(not(ARLearningAbil==false))then
         return false
     endif
     return true
@@ -8062,7 +8062,7 @@ function Trig_Learn_Ability_Func008Func001Func002C takes nothing returns boolean
 endfunction
 
 function Trig_Learn_Ability_Func008Func001C takes nothing returns boolean
-    if(not(udg_boolean05==true))then
+    if(not(ArNotLearningAbil==true))then
         return false
     endif
     return true
@@ -8188,14 +8188,14 @@ function Trig_Learn_Ability_Func008Func002Func001Func001C takes nothing returns 
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func007Func001Func001C takes nothing returns boolean
-    if(not(udg_boolean06==false))then
+    if(not(ARLearningAbil==false))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func007Func001C takes nothing returns boolean
-    if(not(udg_boolean06==true))then
+    if(not(ARLearningAbil==true))then
         return false
     endif
     return true
@@ -8316,7 +8316,7 @@ function Trig_Learn_Ability_Func008Func002Func001Func007C takes nothing returns 
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func008C takes nothing returns boolean
-    if(not(udg_boolean06==false))then
+    if(not(ARLearningAbil==false))then
         return false
     endif
     return true
@@ -8330,7 +8330,7 @@ function Trig_Learn_Ability_Func008Func002Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func003Func001C takes nothing returns boolean
-    if(not(udg_boolean06==false))then
+    if(not(ARLearningAbil==false))then
         return false
     endif
     return true
@@ -8351,7 +8351,7 @@ function Trig_Learn_Ability_Func008Func002C takes nothing returns boolean
 endfunction
 
 function Trig_Learn_Ability_Func008C takes nothing returns boolean
-    if(not(udg_boolean05==false))then
+    if(not(ArNotLearningAbil==false))then
         return false
     endif
     return true
@@ -8433,7 +8433,7 @@ function Trig_Learn_Ability_Actions takes nothing returns nothing
                 return
             else
                 set HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+ 1)
-                set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= BoughtAbility
+                set PlayerLastLearnedSpell[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= BoughtAbility
                 call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), BoughtAbility, maxAbil, true)
             endif
         else
@@ -8531,7 +8531,7 @@ endfunction
 
 function Trig_Random_Ability_Actions takes nothing returns nothing
     if AbilityMode != 2 then
-        set udg_integer37 = 0
+        set UnknownInteger02 = 0
         set udg_unit01 = GetTriggerUnit()
         call ConditionalTriggerExecute(udg_trigger114)
     else
@@ -8540,14 +8540,14 @@ function Trig_Random_Ability_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Learn_Random_Ability_Func004Func001Func001C takes nothing returns boolean
-    if(not(udg_integer37 > 500))then
+    if(not(UnknownInteger02 > 500))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Learn_Random_Ability_Func004Func001Func002C takes nothing returns boolean
-    if(not(udg_boolean05==true))then
+    if(not(ArNotLearningAbil==true))then
         return false
     endif
     return true
@@ -8593,7 +8593,7 @@ function Trig_Learn_Random_Ability_Func004Func001Func005C takes nothing returns 
     if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),udg_unit01)< 30))then
         return false
     endif
-    if(not(udg_integer37 <= 500))then
+    if(not(UnknownInteger02 <= 500))then
         return false
     endif
     return true
@@ -8607,7 +8607,7 @@ function Trig_Learn_Random_Ability_Func004Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Learn_Random_Ability_Func004Func002C takes nothing returns boolean
-    if(not(udg_boolean05==true))then
+    if(not(ArNotLearningAbil==true))then
         return false
     endif
     return true
@@ -8668,22 +8668,22 @@ function Trig_Learn_Random_Ability_Actions takes nothing returns nothing
     set RoundCreepAbilCastChance = GetItemFromAbility(GetRandomAbility())
     if(Trig_Learn_Random_Ability_Func004C())then
         if(Trig_Learn_Random_Ability_Func004Func002C())then
-            set udg_boolean05 = false
-            set udg_boolean06 = true
+            set ArNotLearningAbil = false
+            set ARLearningAbil = true
             call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
-            set udg_boolean06 = false
-            set udg_boolean05 = true
+            set ARLearningAbil = false
+            set ArNotLearningAbil = true
         else
             call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
         endif
     else
         if(Trig_Learn_Random_Ability_Func004Func001C())then
             if(Trig_Learn_Random_Ability_Func004Func001Func002C())then
-                set udg_boolean05 = false
-                set udg_boolean06 = true
+                set ArNotLearningAbil = false
+                set ARLearningAbil = true
                 call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
-                set udg_boolean06 = false
-                set udg_boolean05 = true
+                set ARLearningAbil = false
+                set ArNotLearningAbil = true
             else
                 call AdjustPlayerStateBJ(5,GetOwningPlayer(udg_unit01),PLAYER_STATE_RESOURCE_LUMBER)
 
@@ -8704,7 +8704,7 @@ function Trig_Learn_Random_Ability_Actions takes nothing returns nothing
                 return
             else
             endif
-            set udg_integer37 =(udg_integer37 + 1)
+            set UnknownInteger02 =(UnknownInteger02 + 1)
             call ConditionalTriggerExecute(GetTriggeringTrigger())
         endif
     endif
@@ -8718,17 +8718,17 @@ function Trig_Unlearn_Ability_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Unlearn_Ability_Func001Func003C takes nothing returns boolean
-    if(not(udg_boolean05==false))then
+    if(not(ArNotLearningAbil==false))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Unlearn_Ability_Func001C takes nothing returns boolean
-    if(not(udg_boolean05==false))then
+    if(not(ArNotLearningAbil==false))then
         return false
     endif
-    if(not(udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]!='Amnz'))then
+    if(not(PlayerLastLearnedSpell[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]!='Amnz'))then
         return false
     endif
     return true
@@ -8747,15 +8747,15 @@ function Trig_Unlearn_Ability_Actions takes nothing returns nothing
         if CountS > 0 then
 
             set HeroAbilityCount[Pid]=(HeroAbilityCount[Pid]- 1)
-            set udg_integers05[Pid] = GetLastLearnedSpell(GetTriggerUnit(), SpellList_Normal, true)
+            set PlayerLastLearnedSpell[Pid] = GetLastLearnedSpell(GetTriggerUnit(), SpellList_Normal, true)
             call SetInfoHeroSpell(GetTriggerUnit(),CountS,0 )
             call SaveCountHeroSpell(GetTriggerUnit() ,CountS - 1,0 ) 
 
-            call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(udg_integers05[Pid], GetUnitAbilityLevel(GetTriggerUnit(), udg_integers05[Pid]) - 1))
+            call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[Pid], GetUnitAbilityLevel(GetTriggerUnit(), PlayerLastLearnedSpell[Pid]) - 1))
             call AddSpecialEffectTargetUnitBJ("origin",GetTriggerUnit(),"Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
-            call UnitRemoveAbilityBJ(udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())
-            call FunResetAbility (udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())
+            call UnitRemoveAbilityBJ(PlayerLastLearnedSpell[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())
+            call FunResetAbility (PlayerLastLearnedSpell[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())
         endif
 
     else
@@ -8793,16 +8793,16 @@ function Trig_AntiStuck_Func002Func001Func005Func001001001002 takes nothing retu
 endfunction
 
 function Trig_AntiStuck_Func002Func001Func005C takes nothing returns boolean
-    if((CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0))then
+    if((CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0))then
         return false
     endif
-    if(not(IsPlayerInForce(GetOwningPlayer(PlayerHeroes[udg_integer27]),DefeatedPlayers)!=true))then
+    if(not(IsPlayerInForce(GetOwningPlayer(PlayerHeroes[AntiStuckPlayerId]),DefeatedPlayers)!=true))then
         return false
     endif
-    if(not(IsPlayerInForce(GetOwningPlayer(PlayerHeroes[udg_integer27]),udg_force03)!=true))then
+    if(not(IsPlayerInForce(GetOwningPlayer(PlayerHeroes[AntiStuckPlayerId]),RoundPlayersCompleted)!=true))then
         return false
     endif
-    if(not(PlayerHeroes[udg_integer27]!=null))then
+    if(not(PlayerHeroes[AntiStuckPlayerId]!=null))then
         return false
     endif
     return true
@@ -8816,26 +8816,26 @@ function Trig_AntiStuck_Func002Func001C takes nothing returns boolean
 endfunction
 
 function Trig_AntiStuck_Actions takes nothing returns nothing
-    set udg_integer27 = 1
+    set AntiStuckPlayerId = 1
     loop
-        exitwhen udg_integer27 > 8
-        if RectContainsUnit(udg_rect09, PlayerHeroes[udg_integer27]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
-            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+        exitwhen AntiStuckPlayerId > 8
+        if RectContainsUnit(udg_rect09, PlayerHeroes[AntiStuckPlayerId]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
+            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
         endif
 
         if(Trig_AntiStuck_Func002Func001C())then
-            call CreateNUnitsAtLoc(1,'n00T',Player(11),GetRectCenter(PlayerArenaRects[udg_integer27]),bj_UNIT_FACING)
-            call SuspendHeroXPBJ(false,PlayerHeroes[udg_integer27])
-            call UnitDamageTargetBJ(PlayerHeroes[udg_integer27],GetLastCreatedUnit(),500,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL)
-            call SuspendHeroXPBJ(true,PlayerHeroes[udg_integer27])
+            call CreateNUnitsAtLoc(1,'n00T',Player(11),GetRectCenter(PlayerArenaRects[AntiStuckPlayerId]),bj_UNIT_FACING)
+            call SuspendHeroXPBJ(false,PlayerHeroes[AntiStuckPlayerId])
+            call UnitDamageTargetBJ(PlayerHeroes[AntiStuckPlayerId],GetLastCreatedUnit(),500,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL)
+            call SuspendHeroXPBJ(true,PlayerHeroes[AntiStuckPlayerId])
         endif
 
-        set udg_integer27 = udg_integer27 + 1
+        set AntiStuckPlayerId = AntiStuckPlayerId + 1
     endloop
 endfunction
 
 function Trig_Countdown_Func001Func001C takes nothing returns boolean
-    if(not(udg_integer19 > 0))then
+    if(not(CountdownCount > 0))then
         return false
     endif
     if(not(RoundNumber==1))then
@@ -8848,7 +8848,7 @@ function Trig_Countdown_Func001Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Countdown_Func001Func002C takes nothing returns boolean
-    if(not(udg_integer19 > 0))then
+    if(not(CountdownCount > 0))then
         return false
     endif
     if(not(udg_boolean09==false))then
@@ -8875,12 +8875,12 @@ function Trig_Countdown_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Countdown_Actions takes nothing returns nothing
-    call CreateTextTagLocBJ((I2S(udg_integer19)+ " ..."),udg_location01,0.00,40.00,100,I2R((udg_integer19 * 20)),I2R((udg_integer19 * 20)),0)
+    call CreateTextTagLocBJ((I2S(CountdownCount)+ " ..."),udg_location01,0.00,40.00,100,I2R((CountdownCount * 20)),I2R((CountdownCount * 20)),0)
     call SetTextTagPermanentBJ(GetLastCreatedTextTag(),false)
     call SetTextTagFadepointBJ(GetLastCreatedTextTag(),0.80)
     call SetTextTagLifespanBJ(GetLastCreatedTextTag(),1.00)
     call PlaySoundBJ(udg_sound09)
-    set udg_integer19 =(udg_integer19 - 1)
+    set CountdownCount =(CountdownCount - 1)
     call TriggerSleepAction(1.00)
     call ConditionalTriggerExecute(GetTriggeringTrigger())
 endfunction
@@ -8928,7 +8928,7 @@ function Trig_End_Game_Func003Func007Func001C takes nothing returns boolean
     if((udg_boolean07==true))then
         return true
     endif
-    if((udg_boolean04==true))then
+    if((ElimModeEnabled==true))then
         return true
     endif
     return false
@@ -8941,7 +8941,7 @@ function Trig_End_Game_Func003Func007Func002C takes nothing returns boolean
     if(not(RoundNumber==25))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -8954,7 +8954,7 @@ function Trig_End_Game_Func003Func007Func003C takes nothing returns boolean
     if(not(RoundNumber==50))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -8996,17 +8996,17 @@ function Trig_End_Game_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Playtime_Func002C takes nothing returns boolean
-    if(not(udg_integers06[2]> 59))then
+    if(not(Playtime[2]> 59))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Playtime_Actions takes nothing returns nothing
-    set udg_integers06[2]=(udg_integers06[2]+ 1)
+    set Playtime[2]=(Playtime[2]+ 1)
     if(Trig_Playtime_Func002C())then
-        set udg_integers06[2]= 0
-        set udg_integers06[1]=(udg_integers06[1]+ 1)
+        set Playtime[2]= 0
+        set Playtime[1]=(Playtime[1]+ 1)
     else
     endif
 endfunction
@@ -9051,7 +9051,7 @@ function Trig_Victory_Func001Func002Func003Func001C takes nothing returns boolea
     if(not(RoundNumber==25))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -9064,7 +9064,7 @@ function Trig_Victory_Func001Func002Func003Func002C takes nothing returns boolea
     if(not(RoundNumber==50))then
         return false
     endif
-    if(not(udg_boolean04==false))then
+    if(not(ElimModeEnabled==false))then
         return false
     endif
     return true
@@ -9111,7 +9111,7 @@ function Trig_Victory_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Victory_Func006C takes nothing returns boolean
-    if(not(udg_boolean02==false))then
+    if(not(BrStarted==false))then
         return false
     endif
     return true
@@ -9284,10 +9284,10 @@ function Trig_Movement_Speed_Command_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Playtime_Command_Func002Func001Func001Func003C takes nothing returns boolean
-    if(not(udg_integers06[1]!=1))then
+    if(not(Playtime[1]!=1))then
         return false
     endif
-    if(not(udg_integers06[2]==1))then
+    if(not(Playtime[2]==1))then
         return false
     endif
     return true
@@ -9301,10 +9301,10 @@ function Trig_Playtime_Command_Func002Func001Func001C takes nothing returns bool
 endfunction
 
 function Trig_Playtime_Command_Func002Func001Func003C takes nothing returns boolean
-    if(not(udg_integers06[1]==1))then
+    if(not(Playtime[1]==1))then
         return false
     endif
-    if(not(udg_integers06[2]!=1))then
+    if(not(Playtime[2]!=1))then
         return false
     endif
     return true
@@ -9318,10 +9318,10 @@ function Trig_Playtime_Command_Func002Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Playtime_Command_Func002Func003C takes nothing returns boolean
-    if(not(udg_integers06[1]==1))then
+    if(not(Playtime[1]==1))then
         return false
     endif
-    if(not(udg_integers06[2]==1))then
+    if(not(Playtime[2]==1))then
         return false
     endif
     return true
@@ -9337,15 +9337,15 @@ endfunction
 function Trig_Playtime_Command_Actions takes nothing returns nothing
     call ForceAddPlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
     if(Trig_Playtime_Command_Func002C())then
-        call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Playtime: " +((I2S(udg_integers06[1])+(" minute and " +(I2S(udg_integers06[2])+ " second")))+ "|r")))
+        call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Playtime: " +((I2S(Playtime[1])+(" minute and " +(I2S(Playtime[2])+ " second")))+ "|r")))
     else
         if(Trig_Playtime_Command_Func002Func001C())then
-            call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Playtime: " +((I2S(udg_integers06[1])+(" minute and " +(I2S(udg_integers06[2])+ " seconds")))+ "|r")))
+            call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Playtime: " +((I2S(Playtime[1])+(" minute and " +(I2S(Playtime[2])+ " seconds")))+ "|r")))
         else
             if(Trig_Playtime_Command_Func002Func001Func001C())then
-                call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Playtime: " +((I2S(udg_integers06[1])+(" minutes and " +(I2S(udg_integers06[2])+ " second")))+ "|r")))
+                call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Playtime: " +((I2S(Playtime[1])+(" minutes and " +(I2S(Playtime[2])+ " second")))+ "|r")))
             else
-                call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Playtime: " +((I2S(udg_integers06[1])+(" minutes and " +(I2S(udg_integers06[2])+ " seconds")))+ "|r")))
+                call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Playtime: " +((I2S(Playtime[1])+(" minutes and " +(I2S(Playtime[2])+ " seconds")))+ "|r")))
             endif
         endif
     endif
@@ -9562,7 +9562,7 @@ function Trig_Player_Selection_Camera_Func001001 takes nothing returns boolean
 endfunction
 
 function Trig_Player_Selection_Camera_Func002001001 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force01)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
 endfunction
 
 function Trig_Player_Selection_Camera_Func002A takes nothing returns nothing
@@ -10076,49 +10076,49 @@ function Trig_End_PvP_Actions takes nothing returns nothing
     if(Trig_End_PvP_Func021C())then
         call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
         call FixDeath(GetDyingUnit())
-        set udg_integer32 = 1
+        set PvpEndIndex = 1
         loop
-            exitwhen udg_integer32 > 6
-            call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32))
-            call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32))
-            call UnitAddItemByIdSwapped(DuelHeroItemIds1[udg_integer32],DuelingHeroes[1])
-            if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),udg_integer32) then
+            exitwhen PvpEndIndex > 6
+            call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex))
+            call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex))
+            call UnitAddItemByIdSwapped(DuelHeroItemIds1[PvpEndIndex],DuelingHeroes[1])
+            if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),PvpEndIndex) then
                 //call BJDebugMsg("1a item move success")
             else
                 //call BJDebugMsg("1a item move fail")
             endif
-            call UnitAddItemByIdSwapped(DuelHeroItemIds2[udg_integer32],DuelingHeroes[2])
-            if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),udg_integer32) then
+            call UnitAddItemByIdSwapped(DuelHeroItemIds2[PvpEndIndex],DuelingHeroes[2])
+            if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),PvpEndIndex) then
                 //call BJDebugMsg("2a item move success")
             else
                 //call BJDebugMsg("2a item move fail")
             endif
-            set udg_integer32 = udg_integer32 + 1
+            set PvpEndIndex = PvpEndIndex + 1
         endloop
     else
-        set udg_integer32 = 1
+        set PvpEndIndex = 1
         loop
-            exitwhen udg_integer32 > 6
+            exitwhen PvpEndIndex > 6
             if(Trig_End_PvP_Func021Func001Func001C())then
-                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32))
-                call UnitAddItemByIdSwapped(DuelHeroItemIds1[udg_integer32],DuelingHeroes[1])
-                if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),udg_integer32) then
+                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex))
+                call UnitAddItemByIdSwapped(DuelHeroItemIds1[PvpEndIndex],DuelingHeroes[1])
+                if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),PvpEndIndex) then
                     //call BJDebugMsg("1b item move success")
                 else
                    //call BJDebugMsg("1b item move fail")
                 endif
             else
-                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32))
-                call UnitAddItemByIdSwapped(DuelHeroItemIds2[udg_integer32],DuelingHeroes[2])
-                if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),udg_integer32) then
+                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex))
+                call UnitAddItemByIdSwapped(DuelHeroItemIds2[PvpEndIndex],DuelingHeroes[2])
+                if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),PvpEndIndex) then
                     //call BJDebugMsg("2b item move success")
                 else
                     //call BJDebugMsg("2b item move fail")
                 endif
             endif
-            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32), true)
-            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32), true)
-            set udg_integer32 = udg_integer32 + 1
+            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex), true)
+            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex), true)
+            set PvpEndIndex = PvpEndIndex + 1
         endloop
     endif
     call ConditionalTriggerExecute(udg_trigger54)
@@ -10368,7 +10368,7 @@ endfunction
 
 function Trig_PvP_Battle_Func001Func031Func006A takes nothing returns nothing
     if(Trig_PvP_Battle_Func001Func031Func006Func001C())then
-        call DialogDisplayBJ(true,udg_dialogs01[1],GetEnumPlayer())
+        call DialogDisplayBJ(true,Dialogs[1],GetEnumPlayer())
     else
     endif
 endfunction
@@ -10385,7 +10385,7 @@ function Trig_PvP_Battle_Func001Func041A takes nothing returns nothing
     set bj_forLoopAIndexEnd = 3
     loop
         exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-        call DialogDisplayBJ(false,udg_dialogs01[GetForLoopIndexA()],GetEnumPlayer())
+        call DialogDisplayBJ(false,Dialogs[GetForLoopIndexA()],GetEnumPlayer())
         set bj_forLoopAIndex = bj_forLoopAIndex + 1
     endloop
 endfunction
@@ -10457,41 +10457,41 @@ function Trig_PvP_Battle_Actions takes nothing returns nothing
         endloop
         call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
         call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
-        set udg_integer33 = 1
+        set PvpStartIndex = 1
         loop
-            exitwhen udg_integer33 > 6
-            set DuelHeroItemIds1[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33))
-            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33), false)
-            set DuelHeroItemIds2[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33))
-            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33), false)
-            set udg_integer33 = udg_integer33 + 1
+            exitwhen PvpStartIndex > 6
+            set DuelHeroItemIds1[PvpStartIndex]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[1],PvpStartIndex))
+            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],PvpStartIndex), false)
+            set DuelHeroItemIds2[PvpStartIndex]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[2],PvpStartIndex))
+            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],PvpStartIndex), false)
+            set PvpStartIndex = PvpStartIndex + 1
         endloop
         call TriggerSleepAction(0.20)
         set udg_boolean18 = true
         if(Trig_PvP_Battle_Func001Func031C())then
-            call DialogClearBJ(udg_dialogs01[1])
-            call DialogSetMessageBJ(udg_dialogs01[1],"Betting Menu")
+            call DialogClearBJ(Dialogs[1])
+            call DialogSetMessageBJ(Dialogs[1],"Betting Menu")
             set bj_forLoopAIndex = 1
             set bj_forLoopAIndexEnd = 2
             loop
                 exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
                 if(Trig_PvP_Battle_Func001Func031Func003Func001C())then
-                    call DialogAddButtonBJ(udg_dialogs01[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r   ")))
+                    call DialogAddButtonBJ(Dialogs[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r   ")))
                 else
-                    call DialogAddButtonBJ(udg_dialogs01[1],("   " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r >>")))
+                    call DialogAddButtonBJ(Dialogs[1],("   " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r >>")))
                 endif
-                set udg_buttons02[GetForLoopIndexA()]= GetLastCreatedButtonBJ()
+                set DialogButtons[GetForLoopIndexA()]= GetLastCreatedButtonBJ()
                 set bj_forLoopAIndex = bj_forLoopAIndex + 1
             endloop
-            call DialogAddButtonBJ(udg_dialogs01[1],"Skip")
-            set udg_buttons02[3]= GetLastCreatedButtonBJ()
+            call DialogAddButtonBJ(Dialogs[1],"Skip")
+            set DialogButtons[3]= GetLastCreatedButtonBJ()
             call ForForce(GetPlayersMatching(Condition(function Trig_PvP_Battle_Func001Func031Func006001001)),function Trig_PvP_Battle_Func001Func031Func006A)
         endif
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Prepare ...")
         call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
         call TriggerSleepAction(4.50)
-        set udg_integer19 = 5
+        set CountdownCount = 5
         call ConditionalTriggerExecute(udg_trigger117)
         call TriggerSleepAction(5.50)
         set udg_boolean18 = false
@@ -10859,7 +10859,7 @@ function Trig_Remove_Units_From_Center_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Update_Items_Func001Func001C takes nothing returns boolean
-    if((udg_boolean04==true))then
+    if((ElimModeEnabled==true))then
         return true
     endif
     if((udg_boolean08==true))then
@@ -10944,30 +10944,30 @@ function Trig_Hide_Shops_Func002001002 takes nothing returns boolean
 endfunction
 
 function Trig_Hide_Shops_Func002A takes nothing returns nothing
-    set udg_integer35 =(udg_integer35 + 1)
-    set udg_locations01[udg_integer35]= GetUnitLoc(GetEnumUnit())
-    set udg_integers10[udg_integer35]= GetUnitTypeId(GetEnumUnit())
+    set HideShopsCount =(HideShopsCount + 1)
+    set udg_locations01[HideShopsCount]= GetUnitLoc(GetEnumUnit())
+    set ShopIds[HideShopsCount]= GetUnitTypeId(GetEnumUnit())
     call SetUnitPositionLoc(GetEnumUnit(),OffsetLocation(GetRectCenter(GetEntireMapRect()),0,1000000000.00))
     call DeleteUnit(GetEnumUnit())
 endfunction
 
 function Trig_Hide_Shops_Actions takes nothing returns nothing
-    set udg_integer35 = 0
+    set HideShopsCount = 0
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Hide_Shops_Func002001002)),function Trig_Hide_Shops_Func002A)
 endfunction
 
 function Trig_Unhide_Shops_Func001Func001Func001Func002C takes nothing returns boolean
-    if(not(udg_boolean05!=true))then
+    if(not(ArNotLearningAbil!=true))then
         return false
     endif
-    if(not(udg_integers10[udg_integer36]!='n016'))then
+    if(not(ShopIds[HideShopsIndex]!='n016'))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Unhide_Shops_Func001Func001Func001C takes nothing returns boolean
-    if((udg_boolean05==true))then
+    if((ArNotLearningAbil==true))then
         return true
     endif
     if(Trig_Unhide_Shops_Func001Func001Func001Func002C())then
@@ -10991,11 +10991,11 @@ function Trig_Unhide_Shops_Func001Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Unhide_Shops_Actions takes nothing returns nothing
-    set udg_integer36 = 1
+    set HideShopsIndex = 1
     loop
-        exitwhen udg_integer36 > udg_integer35
+        exitwhen HideShopsIndex > HideShopsCount
         if(Trig_Unhide_Shops_Func001Func001C())then
-            call CreateNUnitsAtLoc(1,udg_integers10[udg_integer36],Player(PLAYER_NEUTRAL_PASSIVE),udg_locations01[udg_integer36],bj_UNIT_FACING)
+            call CreateNUnitsAtLoc(1,ShopIds[HideShopsIndex],Player(PLAYER_NEUTRAL_PASSIVE),udg_locations01[HideShopsIndex],bj_UNIT_FACING)
             if(Trig_Unhide_Shops_Func001Func001Func003C())then
                 call TriggerRegisterUnitInRangeSimple(udg_trigger149,300.00,GetLastCreatedUnit())
                 set udg_unit04 = GetLastCreatedUnit()
@@ -11003,7 +11003,7 @@ function Trig_Unhide_Shops_Actions takes nothing returns nothing
             endif
         else
         endif
-        set udg_integer36 = udg_integer36 + 1
+        set HideShopsIndex = HideShopsIndex + 1
     endloop
 endfunction
 
@@ -11115,7 +11115,7 @@ function Trig_Hero_Dies_Death_Match_PvP_Actions takes nothing returns nothing
     call SetCurrentlyFighting(GetOwningPlayer(GetTriggerUnit()), false)
     set PlayerCount =(PlayerCount - 1)
     call AllowSinglePlayerCommands()
-    set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= true
+    
     call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
     call DisableTrigger(udg_trigger16)
     call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_Death_Match_PvP_Func008A)
@@ -11126,15 +11126,15 @@ function Trig_Hero_Dies_Death_Match_PvP_Actions takes nothing returns nothing
     else
         call CustomDefeatBJ(GetOwningPlayer(GetTriggerUnit()),"Defeat!")
     endif
-    set udg_integer30 = 1
+    set ElimDmHeroDeathFxIndex = 1
     loop
-        exitwhen udg_integer30 > 5
+        exitwhen ElimDmHeroDeathFxIndex > 5
         call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Human\\HumanLargeDeathExplode\\HumanLargeDeathExplode.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
         call AddSpecialEffectTargetUnitBJ("chest",GetTriggerUnit(),"Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
         call TriggerSleepAction(0.10)
-        set udg_integer30 = udg_integer30 + 1
+        set ElimDmHeroDeathFxIndex = ElimDmHeroDeathFxIndex + 1
     endloop
     call TriggerSleepAction(0.50)
     call StopSoundBJ(udg_sound13,true)
@@ -11203,7 +11203,7 @@ function Trig_Elimination_Func020001002 takes nothing returns boolean
 endfunction
 
 function Trig_Elimination_Func020A takes nothing returns nothing
-    set udg_integer29 =(udg_integer29 + 1)
+    set ElimPlayerCount =(ElimPlayerCount + 1)
     set udg_unit01 = GetEnumUnit()
     call ConditionalTriggerExecute(udg_trigger82)
     call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),750.00,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
@@ -11250,7 +11250,7 @@ function Trig_Elimination_Func036A takes nothing returns nothing
 endfunction
 
 function Trig_Elimination_Func037C takes nothing returns boolean
-    if(not(udg_integer29==1))then
+    if(not(ElimPlayerCount==1))then
         return false
     endif
     return true
@@ -11267,7 +11267,7 @@ function Trig_Elimination_Actions takes nothing returns nothing
     call TriggerSleepAction(2.00)
     call PlaySoundBJ(udg_sound16)
     call TriggerSleepAction(12.50)
-    set udg_boolean03 = true
+    set ElimPvpStarted = true
     call DisplayTextToForce(GetPlayersAll(),"|cffffcc00Elimination - Survive to advance to the next level!")
     call PauseAllUnitsBJ(true)
     call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
@@ -11279,7 +11279,7 @@ function Trig_Elimination_Actions takes nothing returns nothing
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Elimination_Func018Func001001002)),function Trig_Elimination_Func018Func001A)
         set udg_integer46 = udg_integer46 + 1
     endloop
-    set udg_integer29 = 0
+    set ElimPlayerCount = 0
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Elimination_Func020001002)),function Trig_Elimination_Func020A)
     call EnumItemsInRectBJ(GetPlayableMapRect(),function Trig_Elimination_Func021A)
     call DisableTrigger(udg_trigger142)
@@ -11290,7 +11290,7 @@ function Trig_Elimination_Actions takes nothing returns nothing
     call EnableTrigger(udg_trigger153)
     call TriggerSleepAction(2)
     set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
-    set udg_integer19 = 5
+    set CountdownCount = 5
     call ConditionalTriggerExecute(udg_trigger117)
     call TriggerSleepAction(5.00)
     call ResumeMusicBJ()
@@ -11307,7 +11307,7 @@ function Trig_Elimination_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Hero_Dies_Elimination_Func039C takes nothing returns boolean
-    if(not(udg_boolean03==true))then
+    if(not(ElimPvpStarted==true))then
         return false
     endif
     if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
@@ -11534,18 +11534,18 @@ function Trig_Hero_Dies_Elimination_Actions takes nothing returns nothing
     else
         call CustomDefeatBJ(GetOwningPlayer(GetTriggerUnit()),"Defeat!")
     endif
-    set udg_integer30 = 1
+    set ElimDmHeroDeathFxIndex = 1
     loop
-        exitwhen udg_integer30 > 5
+        exitwhen ElimDmHeroDeathFxIndex > 5
         call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Human\\HumanLargeDeathExplode\\HumanLargeDeathExplode.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
         call AddSpecialEffectTargetUnitBJ("chest",GetTriggerUnit(),"Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
         call TriggerSleepAction(0.10)
-        set udg_integer30 = udg_integer30 + 1
+        set ElimDmHeroDeathFxIndex = ElimDmHeroDeathFxIndex + 1
     endloop
     call TriggerSleepAction(3.00)
-    set udg_boolean03 = false
+    set ElimPvpStarted = false
     set udg_integer47 = 1
     loop
         exitwhen udg_integer47 > 8
@@ -11838,31 +11838,31 @@ function main2 takes nothing returns nothing
     call TriggerAddCondition(udg_trigger44,Condition(function Trig_Betting_Initialization_Conditions))
     call TriggerAddAction(udg_trigger44,function Trig_Betting_Initialization_Actions)
     set udg_trigger45 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger45,udg_dialogs01[1])
+    call TriggerRegisterDialogEventBJ(udg_trigger45,Dialogs[1])
     call TriggerAddCondition(udg_trigger45,Condition(function Trig_Place_Bet_PvP1_Conditions))
     call TriggerAddAction(udg_trigger45,function Trig_Place_Bet_PvP1_Actions)
     set udg_trigger46 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger46,udg_dialogs01[1])
+    call TriggerRegisterDialogEventBJ(udg_trigger46,Dialogs[1])
     call TriggerAddCondition(udg_trigger46,Condition(function Trig_Place_Bet_PvP2_Conditions))
     call TriggerAddAction(udg_trigger46,function Trig_Place_Bet_PvP2_Actions)
     set udg_trigger47 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger47,udg_dialogs01[1])
+    call TriggerRegisterDialogEventBJ(udg_trigger47,Dialogs[1])
     call TriggerAddCondition(udg_trigger47,Condition(function Trig_Skip_Bet_Conditions))
     call TriggerAddAction(udg_trigger47,function Trig_Skip_Bet_Actions)
     set udg_trigger48 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger48,udg_dialogs01[2])
+    call TriggerRegisterDialogEventBJ(udg_trigger48,Dialogs[2])
     call TriggerAddCondition(udg_trigger48,Condition(function Trig_Place_Bet_Gold_Conditions))
     call TriggerAddAction(udg_trigger48,function Trig_Place_Bet_Gold_Actions)
     set udg_trigger49 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger49,udg_dialogs01[2])
+    call TriggerRegisterDialogEventBJ(udg_trigger49,Dialogs[2])
     call TriggerAddCondition(udg_trigger49,Condition(function Trig_Place_Bet_Lumber_Conditions))
     call TriggerAddAction(udg_trigger49,function Trig_Place_Bet_Lumber_Actions)
     set udg_trigger50 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger50,udg_dialogs01[2])
+    call TriggerRegisterDialogEventBJ(udg_trigger50,Dialogs[2])
     call TriggerAddCondition(udg_trigger50,Condition(function Trig_Place_Bet_GoldLumber_Conditions))
     call TriggerAddAction(udg_trigger50,function Trig_Place_Bet_GoldLumber_Actions)
     set udg_trigger51 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger51,udg_dialogs01[3])
+    call TriggerRegisterDialogEventBJ(udg_trigger51,Dialogs[3])
     call TriggerAddCondition(udg_trigger51,Condition(function Trig_Place_Bet_Conditions))
     call TriggerAddAction(udg_trigger51,function Trig_Place_Bet_Actions)
     set udg_trigger52 = CreateTrigger()
@@ -11888,93 +11888,93 @@ function main2 takes nothing returns nothing
     call TriggerAddCondition(udg_trigger58,Condition(function Trig_Everyone_Votes_Conditions))
     call TriggerAddAction(udg_trigger58,function Trig_Everyone_Votes_Actions)
     set udg_trigger59 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger59,udg_dialog01)
+    call TriggerRegisterDialogEventBJ(udg_trigger59,GameDurDialog)
     call TriggerAddCondition(udg_trigger59,Condition(function Trig_Dialog_25_Conditions))
     call TriggerAddAction(udg_trigger59,function Trig_Dialog_25_Actions)
     set udg_trigger60 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger60,udg_dialog01)
+    call TriggerRegisterDialogEventBJ(udg_trigger60,GameDurDialog)
     call TriggerAddCondition(udg_trigger60,Condition(function Trig_Dialog_50_Conditions))
     call TriggerAddAction(udg_trigger60,function Trig_Dialog_50_Actions)
     set udg_trigger61 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger61,udg_dialog01)
+    call TriggerRegisterDialogEventBJ(udg_trigger61,GameDurDialog)
     call TriggerAddCondition(udg_trigger61,Condition(function Trig_Doesnt_Matter_Conditions))
     call TriggerAddAction(udg_trigger61,function Trig_Doesnt_Matter_Actions)
     set udg_trigger62 = CreateTrigger()
     call TriggerAddAction(udg_trigger62,function Trig_Skip_Betting_Menu_Actions)
     set udg_trigger63 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger63,udg_dialog02)
+    call TriggerRegisterDialogEventBJ(udg_trigger63,GameModeDialog)
     call TriggerAddCondition(udg_trigger63,Condition(function Trig_Normal_Mode_Conditions))
     call TriggerAddAction(udg_trigger63,function Trig_Normal_Mode_Actions)
     set udg_trigger64 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger64,udg_dialog02)
+    call TriggerRegisterDialogEventBJ(udg_trigger64,GameModeDialog)
     call TriggerAddCondition(udg_trigger64,Condition(function Trig_Elimination_Mode_Conditions))
     call TriggerAddAction(udg_trigger64,function Trig_Elimination_Mode_Actions)
     set udg_trigger65 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger65,udg_dialog02)
+    call TriggerRegisterDialogEventBJ(udg_trigger65,GameModeDialog)
     call TriggerAddCondition(udg_trigger65,Condition(function Trig_Death_Match_Mode_Conditions))
     call TriggerAddAction(udg_trigger65,function Trig_Death_Match_Mode_Actions)
     set udg_trigger66 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger66,udg_dialog02)
+    call TriggerRegisterDialogEventBJ(udg_trigger66,GameModeDialog)
     call TriggerAddCondition(udg_trigger66,Condition(function Trig_Doesnt_Matter_Mode_Conditions))
     call TriggerAddAction(udg_trigger66,function Trig_Doesnt_Matter_Mode_Actions)
     set udg_trigger67 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger67,udg_dialog03)
+    call TriggerRegisterDialogEventBJ(udg_trigger67,AbilModeDialog)
     call TriggerAddCondition(udg_trigger67,Condition(function Trig_Pick_Abilities_Conditions))
     call TriggerAddAction(udg_trigger67,function Trig_Pick_Abilities_Actions)
     set udg_trigger68 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger68,udg_dialog03)
+    call TriggerRegisterDialogEventBJ(udg_trigger68,AbilModeDialog)
     call TriggerAddCondition(udg_trigger68,Condition(function Trig_Random_Abilities_Conditions))
     call TriggerAddAction(udg_trigger68,function Trig_Random_Abilities_Actions)
     set trg = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(trg,udg_dialog03)
+    call TriggerRegisterDialogEventBJ(trg,AbilModeDialog)
     call TriggerAddCondition(trg,Condition(function Trig_Draft_Abilities_Conditions))
     call TriggerAddAction(trg,function Trig_Draft_Abilities_Actions)
     set udg_trigger69 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger69,udg_dialog03)
+    call TriggerRegisterDialogEventBJ(udg_trigger69,AbilModeDialog)
     call TriggerAddCondition(udg_trigger69,Condition(function Trig_Doesnt_Matter_Abilities_Conditions))
     call TriggerAddAction(udg_trigger69,function Trig_Doesnt_Matter_Abilities_Actions)
 
     set trg = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(trg,IncomeDialog)
+    call TriggerRegisterDialogEventBJ(trg,IncomeModeDialog)
     call TriggerAddCondition(trg,Condition(function Trig_Income_Conditions))
     call TriggerAddAction(trg,function Trig_Income_Actions)
     set trg = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(trg,IncomeDialog)
+    call TriggerRegisterDialogEventBJ(trg,IncomeModeDialog)
     call TriggerAddCondition(trg,Condition(function Trig_Individual_Income_Conditions))
     call TriggerAddAction(trg,function Trig_Individual_Income_Actions)
     set trg = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(trg,IncomeDialog)
+    call TriggerRegisterDialogEventBJ(trg,IncomeModeDialog)
     call TriggerAddCondition(trg,Condition(function Trig_No_Income_Conditions))
     call TriggerAddAction(trg,function Trig_No_Income_Actions)
 
     set trg = null
 
     set udg_trigger70 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger70,udg_dialog07)
+    call TriggerRegisterDialogEventBJ(udg_trigger70,HeroModeDialog)
     call TriggerAddCondition(udg_trigger70,Condition(function Trig_Pick_Hero_Conditions))
     call TriggerAddAction(udg_trigger70,function Trig_Pick_Hero_Actions)
     set udg_trigger71 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger71,udg_dialog07)
+    call TriggerRegisterDialogEventBJ(udg_trigger71,HeroModeDialog)
     call TriggerAddCondition(udg_trigger71,Condition(function Trig_Random_Hero_Conditions))
     call TriggerAddAction(udg_trigger71,function Trig_Random_Hero_Actions)
     set udg_trigger72 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger72,udg_dialog07)
+    call TriggerRegisterDialogEventBJ(udg_trigger72,HeroModeDialog)
     call TriggerAddCondition(udg_trigger72,Condition(function Trig_Doesnt_Matter_Hero_Conditions))
     call TriggerAddAction(udg_trigger72,function Trig_Doesnt_Matter_Hero_Actions)
     set udg_trigger73 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger73,udg_dialog05)
+    call TriggerRegisterDialogEventBJ(udg_trigger73,BettingModeDialog)
     call TriggerAddCondition(udg_trigger73,Condition(function Trig_Show_Betting_Menu_Conditions))
     call TriggerAddAction(udg_trigger73,function Trig_Show_Betting_Menu_Actions)
     set udg_trigger74 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger74,udg_dialog05)
+    call TriggerRegisterDialogEventBJ(udg_trigger74,BettingModeDialog)
     call TriggerAddCondition(udg_trigger74,Condition(function Trig_Hide_Betting_Menu_Conditions))
     call TriggerAddAction(udg_trigger74,function Trig_Hide_Betting_Menu_Actions)
     set udg_trigger75 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger75,udg_dialog05)
+    call TriggerRegisterDialogEventBJ(udg_trigger75,BettingModeDialog)
     call TriggerAddCondition(udg_trigger75,Condition(function Trig_Disable_Betting_Menu_Conditions))
     call TriggerAddAction(udg_trigger75,function Trig_Disable_Betting_Menu_Actions)
     set udg_trigger76 = CreateTrigger()
-    call TriggerRegisterDialogEventBJ(udg_trigger76,udg_dialog05)
+    call TriggerRegisterDialogEventBJ(udg_trigger76,BettingModeDialog)
     call TriggerAddCondition(udg_trigger76,Condition(function Trig_Doesnt_Matter_Betting_Menu_Conditions))
     call TriggerAddAction(udg_trigger76,function Trig_Doesnt_Matter_Betting_Menu_Actions)
     set udg_trigger77 = CreateTrigger()

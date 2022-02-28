@@ -164,20 +164,20 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
         if(Trig_End_PvP_Func021C())then
             call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
             call FixDeath(GetDyingUnit())
-            set udg_integer32 = 1
+            set PvpEndIndex = 1
             loop
-                exitwhen udg_integer32 > 6
-                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32))
-                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32))
+                exitwhen PvpEndIndex > 6
+                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex))
+                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex))
 
                 if GetPlayerSlotState(GetOwningPlayer(DuelingHeroes[1])) != PLAYER_SLOT_STATE_LEFT then
-                    set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds1[udg_integer32],DuelingHeroes[1])
+                    set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds1[PvpEndIndex],DuelingHeroes[1])
 
-                    if ItemStacksP1[udg_integer32] > 1 then
-                        call SetItemCharges(tempItem, ItemStacksP1[udg_integer32])
+                    if ItemStacksP1[PvpEndIndex] > 1 then
+                        call SetItemCharges(tempItem, ItemStacksP1[PvpEndIndex])
                     endif
                     
-                    if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),udg_integer32) then
+                    if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),PvpEndIndex) then
                         //call BJDebugMsg("1a item move success")
                     else
                         //call BJDebugMsg("1a item move fail")
@@ -185,44 +185,44 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
                 endif
 
                 if GetPlayerSlotState(GetOwningPlayer(DuelingHeroes[2])) != PLAYER_SLOT_STATE_LEFT then
-                    set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds2[udg_integer32],DuelingHeroes[2])
+                    set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds2[PvpEndIndex],DuelingHeroes[2])
 
-                    if ItemStacksP2[udg_integer32] > 1 then
-                        call SetItemCharges(tempItem, ItemStacksP2[udg_integer32])
+                    if ItemStacksP2[PvpEndIndex] > 1 then
+                        call SetItemCharges(tempItem, ItemStacksP2[PvpEndIndex])
                     endif
 
-                    if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),udg_integer32) then
+                    if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),PvpEndIndex) then
                         //call BJDebugMsg("2a item move success")
                     else
                         //call BJDebugMsg("2a item move fail")
                     endif
                 endif
-                set udg_integer32 = udg_integer32 + 1
+                set PvpEndIndex = PvpEndIndex + 1
             endloop
         else
-            set udg_integer32 = 1
+            set PvpEndIndex = 1
             loop
-                exitwhen udg_integer32 > 6
+                exitwhen PvpEndIndex > 6
                 if(Trig_End_PvP_Func021Func001Func001C())then
-                    call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32))
-                    call UnitAddItemByIdSwapped(DuelHeroItemIds1[udg_integer32],DuelingHeroes[1])
-                    if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),udg_integer32) then
+                    call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex))
+                    call UnitAddItemByIdSwapped(DuelHeroItemIds1[PvpEndIndex],DuelingHeroes[1])
+                    if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),PvpEndIndex) then
                         //call BJDebugMsg("1b item move success")
                     else
                        //call BJDebugMsg("1b item move fail")
                     endif
                 else
-                    call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32))
-                    call UnitAddItemByIdSwapped(DuelHeroItemIds2[udg_integer32],DuelingHeroes[2])
-                    if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),udg_integer32) then
+                    call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex))
+                    call UnitAddItemByIdSwapped(DuelHeroItemIds2[PvpEndIndex],DuelingHeroes[2])
+                    if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),PvpEndIndex) then
                         //call BJDebugMsg("2b item move success")
                     else
                         //call BJDebugMsg("2b item move fail")
                     endif
                 endif
-                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32), true)
-                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32), true)
-                set udg_integer32 = udg_integer32 + 1
+                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex), true)
+                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex), true)
+                set PvpEndIndex = PvpEndIndex + 1
             endloop
         endif
         call ConditionalTriggerExecute(udg_trigger54)

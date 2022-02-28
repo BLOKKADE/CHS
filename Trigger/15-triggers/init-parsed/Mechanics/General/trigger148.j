@@ -1,10 +1,10 @@
 library trigger148 initializer init requires RandomShit
 
     function Trig_Unhide_Shops_Func001Func001Func001Func002C takes nothing returns boolean
-        if(not(udg_boolean05!=true))then
+        if(not(ArNotLearningAbil!=true))then
             return false
         endif
-        if(not(udg_integers10[udg_integer36]!='n016'))then
+        if(not(ShopIds[HideShopsIndex]!='n016'))then
             return false
         endif
         return true
@@ -12,7 +12,7 @@ library trigger148 initializer init requires RandomShit
 
 
     function Trig_Unhide_Shops_Func001Func001Func001C takes nothing returns boolean
-        if((udg_boolean05==true))then
+        if((ArNotLearningAbil==true))then
             return true
         endif
         if(Trig_Unhide_Shops_Func001Func001Func001Func002C())then
@@ -39,11 +39,11 @@ library trigger148 initializer init requires RandomShit
 
 
     function Trig_Unhide_Shops_Actions takes nothing returns nothing
-        set udg_integer36 = 1
+        set HideShopsIndex = 1
         loop
-            exitwhen udg_integer36 > udg_integer35
+            exitwhen HideShopsIndex > HideShopsCount
             if(Trig_Unhide_Shops_Func001Func001C())then
-                call CreateNUnitsAtLoc(1,udg_integers10[udg_integer36],Player(PLAYER_NEUTRAL_PASSIVE),udg_locations01[udg_integer36],bj_UNIT_FACING)
+                call CreateNUnitsAtLoc(1,ShopIds[HideShopsIndex],Player(PLAYER_NEUTRAL_PASSIVE),udg_locations01[HideShopsIndex],bj_UNIT_FACING)
                 if(Trig_Unhide_Shops_Func001Func001Func003C())then
                     call TriggerRegisterUnitInRangeSimple(udg_trigger149,300.00,GetLastCreatedUnit())
                     set udg_unit04 = GetLastCreatedUnit()
@@ -51,7 +51,7 @@ library trigger148 initializer init requires RandomShit
                 endif
             else
             endif
-            set udg_integer36 = udg_integer36 + 1
+            set HideShopsIndex = HideShopsIndex + 1
         endloop
     endfunction
 

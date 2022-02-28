@@ -11,7 +11,7 @@ library Hints initializer init
     public function DisplayHint takes integer i returns nothing
             call DisplayTimedTextToPlayer(Player(i), 0, 0, 20, "Visit the Discord at: |cff45ec53customherosurvival.com|r")
             if DisableHint[i] != true then
-                if udg_boolean04 then
+                if ElimModeEnabled then
                     call DisplayTimedTextToPlayer(Player(i), 0, 0, 5, "|cff4599ecHint|r: " + Hints[GetRandomInt(1,limit1)]+ "|r")
                 else
                     if udg_boolean07 then

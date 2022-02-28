@@ -65,7 +65,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
     endfunction
     
     function Trig_Melee_Initialization_Func010Func003001001002002 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),udg_force01)!=true)
+        return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
     endfunction
     
     function Trig_Melee_Initialization_Func010Func003001001002 takes nothing returns boolean
@@ -91,7 +91,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
 
 
     function Trig_Melee_Initialization_Func010Func003Func001Func003C takes nothing returns boolean
-        if(not(udg_booleans03[GetConvertedPlayerId(GetEnumPlayer())]==false))then
+        if(not(PlayerHeroPicked[GetConvertedPlayerId(GetEnumPlayer())]==false))then
             return false
         endif
         if(not(CountUnitsInGroup(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Melee_Initialization_Func010Func003Func001Func003Func002001001002)))==0))then
@@ -138,7 +138,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
         endif
         call TriggerSleepAction(24.50)
         set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
-        set udg_integer19 = 5
+        set CountdownCount = 5
         call ConditionalTriggerExecute(udg_trigger117)
         call TriggerSleepAction(5.00)
         if(Trig_Melee_Initialization_Func010C())then

@@ -45,7 +45,7 @@ library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', upgradeShopX, upgradeShopY, 0)
             //set FloatingTextUpgrade = ShopText(upgradeShopX, upgradeShopY, "Upgrade abilities", 0, 255, 100)
             //call SetTextTagVisibility(FloatingTextUpgrade, true)
-            call ForForce( udg_force01, function CreateUpgradeShop) 
+            call ForForce( PlayersWithHero, function CreateUpgradeShop) 
         endif
     endfunction
 endlibrary

@@ -41,7 +41,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func014C takes nothing returns boolean
-        if(not(udg_boolean04==true))then
+        if(not(ElimModeEnabled==true))then
             return false
         endif
         return true
@@ -97,7 +97,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
         if(not(udg_boolean08==true))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true
@@ -128,7 +128,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
         if(not(PlayerCount > 1))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true
@@ -203,7 +203,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
         if(not(PlayerCount > 1))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true
@@ -222,7 +222,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
         if(not(udg_boolean08==true))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true
@@ -233,7 +233,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
         if(not(RoundNumber==BattleRoyalRound))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true
@@ -252,7 +252,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
         if(not(RoundNumber==BattleRoyalRound))then
             return false
         endif
-        if(not(udg_boolean04==false))then
+        if(not(ElimModeEnabled==false))then
             return false
         endif
         return true

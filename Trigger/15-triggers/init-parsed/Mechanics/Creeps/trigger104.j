@@ -24,7 +24,7 @@ library trigger104 initializer init requires RandomShit
         set CreepUnitTypeIds[21]= 'n01G'
         set CreepUnitTypeIds[22]= 'n00W'
         set CreepUnitTypeIds[23]= 'n01H'
-        set udg_integer22 = 23
+        set MaxCreepUnitTypes = 23
     endfunction
 
 

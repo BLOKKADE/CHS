@@ -1,7 +1,7 @@
 library trigger48 initializer init requires RandomShit
 
     function Trig_Place_Bet_Gold_Func002C takes nothing returns boolean
-        if(not(GetClickedButtonBJ()==udg_buttons02[4]))then
+        if(not(GetClickedButtonBJ()==DialogButtons[4]))then
             return false
         endif
         return true
@@ -31,8 +31,8 @@ library trigger48 initializer init requires RandomShit
 
     function Trig_Place_Bet_Gold_Actions takes nothing returns nothing
         if(Trig_Place_Bet_Gold_Func001C())then
-            call DialogSetMessageBJ(udg_dialogs01[3],"Betting Menu")
-            call DialogDisplayBJ(true,udg_dialogs01[3],GetTriggerPlayer())
+            call DialogSetMessageBJ(Dialogs[3],"Betting Menu")
+            call DialogDisplayBJ(true,Dialogs[3],GetTriggerPlayer())
             set udg_booleans04[GetConvertedPlayerId(GetTriggerPlayer())]= true
             set udg_booleans05[GetConvertedPlayerId(GetTriggerPlayer())]= false
         else
@@ -41,14 +41,14 @@ library trigger48 initializer init requires RandomShit
             else
                 call DoNothing()
             endif
-            call DialogDisplayBJ(true,udg_dialogs01[2],GetTriggerPlayer())
+            call DialogDisplayBJ(true,Dialogs[2],GetTriggerPlayer())
         endif
     endfunction
 
 
     private function init takes nothing returns nothing
         set udg_trigger48 = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(udg_trigger48,udg_dialogs01[2])
+        call TriggerRegisterDialogEventBJ(udg_trigger48,Dialogs[2])
         call TriggerAddCondition(udg_trigger48,Condition(function Trig_Place_Bet_Gold_Conditions))
         call TriggerAddAction(udg_trigger48,function Trig_Place_Bet_Gold_Actions)
     endfunction

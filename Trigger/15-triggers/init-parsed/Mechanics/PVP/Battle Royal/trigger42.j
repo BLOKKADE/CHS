@@ -40,7 +40,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
 
 
     function Trig_Battle_Royal_Func016Func001A takes nothing returns nothing
-        set udg_integer16 =(udg_integer16 + 1)
+        set BrPlayerCount =(BrPlayerCount + 1)
         call SetPlayerAllianceStateBJ(GetOwningPlayer(GetEnumUnit()),ConvertedPlayer(GetForLoopIndexA()),bj_ALLIANCE_UNALLIED)
     endfunction
 
@@ -136,7 +136,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
 
 
     function Trig_Battle_Royal_Func034C takes nothing returns boolean
-        if(not(udg_integer16==1))then
+        if(not(BrPlayerCount==1))then
             return false
         endif
         return true
@@ -152,7 +152,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call StartTimerBJ(GetLastCreatedTimerBJ(),false,60.00)
         call DisplayTextToForce(GetPlayersAll(),"Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
         call TriggerSleepAction(60.00)
-        set udg_boolean02 = true
+        set BrStarted = true
         call SetVersion()
         call PlaySoundBJ(udg_sound10)
         call DisplayTextToForce(GetPlayersAll(),"|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL")
@@ -178,7 +178,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call EnableTrigger(udg_trigger43)
         call TriggerSleepAction(2)
         set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
-        set udg_integer19 = 5
+        set CountdownCount = 5
         call ConditionalTriggerExecute(udg_trigger117)
         call TriggerSleepAction(5.00)
         call PlaySoundBJ(udg_sound08)

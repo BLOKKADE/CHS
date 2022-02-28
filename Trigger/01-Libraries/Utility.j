@@ -43,7 +43,7 @@ library Utility requires NewBonus
 
     function HasPlayerFinishedLevel takes unit u, player p returns boolean
         return CurrentlyFighting[GetPlayerId(p)] == false
-        //return (IsPlayerInForce(p,udg_force03) and udg_boolean02 == false and DuelingHeroes[2] != u and DuelingHeroes[1] != u and PvpPrepare = false) or BattleRoyal = true
+        //return (IsPlayerInForce(p,RoundPlayersCompleted) and BrStarted == false and DuelingHeroes[2] != u and DuelingHeroes[1] != u and PvpPrepare = false) or BattleRoyal = true
     endfunction
 
     function GetUnitDamage takes unit u, integer weaponIndex returns real

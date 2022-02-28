@@ -12,7 +12,7 @@ library trigger78 initializer init requires RandomShit
 
 
     function Trig_Choose_Hero_Func002C takes nothing returns boolean
-        if(not(udg_booleans03[GetConvertedPlayerId(GetTriggerPlayer())]==false))then
+        if(not(PlayerHeroPicked[GetConvertedPlayerId(GetTriggerPlayer())]==false))then
             return false
         endif
         if(not(GetOwningPlayer(GetTriggerUnit())==Player(8)))then
