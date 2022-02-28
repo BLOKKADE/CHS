@@ -21,8 +21,8 @@ scope Killing initializer init
         local player killingPlayer = GetOwningPlayer(killer)
         local integer targetPid = GetPlayerId(targetPlayer)
         local integer killingPid = GetPlayerId(killingPlayer)
-        local unit targetHero = udg_units01[targetPid + 1]
-        local unit killingHero = udg_units01[killingPid + 1]
+        local unit targetHero = PlayerHeroes[targetPid + 1]
+        local unit killingHero = PlayerHeroes[killingPid + 1]
         local integer i = 0
         local timer t
         local effect fx

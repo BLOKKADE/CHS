@@ -20,7 +20,7 @@ library trigger146 initializer init requires RandomShit
 
 
     function Trig_Update_Items_Func001Func002Func001C takes nothing returns boolean
-        if(not(udg_integer02==10))then
+        if(not(RoundNumber==10))then
             return false
         endif
         return true
@@ -33,7 +33,7 @@ library trigger146 initializer init requires RandomShit
 
 
     function Trig_Update_Items_Func001Func003Func001C takes nothing returns boolean
-        if(not(udg_integer02==20))then
+        if(not(RoundNumber==20))then
             return false
         endif
         return true

@@ -1,37 +1,37 @@
 library trigger99 initializer init requires RandomShit
 
     function Trig_Add_Unit_Abilities_Func001001 takes nothing returns boolean
-        return(udg_integer10==1)
+        return(RoundCreepChanceBash==1)
     endfunction
 
 
     function Trig_Add_Unit_Abilities_Func002001 takes nothing returns boolean
-        return(udg_integer11==1)
+        return(RoundCreepChanceCritStrike==1)
     endfunction
 
 
     function Trig_Add_Unit_Abilities_Func003001 takes nothing returns boolean
-        return(udg_integer12==1)
+        return(RoundCreepChanceEvasion==1)
     endfunction
 
 
     function Trig_Add_Unit_Abilities_Func004001 takes nothing returns boolean
-        return(udg_integer17==1)
+        return(RoundCreepChanceCleave==1)
     endfunction
 
 
     function Trig_Add_Unit_Abilities_Func005001 takes nothing returns boolean
-        return(udg_integer18==1)
+        return(RoundCreepChanceLifesteal==1)
     endfunction
 
 
     function Trig_Add_Unit_Abilities_Func006001 takes nothing returns boolean
-        return(udg_integer20==1)
+        return(RoundCreepChanceThorns==1)
     endfunction
 
 
     function Trig_Add_Unit_Abilities_Func007C takes nothing returns boolean
-        if(not(udg_integer21==1))then
+        if(not(RoundCreepChanceShockwave==1))then
             return false
         endif
         return true
@@ -39,7 +39,7 @@ library trigger99 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Abilities_Func008C takes nothing returns boolean
-        if(not(udg_integer23==1))then
+        if(not(RoundCreepChanceManaBurn==1))then
             return false
         endif
         return true
@@ -47,7 +47,7 @@ library trigger99 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Abilities_Func009C takes nothing returns boolean
-        if(not(udg_integer24==1))then
+        if(not(RoundCreepChanceHurlBoulder==1))then
             return false
         endif
         return true
@@ -55,7 +55,7 @@ library trigger99 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Abilities_Func010C takes nothing returns boolean
-        if(not(udg_integer25==1))then
+        if(not(RoundCreepChanceRejuv==1))then
             return false
         endif
         return true
@@ -63,7 +63,7 @@ library trigger99 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Abilities_Func011C takes nothing returns boolean
-        if(not(udg_integer49==1))then
+        if(not(RoundCreepChanceSlow==1))then
             return false
         endif
         return true
@@ -71,7 +71,7 @@ library trigger99 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Abilities_Func012C takes nothing returns boolean
-        if(not(udg_integer50==1))then
+        if(not(RoundCreepChanceBigBadV==1))then
             return false
         endif
         return true
@@ -79,7 +79,7 @@ library trigger99 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Abilities_Func013C takes nothing returns boolean
-        if(not(udg_integer51==1))then
+        if(not(RoundCreepChanceFaerieFire==1))then
             return false
         endif
         return true
@@ -87,7 +87,7 @@ library trigger99 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Abilities_Func014C takes nothing returns boolean
-        if(not(udg_integer54==1))then
+        if(not(RoundCreepChanceBlink==1))then
             return false
         endif
         return true
@@ -95,7 +95,7 @@ library trigger99 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Abilities_Func015C takes nothing returns boolean
-        if(not(udg_integer55==1))then
+        if(not(RoundCreepChanceThunderClap==1))then
             return false
         endif
         return true
@@ -131,7 +131,7 @@ library trigger99 initializer init requires RandomShit
         endif
         if(Trig_Add_Unit_Abilities_Func006001())then
             call UnitAddAbilityBJ('A08F',GetLastCreatedUnit())
-            call SetUnitAbilityLevel(GetLastCreatedUnit(), 'A08F', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+            call SetUnitAbilityLevel(GetLastCreatedUnit(), 'A08F', IMinBJ(R2I(RoundNumber * 0.4), 30))
         else
             call DoNothing()
         endif

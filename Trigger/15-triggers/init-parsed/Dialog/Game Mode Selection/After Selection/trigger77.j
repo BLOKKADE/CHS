@@ -8,7 +8,7 @@ library trigger77 initializer init requires RandomShit
         if((udg_boolean15==false))then
             return true
         endif
-        if((udg_integer63==udg_integer06))then
+        if((udg_integer63==PlayerCount))then
             return true
         endif
         return false
@@ -35,12 +35,12 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func006Func008Func011001 takes nothing returns boolean
-        return(udg_integer13==1)
+        return(InitialPlayerCount==1)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func008Func006001 takes nothing returns boolean
-        return(udg_integer13==1)
+        return(InitialPlayerCount==1)
     endfunction
 
 
@@ -89,92 +89,92 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func020001 takes nothing returns boolean
-        return(udg_integer13==1)
+        return(InitialPlayerCount==1)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func022001 takes nothing returns boolean
-        return(udg_integer06==1)
+        return(PlayerCount==1)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func023001 takes nothing returns boolean
-        return(udg_integer06==2)
+        return(PlayerCount==2)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func024001 takes nothing returns boolean
-        return(udg_integer06==3)
+        return(PlayerCount==3)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func025001 takes nothing returns boolean
-        return(udg_integer06==4)
+        return(PlayerCount==4)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func026001 takes nothing returns boolean
-        return(udg_integer06==5)
+        return(PlayerCount==5)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func027001 takes nothing returns boolean
-        return(udg_integer06==6)
+        return(PlayerCount==6)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func028001 takes nothing returns boolean
-        return(udg_integer06==7)
+        return(PlayerCount==7)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func029001 takes nothing returns boolean
-        return(udg_integer06==8)
+        return(PlayerCount==8)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func006001 takes nothing returns boolean
-        return(udg_integer13==1)
+        return(InitialPlayerCount==1)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func008001 takes nothing returns boolean
-        return(udg_integer06==1)
+        return(PlayerCount==1)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func009001 takes nothing returns boolean
-        return(udg_integer06==2)
+        return(PlayerCount==2)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func010001 takes nothing returns boolean
-        return(udg_integer06==3)
+        return(PlayerCount==3)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func011001 takes nothing returns boolean
-        return(udg_integer06==4)
+        return(PlayerCount==4)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func012001 takes nothing returns boolean
-        return(udg_integer06==5)
+        return(PlayerCount==5)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func013001 takes nothing returns boolean
-        return(udg_integer06==6)
+        return(PlayerCount==6)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func014001 takes nothing returns boolean
-        return(udg_integer06==7)
+        return(PlayerCount==7)
     endfunction
 
 
     function Trig_Dialog_Complete_Func006Func004Func005Func015001 takes nothing returns boolean
-        return(udg_integer06==8)
+        return(PlayerCount==8)
     endfunction
 
 
@@ -242,7 +242,7 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func008Func003Func012001 takes nothing returns boolean
-        return(udg_integer13==1)
+        return(InitialPlayerCount==1)
     endfunction
 
 
@@ -275,7 +275,7 @@ library trigger77 initializer init requires RandomShit
 
 
     function Trig_Dialog_Complete_Func008Func003Func006001 takes nothing returns boolean
-        return(udg_integer13==1)
+        return(InitialPlayerCount==1)
     endfunction
 
 
@@ -368,7 +368,7 @@ library trigger77 initializer init requires RandomShit
         if((udg_boolean04==true))then
             return true
         endif
-        if((udg_integer13 <= 2))then
+        if((InitialPlayerCount <= 2))then
             return true
         endif
         if(Trig_Dialog_Complete_Func014Func001Func003C())then

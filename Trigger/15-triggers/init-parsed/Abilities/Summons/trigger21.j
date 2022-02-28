@@ -9,9 +9,9 @@
 
 
     function Trig_Phoenix_Actions takes nothing returns nothing
-        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AHpx',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 1))
+        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AHpx',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 1))
         set bj_forLoopBIndex = 1
-        set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AHpx',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 2)
+        set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AHpx',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 2)
         loop
             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
             call UnitAddItemByIdSwapped('I022',GetTriggerUnit())

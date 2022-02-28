@@ -15,7 +15,7 @@ library trigger62 initializer init requires RandomShit
 
 
     function Trig_Skip_Betting_Menu_Func001Func003C takes nothing returns boolean
-        if((udg_integer13 <= 2))then
+        if((InitialPlayerCount <= 2))then
             return true
         endif
         if(Trig_Skip_Betting_Menu_Func001Func003Func002C())then

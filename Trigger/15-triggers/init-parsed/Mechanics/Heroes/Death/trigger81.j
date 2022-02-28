@@ -28,7 +28,7 @@ library trigger81 initializer init requires RandomShit
 
 
     function Trig_Hero_Dies_After_Victory_Func007C takes nothing returns boolean
-        if(not(udg_integer06==0))then
+        if(not(PlayerCount==0))then
             return false
         endif
         return true
@@ -36,7 +36,7 @@ library trigger81 initializer init requires RandomShit
 
 
     function Trig_Hero_Dies_After_Victory_Func007Func006C takes nothing returns boolean
-        if(not(udg_integer13 > 1))then
+        if(not(InitialPlayerCount > 1))then
             return false
         endif
         return true
@@ -49,8 +49,8 @@ library trigger81 initializer init requires RandomShit
 
 
     function Trig_Hero_Dies_After_Victory_Actions takes nothing returns nothing
-        set udg_integer06 =(udg_integer06 - 1)
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+(" |cffffcc00has fallen at level " +(I2S(udg_integer02)+ "!|r")))))
+        set PlayerCount =(PlayerCount - 1)
+        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+(" |cffffcc00has fallen at level " +(I2S(RoundNumber)+ "!|r")))))
         call DisableTrigger(udg_trigger16)
         call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_After_Victory_Func004A)
         call EnableTrigger(udg_trigger16)
@@ -60,11 +60,11 @@ library trigger81 initializer init requires RandomShit
             call DisableTrigger(udg_trigger107)
             call TriggerSleepAction(2)
             if(Trig_Hero_Dies_After_Victory_Func007Func006C())then
-                call CustomVictoryBJ(udg_player01,true,true)
+                call CustomVictoryBJ(SingleplayerPlayer,true,true)
             else
-                call CustomDefeatBJ(udg_player01,"Defeat!")
+                call CustomDefeatBJ(SingleplayerPlayer,"Defeat!")
             endif
-            call ForForce(udg_force02,function Trig_Hero_Dies_After_Victory_Func007Func007A)
+            call ForForce(DefeatedPlayers,function Trig_Hero_Dies_After_Victory_Func007Func007A)
         else
         endif
     endfunction

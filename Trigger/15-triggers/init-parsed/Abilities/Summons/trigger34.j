@@ -29,7 +29,7 @@ library trigger34 initializer init requires RandomShit
 
 
     function Trig_Ward_Location_Func001Func003C takes nothing returns boolean
-        if((RectContainsUnit(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())==true))then
+        if((RectContainsUnit(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())==true))then
             return true
         endif
         if((RectContainsUnit(udg_rect09,GetTriggerUnit())==true))then
@@ -61,7 +61,7 @@ library trigger34 initializer init requires RandomShit
 
 
     function Trig_Ward_Location_Func001Func002Func003C takes nothing returns boolean
-        if(not(CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],Condition(function Trig_Ward_Location_Func001Func002Func003Func001001001002)))==0))then
+        if(not(CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],Condition(function Trig_Ward_Location_Func001Func002Func003Func001001001002)))==0))then
             return false
         endif
         return true
@@ -83,7 +83,7 @@ library trigger34 initializer init requires RandomShit
             if(Trig_Ward_Location_Func001Func002C())then
                 call DoNothing()
             else
-                call SetUnitPositionLoc(GetTriggerUnit(),PolarProjectionBJ(GetRectCenter(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),525.00,AngleBetweenPoints(GetRectCenter(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),GetUnitLoc(GetTriggerUnit()))))
+                call SetUnitPositionLoc(GetTriggerUnit(),PolarProjectionBJ(GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),525.00,AngleBetweenPoints(GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),GetUnitLoc(GetTriggerUnit()))))
             endif
         endif
     endfunction

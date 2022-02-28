@@ -1,14 +1,14 @@
 library trigger91 initializer init requires RandomShit
 
     function Trig_Player_Region_Initialization_Actions takes nothing returns nothing
-        set udg_rects01[1]= udg_rect01
-        set udg_rects01[2]= udg_rect02
-        set udg_rects01[3]= udg_rect03
-        set udg_rects01[4]= udg_rect04
-        set udg_rects01[5]= udg_rect05
-        set udg_rects01[6]= udg_rect06
-        set udg_rects01[7]= udg_rect07
-        set udg_rects01[8]= udg_rect08
+        set PlayerArenaRects[1]= udg_rect01
+        set PlayerArenaRects[2]= udg_rect02
+        set PlayerArenaRects[3]= udg_rect03
+        set PlayerArenaRects[4]= udg_rect04
+        set PlayerArenaRects[5]= udg_rect05
+        set PlayerArenaRects[6]= udg_rect06
+        set PlayerArenaRects[7]= udg_rect07
+        set PlayerArenaRects[8]= udg_rect08
     endfunction
 
 

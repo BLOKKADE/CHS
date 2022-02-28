@@ -10,7 +10,7 @@ library trigger151 initializer init requires RandomShit, DebugCommands
         if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
             return false
         endif
-        if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)==true))then
+        if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true))then
             return false
         endif
         if(not(udg_boolean07==true))then
@@ -58,9 +58,9 @@ library trigger151 initializer init requires RandomShit, DebugCommands
     function Trig_Hero_Dies_Death_Match_PvP_Actions takes nothing returns nothing
         call StopSoundBJ(udg_sound13,false)
         call PlaySoundBJ(udg_sound13)
-        call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
+        call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
         call SetCurrentlyFighting(GetOwningPlayer(GetTriggerUnit()), false)
-        set udg_integer06 =(udg_integer06 - 1)
+        set PlayerCount =(PlayerCount - 1)
         call AllowSinglePlayerCommands()
         set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= true
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))

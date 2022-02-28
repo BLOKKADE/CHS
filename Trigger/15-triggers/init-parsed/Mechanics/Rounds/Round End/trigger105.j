@@ -30,7 +30,7 @@ library trigger105 initializer init requires RandomShit
         set bonus = bonus + GetLearnabilityBonus(GetEnumUnit()) + GetMagicNecklaceBonus(GetEnumUnit(), GetTriggerUnit())
         //call BJDebugMsg("be xp bonus post: " + R2S(bonus))
 
-        call AddHeroXPSwapped(R2I(((udg_real01)* 55) * bonus),GetEnumUnit(),true)
+        call AddHeroXPSwapped(R2I(((RoundCreepPower)* 55) * bonus),GetEnumUnit(),true)
     endfunction
 
 
@@ -45,7 +45,7 @@ library trigger105 initializer init requires RandomShit
         set bonus = bonus + GetLearnabilityBonus(GetEnumUnit()) + GetMagicNecklaceBonus(GetEnumUnit(), GetTriggerUnit())
         //call BJDebugMsg("be xp bonus post: " + R2S(bonus))
 
-        call AddHeroXPSwapped(R2I(((udg_real01)* 35) * bonus),GetEnumUnit(),true)
+        call AddHeroXPSwapped(R2I(((RoundCreepPower)* 35) * bonus),GetEnumUnit(),true)
     endfunction
 
 

@@ -11,19 +11,19 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
     endglobals
 
     function GetVotesNeeded takes nothing returns integer
-        if udg_integer06 == 4 or udg_integer06 == 6 or udg_integer06 == 8 then
-            return R2I(udg_integer06 / 2) + 1
-        elseif udg_integer06 == 5 then
+        if PlayerCount == 4 or PlayerCount == 6 or PlayerCount == 8 then
+            return R2I(PlayerCount / 2) + 1
+        elseif PlayerCount == 5 then
             return 3
-        elseif udg_integer06 == 7 then
+        elseif PlayerCount == 7 then
             return 4
         else
             return 3
         endif
     endfunction
 
-    function CanPlayerVotes takes player p returns boolean
-        return IsPlayerInForce(p, udg_force02) == false
+    function CanPlayerVote takes player p returns boolean
+        return IsPlayerInForce(p, DefeatedPlayers) == false
     endfunction
 
     function KickPlayer takes player p returns nothing
@@ -91,7 +91,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
     endfunction
 
     function VoteKickYes takes nothing returns nothing
-        if CanPlayerVotes(GetTriggerPlayer()) then
+        if CanPlayerVote(GetTriggerPlayer()) then
             call VoteKickVote(true, GetTriggerPlayer())
         endif
     endfunction
@@ -135,7 +135,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
         local timer t = NewTimer()
         local timer t2 = NewTimerEx(GetPlayerId(GetTriggerPlayer()))
         local string input
-        if CanPlayerVotes(GetTriggerPlayer()) then
+        if CanPlayerVote(GetTriggerPlayer()) then
             if voteKickStarted == false then
                 if voteKickAllow[GetPlayerId(GetTriggerPlayer())] == false then
                     call VoteKickReset()
@@ -157,7 +157,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
                         call DisplayTextToPlayer(GetTriggerPlayer(),0,0,"|cffFFCD38Can't find player:|r " + playerName)
                     else
                         if pickedPlayer != GetPlayerId(GetTriggerPlayer()) then
-                            if udg_integer06 > 3 then
+                            if PlayerCount > 3 then
                                 set voteKickStarted = true
                                 set voteKickPlayer = pickedPlayer
                                 set voteKickAllow[GetPlayerId(GetTriggerPlayer())] = true

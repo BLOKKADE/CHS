@@ -30,8 +30,8 @@ library trigger89 initializer init requires RandomShit
 
 
     function Trig_Map_Initialization_Func010A takes nothing returns nothing
-        set udg_integer06 =(udg_integer06 + 1)
-        set udg_integer13 =(udg_integer13 + 1)
+        set PlayerCount =(PlayerCount + 1)
+        set InitialPlayerCount =(InitialPlayerCount + 1)
         set bj_forLoopAIndex = 1
         set bj_forLoopAIndexEnd = 8
         loop
@@ -47,7 +47,7 @@ library trigger89 initializer init requires RandomShit
 
 
     function Trig_Map_Initialization_Func011C takes nothing returns boolean
-        if(not(udg_integer06==1))then
+        if(not(PlayerCount==1))then
             return false
         endif
         return true
@@ -94,7 +94,7 @@ library trigger89 initializer init requires RandomShit
         call SetMapFlag(MAP_ALLIANCE_CHANGES_HIDDEN,true)
         call SetMapFlag(MAP_LOCK_RESOURCE_TRADING,true)
         call SetTimeOfDay(12)
-        set udg_boolean01 = false
+        
         call ForForce(GetPlayersMatching(Condition(function Trig_Map_Initialization_Func010001001)),function Trig_Map_Initialization_Func010A)
         if(Trig_Map_Initialization_Func011C())then
             call DisableTrigger(udg_trigger118)

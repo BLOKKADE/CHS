@@ -9,7 +9,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
 
 
     function Trig_Melee_Initialization_Func004C takes nothing returns boolean
-        if(not(udg_integer07 < udg_integer06))then
+        if(not(SpawnedHeroCount < PlayerCount))then
             return false
         endif
         return true
@@ -22,10 +22,10 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
 
 
     function Trig_Melee_Initialization_Func010Func004C takes nothing returns boolean
-        if(not(udg_integer02==1))then
+        if(not(RoundNumber==1))then
             return false
         endif
-        if(not(udg_integer07 < udg_integer06))then
+        if(not(SpawnedHeroCount < PlayerCount))then
             return false
         endif
         return true

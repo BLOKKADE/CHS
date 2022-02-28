@@ -1,7 +1,7 @@
 library trigger55 initializer init requires RandomShit
 
     function Trig_Dialog_Initialization_Func047Func001C takes nothing returns boolean
-        if(not(udg_integer13 > 1))then
+        if(not(InitialPlayerCount > 1))then
             return false
         endif
         return true

@@ -258,12 +258,12 @@ library SaveBuild requires Table, RandomShit, CustomState
         local timer t = GetExpiredTimer()
         local integer pid = GetTimerData(t)
         if PlayerBuilds[pid] != 0 then
-            call PlayerBuilds[pid].updateBuild(udg_integer02)
+            call PlayerBuilds[pid].updateBuild(RoundNumber)
         else
-            set PlayerBuilds[pid] = PlayerBuild.create(udg_units01[pid + 1])
-            call PlayerBuilds[pid].updateBuild(udg_integer02)
+            set PlayerBuilds[pid] = PlayerBuild.create(PlayerHeroes[pid + 1])
+            call PlayerBuilds[pid].updateBuild(RoundNumber)
         endif
-        //call BJDebugMsg(PlayerBuilds[pid].export(udg_integer02))
+        //call BJDebugMsg(PlayerBuilds[pid].export(RoundNumber))
         call ReleaseTimer(t)
         set t = null
     endfunction
@@ -275,7 +275,7 @@ library SaveBuild requires Table, RandomShit, CustomState
     function StoreAllPlayerBuilds takes nothing returns nothing
         local integer i = 0
         loop
-            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING and GetPlayerController(Player(i)) == MAP_CONTROL_USER and udg_units01[i + 1] != null then
+            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING and GetPlayerController(Player(i)) == MAP_CONTROL_USER and PlayerHeroes[i + 1] != null then
                 call StoreBuild(i)
             endif
             set i = i + 1

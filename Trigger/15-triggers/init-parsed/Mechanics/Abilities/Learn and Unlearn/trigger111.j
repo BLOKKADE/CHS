@@ -21,7 +21,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)==0))then
+        if(not(GetUnitAbilityLevelSwapped(BoughtAbility,BuyingUnit)==0))then
             return false
         endif
         return true
@@ -29,16 +29,16 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func002Func002C takes nothing returns boolean
-        if((udg_integer01=='ANba'))then
+        if((BoughtAbility=='ANba'))then
             return true
         endif
-        if((udg_integer01=='AHca'))then
+        if((BoughtAbility=='AHca'))then
             return true
         endif
-        if((udg_integer01=='AHfa'))then
+        if((BoughtAbility=='AHfa'))then
             return true
         endif
-        if((udg_integer01=='Aliq'))then
+        if((BoughtAbility=='Aliq'))then
             return true
         endif
         return false
@@ -57,7 +57,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func003Func002C takes nothing returns boolean
-        if((udg_integer01=='ANca'))then
+        if((BoughtAbility=='ANca'))then
             return true
         endif
         return false
@@ -84,10 +84,10 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func004Func002C takes nothing returns boolean
-        if((udg_integer01=='ANba'))then
+        if((BoughtAbility=='ANba'))then
             return true
         endif
-        if((udg_integer01=='Aroc'))then
+        if((BoughtAbility=='Aroc'))then
             return true
         endif
         return false
@@ -120,7 +120,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func005Func002C takes nothing returns boolean
-        if((udg_integer01=='ACvs'))then
+        if((BoughtAbility=='ACvs'))then
             return true
         endif
         return false
@@ -139,7 +139,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001C takes nothing returns boolean
-        if((udg_integers01[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]>= 10))then
+        if((HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]>= 10))then
             return true
         endif
         if(Trig_Learn_Ability_Func008Func002Func001Func001Func002C())then
@@ -167,16 +167,16 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001Func002C takes nothing returns boolean
-        if((udg_integer01=='ANba'))then
+        if((BoughtAbility=='ANba'))then
             return true
         endif
-        if((udg_integer01=='AHca'))then
+        if((BoughtAbility=='AHca'))then
             return true
         endif
-        if((udg_integer01=='AHfa'))then
+        if((BoughtAbility=='AHfa'))then
             return true
         endif
-        if((udg_integer01=='Aliq'))then
+        if((BoughtAbility=='Aliq'))then
             return true
         endif
         return false
@@ -195,7 +195,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func002Func002C takes nothing returns boolean
-        if((udg_integer01=='ANca'))then
+        if((BoughtAbility=='ANca'))then
             return true
         endif
         return false
@@ -222,10 +222,10 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func002C takes nothing returns boolean
-        if((udg_integer01=='ANba'))then
+        if((BoughtAbility=='ANba'))then
             return true
         endif
-        if((udg_integer01=='Aroc'))then
+        if((BoughtAbility=='Aroc'))then
             return true
         endif
         return false
@@ -249,7 +249,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004Func002C takes nothing returns boolean
-        if((udg_integer01=='ACvs'))then
+        if((BoughtAbility=='ACvs'))then
             return true
         endif
         return false
@@ -345,7 +345,7 @@ library trigger111 initializer init requires RandomShit, Functions
             endif
         endif
         if i > 1 and i < 31 then
-            call SetUnitAbilityLevel(u, udg_integer01, i)
+            call SetUnitAbilityLevel(u, BoughtAbility, i)
         endif
 
         call SetupDummySpell(u, abil, i, new)
@@ -357,7 +357,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func003C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)< 30))then
+        if(not(GetUnitAbilityLevelSwapped(BoughtAbility,BuyingUnit)< 30))then
             return false
         endif
         return true
@@ -381,7 +381,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func001Func002C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)>= 0))then
+        if(not(GetUnitAbilityLevelSwapped(BoughtAbility,BuyingUnit)>= 0))then
             return false
         endif
         return true
@@ -397,7 +397,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func001Func002Func002C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)< 30))then
+        if(not(GetUnitAbilityLevelSwapped(BoughtAbility,BuyingUnit)< 30))then
             return false
         endif
         return true
@@ -415,18 +415,18 @@ library trigger111 initializer init requires RandomShit, Functions
     function Trig_Learn_Ability_Actions takes nothing returns nothing
         local integer abilLevel
         local boolean maxAbil = false
-        set BuyingUnit = udg_units01[GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1]
-        set udg_integer01 = GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
+        set BuyingUnit = PlayerHeroes[GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1]
+        set BoughtAbility = GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
         //call ConditionalTriggerExecute(udg_trigger112)
-        if udg_integer01 == 0 or IsAbsolute(udg_integer01) or GetTriggerUnit() != BuyingUnit then
+        if BoughtAbility == 0 or IsAbsolute(BoughtAbility) or GetTriggerUnit() != BuyingUnit then
             return
         endif
-        set abilLevel = GetUnitAbilityLevel(BuyingUnit, udg_integer01)
+        set abilLevel = GetUnitAbilityLevel(BuyingUnit, BoughtAbility)
         if HoldCtrl[GetPlayerId(GetOwningPlayer(BuyingUnit))] then
             set maxAbil = true
         endif
 
-        if EconomicModeAbility(udg_integer01) then
+        if EconomicModeAbility(BoughtAbility) then
             if udg_boolean06 then
                 call ConditionalTriggerExecute(udg_trigger114)
                 return
@@ -477,14 +477,14 @@ library trigger111 initializer init requires RandomShit, Functions
                     call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r")
                     return
                 else
-                    set udg_integers01[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]=(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]+ 1)
-                    set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]= udg_integer01
-                    call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, udg_integer01, maxAbil, true)
+                    set HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]=(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]+ 1)
+                    set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(BuyingUnit))]= BoughtAbility
+                    call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, BoughtAbility, maxAbil, true)
                 endif
             else
                 //increase level ap
                 if(Trig_Learn_Ability_Func008Func002Func003C())then
-                    call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, udg_integer01, maxAbil, false)
+                    call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, BoughtAbility, maxAbil, false)
                 else
                     //max level reached
                     if(Trig_Learn_Ability_Func008Func002Func003Func001C())then
@@ -515,11 +515,11 @@ library trigger111 initializer init requires RandomShit, Functions
                 else
                     //increase level ap
                     if(Trig_Learn_Ability_Func008Func001Func002Func002C())then
-                        call IncUnitAbilityLevelSwapped(udg_integer01,BuyingUnit)
-                        call FuncEditParam(udg_integer01,BuyingUnit)
+                        call IncUnitAbilityLevelSwapped(BoughtAbility,BuyingUnit)
+                        call FuncEditParam(BoughtAbility,BuyingUnit)
                         call AddSpecialEffectLocBJ(GetUnitLoc(BuyingUnit),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
                         call DestroyEffectBJ(GetLastCreatedEffectBJ())
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(udg_integer01, abilLevel))
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(BoughtAbility, abilLevel))
                     else
                         if(Trig_Learn_Ability_Func008Func001Func002Func002Func001C())then
                             call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(BuyingUnit),PLAYER_STATE_RESOURCE_LUMBER)

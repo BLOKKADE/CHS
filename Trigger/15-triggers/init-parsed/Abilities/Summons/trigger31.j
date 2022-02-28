@@ -9,12 +9,12 @@
 
 
     function Trig_Summon_Hawk_Actions takes nothing returns nothing
-        set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANsw',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1)
+        set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANsw',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1)
         call SetUnitScalePercent(GetTriggerUnit(),(100.00 + udg_real02),(100.00 + udg_real02),(100.00 + udg_real02))
         call SetUnitVertexColorBJ(GetTriggerUnit(),100,(100.00 - udg_real02),(100.00 - udg_real02),0)
-        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsw',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 4))
+        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsw',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 4))
         set bj_forLoopBIndex = 1
-        set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANsw',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 2)
+        set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANsw',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 2)
         loop
             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
             call UnitAddItemByIdSwapped('I02L',GetTriggerUnit())

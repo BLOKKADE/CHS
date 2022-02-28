@@ -4,10 +4,10 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
             return false
         endif
-        if(not(udg_integer13 > 1))then
+        if(not(InitialPlayerCount > 1))then
             return false
         endif
-        if(not(udg_integer06==1))then
+        if(not(PlayerCount==1))then
             return false
         endif
         if(not(udg_boolean11==false))then
@@ -21,7 +21,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(not(udg_boolean08==true))then
             return false
         endif
-        if(not(udg_integer02==25))then
+        if(not(RoundNumber==25))then
             return false
         endif
         if(not(udg_boolean04==false))then
@@ -35,7 +35,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(not(udg_boolean08==false))then
             return false
         endif
-        if(not(udg_integer02==50))then
+        if(not(RoundNumber==50))then
             return false
         endif
         if(not(udg_boolean04==false))then
@@ -57,10 +57,10 @@ library trigger122 initializer init requires RandomShit, SaveCommand
 
 
     function Trig_Victory_Func001Func002C takes nothing returns boolean
-        if(not(udg_integer13==1))then
+        if(not(InitialPlayerCount==1))then
             return false
         endif
-        if(not(udg_integer06==1))then
+        if(not(PlayerCount==1))then
             return false
         endif
         if(not Trig_Victory_Func001Func002Func003C())then
@@ -98,10 +98,10 @@ library trigger122 initializer init requires RandomShit, SaveCommand
 
 
     function Trig_Victory_Func012C takes nothing returns boolean
-        if(not(udg_integer13==1))then
+        if(not(InitialPlayerCount==1))then
             return false
         endif
-        if(not(udg_integer06==1))then
+        if(not(PlayerCount==1))then
             return false
         endif
         return true

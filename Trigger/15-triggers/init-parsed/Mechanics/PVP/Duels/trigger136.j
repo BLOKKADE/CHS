@@ -6,7 +6,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
     endglobals
 
     function Trig_PvP_Battle_Func001C takes nothing returns boolean
-        if(not(CountUnitsInGroup(udg_group01)>= 1))then
+        if(not(CountUnitsInGroup(PotentialDuelHeroes)>= 1))then
             return false
         endif
         return true
@@ -30,7 +30,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
     endfunction
     
     function Trig_PvP_Battle_Func001Func008002001002002002002002 takes nothing returns boolean
-        return(IsUnitInGroup(GetFilterUnit(),udg_group01)==true)
+        return(IsUnitInGroup(GetFilterUnit(),PotentialDuelHeroes)==true)
     endfunction
     
     function Trig_PvP_Battle_Func001Func008002001002002002002 takes nothing returns boolean
@@ -51,7 +51,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
 
     function Trig_PvP_Battle_Func001Func010C takes nothing returns boolean
-        if(not(CountUnitsInGroup(udg_group01)>= 1))then
+        if(not(CountUnitsInGroup(PotentialDuelHeroes)>= 1))then
             return false
         endif
         return true
@@ -75,7 +75,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
     endfunction
     
     function Trig_PvP_Battle_Func001Func010Func003002001002002002002002 takes nothing returns boolean
-        return(IsUnitInGroup(GetFilterUnit(),udg_group01)==true) and GetFilterUnit() != udg_units03[1]
+        return(IsUnitInGroup(GetFilterUnit(),PotentialDuelHeroes)==true) and GetFilterUnit() != DuelingHeroes[1]
     endfunction
     
     function Trig_PvP_Battle_Func001Func010Func003002001002002002002 takes nothing returns boolean
@@ -112,7 +112,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
     endfunction
     
     function Trig_PvP_Battle_Func001Func010Func001002001002002002002002 takes nothing returns boolean
-        return IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DuelLosers) and GetFilterUnit() != udg_units03[1]
+        return IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DuelLosers) and GetFilterUnit() != DuelingHeroes[1]
     endfunction
     
     function Trig_PvP_Battle_Func001Func010Func001002001002002002002 takes nothing returns boolean
@@ -145,7 +145,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
     
         set debugText = debugText + " GP"
         loop
-            set debugText = debugText + I2S(GetPlayerId(GetOwningPlayer(BlzGroupUnitAt(udg_group01, i))))
+            set debugText = debugText + I2S(GetPlayerId(GetOwningPlayer(BlzGroupUnitAt(PotentialDuelHeroes, i))))
             set i = i - 1
             exitwhen i < 0
         endloop
@@ -155,12 +155,12 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
 
     function GetPvpEnemy takes nothing returns boolean
-        return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and UnitAlive(GetFilterUnit()) and GetFilterUnit() != udg_units03[1] and GetOwningPlayer(GetFilterUnit()) != Player(8) and GetOwningPlayer(GetFilterUnit()) != Player(11) 
+        return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and UnitAlive(GetFilterUnit()) and GetFilterUnit() != DuelingHeroes[1] and GetOwningPlayer(GetFilterUnit()) != Player(8) and GetOwningPlayer(GetFilterUnit()) != Player(11) 
     endfunction
 
 
     function Trig_PvP_Battle_Func001Func017A takes nothing returns nothing
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(udg_rects01[udg_integer14]),0.20)
+        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),0.20)
     endfunction
 
 
@@ -219,15 +219,15 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
 
     function Trig_PvP_Battle_Func001Func031Func006001001001 takes nothing returns boolean
-        return(GetOwningPlayer(udg_units03[1])!=GetFilterPlayer())
+        return(GetOwningPlayer(DuelingHeroes[1])!=GetFilterPlayer())
     endfunction
     
     function Trig_PvP_Battle_Func001Func031Func006001001002001 takes nothing returns boolean
-        return(GetOwningPlayer(udg_units03[2])!=GetFilterPlayer())
+        return(GetOwningPlayer(DuelingHeroes[2])!=GetFilterPlayer())
     endfunction
     
     function Trig_PvP_Battle_Func001Func031Func006001001002002 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),udg_force02)!=true)
+        return(IsPlayerInForce(GetFilterPlayer(),DefeatedPlayers)!=true)
     endfunction
     
     function Trig_PvP_Battle_Func001Func031Func006001001002 takes nothing returns boolean
@@ -284,57 +284,57 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
     function Trig_PvP_Battle_Actions takes nothing returns nothing
         if(Trig_PvP_Battle_Func001C())then
-            set udg_units03[1]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
-            call GroupRemoveUnitSimple(udg_units03[1],udg_group01)
+            set DuelingHeroes[1]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
+            call GroupRemoveUnitSimple(DuelingHeroes[1],PotentialDuelHeroes)
             if(Trig_PvP_Battle_Func001Func010C())then
-                set udg_units03[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func003002001002)))
+                set DuelingHeroes[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func003002001002)))
             else
-                set udg_units03[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
+                set DuelingHeroes[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
             endif
             //shitty attempt at making sure it doesnt fuck up
-            if udg_units03[2] == udg_units03[1] or udg_units03[2] == null then
-                call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: " + GetPlayerName(GetOwningPlayer(udg_units03[1])) + " will fight any random player.\nPlease send this code in the bug-report channel on discord: " + TempDuelDebug() )
-                set udg_units03[2] = GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function GetPvpEnemy)))
+            if DuelingHeroes[2] == DuelingHeroes[1] or DuelingHeroes[2] == null then
+                call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: " + GetPlayerName(GetOwningPlayer(DuelingHeroes[1])) + " will fight any random player.\nPlease send this code in the bug-report channel on discord: " + TempDuelDebug() )
+                set DuelingHeroes[2] = GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function GetPvpEnemy)))
             endif
 
             // Save debug logs for each player before the fight
-            call DebugCode_SavePlayerDebug(GetOwningPlayer(udg_units03[1]))
-            call DebugCode_SavePlayerDebug(GetOwningPlayer(udg_units03[2]))
+            call DebugCode_SavePlayerDebug(GetOwningPlayer(DuelingHeroes[1]))
+            call DebugCode_SavePlayerDebug(GetOwningPlayer(DuelingHeroes[2]))
 
-            call GroupRemoveUnitSimple(udg_units03[2],udg_group01)
+            call GroupRemoveUnitSimple(DuelingHeroes[2],PotentialDuelHeroes)
             call PlaySoundBJ(udg_sound08)
-            call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[1]))+(" vs " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[2])))))))
-            set udg_integer14 = GetRandomInt(1,8)
+            call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[1]))+(" vs " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[2])))))))
+            set RoundCreepAbilCastChance = GetRandomInt(1,8)
             call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func017A)
-            call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer14],Condition(function Trig_PvP_Battle_Func001Func018001002)),function Trig_PvP_Battle_Func001Func018A)
-            call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(udg_units03[1]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
-            call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(udg_units03[2]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
-            call EnumItemsInRectBJ(udg_rects01[udg_integer14],function Trig_PvP_Battle_Func001Func019A)
-            set udg_location01 = OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),- 40.00,- 50.00)
-            call SetUnitPositionLocFacingLocBJ(udg_units03[1],OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),- 500.00,0),GetRectCenter(udg_rects01[udg_integer14]))
-            call SetUnitPositionLocFacingLocBJ(udg_units03[2],OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),500.00,0),GetRectCenter(udg_rects01[udg_integer14]))
+            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[RoundCreepAbilCastChance],Condition(function Trig_PvP_Battle_Func001Func018001002)),function Trig_PvP_Battle_Func001Func018A)
+            call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(DuelingHeroes[1]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
+            call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(DuelingHeroes[2]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
+            call EnumItemsInRectBJ(PlayerArenaRects[RoundCreepAbilCastChance],function Trig_PvP_Battle_Func001Func019A)
+            set udg_location01 = OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 40.00,- 50.00)
+            call SetUnitPositionLocFacingLocBJ(DuelingHeroes[1],OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
+            call SetUnitPositionLocFacingLocBJ(DuelingHeroes[2],OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
             set bj_forLoopAIndex = 1
             set bj_forLoopAIndexEnd = 2
             loop
                 exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-                call PauseUnitBJ(true,udg_units03[GetForLoopIndexA()])
-                call SelectUnitForPlayerSingle(udg_units03[GetForLoopIndexA()],GetOwningPlayer(udg_units03[GetForLoopIndexA()]))
-                set udg_unit01 = udg_units03[GetForLoopIndexA()]
+                call PauseUnitBJ(true,DuelingHeroes[GetForLoopIndexA()])
+                call SelectUnitForPlayerSingle(DuelingHeroes[GetForLoopIndexA()],GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))
+                set udg_unit01 = DuelingHeroes[GetForLoopIndexA()]
                 call ConditionalTriggerExecute(udg_trigger82)
-                call GroupAddUnitSimple(udg_units03[GetForLoopIndexA()],udg_group02)
+                call GroupAddUnitSimple(DuelingHeroes[GetForLoopIndexA()],DuelingHeroGroup)
                 set bj_forLoopAIndex = bj_forLoopAIndex + 1
             endloop
-            call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED)
-            call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED)
+            call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
+            call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
             set udg_integer33 = 1
             loop
                 exitwhen udg_integer33 > 6
-                set udg_integers03[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(udg_units03[1],udg_integer33))
-                set ItemStacksP1[udg_integer33] = GetItemCharges(UnitItemInSlotBJ(udg_units03[1],udg_integer33))
-                call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer33), false)
-                set udg_integers04[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(udg_units03[2],udg_integer33))
-                set ItemStacksP2[udg_integer33] = GetItemCharges(UnitItemInSlotBJ(udg_units03[2],udg_integer33))
-                call SetItemPawnable(UnitItemInSlotBJ(udg_units03[2],udg_integer33), false)
+                set DuelHeroItemIds1[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33))
+                set ItemStacksP1[udg_integer33] = GetItemCharges(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33))
+                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33), false)
+                set DuelHeroItemIds2[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33))
+                set ItemStacksP2[udg_integer33] = GetItemCharges(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33))
+                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33), false)
                 set udg_integer33 = udg_integer33 + 1
             endloop
             call TriggerSleepAction(0.20)
@@ -347,9 +347,9 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
                 loop
                     exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
                     if(Trig_PvP_Battle_Func001Func031Func003Func001C())then
-                        call DialogAddButtonBJ(udg_dialogs01[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[GetForLoopIndexA()]))+ "|r   ")))
+                        call DialogAddButtonBJ(udg_dialogs01[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r   ")))
                     else
-                        call DialogAddButtonBJ(udg_dialogs01[1],("   " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[GetForLoopIndexA()]))+ "|r >>")))
+                        call DialogAddButtonBJ(udg_dialogs01[1],("   " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r >>")))
                     endif
                     set udg_buttons02[GetForLoopIndexA()]= GetLastCreatedButtonBJ()
                     set bj_forLoopAIndex = bj_forLoopAIndex + 1
@@ -373,16 +373,16 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
             call EnableTrigger(udg_trigger140)
             call EnableTrigger(udg_trigger141)
             call PvpStartSuddenDeathTimer()
-            call SetCurrentlyFighting(GetOwningPlayer(udg_units03[1]), true)
-            call SetCurrentlyFighting(GetOwningPlayer(udg_units03[2]), true)
+            call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[1]), true)
+            call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[2]), true)
             call PlaySoundBJ(udg_sound15)
             set bj_forLoopAIndex = 1
             set bj_forLoopAIndexEnd = 2
             loop
                 exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-                call SetUnitInvulnerable(udg_units03[GetForLoopIndexA()],false)
-                call StartFunctionSpell(udg_units03[GetForLoopIndexA()],4 ) 
-                call PauseUnitBJ(false,udg_units03[GetForLoopIndexA()])
+                call SetUnitInvulnerable(DuelingHeroes[GetForLoopIndexA()],false)
+                call StartFunctionSpell(DuelingHeroes[GetForLoopIndexA()],4 ) 
+                call PauseUnitBJ(false,DuelingHeroes[GetForLoopIndexA()])
                 set bj_forLoopAIndex = bj_forLoopAIndex + 1
             endloop
         else

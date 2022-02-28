@@ -17,7 +17,7 @@ library trigger57 initializer init requires RandomShit
 
 
     function Trig_Game_Master_Selects_Func005001 takes nothing returns boolean
-        return(udg_integer13==1)
+        return(InitialPlayerCount==1)
     endfunction
 
 

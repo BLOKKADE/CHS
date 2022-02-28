@@ -12,7 +12,7 @@
 
 
     function Trig_Volcanic_Armor_Func003C takes nothing returns boolean
-        if(not(udg_integer14 <= 15))then
+        if(not(RoundCreepAbilCastChance <= 15))then
             return false
         endif
         return true
@@ -20,8 +20,8 @@
 
 
     function Trig_Volcanic_Armor_Actions takes nothing returns nothing
-        set udg_integer14 = GetRandomInt(1,100)
-        if udg_integer14 < 15 * GetUnitLuck(GetTriggerUnit()) then
+        set RoundCreepAbilCastChance = GetRandomInt(1,100)
+        if RoundCreepAbilCastChance < 15 * GetUnitLuck(GetTriggerUnit()) then
             call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
             call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
             call UnitAddAbilityBJ('A015',GetLastCreatedUnit())

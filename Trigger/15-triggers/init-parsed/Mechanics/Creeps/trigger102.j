@@ -15,7 +15,7 @@ library trigger102 initializer init requires RandomShit
 
 
     function Trig_Creep_Dies_Actions takes nothing returns nothing
-        call CreepDeath_Death(GetTriggerUnit(), udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()))])
+        call CreepDeath_Death(GetTriggerUnit(), PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()))])
         call TriggerSleepAction(0.00)
         call SetUnitOwner(GetTriggerUnit(),Player(PLAYER_NEUTRAL_PASSIVE),false)
     endfunction

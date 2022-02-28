@@ -28,7 +28,7 @@ library CreepDeath initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_Dies_Func003C takes nothing returns boolean
-        if(not(CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Creep_Dies_Func003Func005001001002)))==0))then
+        if(not(CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Creep_Dies_Func003Func005001001002)))==0))then
             return false
         endif
         return true
@@ -63,9 +63,9 @@ library CreepDeath initializer init requires RandomShit
         endif
 
         if IncomeMode == 3 then
-            if udg_integer02 > 5 then
-                set pillageBonus = IMinBJ(udg_integer02, 15) * 13
-                set expBounty = expBounty + IMinBJ(udg_integer02, 15) * 30
+            if RoundNumber > 5 then
+                set pillageBonus = IMinBJ(RoundNumber, 15) * 13
+                set expBounty = expBounty + IMinBJ(RoundNumber, 15) * 30
             endif
         else
             //Pillage
@@ -154,7 +154,7 @@ library CreepDeath initializer init requires RandomShit
 
     private function SummonDeath takes nothing returns boolean
         if GetOwningPlayer(GetDyingUnit()) != Player(11) and IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == false and GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
-            call NonCreepDeath(GetDyingUnit(), udg_units01[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1])
+            call NonCreepDeath(GetDyingUnit(), PlayerHeroes[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1])
         endif
         return false
     endfunction

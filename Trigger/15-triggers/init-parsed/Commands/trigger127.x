@@ -1,7 +1,7 @@
 library trigger127 initializer init requires RandomShit
 
     function Trig_Movement_Speed_Command_Conditions takes nothing returns boolean
-        if(not(IsUnitAliveBJ(udg_units01[GetConvertedPlayerId(GetTriggerPlayer())])==true))then
+        if(not(IsUnitAliveBJ(PlayerHeroes[GetConvertedPlayerId(GetTriggerPlayer())])==true))then
             return false
         endif
         return true
@@ -10,7 +10,7 @@ library trigger127 initializer init requires RandomShit
 
     function Trig_Movement_Speed_Command_Actions takes nothing returns nothing
         call ForceAddPlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
-        call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Movement Speed: " +(I2S(R2I(GetUnitMoveSpeed(udg_units01[GetConvertedPlayerId(GetTriggerPlayer())])))+ "|r")))
+        call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Movement Speed: " +(I2S(R2I(GetUnitMoveSpeed(PlayerHeroes[GetConvertedPlayerId(GetTriggerPlayer())])))+ "|r")))
         call ForceRemovePlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
     endfunction
 

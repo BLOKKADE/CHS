@@ -5,7 +5,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
     endglobals
 
     function Trig_Level_Completed_Func001C takes nothing returns boolean
-        if(not(udg_integer08 >= udg_integer06))then
+        if(not(RoundFinishedCount >= PlayerCount))then
             return false
         endif
         return true
@@ -24,7 +24,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
     endfunction
     
     function Trig_Level_Completed_Func001Func001001002002002 takes nothing returns boolean
-        return(udg_integer13!=1)
+        return(InitialPlayerCount!=1)
     endfunction
     
     function Trig_Level_Completed_Func001Func001001002002 takes nothing returns boolean
@@ -49,25 +49,25 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func014Func001Func001Func002C takes nothing returns boolean
-        if((udg_integer02==5))then
+        if((RoundNumber==5))then
             return true
         endif
-        if((udg_integer02==10))then
+        if((RoundNumber==10))then
             return true
         endif
-        if((udg_integer02==15))then
+        if((RoundNumber==15))then
             return true
         endif
-        if((udg_integer02==20))then
+        if((RoundNumber==20))then
             return true
         endif
-        if((udg_integer02==25))then
+        if((RoundNumber==25))then
             return true
         endif
-        if((udg_integer02==30))then
+        if((RoundNumber==30))then
             return true
         endif
-        if((udg_integer02==35))then
+        if((RoundNumber==35))then
             return true
         endif
         return false
@@ -75,7 +75,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func014Func001Func001C takes nothing returns boolean
-        if(not(udg_integer06 > 1))then
+        if(not(PlayerCount > 1))then
             return false
         endif
         if(not Trig_Level_Completed_Func001Func014Func001Func001Func002C())then
@@ -105,16 +105,16 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func018Func002Func004Func001C takes nothing returns boolean
-        if((udg_integer02==5))then
+        if((RoundNumber==5))then
             return true
         endif
-        if((udg_integer02==10))then
+        if((RoundNumber==10))then
             return true
         endif
-        if((udg_integer02==15))then
+        if((RoundNumber==15))then
             return true
         endif
-        if((udg_integer02==20))then
+        if((RoundNumber==20))then
             return true
         endif
         return false
@@ -125,7 +125,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
         if(not Trig_Level_Completed_Func001Func018Func002Func004Func001C())then
             return false
         endif
-        if(not(udg_integer06 > 1))then
+        if(not(PlayerCount > 1))then
             return false
         endif
         if(not(udg_boolean04==false))then
@@ -146,45 +146,45 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
     function Trig_Level_Completed_Func001Func018Func001Func004Func001C takes nothing returns boolean
     
         if MorePvp == 0 then
-            if((udg_integer02==10))then
+            if((RoundNumber==10))then
                 return true
             endif
-            if((udg_integer02==20))then
+            if((RoundNumber==20))then
                 return true
             endif
-            if((udg_integer02==30))then
+            if((RoundNumber==30))then
                 return true
             endif
-            if((udg_integer02==40))then
+            if((RoundNumber==40))then
                 return true
             endif
         else
     
-            if((udg_integer02==5))then
+            if((RoundNumber==5))then
                 return true
             endif
-            if((udg_integer02==10))then
+            if((RoundNumber==10))then
                 return true
             endif
-            if((udg_integer02==15))then
+            if((RoundNumber==15))then
                 return true
             endif
-            if((udg_integer02==20))then
+            if((RoundNumber==20))then
                 return true
             endif
-            if((udg_integer02==25))then
+            if((RoundNumber==25))then
                 return true
             endif
-            if((udg_integer02==30))then
+            if((RoundNumber==30))then
                 return true
             endif	
-            if((udg_integer02==35))then
+            if((RoundNumber==35))then
                 return true
             endif	
-            if((udg_integer02==40))then
+            if((RoundNumber==40))then
                 return true
             endif	
-            if((udg_integer02==45))then
+            if((RoundNumber==45))then
                 return true
             endif	
     
@@ -200,7 +200,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
         if(not Trig_Level_Completed_Func001Func018Func001Func004Func001C())then
             return false
         endif
-        if(not(udg_integer06 > 1))then
+        if(not(PlayerCount > 1))then
             return false
         endif
         if(not(udg_boolean04==false))then
@@ -230,7 +230,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func023Func002C takes nothing returns boolean
-        if(not(udg_integer02==BattleRoyalRound))then
+        if(not(RoundNumber==BattleRoyalRound))then
             return false
         endif
         if(not(udg_boolean04==false))then
@@ -241,7 +241,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func023Func002Func003C takes nothing returns boolean
-        if(not(udg_integer06==1))then
+        if(not(PlayerCount==1))then
             return false
         endif
         return true
@@ -249,7 +249,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func023Func001C takes nothing returns boolean
-        if(not(udg_integer02==BattleRoyalRound))then
+        if(not(RoundNumber==BattleRoyalRound))then
             return false
         endif
         if(not(udg_boolean04==false))then
@@ -260,7 +260,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func023Func001Func003C takes nothing returns boolean
-        if(not(udg_integer06==1))then
+        if(not(PlayerCount==1))then
             return false
         endif
         return true
@@ -268,7 +268,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func028C takes nothing returns boolean
-        if(not(udg_integer02 <= 3))then
+        if(not(RoundNumber <= 3))then
             return false
         endif
         return true
@@ -276,7 +276,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Actions takes nothing returns nothing
-        local integer round = udg_integer02 + 1
+        local integer round = RoundNumber + 1
         if(Trig_Level_Completed_Func001C())then
             if(Trig_Level_Completed_Func001Func001001())then
                 return
@@ -288,8 +288,8 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
             call DisableTrigger(udg_trigger116)
             call ConditionalTriggerExecute(udg_trigger122)
             call ConditionalTriggerExecute(udg_trigger119)
-            set udg_boolean01 = true
-            set udg_integer08 = 0
+            
+            set RoundFinishedCount = 0
             call PlaySoundBJ(udg_sound02)
             if(Trig_Level_Completed_Func001Func014C())then
                 if(Trig_Level_Completed_Func001Func014Func001C())then
@@ -299,13 +299,13 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
             endif
             if(Trig_Level_Completed_Func001Func018C())then
                 if(Trig_Level_Completed_Func001Func018Func002C())then
-                    call GroupClear(udg_group03)
+                    call GroupClear(DuelWinners)
                     call ConditionalTriggerExecute(udg_trigger134)
                     return
                 endif
             else
                 if(Trig_Level_Completed_Func001Func018Func001C())then
-                    call GroupClear(udg_group03)
+                    call GroupClear(DuelWinners)
                     call ConditionalTriggerExecute(udg_trigger134)
                     return
                 endif

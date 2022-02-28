@@ -4,7 +4,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
 
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
         if GetUnitTypeId(caster) == 'h014' or GetUnitTypeId(caster) == PRIEST_1_UNIT_ID then
-            set caster = udg_units01[GetConvertedPlayerId(GetOwningPlayer( caster ) ) ]
+            set caster = PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer( caster ) ) ]
         endif
 
         //Mysterious Runestone

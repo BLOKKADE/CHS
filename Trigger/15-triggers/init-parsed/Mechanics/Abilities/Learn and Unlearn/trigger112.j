@@ -18,12 +18,12 @@ library trigger112 initializer init requires RandomShit
         loop
             exitwhen udg_integer44 > udg_integer26
             if(Trig_Set_Ability_Func001Func001001())then
-                set udg_integer01 = udg_integers08[udg_integer44]
+                set BoughtAbility = udg_integers08[udg_integer44]
             else
                 call DoNothing()
             endif
             if(Trig_Set_Ability_Func001Func002C())then
-                set udg_integer01 = udg_integers08[udg_integer44]
+                set BoughtAbility = udg_integers08[udg_integer44]
                 return
             else
             endif

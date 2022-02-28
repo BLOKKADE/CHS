@@ -40,7 +40,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func001Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -90,7 +90,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func002Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -147,7 +147,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func003Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -188,7 +188,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func004Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -237,7 +237,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func005Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -271,7 +271,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func006Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -314,7 +314,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func007Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -355,7 +355,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func008Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -419,7 +419,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func009Func002C takes nothing returns boolean
-        if(not(udg_integer14==1))then
+        if(not(RoundCreepAbilCastChance==1))then
             return false
         endif
         return true
@@ -437,12 +437,12 @@ library trigger101 initializer init requires RandomShit
         if (IsUnitAliveBJ(GetEnumUnit())==true) then
     
             if(Trig_Creep_AutoCast_Func001Func001C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func001Func002C())then
                     if(Trig_Creep_AutoCast_Func001Func001Func002Func001C())then
-                        call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                        call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                        call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
                     call IssueTargetOrderBJ(GetEnumUnit(),"manaburn",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(300.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func001Func002Func002003001003))))
                 else
@@ -450,7 +450,7 @@ library trigger101 initializer init requires RandomShit
             else
             endif
             if(Trig_Creep_AutoCast_Func001Func002C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func002Func002C())then
                     call IssuePointOrderLocBJ(GetEnumUnit(),"blink",OffsetLocation(GetUnitLoc(GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func002Func002Func001003001001001003)))),GetRandomReal(- 100.00,100.00),GetRandomReal(- 100.00,100.00)))
                 else
@@ -458,12 +458,12 @@ library trigger101 initializer init requires RandomShit
             else
             endif
             if(Trig_Creep_AutoCast_Func001Func003C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func003Func002C())then
                     if(Trig_Creep_AutoCast_Func001Func003Func002Func001C())then
-                        call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                        call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                        call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
                     call IssuePointOrderLocBJ(GetEnumUnit(),"shockwave",GetUnitLoc(GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func003Func002Func002003001001003)))))
                 else
@@ -471,12 +471,12 @@ library trigger101 initializer init requires RandomShit
             else
             endif
             if(Trig_Creep_AutoCast_Func001Func004C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func004Func002C())then
                     if(Trig_Creep_AutoCast_Func001Func004Func002Func001C())then
-                        call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                        call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                        call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
                     call IssueTargetOrderBJ(GetEnumUnit(),"creepthunderbolt",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func004Func002Func002003001003))))
                 else
@@ -484,12 +484,12 @@ library trigger101 initializer init requires RandomShit
             else
             endif
             if(Trig_Creep_AutoCast_Func001Func005C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func005Func002C())then
                     if(Trig_Creep_AutoCast_Func001Func005Func002Func001C())then
-                        call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                        call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                        call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
                     call IssueTargetOrderBJ(GetEnumUnit(),"rejuvination",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(400.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func005Func002Func002003001003))))
                 else
@@ -497,7 +497,7 @@ library trigger101 initializer init requires RandomShit
             else
             endif
             if(Trig_Creep_AutoCast_Func001Func006C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func006Func002C())then
                     call IssueTargetOrderBJ(GetEnumUnit(),"slow",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(600.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func006Func002Func001003001003))))
                 else
@@ -505,7 +505,7 @@ library trigger101 initializer init requires RandomShit
             else
             endif
             if(Trig_Creep_AutoCast_Func001Func007C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func007Func002C())then
                     if(Trig_Creep_AutoCast_Func001Func007Func002Func001C())then
                         call IssueImmediateOrderBJ(GetEnumUnit(),"voodoo")
@@ -516,12 +516,12 @@ library trigger101 initializer init requires RandomShit
             else
             endif
             if(Trig_Creep_AutoCast_Func001Func008C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func008Func002C())then
                     if(Trig_Creep_AutoCast_Func001Func008Func002Func001C())then
-                        call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                        call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                        call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
                     call IssueTargetOrderBJ(GetEnumUnit(),"faeriefire",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(700.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func008Func002Func002003001003))))
                 else
@@ -529,13 +529,13 @@ library trigger101 initializer init requires RandomShit
             else
             endif
             if(Trig_Creep_AutoCast_Func001Func009C())then
-                set udg_integer14 = GetRandomInt(1,5)
+                set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func009Func002C())then
                     if(Trig_Creep_AutoCast_Func001Func009Func002Func001C())then
                         if(Trig_Creep_AutoCast_Func001Func009Func002Func001Func002C())then
-                            call SetUnitAbilityLevelSwapped('A01B',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                            call SetUnitAbilityLevelSwapped('A01B',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                         else
-                            call SetUnitAbilityLevelSwapped('A01B',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                            call SetUnitAbilityLevelSwapped('A01B',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                         endif
                         call IssueImmediateOrderBJ(GetEnumUnit(),"thunderclap")
                     else

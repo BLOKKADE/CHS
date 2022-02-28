@@ -6,7 +6,7 @@ library trigger134 initializer init requires RandomShit
 
 
     function Trig_PvP_Func002A takes nothing returns nothing
-        call GroupAddUnitSimple(GetEnumUnit(),udg_group01)
+        call GroupAddUnitSimple(GetEnumUnit(),PotentialDuelHeroes)
     endfunction
 
 
@@ -19,32 +19,32 @@ library trigger134 initializer init requires RandomShit
 
 
     function Trig_PvP_Func004Func001Func004001 takes nothing returns boolean
-        return(udg_integer02==10)
+        return(RoundNumber==10)
     endfunction
 
 
     function Trig_PvP_Func004Func001Func005001 takes nothing returns boolean
-        return(udg_integer02==15)
+        return(RoundNumber==15)
     endfunction
 
 
     function Trig_PvP_Func004Func001Func006001 takes nothing returns boolean
-        return(udg_integer02==20)
+        return(RoundNumber==20)
     endfunction
 
 
     function Trig_PvP_Func004Func001Func001001 takes nothing returns boolean
-        return(udg_integer02==20)
+        return(RoundNumber==20)
     endfunction
 
 
     function Trig_PvP_Func004Func001Func002001 takes nothing returns boolean
-        return(udg_integer02==30)
+        return(RoundNumber==30)
     endfunction
 
 
     function Trig_PvP_Func004Func001Func003001 takes nothing returns boolean
-        return(udg_integer02==40)
+        return(RoundNumber==40)
     endfunction
 
 
@@ -132,8 +132,8 @@ library trigger134 initializer init requires RandomShit
     function Trig_PvP_Actions takes nothing returns nothing
         call TriggerSleepAction(5.00)
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Func002001002)),function Trig_PvP_Func002A)
-        call ForGroupBJ(udg_group03,function Trig_PvP_Func004A)
-        call GroupClear(udg_group03)
+        call ForGroupBJ(DuelWinners,function Trig_PvP_Func004A)
+        call GroupClear(DuelWinners)
         if(Trig_PvP_Func007C())then
             call DisplayTextToForce(GetPlayersAll(),"|cffffcc00Death Match - Survive to advance to the next level!")
         else

@@ -13,7 +13,7 @@ scope ShortPeriodCheck initializer init
         
         loop
             exitwhen II > 8
-            set u = udg_units01[II]
+            set u = PlayerHeroes[II]
             set hid = GetHandleId(u)
             if GetWidgetLife(u) > 0.405 then
 

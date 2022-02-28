@@ -1,7 +1,7 @@
 library trigger118 initializer init requires RandomShit
 
     function Trig_Defeat_Conditions takes nothing returns boolean
-        if(not(udg_integer06==0))then
+        if(not(PlayerCount==0))then
             return false
         endif
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
@@ -28,7 +28,7 @@ library trigger118 initializer init requires RandomShit
         call TriggerSleepAction(2.00)
         call DisplayTimedTextToForce(GetPlayersAll(),26.00,"|cffffcc00But thank you for playing!!|r")
         call TriggerSleepAction(5.00)
-        call ForForce(udg_force02,function Trig_Defeat_Func012A)
+        call ForForce(DefeatedPlayers,function Trig_Defeat_Func012A)
     endfunction
 
 

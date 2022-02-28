@@ -45,8 +45,8 @@ library trigger43 initializer init requires RandomShit
 
 
     function Trig_Hero_Dies_Battle_Royal_Actions takes nothing returns nothing
-        call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
-        set udg_integer06 =(udg_integer06 - 1)
+        call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
+        set PlayerCount =(PlayerCount - 1)
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,("|cffffcc00" + GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit())) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit()))))
         call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_Battle_Royal_Func004A)
         set WinningPlayer = GetOwningPlayer(GetKillingUnit())

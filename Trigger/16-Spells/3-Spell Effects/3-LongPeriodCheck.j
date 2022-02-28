@@ -72,7 +72,7 @@ scope LongPeriodCheck initializer init
         local player Pl = Player(i)
         local integer SpellId = 0
         local string textureS = ""
-        local integer unitId = GetUnitTypeId(udg_units01[NumPlayerLast[i] + 1])
+        local integer unitId = GetUnitTypeId(PlayerHeroes[NumPlayerLast[i] + 1])
 
         if unitId != 0 then
             if GetLocalPlayer() == Pl then
@@ -111,7 +111,7 @@ scope LongPeriodCheck initializer init
         else
             loop
                 exitwhen i1 > 21
-                set SpellId = GetInfoHeroSpell(udg_units01[NumPlayerLast[i] + 1] , i1)
+                set SpellId = GetInfoHeroSpell(PlayerHeroes[NumPlayerLast[i] + 1] , i1)
                 if SpellId != 0 then
                     set textureS = BlzGetAbilityIcon(SpellId)
 
@@ -182,7 +182,7 @@ scope LongPeriodCheck initializer init
 
 
             call FunUpdateSkill(II)
-            set u = udg_units01[II]
+            set u = PlayerHeroes[II]
             set hid = GetHandleId(u)
             if GetWidgetLife(u) > 0.405 then
                 call FunctionAttackSpeedA(u)

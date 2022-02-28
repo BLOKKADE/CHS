@@ -8,7 +8,7 @@ library trigger11 initializer init requires RandomShit
         if(not(   BlzGetUnitAbilityCooldownRemaining(GetEventDamageSource(),'A050')<= 0 ))then
             return false
         endif
-        if(not(IsUnitAliveBJ(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))])==true))then
+        if(not(IsUnitAliveBJ(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))])==true))then
             return false
         endif
         return true

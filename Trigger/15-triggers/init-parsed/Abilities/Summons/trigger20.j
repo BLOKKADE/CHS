@@ -9,10 +9,10 @@
 
 
     function Trig_Parasite_Actions takes nothing returns nothing
-        set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANpa',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
+        set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANpa',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
         call SetUnitScalePercent(GetTriggerUnit(),(100.00 + udg_real02),(100.00 + udg_real02),(100.00 + udg_real02))
         call SetUnitVertexColorBJ(GetTriggerUnit(),100,(100.00 - udg_real02),(100.00 - udg_real02),0)
-        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANpa',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 2))
+        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANpa',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 2))
     endfunction
 
 

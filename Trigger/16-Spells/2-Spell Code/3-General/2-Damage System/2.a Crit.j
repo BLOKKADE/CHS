@@ -39,7 +39,7 @@ library CritDamage requires RandomShit
 
         //PYromancer Scorched Earth
         if GetUnitAbilityLevel(DamageTarget, 'B027') > 0 then
-            set baseCritChance = baseCritChance + (0.1 * GetHeroLevel(udg_units01[ScorchedEarthSource[DamageSourceId] + 1]))
+            set baseCritChance = baseCritChance + (0.1 * GetHeroLevel(PlayerHeroes[ScorchedEarthSource[DamageSourceId] + 1]))
         endif
 
         if not magicDmgType then

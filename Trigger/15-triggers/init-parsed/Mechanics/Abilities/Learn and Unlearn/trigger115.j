@@ -39,7 +39,7 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
             set CountS = LoadCountHeroSpell(u, 0)
             if CountS > 0 then
     
-                set udg_integers01[Pid]=(udg_integers01[Pid]- 1)
+                set HeroAbilityCount[Pid]=(HeroAbilityCount[Pid]- 1)
                 set udg_integers05[Pid] = GetLastLearnedSpell(u, SpellList_Normal, true)
                 call SetInfoHeroSpell(u,CountS,0 )
                 call SaveCountHeroSpell(u ,CountS - 1,0 ) 

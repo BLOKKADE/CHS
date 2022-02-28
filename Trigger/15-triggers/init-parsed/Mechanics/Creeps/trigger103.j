@@ -1,17 +1,17 @@
 library trigger103 initializer init requires RandomShit, Functions
 
     globals
-        integer ReflectionAuraChance = 0
-        integer WizardbaneAuraChance = 0
-        integer DrunkenMasterchance = 0
-        integer SlowAuraChance = 0
-        integer PulverizeChance = 0 
-        integer LastBreathChance = 0
+        integer RoundCreepChanceReflectAura = 0
+        integer RoundCreepChanceWizardbane = 0
+        integer RoundCreepChanceDrunkMaster = 0
+        integer RoundCreepChanceSlowAura = 0
+        integer RoundCreepChancePulverize = 0 
+        integer RoundCreepChanceLastBreath = 0
         integer FireshieldChance = 0
-        integer CorrosiveSkinChance = 0 
-        integer MulticastChance = 0
-        integer FastMagicChance = 0
-        integer ImmortalityAuraChance = 0
+        integer RoundCreepChanceCorrosiveSkin = 0 
+        integer RoundCreepChanceMulticast = 0
+        integer RoundCreepChanceFastMagic = 0
+        integer RoundCreepChanceImmortalAura = 0
         boolean wizardbaneDebug = false
     endglobals
 
@@ -35,7 +35,7 @@ library trigger103 initializer init requires RandomShit, Functions
 
 
     function Trig_Generate_Next_Level_Func012C takes nothing returns boolean
-        if(not((udg_integer02 + 1)> 1))then
+        if(not((RoundNumber + 1)> 1))then
             return false
         endif
         return true
@@ -43,7 +43,7 @@ library trigger103 initializer init requires RandomShit, Functions
 
 
     function Trig_Generate_Next_Level_Func014C takes nothing returns boolean
-        if(not((udg_integer02 + 1)<= 8))then
+        if(not((RoundNumber + 1)<= 8))then
             return false
         endif
         return true
@@ -60,126 +60,126 @@ library trigger103 initializer init requires RandomShit, Functions
     function CheckUnitAbilities takes nothing returns nothing
         local string s = ""
     
-        if udg_integer10 == 1 then
+        if RoundCreepChanceBash == 1 then
             set s = s + "Bash "
             call AddRoundAbility('ACbh')
         endif
     
-        if udg_integer24 == 1 then
+        if RoundCreepChanceHurlBoulder == 1 then
             set s = s + "Hurl Boulder "
             call AddRoundAbility('A00W')
         endif
     
-        if udg_integer25 == 1 then
+        if RoundCreepChanceRejuv == 1 then
             set s = s + "Rejuvenation "
             call AddRoundAbility('A00X')
         endif
     
-        if udg_integer50 == 1 then
+        if RoundCreepChanceBigBadV == 1 then
             set s = s + "Big Bad Voodoo "
             call AddRoundAbility('A018')
         endif
     
-        if udg_integer54 == 1 then
+        if RoundCreepChanceBlink == 1 then
             set s = s + "Blink "
             call AddRoundAbility('A01A')
         endif
     
-        if udg_integer11 == 1 then
+        if RoundCreepChanceCritStrike == 1 then
             set s = s + "Critical Strike "
             call AddRoundAbility('AOcr')
         endif
     
-        if udg_integer12 == 1 then
+        if RoundCreepChanceEvasion == 1 then
             set s = s + "Evasion "
         endif
     
-        if udg_integer51 == 1 then
+        if RoundCreepChanceFaerieFire == 1 then
             set s = s + "Faerie Fire "
             call AddRoundAbility('A016')
         endif
     
-        if udg_integer18 == 1 then
+        if RoundCreepChanceLifesteal == 1 then
             set s = s + "Lifesteal "
             call AddRoundAbility('SCva')
         endif
     
-        if udg_integer23 == 1 then
+        if RoundCreepChanceManaBurn == 1 then
             set s = s + "Mana Burn "
             call AddRoundAbility('A00V')
         endif
     
-        if udg_integer21 == 1 then
+        if RoundCreepChanceShockwave == 1 then
             set s = s + "Shockwave "
             call AddRoundAbility('A00U')
         endif
     
-        if udg_integer49 == 1 then
+        if RoundCreepChanceSlow == 1 then
             set s = s + "Slow "
             call AddRoundAbility('A013')
         endif
     
-        if udg_integer17 == 1 then
+        if RoundCreepChanceCleave == 1 then
             set s = s + "Cleave "
             call AddRoundAbility('ACce')
         endif
     
-        if udg_integer20 == 1 then
+        if RoundCreepChanceThorns == 1 then
             set s = s + "Thorns Aura "
             call AddRoundAbility('A08F')
         endif
     
-        if udg_integer55 == 1 then
+        if RoundCreepChanceThunderClap == 1 then
             set s = s + "Thunder Clap "
             call AddRoundAbility('A01B')
         endif
     
-        if ReflectionAuraChance == 1 then
+        if RoundCreepChanceReflectAura == 1 then
             set s = s + "Reflection Aura "
             call AddRoundAbility('A093')
         endif
     
-        if WizardbaneAuraChance == 1 then
+        if RoundCreepChanceWizardbane == 1 then
             set s = s + "Wizardbane Aura  "
             call AddRoundAbility('A088')
         endif
     
-        if DrunkenMasterchance == 1 then
+        if RoundCreepChanceDrunkMaster == 1 then
             set s = s + "Drunken Master "
             call AddRoundAbility('Acdb')
         endif
     
-        if SlowAuraChance == 1 then
+        if RoundCreepChanceSlowAura == 1 then
             set s = s + "Slow Aura "
             call AddRoundAbility('AOr2')
         endif
     
-        if PulverizeChance == 1 then
+        if RoundCreepChancePulverize == 1 then
             set s = s + "Pulverize "
             call AddRoundAbility('Awar')
         endif
     
-        if LastBreathChance == 1 then
+        if RoundCreepChanceLastBreath == 1 then
             set s = s + "Last Breath "
             call AddRoundAbility('A05R')
         endif
     
-        if CorrosiveSkinChance == 1 then
+        if RoundCreepChanceCorrosiveSkin == 1 then
             set s = s + "Corrosive Skin "
             call AddRoundAbility('A00Q')
         endif
     
-        if MulticastChance == 1 then
+        if RoundCreepChanceMulticast == 1 then
             set s = s + "Multicast "
             call AddRoundAbility('A04F')
         endif
     
-        if FastMagicChance == 1 then
+        if RoundCreepChanceFastMagic == 1 then
             set s = s + "Fast Magic "
             call AddRoundAbility('A03P')
         endif
 
-        if ImmortalityAuraChance == 1 then
+        if RoundCreepChanceImmortalAura == 1 then
             set s = s + "Aura of Immortality"
             call AddRoundAbility('A02L')
         endif
@@ -201,7 +201,7 @@ library trigger103 initializer init requires RandomShit, Functions
         if(not(GetPlayerSlotState(ConvertedPlayer(udg_integer40))!=PLAYER_SLOT_STATE_EMPTY))then
             return false
         endif
-        if(not(IsPlayerInForce(ConvertedPlayer(udg_integer40),udg_force02)!=true))then
+        if(not(IsPlayerInForce(ConvertedPlayer(udg_integer40),DefeatedPlayers)!=true))then
             return false
         endif
         return true
@@ -209,60 +209,60 @@ library trigger103 initializer init requires RandomShit, Functions
 
 
     function UnitAddNewAbilities takes unit u returns nothing
-        if udg_integer11 == 1 then
-            call SetUnitAbilityLevel(u, 'AOcr', IMinBJ(R2I(udg_integer02 * 0.2), 30))
+        if RoundCreepChanceCritStrike == 1 then
+            call SetUnitAbilityLevel(u, 'AOcr', IMinBJ(R2I(RoundNumber * 0.2), 30))
         endif
     
-        if DrunkenMasterchance == 1 then
+        if RoundCreepChanceDrunkMaster == 1 then
             call UnitAddAbility(u, 'Acdb')
             call FuncEditParam('Acdb',u)
-            call SetUnitAbilityLevel(u, 'Acdb', IMinBJ(R2I(udg_integer02 * 0.3), 30))
+            call SetUnitAbilityLevel(u, 'Acdb', IMinBJ(R2I(RoundNumber * 0.3), 30))
         endif
     
-        if ReflectionAuraChance == 1 then
+        if RoundCreepChanceReflectAura == 1 then
             call UnitAddAbility(u, 'A093')
-            call SetUnitAbilityLevel(u, 'A093', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+            call SetUnitAbilityLevel(u, 'A093', IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
     
-        if WizardbaneAuraChance == 1 then
+        if RoundCreepChanceWizardbane == 1 then
             call UnitAddAbility(u, 'A088')
-            call SetUnitAbilityLevel(u, 'A088', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+            call SetUnitAbilityLevel(u, 'A088', IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
     
-        if SlowAuraChance == 1 then
+        if RoundCreepChanceSlowAura == 1 then
             call UnitAddAbility(u, 'AOr2')
-            call SetUnitAbilityLevel(u, 'AOr2', IMinBJ(R2I(udg_integer02 * 0.75), 30))
+            call SetUnitAbilityLevel(u, 'AOr2', IMinBJ(R2I(RoundNumber * 0.75), 30))
         endif
     
-        if PulverizeChance == 1 then
+        if RoundCreepChancePulverize == 1 then
             call UnitAddAbility(u, 'Awar')
-            call SetUnitAbilityLevel(u, 'Awar', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+            call SetUnitAbilityLevel(u, 'Awar', IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
     
-        if LastBreathChance == 1 then
+        if RoundCreepChanceLastBreath == 1 then
             call UnitAddAbility(u, 'A05R')
             call FuncEditParam('A05R', u)
-            call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(udg_integer02 * 0.2), 30))
+            call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(RoundNumber * 0.2), 30))
         endif
     
-        if CorrosiveSkinChance == 1 then
+        if RoundCreepChanceCorrosiveSkin == 1 then
             call UnitAddAbility(u, 'A00Q')
-            call SetUnitAbilityLevel(u, 'A00Q', IMinBJ(R2I(udg_integer02 * 0.6), 30))
+            call SetUnitAbilityLevel(u, 'A00Q', IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
     
-        if MulticastChance == 1 then
+        if RoundCreepChanceMulticast == 1 then
             call UnitAddAbility(u, 'A04F')
-            call SetUnitAbilityLevel(u, 'A04F', IMinBJ(R2I(udg_integer02 * 0.5), 30))
+            call SetUnitAbilityLevel(u, 'A04F', IMinBJ(R2I(RoundNumber * 0.5), 30))
         endif
     
-        if FastMagicChance == 1 then
+        if RoundCreepChanceFastMagic == 1 then
             call UnitAddAbility(u, 'A03P')
-            call SetUnitAbilityLevel(u, 'A03P', IMinBJ(R2I(udg_integer02 * 0.6), 30))
+            call SetUnitAbilityLevel(u, 'A03P', IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
 
-        if ImmortalityAuraChance == 1 then
+        if RoundCreepChanceImmortalAura == 1 then
             call UnitAddAbility(u, 'A02L')
-            call SetUnitAbilityLevel(u, 'A02L', IMinBJ(R2I(udg_integer02 * 0.6), 30))
+            call SetUnitAbilityLevel(u, 'A02L', IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
     endfunction
 
@@ -288,139 +288,139 @@ library trigger103 initializer init requires RandomShit, Functions
         call DisableTrigger(GetTriggeringTrigger())
         call ConditionalTriggerExecute(udg_trigger104)
         call ResetRoundAbilities()
-        if udg_integer02 < 15 then
-            set udg_integer04 = udg_integers02[GetRandomInt(1,udg_integer22 - 2)]
+        if RoundNumber < 15 then
+            set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,udg_integer22 - 2)]
         else
-            set udg_integer04 = udg_integers02[GetRandomInt(1,udg_integer22)]
+            set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,udg_integer22)]
         endif
-        set udg_integer09 = GetRandomInt(GetRandomInt(150, 150 + udg_integer02 * 2),400)
-        set udg_integer05 = GetRandomInt(1,udg_integer02)
+        set RoundCreepMoveSpeed = GetRandomInt(GetRandomInt(150, 150 + RoundNumber * 2),400)
+        set RoundCreepMaxAttackSpeed = GetRandomInt(1,RoundNumber)
         
-        if udg_integer02 > 25 then
+        if RoundNumber > 25 then
             set newAbilChance = 20
         endif
-        if udg_integer02 > 40 then
+        if RoundNumber > 40 then
             set oldAbilChance = 15
         endif
-        if udg_integer02 > 5 then
-            set udg_integer10 = GetRandomInt(1,20)
-            set udg_integer24 = GetRandomInt(1,20)
-            set udg_integer25 = GetRandomInt(1,20)
-            set udg_integer49 = GetRandomInt(1, oldAbilChance)
-            set SlowAuraChance = GetRandomInt(1, newAbilChance)
-            set ImmortalityAuraChance = GetRandomInt(1, newAbilChance)
+        if RoundNumber > 5 then
+            set RoundCreepChanceBash = GetRandomInt(1,20)
+            set RoundCreepChanceHurlBoulder = GetRandomInt(1,20)
+            set RoundCreepChanceRejuv = GetRandomInt(1,20)
+            set RoundCreepChanceSlow = GetRandomInt(1, oldAbilChance)
+            set RoundCreepChanceSlowAura = GetRandomInt(1, newAbilChance)
+            set RoundCreepChanceImmortalAura = GetRandomInt(1, newAbilChance)
         endif
         if(Trig_Generate_Next_Level_Func012C())then
-            set udg_integer50 = GetRandomInt(1,oldAbilChance)
-            set udg_integer54 = GetRandomInt(1,oldAbilChance)
-            if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
-                set udg_integer11 = GetRandomInt(1,oldAbilChance)
-                set udg_integer21 = GetRandomInt(1,oldAbilChance)
-                if udg_integer02 > 5 then
-                    set udg_integer55 = GetRandomInt(1,oldAbilChance)    
+            set RoundCreepChanceBigBadV = GetRandomInt(1,oldAbilChance)
+            set RoundCreepChanceBlink = GetRandomInt(1,oldAbilChance)
+            if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
+                set RoundCreepChanceCritStrike = GetRandomInt(1,oldAbilChance)
+                set RoundCreepChanceShockwave = GetRandomInt(1,oldAbilChance)
+                if RoundNumber > 5 then
+                    set RoundCreepChanceThunderClap = GetRandomInt(1,oldAbilChance)    
                 endif
             else
-                set udg_integer11 = 0
-                set udg_integer21 = 0
-                set udg_integer55 = 0
+                set RoundCreepChanceCritStrike = 0
+                set RoundCreepChanceShockwave = 0
+                set RoundCreepChanceThunderClap = 0
             endif
-            set udg_integer12 = GetRandomInt(1,oldAbilChance)
-            set udg_integer51 = GetRandomInt(1,oldAbilChance)
-            set udg_integer18 = GetRandomInt(1,oldAbilChance)
-            set udg_integer23 = GetRandomInt(1,oldAbilChance)
+            set RoundCreepChanceEvasion = GetRandomInt(1,oldAbilChance)
+            set RoundCreepChanceFaerieFire = GetRandomInt(1,oldAbilChance)
+            set RoundCreepChanceLifesteal = GetRandomInt(1,oldAbilChance)
+            set RoundCreepChanceManaBurn = GetRandomInt(1,oldAbilChance)
             
             
-            set udg_integer17 = GetRandomInt(1,oldAbilChance)
-            set udg_integer20 = 0
-            set ReflectionAuraChance = 0
+            set RoundCreepChanceCleave = GetRandomInt(1,oldAbilChance)
+            set RoundCreepChanceThorns = 0
+            set RoundCreepChanceReflectAura = 0
             if wizardbaneDebug then
-                set WizardbaneAuraChance = 1
+                set RoundCreepChanceWizardbane = 1
             else
-            set WizardbaneAuraChance = 0
+            set RoundCreepChanceWizardbane = 0
                 if GetRandomInt(1, oldAbilChance) == 1 then
                     set temp = GetRandomInt(1,4)
                     if temp == 1 then
-                        set udg_integer20 = 1
+                        set RoundCreepChanceThorns = 1
                     elseif temp == 2 then
-                        set ReflectionAuraChance = 1
+                        set RoundCreepChanceReflectAura = 1
                     elseif temp == 3 then
-                        set WizardbaneAuraChance = 1
-                    elseif udg_integer02 > 20 then
-                        if udg_integer02 > 40 then
-                            set udg_integer20 = GetRandomInt(1,2)
-                            set ReflectionAuraChance = GetRandomInt(1,2)
-                            set WizardbaneAuraChance = GetRandomInt(1,2)
+                        set RoundCreepChanceWizardbane = 1
+                    elseif RoundNumber > 20 then
+                        if RoundNumber > 40 then
+                            set RoundCreepChanceThorns = GetRandomInt(1,2)
+                            set RoundCreepChanceReflectAura = GetRandomInt(1,2)
+                            set RoundCreepChanceWizardbane = GetRandomInt(1,2)
                         else
-                            set udg_integer20 = GetRandomInt(1,3)
-                            set ReflectionAuraChance = GetRandomInt(1,3)
-                            set WizardbaneAuraChance = GetRandomInt(1,3)
+                            set RoundCreepChanceThorns = GetRandomInt(1,3)
+                            set RoundCreepChanceReflectAura = GetRandomInt(1,3)
+                            set RoundCreepChanceWizardbane = GetRandomInt(1,3)
                         endif
                     endif
                 endif
             endif
             
         endif
-        if udg_integer02 > 10 then
-            if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
-                set DrunkenMasterchance = GetRandomInt(1,oldAbilChance)
-                set PulverizeChance = GetRandomInt(1,newAbilChance)
+        if RoundNumber > 10 then
+            if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
+                set RoundCreepChanceDrunkMaster = GetRandomInt(1,oldAbilChance)
+                set RoundCreepChancePulverize = GetRandomInt(1,newAbilChance)
             endif
             set FireshieldChance = GetRandomInt(1,newAbilChance)
-            set CorrosiveSkinChance = GetRandomInt(1,newAbilChance)
+            set RoundCreepChanceCorrosiveSkin = GetRandomInt(1,newAbilChance)
         endif
-        if udg_integer02 >= 35 then
-            set MulticastChance = GetRandomInt(1,newAbilChance + 10)
-            set FastMagicChance = GetRandomInt(1,newAbilChance + 6)
+        if RoundNumber >= 35 then
+            set RoundCreepChanceMulticast = GetRandomInt(1,newAbilChance + 10)
+            set RoundCreepChanceFastMagic = GetRandomInt(1,newAbilChance + 6)
         endif
     
-        if udg_integer02 == 28 or udg_integer02 == 38 or udg_integer02 == 48 then
-            set LastBreathChance = 1
+        if RoundNumber == 28 or RoundNumber == 38 or RoundNumber == 48 then
+            set RoundCreepChanceLastBreath = 1
         else  
-            set LastBreathChance = 2
+            set RoundCreepChanceLastBreath = 2
         endif
     
         if(Trig_Generate_Next_Level_Func014C())then
-            set udg_integer03 = GetRandomInt(2,(udg_integer02 / 2 + 4))
+            set RoundCreepNumber = GetRandomInt(2,(RoundNumber / 2 + 4))
         else
-            set udg_integer03 = GetRandomInt(2,25)
+            set RoundCreepNumber = GetRandomInt(2,25)
         endif
     
-        if udg_integer02 > 0 then
+        if RoundNumber > 0 then
             call CheckUnitAbilities()
         endif
 
-        set udg_integer02 =(udg_integer02 + 1)
+        set RoundNumber =(RoundNumber + 1)
         call ForGroupBJ(udg_group05,function Trig_Generate_Next_Level_Func018A)
         call GroupClear(udg_group05)
         set udg_integer28 = 1
         loop
-            exitwhen udg_integer28 > udg_integer03
+            exitwhen udg_integer28 > RoundCreepNumber
             set udg_integer40 = 1
             if udg_integer28 > 4 then
-                set udg_integer50 = 2
+                set RoundCreepChanceBigBadV = 2
             endif
             loop
                 exitwhen udg_integer40 > 8
-                if udg_integer02 > 1 then
+                if RoundNumber > 1 then
                     set ShowCreepAbilButton[udg_integer40 - 1] = true
                 endif
                 
                 //Creep upgrade bonuses
-                if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
+                if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
                     set magicPowerBonus = 1 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1])
-                    set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* udg_integer02)
+                    set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* RoundNumber)
                 else
                     set magicPowerBonus = 0
                 endif
                 set magicDefBonus = 0.09 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
                 set evasionBonus = 0.06 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
                 set blockBonus = 0.12 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
-                if udg_integer02 < 40 then
+                if RoundNumber < 40 then
                     set damageBonus = damageBonus / 2
                 endif
     
                 if(Trig_Generate_Next_Level_Func021Func001Func001C())then
-                    call CreateNUnitsAtLoc(1,udg_integer04,Player(11),OffsetLocation(GetRectCenter(udg_rects01[udg_integer40]),GetRandomReal(- 600.00,600.00),GetRandomReal(- 600.00,600.00)),GetRandomDirectionDeg())
+                    call CreateNUnitsAtLoc(1,RoundCreepTypeId,Player(11),OffsetLocation(GetRectCenter(PlayerArenaRects[udg_integer40]),GetRandomReal(- 600.00,600.00),GetRandomReal(- 600.00,600.00)),GetRandomDirectionDeg())
                     call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group05)
                     //call UnitAddAbility(GetLastCreatedUnit(),'A057')
                     //call BlzUnitDisableAbility(GetLastCreatedUnit(),'A057',false,true)
@@ -428,7 +428,7 @@ library trigger103 initializer init requires RandomShit, Functions
                     call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0) + damageBonus,0)
     
                     call SetUnitMagicDmg(GetLastCreatedUnit(), magicPowerBonus)
-                    call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.25 *(udg_integer02)))
+                    call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.25 *(RoundNumber)))
                     call SetUnitEvasion(GetLastCreatedUnit(), evasionBonus)	
                     call SetUnitBlock(GetLastCreatedUnit(), blockBonus)			
 
@@ -436,68 +436,68 @@ library trigger103 initializer init requires RandomShit, Functions
                         call SetUnitMagicDmg(GetLastCreatedUnit(), 5000)
                     endif
     
-                    if udg_integer02 < 3 then
+                    if RoundNumber < 3 then
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)- 3,0)
     
-                    elseif udg_integer02 < 8  then
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 1 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 3 * udg_integer02)
+                    elseif RoundNumber < 8  then
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 1 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 3 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )
-                    elseif udg_integer02 < 11  then
-                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 / 3) 
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 2 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 10 * udg_integer02)
+                    elseif RoundNumber < 11  then
+                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber / 3) 
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 2 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 10 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) ) 		
-                    elseif udg_integer02 < 19  then
-                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 1) 
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 6 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 40 * udg_integer02)
+                    elseif RoundNumber < 19  then
+                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 1) 
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 6 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 40 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )                	
-                    elseif udg_integer02 < 24  then
-                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 3) 
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 14 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 45 * udg_integer02)
+                    elseif RoundNumber < 24  then
+                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 3) 
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 14 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 45 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )		    
     
-                    elseif udg_integer02 < 35  then
-                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 5) 
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 55 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 70 * udg_integer02)
+                    elseif RoundNumber < 35  then
+                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 5) 
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 55 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 70 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )				    
     
-                    elseif udg_integer02 < 41  then
-                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 12) 
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 200 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 150 * udg_integer02)
+                    elseif RoundNumber < 41  then
+                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 12) 
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 200 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 150 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )				    
-                    elseif udg_integer02 < 45  then
-                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 18) 
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 400 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 305 * udg_integer02)
+                    elseif RoundNumber < 45  then
+                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 18) 
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 400 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 305 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	
-                    elseif udg_integer02 < 49  then
+                    elseif RoundNumber < 49  then
     
-                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 20) 
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 500 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 600 * udg_integer02)
+                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 20) 
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 500 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 600 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	                                 
                     else
-                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 20) 
-                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 900 * udg_integer02,0)
-                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 1500 * udg_integer02)
+                        call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 20) 
+                        call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 900 * RoundNumber,0)
+                        call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 1500 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	             			    
                     endif
     
     
     
     
-                    call SetUnitScalePercent(GetLastCreatedUnit(),(85.00 +((I2R(udg_integer02)- 1.00)* 0.50)),100,100)
+                    call SetUnitScalePercent(GetLastCreatedUnit(),(85.00 +((I2R(RoundNumber)- 1.00)* 0.50)),100,100)
                     call UnitAddNewAbilities(GetLastCreatedUnit())
                     call ConditionalTriggerExecute(udg_trigger99)
                     call ConditionalTriggerExecute(udg_trigger100)
-                    call SetUnitMoveSpeed(GetLastCreatedUnit(),I2R(udg_integer09))
-                    call SetUnitAbilityLevelSwapped('A000',GetLastCreatedUnit(),(R2I(udg_real01)/ 2))
-                    call SetUnitAbilityLevelSwapped('A002',GetLastCreatedUnit(),udg_integer05)
+                    call SetUnitMoveSpeed(GetLastCreatedUnit(),I2R(RoundCreepMoveSpeed))
+                    call SetUnitAbilityLevelSwapped('A000',GetLastCreatedUnit(),(R2I(RoundCreepPower)/ 2))
+                    call SetUnitAbilityLevelSwapped('A002',GetLastCreatedUnit(),RoundCreepMaxAttackSpeed)
                     call PauseUnitBJ(true,GetLastCreatedUnit())
                     call SetUnitInvulnerable(GetLastCreatedUnit(),true)
                     call ShowUnitHide(GetLastCreatedUnit())
@@ -506,14 +506,14 @@ library trigger103 initializer init requires RandomShit, Functions
                         call UnitAddAbility(GetLastCreatedUnit(), 'A0B1')
                     endif
                     
-                    if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
+                    if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),R2I(BlzGetUnitBaseDamage(GetLastCreatedUnit(),0) * 0.5),0)
                     endif
     
                     //call BJDebugMsg("rci: " + I2S(udg_integer40 - 1))
                     if RoundCreepInfo[udg_integer40 - 1] == "" then
                         //call BJDebugMsg("a")
-                        set RoundCreepTitle = "|cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r"
+                        set RoundCreepTitle = "|cffdd9bf1" + I2S(RoundCreepNumber) + " |r|cff77d2fc" + GetObjectName(RoundCreepTypeId) + "|r"
                         set s = RoundCreepTitle + ": "
                         set RoundCreepInfo[udg_integer40 - 1] = "|cfff19b9bHit points|r: " + I2S(BlzGetUnitMaxHP(GetLastCreatedUnit())) + "|n"
                         //call BJDebugMsg("b")
@@ -524,7 +524,7 @@ library trigger103 initializer init requires RandomShit, Functions
                             set s = s + "|cff82f373Ranged|r: "
                         endif
                         //call BJDebugMsg("c")
-                        if udg_integer04 == 'n01H' or udg_integer04 == 'n00W' then
+                        if RoundCreepTypeId == 'n01H' or RoundCreepTypeId == 'n00W' then
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bddf1Damage Type|r: magic |n"
                             set s = s + "|cff9bddf1Magic Damage|r: "
                         else
@@ -532,14 +532,14 @@ library trigger103 initializer init requires RandomShit, Functions
                         endif
                         //call BJDebugMsg("d")
                         if BonusNeutral == 0 and BonusNeutralPlayer[udg_integer40 - 1] == 0 then
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1)) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) ) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1)) + "|n"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1)) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) ) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1)) + "|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitBlock(GetLastCreatedUnit()))) + "|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitMagicDmg(GetLastCreatedUnit()))) + "|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitMagicDef(GetLastCreatedUnit()))) + "|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitEvasion(GetLastCreatedUnit())))
                         else
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1) - damageBonus) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1) - damageBonus )) + " + |cfff19bb8" + I2S(R2I(damageBonus)) + "|r|n"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1) - damageBonus) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1) - damageBonus )) + " + |cfff19bb8" + I2S(R2I(damageBonus)) + "|r|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitBlock(GetLastCreatedUnit()) - blockBonus)) + " + |cff78729e" + I2S(R2I(blockBonus)) + "|r|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitMagicDmg(GetLastCreatedUnit()) - magicPowerBonus)) + "+ |cff9bc7f1" + I2S(R2I(magicPowerBonus)) + "|r|n"

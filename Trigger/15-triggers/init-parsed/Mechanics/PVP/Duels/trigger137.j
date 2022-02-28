@@ -5,7 +5,7 @@ library trigger137 initializer init requires RandomShit
     endfunction
     
     function Trig_PvP_No_Player_Func001Func001001002001002 takes nothing returns boolean
-        return(IsUnitInGroup(GetFilterUnit(),udg_group02)==true)
+        return(IsUnitInGroup(GetFilterUnit(),DuelingHeroGroup)==true)
     endfunction
     
     function Trig_PvP_No_Player_Func001Func001001002001 takes nothing returns boolean
@@ -30,7 +30,7 @@ library trigger137 initializer init requires RandomShit
 
 
     function Trig_PvP_No_Player_Func001Func001Func001C takes nothing returns boolean
-        if(not(RectContainsUnit(udg_rects01[udg_integer45],GetEnumUnit())==true))then
+        if(not(RectContainsUnit(PlayerArenaRects[udg_integer45],GetEnumUnit())==true))then
             return false
         endif
         return true
@@ -39,7 +39,7 @@ library trigger137 initializer init requires RandomShit
 
     function Trig_PvP_No_Player_Func001Func001A takes nothing returns nothing
         if(Trig_PvP_No_Player_Func001Func001Func001C())then
-            call IssuePointOrderLocBJ(GetEnumUnit(),"attack",GetRandomLocInRect(udg_rects01[udg_integer45]))
+            call IssuePointOrderLocBJ(GetEnumUnit(),"attack",GetRandomLocInRect(PlayerArenaRects[udg_integer45]))
         else
         endif
     endfunction

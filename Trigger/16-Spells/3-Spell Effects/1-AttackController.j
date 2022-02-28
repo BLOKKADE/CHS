@@ -38,7 +38,7 @@ scope AttackController initializer init
         local timer t = null
         local unit u = GetTriggerUnit()
         local unit u2 = GetAttacker()
-        local unit attackerHero = udg_units01[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]
+        local unit attackerHero = PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]
         local real luck = GetUnitLuck(u)
         
         

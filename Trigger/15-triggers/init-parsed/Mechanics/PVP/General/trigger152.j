@@ -165,7 +165,7 @@ library trigger152 initializer init requires RandomShit, StartFunction
         call SetAllCurrentlyFighting(true)
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Elimination_Func036001002)),function Trig_Elimination_Func036A)
         if(Trig_Elimination_Func037C())then
-            set udg_integer06 = 1
+            set PlayerCount = 1
             call ConditionalTriggerExecute(udg_trigger122)
         else
         endif

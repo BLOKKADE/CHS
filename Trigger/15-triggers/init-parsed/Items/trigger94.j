@@ -9,7 +9,7 @@ library trigger94 initializer init requires RandomShit
 
 
     function Trig_Scepter_of_Confusion_Func002C takes nothing returns boolean
-        if(not(udg_integer14!=1))then
+        if(not(RoundCreepAbilCastChance!=1))then
             return false
         endif
         return true
@@ -17,7 +17,7 @@ library trigger94 initializer init requires RandomShit
 
 
     function Trig_Scepter_of_Confusion_Actions takes nothing returns nothing
-        set udg_integer14 = GetRandomInt(1,4)
+        set RoundCreepAbilCastChance = GetRandomInt(1,4)
         if(Trig_Scepter_of_Confusion_Func002C())then
             call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
             call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())

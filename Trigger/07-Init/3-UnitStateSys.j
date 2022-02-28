@@ -31,7 +31,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         local integer i2 = 0
         local integer totalLevel = 0
         local integer pid = GetPlayerId(GetOwningPlayer(u))
-        local unit hero = udg_units01[pid + 1]
+        local unit hero = PlayerHeroes[pid + 1]
         local integer UpgradeU = 15 * UnitHasItemI(hero,'I07K')
         local real wild = 1 + GetUnitSummonStronger(hero)/ 100
         local real r1
@@ -202,9 +202,9 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Illusion
         if IsUnitIllusion(u) and IsUnitType(u, UNIT_TYPE_HERO) then
-            call SetHeroStr(u, GetHeroStr(udg_units01[pid + 1], false), false)
-            call SetHeroAgi(u, GetHeroAgi(udg_units01[pid + 1], false), false)
-            call SetHeroInt(u, GetHeroInt(udg_units01[pid + 1], false), false)
+            call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid + 1], false), false)
+            call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid + 1], false), false)
+            call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid + 1], false), false)
         endif
 
         //Rock Golem

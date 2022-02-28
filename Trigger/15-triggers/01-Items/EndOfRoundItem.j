@@ -1,7 +1,7 @@
 library EndOfRoundItem
 
     function CheckEndOfRoundItem takes item it returns boolean
-        return udg_integer02 != GetItemUserData(it) 
+        return RoundNumber != GetItemUserData(it) 
     endfunction
 
     function GetValidEndOfRoundItems takes unit u, integer itemId returns integer
@@ -28,9 +28,9 @@ library EndOfRoundItem
 
     function RegisterEndOfRoundItem takes integer pid, item it returns nothing
         if it != null then
-            if CurrentlyFighting[pid] or RectContainsUnit(udg_rect09, udg_units01[pid + 1]) == false then
+            if CurrentlyFighting[pid] or RectContainsUnit(udg_rect09, PlayerHeroes[pid + 1]) == false then
                 call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Your |cff68eef3" + GetItemName(it) + "|r will start working |cff6cff40next round|r.")
-                call SetItemUserData(it, udg_integer02)
+                call SetItemUserData(it, RoundNumber)
             else
                 call SetItemUserData(it, 0)
             endif

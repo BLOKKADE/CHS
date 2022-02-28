@@ -166,7 +166,7 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetPlayerAbilityAvailable(Player(Pid), 'A08L', false)
             call SetPlayerAbilityAvailable(Player(Pid), 'A08L', true)
             set LastLvlHero[Pid] = I_l
-                
+
         elseif TypeHero == DRUID_OF_THE_CLAY_UNIT_ID then
             call SetBonus(UnitHero, 0, 1 * (I_l + 1))
         elseif TypeHero == MAULER_UNIT_ID then  

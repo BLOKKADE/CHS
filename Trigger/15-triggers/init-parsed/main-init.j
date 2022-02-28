@@ -19,60 +19,59 @@ library OldInitialization initializer main3
 
         //default variables
         //Todo set default values from initglobals2 and 3 here so those functions can be removed
-        unit array udg_units01
-        integer udg_integer01= 0
-        integer array udg_integers01
-        integer array udg_integers02
-        integer udg_integer02= 0
-        integer udg_integer03= 0
-        integer udg_integer04= 0
-        rect array udg_rects01
-        integer udg_integer05= 0
-        integer udg_integer06= 0
-        integer udg_integer07= 0
-        integer udg_integer08= 0
-        real udg_real01= 0
-        integer udg_integer09= 0
-        integer udg_integer10= 0
-        integer udg_integer11= 0
-        integer udg_integer12= 0
-        player udg_player01= null
-        integer udg_integer13= 0
-        unit array udg_units02
-        boolean udg_boolean01= false
-        force udg_force02= null
-        group udg_group01= null
-        unit array udg_units03
-        integer udg_integer14= 0
-        integer array udg_integers03
-        integer array udg_integers04
-        group udg_group02= null
-        group udg_group03= null
+        unit array PlayerHeroes
+        integer BoughtAbility= 0
+        integer array HeroAbilityCount
+        integer array CreepUnitTypeIds
+        integer RoundNumber= 0
+        integer RoundCreepNumber= 0
+        integer RoundCreepTypeId= 0
+        rect array PlayerArenaRects
+        integer RoundCreepMaxAttackSpeed= 0
+        integer PlayerCount= 0
+        integer SpawnedHeroCount= 0
+        integer RoundFinishedCount= 0
+        real RoundCreepPower= 0
+        integer RoundCreepMoveSpeed= 0
+        integer RoundCreepChanceBash= 0
+        integer RoundCreepChanceCritStrike= 0
+        integer RoundCreepChanceEvasion= 0
+        player SingleplayerPlayer= null
+        integer InitialPlayerCount= 0
+        unit array ChooseHeroSelection
+        force DefeatedPlayers= null
+        group PotentialDuelHeroes= null
+        unit array DuelingHeroes
+        integer RoundCreepAbilCastChance= 0
+        integer array DuelHeroItemIds1
+        integer array DuelHeroItemIds2
+        group DuelingHeroGroup= null
+        group DuelWinners= null
         integer udg_integer15= 0
         integer udg_integer16= 0
         boolean array udg_booleans01
         boolean udg_boolean02= false
         integer array udg_integers05
         boolean array udg_booleans02
-        integer udg_integer17= 0
-        integer udg_integer18= 0
+        integer RoundCreepChanceCleave= 0
+        integer RoundCreepChanceLifesteal= 0
         item array udg_items01
         boolean array udg_booleans03
         force udg_force03= null
         location udg_location01= null
         integer udg_integer19= 0
-        integer udg_integer20= 0
+        integer RoundCreepChanceThorns= 0
         real udg_real02= 0
         unit udg_unit01= null
         integer array udg_integers06
         dialog udg_dialog01= null
         button array udg_buttons01
         integer array udg_integers07
-        integer udg_integer21= 0
+        integer RoundCreepChanceShockwave= 0
         integer udg_integer22= 0
-        integer udg_integer23= 0
-        integer udg_integer24= 0
-        integer udg_integer25= 0
+        integer RoundCreepChanceManaBurn= 0
+        integer RoundCreepChanceHurlBoulder= 0
+        integer RoundCreepChanceRejuv= 0
         integer array udg_integers08
         integer array udg_integers09
         integer udg_integer26= 0
@@ -129,17 +128,17 @@ library OldInitialization initializer main3
         force udg_force07= null
         boolean udg_boolean12= false
         integer udg_integer48= 0
-        integer udg_integer49= 0
-        integer udg_integer50= 0
-        integer udg_integer51= 0
+        integer RoundCreepChanceSlow= 0
+        integer RoundCreepChanceBigBadV= 0
+        integer RoundCreepChanceFaerieFire= 0
         integer udg_integer52= 0
         integer array udg_integers13
         integer udg_integer53= 0
         effect array udg_effects01
         effect array udg_effects02
         group udg_group06= null
-        integer udg_integer54= 0
-        integer udg_integer55= 0
+        integer RoundCreepChanceBlink= 0
+        integer RoundCreepChanceThunderClap= 0
         integer udg_integer56= 0
         group udg_group07= null
         sound array udg_sounds01
@@ -431,53 +430,53 @@ library OldInitialization initializer main3
     endglobals
     function InitGlobals3 takes nothing returns nothing
         local integer i = 0
-        set udg_integer01 = 0	
+        set BoughtAbility = 0	
         set roundAbilities = Table.create()
         //call BJDebugMsg("ra create")
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers01[i]= 0
+            set HeroAbilityCount[i]= 0
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers02[i]= 0
+            set CreepUnitTypeIds[i]= 0
             set i = i + 1
         endloop
-        set udg_integer02 = 0
-        set udg_integer03 = 0
-        set udg_integer04 = 0
-        set udg_integer05 = 0
-        set udg_integer06 = 0
-        set udg_integer07 = 0
-        set udg_integer08 = 0
-        set udg_real01 = 0
-        set udg_integer09 = 0
-        set udg_integer10 = 0
-        set udg_integer11 = 0
-        set udg_integer12 = 0
-        set udg_integer13 = 0
+        set RoundNumber = 0
+        set RoundCreepNumber = 0
+        set RoundCreepTypeId = 0
+        set RoundCreepMaxAttackSpeed = 0
+        set PlayerCount = 0
+        set SpawnedHeroCount = 0
+        set RoundFinishedCount = 0
+        set RoundCreepPower = 0
+        set RoundCreepMoveSpeed = 0
+        set RoundCreepChanceBash = 0
+        set RoundCreepChanceCritStrike = 0
+        set RoundCreepChanceEvasion = 0
+        set InitialPlayerCount = 0
         set udg_force01 = CreateForce()
-        set udg_boolean01 = false
-        set udg_force02 = CreateForce()
-        set udg_group01 = CreateGroup()
-        set udg_integer14 = 0
+        
+        set DefeatedPlayers = CreateForce()
+        set PotentialDuelHeroes = CreateGroup()
+        set RoundCreepAbilCastChance = 0
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers03[i]= 0
+            set DuelHeroItemIds1[i]= 0
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers04[i]= 0
+            set DuelHeroItemIds2[i]= 0
             set i = i + 1
         endloop
-        set udg_group02 = CreateGroup()
-        set udg_group03 = CreateGroup()
+        set DuelingHeroGroup = CreateGroup()
+        set DuelWinners = CreateGroup()
         set udg_integer15 = 0
         set udg_integer16 = 0
         set i = 0
@@ -499,8 +498,8 @@ library OldInitialization initializer main3
             set udg_booleans02[i]= false
             set i = i + 1
         endloop
-        set udg_integer17 = 0
-        set udg_integer18 = 0
+        set RoundCreepChanceCleave = 0
+        set RoundCreepChanceLifesteal = 0
         set i = 0
         loop
             exitwhen(i > 1)
@@ -509,7 +508,7 @@ library OldInitialization initializer main3
         endloop
         set udg_force03 = CreateForce()
         set udg_integer19 = 0
-        set udg_integer20 = 0
+        set RoundCreepChanceThorns = 0
         set udg_real02 = 0
         set i = 0
         loop
@@ -525,11 +524,11 @@ library OldInitialization initializer main3
             set udg_integers07[i]= 0
             set i = i + 1
         endloop
-        set udg_integer21 = 0
+        set RoundCreepChanceShockwave = 0
         set udg_integer22 = 0
-        set udg_integer23 = 0
-        set udg_integer24 = 0
-        set udg_integer25 = 0
+        set RoundCreepChanceManaBurn = 0
+        set RoundCreepChanceHurlBoulder = 0
+        set RoundCreepChanceRejuv = 0
         set i = 0
         loop
             exitwhen(i > 1)
@@ -627,9 +626,9 @@ library OldInitialization initializer main3
         set udg_force07 = CreateForce()
         set udg_boolean12 = false
         set udg_integer48 = 0
-        set udg_integer49 = 0
-        set udg_integer50 = 0
-        set udg_integer51 = 0
+        set RoundCreepChanceSlow = 0
+        set RoundCreepChanceBigBadV = 0
+        set RoundCreepChanceFaerieFire = 0
         set udg_integer52 = 0
         set i = 0
         loop
@@ -639,8 +638,8 @@ library OldInitialization initializer main3
         endloop
         set udg_integer53 = 0
         set udg_group06 = CreateGroup()
-        set udg_integer54 = 0
-        set udg_integer55 = 0
+        set RoundCreepChanceBlink = 0
+        set RoundCreepChanceThunderClap = 0
         set udg_integer56 = 0
         set udg_group07 = CreateGroup()
         set udg_group08 = CreateGroup()
@@ -693,28 +692,28 @@ library OldInitialization initializer main3
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers01[i]= 0
+            set HeroAbilityCount[i]= 0
             set i = i + 1
         endloop
-        set udg_integer02 = 0
-        set udg_integer03 = 0
-        set udg_integer05 = 0
-        set udg_integer06 = 0
-        set udg_integer07 = 0
-        set udg_integer08 = 0
-        set udg_real01 = 0
-        set udg_integer09 = 0
-        set udg_integer10 = 0
-        set udg_integer11 = 0
-        set udg_integer12 = 0
-        set udg_integer13 = 0
+        set RoundNumber = 0
+        set RoundCreepNumber = 0
+        set RoundCreepMaxAttackSpeed = 0
+        set PlayerCount = 0
+        set SpawnedHeroCount = 0
+        set RoundFinishedCount = 0
+        set RoundCreepPower = 0
+        set RoundCreepMoveSpeed = 0
+        set RoundCreepChanceBash = 0
+        set RoundCreepChanceCritStrike = 0
+        set RoundCreepChanceEvasion = 0
+        set InitialPlayerCount = 0
         set udg_force01 = CreateForce()
-        set udg_boolean01 = false
-        set udg_force02 = CreateForce()
-        set udg_group01 = CreateGroup()
-        set udg_integer14 = 0
-        set udg_group02 = CreateGroup()
-        set udg_group03 = CreateGroup()
+        
+        set DefeatedPlayers = CreateForce()
+        set PotentialDuelHeroes = CreateGroup()
+        set RoundCreepAbilCastChance = 0
+        set DuelingHeroGroup = CreateGroup()
+        set DuelWinners = CreateGroup()
         set udg_integer16 = 0
         set i = 0
         loop
@@ -729,8 +728,8 @@ library OldInitialization initializer main3
             set udg_booleans02[i]= false
             set i = i + 1
         endloop
-        set udg_integer17 = 0
-        set udg_integer18 = 0
+        set RoundCreepChanceCleave = 0
+        set RoundCreepChanceLifesteal = 0
         set i = 0
         loop
             exitwhen(i > 1)
@@ -739,7 +738,7 @@ library OldInitialization initializer main3
         endloop
         set udg_force03 = CreateForce()
         set udg_integer19 = 0
-        set udg_integer20 = 0
+        set RoundCreepChanceThorns = 0
         set udg_real02 = 0
         set i = 0
         loop
@@ -754,11 +753,11 @@ library OldInitialization initializer main3
             set udg_integers07[i]= 0
             set i = i + 1
         endloop
-        set udg_integer21 = 0
+        set RoundCreepChanceShockwave = 0
         set udg_integer22 = 0
-        set udg_integer23 = 0
-        set udg_integer24 = 0
-        set udg_integer25 = 0
+        set RoundCreepChanceManaBurn = 0
+        set RoundCreepChanceHurlBoulder = 0
+        set RoundCreepChanceRejuv = 0
         set udg_integer26 = 0
         set udg_integer27 = 0
         set udg_integer28 = 0
@@ -838,9 +837,9 @@ library OldInitialization initializer main3
         set udg_force07 = CreateForce()
         set udg_boolean12 = false
         set udg_integer48 = 0
-        set udg_integer49 = 0
-        set udg_integer50 = 0
-        set udg_integer51 = 0
+        set RoundCreepChanceSlow = 0
+        set RoundCreepChanceBigBadV = 0
+        set RoundCreepChanceFaerieFire = 0
         set udg_integer52 = 0
         set i = 0
         loop
@@ -850,8 +849,8 @@ library OldInitialization initializer main3
         endloop
         set udg_integer53 = 0
         set udg_group06 = CreateGroup()
-        set udg_integer54 = 0
-        set udg_integer55 = 0
+        set RoundCreepChanceBlink = 0
+        set RoundCreepChanceThunderClap = 0
         set udg_integer56 = 0
         set udg_group07 = CreateGroup()
         set udg_group08 = CreateGroup()

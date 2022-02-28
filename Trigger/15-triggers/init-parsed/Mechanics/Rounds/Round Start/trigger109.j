@@ -12,7 +12,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         if(not(udg_boolean12==false))then
             return false
         endif
-        if(not(udg_integer02==1))then
+        if(not(RoundNumber==1))then
             return false
         endif
         return true
@@ -33,7 +33,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
 
     function Trig_Start_Level_Func011A takes nothing returns nothing
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,udg_integer02)
+        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,RoundNumber)
         set ShowCreepAbilButton[GetPlayerId(GetEnumPlayer())] = false
         call ResourseRefresh(GetEnumPlayer()) 
     endfunction
@@ -59,7 +59,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
 
     function Trig_Start_Level_Func015C takes nothing returns boolean
-        if(not(udg_integer02 > 1))then
+        if(not(RoundNumber > 1))then
             return false
         endif
         return true
@@ -79,7 +79,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
     endfunction
     
     function Trig_Start_Level_Func015Func002001001002 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),udg_force02)!=true)
+        return(IsPlayerInForce(GetFilterPlayer(),DefeatedPlayers)!=true)
     endfunction
     
     function Trig_Start_Level_Func015Func002001001 takes nothing returns boolean
@@ -118,19 +118,19 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         set udg_booleans02[GetConvertedPlayerId(GetEnumPlayer())]= false
         set udg_booleans01[GetConvertedPlayerId(GetEnumPlayer())]= false
         call ForGroupBJ(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Start_Level_Func015Func002Func003001002)),function Trig_Start_Level_Func015Func002Func003A)
-        call EnumItemsInRectBJ(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
-        call SetUnitInvulnerable(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],false)
-        call SetUnitPositionLoc(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],GetRectCenter(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())]))
-        set udg_unit01 = udg_units01[GetConvertedPlayerId(GetEnumPlayer())]
+        call EnumItemsInRectBJ(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
+        call SetUnitInvulnerable(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],false)
+        call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]))
+        set udg_unit01 = PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]
         call ConditionalTriggerExecute(udg_trigger82)
-        call SelectUnitForPlayerSingle(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetEnumPlayer())]))
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())]),0)
+        call SelectUnitForPlayerSingle(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]))
+        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]),0)
         call SetCurrentlyFighting(GetEnumPlayer(), true)
     endfunction
 
 
     function StartLevelRoundOne takes nothing returns nothing
-        call StartFunctionSpell(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],3) 
+        call StartFunctionSpell(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],3) 
         call SetCurrentlyFighting(GetEnumPlayer(), true)
     endfunction
 
@@ -144,7 +144,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
 
     function StartFunctionSpells takes nothing returns nothing
-        call StartFunctionSpell(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],3) 
+        call StartFunctionSpell(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],3) 
     endfunction
 
     function Trig_Start_Level_Actions takes nothing returns nothing
@@ -155,22 +155,22 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
             set udg_boolean12 = true
             set udg_boolean09 = true
 
-            call DisplayTextToForce(GetPlayersAll(),("|c00F08000Level " +(I2S(udg_integer02)+ "|r")))
+            call DisplayTextToForce(GetPlayersAll(),("|c00F08000Level " +(I2S(RoundNumber)+ "|r")))
             call ConditionalTriggerExecute(udg_trigger143)
             call ForGroupBJ(GetUnitsOfTypeIdAll('n00E'),function Trig_Start_Level_Func003Func006A)
         else
         endif
         call ForceClear(udg_force03)
-        set udg_boolean01 = false
-        set udg_integer08 = 0
+        
+        set RoundFinishedCount = 0
         call ConditionalTriggerExecute(udg_trigger146)
         call ForForce(GetPlayersAll(),function Trig_Start_Level_Func011A)
         if(Trig_Start_Level_Func013C())then
-            set udg_integer59 =((125 * udg_integer02)/ udg_integer03)
-            set udg_integer61 =((125 * udg_integer02)-(udg_integer59 * udg_integer03))
+            set udg_integer59 =((125 * RoundNumber)/ RoundCreepNumber)
+            set udg_integer61 =((125 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
         else
-            set udg_integer59 =((80 * udg_integer02)/ udg_integer03)
-            set udg_integer61 =((80 * udg_integer02)-(udg_integer59 * udg_integer03))
+            set udg_integer59 =((80 * RoundNumber)/ RoundCreepNumber)
+            set udg_integer61 =((80 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
         endif
         if(Trig_Start_Level_Func015C())then
             call PlaySoundBJ(udg_sound03)

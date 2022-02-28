@@ -1,7 +1,7 @@
 library trigger56 initializer init requires RandomShit
 
     function Trig_Voting_Rights_Initialization_Func003C takes nothing returns boolean
-        if(not(udg_integer13==1))then
+        if(not(InitialPlayerCount==1))then
             return false
         endif
         return true

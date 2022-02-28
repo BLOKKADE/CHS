@@ -28,7 +28,7 @@ library trigger54 initializer init requires RandomShit
 
 
     function Trig_Betting_Complete_Func002Func001Func001Func001Func001C takes nothing returns boolean
-        if(not(udg_units03[1]==udg_unit05))then
+        if(not(DuelingHeroes[1]==udg_unit05))then
             return false
         endif
         if(not(IsPlayerInForce(GetEnumPlayer(),udg_force04)==true))then
@@ -39,7 +39,7 @@ library trigger54 initializer init requires RandomShit
 
 
     function Trig_Betting_Complete_Func002Func001Func001Func001Func002C takes nothing returns boolean
-        if(not(udg_units03[2]==udg_unit05))then
+        if(not(DuelingHeroes[2]==udg_unit05))then
             return false
         endif
         if(not(IsPlayerInForce(GetEnumPlayer(),udg_force05)==true))then
@@ -97,7 +97,7 @@ library trigger54 initializer init requires RandomShit
             if(Trig_Betting_Complete_Func002Func001Func001C())then
                 set udg_string01 =(GetPlayerNameColour(GetEnumPlayer()))
                 set udg_string01 =(udg_string01 + " won: ")
-                call AddSpecialEffectTargetUnitBJ("origin",udg_units01[GetConvertedPlayerId(GetEnumPlayer())],"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
+                call AddSpecialEffectTargetUnitBJ("origin",PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
                 call DestroyEffectBJ(GetLastCreatedEffectBJ())
                 if(Trig_Betting_Complete_Func002Func001Func001Func006C())then
                     call AdjustPlayerStateBJ((udg_integers15[GetConvertedPlayerId(GetEnumPlayer())]* 2),GetEnumPlayer(),PLAYER_STATE_RESOURCE_GOLD)

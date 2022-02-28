@@ -5,7 +5,7 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
     endglobals
 
     function RemoveSpell takes integer pid, unit u, integer abilId returns nothing
-        set udg_integers01[pid + 1]= udg_integers01[pid + 1] - 1
+        set HeroAbilityCount[pid + 1]= HeroAbilityCount[pid + 1] - 1
         if udg_integers05[pid + 1] == abilId then
             set udg_integers05[pid + 1] = GetLastLearnedSpell(u, SpellList_Normal, false)
         endif

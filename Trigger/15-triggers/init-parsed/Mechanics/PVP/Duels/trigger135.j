@@ -1,7 +1,7 @@
 library trigger135 initializer init requires RandomShit, PlayerTracking
 
     function Trig_End_PvP_Conditions takes nothing returns boolean
-        if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)==true))then
+        if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true))then
             return false
         endif
         return true
@@ -9,7 +9,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
 
 
     function Trig_End_PvP_Func001C takes nothing returns boolean
-        if(not(udg_units03[1]==GetTriggerUnit()))then
+        if(not(DuelingHeroes[1]==GetTriggerUnit()))then
             return false
         endif
         return true
@@ -30,7 +30,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
 
 
     function Trig_End_PvP_Func021Func001Func001C takes nothing returns boolean
-        if(not(udg_units03[1]==udg_unit05))then
+        if(not(DuelingHeroes[1]==udg_unit05))then
             return false
         endif
         return true
@@ -43,7 +43,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
 
 
     function Trig_End_PvP_Func026C takes nothing returns boolean
-        if(not(CountUnitsInGroup(udg_group01)==0))then
+        if(not(CountUnitsInGroup(PotentialDuelHeroes)==0))then
             return false
         endif
         return true
@@ -85,7 +85,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
 
 
     function Trig_End_PvP_Func026Func008C takes nothing returns boolean
-        if(not(udg_integer06 > 1))then
+        if(not(PlayerCount > 1))then
             return false
         endif
         return true
@@ -120,9 +120,9 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
         local PlayerStats winningPlayer
 
         if(Trig_End_PvP_Func001C())then
-            set udg_unit05 = udg_units03[2]
+            set udg_unit05 = DuelingHeroes[2]
         else
-            set udg_unit05 = udg_units03[1]
+            set udg_unit05 = DuelingHeroes[1]
         endif
         call DisableTrigger(udg_trigger140)
         call DisableTrigger(udg_trigger141)
@@ -149,16 +149,16 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
         endif
     
         call TriggerSleepAction(4.00)
-        if IsUnitInGroup(udg_unit05, udg_group03) == false then
-            call GroupAddUnitSimple(udg_unit05,udg_group03)
+        if IsUnitInGroup(udg_unit05, DuelWinners) == false then
+            call GroupAddUnitSimple(udg_unit05,DuelWinners)
         endif
         call FunWinner( udg_unit05 )
-        //call GroupRemoveUnitSimple(GetDyingUnit(),udg_group03)
-        call GroupRemoveUnitSimple(udg_unit05,udg_group02)
-        call GroupRemoveUnitSimple(GetDyingUnit(),udg_group02)
+        //call GroupRemoveUnitSimple(GetDyingUnit(),DuelWinners)
+        call GroupRemoveUnitSimple(udg_unit05,DuelingHeroGroup)
+        call GroupRemoveUnitSimple(GetDyingUnit(),DuelingHeroGroup)
         call ForceAddPlayer(DuelLosers, GetOwningPlayer(GetDyingUnit()))
-        call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED)
-        call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED)
+        call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
+        call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
         call ForForce(GetPlayersAll(),function Trig_End_PvP_Func019A)
         call SetUnitPositionLoc(udg_unit05,GetRectCenter(udg_rect09))
         if(Trig_End_PvP_Func021C())then
@@ -167,31 +167,31 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
             set udg_integer32 = 1
             loop
                 exitwhen udg_integer32 > 6
-                call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
-                call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
+                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32))
+                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32))
 
-                if GetPlayerSlotState(GetOwningPlayer(udg_units03[1])) != PLAYER_SLOT_STATE_LEFT then
-                    set tempItem = UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
+                if GetPlayerSlotState(GetOwningPlayer(DuelingHeroes[1])) != PLAYER_SLOT_STATE_LEFT then
+                    set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds1[udg_integer32],DuelingHeroes[1])
 
                     if ItemStacksP1[udg_integer32] > 1 then
                         call SetItemCharges(tempItem, ItemStacksP1[udg_integer32])
                     endif
                     
-                    if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
+                    if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),udg_integer32) then
                         //call BJDebugMsg("1a item move success")
                     else
                         //call BJDebugMsg("1a item move fail")
                     endif
                 endif
 
-                if GetPlayerSlotState(GetOwningPlayer(udg_units03[2])) != PLAYER_SLOT_STATE_LEFT then
-                    set tempItem = UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
+                if GetPlayerSlotState(GetOwningPlayer(DuelingHeroes[2])) != PLAYER_SLOT_STATE_LEFT then
+                    set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds2[udg_integer32],DuelingHeroes[2])
 
                     if ItemStacksP2[udg_integer32] > 1 then
                         call SetItemCharges(tempItem, ItemStacksP2[udg_integer32])
                     endif
 
-                    if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
+                    if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),udg_integer32) then
                         //call BJDebugMsg("2a item move success")
                     else
                         //call BJDebugMsg("2a item move fail")
@@ -204,24 +204,24 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
             loop
                 exitwhen udg_integer32 > 6
                 if(Trig_End_PvP_Func021Func001Func001C())then
-                    call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
-                    call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
-                    if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
+                    call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32))
+                    call UnitAddItemByIdSwapped(DuelHeroItemIds1[udg_integer32],DuelingHeroes[1])
+                    if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),udg_integer32) then
                         //call BJDebugMsg("1b item move success")
                     else
                        //call BJDebugMsg("1b item move fail")
                     endif
                 else
-                    call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
-                    call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
-                    if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
+                    call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32))
+                    call UnitAddItemByIdSwapped(DuelHeroItemIds2[udg_integer32],DuelingHeroes[2])
+                    if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),udg_integer32) then
                         //call BJDebugMsg("2b item move success")
                     else
                         //call BJDebugMsg("2b item move fail")
                     endif
                 endif
-                call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer32), true)
-                call SetItemPawnable(UnitItemInSlotBJ(udg_units03[2],udg_integer32), true)
+                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32), true)
+                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32), true)
                 set udg_integer32 = udg_integer32 + 1
             endloop
         endif
@@ -230,12 +230,12 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
         set udg_integer38 = 1
         loop
             exitwhen udg_integer38 > 8
-            call EnumItemsInRectBJ(udg_rects01[udg_integer38],function Trig_End_PvP_Func024Func001A)
+            call EnumItemsInRectBJ(PlayerArenaRects[udg_integer38],function Trig_End_PvP_Func024Func001A)
             set udg_integer38 = udg_integer38 + 1
         endloop
         set udg_unit05 = null
-        call SetCurrentlyFighting(GetOwningPlayer(udg_units03[1]), false)
-        call SetCurrentlyFighting(GetOwningPlayer(udg_units03[2]), false)
+        call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[1]), false)
+        call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[2]), false)
         if(Trig_End_PvP_Func026C())then
             call TriggerSleepAction(2)
             call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_End_PvP_Func026Func007001002)),function Trig_End_PvP_Func026Func007A)
@@ -249,12 +249,12 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
             call TriggerSleepAction(1.00)
     
             if(Trig_End_PvP_Func026Func016C())then
-                set udg_integer15 = DuelGoldReward[udg_integer02]
+                set udg_integer15 = DuelGoldReward[RoundNumber]
             else
-                set udg_integer15 = DuelGoldReward[udg_integer02]		
+                set udg_integer15 = DuelGoldReward[RoundNumber]		
             endif
             if(Trig_End_PvP_Func026Func018C())then
-                call ForGroupBJ(udg_group03,function Trig_End_PvP_Func026Func018Func002A)
+                call ForGroupBJ(DuelWinners,function Trig_End_PvP_Func026Func018Func002A)
             endif
             call PlaySoundBJ(udg_sound07)
             call ConditionalTriggerExecute(udg_trigger138)

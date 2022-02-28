@@ -37,7 +37,7 @@ library trigger78 initializer init requires RandomShit
 
 
     function Trig_Choose_Hero_Func001C takes nothing returns boolean
-        if(not(GetTriggerUnit()==udg_units02[GetConvertedPlayerId(GetTriggerPlayer())]))then
+        if(not(GetTriggerUnit()==ChooseHeroSelection[GetConvertedPlayerId(GetTriggerPlayer())]))then
             return false
         endif
         return true
@@ -86,7 +86,7 @@ library trigger78 initializer init requires RandomShit
             call QueueUnitAnimationBJ(GetTriggerUnit(),"stand")
             call ForGroupBJ(GetUnitsOfPlayerAndTypeId(GetTriggerPlayer(),'n00E'),function Trig_Choose_Hero_Func001Func011A)
             call CreateNUnitsAtLoc(1,'n00E',GetTriggerPlayer(),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
-            set udg_units02[GetConvertedPlayerId(GetTriggerPlayer())]= GetTriggerUnit()
+            set ChooseHeroSelection[GetConvertedPlayerId(GetTriggerPlayer())]= GetTriggerUnit()
         endif
         set ToolTipS = null
     endfunction

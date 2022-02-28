@@ -14,7 +14,7 @@ library trigger98 initializer init requires RandomShit
 
 
     function Trig_Attack_Move_Func001Func001A takes nothing returns nothing
-        call IssuePointOrderLocBJ(GetEnumUnit(),"patrol",GetRandomLocInRect(udg_rects01[udg_integer43]))
+        call IssuePointOrderLocBJ(GetEnumUnit(),"patrol",GetRandomLocInRect(PlayerArenaRects[udg_integer43]))
     endfunction
 
 
@@ -22,7 +22,7 @@ library trigger98 initializer init requires RandomShit
         set udg_integer43 = 1
         loop
             exitwhen udg_integer43 > 8
-            call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer43],Condition(function Trig_Attack_Move_Func001Func001001002)),function Trig_Attack_Move_Func001Func001A)
+            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer43],Condition(function Trig_Attack_Move_Func001Func001001002)),function Trig_Attack_Move_Func001Func001A)
             set udg_integer43 = udg_integer43 + 1
         endloop
     endfunction

@@ -97,7 +97,7 @@ library trigger153 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Elimination_Func021001 takes nothing returns boolean
-        return(udg_integer06==1)
+        return(PlayerCount==1)
     endfunction
 
     function Trig_Hero_Dies_Elimination_Func030001002001 takes nothing returns boolean
@@ -227,9 +227,9 @@ library trigger153 initializer init requires RandomShit, DebugCommands
         call DisableTrigger(GetTriggeringTrigger())
         call StopSoundBJ(udg_sound13,false)
         call PlaySoundBJ(udg_sound13)
-        call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
+        call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
         call SetCurrentlyFighting(GetOwningPlayer(GetTriggerUnit()), false)
-        set udg_integer06 =(udg_integer06 - 1)
+        set PlayerCount =(PlayerCount - 1)
         call AllowSinglePlayerCommands()
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffffcc00 was defeated!|r")))
         call DisableTrigger(udg_trigger16)

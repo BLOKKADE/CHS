@@ -20,7 +20,7 @@ library DebugCode requires RandomShit, OldInitialization
 
         loop
 
-            set playerHero = udg_units01[i] // Get player's hero
+            set playerHero = PlayerHeroes[i] // Get player's hero
 
             // Make sure the hero was found
             if (playerHero != null) then

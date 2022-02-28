@@ -9,7 +9,7 @@
 
 
     function Trig_Healing_Ward_Actions takes nothing returns nothing
-        call SetUnitAbilityLevelSwapped('Aoar',GetTriggerUnit(),GetUnitAbilityLevelSwapped('Ahwd',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+        call SetUnitAbilityLevelSwapped('Aoar',GetTriggerUnit(),GetUnitAbilityLevelSwapped('Ahwd',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
     endfunction
 
 

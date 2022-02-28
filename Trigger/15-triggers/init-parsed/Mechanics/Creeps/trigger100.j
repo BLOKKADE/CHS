@@ -9,7 +9,7 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func002C takes nothing returns boolean
-        if(not(udg_integer02 <= 5))then
+        if(not(RoundNumber <= 5))then
             return false
         endif
         return true
@@ -17,12 +17,12 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func002Func003001 takes nothing returns boolean
-        return(udg_integer03==1)
+        return(RoundCreepNumber==1)
     endfunction
 
 
     function Trig_Add_Unit_Power_Func001Func002Func001C takes nothing returns boolean
-        if(not(udg_integer02 <= 10))then
+        if(not(RoundNumber <= 10))then
             return false
         endif
         return true
@@ -30,12 +30,12 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func002Func001Func004001 takes nothing returns boolean
-        return(udg_integer03==1)
+        return(RoundCreepNumber==1)
     endfunction
 
 
     function Trig_Add_Unit_Power_Func001Func002Func001Func001C takes nothing returns boolean
-        if(not(udg_integer02 <= 15))then
+        if(not(RoundNumber <= 15))then
             return false
         endif
         return true
@@ -43,12 +43,12 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func002Func001Func001Func004001 takes nothing returns boolean
-        return(udg_integer03==1)
+        return(RoundCreepNumber==1)
     endfunction
 
 
     function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002C takes nothing returns boolean
-        if(not(udg_integer02 <= 20))then
+        if(not(RoundNumber <= 20))then
             return false
         endif
         return true
@@ -56,12 +56,12 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func002001 takes nothing returns boolean
-        return(udg_integer03==1)
+        return(RoundCreepNumber==1)
     endfunction
 
 
     function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003C takes nothing returns boolean
-        if(not(udg_integer02 <= 25))then
+        if(not(RoundNumber <= 25))then
             return false
         endif
         return true
@@ -69,15 +69,15 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003Func003001 takes nothing returns boolean
-        return(udg_integer03==1)
+        return(RoundCreepNumber==1)
     endfunction
 
 
     function Trig_Add_Unit_Power_Func001Func009Func002C takes nothing returns boolean
-        if(not(udg_integer02 > 1))then
+        if(not(RoundNumber > 1))then
             return false
         endif
-        if(not(udg_integer02 <= 10))then
+        if(not(RoundNumber <= 10))then
             return false
         endif
         return true
@@ -93,7 +93,7 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func009Func003Func002C takes nothing returns boolean
-        if(not(udg_integer02 >= 4))then
+        if(not(RoundNumber >= 4))then
             return false
         endif
         return true
@@ -101,7 +101,7 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func009Func003Func003C takes nothing returns boolean
-        if(not(udg_integer02 >= 8))then
+        if(not(RoundNumber >= 8))then
             return false
         endif
         return true
@@ -109,10 +109,10 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func009Func001Func002C takes nothing returns boolean
-        if(not(udg_integer02 > 10))then
+        if(not(RoundNumber > 10))then
             return false
         endif
-        if(not(udg_integer02 <= 20))then
+        if(not(RoundNumber <= 20))then
             return false
         endif
         return true
@@ -128,10 +128,10 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func009Func001Func001Func002C takes nothing returns boolean
-        if(not(udg_integer02 > 20))then
+        if(not(RoundNumber > 20))then
             return false
         endif
-        if(not(udg_integer02 <= 25))then
+        if(not(RoundNumber <= 25))then
             return false
         endif
         return true
@@ -147,7 +147,7 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func009Func001Func001Func001Func001C takes nothing returns boolean
-        if(not(udg_integer02 > 25))then
+        if(not(RoundNumber > 25))then
             return false
         endif
         return true
@@ -163,7 +163,7 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func004C takes nothing returns boolean
-        if(not(udg_integer02 <= 30))then
+        if(not(RoundNumber <= 30))then
             return false
         endif
         return true
@@ -171,12 +171,12 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func004Func004001 takes nothing returns boolean
-        return(udg_integer03==1)
+        return(RoundCreepNumber==1)
     endfunction
 
 
     function Trig_Add_Unit_Power_Func001Func004Func002C takes nothing returns boolean
-        if(not(udg_integer02 <= 40))then
+        if(not(RoundNumber <= 40))then
             return false
         endif
         return true
@@ -184,12 +184,12 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func004Func002Func002001 takes nothing returns boolean
-        return(udg_integer03==1)
+        return(RoundCreepNumber==1)
     endfunction
 
 
     function Trig_Add_Unit_Power_Func001Func004Func002Func003C takes nothing returns boolean
-        if(not(udg_integer02 <= 50))then
+        if(not(RoundNumber <= 50))then
             return false
         endif
         return true
@@ -197,15 +197,15 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func004Func002Func003Func003001 takes nothing returns boolean
-        return(udg_integer03==1)
+        return(RoundCreepNumber==1)
     endfunction
 
 
     function Trig_Add_Unit_Power_Func001Func006Func002C takes nothing returns boolean
-        if(not(udg_integer02 > 1))then
+        if(not(RoundNumber > 1))then
             return false
         endif
-        if(not(udg_integer02 <= 20))then
+        if(not(RoundNumber <= 20))then
             return false
         endif
         return true
@@ -221,7 +221,7 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func006Func003Func002C takes nothing returns boolean
-        if(not(udg_integer02 >= 8))then
+        if(not(RoundNumber >= 8))then
             return false
         endif
         return true
@@ -229,7 +229,7 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func006Func003Func003C takes nothing returns boolean
-        if(not(udg_integer02 >= 16))then
+        if(not(RoundNumber >= 16))then
             return false
         endif
         return true
@@ -237,10 +237,10 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func006Func001Func002C takes nothing returns boolean
-        if(not(udg_integer02 > 20))then
+        if(not(RoundNumber > 20))then
             return false
         endif
-        if(not(udg_integer02 <= 40))then
+        if(not(RoundNumber <= 40))then
             return false
         endif
         return true
@@ -256,10 +256,10 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func006Func001Func001Func002C takes nothing returns boolean
-        if(not(udg_integer02 > 40))then
+        if(not(RoundNumber > 40))then
             return false
         endif
-        if(not(udg_integer02 <= 50))then
+        if(not(RoundNumber <= 50))then
             return false
         endif
         return true
@@ -275,7 +275,7 @@ library trigger100 initializer init requires RandomShit
 
 
     function Trig_Add_Unit_Power_Func001Func006Func001Func001Func001Func001C takes nothing returns boolean
-        if(not(udg_integer02 > 50))then
+        if(not(RoundNumber > 50))then
             return false
         endif
         return true
@@ -294,46 +294,46 @@ library trigger100 initializer init requires RandomShit
         local unit u = GetLastCreatedUnit()
         if(Trig_Add_Unit_Power_Func001C())then
             if(Trig_Add_Unit_Power_Func001Func002C())then
-                set udg_real01 =(I2R((udg_integer02 * 1))/(I2R(udg_integer03)/ 2.00))
+                set RoundCreepPower =(I2R((RoundNumber * 1))/(I2R(RoundCreepNumber)/ 2.00))
                 if(Trig_Add_Unit_Power_Func001Func002Func003001())then
-                    set udg_real01 =(udg_real01 / 1.50)
+                    set RoundCreepPower =(RoundCreepPower / 1.50)
                 else
                     call DoNothing()
                 endif
             else
                 if(Trig_Add_Unit_Power_Func001Func002Func001C())then
-                    set udg_real01 =((I2R(udg_integer02)* 1.25)/(I2R(udg_integer03)/ 2.00))
+                    set RoundCreepPower =((I2R(RoundNumber)* 1.25)/(I2R(RoundCreepNumber)/ 2.00))
                     if(Trig_Add_Unit_Power_Func001Func002Func001Func004001())then
-                        set udg_real01 =(udg_real01 / 1.50)
+                        set RoundCreepPower =(RoundCreepPower / 1.50)
                     else
                         call DoNothing()
                     endif
                 else
                     if(Trig_Add_Unit_Power_Func001Func002Func001Func001C())then
-                        set udg_real01 =((I2R(udg_integer02)* 1.75)/(I2R(udg_integer03)/ 2.00))
+                        set RoundCreepPower =((I2R(RoundNumber)* 1.75)/(I2R(RoundCreepNumber)/ 2.00))
                         if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func004001())then
-                            set udg_real01 =(udg_real01 / 1.50)
+                            set RoundCreepPower =(RoundCreepPower / 1.50)
                         else
                             call DoNothing()
                         endif
                     else
                         if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002C())then
-                            set udg_real01 =((I2R(udg_integer02)* 2.50)/(I2R(udg_integer03)/ 2.00))
+                            set RoundCreepPower =((I2R(RoundNumber)* 2.50)/(I2R(RoundCreepNumber)/ 2.00))
                             if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func002001())then
-                                set udg_real01 =(udg_real01 / 1.50)
+                                set RoundCreepPower =(RoundCreepPower / 1.50)
                             else
                                 call DoNothing()
                             endif
                         else
                             if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003C())then
-                                set udg_real01 =(I2R((udg_integer02 * 4))/(I2R(udg_integer03)/ 2.00))
+                                set RoundCreepPower =(I2R((RoundNumber * 4))/(I2R(RoundCreepNumber)/ 2.00))
                                 if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003Func003001())then
-                                    set udg_real01 =(udg_real01 / 1.50)
+                                    set RoundCreepPower =(RoundCreepPower / 1.50)
                                 else
                                     call DoNothing()
                                 endif
                             else
-                                set udg_real01 =(I2R(((udg_integer02 * udg_integer02)/ 2))/(I2R(udg_integer03)/ 2.00))
+                                set RoundCreepPower =(I2R(((RoundNumber * RoundNumber)/ 2))/(I2R(RoundCreepNumber)/ 2.00))
                             endif
                         endif
                     endif
@@ -341,7 +341,7 @@ library trigger100 initializer init requires RandomShit
             endif
             if(Trig_Add_Unit_Power_Func001Func009C())then
                 set bj_forLoopBIndex = 1
-                set bj_forLoopBIndexEnd = R2I(udg_real01)
+                set bj_forLoopBIndexEnd = R2I(RoundCreepPower)
                 loop
                     exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                     call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
@@ -358,7 +358,7 @@ library trigger100 initializer init requires RandomShit
             else
                 if(Trig_Add_Unit_Power_Func001Func009Func001C())then
                     set bj_forLoopBIndex = 1
-                    set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 4)
+                    set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 4)
                     loop
                         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 600)
@@ -367,7 +367,7 @@ library trigger100 initializer init requires RandomShit
                 else
                     if(Trig_Add_Unit_Power_Func001Func009Func001Func001C())then
                         set bj_forLoopBIndex = 1
-                        set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 8)
+                        set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 8)
                         loop
                             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                             call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
@@ -376,7 +376,7 @@ library trigger100 initializer init requires RandomShit
                     else
                         if(Trig_Add_Unit_Power_Func001Func009Func001Func001Func001C())then
                             set bj_forLoopBIndex = 1
-                            set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 8)
+                            set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 8)
                             loop
                                 exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                                 call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
@@ -389,36 +389,36 @@ library trigger100 initializer init requires RandomShit
             endif
         else
             if(Trig_Add_Unit_Power_Func001Func004C())then
-                set udg_real01 =((I2R(udg_integer02)* 1.75)/(I2R(udg_integer03)/ 2.00))
+                set RoundCreepPower =((I2R(RoundNumber)* 1.75)/(I2R(RoundCreepNumber)/ 2.00))
                 if(Trig_Add_Unit_Power_Func001Func004Func004001())then
-                    set udg_real01 =(udg_real01 / 1.50)
+                    set RoundCreepPower =(RoundCreepPower / 1.50)
                 else
                     call DoNothing()
                 endif
             else
                 if(Trig_Add_Unit_Power_Func001Func004Func002C())then
-                    set udg_real01 =((I2R(udg_integer02)* 2.50)/(I2R(udg_integer03)/ 2.00))
+                    set RoundCreepPower =((I2R(RoundNumber)* 2.50)/(I2R(RoundCreepNumber)/ 2.00))
                     if(Trig_Add_Unit_Power_Func001Func004Func002Func002001())then
-                        set udg_real01 =(udg_real01 / 1.50)
+                        set RoundCreepPower =(RoundCreepPower / 1.50)
                     else
                         call DoNothing()
                     endif
                 else
                     if(Trig_Add_Unit_Power_Func001Func004Func002Func003C())then
-                        set udg_real01 =((I2R(udg_integer02)* 4.00)/(I2R(udg_integer03)/ 2.00))
+                        set RoundCreepPower =((I2R(RoundNumber)* 4.00)/(I2R(RoundCreepNumber)/ 2.00))
                         if(Trig_Add_Unit_Power_Func001Func004Func002Func003Func003001())then
-                            set udg_real01 =(udg_real01 / 1.50)
+                            set RoundCreepPower =(RoundCreepPower / 1.50)
                         else
                             call DoNothing()
                         endif
                     else
-                        set udg_real01 =(I2R(((udg_integer02 * udg_integer02)/ 10))/(I2R(udg_integer03)/ 2.00))
+                        set RoundCreepPower =(I2R(((RoundNumber * RoundNumber)/ 10))/(I2R(RoundCreepNumber)/ 2.00))
                     endif
                 endif
             endif
             if(Trig_Add_Unit_Power_Func001Func006C())then
                 set bj_forLoopBIndex = 1
-                set bj_forLoopBIndexEnd = R2I(udg_real01)
+                set bj_forLoopBIndexEnd = R2I(RoundCreepPower)
                 loop
                     exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                     call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
@@ -435,7 +435,7 @@ library trigger100 initializer init requires RandomShit
             else
                 if(Trig_Add_Unit_Power_Func001Func006Func001C())then
                     set bj_forLoopBIndex = 1
-                    set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 4)
+                    set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 4)
                     loop
                         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 600)
@@ -444,7 +444,7 @@ library trigger100 initializer init requires RandomShit
                 else
                     if(Trig_Add_Unit_Power_Func001Func006Func001Func001C())then
                         set bj_forLoopBIndex = 1
-                        set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 8)
+                        set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 8)
                         loop
                             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                             call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
@@ -453,7 +453,7 @@ library trigger100 initializer init requires RandomShit
                     else
                         if(Trig_Add_Unit_Power_Func001Func006Func001Func001Func001C())then
                             set bj_forLoopBIndex = 1
-                            set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 8)
+                            set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 8)
                             loop
                                 exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                                 call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)

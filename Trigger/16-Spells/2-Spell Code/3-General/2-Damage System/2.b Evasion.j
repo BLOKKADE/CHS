@@ -31,7 +31,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers
         endif
 
         if GetUnitAbilityLevel(DamageSource, 'B027') > 0 then
-            if GetRandomReal(0, 100) > GetHeroLevel(udg_units01[ScorchedEarthSource[GetHandleId(DamageSource)] + 1]) * 0.5 then
+            if GetRandomReal(0, 100) > GetHeroLevel(PlayerHeroes[ScorchedEarthSource[GetHandleId(DamageSource)] + 1]) * 0.5 then
                 return
             endif
         endif

@@ -119,7 +119,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         local integer i = 0
 
         loop
-            if /*not UnitAlive(udg_units01[i + 1]) */ i == test then
+            if /*not UnitAlive(PlayerHeroes[i + 1]) */ i == test then
                 call PlayerList.erase(PlayerList.find(i))
             endif
             set i = i + 1
@@ -140,7 +140,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         set DuelGameList = DuelGameList.create()
 
         loop
-            if /*UnitAlive(udg_units01[i + 1])*/ true then
+            if /*UnitAlive(PlayerHeroes[i + 1])*/ true then
                 call PlayerList.push(i)
             endif
             set i = i + 1

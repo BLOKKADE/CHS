@@ -29,7 +29,7 @@
         if(not(GetUnitTypeId(GetTriggerUnit())=='nqb4'))then
             return false
         endif
-        if(not(GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 4))then
+        if(not(GetUnitAbilityLevelSwapped('Arsq',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 4))then
             return false
         endif
         return true
@@ -45,11 +45,11 @@
 
 
     function Trig_Summon_Quilbeast_Actions takes nothing returns nothing
-        call SetUnitAbilityLevelSwapped('Aspo',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 0))
+        call SetUnitAbilityLevelSwapped('Aspo',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arsq',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 0))
         if(Trig_Summon_Quilbeast_Func003C())then
-            call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 2))
+            call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arsq',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 2))
             set bj_forLoopBIndex = 1
-            set bj_forLoopBIndexEnd =((GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 4)* 1)
+            set bj_forLoopBIndexEnd =((GetUnitAbilityLevelSwapped('Arsq',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 4)* 1)
             loop
                 exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                 call UnitAddItemByIdSwapped('I01B',GetTriggerUnit())

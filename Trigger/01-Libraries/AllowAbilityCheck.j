@@ -1,6 +1,6 @@
 library AllowCastCheck
     private function CheckUnitGroup takes unit u returns boolean
-        if(not(IsUnitInGroup(u,udg_group02)!=true))then
+        if(not(IsUnitInGroup(u,DuelingHeroGroup)!=true))then
             return false
         endif
         if(not(IsPlayerInForce(GetOwningPlayer(u),udg_force03)==true))then

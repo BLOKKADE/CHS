@@ -41,7 +41,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local real value = S2R(SubString(GetEventPlayerChatString(), 6, 20))
         local player p = GetTriggerPlayer()
         local unit u = PlayerDummy[GetPlayerId(p)]
-        local unit hero = udg_units01[GetPlayerId(p) + 1]
+        local unit hero = PlayerHeroes[GetPlayerId(p) + 1]
         local string s = ""
         if command == "-ddmg" then
             call BlzSetUnitBaseDamage(u, R2I(value), 0)
@@ -129,7 +129,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     function SpawnDummy takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(udg_units01[pid + 1]), GetUnitY(udg_units01[pid + 1]), 0)
+        set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid + 1]), GetUnitY(PlayerHeroes[pid + 1]), 0)
         set CreatedDummies[pid] = CreatedDummies[pid] + 1
         call BlzSetHeroProperName(PlayerDummy[pid], "Subject #" + I2S(CreatedDummies[pid]))
         if dummyEnabled[pid] == false then
@@ -142,7 +142,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local integer pid = GetPlayerId(GetTriggerPlayer())
         local integer pn = S2I(args[1])
         if pn > 1 then 
-        call SetHeroLevel(udg_units01[pid + 1], GetHeroLevel(udg_units01[pid+1]) + pn, true)
+        call SetHeroLevel(PlayerHeroes[pid + 1], GetHeroLevel(PlayerHeroes[pid+1]) + pn, true)
         endif
     endfunction
 
@@ -157,8 +157,8 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     function StartNextRound takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer()) 
-        if NextRound[udg_integer02] then
-            set NextRound[udg_integer02] = false
+        if NextRound[RoundNumber] then
+            set NextRound[RoundNumber] = false
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "|cffffcc00Next round started!|r")
             call TriggerExecute(udg_trigger109)
         endif
@@ -174,7 +174,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     function SetBattleRoyale takes Args args returns nothing
         local integer pn = S2I(args[1])
-        if pn >= udg_integer02 then
+        if pn >= RoundNumber then
             set BattleRoyalRound = pn
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Battle Royal will start after round: " + I2S(pn))
         endif
@@ -194,9 +194,9 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local trigger trg = CreateTrigger()
         local integer i = 0
         local trigger trg2 = CreateTrigger()
-        if udg_integer06 == 1 and (not DebugModeEnabled) then
+        if PlayerCount == 1 and (not DebugModeEnabled) then
             loop
-                if UnitAlive(udg_units01[i + 1]) then
+                if UnitAlive(PlayerHeroes[i + 1]) then
                     call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Single player commands have been enabled")
                     call Command.create(CommandHandler.StartNextRound).name("nx").handles("nx").help("nx", "Starts the next round if used inbetween rounds.")
                     call Command.create(CommandHandler.SetRoundTime).name("rt").handles("rt").help("rt <value>", "Starting next round, sets the time between rounds to <value>.")

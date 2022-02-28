@@ -20,16 +20,16 @@ library trigger116 initializer init requires RandomShit
     endfunction
 
     function Trig_AntiStuck_Func002Func001Func005C takes nothing returns boolean
-        if((CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0))then
+        if((CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0))then
             return false
         endif
-        if(not(IsPlayerInForce(GetOwningPlayer(udg_units01[udg_integer27]),udg_force02)!=true))then
+        if(not(IsPlayerInForce(GetOwningPlayer(PlayerHeroes[udg_integer27]),DefeatedPlayers)!=true))then
             return false
         endif
-        if(not(IsPlayerInForce(GetOwningPlayer(udg_units01[udg_integer27]),udg_force03)!=true))then
+        if(not(IsPlayerInForce(GetOwningPlayer(PlayerHeroes[udg_integer27]),udg_force03)!=true))then
             return false
         endif
-        if(not(udg_units01[udg_integer27]!=null))then
+        if(not(PlayerHeroes[udg_integer27]!=null))then
             return false
         endif
         return true
@@ -48,15 +48,15 @@ library trigger116 initializer init requires RandomShit
         set udg_integer27 = 1
         loop
             exitwhen udg_integer27 > 8
-            if RectContainsUnit(udg_rect09, udg_units01[udg_integer27]) and CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
-                call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer27],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+            if RectContainsUnit(udg_rect09, PlayerHeroes[udg_integer27]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
+                call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
             endif
     
             if(Trig_AntiStuck_Func002Func001C())then
-                call CreateNUnitsAtLoc(1,'n00T',Player(11),GetRectCenter(udg_rects01[udg_integer27]),bj_UNIT_FACING)
-                call SuspendHeroXPBJ(false,udg_units01[udg_integer27])
-                call UnitDamageTargetBJ(udg_units01[udg_integer27],GetLastCreatedUnit(),500,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL)
-                call SuspendHeroXPBJ(true,udg_units01[udg_integer27])
+                call CreateNUnitsAtLoc(1,'n00T',Player(11),GetRectCenter(PlayerArenaRects[udg_integer27]),bj_UNIT_FACING)
+                call SuspendHeroXPBJ(false,PlayerHeroes[udg_integer27])
+                call UnitDamageTargetBJ(PlayerHeroes[udg_integer27],GetLastCreatedUnit(),500,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL)
+                call SuspendHeroXPBJ(true,PlayerHeroes[udg_integer27])
             endif
     
             set udg_integer27 = udg_integer27 + 1

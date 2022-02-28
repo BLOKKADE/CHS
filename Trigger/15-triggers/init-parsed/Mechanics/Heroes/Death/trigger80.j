@@ -10,7 +10,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
         if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
             return false
         endif
-        if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)!=true))then
+        if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)!=true))then
             return false
         endif
         return true
@@ -19,7 +19,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
     function EnableDeathTrigger takes nothing returns nothing
         local integer pid = GetTimerData(GetExpiredTimer())
-        local unit u = udg_units01[pid+1]
+        local unit u = PlayerHeroes[pid+1]
 
         call ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)
         call FixDeath(u)
@@ -43,7 +43,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
             call FixDeath(u)
             call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
     
-            call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
             
             set u = null
             return false
@@ -52,7 +52,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
         if Lives[GetPlayerId(GetOwningPlayer(u))] > 0 and udg_boolean07 == false and udg_boolean02 == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
             call TimerStart(NewTimerEx(pid), 1, false, function EnableDeathTrigger)
             set RoundLiveLost[pid] = true
-            call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
     
             set Lives[pid] = Lives[pid] - 1
             call DisplayTextToPlayer(GetOwningPlayer(u) ,0,0,"You have " + I2S(Lives[pid]) + " lives left")
@@ -88,7 +88,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Func013Func001001 takes nothing returns boolean
-        return((udg_integer31 - 5)>= udg_integer02)
+        return((udg_integer31 - 5)>= RoundNumber)
     endfunction
 
 
@@ -137,11 +137,11 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Func014Func001Func003001001 takes nothing returns boolean
-        return(udg_integer06==2)
+        return(PlayerCount==2)
     endfunction
     
     function Trig_Hero_Dies_Func014Func001Func003001002 takes nothing returns boolean
-        return(udg_integer06==3)
+        return(PlayerCount==3)
     endfunction
     
     function Trig_Hero_Dies_Func014Func001Func003001 takes nothing returns boolean
@@ -150,16 +150,16 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Func014Func001Func004001 takes nothing returns boolean
-        return(udg_integer06 >= 4)
+        return(PlayerCount >= 4)
     endfunction
 
 
     function Trig_Hero_Dies_Func014Func001Func001001001 takes nothing returns boolean
-        return(udg_integer06==2)
+        return(PlayerCount==2)
     endfunction
     
     function Trig_Hero_Dies_Func014Func001Func001001002 takes nothing returns boolean
-        return(udg_integer06==3)
+        return(PlayerCount==3)
     endfunction
     
     function Trig_Hero_Dies_Func014Func001Func001001 takes nothing returns boolean
@@ -168,7 +168,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Func014Func001Func002001 takes nothing returns boolean
-        return(udg_integer06 >= 4)
+        return(PlayerCount >= 4)
     endfunction
 
 
@@ -209,7 +209,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Func024Func001C takes nothing returns boolean
-        if(not(RectContainsUnit(udg_rects01[udg_integer42],GetTriggerUnit())==true))then
+        if(not(RectContainsUnit(PlayerArenaRects[udg_integer42],GetTriggerUnit())==true))then
             return false
         endif
         return true
@@ -228,8 +228,8 @@ library trigger80 initializer init requires RandomShit, DebugCommands
     function Trig_Hero_Dies_Actions takes nothing returns nothing
         call StopSoundBJ(udg_sound13,false)
         call PlaySoundBJ(udg_sound13)
-        call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
-        set udg_integer06 =(udg_integer06 - 1)
+        call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
+        set PlayerCount =(PlayerCount - 1)
         call AllowSinglePlayerCommands()
         set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= true
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
@@ -294,7 +294,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands
         loop
             exitwhen udg_integer42 > 8
             if(Trig_Hero_Dies_Func024Func001C())then
-                call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer42],Condition(function Trig_Hero_Dies_Func024Func001Func001001002)),function Trig_Hero_Dies_Func024Func001Func001A)
+                call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer42],Condition(function Trig_Hero_Dies_Func024Func001Func001001002)),function Trig_Hero_Dies_Func024Func001Func001A)
             endif
             set udg_integer42 = udg_integer42 + 1
         endloop

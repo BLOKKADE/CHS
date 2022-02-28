@@ -186,7 +186,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call SetAllCurrentlyFighting(true)
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Battle_Royal_Func033001002)),function Trig_Battle_Royal_Func033A)
         if(Trig_Battle_Royal_Func034C())then
-            set udg_integer06 = 1
+            set PlayerCount = 1
             call ConditionalTriggerExecute(udg_trigger122)
         else
         endif

@@ -93,7 +93,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
 			/*//Hero icon
 			if NumButton == 0 then
-				set SpellU = udg_units01[PlID + 1]
+				set SpellU = PlayerHeroes[PlID + 1]
 				set ToolTipS = GetClassification(SpellU, GetUnitTypeId(SpellU), false) + "|n"
 				set temp = LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
 				if temp != "" and temp != null then
@@ -144,7 +144,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
 				elseif NumButton == 38 then
-					set SpellU = udg_units01[NumPlayerLast[PlID] + 1]
+					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
 					set i1 = 1
 					set ToolTipS = "|cffd0ff00Element Counts|r"
 
@@ -166,7 +166,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
 				elseif NumButton == 39 then
-					set SpellU = udg_units01[NumPlayerLast[PlID] + 1]
+					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
 					set ps = PlayerStats.forPlayer(GetOwningPlayer(SpellU))
 					set ToolTipS = "|cffd0ff00All Pick Stats|r"
 					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getAPBRAllWins())
@@ -192,7 +192,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
 				elseif NumButton == 100 then
-					set SpellU = udg_units01[NumPlayerLast[PlID] + 1]
+					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
 					set temp = GetClassification(SpellU, GetUnitTypeId(SpellU), false)
 					if temp != "" and temp != null then
 						set ToolTipS = ToolTipS + temp + "|n"
@@ -229,7 +229,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 					//Hero abilities and absolutes
 				elseif NumButton > 100 and NumButton <= 120 then
 					if NumPlayerLast[PlID] != 11 then
-						set SpellU = udg_units01[NumPlayerLast[PlID]+ 1]
+						set SpellU = PlayerHeroes[NumPlayerLast[PlID]+ 1]
 						set i3 = GetInfoHeroSpell(SpellU ,NumButton - 100) 
 						set SpellCP[PlID] = i3
 						set temp = GetClassification(SpellU, i3, true)

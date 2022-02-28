@@ -16,7 +16,7 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
     function PlayerText takes string s returns nothing
         local integer i = 0
         loop
-            if HasPlayerFinishedLevel(udg_units01[i+1], Player(i)) == false then
+            if HasPlayerFinishedLevel(PlayerHeroes[i+1], Player(i)) == false then
                 call DisplayTimedTextToPlayer(Player(i), 0, 0, 10, s)
             endif
             set i = i + 1

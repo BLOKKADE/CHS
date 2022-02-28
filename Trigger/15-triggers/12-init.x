@@ -11,16 +11,16 @@ globals
     string RoundCreepTitle
     string array RoundCreepInfo
     string RoundAbilities = ""
-    integer ReflectionAuraChance = 0
-    integer WizardbaneAuraChance = 0
-    integer DrunkenMasterchance = 0
-    integer SlowAuraChance = 0
-    integer PulverizeChance = 0 
-    integer LastBreathChance = 0
+    integer RoundCreepChanceReflectAura = 0
+    integer RoundCreepChanceWizardbane = 0
+    integer RoundCreepChanceDrunkMaster = 0
+    integer RoundCreepChanceSlowAura = 0
+    integer RoundCreepChancePulverize = 0 
+    integer RoundCreepChanceLastBreath = 0
     integer FireshieldChance = 0
-    integer CorrosiveSkinChance = 0 
-    integer MulticastChance = 0
-    integer FastMagicChance = 0
+    integer RoundCreepChanceCorrosiveSkin = 0 
+    integer RoundCreepChanceMulticast = 0
+    integer RoundCreepChanceFastMagic = 0
     boolean SuddenDeathEnabled = false
     boolean array RoundLiveLost
     player WinningPlayer
@@ -28,53 +28,53 @@ endglobals
 
 function InitGlobals3 takes nothing returns nothing
     local integer i = 0
-    set udg_integer01 = 0	
+    set BoughtAbility = 0	
     set roundAbilities = Table.create()
     //call BJDebugMsg("ra create")
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers01[i]= 0
+        set HeroAbilityCount[i]= 0
         set i = i + 1
     endloop
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers02[i]= 0
+        set CreepUnitTypeIds[i]= 0
         set i = i + 1
     endloop
-    set udg_integer02 = 0
-    set udg_integer03 = 0
-    set udg_integer04 = 0
-    set udg_integer05 = 0
-    set udg_integer06 = 0
-    set udg_integer07 = 0
-    set udg_integer08 = 0
-    set udg_real01 = 0
-    set udg_integer09 = 0
-    set udg_integer10 = 0
-    set udg_integer11 = 0
-    set udg_integer12 = 0
-    set udg_integer13 = 0
+    set RoundNumber = 0
+    set RoundCreepNumber = 0
+    set RoundCreepTypeId = 0
+    set RoundCreepMaxAttackSpeed = 0
+    set PlayerCount = 0
+    set SpawnedHeroCount = 0
+    set RoundFinishedCount = 0
+    set RoundCreepPower = 0
+    set RoundCreepMoveSpeed = 0
+    set RoundCreepChanceBash = 0
+    set RoundCreepChanceCritStrike = 0
+    set RoundCreepChanceEvasion = 0
+    set InitialPlayerCount = 0
     set udg_force01 = CreateForce()
-    set udg_boolean01 = false
-    set udg_force02 = CreateForce()
-    set udg_group01 = CreateGroup()
-    set udg_integer14 = 0
+    
+    set DefeatedPlayers = CreateForce()
+    set PotentialDuelHeroes = CreateGroup()
+    set RoundCreepAbilCastChance = 0
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers03[i]= 0
+        set DuelHeroItemIds1[i]= 0
         set i = i + 1
     endloop
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers04[i]= 0
+        set DuelHeroItemIds2[i]= 0
         set i = i + 1
     endloop
-    set udg_group02 = CreateGroup()
-    set udg_group03 = CreateGroup()
+    set DuelingHeroGroup = CreateGroup()
+    set DuelWinners = CreateGroup()
     set udg_integer15 = 0
     set udg_integer16 = 0
     set i = 0
@@ -96,8 +96,8 @@ function InitGlobals3 takes nothing returns nothing
         set udg_booleans02[i]= false
         set i = i + 1
     endloop
-    set udg_integer17 = 0
-    set udg_integer18 = 0
+    set RoundCreepChanceCleave = 0
+    set RoundCreepChanceLifesteal = 0
     set i = 0
     loop
         exitwhen(i > 1)
@@ -106,7 +106,7 @@ function InitGlobals3 takes nothing returns nothing
     endloop
     set udg_force03 = CreateForce()
     set udg_integer19 = 0
-    set udg_integer20 = 0
+    set RoundCreepChanceThorns = 0
     set udg_real02 = 0
     set i = 0
     loop
@@ -122,11 +122,11 @@ function InitGlobals3 takes nothing returns nothing
         set udg_integers07[i]= 0
         set i = i + 1
     endloop
-    set udg_integer21 = 0
+    set RoundCreepChanceShockwave = 0
     set udg_integer22 = 0
-    set udg_integer23 = 0
-    set udg_integer24 = 0
-    set udg_integer25 = 0
+    set RoundCreepChanceManaBurn = 0
+    set RoundCreepChanceHurlBoulder = 0
+    set RoundCreepChanceRejuv = 0
     set i = 0
     loop
         exitwhen(i > 1)
@@ -224,9 +224,9 @@ function InitGlobals3 takes nothing returns nothing
     set udg_force07 = CreateForce()
     set udg_boolean12 = false
     set udg_integer48 = 0
-    set udg_integer49 = 0
-    set udg_integer50 = 0
-    set udg_integer51 = 0
+    set RoundCreepChanceSlow = 0
+    set RoundCreepChanceBigBadV = 0
+    set RoundCreepChanceFaerieFire = 0
     set udg_integer52 = 0
     set i = 0
     loop
@@ -236,8 +236,8 @@ function InitGlobals3 takes nothing returns nothing
     endloop
     set udg_integer53 = 0
     set udg_group06 = CreateGroup()
-    set udg_integer54 = 0
-    set udg_integer55 = 0
+    set RoundCreepChanceBlink = 0
+    set RoundCreepChanceThunderClap = 0
     set udg_integer56 = 0
     set udg_group07 = CreateGroup()
     set udg_group08 = CreateGroup()
@@ -291,28 +291,28 @@ function InitGlobals2 takes nothing returns nothing
     set i = 0
     loop
         exitwhen(i > 1)
-        set udg_integers01[i]= 0
+        set HeroAbilityCount[i]= 0
         set i = i + 1
     endloop
-    set udg_integer02 = 0
-    set udg_integer03 = 0
-    set udg_integer05 = 0
-    set udg_integer06 = 0
-    set udg_integer07 = 0
-    set udg_integer08 = 0
-    set udg_real01 = 0
-    set udg_integer09 = 0
-    set udg_integer10 = 0
-    set udg_integer11 = 0
-    set udg_integer12 = 0
-    set udg_integer13 = 0
+    set RoundNumber = 0
+    set RoundCreepNumber = 0
+    set RoundCreepMaxAttackSpeed = 0
+    set PlayerCount = 0
+    set SpawnedHeroCount = 0
+    set RoundFinishedCount = 0
+    set RoundCreepPower = 0
+    set RoundCreepMoveSpeed = 0
+    set RoundCreepChanceBash = 0
+    set RoundCreepChanceCritStrike = 0
+    set RoundCreepChanceEvasion = 0
+    set InitialPlayerCount = 0
     set udg_force01 = CreateForce()
-    set udg_boolean01 = false
-    set udg_force02 = CreateForce()
-    set udg_group01 = CreateGroup()
-    set udg_integer14 = 0
-    set udg_group02 = CreateGroup()
-    set udg_group03 = CreateGroup()
+    
+    set DefeatedPlayers = CreateForce()
+    set PotentialDuelHeroes = CreateGroup()
+    set RoundCreepAbilCastChance = 0
+    set DuelingHeroGroup = CreateGroup()
+    set DuelWinners = CreateGroup()
     set udg_integer16 = 0
     set i = 0
     loop
@@ -327,8 +327,8 @@ function InitGlobals2 takes nothing returns nothing
         set udg_booleans02[i]= false
         set i = i + 1
     endloop
-    set udg_integer17 = 0
-    set udg_integer18 = 0
+    set RoundCreepChanceCleave = 0
+    set RoundCreepChanceLifesteal = 0
     set i = 0
     loop
         exitwhen(i > 1)
@@ -337,7 +337,7 @@ function InitGlobals2 takes nothing returns nothing
     endloop
     set udg_force03 = CreateForce()
     set udg_integer19 = 0
-    set udg_integer20 = 0
+    set RoundCreepChanceThorns = 0
     set udg_real02 = 0
     set i = 0
     loop
@@ -352,11 +352,11 @@ function InitGlobals2 takes nothing returns nothing
         set udg_integers07[i]= 0
         set i = i + 1
     endloop
-    set udg_integer21 = 0
+    set RoundCreepChanceShockwave = 0
     set udg_integer22 = 0
-    set udg_integer23 = 0
-    set udg_integer24 = 0
-    set udg_integer25 = 0
+    set RoundCreepChanceManaBurn = 0
+    set RoundCreepChanceHurlBoulder = 0
+    set RoundCreepChanceRejuv = 0
     set udg_integer26 = 0
     set udg_integer27 = 0
     set udg_integer28 = 0
@@ -436,9 +436,9 @@ function InitGlobals2 takes nothing returns nothing
     set udg_force07 = CreateForce()
     set udg_boolean12 = false
     set udg_integer48 = 0
-    set udg_integer49 = 0
-    set udg_integer50 = 0
-    set udg_integer51 = 0
+    set RoundCreepChanceSlow = 0
+    set RoundCreepChanceBigBadV = 0
+    set RoundCreepChanceFaerieFire = 0
     set udg_integer52 = 0
     set i = 0
     loop
@@ -448,8 +448,8 @@ function InitGlobals2 takes nothing returns nothing
     endloop
     set udg_integer53 = 0
     set udg_group06 = CreateGroup()
-    set udg_integer54 = 0
-    set udg_integer55 = 0
+    set RoundCreepChanceBlink = 0
+    set RoundCreepChanceThunderClap = 0
     set udg_integer56 = 0
     set udg_group07 = CreateGroup()
     set udg_group08 = CreateGroup()
@@ -785,12 +785,12 @@ function Trig_Black_Arrow_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Black_Arrow_Actions takes nothing returns nothing
-    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANba',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
+    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANba',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
     call SetUnitScalePercent(GetTriggerUnit(),(100.00 + udg_real02),(100.00 + udg_real02),(100.00 + udg_real02))
     call SetUnitVertexColorBJ(GetTriggerUnit(),100,(100.00 - udg_real02),(100.00 - udg_real02),0)
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANba',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 1))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANba',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 1))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANba',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 1)
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANba',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 1)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I02L',GetTriggerUnit())
@@ -806,12 +806,12 @@ function Trig_Carrion_Beetles_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Carrion_Beetles_Actions takes nothing returns nothing
-    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('AUcb',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
+    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('AUcb',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
     call SetUnitScalePercent(GetTriggerUnit(),(100.00 + udg_real02),(100.00 + udg_real02),(100.00 + udg_real02))
     call SetUnitVertexColorBJ(GetTriggerUnit(),100,(100.00 - udg_real02),(100.00 - udg_real02),0)
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AUcb',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 2))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AUcb',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 2))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AUcb',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 1)
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AUcb',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 1)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I01B',GetTriggerUnit())
@@ -827,12 +827,12 @@ function Trig_Clockwerk_Goblin_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Clockwerk_Goblin_Actions takes nothing returns nothing
-    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANsy',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
+    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANsy',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
     call SetUnitScalePercent(GetTriggerUnit(),(100.00 + udg_real02),(100.00 + udg_real02),(100.00 + udg_real02))
-    call SetUnitAbilityLevelSwapped('A00P',GetTriggerUnit(),GetUnitAbilityLevelSwapped('ANsy',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsy',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 1))
+    call SetUnitAbilityLevelSwapped('A00P',GetTriggerUnit(),GetUnitAbilityLevelSwapped('ANsy',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsy',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 1))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANsy',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 1)
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANsy',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 1)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I02L',GetTriggerUnit())
@@ -853,11 +853,11 @@ function Trig_Corrosive_Skin_Actions takes nothing returns nothing
     local real luck = GetUnitLuck(GetTriggerUnit())
     local real bonus
     if GetRandomReal(0,100) <= 35 * luck then
-        set bonus = PoisonBonus[GetHandleId(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetAttackedUnitBJ()))])]
+        set bonus = PoisonBonus[GetHandleId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetAttackedUnitBJ()))])]
         if bonus == 0 then
             set bonus = 1
         endif
-        call DummyOrder.create(GetAttackedUnitBJ(), GetUnitX(GetAttackedUnitBJ()), GetUnitY(GetAttackedUnitBJ()), GetUnitFacing(GetAttackedUnitBJ()), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * GetUnitAbilityLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetAttackedUnitBJ()))], 'A00Q')) * bonus).target(GetAttacker()).activate()
+        call DummyOrder.create(GetAttackedUnitBJ(), GetUnitX(GetAttackedUnitBJ()), GetUnitY(GetAttackedUnitBJ()), GetUnitFacing(GetAttackedUnitBJ()), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * GetUnitAbilityLevel(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetAttackedUnitBJ()))], 'A00Q')) * bonus).target(GetAttacker()).activate()
         call PoisonSpellCast(GetAttackedUnitBJ(), GetAttacker())
     endif
 endfunction
@@ -901,7 +901,7 @@ function Trig_Devastating_Blow_Conditions takes nothing returns boolean
     if(not(   BlzGetUnitAbilityCooldownRemaining(GetEventDamageSource(),'A050')<= 0 ))then
         return false
     endif
-    if(not(IsUnitAliveBJ(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))])==true))then
+    if(not(IsUnitAliveBJ(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))])==true))then
         return false
     endif
     return true
@@ -937,12 +937,12 @@ function Trig_Devastating_Blow_Ennhance_Actions takes nothing returns nothing
     loop
         exitwhen udg_integer53 > 8
 
-        if GetUnitAbilityLevel(udg_units01[udg_integer53],'A050') > 0 and BlzGetUnitAbilityCooldownRemaining(udg_units01[udg_integer53],'A050')<= 0 and udg_effects01[udg_integer53] == null then
+        if GetUnitAbilityLevel(PlayerHeroes[udg_integer53],'A050') > 0 and BlzGetUnitAbilityCooldownRemaining(PlayerHeroes[udg_integer53],'A050')<= 0 and udg_effects01[udg_integer53] == null then
             call DestroyEffectBJ(udg_effects01[udg_integer53])
-            call AddSpecialEffectTargetUnitBJ("hand left",udg_units01[udg_integer53],"Abilities\\Weapons\\LavaSpawnMissile\\LavaSpawnMissile.mdl")
+            call AddSpecialEffectTargetUnitBJ("hand left",PlayerHeroes[udg_integer53],"Abilities\\Weapons\\LavaSpawnMissile\\LavaSpawnMissile.mdl")
             set udg_effects01[udg_integer53]= GetLastCreatedEffectBJ()
             call DestroyEffectBJ(udg_effects02[udg_integer53])
-            call AddSpecialEffectTargetUnitBJ("hand right",udg_units01[udg_integer53],"Abilities\\Weapons\\LavaSpawnMissile\\LavaSpawnMissile.mdl")
+            call AddSpecialEffectTargetUnitBJ("hand right",PlayerHeroes[udg_integer53],"Abilities\\Weapons\\LavaSpawnMissile\\LavaSpawnMissile.mdl")
             set udg_effects02[udg_integer53]= GetLastCreatedEffectBJ()
         endif
 
@@ -980,7 +980,7 @@ function Trig_Dreadlords_Thirst_Actions takes nothing returns nothing
 endfunction
 /*
 function Trig_Faerie_Dragon_Func001Func001Func002C takes nothing returns boolean
-    if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 900.00))then
+    if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 900.00))then
         return false
     endif
     return true
@@ -994,7 +994,7 @@ function Trig_Faerie_Dragon_Func001Func001Func003C takes nothing returns boolean
 endfunction
 
 function Trig_Faerie_Dragon_Func001Func001C takes nothing returns boolean
-    if(not(GetOwningPlayer(GetEnumUnit())==GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])))then
+    if(not(GetOwningPlayer(GetEnumUnit())==GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])))then
         return false
     endif
     return true
@@ -1009,17 +1009,17 @@ function Trig_Faerie_Dragon_Func001A takes nothing returns nothing
         if(Trig_Faerie_Dragon_Func001Func001Func002C())then
             call AddSpecialEffectLocBJ(GetUnitLoc(GetEnumUnit()),"Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
-            call SetUnitPositionLoc(GetEnumUnit(),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))
+            call SetUnitPositionLoc(GetEnumUnit(),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))
             call IssueImmediateOrderBJ(GetEnumUnit(),"stop")
             call AddSpecialEffectTargetUnitBJ("origin",GetEnumUnit(),"Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
         endif
         if(Trig_Faerie_Dragon_Func001Func001Func003C())then
             set MysticFaerie[GetPlayerId(GetOwningPlayer(GetEnumUnit()))] = GetEnumUnit()
-            call BlzSetUnitAttackCooldown(GetEnumUnit(), BlzGetUnitAttackCooldown(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))], 0), 0)
-            call SetUnitAbilityLevelSwapped('A000',GetEnumUnit(),R2I(GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])/ 3))
-            call UnitSetAttackSpeed(GetEnumUnit(), GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]) * 0.03)
-            call IssuePointOrderLocBJ(GetEnumUnit(),"attack",OffsetLocation(GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(- 300.00,300.00),GetRandomReal(- 300.00,300.00)))
+            call BlzSetUnitAttackCooldown(GetEnumUnit(), BlzGetUnitAttackCooldown(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))], 0), 0)
+            call SetUnitAbilityLevelSwapped('A000',GetEnumUnit(),R2I(GetHeroLevel(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])/ 3))
+            call UnitSetAttackSpeed(GetEnumUnit(), GetHeroLevel(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]) * 0.03)
+            call IssuePointOrderLocBJ(GetEnumUnit(),"attack",OffsetLocation(GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(- 300.00,300.00),GetRandomReal(- 300.00,300.00)))
             call SetUnitManaBJ(GetEnumUnit(),GetRandomReal(0,1.00))
         endif
     endif
@@ -1061,7 +1061,7 @@ function Trig_Healing_Ward_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Healing_Ward_Actions takes nothing returns nothing
-    call SetUnitAbilityLevelSwapped('Aoar',GetTriggerUnit(),GetUnitAbilityLevelSwapped('Ahwd',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+    call SetUnitAbilityLevelSwapped('Aoar',GetTriggerUnit(),GetUnitAbilityLevelSwapped('Ahwd',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
 endfunction
 
 function Trig_Inferno_Conditions takes nothing returns boolean
@@ -1072,10 +1072,10 @@ function Trig_Inferno_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Inferno_Actions takes nothing returns nothing
-    call SetUnitAbilityLevelSwapped('ANpi',GetTriggerUnit(),GetUnitAbilityLevelSwapped('AUin',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AUin',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])))
+    call SetUnitAbilityLevelSwapped('ANpi',GetTriggerUnit(),GetUnitAbilityLevelSwapped('AUin',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AUin',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AUin',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 2)
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AUin',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 2)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I022',GetTriggerUnit())
@@ -1092,10 +1092,10 @@ function Trig_Mountain_Giant_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Mountain_Giant_Actions takes nothing returns nothing
-    call SetUnitAbilityLevelSwapped('ANpi',GetTriggerUnit(),GetUnitAbilityLevelSwapped('AEsv',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AEsv',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 1))
+    call SetUnitAbilityLevelSwapped('ANpi',GetTriggerUnit(),GetUnitAbilityLevelSwapped('AEsv',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AEsv',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 1))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AEsv',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 6)
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AEsv',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 6)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I02K',GetTriggerUnit())
@@ -1112,10 +1112,10 @@ function Trig_Parasite_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Parasite_Actions takes nothing returns nothing
-    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANpa',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
+    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANpa',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
     call SetUnitScalePercent(GetTriggerUnit(),(100.00 + udg_real02),(100.00 + udg_real02),(100.00 + udg_real02))
     call SetUnitVertexColorBJ(GetTriggerUnit(),100,(100.00 - udg_real02),(100.00 - udg_real02),0)
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANpa',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 2))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANpa',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 2))
 endfunction
 
 function Trig_Phoenix_Conditions takes nothing returns boolean
@@ -1126,9 +1126,9 @@ function Trig_Phoenix_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Phoenix_Actions takes nothing returns nothing
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AHpx',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 1))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AHpx',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 1))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AHpx',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 2)
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AHpx',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 2)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I022',GetTriggerUnit())
@@ -1145,7 +1145,7 @@ library Pillage requires RandomShit
         local integer RemBon = 0
         local integer expBounty = 0
         local integer goldBounty = 0
-        local unit Gku = udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]
+        local unit Gku = PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]
         local player OwningUnit = GetOwningPlayer(Gku)     
         local integer pid = GetPlayerId(OwningUnit)
         local real luck = GetUnitLuck(Gku)
@@ -1353,10 +1353,10 @@ function Trig_Pocket_Factory_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Pocket_Factory_Actions takes nothing returns nothing
-    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANsy',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.0)
+    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANsy',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.0)
     call SetUnitScalePercent(GetTriggerUnit(),(90.00 + udg_real02),(90.00 + udg_real02),(90.00 + udg_real02))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANsy',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANsy',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I02L',GetTriggerUnit())
@@ -1445,7 +1445,7 @@ function Trig_Pulverize_Func003Func005001003 takes nothing returns boolean
 endfunction
 
 function Trig_Pulverize_Func003C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -1503,12 +1503,12 @@ function Trig_Raise_Dead_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Raise_Dead_Actions takes nothing returns nothing
-    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('Arai',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
+    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('Arai',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1.50)
     call SetUnitScalePercent(GetTriggerUnit(),(100.00 + udg_real02),(100.00 + udg_real02),(100.00 + udg_real02))
     call SetUnitVertexColorBJ(GetTriggerUnit(),100,(100.00 - udg_real02),(100.00 - udg_real02),0)
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arai',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 3))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arai',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 3))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('Arai',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 1)
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('Arai',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 1)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I02L',GetTriggerUnit())
@@ -1536,10 +1536,10 @@ function Trig_Skeletal_Brute_Conditions takes nothing returns boolean
     if(not(GetUnitTypeId(GetTriggerUnit())!='h00V'))then
         return false
     endif
-    if(not(GetUnitTypeId(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])=='N00O'))then
+    if(not(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])=='N00O'))then
         return false
     endif
-    if(not(IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))==true))then
+    if(not(IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]))==true))then
         return false
     endif
     return true
@@ -1556,7 +1556,7 @@ function Trig_Summon_Bear_Func001C takes nothing returns boolean
     if(not(GetUnitTypeId(GetTriggerUnit())=='ngz3'))then
         return false
     endif
-    if(not(GetUnitAbilityLevelSwapped('ANsg',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 3))then
+    if(not(GetUnitAbilityLevelSwapped('ANsg',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 3))then
         return false
     endif
     return true
@@ -1570,9 +1570,9 @@ function Trig_Summon_Bear_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Summon_Bear_Actions takes nothing returns nothing
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsg',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 2))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsg',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 2))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =((GetUnitAbilityLevelSwapped('ANsg',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 4)* 2)
+    set bj_forLoopBIndexEnd =((GetUnitAbilityLevelSwapped('ANsg',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 4)* 2)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I022',GetTriggerUnit())
@@ -1588,12 +1588,12 @@ function Trig_Summon_Hawk_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Summon_Hawk_Actions takes nothing returns nothing
-    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANsw',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1)
+    set udg_real02 =(I2R(GetUnitAbilityLevelSwapped('ANsw',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))* 1)
     call SetUnitScalePercent(GetTriggerUnit(),(100.00 + udg_real02),(100.00 + udg_real02),(100.00 + udg_real02))
     call SetUnitVertexColorBJ(GetTriggerUnit(),100,(100.00 - udg_real02),(100.00 - udg_real02),0)
-    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsw',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 4))
+    call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsw',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 4))
     set bj_forLoopBIndex = 1
-    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANsw',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 2)
+    set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('ANsw',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])/ 2)
     loop
         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
         call UnitAddItemByIdSwapped('I02L',GetTriggerUnit())
@@ -1628,7 +1628,7 @@ function Trig_Summon_Quilbeast_Func003Func001C takes nothing returns boolean
     if(not(GetUnitTypeId(GetTriggerUnit())=='nqb4'))then
         return false
     endif
-    if(not(GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 4))then
+    if(not(GetUnitAbilityLevelSwapped('Arsq',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 4))then
         return false
     endif
     return true
@@ -1642,11 +1642,11 @@ function Trig_Summon_Quilbeast_Func003C takes nothing returns boolean
 endfunction
 
 function Trig_Summon_Quilbeast_Actions takes nothing returns nothing
-    call SetUnitAbilityLevelSwapped('Aspo',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 0))
+    call SetUnitAbilityLevelSwapped('Aspo',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arsq',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 0))
     if(Trig_Summon_Quilbeast_Func003C())then
-        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 2))
+        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('Arsq',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 2))
         set bj_forLoopBIndex = 1
-        set bj_forLoopBIndexEnd =((GetUnitAbilityLevelSwapped('Arsq',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 4)* 1)
+        set bj_forLoopBIndexEnd =((GetUnitAbilityLevelSwapped('Arsq',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 4)* 1)
         loop
             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
             call UnitAddItemByIdSwapped('I01B',GetTriggerUnit())
@@ -1709,7 +1709,7 @@ function Trig_Ward_Location_Func001Func002Func003Func001001001002 takes nothing 
 endfunction
 
 function Trig_Ward_Location_Func001Func002Func003C takes nothing returns boolean
-    if(not(CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],Condition(function Trig_Ward_Location_Func001Func002Func003Func001001001002)))==0))then
+    if(not(CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],Condition(function Trig_Ward_Location_Func001Func002Func003Func001001001002)))==0))then
         return false
     endif
     return true
@@ -1723,7 +1723,7 @@ function Trig_Ward_Location_Func001Func002C takes nothing returns boolean
 endfunction
 
 function Trig_Ward_Location_Func001Func003C takes nothing returns boolean
-    if((RectContainsUnit(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())==true))then
+    if((RectContainsUnit(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())==true))then
         return true
     endif
     if((RectContainsUnit(udg_rect09,GetTriggerUnit())==true))then
@@ -1746,27 +1746,27 @@ function Trig_Ward_Location_Actions takes nothing returns nothing
         if(Trig_Ward_Location_Func001Func002C())then
             call DoNothing()
         else
-            call SetUnitPositionLoc(GetTriggerUnit(),PolarProjectionBJ(GetRectCenter(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),525.00,AngleBetweenPoints(GetRectCenter(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),GetUnitLoc(GetTriggerUnit()))))
+            call SetUnitPositionLoc(GetTriggerUnit(),PolarProjectionBJ(GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),525.00,AngleBetweenPoints(GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),GetUnitLoc(GetTriggerUnit()))))
         endif
     endif
 endfunction
 
 function Trig_Wisp_Func001Func001Func002Func001C takes nothing returns boolean
-    if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))<= 450.00))then
+    if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))<= 450.00))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Wisp_Func001Func001Func002C takes nothing returns boolean
-    if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 800.00))then
+    if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 800.00))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Wisp_Func001Func001Func003Func001C takes nothing returns boolean
-    if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 200.00))then
+    if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 200.00))then
         return false
     endif
     return true
@@ -1780,7 +1780,7 @@ function Trig_Wisp_Func001Func001Func003C takes nothing returns boolean
 endfunction
 
 function Trig_Wisp_Func001Func001C takes nothing returns boolean
-    if(not(GetOwningPlayer(GetEnumUnit())==GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])))then
+    if(not(GetOwningPlayer(GetEnumUnit())==GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])))then
         return false
     endif
     return true
@@ -1791,24 +1791,24 @@ function Trig_Wisp_Func001A takes nothing returns nothing
         if(Trig_Wisp_Func001Func001Func002C())then
             call AddSpecialEffectLocBJ(GetUnitLoc(GetEnumUnit()),"Abilities\\Spells\\NightElf\\FaerieDragonInvis\\FaerieDragon_Invis.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
-            call SetUnitPositionLoc(GetEnumUnit(),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))
+            call SetUnitPositionLoc(GetEnumUnit(),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))
             call IssueImmediateOrderBJ(GetEnumUnit(),"stop")
             call AddSpecialEffectTargetUnitBJ("origin",GetEnumUnit(),"Abilities\\Spells\\NightElf\\FaerieDragonInvis\\FaerieDragon_Invis.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
         else
             if(Trig_Wisp_Func001Func001Func002Func001C())then
-                call SetUnitAbilityLevelSwapped('A01H',GetEnumUnit(),(GetHeroLevel(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])/ 2))
-                call IssueTargetOrderBJ(GetEnumUnit(),"healingwave",udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])
+                call SetUnitAbilityLevelSwapped('A01H',GetEnumUnit(),(GetHeroLevel(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])/ 2))
+                call IssueTargetOrderBJ(GetEnumUnit(),"healingwave",PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])
             else
             endif
         endif
         if(Trig_Wisp_Func001Func001Func003C())then
-            call IssuePointOrderLocBJ(GetEnumUnit(),"move",OffsetLocation(GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(- 150.00,150.00),GetRandomReal(- 150.00,150.00)))
+            call IssuePointOrderLocBJ(GetEnumUnit(),"move",OffsetLocation(GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(- 150.00,150.00),GetRandomReal(- 150.00,150.00)))
             call SetUnitManaBJ(GetEnumUnit(),GetRandomReal(0,1.00))
         else
             if(Trig_Wisp_Func001Func001Func003Func001C())then
-                call SetUnitMoveSpeed(GetEnumUnit(),(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))/ 2.00))
-                call IssuePointOrderLocBJ(GetEnumUnit(),"move",OffsetLocation(GetUnitLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(- 150.00,150.00),GetRandomReal(- 150.00,150.00)))
+                call SetUnitMoveSpeed(GetEnumUnit(),(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))/ 2.00))
+                call IssuePointOrderLocBJ(GetEnumUnit(),"move",OffsetLocation(GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(- 150.00,150.00),GetRandomReal(- 150.00,150.00)))
                 call SetUnitManaBJ(GetEnumUnit(),GetRandomReal(0,1.00))
             else
                 call SetUnitMoveSpeed(GetEnumUnit(),GetUnitDefaultMoveSpeed(GetEnumUnit()))
@@ -1827,7 +1827,7 @@ endfunction
 
 /*
 function Trig_Disable_Abilities_Func001Func003Func003Func003C takes nothing returns boolean
-    if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)!=true))then
+    if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)!=true))then
         return false
     endif
     if(not(IsPlayerInForce(GetOwningPlayer(GetTriggerUnit()),udg_force03)==true))then
@@ -2288,7 +2288,7 @@ function Trig_Battle_Royal_Actions takes nothing returns nothing
     call SetAllCurrentlyFighting(true)
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Battle_Royal_Func033001002)),function Trig_Battle_Royal_Func033A)
     if(Trig_Battle_Royal_Func034C())then
-        set udg_integer06 = 1
+        set PlayerCount = 1
         call ConditionalTriggerExecute(udg_trigger122)
     else
     endif
@@ -2337,8 +2337,8 @@ function Trig_Hero_Dies_Battle_Royal_Func004A takes nothing returns nothing
 endfunction
 
 function Trig_Hero_Dies_Battle_Royal_Actions takes nothing returns nothing
-    call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
-    set udg_integer06 =(udg_integer06 - 1)
+    call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
+    set PlayerCount =(PlayerCount - 1)
     call DisplayTimedTextToForce(GetPlayersAll(),5.00,("|cffffcc00" + GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit())) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit()))))
     call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_Battle_Royal_Func004A)
     set WinningPlayer = GetOwningPlayer(GetKillingUnit())
@@ -2657,9 +2657,9 @@ function Trig_Place_Bet_Actions takes nothing returns nothing
         call DoNothing()
     endif
     if(Trig_Place_Bet_Func008C())then
-        call DisplayTimedTextToForce(GetPlayersAll(),2.00,("|c00F08000" +(GetPlayerNameColour(GetTriggerPlayer())+(" placed a bet on " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[1]))+ "!")))))
+        call DisplayTimedTextToForce(GetPlayersAll(),2.00,("|c00F08000" +(GetPlayerNameColour(GetTriggerPlayer())+(" placed a bet on " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[1]))+ "!")))))
     else
-        call DisplayTimedTextToForce(GetPlayersAll(),2.00,("|c00F08000" +(GetPlayerNameColour(GetTriggerPlayer())+(" placed a bet on " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[2]))+ "!")))))
+        call DisplayTimedTextToForce(GetPlayersAll(),2.00,("|c00F08000" +(GetPlayerNameColour(GetTriggerPlayer())+(" placed a bet on " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[2]))+ "!")))))
     endif
 endfunction
 
@@ -2700,7 +2700,7 @@ function Trig_Betting_Complete_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Betting_Complete_Func002Func001Func001Func001Func001C takes nothing returns boolean
-    if(not(udg_units03[1]==udg_unit05))then
+    if(not(DuelingHeroes[1]==udg_unit05))then
         return false
     endif
     if(not(IsPlayerInForce(GetEnumPlayer(),udg_force04)==true))then
@@ -2710,7 +2710,7 @@ function Trig_Betting_Complete_Func002Func001Func001Func001Func001C takes nothin
 endfunction
 
 function Trig_Betting_Complete_Func002Func001Func001Func001Func002C takes nothing returns boolean
-    if(not(udg_units03[2]==udg_unit05))then
+    if(not(DuelingHeroes[2]==udg_unit05))then
         return false
     endif
     if(not(IsPlayerInForce(GetEnumPlayer(),udg_force05)==true))then
@@ -2779,7 +2779,7 @@ function Trig_Betting_Complete_Func002A takes nothing returns nothing
         if(Trig_Betting_Complete_Func002Func001Func001C())then
             set udg_string01 =(GetPlayerNameColour(GetEnumPlayer()))
             set udg_string01 =(udg_string01 + " won: ")
-            call AddSpecialEffectTargetUnitBJ("origin",udg_units01[GetConvertedPlayerId(GetEnumPlayer())],"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
+            call AddSpecialEffectTargetUnitBJ("origin",PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
             if(Trig_Betting_Complete_Func002Func001Func001Func006C())then
                 call AdjustPlayerStateBJ((udg_integers15[GetConvertedPlayerId(GetEnumPlayer())]* 2),GetEnumPlayer(),PLAYER_STATE_RESOURCE_GOLD)
@@ -2825,7 +2825,7 @@ function Trig_Dialog_Initialization_Func047Func001Func001C takes nothing returns
 endfunction
 
 function Trig_Dialog_Initialization_Func047Func001C takes nothing returns boolean
-    if(not(udg_integer13 > 1))then
+    if(not(InitialPlayerCount > 1))then
         return false
     endif
     return true
@@ -2978,7 +2978,7 @@ function Trig_Dialog_Initialization_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Voting_Rights_Initialization_Func003C takes nothing returns boolean
-    if(not(udg_integer13==1))then
+    if(not(InitialPlayerCount==1))then
         return false
     endif
     return true
@@ -3049,7 +3049,7 @@ function Trig_Game_Master_Selects_Func001Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Game_Master_Selects_Func005001 takes nothing returns boolean
-    return(udg_integer13==1)
+    return(InitialPlayerCount==1)
 endfunction
 
 function Trig_Game_Master_Selects_Func007001001 takes nothing returns boolean
@@ -3141,7 +3141,7 @@ function Trig_Skip_Betting_Menu_Func001Func003Func002C takes nothing returns boo
 endfunction
 
 function Trig_Skip_Betting_Menu_Func001Func003C takes nothing returns boolean
-    if((udg_integer13 <= 2))then
+    if((InitialPlayerCount <= 2))then
         return true
     endif
     if(Trig_Skip_Betting_Menu_Func001Func003Func002C())then
@@ -3402,7 +3402,7 @@ function Trig_Dialog_Complete_Func026C takes nothing returns boolean
     if((udg_boolean15==false))then
         return true
     endif
-    if((udg_integer63==udg_integer06))then
+    if((udg_integer63==PlayerCount))then
         return true
     endif
     return false
@@ -3429,75 +3429,75 @@ function Trig_Dialog_Complete_Func006Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func006001 takes nothing returns boolean
-    return(udg_integer13==1)
+    return(InitialPlayerCount==1)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func008001 takes nothing returns boolean
-    return(udg_integer06==1)
+    return(PlayerCount==1)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func009001 takes nothing returns boolean
-    return(udg_integer06==2)
+    return(PlayerCount==2)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func010001 takes nothing returns boolean
-    return(udg_integer06==3)
+    return(PlayerCount==3)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func011001 takes nothing returns boolean
-    return(udg_integer06==4)
+    return(PlayerCount==4)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func012001 takes nothing returns boolean
-    return(udg_integer06==5)
+    return(PlayerCount==5)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func013001 takes nothing returns boolean
-    return(udg_integer06==6)
+    return(PlayerCount==6)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func014001 takes nothing returns boolean
-    return(udg_integer06==7)
+    return(PlayerCount==7)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func015001 takes nothing returns boolean
-    return(udg_integer06==8)
+    return(PlayerCount==8)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func020001 takes nothing returns boolean
-    return(udg_integer13==1)
+    return(InitialPlayerCount==1)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func022001 takes nothing returns boolean
-    return(udg_integer06==1)
+    return(PlayerCount==1)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func023001 takes nothing returns boolean
-    return(udg_integer06==2)
+    return(PlayerCount==2)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func024001 takes nothing returns boolean
-    return(udg_integer06==3)
+    return(PlayerCount==3)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func025001 takes nothing returns boolean
-    return(udg_integer06==4)
+    return(PlayerCount==4)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func026001 takes nothing returns boolean
-    return(udg_integer06==5)
+    return(PlayerCount==5)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func027001 takes nothing returns boolean
-    return(udg_integer06==6)
+    return(PlayerCount==6)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func028001 takes nothing returns boolean
-    return(udg_integer06==7)
+    return(PlayerCount==7)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005Func029001 takes nothing returns boolean
-    return(udg_integer06==8)
+    return(PlayerCount==8)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func004Func005C takes nothing returns boolean
@@ -3541,11 +3541,11 @@ function Trig_Dialog_Complete_Func006Func004C takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func006Func008Func006001 takes nothing returns boolean
-    return(udg_integer13==1)
+    return(InitialPlayerCount==1)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func008Func011001 takes nothing returns boolean
-    return(udg_integer13==1)
+    return(InitialPlayerCount==1)
 endfunction
 
 function Trig_Dialog_Complete_Func006Func008C takes nothing returns boolean
@@ -3606,7 +3606,7 @@ function Trig_Dialog_Complete_Func008Func002C takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func008Func003Func006001 takes nothing returns boolean
-    return(udg_integer13==1)
+    return(InitialPlayerCount==1)
 endfunction
 
 function Trig_Dialog_Complete_Func008Func003Func008001001001001 takes nothing returns boolean
@@ -3636,7 +3636,7 @@ function Trig_Dialog_Complete_Func008Func003Func008A takes nothing returns nothi
 endfunction
 
 function Trig_Dialog_Complete_Func008Func003Func012001 takes nothing returns boolean
-    return(udg_integer13==1)
+    return(InitialPlayerCount==1)
 endfunction
 
 function Trig_Dialog_Complete_Func008Func003Func014001001001001 takes nothing returns boolean
@@ -3723,7 +3723,7 @@ function Trig_Dialog_Complete_Func014Func001C takes nothing returns boolean
     if((udg_boolean04==true))then
         return true
     endif
-    if((udg_integer13 <= 2))then
+    if((InitialPlayerCount <= 2))then
         return true
     endif
     if(Trig_Dialog_Complete_Func014Func001Func003C())then
@@ -3826,7 +3826,7 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
     if(Trig_Dialog_Complete_Func006C())then
         call DisableTrigger(GetTriggeringTrigger())
         set udg_boolean04 = true
-        set udg_integer31 =(udg_integer06 * 5)
+        set udg_integer31 =(PlayerCount * 5)
         set udg_integer31 =(udg_integer31 - 5)
         if(Trig_Dialog_Complete_Func006Func008C())then
             set udg_strings02[1]= "Mode: Elimination (Hard)|r"
@@ -4141,7 +4141,7 @@ function Trig_Choose_Hero_Func001Func011A takes nothing returns nothing
 endfunction
 
 function Trig_Choose_Hero_Func001C takes nothing returns boolean
-    if(not(GetTriggerUnit()==udg_units02[GetConvertedPlayerId(GetTriggerPlayer())]))then
+    if(not(GetTriggerUnit()==ChooseHeroSelection[GetConvertedPlayerId(GetTriggerPlayer())]))then
         return false
     endif
     return true
@@ -4179,7 +4179,7 @@ function Trig_Choose_Hero_Actions takes nothing returns nothing
         call QueueUnitAnimationBJ(GetTriggerUnit(),"stand")
         call ForGroupBJ(GetUnitsOfPlayerAndTypeId(GetTriggerPlayer(),'n00E'),function Trig_Choose_Hero_Func001Func011A)
         call CreateNUnitsAtLoc(1,'n00E',GetTriggerPlayer(),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
-        set udg_units02[GetConvertedPlayerId(GetTriggerPlayer())]= GetTriggerUnit()
+        set ChooseHeroSelection[GetConvertedPlayerId(GetTriggerPlayer())]= GetTriggerUnit()
     endif
     set ToolTipS = null
 endfunction
@@ -4199,19 +4199,19 @@ function Trig_Spawn_Hero_Func005C takes nothing returns boolean
 endfunction
 
 function Trig_Spawn_Hero_Func013001 takes nothing returns boolean
-    return(GetUnitTypeId(udg_units01[GetConvertedPlayerId(udg_player02)])=='O008')
+    return(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(udg_player02)])=='O008')
 endfunction
 
 function Trig_Spawn_Hero_Func014Func001001 takes nothing returns boolean
-    return(GetUnitTypeId(udg_units01[GetConvertedPlayerId(udg_player02)])=='H008')
+    return(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(udg_player02)])=='H008')
 endfunction
 
 function Trig_Spawn_Hero_Func014Func002001 takes nothing returns boolean
-    return(GetUnitTypeId(udg_units01[GetConvertedPlayerId(udg_player02)])=='H008')
+    return(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(udg_player02)])=='H008')
 endfunction
 
 function Trig_Spawn_Hero_Func015001 takes nothing returns boolean
-    return(udg_integer06==1)
+    return(PlayerCount==1)
 endfunction
 
 function Trig_Spawn_Hero_Func016A takes nothing returns nothing
@@ -4219,10 +4219,10 @@ function Trig_Spawn_Hero_Func016A takes nothing returns nothing
 endfunction
 
 function Trig_Spawn_Hero_Func017Func008C takes nothing returns boolean
-    if(not(udg_integer02==1))then
+    if(not(RoundNumber==1))then
         return false
     endif
-    if(not(udg_integer07 >= udg_integer06))then
+    if(not(SpawnedHeroCount >= PlayerCount))then
         return false
     endif
     return true
@@ -4236,10 +4236,10 @@ function Trig_Spawn_Hero_Func017C takes nothing returns boolean
 endfunction
 
 function Trig_Spawn_Hero_Func019Func001C takes nothing returns boolean
-    if(not(udg_integer02==1))then
+    if(not(RoundNumber==1))then
         return false
     endif
-    if(not(udg_integer07 >= udg_integer06))then
+    if(not(SpawnedHeroCount >= PlayerCount))then
         return false
     endif
     return true
@@ -4255,16 +4255,16 @@ endfunction
 function Trig_Spawn_Hero_Actions takes nothing returns nothing
     call ForceAddPlayerSimple(udg_player02,udg_force01)
     set udg_booleans03[GetConvertedPlayerId(udg_player02)]= true
-    set udg_integer07 =(udg_integer07 + 1)
+    set SpawnedHeroCount =(SpawnedHeroCount + 1)
 
     if(Trig_Spawn_Hero_Func005C())then
-        call CreateNUnitsAtLoc(1,GetUnitTypeId(GetTriggerUnit()),GetTriggerPlayer(),GetRectCenter(udg_rects01[GetConvertedPlayerId(GetTriggerPlayer())]),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,GetUnitTypeId(GetTriggerUnit()),GetTriggerPlayer(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetTriggerPlayer())]),bj_UNIT_FACING)
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer())+(" |cffffcc00has selected " +(GetUnitName(GetLastCreatedUnit())+ "!")))))
         call AdjustPlayerStateBJ(600,udg_player02,PLAYER_STATE_RESOURCE_GOLD)
         call ResourseRefresh( udg_player02   )
 
     else
-        call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8),Condition(function Trig_Spawn_Hero_Func005Func001002001001002)))),udg_player02,GetRectCenter(udg_rects01[GetConvertedPlayerId(udg_player02)]),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8),Condition(function Trig_Spawn_Hero_Func005Func001002001001002)))),udg_player02,GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(udg_player02)]),bj_UNIT_FACING)
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(udg_player02)+(" |cffffcc00has randomed " +(GetUnitName(GetLastCreatedUnit())+ "! (+300 bonus gold)")))))
         call AdjustPlayerStateBJ(900,udg_player02,PLAYER_STATE_RESOURCE_GOLD)
         call ResourseRefresh( udg_player02   )
@@ -4293,15 +4293,15 @@ function Trig_Spawn_Hero_Actions takes nothing returns nothing
 
     call BlzSetHeroProperName( GetLastCreatedUnit(), GetPlayerNameNoTag( GetPlayerName(GetOwningPlayer(GetLastCreatedUnit())   )))
     call ConditionalTriggerExecute(udg_trigger130)
-    set udg_units01[GetConvertedPlayerId(udg_player02)]= GetLastCreatedUnit()
+    set PlayerHeroes[GetConvertedPlayerId(udg_player02)]= GetLastCreatedUnit()
     call UnitAddItemByIdSwapped('ankh',GetLastCreatedUnit())
     call UnitAddItemByIdSwapped('pghe',GetLastCreatedUnit())
     call UnitAddItemByIdSwapped('I04R',GetLastCreatedUnit())
     call ResetToGameCameraForPlayer(udg_player02,0)
-    call PanCameraToTimedLocForPlayer(udg_player02,GetRectCenter(udg_rects01[GetConvertedPlayerId(udg_player02)]),0.00)
+    call PanCameraToTimedLocForPlayer(udg_player02,GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(udg_player02)]),0.00)
     call SelectUnitForPlayerSingle(GetLastCreatedUnit(),udg_player02)
     /*if(Trig_Spawn_Hero_Func013001())then
-        call CreateNUnitsAtLoc(1,'e001',udg_player02,OffsetLocation(GetUnitLoc(udg_units01[GetConvertedPlayerId(udg_player02)]),100.00,50.00),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,'e001',udg_player02,OffsetLocation(GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(udg_player02)]),100.00,50.00),bj_UNIT_FACING)
     else
         call DoNothing()
     endif*/
@@ -4310,7 +4310,7 @@ function Trig_Spawn_Hero_Actions takes nothing returns nothing
     loop
         exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
         if(Trig_Spawn_Hero_Func014Func001001())then
-            call CreateNUnitsAtLoc(1,'e003',udg_player02,PolarProjectionBJ(GetUnitLoc(udg_units01[GetConvertedPlayerId(udg_player02)]),50.00,(45.00 * I2R(GetForLoopIndexA()))),bj_UNIT_FACING)
+            call CreateNUnitsAtLoc(1,'e003',udg_player02,PolarProjectionBJ(GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(udg_player02)]),50.00,(45.00 * I2R(GetForLoopIndexA()))),bj_UNIT_FACING)
         else
             call DoNothing()
         endif
@@ -4322,7 +4322,7 @@ function Trig_Spawn_Hero_Actions takes nothing returns nothing
         set bj_forLoopAIndex = bj_forLoopAIndex + 1
     endloop
     if(Trig_Spawn_Hero_Func015001())then
-        set udg_player01 = GetOwningPlayer(GetLastCreatedUnit())
+        set SingleplayerPlayer = GetOwningPlayer(GetLastCreatedUnit())
     else
         call DoNothing()
     endif
@@ -4358,7 +4358,7 @@ function Trig_Hero_Dies_Func026C takes nothing returns boolean
     if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
         return false
     endif
-    if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)!=true))then
+    if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)!=true))then
         return false
     endif
     return true
@@ -4406,7 +4406,7 @@ function Trig_Hero_Dies_Conditions takes nothing returns boolean
         call FixDeath(GetDyingUnit())
         call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
 
-        call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+        call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
 
         return false
     endif
@@ -4420,7 +4420,7 @@ function Trig_Hero_Dies_Conditions takes nothing returns boolean
         call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
         call FixDeath(GetDyingUnit())
         call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
-        call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+        call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
 
         set Lives[pid] = Lives[pid] - 1
         call DisplayTextToPlayer(GetOwningPlayer(GetDyingUnit()) ,0,0,"You have " + I2S(Lives[pid]) + " lives left")
@@ -4444,7 +4444,7 @@ function Trig_Hero_Dies_Func011C takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func013Func001001 takes nothing returns boolean
-    return((udg_integer31 - 5)>= udg_integer02)
+    return((udg_integer31 - 5)>= RoundNumber)
 endfunction
 
 function Trig_Hero_Dies_Func013Func002001001001001 takes nothing returns boolean
@@ -4481,11 +4481,11 @@ function Trig_Hero_Dies_Func013C takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func014Func001Func001001001 takes nothing returns boolean
-    return(udg_integer06==2)
+    return(PlayerCount==2)
 endfunction
 
 function Trig_Hero_Dies_Func014Func001Func001001002 takes nothing returns boolean
-    return(udg_integer06==3)
+    return(PlayerCount==3)
 endfunction
 
 function Trig_Hero_Dies_Func014Func001Func001001 takes nothing returns boolean
@@ -4493,15 +4493,15 @@ function Trig_Hero_Dies_Func014Func001Func001001 takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func014Func001Func002001 takes nothing returns boolean
-    return(udg_integer06 >= 4)
+    return(PlayerCount >= 4)
 endfunction
 
 function Trig_Hero_Dies_Func014Func001Func003001001 takes nothing returns boolean
-    return(udg_integer06==2)
+    return(PlayerCount==2)
 endfunction
 
 function Trig_Hero_Dies_Func014Func001Func003001002 takes nothing returns boolean
-    return(udg_integer06==3)
+    return(PlayerCount==3)
 endfunction
 
 function Trig_Hero_Dies_Func014Func001Func003001 takes nothing returns boolean
@@ -4509,7 +4509,7 @@ function Trig_Hero_Dies_Func014Func001Func003001 takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func014Func001Func004001 takes nothing returns boolean
-    return(udg_integer06 >= 4)
+    return(PlayerCount >= 4)
 endfunction
 
 function Trig_Hero_Dies_Func014Func001C takes nothing returns boolean
@@ -4570,7 +4570,7 @@ function Trig_Hero_Dies_Func024Func001Func001A takes nothing returns nothing
 endfunction
 
 function Trig_Hero_Dies_Func024Func001C takes nothing returns boolean
-    if(not(RectContainsUnit(udg_rects01[udg_integer42],GetTriggerUnit())==true))then
+    if(not(RectContainsUnit(PlayerArenaRects[udg_integer42],GetTriggerUnit())==true))then
         return false
     endif
     return true
@@ -4579,8 +4579,8 @@ endfunction
 function Trig_Hero_Dies_Actions takes nothing returns nothing
     call StopSoundBJ(udg_sound13,false)
     call PlaySoundBJ(udg_sound13)
-    call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
-    set udg_integer06 =(udg_integer06 - 1)
+    call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
+    set PlayerCount =(PlayerCount - 1)
     call AllowSinglePlayerCommands()
     set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= true
     call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
@@ -4645,7 +4645,7 @@ function Trig_Hero_Dies_Actions takes nothing returns nothing
     loop
         exitwhen udg_integer42 > 8
         if(Trig_Hero_Dies_Func024Func001C())then
-            call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer42],Condition(function Trig_Hero_Dies_Func024Func001Func001001002)),function Trig_Hero_Dies_Func024Func001Func001A)
+            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer42],Condition(function Trig_Hero_Dies_Func024Func001Func001001002)),function Trig_Hero_Dies_Func024Func001Func001A)
         endif
         set udg_integer42 = udg_integer42 + 1
     endloop
@@ -4678,7 +4678,7 @@ function Trig_Hero_Dies_After_Victory_Func004A takes nothing returns nothing
 endfunction
 
 function Trig_Hero_Dies_After_Victory_Func007Func006C takes nothing returns boolean
-    if(not(udg_integer13 > 1))then
+    if(not(InitialPlayerCount > 1))then
         return false
     endif
     return true
@@ -4689,15 +4689,15 @@ function Trig_Hero_Dies_After_Victory_Func007Func007A takes nothing returns noth
 endfunction
 
 function Trig_Hero_Dies_After_Victory_Func007C takes nothing returns boolean
-    if(not(udg_integer06==0))then
+    if(not(PlayerCount==0))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Hero_Dies_After_Victory_Actions takes nothing returns nothing
-    set udg_integer06 =(udg_integer06 - 1)
-    call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+(" |cffffcc00has fallen at level " +(I2S(udg_integer02)+ "!|r")))))
+    set PlayerCount =(PlayerCount - 1)
+    call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+(" |cffffcc00has fallen at level " +(I2S(RoundNumber)+ "!|r")))))
     call DisableTrigger(udg_trigger16)
     call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_After_Victory_Func004A)
     call EnableTrigger(udg_trigger16)
@@ -4707,11 +4707,11 @@ function Trig_Hero_Dies_After_Victory_Actions takes nothing returns nothing
         call DisableTrigger(udg_trigger107)
         call TriggerSleepAction(2)
         if(Trig_Hero_Dies_After_Victory_Func007Func006C())then
-            call CustomVictoryBJ(udg_player01,true,true)
+            call CustomVictoryBJ(SingleplayerPlayer,true,true)
         else
-            call CustomDefeatBJ(udg_player01,"Defeat!")
+            call CustomDefeatBJ(SingleplayerPlayer,"Defeat!")
         endif
-        call ForForce(udg_force02,function Trig_Hero_Dies_After_Victory_Func007Func007A)
+        call ForForce(DefeatedPlayers,function Trig_Hero_Dies_After_Victory_Func007Func007A)
     else
     endif
 endfunction
@@ -4851,7 +4851,7 @@ function Trig_Display_Hint_Func001Func001Func001001001002001 takes nothing retur
 endfunction
 
 function Trig_Display_Hint_Func001Func001Func001001001002002 takes nothing returns boolean
-    return(IsUnitInGroup(udg_units01[GetConvertedPlayerId(GetFilterPlayer())],udg_group02)!=true)
+    return(IsUnitInGroup(PlayerHeroes[GetConvertedPlayerId(GetFilterPlayer())],DuelingHeroGroup)!=true)
 endfunction
 
 function Trig_Display_Hint_Func001Func001Func001001001002 takes nothing returns boolean
@@ -4871,7 +4871,7 @@ function Trig_Display_Hint_Func001Func001Func002001001002001 takes nothing retur
 endfunction
 
 function Trig_Display_Hint_Func001Func001Func002001001002002 takes nothing returns boolean
-    return(IsUnitInGroup(udg_units01[GetConvertedPlayerId(GetFilterPlayer())],udg_group02)!=true)
+    return(IsUnitInGroup(PlayerHeroes[GetConvertedPlayerId(GetFilterPlayer())],DuelingHeroGroup)!=true)
 endfunction
 
 function Trig_Display_Hint_Func001Func001Func002001001002 takes nothing returns boolean
@@ -4898,7 +4898,7 @@ function Trig_Display_Hint_Func001Func003001001002001 takes nothing returns bool
 endfunction
 
 function Trig_Display_Hint_Func001Func003001001002002 takes nothing returns boolean
-    return(IsUnitInGroup(udg_units01[GetConvertedPlayerId(GetFilterPlayer())],udg_group02)!=true)
+    return(IsUnitInGroup(PlayerHeroes[GetConvertedPlayerId(GetFilterPlayer())],DuelingHeroGroup)!=true)
 endfunction
 
 function Trig_Display_Hint_Func001Func003001001002 takes nothing returns boolean
@@ -4991,8 +4991,8 @@ function Trig_Map_Initialization_Func010001001 takes nothing returns boolean
 endfunction
 
 function Trig_Map_Initialization_Func010A takes nothing returns nothing
-    set udg_integer06 =(udg_integer06 + 1)
-    set udg_integer13 =(udg_integer13 + 1)
+    set PlayerCount =(PlayerCount + 1)
+    set InitialPlayerCount =(InitialPlayerCount + 1)
     set bj_forLoopAIndex = 1
     set bj_forLoopAIndexEnd = 8
     loop
@@ -5008,7 +5008,7 @@ function Trig_Map_Initialization_Func010A takes nothing returns nothing
 endfunction
 
 function Trig_Map_Initialization_Func011C takes nothing returns boolean
-    if(not(udg_integer06==1))then
+    if(not(PlayerCount==1))then
         return false
     endif
     return true
@@ -5052,7 +5052,7 @@ function Trig_Map_Initialization_Actions takes nothing returns nothing
     call SetMapFlag(MAP_ALLIANCE_CHANGES_HIDDEN,true)
     call SetMapFlag(MAP_LOCK_RESOURCE_TRADING,true)
     call SetTimeOfDay(12)
-    set udg_boolean01 = false
+    
     call ForForce(GetPlayersMatching(Condition(function Trig_Map_Initialization_Func010001001)),function Trig_Map_Initialization_Func010A)
     if(Trig_Map_Initialization_Func011C())then
         call DisableTrigger(udg_trigger118)
@@ -5081,7 +5081,7 @@ function Trig_Melee_Initialization_Func004Func001001 takes nothing returns boole
 endfunction
 
 function Trig_Melee_Initialization_Func004C takes nothing returns boolean
-    if(not(udg_integer07 < udg_integer06))then
+    if(not(SpawnedHeroCount < PlayerCount))then
         return false
     endif
     return true
@@ -5161,10 +5161,10 @@ function Trig_Melee_Initialization_Func010Func003A takes nothing returns nothing
 endfunction
 
 function Trig_Melee_Initialization_Func010Func004C takes nothing returns boolean
-    if(not(udg_integer02==1))then
+    if(not(RoundNumber==1))then
         return false
     endif
-    if(not(udg_integer07 < udg_integer06))then
+    if(not(SpawnedHeroCount < PlayerCount))then
         return false
     endif
     return true
@@ -5209,14 +5209,14 @@ function Trig_Melee_Initialization_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Player_Region_Initialization_Actions takes nothing returns nothing
-    set udg_rects01[1]= udg_rect01
-    set udg_rects01[2]= udg_rect02
-    set udg_rects01[3]= udg_rect03
-    set udg_rects01[4]= udg_rect04
-    set udg_rects01[5]= udg_rect05
-    set udg_rects01[6]= udg_rect06
-    set udg_rects01[7]= udg_rect07
-    set udg_rects01[8]= udg_rect08
+    set PlayerArenaRects[1]= udg_rect01
+    set PlayerArenaRects[2]= udg_rect02
+    set PlayerArenaRects[3]= udg_rect03
+    set PlayerArenaRects[4]= udg_rect04
+    set PlayerArenaRects[5]= udg_rect05
+    set PlayerArenaRects[6]= udg_rect06
+    set PlayerArenaRects[7]= udg_rect07
+    set PlayerArenaRects[8]= udg_rect08
 endfunction
 
 
@@ -5246,14 +5246,14 @@ function Trig_Scepter_of_Confusion_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Scepter_of_Confusion_Func002C takes nothing returns boolean
-    if(not(udg_integer14!=1))then
+    if(not(RoundCreepAbilCastChance!=1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Scepter_of_Confusion_Actions takes nothing returns nothing
-    set udg_integer14 = GetRandomInt(1,4)
+    set RoundCreepAbilCastChance = GetRandomInt(1,4)
     if(Trig_Scepter_of_Confusion_Func002C())then
         call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
@@ -5294,14 +5294,14 @@ function Trig_Volcanic_Armor_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Volcanic_Armor_Func003C takes nothing returns boolean
-    if(not(udg_integer14 <= 15))then
+    if(not(RoundCreepAbilCastChance <= 15))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Volcanic_Armor_Actions takes nothing returns nothing
-    set udg_integer14 = GetRandomInt(1,100)
+    set RoundCreepAbilCastChance = GetRandomInt(1,100)
     if(Trig_Volcanic_Armor_Func003C())then
         call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
@@ -5319,7 +5319,7 @@ function Trig_Xesils_Legacy_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Xesils_Legacy_Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -5329,7 +5329,7 @@ function Trig_Xesils_Legacy_Actions takes nothing returns nothing
     local unit U = GetTriggerUnit()
     local integer Ib = GetSpellAbilityId()
 
-    set udg_integer14 = GetRandomInt(1,4)
+    set RoundCreepAbilCastChance = GetRandomInt(1,4)
     if(Trig_Xesils_Legacy_Func002C())then
         call TriggerSleepAction(0.00)	
         call BlzEndUnitAbilityCooldown(U,Ib)
@@ -5352,100 +5352,100 @@ function Trig_Attack_Move_Func001Func001001002 takes nothing returns boolean
 endfunction
 
 function Trig_Attack_Move_Func001Func001A takes nothing returns nothing
-    call IssuePointOrderLocBJ(GetEnumUnit(),"patrol",GetRandomLocInRect(udg_rects01[udg_integer43]))
+    call IssuePointOrderLocBJ(GetEnumUnit(),"patrol",GetRandomLocInRect(PlayerArenaRects[udg_integer43]))
 endfunction
 
 function Trig_Attack_Move_Actions takes nothing returns nothing
     set udg_integer43 = 1
     loop
         exitwhen udg_integer43 > 8
-        call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer43],Condition(function Trig_Attack_Move_Func001Func001001002)),function Trig_Attack_Move_Func001Func001A)
+        call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer43],Condition(function Trig_Attack_Move_Func001Func001001002)),function Trig_Attack_Move_Func001Func001A)
         set udg_integer43 = udg_integer43 + 1
     endloop
 endfunction
 
 function Trig_Add_Unit_Abilities_Func001001 takes nothing returns boolean
-    return(udg_integer10==1)
+    return(RoundCreepChanceBash==1)
 endfunction
 
 function Trig_Add_Unit_Abilities_Func002001 takes nothing returns boolean
-    return(udg_integer11==1)
+    return(RoundCreepChanceCritStrike==1)
 endfunction
 
 function Trig_Add_Unit_Abilities_Func003001 takes nothing returns boolean
-    return(udg_integer12==1)
+    return(RoundCreepChanceEvasion==1)
 endfunction
 
 function Trig_Add_Unit_Abilities_Func004001 takes nothing returns boolean
-    return(udg_integer17==1)
+    return(RoundCreepChanceCleave==1)
 endfunction
 
 function Trig_Add_Unit_Abilities_Func005001 takes nothing returns boolean
-    return(udg_integer18==1)
+    return(RoundCreepChanceLifesteal==1)
 endfunction
 
 function Trig_Add_Unit_Abilities_Func006001 takes nothing returns boolean
-    return(udg_integer20==1)
+    return(RoundCreepChanceThorns==1)
 endfunction
 
 function Trig_Add_Unit_Abilities_Func007C takes nothing returns boolean
-    if(not(udg_integer21==1))then
+    if(not(RoundCreepChanceShockwave==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Abilities_Func008C takes nothing returns boolean
-    if(not(udg_integer23==1))then
+    if(not(RoundCreepChanceManaBurn==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Abilities_Func009C takes nothing returns boolean
-    if(not(udg_integer24==1))then
+    if(not(RoundCreepChanceHurlBoulder==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Abilities_Func010C takes nothing returns boolean
-    if(not(udg_integer25==1))then
+    if(not(RoundCreepChanceRejuv==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Abilities_Func011C takes nothing returns boolean
-    if(not(udg_integer49==1))then
+    if(not(RoundCreepChanceSlow==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Abilities_Func012C takes nothing returns boolean
-    if(not(udg_integer50==1))then
+    if(not(RoundCreepChanceBigBadV==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Abilities_Func013C takes nothing returns boolean
-    if(not(udg_integer51==1))then
+    if(not(RoundCreepChanceFaerieFire==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Abilities_Func014C takes nothing returns boolean
-    if(not(udg_integer54==1))then
+    if(not(RoundCreepChanceBlink==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Abilities_Func015C takes nothing returns boolean
-    if(not(udg_integer55==1))then
+    if(not(RoundCreepChanceThunderClap==1))then
         return false
     endif
     return true
@@ -5496,7 +5496,7 @@ function Trig_Add_Unit_Abilities_Actions takes nothing returns nothing
     endif
     if(Trig_Add_Unit_Abilities_Func006001())then
         call UnitAddAbilityBJ('A08F',GetLastCreatedUnit())
-        call SetUnitAbilityLevel(GetLastCreatedUnit(), 'A08F', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+        call SetUnitAbilityLevel(GetLastCreatedUnit(), 'A08F', IMinBJ(R2I(RoundNumber * 0.4), 30))
     else
         call DoNothing()
     endif
@@ -5539,95 +5539,95 @@ function Trig_Add_Unit_Abilities_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func002001 takes nothing returns boolean
-    return(udg_integer03==1)
+    return(RoundCreepNumber==1)
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003Func003001 takes nothing returns boolean
-    return(udg_integer03==1)
+    return(RoundCreepNumber==1)
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003C takes nothing returns boolean
-    if(not(udg_integer02 <= 25))then
+    if(not(RoundNumber <= 25))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func001Func001Func002C takes nothing returns boolean
-    if(not(udg_integer02 <= 20))then
+    if(not(RoundNumber <= 20))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func001Func001Func004001 takes nothing returns boolean
-    return(udg_integer03==1)
+    return(RoundCreepNumber==1)
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func001Func001C takes nothing returns boolean
-    if(not(udg_integer02 <= 15))then
+    if(not(RoundNumber <= 15))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func001Func004001 takes nothing returns boolean
-    return(udg_integer03==1)
+    return(RoundCreepNumber==1)
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func001C takes nothing returns boolean
-    if(not(udg_integer02 <= 10))then
+    if(not(RoundNumber <= 10))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002Func003001 takes nothing returns boolean
-    return(udg_integer03==1)
+    return(RoundCreepNumber==1)
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func002C takes nothing returns boolean
-    if(not(udg_integer02 <= 5))then
+    if(not(RoundNumber <= 5))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func004Func002Func002001 takes nothing returns boolean
-    return(udg_integer03==1)
+    return(RoundCreepNumber==1)
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func004Func002Func003Func003001 takes nothing returns boolean
-    return(udg_integer03==1)
+    return(RoundCreepNumber==1)
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func004Func002Func003C takes nothing returns boolean
-    if(not(udg_integer02 <= 50))then
+    if(not(RoundNumber <= 50))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func004Func002C takes nothing returns boolean
-    if(not(udg_integer02 <= 40))then
+    if(not(RoundNumber <= 40))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func004Func004001 takes nothing returns boolean
-    return(udg_integer03==1)
+    return(RoundCreepNumber==1)
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func004C takes nothing returns boolean
-    if(not(udg_integer02 <= 30))then
+    if(not(RoundNumber <= 30))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func006Func001Func001Func001Func001C takes nothing returns boolean
-    if(not(udg_integer02 > 50))then
+    if(not(RoundNumber > 50))then
         return false
     endif
     return true
@@ -5641,10 +5641,10 @@ function Trig_Add_Unit_Power_Func001Func006Func001Func001Func001C takes nothing 
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func006Func001Func001Func002C takes nothing returns boolean
-    if(not(udg_integer02 > 40))then
+    if(not(RoundNumber > 40))then
         return false
     endif
-    if(not(udg_integer02 <= 50))then
+    if(not(RoundNumber <= 50))then
         return false
     endif
     return true
@@ -5658,10 +5658,10 @@ function Trig_Add_Unit_Power_Func001Func006Func001Func001C takes nothing returns
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func006Func001Func002C takes nothing returns boolean
-    if(not(udg_integer02 > 20))then
+    if(not(RoundNumber > 20))then
         return false
     endif
-    if(not(udg_integer02 <= 40))then
+    if(not(RoundNumber <= 40))then
         return false
     endif
     return true
@@ -5675,24 +5675,24 @@ function Trig_Add_Unit_Power_Func001Func006Func001C takes nothing returns boolea
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func006Func002C takes nothing returns boolean
-    if(not(udg_integer02 > 1))then
+    if(not(RoundNumber > 1))then
         return false
     endif
-    if(not(udg_integer02 <= 20))then
+    if(not(RoundNumber <= 20))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func006Func003Func002C takes nothing returns boolean
-    if(not(udg_integer02 >= 8))then
+    if(not(RoundNumber >= 8))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func006Func003Func003C takes nothing returns boolean
-    if(not(udg_integer02 >= 16))then
+    if(not(RoundNumber >= 16))then
         return false
     endif
     return true
@@ -5706,7 +5706,7 @@ function Trig_Add_Unit_Power_Func001Func006C takes nothing returns boolean
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func009Func001Func001Func001Func001C takes nothing returns boolean
-    if(not(udg_integer02 > 25))then
+    if(not(RoundNumber > 25))then
         return false
     endif
     return true
@@ -5720,10 +5720,10 @@ function Trig_Add_Unit_Power_Func001Func009Func001Func001Func001C takes nothing 
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func009Func001Func001Func002C takes nothing returns boolean
-    if(not(udg_integer02 > 20))then
+    if(not(RoundNumber > 20))then
         return false
     endif
-    if(not(udg_integer02 <= 25))then
+    if(not(RoundNumber <= 25))then
         return false
     endif
     return true
@@ -5737,10 +5737,10 @@ function Trig_Add_Unit_Power_Func001Func009Func001Func001C takes nothing returns
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func009Func001Func002C takes nothing returns boolean
-    if(not(udg_integer02 > 10))then
+    if(not(RoundNumber > 10))then
         return false
     endif
-    if(not(udg_integer02 <= 20))then
+    if(not(RoundNumber <= 20))then
         return false
     endif
     return true
@@ -5754,24 +5754,24 @@ function Trig_Add_Unit_Power_Func001Func009Func001C takes nothing returns boolea
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func009Func002C takes nothing returns boolean
-    if(not(udg_integer02 > 1))then
+    if(not(RoundNumber > 1))then
         return false
     endif
-    if(not(udg_integer02 <= 10))then
+    if(not(RoundNumber <= 10))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func009Func003Func002C takes nothing returns boolean
-    if(not(udg_integer02 >= 4))then
+    if(not(RoundNumber >= 4))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Add_Unit_Power_Func001Func009Func003Func003C takes nothing returns boolean
-    if(not(udg_integer02 >= 8))then
+    if(not(RoundNumber >= 8))then
         return false
     endif
     return true
@@ -5795,46 +5795,46 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
     local unit u = GetLastCreatedUnit()
     if(Trig_Add_Unit_Power_Func001C())then
         if(Trig_Add_Unit_Power_Func001Func002C())then
-            set udg_real01 =(I2R((udg_integer02 * 1))/(I2R(udg_integer03)/ 2.00))
+            set RoundCreepPower =(I2R((RoundNumber * 1))/(I2R(RoundCreepNumber)/ 2.00))
             if(Trig_Add_Unit_Power_Func001Func002Func003001())then
-                set udg_real01 =(udg_real01 / 1.50)
+                set RoundCreepPower =(RoundCreepPower / 1.50)
             else
                 call DoNothing()
             endif
         else
             if(Trig_Add_Unit_Power_Func001Func002Func001C())then
-                set udg_real01 =((I2R(udg_integer02)* 1.25)/(I2R(udg_integer03)/ 2.00))
+                set RoundCreepPower =((I2R(RoundNumber)* 1.25)/(I2R(RoundCreepNumber)/ 2.00))
                 if(Trig_Add_Unit_Power_Func001Func002Func001Func004001())then
-                    set udg_real01 =(udg_real01 / 1.50)
+                    set RoundCreepPower =(RoundCreepPower / 1.50)
                 else
                     call DoNothing()
                 endif
             else
                 if(Trig_Add_Unit_Power_Func001Func002Func001Func001C())then
-                    set udg_real01 =((I2R(udg_integer02)* 1.75)/(I2R(udg_integer03)/ 2.00))
+                    set RoundCreepPower =((I2R(RoundNumber)* 1.75)/(I2R(RoundCreepNumber)/ 2.00))
                     if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func004001())then
-                        set udg_real01 =(udg_real01 / 1.50)
+                        set RoundCreepPower =(RoundCreepPower / 1.50)
                     else
                         call DoNothing()
                     endif
                 else
                     if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002C())then
-                        set udg_real01 =((I2R(udg_integer02)* 2.50)/(I2R(udg_integer03)/ 2.00))
+                        set RoundCreepPower =((I2R(RoundNumber)* 2.50)/(I2R(RoundCreepNumber)/ 2.00))
                         if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func002001())then
-                            set udg_real01 =(udg_real01 / 1.50)
+                            set RoundCreepPower =(RoundCreepPower / 1.50)
                         else
                             call DoNothing()
                         endif
                     else
                         if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003C())then
-                            set udg_real01 =(I2R((udg_integer02 * 4))/(I2R(udg_integer03)/ 2.00))
+                            set RoundCreepPower =(I2R((RoundNumber * 4))/(I2R(RoundCreepNumber)/ 2.00))
                             if(Trig_Add_Unit_Power_Func001Func002Func001Func001Func002Func003Func003001())then
-                                set udg_real01 =(udg_real01 / 1.50)
+                                set RoundCreepPower =(RoundCreepPower / 1.50)
                             else
                                 call DoNothing()
                             endif
                         else
-                            set udg_real01 =(I2R(((udg_integer02 * udg_integer02)/ 2))/(I2R(udg_integer03)/ 2.00))
+                            set RoundCreepPower =(I2R(((RoundNumber * RoundNumber)/ 2))/(I2R(RoundCreepNumber)/ 2.00))
                         endif
                     endif
                 endif
@@ -5842,7 +5842,7 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
         endif
         if(Trig_Add_Unit_Power_Func001Func009C())then
             set bj_forLoopBIndex = 1
-            set bj_forLoopBIndexEnd = R2I(udg_real01)
+            set bj_forLoopBIndexEnd = R2I(RoundCreepPower)
             loop
                 exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                 call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
@@ -5859,7 +5859,7 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
         else
             if(Trig_Add_Unit_Power_Func001Func009Func001C())then
                 set bj_forLoopBIndex = 1
-                set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 4)
+                set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 4)
                 loop
                     exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                     call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 600)
@@ -5868,7 +5868,7 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
             else
                 if(Trig_Add_Unit_Power_Func001Func009Func001Func001C())then
                     set bj_forLoopBIndex = 1
-                    set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 8)
+                    set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 8)
                     loop
                         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
@@ -5877,7 +5877,7 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
                 else
                     if(Trig_Add_Unit_Power_Func001Func009Func001Func001Func001C())then
                         set bj_forLoopBIndex = 1
-                        set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 8)
+                        set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 8)
                         loop
                             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                             call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
@@ -5890,36 +5890,36 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
         endif
     else
         if(Trig_Add_Unit_Power_Func001Func004C())then
-            set udg_real01 =((I2R(udg_integer02)* 1.75)/(I2R(udg_integer03)/ 2.00))
+            set RoundCreepPower =((I2R(RoundNumber)* 1.75)/(I2R(RoundCreepNumber)/ 2.00))
             if(Trig_Add_Unit_Power_Func001Func004Func004001())then
-                set udg_real01 =(udg_real01 / 1.50)
+                set RoundCreepPower =(RoundCreepPower / 1.50)
             else
                 call DoNothing()
             endif
         else
             if(Trig_Add_Unit_Power_Func001Func004Func002C())then
-                set udg_real01 =((I2R(udg_integer02)* 2.50)/(I2R(udg_integer03)/ 2.00))
+                set RoundCreepPower =((I2R(RoundNumber)* 2.50)/(I2R(RoundCreepNumber)/ 2.00))
                 if(Trig_Add_Unit_Power_Func001Func004Func002Func002001())then
-                    set udg_real01 =(udg_real01 / 1.50)
+                    set RoundCreepPower =(RoundCreepPower / 1.50)
                 else
                     call DoNothing()
                 endif
             else
                 if(Trig_Add_Unit_Power_Func001Func004Func002Func003C())then
-                    set udg_real01 =((I2R(udg_integer02)* 4.00)/(I2R(udg_integer03)/ 2.00))
+                    set RoundCreepPower =((I2R(RoundNumber)* 4.00)/(I2R(RoundCreepNumber)/ 2.00))
                     if(Trig_Add_Unit_Power_Func001Func004Func002Func003Func003001())then
-                        set udg_real01 =(udg_real01 / 1.50)
+                        set RoundCreepPower =(RoundCreepPower / 1.50)
                     else
                         call DoNothing()
                     endif
                 else
-                    set udg_real01 =(I2R(((udg_integer02 * udg_integer02)/ 10))/(I2R(udg_integer03)/ 2.00))
+                    set RoundCreepPower =(I2R(((RoundNumber * RoundNumber)/ 10))/(I2R(RoundCreepNumber)/ 2.00))
                 endif
             endif
         endif
         if(Trig_Add_Unit_Power_Func001Func006C())then
             set bj_forLoopBIndex = 1
-            set bj_forLoopBIndexEnd = R2I(udg_real01)
+            set bj_forLoopBIndexEnd = R2I(RoundCreepPower)
             loop
                 exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                 call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
@@ -5936,7 +5936,7 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
         else
             if(Trig_Add_Unit_Power_Func001Func006Func001C())then
                 set bj_forLoopBIndex = 1
-                set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 4)
+                set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 4)
                 loop
                     exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                     call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 600)
@@ -5945,7 +5945,7 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
             else
                 if(Trig_Add_Unit_Power_Func001Func006Func001Func001C())then
                     set bj_forLoopBIndex = 1
-                    set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 8)
+                    set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 8)
                     loop
                         exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
@@ -5954,7 +5954,7 @@ function Trig_Add_Unit_Power_Actions takes nothing returns nothing
                 else
                     if(Trig_Add_Unit_Power_Func001Func006Func001Func001Func001C())then
                         set bj_forLoopBIndex = 1
-                        set bj_forLoopBIndexEnd =(R2I(udg_real01)/ 8)
+                        set bj_forLoopBIndexEnd =(R2I(RoundCreepPower)/ 8)
                         loop
                             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
                             call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
@@ -6010,7 +6010,7 @@ function Trig_Creep_AutoCast_Func001Func001Func002Func002003001003 takes nothing
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func001Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6060,7 +6060,7 @@ function Trig_Creep_AutoCast_Func001Func002Func002Func001003001001001003 takes n
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func002Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6117,7 +6117,7 @@ function Trig_Creep_AutoCast_Func001Func003Func002Func002003001001003 takes noth
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func003Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6158,7 +6158,7 @@ function Trig_Creep_AutoCast_Func001Func004Func002Func002003001003 takes nothing
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func004Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6207,7 +6207,7 @@ function Trig_Creep_AutoCast_Func001Func005Func002Func002003001003 takes nothing
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func005Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6241,7 +6241,7 @@ function Trig_Creep_AutoCast_Func001Func006Func002Func001003001003 takes nothing
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func006Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6284,7 +6284,7 @@ function Trig_Creep_AutoCast_Func001Func007Func002Func001C takes nothing returns
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func007Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6325,7 +6325,7 @@ function Trig_Creep_AutoCast_Func001Func008Func002Func002003001003 takes nothing
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func008Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6389,7 +6389,7 @@ function Trig_Creep_AutoCast_Func001Func009Func002Func001C takes nothing returns
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func009Func002C takes nothing returns boolean
-    if(not(udg_integer14==1))then
+    if(not(RoundCreepAbilCastChance==1))then
         return false
     endif
     return true
@@ -6407,12 +6407,12 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
     if (IsUnitAliveBJ(GetEnumUnit())==true) then
 
         if(Trig_Creep_AutoCast_Func001Func001C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func001Func002C())then
                 if(Trig_Creep_AutoCast_Func001Func001Func002Func001C())then
-                    call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                    call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                 else
-                    call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                    call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                 endif
                 call IssueTargetOrderBJ(GetEnumUnit(),"manaburn",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(300.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func001Func002Func002003001003))))
             else
@@ -6420,7 +6420,7 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
         else
         endif
         if(Trig_Creep_AutoCast_Func001Func002C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func002Func002C())then
                 call IssuePointOrderLocBJ(GetEnumUnit(),"blink",OffsetLocation(GetUnitLoc(GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func002Func002Func001003001001001003)))),GetRandomReal(- 100.00,100.00),GetRandomReal(- 100.00,100.00)))
             else
@@ -6428,12 +6428,12 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
         else
         endif
         if(Trig_Creep_AutoCast_Func001Func003C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func003Func002C())then
                 if(Trig_Creep_AutoCast_Func001Func003Func002Func001C())then
-                    call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                    call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                 else
-                    call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                    call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                 endif
                 call IssuePointOrderLocBJ(GetEnumUnit(),"shockwave",GetUnitLoc(GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func003Func002Func002003001001003)))))
             else
@@ -6441,12 +6441,12 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
         else
         endif
         if(Trig_Creep_AutoCast_Func001Func004C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func004Func002C())then
                 if(Trig_Creep_AutoCast_Func001Func004Func002Func001C())then
-                    call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                    call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                 else
-                    call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                    call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                 endif
                 call IssueTargetOrderBJ(GetEnumUnit(),"creepthunderbolt",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func004Func002Func002003001003))))
             else
@@ -6454,12 +6454,12 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
         else
         endif
         if(Trig_Creep_AutoCast_Func001Func005C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func005Func002C())then
                 if(Trig_Creep_AutoCast_Func001Func005Func002Func001C())then
-                    call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                    call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                 else
-                    call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                    call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                 endif
                 call IssueTargetOrderBJ(GetEnumUnit(),"rejuvination",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(400.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func005Func002Func002003001003))))
             else
@@ -6467,7 +6467,7 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
         else
         endif
         if(Trig_Creep_AutoCast_Func001Func006C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func006Func002C())then
                 call IssueTargetOrderBJ(GetEnumUnit(),"slow",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(600.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func006Func002Func001003001003))))
             else
@@ -6475,7 +6475,7 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
         else
         endif
         if(Trig_Creep_AutoCast_Func001Func007C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func007Func002C())then
                 if(Trig_Creep_AutoCast_Func001Func007Func002Func001C())then
                     call IssueImmediateOrderBJ(GetEnumUnit(),"voodoo")
@@ -6486,12 +6486,12 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
         else
         endif
         if(Trig_Creep_AutoCast_Func001Func008C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func008Func002C())then
                 if(Trig_Creep_AutoCast_Func001Func008Func002Func001C())then
-                    call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                    call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                 else
-                    call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                    call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                 endif
                 call IssueTargetOrderBJ(GetEnumUnit(),"faeriefire",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(700.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func008Func002Func002003001003))))
             else
@@ -6499,13 +6499,13 @@ function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
         else
         endif
         if(Trig_Creep_AutoCast_Func001Func009C())then
-            set udg_integer14 = GetRandomInt(1,5)
+            set RoundCreepAbilCastChance = GetRandomInt(1,5)
             if(Trig_Creep_AutoCast_Func001Func009Func002C())then
                 if(Trig_Creep_AutoCast_Func001Func009Func002Func001C())then
                     if(Trig_Creep_AutoCast_Func001Func009Func002Func001Func002C())then
-                        call SetUnitAbilityLevelSwapped('A01B',GetEnumUnit(),((udg_integer02 * 4)/ udg_integer03))
+                        call SetUnitAbilityLevelSwapped('A01B',GetEnumUnit(),((RoundNumber * 4)/ RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevelSwapped('A01B',GetEnumUnit(),(((udg_integer02 * 4)/ udg_integer03)/ 2))
+                        call SetUnitAbilityLevelSwapped('A01B',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
                     call IssueImmediateOrderBJ(GetEnumUnit(),"thunderclap")
                 else
@@ -6551,14 +6551,14 @@ function Trig_Creep_Dies_Func003Func005001001002 takes nothing returns boolean
 endfunction
 
 function Trig_Creep_Dies_Func003C takes nothing returns boolean
-    if(not(CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Creep_Dies_Func003Func005001001002)))==0))then
+    if(not(CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Creep_Dies_Func003Func005001001002)))==0))then
         return false
     endif
     return true
 endfunction
 */
 function Trig_Creep_Dies_Actions takes nothing returns nothing
-    call CreepDeath_Death(GetTriggerUnit(), udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()))])
+    call CreepDeath_Death(GetTriggerUnit(), PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()))])
     call TriggerSleepAction(0.00)
     call SetUnitOwner(GetTriggerUnit(),Player(PLAYER_NEUTRAL_PASSIVE),false)
 endfunction
@@ -6571,21 +6571,21 @@ function Trig_Generate_Next_Level_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Generate_Next_Level_Func011C takes nothing returns boolean
-    if(not((udg_integer02 + 1)> 5))then
+    if(not((RoundNumber + 1)> 5))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Generate_Next_Level_Func012C takes nothing returns boolean
-    if(not((udg_integer02 + 1)> 1))then
+    if(not((RoundNumber + 1)> 1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Generate_Next_Level_Func014C takes nothing returns boolean
-    if(not((udg_integer02 + 1)<= 8))then
+    if(not((RoundNumber + 1)<= 8))then
         return false
     endif
     return true
@@ -6599,7 +6599,7 @@ function Trig_Generate_Next_Level_Func021Func001Func001C takes nothing returns b
     if(not(GetPlayerSlotState(ConvertedPlayer(udg_integer40))!=PLAYER_SLOT_STATE_EMPTY))then
         return false
     endif
-    if(not(IsPlayerInForce(ConvertedPlayer(udg_integer40),udg_force02)!=true))then
+    if(not(IsPlayerInForce(ConvertedPlayer(udg_integer40),DefeatedPlayers)!=true))then
         return false
     endif
     return true
@@ -6608,106 +6608,106 @@ endfunction
 function CheckUnitAbilities takes nothing returns nothing
     local string s = ""
 
-    if udg_integer10 == 1 then
+    if RoundCreepChanceBash == 1 then
         set s = s + "Bash "
         call AddRoundAbility('ACbh')
     endif
 
-    if udg_integer24 == 1 then
+    if RoundCreepChanceHurlBoulder == 1 then
         set s = s + "Hurl Boulder "
         call AddRoundAbility('A00W')
     endif
 
-    if udg_integer25 == 1 then
+    if RoundCreepChanceRejuv == 1 then
         set s = s + "Rejuvenation "
         call AddRoundAbility('A00X')
     endif
 
-    if udg_integer50 == 1 then
+    if RoundCreepChanceBigBadV == 1 then
         set s = s + "Big Bad Voodoo "
         call AddRoundAbility('A018')
     endif
 
-    if udg_integer54 == 1 then
+    if RoundCreepChanceBlink == 1 then
         set s = s + "Blink "
         call AddRoundAbility('A01A')
     endif
 
-    if udg_integer11 == 1 then
+    if RoundCreepChanceCritStrike == 1 then
         set s = s + "Critical Strike "
         call AddRoundAbility('AOcr')
     endif
 
-    if udg_integer12 == 1 then
+    if RoundCreepChanceEvasion == 1 then
         set s = s + "Evasion "
     endif
 
-    if udg_integer51 == 1 then
+    if RoundCreepChanceFaerieFire == 1 then
         set s = s + "Faerie Fire "
         call AddRoundAbility('A016')
     endif
 
-    if udg_integer18 == 1 then
+    if RoundCreepChanceLifesteal == 1 then
         set s = s + "Lifesteal "
         call AddRoundAbility('SCva')
     endif
 
-    if udg_integer23 == 1 then
+    if RoundCreepChanceManaBurn == 1 then
         set s = s + "Mana Burn "
         call AddRoundAbility('A00V')
     endif
 
-    if udg_integer21 == 1 then
+    if RoundCreepChanceShockwave == 1 then
         set s = s + "Shockwave "
         call AddRoundAbility('A00U')
     endif
 
-    if udg_integer49 == 1 then
+    if RoundCreepChanceSlow == 1 then
         set s = s + "Slow "
         call AddRoundAbility('A013')
     endif
 
-    if udg_integer17 == 1 then
+    if RoundCreepChanceCleave == 1 then
         set s = s + "Cleave "
         call AddRoundAbility('ACce')
     endif
 
-    if udg_integer20 == 1 then
+    if RoundCreepChanceThorns == 1 then
         set s = s + "Thorns Aura "
         call AddRoundAbility('A08F')
     endif
 
-    if udg_integer55 == 1 then
+    if RoundCreepChanceThunderClap == 1 then
         set s = s + "Thunder Clap "
         call AddRoundAbility('A01B')
     endif
 
-    if ReflectionAuraChance == 1 then
+    if RoundCreepChanceReflectAura == 1 then
         set s = s + "Reflection Aura "
         call AddRoundAbility('A093')
     endif
 
-    if WizardbaneAuraChance == 1 then
+    if RoundCreepChanceWizardbane == 1 then
         set s = s + "Wizardbane Aura  "
         call AddRoundAbility('A088')
     endif
 
-    if DrunkenMasterchance == 1 then
+    if RoundCreepChanceDrunkMaster == 1 then
         set s = s + "Drunken Master "
         call AddRoundAbility('Acdb')
     endif
 
-    if SlowAuraChance == 1 then
+    if RoundCreepChanceSlowAura == 1 then
         set s = s + "Slow Aura "
         call AddRoundAbility('AOr2')
     endif
 
-    if PulverizeChance == 1 then
+    if RoundCreepChancePulverize == 1 then
         set s = s + "Pulverize "
         call AddRoundAbility('Awar')
     endif
 
-    if LastBreathChance == 1 then
+    if RoundCreepChanceLastBreath == 1 then
         set s = s + "Last Breath "
         call AddRoundAbility('A05R')
     endif
@@ -6717,17 +6717,17 @@ function CheckUnitAbilities takes nothing returns nothing
         call AddRoundAbility('A05S')
     endif
 
-    if CorrosiveSkinChance == 1 then
+    if RoundCreepChanceCorrosiveSkin == 1 then
         set s = s + "Corrosive Skin "
         call AddRoundAbility('A00Q')
     endif
 
-    if MulticastChance == 1 then
+    if RoundCreepChanceMulticast == 1 then
         set s = s + "Multicast "
         call AddRoundAbility('A04F')
     endif
 
-    if FastMagicChance == 1 then
+    if RoundCreepChanceFastMagic == 1 then
         set s = s + "Fast Magic "
         call AddRoundAbility('A03P')
     endif
@@ -6740,60 +6740,60 @@ function CheckUnitAbilities takes nothing returns nothing
 endfunction
 
 function UnitAddNewAbilities takes unit u returns nothing
-    if udg_integer11 == 1 then
-        call SetUnitAbilityLevel(u, 'AOcr', IMinBJ(R2I(udg_integer02 * 0.2), 30))
+    if RoundCreepChanceCritStrike == 1 then
+        call SetUnitAbilityLevel(u, 'AOcr', IMinBJ(R2I(RoundNumber * 0.2), 30))
     endif
 
-    if DrunkenMasterchance == 1 then
+    if RoundCreepChanceDrunkMaster == 1 then
         call UnitAddAbility(u, 'Acdb')
         call FuncEditParam('Acdb',u)
-        call SetUnitAbilityLevel(u, 'Acdb', IMinBJ(R2I(udg_integer02 * 0.3), 30))
+        call SetUnitAbilityLevel(u, 'Acdb', IMinBJ(R2I(RoundNumber * 0.3), 30))
     endif
 
-    if ReflectionAuraChance == 1 then
+    if RoundCreepChanceReflectAura == 1 then
         call UnitAddAbility(u, 'A093')
-        call SetUnitAbilityLevel(u, 'A093', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+        call SetUnitAbilityLevel(u, 'A093', IMinBJ(R2I(RoundNumber * 0.4), 30))
     endif
 
-    if WizardbaneAuraChance == 1 then
+    if RoundCreepChanceWizardbane == 1 then
         call UnitAddAbility(u, 'A088')
-        call SetUnitAbilityLevel(u, 'A088', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+        call SetUnitAbilityLevel(u, 'A088', IMinBJ(R2I(RoundNumber * 0.4), 30))
     endif
 
-    if SlowAuraChance == 1 then
+    if RoundCreepChanceSlowAura == 1 then
         call UnitAddAbility(u, 'AOr2')
-        call SetUnitAbilityLevel(u, 'AOr2', IMinBJ(R2I(udg_integer02 * 0.75), 30))
+        call SetUnitAbilityLevel(u, 'AOr2', IMinBJ(R2I(RoundNumber * 0.75), 30))
     endif
 
-    if PulverizeChance == 1 then
+    if RoundCreepChancePulverize == 1 then
         call UnitAddAbility(u, 'Awar')
-        call SetUnitAbilityLevel(u, 'Awar', IMinBJ(R2I(udg_integer02 * 0.4), 30))
+        call SetUnitAbilityLevel(u, 'Awar', IMinBJ(R2I(RoundNumber * 0.4), 30))
     endif
 
-    if LastBreathChance == 1 then
+    if RoundCreepChanceLastBreath == 1 then
         call UnitAddAbility(u, 'A05R')
         call FuncEditParam('A05R', u)
-        call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(udg_integer02 * 0.2), 30))
+        call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(RoundNumber * 0.2), 30))
     endif
 
     if FireshieldChance == 1 then
         call UnitAddAbility(u, 'A05S')
-        call SetUnitAbilityLevel(u, 'A05S', IMinBJ(R2I(udg_integer02 * 0.3), 30))
+        call SetUnitAbilityLevel(u, 'A05S', IMinBJ(R2I(RoundNumber * 0.3), 30))
     endif
 
-    if CorrosiveSkinChance == 1 then
+    if RoundCreepChanceCorrosiveSkin == 1 then
         call UnitAddAbility(u, 'A00Q')
-        call SetUnitAbilityLevel(u, 'A00Q', IMinBJ(R2I(udg_integer02 * 0.6), 30))
+        call SetUnitAbilityLevel(u, 'A00Q', IMinBJ(R2I(RoundNumber * 0.6), 30))
     endif
 
-    if MulticastChance == 1 then
+    if RoundCreepChanceMulticast == 1 then
         call UnitAddAbility(u, 'A04F')
-        call SetUnitAbilityLevel(u, 'A04F', IMinBJ(R2I(udg_integer02 * 0.5), 30))
+        call SetUnitAbilityLevel(u, 'A04F', IMinBJ(R2I(RoundNumber * 0.5), 30))
     endif
 
-    if FastMagicChance == 1 then
+    if RoundCreepChanceFastMagic == 1 then
         call UnitAddAbility(u, 'A03P')
-        call SetUnitAbilityLevel(u, 'A03P', IMinBJ(R2I(udg_integer02 * 0.6), 30))
+        call SetUnitAbilityLevel(u, 'A03P', IMinBJ(R2I(RoundNumber * 0.6), 30))
     endif
 endfunction
 
@@ -6820,100 +6820,100 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
     call DisableTrigger(GetTriggeringTrigger())
     call ConditionalTriggerExecute(udg_trigger104)
     call ResetRoundAbilities()
-    if udg_integer02 < 15 then
-        set udg_integer04 = udg_integers02[GetRandomInt(1,udg_integer22 - 2)]
+    if RoundNumber < 15 then
+        set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,udg_integer22 - 2)]
     else
-        set udg_integer04 = udg_integers02[GetRandomInt(1,udg_integer22)]
+        set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,udg_integer22)]
     endif
-    set udg_integer09 = GetRandomInt(GetRandomInt(150, 150 + udg_integer02 * 2),400)
-    set udg_integer05 = GetRandomInt(1,udg_integer02)
+    set RoundCreepMoveSpeed = GetRandomInt(GetRandomInt(150, 150 + RoundNumber * 2),400)
+    set RoundCreepMaxAttackSpeed = GetRandomInt(1,RoundNumber)
     
-    if udg_integer02 > 25 then
+    if RoundNumber > 25 then
         set newAbilChance = 20
     endif
-    if udg_integer02 > 40 then
+    if RoundNumber > 40 then
         set oldAbilChance = 15
     endif
-    if udg_integer02 > 5 then
-        set udg_integer10 = GetRandomInt(1,20)
-        set udg_integer24 = GetRandomInt(1,20)
-        set udg_integer25 = GetRandomInt(1,20)
-        set udg_integer49 = GetRandomInt(1,oldAbilChance)
-        set SlowAuraChance = GetRandomInt(1,newAbilChance)
+    if RoundNumber > 5 then
+        set RoundCreepChanceBash = GetRandomInt(1,20)
+        set RoundCreepChanceHurlBoulder = GetRandomInt(1,20)
+        set RoundCreepChanceRejuv = GetRandomInt(1,20)
+        set RoundCreepChanceSlow = GetRandomInt(1,oldAbilChance)
+        set RoundCreepChanceSlowAura = GetRandomInt(1,newAbilChance)
     endif
     if(Trig_Generate_Next_Level_Func012C())then
-        set udg_integer50 = GetRandomInt(1,oldAbilChance)
-        set udg_integer54 = GetRandomInt(1,oldAbilChance)
-        if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
-            set udg_integer11 = GetRandomInt(1,oldAbilChance)
-            set udg_integer21 = GetRandomInt(1,oldAbilChance)
-            if udg_integer02 > 5 then
-                set udg_integer55 = GetRandomInt(1,oldAbilChance)    
+        set RoundCreepChanceBigBadV = GetRandomInt(1,oldAbilChance)
+        set RoundCreepChanceBlink = GetRandomInt(1,oldAbilChance)
+        if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
+            set RoundCreepChanceCritStrike = GetRandomInt(1,oldAbilChance)
+            set RoundCreepChanceShockwave = GetRandomInt(1,oldAbilChance)
+            if RoundNumber > 5 then
+                set RoundCreepChanceThunderClap = GetRandomInt(1,oldAbilChance)    
             endif
         else
-            set udg_integer11 = 0
-            set udg_integer21 = 0
-            set udg_integer55 = 0
+            set RoundCreepChanceCritStrike = 0
+            set RoundCreepChanceShockwave = 0
+            set RoundCreepChanceThunderClap = 0
         endif
-        set udg_integer12 = GetRandomInt(1,oldAbilChance)
-        set udg_integer51 = GetRandomInt(1,oldAbilChance)
-        set udg_integer18 = GetRandomInt(1,oldAbilChance)
-        set udg_integer23 = GetRandomInt(1,oldAbilChance)
+        set RoundCreepChanceEvasion = GetRandomInt(1,oldAbilChance)
+        set RoundCreepChanceFaerieFire = GetRandomInt(1,oldAbilChance)
+        set RoundCreepChanceLifesteal = GetRandomInt(1,oldAbilChance)
+        set RoundCreepChanceManaBurn = GetRandomInt(1,oldAbilChance)
         
         
-        set udg_integer17 = GetRandomInt(1,oldAbilChance)
-        set udg_integer20 = 0
-        set ReflectionAuraChance = 0
-        set WizardbaneAuraChance = 0
+        set RoundCreepChanceCleave = GetRandomInt(1,oldAbilChance)
+        set RoundCreepChanceThorns = 0
+        set RoundCreepChanceReflectAura = 0
+        set RoundCreepChanceWizardbane = 0
         if GetRandomInt(1, oldAbilChance) == 1 then
             set temp = GetRandomInt(1,4)
             if temp == 1 then
-                set udg_integer20 = 1
+                set RoundCreepChanceThorns = 1
             elseif temp == 2 then
-                set ReflectionAuraChance = 1
+                set RoundCreepChanceReflectAura = 1
             elseif temp == 3 then
-                set WizardbaneAuraChance = 1
-            elseif udg_integer02 > 20 then
-                if udg_integer02 > 40 then
-                    set udg_integer20 = GetRandomInt(1,2)
-                    set ReflectionAuraChance = GetRandomInt(1,2)
-                    set WizardbaneAuraChance = GetRandomInt(1,2)
+                set RoundCreepChanceWizardbane = 1
+            elseif RoundNumber > 20 then
+                if RoundNumber > 40 then
+                    set RoundCreepChanceThorns = GetRandomInt(1,2)
+                    set RoundCreepChanceReflectAura = GetRandomInt(1,2)
+                    set RoundCreepChanceWizardbane = GetRandomInt(1,2)
                 else
-                    set udg_integer20 = GetRandomInt(1,3)
-                    set ReflectionAuraChance = GetRandomInt(1,3)
-                    set WizardbaneAuraChance = GetRandomInt(1,3)
+                    set RoundCreepChanceThorns = GetRandomInt(1,3)
+                    set RoundCreepChanceReflectAura = GetRandomInt(1,3)
+                    set RoundCreepChanceWizardbane = GetRandomInt(1,3)
                 endif
             endif
         endif
         
         
     endif
-    if udg_integer02 > 10 then
-        if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
-            set DrunkenMasterchance = GetRandomInt(1,oldAbilChance)
-            set PulverizeChance = GetRandomInt(1,newAbilChance)
+    if RoundNumber > 10 then
+        if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
+            set RoundCreepChanceDrunkMaster = GetRandomInt(1,oldAbilChance)
+            set RoundCreepChancePulverize = GetRandomInt(1,newAbilChance)
         endif
         set FireshieldChance = GetRandomInt(1,newAbilChance)
-        set CorrosiveSkinChance = GetRandomInt(1,newAbilChance)
+        set RoundCreepChanceCorrosiveSkin = GetRandomInt(1,newAbilChance)
     endif
-    if udg_integer02 >= 35 then
-        set MulticastChance = GetRandomInt(1,newAbilChance + 10)
-        set FastMagicChance = GetRandomInt(1,newAbilChance + 6)
+    if RoundNumber >= 35 then
+        set RoundCreepChanceMulticast = GetRandomInt(1,newAbilChance + 10)
+        set RoundCreepChanceFastMagic = GetRandomInt(1,newAbilChance + 6)
     endif
 
-    if udg_integer02 == 28 or udg_integer02 == 38 or udg_integer02 == 48 then
-        set LastBreathChance = 1
+    if RoundNumber == 28 or RoundNumber == 38 or RoundNumber == 48 then
+        set RoundCreepChanceLastBreath = 1
     else  
-        set LastBreathChance = 2
+        set RoundCreepChanceLastBreath = 2
     endif
 
     if(Trig_Generate_Next_Level_Func014C())then
-        set udg_integer03 = GetRandomInt(2,(udg_integer02 / 2 + 4))
+        set RoundCreepNumber = GetRandomInt(2,(RoundNumber / 2 + 4))
     else
-        set udg_integer03 = GetRandomInt(2,25)
+        set RoundCreepNumber = GetRandomInt(2,25)
     endif
 
-    if udg_integer02 > 0 then
+    if RoundNumber > 0 then
         call CheckUnitAbilities()
     endif
 
@@ -6927,38 +6927,38 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
     set NumberOfUnit[7] = 0 
     set NumberOfUnit[8] = 0 
 
-    set udg_integer02 =(udg_integer02 + 1)
+    set RoundNumber =(RoundNumber + 1)
     call ForGroupBJ(udg_group05,function Trig_Generate_Next_Level_Func018A)
     call GroupClear(udg_group05)
     set udg_integer28 = 1
     loop
-        exitwhen udg_integer28 > udg_integer03
+        exitwhen udg_integer28 > RoundCreepNumber
         set udg_integer40 = 1
         if udg_integer28 > 4 then
-            set udg_integer50 = 2
+            set RoundCreepChanceBigBadV = 2
         endif
         loop
             exitwhen udg_integer40 > 8
-            if udg_integer02 > 1 then
+            if RoundNumber > 1 then
                 set ShowCreepAbilButton[udg_integer40 - 1] = true
             endif
             
             //Creep upgrade bonuses
-            if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
+            if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
                 set magicPowerBonus = 1 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1])
-                set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* udg_integer02)
+                set damageBonus = ((BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )* RoundNumber)
             else
                 set magicPowerBonus = 0
             endif
             set magicDefBonus = 0.09 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
             set evasionBonus = 0.06 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
             set blockBonus = 0.12 *(BonusNeutral + BonusNeutralPlayer[udg_integer40 - 1] )
-            if udg_integer02 < 40 then
+            if RoundNumber < 40 then
                 set damageBonus = damageBonus / 2
             endif
 
             if(Trig_Generate_Next_Level_Func021Func001Func001C())then
-                call CreateNUnitsAtLoc(1,udg_integer04,Player(11),OffsetLocation(GetRectCenter(udg_rects01[udg_integer40]),GetRandomReal(- 600.00,600.00),GetRandomReal(- 600.00,600.00)),GetRandomDirectionDeg())
+                call CreateNUnitsAtLoc(1,RoundCreepTypeId,Player(11),OffsetLocation(GetRectCenter(PlayerArenaRects[udg_integer40]),GetRandomReal(- 600.00,600.00),GetRandomReal(- 600.00,600.00)),GetRandomDirectionDeg())
                 call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group05)
                 //call UnitAddAbility(GetLastCreatedUnit(),'A057')
                 //call BlzUnitDisableAbility(GetLastCreatedUnit(),'A057',false,true)
@@ -6974,69 +6974,69 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
 
 
 
-                call AddUnitMagicDef(GetLastCreatedUnit(),0.25 *(udg_integer02))
-                if udg_integer02 < 3 then
+                call AddUnitMagicDef(GetLastCreatedUnit(),0.25 *(RoundNumber))
+                if RoundNumber < 3 then
                     call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)- 3,0)
 
-                elseif udg_integer02 < 8  then
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 1 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 3 * udg_integer02)
+                elseif RoundNumber < 8  then
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 1 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 3 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )
-                elseif udg_integer02 < 11  then
-                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 / 3) 
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 2 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 10 * udg_integer02)
+                elseif RoundNumber < 11  then
+                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber / 3) 
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 2 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 10 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) ) 		
-                elseif udg_integer02 < 19  then
-                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 1) 
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 6 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 40 * udg_integer02)
+                elseif RoundNumber < 19  then
+                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 1) 
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 6 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 40 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )                	
-                elseif udg_integer02 < 24  then
-                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 3) 
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 14 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 45 * udg_integer02)
+                elseif RoundNumber < 24  then
+                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 3) 
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 14 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 45 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )		    
 
-                elseif udg_integer02 < 35  then
-                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 5) 
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 55 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 70 * udg_integer02)
+                elseif RoundNumber < 35  then
+                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 5) 
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 55 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 70 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )				    
 
-                elseif udg_integer02 < 41  then
-                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 12) 
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 200 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 150 * udg_integer02)
+                elseif RoundNumber < 41  then
+                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 12) 
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 200 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 150 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )				    
-                elseif udg_integer02 < 45  then
-                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 18) 
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 400 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 305 * udg_integer02)
+                elseif RoundNumber < 45  then
+                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 18) 
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 400 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 305 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	
-                elseif udg_integer02 < 49  then
+                elseif RoundNumber < 49  then
 
-                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 20) 
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 500 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 600 * udg_integer02)
+                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 20) 
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 500 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 600 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	                                 
                 else
-                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + udg_integer02 * 20) 
-                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 900 * udg_integer02,0)
-                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 1500 * udg_integer02)
+                    call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 20) 
+                    call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 900 * RoundNumber,0)
+                    call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 1500 * RoundNumber)
                     call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	             			    
                 endif
 
 
 
 
-                call SetUnitScalePercent(GetLastCreatedUnit(),(85.00 +((I2R(udg_integer02)- 1.00)* 0.50)),100,100)
+                call SetUnitScalePercent(GetLastCreatedUnit(),(85.00 +((I2R(RoundNumber)- 1.00)* 0.50)),100,100)
                 call UnitAddNewAbilities(GetLastCreatedUnit())
                 call ConditionalTriggerExecute(udg_trigger99)
                 call ConditionalTriggerExecute(udg_trigger100)
-                call SetUnitMoveSpeed(GetLastCreatedUnit(),I2R(udg_integer09))
-                call SetUnitAbilityLevelSwapped('A000',GetLastCreatedUnit(),(R2I(udg_real01)/ 2))
-                call SetUnitAbilityLevelSwapped('A002',GetLastCreatedUnit(),udg_integer05)
+                call SetUnitMoveSpeed(GetLastCreatedUnit(),I2R(RoundCreepMoveSpeed))
+                call SetUnitAbilityLevelSwapped('A000',GetLastCreatedUnit(),(R2I(RoundCreepPower)/ 2))
+                call SetUnitAbilityLevelSwapped('A002',GetLastCreatedUnit(),RoundCreepMaxAttackSpeed)
                 call PauseUnitBJ(true,GetLastCreatedUnit())
                 call SetUnitInvulnerable(GetLastCreatedUnit(),true)
                 call ShowUnitHide(GetLastCreatedUnit())
@@ -7045,14 +7045,14 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                     call UnitAddAbility(GetLastCreatedUnit(), 'A0B1')
                 endif
                 
-                if udg_integer04 != 'n01H' and udg_integer04 != 'n00W' then
+                if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
                     call BlzSetUnitBaseDamage(GetLastCreatedUnit(),R2I(BlzGetUnitBaseDamage(GetLastCreatedUnit(),0) * 0.5),0)
                 endif
 
                 //call BJDebugMsg("rci: " + I2S(udg_integer40 - 1))
                 if RoundCreepInfo[udg_integer40 - 1] == "" then
                     //call BJDebugMsg("a")
-                    set RoundCreepTitle = "|cffdd9bf1" + I2S(udg_integer03) + " |r|cff77d2fc" + GetObjectName(udg_integer04) + "|r"
+                    set RoundCreepTitle = "|cffdd9bf1" + I2S(RoundCreepNumber) + " |r|cff77d2fc" + GetObjectName(RoundCreepTypeId) + "|r"
                     set s = RoundCreepTitle + ": "
                     set RoundCreepInfo[udg_integer40 - 1] = "|cfff19b9bHit points|r: " + I2S(BlzGetUnitMaxHP(GetLastCreatedUnit())) + "|n"
                     //call BJDebugMsg("b")
@@ -7063,7 +7063,7 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                         set s = s + "|cff82f373Ranged|r: "
                     endif
                     //call BJDebugMsg("c")
-                    if udg_integer04 == 'n01H' or udg_integer04 == 'n00W' then
+                    if RoundCreepTypeId == 'n01H' or RoundCreepTypeId == 'n00W' then
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bddf1Damage Type|r: magic |n"
                         set s = s + "|cff9bddf1Magic Damage|r: "
                     else
@@ -7071,14 +7071,14 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                     endif
                     //call BJDebugMsg("d")
                     if BonusNeutral == 0 and BonusNeutralPlayer[udg_integer40 - 1] == 0 then
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1)) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) ) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1)) + "|n"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1)) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) ) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1)) + "|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitBlock(GetLastCreatedUnit()))) + "|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitMagicDmg(GetLastCreatedUnit()))) + "|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitMagicDef(GetLastCreatedUnit()))) + "|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitEvasion(GetLastCreatedUnit())))
                     else
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1) - damageBonus) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(udg_real01)/ 2) - 1) - damageBonus )) + " + |cfff19bb8" + I2S(R2I(damageBonus)) + "|r|n"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1) - damageBonus) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1) - damageBonus )) + " + |cfff19bb8" + I2S(R2I(damageBonus)) + "|r|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitBlock(GetLastCreatedUnit()) - blockBonus)) + " + |cff78729e" + I2S(R2I(blockBonus)) + "|r|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitMagicDmg(GetLastCreatedUnit()) - magicPowerBonus)) + "+ |cff9bc7f1" + I2S(R2I(magicPowerBonus)) + "|r|n"
@@ -7100,29 +7100,29 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Unit_Type_Actions takes nothing returns nothing
-    set udg_integers02[1]= 'n000'
-    set udg_integers02[2]= 'n002'
-    set udg_integers02[3]= 'n008'
-    set udg_integers02[4]= 'n009'
-    set udg_integers02[5]= 'n006'
-    set udg_integers02[6]= 'n00G'
-    set udg_integers02[7]= 'n00F'
-    set udg_integers02[8]= 'n00H'
-    set udg_integers02[9]= 'n00N'
-    set udg_integers02[10]= 'n007'
-    set udg_integers02[11]= 'n00X'
-    set udg_integers02[12]= 'n019'
-    set udg_integers02[13]= 'n01B'
-    set udg_integers02[14]= 'n01C'
-    set udg_integers02[15]= 'n01A'
-    set udg_integers02[16]= 'n018'
-    set udg_integers02[17]= 'n01F'
-    set udg_integers02[18]= 'n01K'
-    set udg_integers02[19]= 'n01J'
-    set udg_integers02[20]= 'n01I'
-    set udg_integers02[21]= 'n01G'
-    set udg_integers02[22]= 'n00W'
-    set udg_integers02[23]= 'n01H'
+    set CreepUnitTypeIds[1]= 'n000'
+    set CreepUnitTypeIds[2]= 'n002'
+    set CreepUnitTypeIds[3]= 'n008'
+    set CreepUnitTypeIds[4]= 'n009'
+    set CreepUnitTypeIds[5]= 'n006'
+    set CreepUnitTypeIds[6]= 'n00G'
+    set CreepUnitTypeIds[7]= 'n00F'
+    set CreepUnitTypeIds[8]= 'n00H'
+    set CreepUnitTypeIds[9]= 'n00N'
+    set CreepUnitTypeIds[10]= 'n007'
+    set CreepUnitTypeIds[11]= 'n00X'
+    set CreepUnitTypeIds[12]= 'n019'
+    set CreepUnitTypeIds[13]= 'n01B'
+    set CreepUnitTypeIds[14]= 'n01C'
+    set CreepUnitTypeIds[15]= 'n01A'
+    set CreepUnitTypeIds[16]= 'n018'
+    set CreepUnitTypeIds[17]= 'n01F'
+    set CreepUnitTypeIds[18]= 'n01K'
+    set CreepUnitTypeIds[19]= 'n01J'
+    set CreepUnitTypeIds[20]= 'n01I'
+    set CreepUnitTypeIds[21]= 'n01G'
+    set CreepUnitTypeIds[22]= 'n00W'
+    set CreepUnitTypeIds[23]= 'n01H'
     set udg_integer22 = 23
 endfunction
 
@@ -7145,7 +7145,7 @@ function Trig_Bonus_Exp_Func001Func001A takes nothing returns nothing
     if MagicNecklaceBonus.boolean[GetHandleId(GetTriggerUnit())] and UnitHasItemOfTypeBJ(GetEnumUnit(), 'I05G') then
         set bonus = MagicNecklaceBonus
     endif
-    call AddHeroXPSwapped(R2I(((udg_real01)* 35) * bonus),GetEnumUnit(),true)
+    call AddHeroXPSwapped(R2I(((RoundCreepPower)* 35) * bonus),GetEnumUnit(),true)
 endfunction
 
 function Trig_Bonus_Exp_Func001Func002001002 takes nothing returns boolean
@@ -7157,7 +7157,7 @@ function Trig_Bonus_Exp_Func001Func002A takes nothing returns nothing
     if MagicNecklaceBonus.boolean[GetHandleId(GetTriggerUnit())] and UnitHasItemOfTypeBJ(GetEnumUnit(), 'I05G') then
         set bonus = MagicNecklaceBonus
     endif
-    call AddHeroXPSwapped(R2I(((udg_real01)* 55) * bonus),GetEnumUnit(),true)
+    call AddHeroXPSwapped(R2I(((RoundCreepPower)* 55) * bonus),GetEnumUnit(),true)
 endfunction
 
 function Trig_Bonus_Exp_Func001C takes nothing returns boolean
@@ -7183,7 +7183,7 @@ function Trig_Complete_Level_Move_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Complete_Level_Move_Func003C takes nothing returns boolean
-    if(not(IsPlayerInForce(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),udg_force02)!=true))then
+    if(not(IsPlayerInForce(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),DefeatedPlayers)!=true))then
         return false
     endif
     return true
@@ -7200,28 +7200,28 @@ function Trig_Complete_Level_Move_Func005Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Complete_Level_Move_Func005Func002Func001C takes nothing returns boolean
-    if(not(udg_integer02 < 8))then
+    if(not(RoundNumber < 8))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Complete_Level_Move_Func005Func002C takes nothing returns boolean
-    if(not(udg_integer02 <= 1))then
+    if(not(RoundNumber <= 1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Complete_Level_Move_Func005Func003Func001C takes nothing returns boolean
-    if(not(udg_integer02 < 4))then
+    if(not(RoundNumber < 4))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Complete_Level_Move_Func005Func003C takes nothing returns boolean
-    if(not(udg_integer02 <= 1))then
+    if(not(RoundNumber <= 1))then
         return false
     endif
     return true
@@ -7238,49 +7238,49 @@ function Trig_Complete_Level_Move_Actions takes nothing returns nothing
     local integer pid = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
 
     if(Trig_Complete_Level_Move_Func003C())then
-        call RemoveDebuff(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))], 0)
-        call SetUnitPositionLoc(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetRectCenter(udg_rect09))
+        call RemoveDebuff(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))], 0)
+        call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetRectCenter(udg_rect09))
         call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),GetRectCenter(udg_rect09),0.20)
     endif
     if(Trig_Complete_Level_Move_Func005C())then
         if(Trig_Complete_Level_Move_Func005Func003C())then
-            set LumberGained[pid] = 21 * udg_integer02
-            call AdjustPlayerStateBJ((21 * udg_integer02),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
-            //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(21*udg_integer02) + " lumber|r")
+            set LumberGained[pid] = 21 * RoundNumber
+            call AdjustPlayerStateBJ((21 * RoundNumber),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+            //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(21*RoundNumber) + " lumber|r")
             call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
         else
             if(Trig_Complete_Level_Move_Func005Func003Func001C())then
-                set LumberGained[pid] = 11 * udg_integer02
-                call AdjustPlayerStateBJ((11 * udg_integer02),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+                set LumberGained[pid] = 11 * RoundNumber
+                call AdjustPlayerStateBJ((11 * RoundNumber),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
                 call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
             else
-                set LumberGained[pid] = R2I((I2R(udg_integer02)/ 2.00))* 6
-                call AdjustPlayerStateBJ((R2I((I2R(udg_integer02)/ 2.00))* 6),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+                set LumberGained[pid] = R2I((I2R(RoundNumber)/ 2.00))* 6
+                call AdjustPlayerStateBJ((R2I((I2R(RoundNumber)/ 2.00))* 6),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
                 call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
             endif
         endif
     else
         if(Trig_Complete_Level_Move_Func005Func002C())then
-            set LumberGained[pid] = 10 * udg_integer02
-            call AdjustPlayerStateBJ((10 * udg_integer02),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
-            //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(10*udg_integer02) + " lumber|r")
+            set LumberGained[pid] = 10 * RoundNumber
+            call AdjustPlayerStateBJ((10 * RoundNumber),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+            //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(10*RoundNumber) + " lumber|r")
             call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
         else
             if(Trig_Complete_Level_Move_Func005Func002Func001C())then
-                set LumberGained[pid] = 6 * udg_integer02
-                call AdjustPlayerStateBJ((6 * udg_integer02),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
-                //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(6*udg_integer02) + " lumber|r")
+                set LumberGained[pid] = 6 * RoundNumber
+                call AdjustPlayerStateBJ((6 * RoundNumber),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+                //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(6*RoundNumber) + " lumber|r")
                 call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
             else
-                set LumberGained[pid] = R2I((I2R(udg_integer02)/ 4.00))* 6
-                call AdjustPlayerStateBJ((R2I((I2R(udg_integer02)/ 4.00))* 6),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
-                //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S((R2I((I2R(udg_integer02)/4.00))*6)) + " lumber|r")
+                set LumberGained[pid] = R2I((I2R(RoundNumber)/ 4.00))* 6
+                call AdjustPlayerStateBJ((R2I((I2R(RoundNumber)/ 4.00))* 6),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
+                //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S((R2I((I2R(RoundNumber)/4.00))*6)) + " lumber|r")
                 call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
             endif
         endif
     endif
     call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, ("|cffffcc00Level Completed!"))
-    call Func_completeLevel(  udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] )
+    call Func_completeLevel(  PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] )
     call DeleteUnit(GetTriggerUnit())
     call ConditionalTriggerExecute(udg_trigger108)
 endfunction
@@ -7301,10 +7301,10 @@ function Trig_Complete_Level_Player_Func006C takes nothing returns boolean
     if(not(GetOwningPlayer(GetTriggerUnit())==Player(11)))then
         return false
     endif
-    if(not(CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Complete_Level_Player_Func006Func002001001002)))==0))then
+    if(not(CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Complete_Level_Player_Func006Func002001001002)))==0))then
         return false
     endif
-    if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),udg_force02)!=true))then
+    if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),DefeatedPlayers)!=true))then
         return false
     endif
     if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),udg_force03)!=true))then
@@ -7327,7 +7327,7 @@ function Trig_Complete_Level_Player_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Complete_Level_Player_Func001001 takes nothing returns boolean
-    return(udg_integer02==5)
+    return(RoundNumber==5)
 endfunction
 
 function Trig_Complete_Level_Player_Func004001 takes nothing returns boolean
@@ -7342,7 +7342,7 @@ function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
     if(not(CountPlayersInForceBJ(udg_force03)< udg_integer56))then
         return false
     endif
-    //	if(not(GetUnitTypeId(udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])!='N00K'))then
+    //	if(not(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])!='N00K'))then
     //		return false
     //	endif
     return true
@@ -7372,15 +7372,15 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
     else
         call DoNothing()
     endif
-    set udg_integer56 =(udg_integer06 / 2)
+    set udg_integer56 =(PlayerCount / 2)
     if(Trig_Complete_Level_Player_Func004001())then
         set udg_integer56 = 3
     else
         call DoNothing()
     endif
     if(Trig_Complete_Level_Player_Func005C())then
-        set udg_integer48 =((udg_integer06 -(1 + CountPlayersInForceBJ(udg_force03)))*(udg_integer02 * 5))
-        set udg_integer48 =(udg_integer48 * udg_integer02)
+        set udg_integer48 =((PlayerCount -(1 + CountPlayersInForceBJ(udg_force03)))*(RoundNumber * 5))
+        set udg_integer48 =(udg_integer48 * RoundNumber)
         if(Trig_Complete_Level_Player_Func005Func004001())then
             set udg_integer48 =(udg_integer48 / 2)
         else
@@ -7391,8 +7391,8 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
     endif
     call ForceAddPlayerSimple(p,udg_force03)
     call SetCurrentlyFighting(p, false)
-    set udg_integer08 =(udg_integer08 + 1)
-    call SetUnitInvulnerable(udg_units01[pid + 1],true)
+    set RoundFinishedCount =(RoundFinishedCount + 1)
+    call SetUnitInvulnerable(PlayerHeroes[pid + 1],true)
     if RoundLiveLost[pid] then
         set RoundLiveLost[pid] = false
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ " |cffff7300died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")))
@@ -7401,7 +7401,7 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ " |cffffcc00survived the level!|r")))
         else
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00survived the level!|r |cff7bff00(+" +(I2S(udg_integer48)+ " exp)|r")))))
-            call AddHeroXPSwapped(udg_integer48,udg_units01[pid + 1],true)
+            call AddHeroXPSwapped(udg_integer48,PlayerHeroes[pid + 1],true)
         endif
     endif
     call CreateNUnitsAtLoc(1,'h015',p,GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
@@ -7422,7 +7422,7 @@ function Trig_Level_Completed_Func001Func001001002002001 takes nothing returns b
 endfunction
 
 function Trig_Level_Completed_Func001Func001001002002002 takes nothing returns boolean
-    return(udg_integer13!=1)
+    return(InitialPlayerCount!=1)
 endfunction
 
 function Trig_Level_Completed_Func001Func001001002002 takes nothing returns boolean
@@ -7438,32 +7438,32 @@ function Trig_Level_Completed_Func001Func001001 takes nothing returns boolean
 endfunction
 
 function Trig_Level_Completed_Func001Func014Func001Func001Func002C takes nothing returns boolean
-    if((udg_integer02==5))then
+    if((RoundNumber==5))then
         return true
     endif
-    if((udg_integer02==10))then
+    if((RoundNumber==10))then
         return true
     endif
-    if((udg_integer02==15))then
+    if((RoundNumber==15))then
         return true
     endif
-    if((udg_integer02==20))then
+    if((RoundNumber==20))then
         return true
     endif
-    if((udg_integer02==25))then
+    if((RoundNumber==25))then
         return true
     endif
-    if((udg_integer02==30))then
+    if((RoundNumber==30))then
         return true
     endif
-    if((udg_integer02==35))then
+    if((RoundNumber==35))then
         return true
     endif
     return false
 endfunction
 
 function Trig_Level_Completed_Func001Func014Func001Func001C takes nothing returns boolean
-    if(not(udg_integer06 > 1))then
+    if(not(PlayerCount > 1))then
         return false
     endif
     if(not Trig_Level_Completed_Func001Func014Func001Func001Func002C())then
@@ -7489,45 +7489,45 @@ endfunction
 function Trig_Level_Completed_Func001Func018Func001Func004Func001C takes nothing returns boolean
 
     if MorePvp == 0 then
-        if((udg_integer02==10))then
+        if((RoundNumber==10))then
             return true
         endif
-        if((udg_integer02==20))then
+        if((RoundNumber==20))then
             return true
         endif
-        if((udg_integer02==30))then
+        if((RoundNumber==30))then
             return true
         endif
-        if((udg_integer02==40))then
+        if((RoundNumber==40))then
             return true
         endif
     else
 
-        if((udg_integer02==5))then
+        if((RoundNumber==5))then
             return true
         endif
-        if((udg_integer02==10))then
+        if((RoundNumber==10))then
             return true
         endif
-        if((udg_integer02==15))then
+        if((RoundNumber==15))then
             return true
         endif
-        if((udg_integer02==20))then
+        if((RoundNumber==20))then
             return true
         endif
-        if((udg_integer02==25))then
+        if((RoundNumber==25))then
             return true
         endif
-        if((udg_integer02==30))then
+        if((RoundNumber==30))then
             return true
         endif	
-        if((udg_integer02==35))then
+        if((RoundNumber==35))then
             return true
         endif	
-        if((udg_integer02==40))then
+        if((RoundNumber==40))then
             return true
         endif	
-        if((udg_integer02==45))then
+        if((RoundNumber==45))then
             return true
         endif	
 
@@ -7542,7 +7542,7 @@ function Trig_Level_Completed_Func001Func018Func001Func004C takes nothing return
     if(not Trig_Level_Completed_Func001Func018Func001Func004Func001C())then
         return false
     endif
-    if(not(udg_integer06 > 1))then
+    if(not(PlayerCount > 1))then
         return false
     endif
     if(not(udg_boolean04==false))then
@@ -7559,16 +7559,16 @@ function Trig_Level_Completed_Func001Func018Func001C takes nothing returns boole
 endfunction
 
 function Trig_Level_Completed_Func001Func018Func002Func004Func001C takes nothing returns boolean
-    if((udg_integer02==5))then
+    if((RoundNumber==5))then
         return true
     endif
-    if((udg_integer02==10))then
+    if((RoundNumber==10))then
         return true
     endif
-    if((udg_integer02==15))then
+    if((RoundNumber==15))then
         return true
     endif
-    if((udg_integer02==20))then
+    if((RoundNumber==20))then
         return true
     endif
     return false
@@ -7578,7 +7578,7 @@ function Trig_Level_Completed_Func001Func018Func002Func004C takes nothing return
     if(not Trig_Level_Completed_Func001Func018Func002Func004Func001C())then
         return false
     endif
-    if(not(udg_integer06 > 1))then
+    if(not(PlayerCount > 1))then
         return false
     endif
     if(not(udg_boolean04==false))then
@@ -7605,14 +7605,14 @@ function Trig_Level_Completed_Func001Func018C takes nothing returns boolean
 endfunction
 
 function Trig_Level_Completed_Func001Func023Func001Func003C takes nothing returns boolean
-    if(not(udg_integer06==1))then
+    if(not(PlayerCount==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Level_Completed_Func001Func023Func001C takes nothing returns boolean
-    if(not(udg_integer02==50))then
+    if(not(RoundNumber==50))then
         return false
     endif
     if(not(udg_boolean04==false))then
@@ -7622,14 +7622,14 @@ function Trig_Level_Completed_Func001Func023Func001C takes nothing returns boole
 endfunction
 
 function Trig_Level_Completed_Func001Func023Func002Func003C takes nothing returns boolean
-    if(not(udg_integer06==1))then
+    if(not(PlayerCount==1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Level_Completed_Func001Func023Func002C takes nothing returns boolean
-    if(not(udg_integer02==25))then
+    if(not(RoundNumber==25))then
         return false
     endif
     if(not(udg_boolean04==false))then
@@ -7649,14 +7649,14 @@ function Trig_Level_Completed_Func001Func023C takes nothing returns boolean
 endfunction
 
 function Trig_Level_Completed_Func001Func028C takes nothing returns boolean
-    if(not(udg_integer02 <= 3))then
+    if(not(RoundNumber <= 3))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Level_Completed_Func001C takes nothing returns boolean
-    if(not(udg_integer08 >= udg_integer06))then
+    if(not(RoundFinishedCount >= PlayerCount))then
         return false
     endif
     return true
@@ -7664,7 +7664,7 @@ endfunction
 
 //trigger108
 function Trig_Level_Completed_Actions takes nothing returns nothing
-    local integer round = udg_integer02 + 1
+    local integer round = RoundNumber + 1
     if(Trig_Level_Completed_Func001C())then
         if(Trig_Level_Completed_Func001Func001001())then
             return
@@ -7676,8 +7676,8 @@ function Trig_Level_Completed_Actions takes nothing returns nothing
         call DisableTrigger(udg_trigger116)
         call ConditionalTriggerExecute(udg_trigger122)
         call ConditionalTriggerExecute(udg_trigger119)
-        set udg_boolean01 = true
-        set udg_integer08 = 0
+        
+        set RoundFinishedCount = 0
         call PlaySoundBJ(udg_sound02)
         if(Trig_Level_Completed_Func001Func014C())then
             if(Trig_Level_Completed_Func001Func014Func001C())then
@@ -7687,13 +7687,13 @@ function Trig_Level_Completed_Actions takes nothing returns nothing
         endif
         if(Trig_Level_Completed_Func001Func018C())then
             if(Trig_Level_Completed_Func001Func018Func002C())then
-                call GroupClear(udg_group03)
+                call GroupClear(DuelWinners)
                 call ConditionalTriggerExecute(udg_trigger134)
                 return
             endif
         else
             if(Trig_Level_Completed_Func001Func018Func001C())then
-                call GroupClear(udg_group03)
+                call GroupClear(DuelWinners)
                 call ConditionalTriggerExecute(udg_trigger134)
                 return
             endif
@@ -7746,7 +7746,7 @@ function Trig_Start_Level_Func003Func001C takes nothing returns boolean
     if(not(udg_boolean12==false))then
         return false
     endif
-    if(not(udg_integer02==1))then
+    if(not(RoundNumber==1))then
         return false
     endif
     return true
@@ -7764,7 +7764,7 @@ function Trig_Start_Level_Func003C takes nothing returns boolean
 endfunction
 
 function Trig_Start_Level_Func011A takes nothing returns nothing
-    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,udg_integer02)
+    call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,RoundNumber)
     set ShowCreepAbilButton[GetPlayerId(GetEnumPlayer())] = false
     call ResourseRefresh(GetEnumPlayer()) 
 endfunction
@@ -7799,7 +7799,7 @@ function Trig_Start_Level_Func015Func002001001001 takes nothing returns boolean
 endfunction
 
 function Trig_Start_Level_Func015Func002001001002 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force02)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),DefeatedPlayers)!=true)
 endfunction
 
 function Trig_Start_Level_Func015Func002001001 takes nothing returns boolean
@@ -7838,7 +7838,7 @@ function Trig_Start_Level_Func015Func002Func004A takes nothing returns nothing
 endfunction
 
 function StartLevelRoundOne takes nothing returns nothing
-    call StartFunctionSpell(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],3) 
+    call StartFunctionSpell(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],3) 
     call SetCurrentlyFighting(GetEnumPlayer(), true)
 endfunction
 
@@ -7846,22 +7846,22 @@ function Trig_Start_Level_Func015Func002A takes nothing returns nothing
     set udg_booleans02[GetConvertedPlayerId(GetEnumPlayer())]= false
     set udg_booleans01[GetConvertedPlayerId(GetEnumPlayer())]= false
     call ForGroupBJ(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Start_Level_Func015Func002Func003001002)),function Trig_Start_Level_Func015Func002Func003A)
-    call EnumItemsInRectBJ(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
-    call SetUnitInvulnerable(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],false)
-    call SetUnitPositionLoc(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],GetRectCenter(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())]))
-    set udg_unit01 = udg_units01[GetConvertedPlayerId(GetEnumPlayer())]
+    call EnumItemsInRectBJ(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
+    call SetUnitInvulnerable(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],false)
+    call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]))
+    set udg_unit01 = PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]
     call ConditionalTriggerExecute(udg_trigger82)
-    call SelectUnitForPlayerSingle(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(udg_units01[GetConvertedPlayerId(GetEnumPlayer())]))
-    call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(udg_rects01[GetConvertedPlayerId(GetEnumPlayer())]),0)
+    call SelectUnitForPlayerSingle(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]))
+    call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]),0)
     call SetCurrentlyFighting(GetEnumPlayer(), true)
 endfunction
 
 function StartFunctionSpells takes nothing returns nothing
-    call StartFunctionSpell(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],3) 
+    call StartFunctionSpell(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],3) 
 endfunction
 
 function Trig_Start_Level_Func015C takes nothing returns boolean
-    if(not(udg_integer02 > 1))then
+    if(not(RoundNumber > 1))then
         return false
     endif
     return true
@@ -7872,7 +7872,7 @@ function StartCountdown takes string text, integer value returns nothing
     local integer i = 0
     loop
         set ft = CreateTextTag()
-        call SetTextTagPos(ft, GetRectCenterX(udg_rects01[i + 1]) - 40, GetRectCenterY(udg_rects01[i + 1]) - 50, 0)
+        call SetTextTagPos(ft, GetRectCenterX(PlayerArenaRects[i + 1]) - 40, GetRectCenterY(PlayerArenaRects[i + 1]) - 50, 0)
         call SetTextTagText(ft, text, TextTagSize2Height(40))
         call SetTextTagColor(ft, 100, 255 - (50 * value), 255 - (50 * value), 0)
         call SetTextTagPermanentBJ(ft,false)
@@ -7899,22 +7899,22 @@ function Trig_Start_Level_Actions takes nothing returns nothing
     if(Trig_Start_Level_Func003C())then
         set udg_boolean12 = true
         set udg_boolean09 = true
-        call DisplayTextToForce(GetPlayersAll(),("|c00F08000Level " +(I2S(udg_integer02)+ "|r")))
+        call DisplayTextToForce(GetPlayersAll(),("|c00F08000Level " +(I2S(RoundNumber)+ "|r")))
         call ConditionalTriggerExecute(udg_trigger143)
         call ForGroupBJ(GetUnitsOfTypeIdAll('n00E'),function Trig_Start_Level_Func003Func006A)
     else
     endif
     call ForceClear(udg_force03)
-    set udg_boolean01 = false
-    set udg_integer08 = 0
+    
+    set RoundFinishedCount = 0
     call ConditionalTriggerExecute(udg_trigger146)
     call ForForce(GetPlayersAll(),function Trig_Start_Level_Func011A)
     if(Trig_Start_Level_Func013C())then
-        set udg_integer59 =((125 * udg_integer02)/ udg_integer03)
-        set udg_integer61 =((125 * udg_integer02)-(udg_integer59 * udg_integer03))
+        set udg_integer59 =((125 * RoundNumber)/ RoundCreepNumber)
+        set udg_integer61 =((125 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
     else
-        set udg_integer59 =((80 * udg_integer02)/ udg_integer03)
-        set udg_integer61 =((80 * udg_integer02)-(udg_integer59 * udg_integer03))
+        set udg_integer59 =((80 * RoundNumber)/ RoundCreepNumber)
+        set udg_integer61 =((80 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
     endif
     if(Trig_Start_Level_Func015C())then
         call PlaySoundBJ(udg_sound03)
@@ -7976,7 +7976,7 @@ function Trig_Sudden_Death_Timer_Func002Func002Func002Func001001001 takes nothin
 endfunction
 
 function Trig_Sudden_Death_Timer_Func002Func002Func002Func001A takes nothing returns nothing
-    call SetUnitLifeBJ(udg_units01[GetConvertedPlayerId(GetEnumPlayer())],(GetUnitStateSwap(UNIT_STATE_LIFE,udg_units01[GetConvertedPlayerId(GetEnumPlayer())])- 1))
+    call SetUnitLifeBJ(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],(GetUnitStateSwap(UNIT_STATE_LIFE,PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())])- 1))
 endfunction
 
 function Trig_Sudden_Death_Timer_Func002Func002Func002C takes nothing returns boolean
@@ -8027,7 +8027,7 @@ function Trig_Learn_Ability_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Learn_Ability_Func006C takes nothing returns boolean
-    if(not(udg_integer01=='Amnz'))then
+    if(not(BoughtAbility=='Amnz'))then
         return false
     endif
     return true
@@ -8048,14 +8048,14 @@ function Trig_Learn_Ability_Func008Func001Func002Func002Func001C takes nothing r
 endfunction
 
 function Trig_Learn_Ability_Func008Func001Func002Func002C takes nothing returns boolean
-    if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())< 30))then
+    if(not(GetUnitAbilityLevelSwapped(BoughtAbility,GetTriggerUnit())< 30))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Learn_Ability_Func008Func001Func002C takes nothing returns boolean
-    if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())>= 0))then
+    if(not(GetUnitAbilityLevelSwapped(BoughtAbility,GetTriggerUnit())>= 0))then
         return false
     endif
     return true
@@ -8069,16 +8069,16 @@ function Trig_Learn_Ability_Func008Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func001Func002Func002C takes nothing returns boolean
-    if((udg_integer01=='ANba'))then
+    if((BoughtAbility=='ANba'))then
         return true
     endif
-    if((udg_integer01=='AHca'))then
+    if((BoughtAbility=='AHca'))then
         return true
     endif
-    if((udg_integer01=='AHfa'))then
+    if((BoughtAbility=='AHfa'))then
         return true
     endif
-    if((udg_integer01=='Aliq'))then
+    if((BoughtAbility=='Aliq'))then
         return true
     endif
     return false
@@ -8095,7 +8095,7 @@ function Trig_Learn_Ability_Func008Func002Func001Func001Func002C takes nothing r
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func001Func003Func002C takes nothing returns boolean
-    if((udg_integer01=='ANca'))then
+    if((BoughtAbility=='ANca'))then
         return true
     endif
     return false
@@ -8119,10 +8119,10 @@ function Trig_Learn_Ability_Func008Func002Func001Func001Func004Func001C takes no
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func001Func004Func002C takes nothing returns boolean
-    if((udg_integer01=='ANba'))then
+    if((BoughtAbility=='ANba'))then
         return true
     endif
-    if((udg_integer01=='Aroc'))then
+    if((BoughtAbility=='Aroc'))then
         return true
     endif
     return false
@@ -8152,7 +8152,7 @@ function Trig_Learn_Ability_Func008Func002Func001Func001Func005Func001C takes no
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func001Func005Func002C takes nothing returns boolean
-    if((udg_integer01=='ACvs'))then
+    if((BoughtAbility=='ACvs'))then
         return true
     endif
     return false
@@ -8169,7 +8169,7 @@ function Trig_Learn_Ability_Func008Func002Func001Func001Func005C takes nothing r
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func001C takes nothing returns boolean
-    if((udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]>= 10))then
+    if((HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]>= 10))then
         return true
     endif
     if(Trig_Learn_Ability_Func008Func002Func001Func001Func002C())then
@@ -8202,16 +8202,16 @@ function Trig_Learn_Ability_Func008Func002Func001Func007Func001C takes nothing r
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001Func002C takes nothing returns boolean
-    if((udg_integer01=='ANba'))then
+    if((BoughtAbility=='ANba'))then
         return true
     endif
-    if((udg_integer01=='AHca'))then
+    if((BoughtAbility=='AHca'))then
         return true
     endif
-    if((udg_integer01=='AHfa'))then
+    if((BoughtAbility=='AHfa'))then
         return true
     endif
-    if((udg_integer01=='Aliq'))then
+    if((BoughtAbility=='Aliq'))then
         return true
     endif
     return false
@@ -8228,7 +8228,7 @@ function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func001C takes no
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func002Func002C takes nothing returns boolean
-    if((udg_integer01=='ANca'))then
+    if((BoughtAbility=='ANca'))then
         return true
     endif
     return false
@@ -8252,10 +8252,10 @@ function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func001C t
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func003Func002C takes nothing returns boolean
-    if((udg_integer01=='ANba'))then
+    if((BoughtAbility=='ANba'))then
         return true
     endif
-    if((udg_integer01=='Aroc'))then
+    if((BoughtAbility=='Aroc'))then
         return true
     endif
     return false
@@ -8276,7 +8276,7 @@ function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004Func001C t
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func001Func007Func002Func004Func002C takes nothing returns boolean
-    if((udg_integer01=='ACvs'))then
+    if((BoughtAbility=='ACvs'))then
         return true
     endif
     return false
@@ -8337,14 +8337,14 @@ function Trig_Learn_Ability_Func008Func002Func003Func001C takes nothing returns 
 endfunction
 
 function Trig_Learn_Ability_Func008Func002Func003C takes nothing returns boolean
-    if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())< 30))then
+    if(not(GetUnitAbilityLevelSwapped(BoughtAbility,GetTriggerUnit())< 30))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Learn_Ability_Func008Func002C takes nothing returns boolean
-    if(not(GetUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())==0))then
+    if(not(GetUnitAbilityLevelSwapped(BoughtAbility,GetTriggerUnit())==0))then
         return false
     endif
     return true
@@ -8378,7 +8378,7 @@ function BuyLevels takes player p, unit u, integer abil, boolean maxBuy, boolean
         call SpellLearnedFunc(u, abil)
     endif
     if i > 1 then
-        call SetUnitAbilityLevel(u, udg_integer01, i)
+        call SetUnitAbilityLevel(u, BoughtAbility, i)
     endif
     call FuncEditParam(abil,u)
     call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
@@ -8389,12 +8389,12 @@ endfunction
 function Trig_Learn_Ability_Actions takes nothing returns nothing
     local integer abilLevel
     local boolean maxAbil = false
-    set udg_integer01 = GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
+    set BoughtAbility = GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
     //call ConditionalTriggerExecute(udg_trigger112)
-    if udg_integer01 == 0 or IsAbsolute(udg_integer01) then
+    if BoughtAbility == 0 or IsAbsolute(BoughtAbility) then
         return
     endif
-    set abilLevel = GetUnitAbilityLevel(GetTriggerUnit(), udg_integer01)
+    set abilLevel = GetUnitAbilityLevel(GetTriggerUnit(), BoughtAbility)
     if HoldCtrl[GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] then
         set maxAbil = true
     endif
@@ -8432,14 +8432,14 @@ function Trig_Learn_Ability_Actions takes nothing returns nothing
                 call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffffe600Failed to learn|r")
                 return
             else
-                set udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+ 1)
-                set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= udg_integer01
-                call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), udg_integer01, maxAbil, true)
+                set HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+ 1)
+                set udg_integers05[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= BoughtAbility
+                call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), BoughtAbility, maxAbil, true)
             endif
         else
             //increase level ap
             if(Trig_Learn_Ability_Func008Func002Func003C())then
-                call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), udg_integer01, maxAbil, false)
+                call BuyLevels(GetOwningPlayer(GetTriggerUnit()), GetTriggerUnit(), BoughtAbility, maxAbil, false)
             else
                 //max level reached
                 if(Trig_Learn_Ability_Func008Func002Func003Func001C())then
@@ -8470,11 +8470,11 @@ function Trig_Learn_Ability_Actions takes nothing returns nothing
             else
                 //increase level ap
                 if(Trig_Learn_Ability_Func008Func001Func002Func002C())then
-                    call IncUnitAbilityLevelSwapped(udg_integer01,GetTriggerUnit())
-                    call FuncEditParam(udg_integer01,GetTriggerUnit())
+                    call IncUnitAbilityLevelSwapped(BoughtAbility,GetTriggerUnit())
+                    call FuncEditParam(BoughtAbility,GetTriggerUnit())
                     call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
                     call DestroyEffectBJ(GetLastCreatedEffectBJ())
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(udg_integer01, abilLevel))
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(BoughtAbility, abilLevel))
                 else
                     if(Trig_Learn_Ability_Func008Func001Func002Func002Func001C())then
                         call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_LUMBER)
@@ -8509,12 +8509,12 @@ function Trig_Set_Ability_Actions takes nothing returns nothing
     loop
         exitwhen udg_integer44 > udg_integer26
         if(Trig_Set_Ability_Func001Func001001())then
-            set udg_integer01 = udg_integers08[udg_integer44]
+            set BoughtAbility = udg_integers08[udg_integer44]
         else
             call DoNothing()
         endif
         if(Trig_Set_Ability_Func001Func002C())then
-            set udg_integer01 = udg_integers08[udg_integer44]
+            set BoughtAbility = udg_integers08[udg_integer44]
             return
         else
         endif
@@ -8554,7 +8554,7 @@ function Trig_Learn_Random_Ability_Func004Func001Func002C takes nothing returns 
 endfunction
 
 function Trig_Learn_Random_Ability_Func004Func001Func005Func001Func001C takes nothing returns boolean
-    if(not(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]>= 10))then
+    if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]>= 10))then
         return false
     endif
     if(not(GetUnitTypeId(udg_unit01)=='O000'))then
@@ -8564,7 +8564,7 @@ function Trig_Learn_Random_Ability_Func004Func001Func005Func001Func001C takes no
 endfunction
 
 function Trig_Learn_Random_Ability_Func004Func001Func005Func001Func002C takes nothing returns boolean
-    if(not(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]>= 10))then
+    if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]>= 10))then
         return false
     endif
     if(not(GetUnitTypeId(udg_unit01)!='O000'))then
@@ -8587,10 +8587,10 @@ function Trig_Learn_Random_Ability_Func004Func001Func005C takes nothing returns 
     if(not Trig_Learn_Random_Ability_Func004Func001Func005Func001C())then
         return false
     endif
-    if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(udg_integer14),udg_unit01)> 0))then
+    if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),udg_unit01)> 0))then
         return false
     endif
-    if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(udg_integer14),udg_unit01)< 30))then
+    if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),udg_unit01)< 30))then
         return false
     endif
     if(not(udg_integer37 <= 500))then
@@ -8614,7 +8614,7 @@ function Trig_Learn_Random_Ability_Func004Func002C takes nothing returns boolean
 endfunction
 
 function Trig_Learn_Random_Ability_Func004Func003Func003Func001C takes nothing returns boolean
-    if(not(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]< 10))then
+    if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]< 10))then
         return false
     endif
     if(not(GetUnitTypeId(udg_unit01)=='O000'))then
@@ -8624,7 +8624,7 @@ function Trig_Learn_Random_Ability_Func004Func003Func003Func001C takes nothing r
 endfunction
 
 function Trig_Learn_Random_Ability_Func004Func003Func003Func002C takes nothing returns boolean
-    if(not(udg_integers01[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]< 10))then
+    if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]< 10))then
         return false
     endif
     if(not(GetUnitTypeId(udg_unit01)!='O000'))then
@@ -8644,10 +8644,10 @@ function Trig_Learn_Random_Ability_Func004Func003Func003C takes nothing returns 
 endfunction
 
 function Trig_Learn_Random_Ability_Func004Func003C takes nothing returns boolean
-    if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(udg_integer14),udg_unit01)==0))then
+    if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),udg_unit01)==0))then
         return false
     endif
-    if(not(udg_integer14!=GetItemTypeId(null)))then
+    if(not(RoundCreepAbilCastChance!=GetItemTypeId(null)))then
         return false
     endif
     if(not Trig_Learn_Random_Ability_Func004Func003Func003C())then
@@ -8665,23 +8665,23 @@ endfunction
 
 function Trig_Learn_Random_Ability_Actions takes nothing returns nothing
     set udg_player02 = GetOwningPlayer(udg_unit01)
-    set udg_integer14 = GetItemFromAbility(GetRandomAbility())
+    set RoundCreepAbilCastChance = GetItemFromAbility(GetRandomAbility())
     if(Trig_Learn_Random_Ability_Func004C())then
         if(Trig_Learn_Random_Ability_Func004Func002C())then
             set udg_boolean05 = false
             set udg_boolean06 = true
-            call UnitAddItemByIdSwapped(udg_integer14,udg_units01[GetConvertedPlayerId(udg_player02)])
+            call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
             set udg_boolean06 = false
             set udg_boolean05 = true
         else
-            call UnitAddItemByIdSwapped(udg_integer14,udg_units01[GetConvertedPlayerId(udg_player02)])
+            call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
         endif
     else
         if(Trig_Learn_Random_Ability_Func004Func001C())then
             if(Trig_Learn_Random_Ability_Func004Func001Func002C())then
                 set udg_boolean05 = false
                 set udg_boolean06 = true
-                call UnitAddItemByIdSwapped(udg_integer14,udg_units01[GetConvertedPlayerId(udg_player02)])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
                 set udg_boolean06 = false
                 set udg_boolean05 = true
             else
@@ -8746,7 +8746,7 @@ function Trig_Unlearn_Ability_Actions takes nothing returns nothing
         set CountS = LoadCountHeroSpell(GetTriggerUnit(), 0)
         if CountS > 0 then
 
-            set udg_integers01[Pid]=(udg_integers01[Pid]- 1)
+            set HeroAbilityCount[Pid]=(HeroAbilityCount[Pid]- 1)
             set udg_integers05[Pid] = GetLastLearnedSpell(GetTriggerUnit(), SpellList_Normal, true)
             call SetInfoHeroSpell(GetTriggerUnit(),CountS,0 )
             call SaveCountHeroSpell(GetTriggerUnit() ,CountS - 1,0 ) 
@@ -8793,16 +8793,16 @@ function Trig_AntiStuck_Func002Func001Func005Func001001001002 takes nothing retu
 endfunction
 
 function Trig_AntiStuck_Func002Func001Func005C takes nothing returns boolean
-    if((CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0))then
+    if((CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0))then
         return false
     endif
-    if(not(IsPlayerInForce(GetOwningPlayer(udg_units01[udg_integer27]),udg_force02)!=true))then
+    if(not(IsPlayerInForce(GetOwningPlayer(PlayerHeroes[udg_integer27]),DefeatedPlayers)!=true))then
         return false
     endif
-    if(not(IsPlayerInForce(GetOwningPlayer(udg_units01[udg_integer27]),udg_force03)!=true))then
+    if(not(IsPlayerInForce(GetOwningPlayer(PlayerHeroes[udg_integer27]),udg_force03)!=true))then
         return false
     endif
-    if(not(udg_units01[udg_integer27]!=null))then
+    if(not(PlayerHeroes[udg_integer27]!=null))then
         return false
     endif
     return true
@@ -8819,15 +8819,15 @@ function Trig_AntiStuck_Actions takes nothing returns nothing
     set udg_integer27 = 1
     loop
         exitwhen udg_integer27 > 8
-        if RectContainsUnit(udg_rect09, udg_units01[udg_integer27]) and CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
-            call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer27],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+        if RectContainsUnit(udg_rect09, PlayerHeroes[udg_integer27]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
+            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer27],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
         endif
 
         if(Trig_AntiStuck_Func002Func001C())then
-            call CreateNUnitsAtLoc(1,'n00T',Player(11),GetRectCenter(udg_rects01[udg_integer27]),bj_UNIT_FACING)
-            call SuspendHeroXPBJ(false,udg_units01[udg_integer27])
-            call UnitDamageTargetBJ(udg_units01[udg_integer27],GetLastCreatedUnit(),500,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL)
-            call SuspendHeroXPBJ(true,udg_units01[udg_integer27])
+            call CreateNUnitsAtLoc(1,'n00T',Player(11),GetRectCenter(PlayerArenaRects[udg_integer27]),bj_UNIT_FACING)
+            call SuspendHeroXPBJ(false,PlayerHeroes[udg_integer27])
+            call UnitDamageTargetBJ(PlayerHeroes[udg_integer27],GetLastCreatedUnit(),500,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL)
+            call SuspendHeroXPBJ(true,PlayerHeroes[udg_integer27])
         endif
 
         set udg_integer27 = udg_integer27 + 1
@@ -8838,10 +8838,10 @@ function Trig_Countdown_Func001Func001C takes nothing returns boolean
     if(not(udg_integer19 > 0))then
         return false
     endif
-    if(not(udg_integer02==1))then
+    if(not(RoundNumber==1))then
         return false
     endif
-    if(not(udg_integer07 < udg_integer06))then
+    if(not(SpawnedHeroCount < PlayerCount))then
         return false
     endif
     return true
@@ -8886,7 +8886,7 @@ function Trig_Countdown_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Defeat_Conditions takes nothing returns boolean
-    if(not(udg_integer06==0))then
+    if(not(PlayerCount==0))then
         return false
     endif
     if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
@@ -8911,7 +8911,7 @@ function Trig_Defeat_Actions takes nothing returns nothing
     call TriggerSleepAction(2.00)
     call DisplayTimedTextToForce(GetPlayersAll(),26.00,"|cffffcc00But thank you for playing!!|r")
     call TriggerSleepAction(5.00)
-    call ForForce(udg_force02,function Trig_Defeat_Func012A)
+    call ForForce(DefeatedPlayers,function Trig_Defeat_Func012A)
 endfunction
 
 function Trig_End_Game_Conditions takes nothing returns boolean
@@ -8938,7 +8938,7 @@ function Trig_End_Game_Func003Func007Func002C takes nothing returns boolean
     if(not(udg_boolean08==true))then
         return false
     endif
-    if(not(udg_integer02==25))then
+    if(not(RoundNumber==25))then
         return false
     endif
     if(not(udg_boolean04==false))then
@@ -8951,7 +8951,7 @@ function Trig_End_Game_Func003Func007Func003C takes nothing returns boolean
     if(not(udg_boolean08==false))then
         return false
     endif
-    if(not(udg_integer02==50))then
+    if(not(RoundNumber==50))then
         return false
     endif
     if(not(udg_boolean04==false))then
@@ -9032,10 +9032,10 @@ function Trig_Victory_Func001Func001C takes nothing returns boolean
     if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then
         return false
     endif
-    if(not(udg_integer13 > 1))then
+    if(not(InitialPlayerCount > 1))then
         return false
     endif
-    if(not(udg_integer06==1))then
+    if(not(PlayerCount==1))then
         return false
     endif
     if(not(udg_boolean11==false))then
@@ -9048,7 +9048,7 @@ function Trig_Victory_Func001Func002Func003Func001C takes nothing returns boolea
     if(not(udg_boolean08==true))then
         return false
     endif
-    if(not(udg_integer02==25))then
+    if(not(RoundNumber==25))then
         return false
     endif
     if(not(udg_boolean04==false))then
@@ -9061,7 +9061,7 @@ function Trig_Victory_Func001Func002Func003Func002C takes nothing returns boolea
     if(not(udg_boolean08==false))then
         return false
     endif
-    if(not(udg_integer02==50))then
+    if(not(RoundNumber==50))then
         return false
     endif
     if(not(udg_boolean04==false))then
@@ -9081,10 +9081,10 @@ function Trig_Victory_Func001Func002Func003C takes nothing returns boolean
 endfunction
 
 function Trig_Victory_Func001Func002C takes nothing returns boolean
-    if(not(udg_integer13==1))then
+    if(not(InitialPlayerCount==1))then
         return false
     endif
-    if(not(udg_integer06==1))then
+    if(not(PlayerCount==1))then
         return false
     endif
     if(not Trig_Victory_Func001Func002Func003C())then
@@ -9151,14 +9151,14 @@ function Trig_Victory_Func011Func002A takes nothing returns nothing
 endfunction
 
 function Trig_Victory_Func011A takes nothing returns nothing
-    call ForForce(udg_force02,function Trig_Victory_Func011Func002A)
+    call ForForce(DefeatedPlayers,function Trig_Victory_Func011Func002A)
 endfunction
 
 function Trig_Victory_Func012C takes nothing returns boolean
-    if(not(udg_integer13==1))then
+    if(not(InitialPlayerCount==1))then
         return false
     endif
-    if(not(udg_integer06==1))then
+    if(not(PlayerCount==1))then
         return false
     endif
     return true
@@ -9266,12 +9266,12 @@ endfunction
 
 function Trig_Level_Command_Actions takes nothing returns nothing
     call ForceAddPlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
-    call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Level " +(I2S(udg_integer02)+ "|r")))
+    call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Level " +(I2S(RoundNumber)+ "|r")))
     call ForceRemovePlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
 endfunction
 
 function Trig_Movement_Speed_Command_Conditions takes nothing returns boolean
-    if(not(IsUnitAliveBJ(udg_units01[GetConvertedPlayerId(GetTriggerPlayer())])==true))then
+    if(not(IsUnitAliveBJ(PlayerHeroes[GetConvertedPlayerId(GetTriggerPlayer())])==true))then
         return false
     endif
     return true
@@ -9279,7 +9279,7 @@ endfunction
 
 function Trig_Movement_Speed_Command_Actions takes nothing returns nothing
     call ForceAddPlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
-    call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Movement Speed: " +(I2S(R2I(GetUnitMoveSpeed(udg_units01[GetConvertedPlayerId(GetTriggerPlayer())])))+ "|r")))
+    call DisplayTextToForce(bj_FORCE_PLAYER[11],("|c00F08000Current Movement Speed: " +(I2S(R2I(GetUnitMoveSpeed(PlayerHeroes[GetConvertedPlayerId(GetTriggerPlayer())])))+ "|r")))
     call ForceRemovePlayerSimple(GetTriggerPlayer(),bj_FORCE_PLAYER[11])
 endfunction
 
@@ -9353,7 +9353,7 @@ function Trig_Playtime_Command_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Player_Leaves_Conditions takes nothing returns boolean
-    if(not(IsPlayerInForce(GetTriggerPlayer(),udg_force02)!=true))then
+    if(not(IsPlayerInForce(GetTriggerPlayer(),DefeatedPlayers)!=true))then
         return false
     endif
     return true
@@ -9376,7 +9376,7 @@ function Trig_Player_Leaves_Func007Func001Func002001001002 takes nothing returns
 endfunction
 
 function Trig_Player_Leaves_Func007Func001C takes nothing returns boolean
-    if(not(udg_integer02==0))then
+    if(not(RoundNumber==0))then
         return false
     endif
     if(not(CountUnitsInGroup(GetUnitsOfPlayerMatching(GetTriggerPlayer(),Condition(function Trig_Player_Leaves_Func007Func001Func002001001002)))==0))then
@@ -9416,23 +9416,23 @@ function Trig_Player_Leaves_Actions takes nothing returns nothing
     call PlaySoundBJ(udg_sound04)
     call ForceAddPlayerSimple(GetTriggerPlayer(),udg_force07)
     call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer()))+ " |cffffcc00has left the game!|r"))
-    call ResetHero(udg_units01[pid])
+    call ResetHero(PlayerHeroes[pid])
     if(Trig_Player_Leaves_Func005001())then
         call ConditionalTriggerExecute(udg_trigger131)
     else
         call DoNothing()
     endif
     if(Trig_Player_Leaves_Func007C())then
-        set udg_integer07 =(udg_integer07 + 1)
-        call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8),Condition(function Trig_Player_Leaves_Func007Func003002001001002)))),GetTriggerPlayer(),GetRectCenter(udg_rects01[GetConvertedPlayerId(GetTriggerPlayer())]),bj_UNIT_FACING)
+        set SpawnedHeroCount =(SpawnedHeroCount + 1)
+        call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8),Condition(function Trig_Player_Leaves_Func007Func003002001001002)))),GetTriggerPlayer(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetTriggerPlayer())]),bj_UNIT_FACING)
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer())+(" |cffffcc00has randomed " +(GetUnitName(GetLastCreatedUnit())+ "! (+5 bonus gold)")))))
         call AdjustPlayerStateBJ(5,GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)
         call ResourseRefresh(GetTriggerPlayer() )
-        set udg_units01[GetConvertedPlayerId(GetTriggerPlayer())]= GetLastCreatedUnit()
+        set PlayerHeroes[GetConvertedPlayerId(GetTriggerPlayer())]= GetLastCreatedUnit()
         call UnitAddItemByIdSwapped('ankh',GetLastCreatedUnit())
         call UnitAddItemByIdSwapped('pghe',GetLastCreatedUnit())
         call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
-        call PanCameraToTimedLocForPlayer(GetTriggerPlayer(),GetRectCenter(udg_rects01[GetConvertedPlayerId(GetTriggerPlayer())]),0.10)
+        call PanCameraToTimedLocForPlayer(GetTriggerPlayer(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetTriggerPlayer())]),0.10)
         call SelectUnitForPlayerSingle(GetLastCreatedUnit(),GetTriggerPlayer())
         call TriggerSleepAction(2)
         call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
@@ -9609,31 +9609,31 @@ function Trig_PvP_Func002001002 takes nothing returns boolean
 endfunction
 
 function Trig_PvP_Func002A takes nothing returns nothing
-    call GroupAddUnitSimple(GetEnumUnit(),udg_group01)
+    call GroupAddUnitSimple(GetEnumUnit(),PotentialDuelHeroes)
 endfunction
 
 function Trig_PvP_Func004Func001Func001001 takes nothing returns boolean
-    return(udg_integer02==20)
+    return(RoundNumber==20)
 endfunction
 
 function Trig_PvP_Func004Func001Func002001 takes nothing returns boolean
-    return(udg_integer02==30)
+    return(RoundNumber==30)
 endfunction
 
 function Trig_PvP_Func004Func001Func003001 takes nothing returns boolean
-    return(udg_integer02==40)
+    return(RoundNumber==40)
 endfunction
 
 function Trig_PvP_Func004Func001Func004001 takes nothing returns boolean
-    return(udg_integer02==10)
+    return(RoundNumber==10)
 endfunction
 
 function Trig_PvP_Func004Func001Func005001 takes nothing returns boolean
-    return(udg_integer02==15)
+    return(RoundNumber==15)
 endfunction
 
 function Trig_PvP_Func004Func001Func006001 takes nothing returns boolean
-    return(udg_integer02==20)
+    return(RoundNumber==20)
 endfunction
 
 function Trig_PvP_Func004Func001C takes nothing returns boolean
@@ -9718,8 +9718,8 @@ endfunction
 function Trig_PvP_Actions takes nothing returns nothing
     call TriggerSleepAction(5.00)
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Func002001002)),function Trig_PvP_Func002A)
-    call ForGroupBJ(udg_group03,function Trig_PvP_Func004A)
-    call GroupClear(udg_group03)
+    call ForGroupBJ(DuelWinners,function Trig_PvP_Func004A)
+    call GroupClear(DuelWinners)
     if(Trig_PvP_Func007C())then
         call DisplayTextToForce(GetPlayersAll(),"|cffffcc00Death Match - Survive to advance to the next level!")
     else
@@ -9738,14 +9738,14 @@ function Trig_PvP_Actions takes nothing returns nothing
 endfunction
 
 function Trig_End_PvP_Conditions takes nothing returns boolean
-    if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)==true))then
+    if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func001C takes nothing returns boolean
-    if(not(udg_units03[1]==GetTriggerUnit()))then
+    if(not(DuelingHeroes[1]==GetTriggerUnit()))then
         return false
     endif
     return true
@@ -9756,7 +9756,7 @@ function Trig_End_PvP_Func019A takes nothing returns nothing
 endfunction
 
 function Trig_End_PvP_Func021Func001Func001C takes nothing returns boolean
-    if(not(udg_units03[1]==udg_unit05))then
+    if(not(DuelingHeroes[1]==udg_unit05))then
         return false
     endif
     return true
@@ -9806,206 +9806,206 @@ function Trig_End_PvP_Func026Func007A takes nothing returns nothing
 endfunction
 
 function Trig_End_PvP_Func026Func008Func003C takes nothing returns boolean
-    if(not(CountUnitsInGroup(udg_group03)> 1))then
+    if(not(CountUnitsInGroup(DuelWinners)> 1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func008C takes nothing returns boolean
-    if(not(udg_integer06 > 1))then
+    if(not(PlayerCount > 1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func001Func002001 takes nothing returns boolean
-    return(udg_integer14==1)
+    return(RoundCreepAbilCastChance==1)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func001Func003001 takes nothing returns boolean
-    return(udg_integer14==2)
+    return(RoundCreepAbilCastChance==2)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func001Func004001 takes nothing returns boolean
-    return(udg_integer14==3)
+    return(RoundCreepAbilCastChance==3)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func001Func005001 takes nothing returns boolean
-    return(udg_integer14==4)
+    return(RoundCreepAbilCastChance==4)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func001Func006001 takes nothing returns boolean
-    return(udg_integer14==5)
+    return(RoundCreepAbilCastChance==5)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func001C takes nothing returns boolean
-    if(not(udg_integer02==40))then
+    if(not(RoundNumber==40))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func003001 takes nothing returns boolean
-    return(udg_integer14==1)
+    return(RoundCreepAbilCastChance==1)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func004001 takes nothing returns boolean
-    return(udg_integer14==2)
+    return(RoundCreepAbilCastChance==2)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func005001 takes nothing returns boolean
-    return(udg_integer14==3)
+    return(RoundCreepAbilCastChance==3)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001Func006001 takes nothing returns boolean
-    return(udg_integer14==4)
+    return(RoundCreepAbilCastChance==4)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func001C takes nothing returns boolean
-    if(not(udg_integer02==30))then
+    if(not(RoundNumber==30))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func003001 takes nothing returns boolean
-    return(udg_integer14==1)
+    return(RoundCreepAbilCastChance==1)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func004001 takes nothing returns boolean
-    return(udg_integer14==2)
+    return(RoundCreepAbilCastChance==2)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func005001 takes nothing returns boolean
-    return(udg_integer14==3)
+    return(RoundCreepAbilCastChance==3)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001Func006001 takes nothing returns boolean
-    return(udg_integer14==4)
+    return(RoundCreepAbilCastChance==4)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func001C takes nothing returns boolean
-    if(not(udg_integer02==20))then
+    if(not(RoundNumber==20))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func003001 takes nothing returns boolean
-    return(udg_integer14==1)
+    return(RoundCreepAbilCastChance==1)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func004001 takes nothing returns boolean
-    return(udg_integer14==2)
+    return(RoundCreepAbilCastChance==2)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func005001 takes nothing returns boolean
-    return(udg_integer14==3)
+    return(RoundCreepAbilCastChance==3)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001Func006001 takes nothing returns boolean
-    return(udg_integer14==4)
+    return(RoundCreepAbilCastChance==4)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func001C takes nothing returns boolean
-    if(not(udg_integer02==10))then
+    if(not(RoundNumber==10))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func001Func002001 takes nothing returns boolean
-    return(udg_integer14==1)
+    return(RoundCreepAbilCastChance==1)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func001Func003001 takes nothing returns boolean
-    return(udg_integer14==2)
+    return(RoundCreepAbilCastChance==2)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func001Func004001 takes nothing returns boolean
-    return(udg_integer14==3)
+    return(RoundCreepAbilCastChance==3)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func001Func005001 takes nothing returns boolean
-    return(udg_integer14==4)
+    return(RoundCreepAbilCastChance==4)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func001Func006001 takes nothing returns boolean
-    return(udg_integer14==5)
+    return(RoundCreepAbilCastChance==5)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func001C takes nothing returns boolean
-    if(not(udg_integer02==20))then
+    if(not(RoundNumber==20))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func003001 takes nothing returns boolean
-    return(udg_integer14==1)
+    return(RoundCreepAbilCastChance==1)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func004001 takes nothing returns boolean
-    return(udg_integer14==2)
+    return(RoundCreepAbilCastChance==2)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func005001 takes nothing returns boolean
-    return(udg_integer14==3)
+    return(RoundCreepAbilCastChance==3)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001Func006001 takes nothing returns boolean
-    return(udg_integer14==4)
+    return(RoundCreepAbilCastChance==4)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func001C takes nothing returns boolean
-    if(not(udg_integer02==15))then
+    if(not(RoundNumber==15))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func003001 takes nothing returns boolean
-    return(udg_integer14==1)
+    return(RoundCreepAbilCastChance==1)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func004001 takes nothing returns boolean
-    return(udg_integer14==2)
+    return(RoundCreepAbilCastChance==2)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func005001 takes nothing returns boolean
-    return(udg_integer14==3)
+    return(RoundCreepAbilCastChance==3)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001Func006001 takes nothing returns boolean
-    return(udg_integer14==4)
+    return(RoundCreepAbilCastChance==4)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func001C takes nothing returns boolean
-    if(not(udg_integer02==10))then
+    if(not(RoundNumber==10))then
         return false
     endif
     return true
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func003001 takes nothing returns boolean
-    return(udg_integer14==1)
+    return(RoundCreepAbilCastChance==1)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func004001 takes nothing returns boolean
-    return(udg_integer14==2)
+    return(RoundCreepAbilCastChance==2)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func005001 takes nothing returns boolean
-    return(udg_integer14==3)
+    return(RoundCreepAbilCastChance==3)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002Func006001 takes nothing returns boolean
-    return(udg_integer14==4)
+    return(RoundCreepAbilCastChance==4)
 endfunction
 
 function Trig_End_PvP_Func026Func016Func002C takes nothing returns boolean
-    if(not(udg_integer02==5))then
+    if(not(RoundNumber==5))then
         return false
     endif
     return true
@@ -10031,7 +10031,7 @@ function Trig_End_PvP_Func026Func018C takes nothing returns boolean
 endfunction
 
 function Trig_End_PvP_Func026C takes nothing returns boolean
-    if(not(CountUnitsInGroup(udg_group01)==0))then
+    if(not(CountUnitsInGroup(PotentialDuelHeroes)==0))then
         return false
     endif
     return true
@@ -10040,9 +10040,9 @@ endfunction
 function Trig_End_PvP_Actions takes nothing returns nothing
     local real bonus = 1
     if(Trig_End_PvP_Func001C())then
-        set udg_unit05 = udg_units03[2]
+        set udg_unit05 = DuelingHeroes[2]
     else
-        set udg_unit05 = udg_units03[1]
+        set udg_unit05 = DuelingHeroes[1]
     endif
     call DisableTrigger(udg_trigger140)
     call DisableTrigger(udg_trigger141)
@@ -10061,16 +10061,16 @@ function Trig_End_PvP_Actions takes nothing returns nothing
     endif
 
     call TriggerSleepAction(4.00)
-    if IsUnitInGroup(udg_unit05, udg_group03) == false then
-        call GroupAddUnitSimple(udg_unit05,udg_group03)
+    if IsUnitInGroup(udg_unit05, DuelWinners) == false then
+        call GroupAddUnitSimple(udg_unit05,DuelWinners)
     endif
     call FunWinner( udg_unit05 )
-    //call GroupRemoveUnitSimple(GetDyingUnit(),udg_group03)
-    call GroupRemoveUnitSimple(udg_unit05,udg_group02)
-    call GroupRemoveUnitSimple(GetDyingUnit(),udg_group02)
+    //call GroupRemoveUnitSimple(GetDyingUnit(),DuelWinners)
+    call GroupRemoveUnitSimple(udg_unit05,DuelingHeroGroup)
+    call GroupRemoveUnitSimple(GetDyingUnit(),DuelingHeroGroup)
     call ForceAddPlayer(DuelLosers, GetOwningPlayer(GetDyingUnit()))
-    call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED)
-    call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED)
+    call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
+    call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
     call ForForce(GetPlayersAll(),function Trig_End_PvP_Func019A)
     call SetUnitPositionLoc(udg_unit05,GetRectCenter(udg_rect09))
     if(Trig_End_PvP_Func021C())then
@@ -10079,16 +10079,16 @@ function Trig_End_PvP_Actions takes nothing returns nothing
         set udg_integer32 = 1
         loop
             exitwhen udg_integer32 > 6
-            call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
-            call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
-            call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
-            if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
+            call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32))
+            call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32))
+            call UnitAddItemByIdSwapped(DuelHeroItemIds1[udg_integer32],DuelingHeroes[1])
+            if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),udg_integer32) then
                 //call BJDebugMsg("1a item move success")
             else
                 //call BJDebugMsg("1a item move fail")
             endif
-            call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
-            if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
+            call UnitAddItemByIdSwapped(DuelHeroItemIds2[udg_integer32],DuelingHeroes[2])
+            if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),udg_integer32) then
                 //call BJDebugMsg("2a item move success")
             else
                 //call BJDebugMsg("2a item move fail")
@@ -10100,24 +10100,24 @@ function Trig_End_PvP_Actions takes nothing returns nothing
         loop
             exitwhen udg_integer32 > 6
             if(Trig_End_PvP_Func021Func001Func001C())then
-                call RemoveItem(UnitItemInSlotBJ(udg_units03[1],udg_integer32))
-                call UnitAddItemByIdSwapped(udg_integers03[udg_integer32],udg_units03[1])
-                if UnitDropItemSlotBJ(udg_units03[1],GetLastCreatedItem(),udg_integer32) then
+                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32))
+                call UnitAddItemByIdSwapped(DuelHeroItemIds1[udg_integer32],DuelingHeroes[1])
+                if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),udg_integer32) then
                     //call BJDebugMsg("1b item move success")
                 else
                    //call BJDebugMsg("1b item move fail")
                 endif
             else
-                call RemoveItem(UnitItemInSlotBJ(udg_units03[2],udg_integer32))
-                call UnitAddItemByIdSwapped(udg_integers04[udg_integer32],udg_units03[2])
-                if UnitDropItemSlotBJ(udg_units03[2],GetLastCreatedItem(),udg_integer32) then
+                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32))
+                call UnitAddItemByIdSwapped(DuelHeroItemIds2[udg_integer32],DuelingHeroes[2])
+                if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),udg_integer32) then
                     //call BJDebugMsg("2b item move success")
                 else
                     //call BJDebugMsg("2b item move fail")
                 endif
             endif
-            call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer32), true)
-            call SetItemPawnable(UnitItemInSlotBJ(udg_units03[2],udg_integer32), true)
+            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer32), true)
+            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer32), true)
             set udg_integer32 = udg_integer32 + 1
         endloop
     endif
@@ -10126,12 +10126,12 @@ function Trig_End_PvP_Actions takes nothing returns nothing
     set udg_integer38 = 1
     loop
         exitwhen udg_integer38 > 8
-        call EnumItemsInRectBJ(udg_rects01[udg_integer38],function Trig_End_PvP_Func024Func001A)
+        call EnumItemsInRectBJ(PlayerArenaRects[udg_integer38],function Trig_End_PvP_Func024Func001A)
         set udg_integer38 = udg_integer38 + 1
     endloop
     set udg_unit05 = null
-    call SetCurrentlyFighting(GetOwningPlayer(udg_units03[1]), false)
-    call SetCurrentlyFighting(GetOwningPlayer(udg_units03[2]), false)
+    call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[1]), false)
+    call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[2]), false)
     if(Trig_End_PvP_Func026C())then
         call TriggerSleepAction(2)
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_End_PvP_Func026Func007001002)),function Trig_End_PvP_Func026Func007A)
@@ -10145,12 +10145,12 @@ function Trig_End_PvP_Actions takes nothing returns nothing
         call TriggerSleepAction(1.00)
 
         if(Trig_End_PvP_Func026Func016C())then
-            set udg_integer15 = DuelGoldReward[udg_integer02]
+            set udg_integer15 = DuelGoldReward[RoundNumber]
         else
-            set udg_integer15 = DuelGoldReward[udg_integer02]		
+            set udg_integer15 = DuelGoldReward[RoundNumber]		
         endif
         if(Trig_End_PvP_Func026Func018C())then
-            call ForGroupBJ(udg_group03,function Trig_End_PvP_Func026Func018Func002A)
+            call ForGroupBJ(DuelWinners,function Trig_End_PvP_Func026Func018Func002A)
         endif
         call PlaySoundBJ(udg_sound07)
         call ConditionalTriggerExecute(udg_trigger138)
@@ -10187,7 +10187,7 @@ function Trig_PvP_Battle_Func001Func008002001002002002002001 takes nothing retur
 endfunction
 
 function Trig_PvP_Battle_Func001Func008002001002002002002002 takes nothing returns boolean
-    return(IsUnitInGroup(GetFilterUnit(),udg_group01)==true)
+    return(IsUnitInGroup(GetFilterUnit(),PotentialDuelHeroes)==true)
 endfunction
 
 function Trig_PvP_Battle_Func001Func008002001002002002002 takes nothing returns boolean
@@ -10223,7 +10223,7 @@ function Trig_PvP_Battle_Func001Func010Func001002001002002002002001 takes nothin
 endfunction
 
 function Trig_PvP_Battle_Func001Func010Func001002001002002002002002 takes nothing returns boolean
-    return IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DuelLosers) and GetFilterUnit() != udg_units03[1]
+    return IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DuelLosers) and GetFilterUnit() != DuelingHeroes[1]
 endfunction
 
 function Trig_PvP_Battle_Func001Func010Func001002001002002002002 takes nothing returns boolean
@@ -10259,11 +10259,11 @@ function Trig_PvP_Battle_Func001Func010Func003002001002002002002001 takes nothin
 endfunction
 
 function Trig_PvP_Battle_Func001Func010Func003002001002002002002002 takes nothing returns boolean
-    return(IsUnitInGroup(GetFilterUnit(),udg_group01)==true) and GetFilterUnit() != udg_units03[1]
+    return(IsUnitInGroup(GetFilterUnit(),PotentialDuelHeroes)==true) and GetFilterUnit() != DuelingHeroes[1]
 endfunction
 
 function GetPvpEnemy takes nothing returns boolean
-    return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and UnitAlive(GetFilterUnit()) and GetFilterUnit() != udg_units03[1] and GetOwningPlayer(GetFilterUnit()) != Player(8) and GetOwningPlayer(GetFilterUnit()) != Player(11) 
+    return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and UnitAlive(GetFilterUnit()) and GetFilterUnit() != DuelingHeroes[1] and GetOwningPlayer(GetFilterUnit()) != Player(8) and GetOwningPlayer(GetFilterUnit()) != Player(11) 
 endfunction
 
 function Trig_PvP_Battle_Func001Func010Func003002001002002002002 takes nothing returns boolean
@@ -10283,14 +10283,14 @@ function Trig_PvP_Battle_Func001Func010Func003002001002 takes nothing returns bo
 endfunction
 
 function Trig_PvP_Battle_Func001Func010C takes nothing returns boolean
-    if(not(CountUnitsInGroup(udg_group01)>= 1))then
+    if(not(CountUnitsInGroup(PotentialDuelHeroes)>= 1))then
         return false
     endif
     return true
 endfunction
 
 function Trig_PvP_Battle_Func001Func017A takes nothing returns nothing
-    call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(udg_rects01[udg_integer14]),0.20)
+    call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),0.20)
 endfunction
 
 function Trig_PvP_Battle_Func001Func018001002001 takes nothing returns boolean
@@ -10330,15 +10330,15 @@ function Trig_PvP_Battle_Func001Func031Func003Func001C takes nothing returns boo
 endfunction
 
 function Trig_PvP_Battle_Func001Func031Func006001001001 takes nothing returns boolean
-    return(GetOwningPlayer(udg_units03[1])!=GetFilterPlayer())
+    return(GetOwningPlayer(DuelingHeroes[1])!=GetFilterPlayer())
 endfunction
 
 function Trig_PvP_Battle_Func001Func031Func006001001002001 takes nothing returns boolean
-    return(GetOwningPlayer(udg_units03[2])!=GetFilterPlayer())
+    return(GetOwningPlayer(DuelingHeroes[2])!=GetFilterPlayer())
 endfunction
 
 function Trig_PvP_Battle_Func001Func031Func006001001002002 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),udg_force02)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),DefeatedPlayers)!=true)
 endfunction
 
 function Trig_PvP_Battle_Func001Func031Func006001001002 takes nothing returns boolean
@@ -10391,7 +10391,7 @@ function Trig_PvP_Battle_Func001Func041A takes nothing returns nothing
 endfunction
 
 function Trig_PvP_Battle_Func001C takes nothing returns boolean
-    if(not(CountUnitsInGroup(udg_group01)>= 1))then
+    if(not(CountUnitsInGroup(PotentialDuelHeroes)>= 1))then
         return false
     endif
     return true
@@ -10410,7 +10410,7 @@ function TempDuelDebug takes nothing returns string
 
     set debugText = debugText + " GP"
     loop
-        set debugText = debugText + I2S(GetPlayerId(GetOwningPlayer(BlzGroupUnitAt(udg_group01, i))))
+        set debugText = debugText + I2S(GetPlayerId(GetOwningPlayer(BlzGroupUnitAt(PotentialDuelHeroes, i))))
         set i = i - 1
         exitwhen i < 0
     endloop
@@ -10420,50 +10420,50 @@ endfunction
 
 function Trig_PvP_Battle_Actions takes nothing returns nothing
     if(Trig_PvP_Battle_Func001C())then
-        set udg_units03[1]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
-        call GroupRemoveUnitSimple(udg_units03[1],udg_group01)
+        set DuelingHeroes[1]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
+        call GroupRemoveUnitSimple(DuelingHeroes[1],PotentialDuelHeroes)
         if(Trig_PvP_Battle_Func001Func010C())then
-            set udg_units03[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func003002001002)))
+            set DuelingHeroes[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func003002001002)))
         else
-            set udg_units03[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
+            set DuelingHeroes[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
         endif
         //shitty attempt at making sure it doesnt fuck up
-        if udg_units03[2] == udg_units03[1] or udg_units03[2] == null then
-            call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: " + GetPlayerName(GetOwningPlayer(udg_units03[1])) + " will fight any random player.\nPlease send this code in the bug-report channel on discord: " + TempDuelDebug() )
-            set udg_units03[2] = GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function GetPvpEnemy)))
+        if DuelingHeroes[2] == DuelingHeroes[1] or DuelingHeroes[2] == null then
+            call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: " + GetPlayerName(GetOwningPlayer(DuelingHeroes[1])) + " will fight any random player.\nPlease send this code in the bug-report channel on discord: " + TempDuelDebug() )
+            set DuelingHeroes[2] = GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function GetPvpEnemy)))
         endif
-        call GroupRemoveUnitSimple(udg_units03[2],udg_group01)
+        call GroupRemoveUnitSimple(DuelingHeroes[2],PotentialDuelHeroes)
         call PlaySoundBJ(udg_sound08)
-        call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[1]))+(" vs " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[2])))))))
-        set udg_integer14 = GetRandomInt(1,8)
+        call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[1]))+(" vs " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[2])))))))
+        set RoundCreepAbilCastChance = GetRandomInt(1,8)
         call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func017A)
-        call ForGroupBJ(GetUnitsInRectMatching(udg_rects01[udg_integer14],Condition(function Trig_PvP_Battle_Func001Func018001002)),function Trig_PvP_Battle_Func001Func018A)
-        call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(udg_units03[1]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
-        call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(udg_units03[2]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
-        call EnumItemsInRectBJ(udg_rects01[udg_integer14],function Trig_PvP_Battle_Func001Func019A)
-        set udg_location01 = OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),- 40.00,- 50.00)
-        call SetUnitPositionLocFacingLocBJ(udg_units03[1],OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),- 500.00,0),GetRectCenter(udg_rects01[udg_integer14]))
-        call SetUnitPositionLocFacingLocBJ(udg_units03[2],OffsetLocation(GetRectCenter(udg_rects01[udg_integer14]),500.00,0),GetRectCenter(udg_rects01[udg_integer14]))
+        call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[RoundCreepAbilCastChance],Condition(function Trig_PvP_Battle_Func001Func018001002)),function Trig_PvP_Battle_Func001Func018A)
+        call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(DuelingHeroes[1]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
+        call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(DuelingHeroes[2]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
+        call EnumItemsInRectBJ(PlayerArenaRects[RoundCreepAbilCastChance],function Trig_PvP_Battle_Func001Func019A)
+        set udg_location01 = OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 40.00,- 50.00)
+        call SetUnitPositionLocFacingLocBJ(DuelingHeroes[1],OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
+        call SetUnitPositionLocFacingLocBJ(DuelingHeroes[2],OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
         set bj_forLoopAIndex = 1
         set bj_forLoopAIndexEnd = 2
         loop
             exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-            call PauseUnitBJ(true,udg_units03[GetForLoopIndexA()])
-            call SelectUnitForPlayerSingle(udg_units03[GetForLoopIndexA()],GetOwningPlayer(udg_units03[GetForLoopIndexA()]))
-            set udg_unit01 = udg_units03[GetForLoopIndexA()]
+            call PauseUnitBJ(true,DuelingHeroes[GetForLoopIndexA()])
+            call SelectUnitForPlayerSingle(DuelingHeroes[GetForLoopIndexA()],GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))
+            set udg_unit01 = DuelingHeroes[GetForLoopIndexA()]
             call ConditionalTriggerExecute(udg_trigger82)
-            call GroupAddUnitSimple(udg_units03[GetForLoopIndexA()],udg_group02)
+            call GroupAddUnitSimple(DuelingHeroes[GetForLoopIndexA()],DuelingHeroGroup)
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
-        call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[1]),GetOwningPlayer(udg_units03[2]),bj_ALLIANCE_UNALLIED)
-        call SetPlayerAllianceStateBJ(GetOwningPlayer(udg_units03[2]),GetOwningPlayer(udg_units03[1]),bj_ALLIANCE_UNALLIED)
+        call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
+        call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
         set udg_integer33 = 1
         loop
             exitwhen udg_integer33 > 6
-            set udg_integers03[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(udg_units03[1],udg_integer33))
-            call SetItemPawnable(UnitItemInSlotBJ(udg_units03[1],udg_integer33), false)
-            set udg_integers04[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(udg_units03[2],udg_integer33))
-            call SetItemPawnable(UnitItemInSlotBJ(udg_units03[2],udg_integer33), false)
+            set DuelHeroItemIds1[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33))
+            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],udg_integer33), false)
+            set DuelHeroItemIds2[udg_integer33]= GetItemTypeId(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33))
+            call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],udg_integer33), false)
             set udg_integer33 = udg_integer33 + 1
         endloop
         call TriggerSleepAction(0.20)
@@ -10476,9 +10476,9 @@ function Trig_PvP_Battle_Actions takes nothing returns nothing
             loop
                 exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
                 if(Trig_PvP_Battle_Func001Func031Func003Func001C())then
-                    call DialogAddButtonBJ(udg_dialogs01[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[GetForLoopIndexA()]))+ "|r   ")))
+                    call DialogAddButtonBJ(udg_dialogs01[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r   ")))
                 else
-                    call DialogAddButtonBJ(udg_dialogs01[1],("   " +(GetPlayerNameColour(GetOwningPlayer(udg_units03[GetForLoopIndexA()]))+ "|r >>")))
+                    call DialogAddButtonBJ(udg_dialogs01[1],("   " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r >>")))
                 endif
                 set udg_buttons02[GetForLoopIndexA()]= GetLastCreatedButtonBJ()
                 set bj_forLoopAIndex = bj_forLoopAIndex + 1
@@ -10502,16 +10502,16 @@ function Trig_PvP_Battle_Actions takes nothing returns nothing
         call EnableTrigger(udg_trigger140)
         call EnableTrigger(udg_trigger141)
         call PvpStartSuddenDeathTimer()
-        call SetCurrentlyFighting(GetOwningPlayer(udg_units03[1]), true)
-        call SetCurrentlyFighting(GetOwningPlayer(udg_units03[2]), true)
+        call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[1]), true)
+        call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[2]), true)
         call PlaySoundBJ(udg_sound15)
         set bj_forLoopAIndex = 1
         set bj_forLoopAIndexEnd = 2
         loop
             exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-            call SetUnitInvulnerable(udg_units03[GetForLoopIndexA()],false)
-            call StartFunctionSpell(udg_units03[GetForLoopIndexA()],4 ) 
-            call PauseUnitBJ(false,udg_units03[GetForLoopIndexA()])
+            call SetUnitInvulnerable(DuelingHeroes[GetForLoopIndexA()],false)
+            call StartFunctionSpell(DuelingHeroes[GetForLoopIndexA()],4 ) 
+            call PauseUnitBJ(false,DuelingHeroes[GetForLoopIndexA()])
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
     else
@@ -10534,7 +10534,7 @@ function Trig_PvP_No_Player_Func001Func001001002001001 takes nothing returns boo
 endfunction
 
 function Trig_PvP_No_Player_Func001Func001001002001002 takes nothing returns boolean
-    return(IsUnitInGroup(GetFilterUnit(),udg_group02)==true)
+    return(IsUnitInGroup(GetFilterUnit(),DuelingHeroGroup)==true)
 endfunction
 
 function Trig_PvP_No_Player_Func001Func001001002001 takes nothing returns boolean
@@ -10558,7 +10558,7 @@ function Trig_PvP_No_Player_Func001Func001001002 takes nothing returns boolean
 endfunction
 
 function Trig_PvP_No_Player_Func001Func001Func001C takes nothing returns boolean
-    if(not(RectContainsUnit(udg_rects01[udg_integer45],GetEnumUnit())==true))then
+    if(not(RectContainsUnit(PlayerArenaRects[udg_integer45],GetEnumUnit())==true))then
         return false
     endif
     return true
@@ -10566,7 +10566,7 @@ endfunction
 
 function Trig_PvP_No_Player_Func001Func001A takes nothing returns nothing
     if(Trig_PvP_No_Player_Func001Func001Func001C())then
-        call IssuePointOrderLocBJ(GetEnumUnit(),"attack",GetRandomLocInRect(udg_rects01[udg_integer45]))
+        call IssuePointOrderLocBJ(GetEnumUnit(),"attack",GetRandomLocInRect(PlayerArenaRects[udg_integer45]))
     else
     endif
 endfunction
@@ -10581,7 +10581,7 @@ function Trig_PvP_No_Player_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Receive_Prize_Conditions takes nothing returns boolean
-    if(not(CountUnitsInGroup(udg_group03)> 0))then
+    if(not(CountUnitsInGroup(DuelWinners)> 0))then
         return false
     endif
     return true
@@ -10614,13 +10614,13 @@ endfunction
 function Trig_Receive_Prize_Func002A takes nothing returns nothing
     if(Trig_Receive_Prize_Func002Func003C())then
         call SetPlayerState(GetOwningPlayer(GetEnumUnit()), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(GetEnumUnit()), PLAYER_STATE_RESOURCE_GOLD) + udg_integer15)
-        call GroupRemoveUnitSimple(GetEnumUnit(),udg_group03)
+        call GroupRemoveUnitSimple(GetEnumUnit(),DuelWinners)
     else
     endif
 endfunction
 
 function Trig_Receive_Prize_Actions takes nothing returns nothing
-    call ForGroupBJ(udg_group03,function Trig_Receive_Prize_Func002A)
+    call ForGroupBJ(DuelWinners,function Trig_Receive_Prize_Func002A)
     call TriggerSleepAction(0.50)
     call ConditionalTriggerExecute(GetTriggeringTrigger())
 endfunction
@@ -10676,12 +10676,12 @@ function Trig_Sudden_Death_Timer_PvP_Actions takes nothing returns nothing
     if(Trig_Sudden_Death_Timer_PvP_Func002C())then
         call DisableTrigger(udg_trigger11)
         call DisableTrigger(udg_trigger26)
-        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(udg_units03[1]),GetUnitLoc(udg_units03[1]),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(DuelingHeroes[1]),GetUnitLoc(DuelingHeroes[1]),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(0.25,'BTLF',GetLastCreatedUnit())
-        call UnitDamageTargetBJ(GetLastCreatedUnit(),udg_units03[2],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,udg_units03[2])* udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
-        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(udg_units03[2]),GetUnitLoc(udg_units03[2]),bj_UNIT_FACING)
+        call UnitDamageTargetBJ(GetLastCreatedUnit(),DuelingHeroes[2],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,DuelingHeroes[2])* udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
+        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(DuelingHeroes[2]),GetUnitLoc(DuelingHeroes[2]),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(0.25,'BTLF',GetLastCreatedUnit())
-        call UnitDamageTargetBJ(GetLastCreatedUnit(),udg_units03[1],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,udg_units03[1])* udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
+        call UnitDamageTargetBJ(GetLastCreatedUnit(),DuelingHeroes[1],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,DuelingHeroes[1])* udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
         call EnableTrigger(udg_trigger11)
         call EnableTrigger(udg_trigger26)
     else
@@ -10873,7 +10873,7 @@ function Trig_Update_Items_Func001Func002Func001Func001A takes nothing returns n
 endfunction
 
 function Trig_Update_Items_Func001Func002Func001C takes nothing returns boolean
-    if(not(udg_integer02==10))then
+    if(not(RoundNumber==10))then
         return false
     endif
     return true
@@ -10888,7 +10888,7 @@ function Trig_Update_Items_Func001Func002Func003A takes nothing returns nothing
 endfunction
 
 function Trig_Update_Items_Func001Func002C takes nothing returns boolean
-    if(not(udg_integer02==5))then
+    if(not(RoundNumber==5))then
         return false
     endif
     return true
@@ -10899,7 +10899,7 @@ function Trig_Update_Items_Func001Func003Func001Func001A takes nothing returns n
 endfunction
 
 function Trig_Update_Items_Func001Func003Func001C takes nothing returns boolean
-    if(not(udg_integer02==20))then
+    if(not(RoundNumber==20))then
         return false
     endif
     return true
@@ -10914,7 +10914,7 @@ function Trig_Update_Items_Func001Func003Func003A takes nothing returns nothing
 endfunction
 
 function Trig_Update_Items_Func001Func003C takes nothing returns boolean
-    if(not(udg_integer02==10))then
+    if(not(RoundNumber==10))then
         return false
     endif
     return true
@@ -11067,7 +11067,7 @@ function Trig_Hero_Dies_Death_Match_PvP_Func019C takes nothing returns boolean
     if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
         return false
     endif
-    if(not(IsUnitInGroup(GetTriggerUnit(),udg_group02)==true))then
+    if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true))then
         return false
     endif
     if(not(udg_boolean07==true))then
@@ -11111,9 +11111,9 @@ endfunction
 function Trig_Hero_Dies_Death_Match_PvP_Actions takes nothing returns nothing
     call StopSoundBJ(udg_sound13,false)
     call PlaySoundBJ(udg_sound13)
-    call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
+    call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
     call SetCurrentlyFighting(GetOwningPlayer(GetTriggerUnit()), false)
-    set udg_integer06 =(udg_integer06 - 1)
+    set PlayerCount =(PlayerCount - 1)
     call AllowSinglePlayerCommands()
     set udg_booleans02[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]= true
     call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
@@ -11299,7 +11299,7 @@ function Trig_Elimination_Actions takes nothing returns nothing
     call SetAllCurrentlyFighting(true)
     call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Elimination_Func036001002)),function Trig_Elimination_Func036A)
     if(Trig_Elimination_Func037C())then
-        set udg_integer06 = 1
+        set PlayerCount = 1
         call ConditionalTriggerExecute(udg_trigger122)
     else
     endif
@@ -11395,7 +11395,7 @@ function Trig_Hero_Dies_Elimination_Func018Func001A takes nothing returns nothin
 endfunction
 
 function Trig_Hero_Dies_Elimination_Func021001 takes nothing returns boolean
-    return(udg_integer06==1)
+    return(PlayerCount==1)
 endfunction
 
 function Trig_Hero_Dies_Elimination_Func030001002001 takes nothing returns boolean
@@ -11519,9 +11519,9 @@ function Trig_Hero_Dies_Elimination_Actions takes nothing returns nothing
     call DisableTrigger(GetTriggeringTrigger())
     call StopSoundBJ(udg_sound13,false)
     call PlaySoundBJ(udg_sound13)
-    call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),udg_force02)
+    call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
     call SetCurrentlyFighting(GetOwningPlayer(GetTriggerUnit()), false)
-    set udg_integer06 =(udg_integer06 - 1)
+    set PlayerCount =(PlayerCount - 1)
     call AllowSinglePlayerCommands()
     call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffffcc00 was defeated!|r")))
     call DisableTrigger(udg_trigger16)

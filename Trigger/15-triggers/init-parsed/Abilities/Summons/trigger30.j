@@ -4,7 +4,7 @@
         if(not(GetUnitTypeId(GetTriggerUnit())=='ngz3'))then
             return false
         endif
-        if(not(GetUnitAbilityLevelSwapped('ANsg',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 3))then
+        if(not(GetUnitAbilityLevelSwapped('ANsg',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])> 3))then
             return false
         endif
         return true
@@ -20,9 +20,9 @@
 
 
     function Trig_Summon_Bear_Actions takes nothing returns nothing
-        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsg',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 2))
+        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('ANsg',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])+ 2))
         set bj_forLoopBIndex = 1
-        set bj_forLoopBIndexEnd =((GetUnitAbilityLevelSwapped('ANsg',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 4)* 2)
+        set bj_forLoopBIndexEnd =((GetUnitAbilityLevelSwapped('ANsg',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])- 4)* 2)
         loop
             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
             call UnitAddItemByIdSwapped('I022',GetTriggerUnit())

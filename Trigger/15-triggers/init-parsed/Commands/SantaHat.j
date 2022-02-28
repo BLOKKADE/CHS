@@ -17,10 +17,10 @@ scope NoAddSantaHatBets initializer init
 
         loop
 
-            if GetUnitAbilityLevel(udg_units01[i], 'A0B1') == 0 then
-                call UnitAddAbility(udg_units01[i], 'A0B1')
+            if GetUnitAbilityLevel(PlayerHeroes[i], 'A0B1') == 0 then
+                call UnitAddAbility(PlayerHeroes[i], 'A0B1')
             else
-                call UnitRemoveAbility(udg_units01[i], 'A0B1')
+                call UnitRemoveAbility(PlayerHeroes[i], 'A0B1')
             endif
 
             set i = i + 1

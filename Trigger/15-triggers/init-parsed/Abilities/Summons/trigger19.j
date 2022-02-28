@@ -9,10 +9,10 @@
 
 
     function Trig_Mountain_Giant_Actions takes nothing returns nothing
-        call SetUnitAbilityLevelSwapped('ANpi',GetTriggerUnit(),GetUnitAbilityLevelSwapped('AEsv',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
-        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AEsv',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 1))
+        call SetUnitAbilityLevelSwapped('ANpi',GetTriggerUnit(),GetUnitAbilityLevelSwapped('AEsv',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+        call SetUnitAbilityLevelSwapped('A000',GetTriggerUnit(),(GetUnitAbilityLevelSwapped('AEsv',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 1))
         set bj_forLoopBIndex = 1
-        set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AEsv',udg_units01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 6)
+        set bj_forLoopBIndexEnd =(GetUnitAbilityLevelSwapped('AEsv',PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])* 6)
         loop
             exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
             call UnitAddItemByIdSwapped('I02K',GetTriggerUnit())

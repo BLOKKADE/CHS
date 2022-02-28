@@ -91,10 +91,10 @@ library MidasTouch initializer init requires DummyOrder
         local integer i = MidasTouchCasts[uhid]
         local DummyOrder dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 6)
         
-        if MidasTouchLastCast[uhid] != udg_integer02 then
+        if MidasTouchLastCast[uhid] != RoundNumber then
             set MidasTouchCasts[uhid] = 0
             set i = 0
-            set MidasTouchLastCast[uhid] = udg_integer02
+            set MidasTouchLastCast[uhid] = RoundNumber
         endif
         set MidasTouchCasts[uhid] = MidasTouchCasts[uhid] + 1
 

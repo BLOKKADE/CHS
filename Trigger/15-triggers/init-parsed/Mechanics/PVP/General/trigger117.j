@@ -4,10 +4,10 @@ library trigger117 initializer init requires RandomShit
         if(not(udg_integer19 > 0))then
             return false
         endif
-        if(not(udg_integer02==1))then
+        if(not(RoundNumber==1))then
             return false
         endif
-        if(not(udg_integer07 < udg_integer06))then
+        if(not(SpawnedHeroCount < PlayerCount))then
             return false
         endif
         return true
