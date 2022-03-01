@@ -271,7 +271,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Fire, 1)
 
         //14 - Holy Light 
-        call SaveAbilData(HOLY_LIGHT_ABILITY_ID, HOLY_LIGHT_ITEM_ID, false, 1, 0, true, Order_Target, "holybolt")
+        call SaveAbilData(HOLY_LIGHT_ABILITY_ID, HOLY_LIGHT_ITEM_ID, false, Target_Any, 0, true, Order_Target, "holybolt")
         call SetLastObjectElement(Element_Light, 1)
 
         //15 - Impale 
@@ -303,6 +303,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //20 - Unholy Aura 
         call SaveAbilData(UNHOLY_AURA_ABILITY_ID, UNHOLY_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastAbilityNotReplaceable()
 
         //21 - Vampirism 
         call SaveAbilData(VAMPIRISM_ABILITY_ID, VAMPIRISM_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -316,9 +317,6 @@ library AbilityData initializer init requires Table, IdLibrary
         //23 - Life Drain 
         call SaveAbilData(LIFE_DRAIN_ABILITY_ID, LIFE_DRAIN_ITEM_ID, false, 0, 0, true, Order_Target, "drain")
         call SetLastObjectElement(Element_Dark, 1)
-
-        //24 - Cleaving Attack 
-        //call SaveAbilData(CLEAVING_ATTACK_ABILITY_ID, CLEAVING_ATTACK_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //25 - Spiked Carapace 
         call SaveAbilData(SPIKED_CARAPACE_ABILITY_ID, SPIKED_CARAPACE_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -513,10 +511,6 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
-        /*//64 - War Drums 
-        call SaveAbilData(WAR_DRUMS_ABILITY_ID, WAR_DRUMS_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)*/
-
         //65 - Hardened Skin 
         call SaveAbilData(HARDENED_SKIN_ABILITY_ID, HARDENED_SKIN_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Earth, 1)
@@ -590,10 +584,6 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
-        /*//80 - Healing Ward 
-        call SaveAbilData(HEALING_WARD_ABILITY_ID, HEALING_WARD_ITEM_ID, false, Target_Any, 0, true, Order_Point, "healingward")
-        call SetLastObjectElement(Element_Light, 2)*/
-
         //81 - Unholy Frenzy 
         call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID, UNHOLY_FRENZY_ITEM_ID, false, 0, 1, true, Order_Target, "unholyfrenzy")
         call SetLastObjectElement(Element_Dark, 1)
@@ -635,9 +625,6 @@ library AbilityData initializer init requires Table, IdLibrary
         //90 - Envenomed Weapons 
         call SaveAbilData(ENVENOMED_WEAPONS_ABILITY_ID, ENVENOMED_WEAPONS_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Poison, 1)
-
-        //91 - Multishot 
-        //call SaveAbilData(MULTISHOT_ABILITY_ID, MULTISHOT_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //92 - Slow Aura 
         call SaveAbilData(SLOW_AURA_ABILITY_ID, SLOW_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -776,6 +763,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //126 - Death Pact 
         call SaveAbilData(DEATH_PACT_ABILITY_ID, DEATH_PACT_ITEM_ID, false, 0, 1, false, Order_Target, "deathpact")
         call SetLastObjectElement(Element_Dark, 2)
+        call SetLastAbilityNotReplaceable()
 
         //127 - Big Bad Voodoo 
         call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID, BIG_BAD_VOODOO_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -1033,6 +1021,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(MANA_STARVATIO_ABILITY_ID, MANA_STARVATIO_ITEM_ID, false, 0, 0, true, Order_Target, "ancestralspirit")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastAbilityNotReplaceable()
 
         //180 - Fatal Flaw
         call SaveAbilData(FATAL_FLA_ABILITY_ID, FATAL_FLA_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -1041,9 +1030,6 @@ library AbilityData initializer init requires Table, IdLibrary
         //181 - Retaliation Aura
         call SaveAbilData(RETALIATION_AUR_ABILITY_ID, RETALIATION_AUR_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
-
-        //182 - Unlimited Agony
-        //call SaveAbilData(UNLIMITED_AGON_ABILITY_ID, UNLIMITED_AGON_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //183 - Time Manipulation
         call SaveAbilData(TIME_MANIPULATION_ABILITY_ID, TIME_MANIPULATION_ITEM_ID, false, 0, 0, false, Order_None, null)
