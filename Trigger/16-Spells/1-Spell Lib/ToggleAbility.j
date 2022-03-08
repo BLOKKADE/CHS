@@ -6,7 +6,7 @@ library ToggleAbility initializer init requires AbilityDescription
     endglobals
 
     function IsAbilityEnabled takes unit u, integer abilId returns boolean
-        return CurrentAbilitySetting[GetHandleId(u)].boolean[abilId]
+        return CurrentAbilitySetting[GetHandleId(u)].boolean[abilId] and GetUnitAbilityLevel(u, abilId) > 0
     endfunction
 
     function SetAbilityIcon takes player p, integer abilId, boolean enabled returns nothing
