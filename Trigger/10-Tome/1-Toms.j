@@ -102,6 +102,14 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         local integer summonUpgradeBonus = 0
         local real gloryBonus = 0
         local boolean maxLevel = GetHeroLevel(u) == 600
+        local boolean expTome = false
+
+        if not IsHeroUnitId(GetUnitTypeId(u)) then
+            set u = null
+            set p = null
+            set It = null
+			return
+		endif
 
         if HoldCtrl[pid] then
             set ctrl = true
@@ -142,7 +150,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_ARMOR_TOME_ITEM_ID then
                 if Glory[pid] >= 1500 then
                     call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 20)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 1500
                     set gloryBonus = gloryBonus + 20
                 else
@@ -153,7 +161,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_ATTACK_DAMAGE_TOME_ITEM_ID then
                 if Glory[pid] >= 1500 then
                     call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ 100,0)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 1500
                     set gloryBonus = gloryBonus + 100
                 else
@@ -165,7 +173,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if Glory[pid] >= 1500 then
                     set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
                     call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 50)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 1500
                     set gloryBonus = gloryBonus + 50 
                 else
@@ -177,7 +185,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if Glory[pid] >= 2000 then
 
                     call AddUnitMagicDef(u,3)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 2000
                     set gloryBonus = gloryBonus + 3
                 else
@@ -188,7 +196,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_MAGIC_POWER_TOME_ITEM_ID then
                 if Glory[pid] >= 2000 then
                     call AddUnitMagicDmg (u,3)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 2000
                     set gloryBonus = gloryBonus + 3
                 else
@@ -199,7 +207,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_MANA_REGENERATION_TOME_ITEM_ID then
                 if Glory[pid] >= 1500 then
                     call BlzSetUnitRealField(u,ConvertUnitRealField('umpr'),BlzGetUnitRealField(u,ConvertUnitRealField('umpr')) + 100)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 1500
                     set gloryBonus = gloryBonus + 100
                 else
@@ -211,7 +219,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if Glory[pid] >= 2000 then
                     // set PvpBonus[pid] = PvpBonus[pid]+1.5
                     call AddUnitPvpBonus(u,1.5)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 2000
                     set gloryBonus = gloryBonus + 1.5
                 else
@@ -223,7 +231,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if Glory[pid] >= 100 then
                     call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 150)
                     call CalculateNewCurrentHP(u, 150)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 100
                     set gloryBonus = gloryBonus + 150
                 else
@@ -234,7 +242,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_MANA_TOME_ITEM_ID then
                 if Glory[pid] >= 100 then
                     call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + 100)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid] - 100
                     set gloryBonus = gloryBonus + 100
                 else
@@ -245,7 +253,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_STRENGTH_TOME_ITEM_ID then
                 if Glory[pid] >= 1500 then
                     call SetHeroStr(u, GetHeroStr(u, false) + 30, true)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 1500
                     set gloryBonus = gloryBonus + 30
                 else
@@ -256,7 +264,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_AGILITY_TOME_ITEM_ID then
                 if Glory[pid] >= 1200 then
                     call SetHeroAgi(u, GetHeroAgi(u, false) + 30, true)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 1200
                     set gloryBonus = gloryBonus + 30
                 else
@@ -267,7 +275,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_INTELLIGENCE_TOME_ITEM_ID then
                 if Glory[pid] >= 1000 then
                     call SetHeroInt(u, GetHeroInt(u, false) + 30, true)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 1000
                     set gloryBonus = gloryBonus + 30
                 else
@@ -278,7 +286,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_EVASION_TOME_ITEM_ID then
                 if Glory[pid] >= 1500 then
                     call AddUnitEvasion(u, 5)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 1500
                     set gloryBonus = gloryBonus + 5
                 else
@@ -289,7 +297,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_BLOCK_TOME_ITEM_ID then
                 if Glory[pid] >= 2000 then
                     call AddUnitBlock(u, 100)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 2000
                     set gloryBonus = gloryBonus + 100
                 else
@@ -300,7 +308,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_MOVESPEED_TOME_ITEM_ID then
                 if Glory[pid] >= 10000 and GetUnitMoveSpeed(u) < 522 then
                     call SetUnitMoveSpeed(u, 522)
-                    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"head"))
+                    
                     set Glory[pid]= Glory[pid]- 10000
                     set gloryBonus = gloryBonus + 522
                 endif   
@@ -414,6 +422,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Tome of Power
             elseif II == TOME_OF_POWER_2000_ITEM_ID then 
                 call AddHeroXP(u, 2000, false)
+                set expTome = true
                 //Tome of agility + 1
             elseif II == TOME_OF_AGILITY_ITEM_ID then 
                 call SetHeroAgi(u, GetHeroAgi(u, false) + 1, true)
@@ -444,6 +453,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Tome of experience
             elseif II == TOME_OF_EXPERIENCE_100_ITEM_ID then
                 call AddHeroXP(u, 100, false)
+                set expTome = true
             else
                 set ctrl = false
             endif
@@ -459,8 +469,13 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             call DisplayTimedTextToPlayer(p, 0, 0, 2, GetObjectName(II) + " - [|cffffcc00Level " + I2S(summonUpgradeBonus) + "|r]")
         elseif gloryBonus > 0 then
             call DisplayTimedTextToPlayer(p, 0, 0, 2, GetObjectName(II) + " +|cffffcc00" + R2SW(gloryBonus, 1, 1) + "|r")
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"origin"))
         elseif i > 1 then
             call DisplayTimedTextToPlayer(p, 0, 0, 2, "Bought |cff55df32" + I2S(i) + "|r |cffdf9432" + GetObjectName(II) + "|r")
+        endif
+
+        if expTome then
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIem\\AIemTarget.mdl", u, "origin"))
         endif
 
         if II == 'manh' then
