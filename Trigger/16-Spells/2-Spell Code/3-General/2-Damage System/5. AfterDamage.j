@@ -16,7 +16,7 @@ scope AfterDamage initializer init
         endif
 
         if ShowDmgText then
-            if GetOwningPlayer(DamageTarget) == GetLocalPlayer() then
+            if GetOwningPlayer(DamageTarget) == GetLocalPlayer() or GetOwningPlayer(DamageSource) == GetLocalPlayer() then
                 call DamageText()
             endif
         endif
