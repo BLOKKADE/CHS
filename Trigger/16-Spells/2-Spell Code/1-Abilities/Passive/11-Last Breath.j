@@ -12,7 +12,7 @@ function LastBreathEnd takes nothing returns nothing
     set eff = null
     set u = null
 endfunction
- 
+
  
 function LastBreath takes unit target, integer level returns nothing 
     local timer t
@@ -33,9 +33,7 @@ function LastBreath takes unit target, integer level returns nothing
         call AbilStartCD(target,LAST_BREATHS_ABILITY_ID, 60 + BlzGetUnitAbilityCooldownRemaining(target,LAST_BREATHS_ABILITY_ID) )  
         call SaveInteger(HT,GetHandleId(target),LAST_BREATHS_ABILITY_ID,1)	             
         call SaveUnitHandle(HT,GetHandleId(t),1, target)
-        if GetOwningPlayer(target) != Player(11) then
-            call SaveEffectHandle(HT,GetHandleId(t),2,AddSpecialEffectTarget( LastBreathAnim , target , "origin" ) ) 
-        endif
+        call SaveEffectHandle(HT,GetHandleId(t),2,AddSpecialEffectTarget("war3mapImported\\Effect_ShieldBuff_Purple.mdx" , target , "overhead" ) ) 
         call UnitAddAbility(target, 'A08B')
         call TimerStart(t,0.8 + 0.2 * level,false, function LastBreathEnd)
 

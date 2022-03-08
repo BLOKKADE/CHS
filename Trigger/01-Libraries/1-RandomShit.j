@@ -11,7 +11,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         constant real TEXT_FADE = 0.6
 
         boolean EffectVisible = true
-        string LastBreathAnim = "Abilities\\Spells\\Undead\\Unsummon\\UnsummonTarget.mdl"
 
         unit GLOB_DEBUF = null
 
