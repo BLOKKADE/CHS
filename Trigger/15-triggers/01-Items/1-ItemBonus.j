@@ -613,6 +613,10 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 	function Trig_ItemBonus_Actions takes nothing returns nothing
 		local timer Time1 = null
 
+		if not IsHeroUnitId(GetUnitTypeId(GetTriggerUnit())) then
+			return
+		endif
+
 
 		set Time1 = NewTimer()
 
