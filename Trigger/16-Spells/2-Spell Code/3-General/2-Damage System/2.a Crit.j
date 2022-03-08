@@ -32,7 +32,7 @@ library CritDamage requires RandomShit
         //Aura of Vulnerability
         if GetUnitAbilityLevel(DamageTarget ,'B00E') > 0 then
             if GetRandomReal(0,100) <= 5 * DamageSourceLuck then
-                set critDmg = critDmg + (Dmg * 1 + (0.5 * GetUnitAbilityLevel(DamageSourceHero, AURA_OF_VULNERABILITY_ABILITY_ID)))
+                set critDmg = critDmg + (Dmg * (1 + (0.5 * GetUnitAbilityLevel(DamageSourceHero, AURA_OF_VULNERABILITY_ABILITY_ID))))
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", DamageTarget, "chest"))
             endif
         endif
