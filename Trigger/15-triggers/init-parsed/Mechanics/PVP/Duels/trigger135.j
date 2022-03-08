@@ -113,6 +113,13 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
     endfunction
 
+    private function KillSummons takes nothing returns boolean
+        if SUMMONS.contains(GetUnitTypeId(GetEnumUnit())) then
+            call RemoveUnit(GetEnumUnit())
+        endif
+        return false
+    endfunction
+
 
     function Trig_End_PvP_Actions takes nothing returns nothing
         local real bonus = 1
@@ -225,11 +232,14 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
                 set PvpEndIndex = PvpEndIndex + 1
             endloop
         endif
+        call GroupClear(ENUM_GROUP)
+        
         call ConditionalTriggerExecute(udg_trigger54)
         call ConditionalTriggerExecute(udg_trigger122)
         set udg_integer38 = 1
         loop
             exitwhen udg_integer38 > 8
+            call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[udg_integer38], Filter(function KillSummons))
             call EnumItemsInRectBJ(PlayerArenaRects[udg_integer38],function Trig_End_PvP_Func024Func001A)
             set udg_integer38 = udg_integer38 + 1
         endloop
