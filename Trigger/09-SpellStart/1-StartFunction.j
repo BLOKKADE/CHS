@@ -151,8 +151,8 @@ function FunctionTimerSpell takes nothing returns nothing
     //Shining Runestone
     set i1 = UnitHasItemI( Herou,'I08L' )
     set i = 0
-    call ElemFuncStart(Herou,'I08L')
     if i1 > 0 then
+        //call ElemFuncStart(Herou,'I08L')
         loop 
             exitwhen i >= R2I(i1)
             call CreateRandomRune(0,GetRandomReal(- 100,100)+ GetUnitX(Herou) ,GetRandomReal(- 100,100)+ GetUnitY(Herou)   ,Herou)
