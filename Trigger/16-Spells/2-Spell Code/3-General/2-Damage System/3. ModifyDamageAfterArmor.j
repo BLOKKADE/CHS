@@ -260,6 +260,7 @@ scope ModifyDamageAfterArmor initializer init
             call BladestormDamage(DamageSource, Damage.index.amount , IsMagicDamage())
         endif
 
+        //call BJDebugMsg("src: " + GetObjectName(DamageSourceAbility))
         //Pyromancer
         if DamageSourceTypeId == PYROMANCER_UNIT_ID  and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A0B6') == 0 then
@@ -324,7 +325,7 @@ scope ModifyDamageAfterArmor initializer init
             set r2 = 1
         endif
 
-        if not DamageIsOnHit and Damage.index.amount > 0 then
+        if (not DamageIsOnHit) and Damage.index.amount > 0 then
             if IsPhysDamage() then
 
                  //Pulverize
@@ -356,16 +357,18 @@ scope ModifyDamageAfterArmor initializer init
                 if (GetUnitAbilityLevel(DamageTarget, 'B01C') > 0 and IsUnitType(DamageSource, UNIT_TYPE_MELEE_ATTACKER)) then
                     
                     set r1 = 1 - (0.01 * GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID + GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID)))
-                    //call BJDebugMsg("thorns: r1:" + R2S(r1) + " ttl: " + R2S((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.01)) * r1))
+                    
                     set udg_NextDamageType = DamageType_Onhit
                     set udg_NextDamageAbilitySource = THORNS_AURA_ABILITY_ID
                     
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
                         set r3 = ((Damage.index.amount * ( 0.12 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
+                        //call BJDebugMsg("thorns: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                         call Damage.applyMagic(DamageTarget, DamageSource, r3, DAMAGE_TYPE_MAGIC)
                         //call MagicDamage(DamageTarget,DamageSource, , true)
                     else
                         set r3 = ((Damage.index.amount * ( 0.18 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
+                        //call BJDebugMsg("thorns: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                         call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     endif
                 endif
@@ -378,18 +381,23 @@ scope ModifyDamageAfterArmor initializer init
                     set udg_NextDamageAbilitySource = REFLECTION_AUR_ABILITY_ID
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
                         set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.03))) * r1) * r2
+                        //call BJDebugMsg("ref: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                         call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     else
                         set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.045))) * r1) * r2
+                        //call BJDebugMsg("ref: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                         call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     endif
                 endif
 
+                //call BJDebugMsg("trgt: " + GetUnitName(DamageTarget) + " attack: " + B2S(Damage.index.isAttack))
                 //Spiked Carapaces
-                if GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID) > 0 and Damage.index.isAttack then
+                set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID) + GetUnitAbilityLevel(DamageTarget, CARBEE_SPIKED_CARAP_ABILITY_ID) 
+                if i > 0 and Damage.index.isAttack then
                     set udg_NextDamageType = DamageType_Onhit
                     set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
                     set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
+                    //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                     call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                 endif
             endif
@@ -404,9 +412,11 @@ scope ModifyDamageAfterArmor initializer init
                     set udg_NextDamageAbilitySource = WIZARDBANE_AURA_ABILITY_ID
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
                         set r3 = ((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.03)) * r1) * r2
+                        //call BJDebugMsg("wb: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                         call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     else
                         set r3 = ((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.05)) * r1) * r2
+                        //call BJDebugMsg("wb: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                         call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     endif
                     //call BJDebugMsg("wb damage: " + R2S(r3) + " mult: " + R2S(r2) + " reduce: " + R2S(r1))
@@ -416,11 +426,13 @@ scope ModifyDamageAfterArmor initializer init
 
             //Spiked Shield heal
             if i1 > 0 and r3 != 0 then
+                //call BJDebugMsg("ss heal: " + R2S(r3 * 0.1))
                 call SetUnitState(DamageSource, UNIT_STATE_LIFE, GetUnitState(DamageSource, UNIT_STATE_LIFE) + (r3 * 0.1))
             endif
 
             //Dark Hunter Bash
             if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+                //call BJDebugMsg("src: " + GetUnitName(DamageSource) + " doh: " + B2S(DamageIsOnHit) + " dmg: " + R2S(Damage.index.damage))
                 call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", 50 * GetHeroLevel(DamageSource), ABILITY_RLF_DAMAGE_HTB1 )
             endif
         endif

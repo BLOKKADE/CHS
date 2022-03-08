@@ -160,12 +160,6 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == ABOMINATION_UNIT_ID then
 
             call SetBonus(UnitHero, 0, 40 * (I_l + 1))
-            call SetUnitAbilityLevel(UnitHero,'A08L',2)
-            call BlzSetAbilityRealLevelField(BlzGetUnitAbility(UnitHero,'A08L'), ABILITY_RLF_DAMAGE_PER_INTERVAL, 0, 40 * (I_l + 1))
-            call SetUnitAbilityLevel(UnitHero,'A08L',1)
-            call SetPlayerAbilityAvailable(Player(Pid), 'A08L', false)
-            call SetPlayerAbilityAvailable(Player(Pid), 'A08L', true)
-            set LastLvlHero[Pid] = I_l
 
         elseif TypeHero == DRUID_OF_THE_CLAY_UNIT_ID then
             call SetBonus(UnitHero, 0, 1 * (I_l + 1))

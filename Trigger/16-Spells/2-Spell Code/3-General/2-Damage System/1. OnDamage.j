@@ -151,16 +151,17 @@ scope OnDamage initializer init
         set DamageTargetLuck = GetUnitLuck(DamageTarget)
 
         call SetTypeDamage(DamageSource)
-/*
+        /*
         if Damage.index.isAttack then
             call BJDebugMsg("post attack dmg: " + I2S(GetHandleId(Damage.index.damageType)) + "phys:" + B2S(IsPhysDamage()) + "magic:" + B2S(IsMagicDamage()))
         elseif Damage.index.isSpell then
             call BJDebugMsg("post spell dmg: " + I2S(GetHandleId(Damage.index.damageType)) + "phys:" + B2S(IsPhysDamage()) + "magic:" + B2S(IsMagicDamage()) + "src: " + GetObjectName(DamageSourceAbility))
         else
             call BJDebugMsg("post dmg, phys:" + B2S(IsPhysDamage()) + "magic:" + B2S(IsMagicDamage()))
-        endif*/
+        endif
+        */
 
-        //call BJDebugMsg("MOD1.0 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
+        //call BJDebugMsg("MOD1.0 src: " + GetUnitName(DamageSource) + " trg: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage) + " dsrc: " + GetObjectName(DamageSourceAbility))
     endfunction
 
     private function init takes nothing returns nothing
