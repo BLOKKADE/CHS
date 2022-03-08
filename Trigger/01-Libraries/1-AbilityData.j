@@ -303,7 +303,6 @@ library AbilityData initializer init requires Table, IdLibrary
         //20 - Unholy Aura 
         call SaveAbilData(UNHOLY_AURA_ABILITY_ID, UNHOLY_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Dark, 1)
-        call SetLastAbilityNotReplaceable()
 
         //21 - Vampirism 
         call SaveAbilData(VAMPIRISM_ABILITY_ID, VAMPIRISM_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -587,6 +586,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //81 - Unholy Frenzy 
         call SaveAbilData(UNHOLY_FRENZY_ABILITY_ID, UNHOLY_FRENZY_ITEM_ID, false, 0, 1, true, Order_Target, "unholyfrenzy")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastAbilityNotReplaceable()
 
         //82 - Berserk 
         call SaveAbilData(BERSERK_ABILITY_ID, BERSERK_ITEM_ID, false, 0, 0, false, Order_None, "berserk")
@@ -750,6 +750,7 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //123 - Midas Touch 
         call SaveAbilData(MIDAS_TOUCH_ABILITY_ID, MIDAS_TOUCH_ITEM_ID, false, 0, 1, true, Order_Target, "transmute")
+        call SetLastAbilityNotReplaceable()
 
         //124 - Silence 
         call SaveAbilData(SILENCE_ABILITY_ID, SILENCE_ITEM_ID, false, 0, 1, true, Order_Point, "silence")
