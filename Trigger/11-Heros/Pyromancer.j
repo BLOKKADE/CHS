@@ -17,6 +17,8 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
         call dummy.addActiveAbility('A0B5', 1, OrderId("flamestrike"))
         call dummy.setAbilityRealField('A0B5', ABILITY_RLF_AREA_OF_EFFECT, area)
         call dummy.point(x, y).activate()
+        call AbilStartCD(u, 'A0B6', 1)
+        call ElemFuncStart(u, PYROMANCER_UNIT_ID)
     endfunction
 
     function PyromancerScorch takes unit source, unit target returns nothing
@@ -28,8 +30,6 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
         local real xBonus = (area * 0.75) * Cos(angle)
         local real yBonus = (area * 0.75) * Sin(angle)
         local unit p
-        
-        call ElemFuncStart(source,PYROMANCER_UNIT_ID)
 
         set PyromancerDamage = NewGroup()
         set PyromancerTemp = NewGroup()
@@ -43,10 +43,6 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
             exitwhen i <= 0
         endloop
 
-        if BlzGetUnitAbilityCooldownRemaining(source, 'A0B6') == 0 then
-            call AbilStartCD(source, 'A0B6', 1)
-        endif
-
         set i = BlzGroupGetSize(PyromancerDamage)
         loop
             set p = FirstOfGroup(PyromancerDamage)
@@ -54,7 +50,6 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
             if p != target and IsUnitEnemy(p, GetOwningPlayer(source)) then
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
-                set udg_NextDamageAbilitySource = PYROMANCER_UNIT_ID
                 set udg_NextDamageIsAttack = true
                 call Damage.applyPhys(source, p, GetUnitDamage(source, 0), true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
             endif
