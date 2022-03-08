@@ -15,6 +15,10 @@ library IdLibrary initializer init
 
         // --- Unit IDs ---
 
+        // --- Dummies ---
+        constant integer SELL_ITEM_DUMMY                                = 'h00F'
+        constant integer PRIEST_1_UNIT_ID                               = 'h015'
+
         // --- Shops ---
 
         constant integer ABSOLUTE_SHOP_UNIT_ID                          = 'n031'
@@ -66,7 +70,7 @@ library IdLibrary initializer init
         constant integer PARASITE_1_UNIT_ID                             = 'ncfs'
         constant integer PHOENIX_1_UNIT_ID                              = 'h009'
         constant integer POCKET_FACTORY_1_UNIT_ID                       = 'n010'
-        constant integer PRIEST_1_UNIT_ID                               = 'h015'
+        
         constant integer SKELETON_BATTLEMASTER_1_UNIT_ID                = 'n015'
         constant integer SKELETON_MAGE_1_UNIT_ID                        = 'uskm'
         constant integer SKELETON_WARMAGE_1_UNIT_ID                     = 'u004'
@@ -368,7 +372,7 @@ library IdLibrary initializer init
         constant integer SILENCE_ABILITY_ID                             = 'ANsi'
         constant integer SLOW_AURA_ABILITY_ID                           = 'AOr2'
         constant integer SOUL_BURN_ABILITY_ID                           = 'ANso'
-        constant integer SPIKED_CARAPACE_ABILITY_ID                     = 'AUts'
+        constant integer SPIKED_CARAPACE_ABILITY_ID                     = 'A0CC'
         constant integer SPIRIT_LINK_ABILITY_ID                         = 'A0B7'
         constant integer STAMPEDE_ABILITY_ID                            = 'ANst'
         constant integer STARFALL_ABILITY_ID                            = 'AEsf'
@@ -415,6 +419,7 @@ library IdLibrary initializer init
         constant integer TRANQUILITY_DUMMY_ABILITY_ID                   = 'AEtq'
         constant integer VOLCANO_DUMMY_ABILITY_ID                       = 'ANvc'
         constant integer STUN_ABILITY_ID                                = 'A0C2'
+        constant integer CARBEE_SPIKED_CARAP_ABILITY_ID                 = 'A0CD'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'

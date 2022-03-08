@@ -115,6 +115,13 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             set LearnabilityBonus.real[hid] = 0.05 + (0.005 * I2R(i1 - i2))
             call SaveInteger(HT,hid, abilId,i1)
         endif
+
+        if abilId == SPIKED_CARAPACE_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u, abilId)
+            set i2 = LoadInteger(HT, hid, abilId)
+            call AddUnitBonus(u, BONUS_ARMOR, 4 * (i1 - i2))
+            call SaveInteger(HT, hid, abilId, i1)
+        endif
     endfunction
 
     function RemoveSkillStruct takes unit u, integer abilId returns nothing

@@ -11,7 +11,8 @@ library CarrionBeetle requires CustomState, SpellFormula
         call AddUnitMagicDef(u,totalLevel * 2)
         call AddUnitEvasion(u,totalLevel * 2)
 
-        call UnitAddAbility(u, 'A06J')
-        call SetUnitAbilityLevel(u, 'A06J', IMinBJ(R2I(totalLevel / 2), 30))
+        call UnitAddAbility(u, CARBEE_SPIKED_CARAP_ABILITY_ID)
+        call SetUnitAbilityLevel(u, CARBEE_SPIKED_CARAP_ABILITY_ID, IMinBJ(R2I(totalLevel / 2), 30))
+        call AddUnitBonus(u, BONUS_ARMOR, IMinBJ(R2I(totalLevel / 2), 30) * 4)
     endfunction
 endlibrary
