@@ -65,7 +65,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
     endfunction
     
     function Trig_Melee_Initialization_Func010Func003001001002002 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
+        return(IsPlayerInForce(GetFilterPlayer(),udg_PlayersWithHero)!=true)
     endfunction
     
     function Trig_Melee_Initialization_Func010Func003001001002 takes nothing returns boolean

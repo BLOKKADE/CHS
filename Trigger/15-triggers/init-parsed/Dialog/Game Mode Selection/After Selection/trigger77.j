@@ -435,7 +435,7 @@ library trigger77 initializer init requires RandomShit
     endfunction
     
     function Trig_Dialog_Complete_Func025001001002002 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
+        return(IsPlayerInForce(GetFilterPlayer(),udg_PlayersWithHero)!=true)
     endfunction
     
     function Trig_Dialog_Complete_Func025001001002 takes nothing returns boolean

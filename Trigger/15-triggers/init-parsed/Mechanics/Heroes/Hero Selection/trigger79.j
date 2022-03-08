@@ -212,7 +212,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
 
 
     function Trig_Spawn_Hero_Actions takes nothing returns nothing
-        call ForceAddPlayerSimple(udg_player02,PlayersWithHero)
+        call ForceAddPlayerSimple(udg_player02,udg_PlayersWithHero)
         set PlayerHeroPicked[GetConvertedPlayerId(udg_player02)]= true
         set SpawnedHeroCount =(SpawnedHeroCount + 1)
     

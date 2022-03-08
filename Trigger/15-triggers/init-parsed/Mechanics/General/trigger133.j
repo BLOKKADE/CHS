@@ -6,7 +6,7 @@ library trigger133 initializer init requires RandomShit
 
 
     function Trig_Player_Selection_Camera_Func002001001 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
+        return(IsPlayerInForce(GetFilterPlayer(),udg_PlayersWithHero)!=true)
     endfunction
 
 

@@ -57,7 +57,7 @@ library OldInitialization initializer main3
         integer RoundCreepChanceLifesteal= 0
         item array udg_items01
         boolean array PlayerHeroPicked
-        force PlayersWithHero = null
+        //force udg_PlayersWithHero = null
         force RoundPlayersCompleted= null
         location udg_location01= null
         integer CountdownCount= 0
@@ -453,7 +453,7 @@ library OldInitialization initializer main3
         set RoundCreepChanceCritStrike = 0
         set RoundCreepChanceEvasion = 0
         set InitialPlayerCount = 0
-        set PlayersWithHero = CreateForce()
+        set udg_PlayersWithHero = CreateForce()
         
         set DefeatedPlayers = CreateForce()
         set PotentialDuelHeroes = CreateGroup()
@@ -689,7 +689,7 @@ library OldInitialization initializer main3
         set RoundCreepChanceCritStrike = 0
         set RoundCreepChanceEvasion = 0
         set InitialPlayerCount = 0
-        set PlayersWithHero = CreateForce()
+        set udg_PlayersWithHero = CreateForce()
         
         set DefeatedPlayers = CreateForce()
         set PotentialDuelHeroes = CreateGroup()
