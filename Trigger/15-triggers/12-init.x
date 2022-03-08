@@ -56,7 +56,7 @@ function InitGlobals3 takes nothing returns nothing
     set RoundCreepChanceCritStrike = 0
     set RoundCreepChanceEvasion = 0
     set InitialPlayerCount = 0
-    set PlayersWithHero = CreateForce()
+    set udg_PlayersWithHero = CreateForce()
     
     set DefeatedPlayers = CreateForce()
     set PotentialDuelHeroes = CreateGroup()
@@ -306,7 +306,7 @@ function InitGlobals2 takes nothing returns nothing
     set RoundCreepChanceCritStrike = 0
     set RoundCreepChanceEvasion = 0
     set InitialPlayerCount = 0
-    set PlayersWithHero = CreateForce()
+    set udg_PlayersWithHero = CreateForce()
     
     set DefeatedPlayers = CreateForce()
     set PotentialDuelHeroes = CreateGroup()
@@ -3785,7 +3785,7 @@ function Trig_Dialog_Complete_Func025001001002001 takes nothing returns boolean
 endfunction
 
 function Trig_Dialog_Complete_Func025001001002002 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),udg_PlayersWithHero)!=true)
 endfunction
 
 function Trig_Dialog_Complete_Func025001001002 takes nothing returns boolean
@@ -4253,7 +4253,7 @@ function Trig_Spawn_Hero_Func019C takes nothing returns boolean
 endfunction
 
 function Trig_Spawn_Hero_Actions takes nothing returns nothing
-    call ForceAddPlayerSimple(udg_player02,PlayersWithHero)
+    call ForceAddPlayerSimple(udg_player02,udg_PlayersWithHero)
     set PlayerHeroPicked[GetConvertedPlayerId(udg_player02)]= true
     set SpawnedHeroCount =(SpawnedHeroCount + 1)
 
@@ -5112,7 +5112,7 @@ function Trig_Melee_Initialization_Func010Func003001001002001 takes nothing retu
 endfunction
 
 function Trig_Melee_Initialization_Func010Func003001001002002 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),udg_PlayersWithHero)!=true)
 endfunction
 
 function Trig_Melee_Initialization_Func010Func003001001002 takes nothing returns boolean
@@ -9562,7 +9562,7 @@ function Trig_Player_Selection_Camera_Func001001 takes nothing returns boolean
 endfunction
 
 function Trig_Player_Selection_Camera_Func002001001 takes nothing returns boolean
-    return(IsPlayerInForce(GetFilterPlayer(),PlayersWithHero)!=true)
+    return(IsPlayerInForce(GetFilterPlayer(),udg_PlayersWithHero)!=true)
 endfunction
 
 function Trig_Player_Selection_Camera_Func002A takes nothing returns nothing
