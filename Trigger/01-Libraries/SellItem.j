@@ -1,7 +1,7 @@
 library SellItems requires DummyRecycler
     function SellItem takes integer pid, item it returns boolean
             local boolean success = false
-            local unit u = GetRecycledDummyAnyAngle(GetItemX(it), GetItemY(it), 0)
+            local unit u = CreateUnit(Player(pid), SELL_ITEM_DUMMY, GetItemX(it), GetItemY(it), 0)
             
             call SetUnitOwner(u, Player(pid), false)
             call PauseUnit(u, false)
@@ -9,7 +9,7 @@ library SellItems requires DummyRecycler
             call UnitAddItem(u, it)
             set success = UnitDropItemTarget(u, it, GetShopById(ITEM_SHOP_I_UNIT_ID))
     
-            call DummyAddRecycleTimer(u, 1)
+            call UnitApplyTimedLife(u, 'BTLF' , 1)
             
             set u = null
             return success
