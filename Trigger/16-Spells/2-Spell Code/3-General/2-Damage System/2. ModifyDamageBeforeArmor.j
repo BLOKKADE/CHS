@@ -130,7 +130,6 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID) then
             set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.04
             if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
-                //call BJDebugMsg("ca: " + I2S(GetSpellValue(20, 10, i1)))
                 set DamageSourceAbility = COLD_ARROWS_ABILITY_ID
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
                 set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
@@ -245,6 +244,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Tauren
         if DamageSourceTypeId == TAUREN_UNIT_ID then
             
+            set r1 = 0
             set i1 = GetHeroLevel(DamageSource)
             loop
                 if IsSpellElement(DamageSource, DamageSourceAbility, i) then
@@ -253,7 +253,6 @@ scope ModifyDamageBeforeArmor initializer init
                 set i = i + 1
                 exitwhen i > 12
             endloop
-
             set Damage.index.damage = Damage.index.damage * (1 + r1)
         endif
 
@@ -355,8 +354,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif*/
 
         //Ogre Warrior Stomp block ignore
-        if DamageSourceAbility == 'A047' then
-            call TempBonus.create(DamageTarget, BONUS_BLOCK, GetUnitBlock(DamageTarget) * 0.2, 1)
+        if DamageSourceAbility == 'A047' and GetUnitBlock(DamageTarget) > 0 then
+            call TempBonus.create(DamageTarget, BONUS_BLOCK,0 - GetUnitBlock(DamageTarget) * 0.2, 1)
         endif
 
         //Lich
