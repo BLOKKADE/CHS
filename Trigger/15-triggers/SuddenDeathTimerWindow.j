@@ -1,4 +1,4 @@
-library SuddenDeathTimerWindow requires TimerUtils
+library SuddenDeathTimerWindow requires TimerUtils, Utility
     globals
         private timer SuddenDeathTimer = null
         private timerdialog SuddenDeathDialog = null
@@ -16,7 +16,7 @@ library SuddenDeathTimerWindow requires TimerUtils
     function PlayerText takes string s returns nothing
         local integer i = 0
         loop
-            if HasPlayerFinishedLevel(udg_units01[i+1], Player(i)) == false then
+            if HasPlayerFinishedLevel(PlayerHeroes[i+1], Player(i)) == false then
                 call DisplayTimedTextToPlayer(Player(i), 0, 0, 10, s)
             endif
             set i = i + 1
@@ -37,7 +37,7 @@ library SuddenDeathTimerWindow requires TimerUtils
         elseif level == 4 then
             call PlayerText("|cffff6600Sudden Death Level 3|r: Creeps get attack damage bonus")
         elseif level == 5 then
-            call PlayerText("|cffff0000Sudden Death Level 4|r: HP drain")
+            call PlayerText("|cffff0000Sudden Death Level 4|r: 20% current hit point drain every 0.25 seconds.")
             return
         endif
         call TimerStart(SuddenDeathTimer, duration, false, null)

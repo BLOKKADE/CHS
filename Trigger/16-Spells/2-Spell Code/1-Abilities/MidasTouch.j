@@ -23,9 +23,7 @@ library MidasTouch initializer init requires DummyOrder
         integer dmgBonus
         integer endTick
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         method updateStats takes boolean negative returns nothing
             local real multiplier = 1
@@ -48,15 +46,7 @@ library MidasTouch initializer init requires DummyOrder
         endmethod  
 
         static method create takes unit target, integer bonus, real duration returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set this.target = target
             set this.bonus = bonus
@@ -85,26 +75,26 @@ library MidasTouch initializer init requires DummyOrder
             set MidasTouchGold[GetHandleId(this.target)] = 0
             call this.updateStats(true)
             set this.target = null  
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
 
         implement T32x
+        implement Recycle
     endstruct
 
     function CastMidasTouch takes unit caster, unit target, integer level returns nothing
         local integer uhid = GetHandleId(caster)
         local integer hid = GetHandleId(target)
-        local real abilPower = ((GetUnitAbilityLevel(caster, 'Asal') + GetUnitAbilityLevel(caster, 'A02W') + GetUnitAbilityLevel(caster, 'A04K')) * 2)
+        local real abilPower = ((GetUnitAbilityLevel(caster, PILLAGE_ABILITY_ID) + GetUnitAbilityLevel(caster, LEARNABILITY_ABILITY_ID) + GetUnitAbilityLevel(caster, HOLY_ENLIGHTENMENT_ABILITY_ID)) * 2)
         local real power = RMaxBJ((100 - abilPower) / 100, 0)
         local integer bonus = R2I((499 + (26 * level)) * power)
         local integer i = MidasTouchCasts[uhid]
         local DummyOrder dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 6)
         
-        if MidasTouchLastCast[uhid] != udg_integer02 then
+        if MidasTouchLastCast[uhid] != RoundNumber then
             set MidasTouchCasts[uhid] = 0
             set i = 0
-            set MidasTouchLastCast[uhid] = udg_integer02
+            set MidasTouchLastCast[uhid] = RoundNumber
         endif
         set MidasTouchCasts[uhid] = MidasTouchCasts[uhid] + 1
 

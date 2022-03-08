@@ -1,4 +1,4 @@
-library UnitStateSys initializer init requires RandomShit, Functions
+library UnitStateSys initializer init requires RandomShit, Functions, SummonSpells
     globals
         integer array SkeletonDefender
         boolean array bnos_a
@@ -9,6 +9,9 @@ library UnitStateSys initializer init requires RandomShit, Functions
         integer array SummonIceArmor
         integer array SummonWildDefense
         integer array SummonDomeProtection
+        integer array SummonHitPoints
+        integer array SummonDamage
+        integer array SummonArmor
     endglobals
 
     function RandomAbilityLevel takes integer id, unit hero returns integer
@@ -26,24 +29,30 @@ library UnitStateSys initializer init requires RandomShit, Functions
     function SummonUnit takes unit u returns nothing
         local integer i = GetUnitTypeId(u)
         local integer i2 = 0
+        local integer totalLevel = 0
         local integer pid = GetPlayerId(GetOwningPlayer(u))
-        local unit hero = udg_units01[pid + 1]
+        local unit hero = PlayerHeroes[pid + 1]
         local integer UpgradeU = 15 * UnitHasItemI(hero,'I07K')
         local real wild = 1 + GetUnitSummonStronger(hero)/ 100
         local real r1
 
         //Beastmaster
-        if GetUnitTypeId(hero) == 'N00P' then
+        if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
             set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.3)
         endif
 
+        //Mortar Team
+        if GetUnitTypeId(hero) == 'H004' then
+            call AddUnitPhysPow(u, 3 * GetHeroLevel(hero))  
+        endif
+
         //Druid of the Claw
-        if GetUnitTypeId(hero) == 'H006' then
+        if GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
             set r1 = GetHeroLevel(hero) * 0.01
             call AddUnitMagicDmg(u, (GetUnitMagicDmg(hero) * r1))
             call AddUnitMagicDef(u, (GetUnitMagicDef(hero) * r1))
-            call BlzSetUnitBaseDamage(u, R2I(BlzGetUnitBaseDamage(u, 0) + (GetUnitDamage(hero, 0) * r1)), 0)
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (BlzGetUnitArmor(hero) * r1))
+            call AddUnitBonus(u, BONUS_DAMAGE, R2I((GetUnitDamage(hero, 0) * r1)))
+            call AddUnitBonus(u, BONUS_ARMOR, R2I((BlzGetUnitArmor(hero) * r1)))
         endif
 
         //Wild Defense
@@ -51,239 +60,120 @@ library UnitStateSys initializer init requires RandomShit, Functions
             call AddUnitMagicDef(u,10 * SummonWildDefense[pid])
             call AddUnitEvasion(u,1 * SummonWildDefense[pid])
             call AddUnitBlock(u,10 * SummonWildDefense[pid])
-            call AddSummonAbility(u, 'A06X', SummonWildDefense[pid])
+            call AddSummonAbility(u, WILD_DEFENSE_ABILITY_ID, SummonWildDefense[pid])
         endif
 
-        if SummonCrit[pid] > 0 and i != 'h009' then
-            call AddSummonAbility(u, 'AOcr', SummonCrit[pid])
+        if SummonCrit[pid] > 0 and i != PHOENIX_1_UNIT_ID then
+            call AddSummonAbility(u, CRITICAL_STRIKE_ABILITY_ID, SummonCrit[pid])
         endif
 
         if SummonCutting[pid] > 0 then
-            call AddSummonAbility(u, 'A081', SummonCutting[pid])
+            call AddSummonAbility(u, CUTTING_ABILITY_ID, SummonCutting[pid])
         endif
 
         if SummonLastBreath[pid] > 0 then
-            call AddSummonAbility(u, 'A05R', SummonLastBreath[pid])
+            call AddSummonAbility(u, LAST_BREATHS_ABILITY_ID, SummonLastBreath[pid])
         endif
 
         if SummonIceArmor[pid] > 0 then
-            call AddSummonAbility(u, 'A053', SummonIceArmor[pid])
+            call AddSummonAbility(u, ICE_ARMOR_ABILITY_ID, SummonIceArmor[pid])
         endif
 
         if SummonDomeProtection[pid] > 0 then
-            call AddSummonAbility(u, 'A0B9', SummonDomeProtection[pid])
+            call AddSummonAbility(u, DOME_OF_PROTECTION_ABILITY_ID, SummonDomeProtection[pid])
+        endif
+
+        if SummonHitPoints[pid] > 0 then
+            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
+            call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
+        endif
+
+        if SummonArmor[pid] > 0 then
+            call BlzSetUnitArmor(u, SummonArmor[pid] * 2)
+        endif
+
+        if SummonDamage[pid] > 0 then
+            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
 
         call AddUnitPvpBonus(u, GetUnitPvpBonus(hero))
 
-        //Water Elemental
-        if i == 'hwt3' or i == 'hwt2' or i == 'hwat' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AHwe'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
-            call AddUnitMagicDef(u,15 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-        
-            //Feral Spirit Wolf
-        elseif i == 'osw3' or i == 'osw2' or i == 'osw1' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AOsf'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
-            call AddUnitEvasion(u,15 * i2)
-            if GetUnitAbilityLevel(u, 'AOcr') > 0 then
-                call SetUnitAbilityLevel(u, 'AOcr', GetUnitAbilityLevel(u, 'AOcr') + 1)
-            else
-                call UnitAddAbility(u, 'AOcr')
-            endif
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Serpent Ward 
-        elseif i == 'osp3' or i == 'osp2' or i == 'osp1' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AOsw'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(10.1 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 300)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-        
-            //Skeleton Warrior Skeleton Mage
-        elseif i == 'uske' or i == 'uskm' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'Arai'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 100,0)
-            call AddUnitEvasion(u,15 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 200)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Summon Mountain Giant
-        elseif i == 'e00N' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AEsv'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 50,0)
-            call AddUnitBlock(u,500 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 1500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Summon Quilbeast
-        elseif i == 'nqb4' or i == 'nqb3' or i == 'nqb2' or i == 'nqb1' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'Arsq'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 50,0)
-            call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 25 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 300)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Summon Bear
-        elseif i == 'ngz3' or i == 'ngz2' or i == 'ngz1'  then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsg'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
-            call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 20 * i2)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Summon Hawk
-        elseif i == 'nwe3' or i == 'nwe2' or i == 'nwe1'  then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsw'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 25,0)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(7 /(12.1 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-        
-            //Phoenix
-        elseif i == 'h009' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AHpx'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 400,0)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(7 /(12.1 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 5000)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-        
-            //Lava Spawn
-        elseif i == 'nlv3' or i == 'nlv2' or i == 'nlv1' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANlm'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 15,0)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(10.1 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 700)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Inferno
-        elseif i == 'n01E' or (i >= 'n01O' and i <= 'n01Z') or (i >= 'n020' and i <= 'n02G') then
-            set i2 = UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 500,0)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(20 /(20 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 5000)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-
-            if i2 != 0 then
-                call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
+        if SUMMONS.contains(i) then
+            set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(i)) + UpgradeU
+            if i == WATER_ELEMENTAL_1_UNIT_ID then
+                //call BJDebugMsg("we")
+                call WaterElementalStats(u, totalLevel)
+            elseif i == FERAL_SPIRIT_WOLF_1_UNIT_ID then
+                //call BJDebugMsg("fw")
+                call SpiritWolfStats(u, totalLevel)
+            elseif i == SERPENT_WARD_1_UNIT_ID then
+                //call BJDebugMsg("sw")
+                call SerpentWardStats(u, totalLevel)
+            elseif i == MOUNTAIN_GIANT_1_UNIT_ID then
+                //call BJDebugMsg("mg")
+                call MountainGiantStats(u, totalLevel)
+            elseif i == BEAR_1_UNIT_ID then
+                //call BJDebugMsg("be")
+                call BearStats(u, totalLevel)
+            elseif i == HAWK_1_UNIT_ID then
+                //call BJDebugMsg("ha")
+                call HawkStats(u, totalLevel)
+            elseif i == QUILBEAST_1_UNIT_ID then
+                //call BJDebugMsg("qu")
+                call QuilbeastStats(u, totalLevel)
+            elseif i == PHOENIX_1_UNIT_ID then
+                //call BJDebugMsg("ph")
+                call PhoenixStats(u, totalLevel)
+            elseif i == INFERNAL_1_UNIT_ID then
+                //call BJDebugMsg("in")
+                call InfernoStats(u, totalLevel)
+            elseif i == LAVA_SPAWN_1_UNIT_ID then
+                //call BJDebugMsg("ls")
+                call LavaSpawnStats(u, totalLevel)
+            elseif i == POCKET_FACTORY_1_UNIT_ID then
+                //call BJDebugMsg("pf")
+                call PocketFactoryStats(u, totalLevel)
+            elseif i == CLOCKWORK_GOBLIN_1_UNIT_ID then
+                //call BJDebugMsg("cg")
+                call ClockwerkGoblinStats(u, totalLevel)
+            elseif i == PARASITE_1_UNIT_ID then
+                //call BJDebugMsg("pa")
+                call ParasiteStats(u, totalLevel)
+            elseif i == CARRION_BEETLE_1_UNIT_ID then
+                //call BJDebugMsg("cb")
+                call CarrionBeetleStats(u, totalLevel)
+            elseif i == SKELETON_BATTLEMASTER_1_UNIT_ID then
+                //call BJDebugMsg("basb")
+                call BlackArrowMeleeSkeletonStats(u, totalLevel)
+            elseif i == SKELETON_WARMAGE_1_UNIT_ID then
+                //call BJDebugMsg("basw")
+                call BlackArrowRangedSkeletonStats(u, totalLevel)
+            elseif SKELLIESCAPTAINS.contains(i) then
+                //call BJDebugMsg("rest")
+                call SkeletonStats(u, totalLevel)
             endif
 
-            //Pocket Factory
-        elseif i == 'n011' or i == 'n010' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANsy'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
-            call AddUnitMagicDmg(u,45 * i2)
-            call AddUnitMagicDef(u,15 * i2)
-            call AddUnitEvasion(u,5 * i2)
-            call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 5 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-        
-            //??? Priest?
-        elseif i == 'h015' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANba'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
-            call AddUnitMagicDef(u,5 * i2)
-            call AddUnitEvasion(u,5 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + i2))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 175)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Parasite
-        elseif i == 'ncfs' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'ANpa'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
-            call AddUnitMagicDef(u,5 * i2)
-            call AddUnitEvasion(u,5 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + i2))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 175)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Carrion Beetle
-        elseif i == 'u001' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'AUcb'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 35,0)
-            call AddUnitMagicDef(u,5 * i2)
-            call AddUnitEvasion(u,5 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + i2))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-
-            //Raise Dead
-        elseif i == 'n02S' or i == 'n02R' or i == 'h01A' or i == 'u003' then
-            set i2 = UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 30,0)
-            call AddUnitMagicDef(u,5 * i2)
-            call AddUnitEvasion(u,5 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-                
-            if i2 != 0 then
-                call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-            endif
-
-            //Black Arrow Skeleton Battlemaster
-        elseif i == 'n015' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'A0AW'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 100,0)
-            call AddUnitMagicDef(u,5 * i2)
-            call AddUnitEvasion(u,5 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 1000)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-                
-            if i2 != 0 then
-                call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-            endif
-
-            //Black Arrow Skeleton Warmage
-        elseif i == 'u004' then
-            set i2 = RandomAbilityLevel(GetUnitAbilityLevel(hero,'A0AW'),hero) + UpgradeU
-            call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ i2 * 60,0)
-            call AddUnitMagicDmg(u,10 * i2)
-            call AddUnitMagicDef(u,5 * i2)
-            call AddUnitEvasion(u,5 * i2)
-            call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8 + I2R(i2)))  ,0)
-            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ i2 * 500)
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
-                
-            if i2 != 0 then
-                call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(i2) )
-            endif
-        endif 
+            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(totalLevel) )
+            call SetWidgetLife(u, BlzGetUnitMaxHP(u))
+        endif
 
         //wild Defense
         if wild != 1 then      
             call BlzSetUnitBaseDamage(u,R2I(I2R(BlzGetUnitBaseDamage(u,0))* wild),0)  
             call BlzSetUnitMaxHP(u,R2I(I2R(BlzGetUnitMaxHP(u))* wild))
             call SetWidgetLife(u,BlzGetUnitMaxHP(u))
+        endif
+
+        //Trueshot Aura
+        set i2 = GetUnitAbilityLevel(hero, TRUESHOT_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * (0.05 * i2)))
+        endif
+
+        //Command Aura
+        set i2 = GetUnitAbilityLevel(hero, COMMAND_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * (0.1 * i2)))
         endif
         
         set u = null
@@ -312,50 +202,50 @@ library UnitStateSys initializer init requires RandomShit, Functions
 
         //Illusion
         if IsUnitIllusion(u) and IsUnitType(u, UNIT_TYPE_HERO) then
-            call SetHeroStr(u, GetHeroStr(udg_units01[pid + 1], false), false)
-            call SetHeroAgi(u, GetHeroAgi(udg_units01[pid + 1], false), false)
-            call SetHeroInt(u, GetHeroInt(udg_units01[pid + 1], false), false)
+            call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid + 1], false), false)
+            call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid + 1], false), false)
+            call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid + 1], false), false)
         endif
 
         //Rock Golem
-        if GetUnitTypeId(u) == 'H017' then
+        if GetUnitTypeId(u) == ROCK_GOLEM_UNIT_ID then
             call AddUnitBlock(u,50)
             call AddUnitMagicDef(u,15)
         endif
 
         //Medivh
-        if GetUnitTypeId(u) == 'H01G' then
+        if GetUnitTypeId(u) == MEDIVH_UNIT_ID then
             call AddUnitMagicDmg(u,5)
         endif
 
         //Pit Lord
-        if GetUnitTypeId(u) == 'O007' then
-            call UnitAddAbility(u, 'A07B')
-            call BlzUnitDisableAbility(u,'A07B',false,true)
+        if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
+            call UnitAddAbility(u, ABSOLUTE_FIRE_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_FIRE_ABILITY_ID,false,true)
             call SaveInteger(HT,GetHandleId(u),941561, 1)
-            call AddSpellPlayerInfo('A07B',u,1)
-            call FuncEditParam('A07B',u)
+            call AddSpellPlayerInfo(ABSOLUTE_FIRE_ABILITY_ID,u,1)
+            call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID,u)
             call AddHeroMaxAbsoluteAbility(u)
         endif
 
         //Satyr Trickster
-        if GetUnitTypeId(u) == 'O00C' then
+        if GetUnitTypeId(u) == SATYR_TRICKSTER_UNIT_ID then
             call AddUnitEvasion(u,10)
         endif
 
         //Witch Doctor
-        if GetUnitTypeId(u) == 'O006' then
+        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
             call AddHeroMaxAbsoluteAbility(u)
             call SetBonus(u, 0, 1)
         endif
 
         //Blademaster
-        if GetUnitTypeId(u) == 'N00K' then
+        if GetUnitTypeId(u) == BLADE_MASTER_UNIT_ID then
             set BladestormAttackLimit[GetHandleId(u)] = 9
         endif
 
         //Thunder Witch
-        if GetUnitTypeId(u) == 'O001' then
+        if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID then
             set ThunderBoltTargets[GetHandleId(u)] = 1
         endif
 

@@ -2,14 +2,13 @@ scope LongPeriodCheck initializer init
     function FunctionAttackSpeedA takes unit u returns nothing
         local real r1 = LoadReal(HT, GetHandleId(u),- 1001 )
         local real r2 = 0
-        local real i1 = I2R(GetUnitAbilityLevel(u,'A02O'))
+        local integer i1 = GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID)
         local real i2 = UnitHasItemI(u,'I066')
 
 
 
         if i1 > 0 then
-            set r2 = 0.92 - 0.02 * i1
-
+            set r2 = r1 - MegaSpeedBonus(u, i1, r1)
         else
 
             set r2 = r1 
@@ -17,7 +16,7 @@ scope LongPeriodCheck initializer init
 
         set r2 = r2 + i2 * 1.4
 
-        if GetUnitAbilityLevel(u, 'B01Q') > 0 then
+        if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
             set r2 = r2 + 0.4
         endif
 
@@ -25,7 +24,7 @@ scope LongPeriodCheck initializer init
             set r2 = r2 * 0.8
         endif
 
-        if GetUnitTypeId(u) == 'O00A' then
+        if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID then
 
             set r2 = r2 * 100 /(I2R(100 + GetHeroLevel(u))) 
         endif
@@ -42,9 +41,9 @@ scope LongPeriodCheck initializer init
     function AABfunction takes unit u returns nothing
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
             //Mysterious Talent
-            if GetUnitAbilityLevel(u,'A05Z') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A05Z') <= 0.001 then
+            if GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u,MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 then
                 call MysteriousTalentActivate(u)
-                call AbilStartCD(u,'A05Z',45 - GetUnitAbilityLevel(u,'A05Z') ) 
+                call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID) ) 
             endif
 
             //Holy Shield
@@ -61,9 +60,9 @@ scope LongPeriodCheck initializer init
             endif
 
             //Earthquake
-            if GetUnitAbilityLevel(u,'A07L') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A07L') <= 0.001 and CheckProc(u, 600) then
-                call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap",GetUnitAbilityLevel(u,'A07L')* 100,ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
-                call AbilStartCD(u,'A07L',5 ) 
+            if GetUnitAbilityLevel(u,EARTHQUAKE_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u,EARTHQUAKE_ABILITY_ID) <= 0.001 and CheckProc(u, 600) then
+                call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap",GetUnitAbilityLevel(u,EARTHQUAKE_ABILITY_ID)* 100,ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
+                call AbilStartCD(u,EARTHQUAKE_ABILITY_ID,5 ) 
             endif
         endif
     endfunction
@@ -73,17 +72,21 @@ scope LongPeriodCheck initializer init
         local player Pl = Player(i)
         local integer SpellId = 0
         local string textureS = ""
-        local integer unitId = GetUnitTypeId(udg_units01[NumPlayerLast[i] + 1])
+        local integer unitId = GetUnitTypeId(PlayerHeroes[NumPlayerLast[i] + 1])
 
         if unitId != 0 then
             if GetLocalPlayer() == Pl then
                 set textureS = LoadStr(HT_data, unitId, 1)
-                call BlzFrameSetVisible(SpellUP[100], true)
+                call BlzFrameSetVisible(SpellUP[38], true) // Element count
+                call BlzFrameSetVisible(SpellUP[39], true) // Win Counts
+                call BlzFrameSetVisible(SpellUP[100], true) // Hero passive/description
                 call BlzFrameSetTexture(SpellFR[100], textureS, 0, true)
             endif
         else
             if GetLocalPlayer() == Pl then
-                call BlzFrameSetVisible(SpellUP[100], false)
+                call BlzFrameSetVisible(SpellUP[38], false) // Element count
+                call BlzFrameSetVisible(SpellUP[39], false) // Win Counts
+                call BlzFrameSetVisible(SpellUP[100], false) // Hero passive/description
             endif
         endif
 
@@ -108,7 +111,7 @@ scope LongPeriodCheck initializer init
         else
             loop
                 exitwhen i1 > 21
-                set SpellId = GetInfoHeroSpell(udg_units01[NumPlayerLast[i] + 1] , i1)
+                set SpellId = GetInfoHeroSpell(PlayerHeroes[NumPlayerLast[i] + 1] , i1)
                 if SpellId != 0 then
                     set textureS = BlzGetAbilityIcon(SpellId)
 
@@ -179,7 +182,7 @@ scope LongPeriodCheck initializer init
 
 
             call FunUpdateSkill(II)
-            set u = udg_units01[II]
+            set u = PlayerHeroes[II]
             set hid = GetHandleId(u)
             if GetWidgetLife(u) > 0.405 then
                 call FunctionAttackSpeedA(u)
@@ -255,14 +258,14 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //Absolute Light
-                set i1 = GetUnitAbilityLevel(u ,'A07P')
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_LIGHT_ABILITY_ID)
                 if i1 >= 1  then
                     set i1 = i1 * GetClassUnitSpell(u,8)
                     set HpBonus = HpBonus + 0.005 * I2R(i1)
                 endif
 
                 //Divine Gift
-                set i1 = GetUnitAbilityLevel(u ,'A082')
+                set i1 = GetUnitAbilityLevel(u ,DIVINE_GIFT_ABILITY_ID)
                 if i1 >= 1 then
                     set HpBonus = HpBonus + 0.05 * I2R(i1)
                 endif
@@ -272,20 +275,20 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,'B026')
                 //Goblet of Blood
                 if GetUnitAbilityLevel(u, 'B026') > 0 then
-                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.1)
+                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.01)
 
                     if i1 != i2 then
-                        call UnitAddAttackDamage(u, 0 - i2 + i1)
+                        call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2 + i1)
                         call SaveInteger(HT,hid,'B026',i1)
                     endif
                 elseif i2 != 0 then
-                    call UnitAddAttackDamage(u, 0 - i2)
+                    call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2)
                     call SaveInteger(HT,hid,'B026',0)
                 endif
 
                 if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
                     //Drain aura
-                    set i1 = GetUnitAbilityLevel(u ,'A023')
+                    set i1 = GetUnitAbilityLevel(u ,DRAIN_AURA_ABILITY_ID)
                     if i1 >= 1 or UnitHasItemS(u, 'I0B5') then
                         if UnitHasItemS(u, 'I0B5') then
                             call AoeDrainAura(u, (I2R(i1) * 0.0001) + 0.001,500,true)
@@ -297,15 +300,14 @@ scope LongPeriodCheck initializer init
                 call AABfunction(u)
 
                 //Banshee
-                if GetUnitTypeId(u) == 'H01I' then
+                if GetUnitTypeId(u) == BANSHEE_UNIT_ID then
                     set i1 = (BlzGetUnitMaxHP(u)* 3)/ 4
-                    set i2 = LoadInteger(HT,hid,'H01I')
+                    set i2 = LoadInteger(HT,hid,BANSHEE_UNIT_ID)
 
                     call BlzSetUnitMaxMana(u,BlzGetUnitMaxMana(u)+ i1 - i2   )
-                    call SaveInteger(HT,hid,'H01I',i1  )
+                    call SaveInteger(HT,hid,BANSHEE_UNIT_ID,i1  )
 
                 endif
-
 
                 //Robes of the Archmage
                 if GetUnitAbilityLevel(u ,'B00L') >= 1 then
@@ -325,95 +327,113 @@ scope LongPeriodCheck initializer init
                     call SaveReal(HT,hid,291,0)
                 endif
 
+                //Contract of the Living
+                if IsContractLivingAvailable(u) then
+                    call ActivateContractLiving(u)
+                endif
+
                 //Absolute Fire
-                set i1 = GetUnitAbilityLevel(u ,'A07B')
-                set i2 = LoadInteger(HT,hid,'A07B')
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_FIRE_ABILITY_ID)
+                set i2 = LoadInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    if GetUnitTypeId(u) == 'O007' then
+                    if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                         set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
                         set i1 = R2I((i1 * GetClassUnitSpell(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
                     else
                         set i1 = i1 * GetClassUnitSpell(u, Element_Fire)
                     endif
                     call AddUnitMagicDmg(u ,   0.5 * I2R(i1 - i2)  )	
-                    call SaveInteger(HT,hid,'A07B',i1)	
+                    call SaveInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
                 endif
 
                 //Absolute Water
-                set i1 = GetUnitAbilityLevel(u ,'A07C')
-                set i2 = LoadInteger(HT,hid,'A07C')
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WATER_ABILITY_ID)
+                set i2 = LoadInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,2)
-                    call BlzSetUnitMaxMana(u,BlzGetUnitMaxMana(u) + 100 *(i1 - i2)    )
-                    call SaveInteger(HT,hid,'A07C',i1)	
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Water)
+                    call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)), false)
+                    call SaveInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID,i1)	
                 endif
 
                 //Absolute Wind
-                set i1 = GetUnitAbilityLevel(u ,'A07E')
-                set i2 = LoadInteger(HT,hid,'A07E')
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WIND_ABILITY_ID)
+                set i2 = LoadInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,3)
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Wind)
                     call AddUnitEvasion(u ,   0.5 * I2R(i1 - i2)  )
                     call SetHeroAgi(u,GetHeroAgi(u,false)+ 10 *(i1 - i2),false     )
-                    call SaveInteger(HT,hid,'A07E',i1)	
+                    call SaveInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID,i1)	
                 endif
 
                 //Absolute Earth
-                set i1 = GetUnitAbilityLevel(u ,'A07D')
-                set i2 = LoadInteger(HT,hid,'A07D')
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_EARTH_ABILITY_ID)
+                set i2 = LoadInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,4)
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Earth)
                     call AddUnitBlock(u ,   20 * I2R(i1 - i2)  )	
-                    call SaveInteger(HT,hid,'A07D',i1)	
+                    call SaveInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID,i1)	
                 endif
 
                 //Absolute Blood
-                set i1 = GetUnitAbilityLevel(u ,'A07R')
-                set i2 = LoadInteger(HT,hid,'A07R')
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_BLOOD_ABILITY_ID)
+                set i2 = LoadInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,11)
-                    call SetHeroStr(u,GetHeroStr(u,false)+ 12 *(i1 - i2),false     )
-                    call SaveInteger(HT,hid,'A07R',i1)	
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Blood)
+                    call SetHeroStr(u,GetHeroStr(u,false)+ 10 *(i1 - i2),false     )
+                    call SaveInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID,i1)	
+                endif
+
+                //Decaying Scythe
+                set i2 = LoadInteger(HT, hid, DECAYING_SCYTHE_ABILITY_ID)
+                if GetUnitAbilityLevel(u, DECAYING_SCYTHE_ABILITY_ID) > 0 then
+                    set i1 = GetClassUnitSpell(u, Element_Poison)
+                    if i1 != i2 then
+                        call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + ((i1 - i2) * 300))
+                        call SaveInteger(HT,hid,DECAYING_SCYTHE_ABILITY_ID,i1)
+                    endif
+                elseif i2 != 0 then
+                    call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) - i2 * 300)
+                    call SaveInteger(HT,hid,DECAYING_SCYTHE_ABILITY_ID,0)
                 endif
 
                 //Brilliance Aura
-                set i1 = GetUnitAbilityLevel(u, 'AHab')
+                set i1 = GetUnitAbilityLevel(u, BRILLIANCE_AURA_ABILITY_ID)
                 if i1 > 0 then
                     call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) + ((0.0001 * i1) * GetUnitState(u, UNIT_STATE_MAX_MANA)))
                 endif
 
                 //Absolute Wild
-                set i1 = GetUnitAbilityLevel(u ,'A07K')
-                set i2 = LoadInteger(HT,hid,'A07K')
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WILD_ABILITY_ID)
+                set i2 = LoadInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u,5)
+                    set i1 = i1 * GetClassUnitSpell(u, Element_Wild)
                     call AddUnitSummonStronger(u ,   1 * I2R(i1 - i2)  )	
-                    call SaveInteger(HT,hid,'A07K',i1)	
+                    call SaveInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID,i1)	
                 endif
 
                 //Thunder Witch
-                if GetUnitTypeId(u) == 'O001' then
+                if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID then
                     if BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and CheckProc(u, 610) then
                         call ThunderWitchBolt(u, GetHeroLevel(u), hid)
                     endif
                 endif
 
                 //Pit Lord
-                if GetUnitTypeId(u) == 'O007' then
+                if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                     set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
                     set i1 = R2I(GetUnitMagicDmg(u) * r1)
-                    set i2 = LoadInteger(HT,hid,'O007')
+                    set i2 = LoadInteger(HT,hid,PIT_LORD_UNIT_ID)
                     if i1 != i2 then
                         call AddUnitPhysPow(u, 0 - i2)
                         call AddUnitPhysPow(u, i1)
-                        call SaveInteger(HT,hid,'O007',i1)	
+                        call SaveInteger(HT,hid,PIT_LORD_UNIT_ID,i1)	
                     endif
                 endif
 
                 //Mana Bonus
-                if GetUnitAbilityLevel(u ,'A02X') >= 1 then
+                if GetUnitAbilityLevel(u ,MANA_BONUS_ABILITY_ID) >= 1 then
                     set MANA1 = LoadInteger(HT,hid,12)
-                    set MANA2 = 10000 * GetUnitAbilityLevel(u ,'A02X')
+                    set MANA2 = 10000 * GetUnitAbilityLevel(u ,MANA_BONUS_ABILITY_ID)
                     if MANA1 != MANA2 then
                         call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + MANA2 - MANA1 )
                         call SaveInteger(HT,hid,12,MANA2  )
@@ -424,8 +444,8 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //Time Manipulation
-                if GetUnitAbilityLevel(u, 'A0AS') > 0 and CurrentlyFighting[GetPlayerId(GetOwningPlayer(u))] and TimeManipulationTable[hid].boolean[1] then
-                    if BlzGetUnitAbilityCooldownRemaining(u, 'A0AS') == 0 then
+                if GetUnitAbilityLevel(u, TIME_MANIPULATION_ABILITY_ID) > 0 and CurrentlyFighting[GetPlayerId(GetOwningPlayer(u))] and TimeManipulationTable[hid].boolean[1] then
+                    if BlzGetUnitAbilityCooldownRemaining(u, TIME_MANIPULATION_ABILITY_ID) == 0 then
                         set TimeManipulationTable[hid].real[2] = TimeManipulationTable[hid].real[2] + 1
                         call StartFunctionSpell(u, 6)
                     endif

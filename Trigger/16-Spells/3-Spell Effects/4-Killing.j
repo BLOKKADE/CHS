@@ -21,8 +21,8 @@ scope Killing initializer init
         local player killingPlayer = GetOwningPlayer(killer)
         local integer targetPid = GetPlayerId(targetPlayer)
         local integer killingPid = GetPlayerId(killingPlayer)
-        local unit targetHero = udg_units01[targetPid + 1]
-        local unit killingHero = udg_units01[killingPid + 1]
+        local unit targetHero = PlayerHeroes[targetPid + 1]
+        local unit killingHero = PlayerHeroes[killingPid + 1]
         local integer i = 0
         local timer t
         local effect fx
@@ -40,11 +40,11 @@ scope Killing initializer init
         //Incinerate
         if LoadInteger(HT,GetHandleId(target),- 300004)+ 160 > T32_Tick then
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", target, "head"))
-            call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, 'B014')
+            call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, INCINERATE_ABILITY_ID)
         endif
         
         //Black Arrow
-        set i = GetUnitAbilityLevel(killingHero, 'A0AW')
+        set i = GetUnitAbilityLevel(killingHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
         if i > 0 and killer != null and IsUnitEnemy(killer, targetPlayer) then
             call CastBlackArrow(killingHero, target, i)
         endif   
@@ -52,9 +52,9 @@ scope Killing initializer init
         if IsHeroUnitId(GetUnitTypeId(target)) == false then
 
             //Skeleton Brute
-            if GetUnitTypeId(targetHero) == 'N00O' then
+            if GetUnitTypeId(targetHero) == SKELETON_BRUTE_UNIT_ID then
                 call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + ( (0.02 + (0.0005 * GetHeroLevel(targetHero))) * BlzGetUnitMaxHP(targetHero)))
-                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), 20 + (30 * GetHeroLevel(targetHero)), 400, false, 'N00O')
+                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), 20 + (30 * GetHeroLevel(targetHero)), 400, false, SKELETON_BRUTE_UNIT_ID)
                 set fx = AddSpecialEffect("war3mapImported\\Arcane Explosion.mdx", GetUnitX(target), GetUnitY(target))
                 call BlzSetSpecialEffectTimeScale(fx, 2)
                 call DestroyEffect(fx)
@@ -62,7 +62,7 @@ scope Killing initializer init
             endif
 
             //Necromancer's Army
-            set i = GetUnitAbilityLevel(targetHero, 'A0B0')
+            set i = GetUnitAbilityLevel(targetHero, NECROMANCERS_ARMY_ABILITY_ID)
             if i > 0 and IsUnitType(target, UNIT_TYPE_UNDEAD) == false then
                 call ActivateNecromancerArmy(targetHero, target, i)
             endif
@@ -78,12 +78,7 @@ scope Killing initializer init
             set i = UnitHasItemI( killingHero,'I07E') 
             if i > 0 and GetOwningPlayer(target) == Player(11) then
 
-                call AddUnitMagicDmg(killingHero,i * 15)
-
-                set t = NewTimer()
-                call SaveUnitHandle(HT,GetHandleId(t),1,killingHero)
-                call SaveInteger(HT,GetHandleId(t),2,i)
-                call TimerStart(t,10,false,function TimerMagDmg )
+                call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 15, 10)
             endif
 
             //Not sure what this is for

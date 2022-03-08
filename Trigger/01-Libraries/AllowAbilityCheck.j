@@ -1,9 +1,9 @@
 library AllowCastCheck
     private function CheckUnitGroup takes unit u returns boolean
-        if(not(IsUnitInGroup(u,udg_group02)!=true))then
+        if(not(IsUnitInGroup(u,DuelingHeroGroup)!=true))then
             return false
         endif
-        if(not(IsPlayerInForce(GetOwningPlayer(u),udg_force03)==true))then
+        if(not(IsPlayerInForce(GetOwningPlayer(u),RoundPlayersCompleted)==true))then
             return false
         endif
         return true
@@ -23,10 +23,10 @@ library AllowCastCheck
     endfunction
     
     function CheckIfCastAllowed takes unit u returns boolean
-        if(not(udg_boolean02==false))then
+        if(not(BrStarted==false))then
             return false
         endif
-        if(not(udg_boolean03==false))then
+        if(not(ElimPvpStarted==false))then
             return false
         endif
         if(not CheckUnit(u))then
@@ -35,7 +35,7 @@ library AllowCastCheck
         if(not(GetUnitTypeId(u)!='n00V'))then
             return false
         endif
-        if(not(GetUnitTypeId(u)!='h015'))then
+        if(not(GetUnitTypeId(u)!=PRIEST_1_UNIT_ID))then
             return false
         endif	
         if(not(GetUnitTypeId(u)!='h014'))then

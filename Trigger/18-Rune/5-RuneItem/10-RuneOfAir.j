@@ -6,7 +6,7 @@ library WindRune requires RandomShit
 
     function CastRuneOfWinds takes nothing returns boolean
 
-        if IsUnitEnemy(GLOB_RUNE_U,GetOwningPlayer(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != 'h015' then
+        if IsUnitEnemy(GLOB_RUNE_U,GetOwningPlayer(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != PRIEST_1_UNIT_ID then
             call UsOrderU2(GLOB_RUNE_U,GetFilterUnit(),GetUnitX(GLOB_RUNE_U),GetUnitY(GLOB_RUNE_U),'A075',"entanglingroots",500 * GLOB_RUNE_POWER,4,ABILITY_RLF_DAMAGE_PER_SECOND_EER1,ABILITY_RLF_DURATION_NORMAL)
             
         endif
@@ -17,7 +17,8 @@ library WindRune requires RandomShit
         local unit u = GLOB_RUNE_U
         local real power = GLOB_RUNE_POWER 
 
-        call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),400 + 100 * power,RuneOfWinds_b )
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),400 + 100 * power,RuneOfWinds_b )
 
         set u = null
         return false

@@ -4,7 +4,7 @@ library Lich initializer init requires TimerUtils
   endglobals
 
   function Trig_Event_lich_Actions takes nothing returns nothing
-    if GetUnitTypeId(GetTriggerUnit()) == 'H018' and IsUnitIllusion(GetTriggerUnit()) != true then
+    if GetUnitTypeId(GetTriggerUnit()) == LICH_UNIT_ID and IsUnitIllusion(GetTriggerUnit()) != true then
       call SaveEffectHandle(DataUnitHT,GetHandleId(GetTriggerUnit()),1,AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIob\\AIobTarget.mdl", GetTriggerUnit(), "hand left") )
       call SaveEffectHandle(DataUnitHT,GetHandleId(GetTriggerUnit()),2,AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIob\\AIobTarget.mdl", GetTriggerUnit(), "hand right") )
       call SaveInteger(DataUnitHT,GetHandleId(GetTriggerUnit()),3,1)

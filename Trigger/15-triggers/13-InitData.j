@@ -1,17 +1,8 @@
 library DuelReward initializer init
     globals
         integer array DuelGoldReward
-        force DuelWinners = CreateForce()
         force DuelLosers = CreateForce()
     endglobals
-
-    function GiveGold takes nothing returns nothing
-        call SetPlayerState(GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD) + DuelGoldReward[udg_integer02])
-    endfunction
-    
-    function GiveDuelReward takes nothing returns nothing
-        call ForForce(DuelWinners, function GiveGold)
-    endfunction
     
     private function init takes nothing returns nothing
         set DuelGoldReward[5] = 500

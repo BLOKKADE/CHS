@@ -2,16 +2,16 @@ library CustomState requires TimerUtils
     globals
         hashtable HT_unitstate = InitHashtable()
 
-        integer CustomState_MagicPow = 1
-        integer CustomState_MagicRes = 2
-        integer CustomState_Evasion = 3
-        integer CustomState_Block = 4
-        integer CustomState_Luck = 5
-        integer CustomState_RunePow = 6
-        integer CustomState_SummonPow = 7
-        integer CustomState_PvpBonus = 8
-        integer CustomState_PhysPow = 9
-        integer CustomState_MissChance = 9
+        constant integer BONUS_MAGICPOW                 = 1
+        constant integer BONUS_MAGICRES                 = 2
+        constant integer BONUS_EVASION                  = 3
+        constant integer BONUS_BLOCK                    = 4
+        constant integer BONUS_LUCK                     = 5
+        constant integer BONUS_RUNEPOW                  = 6
+        constant integer BONUS_SUMMONPOW                = 7
+        constant integer BONUS_PVPBONUS                 = 8
+        constant integer BONUS_PHYSPOW                  = 9
+        constant integer BONUS_MISSCHANCE               = 10
     endglobals
 
     //Magic damage
@@ -87,7 +87,7 @@ library CustomState requires TimerUtils
 
     //Luck
     function SetUnitLuck takes unit u,real r returns nothing
-        call SaveReal(HT_unitstate,GetHandleId(u),1,5)
+        call SaveReal(HT_unitstate,GetHandleId(u),5, 1)
     endfunction
 
     //function GetUnitLuck takes unit u returns real
@@ -149,87 +149,6 @@ library CustomState requires TimerUtils
     function AddUnitPhysPow takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),9,LoadReal(HT_unitstate,GetHandleId(u),9)+ r)
     endfunction
-
-    //Temp edit
-    function endTimerState takes nothing returns nothing
-        local timer t = GetExpiredTimer()
-        local integer i = LoadInteger(HT,GetHandleId(t),1)
-        local real r = LoadReal(HT,GetHandleId(t),2)
-        local unit u = LoadUnitHandle(HT,GetHandleId(t),3)
-
-        call SaveReal(HT_unitstate,GetHandleId(u),i,LoadReal(HT_unitstate,GetHandleId(u),i) - r  )   
-            
-        call FlushChildHashtable(HT,GetHandleId(t))
-        call ReleaseTimer(t)
-        set u = null
-        set t = null
-    endfunction
-
-    function AddStateTemp takes unit u,integer i, real r, real time returns nothing
-        local timer t = NewTimer()
-        
-        call SaveInteger(HT,GetHandleId(t),1,i)
-        call SaveReal(HT,GetHandleId(t),2,r)  
-        call SaveUnitHandle(HT,GetHandleId(t),3,u)
-        
-        call SaveReal(HT_unitstate,GetHandleId(u),i,LoadReal(HT_unitstate,GetHandleId(u),i)+ r)   
-
-        call TimerStart(t,time,false,function endTimerState)
-        set t = null
-    endfunction
-
-    struct CustomStateBonus extends array
-        unit source
-        real bonus
-        boolean stop
-        integer state
-        integer endTick
-
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
-
-        private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop then
-                call this.stopPeriodic()
-                call this.destroy()
-            endif
-        endmethod  
-
-        static method create takes unit source, integer state, real bonus, real duration returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
-
-            set this.stop = false
-            set this.source = source
-            set this.bonus = bonus
-            set this.state = state
-            call SaveReal(HT_unitstate, GetHandleId(source), state, LoadReal(HT_unitstate, GetHandleId(source), state) + bonus)   
-
-            set this.endTick = T32_Tick + R2I(duration * 32)
-            call this.startPeriodic()
-            return this
-        endmethod
-        
-        method destroy takes nothing returns nothing
-            call SaveReal(HT_unitstate, GetHandleId(this.source), this.state, LoadReal(HT_unitstate, GetHandleId(this.source), this.state) - this.bonus)
-            set this.source = null
-            set this.stop = true
-            set this.bonus = 0
-            set recycleNext = recycle
-            set recycle = this
-        endmethod
-
-        implement T32x
-    endstruct
-
 
     //Absolute limit
     function GetHeroMaxAbsoluteAbility takes unit u returns integer

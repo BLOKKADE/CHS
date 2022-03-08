@@ -1,69 +1,54 @@
-/*library SpellFormula initializer init requires AbilityData
+library SpellFormula initializer init requires AbilityData
 
     globals
-        private HashTable SpellValueHashTable
+        private HashTable SpellValueTable
     endglobals
 
-    function HasAbilityKeyLevelValue takes integer abilId, integer valueKey, integer level returns boolean
-        return SpellValueHashTable[abilId][valueKey] != 0 and SpellValueHashTable[abilId][valueKey].real[level] != 0
+    function HasAbilityKeyLevelValue takes integer valueFactor, integer level returns boolean
+        return level == 0 or SpellValueTable[valueFactor].integer[level] != 0
     endfunction
 
-    function GetAbilityKeyLevelValue takes integer abilId, integer valueKey, integer level returns real
-        return SpellValueHashTable[abilId][valueKey].real[level]
+    function GetAbilityKeyLevelValue takes integer valueFactor, integer level returns integer
+        return SpellValueTable[valueFactor].integer[level]
     endfunction
 
-    function SetAbilityKeyLevelValue takes integer abilId, integer valueKey, integer level, real value returns nothing
-        if SpellValueHashTable[abilId][valueKey] == 0 then
-            set SpellValueHashTable[abilId][valueKey] = Table.create()
-        endif
-        set SpellValueHashTable[abilId][valueKey].real[level] = value
+    function SetAbilityKeyLevelValue takes integer valueFactor, integer level, integer value returns nothing
+        set SpellValueTable[valueFactor].integer[level] = value
     endfunction
 
-    function CalculateValue takes real prevDamage, real initDamage, real factor, integer level returns real
-        if prevDamage != 0 then
-            return prevDamage + (factor * level)
+    function CalculateValue takes integer prevValue, integer valueFactor, integer level returns integer
+        return prevValue + (valueFactor * level)
+    endfunction
+
+    //TODO optimise this
+    function CalculateValues takes integer valueFactor, integer level returns nothing
+        local integer i = 1
+        if level < 30 then
+            loop
+                call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))
+                set i = i + 1
+                exitwhen i > 30
+            endloop
         else
-            return initDamage
+            loop
+                call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))
+                set i = i + 1
+                exitwhen i > 120
+            endloop
         endif
     endfunction
     //============================================================================
     //calculates ability damage and other values using the world editor object editor formula
     //stores calculated values in a table so it doesnt need to be recalculated
-        function GetSpellValue takes integer abilId, integer valueKey, real initDamage, real factor, real level returns real
-            local real damage
-            local real damageNext
-            local integer levelRounded = floor(level)
-            local real levelDecimals = level - levelRounded
-            local integer i = 2
-
-            if levelDecimals == 0 then
-                if HasAbilityKeyLevelValue(abilId, valueKey, levelRounded) then
-                    return GetAbilityKeyLevelValue(abilId, valueKey, levelRounded)
-                else
-                    set damage = CalculateValue(GetAbilityKeyLevelValue(abilId, valueKey, levelRounded -1), initDamage, factor, levelRounded)
-                    call SetAbilityKeyLevelValue(abilId, valueKey, levelRounded, damage)
-                    return damage
-                endif
-            else
-                if HasAbilityKeyLevelValue(abilId, valueKey, levelRounded) then
-                    set damage = GetAbilityKeyLevelValue(abilId, valueKey, levelRounded)
-                else
-                    set damage = CalculateValue(GetAbilityKeyLevelValue(abilId, valueKey, levelRounded -1), initDamage, factor, levelRounded)
-                    call SetAbilityKeyLevelValue(abilId, valueKey, levelRounded, damage)
-                endif
-
-                if HasAbilityKeyLevelValue(abilId, valueKey, levelRounded + 1) then
-                    set damageNext = GetAbilityKeyLevelValue(abilId, valueKey, levelRounded + 1)
-                else
-                    set damageNext = CalculateValue(damage, initDamage, factor, levelRounded + 1)
-                    call SetAbilityKeyLevelValue(abilId, valueKey, levelRounded + 1, damageNext)
-                endif
-
-                return damage + ((damageNext - damage) * levelDecimals)
+        function GetSpellValue takes integer valueInit, integer valueFactor, integer level returns integer
+            if not HasAbilityKeyLevelValue(valueFactor, level) then
+                call CalculateValues(valueFactor, level)
             endif
+
+            return (GetAbilityKeyLevelValue(valueFactor, level)) + valueInit
         endfunction
 
         private function init takes nothing returns nothing
-            set SpellValueHashTable = HashTable.create()
+            set SpellValueTable = HashTable.create()
         endfunction
-    endlibrary*/
+    endlibrary

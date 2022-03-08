@@ -1,4 +1,4 @@
-library AncientStaff requires DummyOrder, RandomShit, CustomState
+library AncientStaff requires DummyOrder, RandomShit, CustomState, GetRandomUnit
     private function CalculateReduction takes integer count returns real
         local integer i = 1
         local real mr = 0.3
@@ -21,7 +21,7 @@ library AncientStaff requires DummyOrder, RandomShit, CustomState
         call dummy.target(target)
         call dummy.activate()
         call AbilStartCD(u, 'A094', 30)
-        call CustomStateBonus.create(target, CustomState_MagicRes, 0 - (GetUnitMagicDef(target)* CalculateReduction(UnitHasItemI(u, 'I06V'))), 5)
+        call TempBonus.create(target, BONUS_MAGICRES, 0 - (GetUnitMagicDef(target)* CalculateReduction(UnitHasItemI(u, ANCIENT_STAFF_ITEM_ID))), 5)
         set target = null
     endfunction
 endlibrary

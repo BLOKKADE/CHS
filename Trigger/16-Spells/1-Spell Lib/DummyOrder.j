@@ -1,13 +1,14 @@
-library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
+library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyRecycler, DummyId
  
     //============================================================================
 
     globals
         Table DummyInfo
+        Table DummyAbilitySource
     endglobals
 
     function GetDummyOrder takes integer id returns DummyOrder
-        return id
+        return DummyInfo[id]
     endfunction
 
     function GetDummyOrderSource takes integer id returns unit
@@ -24,15 +25,16 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         integer endTick
         integer orderType
         boolean stopDummy
+        boolean noEarlyStop
+        boolean destroyDummy
+        boolean abilSet
 
         unit targetUnit
 
         real targetX
         real targetY
         
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         method stop takes nothing returns nothing
             set this.stopDummy = true
@@ -84,17 +86,28 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
             return this
         endmethod 
 
+        //do not use more than once per dummy
         method addActiveAbility takes integer abilityId, integer level, integer order returns thistype
-            call UnitAddAbility(dummy, abilityId)
-            call UnitMakeAbilityPermanent(this.dummy, true, abilityId)
-            call SetUnitAbilityLevel(dummy, abilityId, level)
-            set this.order = order
-            set this.abil = abilityId
+            if not this.abilSet then
+                call UnitAddAbility(dummy, abilityId)
+                call UnitMakeAbilityPermanent(this.dummy, true, abilityId)
+                call SetUnitAbilityLevel(dummy, abilityId, level)
+                set this.order = order
+                set this.abil = abilityId
+                set DummyAbilitySource[GetDummyId(this.dummy)] = abilityId
+                //call BJDebugMsg("set das: " + "dummy id: " + I2S(GetDummyId(this.dummy)) + GetObjectName(DummyAbilitySource[GetDummyId(this.dummy)]))
+                set this.abilSet = true
 
+                if IsSpellDot(abilityId) then
+                    set this.endTick = T32_Tick + R2I(BlzGetAbilityRealLevelField(BlzGetUnitAbility(this.dummy, abilityId), ABILITY_RLF_DURATION_NORMAL, level - 1) * 32)
+                    set this.noEarlyStop = true
+                endif
+            endif
             //call BJDebugMsg("dummy added active")
             return this
         endmethod
 
+        /*if implemented add way of making sure all abilities are removed before recycling
         method addPassiveAbility takes integer abilityId, integer level returns thistype
             call UnitAddAbility(dummy, abilityId)
             call UnitMakeAbilityPermanent(this.dummy, true, abilityId)
@@ -102,15 +115,24 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
             
             //call BJDebugMsg("dummy added passive")
             return this
-        endmethod
+        endmethod*/
 
         method periodic takes nothing returns nothing
-            if T32_Tick >= this.endTick or this.stopDummy or GetUnitCurrentOrder(this.dummy) == 0 then
-                call this.stopPeriodic()
-                call this.destroy()
+            if this.destroyDummy then
+                if T32_Tick >= this.endTick then
+                    call this.stopPeriodic()
+                    call this.destroy()
+                endif
+            else
+                if T32_Tick > this.endTick then
+                    set this.destroyDummy = true
+                    set this.endTick = T32_Tick + (5 * 32)
+                    call this.resetDummy()
+                endif
             endif
         endmethod
         implement T32x
+        implement Recycle
 
         method activate takes nothing returns boolean
             local trigger trg = CreateTrigger()
@@ -141,48 +163,53 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo
         */
         
         static method create takes unit source, real x, real y, real facing, real duration returns thistype
-            local thistype this
+            local thistype this = thistype.setup()
             local player p = GetOwningPlayer(source)
 
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
-
-            set this.dummy = CreateUnit(p, 'h015', x, y, facing) 
-            set DummyInfo[GetHandleId(this.dummy)] = this
+            set this.dummy = GetRecycledDummyAnyAngle(x, y, 0.) 
+            call SetDummyId(this.dummy)
+            call PauseUnit(this.dummy, false)
+            call BlzSetUnitFacingEx(this.dummy, facing)
+            set DummyInfo[GetDummyId(this.dummy)] = this
+            call SetUnitOwner(this.dummy, p, true)
             set this.pid = GetPlayerId(p)
             set this.source = source
+            set this.destroyDummy = false
+            set this.abilSet = false
+            set this.noEarlyStop = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             set this.endTick = T32_Tick + R2I((duration * 32))
             //call BJDebugMsg("created dummy")
             return this
         endmethod
+
+        method resetDummy takes nothing returns nothing
+            set DummyInfo[GetDummyId(this.dummy)] = 0
+            call ResetDummyId(this.dummy)
+            call IssueImmediateOrderById(this.dummy, 851972)
+        endmethod
         
         method destroy takes nothing returns nothing
-            //call UnitRemoveAbility(this.dummy, this.abil)
+            call UnitRemoveAbility(this.dummy, this.abil)
 
-            set DummyInfo[GetHandleId(this.dummy)] = 0
+            
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             ///set DummyInfo[GetUnitId(this.dummy)].boolean[2] = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[3] = false
 
-            call UnitApplyTimedLife(this.dummy, 'BTLF', 5)
+            call BlzSetUnitFacingEx(this.dummy, 0)
+            call RecycleDummy(this.dummy) 
             //call RemoveUnit(this.dummy)
             //set this.callback = null
             set this.dummy = null
             set this.source = null
             set this.targetUnit = null
-            //call BJDebugMsg("dummy destroyed")
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     endstruct
 
     private function Init takes nothing returns nothing
         set DummyInfo = Table.create()
+        set DummyAbilitySource = Table.create()
     endfunction
 endlibrary

@@ -5,9 +5,9 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
     endglobals
 
     function RemoveSpell takes integer pid, unit u, integer abilId returns nothing
-        set udg_integers01[pid + 1]= udg_integers01[pid + 1] - 1
-        if udg_integers05[pid + 1] == abilId then
-            set udg_integers05[pid + 1] = GetLastLearnedSpell(u, SpellList_Normal, false)
+        set HeroAbilityCount[pid + 1]= HeroAbilityCount[pid + 1] - 1
+        if PlayerLastLearnedSpell[pid + 1] == abilId then
+            set PlayerLastLearnedSpell[pid + 1] = GetLastLearnedSpell(u, SpellList_Normal, false)
         endif
         call SaveCountHeroSpell(u ,LoadCountHeroSpell(u,0) - 1 ,0 ) 
         call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(abilId, GetUnitAbilityLevel(u, abilId) - 1))    
@@ -52,33 +52,50 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
 
             //call SpellsLearnedDebug("pre nl", u, 0)
 
-            if GetUnitAbilityLevel(u, 'Asal') > 0 then
-                call RemoveSpell(pid, u, 'Asal')
+            if GetUnitAbilityLevel(u, PILLAGE_ABILITY_ID) > 0 then
+                call RemoveSpell(pid, u, PILLAGE_ABILITY_ID)
+                if AbilityMode != 0 then
+                    call RemoveItemFromUpgradeShop(pid, PILLAGE_ITEM_ID)
+                endif
                 set count = 1
             endif
 
-            if GetUnitAbilityLevel(u, 'A02W') > 0 then
-                call RemoveSpell(pid, u, 'A02W')
+            if GetUnitAbilityLevel(u, LEARNABILITY_ABILITY_ID) > 0 then
+                call RemoveSpell(pid, u, LEARNABILITY_ABILITY_ID)
+                if AbilityMode != 0 then
+                    call RemoveItemFromUpgradeShop(pid, LEARNABILITY_ITEM_ID)
+                endif
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(u, 'A04K') > 0 then
-                call RemoveSpell(pid, u, 'A04K')
+            if GetUnitAbilityLevel(u, HOLY_ENLIGHTENMENT_ABILITY_ID) > 0 then
+                call RemoveSpell(pid, u, HOLY_ENLIGHTENMENT_ABILITY_ID)
+                if AbilityMode != 0 then
+                    call RemoveItemFromUpgradeShop(pid, HOLY_ENLIGHTENMENT_ITEM_ID)
+                endif
                 set count = count + 1
             endif
 
-            if GetUnitAbilityLevel(u, 'A0A2') > 0 then
-                call RemoveSpell(pid, u, 'A0A2')
+            if GetUnitAbilityLevel(u, MIDAS_TOUCH_ABILITY_ID) > 0 then
+                call RemoveSpell(pid, u, MIDAS_TOUCH_ABILITY_ID)
+                if AbilityMode != 0 then
+                    call RemoveItemFromUpgradeShop(pid, MIDAS_TOUCH_ITEM_ID)
+                endif
                 set count = count + 1
             endif
 
             if count > 0 then
                 call MoveSpellList(u)
-
+                call RefreshUpgradeShop(pid, u)
+                
                 if AbilityMode == 2 then
                     set udg_Draft_NOSpellsLearned[pid+1] = udg_Draft_NOSpellsLearned[pid+1] - count
-                    call GenerateDraftSpells(pid+1, udg_Draft_NODraftSpells) 
                 endif
+            endif
+
+            if AbilityMode == 2 then
+                
+                call GenerateDraftSpells(pid+1, udg_Draft_NODraftSpells) 
             endif
 
             //call SpellsLearnedDebug("post nl", u, 0)

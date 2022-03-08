@@ -9,9 +9,7 @@ library PoisonRune initializer init requires RandomShit
         integer level
         integer endTick
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
     
         private method periodic takes nothing returns nothing
@@ -22,15 +20,7 @@ library PoisonRune initializer init requires RandomShit
         endmethod  
     
         static method create takes integer pid, integer level returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set this.pid = pid
             set this.level = level
@@ -42,11 +32,11 @@ library PoisonRune initializer init requires RandomShit
         
         method destroy takes nothing returns nothing
             set PoisonRuneBonus[this.pid] = PoisonRuneBonus[this.pid] - this.level
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function PoisonRune takes nothing returns boolean

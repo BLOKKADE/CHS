@@ -11,7 +11,8 @@ library StormRune requires RandomShit
             call SetUnitX(GetFilterUnit(),GetUnitX(GLOB_RUNE_U)+ GetRandomReal(- 50,50))
             call SetUnitY(GetFilterUnit(),GetUnitY(GLOB_RUNE_U)+ GetRandomReal(- 50,50))  
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\CrushingWave\\CrushingWaveMissile.mdl", GetFilterUnit(), "chest"))  
-            call UnitDamageTarget(GLOB_RUNE_U,GetFilterUnit(),1000 * GLOB_RUNE_POWER,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS)
+            set udg_NextDamageAbilitySource = 'I08I'
+            call Damage.applyMagic(GLOB_RUNE_U, GetFilterUnit(), 1000 * GLOB_RUNE_POWER, DAMAGE_TYPE_MAGIC)
         endif
         return false
     endfunction
@@ -20,7 +21,8 @@ library StormRune requires RandomShit
         local unit u = GLOB_RUNE_U
         local real power = GLOB_RUNE_POWER 
 
-        call GroupEnumUnitsInRange(GL_GR,GetUnitX(u),GetUnitY(u),300 + 100 * power,RuneOfStorm_b )
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),300 + 100 * power,RuneOfStorm_b )
 
 
         set u = null

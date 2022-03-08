@@ -1,6 +1,6 @@
 scope Quests initializer init
     globals
-        string VERSION = "CHS 1.9.29-fix2"
+        string VERSION = "CHS 1.9.30-beta1-fix2"
     endglobals
 
     function AddQuest takes string title, string description, string icon, boolean required, boolean discovered, boolean completed returns nothing
@@ -20,7 +20,7 @@ scope Quests initializer init
     endfunction
     
     function QuestSetUp takes nothing returns nothing
-        call AddQuest("General Information", "Continuation of Custom Hero Survival 1.9.xx by Snowww & BLOKKADE.\nThanks to everyone on the Discord for feedback and suggestions.", "ReplaceableTextures\\PassiveButtons\\PASTimeEclipse3.blp", true, true, false)
+        call AddQuest("General Information", "Continuation of Custom Hero Survival 1.9.xx by Snowww & BLOKKADE.\nDevelopers: BLOKKADE, A Black Death.\nThanks to Barebacker for working on the descriptions.\nThanks to everyone on the Discord for feedback and suggestions.\n", "ReplaceableTextures\\PassiveButtons\\PASTimeEclipse3.blp", true, true, false)
         call AddQuestItem(bj_lastCreatedQuest, "Visit the discord to join our community!", false)
         call AddQuestItem(bj_lastCreatedQuest, "customherosurvival.com or discord.gg/dtTcyMGTyu", false)
         call AddQuestItem(bj_lastCreatedQuest, "Current version: " + VERSION, false)
@@ -39,7 +39,7 @@ scope Quests initializer init
 
         call AddQuest("Hotkeys", "|cff3cff00CTRL + Q|r to convert all lumber to gold. |cff3cff00CTRL + W|r to convert all gold to lumber.\nWhen buying an ability, creep upgrade, glory buff or time hold |cffeeff00SHIFT|r to buy as much of it as you can (does not convert resources).", "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", false, true, false)
 
-        call AddQuest("Credits", "Code\nBribe, Vexorian, Jesus4Lyf \n\nIcons\nPeeKay, Marcos DAB, Dentothor, Darkfang, Kola, Mr. Goblin, JollyD, The Panda, Blood Raven, -Berz-,bu3ny \n\nModels\nJesusHipster, nGy, exfyre, Mythic, Hermit, xyzier_24, JetFangInferno", "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp" , false, true, false)
+        call AddQuest("Credits", "Code\nBribe, Vexorian, Jesus4Lyf \n\nIcons\nPeeKay, Marcos DAB, Nightcrime, Dentothor, Darkfang, Kola, Mr. Goblin, JollyD, The Panda, Blood Raven, -Berz-,bu3ny \n\nModels\nJesusHipster, nGy, exfyre, Mythic, Hermit, xyzier_24, JetFangInferno", "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp" , false, true, false)
         call AddQuestItem(bj_lastCreatedQuest, "Thanks to N1 for making the ability draft mode.", false)
         call AddQuestItem(bj_lastCreatedQuest, "Thanks to Komoset for making the loading screen.", false)
         call AddQuestItem(bj_lastCreatedQuest, "This list is incomplete. Is your name missing? Let us know.", false)

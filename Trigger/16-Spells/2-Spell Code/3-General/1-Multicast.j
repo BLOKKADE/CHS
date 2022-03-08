@@ -2,14 +2,14 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
     function MultiBonusCast takes unit caster, unit target, integer abilId, integer abilOrder, location spellLoc returns nothing
         local real targetX
         local real targetY
-        local real multicastLvl = GetUnitAbilityLevel(caster,'A04F')
+        local real multicastLvl = GetUnitAbilityLevel(caster,MULTICAST_ABILITY_ID)
         local integer orderType = 0
         local integer amount = 0
         local integer OGRE_i
         local integer OGRE_i2
 
         local real luck = GetUnitLuck(caster)
-        
+
         if target == null then
             set orderType = 1
             if spellLoc == null then
@@ -27,10 +27,8 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             set targetY = GetUnitY(target)
         endif
 
-        
-
         //Check if caster has multicast
-        if abilId == 'AOmi' then
+        if GetAbilityOrderType(abilId) == 0 then
             set caster = null
             set target = null
             return
@@ -61,7 +59,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             endif
 
             //Ogre Mage multicast chances
-            if GetUnitTypeId(caster) == 'H01E' then
+            if GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID then
                 set OGRE_i = 15 + GetHeroLevel(caster) * 2
                 set OGRE_i2 = OGRE_i / 100 
                 set OGRE_i = OGRE_i - OGRE_i2 * 100

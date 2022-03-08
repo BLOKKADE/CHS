@@ -6,11 +6,15 @@ library Glory initializer initLState
         integer array WinCount
     endglobals
 
+    function SetVersion takes nothing returns nothing
+        call BlzFrameSetText(ResPlayer, VERSION)
+    endfunction
+
     function ResourseRefresh takes player Pl returns nothing 
         local integer pid = GetPlayerId(Pl)
         local string S = "Glory:  " + I2S(R2I(Glory[pid]))
 
-        if GetLocalPlayer() == Pl then
+        if (not BrStarted) and GetLocalPlayer() == Pl then
             call BlzFrameSetText(ResPlayer ,S)
         endif
     endfunction
@@ -32,7 +36,7 @@ library Glory initializer initLState
         local real gloryBonus = 0
 
         //Arena Ring
-        set gloryBonus = gloryBonus + (GetRingGloryBonus(udg_units01[pid + 1]) * GetValidEndOfRoundItems(udg_units01[pid + 1], 'I0AF'))
+        set gloryBonus = gloryBonus + (GetRingGloryBonus(PlayerHeroes[pid + 1]) * GetValidEndOfRoundItems(PlayerHeroes[pid + 1], 'I0AF'))
 
         //Default bonus
         set gloryBonus = gloryBonus + 200
@@ -49,18 +53,18 @@ library Glory initializer initLState
         call ResourseRefresh(GetOwningPlayer(u)) 
 
         if udg_boolean08 == true then
-            if WinCount[pid] != udg_integer02 then
-                set Glory[pid] = Glory[pid] + 4000 + ((udg_integer02 / 5)- 1)* 2000
-                set WinCount[pid] = udg_integer02 
+            if WinCount[pid] != RoundNumber then
+                set Glory[pid] = Glory[pid] + 4000 + ((RoundNumber / 5)- 1)* 2000
+                set WinCount[pid] = RoundNumber 
             else
-                set Glory[pid] = Glory[pid] + 2000 + ((udg_integer02 / 5)- 1)* 1000
+                set Glory[pid] = Glory[pid] + 2000 + ((RoundNumber / 5)- 1)* 1000
             endif
         else
-            if WinCount[pid] != udg_integer02 then
-                set Glory[pid] = Glory[pid] + 3000 + ((udg_integer02 / 5)- 1)* 1000
-                set WinCount[pid] = udg_integer02 
+            if WinCount[pid] != RoundNumber then
+                set Glory[pid] = Glory[pid] + 3000 + ((RoundNumber / 5)- 1)* 1000
+                set WinCount[pid] = RoundNumber 
             else
-                set Glory[pid] = Glory[pid] + 1500 + ((udg_integer02 / 5)- 1)* 500
+                set Glory[pid] = Glory[pid] + 1500 + ((RoundNumber / 5)- 1)* 500
             endif
         endif
 

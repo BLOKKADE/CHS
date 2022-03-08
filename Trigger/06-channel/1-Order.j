@@ -1,4 +1,4 @@
-library ChannelOrder initializer FreeInitChannel
+/*library ChannelOrder initializer FreeInitChannel
     globals 
         string array OrderString
         hashtable HTInfoSpell = InitHashtable()
@@ -49,7 +49,7 @@ library ChannelOrder initializer FreeInitChannel
         set OrderString[39] = "sacrifice"
         
         // InitSpellChanell
-        call SaveInteger(HT,'A05X',4,1)
+        call SaveInteger(HT,CYCLONE_ABILITY_ID,4,1)
         
         
     endfunction
@@ -63,4 +63,4 @@ library ChannelOrder initializer FreeInitChannel
         
         endif
     endfunction
-endlibrary
+endlibrary*/

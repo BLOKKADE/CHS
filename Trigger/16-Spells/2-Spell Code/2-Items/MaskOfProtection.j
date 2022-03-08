@@ -14,9 +14,7 @@ library MaskOfProtection initializer init requires CustomState
         real magicResBonus
         integer endTick
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         private method disableBonus takes nothing returns nothing
             call BlzSetUnitArmor(this.source, BlzGetUnitArmor(this.source) - this.armorBonus)
@@ -32,16 +30,8 @@ library MaskOfProtection initializer init requires CustomState
         endmethod  
     
         static method create takes unit source returns thistype
-            local thistype this
+            local thistype this = thistype.setup()
             local real magicpower = GetUnitMagicDmg(source)
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
 
             set this.source = source
             set this.armorBonus = magicpower * 3
@@ -58,11 +48,11 @@ library MaskOfProtection initializer init requires CustomState
         method destroy takes nothing returns nothing
             set MopStruct[GetHandleId(this.source)] = 0
             set this.source = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function MaskOfProtectionCast takes unit u returns nothing

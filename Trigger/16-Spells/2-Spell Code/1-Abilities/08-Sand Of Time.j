@@ -29,27 +29,27 @@ library SandOfTime requires RandomShit
         endloop
 
         //Ogre Warrior
-        if GetUnitTypeId(hero) == 'H01C' then
+        if GetUnitTypeId(hero) == OGRE_WARRIOR_UNIT_ID then
             call ResetSpell(hero, 'A08U', time, true)
         endif
 
         //Pit Lord
-        /*if GetUnitTypeId(hero) == 'O007' then
+        /*if GetUnitTypeId(hero) == PIT_LORD_UNIT_ID then
             call ResetSpell(hero, 'A08V', time, true)
         endif*/
 
         //Centaur
-        if GetUnitTypeId(hero) == 'H01B' then
+        if GetUnitTypeId(hero) == CENTAUR_ARCHER_UNIT_ID then
             call ResetSpell(hero, 'A08T', time, true)
         endif
 
         //Thunder Witch
-        if GetUnitTypeId(hero) == 'O001' then
+        if GetUnitTypeId(hero) == THUNDER_WITCH_UNIT_ID then
             call ResetSpell(hero, 'A08P', time, true)
         endif
 
         //Lich
-        if GetUnitTypeId(hero) == 'H018' then
+        if GetUnitTypeId(hero) == LICH_UNIT_ID then
             call ResetSpell(hero, 'A08W', time, true)
         endif
     endfunction

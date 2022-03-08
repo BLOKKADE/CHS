@@ -1,10 +1,9 @@
-library ChaosRune requires ChaosMagic
+library ChaosRune initializer init requires ChaosMagic
     globals
-        group GL_GR = CreateGroup()
         boolexpr RuneOfChaos_b
+        Table RuneOfChaosMagicPower
         integer GLOB_LVL_abil = 0
         integer unitsHit
-        boolexpr BOOLEXPR_TRUE = null
     endglobals
 
 
@@ -17,7 +16,7 @@ library ChaosRune requires ChaosMagic
             set RandomSpellLoc = null
         endif
             
-        call GroupRemoveUnit(GL_GR, u)
+        call GroupRemoveUnit(ENUM_GROUP, u)
         return false
     endfunction
 
@@ -26,24 +25,27 @@ library ChaosRune requires ChaosMagic
         local real power = GLOB_RUNE_POWER 
         local integer lvl = 10 + R2I((power - 1)* 10)
         local integer lp = 0
-        local integer i = 0
+
         if lvl > 30 then
-            set lp = (lp + lvl - 30)/ 3
+            set lp = (lp + lvl - 30) / 2
+            set RuneOfChaosMagicPower.real[GetPlayerId(GetOwningPlayer(u))] = lp * 10
             set lvl = 30
         endif
-        
-        loop
-            set GLOB_LVL_abil = lvl
-            call GroupClear(GL_GR)
-            call EnumTargettableUnitsInRange(GL_GR, GetUnitX(u), GetUnitY(u), 400 + 75 * power, GetOwningPlayer(u), false)
-            call CastRuneOfChaos(BlzGroupUnitAt(GL_GR, GetRandomInt(0, BlzGroupGetSize(GL_GR))))
-            call CastRuneOfChaos(BlzGroupUnitAt(GL_GR, GetRandomInt(0, BlzGroupGetSize(GL_GR))))
-            call CastRuneOfChaos(BlzGroupUnitAt(GL_GR, GetRandomInt(0, BlzGroupGetSize(GL_GR))))
-            set i = i + 1
-            exitwhen i >= lp
-        endloop
+
+        set GLOB_LVL_abil = lvl
+        call GroupClear(ENUM_GROUP)
+        call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 400 + 75 * power, GetOwningPlayer(u), false, Target_Any)
+        call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
+        call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
+        call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
+
+        set RuneOfChaosMagicPower.real[GetHandleId(u)] = 0
 
         set u = null
         return false
+    endfunction
+
+    private function init takes nothing returns nothing
+        set RuneOfChaosMagicPower = Table.create()
     endfunction
 endlibrary

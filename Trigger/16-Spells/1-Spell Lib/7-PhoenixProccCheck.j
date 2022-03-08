@@ -1,7 +1,6 @@
-library CheckProcc
+library CheckProcc requires GroupUtils
 
     globals
-        private group ProcGroup = CreateGroup()
         private integer ProcCount = 0
         private player ProcOwner
     endglobals
@@ -15,13 +14,17 @@ library CheckProcc
         return false
     endfunction
 
+    function GetProcCheckCount takes nothing returns integer
+        return ProcCount
+    endfunction
+
     function CheckProc takes unit u, real area returns boolean
         local real x = GetUnitX(u)
         local real y = GetUnitY(u)
         set ProcCount = 0
         set ProcOwner = GetOwningPlayer(u)
-        call GroupEnumUnitsInRange(ProcGroup, x, y, area, Condition(function Filter))
-        call GroupClear(ProcGroup)
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP, x, y, area, Condition(function Filter))
         if ProcCount > 0 then
             return true
         endif

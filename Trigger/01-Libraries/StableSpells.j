@@ -10,24 +10,25 @@ library StableSpells initializer init
     private function init takes nothing returns nothing
         set StableSpells = Table.create()
 
-        set StableSpells.boolean['AHds'] = true
-        set StableSpells.boolean['A07S'] = true
-        set StableSpells.boolean['A05R'] = true
-        set StableSpells.boolean['A0AB'] = true
+        set StableSpells.boolean[DIVINE_SHIELD_ABILITY_ID] = true
+        set StableSpells.boolean[DIVINE_BUBBLE_ABILITY_ID] = true
+        set StableSpells.boolean[LAST_BREATHS_ABILITY_ID] = true
+        set StableSpells.boolean[ABSOLUTE_ARCANE_ABILITY_ID] = true
         set StableSpells.boolean['A0AM'] = true
         set StableSpells.boolean['A08P'] = true
         set StableSpells.boolean['A08P'] = true
-        set StableSpells.boolean['A024'] = true
-        set StableSpells.boolean['A05U'] = true
+        set StableSpells.boolean[RESET_TIME_ABILITY_ID] = true
+        set StableSpells.boolean[ANCIENT_TEACHING_ABILITY_ID] = true
         set StableSpells.boolean['A044'] = true
         set StableSpells.boolean['A0AH'] = true
         set StableSpells.boolean['A08P'] = true
-        set StableSpells.boolean['A083'] = true
-        set StableSpells.boolean['A0AS'] = true
-        set StableSpells.boolean['A06Q'] = true
-        set StableSpells.boolean['A06O'] = true
+        set StableSpells.boolean[SAND_OF_TIME_ABILITY_ID] = true
+        set StableSpells.boolean[TIME_MANIPULATION_ABILITY_ID] = true
+        set StableSpells.boolean[LIQUID_FIRE_ABILITY_ID] = true
+        set StableSpells.boolean[ENVENOMED_WEAPONS_ABILITY_ID] = true
         set StableSpells.boolean['A0B6'] = true
         set StableSpells.boolean['A0BA'] = true
-        set StableSpells.boolean['A07T'] = true
+        set StableSpells.boolean[ANCIENT_BLOOD_ABILITY_ID] = true
+        set StableSpells.boolean[CONTRACT_LIVING_ABIL_ID] = true
     endfunction
 endlibrary

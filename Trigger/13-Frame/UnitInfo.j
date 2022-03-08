@@ -31,12 +31,12 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		string array statColour
 	endglobals
 
-	function UnitInfoGetUnit takes player p returns unit
+	/*function UnitInfoGetUnit takes player p returns unit
 		call GroupEnumUnitsSelected(gUI, p, null)
 		set UnitInfoUnit = FirstOfGroup(gUI)
 		call GroupClear(gUI)
 		return UnitInfoUnit
-	endfunction
+	endfunction*/
 
 	function GameUIStandart takes nothing returns nothing 
 		set parent = BlzCreateFrameByType("SIMPLEFRAME", "", unitInfo, "", 0) 
@@ -84,8 +84,14 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 
 	function StrInfo takes unit u returns string
 		local string s = PrimaryAttributeDmg(u, 0)
+		local real gloryRegen = LoadReal(DataUnitHT, GetHandleId(u), 1000)
 		set s = s + "Each point increases hit points by 26. (" + statColour[0] + "+" + I2S(GetHeroStr(u, true) * 26) + " total|r)\n" 
-		set s = s + "Each point increases hit point regeneration by 0.075. (" + statColour[0] + "+" + R2SW(BlzGetUnitRealField(u, ConvertUnitRealField('uhpr')) + (GetHeroStr(u, true) * 0.075), 1, 1) + " total|r)\n"
+		set s = s + "Each point increases hit point regeneration by 0.075. (" + statColour[0] + "+" + R2SW(BlzGetUnitRealField(u, ConvertUnitRealField('uhpr')) + GetUnitBonusReal(u, BONUS_HEALTH_REGEN) + (GetHeroStr(u, true) * 0.075) + GetSpellValue(0, 5, GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID)) + (UnitHasItemI(u, 'I04N') * 1500), 1, 1) + " total|r)\n"
+		
+		if gloryRegen > 0 then
+			set s = s + statColour[0] + I2S(R2I(gloryRegen + (50 * GloryRegenLevel[GetHandleId(u)]))) + "|r of that is from glory HP regen.\n"
+		endif
+		
 		return s + "Strength per level: " + statColour[0] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(u)) + "|r"
 	endfunction
 
@@ -103,20 +109,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		return s + "Intelligence per level: " + statColour[2] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(u)) + "|r"
 	endfunction
 
-	function UpdateTextRelaese takes unit u returns nothing
-		local string dmgT = "-"
-		local integer Pid = GetPlayerId(GetOwningPlayer(u))
-
-		set dmgT = BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 0))
-		call BlzFrameSetText(TextUI[1], dmgT)
-
-		call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
-		call BlzFrameSetText(TextUI[4], R2SW(GetUnitBlock(u), 1, 0))
-		call BlzFrameSetText(TextUI[2], R2SW(BlzGetUnitAttackCooldown(u, 0), 1, 2) + "/" + R2SW(BlzGetUnitRealField(u, UNIT_RF_CAST_POINT), 1, 2))
-		call BlzFrameSetText(TextUI[5], R2SW(GetUnitPvpBonus(u), 1, 1))
-		call BlzFrameSetText(TextUI[9], R2SW(GetUnitMagicDmg(u), 1, 1))
-		call BlzFrameSetText(TextUI[10], R2SW(GetUnitMagicDef(u), 1, 1))
-		call BlzFrameSetText(TextUI[11], R2SW(GetUnitEvasion(u), 1, 1))
+	function UpdateTooltipText takes unit u returns nothing
 		set CustomInfoT1[1] = R2S(100 * GetUnitRealEvade(u))
 
 		if BlzGetUnitArmor(u) >= 0 and not BlzIsUnitInvulnerable(u) then
@@ -126,6 +119,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		else
 			set CustomInfoT1[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
 		endif
+
 		set CustomInfoT1[3] = R2S(GetUnitMagicDmg(u))
 		set CustomInfoT1[4] = R2S( (1 - (50 / ( 50 + GetUnitMagicDef(u) ))) * 100 )
 		set CustomInfoT1[5] = ExtraFieldInfo(u)
@@ -133,14 +127,17 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		set CustomInfoT1[7] = AgiInfo(u)
 		set CustomInfoT1[8] = IntInfo(u)
 		set CustomInfoT1[9] = DmgInfo(u)
+	endfunction
 
-		/*
-		set ToolTipS = ToolTipS + "|cffe7544aStrength|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(SpellU)) + "\n"
-		set ToolTipS = ToolTipS + "|cffd6e049Agility|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(SpellU)) + "\n"
-		set ToolTipS = ToolTipS + "|cff4daed4Intelligence|r per level: " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(SpellU)) + "\n"
-		set ToolTipS = ToolTipS + "|cff51d44dHit point/mana regeneration|r - " + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('uhpr')) + (GetHeroStr(SpellU, true) * 0.075)) + 
-		"/" + R2S(BlzGetUnitRealField(SpellU, ConvertUnitRealField('umpr'))  + (GetHeroInt(SpellU, true) * 0.065)) + "\n"
-		*/
+	function UpdateTextRelaese takes unit u returns nothing
+		call BlzFrameSetText(TextUI[1], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 0)))
+		call BlzFrameSetText(TextUI[2], R2SW(BlzGetUnitAttackCooldown(u, 0), 1, 2) + "/" + R2SW(BlzGetUnitRealField(u, UNIT_RF_CAST_POINT), 1, 2))
+		call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
+		call BlzFrameSetText(TextUI[4], R2SW(GetUnitBlock(u), 1, 0))
+		call BlzFrameSetText(TextUI[5], R2SW(GetUnitPvpBonus(u), 1, 1))
+		call BlzFrameSetText(TextUI[9], R2SW(GetUnitMagicDmg(u), 1, 1))
+		call BlzFrameSetText(TextUI[10], R2SW(GetUnitMagicDef(u), 1, 1))
+		call BlzFrameSetText(TextUI[11], R2SW(GetUnitEvasion(u), 1, 1))
 
 		if IsHeroUnitId(GetUnitTypeId(u)) then
 			call BlzFrameSetText(TextUI[6], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroStrengthValue", 6)))
@@ -156,22 +153,6 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 			call BlzFrameSetText(TextUI[8], "-")
 			call BlzFrameSetText(TextUI[12], "-")
 		endif
-
-		set dmgT = null
-	endfunction
-
-	function UpdateText takes nothing returns nothing 
-		local integer loopA = 0
-		local unit u = null
-
-		loop
-			set UnitArrayUpdate[loopA] = UnitInfoGetUnit(Player(loopA))
-			call UpdateTextRelaese(UnitArrayUpdate[GetPlayerId(GetLocalPlayer())])
-			set loopA = loopA + 1
-			exitwhen loopA > 8
-		endloop
-		
-		set u = null
 	endfunction
 
 	function InitDataInfoPanel takes integer id, string label, string icon, string desc returns nothing
@@ -216,39 +197,41 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 	endfunction
 
 	function update takes nothing returns nothing
-		local integer loopA = 0
+		local integer currentFrame = 0
 		local boolean VisibleFrame = false
+		local integer localpid = GetPlayerId(GetLocalPlayer())
 
-		call UpdateText()
+		call UpdateTextRelaese(selectedUnit[localpid])
 
 		loop
-			if BlzFrameIsVisible(ToolTipUI[loopA]) then
+			if BlzFrameIsVisible(ToolTipUI[currentFrame]) then
+				call UpdateTooltipText(selectedUnit[localpid])
 				set VisibleFrame = true
-				set ToolTipA = DataLabel[loopA] + BlzFrameGetText(TextUI[loopA]) + "\n------------------------------\n" + DataDesc[loopA]
-				if loopA == 3 then
+				set ToolTipA = DataLabel[currentFrame] + BlzFrameGetText(TextUI[currentFrame]) + "\n------------------------------\n" + DataDesc[currentFrame]
+				if currentFrame == 3 then
 					set ToolTipA = ToolTipA + CustomInfoT1[2] + "%%|r."
-				elseif loopA == 1 then
+				elseif currentFrame == 1 then
 					set ToolTipA = ToolTipA + CustomInfoT1[9]
-				elseif loopA == 6 then
+				elseif currentFrame == 6 then
 					set ToolTipA = ToolTipA + CustomInfoT1[6]
-				elseif loopA == 7 then
+				elseif currentFrame == 7 then
 					set ToolTipA = ToolTipA + CustomInfoT1[7]
-				elseif loopA == 8 then
+				elseif currentFrame == 8 then
 					set ToolTipA = ToolTipA + CustomInfoT1[8]
-				elseif loopA == 9 then
+				elseif currentFrame == 9 then
 					set ToolTipA = ToolTipA + CustomInfoT1[3] + "%%|r."
-				elseif loopA == 10 then
+				elseif currentFrame == 10 then
 					set ToolTipA = ToolTipA + CustomInfoT1[4] + "%%|r."
-				elseif loopA == 11 then
+				elseif currentFrame == 11 then
 					set ToolTipA = ToolTipA + CustomInfoT1[1] + "%%|r."
-				elseif loopA == 12 then
-					set ToolTipA = "More info\n------------------------------\n" + DataDesc[loopA]
+				elseif currentFrame == 12 then
+					set ToolTipA = "More info\n------------------------------\n" + DataDesc[currentFrame]
 					set ToolTipA = ToolTipA + CustomInfoT1[5]
 				endif
 				call BlzFrameSetText(tooltipText, ToolTipA)
 			endif
-			set loopA = loopA + 1
-			exitwhen loopA > 12
+			set currentFrame = currentFrame + 1
+			exitwhen currentFrame > 12
 		endloop
 
 		call BlzFrameSetVisible(tooltipBox, VisibleFrame)

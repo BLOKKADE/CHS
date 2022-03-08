@@ -11,14 +11,11 @@ library GetRandomUnit initializer init requires UnitHelpers
         unit exclusionTarget
         boolean createdExclusionGroup
         boolean heroPriority
-        boolean ally
         boolean allowMagicImmune
         unit pickedUnit
         integer endTick
         
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         method GetRandomUnit takes boolean exclude returns unit
             if this.heroPriority and BlzGroupGetSize(this.heroGroup) > 0 then
@@ -33,7 +30,7 @@ library GetRandomUnit initializer init requires UnitHelpers
 
             if exclude then
                 if this.exclusionGroup == null then
-                    set this.exclusionGroup = CreateGroup()
+                    set this.exclusionGroup = NewGroup()
                     set this.createdExclusionGroup = true
                 endif
                 //call BJDebugMsg("ruh excl add")
@@ -43,19 +40,20 @@ library GetRandomUnit initializer init requires UnitHelpers
             return this.pickedUnit
         endmethod
 
-        method EnumUnits takes real x, real y, real range, player p returns thistype
+        method EnumUnits takes real x, real y, real range, integer targetType, player p returns thistype
             local unit temp
             call GroupClear(ENUM_GROUP1)
-            call EnumTargettableUnitsInRange(ENUM_GROUP1, x, y, range, p, this.allowMagicImmune)
+            //call BJDebugMsg("trgtp: " + I2S(targetType) + " p: " + I2S(GetPlayerId(p)))
+            call EnumTargettableUnitsInRange(ENUM_GROUP1, x, y, range, p, this.allowMagicImmune, targetType)
             loop
                 set temp = FirstOfGroup(ENUM_GROUP1)
                 //call BJDebugMsg("gru" + GetUnitName(temp) + " : " + I2S(GetHandleId(temp)))
                 exitwhen temp == null
-                if ((this.ally and IsUnitAlly(temp, p)) or (not this.ally and IsUnitEnemy(temp, p))) and temp != this.exclusionTarget and IsUnitInGroup(temp, this.RandomUnitHelperGroup) == false then
+                if temp != this.exclusionTarget and IsUnitInGroup(temp, this.RandomUnitHelperGroup) == false and GetUnitAbilityLevel(temp, 'Aloc') == 0 then
                     //call BJDebugMsg("ruh ally excl double check")
                     if (this.exclusionGroup != null and IsUnitInGroup(temp, this.exclusionGroup) == false) or this.exclusionGroup == null then
                         call GroupAddUnit(this.RandomUnitHelperGroup, temp)
-                        //call BJDebugMsg("ruh u add")
+                        //call BJDebugMsg("ruh u add: " + GetUnitName(temp) + " : " + I2S(GetHandleId(temp)))
                         if this.heroPriority and IsUnitType(temp, UNIT_TYPE_HERO) and IsUnitInGroup(temp, this.heroGroup) == false then  
                             call GroupAddUnit(this.heroGroup, temp)
                             //call BJDebugMsg("ruh hp add")
@@ -72,14 +70,9 @@ library GetRandomUnit initializer init requires UnitHelpers
             return this
         endmethod
 
-        method checkAlly takes nothing returns thistype
-            set this.ally = true
-            return this
-        endmethod
-
         method doHeroPriority takes nothing returns thistype
             set this.heroPriority = true
-            set this.heroGroup = CreateGroup()
+            set this.heroGroup = NewGroup()
             return this
         endmethod
 
@@ -102,16 +95,17 @@ library GetRandomUnit initializer init requires UnitHelpers
             endif
         endmethod
         implement T32x
+        implement Recycle
 
         method destroyGroups takes nothing returns nothing
             if this.heroGroup != null then
-                call DestroyGroup(this.heroGroup)
+                call ReleaseGroup(this.heroGroup)
             endif
             if this.createdExclusionGroup then
-                call DestroyGroup(this.exclusionGroup)
+                call ReleaseGroup(this.exclusionGroup)
             endif
             if this.RandomUnitHelperGroup != null then
-                call DestroyGroup(this.RandomUnitHelperGroup)
+                call ReleaseGroup(this.RandomUnitHelperGroup)
             endif
         endmethod
 
@@ -124,21 +118,12 @@ library GetRandomUnit initializer init requires UnitHelpers
             set this.exclusionGroup = null
             set this.allowMagicImmune = false
             set this.heroPriority = false
-            set this.ally = false
-            set this.RandomUnitHelperGroup = CreateGroup()
+            set this.RandomUnitHelperGroup = NewGroup()
             return this
         endmethod
         
         static method create takes real duration returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             
             call this.reset()
 
@@ -152,8 +137,7 @@ library GetRandomUnit initializer init requires UnitHelpers
         method destroy takes nothing returns nothing
             call this.reset()
             //call BJDebugMsg("dummy destroyed")
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     endstruct
 
@@ -164,11 +148,6 @@ library GetRandomUnit initializer init requires UnitHelpers
     function GetRandomUnit takes real x, real y, real range, player p, integer targetType, boolean heroPriority, boolean allowMagicImmune returns unit
         call RUH.reset()
 
-        if targetType == 1 then
-            //call BJDebugMsg("ally")
-            call RUH.checkAlly()
-        endif
-
         if heroPriority then
             call RUH.doHeroPriority()
         endif
@@ -178,7 +157,7 @@ library GetRandomUnit initializer init requires UnitHelpers
         endif
 
         //call BJDebugMsg("range: " + R2S(range))
-        call RUH.EnumUnits(x, y, range, p)
+        call RUH.EnumUnits(x, y, range, targetType, p)
         return RUH.GetRandomUnit(false)
     endfunction
 endlibrary

@@ -10,8 +10,8 @@ scope BoolexprInit initializer init
 
     function InitBoolExpr takes nothing returns nothing 
 
-        set PULV1 = Condition(function Trig_Pulverize_Func003Func004001003 )      
-        set PULV2 = Condition(function Trig_Pulverize_Func003Func005001003 )
+        //set PULV1 = Condition(function Trig_Pulverize_Func003Func004001003 )      
+        //set PULV2 = Condition(function Trig_Pulverize_Func003Func005001003 )
         set AbsoluteIceFuncBool = Condition(function AbsoluteIceFunc )
         set AbsoluteColdBool = Condition(function AbsoluteColdFunc)
     endfunction

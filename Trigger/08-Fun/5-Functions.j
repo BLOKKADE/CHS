@@ -1,6 +1,7 @@
-library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory
+library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows
     globals 
         hashtable HT_SpellPlayer = InitHashtable()
+        integer RectPid
     endglobals
 
     function LoadCountHeroSpell takes unit u,integer list returns integer 
@@ -52,135 +53,138 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
 
     function SpellLearnedFunc takes unit u, integer abilId returns nothing
 
-        if GetUnitTypeId(u) == 'O000' then
+        if GetUnitTypeId(u) == TAUREN_UNIT_ID then
             call SpiritTaurenRuneBonus(u, abilId)
         endif
     endfunction
 
-    function FuncEditParam takes integer abilId, unit u returns nothing
+    function SetSkillParameters takes unit u, integer abilId returns nothing
+        local integer hid = GetHandleId(u)
         local integer i1 = 0
         local integer i2 = 0
+
+        if abilId == EVASION_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,hid, abilId) 
+            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,hid, abilId,i1)
+        endif
+
+        if abilId == DRUNKEN_MASTER_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,hid, abilId) 
+            call AddUnitEvasion(u ,   I2R(i1 - i2)  )	
+            call SaveInteger(HT,hid, abilId,i1)
+        endif 
+
+        if abilId == HARDENED_SKIN_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,hid, abilId) 
+            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,hid, abilId,i1)
+        endif 
+
+        if abilId == FIRE_SHIELD_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,hid, abilId) 
+            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,hid, abilId,i1)
+        endif 
+
+        if abilId == MEGA_LUCK_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u,abilId)
+            set i2 = LoadInteger(HT,hid, abilId) 
+            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
+            call SaveInteger(HT,hid, abilId,i1)
+        endif 
+
+        if abilId == ABSOLUTE_POISON_ABILITY_ID then
+            call AbsolutePoisonLearned(u)
+        endif
+
+        if abilId == DEMOLISH_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u, abilId)
+            set i2 = LoadInteger(HT,hid, abilId) 
+            call AddUnitPhysPow(u, 3 * I2R(i1 - i2))
+            call SaveInteger(HT,hid, abilId,i1)
+        endif
+
+        if abilId == LEARNABILITY_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u, abilId)
+            set i2 = LoadInteger(HT,hid, abilId) 
+            set LearnabilityBonus.real[hid] = 0.05 + (0.005 * I2R(i1 - i2))
+            call SaveInteger(HT,hid, abilId,i1)
+        endif
+
+        if abilId == SPIKED_CARAPACE_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u, abilId)
+            set i2 = LoadInteger(HT, hid, abilId)
+            call AddUnitBonus(u, BONUS_ARMOR, 4 * (i1 - i2))
+            call SaveInteger(HT, hid, abilId, i1)
+        endif
+    endfunction
+
+    function RemoveSkillStruct takes unit u, integer abilId returns nothing
+        local integer hid = GetHandleId(u)
+        
+        if abilId == SEARING_ARROWS_ABILITY_ID then
+            call GetSearingArrowsStruct(hid).destroy()
+        endif
+
+        if abilId == IMMOLATION_ABILITY_ID then
+            call GetImmolationStruct(hid).destroy()
+        endif
+    endfunction
+
+    function FuncEditParam takes integer abilId, unit u returns nothing
         local integer NumAbility
 
         if IsUnitType(u, UNIT_TYPE_HERO) and IsAbsolute(abilId) == false then
             call AddSpellPlayerInfo(abilId,u,0)
 
-            call SetChanellOrder(u,abilId,GetInfoHeroSpell(u,abilId)  )
+            //call SetChanellOrder(u,abilId,GetInfoHeroSpell(u,abilId)  )
         endif
 
-        if abilId == 'AEev' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10001) 
-            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10001,i1)
+        if IsAbilityEnabled(u, abilId) then
+            call ToggleUpdateDescription(GetOwningPlayer(u), abilId, GetUnitAbilityLevel(u, abilId))
         endif
 
-        if abilId == 'Acdb' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10002) 
-            call AddUnitEvasion(u ,   1 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10002,i1)
-        endif    
+        call SetSkillParameters(u, abilId)
 
-        if abilId == 'Assk' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10003) 
-            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10003,i1)
-        endif 
-
-        if abilId == 'A05S' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10004) 
-            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10004,i1)
-            call SetPlayerAbilityAvailable(GetOwningPlayer(u), 'A05S', false)
-            call SetPlayerAbilityAvailable(GetOwningPlayer(u), 'A05S', true)
-        endif 
-
-        if abilId == 'A06V' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10005) 
-            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10005,i1)
-        endif 
-
-        if GetUnitAbilityLevel(u, 'A0AC') > 0 then
-            call AbsolutePoisonLearned(u)
-        endif
-
-        if abilId == 'A05Z' or abilId == 'A05U' or abilId == 'A0AS' and GetUnitAbilityLevel(u,abilId) == 1 then
+        if abilId == MYSTERIOUS_TALENT_ABILITY_ID or abilId == ANCIENT_TEACHING_ABILITY_ID or abilId == TIME_MANIPULATION_ABILITY_ID and GetUnitAbilityLevel(u,abilId) == 1 then
             call BlzStartUnitAbilityCooldown(u,abilId,60)
         endif
 
-        if abilId == 'A05Z' then
+        if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
             call MysteriousTalentUpdateDesc(u)
         endif
 
-
-        if abilId == 'A02O' then     
+        if abilId == MEGA_SPEED_ABILITY_ID then     
             if LoadReal(HT, GetHandleId(u),1 ) == 0 then 
                 call SaveReal(HT,GetHandleId(u),1, BlzGetUnitAttackCooldown(u,0)    )
             endif
-            call SaveReal(HT,GetHandleId(u),'A02O', 0.02 * I2R(GetUnitAbilityLevel(u,abilId))   )	
+            call SaveReal(HT,GetHandleId(u),MEGA_SPEED_ABILITY_ID, 0.02 * I2R(GetUnitAbilityLevel(u,abilId))   )	
             //     call BlzSetUnitAttackCooldown(u, 0.92 - (0.02*I2R(GetUnitAbilityLevel(u,abilId)) ),0  )
         endif
     endfunction
 
     function FunResetAbility takes integer abilId, unit u returns nothing
-        local integer i1 = 0
-        local integer i2 = 0
 
         call RemoveInfoHeroSpell(u,abilId)
 
-        if abilId == 'AEev' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10001) 
-            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10001,i1)
-        endif
+        call SetSkillParameters(u, abilId)
 
-        if abilId == 'Acdb' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10002) 
-            call AddUnitEvasion(u ,   I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10002,i1)
-        endif 
+        call RemoveSkillStruct(u, abilId)
 
-        if abilId == 'Assk' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10003) 
-            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10003,i1)
-        endif 
-
-        if abilId == 'A05S' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10004) 
-            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10004,i1)
-        endif 
-
-        if abilId == 'A082' then
-            set i1 = GetUnitAbilityLevel(u,abilId)
-            set i2 = LoadInteger(HT,GetHandleId(u),- 10005) 
-            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
-            call SaveInteger(HT,GetHandleId(u),- 10005,i1)
-        endif 
-
-        if abilId == 'A0AC' then
-            call AbsolutePoisonLearned(u)
-        endif
-
-        if GetUnitTypeId(u) == 'O000' then
+        if GetUnitTypeId(u) == TAUREN_UNIT_ID then
             call SpiritTaurenRuneBonusReset(u, abilId)
         endif
 
-        if abilId == 'A02O' then
+        /*if abilId == MEGA_SPEED_ABILITY_ID then
             if LoadReal(HT, GetHandleId(u),1 ) != 0 then
                 //   call BlzSetUnitAttackCooldown(u,LoadReal(HT, GetHandleId(u),1 ) ,0 ) 
             endif
-        endif
+        endif*/
     endfunction
 
     function FunctionStartUnit takes unit U returns nothing
@@ -190,11 +194,20 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         endif
     endfunction
 
+    function SellItemsOnGround takes nothing returns nothing
+        call SellItem(RectPid, GetEnumItem())
+    endfunction
+
     function Func_completeLevel takes unit u returns nothing
         local player p = GetOwningPlayer(u)
         local integer pid = GetPlayerId(p)
         local integer i1 = 0 
         local real gloryBonus = 0
+        local integer hid = GetHandleId(u)
+
+        //cleanup items
+        set RectPid = pid
+        call EnumItemsInRectBJ(PlayerArenaRects[pid + 1],function SellItemsOnGround)
 
         //Armor of the Ancestors
         set i1 = LoadInteger(HT,GetHandleId(u),54001)
@@ -202,7 +215,13 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call BlzSetUnitArmor(u,BlzGetUnitArmor(u)- i1)
             call AddUnitBlock(u,- i1)
             call SaveInteger(HT,GetHandleId(u),54001,0)
-            set NumberOfUnit[pid] = 0
+        endif
+
+        //Arcane Infused Sword
+        set i1 = LoadInteger(HT,GetHandleId(u),ARCANE_INFUSED_SWORD_ITEM_ID)
+        if i1 != 0 then 
+            call AddUnitBonus(u, BONUS_DAMAGE, 0 - i1)
+            call SaveInteger(HT,GetHandleId(u),ARCANE_INFUSED_SWORD_ITEM_ID,0)
         endif
 
         //Murloc Warrior
@@ -213,6 +232,13 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call SetHeroInt(u,GetHeroInt(u,false)- i1,false)
             call SaveInteger(HT,GetHandleId(u),54021,0)
         endif
+        
+        //Ankh
+        if AnkhLimitReached.boolean[hid] then
+            if GetItemCharges(GetUnitItem(u, 'ankh')) != 2 then
+                set AnkhLimitReached.boolean[hid] = false
+            endif
+        endif
 
         //Golden Armor
         set i1 = GetValidEndOfRoundItems(u,'I07H') 
@@ -222,15 +248,15 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         endif
 
         //Extra-dimensional Cooperation
-        if GetUnitAbilityLevel(u, 'A08I') > 0 then
+        if GetUnitAbilityLevel(u, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID) > 0 then
             call ResetExtraDimensional(u)
         endif
 
         //Time Manipulation
-        if GetUnitAbilityLevel(u, 'A0AS') > 0 then
+        if GetUnitAbilityLevel(u, TIME_MANIPULATION_ABILITY_ID) > 0 then
             set TimeManipulationTable[GetHandleId(u)].boolean[1] = false
             set TimeManipulationTable[GetHandleId(u)].real[2] = 0
-            call BlzEndUnitAbilityCooldown(u, 'A0AS')
+            call BlzEndUnitAbilityCooldown(u, TIME_MANIPULATION_ABILITY_ID)
         endif
 
         //Wolf Rider - Thrall
@@ -248,17 +274,18 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         call AdjustPlayerStateBJ( Income[pid],p,PLAYER_STATE_RESOURCE_GOLD)
         call DisplayTextToPlayer(p,0,0,"|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " - |cff00aa0eLumber|r: +" + I2S(LumberGained[pid]) + " - |cff7af0f8Glory|r: +" + I2S(R2I((GetPlayerGloryBonus(pid)))))
 
-        if Income[pid] == 0 then 
+        if IncomeMode < 2 and Income[pid] == 0 then 
             call DisplayTextToPlayer(p,0,0,"You can increase your income in Power Ups Shop II")       
         endif
+        
 
-        if ModuloInteger(udg_integer02, 3) == 0 then
+        if ModuloInteger(RoundNumber, 3) == 0 then
             call Hints_DisplayHint(pid)
         endif
 
-        if (udg_integer02 == 15 or udg_integer02 == 30) then
+        if (RoundNumber == 15 or RoundNumber == 30) then
             set Lives[pid] = Lives[pid] + 1
-            call DisplayTextToPlayer(p,0,0,"|cff85ff3eRound|r: " + I2S(udg_integer02) + "|r: |cffecff3e+1 life|r for you being you.")
+            call DisplayTextToPlayer(p,0,0,"|cff85ff3eRound|r: " + I2S(RoundNumber) + "|r: |cffecff3e+1 life|r for you being you.")
         endif
     endfunction
 endlibrary

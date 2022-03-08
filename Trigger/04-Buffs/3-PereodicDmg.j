@@ -1,7 +1,9 @@
 library PeriodicDamage initializer init requires RandomShit
+    
     globals
         HashTable PeriodicCounter
     endglobals
+
     struct PeriodicDamage extends array
         real dmg
         unit target
@@ -10,6 +12,7 @@ library PeriodicDamage initializer init requires RandomShit
         integer endTick
         integer limit
         integer abilId
+        integer limitAbilId
         string fx
         string attachPoint
         integer buffId
@@ -17,20 +20,17 @@ library PeriodicDamage initializer init requires RandomShit
         real lifeDamage
         boolean allowRecursion
 
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
-
         private method damage takes nothing returns nothing
             if GetWidgetLife(this.target) > 0.405 and ((this.buffId != 0 and GetUnitAbilityLevel(this.target, this.buffId) > 0) or this.buffId == 0) then
                 if this.allowRecursion == false then
-                    set TypeDmg_b = 2
+                    set udg_NextDamageType = DamageType_Onhit
                 endif
+                set udg_NextDamageAbilitySource = this.abilId
                 if magic then
-                    call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, null)
+                    call Damage.applyMagic(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), DAMAGE_TYPE_MAGIC)
                 else
-                    set GLOB_typeDmg = 2
-                    call UnitDamageTarget(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
+                    //set GLOB_typeDmg = 2
+                    call Damage.applyPhys(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 endif
                 if this.fx != null then
                     call DestroyEffect(AddSpecialEffectTargetFix(this.fx, this.target, attachPoint))
@@ -60,7 +60,7 @@ library PeriodicDamage initializer init requires RandomShit
 
         method addLimit takes integer abilId, integer max, real cd returns thistype
             local integer count = PeriodicCounter[GetHandleId(this.caster)].integer[abilId]
-            set this.abilId = abilId
+            set this.limitAbilId = abilId
             set PeriodicCounter[GetHandleId(this.caster)].integer[abilId] = count + 1
             if count >= max then  
                 if GetUnitAbilityLevel(this.caster, abilId) > 0 then
@@ -72,18 +72,11 @@ library PeriodicDamage initializer init requires RandomShit
             return this
         endmethod
 
-        static method create takes unit caster, unit target, real intervalDmg, boolean magic, real interval, real duration, real lifeDamage, boolean allowRecursion, integer buffId returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+        static method create takes unit caster, unit target, real intervalDmg, boolean magic, real interval, real duration, real lifeDamage, boolean allowRecursion, integer buffId, integer abilId returns thistype
+            local thistype this = thistype.setup()
             
-            set this.abilId = 0
+            set this.abilId = abilId
+            set this.limitAbilId = 0
             set this.buffId = 0
             set this.fx = null
             set this.dmg = intervalDmg
@@ -104,17 +97,17 @@ library PeriodicDamage initializer init requires RandomShit
         endmethod
         
         method destroy takes nothing returns nothing
-            if this.abilId != 0 then
-                set PeriodicCounter[GetHandleId(this.caster)].integer[this.abilId] = PeriodicCounter[GetHandleId(this.caster)].integer[this.abilId] - 1
+            if this.limitAbilId != 0 then
+                set PeriodicCounter[GetHandleId(this.caster)].integer[this.limitAbilId] = PeriodicCounter[GetHandleId(this.caster)].integer[this.limitAbilId] - 1
             endif
             set this.caster = null
             set this.target = null
 
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
 
         implement T32x
+        implement Recycle
     endstruct
 
     private function init takes nothing returns nothing

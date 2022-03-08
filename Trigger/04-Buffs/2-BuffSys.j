@@ -1,8 +1,6 @@
 library BuffSystem initializer init requires TimerUtils
     globals
-        constant integer IdBuffAbility = 'A06H'
-        constant integer IdDeBuffAbility = 'A06I'
-        constant integer IdBuffUnit = 'h015'
+        constant integer IdBuffUnit = PRIEST_1_UNIT_ID
         
         integer array BufLvl
         integer array DeBufLvl
@@ -62,30 +60,30 @@ library BuffSystem initializer init requires TimerUtils
 
     private function init takes nothing returns nothing
         set DeBufLvlA[1] = 'A06L'
-        set DeBufLvl[1] = 'B014'
+        set DeBufLvl[1] = INCINERATE_CUSTOM_BUFF_ID
 
         set DeBufLvlA[2] = 'A06P'
-        set DeBufLvl[2] = 'B015'
+        set DeBufLvl[2] = POISON_NON_STACKING_CUSTOM_BUFF_ID
 
         set DeBufLvlA[3] = 'A06R'
-        set DeBufLvl[3] = 'B016'
+        set DeBufLvl[3] = LIQUID_FIRE_CUSTOM_BUFF_ID
 
         set DeBufLvlA[4] = 'A08O'
-        set DeBufLvl[4] = 'B01I'
+        set DeBufLvl[4] = BLEED_BUFF_ID
 
         set DeBufLvlA[5] = 'A095'
-        set DeBufLvl[5] = 'B01N'
+        set DeBufLvl[5] = ANCIENT_KNIFE_OF_THE_GODS_BUFF_ID
 
         set DeBufLvlA[6] = 'A09B'
-        set DeBufLvl[6] = 'B01Q'
+        set DeBufLvl[6] = FLIMSY_TOKEN_BUFF_ID
 
         set DeBufLvlA[7] = 'A09H'
-        set DeBufLvl[7] = 'B01S'
+        set DeBufLvl[7] = LUCKY_PANTS_BUFF_ID
 
         set DeBufLvlA[8] = 'A09R'
-        set DeBufLvl[8] = 'B01Z'
+        set DeBufLvl[8] = MANA_STARVATION_BUFF_ID
 
         set DeBufLvlA[9] = 'A09S'
-        set DeBufLvl[9] = 'B020'
+        set DeBufLvl[9] = WISDOM_CHESTPLATE_BUFF_ID
     endfunction
 endlibrary

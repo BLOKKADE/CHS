@@ -4,19 +4,20 @@ library WildRune requires RandomShit
         local real power = GLOB_RUNE_POWER * 100
         local integer levels = R2I(power / 75) + 1
         local integer r
+        local integer pid = GetPlayerId(p)
         
         loop
             set r = GetRandomInt(0,2)
             
             if r == 0 then
-                call SetPlayerTechResearched(p, 'R000', GetPlayerTechCount(p, 'R000', true) + 1) 
-                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon Attack Bonus - [|cffffcc00Level " + I2S(GetPlayerTechCount(p, 'R000', true)) + "|r]")
+                set SummonDamage[pid] = SummonDamage[pid] + 1
+                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon Attack Bonus - [|cffffcc00Level " + I2S(SummonDamage[pid]) + "|r]")
             elseif r == 1 then
-                call SetPlayerTechResearched(p, 'R001', GetPlayerTechCount(p, 'R001', true) + 1) 
-                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon Armor Bonus - [|cffffcc00Level " + I2S(GetPlayerTechCount(p, 'R001', true)) + "|r]")
+                set SummonArmor[pid] = SummonArmor[pid] + 1
+                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon Armor Bonus - [|cffffcc00Level " + I2S(SummonArmor[pid]) + "|r]")
             else
-                call SetPlayerTechResearched(p, 'R002', GetPlayerTechCount(p, 'R002', true) + 1) 
-                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon HP Bonus - [|cffffcc00Level " + I2S(GetPlayerTechCount(p, 'R002', true)) + "|r]")
+                set SummonHitPoints[pid] = SummonHitPoints[pid] + 1
+                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon HP Bonus - [|cffffcc00Level " + I2S(SummonHitPoints[pid]) + "|r]")
             endif
             set levels = levels - 1
             exitwhen levels <= 0

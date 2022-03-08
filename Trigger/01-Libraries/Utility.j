@@ -1,4 +1,4 @@
-library Utility
+library Utility requires NewBonus
     globals
         boolean array CurrentlyFighting
     endglobals
@@ -43,11 +43,17 @@ library Utility
 
     function HasPlayerFinishedLevel takes unit u, player p returns boolean
         return CurrentlyFighting[GetPlayerId(p)] == false
-        //return (IsPlayerInForce(p,udg_force03) and udg_boolean02 == false and udg_units03[2] != u and udg_units03[1] != u and PvpPrepare = false) or BattleRoyal = true
+        //return (IsPlayerInForce(p,RoundPlayersCompleted) and BrStarted == false and DuelingHeroes[2] != u and DuelingHeroes[1] != u and PvpPrepare = false) or BattleRoyal = true
     endfunction
 
     function GetUnitDamage takes unit u, integer weaponIndex returns real
-        return RMaxBJ(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex)), SpellData[GetHandleId(u)].real[7])
+        //call BJDebugMsg(GetUnitName(u) + " attack dmg: " + R2S(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex)) + GetUnitBonus(u, BONUS_DAMAGE)))
+        return I2R((BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))) + GetUnitBonus(u, BONUS_DAMAGE))
+    endfunction
+
+    function GetUnitBaseDamage takes unit u, integer weaponIndex returns real
+        //call BJDebugMsg(GetUnitName(u) + " base attack dmg: " + R2S(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))))
+        return I2R((BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))))
     endfunction
 
     function CalculateNewCurrentHP takes unit u, real hpBonus returns nothing

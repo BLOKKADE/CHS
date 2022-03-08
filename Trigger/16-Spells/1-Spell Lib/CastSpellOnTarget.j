@@ -1,14 +1,20 @@
-library CastSpellOnTarget requires UnitHelpers, AbilityData, ChannelOrder, GetRandomUnit
+library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
 
     function GetAbilityRange takes unit u, integer abilityId returns real
         return BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, abilityId), ABILITY_RLF_CAST_RANGE, GetUnitAbilityLevel(u, abilityId) - 1)
     endfunction
 
+    //make sure to .activate() after calling this
     function CastSpell takes unit caster, unit target, integer abilId, integer level, integer orderType, real targetX, real targetY returns DummyOrder
         local integer order = GetAbilityOrder(abilId)
+        local integer pid = GetPlayerId(GetOwningPlayer(caster))
         local DummyOrder dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 21)
         call dummy.addActiveAbility(abilId, level, order)
         call dummy.setAbilityRealField(abilId, ABILITY_RLF_CAST_RANGE, 99999)
+
+        if RuneOfChaosMagicPower.real[pid] != 0 then
+            call AddUnitMagicDmg(dummy.dummy, RuneOfChaosMagicPower.real[pid])
+        endif
 
         if orderType == Order_Instant then
             //call BJDebugMsg("cs instant")

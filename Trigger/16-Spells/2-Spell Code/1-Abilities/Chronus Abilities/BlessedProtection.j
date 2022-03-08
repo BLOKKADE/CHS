@@ -4,9 +4,7 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
         effect fx
         integer endTick
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
     
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
@@ -16,15 +14,7 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
         endmethod  
     
         static method create takes unit source, real duration returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
             
             set this.source = source
             set this.fx = AddSpecialEffectTarget("Soul Armor Divine_opt.mdx", this.source, "head")
@@ -32,8 +22,7 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
             if GetBuffLevel(this.source, 'A0AF') == 1 then
                 call UnitAddAbility(this.source, 'A0AF')
             endif
-            call ElemFuncStart(this.source,'A045')
-            call TimeManipulation(source, duration)
+            call ElemFuncStart(this.source,BLESSED_PROTECTIO_ABILITY_ID)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this
@@ -47,10 +36,10 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
             call DestroyEffect(this.fx)
             set this.fx = null
             set this.source = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 endlibrary

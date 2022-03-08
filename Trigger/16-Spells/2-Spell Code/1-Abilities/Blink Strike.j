@@ -1,4 +1,4 @@
-library BlinkStrike initializer init requires RandomShit
+library BlinkStrike initializer init requires RandomShit, GetRandomUnit
     globals
         private integer OwnerId
         Table BlinkStrikeEnabled
@@ -21,12 +21,15 @@ library BlinkStrike initializer init requires RandomShit
         call SetUnitX(caster, newX)
         call SetUnitY(caster, newY)
         call BlzSetUnitFacingEx(caster, angle)
-        set BlinkStrikeEnabled.boolean[GetHandleId(caster)] = true
+        //set BlinkStrikeEnabled.boolean[GetHandleId(caster)] = true
 
-        set GLOB_typeDmg = 2
-        set DamageIsAttack = true
-        call UnitDamageTarget(caster, target, GetAttackDamage(caster), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
-        set BlinkStrikeEnabled.boolean[GetHandleId(caster)] = false
+        //set GLOB_typeDmg = 2
+        //set DamageIsAttack = true
+        set udg_NextDamageType = DamageType_BlinkStrike
+        set udg_NextDamageAbilitySource = BLINK_STRIKE_ABILITY_ID
+        set udg_NextDamageIsAttack = true
+        call Damage.applyPhys(caster, target, GetAttackDamage(caster), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+        //set BlinkStrikeEnabled.boolean[GetHandleId(caster)] = false
     endfunction
 
     function BlinkStrike takes unit caster, integer level returns nothing

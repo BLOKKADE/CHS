@@ -1,4 +1,4 @@
-library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData
+library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking
 	globals
 		framehandle gameUI
 		framehandle SkillFrame
@@ -63,6 +63,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		local integer i2
 		local integer i3
 		local unit SpellU
+		local PlayerStats ps
 
 		if BlzGetTriggerFrameEvent() ==  FRAMEEVENT_CONTROL_CLICK then
 			
@@ -92,7 +93,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
 			/*//Hero icon
 			if NumButton == 0 then
-				set SpellU = udg_units01[PlID + 1]
+				set SpellU = PlayerHeroes[PlID + 1]
 				set ToolTipS = GetClassification(SpellU, GetUnitTypeId(SpellU), false) + "|n"
 				set temp = LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
 				if temp != "" and temp != null then
@@ -142,8 +143,56 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						call BlzFrameSetSize(Tooltip, 0.29, 0.02)
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
+				elseif NumButton == 38 then
+					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
+					set i1 = 1
+					set ToolTipS = "|cffd0ff00Element Counts|r"
+
+					loop
+						set i2 = GetClassUnitSpell(SpellU, i1)
+
+						// Don't include empty elements in the list
+						if i2 > 0 then
+							set ToolTipS = ToolTipS + "|n" + ClassAbil[i1] + " : " + I2S(i2)
+						endif
+
+						set i1 = i1 + 1
+						exitwhen i1 > 13 // Based off the amount of elements in ClassAbil array. 2-InitDescription.j
+					endloop
+
+					if GetLocalPlayer() == GetTriggerPlayer() then
+						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+						call BlzFrameSetSize(Tooltip, 0.125, GetTooltipSize(ToolTipS))
+						call BlzFrameSetVisible(Tooltip, true)
+					endif
+				elseif NumButton == 39 then
+					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
+					set ps = PlayerStats.forPlayer(GetOwningPlayer(SpellU))
+					set ToolTipS = "|cffd0ff00All Pick Stats|r"
+					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getAPBRAllWins())
+					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getAPBRSeasonWins())
+					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getAPPVPAllWins())
+					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getAPPVPSeasonWins())
+
+					set ToolTipS = ToolTipS + "|n|cffd0ff00All Random Stats|r"
+					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getARBRAllWins())
+					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getARBRSeasonWins())
+					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getARPVPAllWins())
+					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getARPVPSeasonWins())
+
+					set ToolTipS = ToolTipS + "|n|cffd0ff00Draft Stats|r"
+					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getDraftBRAllWins())
+					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getDraftBRSeasonWins())
+					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getDraftPVPAllWins())
+					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins())
+
+					if GetLocalPlayer() == GetTriggerPlayer() then
+						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+						call BlzFrameSetSize(Tooltip, 0.21, GetTooltipSize(ToolTipS))
+						call BlzFrameSetVisible(Tooltip, true)
+					endif
 				elseif NumButton == 100 then
-					set SpellU = udg_units01[NumPlayerLast[PlID] + 1]
+					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
 					set temp = GetClassification(SpellU, GetUnitTypeId(SpellU), false)
 					if temp != "" and temp != null then
 						set ToolTipS = ToolTipS + temp + "|n"
@@ -160,7 +209,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 
 					set ToolTipS = ToolTipS + GetPassiveStr(SpellU)
 
-					if IncomeMode != 2 then
+					if EconomyMode or IncomeMode != 2 then
 						set ToolTipS = ToolTipS + "|n|n|cffd4954dIncome|r: " + I2S(Income[NumPlayerLast[PlID]])
 					endif
 
@@ -180,7 +229,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 					//Hero abilities and absolutes
 				elseif NumButton > 100 and NumButton <= 120 then
 					if NumPlayerLast[PlID] != 11 then
-						set SpellU = udg_units01[NumPlayerLast[PlID]+ 1]
+						set SpellU = PlayerHeroes[NumPlayerLast[PlID]+ 1]
 						set i3 = GetInfoHeroSpell(SpellU ,NumButton - 100) 
 						set SpellCP[PlID] = i3
 						set temp = GetClassification(SpellU, i3, true)
@@ -270,6 +319,10 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 			call BlzFrameSetVisible(SpellUP[36], true)
 			call CreateIconWorld(37 , "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp" , 0.43 + 0.05 , - 0.024 , 0.025)
 			call BlzFrameSetVisible(SpellUP[37], true)
+			call CreateIconWorld(38 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - 2 * sizeAbil , sizeAbil)
+			call BlzFrameSetTexture(SpellFR[38] , "ReplaceableTextures\\PassiveButtons\\PASElements.blp" , 0, true)
+			call CreateIconWorld(39 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.018 , - sizeAbil , sizeAbil)
+			call BlzFrameSetTexture(SpellFR[39] , "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp" , 0, true)
 			call CreateIconWorld(100 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - sizeAbil , sizeAbil)
 			call CreateIconWorld(101 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + sizeAbil , - sizeAbil , sizeAbil)
 			call CreateIconWorld(102 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 2 * sizeAbil , - sizeAbil  , sizeAbil)

@@ -28,16 +28,16 @@ library CreepDeath initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_Dies_Func003C takes nothing returns boolean
-        if(not(CountUnitsInGroup(GetUnitsInRectMatching(udg_rects01[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Creep_Dies_Func003Func005001001002)))==0))then
+        if(not(CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Creep_Dies_Func003Func005001001002)))==0))then
             return false
         endif
         return true
     endfunction
 
     public function Death takes unit dyingUnit, unit killingHero returns nothing
-        local integer PilageBonus = 0
-        local integer RingBonus = 0
-        local integer RemBon = 0
+        local integer pillageBonus = 0
+        local integer ringBonus = 0
+        local integer remBon = 0
         local integer expBounty = 0
         local integer goldBounty = 0
         local boolean pillage = false
@@ -51,9 +51,9 @@ library CreepDeath initializer init requires RandomShit
         
         //Greedy Goblin
         if GetUnitTypeId(killingHero) == 'N02P' then
-            set goldBounty = goldBounty + (((22 + GetHeroLevel(killingHero) * 3) * 70) / (70 + GetUnitAbilityLevel(killingHero,'Asal')))
-            set expBounty = expBounty + (((21 + GetHeroLevel(killingHero) * 4) * 70) / (70 + GetUnitAbilityLevel(killingHero,'Asal')))
-            set RemBon = 20
+            set goldBounty = goldBounty + (((22 + GetHeroLevel(killingHero) * 3) * 70) / (70 + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID)))
+            set expBounty = expBounty + (((21 + GetHeroLevel(killingHero) * 4) * 70) / (70 + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID)))
+            set remBon = 20
         endif
 
         //Midas Touch
@@ -62,40 +62,47 @@ library CreepDeath initializer init requires RandomShit
             set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
         endif
 
-        //Pillage
-        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('Asal',killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
-            if GetRandomReal(0,100) <= 65 * luck then
-                set PilageBonus = PilageBonus + (((GetUnitAbilityLevelSwapped('Asal',killingHero) * 18) * 70)/( 70 + RemBon + GetUnitAbilityLevelSwapped('A02W',killingHero))  )
-                call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitY(dyingUnit)))
+        if IncomeMode == 3 then
+            if RoundNumber > 5 then
+                set pillageBonus = IMinBJ(RoundNumber, 15) * 13
+                set expBounty = expBounty + IMinBJ(RoundNumber, 15) * 30
             endif
+        else
+            //Pillage
+            if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
+                if GetRandomReal(0,100) <= 65 * luck then
+                    set pillageBonus = pillageBonus + (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero) * 18) * 70)/( 70 + remBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero))  )
+                    call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitY(dyingUnit)))
+                endif
+            endif
+            
+            //Learnability
+            if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
+                set expBounty = expBounty + ( 35 * GetUnitAbilityLevel(killingHero,LEARNABILITY_ABILITY_ID) * 70 )/(70 + remBon + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID))	
+            endif	
         endif
-        
-        //Learnability
-        if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped('A02W',killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
-            set expBounty = expBounty + ( 35 * GetUnitAbilityLevel(killingHero,'A02W') * 70 )/(70 + RemBon + GetUnitAbilityLevel(killingHero,'Asal'))	
-        endif	
         
         //Golden Ring
         set itemCount = UnitHasItemI(killingHero, 'I04R')
         if itemCount > 0 then
-            if GetUnitTypeId(killingHero) == 'H00A' then
-                set RingBonus = RingBonus + 20 * itemCount
+            if GetUnitTypeId(killingHero) == ARENA_MASTER_UNIT_ID then
+                set ringBonus = ringBonus + 20 * itemCount
             else
-                set RingBonus = RingBonus + 10 * itemCount
+                set ringBonus = ringBonus + 10 * itemCount
             endif
         endif
 
         //Golden Ring + Pillage Check
-        if RingBonus > PilageBonus then
-            set goldBounty = goldBounty + RingBonus
+        if ringBonus > pillageBonus then
+            set goldBounty = goldBounty + ringBonus
         else
-            set goldBounty = goldBounty + PilageBonus
+            set goldBounty = goldBounty + pillageBonus
         endif 
 
         //Urn of Memories
         set itemCount = UnitHasItemI(killingHero, 'I05U')
         if itemCount > 0 then
-            if PilageBonus == 0 then
+            if pillageBonus == 0 then
                 set expBounty = expBounty + ((2 * GetHeroLevel(killingHero)) * itemCount)
             else
                 set expBounty = expBounty + ((GetHeroLevel(killingHero)) * itemCount )
@@ -116,9 +123,9 @@ library CreepDeath initializer init requires RandomShit
             set goldBounty = goldBounty + udg_integer59
         endif
 
-        if MacigNecklaceBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05G') then
-            set expBounty = R2I(expBounty * MnBonus)
-        endif
+        //call BJDebugMsg("cd xp bonus pre: " + I2S(expBounty))
+        set expBounty = R2I(expBounty * (1 + (GetMagicNecklaceBonus(killingHero, dyingUnit) + GetLearnabilityBonus(killingHero))))
+        //call BJDebugMsg("cd xp bonus post: " + I2S(expBounty))
 
         if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05A') then
             set goldBounty = R2I(goldBounty * CgBonus)
@@ -147,7 +154,7 @@ library CreepDeath initializer init requires RandomShit
 
     private function SummonDeath takes nothing returns boolean
         if GetOwningPlayer(GetDyingUnit()) != Player(11) and IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == false and GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
-            call NonCreepDeath(GetDyingUnit(), udg_units01[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1])
+            call NonCreepDeath(GetDyingUnit(), PlayerHeroes[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1])
         endif
         return false
     endfunction

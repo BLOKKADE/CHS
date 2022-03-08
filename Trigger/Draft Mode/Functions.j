@@ -1,4 +1,4 @@
-library DraftModeFunctions requires TimerUtils
+library DraftModeFunctions requires TimerUtils, DisableSpells
     /*
     Generates NOSpells in PlayerNumber's Draft store. 
     It chooses a random index, say X, among the remaining spells for that particular player and adds that to the store.
@@ -12,8 +12,8 @@ library DraftModeFunctions requires TimerUtils
         unit circle1 = null
         unit circle2 = null
         boolean DraftInitialised = false
-        texttag FloatingTextBuy
-        texttag FloatingTextUpgrade
+        texttag FloatingTextBuy = null
+        texttag FloatingTextUpgrade = null
     endglobals
 
     function RemoveDraftSpells takes integer playerNumber, integer NOSpells returns nothing
@@ -84,10 +84,17 @@ library DraftModeFunctions requires TimerUtils
     endfunction
 
     function CreateDraftBuildingsLoop takes nothing returns nothing
-        set udg_Draft_DraftBuildings[GetConvertedPlayerId(GetEnumPlayer())] = CreateUnit(GetEnumPlayer(), udg_Draft_DraftBuilding, 0 - OffsetX, OffsetY, 0)
-        set udg_Draft_UpgradeBuildings[GetConvertedPlayerId(GetEnumPlayer())] = CreateUnit(GetEnumPlayer(), udg_Draft_UpgradeBuilding, OffsetX, OffsetY, 0)
+        local integer pid = GetConvertedPlayerId(GetEnumPlayer())
+        set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), udg_Draft_DraftBuilding, 0 - OffsetX, OffsetY, 0)
+        set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), udg_Draft_UpgradeBuilding, OffsetX, OffsetY, 0)
 
-        call GenerateInitialDraftSpells(GetConvertedPlayerId(GetEnumPlayer()), udg_Draft_NODraftSpells)
+        if IncomeMode == 3 then
+            call GenerateDraftSpells(pid, udg_Draft_NODraftSpells)
+        else
+            call GenerateInitialDraftSpells(pid, udg_Draft_NODraftSpells)
+        endif
+
+        call DisableEconomicSpells(pid)
     endfunction
 
     function ShopText takes integer x, integer y, string text, integer r, integer g, integer b returns texttag
@@ -106,7 +113,7 @@ library DraftModeFunctions requires TimerUtils
             set FloatingTextBuy = ShopText(0 - OffsetX, OffsetY, "Buy abilities", 255, 100, 0)
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', OffsetX, OffsetY, 0)
             set FloatingTextUpgrade = ShopText(OffsetX, OffsetY, "Upgrade abilities", 0, 255, 100)
-            call ForForce( udg_force01, function CreateDraftBuildingsLoop )
+            call ForForce( udg_PlayersWithHero, function CreateDraftBuildingsLoop )
         endif
     endfunction
 

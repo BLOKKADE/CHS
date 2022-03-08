@@ -1,4 +1,8 @@
 library StaffOfPower requires RandomShit
+    globals
+        boolean StaffOfPowerCritNegate = false
+    endglobals
+
     function StaffOfPowerCast takes unit u returns nothing
         if UnitHasItemS(u, 'I080') then
             call RemoveItem(GetItemOfTypeFromUnitBJ(u, 'I080'))
@@ -7,5 +11,6 @@ library StaffOfPower requires RandomShit
             call RemoveItem(GetItemOfTypeFromUnitBJ(u, 'I0AT'))
             call UnitAddItemById(u, 'I080')
         endif
+        call BlzStartUnitAbilityCooldown(u, 'A09Q', 20)
     endfunction
 endlibrary

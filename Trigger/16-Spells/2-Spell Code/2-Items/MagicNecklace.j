@@ -1,10 +1,19 @@
 library MagicNecklace initializer init requires Table
     globals
-        constant real MnBonus = 1.2
-        Table MacigNecklaceBonus
+        Table MnXpBonus
+        Table MagicNecklaceBonus
     endglobals
 
+    function GetMagicNecklaceBonus takes unit source, unit target returns real
+        if MagicNecklaceBonus.boolean[GetHandleId(target)] and UnitHasItemOfTypeBJ(source, 'I05G') then
+            return MnXpBonus.real[GetHandleId(source)]
+        else
+            return 0.
+        endif
+    endfunction
+
     private function init takes nothing returns nothing
-        set MacigNecklaceBonus = Table.create()
+        set MagicNecklaceBonus = Table.create()
+        set MnXpBonus = Table.create()
     endfunction
 endlibrary

@@ -38,7 +38,7 @@ scope AttackController initializer init
         local timer t = null
         local unit u = GetTriggerUnit()
         local unit u2 = GetAttacker()
-        local unit attackerHero = udg_units01[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]
+        local unit attackerHero = PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]
         local real luck = GetUnitLuck(u)
         
         
@@ -53,9 +53,26 @@ scope AttackController initializer init
             set u2 = null
             return
         endif
+
+        //Mega Speed
+        if GetUnitAbilityLevel(u2, MEGA_SPEED_ABILITY_ID) > 0 then
+            if T32_Tick - MegaSpeedLastAttack[GetHandleId(u2)] > 6 * 32 then
+                set MegaSpeedStartTimer[GetHandleId(u2)] = T32_Tick
+            endif
+
+            set MegaSpeedLastAttack[GetHandleId(u2)] = T32_Tick
+        endif
+
+        //Corrosive Skin
+
+        set i1 = GetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID)
+        if i1 > 0 and GetRandomReal(0,100) <= 35 * luck then
+            call DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * i1)).target(u2).activate()
+            call PoisonSpellCast(u, u2)
+        endif
         
         //Demon Hunter
-        if GetUnitTypeId(u2) == 'O004' then
+        if GetUnitTypeId(u2) == DEMON_HUNTER_UNIT_ID then
             set r1 = GetHeroLevel(   attackerHero   )* 20
             set r2 = GetUnitState(u, UNIT_STATE_MANA)
             set r3 = r2 - r1
@@ -80,22 +97,22 @@ scope AttackController initializer init
         endif
         
         //Reaction
-        if GetUnitAbilityLevel(u,'A06C') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A06C') <= 0.001  then
+        if GetUnitAbilityLevel(u,REACTION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u,REACTION_ABILITY_ID) <= 0.001  then
             set t = NewTimer()
             
             call SaveUnitHandle(HT,GetHandleId(t),1,u)
-            call SaveInteger(HT,GetHandleId(t),2,GetUnitAbilityLevel(u,'A06C')* 10)
-            call AddUnitEvasion(u,10 * GetUnitAbilityLevel(u,'A06C'))
-            call AbilStartCD(u,'A06C',8)
+            call SaveInteger(HT,GetHandleId(t),2,GetUnitAbilityLevel(u,REACTION_ABILITY_ID)* 10)
+            call AddUnitEvasion(u,10 * GetUnitAbilityLevel(u,REACTION_ABILITY_ID))
+            call AbilStartCD(u,REACTION_ABILITY_ID,8)
             call UnitAddAbility(u, 'A08D')
             call TimerStart(t,2.5,false,function EndEvasionTimer )
             set t = null
         endif
         
         //Cold Wind
-        if GetUnitAbilityLevel(u2,'A07N') > 0 and BlzGetUnitAbilityCooldownRemaining(u2,'A07N') <= 0.001  then
-            call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2),100 * GetUnitAbilityLevel(u2,'A07N'),500,'A07N')
-            call AbilStartCD(u2,'A07N',2 ) 
+        if GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u2,COLD_WIND_ABILITY_ID) <= 0.001  then
+            call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2),100 * GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID),500,COLD_WIND_ABILITY_ID)
+            call AbilStartCD(u2,COLD_WIND_ABILITY_ID,2 ) 
         endif
         
         //Magical Blade
@@ -113,13 +130,13 @@ scope AttackController initializer init
         endif
 
         //Pyromancer
-        if GetUnitTypeId(u2) == 'O005' then
+        if GetUnitTypeId(u2) == PYROMANCER_UNIT_ID then
             call PyromancerScorch(u2, u)
         endif
 
-
-        if (GetUnitAbilityLevel(GetTriggerUnit(),'A02U' ) >= 1)  and (GetRandomReal(1,100)<= 12 * luck) then
-            call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A02V',"fanofknives",  GetHeroStr(GetTriggerUnit(),true)*(60 + 20 * I2R(GetUnitAbilityLevel(u,'A02U' )))/ 100, ConvertAbilityRealLevelField('Ocl1') )
+        //Fire Force
+        if (GetUnitAbilityLevel(GetTriggerUnit(),FIRE_FORCE_ABILITY_ID ) >= 1)  and (GetRandomReal(1,100)<= 12 * luck) then
+            call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A0C0',"fanofknives",  GetHeroStr(GetTriggerUnit(),true)*(60 + 20 * I2R(GetUnitAbilityLevel(u,FIRE_FORCE_ABILITY_ID )))/ 100, ConvertAbilityRealLevelField('Ocl1') )
         endif
         set u = null
         set u2 = null

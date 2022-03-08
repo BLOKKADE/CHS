@@ -12,16 +12,14 @@ library FlimsyToken initializer init requires BuffSystem
         real reduction
         integer endTick
     
-        private static integer instanceCount = 0
-        private static thistype recycle = 0
-        private thistype recycleNext
+        
 
         private method disable takes nothing returns nothing
             call BlzSetUnitAttackCooldown(this.source, BlzGetUnitAttackCooldown(this.source, 0) - this.reduction, 0)
         endmethod
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or GetUnitAbilityLevel(this.source, 'B01Q') == 0 or not UnitAlive(this.source) then
+            if T32_Tick > this.endTick or GetUnitAbilityLevel(this.source, FLIMSY_TOKEN_BUFF_ID) == 0 or not UnitAlive(this.source) then
                 call this.disable()
                 call this.stopPeriodic()
                 call this.destroy()
@@ -29,15 +27,7 @@ library FlimsyToken initializer init requires BuffSystem
         endmethod  
     
         static method create takes unit source returns thistype
-            local thistype this
-    
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.recycleNext
-            endif
+            local thistype this = thistype.setup()
 
             set this.source = source
             set this.reduction = 0.4
@@ -51,11 +41,11 @@ library FlimsyToken initializer init requires BuffSystem
         method destroy takes nothing returns nothing
             set FlimsyTargets[GetHandleId(this.source)] = 0
             set this.source = null
-            set recycleNext = recycle
-            set recycle = this
+            call this.recycle()
         endmethod
     
         implement T32x
+        implement Recycle
     endstruct
 
     function FlimsyToken takes unit source, unit target returns nothing

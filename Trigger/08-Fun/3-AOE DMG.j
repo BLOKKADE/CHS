@@ -1,28 +1,23 @@
 library AoeDamage requires Vampirism
     globals
-        group Area_group = CreateGroup()
-        unit Sourse_unit = null
-        real Dmg_ef = 0
-        damagetype DmgType
-        integer ABILGLOB = 0
-        integer Attack_AbilId = 0 
+        unit Aoe_Source = null
+        real Aoe_DamageAmount = 0
+        integer Aoe_AbilitySource = 0
+        private boolean Aoe_OnHit = false
         
         boolexpr array BoolArray
         boolean GLOB_LIFESTEAL = false
-        integer GLOB_typeDmg = 0 
-        
-        unit Drain
-        private boolean OnHit = false
     endglobals
 
 
 
     function DamageRealase takes nothing returns boolean
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and GetUnitTypeId(GetFilterUnit()) != 'h015' then
-            if OnHit then
-                set TypeDmg_b = 2
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Aoe_Source)) and GetWidgetLife(GetFilterUnit()) > 0.405 and GetUnitTypeId(GetFilterUnit()) != PRIEST_1_UNIT_ID then
+            if Aoe_OnHit then
+                set udg_NextDamageType = DamageType_Onhit
             endif
-            call UnitDamageTarget(Sourse_unit,GetFilterUnit(),Dmg_ef,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS)
+            set udg_NextDamageAbilitySource = Aoe_AbilitySource
+            call Damage.applyMagic(Aoe_Source,GetFilterUnit(),Aoe_DamageAmount, DAMAGE_TYPE_MAGIC)
         endif
 
         return false
@@ -37,21 +32,22 @@ library AoeDamage requires Vampirism
         local real Dmg = LoadReal(HT,i,4)
         local real Area = LoadReal(HT,i,5)
         local integer AbilId = LoadInteger(HT,i,6)
-        set OnHit = LoadBoolean(HT, i, 7)
+        set Aoe_OnHit = LoadBoolean(HT, i, 7)
         
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         
-        set Sourse_unit = Sourse
-        set Dmg_ef = Dmg
-        set ABILGLOB = AbilId
-        call GroupEnumUnitsInRange(Area_group,x1,y1,Area,BoolArray[0])    
+        set Aoe_Source = Sourse
+        set Aoe_DamageAmount = Dmg
+        set Aoe_AbilitySource = AbilId
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,x1,y1,Area,BoolArray[0])    
         
         set t = null
         set Sourse = null
     endfunction
 
-    function AreaDamage takes unit Sourse,real x1,real y1, real Dmg, real Area, boolean onhit, integer AbilId returns nothing
+    function AreaDamage takes unit Sourse,real x1,real y1, real Dmg, real Area, boolean Aoe_OnHit, integer AbilId returns nothing
         local timer t
         local integer i
         if Sourse != null then
@@ -63,7 +59,7 @@ library AoeDamage requires Vampirism
             call SaveReal(HT,i,3,y1)
             call SaveReal(HT,i,4,Dmg)
             call SaveReal(HT,i,5,Area)
-            call SaveBoolean(HT,i,7,onhit)
+            call SaveBoolean(HT,i,7,Aoe_OnHit)
 
             call SaveInteger(HT,i,6,AbilId)
             call TimerStart(t,0,false,function AreaDamageTimer)
@@ -77,10 +73,11 @@ library AoeDamage requires Vampirism
 
 
     function DamageRealasePhys takes nothing returns boolean
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 then
-            set Attack_AbilId = ABILGLOB 
-            set GLOB_typeDmg = 2
-            call UnitDamageTarget(Sourse_unit,GetFilterUnit(),Dmg_ef,true,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL,WEAPON_TYPE_WHOKNOWS)
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Aoe_Source)) and GetWidgetLife(GetFilterUnit()) > 0.405 then
+            //set Attack_AbilId = Aoe_AbilitySource 
+            //set GLOB_typeDmg = 2
+            set udg_NextDamageAbilitySource = Aoe_AbilitySource
+            call Damage.applyPhys(Aoe_Source,GetFilterUnit(),Aoe_DamageAmount, false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
         endif
 
         return false
@@ -99,10 +96,11 @@ library AoeDamage requires Vampirism
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         
-        set Sourse_unit = Sourse
-        set Dmg_ef = Dmg
-        set ABILGLOB = AbilId
-        call GroupEnumUnitsInRange(Area_group,x1,y1,Area,BoolArray[103])    
+        set Aoe_Source = Sourse
+        set Aoe_DamageAmount = Dmg
+        set Aoe_AbilitySource = AbilId
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,x1,y1,Area,BoolArray[103])    
         
         set t = null
         set Sourse = null
@@ -135,9 +133,9 @@ library AoeDamage requires Vampirism
     function DrainRealase takes nothing returns boolean
         local real hp
         local real dmg
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'B01V') == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0 then
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Aoe_Source)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), BLOODSTONE_BUFF_ID) == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0 then
             set hp = GetWidgetLife(GetFilterUnit())
-            set dmg = Dmg_ef
+            set dmg = Aoe_DamageAmount
             if GLOB_LIFESTEAL then
                 set dmg = dmg * BlzGetUnitMaxHP(GetFilterUnit())
             endif
@@ -153,9 +151,9 @@ library AoeDamage requires Vampirism
                 
                 if IsHeroUnitId(GetUnitTypeId(GetFilterUnit())) then
                 
-                    call Vamp(Sourse_unit,GetFilterUnit(),dmg)
+                    call Vamp(Aoe_Source,GetFilterUnit(),dmg)
                 else
-                    call Vamp(Sourse_unit,GetFilterUnit(),dmg / 5)
+                    call Vamp(Aoe_Source,GetFilterUnit(),dmg / 5)
                 endif
             endif
             
@@ -166,10 +164,11 @@ library AoeDamage requires Vampirism
     endfunction
 
     function AoeDrainAura takes unit u, real hp, real Area, boolean lifesteal returns nothing
-        set Sourse_unit = u
-        set Dmg_ef = hp
+        set Aoe_Source = u
+        set Aoe_DamageAmount = hp
         set GLOB_LIFESTEAL = lifesteal
-        call GroupEnumUnitsInRange(Area_group,GetUnitX(u),GetUnitY(u),Area,BoolArray[104])    
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),Area,BoolArray[104])    
     endfunction
 
 
@@ -178,10 +177,10 @@ library AoeDamage requires Vampirism
     function DrainRealase2 takes nothing returns boolean
         local real hp
         local real dmg
-        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Sourse_unit)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'B01V') == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0  then
+        if IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(Aoe_Source)) and GetWidgetLife(GetFilterUnit()) > 0.405 and IsUnitDivineBubbled(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), BLOODSTONE_BUFF_ID) == 0 and GetUnitAbilityLevel(GetFilterUnit(), 'B022') == 0  then
 
             set hp = GetWidgetLife(GetFilterUnit())
-            set dmg = Dmg_ef * hp / 100
+            set dmg = Aoe_DamageAmount * hp / 100
                 
             if hp - 0.405 <= dmg then
                 set dmg = hp
@@ -193,9 +192,9 @@ library AoeDamage requires Vampirism
             if GLOB_LIFESTEAL then
                 if IsHeroUnitId(GetUnitTypeId(GetFilterUnit())) then
                 
-                    call Vamp(Sourse_unit,GetFilterUnit(),dmg)
+                    call Vamp(Aoe_Source,GetFilterUnit(),dmg)
                 else
-                    call Vamp(Sourse_unit,GetFilterUnit(),dmg / 5)
+                    call Vamp(Aoe_Source,GetFilterUnit(),dmg / 5)
                 endif
             endif
             
@@ -206,10 +205,11 @@ library AoeDamage requires Vampirism
     endfunction
 
     function AoeDrainAura2 takes unit u, real hp, real Area, boolean lifesteal returns nothing
-        set Sourse_unit = u
-        set Dmg_ef = hp
+        set Aoe_Source = u
+        set Aoe_DamageAmount = hp
         set GLOB_LIFESTEAL = lifesteal
-        call GroupEnumUnitsInRange(Area_group,GetUnitX(u),GetUnitY(u),Area,BoolArray[105])    
+        call GroupClear(ENUM_GROUP)
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),Area,BoolArray[105])    
     endfunction
 
 
