@@ -148,7 +148,7 @@ scope ShortPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u , 'A05T')
                 set i2 = LoadInteger(HT,hid,'A05T')
                 if i1 > 0 or i2 != 0 then
-                    set i1 = R2I(GetHeroStr(u, true) * 0.25)
+                    set i1 = R2I(GetHeroStr(u, true) * 0.25) * i1
                     if i1 != i2 then
                         call AddUnitBlock(u, i1 - i2)
                         call SaveInteger(HT, hid, 'A05T', i1)	
@@ -202,6 +202,7 @@ scope ShortPeriodCheck initializer init
                 elseif GetUnitTypeId(u) == ABOMINATION_UNIT_ID then
                     if CheckProc(u, 350) then
                         call ElemFuncStart(u,ABOMINATION_UNIT_ID)
+                        call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * GetHeroLevel(u), 350, false, ABOMINATION_UNIT_ID)
                     endif
 
                     //Yeti
