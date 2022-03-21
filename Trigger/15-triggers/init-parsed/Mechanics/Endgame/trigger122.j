@@ -116,6 +116,12 @@ library trigger122 initializer init requires RandomShit, SaveCommand
     function Trig_Victory_Actions takes nothing returns nothing
         local PlayerStats winningPlayer
 
+        // Only allow a BR to save for the players code if there is more than 1 human in the game
+        local force actualPlayers = GetPlayersByMapControl(MAP_CONTROL_USER)
+        local boolean shouldSaveBrWin = CountPlayersInForceBJ(actualPlayers) > 1
+        call DestroyForce(actualPlayers)
+        set actualPlayers = null
+
         set udg_boolean11 = true
         call DisableTrigger(GetTriggeringTrigger())
         call DisableTrigger(udg_trigger118)
@@ -131,11 +137,13 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         else
             call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
             
-            // Update the player's stats that they won a BR
-            set winningPlayer = PlayerStats.forPlayer(WinningPlayer)
-            call winningPlayer.addBRWin()
+            if (shouldSaveBrWin) then
+                // Update the player's stats that they won a BR
+                set winningPlayer = PlayerStats.forPlayer(WinningPlayer)
+                call winningPlayer.addBRWin()
 
-            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(WinningPlayer)+(" has |cffc2154f" + I2S(winningPlayer.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(winningPlayer.getAllBRWins()) + "|r all time for this game mode"))))
+                call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+(" has |cffc2154f" + I2S(winningPlayer.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(winningPlayer.getAllBRWins()) + "|r all time for this game mode"))))
+            endif
 
         endif
         call EndThematicMusicBJ()
