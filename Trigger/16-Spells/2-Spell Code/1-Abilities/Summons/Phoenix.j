@@ -4,7 +4,7 @@ library Phoenix requires CustomState, SpellFormula
         local integer abilityLevel = IMinBJ(totalLevel, 30)
 
         call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + GetSpellValue(50, 11, abilityLevel) + (summonLevel * 150), 0)
-        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (7 / (12.1 + I2R(totalLevel))), 0)
+        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (7 / (12.1 + (totalLevel / 2))), 0)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + GetSpellValue(0, 50, abilityLevel) + (summonLevel * 1000))
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
         /*call UnitAddAbility(u, 'A06I')

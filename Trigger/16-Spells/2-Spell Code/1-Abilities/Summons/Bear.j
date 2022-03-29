@@ -4,7 +4,7 @@ library Bear requires CustomState, SpellFormula
         local integer abilityLevel = IMinBJ(totalLevel, 30)
 
         call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + GetSpellValue(0, 11, abilityLevel) + (summonLevel * 200), 0)
-        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + I2R(totalLevel))), 0)
+        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + (totalLevel / 2))), 0)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 20 * totalLevel)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + GetSpellValue(0, 60, abilityLevel) + (summonLevel * 1100))
 

@@ -4,7 +4,7 @@ library MountainGiant requires CustomState, SpellFormula
         local integer abilityLevel = IMinBJ(totalLevel, 30)
 
         call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + GetSpellValue(0, 8, abilityLevel) + (summonLevel * 50), 0)
-        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + I2R(totalLevel))), 0)
+        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + (totalLevel / 2))), 0)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 10 * totalLevel)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + GetSpellValue(0, 100, abilityLevel) + (summonLevel * 2000))
         call AddUnitBlock(u, GetSpellValue(200, 20, abilityLevel) + (500 * summonLevel))

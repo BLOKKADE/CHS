@@ -4,7 +4,7 @@ library Inferno requires CustomState, SpellFormula
         local integer abilityLevel = IMinBJ(totalLevel, 30)
 
         call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + GetSpellValue(50, 13, abilityLevel) + (summonLevel * 300), 0)
-        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (20 / (20 + I2R(totalLevel))), 0)
+        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (20.0 / (20.0 + (totalLevel / 2))), 0)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + GetSpellValue(0, 75, abilityLevel) + (summonLevel * 800))
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
         

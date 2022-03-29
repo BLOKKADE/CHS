@@ -6,7 +6,7 @@ library SpiritWolf requires CustomState, SpellFormula
         call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0) + GetSpellValue(0, 8, abilityLevel) + summonLevel * 50,0)
         call AddUnitEvasion(u, 15 * totalLevel)
 
-        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + I2R(totalLevel))), 0)
+        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + (totalLevel / 2))), 0)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 600)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
 
