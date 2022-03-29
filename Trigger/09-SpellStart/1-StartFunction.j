@@ -137,15 +137,7 @@ function FunctionTimerSpell takes nothing returns nothing
     set abilLevel = GetUnitAbilityLevel(Herou,BLESSED_PROTECTIO_ABILITY_ID)    
     if abilLevel > 0 then
         call BlessedProtectionStruct.create(Herou, (2.70 + (0.3 * abilLevel))* ChronusLevel)
-    endif
-        
-    //Ancient Runes
-    set abilLevel = GetUnitAbilityLevel(Herou,ANCIENT_RUNES_ABILITY_ID)    
-    if abilLevel > 0 then
-        call ElemFuncStart(Herou,ANCIENT_RUNES_ABILITY_ID)
-        call CreateRandomRune(- 60 + 10 * abilLevel,GetRandomReal(- 100,100)+ GetUnitX(Herou) ,GetRandomReal(- 100,100)+ GetUnitY(Herou)   ,Herou)
-        call CreateRandomRune(- 60 + 10 * abilLevel,GetRandomReal(- 100,100)+ GetUnitX(Herou) ,GetRandomReal(- 100,100)+ GetUnitY(Herou)   ,Herou)
-        call CreateRandomRune(- 60 + 10 * abilLevel,GetRandomReal(- 100,100)+ GetUnitX(Herou) ,GetRandomReal(- 100,100)+ GetUnitY(Herou)   ,Herou)   
+        set chronusActivated = true
     endif
         
     //Shining Runestone

@@ -60,7 +60,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		set s = s + "|cff4aa8e7Glory per Round|r: " + I2S(R2I(GetPlayerGloryBonus(pid))) + "\n"
 		set s = s + "|cff9b67faMovespeed|r: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"
 		set s = s + "|cffe7e44aPhysical Power|r: " + R2SW(100 + GetUnitPhysPow(u), 1, 1) + "\n"
-		set s = s + "|cffda4ae7Rune Power|r: " + R2SW(100 + GetUnitPowerRune(u) + GetHeroLevel(u), 1, 1) + "\n"
+		set s = s + "|cffda4ae7Rune Power|r: " + R2SW((100 + GetUnitPowerRune(u) + GetHeroLevel(u)) / 100, 1, 2) + "\n"
 		set s = s + "|cff5ce74aLuck|r: +" + R2SW(((GetUnitLuck(u) - 1) * 100), 1, 1) + "%%\n"
 		set s = s + "|cff6ac8ffAbsolute Slots|r: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1)
 

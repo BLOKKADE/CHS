@@ -9,9 +9,6 @@ library PoisonRune initializer init requires RandomShit
         integer level
         integer endTick
     
-        
-
-    
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick then
                 call this.stopPeriodic()
