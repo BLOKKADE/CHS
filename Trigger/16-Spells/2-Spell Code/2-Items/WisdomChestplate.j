@@ -12,16 +12,16 @@ library WisdomChestplate initializer init requires BuffSystem, CustomState, Rand
         //local item it
         local real bonus = damage * 0.4
         call SetBuff(target, 9, 5)
-        if GetCustomStateBonus(handleId) == 0 or GetCustomStateBonus(handleId).stop then
+        if GetCustomStateBonus(handleId) == 0 or GetCustomStateBonus(handleId).enabled == false then
             //set it = GetItemOfTypeFromUnitBJ(target, WISDOM_CHESTPLATE_ITEM_ID)
-            set WisdomChestplateTable[handleId] = TempBonus.create(target, BONUS_BLOCK, damage * 0.4, 5)
+            set WisdomChestplateTable[handleId] = TempBonus.create(target, BONUS_BLOCK, damage * 0.4, 5, WISDOM_CHESTPLATE_ITEM_ID)
             call DestroyEffect(AddSpecialEffectFix("war3mapImported\\Flicker.mdx", GetUnitX(target), GetUnitY(target)))
             //call BlzSetItemExtendedTooltip(it, ReplaceText("000", I2S(R2I(bonus)), BlzGetItemExtendedTooltip(it)))
         else
             if GetCustomStateBonus(handleId).bonus < bonus then
-                set GetCustomStateBonus(handleId).stop = true
+                set GetCustomStateBonus(handleId).enabled = false
                 //set it = GetItemOfTypeFromUnitBJ(target, WISDOM_CHESTPLATE_ITEM_ID)
-                set WisdomChestplateTable[handleId] = TempBonus.create(target, BONUS_BLOCK, damage * 0.4, 5)
+                set WisdomChestplateTable[handleId] = TempBonus.create(target, BONUS_BLOCK, damage * 0.4, 5, WISDOM_CHESTPLATE_ITEM_ID)
                 call DestroyEffect(AddSpecialEffectFix("war3mapImported\\Flicker.mdx", GetUnitX(target), GetUnitY(target)))
                 //call BlzSetItemExtendedTooltip(it, ReplaceText("000", I2S(R2I(bonus)), BlzGetItemExtendedTooltip(it)))
             elseif RAbsBJ(GetCustomStateBonus(handleId).bonus - bonus) < bonus * 0.3 then

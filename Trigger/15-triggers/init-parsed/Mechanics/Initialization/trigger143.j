@@ -22,14 +22,12 @@ library trigger143 initializer init requires RandomShit, MouseHoverInfo
 
 
     function Trig_Enter_Shop_Mode_Func036A takes nothing returns nothing
-        if GetUnitTypeId(GetEnumUnit()) == 'n02L' and IncomeMode > 0 then
-            if IncomeMode != 3 then
-                if IncomeMode == 1 then
-                    call ReplaceUnitBJ(GetEnumUnit(),'n035',bj_UNIT_STATE_METHOD_RELATIVE)
-                elseif IncomeMode == 2 then
-                    call ReplaceUnitBJ(GetEnumUnit(),'n034',bj_UNIT_STATE_METHOD_RELATIVE)		
-                endif
-            else
+        if GetUnitTypeId(GetEnumUnit()) == 'n02L' then
+            if IncomeMode == 1 then
+                call ReplaceUnitBJ(GetEnumUnit(),'n035',bj_UNIT_STATE_METHOD_RELATIVE)
+            elseif IncomeMode == 2 then
+                call ReplaceUnitBJ(GetEnumUnit(),'n034',bj_UNIT_STATE_METHOD_RELATIVE)		
+            elseif IncomeMode == 3 then
                 call ReplaceUnitBJ(GetEnumUnit(),'n005',bj_UNIT_STATE_METHOD_RELATIVE)
             endif
         else

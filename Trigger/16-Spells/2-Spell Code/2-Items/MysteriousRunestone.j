@@ -1,7 +1,7 @@
 library MysteriousRuneStone requires RuneInit
     function CastMysteriousRunestone takes unit caster returns nothing
-        call UnitAddItem(caster, CreateRandomRune(0, GetUnitX(caster), GetUnitY(caster), caster))
-        call UnitAddItem(caster, CreateRandomRune(0, GetUnitX(caster), GetUnitY(caster), caster))   
-        call UnitAddItem(caster, CreateRandomRune(0, GetUnitX(caster), GetUnitY(caster), caster))    
+        call CreateRandomRune(0, GetRandomReal(- 100, 100) + GetUnitX(caster), GetRandomReal(- 100, 100) + GetUnitY(caster), caster)
+        call CreateRandomRune(0, GetRandomReal(- 100, 100) + GetUnitX(caster), GetRandomReal(- 100, 100) + GetUnitY(caster), caster)
+        call CreateRandomRune(0, GetRandomReal(- 100, 100) + GetUnitX(caster), GetRandomReal(- 100, 100) + GetUnitY(caster), caster)
     endfunction
 endlibrary

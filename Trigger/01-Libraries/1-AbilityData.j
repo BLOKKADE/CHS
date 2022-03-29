@@ -1,4 +1,4 @@
-library AbilityData initializer init requires Table, IdLibrary
+library AbilityData initializer init requires Table, IdLibrary, Utility
     globals
 
         Table AbilityIndex
@@ -22,6 +22,8 @@ library AbilityData initializer init requires Table, IdLibrary
         integer AbilSRA3_count = 0
         */
 
+        integer Element_Any = -1
+        integer Element_None = 0
         integer Element_Fire = 1
         integer Element_Water = 2
         integer Element_Wind = 3
@@ -35,8 +37,7 @@ library AbilityData initializer init requires Table, IdLibrary
         integer Element_Blood = 11
         integer Element_Summon = 12
         integer Element_Arcane = 13
-        integer Element_Time = 14
-        integer Element_Spirit = 15
+        integer Element_Maximum = 13
 
         integer Order_None = 0
         integer Order_Target = 1
@@ -99,8 +100,14 @@ library AbilityData initializer init requires Table, IdLibrary
     endfunction
 
     //Checks if the ability is passive or not
-    function IsAbilityCasteable takes integer abilId returns boolean
-        return AbilityData[abilId].boolean[4]
+    function IsAbilityCasteable takes integer abilId, boolean allowPlain returns boolean
+        if allowPlain then
+            //call BJDebugMsg("ap " + GetObjectName(abilId) + " casteable: " + B2S(AbilityData[abilId].boolean[4]))
+            return AbilityData[abilId].boolean[4]
+        else
+            //call BJDebugMsg("nap " + GetObjectName(abilId) + " casteable: " + B2S(AbilityData[abilId].boolean[4] and not AbilityData[abilId].boolean[8]))
+            return AbilityData[abilId].boolean[4] and not AbilityData[abilId].boolean[8]
+        endif
     endfunction
 
     //Gets the ability target type: none, ally, enemy
@@ -145,13 +152,13 @@ library AbilityData initializer init requires Table, IdLibrary
         set ItemData[itemId] = abilId
 
         set AbilityData[abilId].integer[0] = itemId
-        set AbilityData[abilId].integer[1] = OrderId(order)
         set AbilityData[abilId].integer[2] = typ
         set AbilityData[abilId].integer[3] = mono
         set AbilityData[abilId].integer[5] = targetType
 
-        if typ != Order_None then
+        if order != null then
             set AbilityData[abilId].boolean[4] = true
+            set AbilityData[abilId].integer[1] = OrderId(order)
         endif
 
         if not absolute then
@@ -210,6 +217,10 @@ library AbilityData initializer init requires Table, IdLibrary
         set AbilityData[LastObject].boolean[7] = true
     endfunction
 
+    function SetLastAbilityPlain takes nothing returns nothing
+        set AbilityData[LastObject].boolean[8] = true
+    endfunction
+
     function SetObjectElement takes integer objectId, integer element, integer count returns nothing
         set ElementData[element].integer[objectId] = count
     endfunction
@@ -217,7 +228,7 @@ library AbilityData initializer init requires Table, IdLibrary
     function InitAbilities takes nothing returns nothing
         //1 - Bash 
         call SaveAbilData(BASH_ABILITY_ID, BASH_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //2 - Mana Shield 
         call SaveAbilData(MANA_SHIELD_ABILITY_ID, MANA_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, "manashieldon")
@@ -311,7 +322,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //22 - War Stomp 
         call SaveAbilData(WAR_STOMP_ABILITY_ID, WAR_STOMP_ITEM_ID, false, 0, 0, true, Order_Instant, "stomp")
         call SetLastObjectElement(Element_Earth, 1)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //23 - Life Drain 
         call SaveAbilData(LIFE_DRAIN_ABILITY_ID, LIFE_DRAIN_ITEM_ID, false, 0, 0, true, Order_Target, "drain")
@@ -322,7 +333,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Dark, 1)
 
         //26 - Entangling Roots 
-        call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID, ENTANGLING_ROOTS_ITEM_ID, false, 0, 1, true, Order_Target, "entanglingroots")
+        call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID, ENTANGLING_ROOTS_ITEM_ID, false, Target_Enemy, 1, true, Order_Target, "entanglingroots")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
 
@@ -355,15 +366,17 @@ library AbilityData initializer init requires Table, IdLibrary
         //32 - Activate Immolation 
         call SaveAbilData(IMMOLATION_ABILITY_ID, IMMOLATION_ITEM_ID, false, 0, 0, false, Order_None, "immolation")
         call SetLastObjectElement(Element_Fire, 2)
+        call SetLastAbilityPlain()
 
         //33 - Storm Bolt 
         call SaveAbilData(STORM_BOLT_ABILITY_ID, STORM_BOLT_ITEM_ID, false, 0, 0, true, Order_Target, "thunderbolt")
         call SetLastObjectElement(Element_Wind, 1)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //34 - Mirror Image 
-        call SaveAbilData(MIRROR_IMAGE_ABILITY_ID, MIRROR_IMAGE_ITEM_ID, false, 0, 0, false, Order_None, "mirrorimage")
+        call SaveAbilData(MIRROR_IMAGE_ABILITY_ID, MIRROR_IMAGE_ITEM_ID, false, 0, 0, false, Order_Instant, "mirrorimage")
         call SetLastObjectElement(Element_Arcane, 1)
+        call SetLastAbilityPlain()
 
         //35 - Chain Lightning 
         call SaveAbilData(CHAIN_LIGHTNING_ABILITY_ID, CHAIN_LIGHTNING_ITEM_ID, false, 0, 0, true, Order_Target, "chainlightning")
@@ -380,9 +393,10 @@ library AbilityData initializer init requires Table, IdLibrary
         //call SaveDummyAbilOrder(CLUSTER_ROCKETS_DUMMY_ABILITY_ID, "clusterrockets")
 
         //38 - Wind Walk 
-        call SaveAbilData(WIND_WALK_ABILITY_ID, WIND_WALK_ITEM_ID, false, 0, 0, false, Order_None, "windwalk")
+        call SaveAbilData(WIND_WALK_ABILITY_ID, WIND_WALK_ITEM_ID, false, 0, 0, false, Order_Instant, "windwalk")
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastAbilityNotReplaceable()
+        call SetLastAbilityPlain()
 
         //39 - Drunken Haze 
         call SaveAbilData(DRUNKEN_HAZE_ABILITY_ID, DRUNKEN_HAZE_ITEM_ID, false, 0, 1, true, Order_Target, "drunkenhaze")
@@ -407,7 +421,7 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //44 - Starfall 
         call SaveAbilData(STARFALL_ABILITY_ID, STARFALL_ITEM_ID, false, 0, 0, true, Order_Instant, "starfall")
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
         //call SaveDummyAbilOrder(STARFALL_DUMMY_ABILITY_ID, "starfall")
 
@@ -469,9 +483,10 @@ library AbilityData initializer init requires Table, IdLibrary
         //call SaveDummyAbilOrder(ACID_SPRAY_DUMMY_ABILITY_ID, "healingspray")
 
         //55 - Activate Avatar 
-        call SaveAbilData(ACTIVATE_AVATAR_ABILITY_ID, ACTIVATE_AVATAR_ITEM_ID, false, 0, 0, false, Order_None, "avatar")
+        call SaveAbilData(ACTIVATE_AVATAR_ABILITY_ID, ACTIVATE_AVATAR_ITEM_ID, false, 0, 0, false, Order_Instant, "avatar")
         call SetLastObjectElement(Element_Earth, 1)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
+        call SetLastAbilityPlain()
 
         //56 - Battle Roar 
         call SaveAbilData(BATTLE_ROAR_ABILITY_ID, BATTLE_ROAR_ITEM_ID, false, 1, 0, true, Order_Instant, "battleroar")
@@ -499,7 +514,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //61 - Pulverize 
         call SaveAbilData(PULVERIZE_ABILITY_ID, PULVERIZE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Earth, 1)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //62 - Corrosive Skin 
         call SaveAbilData(CORROSIVE_SKIN_ABILITY_ID, CORROSIVE_SKIN_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -517,6 +532,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //66 - Searing Arrows 
         call SaveAbilData(SEARING_ARROWS_ABILITY_ID, SEARING_ARROWS_ITEM_ID, false, 0, 0, false, Order_None, "flamingarrows")
         call SetLastObjectElement(Element_Fire, 1)
+        call SetLastAbilityPlain()
 
         //67 - Necromancer's Army 
         call SaveAbilData(NECROMANCERS_ARMY_ABILITY_ID, NECROMANCERS_ARMY_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -531,6 +547,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //69 - Cold Arrows 
         call SaveAbilData(COLD_ARROWS_ABILITY_ID, COLD_ARROWS_ITEM_ID, false, 0, 0, false, Order_None, "coldarrows")
         call SetLastObjectElement(Element_Cold, 1)
+        call SetLastAbilityPlain()
 
         //70 - Faerie Fire 
         call SaveAbilData(FAERIE_FIRE_ABILITY_ID, FAERIE_FIRE_ITEM_ID, false, 0, 1, true, Order_Target, "faeriefire")
@@ -557,7 +574,7 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //74 - Command Aura 
         call SaveAbilData(COMMAND_AURA_ABILITY_ID, COMMAND_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //75 - Devastating Blow 
         call SaveAbilData(DEVASTATING_BLOW_ABILITY_ID, DEVASTATING_BLOW_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -589,8 +606,9 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastAbilityNotReplaceable()
 
         //82 - Berserk 
-        call SaveAbilData(BERSERK_ABILITY_ID, BERSERK_ITEM_ID, false, 0, 0, false, Order_None, "berserk")
+        call SaveAbilData(BERSERK_ABILITY_ID, BERSERK_ITEM_ID, false, 0, 0, false, Order_Instant, "berserk")
         call SetLastObjectElement(Element_Blood, 1)
+        call SetLastAbilityPlain()
 
         //83 - Rejuvenation 
         call SaveAbilData(REJUVENATION_ABILITY_ID, REJUVENATION_ITEM_ID, false, 1, 1, true, Order_Target, "rejuvination")
@@ -598,7 +616,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Light, 1)
 
         //84 - Lightning Shield 
-        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, LIGHTNING_SHIELD_ITEM_ID, false, 0, 1, false, Order_None, "lightningshield")
+        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, LIGHTNING_SHIELD_ITEM_ID, false, Target_Any, 1, false, Order_Target, "lightningshield")
         call SetLastObjectElement(Element_Wind, 2)
         call SetLastAbilityNotReplaceable()
 
@@ -630,11 +648,13 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(SLOW_AURA_ABILITY_ID, SLOW_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //93 - Blink 
-        call SaveAbilData(BLINK_ABILITY_ID, BLINK_ITEM_ID, false, 0, 0, false, Order_None, "blink")
+        call SaveAbilData(BLINK_ABILITY_ID, BLINK_ITEM_ID, false, 0, 0, false, Order_Point, "blink")
         call SetLastAbilityNotReplaceable()
+        call SetLastAbilityPlain()
 
         //94 - Phase Shift 
-        call SaveAbilData(PHASE_SHIFT_ABILITY_ID, PHASE_SHIFT_ITEM_ID, false, 0, 0, false, Order_None, "phaseshiftinstant")
+        call SaveAbilData(PHASE_SHIFT_ABILITY_ID, PHASE_SHIFT_ITEM_ID, false, 0, 0, false, Order_Instant, "phaseshiftinstant")
+        call SetLastAbilityPlain()
 
         //95 - Finger of Death 
         call SaveAbilData(FINGER_OF_DEATH_ABILITY_ID, FINGER_OF_DEATH_ITEM_ID, false, 0, 0, true, Order_Target, "fingerofdeath")
@@ -679,7 +699,7 @@ library AbilityData initializer init requires Table, IdLibrary
         //105 - Mana Bonus 
         call SaveAbilData(MANA_BONUS_ABILITY_ID, MANA_BONUS_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //106 - Power of Ice 
         call SaveAbilData(POWER_OF_ICE_ABILITY_ID, POWER_OF_ICE_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -706,14 +726,11 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(RAPID_RECOVERY_ABILITY_ID, RAPID_RECOVERY_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
-        //112 - Сhronus Wizard 
-        call SaveAbilData(CHRONUS_WIZARD_ABILITY_ID, CHRONUS_WIZARD_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
 
         //113 - Cheater Magic 
         call SaveAbilData(CHEATER_MAGIC_ABILITY_ID, CHEATER_MAGIC_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
 
@@ -731,7 +748,7 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //117 - Reincarnation 
         call SaveAbilData(REINCARNATION_ABILITY_ID, REINCARNATION_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Light, 1)
 
         //118 - Drunken Master 
@@ -742,11 +759,12 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //120 - Destruction
         call SaveAbilData(DESTRUCTION_ABILITY_ID, DESTRUCTION_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //122 - Divine Shield 
-        call SaveAbilData(DIVINE_SHIELD_ABILITY_ID, DIVINE_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, "divineshield")
+        call SaveAbilData(DIVINE_SHIELD_ABILITY_ID, DIVINE_SHIELD_ITEM_ID, false, 0, 0, false, Order_Instant, "divineshield")
         call SetLastObjectElement(Element_Light, 1)
+        call SetLastAbilityPlain()
 
         //123 - Midas Touch 
         call SaveAbilData(MIDAS_TOUCH_ABILITY_ID, MIDAS_TOUCH_ITEM_ID, false, 0, 1, true, Order_Target, "transmute")
@@ -767,9 +785,10 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastAbilityNotReplaceable()
 
         //127 - Big Bad Voodoo 
-        call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID, BIG_BAD_VOODOO_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID, BIG_BAD_VOODOO_ITEM_ID, false, 0, 0, false, Order_Instant, "voodoo")
         call SetLastObjectElement(Element_Arcane, 2)
         call SetLastObjectElement(Element_Dark, 2)
+        call SetLastAbilityPlain()
 
         //128 - Icy Breath 
         call SaveAbilData(ICY_BREATH_ABILITY_ID, ICY_BREATH_ITEM_ID, false, 0, 1, true, Order_Point, "breathoffrost")
@@ -812,7 +831,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Light, 1)
         call SetLastObjectElement(Element_Cold, 1)
@@ -851,7 +870,7 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //143 - Mysterious Talent 
         call SaveAbilData(MYSTERIOUS_TALENT_ABILITY_ID, MYSTERIOUS_TALENT_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //144 - Stone Protection 
@@ -868,7 +887,7 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //147 - Magic Critical Hit 
         call SaveAbilData(MAGIC_CRITICAL_HIT_ABILITY_ID, MAGIC_CRITICAL_HIT_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //148 - Mega Luck 
@@ -879,7 +898,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Water, 1)
 
         //150 - Ancient Runes 
-        call SaveAbilData(ANCIENT_RUNES_ABILITY_ID, ANCIENT_RUNES_ITEM_ID, false, 0, 0, false, Order_Instant, "animatedead")
+        call SaveAbilData(ANCIENT_RUNES_ABILITY_ID, ANCIENT_RUNES_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //151 - Earthquake 
@@ -898,7 +917,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Light, 1)
         call SetLastObjectElement(Element_Cold, 1)
@@ -912,9 +931,15 @@ library AbilityData initializer init requires Table, IdLibrary
         call SaveAbilData(DIVINE_BUBBLE_ABILITY_ID, DIVINE_BUBBLE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
+        //155 - Ancient Element 
+        call SaveAbilData(ANCIENT_ELEMENT_ABILITY_ID, ANCIENT_ELEMENT_ITEM_ID, false, 0, 0, false, Order_None, null)
+        //elements are set in 
+
         //155 - Ancient Blood 
         call SaveAbilData(ANCIENT_BLOOD_ABILITY_ID, ANCIENT_BLOOD_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
+        call SetLastObjectElement(Element_Water, 1)
+        call SetLastObjectElement(Element_Wind, 1)
 
         //156 - Frost Bolt 
         call SaveAbilData(FROST_BOLT_ABILITY_ID, FROST_BOLT_ITEM_ID, false, 0, 0, true, Order_Target, "slowon")
@@ -943,12 +968,12 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //161 - Wizardbane Aura 
         call SaveAbilData(WIZARDBANE_AURA_ABILITY_ID, WIZARDBANE_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //162 - Martial Retribution 
         call SaveAbilData(MARTIAL_RETRIBUTION_ABILITY_ID, MARTIAL_RETRIBUTION_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //163 - Purge 
         call SaveAbilData(PURGE_ABILITY_ID, PURGE_ITEM_ID, false, 0, 1, true, Order_Target, "purge")
@@ -1039,22 +1064,23 @@ library AbilityData initializer init requires Table, IdLibrary
 
         //184 - Crushing Wave 
         call SaveAbilData(CRUSHING_WAVE_ABILITY_ID, CRUSHING_WAVE_ITEM_ID, false, 0, 0, true, Order_Point, "carrionswarm")
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Water, 1)
         call SetLastAbilityManifoldable()
 
         //185 - Energy Trap 
         call SaveAbilData(ENERGY_TRAP_ABILITY_ID, ENERGY_TRAP_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
 
         //186 - Magnetic Oscillation 
         call SaveAbilData(MAGNET_OSC_ABILITY_ID, MAGNET_OSC_ITEM_ID, false, 0, 0, true, Order_None, "hex")
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
         call SetLastObjectElement(Element_Earth, 1)
+        call SetLastAbilityPlain()
 
         //187 - Martial Theft 
         call SaveAbilData(MARTIAL_THEFT_ABILITY_ID, MARTIAL_THEFT_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Energy, 1)
+        //call SetLastObjectElement(Element_Energy, 1)
     endfunction
 
     function InitHeroElements takes nothing returns nothing
@@ -1065,7 +1091,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetObjectElement(PIT_LORD_UNIT_ID, Element_Fire, 1)
         call SetObjectElement(WITCH_DOCTOR_UNIT_ID, Element_Water, 1)
         call SetObjectElement(LICH_UNIT_ID, Element_Water, 1)
-        call SetObjectElement(NAHA_SIREN_UNIT_ID, Element_Water, 1)
+        call SetObjectElement(NAGA_SIREN_UNIT_ID, Element_Water, 1)
         call SetObjectElement(BLOOD_MAGE_UNIT_ID, Element_Water, 1)
         call SetObjectElement(SORCERER_UNIT_ID, Element_Wind, 1)
         call SetObjectElement(THUNDER_WITCH_UNIT_ID, Element_Wind, 1)
@@ -1079,12 +1105,16 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetObjectElement(BEAST_MASTER_UNIT_ID, Element_Wild, 1)
         call SetObjectElement(MYSTIC_UNIT_ID, Element_Wild, 1)
         call SetObjectElement(DRUID_OF_THE_CLAY_UNIT_ID, Element_Wild, 1)
+        call SetObjectElement(SEER_UNIT_ID, Element_Arcane, 1)
+        call SetObjectElement(MURLOC_WARRIOR_UNIT_ID, Element_Blood, 1)
+        /*
         call SetObjectElement(CENTAUR_ARCHER_UNIT_ID, Element_Energy, 1)
-        call SetObjectElement(SEER_UNIT_ID, Element_Energy, 1)
+        
         call SetObjectElement(GRUNT_UNIT_ID, Element_Energy, 1)
         call SetObjectElement(DARK_HUNTER_UNIT_ID, Element_Energy, 1)
         call SetObjectElement(MEDIVH_UNIT_ID, Element_Energy, 1)
         call SetObjectElement(TAUREN_UNIT_ID, Element_Energy, 1)
+        */
         call SetObjectElement(SKELETON_BRUTE_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(FALLEN_RANGER_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(AVATAR_SPIRIT_UNIT_ID, Element_Dark, 1)
@@ -1139,7 +1169,7 @@ library AbilityData initializer init requires Table, IdLibrary
         call SetObjectElement('A07M', Element_Earth, 1)
 
         //Bash
-        call SetObjectElement('A06T', Element_Energy, 1)
+        //call SetObjectElement('A06T', Element_Energy, 1)
 
         //Thunder Force
         call SetObjectElement('A02R', Element_Wind, 1)

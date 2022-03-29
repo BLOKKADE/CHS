@@ -5,45 +5,53 @@ scope LongPeriodCheck initializer init
         local integer i1 = GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID)
         local real i2 = UnitHasItemI(u,'I066')
 
-
-
         if i1 > 0 then
             set r2 = r1 - MegaSpeedBonus(u, i1, r1)
         else
-
             set r2 = r1 
         endif
 
-        set r2 = r2 + i2 * 1.4
-
-        if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
-            set r2 = r2 + 0.4
+        //Speed Blade active: is ovewrriden if already lower than 0.6 from mega speed/default
+        if GetUnitAbilityLevel(u, SPEED_BLADE_BUFF_ID) > 0 then
+            if r2 >= 0.6 then
+                set r2 = 0.6
+            else
+                call UnitRemoveAbility(u, SPEED_BLADE_BUFF_ID)
+            endif
         endif
 
+        //Hammer of the Gods
+        set r2 = r2 + i2 * 1.4
+
+        //Flimsy Token
+        if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
+            set r2 = r2 + 0.6
+        endif
+
+        //Speed Blade passive
         if UnitHasItemS(u,'I06B') then
             set r2 = r2 * 0.8
         endif
 
+        //Troll passive
         if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID then
-
             set r2 = r2 * 100 /(I2R(100 + GetHeroLevel(u))) 
         endif
 
         //  call DisplayTextToPlayer(GetLocalPlayer(),0,0,R2S(r2))
         call BlzSetUnitAttackCooldown(u,r2,0)
-
-
-
     endfunction
 
 
 
     function AABfunction takes unit u returns nothing
+        local integer i
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
             //Mysterious Talent
-            if GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u,MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 then
+            set i = GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID)
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 then
                 call MysteriousTalentActivate(u)
-                call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID) ) 
+                call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - i) 
             endif
 
             //Holy Shield
@@ -52,17 +60,30 @@ scope LongPeriodCheck initializer init
                 call AbilStartCD(u,'A066',10 ) 
             endif
 
+            //Ancient Runes
+            set i = GetUnitAbilityLevel(u, ANCIENT_RUNES_ABILITY_ID)
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,ANCIENT_RUNES_ABILITY_ID) <= 0.001 then
+                call ActivateAncientRunes(u, i)
+            endif
+
+            //Ancient Element
+            set i = GetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID)
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_ELEMENT_ABILITY_ID) <= 0 and CheckProc(u, 600) then
+                call UseAncientElement(u, i)
+            endif
+
             //Runestone of Creation
             if GetUnitAbilityLevel(u,'A073') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A073') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
                 call CreateRandomRune(0,GetUnitX(u),GetUnitY(u),u )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 2000)
                 call AbilStartCD(u,'A073',20 ) 
             endif
-
+            
             //Earthquake
-            if GetUnitAbilityLevel(u,EARTHQUAKE_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u,EARTHQUAKE_ABILITY_ID) <= 0.001 and CheckProc(u, 600) then
-                call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap",GetUnitAbilityLevel(u,EARTHQUAKE_ABILITY_ID)* 100,ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
-                call AbilStartCD(u,EARTHQUAKE_ABILITY_ID,5 ) 
+            set i = GetUnitAbilityLevel(u,EARTHQUAKE_ABILITY_ID)
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,EARTHQUAKE_ABILITY_ID) <= 0.001 and CheckProc(u, 600) then
+                call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap", GetSpellValue(75, 10, i), ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
+                call AbilStartCD(u,EARTHQUAKE_ABILITY_ID,5) 
             endif
         endif
     endfunction
@@ -187,6 +208,25 @@ scope LongPeriodCheck initializer init
             if GetWidgetLife(u) > 0.405 then
                 call FunctionAttackSpeedA(u)
 
+                //Guide To Rune Mastery
+                if GetUnitAbilityLevel(u ,'A09O') >= 1 then
+                    set i1 = R2I(100 + GetUnitPowerRune(u) + GetHeroLevel(u))
+                    set i2 = LoadInteger(HT, hid, 'A09O')
+                    if i1 != i2 then
+                        call SaveInteger(HT, hid, 'A09O', i1)
+
+                        call AddUnitBonus(u, BONUS_STRENGTH, i1 - i2)
+                        call AddUnitBonus(u, BONUS_AGILITY, i1 - i2)
+                        call AddUnitBonus(u, BONUS_INTELLIGENCE, i1 - i2)
+                    endif
+                elseif LoadInteger(HT,hid, 'A09O') != 0 then
+                    set i1 = LoadInteger(HT, hid, 'A09O')
+                    call AddUnitBonus(u, BONUS_STRENGTH, 0 - i1)
+                    call AddUnitBonus(u, BONUS_AGILITY, 0 - i1)
+                    call AddUnitBonus(u, BONUS_INTELLIGENCE, 0 - i1)
+                    call SaveInteger(HT, hid, 'A09O', 0)
+                endif
+
                 //Double Armor
                 if GetUnitAbilityLevel(u ,'B00F') >= 1 then
                     set ARMORN = BlzGetUnitArmor(u)
@@ -203,35 +243,42 @@ scope LongPeriodCheck initializer init
 
                 //Panda Relic
                 if GetUnitAbilityLevel(u ,'B00S') >= 1 then
-                    set Agi1 = GetHeroAgi(u,false)
-                    set Agi2 = LoadReal(HT,hid,1001)
-                    set Smat1 = R2I((Agi1 - Agi2)* 0.35)  //?????? ????
+                    //agi
+                    set i1 = R2I(GetHeroAgi(u,false) * 0.35)
+                    set i2 = LoadInteger(HT,hid, 1001)
 
-                    call SaveReal(HT,hid,1001 ,Smat1   )
-                    call SetHeroAgi(u,R2I(Agi1 + Smat1 - Agi2 ) ,false)
+                    if i1 != i2 then
+                        call SaveInteger(HT, hid, 1001, i1)
+                        call AddUnitBonus(u, BONUS_AGILITY, i1 - i2)
+                    endif
 
-                    set Str1 = GetHeroStr(u,false)
-                    set Str2 = LoadReal(HT,hid,1002)
-                    set Smat1 = R2I((Str1 - Str2)* 0.35)  //?????? ????
+                    //str
+                    set i1 = R2I(GetHeroStr(u,false) * 0.35)
+                    set i2 = LoadInteger(HT,hid, 1002)
 
-                    call SaveReal(HT,hid,1002 ,Smat1   )
-                    call SetHeroStr(u,R2I(Str1 + Smat1 - Str2 ) ,false)
+                    if i1 != i2 then
+                        call SaveInteger(HT, hid, 1002, i1)
+                        call AddUnitBonus(u, BONUS_STRENGTH, i1 - i2)
+                    endif
 
-                    set Int1 = GetHeroInt(u,false)
-                    set Int2 = LoadReal(HT,hid,1003)
-                    set Smat1 = R2I((Int1 - Int2)* 0.35)  //?????? ????
+                    //int
+                    set i1 = R2I(GetHeroInt(u,false) * 0.35)
+                    set i2 = LoadInteger(HT,hid, 1003)
 
-                    call SaveReal(HT,hid,1003 ,Smat1   )
-                    call SetHeroInt(u,R2I(Int1 + Smat1 - Int2 ) ,false)
-                elseif (LoadReal(HT,hid,1001) != 0) or (LoadReal(HT,hid,1002) != 0) or (LoadReal(HT,hid,1003) != 0) then
-                    call SetHeroAgi(u,R2I(GetHeroAgi(u,false) - (LoadReal(HT,hid,1001)) ) ,false)	
-                    call SaveReal(HT,hid,1001,0)
+                    if i1 != i2 then
+                        call SaveInteger(HT, hid, 1003, i1)
+                        call AddUnitBonus(u, BONUS_INTELLIGENCE, i1 - i2)
+                    endif
+                    //call SetHeroInt(u,R2I(Int1 + Smat1 - Int2 ) ,false)
+                elseif (LoadInteger(HT,hid,1001) != 0) or (LoadInteger(HT,hid,1002) != 0) or (LoadInteger(HT,hid,1003) != 0) then
+                    call AddUnitBonus(u, BONUS_AGILITY, 0 - LoadInteger(HT,hid,1001))
+                    call SaveInteger(HT,hid,1001,0)
 
-                    call SetHeroStr(u,R2I(GetHeroStr(u,false) - (LoadReal(HT,hid,1002)) ) ,false)	
-                    call SaveReal(HT,hid,1002,0)
+                    call AddUnitBonus(u, BONUS_STRENGTH, 0 - LoadInteger(HT,hid,1002))
+                    call SaveInteger(HT,hid,1002,0)
 
-                    call SetHeroInt(u,R2I(GetHeroInt(u,false) - (LoadReal(HT,hid,1003)) ) ,false)	
-                    call SaveReal(HT,hid,1003,0)		
+                    call AddUnitBonus(u, BONUS_INTELLIGENCE, 0 - LoadInteger(HT,hid,1003))
+                    call SaveInteger(HT,hid,1003,0)		
                 endif
 
                 //Relic of Magic
@@ -260,7 +307,7 @@ scope LongPeriodCheck initializer init
                 //Absolute Light
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_LIGHT_ABILITY_ID)
                 if i1 >= 1  then
-                    set i1 = i1 * GetClassUnitSpell(u,8)
+                    set i1 = i1 * GetUnitElementCount(u, Element_Light)
                     set HpBonus = HpBonus + 0.005 * I2R(i1)
                 endif
 
@@ -275,7 +322,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,'B026')
                 //Goblet of Blood
                 if GetUnitAbilityLevel(u, 'B026') > 0 then
-                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.01)
+                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.03)
 
                     if i1 != i2 then
                         call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2 + i1)
@@ -337,10 +384,10 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
-                        set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
-                        set i1 = R2I((i1 * GetClassUnitSpell(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
+                        set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
+                        set i1 = R2I((i1 * GetUnitElementCount(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
                     else
-                        set i1 = i1 * GetClassUnitSpell(u, Element_Fire)
+                        set i1 = i1 * GetUnitElementCount(u, Element_Fire)
                     endif
                     call AddUnitMagicDmg(u ,   0.5 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
@@ -350,7 +397,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WATER_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u, Element_Water)
+                    set i1 = i1 * GetUnitElementCount(u, Element_Water)
                     call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)), false)
                     call SaveInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID,i1)	
                 endif
@@ -359,7 +406,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WIND_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u, Element_Wind)
+                    set i1 = i1 * GetUnitElementCount(u, Element_Wind)
                     call AddUnitEvasion(u ,   0.5 * I2R(i1 - i2)  )
                     call SetHeroAgi(u,GetHeroAgi(u,false)+ 10 *(i1 - i2),false     )
                     call SaveInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID,i1)	
@@ -369,7 +416,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_EARTH_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u, Element_Earth)
+                    set i1 = i1 * GetUnitElementCount(u, Element_Earth)
                     call AddUnitBlock(u ,   20 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID,i1)	
                 endif
@@ -378,7 +425,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_BLOOD_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u, Element_Blood)
+                    set i1 = i1 * GetUnitElementCount(u, Element_Blood)
                     call SetHeroStr(u,GetHeroStr(u,false)+ 10 *(i1 - i2),false     )
                     call SaveInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID,i1)	
                 endif
@@ -386,7 +433,7 @@ scope LongPeriodCheck initializer init
                 //Decaying Scythe
                 set i2 = LoadInteger(HT, hid, DECAYING_SCYTHE_ABILITY_ID)
                 if GetUnitAbilityLevel(u, DECAYING_SCYTHE_ABILITY_ID) > 0 then
-                    set i1 = GetClassUnitSpell(u, Element_Poison)
+                    set i1 = GetUnitElementCount(u, Element_Poison)
                     if i1 != i2 then
                         call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + ((i1 - i2) * 300))
                         call SaveInteger(HT,hid,DECAYING_SCYTHE_ABILITY_ID,i1)
@@ -406,7 +453,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WILD_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = i1 * GetClassUnitSpell(u, Element_Wild)
+                    set i1 = i1 * GetUnitElementCount(u, Element_Wild)
                     call AddUnitSummonStronger(u ,   1 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID,i1)	
                 endif
@@ -420,13 +467,23 @@ scope LongPeriodCheck initializer init
 
                 //Pit Lord
                 if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
-                    set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(u, Element_Water), 0)
+                    set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
                     set i1 = R2I(GetUnitMagicDmg(u) * r1)
                     set i2 = LoadInteger(HT,hid,PIT_LORD_UNIT_ID)
                     if i1 != i2 then
                         call AddUnitPhysPow(u, 0 - i2)
                         call AddUnitPhysPow(u, i1)
                         call SaveInteger(HT,hid,PIT_LORD_UNIT_ID,i1)	
+                    endif
+                endif
+
+                //Naga Siren
+                if GetUnitTypeId(u) == NAGA_SIREN_UNIT_ID then
+                    set i1 = NagaSirenBonus[hid] * GetHeroInt(u, true)
+                    set i2 = LoadInteger(HT,hid,NAGA_SIREN_UNIT_ID)
+                    if i1 != i2 then
+                        call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2 + i1)
+                        call SaveInteger(HT, hid, NAGA_SIREN_UNIT_ID, i1)
                     endif
                 endif
 

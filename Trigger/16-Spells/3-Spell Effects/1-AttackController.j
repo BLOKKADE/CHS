@@ -68,7 +68,9 @@ scope AttackController initializer init
         set i1 = GetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID)
         if i1 > 0 and GetRandomReal(0,100) <= 35 * luck then
             call DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * i1)).target(u2).activate()
-            call PoisonSpellCast(u, u2)
+            if GetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
+                call PoisonSpellCast(u, u2)
+            endif
         endif
         
         //Demon Hunter
@@ -88,7 +90,7 @@ scope AttackController initializer init
         endif
 
         //Murloc
-        if GetUnitTypeId(u2) == 'H01F' then
+        if GetUnitTypeId(u2) == MURLOC_WARRIOR_UNIT_ID then
             set i1 = 1 + GetHeroLevel(u2)/ 10 
             call SaveInteger(HT,GetHandleId(u2),54021,i1 + LoadInteger(HT,GetHandleId(u2),54021))
             call SetHeroStr(u2,GetHeroStr(u2,false)+ i1,false)
@@ -97,12 +99,13 @@ scope AttackController initializer init
         endif
         
         //Reaction
-        if GetUnitAbilityLevel(u,REACTION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u,REACTION_ABILITY_ID) <= 0.001  then
+        set i1 = GetUnitAbilityLevel(u,REACTION_ABILITY_ID)
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(u,REACTION_ABILITY_ID) <= 0.001  then
             set t = NewTimer()
             
             call SaveUnitHandle(HT,GetHandleId(t),1,u)
-            call SaveInteger(HT,GetHandleId(t),2,GetUnitAbilityLevel(u,REACTION_ABILITY_ID)* 10)
-            call AddUnitEvasion(u,10 * GetUnitAbilityLevel(u,REACTION_ABILITY_ID))
+            call SaveInteger(HT,GetHandleId(t),2,i1* 10)
+            call AddUnitEvasion(u,10 * i1)
             call AbilStartCD(u,REACTION_ABILITY_ID,8)
             call UnitAddAbility(u, 'A08D')
             call TimerStart(t,2.5,false,function EndEvasionTimer )
@@ -110,8 +113,9 @@ scope AttackController initializer init
         endif
         
         //Cold Wind
-        if GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u2,COLD_WIND_ABILITY_ID) <= 0.001  then
-            call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2),100 * GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID),500,COLD_WIND_ABILITY_ID)
+        set i1 = GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID)
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(u2,COLD_WIND_ABILITY_ID) <= 0.001  then
+            call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2), GetSpellValue(75, 10, i1),500,COLD_WIND_ABILITY_ID)
             call AbilStartCD(u2,COLD_WIND_ABILITY_ID,2 ) 
         endif
         
@@ -135,8 +139,9 @@ scope AttackController initializer init
         endif
 
         //Fire Force
-        if (GetUnitAbilityLevel(GetTriggerUnit(),FIRE_FORCE_ABILITY_ID ) >= 1)  and (GetRandomReal(1,100)<= 12 * luck) then
-            call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A0C0',"fanofknives",  GetHeroStr(GetTriggerUnit(),true)*(60 + 20 * I2R(GetUnitAbilityLevel(u,FIRE_FORCE_ABILITY_ID )))/ 100, ConvertAbilityRealLevelField('Ocl1') )
+        set i1 = GetUnitAbilityLevel(u,FIRE_FORCE_ABILITY_ID )
+        if i1 > 0 and (GetRandomReal(1,100)<= 12 * luck) then
+            call USOrderA(u,GetUnitX(u),GetUnitY(u),'A0C0',"fanofknives",  GetHeroStr(u,true)*(60 + 20 * I2R(i1))/ 100, ConvertAbilityRealLevelField('Ocl1') )
         endif
         set u = null
         set u2 = null

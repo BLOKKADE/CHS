@@ -81,6 +81,7 @@ function FunctionTimerSpell takes nothing returns nothing
     local integer i1 = 0
     local unit U = null
     local integer hid = GetHandleId(Herou)
+    local boolean chronusActivated = false
         
     if Herou != null and (IsPlayerInForce(GetOwningPlayer(Herou), udg_force07) or GetPlayerSlotState(GetOwningPlayer(Herou)) != PLAYER_SLOT_STATE_PLAYING) then
         call SetUnitInvulnerable(Herou, false)
@@ -98,19 +99,22 @@ function FunctionTimerSpell takes nothing returns nothing
     //Hero Buff
     set abilLevel = GetUnitAbilityLevel(Herou,HERO_BUFF_ABILITY_ID)
     if abilLevel > 0 then
-        call HeroBuffCast(Herou, R2I(abilLevel), R2I(heroLevel), ChronusLevel, (7 +(heroLevel * 0.09)) * ChronusLevel)
+        call HeroBuffCast(Herou, R2I(abilLevel), R2I(heroLevel), ChronusLevel, (10 +(heroLevel * 0.02)) * ChronusLevel)
+        set chronusActivated = true
     endif
     
     //Temporary Inisibility
     set abilLevel = GetUnitAbilityLevel(Herou,TEMPORARY_INVISIBILITY_ABILITY_ID)    
     if abilLevel > 0 then
         call TempInvisStruct.create(Herou, (1.8 + (0.2 * abilLevel)) * ChronusLevel)
+        set chronusActivated = true
     endif
         
     //Temporary Power
     set abilLevel = GetUnitAbilityLevel(Herou,TEMPORARY_POWER_ABILITY_ID)    
     if abilLevel > 0 then
-        call TempPowerCast(Herou, (8 + (0.02 * heroLevel)) * ChronusLevel)
+        call TempPowerCast(Herou, (10 + (0.02 * heroLevel)) * ChronusLevel)
+        set chronusActivated = true
     endif
         
     //Holy Enlightenment
@@ -131,6 +135,7 @@ function FunctionTimerSpell takes nothing returns nothing
     set abilLevel = GetUnitAbilityLevel(Herou,CHEATER_MAGIC_ABILITY_ID)    
     if abilLevel > 0 then
         call CheaterMagicStruct.create(Herou, (2.75 + (0.25 * abilLevel))* ChronusLevel)
+        set chronusActivated = true
     endif
         
     //Blessed Protection
@@ -187,7 +192,8 @@ function FunctionTimerSpell takes nothing returns nothing
         call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) - 10 + R2I((abilLevel * 100)*(1 +(heroLevel * 0.038)) ),0)
         call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
         call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,(8 + (heroLevel * 0.09)) * ChronusLevel)
-        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))       
+        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))  
+        set chronusActivated = true     
     endif
 
     //Faerie Dragon
@@ -197,7 +203,7 @@ function FunctionTimerSpell takes nothing returns nothing
         call DestroyEffect(AddSpecialEffect(FX_BLINK, r4, r5))
         set U = CreateUnit(GetOwningPlayer(Herou), 'e001', r4, r5, GetUnitFacing(Herou))
 
-        call BlzSetUnitAttackCooldown(U, BlzGetUnitAttackCooldown(Herou, 0), 0)
+        call BlzSetUnitAttackCooldown(U, BlzGetUnitAttackCooldown(U,0) * (8 / (8.9 + (heroLevel / 2))), 0)
         call SetUnitAbilityLevelSwapped('A000',U,R2I(GetHeroLevel(Herou)/ 3))
         call SetUnitBonusReal(U, BONUS_ATTACK_SPEED, GetHeroLevel(Herou) * 0.03)
     endif
@@ -252,7 +258,8 @@ function FunctionTimerSpell takes nothing returns nothing
     set abilLevel = GetUnitAbilityLevel(Herou,RAPID_RECOVERY_ABILITY_ID)    
     if abilLevel > 0 then
         call ElemFuncStart(Herou,RAPID_RECOVERY_ABILITY_ID)
-        call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_MANA_REGEN ,(8 +(heroLevel * 0.2))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(8 +(heroLevel * 0.2))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
+        call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_MANA_REGEN ,(10 +(heroLevel * 0.02))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(10 +(heroLevel * 0.02))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
+        set chronusActivated = true
     endif
         
     //Demon Curse
@@ -260,11 +267,12 @@ function FunctionTimerSpell takes nothing returns nothing
     if abilLevel > 0 then
         call ElemFuncStart(Herou,DEMONS_CURSE_ABILITY_ID)
         call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A043',"howlofterror",0,ABILITY_RLF_DAMAGE_INCREASE_PERCENT_ROA1,(10 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_DAMAGE_HBZ2 ,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
+        set chronusActivated = true
     endif
 
     //Time Manipulation
     if GetUnitAbilityLevel(Herou, TIME_MANIPULATION_ABILITY_ID) > 0 then
-        call TimeManipulationStart(Herou)
+        call TimeManipulationStart(Herou, chronusActivated)
     endif
     
     call FlushChildHashtable(HT_timerSpell,GetHandleId(startbattle )) 

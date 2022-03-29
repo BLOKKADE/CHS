@@ -50,7 +50,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call BlzSetUnitAttackCooldown(u, value, 0)
             set s = "|cfffff242" + GetUnitName(u) + "|r: " + R2S(value) + " base attack speed"
         elseif command == "-dhpo" then
-            call BlzSetUnitMaxHP(u, R2I(value))
+            call SetUnitMaxHp(u, R2I(value))
             set s = "|cffff7e42" + GetUnitName(u) + "|r: " + R2S(value) + " hit points"
         elseif command == "-dman" then
             call BlzSetUnitMaxMana(u, R2I(value))

@@ -47,7 +47,7 @@ library AoeDamage requires Vampirism
         set Sourse = null
     endfunction
 
-    function AreaDamage takes unit Sourse,real x1,real y1, real Dmg, real Area, boolean Aoe_OnHit, integer AbilId returns nothing
+    function AreaDamage takes unit Sourse,real x1,real y1, real Dmg, real Area, boolean onHit, integer AbilId returns nothing
         local timer t
         local integer i
         if Sourse != null then
@@ -59,7 +59,7 @@ library AoeDamage requires Vampirism
             call SaveReal(HT,i,3,y1)
             call SaveReal(HT,i,4,Dmg)
             call SaveReal(HT,i,5,Area)
-            call SaveBoolean(HT,i,7,Aoe_OnHit)
+            call SaveBoolean(HT,i,7,onHit)
 
             call SaveInteger(HT,i,6,AbilId)
             call TimerStart(t,0,false,function AreaDamageTimer)

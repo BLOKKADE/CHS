@@ -1,4 +1,4 @@
-library MidasTouch initializer init requires DummyOrder
+library MidasTouch initializer init requires DummyOrder, RandomShit
 
     globals
         Table MidasTouchGold
@@ -30,7 +30,7 @@ library MidasTouch initializer init requires DummyOrder
             if negative then
                 set multiplier = - 1
             endif
-            call BlzSetUnitMaxHP(this.target, BlzGetUnitMaxHP(this.target) + R2I(this.hpBonus * multiplier)) 
+            call SetUnitMaxHp(this.target, BlzGetUnitMaxHP(this.target) + R2I(this.hpBonus * multiplier)) 
             call BlzSetUnitArmor(this.target, BlzGetUnitArmor(this.target) + (this.armorBonus * multiplier))
             call SetUnitBlock(this.target, GetUnitBlock(this.target) + (this.blockBonus * multiplier))
             call SetUnitMagicDef(this.target, GetUnitMagicDef(this.target) + (this.magicDefBonus * multiplier))
@@ -66,7 +66,6 @@ library MidasTouch initializer init requires DummyOrder
             set this.dmgBonus = R2I(BlzGetUnitBaseDamage(this.target, 0) * MidasBonus)
             //call BJDebugMsg("dmg: +" + I2S(this.dmgBonus))
             call this.updateStats(false)
-            call CalculateNewCurrentHP(this.target, this.hpBonus)
             call this.startPeriodic()
             return this
         endmethod

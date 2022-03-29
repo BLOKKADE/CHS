@@ -188,22 +188,16 @@ library HeroLevel initializer init requires HeroLvlTable
             endloop
             call SetBonus(UnitHero, 0, 3 * (I_l + 1))
         
-        elseif TypeHero == NAHA_SIREN_UNIT_ID then     
+        elseif TypeHero == NAGA_SIREN_UNIT_ID then  
+            call SetBonus(UnitHero, 0, 10 + (I_l * 0.1))   
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l     
-                set i = GetRandomInt(1,11)
-                call SetHeroInt(UnitHero, GetHeroInt(UnitHero,false) + i ,false)
-                call UpdateBonus(UnitHero, 0, i)
-                if GetHeroStr(UnitHero,false) == 0 then
-                    set i = GetRandomInt(1,11)
-                    call SetHeroInt(UnitHero, GetHeroInt(UnitHero,false) + i ,false)
-                    call UpdateBonus(UnitHero, 0, i)
+                
+                if ModuloInteger(I_l + 1, 50) == 0 then
+                    set NagaSirenBonus[hid] = NagaSirenBonus[hid] + 1
+                    call UpdateBonus(UnitHero, 1, 1)
                 endif
-                if GetHeroAgi(UnitHero,false) == 0 then
-                    set i = GetRandomInt(1,11)
-                    call SetHeroInt(UnitHero, GetHeroInt(UnitHero,false) + i ,false)
-                    call UpdateBonus(UnitHero, 0, i)
-                endif  
+
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop  
             
@@ -227,8 +221,9 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 2, (I_l + 1) * 0.1)
             call SetBonus(UnitHero, 3, 149 + (I_l + 1))
         elseif TypeHero == TAUREN_UNIT_ID then                   
-            call SetBonus(UnitHero, 0, 5 + (0.25 * (I_l + 1)))
+            call SetBonus(UnitHero, 0, 0.1 + (0.0025 * (I_l + 1)))
             call SetBonus(UnitHero, 1, 5 + (0.05 * (I_l + 1)))
+            call UpdateSpiritTaurenRuneBonus(UnitHero)
         elseif TypeHero == MYSTIC_UNIT_ID then  
         
             loop
@@ -426,7 +421,7 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == ROCK_GOLEM_UNIT_ID then
         
             call SetBonus(UnitHero, 0, 49 + (I_l + 1))
-            call SetBonus(UnitHero, 1, (I_l + 1) * 0.5)
+            call SetBonus(UnitHero, 1, (I_l + 1))
             
         elseif TypeHero == LICH_UNIT_ID then
             call SetBonus(UnitHero, 0, 100 + (I_l + 1))
@@ -448,7 +443,7 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == YETI_UNIT_ID then
             call SetBonus(UnitHero, 0, (I_l + 1) * 20)
             call SetBonus(UnitHero, 1, 50 + ((I_l + 1) * 2))
-        elseif TypeHero == 'H01F' then
+        elseif TypeHero == MURLOC_WARRIOR_UNIT_ID then
             call SetBonus(UnitHero, 0, ((I_l + 1) / 10) + 1 )
         elseif TypeHero == GHOUL_UNIT_ID then
             call SetBonus(UnitHero, 0, (2.5 + (0.025 * (I_l + 1))))

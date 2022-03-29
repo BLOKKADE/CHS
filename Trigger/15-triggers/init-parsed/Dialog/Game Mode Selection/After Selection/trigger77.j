@@ -309,12 +309,16 @@ library trigger77 initializer init requires RandomShit
 
     function CheckIncomeVotes takes nothing returns nothing
         if ModeVotesCount[15] > ModeVotesCount[16] and ModeVotesCount[15] > ModeVotesCount[17] and ModeVotesCount[15] > ModeVotesCount[20] then
+            //Global income
             set IncomeMode = 0
         elseif ModeVotesCount[16] > ModeVotesCount[15] and ModeVotesCount[16] > ModeVotesCount[17] and ModeVotesCount[16] > ModeVotesCount[20] then
+            //Individual income
             set IncomeMode = 1
         elseif ModeVotesCount[20] > ModeVotesCount[15] and ModeVotesCount[20] > ModeVotesCount[16] and ModeVotesCount[20] > ModeVotesCount[17] then
+            //Auto eco
             set IncomeMode = 3
         else
+            //No income
             set IncomeMode = 2	
         endif
     endfunction

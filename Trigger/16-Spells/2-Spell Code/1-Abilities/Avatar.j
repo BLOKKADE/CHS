@@ -1,4 +1,4 @@
-library Avatar initializer init requires NewBonus, Utility
+library Avatar initializer init requires NewBonus, RandomShit, RemoveBuffDelay
 
     globals
         Table AvatarBonus
@@ -17,8 +17,6 @@ library Avatar initializer init requires NewBonus, Utility
         real armorBonus
         integer hpBonus
     
-        
-    
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick then
                 call this.stopPeriodic()
@@ -30,7 +28,7 @@ library Avatar initializer init requires NewBonus, Utility
             call UnitRemoveAbility(this.source, 'A0AD')
             call AddUnitBonus(this.source, BONUS_DAMAGE, 0 - this.damageBonus)
             call BlzSetUnitArmor(this.source, BlzGetUnitArmor(this.source) - this.armorBonus)
-            call BlzSetUnitMaxHP(this.source, BlzGetUnitMaxHP(this.source) - this.hpBonus)
+            call SetUnitMaxHp(this.source, BlzGetUnitMaxHP(this.source) - this.hpBonus)
         endmethod
 
         method setBonuses takes integer level returns nothing
@@ -44,12 +42,12 @@ library Avatar initializer init requires NewBonus, Utility
             call UnitAddAbility(this.source, 'A0AD')
             call AddUnitBonus(this.source, BONUS_DAMAGE, this.damageBonus)
             call BlzSetUnitArmor(this.source, BlzGetUnitArmor(this.source) + this.armorBonus)
-            call BlzSetUnitMaxHP(this.source, BlzGetUnitMaxHP(this.source) + this.hpBonus)
-            call CalculateNewCurrentHP(this.source, this.hpBonus)
+            call SetUnitMaxHp(this.source, BlzGetUnitMaxHP(this.source) + this.hpBonus)
         endmethod
     
         static method create takes unit source, integer level returns thistype
             local thistype this = thistype.setup()
+            call RemoveBuffsDelayed(source, 0, 0.2)
             set this.source = source
             set this.level = level
             set this.damageBonus = 0 - 50 + (80 * level)

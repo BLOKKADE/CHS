@@ -65,7 +65,8 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr('H004', 0, "|cffe7544aDamage bonus|r: ,0,%%")
 
-        call SetBonusStr(NAHA_SIREN_UNIT_ID, 0, "|cffe7544aIntelligence bonus|r: ,0,")
+        call SetBonusStr(NAGA_SIREN_UNIT_ID, 0, "|cffe7544aSpell damage bonus|r: ,0,%%")
+        call SetBonusStr(NAGA_SIREN_UNIT_ID, 1, "|cffd6e049Intelligence damage bonus|r: ,0,")
 
         call SetBonusStr(AVATAR_SPIRIT_UNIT_ID, 0, "[|cffd2d2d2Light|r]|cffe7544a Attack damage bonus |r: ,0,")
         call SetBonusStr(AVATAR_SPIRIT_UNIT_ID, 1, "[|cffd2d2d2Light|r]|cffd6e049 Armor bonus|r: ,0,%%")
@@ -166,7 +167,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr(SATYR_TRICKSTER_UNIT_ID, 0, "|cffe7544aEvasion bonus|r: ,0,")
         call SetBonusStr(SATYR_TRICKSTER_UNIT_ID, 1, "|cffd6e049Counter damage|r: ,0,")
 
-        call SetBonusStr('H01F', 0, "|cffe7544aStat bonus per attack|r: ,0,")
+        call SetBonusStr(MURLOC_WARRIOR_UNIT_ID, 0, "|cffe7544aStat bonus per attack|r: ,0,")
 
         call SetBonusStr(MEDIVH_UNIT_ID, 0, "|cffe7544aMagic power bonus|r: ,0,")
 

@@ -16,37 +16,50 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
         integer bonus2
         boolean enabled
 
-        
-    
         private method periodic takes nothing returns nothing
             if this.enabled == false or T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or (not UnitAlive(this.source)) or (T32_Tick - this.startTick > 32 and GetUnitAbilityLevel(this.source, 'B00T') == 0) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
         endmethod  
+
+        method resetBonus takes nothing returns nothing
+            call AddUnitMagicDmg(this.source, 0 - (this.bonus1))
+            call AddUnitMagicDef(this.source, 0 - (this.bonus2))
+        endmethod
+
+        method setBonus takes boolean reset, integer abilLevel, real duration, real heroLevel returns nothing
+            if reset then
+                call this.resetBonus()
+            endif
+
+            call ElemFuncStart(this.source, HERO_BUFF_ABILITY_ID)
+
+            set this.bonus1 = R2I(1.5 * abilLevel*(1 + 0.009 * heroLevel))
+            set this.bonus2 = R2I(1.2 * abilLevel*(1 + 0.009 * heroLevel))
+            set this.endTick = T32_Tick + R2I(duration * 32)
+            set this.startTick = T32_Tick
+            
+            call USOrder4field(this.source,GetUnitX(this.source),GetUnitY(this.source),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,duration,ABILITY_RLF_DURATION_HERO, duration,ABILITY_RLF_DURATION_NORMAL)
+            call AddUnitMagicDmg(this.source, this.bonus1)
+            call AddUnitMagicDef(this.source, this.bonus2)
+        endmethod
     
         static method create takes unit source, integer abilLevel, integer heroLevel, real chronusLevel, real duration returns thistype
             local thistype this = thistype.setup()
             
             set this.source = source
-            set this.bonus1 = R2I(1.5 * abilLevel*(1 + 0.009 * heroLevel))
-            set this.bonus2 = R2I(1.2 * abilLevel*(1 + 0.009 * heroLevel))
+            call this.setBonus(false, abilLevel, duration, heroLevel)
+            
 
             set this.enabled = true
-
-            call AddUnitMagicDmg(this.source, this.bonus1)
-            call AddUnitMagicDef(this.source, this.bonus2)
-            call ElemFuncStart(this.source, HERO_BUFF_ABILITY_ID)
-            call USOrder4field(this.source,GetUnitX(this.source),GetUnitY(this.source),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,duration * chronusLevel,ABILITY_RLF_DURATION_HERO, duration * chronusLevel,ABILITY_RLF_DURATION_NORMAL)
-            set this.endTick = T32_Tick + R2I((duration * chronusLevel) * 32)
-            set this.startTick = T32_Tick
             call this.startPeriodic()
             return this
         endmethod
         
         method destroy takes nothing returns nothing
-            call AddUnitMagicDmg(this.source, 0 - (this.bonus1))
-            call AddUnitMagicDef(this.source, 0 - (this.bonus2))
+            call this.resetBonus()
+            set HbStruct[GetHandleId(this.source)] = 0
             set this.source = null
             call this.recycle()
         endmethod
@@ -59,8 +72,7 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
         if GetHbStruct(GetHandleId(u)) == 0 then
             set HbStruct[GetHandleId(u)] = HeroBuffStruct.create(u, abilLevel, heroLevel, chronusLevel, duration)
         else
-            set GetHbStruct(GetHandleId(u)).enabled = false
-            set HbStruct[GetHandleId(u)] = HeroBuffStruct.create(u, abilLevel, heroLevel, chronusLevel, duration)
+            call GetHbStruct(GetHandleId(u)).setBonus(true, abilLevel, duration, heroLevel)
         endif
     endfunction
 

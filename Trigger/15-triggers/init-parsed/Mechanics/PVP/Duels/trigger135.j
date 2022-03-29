@@ -1,4 +1,4 @@
-library trigger135 initializer init requires RandomShit, PlayerTracking
+library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDeath
 
     function Trig_End_PvP_Conditions takes nothing returns boolean
         if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true))then
@@ -133,6 +133,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking
         endif
         call DisableTrigger(udg_trigger140)
         call DisableTrigger(udg_trigger141)
+        call DisableTrigger(udg_trigger135)
         call PvpStopSuddenDeathTimer()
         
         // Update the player's stats that they won a pvp match, and save

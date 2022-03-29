@@ -5,8 +5,6 @@ library SkeletonBrute requires RandomShit
         integer endTick
         effect fx
 
-        
-
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick then
                 call this.stopPeriodic()

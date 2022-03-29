@@ -1,4 +1,4 @@
-library CreepDeath initializer init requires RandomShit
+library CreepDeath initializer init requires RandomShit, MidasTouch
 
     public function BountyText takes unit source, unit u, integer goldBounty returns nothing
         local texttag floatingtext
@@ -64,15 +64,17 @@ library CreepDeath initializer init requires RandomShit
 
         if IncomeMode == 3 then
             if RoundNumber > 5 then
-                set pillageBonus = IMinBJ(RoundNumber, 15) * 13
-                set expBounty = expBounty + IMinBJ(RoundNumber, 15) * 30
+                set goldBounty = goldBounty + (IMinBJ(RoundNumber - 5, 10) * 19)
+                //call BJDebugMsg("auto eco: " + I2S((IMinBJ(RoundNumber - 5, 10) * 19)))
+                set expBounty = expBounty + IMinBJ(RoundNumber - 5, 10) * 45
             endif
         else
             //Pillage
             if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
                 if GetRandomReal(0,100) <= 65 * luck then
-                    set pillageBonus = pillageBonus + (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero) * 18) * 70)/( 70 + remBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero))  )
+                    set pillageBonus = (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero) * 18) * 70)/( 70 + remBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero))  )
                     call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitY(dyingUnit)))
+                    set goldBounty = goldBounty + pillageBonus
                 endif
             endif
             
@@ -86,18 +88,11 @@ library CreepDeath initializer init requires RandomShit
         set itemCount = UnitHasItemI(killingHero, 'I04R')
         if itemCount > 0 then
             if GetUnitTypeId(killingHero) == ARENA_MASTER_UNIT_ID then
-                set ringBonus = ringBonus + 20 * itemCount
+                set goldBounty = goldBounty + (20 * itemCount)
             else
-                set ringBonus = ringBonus + 10 * itemCount
+                set goldBounty = goldBounty + (10 * itemCount)
             endif
         endif
-
-        //Golden Ring + Pillage Check
-        if ringBonus > pillageBonus then
-            set goldBounty = goldBounty + ringBonus
-        else
-            set goldBounty = goldBounty + pillageBonus
-        endif 
 
         //Urn of Memories
         set itemCount = UnitHasItemI(killingHero, 'I05U')

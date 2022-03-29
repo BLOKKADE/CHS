@@ -50,7 +50,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
     function CreateTextTagTimerColor takes string Text, real Height, real x1, real y1,real z1, real time,integer iR,integer iG,integer iB returns nothing
         local texttag floatingText = CreateTextTag()
-        
+
         call SetTextTagText(floatingText,Text,Height * TEXT_SIZE)
         call SetTextTagPos(floatingText,x1,y1,z1)
         call SetTextTagColor(floatingText,iR,iG,iB,200)
@@ -164,6 +164,8 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call UnitRemoveAbility(u, 'A08G')
         call UnitRemoveAbility(u, CHEATER_MAGIC_BUFF_ID)
         call UnitRemoveAbility(u, HERO_BUFF_ID)
+        call UnitRemoveAbility(u, SPEED_BLADE_BUFF_ID)
+        call UnitRemoveAbility(u, 'A0CI')
     endfunction
 
     function NegativeBuffs takes unit u returns nothing
@@ -400,7 +402,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         return GetObjectElementCount(abilId, id)
     endfunction
     
-    function GetClassUnitSpell takes unit u, integer id returns integer 
+    function GetUnitElementCount takes unit u, integer id returns integer 
         local integer abilId = 0
         local integer i = 1
         local integer elementCount = 0
@@ -413,6 +415,11 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         //Pretty Bright Gem +1 to dark and light
         if UnitHasItemS(u, 'I0AM') and (id == Element_Light or id == Element_Dark) then
             set elementCount = elementCount + 1
+        endif
+
+        //Ancient Element
+        if GetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, GetElementAbsolute(id)) > 0 then
+            set elementCount = elementCount + 2
         endif
 
         //Hero element
@@ -463,10 +470,11 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local real time = cd
         local real ResCD = 1
         local integer i = 0
+        local real timeBonus = 0
 
         //Absolute Arcane
         if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
-            set i = GetClassUnitSpell(u, Element_Arcane)
+            set i = GetUnitElementCount(u, Element_Arcane)
             loop
                 set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))))
                 set i = i - 1
@@ -480,7 +488,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         if active then
             //Frost Bolt
             if id == FROST_BOLT_ABILITY_ID then
-                set time = time - (0.5 * GetClassUnitSpell(u,2))
+                set time = time - (0.5 * GetUnitElementCount(u,Element_Water))
                 if time < 2 then
                     set time = 2
                 endif
@@ -489,7 +497,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             //Spellbane Token
             if IsSpellbaneCooldownEnabled(u) then
                 //call BJDebugMsg("spellbane bonus: " + R2S(((1 - (GetUnitState(u, UNIT_STATE_MANA) / GetUnitState(u, UNIT_STATE_MAX_MANA))) / 0.05) * 0.5))
-                set time = time + (((1 - (GetUnitState(u, UNIT_STATE_MANA) / GetUnitState(u, UNIT_STATE_MAX_MANA))) / 0.05) * 0.5)
+                set timeBonus = timeBonus + (((1 - (GetUnitState(u, UNIT_STATE_MANA) / GetUnitState(u, UNIT_STATE_MAX_MANA))) / 0.05) * 0.5)
             endif
 
             //Fishing Rod and Blink Strike
@@ -498,12 +506,12 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             endif
 
             //Fan
-            if UnitHasItemS(u,'I08Z') and IsObjectElement(id,3) then
+            if UnitHasItemS(u,'I08Z') and IsObjectElement(id,Element_Wind) then
                 set ResCD = ResCD * 0.65
             endif   
 
             //Cheater Magic
-            if GetBuffLevel(u, 'A08G') > 0 and IsSpellResettable(id) then
+            if GetUnitAbilityLevel(u, 'A08G') > 0 and IsSpellResettable(id) then
                 if id == 'A049' then
                     set ResCD = ResCD * 0.1
                 else       
@@ -518,7 +526,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endif
 
         //Druid of the Claw
-        if GetUnitTypeId(u ) == DRUID_OF_THE_CLAY_UNIT_ID and IsObjectElement(id, 12) then
+        if GetUnitTypeId(u ) == DRUID_OF_THE_CLAY_UNIT_ID and IsObjectElement(id, Element_Summon) then
             set ResCD = ResCD * 0.5
         endif
 
@@ -539,14 +547,14 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endif 
         
         //Staff of Water
-        if UnitHasItemS(u,'I08Y') and IsObjectElement(id, 2) and IsSpellResettable(id) then
+        if UnitHasItemS(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) then
             if GetRandomReal(0,100) <= 40 * luck then
                 set ResCD = 0.001
             endif
         endif
         
         //Fan
-        if UnitHasItemS(u,'I08Z') and IsObjectElement(id,3) then
+        if UnitHasItemS(u,'I08Z') and IsObjectElement(id,Element_Wind) then
             set ResCD = ResCD * 0.65
         endif  
 
@@ -556,7 +564,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             set ResCD = ResCD * DousingHexCooldown.real[GetHandleId(u)]
         endif
 
-        return time * ResCD
+        return (time * ResCD) + timeBonus
     endfunction
 
     function AbilStartCD takes unit u, integer id,real cd returns real
@@ -677,11 +685,17 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call dummy.instant().activate()
     endfunction
 
+    function SetUnitMaxHp takes unit u, integer amount returns nothing
+        local real percent = GetUnitLifePercent(u)
+        call BlzSetUnitMaxHP(u, amount)  
+        call SetUnitLifePercentBJ(u, percent)
+    endfunction
+
     function SetUnitProcHp takes unit u, real bonus returns nothing
         local real BonusOldHp = LoadReal(HT,GetHandleId(u),- 412446)
         local real Hp = I2R(BlzGetUnitMaxHP(u))- BonusOldHp
         local real BonusNewHp = Hp * bonus
-        call BlzSetUnitMaxHP(u,R2I(Hp + BonusNewHp) )  
+        call SetUnitMaxHp(u,R2I(Hp + BonusNewHp) )  
         call SaveReal(HT,GetHandleId(u),- 412446, I2R(R2I(BonusNewHp)))
     endfunction
 

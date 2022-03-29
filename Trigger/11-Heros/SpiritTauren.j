@@ -1,19 +1,38 @@
-library SpiritTauren requires IdLibrary
+library SpiritTauren initializer init requires IdLibrary, RandomShit
 
     globals
-        integer RuneBonus = 30
+        Table SpiritTaurenBonus
     endglobals
 
-    function SpiritTaurenRuneBonusReset takes unit u, integer abilId returns nothing
-        if TAUREN_ABILITIES.contains(abilId) then
-            call AddUnitPowerRune(u,0 - RuneBonus)
+    private function GetActiveAbilityCount takes unit u returns integer
+        local integer i = 0
+        local integer abilId = 0
+        local integer count = 0
+        loop
+            set abilId = GetInfoHeroSpell(u, i)
+            if abilId != 0 and IsAbilityCasteable(abilId, true) then
+                set count = count + 1
+            endif
+            set i = i + 1
+            exitwhen i > 10
+        endloop
+
+        return count
+    endfunction
+
+    function UpdateSpiritTaurenRuneBonus takes unit u returns nothing
+        local integer count = GetActiveAbilityCount(u)
+        local real bonus = count * (10 + (0.3 * GetHeroLevel(u)))
+        local integer hid = GetHandleId(u)
+
+        if bonus != SpiritTaurenBonus.real[hid] then
+            call AddUnitPowerRune(u, bonus - SpiritTaurenBonus.real[hid])
+            set SpiritTaurenBonus.real[hid] = bonus
         endif
     endfunction
 
-    function SpiritTaurenRuneBonus takes unit u, integer abilId returns nothing
-        if TAUREN_ABILITIES.contains(abilId) then
-            call AddUnitPowerRune(u, RuneBonus)
-        endif
+    private function init takes nothing returns nothing
+        set SpiritTaurenBonus = Table.create()
     endfunction
 
 endlibrary

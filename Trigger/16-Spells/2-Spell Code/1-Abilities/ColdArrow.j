@@ -45,7 +45,6 @@ library ColdArrows initializer init requires ToggleAbility
         if GetColdArrowsStruct(hid) == 0 then
             set ColdArrowsTable[hid] = ColdArrowsStruct.create(caster)
         else
-
             if GetColdArrowsStruct(hid).enabled then
                 call GetColdArrowsStruct(hid).disable()
             else

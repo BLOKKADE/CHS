@@ -229,8 +229,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory hit points
             elseif II  == GLORY_HIT_POINTS_TOME_ITEM_ID then
                 if Glory[pid] >= 100 then
-                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 150)
-                    call CalculateNewCurrentHP(u, 150)
+                    call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 150)
                     
                     set Glory[pid]= Glory[pid]- 100
                     set gloryBonus = gloryBonus + 150
@@ -307,7 +306,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory movespeed
             elseif II  == GLORY_MOVESPEED_TOME_ITEM_ID then
                 if Glory[pid] >= 10000 and GetUnitMoveSpeed(u) < 522 then
-                    call SetUnitMoveSpeed(u, 522)
+                    call BlzSetUnitRealField(u, UNIT_RF_SPEED, 522)
                     
                     set Glory[pid]= Glory[pid]- 10000
                     set gloryBonus = gloryBonus + 522
@@ -418,7 +417,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Manual of health
             elseif II == 'manh' then 
-                call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 50)
                 //Tome of Power
             elseif II == TOME_OF_POWER_2000_ITEM_ID then 
                 call AddHeroXP(u, 2000, false)
@@ -477,11 +476,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         if expTome then
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIem\\AIemTarget.mdl", u, "origin"))
         endif
-
-        if II == 'manh' then
-            call CalculateNewCurrentHP(u, i * 50)
-        endif
-
+        
         //Ancient Staff
         if II  == ANCIENT_STAFF_TOME_ITEM_ID then   
             if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then

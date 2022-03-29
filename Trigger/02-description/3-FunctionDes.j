@@ -16,7 +16,7 @@ library GetClass requires AbilityData, RandomShit
                 set s = s + ClassAbil[i]
             endif
             set i = i + 1
-            exitwhen i > 15
+            exitwhen i > Element_Maximum
         endloop
         return s
     endfunction

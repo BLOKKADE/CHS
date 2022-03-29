@@ -372,6 +372,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
             set udg_real03 = 0.02
             call EnableTrigger(udg_trigger140)
             call EnableTrigger(udg_trigger141)
+            call EnableTrigger(udg_trigger135)
             call PvpStartSuddenDeathTimer()
             call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[1]), true)
             call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[2]), true)

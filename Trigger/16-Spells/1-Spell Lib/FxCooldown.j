@@ -1,38 +1,29 @@
 library FxCooldown initializer init requires Table
     globals
-        HashTable FxCooldown
+        HashTable FxCooldownDuration
+        HashTable FxCooldownStart
     endglobals
 
-    function IsFxOnCooldown takes unit u, integer id returns boolean
-        return FxCooldown[GetHandleId(u)].boolean[id]
+    function IsFxOnCooldownSet takes integer hid, integer id, real duration returns boolean
+        if T32_Tick - FxCooldownStart[hid].integer[id] < duration * 32 then
+            return true
+        else
+            set FxCooldownStart[hid].integer[id] = T32_Tick
+            return false
+        endif
     endfunction
 
-    function FxCooldownEnd takes nothing returns nothing
-        local timer t = GetExpiredTimer()
-        local FxData data = GetTimerData(t)
-        set FxCooldown[data.unitId].boolean[data.fxId] = false
-        call ReleaseTimer(t)
-        call data.destroy()
-        set t = null
+    function IsFxOnCooldown takes integer hid, integer id returns boolean
+        return T32_Tick - FxCooldownStart[hid].integer[id] < FxCooldownDuration[hid].integer[id]
     endfunction
 
-    struct FxData
-        integer unitId
-        integer fxId
-    endstruct
-
-    function SetFxCooldown takes unit u, integer id, real duration returns nothing
-        local timer t = NewTimer()
-        local FxData data = FxData.create()
-        set data.unitId = GetHandleId(u)
-        set data.fxId = id
-        set FxCooldown[data.unitId].boolean[data.fxId] = true
-        call SetTimerData(t, data)
-        call TimerStart(t, duration, false, function FxCooldownEnd)
-        set t = null
+    function SetFxCooldown takes integer hid, integer id, real duration returns nothing
+        set FxCooldownStart[hid].integer[id] = T32_Tick
+        set FxCooldownDuration[hid].integer[id] = R2I(duration * 32)
     endfunction
 
     private function init takes nothing returns nothing
-        set FxCooldown = HashTable.create()
+        set FxCooldownStart = HashTable.create()
+        set FxCooldownDuration = HashTable.create()
     endfunction
 endlibrary

@@ -13,8 +13,6 @@ library MaskOfProtection initializer init requires CustomState
         real armorBonus
         real magicResBonus
         integer endTick
-    
-        
 
         private method disableBonus takes nothing returns nothing
             call BlzSetUnitArmor(this.source, BlzGetUnitArmor(this.source) - this.armorBonus)
@@ -40,7 +38,7 @@ library MaskOfProtection initializer init requires CustomState
             set this.magicResBonus = magicpower * 0.5
             call AddUnitMagicDef(source, this.magicResBonus)
 
-            set this.endTick = T32_Tick + R2I(7 * 32)
+            set this.endTick = T32_Tick + R2I(10 * 32)
             call this.startPeriodic()
             return this
         endmethod
@@ -59,7 +57,7 @@ library MaskOfProtection initializer init requires CustomState
         if GetMopStruct(GetHandleId(u)) == 0 then
             set MopStruct[GetHandleId(u)] = MaskOfProtection.create(u)
         else
-            set GetMopStruct(GetHandleId(u)).endTick = T32_Tick + R2I(7 * 32)
+            set GetMopStruct(GetHandleId(u)).endTick = T32_Tick + R2I(10 * 32)
         endif
     endfunction
 

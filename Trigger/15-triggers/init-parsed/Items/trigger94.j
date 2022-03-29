@@ -1,4 +1,4 @@
-library trigger94 initializer init requires RandomShit
+/*library trigger94 initializer init requires RandomShit
 
     function Trig_Scepter_of_Confusion_Conditions takes nothing returns boolean
         if(not(UnitHasItemOfTypeBJ(GetTriggerUnit(),'I03R')==true))then
@@ -37,3 +37,4 @@ library trigger94 initializer init requires RandomShit
 
 
 endlibrary
+*/

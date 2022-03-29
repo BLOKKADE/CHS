@@ -1,7 +1,18 @@
 library Utility requires NewBonus
     globals
         boolean array CurrentlyFighting
+
+        integer Stat_Strength = 0
+        integer Stat_Agility = 1
+        integer Stat_Intelligence = 2
     endglobals
+
+    function CheckHpForReduction takes unit u, real hpLoss returns nothing
+        if GetUnitState(u, UNIT_STATE_LIFE) < hpLoss + 1 then
+            call SetUnitState(u, UNIT_STATE_LIFE, hpLoss + 1)
+        endif
+    endfunction
+
     function GetHeroPrimaryStat takes unit u returns integer
         local integer i = BlzGetUnitIntegerField(u, UNIT_IF_PRIMARY_ATTRIBUTE)
         if i == 1 then

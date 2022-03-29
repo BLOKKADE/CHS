@@ -62,7 +62,7 @@ library MartialTheft initializer init requires NewBonus, Utility
 
     function CastMartialTheft takes unit caster, unit target, integer level returns nothing
         local integer hid = GetHandleId(caster)
-        local integer dmgStolen = R2I(GetUnitDamage(target, 0) * (0.075 + (0.0075 * level)))
+        local integer dmgStolen = R2I(GetUnitDamage(target, 0) * (0.01 + (0.01 * level)))
         local integer currentBonus = GetMartialTheftStruct(hid).bonus
 
         if GetMartialTheftStruct(hid).enabled then

@@ -2,7 +2,7 @@ library SandOfTime requires RandomShit
     function ResetSpell takes unit hero, integer SpellId, real time, boolean earthBonus returns nothing
         local real cur_time
             
-        if earthBonus and IsSpellElement(hero, SpellId,4) then
+        if earthBonus and IsSpellElement(hero, SpellId,Element_Earth) then
             set cur_time = time * 2
         else
             set cur_time = time

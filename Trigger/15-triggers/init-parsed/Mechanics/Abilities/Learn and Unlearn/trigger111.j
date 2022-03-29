@@ -422,7 +422,7 @@ library trigger111 initializer init requires RandomShit, Functions
             return
         endif
         set abilLevel = GetUnitAbilityLevel(BuyingUnit, BoughtAbility)
-        if HoldCtrl[GetPlayerId(GetOwningPlayer(BuyingUnit))] then
+        if HoldCtrl[GetPlayerId(GetOwningPlayer(BuyingUnit))] /*and not ARLearningAbil*/ then
             set maxAbil = true
         endif
 

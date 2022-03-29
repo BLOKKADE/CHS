@@ -54,7 +54,7 @@ scope Killing initializer init
             //Skeleton Brute
             if GetUnitTypeId(targetHero) == SKELETON_BRUTE_UNIT_ID then
                 call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + ( (0.02 + (0.0005 * GetHeroLevel(targetHero))) * BlzGetUnitMaxHP(targetHero)))
-                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), 20 + (30 * GetHeroLevel(targetHero)), 400, false, SKELETON_BRUTE_UNIT_ID)
+                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), 50 + (50 * GetHeroLevel(targetHero)), 400, false, SKELETON_BRUTE_UNIT_ID)
                 set fx = AddSpecialEffect("war3mapImported\\Arcane Explosion.mdx", GetUnitX(target), GetUnitY(target))
                 call BlzSetSpecialEffectTimeScale(fx, 2)
                 call DestroyEffect(fx)
@@ -78,7 +78,7 @@ scope Killing initializer init
             set i = UnitHasItemI( killingHero,'I07E') 
             if i > 0 and GetOwningPlayer(target) == Player(11) then
 
-                call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 15, 10)
+                call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 15, 10, 'I07E')
             endif
 
             //Not sure what this is for

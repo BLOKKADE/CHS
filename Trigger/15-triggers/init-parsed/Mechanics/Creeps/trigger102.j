@@ -1,4 +1,4 @@
-library trigger102 initializer init requires RandomShit
+library trigger102 initializer init requires RandomShit, CreepDeath
 
     function Trig_Creep_Dies_Conditions takes nothing returns boolean
         if(not(GetOwningPlayer(GetTriggerUnit())==Player(11)))then

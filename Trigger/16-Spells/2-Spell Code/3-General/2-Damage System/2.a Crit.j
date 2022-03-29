@@ -61,7 +61,7 @@ library CritDamage requires RandomShit
                 set critDmg = critDmg + Dmg *(1.7 + 0.3 * I2R(i))
             endif
             
-            //Drunken Haze
+            //Drunken Master
             set i = GetUnitAbilityLevel(DamageSource,DRUNKEN_MASTER_ABILITY_ID) //Drink
             if i > 0 and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
                 set critDmg = critDmg + ((i * 100) * (1 + 0.02 * GetHeroLevel(DamageSource)))

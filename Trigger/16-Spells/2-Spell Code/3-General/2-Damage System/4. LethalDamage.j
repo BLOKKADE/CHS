@@ -9,7 +9,7 @@ scope LethalDamage initializer init
 
         //Skeleton Battlemaster (Black Arrow)
         set i = GetUnitAbilityLevel(DamageTargetHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
-        if i > 0 and GetUnitAbilityLevel(DamageTarget, 'A0AX') > 0 /*and GetRandomInt(1,100) < (i + 10) * GetUnitLuck(DamageTargetHero)*/ then
+        if i > 0 and GetUnitAbilityLevel(DamageTarget, 'A0AX') > 0 and GetRandomInt(1,100) < (i + 10) * GetUnitLuck(DamageTargetHero) then
             set udg_LethalDamageHP = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE)
             return
         endif
@@ -22,6 +22,10 @@ scope LethalDamage initializer init
         //Chest of Greed
         if UnitHasItemS(DamageSourceHero, 'I05A') and IsPhysDamage() then
             set ChestOfGreedBonus.boolean[GetHandleId(DamageTarget)] = true
+        endif
+
+        if DamageTargetPid != 11 and DamageTarget == DamageTargetHero then
+            call DamageText(true)
         endif
 
         //call BJDebugMsg("lethal source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))

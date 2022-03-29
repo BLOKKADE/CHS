@@ -16,8 +16,6 @@ library ConversionHotkeys initializer init requires Table
     struct HoldShiftStruct extends array
         integer pid
         integer endTick
-    
-        
 
         method update takes nothing returns nothing
             set this.endTick = T32_Tick + 12

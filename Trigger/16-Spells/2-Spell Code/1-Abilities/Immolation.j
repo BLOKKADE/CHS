@@ -36,19 +36,22 @@ library Immolation initializer init requires ToggleAbility
         
         private method damage takes nothing returns nothing
             local unit p
+            local real manaCost = GetSpellValue(5, 1, this.level)
             set this.level = GetUnitAbilityLevel(this.source, IMMOLATION_ABILITY_ID)
-            //call BJDebugMsg("dmg")
-            call GroupClear(ENUM_GROUP)
-            call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(this.source), GetUnitY(this.source), 245 + (5 * this.level), Player(pid), false, Target_Enemy)
-            call SetUnitState(this.source, UNIT_STATE_MANA, GetUnitState(this.source, UNIT_STATE_MANA) - GetSpellValue(5, 1, this.level))
-            loop
-                set p = FirstOfGroup(ENUM_GROUP)
-                exitwhen p == null
-                set udg_NextDamageAbilitySource = IMMOLATION_ABILITY_ID
-                call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\NightElf\\Immolation\\ImmolationDamage.mdl", p, "head"))
-                call Damage.applyMagic(this.source, p, GetSpellValue(30, 12, this.level), DAMAGE_TYPE_MAGIC)
-                call GroupRemoveUnit(ENUM_GROUP, p)
-            endloop
+            if GetUnitState(this.source, UNIT_STATE_MANA) - manaCost >= 0 then
+                //call BJDebugMsg("dmg")
+                call GroupClear(ENUM_GROUP)
+                call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(this.source), GetUnitY(this.source), 245 + (5 * this.level), Player(pid), false, Target_Enemy)
+                call SetUnitState(this.source, UNIT_STATE_MANA, GetUnitState(this.source, UNIT_STATE_MANA) - manaCost)
+                loop
+                    set p = FirstOfGroup(ENUM_GROUP)
+                    exitwhen p == null
+                    set udg_NextDamageAbilitySource = IMMOLATION_ABILITY_ID
+                    call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\NightElf\\Immolation\\ImmolationDamage.mdl", p, "head"))
+                    call Damage.applyMagic(this.source, p, GetSpellValue(30, 12, this.level), DAMAGE_TYPE_MAGIC)
+                    call GroupRemoveUnit(ENUM_GROUP, p)
+                endloop
+            endif
         endmethod
     
 
@@ -83,7 +86,6 @@ library Immolation initializer init requires ToggleAbility
         if GetImmolationStruct(hid) == 0 then
             set ImmolationTable[hid] = ImmolationStruct.create(caster)
         else
-
             if GetImmolationStruct(hid).enabled then
                 call GetImmolationStruct(hid).disable()
             else

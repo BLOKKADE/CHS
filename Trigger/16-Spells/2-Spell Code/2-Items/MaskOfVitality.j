@@ -6,7 +6,7 @@ library MaskOfVitality requires UnitHelpers
         //call BJDebugMsg("mov")
         call GroupClear(ENUM_GROUP)
         call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 600, GetOwningPlayer(u), false, Target_Enemy)
-        call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) - (GetUnitState(p, UNIT_STATE_MAX_LIFE) * 0.1))
+        //call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) - (GetUnitState(u, UNIT_STATE_MAX_LIFE) * 0.1))
         //call BJDebugMsg("mov: " + I2S(BlzGroupGetSize(ENUM_GROUP)))
         loop
             set p = FirstOfGroup(ENUM_GROUP)

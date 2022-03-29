@@ -1,13 +1,18 @@
-library EndOfRoundItem
+library EndOfRoundItem initializer init
+
+    globals
+        Table RoundEndItemData
+    endglobals
 
     function CheckEndOfRoundItem takes item it returns boolean
-        return RoundNumber != GetItemUserData(it) 
+        return RoundNumber != RoundEndItemData[GetHandleId(it)]
     endfunction
 
     function GetValidEndOfRoundItems takes unit u, integer itemId returns integer
         local integer i = 0
         local integer count = 0
         local item it
+        local integer hid
 
         loop
             set it = UnitItemInSlot(u, i)
@@ -30,10 +35,14 @@ library EndOfRoundItem
         if it != null then
             if CurrentlyFighting[pid] or RectContainsUnit(udg_rect09, PlayerHeroes[pid + 1]) == false then
                 call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Your |cff68eef3" + GetItemName(it) + "|r will start working |cff6cff40next round|r.")
-                call SetItemUserData(it, RoundNumber)
+                set RoundEndItemData[GetHandleId(it)] = RoundNumber
             else
-                call SetItemUserData(it, 0)
+                set RoundEndItemData[GetHandleId(it)] = 0
             endif
         endif
+    endfunction
+
+    private function init takes nothing returns nothing
+        set RoundEndItemData = Table.create()
     endfunction
 endlibrary

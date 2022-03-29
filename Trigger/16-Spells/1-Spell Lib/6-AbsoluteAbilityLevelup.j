@@ -47,6 +47,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
         local integer abilityId = GetAbilityFromItem(ItemId)
         local integer abilityLevel 
         local unit u = GetTriggerUnit()
+
         //call BJDebugMsg("aalu")
         if ItemId == 'I09R' then
             //call BJDebugMsg("aalu unlearn")
@@ -73,7 +74,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
             else
                 if counter < 10 and counter <= GetHeroMaxAbsoluteAbility(u) then
                     //call BJDebugMsg("aalu add")
-                    call SaveInteger(HT,GetHandleId(GetTriggerUnit()),941561,counter + 1 )
+                    call SaveInteger(HT,GetHandleId(u),941561,counter + 1 )
                     call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], true)
                     if counter == 0 then
                         call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "You can |cff9dff00find the Absolute ability|r when you hover over the icon on the |cff00e1fftop left of your screen|r below the Info (F9) button.")

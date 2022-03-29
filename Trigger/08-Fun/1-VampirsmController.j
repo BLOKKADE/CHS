@@ -19,7 +19,7 @@ library Vampirism requires RandomShit
             return
         endif
 
-        //Ancient Blood
+        //Absolute Blood
         set i1 = GetUnitAbilityLevel(source,ABSOLUTE_BLOOD_ABILITY_ID)
         if i1 > 0 then
         

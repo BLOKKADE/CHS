@@ -7,7 +7,7 @@ library CheckProcc requires GroupUtils
 
     private function Filter takes nothing returns boolean
         local unit u = GetFilterUnit()
-        if IsUnitEnemy(u, ProcOwner) == true and GetUnitAbilityLevel(u, 'Avul') == 0 and GetUnitAbilityLevel(u, 'B01A') == 0 and GetUnitAbilityLevel(u, 'Bams') == 0 and GetUnitAbilityLevel(u, 'Aloc') == 0 then
+        if UnitAlive(u) and IsUnitEnemy(u, ProcOwner) and GetUnitAbilityLevel(u, 'Avul') == 0 and GetUnitAbilityLevel(u, 'B01A') == 0 and GetUnitAbilityLevel(u, 'Bams') == 0 and GetUnitAbilityLevel(u, 'Aloc') == 0 then
             set ProcCount = ProcCount + 1
         endif
         set u = null

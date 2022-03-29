@@ -37,7 +37,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
         if Trig_Disable_Abilities_Func001C(caster) == false then
 
             //Blaze Staff
-            if UnitHasItemS(caster,'I08X') and IsSpellElement(caster, abilId,1) then
+            if UnitHasItemS(caster,'I08X') and IsSpellElement(caster, abilId, Element_Fire) then
                 set amount = 2
             endif
 

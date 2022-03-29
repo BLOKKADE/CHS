@@ -19,6 +19,9 @@ library Purge requires RandomShit
         local timer t = GetExpiredTimer()
         local unit source = LoadUnitHandle(HT,GetHandleId(t),1)
         local unit target = LoadUnitHandle(HT,GetHandleId(t),2)
+        if IsUnitType(target, UNIT_TYPE_HERO) != true or IsUnitIllusion(target) then
+            call Damage.apply(source, target, BlzGetUnitMaxHP(target) * 0.75, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+        endif
         call UsOrderU(source, target, GetUnitX(target), GetUnitY(target), 'A08A', "purge", 0, null)
         call FlushChildHashtable(HT,GetHandleId(t))
         

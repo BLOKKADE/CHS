@@ -370,8 +370,8 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers09[153]= RANDOM_SPELL_ITEM_ID  
 	set udg_integers08[154]= DIVINE_BUBBLE_ABILITY_ID 
 	set udg_integers09[154]= DIVINE_BUBBLE_ITEM_ID  
-	set udg_integers08[155]= ANCIENT_BLOOD_ABILITY_ID 
-	set udg_integers09[155]= ANCIENT_BLOOD_ITEM_ID      
+	set udg_integers08[155]= ANCIENT_ELEMENT_ABILITY_ID 
+	set udg_integers09[155]= ANCIENT_ELEMENT_ITEM_ID      
    
 	set udg_integers08[156]= FROST_BOLT_ABILITY_ID 
 	set udg_integers09[156]= FROST_BOLT_ITEM_ID   

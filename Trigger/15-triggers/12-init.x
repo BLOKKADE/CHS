@@ -539,7 +539,7 @@ function CreateUnitsForPlayer8 takes nothing returns nothing
     set udg_unit36 = CreateUnit(p,'N00O',- 252.1,- 775.2,270.000)
     set udg_unit38 = CreateUnit(p,'N00Q',514.2,257.2,270.000)
 
-    set u = CreateUnit(p,'H01F',- 252.1,- 1022.1,270.000)
+    set u = CreateUnit(p,MURLOC_WARRIOR_UNIT_ID,- 252.1,- 1022.1,270.000)
     set u = CreateUnit(p,'H01G',252.1,- 1022.1,270.000)
     set u = CreateUnit(p,'H01H',512.1,- 1022.1,270.000)
     set u = CreateUnit(p,'H01I',- 512.1,- 1022.1,270.000)

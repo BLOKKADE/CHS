@@ -18,8 +18,6 @@ library Multicast requires T32, RandomShit, AbilityChannel
         real x
         real y
 
-        
-
         private method GetNewTarget takes real range returns boolean
             if this.caston == null then
                 set this.caston = NewGroup()

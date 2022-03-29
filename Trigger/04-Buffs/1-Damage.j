@@ -1,4 +1,4 @@
-function DamageTimer takes nothing returns nothing
+/*function DamageTimer takes nothing returns nothing
     local timer t = GetExpiredTimer()
     local unit u1 = LoadUnitHandle(HT,GetHandleId(t),1)
     local unit u2 = LoadUnitHandle(HT,GetHandleId(t),2)
@@ -53,4 +53,4 @@ function PhysicalDamage takes unit u1, unit u2, real dmg, boolean typeDmg, integ
 
     call TimerStart(t,0,false,function DamageTimer)
     set t = null
-endfunction
+endfunction*/

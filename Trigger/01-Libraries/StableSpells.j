@@ -28,7 +28,9 @@ library StableSpells initializer init
         set StableSpells.boolean[ENVENOMED_WEAPONS_ABILITY_ID] = true
         set StableSpells.boolean['A0B6'] = true
         set StableSpells.boolean['A0BA'] = true
-        set StableSpells.boolean[ANCIENT_BLOOD_ABILITY_ID] = true
         set StableSpells.boolean[CONTRACT_LIVING_ABIL_ID] = true
+        set StableSpells.boolean[REINCARNATION_ABILITY_ID] = true
+        set StableSpells.boolean[ANCIENT_RUNES_ABILITY_ID] = true
+        //set StableSpells.boolean['A085'] = true
     endfunction
 endlibrary

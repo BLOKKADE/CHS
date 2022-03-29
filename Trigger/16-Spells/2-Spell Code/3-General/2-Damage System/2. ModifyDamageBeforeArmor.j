@@ -16,6 +16,77 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
+        //Conquerors Bamboo Stick
+        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and IsUnitType(DamageSource, UNIT_TYPE_HERO) == false and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
+            //call BJDebugMsg("conq bamboo stick immune")
+            set Damage.index.damage = 0
+            return
+        endif
+
+        //Extradimensional Cooperation
+        if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not DamageIsOnHit) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
+            call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, IsMagicDamage())
+        endif
+
+        //Storm Horn
+        if GetUnitAbilityLevel(DamageTarget ,'B00B') >= 1 then
+            if GetRandomReal(1,100) <= 14 * DamageTargetLuck then
+                set Damage.index.damage = 0
+                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
+                endif
+                return
+            endif		
+        endif
+
+        //Aura of Immortality
+        if GetUnitAbilityLevel(DamageTarget ,'B00D') >= 1 then
+            if GetRandomInt(1,100) <= GetUnitAbilityLevel(DamageTargetHero  ,AURA_OF_IMMORTALITY_ABILITY_ID) then
+                set Damage.index.damage = 0
+                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
+                endif
+                return			
+            endif		
+        endif	
+
+        //Null Void Orb
+        if UnitHasItemS(DamageTarget, 'I0AL') then
+            if GetRandomInt(1,100) <= 10 * DamageTargetLuck then
+                set Damage.index.damage = 0
+                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
+                endif
+                return			
+            endif		
+        endif
+
+
+        //Dark Shield
+        if UnitHasItemS( DamageTarget,'I060' )  then
+            if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
+                if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08R') <= 0 then
+                    call AbilStartCD(DamageTarget, 'A08R', 1)
+                    set Damage.index.damage = 0
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                    return
+                endif 
+            else 
+                if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08Q') <= 0 then
+                    call AbilStartCD(DamageTarget, 'A08Q', 3)
+                    set Damage.index.damage = 0
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                    return
+                endif 
+            endif      
+            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08S') <= 0 then
+                call AbilStartCD(DamageTarget, 'A08S', 6)
+                call RemoveDebuff(DamageTarget, 1)  
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
+                return
+            endif 
+        endif 
+
         //Evasion & miss TODO: clean this up
         if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0) and (GetUnitEvasion(DamageTarget) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitMissChance(DamageSource) > 0) then
             call Evade()
@@ -23,11 +94,6 @@ scope ModifyDamageBeforeArmor initializer init
             if Damage.index.damage == 0 then
                 return
             endif
-        endif
-
-        //Extradimensional Cooperation
-        if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not DamageIsOnHit) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
-            call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, IsMagicDamage())
         endif
 
         if Damage.index.isAttack then
@@ -52,6 +118,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        //Banish and Scroll of Transformation phys immunity and negative dmg ignore
         if Damage.index.damage <= 0 or ((GetUnitAbilityLevel(DamageTarget, 'B028') > 0 or GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0) and IsPhysDamage()) then
             set Damage.index.damage = 0
             return
@@ -144,58 +211,11 @@ scope ModifyDamageBeforeArmor initializer init
             set DamageIsCutting = true
         endif
 
-        //Storm Horn
-        if GetUnitAbilityLevel(DamageTarget ,'B00B') >= 1 then
-            if GetRandomReal(1,100) <= 14 * DamageTargetLuck then
-                set Damage.index.damage = 0
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
-                return
-            endif		
+        //Ancient Blood
+        set i1 = GetUnitAbilityLevel(DamageTarget, ANCIENT_BLOOD_ABILITY_ID)
+        if i1 > 0 then
+            call ActivateAncientBlood(DamageTarget, i1)
         endif
-
-        //Aura of Immortality
-        if GetUnitAbilityLevel(DamageTarget ,'B00D') >= 1 then
-            if GetRandomInt(1,100) <= GetUnitAbilityLevel(DamageTargetHero  ,AURA_OF_IMMORTALITY_ABILITY_ID) then
-                set Damage.index.damage = 0
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
-                return			
-            endif		
-        endif	
-
-        //Null Void Orb
-        if UnitHasItemS(DamageTarget, 'I0AL') then
-            if GetRandomInt(1,100) <= 10 * DamageTargetLuck then
-                set Damage.index.damage = 0
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
-                return			
-            endif		
-        endif
-
-
-        //Dark Shield
-        if UnitHasItemS( DamageTarget,'I060' )  then
-            if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
-                if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08R') <= 0 then
-                    call AbilStartCD(DamageTarget, 'A08R', 1)
-                    set Damage.index.damage = 0
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
-                    return
-                endif 
-            else 
-                if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08Q') <= 0 then
-                    call AbilStartCD(DamageTarget, 'A08Q', 3)
-                    set Damage.index.damage = 0
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
-                    return
-                endif 
-            endif      
-            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08S') <= 0 then
-                call AbilStartCD(DamageTarget, 'A08S', 6)
-                call RemoveDebuff(DamageTarget, 1)  
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
-                return
-            endif 
-        endif 
 
          //Light Magic Shield
         if UnitHasItemS(DamageTarget,'I06K') and BlzGetUnitArmor(DamageTarget)<= 50  then
@@ -226,6 +246,11 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        //Druidic Focus
+        if UnitHasItemS(DamageSource, DRUIDIC_FOCUS_ITEM_ID) and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Wild) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Earth)) then
+            set Damage.index.damage = Damage.index.damage * 1.5
+        endif
+
         //Hero's Hammer
         set i1 = UnitHasItemI( DamageSource,'I064' )
         if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then 
@@ -245,14 +270,18 @@ scope ModifyDamageBeforeArmor initializer init
         if DamageSourceTypeId == TAUREN_UNIT_ID then
             
             set r1 = 0
+            set i = 1
             set i1 = GetHeroLevel(DamageSource)
             loop
                 if IsSpellElement(DamageSource, DamageSourceAbility, i) then
-                    set r1 = r1 + ((0.05 + (0.0005 * i1)) * GetSpellElementCount(DamageSource, DamageSourceAbility, i))
+                    //call BJDebugMsg("element: " + ClassAbil[i])
+                    //call BJDebugMsg("bonus: " + R2S((0.05 + (0.0005 * i1))) + " count: " + I2S(GetSpellElementCount(DamageSource, DamageSourceAbility, i))) 
+                    set r1 = r1 + ((0.05 + (0.0005 * i1)) * GetUnitElementCount(DamageSource, i))
                 endif
                 set i = i + 1
-                exitwhen i > 12
+                exitwhen i > Element_Maximum
             endloop
+            //call BJDebugMsg("st bonus: " + R2S(1 + r1))
             set Damage.index.damage = Damage.index.damage * (1 + r1)
         endif
 
@@ -269,7 +298,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Absolute Poison
         set i = GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID)
         if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison) then
-            set Damage.index.damage = Damage.index.damage * (1 + ((i * 0.01) * GetClassUnitSpell(DamageSource, Element_Poison)))
+            set Damage.index.damage = Damage.index.damage * (1 + ((i * 0.01) * GetUnitElementCount(DamageSource, Element_Poison)))
         endif
 
         //Trident of Pain
@@ -313,7 +342,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Pvp Bonus
-        if GetOwningPlayer(DamageTarget) != Player(11) and GetOwningPlayer(DamageSource) != Player(11) then
+        if DamageTargetPid != 11 and DamageSourcePid != 11 then
             set Damage.index.damage = Damage.index.damage+  (Damage.index.damage*(GetUnitPvpBonus(DamageSource)- GetUnitPvpBonus(DamageTarget)  )/ 100)
         endif 
 
@@ -355,7 +384,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Ogre Warrior Stomp block ignore
         if DamageSourceAbility == 'A047' and GetUnitBlock(DamageTarget) > 0 then
-            call TempBonus.create(DamageTarget, BONUS_BLOCK,0 - GetUnitBlock(DamageTarget) * 0.2, 1)
+            call TempBonus.create(DamageTarget, BONUS_BLOCK,0 - GetUnitBlock(DamageTarget) * 0.2, 1, 'A047')
         endif
 
         //Lich
@@ -378,6 +407,11 @@ scope ModifyDamageBeforeArmor initializer init
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
         endif
 
+        //Naga Siren passive
+        if DamageSourceTypeId == NAGA_SIREN_UNIT_ID and Damage.index.isSpell then
+            set Damage.index.damage = Damage.index.damage + (GetAttackDamage(DamageSource) * (0.1 + (0.001 * GetHeroLevel(DamageSource))))
+        endif
+
         //Grom Hellscream
         if DamageSourceTypeId == ORC_CHAMPION_UNIT_ID then
             set Damage.index.damage = Damage.index.damage + GetHeroStr(DamageSourceHero, true) * 0.1 + (0.01 * GetHeroLevel(DamageSourceHero))
@@ -391,7 +425,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         /*//Pit Lord Magic power for phys
         if GetUnitTypeId(DamageSource) == PIT_LORD_UNIT_ID and IsPhysDamage() and (DamageSourceMagicPower != 1 or GetUnitMagicDmg(DamageSource) > 0) then
-            set r1 = 1 - RMaxBJ(0.25 * GetClassUnitSpell(DamageSource, Element_Water), 0)
+            set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(DamageSource, Element_Water), 0)
             set Damage.index.damage = Damage.index.damage* ((DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100) * r1))
         endif   */
 
@@ -405,19 +439,26 @@ scope ModifyDamageBeforeArmor initializer init
         //Vigour Token
         set i1 = UnitHasItemI(DamageSource, VIGOUR_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitMaxHP(DamageSource) < BlzGetUnitMaxHP(DamageTarget) then
-            set Damage.index.damage = Damage.index.damage * 1 + (0.5 * i1)
+            set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
         endif
 
         //Flimsy Token
         set i1 = UnitHasItemI(DamageSource, FLIMSY_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitArmor(DamageSource) < BlzGetUnitArmor(DamageTarget) then
-            set Damage.index.damage = Damage.index.damage * 1 + (0.5 * i1)
+            set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
         endif
 
         //Spellbane Token
         set i1 = UnitHasItemI(DamageSource, SPELL_BANE_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitMaxMana(DamageSource) < BlzGetUnitMaxMana(DamageTarget) then
-            set Damage.index.damage = Damage.index.damage * 1 + (0.5 * i1)
+            set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
+        endif
+
+        //Conquerors Bamboo Stick
+        if GetUnitAbilityLevel(DamageSource, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageTargetPid != 11 and BambooImmuneActive(DamageSourceId, GetHandleId(DamageTargetHero)) and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
+            //call BJDebugMsg("conq bamboo stick dmg bonus")
+            set Damage.index.damage = Damage.index.damage * 2
+            return
         endif
 
         //Martial Theft
@@ -509,7 +550,7 @@ scope ModifyDamageBeforeArmor initializer init
             //Absolute Dark
             set i1 = GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_DARK_ABILITY_ID)
             if i1 > 0 and GetUnitAbilityLevel(DamageSourceHero, NULL_VOID_ORB_BUFF_ID) == 0 then
-                set blockDamage = blockDamage * (1 - ((0.009 + (0.001 * i1)) * GetClassUnitSpell(DamageSourceHero, Element_Dark)))
+                set blockDamage = blockDamage * (1 - ((0.009 + (0.001 * i1)) * GetUnitElementCount(DamageSourceHero, Element_Dark)))
             endif
 
             //Skeleton Warmage

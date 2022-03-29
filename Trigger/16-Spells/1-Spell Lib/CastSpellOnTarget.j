@@ -35,7 +35,7 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
         local integer orderType = 0
         local integer targetType = 0
         local boolean getNewTarget = true
-        if IsAbilityCasteable(abilId) then
+        if IsAbilityCasteable(abilId, false) then
             //call BJDebugMsg("casteable")
             set orderType = GetAbilityOrderType(abilId)
             set targetType = GetAbilityTargetType(abilId)

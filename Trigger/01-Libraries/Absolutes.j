@@ -4,14 +4,17 @@ library AbsoluteElements initializer init requires Table
         Table AbsoluteElements
     endglobals
 
+    //check if ability is an absolute
     function IsAbsolute takes integer absoluteId returns boolean
         return AbsoluteElements[absoluteId] != 0
     endfunction
 
+    //gets the element associated with an absolute ability id
     function GetAbsoluteElement takes integer absoluteId returns integer
         return AbsoluteElements[absoluteId]
     endfunction
 
+    //gets the absolute ability id associated with an element
     function GetElementAbsolute takes integer elementId returns integer
         return ElementAbsolutes[elementId]
     endfunction

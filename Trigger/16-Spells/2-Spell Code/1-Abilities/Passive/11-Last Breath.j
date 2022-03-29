@@ -21,15 +21,15 @@ function LastBreath takes unit target, integer level returns nothing
     if LoadInteger(HT,GetHandleId(target),LAST_BREATHS_ABILITY_ID) == 1 and GetUnitAbilityLevel(target, 'A08B') > 0 then
         set Hp = GetWidgetLife(target)
         set Hp = Hp - Damage.index.damage
-        if Hp < 1 then
-            set Hp = 1
+        if Hp < 100 then
+            set Hp = 100
         endif
         call SetWidgetLife(target,Hp)
         set Damage.index.damage = 0
-    elseif GetWidgetLife(target) <= Damage.index.damage + 0.405 and BlzGetUnitAbilityCooldownRemaining(target,LAST_BREATHS_ABILITY_ID) <= 0.501 then
+    elseif GetWidgetLife(target) <= Damage.index.damage and BlzGetUnitAbilityCooldownRemaining(target,LAST_BREATHS_ABILITY_ID) <= 0.501 then
         set t = NewTimer()
         set Damage.index.damage = 0
-        call SetWidgetLife(target,1.405)
+        call SetWidgetLife(target, 100)
         call AbilStartCD(target,LAST_BREATHS_ABILITY_ID, 60 + BlzGetUnitAbilityCooldownRemaining(target,LAST_BREATHS_ABILITY_ID) )  
         call SaveInteger(HT,GetHandleId(target),LAST_BREATHS_ABILITY_ID,1)	             
         call SaveUnitHandle(HT,GetHandleId(t),1, target)

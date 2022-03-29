@@ -543,7 +543,7 @@
     3-RuneState: RuneState
     4-RuneEvent: RuneEvent
     5-RuneItem: RuneItem
-        01-RuneOfAttack: RuneOfAttack
+        01-DefenseRune: DefenseRune
         02-RuneOfEarth: RuneOfEarth
         03-RuneOfPower: RuneOfPower
         04-RuneOfHealing: RuneOfHealing

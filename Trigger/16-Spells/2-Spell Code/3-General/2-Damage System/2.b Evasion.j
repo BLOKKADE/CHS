@@ -30,6 +30,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers
             return
         endif
 
+        //Scorched Earth
         if GetUnitAbilityLevel(DamageSource, 'B027') > 0 then
             if GetRandomReal(0, 100) > GetHeroLevel(PlayerHeroes[ScorchedEarthSource[GetHandleId(DamageSource)] + 1]) * 0.5 then
                 return

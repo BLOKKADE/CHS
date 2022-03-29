@@ -8,7 +8,7 @@ library DivineBubble initializer init requires T32, RandomShit
     endfunction
 
     function IsUnitDivineBubbled takes unit u returns boolean
-        return GetDivineBubbleStruct(GetHandleId(u)).enabled
+        return GetDivineBubbleStruct(GetHandleId(u)).enabled and GetDivineBubbleStruct(GetHandleId(u)) != 0
     endfunction
 
     struct DivineBubbleStruct extends array

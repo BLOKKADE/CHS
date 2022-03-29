@@ -187,7 +187,7 @@ library IdLibrary initializer init
         constant integer MAULER_UNIT_ID                                 = 'H002'
         constant integer MEDIVH_UNIT_ID                                 = 'H01G'
         constant integer MYSTIC_UNIT_ID                                 = 'O008'
-        constant integer NAHA_SIREN_UNIT_ID                             = 'H003'
+        constant integer NAGA_SIREN_UNIT_ID                             = 'H003'
         constant integer OGRE_MAGE_UNIT_ID                              = 'H01E'
         constant integer OGRE_WARRIOR_UNIT_ID                           = 'H01C'
         constant integer ORC_CHAMPION_UNIT_ID                           = 'N024'
@@ -207,6 +207,7 @@ library IdLibrary initializer init
         constant integer URSA_WARRIOR_UNIT_ID                           = 'N00Q'
         constant integer WAR_GOLEM_UNIT_ID                              = 'N00C'
         constant integer WITCH_DOCTOR_UNIT_ID                           = 'O006'
+        constant integer MURLOC_WARRIOR_UNIT_ID                         = 'H01F'
         constant integer YETI_UNIT_ID                                   = 'O00B'
         // --- Unit IDs ---
 
@@ -226,8 +227,10 @@ library IdLibrary initializer init
         constant integer ACID_SPRAY_ABILITY_ID                          = 'ANhs'
         constant integer ACTIVATE_AVATAR_ABILITY_ID                     = 'A0AE'
         constant integer AIR_FORCE_ABILITY_ID                           = 'A02T'
-        constant integer ANCIENT_BLOOD_ABILITY_ID                       = 'A07T'
-        constant integer ANCIENT_RUNES_ABILITY_ID                       = 'A09O'
+        constant integer ANCIENT_BLOOD_ABILITY_ID                       = 'A0CH'
+        constant integer ANCIENT_ELEMENT_ABILITY_ID                     = 'A07T'
+        constant integer ANCIENT_RUNES_ABILITY_ID                       = 'A06Z'
+        constant integer RUNE_MASTERY_ABILITY_ID                        = 'A09O'
         constant integer ANCIENT_TEACHING_ABILITY_ID                    = 'A05U'
         constant integer ANTI_MAGIC_SHEL_ABILITY_ID                     = 'Aam2'
         constant integer ARCANE_ASSAUL_ABILITY_ID                       = 'A098'
@@ -456,9 +459,16 @@ library IdLibrary initializer init
         constant integer DECAYING_SCYTHE_DUMMY2_ABILITY_ID              = 'A0C6'
         constant integer SCORCHED_SCIMITAR_ABILITY_ID                   = 'A0C1'
         constant integer SPIKED_SHIELD_ABILITY_ID                       = 'A0C7'
+        constant integer DRUIDIC_FOCUS_ABILITY_ID                       = 'A0CE'
+        constant integer DRUIDIC_FOCUS_ROOTS_ABILITY_ID                 = 'A0CF'
+        constant integer BANNER_OF_MANY_DUMMY_ABILITY_ID                = 'A0CG'
+        constant integer SPEED_BLADE_BUFF_ID                            = 'B02I'
+        constant integer CONQ_BAMBOO_STICK_ABILITY_ID                   = 'A0CM'
+        constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
 
         // --- Item IDs ---
 
+        constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'
         constant integer ARCANE_INFUSED_SWORD_ITEM_ID                   = 'I0BN'
         constant integer MARTIAL_THEFT_ITEM_ID                          = 'I0BL'
         constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'
@@ -485,6 +495,7 @@ library IdLibrary initializer init
         constant integer ANCIENT_AXE_TOME_ITEM_ID                       = 'I06Z'
         constant integer ENERGY_TRAP_ITEM_ID                            = 'I0BJ'
         constant integer MAGNET_OSC_ITEM_ID                             = 'I0BK'
+        constant integer ANCIENT_ELEMENT_ITEM_ID                        = 'I0C0'
         constant integer ANCIENT_BLOOD_ITEM_ID                          = 'I09B'
         constant integer ANCIENT_DAGGER_ITEM_ID                         = 'I06X'
         constant integer ANCIENT_DAGGER_TOME_ITEM_ID                    = 'I070'
@@ -721,10 +732,13 @@ library IdLibrary initializer init
         constant integer WIZARDBANE_AURA_ITEM_ID                        = 'I09M'
         constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
         constant integer SCORCHED_SCIMITAR_ITEM_ID                      = 'I0BO'
+        constant integer DRUIDIC_FOCUS_ITEM_ID                          = 'I0BW'
+        constant integer BANNER_OF_MANY_ITEM_ID                         = 'I0BY'
         
         // --- Item IDs ---
 
         // --- Buff IDs ---
+        constant integer CONQ_BAMBOO_STICK_BUFF_ID                      = 'B02J'
         constant integer CONTRACT_LIVING_BUFF_ID                        = 'A059'
         constant integer ACID_BOMB_BUFF_ID                              = 'BNab'
         constant integer ANCIENT_KNIFE_OF_THE_GODS_BUFF_ID              = 'B01N'
@@ -815,7 +829,8 @@ library IdLibrary initializer init
         constant integer WHIRLWIND_BUFF_ID                              = 'B005'
         constant integer WISDOM_CHESTPLATE_BUFF_ID                      = 'B020'
         constant integer DECAYING_SCYTHE_BUFF_ID                        = 'B02D'
-        constant integer DECAYING_SCYTHE_BUFF2_ID                        = 'B02E'
+        constant integer DECAYING_SCYTHE_BUFF2_ID                       = 'B02E'
+        constant integer DRUIDIC_FOCUS_BUFF_ID                          = 'B02F'
 
         // --- Buff IDs ---
 

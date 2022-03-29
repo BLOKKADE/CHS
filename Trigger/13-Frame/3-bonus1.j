@@ -5,6 +5,7 @@ library HeroData initializer init
 
     private function init takes nothing returns nothing
         call SaveStr(HT_data,LIEUTENANT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSpellBreaker.blp" )        //letinant
+        //call SaveStr(HT_data,LIEUTENANT_UNIT_ID,2, "|cff00ffffPassive|r: Disease Cloud: Deals |cffff00ffmagic damage|r to nearby enemies every second. ")
         call SaveStr(HT_data,LIEUTENANT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +8 to two random stats." )
 
         call SaveStr(HT_data,ABOMINATION_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp" )       // amb
@@ -24,11 +25,12 @@ library HeroData initializer init
         call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +250 mana." )   
         
         call SaveStr(HT_data,'H004',1, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )       // mortal team
-        call SaveStr(HT_data,'H004',2, "|cff00ffffPassive|r: Mortar Aura: Increases all |cffff8080physical damage|r dealt by a percentage. ")
-        call SaveStr(HT_data,'H004',3, "|cffffff00Level Up Bonus|r: Mortar Aura: +3% physical damage bonus." )    
+        call SaveStr(HT_data,'H004',2, "|cff00ffffPassive|r: Mortar Might: Increases physical power. ")
+        call SaveStr(HT_data,'H004',3, "|cffffff00Level Up Bonus|r: Mortar Might: +3 physical power bonus." )    
                     
-        call SaveStr(HT_data,NAHA_SIREN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )       // naga
-        call SaveStr(HT_data,NAHA_SIREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Increases intelligence by a random amount between 1 and 11. Repeats if strength is at 0 and again if agility is at 0." )    
+        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )       // naga
+        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,2, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. ")
+        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Water Addiction: +0.1% attack damage added to spell damage. (Every 50 levels) + 1 bonus attack damage per intelligence" )
         
         call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )       // avatar
         call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,2, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power.")
@@ -47,15 +49,15 @@ library HeroData initializer init
         call SaveStr(HT_data,PYROMANCER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +35 maximum attack damage. Scorched Earth: +0.5% miss chance, +0.1% crit chance. +1 area of effect." )  
         
         call SaveStr(HT_data,TAUREN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSpiritWalker.blp" )       // tauren
-        call SaveStr(HT_data,TAUREN_UNIT_ID,2, "|cff00ffffPassive|r: Spirit Mage: Gains +5 Rune Power for every active spell it has. All [Element] damage deals 5% bonus damage based on how many of the [Element] the Hero has.")
-        call SaveStr(HT_data,TAUREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Spirit Mage: +0.25 Rune Power per active spell. +0.05% damage per [Element]")
+        call SaveStr(HT_data,TAUREN_UNIT_ID,2, "|cff00ffffPassive|r: Spirit Mage: Gains +0.1 Rune Power for every active spell it has. All [Element] damage deals 5% bonus damage based on how many of that [Element] the Hero has.")
+        call SaveStr(HT_data,TAUREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Spirit Mage: +0.0025 Rune Power per active spell. +0.05% damage per [Element]")
         
         call SaveStr(HT_data,MYSTIC_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )       // Mystic
         call SaveStr(HT_data,MYSTIC_UNIT_ID,2, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons an invulnerable Faerie Dragon to aid it in battle.")
-        call SaveStr(HT_data,MYSTIC_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: +3% attack speed. (|cff68eef3Every 3 levels|r) increases Faerie Dragon damage." )
+        call SaveStr(HT_data,MYSTIC_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: Bonus attack speed. (|cff68eef3Every 3 levels|r) increases Faerie Dragon damage." )
             
         call SaveStr(HT_data,PIT_LORD_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )       // Pit Lord
-        call SaveStr(HT_data,PIT_LORD_UNIT_ID,2, "|cff00ffffPassive|r: Hellforged: Starts with Absolute Fire. 1 magic power increases |cffff8080physical damage|r dealt by 1%. |cffc0c0c0Hellforged and Absolute Fire become 25% less effective for every |r [|cff00f7ffWater|r] |cffc0c0c0spell learned.|r")
+        call SaveStr(HT_data,PIT_LORD_UNIT_ID,2, "|cff00ffffPassive|r: Hellforged: Starts with Absolute Fire. 1 magic power increases |cffff8080physical power|r by 1. |cffc0c0c0Hellforged and Absolute Fire become 25% less effective for every |r [|cff00f7ffWater|r] |cffc0c0c0spell learned.|r")
         call SaveStr(HT_data,PIT_LORD_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Hellforged: +0.5% Absolute Fire magic power bonus." )
             
         call SaveStr(HT_data,THUNDER_WITCH_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp" )       // Thunder Witch
@@ -93,15 +95,15 @@ library HeroData initializer init
         call SaveStr(HT_data,'N00R',3, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
             
         call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )       // Brute Skelet
-        call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,2, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 30% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons die the Hero restores 2% of its max HP and the summon explodes, dealing 50 |cffff00ffmagic damage|r to enemies.")
-        call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Reinforced Bone: +0.01 second invulnerability. +0.05% of maximum hit points restored. +30 explosion damage." )
+        call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,2, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 20% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons dies the Hero restores 2% of its max HP and the summon explodes, dealing 50 |cffff00ffmagic damage|r to enemies.")
+        call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Reinforced Bone: +0.01 second invulnerability. +0.05% of maximum hit points restored. +50 explosion damage." )
                 
         call SaveStr(HT_data,SORCERER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNJaina.blp" )       // Sorser
         call SaveStr(HT_data,SORCERER_UNIT_ID,2, "|cff00ffffPassive|r: Lightning Strike: Deals |cffff00ffmagic damage|r to 3 nearby enemies whenever the Hero casts a spell. ")
         call SaveStr(HT_data,SORCERER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Lightning Strike: +50 damage." )
                     
         call SaveStr(HT_data,URSA_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp" )       // Ursa
-        call SaveStr(HT_data,URSA_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Bleed: Every time it attacks it causes enemies to bleed for 3 seconds, dealing 30% of its attack in |cffff8080physical damage|r per second. ")
+        call SaveStr(HT_data,URSA_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Bleed: Every time it attacks it causes enemies to bleed for 3 seconds, dealing 30% of its attack in |cffff8080physical damage|r per second.")
         call SaveStr(HT_data,URSA_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +10 attack damage." )
                             
         call SaveStr(HT_data,WAR_GOLEM_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNFleshGolem.blp" )       // War golem
@@ -169,12 +171,12 @@ library HeroData initializer init
         call SaveStr(HT_data,YETI_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus strength, +2 armor limit." )
         
         call SaveStr(HT_data,SATYR_TRICKSTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSatyr.blp" )       //Satyr
-        call SaveStr(HT_data,SATYR_TRICKSTER_UNIT_ID,2, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it counterattacks, dealing 100% of its attack damage in |cffff8080physical damage|r back to the attacker.")
+        call SaveStr(HT_data,SATYR_TRICKSTER_UNIT_ID,2, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it counterattacks, dealing 100% of its attack damage in |cffff8080physical damage|r back to the attacker.[|cffd45e29onhit|r]")
         call SaveStr(HT_data,SATYR_TRICKSTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Trickshot: +2% damage. +0.5 evasion." )
 
-        call SaveStr(HT_data,'H01F',1, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )       //Murlock
-        call SaveStr(HT_data,'H01F',2, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy or takes damage, lasts until the end of the fight. (Max 2 billion)")
-        call SaveStr(HT_data,'H01F',3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Fish Hook: +1 stat per attack." )
+        call SaveStr(HT_data,MURLOC_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )       //Murlock
+        call SaveStr(HT_data,MURLOC_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy or takes damage, lasts until the end of the fight. (Max 2 billion)")
+        call SaveStr(HT_data,MURLOC_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Fish Hook: +1 stat per attack." )
         
         call SaveStr(HT_data,MEDIVH_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )       //Mediv
         call SaveStr(HT_data,MEDIVH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +2 magic power." )

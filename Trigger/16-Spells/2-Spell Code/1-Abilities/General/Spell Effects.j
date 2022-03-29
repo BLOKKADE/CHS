@@ -121,7 +121,7 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
             return true
             //Frost Bolt
         elseif abilId == FROST_BOLT_ABILITY_ID then
-            call UsFrostBolt(caster,target,120 * lvl * (1 + 0.25 * R2I(GetClassUnitSpell(caster,7))), GetClassUnitSpell(caster,9))
+            call UsFrostBolt(caster,target,120 * lvl * (1 + 0.25 * R2I(GetUnitElementCount(caster,Element_Dark))), GetUnitElementCount(caster,Element_Cold))
             return true
             //Sand of time
         elseif abilId == SAND_OF_TIME_ABILITY_ID then
@@ -245,8 +245,8 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call StaffOfPowerCast(caster)
                     endif
 
-                    if abilId == ANCIENT_RUNES_ABILITY_ID then
-                        call CastAncientRunes(caster)
+                    if abilId == RUNE_MASTERY_ABILITY_ID then
+                        call CastRuneMaster(caster)
                     endif
 
                     if abilId == 'A09D' then
@@ -257,8 +257,20 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call MaskOfVitality(caster)
                     endif
 
+                    if abilId == 'A085' then
+                        call ActivateAntiMagicFlag(caster)
+                    endif
+
+                    if abilId == CONQ_BAMBOO_STICK_ABILITY_ID then
+                        call CastConqBambooStick(caster)
+                    endif
+
                     if UnitHasItemS(caster, 'I03O') then
                         call ActivateMoonstone(caster)
+                    endif
+
+                    if UnitHasItemS(caster, 'I03R') then
+                        call ActivateScepterOfConfusion(caster)
                     endif
 
                     if GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X')  and abilId != RESET_TIME_ABILITY_ID then

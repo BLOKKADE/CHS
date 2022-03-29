@@ -29,7 +29,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Fishing Rod
-        if (not DamageIsOnHit) and UnitHasItemS(DamageSource,'I07T') and IsPhysDamage() then
+        if (not DamageIsOnHit) and UnitHasItemS(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
             //call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))
             if DistanceBetweenUnits(DamageSource, DamageTarget) < 1200 and DistanceBetweenUnits(DamageSource, DamageTarget) > 80 then
                 set r1 = (bj_RADTODEG * GetAngleToTarget(DamageSource, DamageTarget)) + 180
@@ -74,8 +74,13 @@ scope ModifyDamageAfterArmor initializer init
         endif 
 
         //Decaying Scythe
-        if GetUnitAbilityLevel(DamageSource, DECAYING_SCYTHE_BUFF2_ID) > 0 then
+        if GetUnitAbilityLevel(DamageTarget, DECAYING_SCYTHE_BUFF2_ID) > 0 then
             set Damage.index.damage = Damage.index.damage * 0.5
+        endif
+
+        //Conq Bamboo passive
+        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_ABILITY_ID) > 0 and DamageSourcePid != 8 then
+            set Damage.index.damage = Damage.index.damage * 0.7
         endif
 
         //Blokkades Shield damage reduction
@@ -103,7 +108,7 @@ scope ModifyDamageAfterArmor initializer init
         //Vampirism
         set r1 = GetUnitAbilityLevel(DamageSource,VAMPIRISM_ABILITY_ID)
         if r1 > 0 then
-            set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetClassUnitSpell(DamageSource,11)* 0.02 )
+            set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.02 )
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
@@ -189,7 +194,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Frostmourne
-        if GetUnitAbilityLevel(DamageSourceHero ,'B008') >= 1 then
+        if GetUnitAbilityLevel(DamageSourceHero ,'A02C') >= 1 then
             set r2 = (Damage.index.amount / 4)	
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1 
@@ -212,47 +217,11 @@ scope ModifyDamageAfterArmor initializer init
             call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Other\\PandarenBrewmasterBlood\\PandarenBrewmasterBlood.mdl", DamageTarget, "chest"))
         endif 
 
-        if vampCount > 0 and IsFxOnCooldown(DamageSource, 0) == false then
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
-            call Vamp(DamageSource, DamageTarget, vampAmount)
-            call SetFxCooldown(DamageSource, 0, 1)
-        endif
-
-        //Ancient Blood
-        if GetUnitAbilityLevel(DamageTarget,ANCIENT_BLOOD_ABILITY_ID) > 0 then
-            set r1 = LoadReal(HT,DamageTargetId,82340)
-            set r2 = LoadReal(HT,DamageTargetId,82341)
-            set r3 = 1 - 0.01 * I2R(GetUnitAbilityLevel(DamageTarget,ANCIENT_BLOOD_ABILITY_ID) ) 
-            
-            if r1 == 0 then
-                set r2 = 20000
+        if vampCount > 0 then
+            if not IsFxOnCooldownSet(DamageSourceId, 0, 1) then
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
             endif
-            
-            set r1 = r1 + Damage.index.amount
-            loop
-                exitwhen r3 * r2 > r1 
-                set r1 = r1 - r2 * r3 
-                set r2 = r2 + 250
-                call SetHeroStr(DamageTarget,GetHeroStr(DamageTarget,false)+ 2,false)
-                //remove bufs
-                
-                if BlzGetUnitAbilityCooldownRemaining(DamageTarget, ANCIENT_BLOOD_ABILITY_ID) == 0 then
-                    call AbilStartCD(DamageTarget, ANCIENT_BLOOD_ABILITY_ID, 1)
-                    set i1 = 0
-                    loop
-                        exitwhen i1 > 10
-                        set i2 = GetInfoHeroSpell(DamageTarget ,i1)
-                        if i2 != 0 and IsSpellResettable(i2) then
-                            call ResetSpell(DamageTarget, i2, 1 + 0.25 * I2R(GetUnitAbilityLevel(DamageTarget,ANCIENT_BLOOD_ABILITY_ID)), false)
-                        endif   
-                        set i1 = i1 + 1
-                    endloop
-                endif
-                
-                //call RemoveDebuff(DamageTarget, 1)
-            endloop
-            call SaveReal(HT,DamageTargetId,82340,r1)
-            call SaveReal(HT,DamageTargetId,82341,r2)
+            call Vamp(DamageSource, DamageTarget, vampAmount)
         endif
 
         //Blademaster
@@ -463,7 +432,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Skeleton Brute
         if DamageTargetTypeId == SKELETON_BRUTE_UNIT_ID then
-            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0BA') == 0 and Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) * 0.3 and GetUnitAbilityLevel(DamageTarget, 'A0BB') == 0 then
+            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0BA') == 0 and Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) * 0.2 and GetUnitAbilityLevel(DamageTarget, 'A0BB') == 0 then
                 call SkeletonBrute(DamageTarget)
             endif
 
@@ -474,7 +443,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Murloc Warrior
-        if DamageTargetTypeId == 'H01F' and GetHeroStr(DamageTarget, true) < 2147483647 then
+        if DamageTargetTypeId == MURLOC_WARRIOR_UNIT_ID and GetHeroStr(DamageTarget, true) < 2147483647 then
             set i1 = 1 + GetHeroLevel(DamageTarget)/ 10 
             call SaveInteger(HT,DamageTargetId,54021,i1 + LoadInteger(HT,DamageTargetId,54021))
             call SetHeroStr(DamageTarget,GetHeroStr(DamageTarget,false)+ i1,false)
@@ -495,7 +464,7 @@ scope ModifyDamageAfterArmor initializer init
                     set r3 = RMaxBJ(r3 + (r2 - r3), 0)
                 endif
                 if r3 > 0 then
-                    call TempBonus.create(DamageTarget, BONUS_HEALTH_REGEN, r3, 7).addBuffLink(DECAYING_SCYTHE_BUFF_ID)
+                    call TempBonus.create(DamageTarget, BONUS_HEALTH_REGEN, r3, 7, DECAYING_SCYTHE_ABILITY_ID).addBuffLink(DECAYING_SCYTHE_BUFF_ID)
                 endif
                 //call BJDebugMsg("regen red: " + R2S(r3))
             endif
@@ -520,7 +489,9 @@ scope ModifyDamageAfterArmor initializer init
         if Damage.index.amount > 0 and GetUnitAbilityLevel(DamageSourceHero , FINISHING_BLOW_ABILITY_ID) >= 1 then
             if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE)     <= R2I(GetUnitAbilityLevel(DamageSourceHero , FINISHING_BLOW_ABILITY_ID))  then
                 set Damage.index.amount = 9999999
-                call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
+                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                    call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
+                endif
             endif
         endif
 

@@ -1,9 +1,10 @@
-library TempStateBonus requires CustomState, NewBonus
+library TempStateBonus initializer init requires CustomState, NewBonus
 
     //Combines the CustomState system and the Newbonus system to temporarily set their states
 
-    /*
+    
     globals
+        /*
         constant integer BONUS_MAGICPOW                 = 1
         constant integer BONUS_MAGICRES                 = 2
         constant integer BONUS_EVASION                  = 3
@@ -24,25 +25,28 @@ library TempStateBonus requires CustomState, NewBonus
         constant integer BONUS_HEALTHREGEN              = 18
         constant integer BONUS_MANAREGEN                = 19
         constant integer BONUS_ATTACKSPEED              = 20
+        */
+        HashTable TempBonusTable
     endglobals
-    */
 
-    function GetTempBonus takes integer id returns TempBonus
-        return id
+    function GetTempBonus takes integer id, integer abilId, integer state returns TempBonus
+        return TempBonusTable[id][abilId][state]
     endfunction
 
     struct TempBonus extends array
         unit source
         real bonus
-        boolean stop
+        boolean enabled
         integer state
+        integer sourceId
         integer endTick
         integer startTick
         boolean buffLink
         integer buffId
+        integer abilId
 
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
+            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -50,7 +54,7 @@ library TempStateBonus requires CustomState, NewBonus
 
         private method updateState takes nothing returns nothing
             if state < 11 then
-                call SaveReal(HT_unitstate, GetHandleId(this.source), this.state, LoadReal(HT_unitstate, GetHandleId(this.source), this.state) + this.bonus)
+                call SaveReal(HT_unitstate, this.sourceId, this.state, LoadReal(HT_unitstate, this.sourceId, this.state) + this.bonus)
             else
                 if state < 18 then
                     call AddUnitBonus(this.source, this.state, R2I(this.bonus))
@@ -65,16 +69,27 @@ library TempStateBonus requires CustomState, NewBonus
             set this.buffId = buffId
         endmethod
 
-        static method create takes unit source, integer state, real bonus, real duration returns thistype
+        private method setHashTable takes nothing returns nothing
+            if TempBonusTable[this.sourceId][this.abilId] == 0 then
+                set TempBonusTable[this.sourceId][this.abilId] = Table.create()
+            endif
+
+            set TempBonusTable[this.sourceId][this.abilId][this.state] = this
+        endmethod
+
+        static method create takes unit source, integer state, real bonus, real duration, integer abilSource returns thistype
             local thistype this = thistype.setup()
 
             set this.buffLink = false
             set this.buffId = 0
-            set this.stop = false
+            set this.enabled = true
             set this.source = source
             set this.bonus = bonus
             set this.state = state
             set this.startTick = T32_Tick
+            set this.sourceId = GetHandleId(this.source)
+            set this.abilId = abilSource
+            call this.setHashTable()
 
             call this.updateState()
             
@@ -86,8 +101,9 @@ library TempStateBonus requires CustomState, NewBonus
         method destroy takes nothing returns nothing
             set this.bonus = 0 - this.bonus
             call this.updateState()
+            set TempBonusTable[this.sourceId][this.abilId][this.state] = 0
             set this.source = null
-            set this.stop = true
+            set this.enabled = false
             set this.bonus = 0
             call this.recycle()
         endmethod
@@ -95,4 +111,21 @@ library TempStateBonus requires CustomState, NewBonus
         implement Recycle
         implement T32x
     endstruct
+
+    function UniqueTempBonus takes unit u, integer state, real bonus, real duration, integer abilId, integer buffLink returns nothing
+        local TempBonus tBonus = GetTempBonus(GetHandleId(u), abilId, state)
+        if tBonus == 0 or tBonus.enabled == false then
+            set tBonus = TempBonus.create(u, state, bonus, duration, abilId)
+            if buffLink != 0 then
+                call tBonus.addBuffLink(buffLink)
+            endif
+        elseif tBonus.enabled then
+            //call BJDebugMsg("ba dur update")
+            set tBonus.endTick = T32_Tick + R2I(duration * 32)
+        endif
+    endfunction
+
+    private function init takes nothing returns nothing
+        set TempBonusTable = HashTable.create()
+    endfunction
 endlibrary

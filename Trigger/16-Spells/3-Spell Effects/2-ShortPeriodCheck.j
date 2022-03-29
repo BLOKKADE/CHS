@@ -70,32 +70,13 @@ scope ShortPeriodCheck initializer init
                         endif
                     
                     endif
-                    
-                    //Ancient Blood
-                    set i1 = GetUnitAbilityLevel(u,ANCIENT_BLOOD_ABILITY_ID)
-                    if i1 > 0 then
-                        set s = GetAbilityDescription(ANCIENT_BLOOD_ABILITY_ID,i1 - 1)
-                        if LoadReal(HT,hid,82341) == 0 then
-                            set s2 = "20000"
-                        else
-                            set s2 = I2S(R2I(LoadReal(HT,hid,82341)*(1 - I2R(i1)* 0.01 ) ))
-                        endif
-                        
-                        set s3 = ReplaceText("20,000",s2,s) 
-                        set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,82340) ) ,s3)
-                            
-                        if GetLocalPlayer() == GetOwningPlayer(u) then
-                            call BlzSetAbilityExtendedTooltip(ANCIENT_BLOOD_ABILITY_ID,s3  , i1 - 1  ) 
-                        endif
-                    
-                    endif
                             
                     //Absolute Cold
                     set i1 = GetUnitAbilityLevel(u,ABSOLUTE_COLD_ABILITY_ID)
                     if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0  then
                         if BlzGetUnitAbilityCooldownRemaining(u,ABSOLUTE_COLD_ABILITY_ID) == 0 and CheckProc(u, 500) then
                             call AbilStartCD(u, ABSOLUTE_COLD_ABILITY_ID, 20.5 - (0.5 * i1))
-                            call AbsoluteCold(u,GetClassUnitSpell(u,9)* 20 * i1 )
+                            call AbsoluteCold(u,GetUnitElementCount(u,Element_Cold)* 20 * i1 )
                         endif
                     endif
                     
@@ -167,6 +148,11 @@ scope ShortPeriodCheck initializer init
                     endif
                 endif
 
+                //Druidic Focus Roots
+                if GetUnitAbilityLevel(u, DRUIDIC_FOCUS_BUFF_ID) > 0 and T32_Tick - DruidicFocusLastTick[hid] > 320 then
+                    call CastDruidicFocus(u)
+                endif
+
                 //Blood Elf Mage
                 if GetUnitTypeId(u) == BLOOD_MAGE_UNIT_ID then
                     set i1 = R2I(GetUnitState(u, UNIT_STATE_MAX_MANA))
@@ -193,8 +179,7 @@ scope ShortPeriodCheck initializer init
                     set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
-                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) - i2 + i1)
-                        call CalculateNewCurrentHP(u, i1 - i2)
+                        call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) - i2 + i1)
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
 
@@ -207,14 +192,14 @@ scope ShortPeriodCheck initializer init
 
                     //Yeti
                 elseif GetUnitTypeId(u) == YETI_UNIT_ID then
-                    if BlzGetUnitArmor(u) <= 50 + (2 * GetHeroLevel(u)) * (1 + (0.1 * GetClassUnitSpell(u, Element_Cold))) then
+                    if BlzGetUnitArmor(u) <= 50 + (2 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) then
                         if GetUnitAbilityLevel(u, 'A092') == 0 then
                             call UnitAddAbility(u, 'A092')
                         endif
                         set i1 = LoadInteger(DataUnitHT,hid,542)
-                        set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetClassUnitSpell(u, Element_Cold))) - i1)
+                        set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) - i1)
                         call SetHeroStr(u,GetHeroStr(u,false)+ i2, false)
-                        call SaveInteger(DataUnitHT,hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetClassUnitSpell(u, Element_Cold)))))
+                        call SaveInteger(DataUnitHT,hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold)))))
                     else
                         set i1 = LoadInteger(DataUnitHT,hid,542)
                         call SetHeroStr(u,GetHeroStr(u,false)- i1, false)

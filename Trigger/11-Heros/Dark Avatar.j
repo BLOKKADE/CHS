@@ -37,8 +37,8 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable
 
     function SetAvatarMode takes unit u, integer heroLevel returns nothing
         local integer hid = GetHandleId(u)
-        local integer light = GetClassUnitSpell(u, Element_Light)
-        local integer dark = GetClassUnitSpell(u, Element_Dark)
+        local integer light = GetUnitElementCount(u, Element_Light)
+        local integer dark = GetUnitElementCount(u, Element_Dark)
         local integer iBonus = 0
         local real rBonus = 0
 

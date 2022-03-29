@@ -60,7 +60,14 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             if GetUnitAbilityLevel(this.target, POISON_NON_STACKING_CUSTOM_BUFF_ID) > 0 then
                 set count = count + 1
             endif
+
+            if GetUnitAbilityLevel(this.source, NULL_VOID_ORB_BUFF_ID) > 0 then
+                set count = 0
+            endif
+            
             set this.buffCount = count
+
+            //call BJDebugMsg("count: " + I2S(count))
 
             set newRegen = ((count * HpReduction) * regen)
             //make sure regen doesnt go below 0
@@ -74,6 +81,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         private method periodic takes nothing returns nothing
             local real hp = GetUnitState(this.target, UNIT_STATE_LIFE)
             local real currentBonus = this.countBuffs()
+            //call BJDebugMsg("regen: " + R2SW(BlzGetUnitRealField(this.target, ConvertUnitRealField('uhpr')) + GetUnitBonusReal(this.target, BONUS_HEALTH_REGEN) + (GetHeroStr(this.target, true) * 0.075) + GetSpellValue(0, 5, GetUnitAbilityLevel(this.target, UNHOLY_AURA_ABILITY_ID)) + (UnitHasItemI(this.target, 'I04N') * 1500), 1, 1))
             if this.reduction != currentBonus then
                 //call BJDebugMsg("ap old: " + R2S(this.reduction) + " new: " + R2S(currentBonus))
                 //call BJDebugMsg("absolute poison: " + I2S(GetHandleId(this.target)) + " : " + GetUnitName(this.target))
@@ -132,7 +140,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
 
     function AbsolutePoisonLearned takes unit u returns nothing
         /*local integer poisonLevel = GetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID)
-        local real bonus = 1 + ((poisonLevel * 0.01) * GetClassUnitSpell(u, Element_Poison))
+        local real bonus = 1 + ((poisonLevel * 0.01) * GetUnitElementCount(u, Element_Poison))
         local integer abilId = 0
         local integer abilLevel = 0
 

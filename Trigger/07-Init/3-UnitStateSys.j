@@ -175,6 +175,13 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         if i2 > 0 then
             call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * (0.1 * i2)))
         endif
+
+        //Banner of Many
+        if UnitHasItemS(hero, BANNER_OF_MANY_ITEM_ID) then
+            call AddUnitBonusReal(u, BONUS_ATTACK_SPEED, 1.5)
+            call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * 1.5))
+            call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_ABILITY_ID)
+        endif
         
         set u = null
         set hero = null
@@ -197,11 +204,12 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         local unit u = GetTriggerUnit()
         local timer t = null
         local integer pid = GetPlayerId(GetOwningPlayer(u))
+        local boolean realUnit = IsUnitIllusion(u) == false
         //call UnitAddAbility(u,'A057')
         //call BlzUnitDisableAbility(u,'A057',false,true)
 
         //Illusion
-        if IsUnitIllusion(u) and IsUnitType(u, UNIT_TYPE_HERO) then
+        if (not realUnit) and IsUnitType(u, UNIT_TYPE_HERO) then
             call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid + 1], false), false)
             call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid + 1], false), false)
             call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid + 1], false), false)
@@ -222,10 +230,27 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
             call UnitAddAbility(u, ABSOLUTE_FIRE_ABILITY_ID)
             call BlzUnitDisableAbility(u,ABSOLUTE_FIRE_ABILITY_ID,false,true)
-            call SaveInteger(HT,GetHandleId(u),941561, 1)
-            call AddSpellPlayerInfo(ABSOLUTE_FIRE_ABILITY_ID,u,1)
-            call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID,u)
-            call AddHeroMaxAbsoluteAbility(u)
+
+            if realUnit then
+                call SaveInteger(HT,GetHandleId(u),941561, 1)
+                call AddSpellPlayerInfo(ABSOLUTE_FIRE_ABILITY_ID,u,1)
+                call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID,u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+        endif
+
+        //Naga Siren
+        if GetUnitTypeId(u) == NAGA_SIREN_UNIT_ID then
+            call UnitAddAbility(u, ABSOLUTE_WATER_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_WATER_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT,GetHandleId(u),941561, 1)
+                call AddSpellPlayerInfo(ABSOLUTE_WATER_ABILITY_ID,u,1)
+                call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID,u)
+                call AddHeroMaxAbsoluteAbility(u)
+                set NagaSirenBonus[GetHandleId(u)] = 1
+            endif
         endif
 
         //Satyr Trickster
@@ -234,18 +259,18 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         //Witch Doctor
-        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
+        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID and realUnit then
             call AddHeroMaxAbsoluteAbility(u)
             call SetBonus(u, 0, 1)
         endif
 
         //Blademaster
-        if GetUnitTypeId(u) == BLADE_MASTER_UNIT_ID then
+        if GetUnitTypeId(u) == BLADE_MASTER_UNIT_ID and realUnit then
             set BladestormAttackLimit[GetHandleId(u)] = 9
         endif
 
         //Thunder Witch
-        if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID then
+        if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID and realUnit then
             set ThunderBoltTargets[GetHandleId(u)] = 1
         endif
 

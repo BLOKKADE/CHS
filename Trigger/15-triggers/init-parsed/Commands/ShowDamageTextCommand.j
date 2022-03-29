@@ -4,26 +4,39 @@ scope ToggleDmgTxt initializer init
         boolean ShowDmgText = false
     endglobals
 
-    function DamageText takes nothing returns nothing
+    function DamageText takes boolean death returns nothing
         local string colour = "|ccffdde31"
         local string aType = ""
+        local string output = ""
+        local string dmgType = "|r dealt "
+
         if IsMagicDamage() then
             set colour = "|ccf31d4fd"
         endif
 
+        if death then
+            set dmgType = "|r killed " + GetPlayerNameColour(GetOwningPlayer(DamageTarget)) + "|r dealing: "
+        endif
+
         if DamageSourceAbility != 0 then
-            call BJDebugMsg(GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + "|r dealt " + colour + R2S(Damage.index.damage) + " dmg|r." )
+            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + dmgType + colour + R2S(Damage.index.damage) + "|r dmg." )
         else
             
             if Damage.index.isSpell then
-                set aType = aType + "spell "
+                set aType = aType + "spell"
             endif
     
             if Damage.index.isAttack then
-                set aType = aType + "attack "
+                set aType = aType + "attack"
             endif
 
-            call BJDebugMsg(GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + aType + "|rdealt " + colour + R2S(Damage.index.damage) + " dmg|r." )
+            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg." )
+        endif
+
+        if death then
+            call DisplayTimedTextToForce(GetPlayersAll(), 20, output)
+        else
+            call BJDebugMsg(output)
         endif
     endfunction
 

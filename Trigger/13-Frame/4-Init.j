@@ -149,7 +149,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 					set ToolTipS = "|cffd0ff00Element Counts|r"
 
 					loop
-						set i2 = GetClassUnitSpell(SpellU, i1)
+						set i2 = GetUnitElementCount(SpellU, i1)
 
 						// Don't include empty elements in the list
 						if i2 > 0 then
@@ -241,7 +241,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						//Hero absolutes
 						if NumButton > 110 and NumButton <= 120 then
 							set i1 = GetAbsoluteElement(i3)
-							set i2 = GetClassUnitSpell(SpellU, i1)
+							set i2 = GetUnitElementCount(SpellU, i1)
 							set ToolTipS = ToolTipS + "|n|n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
 						endif
 

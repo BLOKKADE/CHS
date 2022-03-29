@@ -45,7 +45,6 @@ library SearingArrows initializer init requires ToggleAbility
         if GetSearingArrowsStruct(hid) == 0 then
             set SearingArrowsTable[hid] = SearingArrowsStruct.create(caster)
         else
-
             if GetSearingArrowsStruct(hid).enabled then
                 call GetSearingArrowsStruct(hid).disable()
             else

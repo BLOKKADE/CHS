@@ -1,4 +1,4 @@
-library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows
+library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin
     globals 
         hashtable HT_SpellPlayer = InitHashtable()
         integer RectPid
@@ -54,7 +54,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
     function SpellLearnedFunc takes unit u, integer abilId returns nothing
 
         if GetUnitTypeId(u) == TAUREN_UNIT_ID then
-            call SpiritTaurenRuneBonus(u, abilId)
+            call UpdateSpiritTaurenRuneBonus(u)
         endif
     endfunction
 
@@ -166,6 +166,8 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call SaveReal(HT,GetHandleId(u),MEGA_SPEED_ABILITY_ID, 0.02 * I2R(GetUnitAbilityLevel(u,abilId))   )	
             //     call BlzSetUnitAttackCooldown(u, 0.92 - (0.02*I2R(GetUnitAbilityLevel(u,abilId)) ),0  )
         endif
+
+        call PandaSkin_CheckAbilitiesAndItems(u)
     endfunction
 
     function FunResetAbility takes integer abilId, unit u returns nothing
@@ -177,7 +179,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         call RemoveSkillStruct(u, abilId)
 
         if GetUnitTypeId(u) == TAUREN_UNIT_ID then
-            call SpiritTaurenRuneBonusReset(u, abilId)
+            call UpdateSpiritTaurenRuneBonus(u)
         endif
 
         /*if abilId == MEGA_SPEED_ABILITY_ID then
@@ -232,7 +234,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call SetHeroInt(u,GetHeroInt(u,false)- i1,false)
             call SaveInteger(HT,GetHandleId(u),54021,0)
         endif
-        
+
         //Ankh
         if AnkhLimitReached.boolean[hid] then
             if GetItemCharges(GetUnitItem(u, 'ankh')) != 2 then
@@ -240,12 +242,17 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             endif
         endif
 
-        //Golden Armor
+        //Obsidian Armor
         set i1 = GetValidEndOfRoundItems(u,'I07H') 
         if i1 > 0 then
-            call AddUnitBlock(u,15 * i1)
-            call AddUnitMagicDef(u,1 * i1)
+            call AddUnitBlock(u,20 * i1)
         endif
+
+         //Golden Armor
+         set i1 = GetValidEndOfRoundItems(u,'I0C1') 
+         if i1 > 0 then
+             call AddUnitMagicDef(u,1 * i1)
+         endif
 
         //Extra-dimensional Cooperation
         if GetUnitAbilityLevel(u, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID) > 0 then

@@ -46,7 +46,6 @@ library MagnetOscillation initializer init requires ToggleAbility
         if GetMagnetOscStruct(hid) == 0 then
             set MagnetOscTable[hid] = MagnetOscStruct.create(caster)
         else
-
             if GetMagnetOscStruct(hid).enabled then
                 call GetMagnetOscStruct(hid).disable()
             else
