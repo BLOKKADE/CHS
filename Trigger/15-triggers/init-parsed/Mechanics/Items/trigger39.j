@@ -7,7 +7,10 @@ library trigger39 initializer init requires RandomShit
         if(not(GetUnitTypeId(GetTriggerUnit())!='n00V'))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())!='h015'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())!=PRIEST_1_UNIT_ID))then
+            return false
+        endif
+        if(not(GetUnitTypeId(GetTriggerUnit())!=SELL_ITEM_DUMMY))then
             return false
         endif
         if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then
