@@ -156,10 +156,10 @@ library DummyRecycler /*
     //Every time a new dummy unit is retrieved, it will apply this resets
     //If it is redundant/you dont need it, remove it.
     //! textmacro DUMMY_UNIT_RESET
-        call SetUnitScale(bj_lastCreatedUnit, 1, 0, 0)
-        call SetUnitVertexColor(bj_lastCreatedUnit, 255, 255, 255, 255)
-        call SetUnitAnimationByIndex(bj_lastCreatedUnit, 90)
-        call ShowDummy(bj_lastCreatedUnit, true)
+        //call SetUnitScale(bj_lastCreatedUnit, 1, 0, 0)
+        //call SetUnitVertexColor(bj_lastCreatedUnit, 255, 255, 255, 255)
+        //call SetUnitAnimationByIndex(bj_lastCreatedUnit, 90)
+        //call ShowDummy(bj_lastCreatedUnit, true)
     //! endtextmacro
 // =============================================================== //
 // ==================== END CONFIGURATION ======================== //
