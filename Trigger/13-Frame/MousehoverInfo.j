@@ -37,8 +37,6 @@ library MouseHoverInfo requires TimerUtils, GetClass, RandomShit
             set heroInfo = heroInfo + "|cffe7544aStrength|r: " + I2S(GetHeroStr(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('ustp')))
             set heroInfo = heroInfo + "\n|cffd6e049Agility|r: " + I2S(GetHeroAgi(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uagp')))
             set heroInfo = heroInfo + "\n|cff4daed4Intelligence|r: " + I2S(GetHeroInt(u, false)) + ", +" + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uinp')))   
-            set heroInfo = heroInfo + "\n|cff51d44dHp regen|r: " + R2S(BlzGetUnitRealField( u,ConvertUnitRealField('uhpr')))
-            set heroInfo = heroInfo + ", |cff51d44dMana regen|r: " + R2S(BlzGetUnitRealField(u,ConvertUnitRealField('umpr')))
             set heroInfo = heroInfo + "\n|cffd99ddfSelect this Hero twice to pick it.|r"
 
             call DisplayTextToPlayer(p, 0,0, heroInfo)

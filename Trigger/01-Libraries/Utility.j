@@ -7,6 +7,14 @@ library Utility requires NewBonus
         integer Stat_Intelligence = 2
     endglobals
 
+    function SaveHeroStrength takes unit u, integer i returns nothing
+        call SaveInteger(HT, GetHandleId(u), 15, i)
+    endfunction
+
+    function GetHeroSavedStrength takes unit u returns integer
+        return LoadInteger(HT, GetHandleId(u), 15)
+    endfunction
+
     function CheckHpForReduction takes unit u, real hpLoss returns nothing
         if GetUnitState(u, UNIT_STATE_LIFE) < hpLoss + 1 then
             call SetUnitState(u, UNIT_STATE_LIFE, hpLoss + 1)

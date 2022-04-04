@@ -138,7 +138,11 @@ scope ShortPeriodCheck initializer init
 
                 //glory hp regen
                 if GloryRegenLevel[hid] > 0 then
-                    set r1 = BlzGetUnitRealField(u, ConvertUnitRealField('uhpr')) + GetSpellValue(10, 5, GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID)) + (UnitHasItemI(u, 'I04N') * 1500)
+                    set r1 = (GetHeroSavedStrength(u) * 0.075) + GetSpellValue(10, 5, GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID)) + (UnitHasItemI(u, 'I04N') * 1500)
+                    if GetUnitTypeId(u) == TROLL_HEADHUNTER_UNIT_ID then
+                        set r1 = r1 + LoadInteger(DataUnitHT, hid, 542)
+                    endif
+                    
                     set r1 = r1 * (GloryRegenLevel[hid] * 0.15)
                     set r2 = LoadReal(DataUnitHT, hid, 1000)
                     if r1 != r2 then
@@ -169,8 +173,9 @@ scope ShortPeriodCheck initializer init
                     set i1 = R2I(GetHeroStr(u, true) * (0.4 + (0.015 * GetHeroLevel(u))))
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
+                        call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - i2 + i1)
                         //call AddUnitBonusR(u, BONUS_HEALTH_REGEN, 0 - i2 + i1)
-                        call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
+                        //call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
                     

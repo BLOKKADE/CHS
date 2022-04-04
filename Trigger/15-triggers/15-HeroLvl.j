@@ -268,7 +268,7 @@ library HeroLevel initializer init requires HeroLvlTable
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l  
                     
-                call BlzSetUnitRealField(UnitHero,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(UnitHero,ConvertUnitRealField('uhpr')) + 6)
+                call AddUnitBonusReal(UnitHero, BONUS_HEALTH_REGEN, 6)
                 call BlzSetUnitArmor(UnitHero, BlzGetUnitArmor(UnitHero) + 3 )
                 call UpdateBonus(UnitHero, 0, 3)   
                 call UpdateBonus(UnitHero, 1, 6)

@@ -87,7 +87,13 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBlock(u ,   500 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
-			
+
+			//Grass of Immortality
+		elseif itemId == 'I04N' then
+			set i = UnitHasItemI(u ,itemId )
+			set prevCount = LoadInteger(HTi, hid, itemId) 
+			call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (1500 * I2R(i - prevCount) ))
+			call SaveInteger(HTi, hid, itemId,i)
 
 			//Sword of Bloodthirst
 		elseif itemId == SWORD_OF_BLOODTHRIST_ITEM_ID then

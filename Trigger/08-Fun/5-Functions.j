@@ -112,7 +112,11 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if abilId == LEARNABILITY_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            set LearnabilityBonus.real[hid] = 0.05 + (0.005 * I2R(i1 - i2))
+            if i1 != 0 then
+                set LearnabilityBonus.real[hid] = 0.05 + (0.005 * I2R(i1 - i2))
+            else
+                set LearnabilityBonus.real[hid] = 0
+            endif
             call SaveInteger(HT,hid, abilId,i1)
         endif
 
@@ -120,6 +124,13 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT, hid, abilId)
             call AddUnitBonus(u, BONUS_ARMOR, 4 * (i1 - i2))
+            call SaveInteger(HT, hid, abilId, i1)
+        endif
+
+        if abilId == UNHOLY_AURA_ABILITY_ID then
+            set i1 = GetSpellValue(10, 5, GetUnitAbilityLevel(u, abilId))
+            set i2 = LoadInteger(HT, hid, abilId)
+            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, i1 - i2)
             call SaveInteger(HT, hid, abilId, i1)
         endif
     endfunction

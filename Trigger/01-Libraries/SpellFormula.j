@@ -23,6 +23,8 @@ library SpellFormula initializer init requires AbilityData
     //TODO optimise this
     function CalculateValues takes integer valueFactor, integer level returns nothing
         local integer i = 1
+        call SetAbilityKeyLevelValue(valueFactor, 0, 0)
+
         if level < 30 then
             loop
                 call SetAbilityKeyLevelValue(valueFactor, i, CalculateValue(GetAbilityKeyLevelValue(valueFactor, i - 1), valueFactor, i))

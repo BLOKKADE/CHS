@@ -449,6 +449,14 @@ scope LongPeriodCheck initializer init
                     call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) + ((0.0001 * i1) * GetUnitState(u, UNIT_STATE_MAX_MANA)))
                 endif
 
+                //strength hp regen
+                set i1 = GetHeroStr(u, true)
+                set i2 = GetHeroSavedStrength(u)
+                if i1 != i2 then
+                    call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (i2 * 0.075) - (i1 * 0.075))
+                    call SaveHeroStrength(u, i1)
+                endif
+
                 //Absolute Wild
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WILD_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID)

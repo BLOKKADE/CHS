@@ -13,7 +13,7 @@ library UnitHelpers initializer init requires Utility, RandomShit
     endfunction
 
     function GetUnitTotalHpRegen takes unit u returns real
-        return (BlzGetUnitRealField(u, ConvertUnitRealField('uhpr')) + GetUnitBonusReal(u, BONUS_HEALTH_REGEN) + (GetHeroStr(u, true) * 0.075) + GetSpellValue(0, 5, GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID)) + (UnitHasItemI(u, 'I04N') * 1500))
+        return GetUnitBonusReal(u, BONUS_HEALTH_REGEN)
     endfunction
 
     function IsUnitMagicImmune takes unit u returns boolean
