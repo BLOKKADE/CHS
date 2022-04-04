@@ -5,10 +5,7 @@ library trigger111 initializer init requires RandomShit, Functions
     endglobals
 
     function Trig_Learn_Ability_Conditions takes nothing returns boolean
-        if(not('I00P'!=GetItemTypeId(GetManipulatedItem())))then
-            return false
-        endif
-        return true
+        return GetAbilityFromItem(GetItemTypeId(GetManipulatedItem())) != 0
     endfunction
 
 
