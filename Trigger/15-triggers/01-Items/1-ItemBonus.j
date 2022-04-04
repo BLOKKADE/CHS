@@ -70,8 +70,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitMagicDef(u ,   25 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi,hid, itemId,i)	
-			
-		
+
 			//Magic Necklace
 		elseif itemId == 'I05G' then
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
@@ -79,8 +78,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call AddUnitMagicDef(u ,   75 * I2R(i - prevCount)  )	
 			set MnXpBonus.real[hid] = MnXpBonus.real[hid] + (0.2 * I2R(i - prevCount))
 			call SaveInteger(HTi, hid, itemId,i)	
-			
-		
+
 			//Legendary Shield
 		elseif itemId == 'I059' then
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
@@ -108,7 +106,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set i = UnitHasItemI(u, itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId)
 			call AddUnitBlock(u, 800 * (i - prevCount))
-			call SaveInteger(HTi, hid, 48, i)
+			call SaveInteger(HTi, hid, itemId, i)
 		
 		
 			//Mask of Protection
@@ -656,20 +654,24 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 	function Trig_ItemBonus_Actions takes nothing returns nothing
 		local timer Time1 = null
+		local item it = GetManipulatedItem()
+		local unit u = GetTriggerUnit()
 
-		if not IsHeroUnitId(GetUnitTypeId(GetTriggerUnit())) then
+		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) and not IsHeroUnitId(GetUnitTypeId(u))) then
 			return
 		endif
 
 
 		set Time1 = NewTimer()
 
-		call SaveUnitHandle(HTi,GetHandleId(Time1),1, GetTriggerUnit() )
-		call SaveItemHandle(HTi, GetHandleId(Time1), 2, GetManipulatedItem())
-		call SaveInteger(HTi, GetHandleId(Time1), 3, GetItemTypeId(GetManipulatedItem()))
+		call SaveUnitHandle(HTi,GetHandleId(Time1),1, u)
+		call SaveItemHandle(HTi, GetHandleId(Time1), 2, it)
+		call SaveInteger(HTi, GetHandleId(Time1), 3, GetItemTypeId(it))
 		
 		call TimerStart(Time1,0,false,function DestrTimer )
 
+		set it = null
+		set u = null
 		set Time1 = null
 	endfunction
 	//call SaveInteger(HTi,GetHandleId(GetTriggerUnit()),1,1)	
