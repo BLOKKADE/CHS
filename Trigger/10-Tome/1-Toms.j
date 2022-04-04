@@ -104,7 +104,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         local boolean maxLevel = GetHeroLevel(u) == 600
         local boolean expTome = false
 
-        if not IsHeroUnitId(GetUnitTypeId(u)) then
+        if ((GetItemType(It) == ITEM_TYPE_POWERUP or GetItemType(It) == ITEM_TYPE_CAMPAIGN) and not IsHeroUnitId(GetUnitTypeId(u))) then
             set u = null
             set p = null
             set It = null
@@ -148,10 +148,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Glory armor
             elseif II  == GLORY_ARMOR_TOME_ITEM_ID then
-                if Glory[pid] >= 1500 then
+                if BuyGloryItem(pid, II) then
                     call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 20)
                     
-                    set Glory[pid]= Glory[pid]- 1500
+                    
                     set gloryBonus = gloryBonus + 20
                 else
                     set ctrl = false
@@ -159,10 +159,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Glory damage
             elseif II  == GLORY_ATTACK_DAMAGE_TOME_ITEM_ID then
-                if Glory[pid] >= 1500 then
+                if BuyGloryItem(pid, II) then
                     call BlzSetUnitBaseDamage(u,BlzGetUnitBaseDamage(u,0)+ 100,0)
                     
-                    set Glory[pid]= Glory[pid]- 1500
+                    
                     set gloryBonus = gloryBonus + 100
                 else
                     set ctrl = false
@@ -170,11 +170,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Glory hp regen
             elseif II  == GLORY_HIT_POINT_REGENERATION_TOME_ITEM_ID then
-                if Glory[pid] >= 1500 then
+                if BuyGloryItem(pid, II) then
                     set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
-                    call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) + 50)
+                    call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 50)
                     
-                    set Glory[pid]= Glory[pid]- 1500
+                    
                     set gloryBonus = gloryBonus + 50 
                 else
                     set ctrl = false
@@ -182,11 +182,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory magic resistance
             elseif II  == GLORY_MAGIC_PROTECTION_TOME_ITEM_ID then
-                if Glory[pid] >= 2000 then
+                if BuyGloryItem(pid, II) then
 
                     call AddUnitMagicDef(u,3)
                     
-                    set Glory[pid]= Glory[pid]- 2000
+                    
                     set gloryBonus = gloryBonus + 3
                 else
                     set ctrl = false
@@ -194,10 +194,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory magic damage
             elseif II  == GLORY_MAGIC_POWER_TOME_ITEM_ID then
-                if Glory[pid] >= 2000 then
+                if BuyGloryItem(pid, II) then
                     call AddUnitMagicDmg (u,3)
                     
-                    set Glory[pid]= Glory[pid]- 2000
+                    
                     set gloryBonus = gloryBonus + 3
                 else
                     set ctrl = false
@@ -205,10 +205,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory mana regen
             elseif II  == GLORY_MANA_REGENERATION_TOME_ITEM_ID then
-                if Glory[pid] >= 1500 then
+                if BuyGloryItem(pid, II) then
                     call BlzSetUnitRealField(u,ConvertUnitRealField('umpr'),BlzGetUnitRealField(u,ConvertUnitRealField('umpr')) + 100)
                     
-                    set Glory[pid]= Glory[pid]- 1500
+                    
                     set gloryBonus = gloryBonus + 100
                 else
                     set ctrl = false
@@ -216,11 +216,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory pvp bonus
             elseif II  == GLORY_PVP_BONUS_TOME_ITEM_ID then
-                if Glory[pid] >= 2000 then
+                if BuyGloryItem(pid, II) then
                     // set PvpBonus[pid] = PvpBonus[pid]+1.5
                     call AddUnitPvpBonus(u,1.5)
                     
-                    set Glory[pid]= Glory[pid]- 2000
+                    
                     set gloryBonus = gloryBonus + 1.5
                 else
                     set ctrl = false
@@ -228,10 +228,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory hit points
             elseif II  == GLORY_HIT_POINTS_TOME_ITEM_ID then
-                if Glory[pid] >= 100 then
+                if BuyGloryItem(pid, II) then
                     call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 150)
                     
-                    set Glory[pid]= Glory[pid]- 100
+                    
                     set gloryBonus = gloryBonus + 150
                 else
                     set ctrl = false
@@ -239,10 +239,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory mana
             elseif II  == GLORY_MANA_TOME_ITEM_ID then
-                if Glory[pid] >= 100 then
+                if BuyGloryItem(pid, II) then
                     call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + 100)
                     
-                    set Glory[pid]= Glory[pid] - 100
+                    
                     set gloryBonus = gloryBonus + 100
                 else
                     set ctrl = false
@@ -250,10 +250,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory strength
             elseif II  == GLORY_STRENGTH_TOME_ITEM_ID then
-                if Glory[pid] >= 1500 then
+                if BuyGloryItem(pid, II) then
                     call SetHeroStr(u, GetHeroStr(u, false) + 30, true)
                     
-                    set Glory[pid]= Glory[pid]- 1500
+                    
                     set gloryBonus = gloryBonus + 30
                 else
                     set ctrl = false
@@ -261,10 +261,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory agility
             elseif II  == GLORY_AGILITY_TOME_ITEM_ID then
-                if Glory[pid] >= 1200 then
+                if BuyGloryItem(pid, II) then
                     call SetHeroAgi(u, GetHeroAgi(u, false) + 30, true)
                     
-                    set Glory[pid]= Glory[pid]- 1200
+                    
                     set gloryBonus = gloryBonus + 30
                 else
                     set ctrl = false
@@ -272,10 +272,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory intelligence
             elseif II  == GLORY_INTELLIGENCE_TOME_ITEM_ID then
-                if Glory[pid] >= 1000 then
+                if BuyGloryItem(pid, II) then
                     call SetHeroInt(u, GetHeroInt(u, false) + 30, true)
                     
-                    set Glory[pid]= Glory[pid]- 1000
                     set gloryBonus = gloryBonus + 30
                 else
                     set ctrl = false
@@ -283,10 +282,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory evasion
             elseif II  == GLORY_EVASION_TOME_ITEM_ID then
-                if Glory[pid] >= 1500 then
+                if BuyGloryItem(pid, II) then
                     call AddUnitEvasion(u, 5)
                     
-                    set Glory[pid]= Glory[pid]- 1500
                     set gloryBonus = gloryBonus + 5
                 else
                     set ctrl = false
@@ -294,10 +292,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory block
             elseif II  == GLORY_BLOCK_TOME_ITEM_ID then
-                if Glory[pid] >= 2000 then
+                if BuyGloryItem(pid, II) then
                     call AddUnitBlock(u, 100)
                     
-                    set Glory[pid]= Glory[pid]- 2000
                     set gloryBonus = gloryBonus + 100
                 else
                     set ctrl = false
@@ -305,10 +302,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory movespeed
             elseif II  == GLORY_MOVESPEED_TOME_ITEM_ID then
-                if Glory[pid] >= 10000 and GetUnitMoveSpeed(u) < 522 then
+                if BuyGloryItem(pid, II) and GetUnitMoveSpeed(u) < 522 then
                     call BlzSetUnitRealField(u, UNIT_RF_SPEED, 522)
                     
-                    set Glory[pid]= Glory[pid]- 10000
+                    
                     set gloryBonus = gloryBonus + 522
                 endif   
                 set ctrl = false
@@ -479,104 +476,104 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         
         //Ancient Staff
         if II  == ANCIENT_STAFF_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(ANCIENT_STAFF_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),15000)
             endif
 
             //Ancient Dagger
         elseif II  == ANCIENT_DAGGER_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(ANCIENT_DAGGER_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),15000)
             endif
 
             //Ancient Axe
         elseif II  == ANCIENT_AXE_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(ANCIENT_AXE_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),15000)
             endif	
 
             //Vigour Token
         elseif II  == VIGOUR_TOKEN_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(VIGOUR_TOKEN_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),15000)
             endif
 
             //Flimsy Token
         elseif II  == FLIMSY_TOKEN_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(FLIMSY_TOKEN_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),15000)
             endif
 
             //Spellbane Token
         elseif II  == SPELLBANE_TOKEN_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(SPELL_BANE_TOKEN_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),15000)
             endif	
 
             //Mask of Elusion
         elseif II  == MASK_OF_ELUSION_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(MASK_OF_ELUSION_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),20000)
             endif
 
             //Mask of Vitality
         elseif II  == MASK_OF_VITALITY_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(MASK_OF_VITALITY_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),20000)
             endif
             //Mask of Protection
         elseif II  == MASK_OF_PROTECTION_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(MASK_OF_PROTECTION_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),20000)
             endif	
             //Sword of Blodthirst
         elseif II  == SWORD_OF_BLOODTHRIST_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(SWORD_OF_BLOODTHRIST_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),10000)
             endif
             //Wisdom Chestplate
         elseif II  == WISDOM_CHESTPLATE_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(WISDOM_CHESTPLATE_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),15000)
             endif
             //Lucky Pants
         elseif II  == LUCKY_PANTS_TOME_ITEM_ID then   
-            if Glory[pid] >= 10000 and UnitHasFullItems(u) == false then
+            if BuyGloryItem(pid, II) and UnitHasFullItems(u) == false then
                 call UnitAddItem(u,CreateItem(LUCKY_PANTS_ITEM_ID,0,0))
-                set Glory[pid]= Glory[pid]- 10000 
+                
             else
                 call PlayerAddGold( GetOwningPlayer(u),20000)
                     
