@@ -197,7 +197,7 @@ scope ShortPeriodCheck initializer init
 
                     //Yeti
                 elseif GetUnitTypeId(u) == YETI_UNIT_ID then
-                    if BlzGetUnitArmor(u) <= 50 + (2 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) then
+                    if BlzGetUnitArmor(u) <= (50 + (2 * GetHeroLevel(u))) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) then
                         if GetUnitAbilityLevel(u, 'A092') == 0 then
                             call UnitAddAbility(u, 'A092')
                         endif
