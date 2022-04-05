@@ -1,4 +1,4 @@
-library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking
+library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking, SellItems
 	globals
 		framehandle gameUI
 		framehandle SkillFrame
@@ -40,6 +40,10 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 		return "Convert |cfffcd277Gold|r to |cff96fc77Lumber|r (|cff77f3fcCtrl+W|r)"
 	endfunction
 
+	function SellAllItemsTooltip takes nothing returns string
+		return "Sell all your items for 100% gold/glory cost (|cff77f3fcCtrl+E|r)"
+	endfunction
+
 	function GetTooltipSize takes string s returns real
 		return (CountNewLines(s) * LINE_SIZE) + DEFAULT_SIZE
 	endfunction
@@ -72,15 +76,22 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 				call BlzFrameSetEnable(BlzGetTriggerFrame() , true)
 			endif
 
+			//Sell all items
+			if NumButton == 3 then
+				set SpellU = PlayerHeroes[PlID + 1]
+
+				call SellItemsFromHero(SpellU)
+				call ResourseRefresh(GetTriggerPlayer()) 
+			
 			//Convert to gold
-			if NumButton == 36 then
+			elseif NumButton == 36 then
 				set i1 = GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER)
 
 				call SetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER,0)
 				call SetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)  + i1 * 30)
 				call ResourseRefresh(GetTriggerPlayer()) 
 			
-				//Convert to lumber
+			//Convert to lumber
 			elseif NumButton == 37 then
 				set i1 = GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)/ 30
 
@@ -128,6 +139,12 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						set temp = RoundCreepInfo[PlID] + "|n|n|cfffce177Abilities|r: " + RoundAbilities
 						call BlzFrameSetText(TooltipTextFrame, temp)
 						call BlzFrameSetSize(Tooltip, 0.29, 0.12 + GetTooltipSize(RoundAbilities))
+						call BlzFrameSetVisible(Tooltip, true)
+					endif
+				elseif NumButton == 3 then
+					if GetLocalPlayer() == GetTriggerPlayer() then
+						call BlzFrameSetText(TooltipTitleFrame, SellAllItemsTooltip())
+						call BlzFrameSetSize(Tooltip, 0.29, 0.02)
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
 					//Hero passive
@@ -315,6 +332,8 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 			call TriggerAddAction(SPEL_DFF, function SkillSysStart)
 			call CreateIconWorld(2 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - 0.39 , 0.036)
 			call BlzFrameSetTexture(SpellFR[2] , "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp" , 0, true)
+			call CreateIconWorld(3 , "ReplaceableTextures\\CommandButtons\\BTNSellAllItems.blp" , 0.43 + 0.075 , - 0.024 , 0.025)
+			call BlzFrameSetVisible(SpellUP[3], true)
 			call CreateIconWorld(36 , "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp" , 0.43 + 0.025 , - 0.024 , 0.025)
 			call BlzFrameSetVisible(SpellUP[36], true)
 			call CreateIconWorld(37 , "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp" , 0.43 + 0.05 , - 0.024 , 0.025)

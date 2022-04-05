@@ -22,7 +22,7 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         local PlayerStats ps = PlayerStats.forPlayer(p)
         set SaveCount = -1 // This must get set to -1 every time we generate a new code
 
-        if (showMessage and (not IsSavingEnabled())) then
+        if (not IsSavingEnabled()) then
             call DisplayTimedTextToPlayer(p,0,0,30,"Saving is disabled since there are computer players")
             return
         endif
