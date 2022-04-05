@@ -22,6 +22,13 @@ library SellItems requires DummyRecycler, GloryItemCosts
             set itemToSell = UnitItemInSlot(playerHero, i)
 
             if (itemToSell != null) then
+                if (not IsItemPawnable(itemToSell)) then
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(playerHero),0,0,10,"You cannot sell items during PVP")
+
+                    set itemToSell = null
+                    exitwhen true
+                endif
+
                 // Create a dummy with timed life, give it a clone of the item, and make the dummy sell it
                 set u = CreateUnit(GetOwningPlayer(playerHero), SELL_ITEM_DUMMY, GetUnitX(playerHero), GetUnitY(playerHero), 0)
                 call UnitApplyTimedLife(u, 'BTLF' , 20)
