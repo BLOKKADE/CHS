@@ -715,10 +715,15 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
     function AddCooldowns takes unit u,real cd returns nothing
         local integer i1 = 1
         local integer id = 0 
+        local integer dummyAbilId = 0
         
         loop
             exitwhen i1 > 10
             set id = GetInfoHeroSpell(u ,i1)
+            set dummyAbilId = GetAssociatedSpell(u, id)
+            if dummyAbilId != 0 then
+                set id = dummyAbilId
+            endif
             call BlzStartUnitAbilityCooldown(u,id, cd + BlzGetUnitAbilityCooldownRemaining(u,id))
 
             set i1 = i1 + 1

@@ -2,18 +2,26 @@ library AbsoluteCold requires RandomShit, DivineBubble
     globals
         unit GLOB_ABSOLUTE_COLD_U = null
         real GLOB_ABSOLUTE_COLD_DMG = 0
+        real GLOB_ABSOLUTE_COLD_DUR = 0
     endglobals
 
     function AbsoluteIceFunc takes nothing returns boolean
+        local DummyOrder dummy
         if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U,GetOwningPlayer(GetFilterUnit())) and IsUnitSpellTargetCheck(GetFilterUnit(), GetOwningPlayer(GLOB_ABSOLUTE_COLD_U)) and IsUnitDivineBubbled(GetFilterUnit()) == false then
-            call UsOrderU2(GLOB_ABSOLUTE_COLD_U,GetFilterUnit(),GetUnitX(GLOB_ABSOLUTE_COLD_U),GetUnitY(GLOB_ABSOLUTE_COLD_U),'A07W',"entanglingroots",GLOB_ABSOLUTE_COLD_DMG,1.0001,ABILITY_RLF_DAMAGE_PER_SECOND_EER1,ABILITY_RLF_DURATION_NORMAL)        
+            set dummy = DummyOrder.create(GLOB_ABSOLUTE_COLD_U, GetUnitX(GLOB_ABSOLUTE_COLD_U),GetUnitY(GLOB_ABSOLUTE_COLD_U), GetUnitFacing(GLOB_ABSOLUTE_COLD_U), 3)
+            call dummy.addActiveAbility('A07W', 1, 852171)
+            call dummy.setAbilityRealField('A07W', ABILITY_RLF_DAMAGE_PER_SECOND_EER1, GLOB_ABSOLUTE_COLD_DMG)
+            call dummy.setAbilityRealField('A07W', ABILITY_RLF_DURATION_NORMAL, GLOB_ABSOLUTE_COLD_DUR)
+            call dummy.setAbilityRealField('A07W', ABILITY_RLF_DURATION_HERO, GLOB_ABSOLUTE_COLD_DUR)
+            call dummy.target(GetFilterUnit()).activate()   
         endif
         return false
     endfunction
 
-    function AbsoluteCold takes unit u,real dmg returns boolean
+    function AbsoluteCold takes unit u, integer elementCount, integer level returns boolean
         set GLOB_ABSOLUTE_COLD_U = u 
-        set GLOB_ABSOLUTE_COLD_DMG = dmg
+        set GLOB_ABSOLUTE_COLD_DMG = elementCount * (30 * level)
+        set GLOB_ABSOLUTE_COLD_DUR = elementCount * 0.15
         call GroupClear(ENUM_GROUP)
         call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 500, AbsoluteIceFuncBool)
         return false

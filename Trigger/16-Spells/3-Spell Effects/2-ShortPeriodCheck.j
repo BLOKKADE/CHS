@@ -77,8 +77,8 @@ scope ShortPeriodCheck initializer init
                     set i1 = GetUnitAbilityLevel(u,ABSOLUTE_COLD_ABILITY_ID)
                     if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0  then
                         if BlzGetUnitAbilityCooldownRemaining(u,ABSOLUTE_COLD_ABILITY_ID) == 0 and CheckProc(u, 500) then
-                            call AbilStartCD(u, ABSOLUTE_COLD_ABILITY_ID, 20.5 - (0.5 * i1))
-                            call AbsoluteCold(u,GetUnitElementCount(u,Element_Cold)* 20 * i1 )
+                            call AbilStartCD(u, ABSOLUTE_COLD_ABILITY_ID, 10)
+                            call AbsoluteCold(u,GetUnitElementCount(u,Element_Cold), i1)
                         endif
                     endif
                     
