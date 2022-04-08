@@ -61,9 +61,17 @@ scope ModifyDamageBeforeArmor initializer init
             endif		
         endif
 
-
+        //Runic Bracer
+        if UnitHasItemS(DamageTarget, 'I04C') then
+            if Damage.index.damageType == DAMAGE_TYPE_MAGIC and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0CP') == 0 then
+                call RemoveDebuff(DamageTarget, 1)
+                call AbilStartCD(DamageTarget, 'A0CP', 10)
+                set Damage.index.damage = 0
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                return
+            endif
         //Dark Shield
-        if UnitHasItemS( DamageTarget,'I060' )  then
+        elseif UnitHasItemS( DamageTarget,'I060' )  then
             if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
                 if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08R') <= 0 then
                     call AbilStartCD(DamageTarget, 'A08R', 1)
@@ -80,7 +88,7 @@ scope ModifyDamageBeforeArmor initializer init
                 endif 
             endif      
             if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08S') <= 0 then
-                call AbilStartCD(DamageTarget, 'A08S', 6)
+                call AbilStartCD(DamageTarget, 'A08S', 10)
                 call RemoveDebuff(DamageTarget, 1)  
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
                 return
@@ -338,6 +346,7 @@ scope ModifyDamageBeforeArmor initializer init
             call BJDebugMsg("dg passive")
             call PeriodicDamage.create(DamageSource, DamageTarget, GetHeroLevel(DamageSource) * 25, true, 1., 8, 0, true, 'B02L', 'A0CO')
         endif
+
         //Ursa Warrior
         if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)
