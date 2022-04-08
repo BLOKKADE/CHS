@@ -9,11 +9,17 @@ library MagicRune requires RandomShit
         local real power = GLOB_RUNE_POWER 
         local integer i1 = 0
         local integer SpellId = 0
+        local integer dummyAbilId = 0
         
         loop
             exitwhen i1 > 10
             set SpellId = GetInfoHeroSpell(u ,i1)
+            set dummyAbilId = GetAssociatedSpell(u, SpellId)
             if IsSpellResettable(SpellId) then
+                if dummyAbilId != 0 then
+                    set SpellId = dummyAbilId
+                endif
+
                 if BlzGetUnitAbilityCooldownRemaining(u,SpellId) < RuneOfMagic_base * power then
                     call BlzEndUnitAbilityCooldown(u,SpellId)
                 elseif BlzGetUnitAbilityCooldownRemaining(u,SpellId)> 0 then

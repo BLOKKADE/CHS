@@ -107,6 +107,6 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         call AddRune('I0AW',function LightRune, "Light Rune", Light_Rune_Id)
         call AddRune('I0AX',function PoisonRune, "Poison Rune", Poison_Rune_Id)
         call AddRune('I0AU',function WildRune, "Wild Rune", Wild_Rune_Id)
-        call AddRune('I0AX',function MightRune, "Might Rune", Might_Rune_Id)
+        call AddRune('I0C3',function MightRune, "Might Rune", Might_Rune_Id)
     endfunction
 endlibrary

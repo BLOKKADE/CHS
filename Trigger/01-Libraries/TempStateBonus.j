@@ -36,6 +36,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus
     struct TempBonus extends array
         unit source
         real bonus
+        player p
         boolean enabled
         integer state
         integer sourceId
@@ -46,7 +47,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus
         integer abilId
 
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
+            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, this.p) or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -89,6 +90,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus
             set this.startTick = T32_Tick
             set this.sourceId = GetHandleId(this.source)
             set this.abilId = abilSource
+            set this.p = GetOwningPlayer(source)
             call this.setHashTable()
 
             call this.updateState()
@@ -103,6 +105,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus
             call this.updateState()
             set TempBonusTable[this.sourceId][this.abilId][this.state] = 0
             set this.source = null
+            set this.p = null
             set this.enabled = false
             set this.bonus = 0
             call this.recycle()
