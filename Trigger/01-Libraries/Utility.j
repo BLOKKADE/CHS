@@ -15,6 +15,16 @@ library Utility requires NewBonus
         return LoadInteger(HT, GetHandleId(u), 15)
     endfunction
 
+    /*function GetHeroSpellByIndex takes unit u, integer index returns integer
+        local integer abilId = GetInfoHeroSpell(u, index)
+        local integer dummyAbilId = GetAssociatedSpell(u, abilId)
+        if dummyAbilId != 0 then
+            return dummyAbilId
+        else
+            return abilId
+        endif
+    endfunction*/
+
     function CheckHpForReduction takes unit u, real hpLoss returns nothing
         if GetUnitState(u, UNIT_STATE_LIFE) < hpLoss + 1 then
             call SetUnitState(u, UNIT_STATE_LIFE, hpLoss + 1)

@@ -111,6 +111,7 @@ scope LongPeriodCheck initializer init
             endif
         endif
 
+        //updates the ability icons displayed in top left
         if NumPlayerLast[i] == 11 then
             loop
                 exitwhen i1 > 21
@@ -149,6 +150,7 @@ scope LongPeriodCheck initializer init
             endloop
         endif
 
+        //updates the icons in top left if selected unit is a creep
         if ShowCreepAbilButton[i] then
             if GetLocalPlayer() == Pl then
                 call BlzFrameSetVisible(SpellUP[2], true)
