@@ -1,4 +1,4 @@
-library ConversionHotkeys initializer init requires Table
+library ConversionHotkeys initializer init requires Table, SellItems
     //detects hotkey presses
     
     globals
@@ -89,16 +89,26 @@ library ConversionHotkeys initializer init requires Table
         call SetPlayerState(Player(pid), PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER) + gold)
         call ResourseRefresh(Player(pid)) 
     endfunction
+
+    private function SellAllItems takes nothing returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+
+        call SellItemsFromHero(PlayerHeroes[pid + 1])
+        call ResourseRefresh(Player(pid)) 
+    endfunction
+
     private function HotKeyInit takes nothing returns nothing
         local trigger trg1 = CreateTrigger()
         local trigger trg2 = CreateTrigger()
         local trigger trg3 = CreateTrigger()
         local trigger trg4 = CreateTrigger()
+        local trigger trg5 = CreateTrigger()
         local integer i = 0
         set HoldShiftStructTable = Table.create()
         loop
             call BlzTriggerRegisterPlayerKeyEvent(trg3, Player(i), OSKEY_Q, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(trg4, Player(i), OSKEY_W, 2, true)
+            call BlzTriggerRegisterPlayerKeyEvent(trg5, Player(i), OSKEY_E, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(trg1, Player(i), OSKEY_LSHIFT, 1, true)
             call BlzTriggerRegisterPlayerKeyEvent(trg2, Player(i), OSKEY_LSHIFT, 0, false)
             call BlzTriggerRegisterPlayerKeyEvent(trg1, Player(i), OSKEY_RSHIFT, 1, true)
@@ -108,8 +118,10 @@ library ConversionHotkeys initializer init requires Table
         endloop
         call TriggerAddAction(trg3, function ConvertLumber)
         call TriggerAddAction(trg4, function ConvertGold)
+        call TriggerAddAction(trg5, function SellAllItems)
         set trg3 = null
         set trg4 = null
+        set trg5 = null
         call TriggerAddAction(trg1, function CtrlDown)
         call TriggerAddAction(trg2, function CtrlRelease)
         set trg1 = null
