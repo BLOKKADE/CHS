@@ -144,9 +144,9 @@ library trigger134 initializer init requires RandomShit
         endif
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
-        call StartTimerBJ(GetLastCreatedTimerBJ(),false,15.00)
-        call DisplayTimedTextToForce(GetPlayersAll(), 15, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
-        call TriggerSleepAction(15.00)
+        call StartTimerBJ(GetLastCreatedTimerBJ(),false,25.00)
+        call DisplayTimedTextToForce(GetPlayersAll(), 25, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
+        call TriggerSleepAction(25.00)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call ConditionalTriggerExecute(udg_trigger136)
     endfunction

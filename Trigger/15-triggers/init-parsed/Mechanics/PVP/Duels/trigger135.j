@@ -274,8 +274,8 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         else
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next PvP Battle ...")
-            call StartTimerBJ(GetLastCreatedTimerBJ(),false,10.00)
-            call TriggerSleepAction(10.00)
+            call StartTimerBJ(GetLastCreatedTimerBJ(),false,3.00)
+            call TriggerSleepAction(3.00)
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
             call ConditionalTriggerExecute(udg_trigger136)
         endif
