@@ -8,23 +8,17 @@ library DousingHex initializer init requires DummyOrder, RandomShit
     function CastDousingHex takes unit caster, unit target, integer level returns nothing
         local integer i = 1
         local integer abilId = 0 
+        local integer dummyAbilId = 0
+        local real cd = 0
+        local integer targetHid = GetHandleId(target)
+        local real cdBonus = 0
 
         local DummyOrder dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 6)
         call dummy.addActiveAbility('A09K', 1, 852189)
         call dummy.target(target)
         call dummy.activate()
-        set DousingHexReduction.real[GetHandleId(target)] = 0.1250 + (0.0125 * level)
-        set DousingHexCooldown.real[GetHandleId(target)] = 1.17 + (0.03 * level)
-        
-        loop
-            exitwhen i > 10
-            set abilId = GetInfoHeroSpell(target ,i)
-            if BlzGetUnitAbilityCooldownRemaining(target, abilId) > 0 then
-                call BlzStartUnitAbilityCooldown(target,abilId, BlzGetUnitAbilityCooldownRemaining(target,abilId) * DousingHexCooldown.real[GetHandleId(target)])
-            endif
-
-            set i = i + 1
-        endloop
+        set DousingHexReduction.real[targetHid] = 0.13 + (0.02 * level)
+        set DousingHexCooldown.real[targetHid] = 1.17 + (0.03 * level)
         //call BJDebugMsg("dh: " + I2S(DousingHexChance.integer[GetHandleId(target)]))
     endfunction
 
