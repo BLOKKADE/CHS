@@ -327,6 +327,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //23 - Life Drain 
         call SaveAbilData(LIFE_DRAIN_ABILITY_ID, LIFE_DRAIN_ITEM_ID, false, 0, 0, true, Order_Target, "drain")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastAbilityNotReplaceable()
 
         //25 - Spiked Carapace 
         call SaveAbilData(SPIKED_CARAPACE_ABILITY_ID, SPIKED_CARAPACE_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -377,6 +378,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(MIRROR_IMAGE_ABILITY_ID, MIRROR_IMAGE_ITEM_ID, false, 0, 0, false, Order_Instant, "mirrorimage")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastAbilityPlain()
+        call SetLastAbilityNotReplaceable()
 
         //35 - Chain Lightning 
         call SaveAbilData(CHAIN_LIGHTNING_ABILITY_ID, CHAIN_LIGHTNING_ITEM_ID, false, 0, 0, true, Order_Target, "chainlightning")
@@ -979,6 +981,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(PURGE_ABILITY_ID, PURGE_ITEM_ID, false, 0, 1, true, Order_Target, "purge")
         //call SetLastObjectElement(Element_Spirit, 1)
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastAbilityNotReplaceable()
 
         //164 - Blink Strike 
         call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
