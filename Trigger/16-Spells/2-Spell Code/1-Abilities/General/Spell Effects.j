@@ -191,7 +191,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
             if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
 
                 set dummyAbilId = GetAssociatedSpell(caster, abilId)
-                if GetAssociatedSpell(caster, abilId) != 0 then
+                if dummyAbilId != 0 then
                     set abilId = dummyAbilId
                     set abilLvl = GetUnitAbilityLevel(caster, abilId)
                     //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
@@ -273,7 +273,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call ActivateScepterOfConfusion(caster)
                     endif
 
-                    if GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X')  and abilId != RESET_TIME_ABILITY_ID then
+                    if IsAbilityCasteable(abilId, false) and (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X'))  and abilId != RESET_TIME_ABILITY_ID then
                         call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                     endif
 
