@@ -476,7 +476,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
             set i = GetUnitElementCount(u, Element_Arcane)
             loop
-                set ResCD = ResCD * (1 - ((0.002 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))))
+                set ResCD = ResCD * (1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))))
                 set i = i - 1
                 exitwhen i <= 0
             endloop
