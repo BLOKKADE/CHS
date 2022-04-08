@@ -334,6 +334,10 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        if DamageSourceAbility == 'A0CN' then
+            call BJDebugMsg("dg passive")
+            call PeriodicDamage.create(DamageSource, DamageTarget, GetHeroLevel(DamageSource) * 25, true, 1., 8, 0, true, 'B02L', 'A0CO')
+        endif
         //Ursa Warrior
         if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)

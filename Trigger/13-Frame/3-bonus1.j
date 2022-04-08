@@ -123,12 +123,12 @@ library HeroData initializer init
         call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Void Bash: +50 damage" )     
                 
         call SaveStr(HT_data,DOOM_GUARD_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDoomGuard.blp" )       // DOOMguard
-        call SaveStr(HT_data,DOOM_GUARD_UNIT_ID,2, "|cff00ffffPassive|r: Hellfire: Deals initial |cffff00ffmagic damage|r and |cffff00ffmagic damage|r per second to nearby enemies for 8 seconds, every 8 seconds. [|cff96ffffStable|r]")
-        call SaveStr(HT_data,DOOM_GUARD_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Hellfire: +50 initial damage, +10 damage per second." )                      
+        call SaveStr(HT_data,DOOM_GUARD_UNIT_ID,2, "|cff00ffffPassive|r: Hellfire: Deals |cffff00ffmagic damage|r per second to a random nearby enemy for 8 seconds. 1 second cooldown. [|cff96ffffStable|r]")
+        call SaveStr(HT_data,DOOM_GUARD_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Hellfire: +25 damage per second." )
                     
         call SaveStr(HT_data,ROCK_GOLEM_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNRockGolem.blp" )       // golem
         call SaveStr(HT_data,ROCK_GOLEM_UNIT_ID,2, "|cff00ffffPassive|r: Stone Edge: When the Golem is damaged it deals 50% of its block in |cffff8080physical damage|r to nearby enemy units within 400 range. 1 second cooldown. [|cff96ffffStable|r]")
-        call SaveStr(HT_data,ROCK_GOLEM_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Stone Edge: +1% block damage. +1% block." )       
+        call SaveStr(HT_data,ROCK_GOLEM_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Stone Edge: +1% block damage. +1% block." )
         
         call SaveStr(HT_data,COLD_KNIGHT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )  
         //   call SaveStr(HT_data,COLD_KNIGHT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )       // cold
@@ -144,7 +144,7 @@ library HeroData initializer init
         call SaveStr(HT_data,GNOME_MASTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun." )             
 
         call SaveStr(HT_data,'N02P',1, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )       // Greed goblin
-        call SaveStr(HT_data,'N02P',2, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. |cffc0c0c01% less effective for each level of PillagePillage and Learnability are 22% less effective.|r.")
+        call SaveStr(HT_data,'N02P',2, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
         call SaveStr(HT_data,'N02P',3, "|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
 
         call SaveStr(HT_data,CENTAUR_ARCHER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNCentaurArcher.blp" )       // Cent archer
