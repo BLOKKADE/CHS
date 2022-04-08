@@ -18,11 +18,16 @@ library SandOfTime requires RandomShit
     function SandRefreshAbility takes unit hero, real time returns nothing
         local integer i1 = 0
         local integer SpellId = 0
+        local integer dummyAbilId = 0
     
         loop
             exitwhen i1 > 10
             set SpellId = GetInfoHeroSpell(hero ,i1)
+            set dummyAbilId = GetAssociatedSpell(hero, SpellId)
             if SpellId != 0 and IsSpellResettable(SpellId) then
+                if dummyAbilId != 0 then
+                    set SpellId = dummyAbilId
+                endif
                 call ResetSpell(hero, SpellId, time, true)
             endif
             set i1 = i1 + 1
