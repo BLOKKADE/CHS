@@ -5,6 +5,7 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         trigger array RunesTriggers
         string array RunesName
         integer RuneCount = 16
+        integer StatRuneDuration = 30
 
         unit GLOB_RUNE_U = null
         real GLOB_RUNE_POWER = 0

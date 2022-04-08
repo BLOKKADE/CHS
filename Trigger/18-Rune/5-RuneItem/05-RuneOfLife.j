@@ -7,8 +7,8 @@ library LifeRune requires RandomShit, TempStateBonus
     function RuneOfLife takes nothing returns boolean
         local unit u = GLOB_RUNE_U
         local real power = GLOB_RUNE_POWER 
-        call UniqueTempBonus(u, BONUS_HEALTH, RuneOfLife_base * power, 20, Runes[Life_Rune_Id], 0)
-        call UniqueTempBonus(u, BONUS_MANA, RuneOfLife_base * power, 20, Runes[Life_Rune_Id], 0)
+        call UniqueTempBonus(u, BONUS_HEALTH, RuneOfLife_base * power, StatRuneDuration, Runes[Life_Rune_Id], 0)
+        call UniqueTempBonus(u, BONUS_MANA, RuneOfLife_base * power, StatRuneDuration, Runes[Life_Rune_Id], 0)
         set u = null
         return false
     endfunction
