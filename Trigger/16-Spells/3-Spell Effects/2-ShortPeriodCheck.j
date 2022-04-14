@@ -76,8 +76,8 @@ scope ShortPeriodCheck initializer init
                     //Absolute Cold
                     set i1 = GetUnitAbilityLevel(u,ABSOLUTE_COLD_ABILITY_ID)
                     if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0  then
-                        if BlzGetUnitAbilityCooldownRemaining(u,ABSOLUTE_COLD_ABILITY_ID) == 0 and CheckProc(u, 500) then
-                            call AbilStartCD(u, ABSOLUTE_COLD_ABILITY_ID, 10)
+                        if T32_Tick - AbsoluteColdLastTick[hid] > (32 * 10) and CheckProc(u, 500) then
+                            set AbsoluteColdLastTick[hid] = T32_Tick
                             call AbsoluteCold(u,GetUnitElementCount(u,Element_Cold), i1)
                         endif
                     endif

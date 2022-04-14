@@ -1,8 +1,10 @@
-library AbsoluteCold requires RandomShit, DivineBubble
+library AbsoluteCold initializer init requires RandomShit, DivineBubble
     globals
         unit GLOB_ABSOLUTE_COLD_U = null
         real GLOB_ABSOLUTE_COLD_DMG = 0
         real GLOB_ABSOLUTE_COLD_DUR = 0
+
+        Table AbsoluteColdLastTick
     endglobals
 
     function AbsoluteIceFunc takes nothing returns boolean
@@ -39,5 +41,9 @@ library AbsoluteCold requires RandomShit, DivineBubble
         call GroupClear(ENUM_GROUP)
         call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),500,AbsoluteColdBool )
         return false
+    endfunction
+
+    private function init takes nothing returns nothing
+        set AbsoluteColdLastTick = Table.create()
     endfunction
 endlibrary
