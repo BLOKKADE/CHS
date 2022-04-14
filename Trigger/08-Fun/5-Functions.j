@@ -208,7 +208,10 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
     endfunction
 
     function SellItemsOnGround takes nothing returns nothing
-        call SellItem(RectPid, GetEnumItem())
+        local itemtype itemType = GetItemType(GetEnumItem())
+        if itemType != ITEM_TYPE_POWERUP and itemType != ITEM_TYPE_CAMPAIGN then
+            call SellItem(RectPid, GetEnumItem())
+        endif
     endfunction
 
     function Func_completeLevel takes unit u returns nothing

@@ -1,4 +1,9 @@
 library trigger79 initializer init requires RandomShit, Functions, LoadCommand, ShopIndex, EconomyMode
+
+    globals
+        boolean ShopsCreated = false
+    endglobals
+
     function Trig_Spawn_Hero_Func005C takes nothing returns boolean
         if(not(udg_boolean16==false))then
             return false
@@ -189,6 +194,8 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         call SetShopIndex(CreateUnit(p,ITEM_SHOP_V_UNIT_ID,620,- 1152,270.000) )
         call SetShopIndex(CreateUnit(p,ITEM_SHOP_VI_UNIT_ID,868,- 1152,270.000))
         call ForGroupBJ( GetUnitsOfTypeIdAll('ncop'), function Trig_Untitled_Trigger_001_Func001A )
+
+        set ShopsCreated = true
     endfunction
 
 

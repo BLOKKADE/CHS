@@ -95,22 +95,6 @@ scope LongPeriodCheck initializer init
         local string textureS = ""
         local integer unitId = GetUnitTypeId(PlayerHeroes[NumPlayerLast[i] + 1])
 
-        if unitId != 0 then
-            if GetLocalPlayer() == Pl then
-                set textureS = LoadStr(HT_data, unitId, 1)
-                call BlzFrameSetVisible(SpellUP[38], true) // Element count
-                call BlzFrameSetVisible(SpellUP[39], true) // Win Counts
-                call BlzFrameSetVisible(SpellUP[100], true) // Hero passive/description
-                call BlzFrameSetTexture(SpellFR[100], textureS, 0, true)
-            endif
-        else
-            if GetLocalPlayer() == Pl then
-                call BlzFrameSetVisible(SpellUP[38], false) // Element count
-                call BlzFrameSetVisible(SpellUP[39], false) // Win Counts
-                call BlzFrameSetVisible(SpellUP[100], false) // Hero passive/description
-            endif
-        endif
-
         //updates the ability icons displayed in top left
         if NumPlayerLast[i] == 11 then
             loop
@@ -151,13 +135,37 @@ scope LongPeriodCheck initializer init
         endif
 
         //updates the icons in top left if selected unit is a creep
-        if ShowCreepAbilButton[i] then
-            if GetLocalPlayer() == Pl then
-                call BlzFrameSetVisible(SpellUP[2], true)
+        if GetLocalPlayer() == Pl then
+
+            //Show element count, win counts or hero passive
+            if unitId != 0 then
+                set textureS = LoadStr(HT_data, unitId, 1)
+                call BlzFrameSetVisible(SpellUP[38], true) // Element count
+                call BlzFrameSetVisible(SpellUP[39], true) // Win Counts
+                call BlzFrameSetVisible(SpellUP[100], true) // Hero passive/description
+                call BlzFrameSetTexture(SpellFR[100], textureS, 0, true)
+            else
+                call BlzFrameSetVisible(SpellUP[38], false) // Element count
+                call BlzFrameSetVisible(SpellUP[39], false) // Win Counts
+                call BlzFrameSetVisible(SpellUP[100], false) // Hero passive/description
             endif
-        else
-            if GetLocalPlayer() == Pl then
+
+            //show creep info button
+            if ShowCreepAbilButton[i] then
+                call BlzFrameSetVisible(SpellUP[2], true)
+            else
                 call BlzFrameSetVisible(SpellUP[2], false)
+            endif
+
+            //show sell all items/convert gold/lumber button
+            if (ShopsCreated == false or BrStarted) then
+                call BlzFrameSetVisible(SpellUP[3], false)
+                call BlzFrameSetVisible(SpellUP[36], false)
+                call BlzFrameSetVisible(SpellUP[37], false)
+            else//if not BlzFrameIsVisible(SpellUP[3]) then
+                call BlzFrameSetVisible(SpellUP[3], true)
+                call BlzFrameSetVisible(SpellUP[36], true)
+                call BlzFrameSetVisible(SpellUP[37], true)
             endif
         endif
 

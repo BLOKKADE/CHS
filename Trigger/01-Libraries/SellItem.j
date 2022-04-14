@@ -23,7 +23,7 @@ library SellItems requires DummyRecycler, GloryItemCosts
 
             if (itemToSell != null) then
                 if (not IsItemPawnable(itemToSell)) then
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(playerHero),0,0,10,"You cannot sell items during PVP")
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(playerHero),0,0,10,"|cffffcc00You cannot sell items during PVP|r")
 
                     set itemToSell = null
                     exitwhen true
