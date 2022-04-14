@@ -98,6 +98,14 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
                 call AbilStartCD(u, 'A0AM', 30) 
             endif
         endif
+
+        //Arcane Gemstone
+        if UnitHasItemS(u, 'I0BQ') and IsSpellElement(u, id, Element_Arcane) then
+            if BlzGetUnitAbilityCooldownRemaining(u, 'A0CS') == 0 then
+                call ActivateStatRune(u)
+                call AbilStartCD(u, 'A0CS', 5) 
+            endif
+        endif
         
         //Absolute Fire
         if GetUnitAbilityLevel(u,ABSOLUTE_FIRE_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Fire) then
