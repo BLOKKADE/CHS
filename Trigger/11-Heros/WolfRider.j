@@ -9,16 +9,16 @@ library WolfRider initializer init requires NewBonus
         local integer hid = GetHandleId(u)
         if value < highest * SpeedFreakLimit then
             call AddUnitBonus(u, stat, 0 - SpeedFreakBonus[hid][stat])
-            set bonus = R2I(highest * SpeedFreakLimit - (value - SpeedFreakBonus[hid][stat]))
+            set bonus = R2I((highest * SpeedFreakLimit) - value)
             call AddUnitBonus(u, stat, bonus)
             set SpeedFreakBonus[hid][stat] = bonus
         endif
     endfunction
 
     function WolfRiderStatBonus takes unit u, integer hid returns nothing
-        local integer str = GetHeroStr(u, true)
-        local integer agi = GetHeroAgi(u, true)
-        local integer int = GetHeroInt(u, true)
+        local integer str = GetHeroStr(u, true) - SpeedFreakBonus[hid][BONUS_STRENGTH]
+        local integer agi = GetHeroAgi(u, true) - SpeedFreakBonus[hid][BONUS_AGILITY]
+        local integer int = GetHeroInt(u, true) - SpeedFreakBonus[hid][BONUS_INTELLIGENCE]
 
         if str > agi and str > int then
             call StatCheck(u, BONUS_AGILITY, agi, str)
