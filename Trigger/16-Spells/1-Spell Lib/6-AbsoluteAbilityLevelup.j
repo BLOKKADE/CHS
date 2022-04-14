@@ -48,43 +48,44 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
         local integer abilityLevel 
         local unit u = GetTriggerUnit()
 
-        //call BJDebugMsg("aalu")
-        if ItemId == 'I09R' then
-            //call BJDebugMsg("aalu unlearn")
-            set counter = LoadInteger(HT,GetHandleId(u),941561) 
-            if counter > 0 then
-                call UnlearnAbsolute(u, GetLastLearnedSpell(u, SpellList_Absolute, true))
-            endif
-        endif
-        if IsAbsolute(abilityId) then
-            //call BJDebugMsg("aalu is absolute")
-            set counter = LoadInteger(HT,GetHandleId(u),941561) 
-            set abilityLevel = GetUnitAbilityLevel(u,abilityId)
-            //call BJDebugMsg("aalu counter: " + I2S(counter))
-            if abilityLevel > 0 then
-            
-                if abilityLevel < 30 then
-                    call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], false)
-                else
-                    call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
-                    call ResourseRefresh(GetOwningPlayer(u) )
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "|cffffe600Failed to learn|r: maximum abilities reached")
+        if IsUnitType(u, UNIT_TYPE_HERO) then
+            if ItemId == 'I09R' then
+                //call BJDebugMsg("aalu unlearn")
+                set counter = LoadInteger(HT,GetHandleId(u),941561) 
+                if counter > 0 then
+                    call UnlearnAbsolute(u, GetLastLearnedSpell(u, SpellList_Absolute, true))
                 endif
+            endif
+            if IsAbsolute(abilityId) then
+                //call BJDebugMsg("aalu is absolute")
+                set counter = LoadInteger(HT,GetHandleId(u),941561) 
+                set abilityLevel = GetUnitAbilityLevel(u,abilityId)
+                //call BJDebugMsg("aalu counter: " + I2S(counter))
+                if abilityLevel > 0 then
                 
-            else
-                if counter < 10 and counter <= GetHeroMaxAbsoluteAbility(u) then
-                    //call BJDebugMsg("aalu add")
-                    call SaveInteger(HT,GetHandleId(u),941561,counter + 1 )
-                    call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], true)
-                    if counter == 0 then
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "You can |cff9dff00find the Absolute ability|r when you hover over the icon on the |cff00e1fftop left of your screen|r below the Info (F9) button.")
+                    if abilityLevel < 30 then
+                        call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], false)
+                    else
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(u) )
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "|cffffe600Failed to learn|r: maximum abilities reached")
                     endif
-                elseif counter > GetHeroMaxAbsoluteAbility(u) then
-                    //call BJDebugMsg("aalu acorn")
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "Buy an |cffbbff00Absolute Acorn|r at |cffffd900Power Ups Shop II|r to buy more Absolute abilities. (|cffff1100Max:" + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)"  ) 
-                    call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
-                    call ResourseRefresh(GetOwningPlayer(u) )
+                    
+                else
+                    if counter < 10 and counter <= GetHeroMaxAbsoluteAbility(u) then
+                        //call BJDebugMsg("aalu add")
+                        call SaveInteger(HT,GetHandleId(u),941561,counter + 1 )
+                        call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], true)
+                        if counter == 0 then
+                            call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "You can |cff9dff00find the Absolute ability|r when you hover over the icon on the |cff00e1fftop left of your screen|r below the Info (F9) button.")
+                        endif
+                    elseif counter > GetHeroMaxAbsoluteAbility(u) then
+                        //call BJDebugMsg("aalu acorn")
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "Buy an |cffbbff00Absolute Acorn|r at |cffffd900Power Ups Shop II|r to buy more Absolute abilities. (|cffff1100Max:" + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)"  ) 
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(u) )
 
+                    endif
                 endif
             endif
         endif
