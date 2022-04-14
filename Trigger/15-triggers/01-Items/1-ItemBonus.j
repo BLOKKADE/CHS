@@ -464,7 +464,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			endif */
 
 			//Runestones
-		elseif itemId == 'I08P' or itemId == 'I0B8' or itemId == 'I0B7' or itemId == 'I0B6' or itemId == 'I095' or itemId == 'I0B5' or itemId == 'I08S' or itemId == 'I08R' or itemId == 'I08Q' then
+		elseif itemId == 'I08P' or itemId == 'I0B8' or itemId == 'I0B7' or itemId == 'I0B6' or itemId == 'I095' or itemId == 'I0B5' or itemId == 'I08S' or itemId == 'I08R' or itemId == 'I08Q' or itemId == 'I0BX' then
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid,itemId) 
 			call AddUnitPowerRune(u ,   100 * I2R(i - prevCount)  )

@@ -5,7 +5,6 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         trigger array RunesTriggers
         string array RunesName
         integer RuneCount = 16
-        integer StatRuneDuration = 30
 
         unit GLOB_RUNE_U = null
         real GLOB_RUNE_POWER = 0
@@ -87,7 +86,8 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         call TriggerRegisterAnyUnitEventBJ( trg, EVENT_PLAYER_UNIT_DROP_ITEM)
         call TriggerAddAction( trg, function InitialiseRune )
         set trg = null
-
+        
+        set StatRuneBonus = HashTable.create()
         set RuneIndex = Table.create()
 
         call AddRune('I08D',function DefenseRune, "Defense Rune", Defense_Rune_Id)
