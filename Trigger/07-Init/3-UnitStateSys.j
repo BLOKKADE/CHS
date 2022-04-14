@@ -55,47 +55,6 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
             call AddUnitBonus(u, BONUS_ARMOR, R2I((BlzGetUnitArmor(hero) * r1)))
         endif
 
-        //Wild Defense
-        if SummonWildDefense[pid] > 0 then
-            call AddUnitMagicDef(u,10 * SummonWildDefense[pid])
-            call AddUnitEvasion(u,1 * SummonWildDefense[pid])
-            call AddUnitBlock(u,10 * SummonWildDefense[pid])
-            call AddSummonAbility(u, WILD_DEFENSE_ABILITY_ID, SummonWildDefense[pid])
-        endif
-
-        if SummonCrit[pid] > 0 and i != PHOENIX_1_UNIT_ID then
-            call AddSummonAbility(u, CRITICAL_STRIKE_ABILITY_ID, SummonCrit[pid])
-        endif
-
-        if SummonCutting[pid] > 0 then
-            call AddSummonAbility(u, CUTTING_ABILITY_ID, SummonCutting[pid])
-        endif
-
-        if SummonLastBreath[pid] > 0 then
-            call AddSummonAbility(u, LAST_BREATHS_ABILITY_ID, SummonLastBreath[pid])
-        endif
-
-        if SummonIceArmor[pid] > 0 then
-            call AddSummonAbility(u, ICE_ARMOR_ABILITY_ID, SummonIceArmor[pid])
-        endif
-
-        if SummonDomeProtection[pid] > 0 then
-            call AddSummonAbility(u, DOME_OF_PROTECTION_ABILITY_ID, SummonDomeProtection[pid])
-        endif
-
-        if SummonHitPoints[pid] > 0 then
-            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
-            call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
-        endif
-
-        if SummonArmor[pid] > 0 then
-            call BlzSetUnitArmor(u, SummonArmor[pid] * 2)
-        endif
-
-        if SummonDamage[pid] > 0 then
-            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
-        endif
-
         call AddUnitPvpBonus(u, GetUnitPvpBonus(hero))
 
         if SUMMONS.contains(i) then
@@ -157,6 +116,47 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
             call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
+         //Wild Defense
+         if SummonWildDefense[pid] > 0 then
+            call AddUnitMagicDef(u,10 * SummonWildDefense[pid])
+            call AddUnitEvasion(u,1 * SummonWildDefense[pid])
+            call AddUnitBlock(u,10 * SummonWildDefense[pid])
+            call AddSummonAbility(u, WILD_DEFENSE_ABILITY_ID, SummonWildDefense[pid])
+        endif
+
+        if SummonCrit[pid] > 0 and i != PHOENIX_1_UNIT_ID then
+            call AddSummonAbility(u, CRITICAL_STRIKE_ABILITY_ID, SummonCrit[pid])
+        endif
+
+        if SummonCutting[pid] > 0 then
+            call AddSummonAbility(u, CUTTING_ABILITY_ID, SummonCutting[pid])
+        endif
+
+        if SummonLastBreath[pid] > 0 then
+            call AddSummonAbility(u, LAST_BREATHS_ABILITY_ID, SummonLastBreath[pid])
+        endif
+
+        if SummonIceArmor[pid] > 0 then
+            call AddSummonAbility(u, ICE_ARMOR_ABILITY_ID, SummonIceArmor[pid])
+        endif
+
+        if SummonDomeProtection[pid] > 0 then
+            call AddSummonAbility(u, DOME_OF_PROTECTION_ABILITY_ID, SummonDomeProtection[pid])
+        endif
+
+        if SummonHitPoints[pid] > 0 then
+            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
+            call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
+        endif
+
+        if SummonArmor[pid] > 0 then
+            call BlzSetUnitArmor(u, SummonArmor[pid] * 2)
+        endif
+
+        if SummonDamage[pid] > 0 then
+            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
+        endif
+
         //wild Defense
         if wild != 1 then      
             call BlzSetUnitBaseDamage(u,R2I(I2R(BlzGetUnitBaseDamage(u,0))* wild),0)  
@@ -178,8 +178,15 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Banner of Many
         if UnitHasItemS(hero, BANNER_OF_MANY_ITEM_ID) then
-            call AddUnitBonusReal(u, BONUS_ATTACK_SPEED, 1.5)
-            call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * 1.5))
+
+            if GetUnitAbilityLevel(u, ENDURANCE_AURA_ABILITY_ID) == 0 then
+                call AddUnitBonusReal(u, BONUS_ATTACK_SPEED, 1.5)
+            endif
+
+            if GetUnitAbilityLevel(hero, TRUESHOT_AURA_ABILITY_ID) == 0 and GetUnitAbilityLevel(hero, COMMAND_AURA_ABILITY_ID) == 0 then
+                call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * 1.5))
+            endif
+
             call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_ABILITY_ID)
         endif
         
