@@ -16,6 +16,10 @@ scope ModifyDamageAfterArmor initializer init
         local integer vampCount = 0
         local real vampAmount = 0
 
+        if Damage.index.amount == 0 then
+            return
+        endif
+
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
         //Strong Chest Mail

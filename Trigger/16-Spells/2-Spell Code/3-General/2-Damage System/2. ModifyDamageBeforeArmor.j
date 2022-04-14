@@ -359,6 +359,10 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = Damage.index.damage+  (Damage.index.damage*(GetUnitPvpBonus(DamageSource)- GetUnitPvpBonus(DamageTarget)  )/ 100)
         endif 
 
+        if Damage.index.damage == 0 then
+            return
+        endif
+
         //Banish magic damage bonus
         if GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0 and IsMagicDamage() then
             set Damage.index.damage =  Damage.index.damage * 1.5
