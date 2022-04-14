@@ -45,9 +45,10 @@ library TempStateBonus initializer init requires CustomState, NewBonus
         boolean buffLink
         integer buffId
         integer abilId
+        boolean roundEnd
 
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, this.p) or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
+            if (not this.roundEnd and T32_Tick > this.endTick) or HasPlayerFinishedLevel(this.source, this.p) or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -91,6 +92,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus
             set this.sourceId = GetHandleId(this.source)
             set this.abilId = abilSource
             set this.p = GetOwningPlayer(source)
+            set this.roundEnd = duration == 0.
             call this.setHashTable()
 
             call this.updateState()
@@ -115,6 +117,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus
         implement T32x
     endstruct
 
+    //0 duration = end of round
     function UniqueTempBonus takes unit u, integer state, real bonus, real duration, integer abilId, integer buffLink returns nothing
         local TempBonus tBonus = GetTempBonus(GetHandleId(u), abilId, state)
         if tBonus == 0 or tBonus.enabled == false then
