@@ -117,7 +117,7 @@ library CritDamage requires RandomShit
                 set critDmg = critDmg / 2
             endif 
 
-            if (DamageSourceTypeId != SEER_UNIT_ID and StaffOfPowerCritNegate) or (magicDmgType and not IsHeroUnitId(DamageSourceTypeId)) then
+            if (DamageSourceTypeId != SEER_UNIT_ID and StaffOfPowerCritNegate) or (magicDmgType and GetUnitAbilityLevel(DamageSource, SUMMON_MAGIC_DMG_ABILITY_ID) > 0) then
                 set critDmg = critDmg / 2
             endif
 

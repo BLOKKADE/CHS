@@ -10,6 +10,7 @@ library BlackArrowRangedSkeleton requires CustomState, SpellFormula
         call AddUnitMagicDef(u,5 * totalLevel)
         call AddUnitMagicDmg(u, 0.1 * totalLevel)
         call AddUnitEvasion(u,5 * totalLevel)
+        call UnitAddAbility(u, SUMMON_MAGIC_DMG_ABILITY_ID)
 
         /*call UnitAddAbility(u, 'A06I')
         call SetUnitAbilityLevel(u, 'A06I', IMinBJ(R2I(totalLevel / 3), 60))*/
