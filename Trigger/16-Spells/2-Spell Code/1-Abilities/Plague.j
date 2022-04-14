@@ -18,6 +18,7 @@ library Plague requires AoeDamage
             call UnitApplyTimedLifeBJ(14.00, 'BTLF', dummy)
             call SetAbilityRealField(dummy, 'A0AG', 1, ABILITY_RLF_DAMAGE_PER_INTERVAL, (60 * level) * bonus)
             call SetUnitTimeScalePercent(dummy, 50.00)
+            set DummyAbilitySource[GetHandleId(dummy)] = PLAGUE_ABILITY_ID
             call SetPlayerAbilityAvailable(p, 'A0AG', false)
             call SetPlayerAbilityAvailable(p, 'A0AG', true)
             if i < corpseLimit then
