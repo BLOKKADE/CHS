@@ -9,19 +9,24 @@ scope ToggleDmgTxt initializer init
         local string aType = ""
         local string output = ""
         local string dmgType = "|r dealt "
+        local string end = "."
 
+        //set colour when dealing magic dmg
         if IsMagicDamage() then
             set colour = "|ccf31d4fd"
         endif
 
+        //death message
         if death then
             set dmgType = "|r killed " + GetPlayerNameColour(GetOwningPlayer(DamageTarget)) + "|r dealing: "
         endif
 
+        //if damage source was an ability
         if DamageSourceAbility != 0 then
-            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + dmgType + colour + R2S(Damage.index.damage) + "|r dmg." )
+            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
         else
-            
+            //if damage source is an attack or unknown ability
+
             if Damage.index.isSpell then
                 set aType = aType + "spell"
             endif
@@ -30,9 +35,18 @@ scope ToggleDmgTxt initializer init
                 set aType = aType + "attack"
             endif
 
-            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg." )
+            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
         endif
 
+        //debug mode shows handle id to differentiate between multiple units
+        if DebugModeEnabled then
+            set end = " to " + I2S(GetHandleId(DamageTarget)) + "."
+        endif
+
+        //add . or debug text to output
+        set output = output + end
+
+        //if death then show to everyone else show to player with dt enabled
         if death then
             call DisplayTimedTextToForce(GetPlayersAll(), 20, output)
         else
