@@ -131,8 +131,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr(DARK_HUNTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
 
-        call SetBonusStr(DOOM_GUARD_UNIT_ID, 0, "|cffe7544aInitial damage|r: ,0,")
-        call SetBonusStr(DOOM_GUARD_UNIT_ID, 1, "|cffd6e049Damage per second|r: ,0,")
+        call SetBonusStr(DOOM_GUARD_UNIT_ID, 0, "|cffd6e049Damage per second|r: ,0,")
 
         call SetBonusStr(ROCK_GOLEM_UNIT_ID, 0, "|cffe7544aStone Edge block damage|r: ,0,%%")
         call SetBonusStr(ROCK_GOLEM_UNIT_ID, 1, "|cffe7544aBlock bonus|r: ,0,%%")

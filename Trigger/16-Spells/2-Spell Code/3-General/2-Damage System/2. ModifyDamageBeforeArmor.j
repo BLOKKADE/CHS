@@ -342,9 +342,9 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        if DamageSourceAbility == 'A0CN' then
-            call BJDebugMsg("dg passive")
-            call PeriodicDamage.create(DamageSource, DamageTarget, GetHeroLevel(DamageSource) * 25, true, 1., 8, 0, true, 'B02L', 'A0CO')
+        if DamageSourceAbility == 'A0CR' then
+            set Damage.index.damage = GetHeroLevel(DamageSource) * 25
+            call DoomGuardHellfireApply(DamageSource, DamageTarget)
         endif
 
         //Ursa Warrior
@@ -664,7 +664,6 @@ scope ModifyDamageBeforeArmor initializer init
                 endif
             endif
         endif
-
         //call BJDebugMsg("MOD1.1 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
     endfunction
 

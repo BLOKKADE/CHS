@@ -380,17 +380,7 @@ library HeroLevel initializer init requires HeroLvlTable
             set LastLvlHero[Pid] = I_l     
                             
         elseif TypeHero == DOOM_GUARD_UNIT_ID then     
-        
-        
-        
-            
-            call SetUnitAbilityLevel(UnitHero,'A038',2)
-            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(UnitHero,'A038'),ABILITY_RLF_INITIAL_DAMAGE_PXF1,0, I2R(I_l + 1)* 50 )
-            call SetBonus(UnitHero, 0, I2R(I_l + 1)* 50)
-            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(UnitHero,'A038'),ABILITY_RLF_DAMAGE_PER_SECOND_PXF2,0, I2R(I_l + 1)* 10 )
-            call SetBonus(UnitHero, 1, I2R(I_l + 1)* 10)
-            call SetUnitAbilityLevel(UnitHero,'A038',1)
-            
+            call SetBonus(UnitHero, 0, I2R(I_l + 1)* 25)
             set LastLvlHero[Pid] = I_l   
                 
         elseif TypeHero == COLD_KNIGHT_UNIT_ID then  
