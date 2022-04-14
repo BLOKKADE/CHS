@@ -67,20 +67,19 @@ library trigger110 initializer init requires RandomShit
 
     function Trig_Sudden_Death_Timer_Actions takes nothing returns nothing
         set udg_integer39 =(udg_integer39 + 1)
-        if udg_integer39 == 120 or udg_integer39 == 240 or udg_integer39 == 480 or udg_integer39 == 720 then
-            call UpdateSuddenDeathTimer()
-        endif
-        if(Trig_Sudden_Death_Timer_Func002C())then
-            call ForGroupBJ(GetUnitsInRectOfPlayer(GetPlayableMapRect(),Player(11)),function Trig_Sudden_Death_Timer_Func002Func001A)
-            if(Trig_Sudden_Death_Timer_Func002Func002C())then
-                call ForGroupBJ(GetUnitsInRectOfPlayer(GetPlayableMapRect(),Player(11)),function Trig_Sudden_Death_Timer_Func002Func002Func001A)
-                if(Trig_Sudden_Death_Timer_Func002Func002Func002C())then
-                    call ForForce(GetPlayersMatching(Condition(function Trig_Sudden_Death_Timer_Func002Func002Func002Func001001001)),function Trig_Sudden_Death_Timer_Func002Func002Func002Func001A)
-                else
-                endif
-            else
+        if CreepEnrageEnabled then
+            if udg_integer39 == 120 or udg_integer39 == 240 or udg_integer39 == 480 or udg_integer39 == 720 then
+                call UpdateSuddenDeathTimer()
             endif
-        else
+            if(Trig_Sudden_Death_Timer_Func002C())then
+                call ForGroupBJ(GetUnitsInRectOfPlayer(GetPlayableMapRect(),Player(11)),function Trig_Sudden_Death_Timer_Func002Func001A)
+                if(Trig_Sudden_Death_Timer_Func002Func002C())then
+                    call ForGroupBJ(GetUnitsInRectOfPlayer(GetPlayableMapRect(),Player(11)),function Trig_Sudden_Death_Timer_Func002Func002Func001A)
+                    if(Trig_Sudden_Death_Timer_Func002Func002Func002C())then
+                        call ForForce(GetPlayersMatching(Condition(function Trig_Sudden_Death_Timer_Func002Func002Func002Func001001001)),function Trig_Sudden_Death_Timer_Func002Func002Func002Func001A)
+                    endif
+                endif
+            endif
         endif
     endfunction
 

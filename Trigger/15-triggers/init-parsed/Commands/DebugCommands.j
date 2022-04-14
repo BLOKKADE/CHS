@@ -7,19 +7,21 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         unit array PlayerDummy
         boolean array dummyEnabled
         integer array CreatedDummies
+        boolean CreepEnrageEnabled = true
     endglobals
     //===========================================================================
     function DummyHelp takes player p returns nothing
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "Dummy Commands: " + I2S(GetHandleId(PlayerDummy[GetPlayerId(p)])) + ": " + GetUnitName(PlayerDummy[GetPlayerId(p)]))
-        call DisplayTimedTextToPlayer(p, 0, 0, 10, "To edit the stats of the last dummy you've created: ")
-        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dhpo xxx (hit points), -dman xxx (mana)")
-        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-ddmg xxx (damage), -dbas xxx (attack speed), -darm xxx (armor), -dblo xxx (block), -dpvp xxx (pvp)")
-        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dstr, dagi, dint xxx (hero stats), -dmpo xxx (magic power), -dmpr xxx (magic protection), -deva xxx (evasion)")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "To edit the stats of the last dummy you've created:")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dhpo (hit points), -dman (mana), -dhpr (hp regen), -dmar (mana regen)")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-ddmg (damage), -dbas (attack speed), -darm (armor), -dblo (block), -dpvp (pvp)")
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dstr, dagi, dint (hero stats), -dmpo (magic power), -dmpr (magic protection), -deva (evasion)")
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-ditem: duplicates all your items to the dummy")
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dabil: duplicates all your abilities to the dummy (might bug if used more than once on the same dummy)") 
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dname: xxxxxxxxxx: sets the name of the dummy")
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dkill: kill the dummy")
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-help: see this list again")    
+        call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cffffcc00example|r: -dhpo 5000 to set hp to 5000")
     endfunction
 
     private function CopyAbilitiesToDummy takes unit hero, unit dummy returns nothing
@@ -82,6 +84,15 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         elseif command == "-deva" then
             call SetUnitEvasion(u, value)
             set s = "|cff9e9e9e" + GetUnitName(u) + "|r: " + R2S(value) + " evasion"
+        elseif command == "-dhpr" then  
+            call SetUnitBonusReal(u, BONUS_HEALTH_REGEN, value)
+            set s = "|cff00ffea" + GetUnitName(u) + "|r: " + R2S(value) + " hp regen"
+        elseif command == "-dmar" then
+            call SetUnitBonusReal(u, BONUS_MANA_REGEN, value)
+            set s = "|cff00a2ff" + GetUnitName(u) + "|r: " + R2S(value) + " mana regen"
+        elseif command == "-dppo" then
+            call SetUnitPhysPow(u, value)
+            set s = "|cff00a2ff" + GetUnitName(u) + "|r: " + R2S(value) + " phys power"
         elseif command == "-help" then
             call DummyHelp(p)
         else
@@ -188,6 +199,15 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creeps will have their regular wizardbane chance in 1 or 2 rounds")
         endif
     endfunction
+
+    function SetCreepEnrage takes Args args returns nothing
+        set CreepEnrageEnabled = CreepEnrageEnabled != true
+        if CreepEnrageEnabled then
+            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creep Enrage enabled.")
+        else
+            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creep Enrage disabled.")
+        endif
+    endfunction
     
     //===========================================================================
     function AllowSinglePlayerCommands takes nothing returns nothing
@@ -230,6 +250,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.SetRoundTime).name("rt").handles("rt").help("rt <value>", "Starting next round, sets the time between rounds to <value>.")
             call Command.create(CommandHandler.SetBattleRoyale).name("sbr").handles("sbr").help("sbr <value>", "The Battle Royal starts after round <value>.")
             call Command.create(CommandHandler.SetWizardbaneDebug).name("wbd").handles("wbd").help("wbd", "Wizardbane debug.")
+            call Command.create(CommandHandler.SetCreepEnrage).name("tce").handles("tce").help("tce", "toggle creep enrage.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
 
