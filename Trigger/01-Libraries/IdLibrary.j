@@ -409,6 +409,7 @@ library IdLibrary initializer init
         constant integer WIND_WALK_ABILITY_ID                           = 'AOwk'
         constant integer WIZARDBANE_AURA_ABILITY_ID                     = 'A088'
         constant integer MARTIAL_THEFT_ABILITY_ID                       = 'A05S'
+        constant integer SUMMON_MAGIC_DMG_ABILITY_ID                    = 'A0CQ'
         
         // Dummy Abilities
         constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'
