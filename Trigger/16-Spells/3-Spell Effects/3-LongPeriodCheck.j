@@ -463,7 +463,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetHeroStr(u, true)
                 set i2 = GetHeroSavedStrength(u)
                 if i1 != i2 then
-                    call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (i2 * 0.075) - (i1 * 0.075))
+                    call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (i1 * 0.075) - (i2 * 0.075))
                     call SaveHeroStrength(u, i1)
                 endif
 
