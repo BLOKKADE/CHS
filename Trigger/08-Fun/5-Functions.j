@@ -295,6 +295,14 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if IncomeMode < 2 and Income[pid] == 0 then 
             call DisplayTextToPlayer(p,0,0,"You can increase your income in Power Ups Shop II")       
         endif
+
+        if RoundNumber == 1 then
+            call ShowDiscordFrames(p, true)
+        endif
+
+        if RoundNumber == 2 then
+            call ShowDiscordFrames(p, false)
+        endif
         
 
         if ModuloInteger(RoundNumber, 3) == 0 then

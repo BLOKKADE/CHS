@@ -47,6 +47,8 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setAPBRAllWins(ps.getAPBRAllWins() + 12)
         */
 
+        call SaveNextBasicValue(ps.getDiscordAdToggle())
+
         // All Pick Save Values
         call SaveNextBasicValue(ps.getAPBRAllWins())
         call SaveNextBasicValue(ps.getAPPVPAllWins())

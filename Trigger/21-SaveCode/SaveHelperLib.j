@@ -194,7 +194,7 @@ library SaveHelperLib initializer Init requires SyncHelper, PlayerUtils, SaveFil
                 call SyncString(s)
             endif
             call ClearTextMessages()
-            call DisplayTimedTextToPlayer(p, 0, 0, 15, "Synchronzing with other players...")
+            call DisplayTimedTextToPlayer(p, 0, 0, 15, "Synchronizing with other players...")
             call SaveHelper.SetSaveSlot(user, slot)
         endif
     endfunction

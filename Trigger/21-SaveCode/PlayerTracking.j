@@ -32,6 +32,7 @@ library PlayerTracking initializer init requires OldInitialization
 
         // Misc Save Values
         private integer CameraZoom = 0
+        private integer DiscordAdToggle = 0
         private integer MapVersion = 0
 
         // Other
@@ -169,6 +170,10 @@ library PlayerTracking initializer init requires OldInitialization
         public method getCameraZoom takes nothing returns integer
             return this.CameraZoom
         endmethod
+
+        public method getDiscordAdToggle takes nothing returns integer
+            return this.DiscordAdToggle
+        endmethod
         
         public method getMapVersion takes nothing returns integer
             return this.MapVersion
@@ -224,6 +229,10 @@ library PlayerTracking initializer init requires OldInitialization
 
         public method setCameraZoom takes integer value returns nothing
             set this.CameraZoom = value
+        endmethod
+
+        public method setDiscordAdToggle takes integer value returns nothing
+            set this.DiscordAdToggle = value
         endmethod
 
         public method setMapVersion takes integer value returns nothing

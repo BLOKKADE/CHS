@@ -93,12 +93,15 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         if (ps.getCameraZoom() > 0) then
             if (ps.getCameraZoom() > 3000) then
                 call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,3000.00,0.50)
+                set CamDistance[GetPlayerId(SaveLoadEvent_Player)] = 3000
                 call ps.setCameraZoom(3000)
             elseif (ps.getCameraZoom() < 1700) then
+                set CamDistance[GetPlayerId(SaveLoadEvent_Player)] = 1700
                 call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,1700.00,0.50)
                 call ps.setCameraZoom(1700)
             else 
                 call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,I2R(ps.getCameraZoom()),0.50)
+                set CamDistance[GetPlayerId(SaveLoadEvent_Player)] = ps.getCameraZoom()
             endif
         else
             call ps.setCameraZoom(0)
@@ -121,6 +124,13 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setAPBRSeasonWins(LoadNextBasicValue())
         call ps.setAPPVPAllWins(LoadNextBasicValue())
         call ps.setAPBRAllWins(LoadNextBasicValue())
+
+        call ps.setDiscordAdToggle(LoadNextBasicValue())
+
+        //Discord ad toggle
+        if ps.getDiscordAdToggle() > 0 then
+            set DiscordAdDisabled[GetPlayerId(SaveLoadEvent_Player)] = true
+        endif
 
         if (resetSeasonStats) then
             call ps.resetSeasonStats()
