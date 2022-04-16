@@ -35,6 +35,10 @@ library PlayerTracking initializer init requires OldInitialization
         private integer DiscordAdToggle = 0
         private integer MapVersion = 0
 
+        // Hats
+        private effect CurrentHatEffect = null
+        private integer HatIndex = 0
+
         // Other
         private boolean DebugEnabled = false
         private boolean HasLoaded = false
@@ -179,6 +183,14 @@ library PlayerTracking initializer init requires OldInitialization
             return this.MapVersion
         endmethod
 
+        public method getHatIndex takes nothing returns integer
+            return this.HatIndex
+        endmethod
+
+        public method getCurrentHatEffect takes nothing returns effect
+            return this.CurrentHatEffect
+        endmethod
+
         public method setAPBRAllWins takes integer value returns nothing
             set this.APBRAllWins = value
         endmethod
@@ -237,6 +249,18 @@ library PlayerTracking initializer init requires OldInitialization
 
         public method setMapVersion takes integer value returns nothing
             set this.MapVersion = value
+        endmethod
+
+        public method setHatIndex takes integer value returns nothing
+            set this.HatIndex = value
+        endmethod
+
+        public method setCurrentHatEffect takes effect value returns nothing
+            if (value == null) then
+                call DestroyEffect(this.CurrentHatEffect)
+            endif
+
+            set this.CurrentHatEffect = value
         endmethod
 
         private method tryIncrementValue takes integer currentValue, string valueName returns integer 

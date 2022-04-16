@@ -228,7 +228,6 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer())+(" |cffffcc00has selected " +(GetUnitName(GetLastCreatedUnit())+ "!")))))
             call AdjustPlayerStateBJ(600,udg_player02,PLAYER_STATE_RESOURCE_GOLD)
             call ResourseRefresh( udg_player02   )
-    
         else
             call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8),Condition(function Trig_Spawn_Hero_Func005Func001002001001002)))),udg_player02,GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(udg_player02)]),bj_UNIT_FACING)
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(udg_player02)+(" |cffffcc00has randomed " +(GetUnitName(GetLastCreatedUnit())+ "! (+300 bonus gold)")))))
@@ -236,17 +235,11 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
             call ResourseRefresh( udg_player02   )
         endif
     
-        // Try to load the code for the player
-        call LoadCommand_AutoLoadPlayerSaveCode(udg_player02)
-                    
-    
         if GetLocalPlayer() == GetOwningPlayer(GetLastCreatedUnit()) then
             call BlzFrameSetVisible(SpellUP[0] ,true )
             call BlzFrameSetTexture(SpellFR[0], LoadStr(HT_data,GetUnitTypeId(GetLastCreatedUnit()) ,1 )  , 0, true)
     
         endif
-    
-    
     
         call BlzUnitHideAbility(GetLastCreatedUnit(),'A030',true)
         call BlzUnitHideAbility(GetLastCreatedUnit(),'A031',true)
@@ -260,6 +253,10 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         call BlzSetHeroProperName( GetLastCreatedUnit(), GetPlayerNameNoTag( GetPlayerName(GetOwningPlayer(GetLastCreatedUnit())   )))
         call ConditionalTriggerExecute(udg_trigger130)
         set PlayerHeroes[GetConvertedPlayerId(udg_player02)]= GetLastCreatedUnit()
+            
+        // Try to load the code for the player
+        call LoadCommand_AutoLoadPlayerSaveCode(udg_player02)
+                    
         call UnitAddItemByIdSwapped('ankh',GetLastCreatedUnit())
         call UnitAddItemByIdSwapped('pghe',GetLastCreatedUnit())
         call UnitAddItemByIdSwapped('I04R',GetLastCreatedUnit())
