@@ -580,7 +580,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif	
             //Ankh of Reincarnation
         elseif II == 'I0BH' then
-            if not AnkhLimitReached.boolean[GetHandleId(u)] then
+            if (not AnkhLimitReached.boolean[GetHandleId(u)]) and UnitHasFullItems(u) == false then
                 set It = GetUnitItem(u, 'ankh')
                 if It != null then
                     call SetItemCharges(It, GetItemCharges(It) + 1)
