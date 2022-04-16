@@ -31,10 +31,10 @@ scope DiscordAdCommand initializer init
 
         if DiscordAdDisabled[pid] then
             call ps.setDiscordAdToggle(1)
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Discard ad disabled")
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Discord ad disabled")
         else
             call ps.setDiscordAdToggle(0)
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Discard ad enabled")
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Discord ad enabled")
         endif
     endfunction
     
