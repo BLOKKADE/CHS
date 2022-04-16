@@ -16,7 +16,7 @@ library FixDeleteUnit requires DummyOrder
 
     function DeleteUnit takes unit u returns nothing
         call FixUnit(u)
-        if GetUnitTypeId(u) != PRIEST_1_UNIT_ID then
+        if GetUnitTypeId(u) != PRIEST_1_UNIT_ID and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
             call RemoveUnit(u)
         endif
     endfunction
