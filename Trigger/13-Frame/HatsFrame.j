@@ -52,7 +52,7 @@ library HatsFrame initializer init uses PlayerTracking, IdLibrary, FrameInit, Ma
             endif
 
             call ps.setCurrentHatEffect(AddSpecialEffectTarget(HatIndexes[hatIndex], PlayerHeroes[heroPlayerId], "head"))
-            call BlzSetSpecialEffectScale(ps.getCurrentHatEffect(), 3.0) // Current scaling is 300%. We can add customization to this per hat if needed
+            call BlzSetSpecialEffectScale(ps.getCurrentHatEffect(), 2.0) // Current scaling is 200%. We can add customization to this per hat if needed
             call ps.setHatIndex(hatIndex)
         else
             // Player took the hat off
@@ -232,20 +232,21 @@ library HatsFrame initializer init uses PlayerTracking, IdLibrary, FrameInit, Ma
 
         // The order this is created in, is the order the buttons appear in the row(s)
         // Create the hat requirement directly under each CreateHatButton call that you want added to it
+        // NOTE: A hat can have mutliple requirements!
         // NOTE: The HatIndex and HatRequirements need to line up for everything to work
-        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNCowboyHat.blp", "Rewards\\CowboyHat.mdx")
+        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNBlueWizardHat.blp", "Rewards\\BlueWizardHat.mdx")
         set currentHatRequirements = HatRequirements.create()
         call currentHatRequirements.addHatRequirementCheck(HatRequirementCheck.BRAllWinsCheck, 2)
 
-        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNChefHat.blp", "Rewards\\ChefsHat.mdx")
+        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNCowboyHat.blp", "Rewards\\CowboyHat.mdx")
         set currentHatRequirements = HatRequirements.create()
         call currentHatRequirements.addHatRequirementCheck(HatRequirementCheck.BRAllWinsCheck, 4)
 
-        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNBrownWizardhat.blp", "Rewards\\BrownWizardHat.mdx")
+        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNOfficerHat.blp", "Rewards\\MilitaryHat.mdx")
         set currentHatRequirements = HatRequirements.create()
         call currentHatRequirements.addHatRequirementCheck(HatRequirementCheck.BRAllWinsCheck, 8)
 
-        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNOfficerHat.blp", "Rewards\\MilitaryHat.mdx")
+        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNSpanishHelmet.blp", "Rewards\\SpanishHelmet2.mdx")
         set currentHatRequirements = HatRequirements.create()
         call currentHatRequirements.addHatRequirementCheck(HatRequirementCheck.BRAllWinsCheck, 16)
 
@@ -253,15 +254,15 @@ library HatsFrame initializer init uses PlayerTracking, IdLibrary, FrameInit, Ma
         set currentHatRequirements = HatRequirements.create()
         call currentHatRequirements.addHatRequirementCheck(HatRequirementCheck.BRAllWinsCheck, 32)
 
-        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNSpanishHelmet.blp", "Rewards\\SpanishHelmet2.mdx")
+        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNPirateHat.blp", "Rewards\\PirateHat.MDX")
         set currentHatRequirements = HatRequirements.create()
         call currentHatRequirements.addHatRequirementCheck(HatRequirementCheck.BRAllWinsCheck, 64)
 
-        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNBlueWizardHat.blp", "Rewards\\BlueWizardHat.mdx")
+        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNBrownWizardhat.blp", "Rewards\\BrownWizardHat.mdx")
         set currentHatRequirements = HatRequirements.create()
         call currentHatRequirements.addHatRequirementCheck(HatRequirementCheck.BRAllWinsCheck, 128)
 
-        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNPirateHat.blp", "Rewards\\PirateHat.MDX")
+        call CreateHatButton("ReplaceableTextures\\CommandButtons\\BTNChefHat.blp", "Rewards\\ChefsHat.mdx")
         set currentHatRequirements = HatRequirements.create()
         call currentHatRequirements.addHatRequirementCheck(HatRequirementCheck.BRAllWinsCheck, 256)
 
