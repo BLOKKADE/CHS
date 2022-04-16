@@ -1,7 +1,6 @@
 library HatsFrame initializer init uses PlayerTracking, IdLibrary, FrameInit, MathRound
 
     globals 
-        private framehandle MainHatFrameHandle 
         private hashtable HatButtonEventHandles
         private trigger HatButtonEventTrigger
 
@@ -12,8 +11,8 @@ library HatsFrame initializer init uses PlayerTracking, IdLibrary, FrameInit, Ma
         private integer CurrentRowIndex = 0
 
         // The X,Y coordinate for the top left of the main frame
-        private real MainFrameTopLeftX = 0.622190
-        private real MainFrameTopLeftY = 0.415688
+        private real MainFrameTopLeftX = 0.04
+        private real MainFrameTopLeftY = 0.527
 
         // Specifications for a button
         private real ButtonWidth = 0.025
@@ -227,6 +226,7 @@ library HatsFrame initializer init uses PlayerTracking, IdLibrary, FrameInit, Ma
         set HatButtonEventHandles = InitHashtable()
         set HatButtonEventTrigger = CreateTrigger()
         set MainHatFrameHandle = BlzCreateFrame("CheckListBox", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
+        call BlzFrameSetVisible(MainHatFrameHandle, false)
 
         call TriggerAddAction(HatButtonEventTrigger, function HatMouseEventActions)
 

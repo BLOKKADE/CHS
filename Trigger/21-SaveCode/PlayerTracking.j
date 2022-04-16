@@ -12,6 +12,7 @@ library PlayerTracking initializer init requires OldInitialization
     endglobals
 
     struct PlayerStats
+        // --- Values that are actually saved in the save code
         // All Pick Save Values
         private integer APBRAllWins = 0
         private integer APPVPAllWins = 0
@@ -36,23 +37,24 @@ library PlayerTracking initializer init requires OldInitialization
         private integer MapVersion = 0
 
         // Hats
-        private effect CurrentHatEffect = null
         private integer HatIndex = 0
-
-        // Other
+        // --- Values that are actually saved in the save code
+ 
+        // --- Temporary values that are not saved to the load code
+        private effect CurrentHatEffect = null
         private boolean DebugEnabled = false
+        private boolean HasAchievementsOpen = false
         private boolean HasLoaded = false
+        // --- Temporary values that are not saved to the load code
 
+        // Easy helper function to get the PlayerTracking struct of a player
         public static method forPlayer takes player p returns thistype
             return thistype(GetPlayerId(p) + 1) // First struct created is 1, not 0
         endmethod
 
+        // --- Functions for data that is not actually saved
         public method isDebugEnabled takes nothing returns boolean
             return this.DebugEnabled
-        endmethod
-
-        public method setDebugEnabled takes boolean status returns nothing
-            set this.DebugEnabled = status
         endmethod
 
         public method hasLoaded takes nothing returns boolean
@@ -63,6 +65,29 @@ library PlayerTracking initializer init requires OldInitialization
             set this.HasLoaded = true
         endmethod
 
+        public method getCurrentHatEffect takes nothing returns effect
+            return this.CurrentHatEffect
+        endmethod
+
+        public method setCurrentHatEffect takes effect value returns nothing
+            if (value == null) then
+                call DestroyEffect(this.CurrentHatEffect)
+            endif
+
+            set this.CurrentHatEffect = value
+        endmethod
+
+        public method setDebugEnabled takes boolean status returns nothing
+            set this.DebugEnabled = status
+        endmethod
+
+        public method toggleHasAchievementsOpen takes nothing returns boolean
+            set this.HasAchievementsOpen = not this.HasAchievementsOpen
+            return this.HasAchievementsOpen
+        endmethod
+        // --- Functions for data that is not actually saved
+
+        // --- Functions for data that is actually saved
         public method getAllBRWins takes nothing returns integer
             // Random
             if (AbilityMode == 0) then
@@ -187,9 +212,7 @@ library PlayerTracking initializer init requires OldInitialization
             return this.HatIndex
         endmethod
 
-        public method getCurrentHatEffect takes nothing returns effect
-            return this.CurrentHatEffect
-        endmethod
+
 
         public method setAPBRAllWins takes integer value returns nothing
             set this.APBRAllWins = value
@@ -255,14 +278,6 @@ library PlayerTracking initializer init requires OldInitialization
             set this.HatIndex = value
         endmethod
 
-        public method setCurrentHatEffect takes effect value returns nothing
-            if (value == null) then
-                call DestroyEffect(this.CurrentHatEffect)
-            endif
-
-            set this.CurrentHatEffect = value
-        endmethod
-
         private method tryIncrementValue takes integer currentValue, string valueName returns integer 
             if (currentValue >= MAX_SAVE_VALUE) then
                 call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"You have maxed out " + valueName + " at " + I2S(MAX_SAVE_VALUE))
@@ -320,6 +335,7 @@ library PlayerTracking initializer init requires OldInitialization
             set this.DraftPVPSeasonWins = 0
         endmethod
     endstruct
+    // --- Functions for data that is actually saved
 
     function GetMapVersionName takes integer gameVersion returns string
         if (gameVersion > 0 and MapVersionLookup[gameVersion] != null) then

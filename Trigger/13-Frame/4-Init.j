@@ -1,5 +1,10 @@
 library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking, SellItems
 	globals
+		// Hat variables
+		framehandle MainHatFrameHandle 
+
+
+
 		framehandle gameUI
 		framehandle SkillFrame
 		framehandle SkillFrame1
@@ -98,7 +103,17 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 				call SetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)- i1 * 30  )
 				call SetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER) + i1)
 				call ResourseRefresh(GetTriggerPlayer()) 
+
+			//Show hats menu
+			elseif NumButton == 39 then
+				set ps = PlayerStats.forPlayer(GetTriggerPlayer())
+				set TypT = ps.toggleHasAchievementsOpen()
+
+				if GetTriggerPlayer() == GetLocalPlayer() then
+					call BlzFrameSetVisible(MainHatFrameHandle, TypT)
+				endif
 			endif
+
 		elseif BlzGetTriggerFrameEvent()  ==FRAMEEVENT_MOUSE_UP then
 
 		elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
@@ -203,9 +218,11 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getDraftPVPAllWins())
 					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins())
 
+					set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
+
 					if GetLocalPlayer() == GetTriggerPlayer() then
 						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
-						call BlzFrameSetSize(Tooltip, 0.21, GetTooltipSize(ToolTipS))
+						call BlzFrameSetSize(Tooltip, 0.23, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(Tooltip, true)
 					endif
 				elseif NumButton == 100 then
