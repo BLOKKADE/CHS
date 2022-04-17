@@ -1,4 +1,4 @@
-library trigger145 initializer init requires RandomShit
+library trigger145 initializer init requires RandomShit, IdLibrary
 
     function Trig_Remove_Units_From_Center_Func001C takes nothing returns boolean
         if(not(GetUnitTypeId(GetTriggerUnit())!='n00V'))then
@@ -25,6 +25,10 @@ library trigger145 initializer init requires RandomShit
         if(not(GetUnitTypeId(GetTriggerUnit())!='e003'))then
             return false
         endif
+        if(not(GetUnitTypeId(GetTriggerUnit())!=PET_BASE_UNIT_ID))then
+            return false
+        endif
+        
         return true
     endfunction
 

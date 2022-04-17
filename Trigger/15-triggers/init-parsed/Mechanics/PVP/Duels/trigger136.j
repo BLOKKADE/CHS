@@ -283,6 +283,8 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
 
     function Trig_PvP_Battle_Actions takes nothing returns nothing
+        local PlayerStats ps
+
         if(Trig_PvP_Battle_Func001C())then
             set DuelingHeroes[1]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
             call GroupRemoveUnitSimple(DuelingHeroes[1],PotentialDuelHeroes)
@@ -313,6 +315,19 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
             set udg_location01 = OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 40.00,- 50.00)
             call SetUnitPositionLocFacingLocBJ(DuelingHeroes[1],OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
             call SetUnitPositionLocFacingLocBJ(DuelingHeroes[2],OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
+            
+            set ps = PlayerStats.forPlayer(GetOwningPlayer(DuelingHeroes[1]))
+
+            if (ps.getPet() != null) then
+                call SetUnitPositionLocFacingLocBJ(ps.getPet(),OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
+            endif
+
+            set ps = PlayerStats.forPlayer(GetOwningPlayer(DuelingHeroes[2]))
+
+            if (ps.getPet() != null) then
+                call SetUnitPositionLocFacingLocBJ(ps.getPet(),OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
+            endif
+
             set bj_forLoopAIndex = 1
             set bj_forLoopAIndexEnd = 2
             loop

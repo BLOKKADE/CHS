@@ -1,4 +1,4 @@
-library trigger85 initializer init requires RandomShit
+library trigger85 initializer init requires RandomShit, PetDeath
 
     function Trig_Pandaren_Death_Sound_Initialization_Conditions takes nothing returns boolean
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then

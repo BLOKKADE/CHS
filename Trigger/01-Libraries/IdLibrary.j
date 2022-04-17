@@ -18,6 +18,7 @@ library IdLibrary initializer init
         // --- Dummies ---
         constant integer SELL_ITEM_DUMMY                                = 'h00F'
         constant integer PRIEST_1_UNIT_ID                               = 'h015'
+        constant integer PET_BASE_UNIT_ID                               = 'e002'
 
         // --- Shops ---
 

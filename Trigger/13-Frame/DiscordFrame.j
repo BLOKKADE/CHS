@@ -36,7 +36,6 @@ library DiscordFrame initializer init
         call BlzFrameSetText(frameDiscordText, "discord.gg/7DtQgxYBXw")
         call BlzFrameSetTextSizeLimit(frameDiscordText, StringLength("discord.gg/7DtQgxYBXw"))
         call BlzFrameSetVisible(frameDiscordText, false)
-        // set frameDiscordTextHandle = tostring(frameDiscordText)
     
         // Add icon
         set frameDiscordIcon = BlzCreateFrameByType("BACKDROP", "frameDiscordIcon", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), "", 1) 

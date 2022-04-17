@@ -1,4 +1,4 @@
-library trigger80 initializer init requires RandomShit, DebugCommands
+library trigger80 initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath
 
     function Trig_Hero_Dies_Func026C takes nothing returns boolean
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
@@ -20,8 +20,11 @@ library trigger80 initializer init requires RandomShit, DebugCommands
     function EnableDeathTrigger takes nothing returns nothing
         local integer pid = GetTimerData(GetExpiredTimer())
         local unit u = PlayerHeroes[pid+1]
+        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
 
         call ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)
+        call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
+
         call FixDeath(u)
         call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
         call ReleaseTimer(GetExpiredTimer())
@@ -33,6 +36,8 @@ library trigger80 initializer init requires RandomShit, DebugCommands
     function Trig_Hero_Dies_Conditions takes nothing returns boolean
         local unit u = GetDyingUnit()
         local integer pid = GetPlayerId(GetOwningPlayer(u))
+        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
+
         //call BJDebugMsg(GetUnitName(u))
         if(not Trig_Hero_Dies_Func026C()) then
             return false
@@ -40,6 +45,8 @@ library trigger80 initializer init requires RandomShit, DebugCommands
         //udg_boolean07
         if ModeNoDeath == true and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
             call ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)
+            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
+
             call FixDeath(u)
             call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
     

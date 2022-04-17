@@ -130,9 +130,16 @@ library trigger153 initializer init requires RandomShit, DebugCommands
 
 
     function Trig_Hero_Dies_Elimination_Func030A takes nothing returns nothing
+        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
+
         set udg_unit01 = GetEnumUnit()
         call ConditionalTriggerExecute(udg_trigger82)
         call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(udg_rect09))
+
+        if (ps.getPet() != null) then
+            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+        endif
+
         call SelectUnitForPlayerSingle(GetEnumUnit(),GetOwningPlayer(GetEnumUnit()))
         call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetEnumUnit()),GetUnitLoc(GetEnumUnit()),0.50)
         call SuspendHeroXPBJ(false,GetEnumUnit())

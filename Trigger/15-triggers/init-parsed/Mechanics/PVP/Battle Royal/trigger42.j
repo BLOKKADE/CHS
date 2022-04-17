@@ -75,10 +75,17 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
 
 
     function Trig_Battle_Royal_Func017A takes nothing returns nothing
+        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
+
         set udg_unit01 = GetEnumUnit()
         call PauseUnit(udg_unit01, true)
         call ConditionalTriggerExecute(udg_trigger82)
         call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),1200,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
+
+        if (ps.getPet() != null) then
+            call SetUnitPositionLocFacingLocBJ(ps.getPet(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),1200,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
+        endif
+
         call SelectUnitForPlayerSingle(GetEnumUnit(),GetOwningPlayer(GetEnumUnit()))
         call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetEnumUnit()),GetUnitLoc(GetEnumUnit()),0.50)
     endfunction
