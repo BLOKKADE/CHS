@@ -425,31 +425,31 @@ library AchievementsFrame initializer init uses PlayerTracking, IdLibrary, Frame
         call CreateAchievementText("|cffae9a00Pets|r")
 
         // Penguin Pet
-        set currentPet = PetSpecification.create('npng', 1.0, -1.0)
+        set currentPet = PetSpecification.create('npng', 1.5, -1.0)
         call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNPenguin.blp", currentPet)
         set currentRequirements = Requirements.create("|cff6a95e1Penguin Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
 
         // Frog Pet
-        set currentPet = PetSpecification.create('nfro', 1.0, -1.0)
+        set currentPet = PetSpecification.create('nfro', 1.5, -1.0)
         call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNHex.blp", currentPet)
         set currentRequirements = Requirements.create("|cff2be747Frog Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
 
         // Reg Dragon Pet
-        set currentPet = PetSpecification.create('nrdk', 1.0, 140.0)
+        set currentPet = PetSpecification.create('nrdk', 0.60, 140.0)
         call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNRedDragon.blp", currentPet)
         set currentRequirements = Requirements.create("|cffd72919Red Dragon Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
 
         // Crab Pet
-        set currentPet = PetSpecification.create('ncrb', 1.0, -1.0)
+        set currentPet = PetSpecification.create('ncrb', 1.5, -1.0)
         call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSpinyCrab.blp", currentPet)
         set currentRequirements = Requirements.create("|cff375a97Crab Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
 
         // Seal Pet
-        set currentPet = PetSpecification.create('nsea', 1.0, -1.0)
+        set currentPet = PetSpecification.create('nsea', 1.5, -1.0)
         call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSeal.blp", currentPet)
         set currentRequirements = Requirements.create("|cff2ae0c8Seal Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
