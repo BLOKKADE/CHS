@@ -436,7 +436,7 @@ library AchievementsFrame initializer init uses PlayerTracking, IdLibrary, Frame
         set currentRequirements = Requirements.create("|cff2be747Frog Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
 
-        // Reg Dragon Pet
+        // Red Dragon Pet
         set currentPet = PetSpecification.create('nrdk', 0.60, 140.0)
         call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNRedDragon.blp", currentPet)
         set currentRequirements = Requirements.create("|cffd72919Red Dragon Pet|r")
@@ -452,6 +452,72 @@ library AchievementsFrame initializer init uses PlayerTracking, IdLibrary, Frame
         set currentPet = PetSpecification.create('nsea', 1.5, -1.0)
         call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSeal.blp", currentPet)
         set currentRequirements = Requirements.create("|cff2ae0c8Seal Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Black Dragon Pet
+        set currentPet = PetSpecification.create('nbdr', 0.6, 140.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNBlackDragon.blp", currentPet)
+        set currentRequirements = Requirements.create("|cff6e2121Black Dragon|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Azure Dragon Pet
+        set currentPet = PetSpecification.create('nadw', 0.6, 140.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNAzureDragon.blp", currentPet)
+        set currentRequirements = Requirements.create("|cff2ae0c8Azure Dragon|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Rabbit Pet
+        set currentPet = PetSpecification.create('necr', 1.5, -1.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNCritterRabbit.blp", currentPet)
+        set currentRequirements = Requirements.create("|cffffffffRabbit Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Chicken Pet
+        set currentPet = PetSpecification.create('nech', 1.5, -1.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNCritterChicken.blp", currentPet)
+        set currentRequirements = Requirements.create("|cffb468c5Chicken Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Wind Serpent Pet
+        set currentPet = PetSpecification.create('nwgs', 0.5, 140.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNWindSerpent.blp", currentPet)
+        set currentRequirements = Requirements.create("|cff68a5c5Wind Serpent Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Sea Turtle Pet
+        set currentPet = PetSpecification.create('nhyc', 0.4, -1.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSeaTurtleRed.blp", currentPet)
+        set currentRequirements = Requirements.create("|cff94241bSea Turtle Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Nerubian Spider Pet
+        set currentPet = PetSpecification.create('nspd', 0.6, -1.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNNerubian.blp", currentPet)
+        set currentRequirements = Requirements.create("|cff256e2aNerubian Spider Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Razorback Pet
+        set currentPet = PetSpecification.create('nspp', 0.7, -1.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNRazorback.blp", currentPet)
+        set currentRequirements = Requirements.create("|cff847304Razorback Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Night Elf Battle Cruiser Pet
+        set currentPet = PetSpecification.create('ebsh', 0.4, -1.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNNightElfBattleCruiser.blp", currentPet)
+        set currentRequirements = Requirements.create("|cff847304Night Elf Battle Cruiser Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Spirit Wyvern Pet
+        set currentPet = PetSpecification.create('oswy', 0.7, 140)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSpiritWyvern.blp", currentPet)
+        set currentRequirements = Requirements.create("|cff10f0fbSpirit Wyvern Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
+
+        // Riderless Horse Pet
+        set currentPet = PetSpecification.create('hrdh', 0.8, -1.0)
+        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNRiderlessHorse.blp", currentPet)
+        set currentRequirements = Requirements.create("|cffa96545Riderless Horse Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 0)
 
         // Compute the main achievement box based on how many achievements there are and the column restrictions
