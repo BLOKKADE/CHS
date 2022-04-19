@@ -28,7 +28,10 @@ library trigger145 initializer init requires RandomShit, IdLibrary
         if(not(GetUnitTypeId(GetTriggerUnit())!=PET_BASE_UNIT_ID))then
             return false
         endif
-        
+        if(not(GetUnitTypeId(GetTriggerUnit())!=SELL_ITEM_DUMMY))then
+            return false
+        endif
+
         return true
     endfunction
 

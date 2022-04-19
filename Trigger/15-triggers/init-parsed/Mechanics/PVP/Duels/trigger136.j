@@ -173,7 +173,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
     endfunction
     
     function Trig_PvP_Battle_Func001Func018001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func018001002001(),Trig_PvP_Battle_Func001Func018001002002())
+        return GetBooleanAnd(Trig_PvP_Battle_Func001Func018001002001(),Trig_PvP_Battle_Func001Func018001002002()) and GetUnitTypeId(GetFilterUnit()) != SELL_ITEM_DUMMY
     endfunction
 
 
@@ -188,7 +188,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
 
     function RemoveNonHeroUnitFilter takes nothing returns boolean
-        return UnitAlive(GetFilterUnit()) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0 and (IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false or IsUnitIllusion(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != 'h00C' and GetUnitTypeId(GetFilterUnit()) != 'h00D' 
+        return UnitAlive(GetFilterUnit()) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0 and (IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false or IsUnitIllusion(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != 'h00C' and GetUnitTypeId(GetFilterUnit()) != 'h00D' and GetUnitTypeId(GetFilterUnit()) != SELL_ITEM_DUMMY 
     endfunction
 
 
