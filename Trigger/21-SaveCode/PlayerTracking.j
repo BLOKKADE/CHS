@@ -47,6 +47,7 @@ library PlayerTracking initializer init requires OldInitialization
         private boolean HasAchievementsOpen = false
         private boolean HasLoaded = false
         private unit Pet = null
+        private integer PetLastSwappedAt = 0
 
         // --- Temporary values that are not saved to the load code
 
@@ -75,6 +76,10 @@ library PlayerTracking initializer init requires OldInitialization
         public method getPet takes nothing returns unit
             return this.Pet
         endmethod
+        
+        public method getPetLastSwappedAt takes nothing returns integer
+            return this.PetLastSwappedAt
+        endmethod
 
         public method setCurrentHatEffect takes effect value returns nothing
             if (value == null) then
@@ -94,6 +99,10 @@ library PlayerTracking initializer init requires OldInitialization
             endif
 
             set this.Pet = value
+        endmethod
+
+        public method setPetLastSwappedAt takes integer value returns nothing
+            set this.PetLastSwappedAt = value
         endmethod
 
         public method toggleHasAchievementsOpen takes nothing returns boolean
