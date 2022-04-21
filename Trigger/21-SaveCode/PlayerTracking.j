@@ -38,6 +38,7 @@ library PlayerTracking initializer init requires OldInitialization
 
         // Hats
         private integer HatIndex = 0
+        private integer PetIndex = 0
         // --- Values that are actually saved in the save code
  
         // --- Temporary values that are not saved to the load code
@@ -45,6 +46,9 @@ library PlayerTracking initializer init requires OldInitialization
         private boolean DebugEnabled = false
         private boolean HasAchievementsOpen = false
         private boolean HasLoaded = false
+        private unit Pet = null
+        private integer PetLastSwappedAt = 0
+
         // --- Temporary values that are not saved to the load code
 
         // Easy helper function to get the PlayerTracking struct of a player
@@ -69,6 +73,14 @@ library PlayerTracking initializer init requires OldInitialization
             return this.CurrentHatEffect
         endmethod
 
+        public method getPet takes nothing returns unit
+            return this.Pet
+        endmethod
+        
+        public method getPetLastSwappedAt takes nothing returns integer
+            return this.PetLastSwappedAt
+        endmethod
+
         public method setCurrentHatEffect takes effect value returns nothing
             if (value == null) then
                 call DestroyEffect(this.CurrentHatEffect)
@@ -77,8 +89,20 @@ library PlayerTracking initializer init requires OldInitialization
             set this.CurrentHatEffect = value
         endmethod
 
-        public method setDebugEnabled takes boolean status returns nothing
-            set this.DebugEnabled = status
+        public method setDebugEnabled takes boolean value returns nothing
+            set this.DebugEnabled = value
+        endmethod
+
+        public method setPet takes unit value returns nothing
+            if (value == null) then
+                call KillUnit(this.Pet)
+            endif
+
+            set this.Pet = value
+        endmethod
+
+        public method setPetLastSwappedAt takes integer value returns nothing
+            set this.PetLastSwappedAt = value
         endmethod
 
         public method toggleHasAchievementsOpen takes nothing returns boolean
@@ -212,7 +236,9 @@ library PlayerTracking initializer init requires OldInitialization
             return this.HatIndex
         endmethod
 
-
+        public method getPetIndex takes nothing returns integer
+            return this.PetIndex
+        endmethod
 
         public method setAPBRAllWins takes integer value returns nothing
             set this.APBRAllWins = value
@@ -276,6 +302,10 @@ library PlayerTracking initializer init requires OldInitialization
 
         public method setHatIndex takes integer value returns nothing
             set this.HatIndex = value
+        endmethod
+
+        public method setPetIndex takes integer value returns nothing
+            set this.PetIndex = value
         endmethod
 
         private method tryIncrementValue takes integer currentValue, string valueName returns integer 

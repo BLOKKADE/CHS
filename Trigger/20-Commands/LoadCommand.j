@@ -1,4 +1,4 @@
-library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, HatsFrame
+library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, AchievementsFrame
 
     // This is responsible for parsing the input and determining how to load the code
     // An event is fired from the savecode library once it is done loading
@@ -52,6 +52,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         local PlayerStats ps = PlayerStats.forPlayer(SaveLoadEvent_Player)
         local boolean resetSeasonStats = false
         local integer hatIndexTemp = 0
+        local integer petIndexTemp = 0
 
         // Don't load anything if the player has already loaded. A player should only need to load once
         if (ps.hasLoaded()) then
@@ -128,14 +129,18 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
         call ps.setDiscordAdToggle(LoadNextBasicValue())
         set hatIndexTemp = LoadNextBasicValue()
+        set petIndexTemp = LoadNextBasicValue()
 
         //Discord ad toggle
         if ps.getDiscordAdToggle() > 0 then
             set DiscordAdDisabled[GetPlayerId(SaveLoadEvent_Player)] = true
         endif
 
-        // Preset hat. The hat index will get saved in HatsFrame_TryToWearHat
-        call HatsFrame_TryToWearHat(hatIndexTemp, SaveLoadEvent_Player, false)
+        // Preset hat. The hat index will get saved in AchievementsFrame_TryToWearHat
+        call AchievementsFrame_TryToWearHat(hatIndexTemp, SaveLoadEvent_Player, false)
+
+        // Preset pet. The pet index will get saved in AchievementsFrame_TryToSummonPet
+        call AchievementsFrame_TryToSummonPet(petIndexTemp, SaveLoadEvent_Player, false)
 
         if (resetSeasonStats) then
             call ps.resetSeasonStats()

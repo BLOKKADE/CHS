@@ -1,4 +1,4 @@
-library trigger86 initializer init requires RandomShit
+library trigger86 initializer init requires RandomShit, PetDeath
 
     function Trig_Pandaren_Dies_Func001Func001C takes nothing returns boolean
         if(not(IsUnitDeadBJ(GetTriggerUnit())==true))then

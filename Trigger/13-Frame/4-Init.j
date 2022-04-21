@@ -1,7 +1,7 @@
 library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking, SellItems
 	globals
 		// Hat variables
-		framehandle MainHatFrameHandle 
+		framehandle MainAchievementFrameHandle 
 
 
 
@@ -110,7 +110,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 				set TypT = ps.toggleHasAchievementsOpen()
 
 				if GetTriggerPlayer() == GetLocalPlayer() then
-					call BlzFrameSetVisible(MainHatFrameHandle, TypT)
+					call BlzFrameSetVisible(MainAchievementFrameHandle, TypT)
 				endif
 			endif
 

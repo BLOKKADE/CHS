@@ -1,4 +1,4 @@
-library trigger81 initializer init requires RandomShit
+library trigger81 initializer init requires RandomShit, PetDeath
 
     function Trig_Hero_Dies_After_Victory_Func008C takes nothing returns boolean
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then

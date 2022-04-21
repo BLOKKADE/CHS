@@ -1,4 +1,4 @@
-library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDeath
+library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame
 
     function Trig_End_PvP_Conditions takes nothing returns boolean
         if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true))then
@@ -80,7 +80,13 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
 
 
     function Trig_End_PvP_Func026Func007A takes nothing returns nothing
+        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
+
         call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(udg_rect09))
+
+        if (ps.getPet() != null) then
+            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+        endif
     endfunction
 
 
@@ -124,7 +130,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
     function Trig_End_PvP_Actions takes nothing returns nothing
         local real bonus = 1
         local item tempItem = null
-        local PlayerStats winningPlayer
+        local PlayerStats ps
 
         if(Trig_End_PvP_Func001C())then
             set udg_unit05 = DuelingHeroes[2]
@@ -137,12 +143,12 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         call PvpStopSuddenDeathTimer()
         
         // Update the player's stats that they won a pvp match, and save
-        set winningPlayer = PlayerStats.forPlayer(GetOwningPlayer(udg_unit05))
-        call winningPlayer.addPVPWin()
+        set ps = PlayerStats.forPlayer(GetOwningPlayer(udg_unit05))
+        call ps.addPVPWin()
         call SaveCommand_SaveCodeForPlayer(GetOwningPlayer(udg_unit05), false)
 
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" |cffffcc00has defeated |r" +(GetPlayerNameColour(GetOwningPlayer(GetDyingUnit()))+ "|cffffcc00!!|r")))))
-        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" has |cffc2154f" + I2S(winningPlayer.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(winningPlayer.getAllPVPWins()) + "|r all time for this game mode"))))
+        call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(udg_unit05))+(" has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"))))
 
         call SetUnitInvulnerable(udg_unit05,true)
     
@@ -169,8 +175,21 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
         call ForForce(GetPlayersAll(),function Trig_End_PvP_Func019A)
         call SetUnitPositionLoc(udg_unit05,GetRectCenter(udg_rect09))
+
+        if (ps.getPet() != null) then
+            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+        endif
+
         if(Trig_End_PvP_Func021C())then
+            set ps = PlayerStats.forPlayer(GetOwningPlayer(GetDyingUnit()))
+
+            if (ps.getPet() != null) then
+                call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+            endif
+            
             call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
+            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(GetDyingUnit()), false)
+
             call FixDeath(GetDyingUnit())
             set PvpEndIndex = 1
             loop

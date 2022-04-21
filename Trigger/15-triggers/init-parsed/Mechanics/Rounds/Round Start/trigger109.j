@@ -99,7 +99,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
     endfunction
 
     function Trig_Start_Level_Func015Func002Func003A takes nothing returns nothing
-        if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' then
+        if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' and GetUnitTypeId(GetEnumUnit()) != PET_BASE_UNIT_ID and GetUnitTypeId(GetEnumUnit()) != SELL_ITEM_DUMMY then
             if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit())) then
                 call DeleteUnit(GetEnumUnit())
             else
@@ -115,12 +115,17 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
 
     function Trig_Start_Level_Func015Func002A takes nothing returns nothing
-        
+        local PlayerStats ps = PlayerStats.forPlayer(GetEnumPlayer())
         
         call ForGroupBJ(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Start_Level_Func015Func002Func003001002)),function Trig_Start_Level_Func015Func002Func003A)
         call EnumItemsInRectBJ(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
         call SetUnitInvulnerable(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],false)
         call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]))
+
+        if (ps.getPet() != null) then
+            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]))
+        endif
+
         set udg_unit01 = PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]
         call ConditionalTriggerExecute(udg_trigger82)
         call SelectUnitForPlayerSingle(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]))
