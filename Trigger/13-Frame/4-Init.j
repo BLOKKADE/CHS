@@ -109,7 +109,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 				set ps = PlayerStats.forPlayer(GetTriggerPlayer())
 				set TypT = ps.toggleHasAchievementsOpen()
 
-				if GetTriggerPlayer() == GetLocalPlayer() then
+				if GetLocalPlayer() == GetTriggerPlayer() then
 					call BlzFrameSetVisible(MainAchievementFrameHandle, TypT)
 				endif
 			endif

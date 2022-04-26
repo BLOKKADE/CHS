@@ -1,4 +1,4 @@
-library AchievementsFrame initializer init uses PlayerTracking, IdLibrary, FrameInit, MathRound, Table, PetFollow
+library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, FrameInit, MathRound, Table, PetFollow
 
     globals 
         // hastables for each type of achievement. It's how we determine what type of achievement it is when a button is selected
@@ -162,10 +162,13 @@ library AchievementsFrame initializer init uses PlayerTracking, IdLibrary, Frame
         local integer achievementType = GetAchievementType(GetHandleId(BlzGetTriggerFrame()))
         local PlayerStats ps = PlayerStats.forPlayer(GetTriggerPlayer())
         local Requirements hr = Requirements.forIndex(index)
+        local string requirementDescription
 
         if BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK then
-            call BlzFrameSetEnable(BlzGetTriggerFrame(), false) 
-            call BlzFrameSetEnable(BlzGetTriggerFrame(), true) 
+            if GetLocalPlayer() == GetTriggerPlayer() then
+				call BlzFrameSetEnable(BlzGetTriggerFrame(), false)
+				call BlzFrameSetEnable(BlzGetTriggerFrame(), true)
+			endif
 
             // Is hat
             if (achievementType == 1) then
@@ -175,10 +178,12 @@ library AchievementsFrame initializer init uses PlayerTracking, IdLibrary, Frame
                 call TryToSummonPet(index, GetTriggerPlayer(), true)
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
+            set requirementDescription = hr.getRequirementDescription(ps)
+
             // We are hijacking the tooltip window that we use for almost everything else in the game from FrameInit
             if GetLocalPlayer() == GetTriggerPlayer() then	
-                call BlzFrameSetText(TooltipTitleFrame, hr.getRequirementDescription(ps))
-                call BlzFrameSetSize(Tooltip, 0.29, GetTooltipSize(hr.getRequirementDescription(ps)))
+                call BlzFrameSetText(TooltipTitleFrame, requirementDescription)
+                call BlzFrameSetSize(Tooltip, 0.29, GetTooltipSize(requirementDescription))
                 call BlzFrameSetVisible(Tooltip, true)
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then
@@ -441,7 +446,7 @@ library AchievementsFrame initializer init uses PlayerTracking, IdLibrary, Frame
         endmethod
     endstruct
 
-    private function init takes nothing returns nothing 
+    private function SetupAchievements takes nothing returns nothing 
         local real mainFrameBottomRightX
         local real mainFrameBottomRightY
         local Requirements currentRequirements
@@ -736,6 +741,10 @@ library AchievementsFrame initializer init uses PlayerTracking, IdLibrary, Frame
         call BlzFrameSetAbsPoint(MainAchievementFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX, MainFrameTopLeftY) 
         call BlzFrameSetAbsPoint(MainAchievementFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX, mainFrameBottomRightY) 
     endfunction 
+
+    private function init takes nothing returns nothing
+        call TimerStart(CreateTimer(), 1, false, function SetupAchievements)
+    endfunction
 
 endlibrary
     
