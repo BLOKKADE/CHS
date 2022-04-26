@@ -430,7 +430,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Grom Hellscream
-        if DamageSourceTypeId == ORC_CHAMPION_UNIT_ID then
+        if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID then
             set Damage.index.damage = Damage.index.damage + GetHeroStr(DamageSourceHero, true) * 0.1 + (0.01 * GetHeroLevel(DamageSourceHero))
             call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
         endif
