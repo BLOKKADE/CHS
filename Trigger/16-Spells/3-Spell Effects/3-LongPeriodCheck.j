@@ -525,6 +525,12 @@ scope LongPeriodCheck initializer init
                         call StartFunctionSpell(u, 6)
                     endif
                 endif
+
+                //hp regen
+                set r1 = GetUnitBonusReal(u, BONUS_HEALTH_REGEN) * 0.1
+                if r1 > 0 then
+                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + r1)
+                endif
             endif
             set II = II + 1
         endloop
