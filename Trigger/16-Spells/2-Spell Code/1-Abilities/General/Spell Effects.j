@@ -289,6 +289,15 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
                         call SpellbaneSpellCast(caster, abilId, abilLvl)
                     endif
+
+                    //Wizard's Gemstone
+                    if UnitHasItemS(caster, 'I0BQ') then
+                        if BlzGetUnitAbilityCooldownRemaining(caster, 'A0CS') == 0 then
+                            call ActivateStatRune(caster)
+                            call AbilStartCD(caster, 'A0CS', 5) 
+                        endif
+                    endif
+
                     //call BJDebugMsg("cd")
                     call SetCooldown(caster, abilId, false) 
                 endif
