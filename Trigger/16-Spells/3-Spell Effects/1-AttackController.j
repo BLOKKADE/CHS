@@ -129,7 +129,7 @@ scope AttackController initializer init
         endif
         
         //Huntress
-        if GetUnitTypeId(u2) == 'N00R' then
+        if GetUnitTypeId(u2) == HUNTRESS_UNIT_ID then
             call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.495 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
         endif
 

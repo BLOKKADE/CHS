@@ -103,7 +103,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func005Func001C takes nothing returns boolean
-        if((GetUnitTypeId(BuyingUnit)=='H004'))then
+        if((GetUnitTypeId(BuyingUnit)==MORTAR_TEAM_UNIT_ID))then
             return true
         endif
         if((GetUnitTypeId(BuyingUnit)=='O005'))then

@@ -16,6 +16,7 @@ library IdLibrary initializer init
         // --- Unit IDs ---
 
         // --- Dummies ---
+        constant integer HERO_PREVIEW_UNIT_ID                           = 'e005'
         constant integer SELL_ITEM_DUMMY                                = 'h00F'
         constant integer PRIEST_1_UNIT_ID                               = 'h015'
         constant integer PET_BASE_UNIT_ID                               = 'e002'
@@ -182,11 +183,14 @@ library IdLibrary initializer init
         constant integer FALLEN_RANGER_UNIT_ID                          = 'N00B'
         constant integer GHOUL_UNIT_ID                                  = 'H01H'
         constant integer GNOME_MASTER_UNIT_ID                           = 'H019'
+        constant integer GREEDY_GOBLIN_UNIT_ID                          = 'N02P'
         constant integer GRUNT_UNIT_ID                                  = 'H01J'
+        constant integer HUNTRESS_UNIT_ID                               = 'N00R'
         constant integer LICH_UNIT_ID                                   = 'H018'
         constant integer LIEUTENANT_UNIT_ID                             = 'E000'
         constant integer MAULER_UNIT_ID                                 = 'H002'
         constant integer MEDIVH_UNIT_ID                                 = 'H01G'
+        constant integer MORTAR_TEAM_UNIT_ID                            = 'H004'
         constant integer MYSTIC_UNIT_ID                                 = 'O008'
         constant integer NAGA_SIREN_UNIT_ID                             = 'H003'
         constant integer OGRE_MAGE_UNIT_ID                              = 'H01E'
@@ -203,11 +207,13 @@ library IdLibrary initializer init
         constant integer TAUREN_UNIT_ID                                 = 'O000'
         constant integer THUNDER_WITCH_UNIT_ID                          = 'O001'
         constant integer TIME_WARRIOR_UNIT_ID                           = 'H01D'
+        constant integer TINKER_UNIT_ID                                 = 'N00L'
         constant integer TROLL_BERSERKER_UNIT_ID                        = 'O00A'
         constant integer TROLL_HEADHUNTER_UNIT_ID                       = 'N00I'
         constant integer URSA_WARRIOR_UNIT_ID                           = 'N00Q'
         constant integer WAR_GOLEM_UNIT_ID                              = 'N00C'
         constant integer WITCH_DOCTOR_UNIT_ID                           = 'O006'
+        constant integer WOLF_RIDER_UNIT_ID                             = 'U000'
         constant integer MURLOC_WARRIOR_UNIT_ID                         = 'H01F'
         constant integer YETI_UNIT_ID                                   = 'O00B'
         // --- Unit IDs ---

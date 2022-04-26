@@ -24,9 +24,9 @@ library HeroData initializer init
         call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,2, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 1000 total mana ")
         call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +250 mana." )   
         
-        call SaveStr(HT_data,'H004',1, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )       // mortal team
-        call SaveStr(HT_data,'H004',2, "|cff00ffffPassive|r: Mortar Might: Increases physical power. ")
-        call SaveStr(HT_data,'H004',3, "|cffffff00Level Up Bonus|r: Mortar Might: +3 physical power bonus." )    
+        call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )       // mortal team
+        call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,2, "|cff00ffffPassive|r: Mortar Might: Increases physical power. ")
+        call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Mortar Might: +3 physical power bonus." )    
                     
         call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )       // naga
         call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,2, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. ")
@@ -64,9 +64,9 @@ library HeroData initializer init
         call SaveStr(HT_data,THUNDER_WITCH_UNIT_ID,2, "|cff00ffffPassive|r: Thunder Bolt: Deals |cffff00ffmagic damage|r to 2 nearby enemies every second. [|cff96ffffStable|r]. Your magic power is doubled for Thunder Bolt.")
         call SaveStr(HT_data,THUNDER_WITCH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Thunder Bolt: +30 damage. (|cff68eef3Every 30 levels|r) +1 target." )
                 
-        call SaveStr(HT_data,'U000',1, "ReplaceableTextures\\CommandButtons\\BTNThrall.blp" )       // Trall
-        call SaveStr(HT_data,'U000',2, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 6 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 50% of its highest stat when they drop lower.")
-        call SaveStr(HT_data,'U000',3, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained." )
+        call SaveStr(HT_data,WOLF_RIDER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNThrall.blp" )       // Trall
+        call SaveStr(HT_data,WOLF_RIDER_UNIT_ID,2, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 6 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 50% of its highest stat when they drop lower.")
+        call SaveStr(HT_data,WOLF_RIDER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained." )
                 
         call SaveStr(HT_data,BLADE_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )       // Blade master
         call SaveStr(HT_data,BLADE_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 50% of its attack damage to nearby enemies as |cffff8080physical damage|r.")
@@ -80,8 +80,8 @@ library HeroData initializer init
         call SaveStr(HT_data,TROLL_HEADHUNTER_UNIT_ID,2, "|cff00ffffPassive|r: Troll Anatomy: Gains bonus hit point regen based on 40% of its strength. ")
         call SaveStr(HT_data,TROLL_HEADHUNTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Troll Anatomy: +1.5% strength conversion." )
                         
-        call SaveStr(HT_data,'N00L',1, "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp" )       // Tinker
-        call SaveStr(HT_data,'N00L',3, "|cffffff00Level Up Bonus|r: Gains 55 * hero level experience." )
+        call SaveStr(HT_data,TINKER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp" )       // Tinker
+        call SaveStr(HT_data,TINKER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Gains 55 * hero level experience." )
         
         call SaveStr(HT_data,BEAST_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNBeastMaster.blp" )       // Beast master
         call SaveStr(HT_data,BEAST_MASTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 3 levels|r) Increases the level of all summons by 1." )
@@ -90,9 +90,9 @@ library HeroData initializer init
         call SaveStr(HT_data,FALLEN_RANGER_UNIT_ID,2, "|cff00ffffPassive|r: Fear Aura: Reduces the armor of nearby enemies. ")
         call SaveStr(HT_data,FALLEN_RANGER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
         
-        call SaveStr(HT_data,'N00R',1, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )       // Luna
-        call SaveStr(HT_data,'N00R',2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 50% of her attack in |cffff00ffmagic damage|r. ")
-        call SaveStr(HT_data,'N00R',3, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
+        call SaveStr(HT_data,HUNTRESS_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )       // Luna
+        call SaveStr(HT_data,HUNTRESS_UNIT_ID,2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 50% of her attack in |cffff00ffmagic damage|r. ")
+        call SaveStr(HT_data,HUNTRESS_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
             
         call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )       // Brute Skelet
         call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,2, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 20% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons dies the Hero restores 2% of its max HP and the summon explodes, dealing 50 |cffff00ffmagic damage|r to enemies.")
@@ -143,9 +143,9 @@ library HeroData initializer init
         call SaveStr(HT_data,GNOME_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Gnome Stomp: At the start of every fight it deals |cffff00ffmagical damage|r and stuns all nearby heroes for 1 second and creeps for 2 seconds. ")
         call SaveStr(HT_data,GNOME_MASTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun." )             
 
-        call SaveStr(HT_data,'N02P',1, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )       // Greed goblin
-        call SaveStr(HT_data,'N02P',2, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
-        call SaveStr(HT_data,'N02P',3, "|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
+        call SaveStr(HT_data,GREEDY_GOBLIN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )       // Greed goblin
+        call SaveStr(HT_data,GREEDY_GOBLIN_UNIT_ID,2, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
+        call SaveStr(HT_data,GREEDY_GOBLIN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
 
         call SaveStr(HT_data,CENTAUR_ARCHER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNCentaurArcher.blp" )       // Cent archer
         call SaveStr(HT_data,CENTAUR_ARCHER_UNIT_ID,2, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus |cffff8080physical damage|r + 6% of the targets total hit points once every 2 seconds.")

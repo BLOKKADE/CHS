@@ -63,7 +63,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr(BLOOD_MAGE_UNIT_ID, 0, "|cffe7544aMana bonus|r: ,0,")
 
-        call SetBonusStr('H004', 0, "|cffe7544aDamage bonus|r: ,0,%%")
+        call SetBonusStr(MORTAR_TEAM_UNIT_ID, 0, "|cffe7544aDamage bonus|r: ,0,%%")
 
         call SetBonusStr(NAGA_SIREN_UNIT_ID, 0, "|cffe7544aSpell damage bonus|r: ,0,%%")
         call SetBonusStr(NAGA_SIREN_UNIT_ID, 1, "|cffd6e049Intelligence damage bonus|r: ,0,")
@@ -93,9 +93,9 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr(TAUREN_UNIT_ID, 0, "|cffe7544aRune power per active spell|r: ,0,")
         call SetBonusStr(TAUREN_UNIT_ID, 1, "|cffd6e049[Element] damage bonus|r: ,0,")
 
-        call SetBonusStr('U000', 0, "|cffe7544aTotal Agility bonus|r: ,0,")
-        call SetBonusStr('U000', 1, "|cffd6e049Agility bonus per round|r: ,0,")
-        call SetBonusStr('U000', 2, "|cff4daed4Round time limit|r: ,0,")
+        call SetBonusStr(WOLF_RIDER_UNIT_ID, 0, "|cffe7544aTotal Agility bonus|r: ,0,")
+        call SetBonusStr(WOLF_RIDER_UNIT_ID, 1, "|cffd6e049Agility bonus per round|r: ,0,")
+        call SetBonusStr(WOLF_RIDER_UNIT_ID, 2, "|cff4daed4Round time limit|r: ,0,")
 
         call SetBonusStr(BLADE_MASTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr(BLADE_MASTER_UNIT_ID, 1, "|cffd6e049Area of effect|r: ,0,")
@@ -107,13 +107,13 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr(TROLL_HEADHUNTER_UNIT_ID, 0, "|cffe7544aRegeneration bonus|r: ,0,%%")
 
-        call SetBonusStr('N00L', 0, "|cffe7544aTotal experience bonus|r: ,0,")
+        call SetBonusStr(TINKER_UNIT_ID, 0, "|cffe7544aTotal experience bonus|r: ,0,")
 
         call SetBonusStr(BEAST_MASTER_UNIT_ID, 0, "|cffe7544aSummon level bonus|r: ,0,")
 
         call SetBonusStr(FALLEN_RANGER_UNIT_ID, 0, "|cffe7544aArmor reduction|r: ,0,")
 
-        call SetBonusStr('N00R', 0, "|cffe7544aChakrum damage|r: ,0,%%")
+        call SetBonusStr(HUNTRESS_UNIT_ID, 0, "|cffe7544aChakrum damage|r: ,0,%%")
 
         call SetBonusStr(SKELETON_BRUTE_UNIT_ID, 0, "|cffe7544aDuration|r: ,0, seconds")
         call SetBonusStr(SKELETON_BRUTE_UNIT_ID, 1, "|cffd6e049Hit points restored|r: ,0,%%")
@@ -141,8 +141,8 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr(LICH_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,%")
 
-        call SetBonusStr('N02P', 0, "|cffe7544aExperience per kill|r: ,0,")
-        call SetBonusStr('N02P', 1, "|cffd6e049Gold per kill|r: ,0,")
+        call SetBonusStr(GREEDY_GOBLIN_UNIT_ID, 0, "|cffe7544aExperience per kill|r: ,0,")
+        call SetBonusStr(GREEDY_GOBLIN_UNIT_ID, 1, "|cffd6e049Gold per kill|r: ,0,")
 
         call SetBonusStr(GNOME_MASTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr(GNOME_MASTER_UNIT_ID, 1, "|cffd6e049Hero Stun|r: ,0, seconds")

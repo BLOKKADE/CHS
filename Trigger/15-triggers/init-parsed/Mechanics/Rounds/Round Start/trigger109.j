@@ -1,4 +1,4 @@
-library trigger109 initializer init requires RandomShit, StartFunction, SellItems, DebugCode
+library trigger109 initializer init requires RandomShit, StartFunction, SellItems, DebugCode, HeroSelectorAction
 
     function Trig_Start_Level_Conditions takes nothing returns boolean
         if(not(udg_boolean09==false))then
@@ -58,14 +58,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
     endfunction
 
 
-    function Trig_Start_Level_Func015C takes nothing returns boolean
-        if(not(RoundNumber > 1))then
-            return false
-        endif
-        return true
-    endfunction
-
-
     function Trig_Start_Level_Func015Func002001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
@@ -96,10 +88,10 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
     
     function Trig_Start_Level_Func015Func002Func003001002 takes nothing returns boolean
         return GetBooleanAnd(Trig_Start_Level_Func015Func002Func003001002001(),Trig_Start_Level_Func015Func002Func003001002002())
-    endfunction
+    endfunction 
 
     function Trig_Start_Level_Func015Func002Func003A takes nothing returns nothing
-        if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' and GetUnitTypeId(GetEnumUnit()) != PET_BASE_UNIT_ID and GetUnitTypeId(GetEnumUnit()) != SELL_ITEM_DUMMY then
+        if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' and GetUnitTypeId(GetEnumUnit()) != PET_BASE_UNIT_ID and GetUnitTypeId(GetEnumUnit()) != SELL_ITEM_DUMMY and GetUnitTypeId(GetEnumUnit()) != HERO_PREVIEW_UNIT_ID then
             if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit())) then
                 call DeleteUnit(GetEnumUnit())
             else
@@ -156,6 +148,9 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         local timerdialog td
         local timer t
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+
+        call RemoveHeroPreviewUnit()
+
         if(Trig_Start_Level_Func003C())then
             set udg_boolean12 = true
             set udg_boolean09 = true
@@ -163,13 +158,14 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
             call DisplayTextToForce(GetPlayersAll(),("|c00F08000Level " +(I2S(RoundNumber)+ "|r")))
             call ConditionalTriggerExecute(udg_trigger143)
             call ForGroupBJ(GetUnitsOfTypeIdAll('n00E'),function Trig_Start_Level_Func003Func006A)
-        else
         endif
+
         call ForceClear(RoundPlayersCompleted)
         
         set RoundFinishedCount = 0
         call ConditionalTriggerExecute(udg_trigger146)
         call ForForce(GetPlayersAll(),function Trig_Start_Level_Func011A)
+
         if(Trig_Start_Level_Func013C())then
             set udg_integer59 =((125 * RoundNumber)/ RoundCreepNumber)
             set udg_integer61 =((125 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
@@ -177,7 +173,8 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
             set udg_integer59 =((80 * RoundNumber)/ RoundCreepNumber)
             set udg_integer61 =((80 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
         endif
-        if(Trig_Start_Level_Func015C())then
+
+        if(RoundNumber > 1)then
             call PlaySoundBJ(udg_sound03)
             call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function Trig_Start_Level_Func015Func002A)
             set t = NewTimer()

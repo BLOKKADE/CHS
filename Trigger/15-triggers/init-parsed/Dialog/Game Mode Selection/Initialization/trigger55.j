@@ -106,6 +106,9 @@ library trigger55 initializer init requires RandomShit
         call DialogAddButtonBJ(HeroModeDialog,"Pick Hero (Recommended)")
         set udg_buttons01[15]= GetLastCreatedButtonBJ()
     
+        call DialogAddButtonBJ(HeroModeDialog,"Draft Hero")
+        set udg_buttons01[23]= GetLastCreatedButtonBJ()
+
         call DialogAddButtonBJ(HeroModeDialog,"Random Hero")
         set udg_buttons01[16]= GetLastCreatedButtonBJ()
     
@@ -145,22 +148,17 @@ library trigger55 initializer init requires RandomShit
         call ForForce(GetPlayersAll(),function Trig_Dialog_Initialization_Func047A)
         if(Trig_Dialog_Initialization_Func049001())then
             return
-        else
-            call DoNothing()
         endif
+
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Mode Selection")
-        call StartTimerBJ(GetLastCreatedTimerBJ(),false,30.00)
-        call TriggerSleepAction(30.00)
+        call TriggerSleepAction(25.00)
         if(Trig_Dialog_Initialization_Func054001())then
             return
-        else
-            call DoNothing()
         endif
+
         call ForForce(GetPlayersAll(),function Trig_Dialog_Initialization_Func055A)
         if(Trig_Dialog_Initialization_Func056C())then
             call TriggerExecute(udg_trigger77)
-        else
         endif
     endfunction
 

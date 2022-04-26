@@ -281,7 +281,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         endif
 
         //Wolf Rider - Thrall
-        if GetUnitTypeId(u) == 'U000' and (T32_Tick - RoundTimer[pid]) / 32 < 8 + (0.01 * GetHeroLevel(u)) then
+        if GetUnitTypeId(u) == WOLF_RIDER_UNIT_ID and (T32_Tick - RoundTimer[pid]) / 32 < 8 + (0.01 * GetHeroLevel(u)) then
             set i1 = R2I(10 + (GetHeroLevel(u) * 1))
             set SpeedFreakBonus[GetHandleId(u)].integer[4] = SpeedFreakBonus[GetHandleId(u)].integer[4] + i1
             call SetBonus(u, 0, SpeedFreakBonus[GetHandleId(u)].integer[4])

@@ -6,6 +6,7 @@ library OldInitialization initializer main3
         boolean duel
         integer IncomeMode = 0
         integer AbilityMode = 0
+        integer HeroMode = 0
         integer array LumberGained
         dialog IncomeModeDialog
         Table roundAbilities

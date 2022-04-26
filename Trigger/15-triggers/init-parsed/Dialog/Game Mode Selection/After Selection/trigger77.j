@@ -1,4 +1,4 @@
-library trigger77 initializer init requires RandomShit
+library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo
 
     globals
         boolean EconomyMode = false
@@ -344,6 +344,25 @@ library trigger77 initializer init requires RandomShit
     endfunction
 
 
+    function CheckHeroVotes takes nothing returns nothing
+        //random
+        if ModeVotesCount[14] > ModeVotesCount[21] and ModeVotesCount[14] > ModeVotesCount[13] then
+            set HeroMode = 0
+    
+            //pick
+        elseif ModeVotesCount[13] > ModeVotesCount[14] and ModeVotesCount[13] > ModeVotesCount[21] then
+            set HeroMode = 1
+    
+            //draft
+        elseif ModeVotesCount[21] > ModeVotesCount[14] and ModeVotesCount[21] > ModeVotesCount[13] then
+            set HeroMode = 2
+    
+            //if tie just do ap
+        else
+            set HeroMode = 1
+        endif
+    endfunction
+
     function Trig_Dialog_Complete_Func010Func004A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction
@@ -453,7 +472,7 @@ library trigger77 initializer init requires RandomShit
 
     function Trig_Dialog_Complete_Func025A takes nothing returns nothing
         set udg_player02 = GetEnumPlayer()
-        call ConditionalTriggerExecute(udg_trigger79)
+        // call ConditionalTriggerExecute(udg_trigger79)
     endfunction
 
 
@@ -463,7 +482,7 @@ library trigger77 initializer init requires RandomShit
         call ClearTextMessagesBJ(GetPlayersAll())
         set ElimModeEnabled = false
         set udg_boolean07 = false
-        
+
         if(Trig_Dialog_Complete_Func008C())then
             if(Trig_Dialog_Complete_Func008Func002C())then
                 call DisableTrigger(GetTriggeringTrigger())
@@ -563,13 +582,33 @@ library trigger77 initializer init requires RandomShit
             set udg_strings02[1]= "Type: Draft Abilities"
             call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
         endif
-        if(Trig_Dialog_Complete_Func012C())then
+
+        call CheckHeroVotes()
+
+        if HeroMode == 0 then // Random
+            call HeroSelectorForceRandom()
+            call HeroSelectorDestroy()
+            call HeroInfoDestroy()
+
             set udg_boolean16 = true
             set udg_strings02[1]=(udg_strings02[1]+ ", Random Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
-        else
+        elseif HeroMode == 1 then // Pick
+            call EnableTrigger(PickingPhaseTrigger)
+            call HeroSelectorShow(true)
+            call HeroSelectorEnablePick(true)
+
             set udg_boolean16 = false
             set udg_strings02[1]=(udg_strings02[1]+ ", Pick Hero|r")
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+        else // Draft
+            call ApplyDraftSelectionForPlayers()
+            call EnableTrigger(PickingPhaseTrigger)
+            call HeroSelectorShow(true)
+            call HeroSelectorEnablePick(true)
+
+            set udg_boolean16 = false
+            set udg_strings02[1]=(udg_strings02[1]+ ", Draft Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
         endif
         if(Trig_Dialog_Complete_Func014C())then
@@ -594,17 +633,16 @@ library trigger77 initializer init requires RandomShit
             endif
         endif
         call PlaySoundBJ(udg_sound03)
-        call ConditionalTriggerExecute(udg_trigger90)
         set udg_strings02[0]=(udg_strings02[0]+ udg_strings02[1])
         call QuestSetDescriptionBJ(GetLastCreatedQuestBJ(),udg_strings02[0])
         call QuestSetDiscoveredBJ(GetLastCreatedQuestBJ(),true)
+        
         if(Trig_Dialog_Complete_Func023001())then
             return
-        else
-            call DoNothing()
         endif
+
         call TriggerSleepAction(0.00)
-        call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func025001001)),function Trig_Dialog_Complete_Func025A)
+        // call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func025001001)),function Trig_Dialog_Complete_Func025A)
     endfunction
 
 

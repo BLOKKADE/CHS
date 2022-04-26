@@ -180,7 +180,7 @@ library HeroLevel initializer init requires HeroLvlTable
                 set LastLvlHero[Pid] = LastLvlHero[Pid] + 1
             endloop  
     
-        elseif TypeHero == 'H004' then  
+        elseif TypeHero == MORTAR_TEAM_UNIT_ID then  
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l
                 call AddUnitPhysPow(UnitHero, 3)
@@ -247,7 +247,7 @@ library HeroLevel initializer init requires HeroLvlTable
             endloop
             call SetBonus(UnitHero, 0, (I_l + 1) * 30)
             call SetBonus(UnitHero, 1, ThunderBoltTargets[hid] + 1)
-        elseif TypeHero == 'U000' then       
+        elseif TypeHero == WOLF_RIDER_UNIT_ID then       
             call SetBonus(UnitHero, 1, 10 + ((I_l + 1)))
             call SetBonus(UnitHero, 2, 6 + (0.01 * (I_l + 1)))
         elseif TypeHero == BLADE_MASTER_UNIT_ID then          
@@ -277,7 +277,7 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 2 , 20 + (I_l + 1)) 
         elseif TypeHero == TROLL_HEADHUNTER_UNIT_ID then   
             call SetBonus(UnitHero, 0, 40 + 1.5 * (I_l + 1))
-        elseif TypeHero == 'N00L' then  
+        elseif TypeHero == TINKER_UNIT_ID then  
 
             loop
                 exitwhen LastLvlHero[Pid] ==  I_l  
@@ -324,7 +324,7 @@ library HeroLevel initializer init requires HeroLvlTable
                 
             set LastLvlHero[Pid]  = I_l 
     
-        elseif TypeHero == 'N00R' then         
+        elseif TypeHero == HUNTRESS_UNIT_ID then         
             call SetBonus(UnitHero, 0, 49.5 + ((I_l + 1) * 0.5))   
         elseif TypeHero == SKELETON_BRUTE_UNIT_ID then   
             call SetBonus(UnitHero, 0, 1 + ((I_l + 1) * 0.01))   
@@ -419,7 +419,7 @@ library HeroLevel initializer init requires HeroLvlTable
             call SetBonus(UnitHero, 0, (I_l + 1) * 55)
             call SetBonus(UnitHero, 1, (I_l + 1) * 0.04)
             call SetBonus(UnitHero, 2, (I_l + 1) * 0.08)
-        elseif TypeHero == 'N02P' then
+        elseif TypeHero == GREEDY_GOBLIN_UNIT_ID then
             call SetBonus(UnitHero, 0, 20 + ((I_l + 1) * 4))
             call SetBonus(UnitHero, 1, 21 + ((I_l + 1) * 3))
         elseif TypeHero == CENTAUR_ARCHER_UNIT_ID then

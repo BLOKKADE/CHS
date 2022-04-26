@@ -7,7 +7,7 @@ library trigger86 initializer init requires RandomShit, PetDeath
         if(not(IsUnitIllusionBJ(GetTriggerUnit())!=true))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())=='N00R'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())==HUNTRESS_UNIT_ID))then
             return false
         endif
         return true
@@ -21,7 +21,7 @@ library trigger86 initializer init requires RandomShit, PetDeath
         if(not(IsUnitIllusionBJ(GetTriggerUnit())!=true))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())=='N00R'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())==HUNTRESS_UNIT_ID))then
             return false
         endif
         if(not(GetItemTypeId(GetManipulatedItem())=='ankh'))then

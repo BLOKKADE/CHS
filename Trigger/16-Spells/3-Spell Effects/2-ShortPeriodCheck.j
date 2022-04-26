@@ -221,7 +221,7 @@ scope ShortPeriodCheck initializer init
                         call UnitRemoveAbility(u, 'A092')
                     endif
 
-                elseif uid == 'U000' then
+                elseif uid == WOLF_RIDER_UNIT_ID then
                     call WolfRiderStatBonus(u, hid)
                 
                     //Rock Golem

@@ -50,7 +50,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         set expBounty = expBounty + BonusNeutral + BonusNeutralPlayer[pid] 
         
         //Greedy Goblin
-        if GetUnitTypeId(killingHero) == 'N02P' then
+        if GetUnitTypeId(killingHero) == GREEDY_GOBLIN_UNIT_ID then
             set goldBounty = goldBounty + (((22 + GetHeroLevel(killingHero) * 3) * 70) / (70 + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID)))
             set expBounty = expBounty + (((21 + GetHeroLevel(killingHero) * 4) * 70) / (70 + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID)))
             set remBon = 20

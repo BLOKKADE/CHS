@@ -42,7 +42,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         //Mortar Team
-        if GetUnitTypeId(hero) == 'H004' then
+        if GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
             call AddUnitPhysPow(u, 3 * GetHeroLevel(hero))  
         endif
 
