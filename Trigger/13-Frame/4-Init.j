@@ -1,9 +1,10 @@
 library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking, SellItems
 	globals
-		// Hat variables
+		// Hat/Pet main frame
 		framehandle MainAchievementFrameHandle 
 
-
+		// Voting main frame
+		framehandle MainVotingFrameHandle 
 
 		framehandle gameUI
 		framehandle SkillFrame
