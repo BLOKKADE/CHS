@@ -82,7 +82,7 @@ scope LongPeriodCheck initializer init
             //Earthquake
             set i = GetUnitAbilityLevel(u,EARTHQUAKE_ABILITY_ID)
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,EARTHQUAKE_ABILITY_ID) <= 0.001 and CheckProc(u, 600) then
-                call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap", GetSpellValue(75, 10, i), ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5,ABILITY_RLF_DURATION_HERO,0.5,ABILITY_RLF_DURATION_NORMAL)
+                call USOrder4field(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap", GetSpellValue(75, 10, i), ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5 + (0.05 * i),ABILITY_RLF_DURATION_HERO,0.5 + (0.05 * i),ABILITY_RLF_DURATION_NORMAL)
                 call AbilStartCD(u,EARTHQUAKE_ABILITY_ID,5) 
             endif
         endif
@@ -524,6 +524,12 @@ scope LongPeriodCheck initializer init
                         set TimeManipulationTable[hid].real[2] = TimeManipulationTable[hid].real[2] + 1
                         call StartFunctionSpell(u, 6)
                     endif
+                endif
+
+                //hp regen
+                set r1 = GetUnitBonusReal(u, BONUS_HEALTH_REGEN) * 0.1
+                if r1 > 0 then
+                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + r1)
                 endif
             endif
             set II = II + 1

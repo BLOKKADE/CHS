@@ -155,6 +155,11 @@ scope ShortPeriodCheck initializer init
                     endif
                 endif
 
+                //Gemstone
+                if GetUnitAbilityLevel(u, 'A02G') > 0 then
+                    call SetUnitManaPercentBJ(u, GetUnitManaPercent(u) + 1)
+                endif
+
                 //Druidic Focus Roots
                 if GetUnitAbilityLevel(u, DRUIDIC_FOCUS_BUFF_ID) > 0 and T32_Tick - DruidicFocusLastTick[hid] > 320 then
                     call CastDruidicFocus(u)
