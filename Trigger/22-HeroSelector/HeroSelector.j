@@ -113,6 +113,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         private string  ToManyTooltip          = "OUTOFSTOCKTOOLTIP"
         //Ban
         private boolean DelayBanUntilPick      = false //(true) baning will not be applied instantly, instead it is applied when HeroSelectorEnablePick is called the next time.
+        integer PlayerBanCount                 = 0 // Keeps track of how many people have banned. We can then short circuit the ban timer if everyoneh as banned
         //Category
         private boolean CategoryAffectRandom   = true  //(false) random will not care about selected category
         private boolean CategoryMultiSelect    = false //(false) deselect other category when selecting one, (true) can selected multiple categories and all heroes having any of them are not filtered.
@@ -522,7 +523,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local integer index =  LoadInteger(Hash, unitCode, 0)
         local integer playerId = GetPlayerId(p)
 
-        if DraftEnabled and PlayerDraftOptions.size != 0 and not PlayerDraftOptions[playerId].has(unitCode) then        
+        if DraftEnabled and not PlayerDraftOptions[playerId].has(unitCode) then        
             return false
         endif
 
@@ -940,6 +941,59 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         call ForForce(GetPlayersAll(), function ApplyDraftSelectionForPlayer)
     endfunction
 
+    function ApplySameDraftSelectionForPlayers takes nothing returns nothing
+        local integer playerIndex = 0
+        local integer currentCount = 0
+        local integer randomUnit1 = 0
+        local integer randomUnit2 = 0
+        local integer tempUnitId = 0
+
+        local Table draftHeroes = Table.create()
+
+        // udg_player03 == Host player. It needs some player to prevent errors. Player doesn't actually matter here
+        local integer strUnitId = HeroSelectorRollOption(udg_player03, false, 0, 4, true)
+        local integer agiUnitId = HeroSelectorRollOption(udg_player03, false, 0, 8, true)
+        local integer intUnitId = HeroSelectorRollOption(udg_player03, false, 0, 16, true)
+        set draftHeroes[strUnitId] = 1
+        set draftHeroes[agiUnitId] = 1
+        set draftHeroes[intUnitId] = 1
+
+        set DraftEnabled = true
+        
+        // Get 2 random heroes
+        loop
+            set tempUnitId = HeroSelectorRollOption(udg_player03, false, 0, 0, true)
+
+            if (not draftHeroes.has(tempUnitId)) then
+                set currentCount = currentCount + 1
+                set draftHeroes[tempUnitId] = 1
+
+                if (randomUnit1 == 0) then
+                    set randomUnit1 = tempUnitId
+                else
+                    set randomUnit2 = tempUnitId
+                endif
+            endif
+
+            exitwhen currentCount == 2
+        endloop
+
+        // Set the same draft options for every player
+        loop
+            set PlayerDraftOptions[playerIndex][strUnitId] = 1
+            set PlayerDraftOptions[playerIndex][agiUnitId] = 1
+            set PlayerDraftOptions[playerIndex][intUnitId] = 1
+            set PlayerDraftOptions[playerIndex][randomUnit1] = 1
+            set PlayerDraftOptions[playerIndex][randomUnit2] = 1
+
+            set playerIndex = playerIndex + 1
+            exitwhen playerIndex == 8
+        endloop
+
+        // Cleanup
+        call draftHeroes.destroy()
+    endfunction
+
     function HeroSelectorDoRandom takes player p returns nothing
         local integer category = 0
         local integer unitCode
@@ -1175,6 +1229,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             set HeroSelectorEvent = 3.0
             set HeroSelectorEvent = 0.0
         endif
+
+        set PlayerBanCount = PlayerBanCount + 1
         set p = null
     endfunction
 

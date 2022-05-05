@@ -9,6 +9,7 @@ library VotingScreen initializer init requires FrameInit, VotingResults
         private hashtable CheckboxEventHandles
         private integer ImmortalHandleId
         private integer PvpBettingHandleId
+        private integer HeroBanningHandleId
         private integer SubmitHandleId
 
         // Stores the selected and non-selected versions of every button
@@ -21,6 +22,10 @@ library VotingScreen initializer init requires FrameInit, VotingResults
         private framehandle CurrentlySelectedHeroFrameHandle
         private framehandle CurrentlySelectedIncomeFrameHandle
 
+        // Description box handle
+        private framehandle VoteDescriptionTextDisplay
+        private framehandle VoteDescriptionDisplay
+
         // The only trigger that handles any vote being selected
         private trigger VoteEventTrigger
 
@@ -31,8 +36,11 @@ library VotingScreen initializer init requires FrameInit, VotingResults
         private integer TotalButtonCount = 0
         private integer TotalVotingTypeCount = 0
 
+        // Specifications about the vote description box
+        private real TextAreaWidth = 0.35
+
         // The X,Y coordinate for the top left of the main frame
-        private real MainFrameTopLeftX = 0.125
+        private real MainFrameTopLeftX = 0.02
         private real MainFrameTopLeftY = 0.51
         private real MainFrameMargin = 0.014
 
@@ -64,8 +72,8 @@ library VotingScreen initializer init requires FrameInit, VotingResults
             return LoadInteger(HeroButtonEventHandles, handleId, 1) // Hero
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
-        elseif (buttonType == 5 or buttonType == 6) then
-            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting
+        elseif (buttonType == 5 or buttonType == 6  or buttonType == 7) then
+            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning
         endif
 
         return 0
@@ -85,6 +93,8 @@ library VotingScreen initializer init requires FrameInit, VotingResults
             return 5 // Immortal 
         elseif (handleId == PvpBettingHandleId) then
             return 6 // PVP betting 
+        elseif (handleId == HeroBanningHandleId) then
+            return 7 // Hero banning
         endif
 
         return 0
@@ -143,6 +153,8 @@ library VotingScreen initializer init requires FrameInit, VotingResults
             call pv.setImmortalVote(value)
         elseif (handleId == PvpBettingHandleId) then // PVP betting
             call pv.setPvpBettingVote(value)
+        elseif (handleId == HeroBanningHandleId) then // Hero Banning
+            call pv.setHeroBanningVote(value)
         endif
     endfunction
 
@@ -178,15 +190,12 @@ library VotingScreen initializer init requires FrameInit, VotingResults
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
             // We are hijacking the tooltip window that we use for almost everything else in the game from FrameInit
             if GetLocalPlayer() == GetTriggerPlayer() then	
-                call BlzFrameSetText(TooltipTitleFrame, VotingDescriptions[index])
-                call BlzFrameSetSize(Tooltip, 0.29, GetTooltipSize(VotingDescriptions[index]))
-                call BlzFrameSetVisible(Tooltip, true)
+                call BlzFrameSetText(VoteDescriptionTextDisplay, VotingDescriptions[index])
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then
             // Empty the text box
             if GetLocalPlayer() == GetTriggerPlayer() then	
-                call BlzFrameSetText(TooltipTextFrame, "")
-                call BlzFrameSetVisible(Tooltip, false)
+                call BlzFrameSetText(VoteDescriptionTextDisplay, "")
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_CHECKBOX_CHECKED then
             call SetCheckboxVote(pv, 2, GetHandleId(BlzGetTriggerFrame()))
@@ -211,11 +220,6 @@ library VotingScreen initializer init requires FrameInit, VotingResults
 
     private function GetTopLeftCheckboxY takes nothing returns real
         return MainFrameTopLeftY - MainFrameMargin - (ButtonHeight * CurrentRowIndex) - (CheckboxSpacing * CurrentRowIndex) - (TextHeight * TotalVotingTypeCount)
-    endfunction
-
-    // A sort of shitty check to see if we are already going to be on the next row
-    private function HasExtraRow takes nothing returns boolean
-        return (I2R(TotalButtonCount) / MaxColumnCount) == CurrentRowIndex
     endfunction
 
     // Start writing new UI on a new row
@@ -306,11 +310,9 @@ library VotingScreen initializer init requires FrameInit, VotingResults
         call BlzTriggerRegisterFrameEvent(VoteEventTrigger, buttonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         call BlzTriggerRegisterFrameEvent(VoteEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
         call BlzTriggerRegisterFrameEvent(VoteEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
-        call BlzTriggerRegisterFrameEvent(VoteEventTrigger, selectedButtonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
-        call BlzTriggerRegisterFrameEvent(VoteEventTrigger, selectedButtonFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
 
         // Make a pretty description
-        set description = "|cffFA8037" + buttonText + "|r\n" + description
+        set description = "|cffFA8037" + buttonText + "|r|n|n" + description
 
         // Save the description
         set VotingDescriptions[TotalButtonCount] = description
@@ -359,7 +361,7 @@ library VotingScreen initializer init requires FrameInit, VotingResults
         call BlzTriggerRegisterFrameEvent(VoteEventTrigger, checkboxFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
 
         // Make a pretty description
-        set description = "|cffFA8037" + checkboxText + "|r\n" + description
+        set description = "|cffFA8037" + checkboxText + "|r|n|n" + description
 
         // Save the description
         set VotingDescriptions[TotalButtonCount] = description
@@ -452,8 +454,8 @@ library VotingScreen initializer init requires FrameInit, VotingResults
 
         // The order this is created in, is the order the buttons appear in the row(s)
         call CreateVotingButtonCategory("|cffD26EFARounds|r")
-        call CreateRoundButton("50 rounds", "The game lasts 50 rounds with 10 rounds of PvP and a battle |nroyale at the end. Lasts around 60 minutes on average.", true)
-        call CreateRoundButton("25 rounds", "The game lasts 25 rounds with 5 rounds of PvP and a battle |nroyale at the end. Lasts around 30 minutes on average.", false)
+        call CreateRoundButton("50 rounds", "The game lasts 50 rounds with 10 rounds of PvP and a battle royale at the end. |n|nLasts around 60 minutes on average.", true)
+        call CreateRoundButton("25 rounds", "The game lasts 25 rounds with 5 rounds of PvP and a battle royale at the end. |n|nLasts around 30 minutes on average.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAAbilities|r")
         call CreateAbilityButton("Pick", "Every player can choose their abilities to learn from any of the ability shops.", true)
@@ -464,34 +466,42 @@ library VotingScreen initializer init requires FrameInit, VotingResults
         call CreateHeroButton("Pick", "Every player can choose any hero.", true)
         call CreateHeroButton("Random", "Every player gets a random hero and 300 bonus starting gold.", false)
         call CreateHeroButton("Draft", "Every player gets 5 random heroes to choose from.", false)
+        call CreateHeroButton("Same-Draft", "Every player gets the same 5 random heroes to choose from.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAIncome|r")
-        call CreateIncomeButton("Auto-Eco", "Pillage, Learnability, Holy Enlightenment and Midas Touch disabled. Creeps give more gold and experience after round 5. Creeps cannot be upgraded manually, instead it happens automatically starting from round 15.", true)
-        call CreateIncomeButton("Individual", "All players can manually increase their income by buying creep upgrades. Creep upgrades only apply to creeps in your own arena.", false)
-        call CreateIncomeButton("Global", "All players can manually increase their income by buying creep upgrades. Creep upgrades apply to creeps in your own arena and at 1/4th the power to all other player's creeps.", false)
-        call CreateIncomeButton("Disabled", "Disabled", false)
+        call CreateIncomeButton("Auto-Eco", "Pillage, Learnability, Holy Enlightenment and Midas Touch disabled. |nCreeps give more gold and experience after round 5. |nCreeps cannot be upgraded manually, instead it happens automatically starting from round 15.", true)
+        call CreateIncomeButton("Individual", "All players can manually increase their income by buying creep upgrades. |nCreep upgrades only apply to creeps in your own arena.", false)
+        call CreateIncomeButton("Global", "All players can manually increase their income by buying creep upgrades. |nCreep upgrades apply to creeps in your own arena and at 1/4th the power to all other player's creeps.", false)
+        call CreateIncomeButton("Disabled", "Players can not buy creep upgrades or upgrade their end of round income in any way. Creeps gain no bonus power.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAOther Options|r")
-        set ImmortalHandleId = CreateVotingCheckbox("Immortal Mode", "Unlimited lives with immortal mode. |n Otherwise, you are given a few lives. Once you |n lose them all, you lose the game.")
+        set ImmortalHandleId = CreateVotingCheckbox("Immortal Mode", "Unlimited lives with immortal mode. Otherwise, you are given a few lives. Once you lose them all, you lose the game.")
         set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches.")
+        set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.")
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameMargin) + (IMinBJ(MaxColumnCount, TotalButtonCount) * ButtonWidth) + ((IMinBJ(MaxColumnCount, TotalButtonCount) - 1) * ButtonSpacing)
         set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameMargin) - ((CurrentRowIndex + 1) * ButtonHeight) - (CurrentRowIndex * ButtonSpacing) - (TextHeight * TotalVotingTypeCount)
 
-        // A sort of shitty check if we need to go back a row in the Y direction. This happens when the next vote element would go on the next row, but there isn't another vote element.
-        if (HasExtraRow()) then
-            set mainFrameBottomRightY = mainFrameBottomRightY + ButtonHeight + ButtonSpacing
-        endif
-
+        // Set the frame for the backdrop of the entire voting screen
         call BlzFrameSetAbsPoint(MainVotingFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX, MainFrameTopLeftY) 
         call BlzFrameSetAbsPoint(MainVotingFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX, mainFrameBottomRightY) 
 
+        // Add the submit button to the bottom right of the voting screen
         call CreateSubmitButton(mainFrameBottomRightX, mainFrameBottomRightY)
-    endfunction
 
-    //private function init takes nothing returns nothing
-    //    call TimerStart(CreateTimer(), 1, false, function SetupVotingButtons)
-    //endfunction
+        // Create the box for the descriptions 
+        set VoteDescriptionDisplay = BlzCreateFrame("CheckListBox", MainVotingFrameHandle, 0, 0)
+        call BlzFrameSetAbsPoint(VoteDescriptionDisplay, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX, MainFrameTopLeftY) 
+        call BlzFrameSetAbsPoint(VoteDescriptionDisplay, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX + .1 + TextAreaWidth, mainFrameBottomRightY) 
+
+        // Create the actual text element that shows the descriptions
+        set VoteDescriptionTextDisplay = BlzCreateFrameByType("TEXT", "VoteDescriptionTextArea", MainVotingFrameHandle, "", 0)    
+        call BlzFrameSetAbsPoint(VoteDescriptionTextDisplay, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX + (1.3 * MainFrameMargin), MainFrameTopLeftY - (1.3 * MainFrameMargin)) 
+        call BlzFrameSetAbsPoint(VoteDescriptionTextDisplay, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX + TextAreaWidth - .1, mainFrameBottomRightY + MainFrameMargin)
+        call BlzFrameSetEnable(VoteDescriptionTextDisplay, false) 
+        call BlzFrameSetScale(VoteDescriptionTextDisplay, 1.5) 
+        call BlzFrameSetTextAlignment(VoteDescriptionTextDisplay, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT)
+    endfunction
 
 endlibrary

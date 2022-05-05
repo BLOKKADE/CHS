@@ -186,12 +186,12 @@ library HeroInfo initializer init_function requires Ascii, GetClass
 
             set descriptionTemp = GetClassification(null, unitCode, false)
             if descriptionTemp != "" then
-                set description = description + descriptionTemp + "\n"
+                set description = description + descriptionTemp + "|n"
             endif
 
             set descriptionTemp = LoadStr(HT_data, unitCode, 2)
             if descriptionTemp != "" and descriptionTemp != null then
-                set description = description + descriptionTemp + "\n"
+                set description = description + descriptionTemp + "|n"
             endif
 
             set descriptionTemp = LoadStr(HT_data, unitCode, 3)

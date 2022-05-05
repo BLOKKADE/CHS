@@ -7,6 +7,7 @@ library VotingResults initializer init
         integer IncomeMode
         integer ImmortalMode
         integer PvpBettingMode
+        integer HeroBanningMode
         string GameDescription
 
         // Counts for each type of vote. Used so that we don't need to hardcode indexes or something
@@ -26,6 +27,7 @@ library VotingResults initializer init
         private integer IncomeVote = 1 // Individual
         private integer ImmortalVote = 1 // Normal lives
         private integer PvpBettingVote = 1 // No betting
+        private integer HeroBanningVote = 1 // No banning
 
         public method setRoundVote takes integer value returns nothing 
             set this.RoundVote = value
@@ -51,6 +53,10 @@ library VotingResults initializer init
             set this.PvpBettingVote = value
         endmethod
         
+        public method setHeroBanningVote takes integer value returns nothing 
+            set this.HeroBanningVote = value
+        endmethod
+
         public method getRoundVote takes nothing returns integer 
             return this.RoundVote
         endmethod
@@ -73,6 +79,10 @@ library VotingResults initializer init
 
         public method getPvpBettingVote takes nothing returns integer 
             return this.PvpBettingVote
+        endmethod
+
+        public method getHeroBanningVote takes nothing returns integer 
+            return this.HeroBanningVote
         endmethod
     endstruct
 
@@ -99,6 +109,8 @@ library VotingResults initializer init
             set GameDescription = GameDescription + "Random Hero |n "
         elseif (HeroMode == 3) then
             set GameDescription = GameDescription + "Draft Hero |n "
+        elseif (HeroMode == 4) then
+            set GameDescription = GameDescription + "Same-Draft Hero |n "
         endif
 
         if (IncomeMode == 1) then
@@ -122,6 +134,12 @@ library VotingResults initializer init
         elseif (PvpBettingMode == 2) then
             set GameDescription = GameDescription + "PVP Betting On |n "
         endif
+
+        if (HeroBanningMode == 1) then
+            set GameDescription = GameDescription + "Hero Banning Off |n "
+        elseif (HeroBanningMode == 2) then
+            set GameDescription = GameDescription + "Hero Banning On |n "
+        endif
     endfunction
 
     private function GetMaxValueInVoteCounts takes integer modeOptionCount returns integer
@@ -135,7 +153,7 @@ library VotingResults initializer init
 
             set i = i + 1
 
-            exitwhen i > modeOptionCount // Because we are 0 indexed
+            exitwhen i > modeOptionCount
         endloop
 
         return currentMaxValue
@@ -170,14 +188,14 @@ library VotingResults initializer init
 
                     set j = j + 1
         
-                    exitwhen j > modeOptionCount // Because we are 0 indexed
+                    exitwhen j > modeOptionCount
                 endloop
             endif
 
             set i = i + 1
             set j = 0
 
-            exitwhen i > modeOptionCount // Because we are 0 indexed
+            exitwhen i > modeOptionCount
         endloop
 
         // Choose a random index from the duplicate count array
@@ -195,6 +213,7 @@ library VotingResults initializer init
         local integer array incomeModeCounts
         local integer array immortalModeCounts
         local integer array pvpBettingModeCounts
+        local integer array heroBanningModeCounts
         local PlayerVotes currentPlayerVotes
         local integer i = 0
 
@@ -210,6 +229,7 @@ library VotingResults initializer init
                 set incomeModeCounts[currentPlayerVotes.getIncomeVote()] = incomeModeCounts[currentPlayerVotes.getIncomeVote()] + 1
                 set immortalModeCounts[currentPlayerVotes.getImmortalVote()] = immortalModeCounts[currentPlayerVotes.getImmortalVote()] + 1
                 set pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] = pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] + 1
+                set heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] = heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] + 1
             endif
 
             set i = i + 1
@@ -222,7 +242,7 @@ library VotingResults initializer init
         loop
             set CategoryVotes[i] = roundModeCounts[i]
             set i = i + 1
-            exitwhen i > RoundButtonCount // Because we are 0 indexed
+            exitwhen i > RoundButtonCount
         endloop
         set RoundMode = GetVoteFromAnyDuplicates(RoundButtonCount)
 
@@ -231,7 +251,7 @@ library VotingResults initializer init
         loop
             set CategoryVotes[i] = abilityModeCounts[i]
             set i = i + 1
-            exitwhen i > AbilityButtonCount // Because we are 0 indexed
+            exitwhen i > AbilityButtonCount
         endloop
         set AbilityMode = GetVoteFromAnyDuplicates(AbilityButtonCount)
 
@@ -240,7 +260,7 @@ library VotingResults initializer init
         loop
             set CategoryVotes[i] = heroModeCounts[i]
             set i = i + 1
-            exitwhen i > HeroButtonCount // Because we are 0 indexed
+            exitwhen i > HeroButtonCount
         endloop
         set HeroMode = GetVoteFromAnyDuplicates(HeroButtonCount)
 
@@ -249,7 +269,7 @@ library VotingResults initializer init
         loop
             set CategoryVotes[i] = incomeModeCounts[i]
             set i = i + 1
-            exitwhen i > IncomeButtonCount // Because we are 0 indexed
+            exitwhen i > IncomeButtonCount
         endloop
         set IncomeMode = GetVoteFromAnyDuplicates(IncomeButtonCount)
 
@@ -258,7 +278,7 @@ library VotingResults initializer init
         loop
             set CategoryVotes[i] = immortalModeCounts[i]
             set i = i + 1
-            exitwhen i > 2 // Because we are 0 indexed
+            exitwhen i > 2
         endloop
         set ImmortalMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
 
@@ -267,9 +287,18 @@ library VotingResults initializer init
         loop
             set CategoryVotes[i] = pvpBettingModeCounts[i]
             set i = i + 1
-            exitwhen i > 2 // Because we are 0 indexed
+            exitwhen i > 2
         endloop
         set PvpBettingMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+
+        // Hero banning vote counting
+        set i = 1
+        loop
+            set CategoryVotes[i] = heroBanningModeCounts[i]
+            set i = i + 1
+            exitwhen i > 2
+        endloop
+        set HeroBanningMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
 
         // Set the weird global variables based off of the results
         set udg_boolean08 = RoundMode == 2 // Boolean that flags if the game is short

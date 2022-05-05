@@ -1,4 +1,4 @@
-library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo
+library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, BanningPhase
 
     globals
         boolean EconomyMode = false
@@ -333,29 +333,28 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo
 
         // Hero mode settings
         if HeroMode == 2 then // Random hero
-            call HeroSelectorForceRandom()
-            call HeroSelectorDestroy()
-            call HeroInfoDestroy()
+            call BanningPhase_TryEnablingBanningPhase()
 
             set udg_boolean16 = true
             set udg_strings02[1]=(udg_strings02[1]+ ", Random Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
         elseif HeroMode == 1 then // Pick hero
-            call EnableTrigger(PickingPhaseTrigger)
-            call HeroSelectorShow(true)
-            call HeroSelectorEnablePick(true)
+            call BanningPhase_TryEnablingBanningPhase()
 
             set udg_boolean16 = false
             set udg_strings02[1]=(udg_strings02[1]+ ", Pick Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
         elseif HeroMode == 3 then // Draft hero
-            call ApplyDraftSelectionForPlayers()
-            call EnableTrigger(PickingPhaseTrigger)
-            call HeroSelectorShow(true)
-            call HeroSelectorEnablePick(true)
+            call BanningPhase_TryEnablingBanningPhase()
 
             set udg_boolean16 = false
             set udg_strings02[1]=(udg_strings02[1]+ ", Draft Hero|r")
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+        elseif HeroMode == 4 then // Same-Draft hero
+            call BanningPhase_TryEnablingBanningPhase()
+
+            set udg_boolean16 = false
+            set udg_strings02[1]=(udg_strings02[1]+ ", Same-Draft Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
         endif
 
