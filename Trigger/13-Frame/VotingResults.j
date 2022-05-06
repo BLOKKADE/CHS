@@ -1,3 +1,9 @@
+/*
+    The entire voting system could probably be better. 
+    Could probably just store all votes in a single array using the index from the voting screen, but it's more dependent then.
+    This results in having to use a lot of arrays to count the cotes from every player.
+    Oh well. It works.
+*/
 library VotingResults initializer init
 
     globals
@@ -87,59 +93,61 @@ library VotingResults initializer init
     endstruct
 
     public function SetGameModeDescription takes nothing returns nothing
-        set GameDescription = ""
+        set GameDescription = "|cffe9820dGame Mode: "
 
         if (RoundMode == 1) then
-            set GameDescription = GameDescription + "50 Rounds |n "
+            set GameDescription = GameDescription + "50 Rounds, "
         elseif (RoundMode == 2) then
-            set GameDescription = GameDescription + "25 Rounds |n "
+            set GameDescription = GameDescription + "25 Rounds, "
         endif
 
         if (AbilityMode == 1) then
-            set GameDescription = GameDescription + "Pick Abilities |n "
+            set GameDescription = GameDescription + "Pick Abilities, "
         elseif (AbilityMode == 2) then
-            set GameDescription = GameDescription + "Random Abilities |n "
+            set GameDescription = GameDescription + "Random Abilities, "
         elseif (AbilityMode == 3) then
-            set GameDescription = GameDescription + "Draft Abilities |n "
+            set GameDescription = GameDescription + "Draft Abilities, "
         endif
 
         if (HeroMode == 1) then
-            set GameDescription = GameDescription + "Pick Hero |n "
+            set GameDescription = GameDescription + "Pick Hero, "
         elseif (HeroMode == 2) then
-            set GameDescription = GameDescription + "Random Hero |n "
+            set GameDescription = GameDescription + "Random Hero, "
         elseif (HeroMode == 3) then
-            set GameDescription = GameDescription + "Draft Hero |n "
+            set GameDescription = GameDescription + "Draft Hero, "
         elseif (HeroMode == 4) then
-            set GameDescription = GameDescription + "Same-Draft Hero |n "
+            set GameDescription = GameDescription + "Same-Draft Hero, "
         endif
 
         if (IncomeMode == 1) then
-            set GameDescription = GameDescription + "Auto-Eco |n "
+            set GameDescription = GameDescription + "Auto-Eco Income, "
         elseif (IncomeMode == 2) then
-            set GameDescription = GameDescription + "Individual |n "
+            set GameDescription = GameDescription + "Individual Income, "
         elseif (IncomeMode == 3) then
-            set GameDescription = GameDescription + "Global |n "
+            set GameDescription = GameDescription + "Global Income, "
         elseif (IncomeMode == 4) then
-            set GameDescription = GameDescription + "Disabled |n "
+            set GameDescription = GameDescription + "Disabled Income, "
         endif
 
         if (ImmortalMode == 1) then
-            set GameDescription = GameDescription + "Mortal Mode |n "
+            set GameDescription = GameDescription + "Mortal Mode, "
         elseif (ImmortalMode == 2) then
-            set GameDescription = GameDescription + "Immortal Mode |n "
+            set GameDescription = GameDescription + "Immortal Mode, "
         endif
 
         if (PvpBettingMode == 1) then
-            set GameDescription = GameDescription + "PVP Betting Off |n "
+            set GameDescription = GameDescription + "PVP Betting Off, "
         elseif (PvpBettingMode == 2) then
-            set GameDescription = GameDescription + "PVP Betting On |n "
+            set GameDescription = GameDescription + "PVP Betting On, "
         endif
 
         if (HeroBanningMode == 1) then
-            set GameDescription = GameDescription + "Hero Banning Off |n "
+            set GameDescription = GameDescription + "Hero Banning Off"
         elseif (HeroBanningMode == 2) then
-            set GameDescription = GameDescription + "Hero Banning On |n "
+            set GameDescription = GameDescription + "Hero Banning On"
         endif
+
+        set GameDescription = GameDescription + "|r"
     endfunction
 
     private function GetMaxValueInVoteCounts takes integer modeOptionCount returns integer

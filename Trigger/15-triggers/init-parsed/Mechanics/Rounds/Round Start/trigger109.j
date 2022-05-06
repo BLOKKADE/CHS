@@ -155,6 +155,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
             set udg_boolean12 = true
             set udg_boolean09 = true
 
+            call DisplayTextToForce(GetPlayersAll(), GameDescription)
             call DisplayTextToForce(GetPlayersAll(),("|c00F08000Level " +(I2S(RoundNumber)+ "|r")))
             call ConditionalTriggerExecute(udg_trigger143)
             call ForGroupBJ(GetUnitsOfTypeIdAll('n00E'),function Trig_Start_Level_Func003Func006A)

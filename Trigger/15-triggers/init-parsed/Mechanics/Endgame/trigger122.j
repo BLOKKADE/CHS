@@ -135,6 +135,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(Trig_Victory_Func012C())then
             call DisplayTimedTextToForce(GetPlayersAll(),30,("|cffffcc00" +("You survived all levels! Congratulations!!")))
         else
+            call DisplayTimedTextToForce(GetPlayersAll(),30,GameDescription)
             call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
             
             if (shouldSaveBrWin) then
@@ -151,7 +152,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         call PlaySoundBJ(udg_sound05)
         call DisableTrigger(udg_trigger87)
         call TriggerSleepAction(2.00)
-        call DisplayTimedTextToForce(GetPlayersAll(),26.00,"|cffffcc00Thank you for playing|r " + "|cff7bff00" + VERSION + "|r")
+        call DisplayTimedTextToForce(GetPlayersAll(),30.00,"|cffffcc00Thank you for playing|r " + "|cff7bff00" + VERSION + "|r")
 
         // Save everyones codes
         call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
