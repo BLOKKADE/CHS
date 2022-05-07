@@ -95,8 +95,8 @@ library HeroData initializer init
         call SaveStr(HT_data,HUNTRESS_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
             
         call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )       // Brute Skelet
-        call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,2, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 20% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons dies the Hero restores 2% of its max HP and the summon explodes, dealing 50 |cffff00ffmagic damage|r to enemies.")
-        call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Reinforced Bone: +0.01 second invulnerability. +0.05% of maximum hit points restored. +50 explosion damage." )
+        call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,2, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 20% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons dies the Hero restores 2% of its max HP and the summon explodes, dealing 50% of its attack damage as |cffff00ffmagic damage|r to enemies.")
+        call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Reinforced Bone: +0.01 second invulnerability. +0.05% of maximum hit points restored. +1% of attack damage explosion damage." )
                 
         call SaveStr(HT_data,SORCERER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNJaina.blp" )       // Sorser
         call SaveStr(HT_data,SORCERER_UNIT_ID,2, "|cff00ffffPassive|r: Lightning Strike: Deals |cffff00ffmagic damage|r to 3 nearby enemies whenever the Hero casts a spell. ")

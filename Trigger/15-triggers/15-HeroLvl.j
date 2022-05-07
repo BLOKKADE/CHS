@@ -329,7 +329,7 @@ library HeroLevel initializer init requires HeroLvlTable
         elseif TypeHero == SKELETON_BRUTE_UNIT_ID then   
             call SetBonus(UnitHero, 0, 1 + ((I_l + 1) * 0.01))   
             call SetBonus(UnitHero, 1, 2 + ((I_l + 1) * 0.05))   
-            call SetBonus(UnitHero, 2, 20 + ((I_l + 1) * 30))   
+            call SetBonus(UnitHero, 2, 50 + (I_l + 1))   
         elseif TypeHero == SORCERER_UNIT_ID then   
             call SetBonus(UnitHero, 0, (I_l + 1) * 50)   
         
