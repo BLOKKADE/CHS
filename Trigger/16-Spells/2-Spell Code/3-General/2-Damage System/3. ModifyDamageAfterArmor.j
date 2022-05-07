@@ -461,7 +461,7 @@ scope ModifyDamageAfterArmor initializer init
             call DummyOrder.create(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitFacing(DamageSource), 2).addActiveAbility(DECAYING_SCYTHE_DUMMY_ABILITY_ID, 1, 852189).target(DamageTarget).activate()
             set DecayingScytheTick[DamageTargetId] = T32_Tick
             if GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID) == 0 then
-                set r2 = GetUnitTotalHpRegen(DamageTarget)
+                set r2 = GetUnitPositiveHpRegen(DamageTarget)
                 set r3 = r2 * 0.6
 
                 if r2 - r3 < 0 then

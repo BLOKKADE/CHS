@@ -12,6 +12,20 @@ library CustomState requires TimerUtils
         constant integer BONUS_PVPBONUS                 = 8
         constant integer BONUS_PHYSPOW                  = 9
         constant integer BONUS_MISSCHANCE               = 10
+        //11-20 are in NewBonus.j
+        /*
+        constant integer BONUS_DAMAGE                   = 11
+        constant integer BONUS_ARMOR                    = 12
+        constant integer BONUS_AGILITY                  = 13
+        constant integer BONUS_STRENGTH                 = 14
+        constant integer BONUS_INTELLIGENCE             = 15
+        constant integer BONUS_HEALTH                   = 16
+        constant integer BONUS_MANA                     = 17
+        constant integer BONUS_HEALTHREGEN              = 18
+        constant integer BONUS_MANAREGEN                = 19
+        constant integer BONUS_ATTACKSPEED              = 20
+        */
+        constant integer BONUS_NEGATIVEHPREGEN          = 21
     endglobals
 
     //Magic damage
@@ -148,6 +162,19 @@ library CustomState requires TimerUtils
 
     function AddUnitPhysPow takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),9,LoadReal(HT_unitstate,GetHandleId(u),9)+ r)
+    endfunction
+
+    //Negative Hp Regen
+    function SetUnitNegativeHpRegen takes unit u,real r returns nothing
+        call SaveReal(HT_unitstate,GetHandleId(u),21,r)
+    endfunction
+
+    function GetUnitNegativeHpRegen takes unit u returns real
+        return LoadReal(HT_unitstate,GetHandleId(u),21)
+    endfunction
+
+    function AddUnitNegativeHpRegen takes unit u,real r returns nothing
+        call SaveReal(HT_unitstate,GetHandleId(u),21,LoadReal(HT_unitstate,GetHandleId(u),21)+ r)
     endfunction
 
     //Absolute limit

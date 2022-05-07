@@ -5,6 +5,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         //Table PoisonBonus
         Table AbsolutePoisonTable
         constant real HpReduction = 0.20
+        constant real maxPercent = 1.00
     endglobals
 
     function GetAbsolutePoisonStruct takes unit u returns AbsolutePoisonStruct
@@ -22,7 +23,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         private method countBuffs takes nothing returns real
             local integer count = 0
             local integer hid = GetHandleId(this.target)
-            local real regen = GetUnitTotalHpRegen(this.target) + this.reduction
+            local real regen = GetUnitPositiveHpRegen(this.target)
             local real newRegen = 0
 
             if GetUnitAbilityLevel(this.target, PARASITE_BUFF_ID) > 0 then
@@ -69,13 +70,10 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
 
             //call BJDebugMsg("count: " + I2S(count))
 
-            set newRegen = ((count * HpReduction) * regen)
-            //make sure regen doesnt go below 0
-            if regen - newRegen < 0 then
-                return RMaxBJ(newRegen + (regen - newRegen), 0)
-            else
-                return newRegen
-            endif 
+            set newRegen = (RMinBJ(count * HpReduction, maxPercent) * regen)
+            //set newRegen = (count * HpReduction) * regen
+
+            return newRegen
         endmethod
     
         private method periodic takes nothing returns nothing
@@ -85,11 +83,12 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             if this.reduction != currentBonus then
                 //call BJDebugMsg("ap old: " + R2S(this.reduction) + " new: " + R2S(currentBonus))
                 //call BJDebugMsg("absolute poison: " + I2S(GetHandleId(this.target)) + " : " + GetUnitName(this.target))
-                //call BJDebugMsg("current:" + R2S(this.reduction) + " count: " + I2S(this.buffCount) + " percent: " + R2S(this.buffCount * 0.12) + " val: " + R2S(currentBonus))
-                call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)
+                //call BJDebugMsg("old red:" + R2S(this.reduction) + I2S(this.buffCount) + " new red: " + R2S(currentBonus))
+                call AddUnitNegativeHpRegen(this.target, 0 - this.reduction + currentBonus)
+                //call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)
                 //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
-                set this.reduction = currentBonus
-                call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, 0 - this.reduction)
+                //set this.reduction = currentBonus
+                //call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, 0 - this.reduction)
                 //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) - this.reduction)
             endif
             if T32_Tick > this.endTick or (T32_Tick - this.startTick > 32 and this.buffCount == 0) or IsUnitDivineBubbled(this.target) or IsUnitSpellTargetCheck(this.target, GetOwningPlayer(this.source)) == false then
@@ -113,6 +112,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         
         method destroy takes nothing returns nothing
             set AbsolutePoisonTable[GetHandleId(this.target)] = 0
+            call BJDebugMsg("abs psn disable")
             call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)
             //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
             set this.target = null

@@ -527,7 +527,7 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //hp regen
-                set r1 = GetUnitBonusReal(u, BONUS_HEALTH_REGEN) * 0.1
+                set r1 = GetUnitTotalHpRegen(u) * 0.1
                 if r1 > 0 then
                     call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + r1)
                 endif

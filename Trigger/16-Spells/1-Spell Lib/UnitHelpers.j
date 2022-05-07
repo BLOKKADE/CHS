@@ -12,10 +12,6 @@ library UnitHelpers initializer init requires Utility, RandomShit
         return GetUnitDamage(u, 0)
     endfunction
 
-    function GetUnitTotalHpRegen takes unit u returns real
-        return GetUnitBonusReal(u, BONUS_HEALTH_REGEN)
-    endfunction
-
     function IsUnitMagicImmune takes unit u returns boolean
         return IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE)
     endfunction

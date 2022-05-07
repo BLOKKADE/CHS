@@ -141,7 +141,7 @@ scope ShortPeriodCheck initializer init
                 //glory hp regen
                 if GloryRegenLevel[hid] > 0 then
                     set r2 = LoadReal(DataUnitHT, hid, 1000)
-                    set r1 = GetUnitBonusReal(u, BONUS_HEALTH_REGEN) - r2
+                    set r1 = GetUnitPositiveHpRegen(u) - r2
                     
                     if uid == TROLL_HEADHUNTER_UNIT_ID then
                         set r1 = r1 + LoadInteger(DataUnitHT, hid, 542)
