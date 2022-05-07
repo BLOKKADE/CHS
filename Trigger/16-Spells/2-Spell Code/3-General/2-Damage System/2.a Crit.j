@@ -42,7 +42,7 @@ library CritDamage requires RandomShit
             set baseCritChance = baseCritChance + (0.1 * GetHeroLevel(PlayerHeroes[ScorchedEarthSource[DamageSourceId] + 1]))
         endif
 
-        if not magicDmgType then
+        if IsPhysDamage() then
             //Creep Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,'ACct') //Critical Strike 
             if i > 0 and GetRandomReal(0,100) <= 10 * DamageSourceLuck + baseCritChance then
@@ -83,7 +83,8 @@ library CritDamage requires RandomShit
             set i = GetUnitAbilityLevel(DamageSource,'AIcs')
             if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
                 set critDmg = critDmg + Dmg
-            endif     
+            endif
+
         elseif magicDmgType then
             //Archmage Staff
             if UnitHasItemS(DamageSource,'I086') and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
