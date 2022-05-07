@@ -302,8 +302,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory movespeed
             elseif II  == GLORY_MOVESPEED_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) and GetUnitMoveSpeed(u) < 522 then
-                    call SetUnitMoveSpeed(u, 522)
+                if BuyGloryItem(pid, II) then
+                    //call SetUnitMoveSpeed(u, 522)
                     call BlzSetUnitRealField(u, UNIT_RF_SPEED, 522)
                     
                     set gloryBonus = gloryBonus + 522
