@@ -208,6 +208,54 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creep Enrage disabled.")
         endif
     endfunction
+
+    function CpuPower takes Args args returns nothing
+        local integer pid = 0
+        local unit u
+        loop
+          set u = PlayerHeroes[pid + 1]
+          if GetPlayerController(Player(pid)) == MAP_CONTROL_COMPUTER and u != null then
+            call SetHeroLevel(u, GetHeroLevel(u) + 200, true)
+            /*call UnitAddAbility(u, ARCANE_ASSAUL_ABILITY_ID)
+            call UnitAddAbility(u, LAST_BREATHS_ABILITY_ID)
+            call UnitAddAbility(u, TRUESHOT_AURA_ABILITY_ID)
+            call UnitAddAbility(u, ICE_ARMOR_ABILITY_ID)
+            call UnitAddAbility(u, DIVINE_GIFT_ABILITY_ID)
+            call UnitAddAbility(u, FAST_MAGIC_ABILITY_ID)
+            call UnitAddAbility(u, UNHOLY_AURA_ABILITY_ID)
+            call UnitAddAbility(u, DIVINE_BUBBLE_ABILITY_ID)
+
+
+            call SetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID, 30)
+            call SetUnitAbilityLevel(u, DIVINE_BUBBLE_ABILITY_ID, 30)
+            call SetUnitAbilityLevel(u, ARCANE_ASSAUL_ABILITY_ID, 30)
+            call SetUnitAbilityLevel(u, LAST_BREATHS_ABILITY_ID, 30)
+            call SetUnitAbilityLevel(u, TRUESHOT_AURA_ABILITY_ID, 30)
+            call SetUnitAbilityLevel(u, ICE_ARMOR_ABILITY_ID, 30)
+            call SetUnitAbilityLevel(u, DIVINE_GIFT_ABILITY_ID, 30)
+            call SetUnitAbilityLevel(u, FAST_MAGIC_ABILITY_ID, 30)
+            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (100000 ))*/
+            //call UnitAddAbility(u, ABSOLUTE_POISON_ABILITY_ID)
+            //call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
+            //call UnitAddAbility(u, ANCIENT_ELEMENT_ABILITY_ID)
+            //call SetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID, 30)
+            //call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, 30)
+            //call SetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID, 30)
+            //call UnitAddItem(u,CreateItem('I0B8',0,0))
+            //call UnitAddItem(u,CreateItem('i0bu',0,0))
+            call SetHeroInt(u, GetHeroInt(u, false) + 1000, true)
+            call SetHeroStr(u, GetHeroStr(u, false) + 1000, true)
+            call SetHeroAgi(u, GetHeroAgi(u, false) + 1000, true)
+            set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
+                    call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 50)
+            endif
+            set pid = pid + 1
+            exitwhen pid > 7
+        endloop
+        
+        set u = null
+
+    endfunction
     
     //===========================================================================
     function AllowSinglePlayerCommands takes nothing returns nothing
@@ -251,6 +299,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.SetBattleRoyale).name("sbr").handles("sbr").help("sbr <value>", "The Battle Royal starts after round <value>.")
             call Command.create(CommandHandler.SetWizardbaneDebug).name("wbd").handles("wbd").help("wbd", "Wizardbane debug.")
             call Command.create(CommandHandler.SetCreepEnrage).name("tce").handles("tce").help("tce", "toggle creep enrage.")
+            call Command.create(CommandHandler.CpuPower).name("cpupw").handles("cpupw").help("cpupw", "Gives CPU players stats, levels and some abilities")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
 
