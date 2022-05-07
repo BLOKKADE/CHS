@@ -264,18 +264,20 @@ scope ModifyDamageAfterArmor initializer init
         set i = GetUnitAbilityLevel(DamageTarget, MAGNET_OSC_ABILITY_ID)
         if i > 0 then
             //call BJDebugMsg("dmg sourceid: " + I2S(DamageSourceId) + " time: " + I2S(T32_Tick - MagnetOscHitTick[DamageSourceId]))
-            if T32_Tick - MagnetOscHitTick[DamageSourceId] > ((8 - (0.2 * i)) * 32) then
+            if T32_Tick >= MagnetOscHitTick[DamageSourceId] then
                 //call SetUnitVertexColor(DamageSource, 0, 255, 0, 255)
                 set r1 = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
                 if r1 < 600 then
                     //call BJDebugMsg("mosc")
-                    set MagnetOscHitTick[DamageSourceId] = T32_Tick
+                    
                     set udg_NextDamageAbilitySource = MAGNET_OSC_ABILITY_ID
                     call Damage.apply(DamageTarget, DamageSource, GetSpellValue(30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                     if IsAbilityEnabled(DamageTarget, MAGNET_OSC_ABILITY_ID) then
+                        set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((11.75 - (0.25 * i)) * 32)
                         call KnockbackTarget(DamageTarget, DamageSource, GetAngleToTarget(DamageTarget, DamageSource) * bj_RADTODEG, RAbsBJ(700 - r1), 600, false, false, false, false)
                     else
                         if r1 > 150 then
+                            set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((8 - (0.2 * i)) * 32)
                             call MoveToPoint(DamageTarget, DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget))
                         endif
                     endif
