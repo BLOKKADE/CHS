@@ -5,7 +5,7 @@ scope AfterDamage initializer init
     endglobals
 
     private function AfterDamage takes nothing returns nothing
-        if DamageShowText and Damage.index.damage > 0 then
+        if DamageShowText and Damage.index.damage >= 1 then
             if IsPhysDamage() then
                 call CreateTextTagTimerColor( I2S(R2I(Damage.index.damage)) + "!", 1, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 50, 1, 177, 0, 0)
             elseif IsMagicDamage() then
