@@ -14,16 +14,20 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         integer array SummonArmor
     endglobals
 
-    function RandomAbilityLevel takes integer id, unit hero returns integer
-        if id == 0 then
-            return LoadInteger(HT,GetHandleId(hero),- 4555101)
-        endif
-        return id
-    endfunction
-
     function AddSummonAbility takes unit u, integer abilId, integer level returns nothing
         call UnitAddAbility(u, abilId)
         call SetUnitAbilityLevel(u, abilId, level)
+    endfunction
+
+    function ResetSummonStats takes unit u returns nothing
+        local integer i = 0
+
+        loop
+            call SaveReal(HT_unitstate,GetHandleId(u), i, 0)
+
+            set i = i + 1
+            exitwhen i > 21
+        endloop
     endfunction
 
     function SummonUnit takes unit u returns nothing
@@ -35,6 +39,9 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         local integer UpgradeU = 15 * UnitHasItemI(hero,'I07K')
         local real wild = 1 + GetUnitSummonStronger(hero)/ 100
         local real r1
+
+        //Prevent super summons?
+        call ResetSummonStats(u)
 
         //Beastmaster
         if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
@@ -117,7 +124,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
          //Wild Defense
-         if SummonWildDefense[pid] > 0 then
+        if SummonWildDefense[pid] > 0 then
             call AddUnitMagicDef(u,10 * SummonWildDefense[pid])
             call AddUnitEvasion(u,1 * SummonWildDefense[pid])
             call AddUnitBlock(u,10 * SummonWildDefense[pid])
@@ -193,18 +200,6 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         set u = null
         set hero = null
     endfunction
-
-
-
-    function SummonUnitS takes nothing returns nothing
-        local timer t = GetExpiredTimer()
-        call SummonUnit(LoadUnitHandle(HT,GetHandleId(t),1))
-        call FlushChildHashtable(HT,GetHandleId(t))
-        call ReleaseTimer(t)
-        set t = null
-    endfunction
-
-
 
     function Trig_UnitStateSys_Actions takes nothing returns nothing
         ///call UnitAddAbility(GetTriggerUnit(),'A06K')
@@ -282,10 +277,8 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         //Summons
-        if IsHeroUnitId(GetUnitTypeId(u)) == false and GetOwningPlayer(u) != Player(11) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) then
-            set t = NewTimer()
-            call SaveUnitHandle(HT,GetHandleId(t),1,u)
-            call TimerStart(t,0,false,function SummonUnitS)
+        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(11) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) then
+            call SummonUnit(u)
         endif
 
         set t = null
