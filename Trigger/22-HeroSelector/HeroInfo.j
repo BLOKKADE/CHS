@@ -1,4 +1,4 @@
-library HeroInfo initializer init_function requires Ascii, GetClass
+library HeroInfo initializer init_function requires GetClass
     // 1.3
     //Plugin for  by Tasyen
     //This Creates a TextDisplay which displays the name and the Extended tooltip of selected units
