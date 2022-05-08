@@ -253,8 +253,19 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call ActivateScepterOfConfusion(caster)
                     endif
 
-                    if IsAbilityCasteable(abilId, false) and (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X'))  and abilId != RESET_TIME_ABILITY_ID then
-                        call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
+                    if IsAbilityCasteable(abilId, false) then
+                        //Wizard's Gemstone
+                        if UnitHasItemS(caster, 'I0BQ') then
+                            if BlzGetUnitAbilityCooldownRemaining(caster, 'A0CS') == 0 then
+                                call ActivateStatRune(caster)
+                                call AbilStartCD(caster, 'A0CS', 5) 
+                            endif
+                        endif
+                        
+                        //multicast
+                        if (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X'))  and abilId != RESET_TIME_ABILITY_ID then
+                            call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
+                        endif
                     endif
 
                     set lvl = GetUnitAbilityLevel(caster, CHAOS_MAGIC_ABILITY_ID)
@@ -268,14 +279,6 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
                         call SpellbaneSpellCast(caster, abilId, abilLvl)
-                    endif
-
-                    //Wizard's Gemstone
-                    if UnitHasItemS(caster, 'I0BQ') then
-                        if BlzGetUnitAbilityCooldownRemaining(caster, 'A0CS') == 0 then
-                            call ActivateStatRune(caster)
-                            call AbilStartCD(caster, 'A0CS', 5) 
-                        endif
                     endif
 
                     //call BJDebugMsg("cd")
