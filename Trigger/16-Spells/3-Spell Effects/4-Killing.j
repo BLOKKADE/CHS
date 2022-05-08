@@ -80,9 +80,6 @@ scope Killing initializer init
 
                 call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 15, 10, 'I07E')
             endif
-
-            //Not sure what this is for
-            call FixUnit(GetTriggerUnit())
         endif
         set t = null
         set target = null

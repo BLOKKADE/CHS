@@ -4,7 +4,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)==true)
     endfunction
 
-
+    //remove shops
     function Trig_Battle_Royal_Func015A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction
@@ -90,17 +90,6 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetEnumUnit()),GetUnitLoc(GetEnumUnit()),0.50)
     endfunction
 
-
-    function Trig_Battle_Royal_Func018002 takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
-    endfunction
-
-
-    function Trig_Battle_Royal_Func019002 takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
-    endfunction
-
-
     function Trig_Battle_Royal_Func020A takes nothing returns nothing
         call RemoveItem(GetEnumItem())
     endfunction
@@ -170,7 +159,6 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
 
 
     function Trig_Battle_Royal_Actions takes nothing returns nothing
-        call KillUnit(udg_unit03)
         call TriggerSleepAction(5.00)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Battle Royal")

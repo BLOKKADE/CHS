@@ -1,4 +1,4 @@
-library trigger150 initializer init requires RandomShit
+/*library trigger150 initializer init requires RandomShit
 
     function Trig_Remove_HintEffect_Conditions takes nothing returns boolean
         if(not(GetTriggerUnit()==udg_unit03))then
@@ -22,3 +22,4 @@ library trigger150 initializer init requires RandomShit
 
 
 endlibrary
+*/

@@ -21,7 +21,7 @@ library trigger81 initializer init requires RandomShit, PetDeath
         return true
     endfunction
 
-
+    //removes all of the players units
     function Trig_Hero_Dies_After_Victory_Func004A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction

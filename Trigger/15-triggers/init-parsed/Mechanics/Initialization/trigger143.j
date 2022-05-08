@@ -35,19 +35,12 @@ library trigger143 initializer init requires RandomShit
         endif
     endfunction
 
-
-    function Trig_Enter_Shop_Mode_Func039A takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
-    endfunction
-
-
     function Trig_Enter_Shop_Mode_Actions takes nothing returns nothing
         call DisableTrigger(GetTriggeringTrigger())
         // call DisableTrigger(udg_trigger78)
         
         call ForGroupBJ(GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE),Condition(function Trig_Enter_Shop_Mode_Func036001002)),function Trig_Enter_Shop_Mode_Func036A)
         call TriggerSleepAction(0.00)
-        call ForGroupBJ(GetUnitsOfPlayerAll(Player(8)),function Trig_Enter_Shop_Mode_Func039A)
         call EnableTrigger(udg_trigger123)
         call EnableTrigger(udg_trigger127)
         call EnableTrigger(udg_trigger132)

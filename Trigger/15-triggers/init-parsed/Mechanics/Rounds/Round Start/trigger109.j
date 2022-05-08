@@ -26,12 +26,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         return true
     endfunction
 
-
-    function Trig_Start_Level_Func003Func006A takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
-    endfunction
-
-
     function Trig_Start_Level_Func011A takes nothing returns nothing
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,RoundNumber)
         set ShowCreepAbilButton[GetPlayerId(GetEnumPlayer())] = false

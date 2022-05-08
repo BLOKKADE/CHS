@@ -1,4 +1,4 @@
-library trigger121 initializer init requires RandomShit
+/*library trigger121 initializer init requires RandomShit
 
     function Trig_Remove_Selection_Circles_Func001A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
@@ -29,3 +29,4 @@ library trigger121 initializer init requires RandomShit
 
 
 endlibrary
+*/

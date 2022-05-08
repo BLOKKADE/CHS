@@ -4,7 +4,7 @@ library trigger147 initializer init requires RandomShit
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)==true)
     endfunction
 
-
+    //removes preplaced shops, couldve really also just hid them I think
     function Trig_Hide_Shops_Func002A takes nothing returns nothing
         set HideShopsCount =(HideShopsCount + 1)
         set udg_locations01[HideShopsCount]= GetUnitLoc(GetEnumUnit())

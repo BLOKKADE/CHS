@@ -191,7 +191,7 @@ library trigger103 initializer init requires RandomShit, Functions
         endif
     endfunction
 
-
+    //removes creeps already created, not sure if it actually does anything
     function Trig_Generate_Next_Level_Func018A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction

@@ -72,7 +72,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         return true
     endfunction
 
-
+    //removes all of a players units
     function Trig_Hero_Dies_Func008A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction

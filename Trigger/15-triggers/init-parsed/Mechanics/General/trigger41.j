@@ -15,8 +15,7 @@ library trigger41 initializer init requires RandomShit
 
 
     function Trig_Remove_Dummies_Actions takes nothing returns nothing
-        call BJDebugMsg("rd" + GetUnitName(GetTriggerUnit()))
-        call DeleteUnit(GetTriggerUnit())
+        call FixUnit(GetTriggerUnit())
     endfunction
 
 
@@ -24,7 +23,6 @@ library trigger41 initializer init requires RandomShit
         set udg_trigger41 = CreateTrigger()
         call TriggerRegisterAnyUnitEventBJ(udg_trigger41,EVENT_PLAYER_UNIT_DEATH)
         call TriggerAddCondition(udg_trigger41,Condition(function Trig_Remove_Dummies_Conditions))
-        call TriggerAddAction(udg_trigger41,function Trig_Remove_Dummies_Actions)
     endfunction
 
 

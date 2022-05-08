@@ -153,6 +153,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
         call ResourseRefresh(GetEnumPlayer()) 
     endfunction
 
+    //removes random abiltiy shop from ar mode
     function Trig_Dialog_Complete_Func010Func004A takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction

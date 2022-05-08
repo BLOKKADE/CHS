@@ -39,12 +39,6 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         return(PlayerCount==1)
     endfunction
 
-
-    function Trig_Spawn_Hero_Func016A takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
-    endfunction
-
-
     function Trig_Spawn_Hero_Func017Func008C takes nothing returns boolean
         if(not(RoundNumber==1))then
             return false
@@ -62,12 +56,6 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         endif
         return true
     endfunction
-
-
-    function Trig_Untitled_Trigger_001_Func001A takes nothing returns nothing
-        call DeleteUnit( GetEnumUnit() )
-    endfunction
-
 
     function CreateNeutralPassiveBuildings2 takes nothing returns nothing
         local player p = Player(PLAYER_NEUTRAL_PASSIVE)
@@ -107,7 +95,6 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         call SetShopIndex(CreateUnit(p,ELEMENTAL_ITEM_SHOP_UNIT_ID,372,- 1152 - 256,270.000) )
         call SetShopIndex(CreateUnit(p,ITEM_SHOP_V_UNIT_ID,620,- 1152,270.000) )
         call SetShopIndex(CreateUnit(p,ITEM_SHOP_VI_UNIT_ID,868,- 1152,270.000))
-        call ForGroupBJ( GetUnitsOfTypeIdAll('ncop'), function Trig_Untitled_Trigger_001_Func001A )
 
         set ShopsCreated = true
     endfunction
@@ -189,8 +176,6 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         if(Trig_Spawn_Hero_Func015001())then
             set SingleplayerPlayer = GetOwningPlayer(hero)
         endif
-
-        call ForGroupBJ(GetUnitsOfPlayerAndTypeId(udg_player02,'n00E'),function Trig_Spawn_Hero_Func016A)
 
         if(Trig_Spawn_Hero_Func017C())then
             set udg_boolean10 = true
