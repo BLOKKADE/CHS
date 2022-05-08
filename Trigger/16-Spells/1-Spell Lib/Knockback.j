@@ -273,7 +273,8 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
                 return false
             endif
         endif
-        if GetUnitTypeId(targ) == PRIEST_1_UNIT_ID then
+        
+        if IsUnitExcluded(targ) then
             return false
         endif
         

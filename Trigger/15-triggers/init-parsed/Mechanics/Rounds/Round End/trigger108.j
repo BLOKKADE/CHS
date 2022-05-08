@@ -291,21 +291,17 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
             
             set RoundFinishedCount = 0
             call PlaySoundBJ(udg_sound02)
-            if(Trig_Level_Completed_Func001Func014C())then
-                if(Trig_Level_Completed_Func001Func014Func001C())then
-                    call ConditionalTriggerExecute(udg_trigger152)
-                    return
-                endif
-            endif
             if(Trig_Level_Completed_Func001Func018C())then
                 if(Trig_Level_Completed_Func001Func018Func002C())then
                     call GroupClear(DuelWinners)
+                    //pvp round
                     call ConditionalTriggerExecute(udg_trigger134)
                     return
                 endif
             else
                 if(Trig_Level_Completed_Func001Func018Func001C())then
                     call GroupClear(DuelWinners)
+                    //pvp round
                     call ConditionalTriggerExecute(udg_trigger134)
                     return
                 endif
@@ -313,8 +309,10 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
             if(Trig_Level_Completed_Func001Func023C())then
                 if(Trig_Level_Completed_Func001Func023Func002C())then
                     if(Trig_Level_Completed_Func001Func023Func002Func003C())then
+                        //end game
                         call ConditionalTriggerExecute(udg_trigger119)
                     else
+                        //battle royal
                         call ConditionalTriggerExecute(udg_trigger42)
                     endif
                     return
@@ -322,8 +320,10 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
             else
                 if(Trig_Level_Completed_Func001Func023Func001C())then
                     if(Trig_Level_Completed_Func001Func023Func001Func003C())then
+                        //end game
                         call ConditionalTriggerExecute(udg_trigger119)
                     else
+                        //battle royal
                         call ConditionalTriggerExecute(udg_trigger42)
                     endif
                     return

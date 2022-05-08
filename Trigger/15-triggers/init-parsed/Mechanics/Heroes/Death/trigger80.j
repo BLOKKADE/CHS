@@ -49,8 +49,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
 
             call FixDeath(u)
             call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
-    
-            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+            call RemovePlayerUnits(Player(pid))
             
             set u = null
             return false
@@ -59,7 +58,8 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         if Lives[GetPlayerId(GetOwningPlayer(u))] > 0 and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
             call TimerStart(NewTimerEx(pid), 1, false, function EnableDeathTrigger)
             set RoundLiveLost[pid] = true
-            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+            
+            call RemovePlayerUnits(Player(pid))
     
             set Lives[pid] = Lives[pid] - 1
             call DisplayTextToPlayer(GetOwningPlayer(u) ,0,0,"You have " + I2S(Lives[pid]) + " lives left")

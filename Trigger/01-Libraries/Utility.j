@@ -1,4 +1,4 @@
-library Utility requires NewBonus
+library Utility requires NewBonus, FixDeleteUnit
     globals
         boolean array CurrentlyFighting
 
@@ -6,6 +6,48 @@ library Utility requires NewBonus
         integer Stat_Agility = 1
         integer Stat_Intelligence = 2
     endglobals
+
+    function IsUnitExcluded takes unit u returns boolean
+        return IsUnitType(u, UNIT_TYPE_STRUCTURE) or IsUnitType(u, UNIT_TYPE_HERO) or DUMMIES.contains(GetUnitTypeId(u))
+    endfunction
+
+    private function RemoveUnitsFilter takes nothing returns boolean
+        local unit u = GetFilterUnit()
+
+        if UnitAlive(u) and GetOwningPlayer(u) != Player(11) and (not IsUnitExcluded(u)) then
+            call DeleteUnit(u)
+        endif
+
+        set u = null
+        return false
+    endfunction
+
+    /*
+    private function RemoveUnitsFilterNoCreeps takes nothing returns boolean
+        local unit u = GetFilterUnit()
+
+        if UnitAlive(u) and GetOwningPlayer(u) != Player(11) and (not IsUnitExcluded(u)) then
+            call DeleteUnit(u)
+        endif
+
+        set u = null
+        return false
+    endfunction
+    */
+
+    function RemovePlayerUnits takes player p returns nothing
+        call GroupEnumUnitsOfPlayer(ENUM_GROUP, p, Condition(function RemoveUnitsFilter))
+    endfunction
+
+    /*
+    function RemoveUnitsInRectExcludeCreeps takes rect r returns nothing
+        call GroupEnumUnitsInRect(ENUM_GROUP, r, Condition(function RemoveUnitsFilterNoCreeps))
+    endfunction
+    */
+
+    function RemoveUnitsInRect takes rect r returns nothing
+        call GroupEnumUnitsInRect(ENUM_GROUP, r, Condition(function RemoveUnitsFilter))
+    endfunction
 
     function SaveHeroStrength takes unit u, integer i returns nothing
         call SaveInteger(HT, GetHandleId(u), 15, i)

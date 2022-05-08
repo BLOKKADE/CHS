@@ -1,4 +1,4 @@
-library TempStateBonus initializer init requires CustomState, NewBonus
+library TempStateBonus initializer init requires CustomState, NewBonus, Utility
 
     //Combines the CustomState system and the Newbonus system to temporarily set their states
 

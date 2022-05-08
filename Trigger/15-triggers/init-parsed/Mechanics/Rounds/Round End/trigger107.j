@@ -118,7 +118,7 @@ library trigger107 initializer init requires RandomShit
                 call AddHeroXPSwapped(udg_integer48,PlayerHeroes[pid + 1],true)
             endif
         endif
-        call CreateNUnitsAtLoc(1,'h015',p,GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,p,GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
         call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group08)
     endfunction

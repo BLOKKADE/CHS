@@ -3,6 +3,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
     globals
         integer array ItemStacksP1
         integer array ItemStacksP2
+        integer duelRectId
     endglobals
 
     function Trig_PvP_Battle_Func001C takes nothing returns boolean
@@ -160,42 +161,8 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
 
     function Trig_PvP_Battle_Func001Func017A takes nothing returns nothing
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),0.20)
+        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(PlayerArenaRects[duelRectId]),0.20)
     endfunction
-
-
-    function Trig_PvP_Battle_Func001Func018001002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func018001002002 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)!=true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func018001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func018001002001(),Trig_PvP_Battle_Func001Func018001002002()) and GetUnitTypeId(GetFilterUnit()) != SELL_ITEM_DUMMY
-    endfunction
-
-
-    function Trig_PvP_Battle_Func001Func018A takes nothing returns nothing
-        if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit()))then
-            call DeleteUnit(GetEnumUnit())
-        else
-            call DoNothing()
-        endif
-        call ExplodeUnitBJ(GetEnumUnit())
-    endfunction
-
-
-    function RemoveNonHeroUnitFilter takes nothing returns boolean
-        return UnitAlive(GetFilterUnit()) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0 and (IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false or IsUnitIllusion(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != 'h00C' and GetUnitTypeId(GetFilterUnit()) != 'h00D' and GetUnitTypeId(GetFilterUnit()) != SELL_ITEM_DUMMY 
-    endfunction
-
-
-    function RemoveNonHeroUnits takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
-    endfunction
-
 
     function Trig_PvP_Battle_Func001Func019A takes nothing returns nothing
         call RemoveItem(GetEnumItem())
@@ -306,26 +273,25 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
             call GroupRemoveUnitSimple(DuelingHeroes[2],PotentialDuelHeroes)
             call PlaySoundBJ(udg_sound08)
             call DisplayTextToForce(GetPlayersAll(),("|cffa0966dPvP Battle:|r " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[1]))+(" vs " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[2])))))))
-            set RoundCreepAbilCastChance = GetRandomInt(1,8)
+            set duelRectId = GetRandomInt(1,8)
+            call RemoveUnitsInRect(bj_mapInitialPlayableArea)
+
             call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func017A)
-            call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[RoundCreepAbilCastChance],Condition(function Trig_PvP_Battle_Func001Func018001002)),function Trig_PvP_Battle_Func001Func018A)
-            call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(DuelingHeroes[1]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
-            call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(DuelingHeroes[2]) , Condition(function RemoveNonHeroUnitFilter)), function RemoveNonHeroUnits)
-            call EnumItemsInRectBJ(PlayerArenaRects[RoundCreepAbilCastChance],function Trig_PvP_Battle_Func001Func019A)
-            set udg_location01 = OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 40.00,- 50.00)
-            call SetUnitPositionLocFacingLocBJ(DuelingHeroes[1],OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
-            call SetUnitPositionLocFacingLocBJ(DuelingHeroes[2],OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
+            call EnumItemsInRectBJ(PlayerArenaRects[duelRectId],function Trig_PvP_Battle_Func001Func019A)
+            set udg_location01 = OffsetLocation(GetRectCenter(PlayerArenaRects[duelRectId]),- 40.00,- 50.00)
+            call SetUnitPositionLocFacingLocBJ(DuelingHeroes[1],OffsetLocation(GetRectCenter(PlayerArenaRects[duelRectId]),- 500.00,0),GetRectCenter(PlayerArenaRects[duelRectId]))
+            call SetUnitPositionLocFacingLocBJ(DuelingHeroes[2],OffsetLocation(GetRectCenter(PlayerArenaRects[duelRectId]),500.00,0),GetRectCenter(PlayerArenaRects[duelRectId]))
             
             set ps = PlayerStats.forPlayer(GetOwningPlayer(DuelingHeroes[1]))
 
             if (ps.getPet() != null) then
-                call SetUnitPositionLocFacingLocBJ(ps.getPet(),OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),- 500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
+                call SetUnitPositionLocFacingLocBJ(ps.getPet(),OffsetLocation(GetRectCenter(PlayerArenaRects[duelRectId]),- 500.00,0),GetRectCenter(PlayerArenaRects[duelRectId]))
             endif
 
             set ps = PlayerStats.forPlayer(GetOwningPlayer(DuelingHeroes[2]))
 
             if (ps.getPet() != null) then
-                call SetUnitPositionLocFacingLocBJ(ps.getPet(),OffsetLocation(GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]),500.00,0),GetRectCenter(PlayerArenaRects[RoundCreepAbilCastChance]))
+                call SetUnitPositionLocFacingLocBJ(ps.getPet(),OffsetLocation(GetRectCenter(PlayerArenaRects[duelRectId]),500.00,0),GetRectCenter(PlayerArenaRects[duelRectId]))
             endif
 
             set bj_forLoopAIndex = 1

@@ -32,15 +32,12 @@ library AllowCastCheck
         if(not CheckUnit(u))then
             return false
         endif
-        if(not(GetUnitTypeId(u)!='n00V'))then
+        if(not(GetUnitTypeId(u)!=SUDDEN_DEATH_UNIT_ID))then
             return false
         endif
         if(not(GetUnitTypeId(u)!=PRIEST_1_UNIT_ID))then
             return false
         endif	
-        if(not(GetUnitTypeId(u)!='h014'))then
-            return false
-        endif		
         return true
     endfunction
     

@@ -1,4 +1,4 @@
-library trigger153 initializer init requires RandomShit, DebugCommands
+/*library trigger153 initializer init requires RandomShit, DebugCommands
 
     function Trig_Hero_Dies_Elimination_Func039C takes nothing returns boolean
         if(not(ElimPvpStarted==true))then
@@ -277,7 +277,6 @@ library trigger153 initializer init requires RandomShit, DebugCommands
         call EnableTrigger(udg_trigger145)
         call EnableTrigger(udg_trigger80)
         call EnableTrigger(udg_trigger87)
-        call EnableTrigger(udg_trigger149)
         call DisableTrigger(udg_trigger153)
         call ConditionalTriggerExecute(udg_trigger148)
         call ShowDraftBuildings(true)
@@ -304,3 +303,4 @@ library trigger153 initializer init requires RandomShit, DebugCommands
 
 
 endlibrary
+*/

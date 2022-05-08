@@ -1,13 +1,10 @@
 library trigger41 initializer init requires RandomShit
 
     function Trig_Remove_Dummies_Conditions takes nothing returns boolean
-        if(not(GetUnitTypeId(GetTriggerUnit())=='n00V'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())==SUDDEN_DEATH_UNIT_ID))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())!='h015'))then
-            return false
-        endif
-        if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())!=PRIEST_1_UNIT_ID))then
             return false
         endif
         if(not(IsUnitInGroup(GetTriggerUnit(),udg_group08)!=true))then
@@ -18,6 +15,7 @@ library trigger41 initializer init requires RandomShit
 
 
     function Trig_Remove_Dummies_Actions takes nothing returns nothing
+        call BJDebugMsg("rd" + GetUnitName(GetTriggerUnit()))
         call DeleteUnit(GetTriggerUnit())
     endfunction
 

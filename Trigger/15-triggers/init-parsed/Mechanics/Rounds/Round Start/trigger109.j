@@ -78,29 +78,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         return GetBooleanAnd(Trig_Start_Level_Func015Func002001001001(),Trig_Start_Level_Func015Func002001001002())
     endfunction
 
-    function Trig_Start_Level_Func015Func002Func003001002001 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)!=true)
-    endfunction
-
-    function Trig_Start_Level_Func015Func002Func003001002002 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_Start_Level_Func015Func002Func003001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Start_Level_Func015Func002Func003001002001(),Trig_Start_Level_Func015Func002Func003001002002())
-    endfunction 
-
-    function Trig_Start_Level_Func015Func002Func003A takes nothing returns nothing
-        if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' and GetUnitTypeId(GetEnumUnit()) != PET_BASE_UNIT_ID and GetUnitTypeId(GetEnumUnit()) != SELL_ITEM_DUMMY and GetUnitTypeId(GetEnumUnit()) != HERO_PREVIEW_UNIT_ID then
-            if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit())) then
-                call DeleteUnit(GetEnumUnit())
-            else
-                call ExplodeUnitBJ(GetEnumUnit())
-            endif
-        endif
-    endfunction
-
-
     function Trig_Start_Level_Func015Func002Func004A takes nothing returns nothing
         call RemoveItem(GetEnumItem())
     endfunction
@@ -109,7 +86,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
     function Trig_Start_Level_Func015Func002A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetEnumPlayer())
         
-        call ForGroupBJ(GetUnitsOfPlayerMatching(GetEnumPlayer(),Condition(function Trig_Start_Level_Func015Func002Func003001002)),function Trig_Start_Level_Func015Func002Func003A)
         call EnumItemsInRectBJ(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
         call SetUnitInvulnerable(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],false)
         call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]))
@@ -149,8 +125,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         local timer t
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
 
-        call RemoveHeroPreviewUnit()
-
         if(Trig_Start_Level_Func003C())then
             set udg_boolean12 = true
             set udg_boolean09 = true
@@ -158,7 +132,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
             call DisplayTextToForce(GetPlayersAll(), GameDescription)
             call DisplayTextToForce(GetPlayersAll(),("|c00F08000Level " +(I2S(RoundNumber)+ "|r")))
             call ConditionalTriggerExecute(udg_trigger143)
-            call ForGroupBJ(GetUnitsOfTypeIdAll('n00E'),function Trig_Start_Level_Func003Func006A)
         endif
 
         call ForceClear(RoundPlayersCompleted)
@@ -177,6 +150,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
         if(RoundNumber > 1)then
             call PlaySoundBJ(udg_sound03)
+            call RemoveUnitsInRect(bj_mapInitialPlayableArea)
             call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function Trig_Start_Level_Func015Func002A)
             set t = NewTimer()
             set td = CreateTimerDialog(t)
@@ -196,6 +170,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
             set t = null
             set td = null
         else
+            call RemoveHeroPreviewUnit()
             call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartLevelRoundOne)
         endif
 

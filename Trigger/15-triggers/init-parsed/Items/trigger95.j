@@ -9,7 +9,7 @@ library trigger95 initializer init requires RandomShit
 
 
     function Trig_The_Divine_Source_Actions takes nothing returns nothing
-        call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
         call UnitRemoveBuffBJ('Bena',GetTriggerUnit())
         call UnitRemoveBuffBJ('Bens',GetTriggerUnit())

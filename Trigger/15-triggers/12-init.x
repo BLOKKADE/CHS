@@ -1530,7 +1530,7 @@ function Trig_Skeletal_Brute_Conditions takes nothing returns boolean
     if(not(GetUnitTypeId(GetTriggerUnit())!='n00T'))then
         return false
     endif
-    if(not(GetUnitTypeId(GetTriggerUnit())!='n00V'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())!=SUDDEN_DEATH_UNIT_ID))then
         return false
     endif
     if(not(GetUnitTypeId(GetTriggerUnit())!='h00V'))then
@@ -1859,10 +1859,10 @@ function Trig_Disable_Abilities_Func001Func003C takes nothing returns boolean
     if(not Trig_Disable_Abilities_Func001Func003Func003C())then
         return false
     endif
-    if(not(GetUnitTypeId(GetTriggerUnit())!='n00V'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())!=SUDDEN_DEATH_UNIT_ID))then
         return false
     endif
-    if(not(GetUnitTypeId(GetTriggerUnit())!='h015'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())!=PRIEST_1_UNIT_ID))then
         return false
     endif	
     if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then
@@ -1961,9 +1961,9 @@ function Trig_Cast_Channeling_Ability_Actions takes nothing returns nothing
     local real manaCost = BlzGetAbilityManaCost(abilId, GetUnitAbilityLevel(GetTriggerUnit(), abilId))
     if GetUnitState(GetTriggerUnit(), UNIT_STATE_MANA) - manaCost > 0 then
         if abilId != 'AEtq' and abilId != 'AEsf'then
-            call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),PolarProjectionBJ(GetSpellTargetLoc(),256.00,AngleBetweenPoints(GetSpellTargetLoc(),GetUnitLoc(GetTriggerUnit()))),bj_UNIT_FACING)
+            call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),PolarProjectionBJ(GetSpellTargetLoc(),256.00,AngleBetweenPoints(GetSpellTargetLoc(),GetUnitLoc(GetTriggerUnit()))),bj_UNIT_FACING)
         else
-            call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+            call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
         endif
 
         call UnitApplyTimedLifeBJ(60.00,'BTLF',GetLastCreatedUnit())
@@ -2019,10 +2019,10 @@ function Trig_Drop_Item_Func001C takes nothing returns boolean
     if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)!=true))then
         return false
     endif
-    if(not(GetUnitTypeId(GetTriggerUnit())!='n00V'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())!=SUDDEN_DEATH_UNIT_ID))then
         return false
     endif
-    if(not(GetUnitTypeId(GetTriggerUnit())!='h015'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())!=PRIEST_1_UNIT_ID))then
         return false
     endif
     if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then
@@ -2081,10 +2081,10 @@ function Trig_Give_Item_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Remove_Dummies_Conditions takes nothing returns boolean
-    if(not(GetUnitTypeId(GetTriggerUnit())=='n00V'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())==SUDDEN_DEATH_UNIT_ID))then
         return false
     endif
-    if(not(GetUnitTypeId(GetTriggerUnit())!='h015'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())!=PRIEST_1_UNIT_ID))then
         return false
     endif
     if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then
@@ -5255,7 +5255,7 @@ endfunction
 function Trig_Scepter_of_Confusion_Actions takes nothing returns nothing
     set RoundCreepAbilCastChance = GetRandomInt(1,4)
     if(Trig_Scepter_of_Confusion_Func002C())then
-        call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
         call UnitAddAbility(GetLastCreatedUnit(), 'A014')
         call IssueTargetOrderById(GetLastCreatedUnit(), 852274, GetTriggerUnit())
@@ -5271,7 +5271,7 @@ function Trig_The_Divine_Source_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_The_Divine_Source_Actions takes nothing returns nothing
-    call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+    call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
     call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
     call UnitRemoveBuffBJ('Bena',GetTriggerUnit())
     call UnitRemoveBuffBJ('Bens',GetTriggerUnit())
@@ -5303,7 +5303,7 @@ endfunction
 function Trig_Volcanic_Armor_Actions takes nothing returns nothing
     set RoundCreepAbilCastChance = GetRandomInt(1,100)
     if(Trig_Volcanic_Armor_Func003C())then
-        call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
         call UnitAddAbilityBJ('A015',GetLastCreatedUnit())
         call IssueTargetOrderBJ(GetLastCreatedUnit(),"firebolt",GetAttacker())
@@ -7356,7 +7356,7 @@ function Trig_Complete_Level_Player_Func010C takes nothing returns boolean
 endfunction
 
 function RemoveNonHeroUnitFilter takes nothing returns boolean
-    return UnitAlive(GetFilterUnit()) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0 and (IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false or IsUnitIllusion(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != 'h00C' and GetUnitTypeId(GetFilterUnit()) != 'h00D' 
+    return UnitAlive(GetFilterUnit()) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0 and (IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false or IsUnitIllusion(GetFilterUnit())) and GetUnitTypeId(GetFilterUnit()) != DRAFT_BUY_UNIT_ID and GetUnitTypeId(GetFilterUnit()) != DRAFT_UPGRADE_UNIT_ID 
 endfunction
 
 function RemoveNonHeroUnits takes nothing returns nothing
@@ -7404,7 +7404,7 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
             call AddHeroXPSwapped(udg_integer48,PlayerHeroes[pid + 1],true)
         endif
     endif
-    call CreateNUnitsAtLoc(1,'h015',p,GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
+    call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,p,GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
     call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
     call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group08)
 endfunction
@@ -7819,11 +7819,11 @@ function Trig_Start_Level_Func015Func002Func003001002 takes nothing returns bool
 endfunction
 
 function Trig_Start_Level_Func015Func002Func003Func001001 takes unit u returns boolean
-    return GetUnitTypeId(u)=='h009' or GetUnitTypeId(u)=='h014' or GetUnitTypeId(u)=='h015' or GetUnitTypeId(u)=='h00B'
+    return GetUnitTypeId(u)=='h009' or GetUnitTypeId(u)=='h014' or GetUnitTypeId(u)==PRIEST_1_UNIT_ID or GetUnitTypeId(u)=='h00B'
 endfunction
 
 function Trig_Start_Level_Func015Func002Func003A takes nothing returns nothing
-    if GetUnitTypeId(GetEnumUnit()) != 'h00C' and GetUnitTypeId(GetEnumUnit()) != 'h00D' then
+    if GetUnitTypeId(GetEnumUnit()) != DRAFT_BUY_UNIT_ID and GetUnitTypeId(GetEnumUnit()) != DRAFT_UPGRADE_UNIT_ID then
         if(Trig_Start_Level_Func015Func002Func003Func001001(GetEnumUnit()))then
             call DeleteUnit(GetEnumUnit())
         else
@@ -10676,10 +10676,10 @@ function Trig_Sudden_Death_Timer_PvP_Actions takes nothing returns nothing
     if(Trig_Sudden_Death_Timer_PvP_Func002C())then
         call DisableTrigger(udg_trigger11)
         call DisableTrigger(udg_trigger26)
-        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(DuelingHeroes[1]),GetUnitLoc(DuelingHeroes[1]),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,SUDDEN_DEATH_UNIT_ID,GetOwningPlayer(DuelingHeroes[1]),GetUnitLoc(DuelingHeroes[1]),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(0.25,'BTLF',GetLastCreatedUnit())
         call UnitDamageTargetBJ(GetLastCreatedUnit(),DuelingHeroes[2],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,DuelingHeroes[2])* udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
-        call CreateNUnitsAtLoc(1,'n00V',GetOwningPlayer(DuelingHeroes[2]),GetUnitLoc(DuelingHeroes[2]),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,SUDDEN_DEATH_UNIT_ID,GetOwningPlayer(DuelingHeroes[2]),GetUnitLoc(DuelingHeroes[2]),bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(0.25,'BTLF',GetLastCreatedUnit())
         call UnitDamageTargetBJ(GetLastCreatedUnit(),DuelingHeroes[1],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,DuelingHeroes[1])* udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
         call EnableTrigger(udg_trigger11)
@@ -10810,10 +10810,10 @@ function Trig_Remove_Power_Ups_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Remove_Units_From_Center_Func001C takes nothing returns boolean
-    if(not(GetUnitTypeId(GetTriggerUnit())!='n00V'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())!=SUDDEN_DEATH_UNIT_ID))then
         return false
     endif
-    if(not(GetUnitTypeId(GetTriggerUnit())!='h015'))then
+    if(not(GetUnitTypeId(GetTriggerUnit())!=PRIEST_1_UNIT_ID))then
         return false
     endif
     if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then

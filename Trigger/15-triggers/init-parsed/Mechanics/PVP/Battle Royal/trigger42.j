@@ -149,9 +149,27 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         return true
     endfunction
 
+    function ShowDraftBuildings takes boolean b returns nothing
+        local integer i = 0
+        if AbilityMode != 0 then
+            loop
+                if AbilityMode == 2 then
+                    call ShowUnit(circle1, b)
+                    call ShowUnit(udg_Draft_DraftBuildings[i], b)
+                    call SetTextTagVisibility(FloatingTextBuy, b)
+                endif
+                
+                call ShowUnit(circle2, b)
+                call ShowUnit(udg_Draft_UpgradeBuildings[i], b)
+                call SetTextTagVisibility(FloatingTextUpgrade, b)
+                set i = i + 1
+                exitwhen i > 9
+            endloop
+        endif
+    endfunction
+
 
     function Trig_Battle_Royal_Actions takes nothing returns nothing
-        call DisableTrigger(udg_trigger149)
         call KillUnit(udg_unit03)
         call TriggerSleepAction(5.00)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
@@ -166,6 +184,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         //call PauseAllUnitsBJ(true)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call ShowDraftBuildings(false)
+        call RemoveUnitsInRect(bj_mapInitialPlayableArea)
         call ForGroupBJ(GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE),Condition(function Trig_Battle_Royal_Func015001002)),function Trig_Battle_Royal_Func015A)
         set bj_forLoopAIndex = 1
         set bj_forLoopAIndexEnd = 8
@@ -175,8 +194,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Battle_Royal_Func017001002)),function Trig_Battle_Royal_Func017A)
-        //call ForGroupBJ(GetUnitsOfTypeIdAll('e001'),function Trig_Battle_Royal_Func018002)
-        call ForGroupBJ(GetUnitsOfTypeIdAll('e003'),function Trig_Battle_Royal_Func019002)
+
         call EnumItemsInRectBJ(GetPlayableMapRect(),function Trig_Battle_Royal_Func020A)
         call DisableTrigger(udg_trigger142)
         call DisableTrigger(udg_trigger145)

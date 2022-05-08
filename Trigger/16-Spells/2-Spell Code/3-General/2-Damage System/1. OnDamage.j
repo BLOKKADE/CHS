@@ -145,7 +145,7 @@ scope OnDamage initializer init
         endif
 
         //modified damage source after this, so can't detect dummy units, those need to go ^^^
-        if DamageSourceTypeId == PRIEST_1_UNIT_ID or DamageSourceTypeId == 'h014' or DamageSourceTypeId == 'n00V' or DamageSourceTypeId == 'n01L' then
+        if DamageSourceTypeId == PRIEST_1_UNIT_ID or DamageSourceTypeId == SUDDEN_DEATH_UNIT_ID or DamageSourceTypeId == 'n01L' then
             set DamageSource = DamageSourceHero
             set DamageSourceTypeId = GetUnitTypeId(DamageSource)
             set DamageSourceId = GetHandleId(DamageSource)

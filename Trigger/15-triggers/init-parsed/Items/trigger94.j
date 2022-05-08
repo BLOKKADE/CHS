@@ -19,7 +19,7 @@
     function Trig_Scepter_of_Confusion_Actions takes nothing returns nothing
         set RoundCreepAbilCastChance = GetRandomInt(1,4)
         if(Trig_Scepter_of_Confusion_Func002C())then
-            call CreateNUnitsAtLoc(1,'h015',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+            call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
             call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
             call UnitAddAbility(GetLastCreatedUnit(), 'A014')
             call IssueTargetOrderById(GetLastCreatedUnit(), 852274, GetTriggerUnit())

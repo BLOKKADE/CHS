@@ -16,12 +16,17 @@ library IdLibrary initializer init
         // --- Unit IDs ---
 
         // --- Dummies ---
+        StaticIdGroup DUMMIES
+
         constant integer HERO_PREVIEW_UNIT_ID                           = 'e005'
         constant integer SELL_ITEM_DUMMY                                = 'h00F'
         constant integer PRIEST_1_UNIT_ID                               = 'h015'
         constant integer PET_BASE_UNIT_ID                               = 'e002'
+        constant integer SUDDEN_DEATH_UNIT_ID                           = 'n00V'
 
         // --- Shops ---
+        constant integer DRAFT_BUY_UNIT_ID                              = 'h00C'
+        constant integer DRAFT_UPGRADE_UNIT_ID                          = 'h00D'
 
         constant integer ABSOLUTE_SHOP_UNIT_ID                          = 'n031'
         constant integer AUTOCAST_TOGGLE_SPELLS_UNIT_ID                 = 'n013'
@@ -1116,6 +1121,16 @@ library IdLibrary initializer init
         call BEARS.add(BEAR_1_UNIT_ID)
         call BEARS.add(BEAR_2_UNIT_ID)
         call BEARS.add(BEAR_3_UNIT_ID)
+
+        // Dummy units
+        set DUMMIES = StaticIdGroup.create()
+        call DUMMIES.add(PET_BASE_UNIT_ID)
+        call DUMMIES.add(SELL_ITEM_DUMMY)
+        call DUMMIES.add(HERO_PREVIEW_UNIT_ID)
+        call DUMMIES.add(PRIEST_1_UNIT_ID)
+        call DUMMIES.add(DRAFT_BUY_UNIT_ID)
+        call DUMMIES.add(DRAFT_UPGRADE_UNIT_ID)
+        call DUMMIES.add(SUDDEN_DEATH_UNIT_ID)
 
         // Feral Spirit Wolfs
         set FERAL_SPIRIT_WOLVES = StaticIdGroup.create()

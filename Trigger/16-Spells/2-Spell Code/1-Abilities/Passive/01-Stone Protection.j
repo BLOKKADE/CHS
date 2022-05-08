@@ -1,4 +1,4 @@
-library StoneProtection requires DummyOrder
+library StoneProtection requires DummyOrder, RandomShit
 
     private struct timerData
         unit source

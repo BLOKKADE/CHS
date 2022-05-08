@@ -1,4 +1,4 @@
-library trigger152 initializer init requires RandomShit, StartFunction
+/*library trigger152 initializer init requires RandomShit, StartFunction
 
     function Trig_Elimination_Func018Func001001002001 takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())!=Player(8))
@@ -130,7 +130,6 @@ library trigger152 initializer init requires RandomShit, StartFunction
 
 
     function Trig_Elimination_Actions takes nothing returns nothing
-        call DisableTrigger(udg_trigger149)
         call KillUnit(udg_unit03)
         call TriggerSleepAction(5.00)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
@@ -187,3 +186,4 @@ library trigger152 initializer init requires RandomShit, StartFunction
 
 
 endlibrary
+*/
