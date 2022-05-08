@@ -20,14 +20,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
     endfunction
 
     function ResetSummonStats takes unit u returns nothing
-        local integer i = 0
-
-        loop
-            call SaveReal(HT_unitstate,GetHandleId(u), i, 0)
-
-            set i = i + 1
-            exitwhen i > 21
-        endloop
+        call FlushChildHashtable(HT_unitstate, GetHandleId(u))
     endfunction
 
     function SummonUnit takes unit u returns nothing
