@@ -240,7 +240,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
 
         call DisableTrigger(GetTriggeringTrigger())
 
-        if ElimModeEnabled then
+        if ImmortalMode == 1 then
             set udg_strings02[1]= "Mode: Normal|r"
         else
             set udg_strings02[1]= "Mode: Immortal|r"

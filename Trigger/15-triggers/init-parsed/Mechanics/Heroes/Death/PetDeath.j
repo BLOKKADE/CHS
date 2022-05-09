@@ -15,16 +15,11 @@ library PetDeath initializer init requires RandomShit
     endfunction
 
     private function HeroDiesActions takes nothing returns nothing
-        local unit u = GetDyingUnit()
-        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
-
-        call BJDebugMsg("Triggering pet death")
+        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetDyingUnit()))
 
         if (ps.getPet() != null) then
             call ps.setPet(null)
         endif
-
-        set u = null
     endfunction
 
     private function init takes nothing returns nothing
