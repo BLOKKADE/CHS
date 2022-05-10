@@ -83,11 +83,11 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             if this.reduction != currentBonus then
                 //call BJDebugMsg("ap old: " + R2S(this.reduction) + " new: " + R2S(currentBonus))
                 //call BJDebugMsg("absolute poison: " + I2S(GetHandleId(this.target)) + " : " + GetUnitName(this.target))
-                //call BJDebugMsg("old red:" + R2S(this.reduction) + I2S(this.buffCount) + " new red: " + R2S(currentBonus))
+                //call BJDebugMsg("old red:" + R2S(this.reduction) + " new red: " + R2S(currentBonus))
                 call AddUnitNegativeHpRegen(this.target, 0 - this.reduction + currentBonus)
                 //call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)
                 //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
-                //set this.reduction = currentBonus
+                set this.reduction = currentBonus
                 //call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, 0 - this.reduction)
                 //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) - this.reduction)
             endif
@@ -103,6 +103,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             set this.source = source
             set this.reduction = 0
             set this.buffCount = 0
+            //call BJDebugMsg("create abs psn" + GetUnitName(this.target))
 
             set this.endTick = T32_Tick + R2I(30 * 32)   
             set this.startTick = T32_Tick
@@ -112,8 +113,8 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         
         method destroy takes nothing returns nothing
             set AbsolutePoisonTable[GetHandleId(this.target)] = 0
-            call BJDebugMsg("abs psn disable")
-            call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)
+            //call BJDebugMsg("abs psn disable: " + GetUnitName(this.target))
+            call AddUnitNegativeHpRegen(this.target, 0 - this.reduction)
             //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
             set this.target = null
             set this.source = null
