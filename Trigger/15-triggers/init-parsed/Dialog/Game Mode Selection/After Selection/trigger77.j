@@ -368,9 +368,9 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
         else
             set udg_boolean13 = true
-            set udg_boolean14 = true
+            set udg_boolean14 = false
             set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Betting: Enabled (Show)|r"
+            set udg_strings02[1]= "Betting: Enabled (Hidden)|r"
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
         endif
 
