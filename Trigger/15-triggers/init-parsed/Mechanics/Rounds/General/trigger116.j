@@ -49,7 +49,7 @@ library trigger116 initializer init requires RandomShit
         loop
             exitwhen AntiStuckPlayerId > 8
             if RectContainsUnit(udg_rect09, PlayerHeroes[AntiStuckPlayerId]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
-                call RemoveUnitsInRect(PlayerArenaRects[AntiStuckPlayerId])
+                call RemoveUnitsInRectCreeps(PlayerArenaRects[AntiStuckPlayerId])
             endif
     
             if(Trig_AntiStuck_Func002Func001C())then

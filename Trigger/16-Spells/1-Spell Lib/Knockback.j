@@ -274,7 +274,7 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
             endif
         endif
         
-        if IsUnitExcluded(targ) then
+        if DUMMIES.contains(GetUnitTypeId(targ)) then
             return false
         endif
         

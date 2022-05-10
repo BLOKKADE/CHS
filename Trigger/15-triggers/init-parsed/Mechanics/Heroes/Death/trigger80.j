@@ -16,13 +16,22 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         return true
     endfunction
 
+    function RemoveUnitsInArena takes nothing returns boolean
+        local unit u = GetFilterUnit()
+
+        if not IsUnitType(u, UNIT_TYPE_HERO) and not DUMMIES.contains(GetUnitTypeId(u)) then
+            call DeleteUnit(u)
+        endif
+
+        return false
+    endfunction
 
     function EnableDeathTrigger takes nothing returns nothing
         local integer pid = GetTimerData(GetExpiredTimer())
         local unit u = PlayerHeroes[pid+1]
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
 
-        call ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)
+        call BJDebugMsg(B2S(ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)))
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
         call FixDeath(u)
@@ -42,14 +51,15 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         if(not Trig_Hero_Dies_Func026C()) then
             return false
         endif
-        //udg_boolean07
+        //immortal mode
         if ModeNoDeath == true and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
             call ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
             call FixDeath(u)
             call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
-            call RemovePlayerUnits(Player(pid))
+
+            call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[pid + 1], Condition( function RemoveUnitsInArena))
             
             set u = null
             return false
@@ -59,7 +69,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
             call TimerStart(NewTimerEx(pid), 1, false, function EnableDeathTrigger)
             set RoundLiveLost[pid] = true
             
-            call RemovePlayerUnits(Player(pid))
+            call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[pid + 1], Condition( function RemoveUnitsInArena))
     
             set Lives[pid] = Lives[pid] - 1
             call DisplayTextToPlayer(GetOwningPlayer(u) ,0,0,"You have " + I2S(Lives[pid]) + " lives left")

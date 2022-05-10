@@ -270,7 +270,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         //Summons
-        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(11) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) then
+        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) then
             call SummonUnit(u)
         endif
 
