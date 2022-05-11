@@ -25,8 +25,6 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
         integer tick
         integer endTick
         boolean enabled
-    
-        
 
         private method updateDescription takes nothing returns nothing
             call UpdateAbilityDescription(GetAbilityDescription(SPIRIT_LINK_ABILITY_ID, this.level - 1), Player(this.pid), SPIRIT_LINK_ABILITY_ID, "000", R2I((1 - this.damageReduction) * 100), level)
@@ -97,7 +95,7 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
                 call GroupEnumUnitsOfPlayer(this.spiritLinkedUnits, Player(this.pid), Condition(function SpiritLinkFilter))
                 call this.refreshGroup()
             endif
-            if T32_Tick > this.endTick then
+            if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, Player(this.pid)) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif

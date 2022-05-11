@@ -93,7 +93,7 @@ library ConqBambooStick initializer init requires CustomState
                 set this.tick = 0
                 call this.search()
             endif
-            if T32_Tick > this.endTick or GetUnitAbilityLevel(this.source, CONQ_BAMBOO_STICK_BUFF_ID) == 0 then
+            if T32_Tick > this.endTick or GetUnitAbilityLevel(this.source, CONQ_BAMBOO_STICK_BUFF_ID) == 0 or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
