@@ -394,7 +394,7 @@ library PlayerTracking initializer init requires OldInitialization
             exitwhen ps == 12 // A static variable that we should be avoiding
         endloop
 
-        set SaveEnabled = CountPlayersInForceBJ(computerPlayers) == 2 // Players 9 and 12 are Computer AI
+        set SaveEnabled = CountPlayersInForceBJ(computerPlayers) == 1 // Player 12 = Computer AI
 
         // Map version stuff
         call SetupMapVersionLookups()

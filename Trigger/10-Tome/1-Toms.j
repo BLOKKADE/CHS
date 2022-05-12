@@ -474,130 +474,126 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIem\\AIemTarget.mdl", u, "origin"))
         endif
         
-        if not UnitHasFullItems(u) then
-            //Ancient Staff
-            if II  == ANCIENT_STAFF_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(ANCIENT_STAFF_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),15000)
-                endif
-
-                //Ancient Dagger
-            elseif II  == ANCIENT_DAGGER_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(ANCIENT_DAGGER_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),15000)
-                endif
-
-                //Ancient Axe
-            elseif II  == ANCIENT_AXE_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(ANCIENT_AXE_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),15000)
-                endif	
-
-                //Vigour Token
-            elseif II  == VIGOUR_TOKEN_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(VIGOUR_TOKEN_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),15000)
-                endif
-
-                //Flimsy Token
-            elseif II  == FLIMSY_TOKEN_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(FLIMSY_TOKEN_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),15000)
-                endif
-
-                //Spellbane Token
-            elseif II  == SPELLBANE_TOKEN_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(SPELL_BANE_TOKEN_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),15000)
-                endif	
-
-                //Mask of Elusion
-            elseif II  == MASK_OF_ELUSION_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(MASK_OF_ELUSION_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),20000)
-                endif
-
-                //Mask of Vitality
-            elseif II  == MASK_OF_VITALITY_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(MASK_OF_VITALITY_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),20000)
-                endif
-                //Mask of Protection
-            elseif II  == MASK_OF_PROTECTION_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(MASK_OF_PROTECTION_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),20000)
-                endif	
-                //Sword of Blodthirst
-            elseif II  == SWORD_OF_BLOODTHRIST_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(SWORD_OF_BLOODTHRIST_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),10000)
-                endif
-                //Wisdom Chestplate
-            elseif II  == WISDOM_CHESTPLATE_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(WISDOM_CHESTPLATE_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),15000)
-                endif
-                //Lucky Pants
-            elseif II  == LUCKY_PANTS_TOME_ITEM_ID then   
-                if BuyGloryItem(pid, II) then
-                    call UnitAddItem(u,CreateItem(LUCKY_PANTS_ITEM_ID,0,0))
-                    
-                else
-                    call PlayerAddGold( GetOwningPlayer(u),20000)
-                        
-                endif	
-                //Ankh of Reincarnation
-            elseif II == 'I0BH' then
-                if (not AnkhLimitReached.boolean[GetHandleId(u)]) then
-                    set It = GetUnitItem(u, 'ankh')
-                    if It != null then
-                        call SetItemCharges(It, GetItemCharges(It) + 1)
-                        set AnkhLimitReached.boolean[GetHandleId(u)] = true
-                    else
-                        call UnitAddItemById(u, 'ankh')
-                    endif
-                else
-                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "Cannot buy more |cffdf9432" + GetObjectName(II) + "|r")
-                    call PlayerAddGold(GetOwningPlayer(u), 400)
-                endif
+        //Ancient Staff
+        if II  == ANCIENT_STAFF_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(ANCIENT_STAFF_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),15000)
             endif
-        endif
-            
-        //Non-Lucrative Tome
-        if II == NON_LUCRATIVE_TOME_ITEM_ID then
+
+            //Ancient Dagger
+        elseif II  == ANCIENT_DAGGER_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(ANCIENT_DAGGER_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),15000)
+            endif
+
+            //Ancient Axe
+        elseif II  == ANCIENT_AXE_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(ANCIENT_AXE_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),15000)
+            endif	
+
+            //Vigour Token
+        elseif II  == VIGOUR_TOKEN_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(VIGOUR_TOKEN_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),15000)
+            endif
+
+            //Flimsy Token
+        elseif II  == FLIMSY_TOKEN_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(FLIMSY_TOKEN_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),15000)
+            endif
+
+            //Spellbane Token
+        elseif II  == SPELLBANE_TOKEN_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(SPELL_BANE_TOKEN_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),15000)
+            endif	
+
+            //Mask of Elusion
+        elseif II  == MASK_OF_ELUSION_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(MASK_OF_ELUSION_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),20000)
+            endif
+
+            //Mask of Vitality
+        elseif II  == MASK_OF_VITALITY_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(MASK_OF_VITALITY_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),20000)
+            endif
+            //Mask of Protection
+        elseif II  == MASK_OF_PROTECTION_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(MASK_OF_PROTECTION_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),20000)
+            endif	
+            //Sword of Blodthirst
+        elseif II  == SWORD_OF_BLOODTHRIST_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(SWORD_OF_BLOODTHRIST_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),10000)
+            endif
+            //Wisdom Chestplate
+        elseif II  == WISDOM_CHESTPLATE_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(WISDOM_CHESTPLATE_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),15000)
+            endif
+            //Lucky Pants
+        elseif II  == LUCKY_PANTS_TOME_ITEM_ID then   
+            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(LUCKY_PANTS_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold( GetOwningPlayer(u),20000)
+                    
+            endif	
+            //Ankh of Reincarnation
+        elseif II == 'I0BH' then
+            if (not AnkhLimitReached.boolean[GetHandleId(u)]) and UnitHasFullItems(u) == false then
+                set It = GetUnitItem(u, 'ankh')
+                if It != null then
+                    call SetItemCharges(It, GetItemCharges(It) + 1)
+                    set AnkhLimitReached.boolean[GetHandleId(u)] = true
+                else
+                    call UnitAddItemById(u, 'ankh')
+                endif
+            else
+                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Cannot buy more |cffdf9432" + GetObjectName(II) + "|r")
+                call PlayerAddGold(GetOwningPlayer(u), 400)
+            endif
+            //Non-Lucrative Tome
+        elseif II == NON_LUCRATIVE_TOME_ITEM_ID then
             call NonLucrativeTomeBought(u)
         endif
 

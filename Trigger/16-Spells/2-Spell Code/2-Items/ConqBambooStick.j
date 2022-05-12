@@ -43,6 +43,8 @@ library ConqBambooStick initializer init requires CustomState
                 set i = i + 1
                 exitwhen i > 8
             endloop
+
+            set enemyHero = null
         endmethod
 
         private method setVulnerable takes unit enemyHero, integer enemyHid returns nothing
@@ -63,6 +65,7 @@ library ConqBambooStick initializer init requires CustomState
             local integer i = 1
             local unit enemyHero
             local integer enemyHid
+            
             loop
                 set enemyHero = PlayerHeroes[i]
                 if enemyHero != null and enemyHero != this.source then
@@ -80,6 +83,8 @@ library ConqBambooStick initializer init requires CustomState
                 set i = i + 1
                 exitwhen i > 8
             endloop
+
+            set enemyHero = null
         endmethod
 
         private method periodic takes nothing returns nothing
