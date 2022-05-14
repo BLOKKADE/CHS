@@ -9,18 +9,36 @@ library trigger35 initializer init requires RandomShit
 
 
     function Trig_Wisp_Func001Func001Func002C takes nothing returns boolean
-        if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 800.00))then
-            return false
+        local location unitLocation = GetUnitLoc(GetEnumUnit())
+        local location heroLocation = GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])
+        local boolean result = true
+
+        if(not(DistanceBetweenPoints(unitLocation,heroLocation)>= 800.00))then
+            set result = false
         endif
-        return true
+
+        call RemoveLocation(unitLocation)
+        call RemoveLocation(heroLocation)
+        set unitLocation = null
+        set heroLocation = null
+        return result
     endfunction
 
 
     function Trig_Wisp_Func001Func001Func002Func001C takes nothing returns boolean
-        if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))<= 450.00))then
-            return false
+        local location unitLocation = GetUnitLoc(GetEnumUnit())
+        local location heroLocation = GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])
+        local boolean result = true
+
+        if(not(DistanceBetweenPoints(unitLocation,heroLocation)<= 450.00))then
+            set result = false
         endif
-        return true
+
+        call RemoveLocation(unitLocation)
+        call RemoveLocation(heroLocation)
+        set unitLocation = null
+        set heroLocation = null
+        return result
     endfunction
 
 
@@ -33,19 +51,31 @@ library trigger35 initializer init requires RandomShit
 
 
     function Trig_Wisp_Func001Func001Func003Func001C takes nothing returns boolean
-        if(not(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))>= 200.00))then
-            return false
+        local location unitLocation = GetUnitLoc(GetEnumUnit())
+        local location heroLocation = GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])
+        local boolean result = true
+
+        if(not(DistanceBetweenPoints(unitLocation,heroLocation)>= 200.00))then
+            set result = false
         endif
-        return true
+
+        call RemoveLocation(unitLocation)
+        call RemoveLocation(heroLocation)
+        set unitLocation = null
+        set heroLocation = null
+        return result
     endfunction
 
 
     function Trig_Wisp_Func001A takes nothing returns nothing
+        local location unitLocation = GetUnitLoc(GetEnumUnit())
+        local location heroLocation = GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))])
+
         if(Trig_Wisp_Func001Func001C())then
             if(Trig_Wisp_Func001Func001Func002C())then
-                call AddSpecialEffectLocBJ(GetUnitLoc(GetEnumUnit()),"Abilities\\Spells\\NightElf\\FaerieDragonInvis\\FaerieDragon_Invis.mdl")
+                call AddSpecialEffectLocBJ(unitLocation,"Abilities\\Spells\\NightElf\\FaerieDragonInvis\\FaerieDragon_Invis.mdl")
                 call DestroyEffectBJ(GetLastCreatedEffectBJ())
-                call SetUnitPositionLoc(GetEnumUnit(),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))
+                call SetUnitPositionLoc(GetEnumUnit(),heroLocation)
                 call IssueImmediateOrderBJ(GetEnumUnit(),"stop")
                 call AddSpecialEffectTargetUnitBJ("origin",GetEnumUnit(),"Abilities\\Spells\\NightElf\\FaerieDragonInvis\\FaerieDragon_Invis.mdl")
                 call DestroyEffectBJ(GetLastCreatedEffectBJ())
@@ -57,12 +87,12 @@ library trigger35 initializer init requires RandomShit
                 endif
             endif
             if(Trig_Wisp_Func001Func001Func003C())then
-                call IssuePointOrderLocBJ(GetEnumUnit(),"move",OffsetLocation(GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(- 150.00,150.00),GetRandomReal(- 150.00,150.00)))
+                call IssuePointOrderLocBJ(GetEnumUnit(),"move",OffsetLocation(heroLocation,GetRandomReal(- 150.00,150.00),GetRandomReal(- 150.00,150.00)))
                 call SetUnitManaBJ(GetEnumUnit(),GetRandomReal(0,1.00))
             else
                 if(Trig_Wisp_Func001Func001Func003Func001C())then
-                    call SetUnitMoveSpeed(GetEnumUnit(),(DistanceBetweenPoints(GetUnitLoc(GetEnumUnit()),GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]))/ 2.00))
-                    call IssuePointOrderLocBJ(GetEnumUnit(),"move",OffsetLocation(GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]),GetRandomReal(- 150.00,150.00),GetRandomReal(- 150.00,150.00)))
+                    call SetUnitMoveSpeed(GetEnumUnit(),(DistanceBetweenPoints(unitLocation,heroLocation)/ 2.00))
+                    call IssuePointOrderLocBJ(GetEnumUnit(),"move",OffsetLocation(heroLocation,GetRandomReal(- 150.00,150.00),GetRandomReal(- 150.00,150.00)))
                     call SetUnitManaBJ(GetEnumUnit(),GetRandomReal(0,1.00))
                 else
                     call SetUnitMoveSpeed(GetEnumUnit(),GetUnitDefaultMoveSpeed(GetEnumUnit()))
@@ -70,6 +100,11 @@ library trigger35 initializer init requires RandomShit
             endif
         else
         endif
+
+        call RemoveLocation(unitLocation)
+        call RemoveLocation(heroLocation)
+        set unitLocation = null
+        set heroLocation = null
     endfunction
 
 

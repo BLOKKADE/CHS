@@ -20,7 +20,10 @@ library trigger16 initializer init requires RandomShit
 
 
     function Trig_Faerie_Dragon_or_Wisp_Dies_Actions takes nothing returns nothing
-        call CreateNUnitsAtLoc(1,GetUnitTypeId(GetTriggerUnit()),GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),GetUnitFacing(GetTriggerUnit()))
+        local location unitLocation = GetUnitLoc(GetTriggerUnit())
+        call CreateNUnitsAtLoc(1,GetUnitTypeId(GetTriggerUnit()),GetOwningPlayer(GetTriggerUnit()),unitLocation,GetUnitFacing(GetTriggerUnit()))
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
     endfunction
 
 

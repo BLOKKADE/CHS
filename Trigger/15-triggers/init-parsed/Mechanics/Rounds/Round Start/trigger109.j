@@ -79,20 +79,24 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
     function Trig_Start_Level_Func015Func002A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetEnumPlayer())
-        
+        local location arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())])
+
         call EnumItemsInRectBJ(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())],function Trig_Start_Level_Func015Func002Func004A)
         call SetUnitInvulnerable(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],false)
-        call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]))
+        call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],arenaLocation)
 
         if (ps.getPet() != null) then
-            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]))
+            call SetUnitPositionLoc(ps.getPet(),arenaLocation)
         endif
 
         set udg_unit01 = PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]
         call ConditionalTriggerExecute(udg_trigger82)
         call SelectUnitForPlayerSingle(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]))
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetEnumPlayer())]),0)
+        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),arenaLocation,0)
         call SetCurrentlyFighting(GetEnumPlayer(), true)
+
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
     endfunction
 
 

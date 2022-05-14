@@ -68,6 +68,8 @@ library trigger129 initializer init requires RandomShit
 
     function Trig_Player_Leaves_Actions takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer()) + 1
+        local location arenaLocation
+
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayerSimple(GetTriggerPlayer(),udg_force07)
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer()))+ " |cffffcc00has left the game!|r"))
@@ -78,8 +80,10 @@ library trigger129 initializer init requires RandomShit
             call DoNothing()
         endif
         if(Trig_Player_Leaves_Func007C())then
+            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetTriggerPlayer())])
+
             set SpawnedHeroCount =(SpawnedHeroCount + 1)
-            call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8),Condition(function Trig_Player_Leaves_Func007Func003002001001002)))),GetTriggerPlayer(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetTriggerPlayer())]),bj_UNIT_FACING)
+            call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8),Condition(function Trig_Player_Leaves_Func007Func003002001001002)))),GetTriggerPlayer(),arenaLocation,bj_UNIT_FACING)
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer())+(" |cffffcc00has randomed " +(GetUnitName(GetLastCreatedUnit())+ "! (+5 bonus gold)")))))
             call AdjustPlayerStateBJ(5,GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)
             call ResourseRefresh(GetTriggerPlayer() )
@@ -87,10 +91,13 @@ library trigger129 initializer init requires RandomShit
             call UnitAddItemByIdSwapped('ankh',GetLastCreatedUnit())
             call UnitAddItemByIdSwapped('pghe',GetLastCreatedUnit())
             call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
-            call PanCameraToTimedLocForPlayer(GetTriggerPlayer(),GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetTriggerPlayer())]),0.10)
+            call PanCameraToTimedLocForPlayer(GetTriggerPlayer(),arenaLocation,0.10)
             call SelectUnitForPlayerSingle(GetLastCreatedUnit(),GetTriggerPlayer())
             call TriggerSleepAction(2)
             call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
+
+            call RemoveLocation(arenaLocation)
+            set arenaLocation = null
         else
         endif
     endfunction

@@ -89,7 +89,10 @@ library trigger89 initializer init requires RandomShit
 
 
     function Trig_Map_Initialization_Actions takes nothing returns nothing
-    
+        local location unit25Location = OffsetLocation(GetUnitLoc(udg_unit25),0.00,0.00)
+        local location unit15Location = OffsetLocation(GetUnitLoc(udg_unit15),15.00,15.00)
+        local location unit34Location = OffsetLocation(GetUnitLoc(udg_unit34),0.00,0.00)
+        local location unit21Location = OffsetLocation(GetUnitLoc(udg_unit21),17.00,15.00)
     
         call SetMapFlag(MAP_ALLIANCE_CHANGES_HIDDEN,true)
         call SetMapFlag(MAP_LOCK_RESOURCE_TRADING,true)
@@ -103,10 +106,20 @@ library trigger89 initializer init requires RandomShit
         else
         endif
         call ConditionalTriggerExecute(udg_trigger147)
-        call SetUnitPositionLoc(udg_unit37,OffsetLocation(GetUnitLoc(udg_unit25),0.00,0.00))
-        call SetUnitPositionLoc(udg_unit36,OffsetLocation(GetUnitLoc(udg_unit15),15.00,15.00))
-        call SetUnitPositionLoc(udg_unit38,OffsetLocation(GetUnitLoc(udg_unit34),0.00,0.00))
-        call SetUnitPositionLoc(udg_unit35,OffsetLocation(GetUnitLoc(udg_unit21),17.00,15.00))
+        call SetUnitPositionLoc(udg_unit37,unit25Location)
+        call SetUnitPositionLoc(udg_unit36,unit15Location)
+        call SetUnitPositionLoc(udg_unit38,unit34Location)
+        call SetUnitPositionLoc(udg_unit35,unit21Location)
+
+        call RemoveLocation(unit25Location)
+        call RemoveLocation(unit15Location)
+        call RemoveLocation(unit34Location)
+        call RemoveLocation(unit21Location)
+        set unit25Location = null
+        set unit15Location = null
+        set unit34Location = null
+        set unit21Location = null
+
         call TriggerSleepAction(0.00)
         call ForForce(GetPlayersMatching(Condition(function Trig_Map_Initialization_Func018001001)),function Trig_Map_Initialization_Func018A)
     endfunction

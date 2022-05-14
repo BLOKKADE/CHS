@@ -998,6 +998,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local integer category = 0
         local integer unitCode
         local unit u
+        local location arenaLocation
+
         if CategoryAffectRandom then
             set category = PlayerSelectedCategory[GetPlayerId(p)]
         endif
@@ -1006,7 +1008,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             return
         endif
 
-        set u = CreateUnitAtLoc(p, unitCode, GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)]), bj_UNIT_FACING)
+        set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
+        set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
 
         call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
 
@@ -1017,6 +1020,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         set HeroSelectorEvent = 0.0
         set HeroSelectorEvent = 1.0
         set HeroSelectorEvent = 0.0
+
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
         set u = null
     endfunction
 
@@ -1025,6 +1031,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local unit u
         //pick what currently is selected, returns true on success returns false when something went wrong,
         local integer buttonIndex = PlayerSelectedButtonIndex[GetPlayerId(p)]
+        local location arenaLocation
+
         if buttonIndex <= 0 then
             return false
         endif //reject nothing selected
@@ -1033,7 +1041,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             return false
         endif //reject requirment not fullfilled
 
-        set u = CreateUnitAtLoc(p, unitCode, GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)]), bj_UNIT_FACING)
+        set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
+        set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
         
         call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
 
@@ -1045,6 +1054,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         set HeroSelectorEvent = 1.0
         set HeroSelectorEvent = 0.0
 
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
         set u = null
         return true
     endfunction

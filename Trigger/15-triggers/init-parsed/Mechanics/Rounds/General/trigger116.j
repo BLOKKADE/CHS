@@ -45,6 +45,8 @@ library trigger116 initializer init requires RandomShit
 
 
     function Trig_AntiStuck_Actions takes nothing returns nothing
+        local location arenaLocation
+
         set AntiStuckPlayerId = 1
         loop
             exitwhen AntiStuckPlayerId > 8
@@ -53,10 +55,15 @@ library trigger116 initializer init requires RandomShit
             endif
     
             if(Trig_AntiStuck_Func002Func001C())then
-                call CreateNUnitsAtLoc(1,'n00T',Player(11),GetRectCenter(PlayerArenaRects[AntiStuckPlayerId]),bj_UNIT_FACING)
+                set arenaLocation = GetRectCenter(PlayerArenaRects[AntiStuckPlayerId])
+
+                call CreateNUnitsAtLoc(1,'n00T',Player(11),arenaLocation,bj_UNIT_FACING)
                 call SuspendHeroXPBJ(false,PlayerHeroes[AntiStuckPlayerId])
                 call UnitDamageTargetBJ(PlayerHeroes[AntiStuckPlayerId],GetLastCreatedUnit(),500,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL)
                 call SuspendHeroXPBJ(true,PlayerHeroes[AntiStuckPlayerId])
+
+                call RemoveLocation(arenaLocation)
+                set arenaLocation = null
             endif
     
             set AntiStuckPlayerId = AntiStuckPlayerId + 1

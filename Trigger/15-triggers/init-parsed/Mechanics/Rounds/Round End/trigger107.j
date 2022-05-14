@@ -80,7 +80,8 @@ library trigger107 initializer init requires RandomShit
     function Trig_Complete_Level_Player_Actions takes nothing returns nothing
         local player p = GetOwningPlayer(GetKillingUnit())
         local integer pid = GetPlayerId(p)
-    
+        local location arenaLocation = GetRectCenter(GetPlayableMapRect())
+
         if(Trig_Complete_Level_Player_Func001001())then
             set udg_boolean09 = false
         else
@@ -118,10 +119,12 @@ library trigger107 initializer init requires RandomShit
                 call AddHeroXPSwapped(udg_integer48,PlayerHeroes[pid + 1],true)
             endif
         endif
-        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,p,GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,p,arenaLocation,bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
         call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group08)
 
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
         set p = null
     endfunction
 

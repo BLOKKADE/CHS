@@ -70,16 +70,22 @@ library trigger106 initializer init requires RandomShit, Functions
     function Trig_Complete_Level_Move_Actions takes nothing returns nothing
         local integer pid = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetTriggerUnit()))
+        local location arenaLocation
 
         if(Trig_Complete_Level_Move_Func003C())then
+            set arenaLocation = GetRectCenter(udg_rect09)
+
             call RemoveDebuff(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))], 0)
-            call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetRectCenter(udg_rect09))
+            call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],arenaLocation)
 
             if (ps.getPet() != null) then
-                call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+                call SetUnitPositionLoc(ps.getPet(),arenaLocation)
             endif
 
-            call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),GetRectCenter(udg_rect09),0.20)
+            call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),arenaLocation,0.20)
+
+            call RemoveLocation(arenaLocation)
+            set arenaLocation = null
         endif
         if(Trig_Complete_Level_Move_Func005C())then
             if(Trig_Complete_Level_Move_Func005Func003C())then

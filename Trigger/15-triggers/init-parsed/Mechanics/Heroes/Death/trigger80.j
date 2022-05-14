@@ -29,15 +29,18 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
     function EnableDeathTrigger takes nothing returns nothing
         local integer pid = GetTimerData(GetExpiredTimer())
         local unit u = PlayerHeroes[pid+1]
+        local location arenaLocation = GetRectCenter(udg_rect09)
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
 
-        call BJDebugMsg(B2S(ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)))
+        call BJDebugMsg(B2S(ReviveHeroLoc(u,arenaLocation,true)))
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
         call FixDeath(u)
         call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
         call ReleaseTimer(GetExpiredTimer())
 
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
         set u = null
     endfunction
 
@@ -45,6 +48,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
     function Trig_Hero_Dies_Conditions takes nothing returns boolean
         local unit u = GetDyingUnit()
         local integer pid = GetPlayerId(GetOwningPlayer(u))
+        local location arenaLocation
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
 
         //call BJDebugMsg(GetUnitName(u))
@@ -54,7 +58,8 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         endif
         //immortal mode
         if ModeNoDeath == true and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
-            call ReviveHeroLoc(u,GetRectCenter(udg_rect09),true)
+            set arenaLocation = GetRectCenter(udg_rect09)
+            call ReviveHeroLoc(u,arenaLocation,true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
             call FixDeath(u)
@@ -62,6 +67,8 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
 
             call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[pid + 1], Condition( function RemoveUnitsInArena))
             
+            call RemoveLocation(arenaLocation)
+            set arenaLocation = null
             set u = null
             return false
         endif

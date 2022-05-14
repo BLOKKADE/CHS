@@ -321,6 +321,8 @@ library trigger111 initializer init requires RandomShit, Functions
         local integer i = GetUnitAbilityLevel(u, abil) + 1
         local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
         local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
+        local location unitLocation = GetUnitLoc(u)
+
         //call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
         if maxBuy and i < 30 then
             loop
@@ -347,9 +349,12 @@ library trigger111 initializer init requires RandomShit, Functions
 
         call SetupDummySpell(u, abil, i, new)
         call FuncEditParam(abil,u)
-        call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
+        call AddSpecialEffectLocBJ(unitLocation,"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
         call DisplayTimedTextToPlayer(p, 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(abil, GetUnitAbilityLevel(u, abil) - 1))
+
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
     endfunction
 
 
