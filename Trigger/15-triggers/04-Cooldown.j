@@ -21,6 +21,7 @@ library Cooldown requires RandomShit
         call FlushChildHashtable(HT_SPELC,GetHandleId(TimerT))
         call ReleaseTimer(TimerT)
         set TimerT = null
+        set u = null
     endfunction
 
     function SetCooldown takes unit u, integer Aid, boolean startCooldown returns nothing 

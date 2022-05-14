@@ -59,9 +59,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
 
     function CreateNeutralPassiveBuildings2 takes nothing returns nothing
         local player p = Player(PLAYER_NEUTRAL_PASSIVE)
-        local unit u
         local integer unitID
-        local trigger t
         local real life
     
         if(ArNotLearningAbil==false) and AbilityMode == 1 then
@@ -97,6 +95,8 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         call SetShopIndex(CreateUnit(p,ITEM_SHOP_VI_UNIT_ID,868,- 1152,270.000))
 
         set ShopsCreated = true
+
+        set p = null
     endfunction
 
 

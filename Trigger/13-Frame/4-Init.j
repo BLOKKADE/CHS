@@ -338,6 +338,10 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 			call BlzTriggerRegisterFrameEvent(SPEL_DFF , TalantB , FRAMEEVENT_MOUSE_UP)
 			call BlzTriggerRegisterFrameEvent(SPEL_DFF , TalantB , FRAMEEVENT_MOUSE_ENTER)
 			call BlzTriggerRegisterFrameEvent(SPEL_DFF , TalantB , FRAMEEVENT_MOUSE_LEAVE)
+
+			set TalantA = null
+			set TalantB = null
+			set TT_text = null
 		endfunction
 
 		function Trig_ABIL_TAKE_Actions takes nothing returns nothing

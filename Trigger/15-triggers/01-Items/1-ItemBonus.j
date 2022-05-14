@@ -658,6 +658,8 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		local unit u = GetTriggerUnit()
 
 		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) and not IsHeroUnitId(GetUnitTypeId(u))) then
+			set it = null
+			set u = null
 			return
 		endif
 

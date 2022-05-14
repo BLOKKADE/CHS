@@ -128,6 +128,10 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         if s != "" then
             call DisplayTextToPlayer(p, 0, 0, s)
         endif
+
+        set p = null
+        set u = null
+        set hero = null
     endfunction
 
     function DummyCommands takes player p returns nothing

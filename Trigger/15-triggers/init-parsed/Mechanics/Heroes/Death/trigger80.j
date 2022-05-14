@@ -49,6 +49,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
 
         //call BJDebugMsg(GetUnitName(u))
         if(not Trig_Hero_Dies_Func026C()) then
+            set u = null
             return false
         endif
         //immortal mode

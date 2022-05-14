@@ -1,4 +1,4 @@
-library ConqBambooStick initializer init requires CustomState
+library ConqBambooStick initializer init requires CustomState, Utility
 
     globals
         HashTable ConqBambStickLightning

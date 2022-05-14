@@ -316,5 +316,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             set Lives[pid] = Lives[pid] + 1
             call DisplayTextToPlayer(p,0,0,"|cff85ff3eRound|r: " + I2S(RoundNumber) + "|r: |cffecff3e+1 life|r for you being you.")
         endif
+
+        set p = null
     endfunction
 endlibrary

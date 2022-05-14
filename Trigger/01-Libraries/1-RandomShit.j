@@ -343,6 +343,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         set Caster1 = null
         set t = null
         set u1 = null
+        set u2 = null
     endfunction
 
 
@@ -673,6 +674,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
 
         set Caster1 = null
+        set u1 = null
     endfunction
 
 

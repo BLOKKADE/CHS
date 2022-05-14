@@ -40,6 +40,7 @@ library DelayedPrinter uses StaticQueue
 			local trigger t = CreateTrigger()
 			call TriggerRegisterTimerEvent(t, INTERVAL, true)
 			call TriggerAddAction(t, function DelayedPrinter.doTick)
+			set t = null
 		endmethod
 	endstruct
 endlibrary
