@@ -50,8 +50,8 @@ library trigger56 initializer init requires RandomShit
         set udg_buttons04[0]= GetLastCreatedButtonBJ()
         call DialogDisplayBJ(true,udg_dialog06,udg_player03)
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Please wait!")
-        call StartTimerBJ(GetLastCreatedTimerBJ(),false,5.00)
-        call TriggerSleepAction(5.00)
+        call StartTimerBJ(GetLastCreatedTimerBJ(),false,15.00)
+        call TriggerSleepAction(15.00)
 
         // If the player doesn't select anything, default to everyone voting
         if(Trig_Voting_Rights_Initialization_Func016C())then
