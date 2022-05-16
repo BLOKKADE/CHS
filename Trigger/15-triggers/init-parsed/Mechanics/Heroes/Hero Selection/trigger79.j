@@ -43,7 +43,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         if(not(RoundNumber==1))then
             return false
         endif
-        if(not(SpawnedHeroCount >= PlayerCount))then
+        if(not(SpawnedHeroCount == PlayerCount))then
             return false
         endif
         return true
@@ -104,7 +104,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         if(not(RoundNumber==1))then
             return false
         endif
-        if(not(SpawnedHeroCount >= PlayerCount))then
+        if(not(SpawnedHeroCount == PlayerCount))then
             return false
         endif
         return true
@@ -146,7 +146,6 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
     
         call BlzSetHeroProperName( hero, GetPlayerNameNoTag( GetPlayerName(GetOwningPlayer(hero)   )))
         call ConditionalTriggerExecute(udg_trigger130)
-        set PlayerHeroes[GetConvertedPlayerId(udg_player02)]= hero
             
         // Try to load the code for the player
         call LoadCommand_AutoLoadPlayerSaveCode(udg_player02)

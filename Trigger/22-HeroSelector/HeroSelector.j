@@ -1008,22 +1008,26 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             return
         endif
 
-        set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
-        set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
+        // Make sure they don't already have a hero
+        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
+            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
+            set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
+            set PlayerHeroes[GetPlayerId(p) + 1] = u
+    
+            call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
+    
+            set HeroSelectorEventUnit = u
+            set HeroSelectorEventIsRandom = true
+            set HeroSelectorEventUnitCode = unitCode
+            set HeroSelectorEventPlayer = p
+            set HeroSelectorEvent = 0.0
+            set HeroSelectorEvent = 1.0
+            set HeroSelectorEvent = 0.0
 
-        call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
-
-        set HeroSelectorEventUnit = u
-        set HeroSelectorEventIsRandom = true
-        set HeroSelectorEventUnitCode = unitCode
-        set HeroSelectorEventPlayer = p
-        set HeroSelectorEvent = 0.0
-        set HeroSelectorEvent = 1.0
-        set HeroSelectorEvent = 0.0
-
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
-        set u = null
+            call RemoveLocation(arenaLocation)
+            set arenaLocation = null
+            set u = null
+        endif
     endfunction
 
     function HeroSelectorDoPick takes player p returns boolean
@@ -1041,23 +1045,30 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             return false
         endif //reject requirment not fullfilled
 
-        set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
-        set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
-        
-        call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
+        // Make sure they don't already have a hero
+        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
+            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
+            set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
+            set PlayerHeroes[GetPlayerId(p) + 1] = u
+            
+            call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
 
-        set HeroSelectorEventUnit = u
-        set HeroSelectorEventIsRandom = false
-        set HeroSelectorEventUnitCode = unitCode
-        set HeroSelectorEventPlayer = p
-        set HeroSelectorEvent = 0.0
-        set HeroSelectorEvent = 1.0
-        set HeroSelectorEvent = 0.0
+            set HeroSelectorEventUnit = u
+            set HeroSelectorEventIsRandom = false
+            set HeroSelectorEventUnitCode = unitCode
+            set HeroSelectorEventPlayer = p
+            set HeroSelectorEvent = 0.0
+            set HeroSelectorEvent = 1.0
+            set HeroSelectorEvent = 0.0
 
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
-        set u = null
-        return true
+            call RemoveLocation(arenaLocation)
+            set arenaLocation = null
+            set u = null
+
+            return true
+        endif
+
+        return false
     endfunction
 
     function HeroSelectorForceRandom takes nothing returns nothing
