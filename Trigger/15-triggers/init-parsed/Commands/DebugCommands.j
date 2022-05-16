@@ -8,6 +8,8 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         boolean array dummyEnabled
         integer array CreatedDummies
         boolean CreepEnrageEnabled = true
+
+        boolean DebugMsgMode = false
     endglobals
     //===========================================================================
     function DummyHelp takes player p returns nothing
@@ -192,7 +194,9 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     endfunction
 
     function RandomDebugCommand takes Args args returns nothing
-        call BJDebugMsg(B2S(IsTriggerEnabled(udg_trigger80)))
+        if GetLocalPlayer() == GetTriggerPlayer() then
+            set DebugMsgMode = true
+        endif
     endfunction
 
     function SetWizardbaneDebug takes Args args returns nothing
@@ -303,10 +307,11 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.SetBattleRoyale).name("sbr").handles("sbr").help("sbr <value>", "The Battle Royal starts after round <value>.")
             call Command.create(CommandHandler.SetWizardbaneDebug).name("wbd").handles("wbd").help("wbd", "Wizardbane debug.")
             call Command.create(CommandHandler.SetCreepEnrage).name("tce").handles("tce").help("tce", "toggle creep enrage.")
-            call Command.create(CommandHandler.RandomDebugCommand).name("debug").handles("debug").help("debug", "shows random info.")
             call Command.create(CommandHandler.CpuPower).name("cpupw").handles("cpupw").help("cpupw", "Gives CPU players stats, levels and some abilities")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
+
+        call Command.create(CommandHandler.RandomDebugCommand).name("debug").handles("debug").help("debug", "enables debug msgs.")
 
         set trg = null
     endfunction

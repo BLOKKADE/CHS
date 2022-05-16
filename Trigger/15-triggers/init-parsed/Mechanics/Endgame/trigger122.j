@@ -113,6 +113,23 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         endif
     endfunction
 
+    function GetWinner takes nothing returns player
+        local integer i = 1
+
+        loop
+            if UnitAlive(PlayerHeroes[i]) then
+                if DebugMsgMode then
+                    call BJDebugMsg(GetUnitName(PlayerHeroes[i]) + "win?")
+                endif
+            endif
+
+            set i = i + 1
+            exitwhen i > 8
+        endloop
+
+        return Player(0)
+    endfunction
+    
     function Trig_Victory_Actions takes nothing returns nothing
         local PlayerStats winningPlayer
 
@@ -121,6 +138,8 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         local boolean shouldSaveBrWin = CountPlayersInForceBJ(actualPlayers) > 1
         call DestroyForce(actualPlayers)
         set actualPlayers = null
+
+        call GetWinner()
 
         set udg_boolean11 = true
         call DisableTrigger(GetTriggeringTrigger())
