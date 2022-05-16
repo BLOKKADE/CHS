@@ -1,4 +1,4 @@
-library SpiritLink initializer init requires DummyOrder, AbilityDescription, MathRound
+library SpiritLink initializer init requires DummyOrder, AbilityDescription, MathRound, Utility
     globals
         Table SpiritLinkTable
     endglobals
