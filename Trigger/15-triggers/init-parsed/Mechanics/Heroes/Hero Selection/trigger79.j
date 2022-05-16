@@ -197,12 +197,12 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
                 call InitUpgradeShop()
             endif
             call CreateNeutralPassiveBuildings2()
-        endif
 
-        call TriggerSleepAction(2)
+            call TriggerSleepAction(2)
 
-        if(Trig_Spawn_Hero_Func019C())then
-            call TriggerExecute(udg_trigger109)
+            if(Trig_Spawn_Hero_Func019C())then
+                call TriggerExecute(udg_trigger109)
+            endif
         endif
     endfunction
 

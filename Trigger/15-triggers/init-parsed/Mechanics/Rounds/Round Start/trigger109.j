@@ -99,13 +99,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         set arenaLocation = null
     endfunction
 
-
-    function StartLevelRoundOne takes nothing returns nothing
-        call StartFunctionSpell(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],3) 
-        call SetCurrentlyFighting(GetEnumPlayer(), true)
-    endfunction
-
-
     function Trig_Start_Level_Func018A takes nothing returns nothing
         call ShowUnitShow(GetEnumUnit())
         call SetUnitInvulnerable(GetEnumUnit(),false)
@@ -113,9 +106,9 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call PauseUnitBJ(false,GetEnumUnit())
     endfunction
 
-
     function StartFunctionSpells takes nothing returns nothing
-        call StartFunctionSpell(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],3) 
+        call StartFunctionSpell(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],3)
+        call SetCurrentlyFighting(GetEnumPlayer(), true) 
     endfunction
 
     function Trig_Start_Level_Actions takes nothing returns nothing
@@ -169,7 +162,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
             set td = null
         else
             call RemoveHeroPreviewUnit()
-            call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartLevelRoundOne)
+            //call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartLevelRoundOne)
         endif
 
         // Save debug codes
