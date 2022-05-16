@@ -13,7 +13,7 @@ library trigger147 initializer init requires RandomShit
         call SetUnitPositionLoc(GetEnumUnit(),OffsetLocation(GetRectCenter(GetEntireMapRect()),0,1000000000.00))
         call DeleteUnit(GetEnumUnit())
 
-        call RemoveLocation(unitLocation)
+        //call RemoveLocation(unitLocation) // Don't remove this location since it is used elsewhere
         set unitLocation = null
     endfunction
 
