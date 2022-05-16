@@ -1,4 +1,4 @@
-library ItemOwnership initializer init requires Table, GetPlayerNames
+/*library ItemOwnership initializer init requires Table, GetPlayerNames
 
     globals
         // Mapping between item handle id and the player id that owns it
@@ -65,4 +65,4 @@ library ItemOwnership initializer init requires Table, GetPlayerNames
         set PlayerItemOwnerships = Table.create()
     endfunction
 
-endlibrary
+endlibrary*/
