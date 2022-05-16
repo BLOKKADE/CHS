@@ -6,7 +6,10 @@ library trigger130 initializer init requires RandomShit
 
 
     function Trig_Spacebar_Point_Func001A takes nothing returns nothing
-        call SetCameraQuickPositionLocForPlayer(GetOwningPlayer(GetEnumUnit()),GetUnitLoc(GetEnumUnit()))
+        local location unitLocation = GetUnitLoc(GetEnumUnit())
+        call SetCameraQuickPositionLocForPlayer(GetOwningPlayer(GetEnumUnit()),unitLocation)
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
     endfunction
 
 

@@ -9,7 +9,9 @@ library trigger95 initializer init requires RandomShit
 
 
     function Trig_The_Divine_Source_Actions takes nothing returns nothing
-        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
+        local location unitLocation = GetUnitLoc(GetTriggerUnit())
+
+        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),unitLocation,bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
         call UnitRemoveBuffBJ('Bena',GetTriggerUnit())
         call UnitRemoveBuffBJ('Bens',GetTriggerUnit())
@@ -19,6 +21,9 @@ library trigger95 initializer init requires RandomShit
         call UnitRemoveBuffBJ('Bpsd',GetTriggerUnit())
         call UnitAddAbilityBJ('Aadm',GetLastCreatedUnit())
         call IssueTargetOrderBJ(GetLastCreatedUnit(),"autodispel",GetTriggerUnit())
+
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
     endfunction
 
 

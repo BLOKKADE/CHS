@@ -468,6 +468,9 @@ library HeroLevel initializer init requires HeroLvlTable
         
         call UpdateAbilityDesc(UnitHero, Pl, GetHeroLevel(UnitHero))
         set LastLvlHero[Pid]  = I_l  
+
+        set UnitHero = null
+        set Pl = null
     endfunction
 
     //===========================================================================

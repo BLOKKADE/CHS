@@ -6,11 +6,15 @@ library trigger147 initializer init requires RandomShit
 
     //removes preplaced shops, couldve really also just hid them I think
     function Trig_Hide_Shops_Func002A takes nothing returns nothing
+        local location unitLocation = GetUnitLoc(GetEnumUnit())
         set HideShopsCount =(HideShopsCount + 1)
-        set udg_locations01[HideShopsCount]= GetUnitLoc(GetEnumUnit())
+        set udg_locations01[HideShopsCount]= unitLocation
         set ShopIds[HideShopsCount]= GetUnitTypeId(GetEnumUnit())
         call SetUnitPositionLoc(GetEnumUnit(),OffsetLocation(GetRectCenter(GetEntireMapRect()),0,1000000000.00))
         call DeleteUnit(GetEnumUnit())
+
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
     endfunction
 
 

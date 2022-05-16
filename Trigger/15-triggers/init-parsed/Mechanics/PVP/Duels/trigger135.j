@@ -81,12 +81,16 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
 
     function Trig_End_PvP_Func026Func007A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
+        local location arenaLocation = GetRectCenter(udg_rect09)
 
-        call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(udg_rect09))
+        call SetUnitPositionLoc(GetEnumUnit(),arenaLocation)
 
         if (ps.getPet() != null) then
-            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+            call SetUnitPositionLoc(ps.getPet(),arenaLocation)
         endif
+
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
     endfunction
 
 
@@ -123,6 +127,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         local real bonus = 1
         local item tempItem = null
         local PlayerStats ps
+        local location arenaLocation = GetRectCenter(udg_rect09)
 
         if(Trig_End_PvP_Func001C())then
             set udg_unit05 = DuelingHeroes[2]
@@ -166,20 +171,20 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
         call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
         call ForForce(GetPlayersAll(),function Trig_End_PvP_Func019A)
-        call SetUnitPositionLoc(udg_unit05,GetRectCenter(udg_rect09))
+        call SetUnitPositionLoc(udg_unit05,arenaLocation)
 
         if (ps.getPet() != null) then
-            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+            call SetUnitPositionLoc(ps.getPet(),arenaLocation)
         endif
 
         if(Trig_End_PvP_Func021C())then
             set ps = PlayerStats.forPlayer(GetOwningPlayer(GetDyingUnit()))
 
             if (ps.getPet() != null) then
-                call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+                call SetUnitPositionLoc(ps.getPet(),arenaLocation)
             endif
             
-            call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
+            call ReviveHeroLoc(GetDyingUnit(),arenaLocation,true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(GetDyingUnit()), false)
 
             call FixDeath(GetDyingUnit())
@@ -244,6 +249,10 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
                 set PvpEndIndex = PvpEndIndex + 1
             endloop
         endif
+
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
+        
         call GroupClear(ENUM_GROUP)
         
         call ConditionalTriggerExecute(udg_trigger54)

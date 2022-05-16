@@ -297,13 +297,21 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func007Func002Func001Func001C takes nothing returns boolean
+        local location unitLocation 
+        local boolean result = true
+
         if(not(UnitHasBuffBJ(GetEnumUnit(),'BOvd')!=true))then
             return false
         endif
-        if(not(CountUnitsInGroup(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func007Func002Func001Func001Func002001001003)))> 1))then
-            return false
+
+        set unitLocation = GetUnitLoc(GetEnumUnit())
+        if(not(CountUnitsInGroup(GetUnitsInRangeOfLocMatching(800.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func007Func002Func001Func001Func002001001003)))> 1))then
+            set result = false
         endif
-        return true
+
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
+        return result
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func007Func002Func001C takes nothing returns boolean
@@ -412,10 +420,16 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func009Func002Func001C takes nothing returns boolean
-        if(not(CountUnitsInGroup(GetUnitsInRangeOfLocMatching(250.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func009Func002Func001Func001001001003)))>= 1))then
-            return false
+        local location unitLocation = GetUnitLoc(GetEnumUnit())
+        local boolean result = true
+
+        if(not(CountUnitsInGroup(GetUnitsInRangeOfLocMatching(250.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func009Func002Func001Func001001001003)))>= 1))then
+            set result = false
         endif
-        return true
+
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
+        return result
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func009Func002C takes nothing returns boolean
@@ -433,9 +447,12 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001A takes nothing returns nothing
-    
+        local location unitLocation
+        local location tempLocation
+
         if (IsUnitAliveBJ(GetEnumUnit())==true) then
-    
+            set unitLocation = GetUnitLoc(GetEnumUnit())
+
             if(Trig_Creep_AutoCast_Func001Func001C())then
                 set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func001Func002C())then
@@ -444,7 +461,7 @@ library trigger101 initializer init requires RandomShit
                     else
                         call SetUnitAbilityLevelSwapped('A00V',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
-                    call IssueTargetOrderBJ(GetEnumUnit(),"manaburn",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(300.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func001Func002Func002003001003))))
+                    call IssueTargetOrderBJ(GetEnumUnit(),"manaburn",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(300.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func001Func002Func002003001003))))
                 else
                 endif
             else
@@ -452,7 +469,10 @@ library trigger101 initializer init requires RandomShit
             if(Trig_Creep_AutoCast_Func001Func002C())then
                 set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func002Func002C())then
-                    call IssuePointOrderLocBJ(GetEnumUnit(),"blink",OffsetLocation(GetUnitLoc(GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func002Func002Func001003001001001003)))),GetRandomReal(- 100.00,100.00),GetRandomReal(- 100.00,100.00)))
+                    set tempLocation = GetUnitLoc(GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func002Func002Func001003001001001003))))
+                    call IssuePointOrderLocBJ(GetEnumUnit(),"blink",OffsetLocation(tempLocation,GetRandomReal(- 100.00,100.00),GetRandomReal(- 100.00,100.00)))
+                    call RemoveLocation(tempLocation)
+                    set tempLocation = null
                 else
                 endif
             else
@@ -465,7 +485,10 @@ library trigger101 initializer init requires RandomShit
                     else
                         call SetUnitAbilityLevelSwapped('A00U',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
-                    call IssuePointOrderLocBJ(GetEnumUnit(),"shockwave",GetUnitLoc(GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func003Func002Func002003001001003)))))
+                    set tempLocation = GetUnitLoc(GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func003Func002Func002003001001003))))
+                    call IssuePointOrderLocBJ(GetEnumUnit(),"shockwave",tempLocation)
+                    call RemoveLocation(tempLocation)
+                    set tempLocation = null
                 else
                 endif
             else
@@ -478,7 +501,7 @@ library trigger101 initializer init requires RandomShit
                     else
                         call SetUnitAbilityLevelSwapped('A00W',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
-                    call IssueTargetOrderBJ(GetEnumUnit(),"creepthunderbolt",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func004Func002Func002003001003))))
+                    call IssueTargetOrderBJ(GetEnumUnit(),"creepthunderbolt",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(800.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func004Func002Func002003001003))))
                 else
                 endif
             else
@@ -491,7 +514,7 @@ library trigger101 initializer init requires RandomShit
                     else
                         call SetUnitAbilityLevelSwapped('A00X',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
-                    call IssueTargetOrderBJ(GetEnumUnit(),"rejuvination",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(400.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func005Func002Func002003001003))))
+                    call IssueTargetOrderBJ(GetEnumUnit(),"rejuvination",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(400.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func005Func002Func002003001003))))
                 else
                 endif
             else
@@ -499,7 +522,7 @@ library trigger101 initializer init requires RandomShit
             if(Trig_Creep_AutoCast_Func001Func006C())then
                 set RoundCreepAbilCastChance = GetRandomInt(1,5)
                 if(Trig_Creep_AutoCast_Func001Func006Func002C())then
-                    call IssueTargetOrderBJ(GetEnumUnit(),"slow",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(600.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func006Func002Func001003001003))))
+                    call IssueTargetOrderBJ(GetEnumUnit(),"slow",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(600.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func006Func002Func001003001003))))
                 else
                 endif
             else
@@ -523,7 +546,7 @@ library trigger101 initializer init requires RandomShit
                     else
                         call SetUnitAbilityLevelSwapped('A016',GetEnumUnit(),(((RoundNumber * 4)/ RoundCreepNumber)/ 2))
                     endif
-                    call IssueTargetOrderBJ(GetEnumUnit(),"faeriefire",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(700.00,GetUnitLoc(GetEnumUnit()),Condition(function Trig_Creep_AutoCast_Func001Func008Func002Func002003001003))))
+                    call IssueTargetOrderBJ(GetEnumUnit(),"faeriefire",GroupPickRandomUnit(GetUnitsInRangeOfLocMatching(700.00,unitLocation,Condition(function Trig_Creep_AutoCast_Func001Func008Func002Func002003001003))))
                 else
                 endif
             else
@@ -544,6 +567,9 @@ library trigger101 initializer init requires RandomShit
                 endif
             else
             endif
+
+            call RemoveLocation(unitLocation)
+            set unitLocation = null
         endif
     endfunction
     

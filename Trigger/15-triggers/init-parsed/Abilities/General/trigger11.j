@@ -16,14 +16,18 @@ library trigger11 initializer init requires RandomShit
 
 
     function Trig_Devastating_Blow_Actions takes nothing returns nothing
+        local location unitLocation
+
         if GetUnitAbilityLevel(GetTriggerUnit(), 'B01D') == 0 and GetEventDamageSource() != GetTriggerUnit() then
+            set unitLocation = GetUnitLoc(GetTriggerUnit())
+
             call DestroyEffectBJ(udg_effects01[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))])
             call DestroyEffectBJ(udg_effects02[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))])
             set udg_effects01[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))] = null
             set udg_effects02[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))] = null
-            call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl")
+            call AddSpecialEffectLocBJ(unitLocation,"Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
-            call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl")
+            call AddSpecialEffectLocBJ(unitLocation,"Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
             call AddSpecialEffectTargetUnitBJ("chest",GetTriggerUnit(),"Objects\\Spawnmodels\\Human\\HumanBlood\\BloodElfSpellThiefBlood.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
@@ -34,6 +38,9 @@ library trigger11 initializer init requires RandomShit
             call DisableTrigger(udg_trigger11)
             call UnitDamageTargetBJ(GetEventDamageSource(),GetTriggerUnit(),(0.08 * GetUnitStateSwap(UNIT_STATE_MAX_LIFE,GetTriggerUnit())) + (50.00 * I2R(GetUnitAbilityLevelSwapped('A050',GetEventDamageSource())))   ,ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
             call EnableTrigger(udg_trigger11) 
+
+            call RemoveLocation(unitLocation)
+            set unitLocation = null
         endif
     endfunction
 

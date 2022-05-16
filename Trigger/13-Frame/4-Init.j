@@ -201,7 +201,9 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 				elseif NumButton == 39 then
 					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
 					set ps = PlayerStats.forPlayer(GetOwningPlayer(SpellU))
-					set ToolTipS = "|cffd0ff00All Pick Stats|r"
+					set ToolTipS = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(GetOwningPlayer(SpellU)) + "|n|n"
+
+					set ToolTipS = ToolTipS + "|cffd0ff00All Pick Stats|r"
 					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getAPBRAllWins())
 					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getAPBRSeasonWins())
 					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getAPPVPAllWins())
@@ -336,6 +338,10 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 			call BlzTriggerRegisterFrameEvent(SPEL_DFF , TalantB , FRAMEEVENT_MOUSE_UP)
 			call BlzTriggerRegisterFrameEvent(SPEL_DFF , TalantB , FRAMEEVENT_MOUSE_ENTER)
 			call BlzTriggerRegisterFrameEvent(SPEL_DFF , TalantB , FRAMEEVENT_MOUSE_LEAVE)
+
+			set TalantA = null
+			set TalantB = null
+			set TT_text = null
 		endfunction
 
 		function Trig_ABIL_TAKE_Actions takes nothing returns nothing

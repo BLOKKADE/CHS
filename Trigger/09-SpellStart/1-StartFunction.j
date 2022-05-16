@@ -86,6 +86,8 @@ function FunctionTimerSpell takes nothing returns nothing
     if Herou != null and (IsPlayerInForce(GetOwningPlayer(Herou), udg_force07) or GetPlayerSlotState(GetOwningPlayer(Herou)) != PLAYER_SLOT_STATE_PLAYING) then
         call SetUnitInvulnerable(Herou, false)
         call KillUnit(Herou)
+        set Herou = null
+        set startbattle = null
         return
     endif
     set heroLevel = GetHeroLevel(Herou)

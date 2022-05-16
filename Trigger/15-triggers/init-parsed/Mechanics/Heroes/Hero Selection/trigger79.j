@@ -43,7 +43,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         if(not(RoundNumber==1))then
             return false
         endif
-        if(not(SpawnedHeroCount >= PlayerCount))then
+        if(not(SpawnedHeroCount == PlayerCount))then
             return false
         endif
         return true
@@ -59,9 +59,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
 
     function CreateNeutralPassiveBuildings2 takes nothing returns nothing
         local player p = Player(PLAYER_NEUTRAL_PASSIVE)
-        local unit u
         local integer unitID
-        local trigger t
         local real life
     
         if(ArNotLearningAbil==false) and AbilityMode == 1 then
@@ -97,6 +95,8 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         call SetShopIndex(CreateUnit(p,ITEM_SHOP_VI_UNIT_ID,868,- 1152,270.000))
 
         set ShopsCreated = true
+
+        set p = null
     endfunction
 
 
@@ -104,7 +104,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         if(not(RoundNumber==1))then
             return false
         endif
-        if(not(SpawnedHeroCount >= PlayerCount))then
+        if(not(SpawnedHeroCount == PlayerCount))then
             return false
         endif
         return true
@@ -120,6 +120,8 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
 
 
     public function SpawnedHeroActions takes player p, unit hero returns nothing
+        local location heroLocation
+
         set udg_player02 = p
 
         set PlayerHeroPicked[GetConvertedPlayerId(udg_player02)]= true
@@ -144,7 +146,6 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
     
         call BlzSetHeroProperName( hero, GetPlayerNameNoTag( GetPlayerName(GetOwningPlayer(hero)   )))
         call ConditionalTriggerExecute(udg_trigger130)
-        set PlayerHeroes[GetConvertedPlayerId(udg_player02)]= hero
             
         // Try to load the code for the player
         call LoadCommand_AutoLoadPlayerSaveCode(udg_player02)
@@ -158,13 +159,15 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         call PanCameraToTimedLocForPlayer(udg_player02,GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(udg_player02)]),0.00)
         call SelectUnitForPlayerSingle(hero,udg_player02)
 
+        set heroLocation = GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(udg_player02)])
+
         set bj_forLoopAIndex = 1
         set bj_forLoopAIndexEnd = 3
         loop
             exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
 
             if(Trig_Spawn_Hero_Func014Func001001())then
-                call CreateNUnitsAtLoc(1,'e003',udg_player02,PolarProjectionBJ(GetUnitLoc(PlayerHeroes[GetConvertedPlayerId(udg_player02)]),50.00,(45.00 * I2R(GetForLoopIndexA()))),bj_UNIT_FACING)
+                call CreateNUnitsAtLoc(1,'e003',udg_player02,PolarProjectionBJ(heroLocation,50.00,(45.00 * I2R(GetForLoopIndexA()))),bj_UNIT_FACING)
             endif
 
             if(Trig_Spawn_Hero_Func014Func002001())then
@@ -172,6 +175,9 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
             endif
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
+
+        call RemoveLocation(heroLocation)
+        set heroLocation = null
 
         if(Trig_Spawn_Hero_Func015001())then
             set SingleplayerPlayer = GetOwningPlayer(hero)

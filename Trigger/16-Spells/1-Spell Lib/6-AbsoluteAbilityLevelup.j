@@ -13,6 +13,8 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
         local integer i = GetUnitAbilityLevel(u, abil) + 1
         local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
         local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
+        local location unitLocation = GetUnitLoc(u)
+
         if maxBuy then
             loop
                 if lumber - cost < 0 then
@@ -36,9 +38,12 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
             call SetUnitAbilityLevel(u, abil, i)
         endif
         call FuncEditParam(abil,u)
-        call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
+        call AddSpecialEffectLocBJ(unitLocation,"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
         call DisplayTimedTextToPlayer(p, 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(abil, GetUnitAbilityLevel(u, abil) - 1))
+
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
     endfunction
 
     function Trig_AbsoluteAbilityLevelup_Actions takes nothing returns nothing

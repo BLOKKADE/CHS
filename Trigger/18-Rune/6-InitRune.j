@@ -53,6 +53,9 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         if GetLocalPlayer() != p then
             call BlzSetItemSkin(rune,'I06F')
         endif
+
+        set p = null
+        
         return rune
     endfunction
 

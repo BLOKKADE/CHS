@@ -77,13 +77,22 @@ library trigger34 initializer init requires RandomShit
 
 
     function Trig_Ward_Location_Actions takes nothing returns nothing
+        local location unitLocation
+        local location arenaLocation
+
         if(Trig_Ward_Location_Func001C())then
             call DoNothing()
         else
             if(Trig_Ward_Location_Func001Func002C())then
                 call DoNothing()
             else
-                call SetUnitPositionLoc(GetTriggerUnit(),PolarProjectionBJ(GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),525.00,AngleBetweenPoints(GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]),GetUnitLoc(GetTriggerUnit()))))
+                set unitLocation = GetUnitLoc(GetTriggerUnit())
+                set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])
+                call SetUnitPositionLoc(GetTriggerUnit(),PolarProjectionBJ(arenaLocation,525.00,AngleBetweenPoints(arenaLocation,unitLocation)))
+                call RemoveLocation(unitLocation)
+                call RemoveLocation(arenaLocation)
+                set unitLocation = null
+                set arenaLocation = null
             endif
         endif
     endfunction

@@ -998,6 +998,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local integer category = 0
         local integer unitCode
         local unit u
+        local location arenaLocation
+
         if CategoryAffectRandom then
             set category = PlayerSelectedCategory[GetPlayerId(p)]
         endif
@@ -1006,18 +1008,26 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             return
         endif
 
-        set u = CreateUnitAtLoc(p, unitCode, GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)]), bj_UNIT_FACING)
+        // Make sure they don't already have a hero
+        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
+            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
+            set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
+            set PlayerHeroes[GetPlayerId(p) + 1] = u
+    
+            call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
+    
+            set HeroSelectorEventUnit = u
+            set HeroSelectorEventIsRandom = true
+            set HeroSelectorEventUnitCode = unitCode
+            set HeroSelectorEventPlayer = p
+            set HeroSelectorEvent = 0.0
+            set HeroSelectorEvent = 1.0
+            set HeroSelectorEvent = 0.0
 
-        call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
-
-        set HeroSelectorEventUnit = u
-        set HeroSelectorEventIsRandom = true
-        set HeroSelectorEventUnitCode = unitCode
-        set HeroSelectorEventPlayer = p
-        set HeroSelectorEvent = 0.0
-        set HeroSelectorEvent = 1.0
-        set HeroSelectorEvent = 0.0
-        set u = null
+            call RemoveLocation(arenaLocation)
+            set arenaLocation = null
+            set u = null
+        endif
     endfunction
 
     function HeroSelectorDoPick takes player p returns boolean
@@ -1025,6 +1035,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local unit u
         //pick what currently is selected, returns true on success returns false when something went wrong,
         local integer buttonIndex = PlayerSelectedButtonIndex[GetPlayerId(p)]
+        local location arenaLocation
+
         if buttonIndex <= 0 then
             return false
         endif //reject nothing selected
@@ -1033,20 +1045,30 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             return false
         endif //reject requirment not fullfilled
 
-        set u = CreateUnitAtLoc(p, unitCode, GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)]), bj_UNIT_FACING)
-        
-        call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
+        // Make sure they don't already have a hero
+        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
+            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
+            set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
+            set PlayerHeroes[GetPlayerId(p) + 1] = u
+            
+            call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
 
-        set HeroSelectorEventUnit = u
-        set HeroSelectorEventIsRandom = false
-        set HeroSelectorEventUnitCode = unitCode
-        set HeroSelectorEventPlayer = p
-        set HeroSelectorEvent = 0.0
-        set HeroSelectorEvent = 1.0
-        set HeroSelectorEvent = 0.0
+            set HeroSelectorEventUnit = u
+            set HeroSelectorEventIsRandom = false
+            set HeroSelectorEventUnitCode = unitCode
+            set HeroSelectorEventPlayer = p
+            set HeroSelectorEvent = 0.0
+            set HeroSelectorEvent = 1.0
+            set HeroSelectorEvent = 0.0
 
-        set u = null
-        return true
+            call RemoveLocation(arenaLocation)
+            set arenaLocation = null
+            set u = null
+
+            return true
+        endif
+
+        return false
     endfunction
 
     function HeroSelectorForceRandom takes nothing returns nothing

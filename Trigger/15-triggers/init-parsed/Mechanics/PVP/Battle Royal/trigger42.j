@@ -76,18 +76,28 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
 
     function Trig_Battle_Royal_Func017A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
+        local location arenaLocation = GetRectCenter(udg_rect09)
+        local location unitLocation = GetUnitLoc(GetEnumUnit())
+        local location playableAreaLocation = GetRectCenter(GetPlayableMapRect())
 
         set udg_unit01 = GetEnumUnit()
         call PauseUnit(udg_unit01, true)
         call ConditionalTriggerExecute(udg_trigger82)
-        call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),1200,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
+        call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(playableAreaLocation,1200,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),arenaLocation)
 
         if (ps.getPet() != null) then
-            call SetUnitPositionLocFacingLocBJ(ps.getPet(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),1200,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
+            call SetUnitPositionLocFacingLocBJ(ps.getPet(),PolarProjectionBJ(playableAreaLocation,1200,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),arenaLocation)
         endif
 
         call SelectUnitForPlayerSingle(GetEnumUnit(),GetOwningPlayer(GetEnumUnit()))
-        call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetEnumUnit()),GetUnitLoc(GetEnumUnit()),0.50)
+        call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetEnumUnit()),unitLocation,0.50)
+
+        call RemoveLocation(arenaLocation)
+        call RemoveLocation(unitLocation)
+        call RemoveLocation(playableAreaLocation)
+        set arenaLocation = null
+        set unitLocation = null
+        set playableAreaLocation = null
     endfunction
 
     function Trig_Battle_Royal_Func020A takes nothing returns nothing
