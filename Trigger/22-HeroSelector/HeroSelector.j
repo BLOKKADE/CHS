@@ -113,7 +113,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         private string  ToManyTooltip          = "OUTOFSTOCKTOOLTIP"
         //Ban
         private boolean DelayBanUntilPick      = false //(true) baning will not be applied instantly, instead it is applied when HeroSelectorEnablePick is called the next time.
-        integer PlayerBanCount                 = 0 // Keeps track of how many people have banned. We can then short circuit the ban timer if everyoneh as banned
+        private boolean array PlayerHasBanned  // Track if the player has banned already. Need to manually check to prevent spamming the ban button
+        integer PlayerBanCount                 = 0 // Keeps track of how many people have banned. We can then short circuit the ban timer if everyone has banned
         //Category
         private boolean CategoryAffectRandom   = true  //(false) random will not care about selected category
         private boolean CategoryMultiSelect    = false //(false) deselect other category when selecting one, (true) can selected multiple categories and all heroes having any of them are not filtered.
@@ -1234,25 +1235,31 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local integer playerIndex = GetPlayerId(p)
         local integer buttonIndex = PlayerSelectedButtonIndex[playerIndex]
         local integer unitCode = HeroButtonUnitCode[buttonIndex]
-        call HeroSelectorframeLoseFocus(BlzGetTriggerFrame())
-        if buttonIndex > 0 then
-            if not DelayBanUntilPick then
-                call HeroSelectorCounterChangeUnitCode(unitCode, UnitCount + 1, p)
-            else
-                set DelayBanCount = DelayBanCount + 1
-                set DelayBanPlayer[DelayBanCount] = p
-                set DelayBanUnitCode[DelayBanCount] = unitCode
+
+        if (not PlayerHasBanned[playerIndex]) then
+            set PlayerHasBanned[playerIndex] = true
+            
+            call HeroSelectorframeLoseFocus(BlzGetTriggerFrame())
+            if buttonIndex > 0 then
+                if not DelayBanUntilPick then
+                    call HeroSelectorCounterChangeUnitCode(unitCode, UnitCount + 1, p)
+                else
+                    set DelayBanCount = DelayBanCount + 1
+                    set DelayBanPlayer[DelayBanCount] = p
+                    set DelayBanUnitCode[DelayBanCount] = unitCode
+                endif
+
+                set HeroSelectorEventUnit = null
+                set HeroSelectorEventUnitCode = unitCode
+                set HeroSelectorEventPlayer = p
+                set HeroSelectorEvent = 0.0
+                set HeroSelectorEvent = 3.0
+                set HeroSelectorEvent = 0.0
             endif
 
-            set HeroSelectorEventUnit = null
-            set HeroSelectorEventUnitCode = unitCode
-            set HeroSelectorEventPlayer = p
-            set HeroSelectorEvent = 0.0
-            set HeroSelectorEvent = 3.0
-            set HeroSelectorEvent = 0.0
+            set PlayerBanCount = PlayerBanCount + 1
         endif
 
-        set PlayerBanCount = PlayerBanCount + 1
         set p = null
     endfunction
 

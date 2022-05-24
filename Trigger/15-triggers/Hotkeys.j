@@ -1,4 +1,4 @@
-library ConversionHotkeys initializer init requires Table, SellItems
+library ConversionHotkeys initializer init requires Table, SellItems, trigger79
     //detects hotkey presses
     
     globals
@@ -93,8 +93,10 @@ library ConversionHotkeys initializer init requires Table, SellItems
     private function SellAllItems takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
-        call SellItemsFromHero(PlayerHeroes[pid + 1])
-        call ResourseRefresh(Player(pid)) 
+        if (ShopsCreated) then
+            call SellItemsFromHero(PlayerHeroes[pid + 1])
+            call ResourseRefresh(Player(pid)) 
+        endif
     endfunction
 
     private function HotKeyInit takes nothing returns nothing
