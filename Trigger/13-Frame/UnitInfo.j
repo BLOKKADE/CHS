@@ -114,8 +114,6 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 
 		if BlzGetUnitArmor(u) >= 0 and not BlzIsUnitInvulnerable(u) then
 			set CustomInfoT1[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
-		elseif BlzIsUnitInvulnerable(u) then
-			set CustomInfoT1[2] = "Reduces physical damage taken by |cff29f800100"
 		else
 			set CustomInfoT1[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
 		endif
