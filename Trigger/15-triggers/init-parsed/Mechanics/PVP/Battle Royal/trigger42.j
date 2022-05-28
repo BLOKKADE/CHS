@@ -137,6 +137,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
     function Trig_Battle_Royal_Func033A takes nothing returns nothing
         call PauseUnit(GetEnumUnit(), false)
         call SetUnitInvulnerable(GetEnumUnit(),false)
+        call RectLeaveDetection.create(GetEnumUnit(), udg_rect09)
         call StartFunctionSpell(GetEnumUnit(),1)
     endfunction
 

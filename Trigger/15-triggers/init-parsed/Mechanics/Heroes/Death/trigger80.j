@@ -56,6 +56,9 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
             set u = null
             return false
         endif
+
+        call StopRectLeaveDetection(GetHandleId(u))
+        
         //immortal mode
         if ModeNoDeath == true and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
             set arenaLocation = GetRectCenter(udg_rect09)

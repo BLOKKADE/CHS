@@ -365,6 +365,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
                 call SetUnitInvulnerable(DuelingHeroes[GetForLoopIndexA()],false)
                 call StartFunctionSpell(DuelingHeroes[GetForLoopIndexA()],4 ) 
                 call PauseUnitBJ(false,DuelingHeroes[GetForLoopIndexA()])
+                call RectLeaveDetection.create(DuelingHeroes[GetForLoopIndexA()], PlayerArenaRects[duelRectId])
                 set bj_forLoopAIndex = bj_forLoopAIndex + 1
             endloop
         else

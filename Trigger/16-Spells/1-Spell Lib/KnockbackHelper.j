@@ -1,4 +1,31 @@
-library KnockbackHelper requires Knockback, GroupUtils
+library KnockbackHelper initializer init requires Knockback, GroupUtils
+
+    globals
+        Table KnockbackImmunityLevel
+    endglobals
+
+    function EndKnockbackImmunity takes nothing returns nothing
+        local timer t = GetExpiredTimer()
+        local integer hid = GetTimerData(t)
+
+        set KnockbackImmunityLevel.integer[hid] = KnockbackImmunityLevel.integer[hid] - 1
+        if KnockbackImmunityLevel.integer[hid] < 1 then
+            set KnockbackImmunity.boolean[hid] = false
+        endif
+
+        call ReleaseTimer(t)
+        set t = null
+    endfunction
+
+    function AddTempKnockbackImmunity takes unit u, real duration returns nothing
+        local integer hid = GetHandleId(u)
+        set KnockbackImmunityLevel.integer[hid] = KnockbackImmunityLevel.integer[hid] + 1
+        if KnockbackImmunityLevel.integer[hid] > 0 then
+            set KnockbackImmunity.boolean[hid] = true
+        endif
+        call TimerStart(NewTimerEx(hid), duration, false, function EndKnockbackImmunity)
+    endfunction
+
 //this is copied from the pre-remake AAA, I'm not sure what to name r2, r3, r4
     function MoveToPointAoE takes unit u,real x,real y,real area returns nothing
         local unit p
@@ -57,5 +84,9 @@ library KnockbackHelper requires Knockback, GroupUtils
         if r2 > 25. then
             call KnockbackTarget(source , target , angle , r2 * 2 , r2 * 2.4 , false , false , false , false)
         endif
+    endfunction
+
+    private function init takes nothing returns nothing
+        set KnockbackImmunityLevel = Table.create()
     endfunction
 endlibrary

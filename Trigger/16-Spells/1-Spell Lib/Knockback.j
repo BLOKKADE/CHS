@@ -52,6 +52,7 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
         private          Table Knockers
         private          Table Entries
         private          Table ToClear
+        Table KnockbackImmunity
         private          boolexpr       DesBoolexpr         = null
         private          boolexpr       AdjBoolexpr         = null
         private          rect           DestRect            = Rect(0,0,1,1)
@@ -187,7 +188,7 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
             set xi   = GetUnitX(u)
             set yi   = GetUnitY(u)
             
-            if n.Displace <= 0 or ToClear[id] > 0 then
+            if n.Displace <= 0 or ToClear[id] > 0 or KnockbackImmunity.boolean[id] then
                 //* Clean up the knockback when it is over
                 if ToClear[id] > 0 then
                     set ToClear[id] = ToClear[id] - 1
@@ -305,6 +306,7 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
         set Knockers = Table.create()
         set Entries = Table.create()
         set ToClear = Table.create()
+        set KnockbackImmunity = Table.create()
         set Timer = NewTimer()
         call SetRect(DestRect, -DEST_RADIUS, -DEST_RADIUS, DEST_RADIUS, DEST_RADIUS)
         set DesBoolexpr = Condition(function KillDests_Check)

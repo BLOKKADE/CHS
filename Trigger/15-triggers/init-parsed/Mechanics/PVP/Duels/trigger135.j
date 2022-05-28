@@ -168,6 +168,8 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         call GroupRemoveUnitSimple(udg_unit05,DuelingHeroGroup)
         call GroupRemoveUnitSimple(GetDyingUnit(),DuelingHeroGroup)
         call ForceAddPlayer(DuelLosers, GetOwningPlayer(GetDyingUnit()))
+        call StopRectLeaveDetection(GetHandleId(DuelingHeroes[1]))
+        call StopRectLeaveDetection(GetHandleId(DuelingHeroes[2]))
         call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
         call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
         call ForForce(GetPlayersAll(),function Trig_End_PvP_Func019A)
