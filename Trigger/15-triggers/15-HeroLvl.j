@@ -47,6 +47,7 @@ library heroLevel initializer init requires HeroLvlTable
             endif
 
             if ModuloInteger(i, 25) == 0 then
+                set j = 0
                 loop
                     set j = j + 1
                     exitwhen j > 15
@@ -121,8 +122,6 @@ library heroLevel initializer init requires HeroLvlTable
         local integer hid = GetHandleId(u)
         local integer i = 0
 
-        call BJDebugMsg(GetUnitName(u) + " levels gained:" + I2S(levelsGained))
-
         if u == null then
             set u = null
             set p = null
@@ -153,7 +152,7 @@ library heroLevel initializer init requires HeroLvlTable
         elseif uid == DRUID_OF_THE_CLAY_UNIT_ID then
             call SetBonus(u, 0, 1 * heroLevel)
         elseif uid == MAULER_UNIT_ID then  
-            set i = prevLevel
+            set i = prevLevel + 1
             loop
                 if ModuloInteger(i, 8) == 0 then
                     call UpdateBonus(u, 0, 1)
@@ -161,25 +160,19 @@ library heroLevel initializer init requires HeroLvlTable
                 endif
 
                 set i = i + 1
-                exitwhen i >= heroLevel
+                exitwhen i >= heroLevel + 1
             endloop
 
         elseif uid == BLOOD_MAGE_UNIT_ID then  
-            set i = prevLevel
-            loop
-                call UpdateBonus(u, 0, 250)
-                call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + 250)
-                
-                set i = i + 1
-                exitwhen i >= heroLevel
-            endloop  
+            call UpdateBonus(u, 0, (levelsGained * 250))
+            call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (levelsGained * 250))
     
         elseif uid == MORTAR_TEAM_UNIT_ID then  
             call AddUnitPhysPow(u,levelsGained * 3)
             call SetBonus(u, 0, 3 * heroLevel)
         elseif uid == NAGA_SIREN_UNIT_ID then  
             call SetBonus(u, 0, 10 + (heroLevel * 0.1))   
-            set i = prevLevel
+            set i = prevLevel + 1
             loop
                 if ModuloInteger(i, 50) == 0 then
                     set NagaSirenBonus[hid] = NagaSirenBonus[hid] + 1
@@ -187,7 +180,7 @@ library heroLevel initializer init requires HeroLvlTable
                 endif
 
                 set i = i + 1
-                exitwhen i >= heroLevel
+                exitwhen i >= heroLevel + 1
             endloop
         elseif uid == DEMON_HUNTER_UNIT_ID then 
             call SetBonus(u, 0, heroLevel * 20)
@@ -211,14 +204,14 @@ library heroLevel initializer init requires HeroLvlTable
         elseif uid == PIT_LORD_UNIT_ID then          
             call SetBonus(u, 0, heroLevel * 0.5)
         elseif uid == THUNDER_WITCH_UNIT_ID then      
-            set i = prevLevel
+            set i = prevLevel + 1
             loop
                 if ModuloInteger(i, 30) == 0 then
                     set ThunderBoltTargets[hid] = ThunderBoltTargets[hid] + 1
                 endif
     
                 set i = i + 1
-                exitwhen i >= heroLevel
+                exitwhen i >= heroLevel + 1
             endloop
 
             call SetBonus(u, 0, heroLevel * 30)
@@ -227,14 +220,14 @@ library heroLevel initializer init requires HeroLvlTable
             call SetBonus(u, 1, 10 + heroLevel)
             call SetBonus(u, 2, 6 + (0.01 * heroLevel))
         elseif uid == BLADE_MASTER_UNIT_ID then          
-            set i = prevLevel
+            set i = prevLevel + 1
             loop
                 if ModuloInteger(i, 20) == 0 and BladestormAttackLimit.integer[hid] > 1 then
                     set BladestormAttackLimit[hid] = BladestormAttackLimit[hid] - 1
                 endif
     
                 set i = i + 1
-                exitwhen i >= heroLevel
+                exitwhen i >= heroLevel + 1
             endloop
 
             call SetBonus(u, 0, 20 * heroLevel)
@@ -249,13 +242,13 @@ library heroLevel initializer init requires HeroLvlTable
         elseif uid == TROLL_HEADHUNTER_UNIT_ID then   
             call SetBonus(u, 0, 40 + 1.5 * heroLevel)
         elseif uid == TINKER_UNIT_ID then  
-            set i = prevLevel
+            set i = prevLevel + 1
             loop
-                call TinkerTimer(u, (prevLevel)* 55)
-                call UpdateBonus(u, 0, (prevLevel)* 55)
+                call TinkerTimer(u, (i)* 55)
+                call UpdateBonus(u, 0, (i)* 55)
 
                 set i = i + 1
-                exitwhen i >= heroLevel
+                exitwhen i >= heroLevel + 1
             endloop
         elseif uid == ARENA_MASTER_UNIT_ID then        
             set Glory[pid] = Glory[pid] + (200 * levelsGained)
@@ -282,7 +275,7 @@ library heroLevel initializer init requires HeroLvlTable
         elseif uid == WAR_GOLEM_UNIT_ID then             
             call SetBonus(u, 0, 49 + (heroLevel * 1))
         elseif uid == WITCH_DOCTOR_UNIT_ID then      
-            call WitchDoctorLevelup(u, prevLevel, heroLevel)  
+            call WitchDoctorLevelup(u, prevLevel + 1, heroLevel + 1)  
         elseif uid == RANGER_UNIT_ID then       
             call SetBonus(u, 0, heroLevel * 5)
         elseif uid == DARK_HUNTER_UNIT_ID then         

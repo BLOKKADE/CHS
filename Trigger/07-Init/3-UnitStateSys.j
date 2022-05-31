@@ -269,6 +269,11 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
             set ThunderBoltTargets[GetHandleId(u)] = 1
         endif
 
+        //Mortar Team
+        if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
+            call AddUnitPhysPow(u, 3)  
+        endif
+
         //Summons
         if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) then
             call SummonUnit(u)
