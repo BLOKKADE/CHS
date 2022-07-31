@@ -12,6 +12,18 @@ library EditAbilityInfo
         endif
     endfunction
 
+    function SetAbilityStringField takes unit u, integer abilId, integer level, abilitystringlevelfield abilField, string value returns nothing
+        if GetUnitAbilityLevel(u, abilId) == 0 then
+            call UnitAddAbility(u, abilId)
+            call SetUnitAbilityLevel(u, abilId, level)
+        endif
+
+        if BlzSetAbilityStringLevelField(BlzGetUnitAbility(u, abilId), abilField, level - 1, value) then
+            call IncUnitAbilityLevel(u, abilId)
+            call DecUnitAbilityLevel(u, abilId)
+        endif
+    endfunction
+
     function SetAbilityRealField takes unit u, integer abilId, integer level, abilityreallevelfield abilField, real value returns nothing
 
         if GetUnitAbilityLevel(u, abilId) == 0 then

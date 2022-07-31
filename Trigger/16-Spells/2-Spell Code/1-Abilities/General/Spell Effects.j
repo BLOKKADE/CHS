@@ -1,4 +1,4 @@
-library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes
+library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, HeroForm
     
     function AbilityChannel takes unit caster, unit target, real x, real y, integer abilId, integer lvl returns boolean
 
@@ -95,6 +95,9 @@ library AbilityChannel requires RandomShit, AncientAxe, AncientDagger, AncientSt
         elseif abilId == 'A094' then
             call AncientStaff(caster)
             return true
+            //ShadowBlade
+        elseif abilId == 'A0D2' then
+            call ShadowBlade(caster)
             //Reset Time
         elseif abilId == RESET_TIME_ABILITY_ID then
             call ResetTime(caster)
@@ -211,6 +214,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if abilId == ACTIVATE_AVATAR_ABILITY_ID then
                         call CastAvatar(caster, abilLvl)
+                    endif
+
+                    if abilId == 'AEsh' then
+                        call UnitAddTimeForm(caster,FORM_SHADOW, 1)
                     endif
 
                     if abilId == 'A044' then

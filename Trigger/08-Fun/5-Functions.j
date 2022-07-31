@@ -1,4 +1,4 @@
-library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin
+library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent
     globals 
         hashtable HT_SpellPlayer = InitHashtable()
         integer RectPid
@@ -218,8 +218,13 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         local player p = GetOwningPlayer(u)
         local integer pid = GetPlayerId(p)
         local integer i1 = 0 
+        local real r1 = 0
+        local DarkSeal ds = 0
         local real gloryBonus = 0
         local integer hid = GetHandleId(u)
+        local customEvent e = customEvent.create()
+        set e.EventUnit = u
+        call DispachEvent(CUSTOM_EVENT_COMPLETE_LEVEL, e)
 
         //cleanup items
         set RectPid = pid
@@ -238,6 +243,12 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if i1 != 0 then 
             call AddUnitBonus(u, BONUS_DAMAGE, 0 - i1)
             call SaveInteger(HT,GetHandleId(u),ARCANE_INFUSED_SWORD_ITEM_ID,0)
+        endif
+
+        set r1 = LoadReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID)
+        if r1 != 0 then 
+            call AddUnitBlock(u, -r1)
+            call SaveReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID,0)
         endif
 
         //Murloc Warrior
@@ -260,6 +271,24 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         set i1 = GetValidEndOfRoundItems(u,'I07H') 
         if i1 > 0 then
             call AddUnitBlock(u,20 * i1)
+        endif
+
+        //Leather Armor
+        set i1 = GetValidEndOfRoundItems(u,'I0CM') 
+        if i1 > 0 then
+            call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u) +   1200 * i1)
+        endif
+
+         //Mana gem
+         set i1 = GetValidEndOfRoundItems(u,MANA_GEM_ITEM_ID) 
+         if i1 > 0 then
+             call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +   250 * i1)
+         endif
+
+         //Rapira
+        set i1 = GetValidEndOfRoundItems(u,RAPIRA_ITEM_ID) 
+        if i1 > 0 then
+            call AddUnitBonus(u, BONUS_DAMAGE, 40 * i1)
         endif
 
          //Golden Armor

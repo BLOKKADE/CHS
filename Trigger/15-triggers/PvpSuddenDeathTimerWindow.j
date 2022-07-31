@@ -2,12 +2,12 @@ library PvpSuddenDeathTimerWindow requires TimerUtils
     globals
         private timer SuddenDeathTimer = null
         private timerdialog SuddenDeathDialog = null
-        private integer Duration = 60
+        private integer Duration = 30
     endglobals
 
     function PvpUpdateDeathTimerDisplay takes real value returns nothing
         set SuddenDeathEnabled = true
-        call TimerDialogSetTitle(SuddenDeathDialog, "Sudden Death: " + R2SW(value * 100, 1, 1) + "%%")
+        call TimerDialogSetTitle(SuddenDeathDialog, "Sudden Death: " + R2SW(value * 5, 1, 1) + " + " + R2SW(value * 50, 1, 1) + "%")
     endfunction
 
     function PvpStopSuddenDeathTimer takes nothing returns nothing
@@ -22,7 +22,7 @@ library PvpSuddenDeathTimerWindow requires TimerUtils
         if SuddenDeathTimer == null then
             set SuddenDeathEnabled = false
             set SuddenDeathTimer = NewTimer()
-            call TimerStart(SuddenDeathTimer, 60, false, null)
+            call TimerStart(SuddenDeathTimer, 30, false, null)
             set SuddenDeathDialog = CreateTimerDialog(SuddenDeathTimer)
             call TimerDialogSetTitle(SuddenDeathDialog, "Sudden Death")
             call TimerDialogDisplay(SuddenDeathDialog, true)

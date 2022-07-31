@@ -43,7 +43,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Mortar Team
         if GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitPhysPow(u, 3 * GetHeroLevel(hero))  
+            call AddUnitPhysPow(u, 2 * GetHeroLevel(hero))  
         endif
 
         //Druid of the Claw
@@ -271,7 +271,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Mortar Team
         if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitPhysPow(u, 3)  
+            call AddUnitPhysPow(u, 2)  
         endif
 
         //Summons

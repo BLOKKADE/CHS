@@ -31,10 +31,16 @@ library CritDamage requires RandomShit
 
         //Aura of Vulnerability
         if GetUnitAbilityLevel(DamageTarget ,'B00E') > 0 then
-            if GetRandomReal(0,100) <= 5 * DamageSourceLuck then
-                set critDmg = critDmg + (Dmg * (1 + (0.5 * GetUnitAbilityLevel(DamageSourceHero, AURA_OF_VULNERABILITY_ABILITY_ID))))
+            if GetRandomReal(0,100) <= 10 * DamageSourceLuck then
+                set critDmg = critDmg + (Dmg * (1.8 + (0.2 * GetUnitAbilityLevel(DamageSourceHero, AURA_OF_VULNERABILITY_ABILITY_ID))))
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", DamageTarget, "chest"))
             endif
+        endif
+
+        set i = GetUnitAbilityLevel(DamageSource, POWER_OF_WATER_ABILITY_ID) //Power of water
+        if i > 0 and GetRandomReal(0,100) <= 25 * DamageSourceLuck + baseCritChance then
+            set critDmg = critDmg + ((BlzGetUnitMaxMana(DamageSource)*i)/100 )
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile.mdl", DamageTarget, "chest"))
         endif
 
         //PYromancer Scorched Earth
@@ -93,8 +99,8 @@ library CritDamage requires RandomShit
             
             //Magic Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,MAGIC_CRITICAL_HIT_ABILITY_ID)
-            if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
-                set critDmg = critDmg + Dmg *(1.9 + 0.17 * I2R(i))
+            if i > 0 and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
+                set critDmg = critDmg + Dmg *(1.5 + 0.1 * I2R(i))
             endif
         endif
 

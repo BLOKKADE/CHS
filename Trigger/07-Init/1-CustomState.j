@@ -177,6 +177,32 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),21,LoadReal(HT_unitstate,GetHandleId(u),21)+ r)
     endfunction
 
+    //Absolute count bonus 100-149
+    function SetUnitAbsoluteBonusCount takes unit u,integer id, integer i returns nothing
+        call SaveInteger(HT_unitstate,GetHandleId(u),100+id,i)
+    endfunction
+    
+    function GetUnitAbsoluteBonusCount takes unit u, integer id returns integer
+        return LoadInteger(HT_unitstate,GetHandleId(u),100+id)
+     endfunction
+
+     function AddUnitAbsoluteBonusCount takes unit u, integer id, integer i returns nothing
+         call SaveInteger(HT_unitstate,GetHandleId(u),100+id,LoadInteger(HT_unitstate,GetHandleId(u),100+id)+ i)
+     endfunction
+
+    //Absolute effective bonus 150-199
+    function SetUnitAbsoluteEffective takes unit u,integer id, real r returns nothing
+        call SaveReal(HT_unitstate,GetHandleId(u),150+id,r)
+    endfunction
+    
+    function GetUnitAbsoluteEffective takes unit u, integer id returns real
+        return LoadReal(HT_unitstate,GetHandleId(u),150+id)
+     endfunction
+
+     function AddUnitAbsoluteEffective takes unit u, integer id, real r returns nothing
+         call SaveReal(HT_unitstate,GetHandleId(u),150+id,LoadReal(HT_unitstate,GetHandleId(u),150+id)+ r)
+     endfunction
+
     //Absolute limit
     function GetHeroMaxAbsoluteAbility takes unit u returns integer
         return LoadInteger(HT,GetHandleId(u),- 8852352)

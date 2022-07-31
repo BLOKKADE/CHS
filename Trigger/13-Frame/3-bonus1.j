@@ -26,11 +26,11 @@ library HeroData initializer init
         
         call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )       // mortal team
         call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,2, "|cff00ffffPassive|r: Mortar Might: Increases physical power. ")
-        call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Mortar Might: +3 physical power bonus." )    
+        call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Mortar Might: +2 physical power bonus." )    
                     
         call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )       // naga
-        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,2, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. ")
-        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Water Addiction: +0.1% attack damage added to spell damage. (Every 50 levels) + 1 bonus attack damage per intelligence" )
+        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,2, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 5% of her attack damage is added to all spell damage dealt. ")
+        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Water Addiction: +0.05% attack damage added to spell damage. (Every 50 levels) + 1 bonus attack damage per intelligence" )
         
         call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )       // avatar
         call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,2, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power.")
@@ -156,7 +156,7 @@ library HeroData initializer init
         call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )       //Xesil
-        call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r[|cff80ff80Luck|r]")
+        call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n||cffc0c0c0 half the chance for [|cff80ff80Luck|r]")
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
 
         call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )       //OGRE MAGE
@@ -186,7 +186,7 @@ library HeroData initializer init
         call SaveStr(HT_data,GHOUL_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Cannibal Frenzy: +0.025% attack damage." )
 
         call SaveStr(HT_data,BANSHEE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp" )       //banshee
-        call SaveStr(HT_data,BANSHEE_UNIT_ID,2, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 75% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
+        call SaveStr(HT_data,BANSHEE_UNIT_ID,2, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 40% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
         
         call SaveStr(HT_data,GRUNT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp" )       //grunt
         call SaveStr(HT_data,GRUNT_UNIT_ID,2, "|cff00ffffPassive|r: The Grunt's Grunt: At the start of every fight the Hero gains 20 bonus attack damage and strength for 10 seconds. ")

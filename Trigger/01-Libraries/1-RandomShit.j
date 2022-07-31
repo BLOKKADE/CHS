@@ -368,6 +368,32 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         return LoadInteger(HT_SpellPlayer,GetHandleId(u),id)
     endfunction
 
+    function GetHeroTotalAbilitiesCooldown takes unit u returns real
+        local real total = 0
+        local integer abilId
+        local integer abilIdCurrent
+        local integer i = 0
+
+        loop
+            set abilId = GetInfoHeroSpell(u, i)
+            set abilIdCurrent = GetAssociatedSpell(u,abilId)
+
+            if (abilIdCurrent == 0) then
+                set abilIdCurrent = abilId
+            endif
+
+            if (abilIdCurrent != 0) then
+                set total = total + BlzGetUnitAbilityCooldownRemaining(u, abilIdCurrent)
+            endif
+            set i = i + 1
+            exitwhen i > 10
+        endloop
+
+        call DisplayTextToPlayer(GetLocalPlayer(), 0,0, R2S(total))
+
+        return total
+    endfunction
+
     function IsSpellElement takes unit u, integer abilId, integer id returns boolean
 
         //Null Void Orb
@@ -444,13 +470,16 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
         //Goblet of Blood
         if id == Element_Blood and UnitHasItemS(u, 'I0B9') then
-            set elementCount = elementCount + 2
+            set elementCount = elementCount + 3
         endif
 
         //Witch Doctor passive
         if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
             set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
         endif
+
+        //Counts
+        set elementCount = elementCount + GetUnitAbsoluteBonusCount(u, id)
         
         return elementCount 
     endfunction
@@ -474,17 +503,17 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local real timeBonus = 0
 
         //Absolute Arcane
-        if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
-            set i = GetUnitElementCount(u, Element_Arcane)
-            loop
-                set ResCD = ResCD * (1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))))
-                set i = i - 1
-                exitwhen i <= 0
-            endloop
-            if ResCD < 0.1 then
-                set ResCD = 0.1
-            endif
-        endif
+        //if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
+        //    set i = GetUnitElementCount(u, Element_Arcane)
+        //    loop
+        //        set ResCD = ResCD * (1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))))
+        //        set i = i - 1
+        //        exitwhen i <= 0
+        //    endloop
+        //    if ResCD < 0.1 then
+        //        set ResCD = 0.1
+        //    endif
+        //endif
 
         if active then
             //Frost Bolt
@@ -542,7 +571,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endif
 
         //Xesil's Legacy
-        if IsSpellResettable(id) and ((GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= xesilChance * luck)) then
+        if IsSpellResettable(id) and ((GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * (1 + ((luck - 1)/2)) ) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= xesilChance * luck)) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 

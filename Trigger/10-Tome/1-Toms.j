@@ -152,7 +152,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 20)
                     
                     
-                    set gloryBonus = gloryBonus + 20
+                    set gloryBonus = gloryBonus + 25
                 else
                     set ctrl = false
                 endif
@@ -184,10 +184,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II  == GLORY_MAGIC_PROTECTION_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
 
-                    call AddUnitMagicDef(u,3)
+                    call AddUnitMagicDef(u,5)
                     
                     
-                    set gloryBonus = gloryBonus + 3
+                    set gloryBonus = gloryBonus + 5
                 else
                     set ctrl = false
                 endif    
@@ -195,13 +195,124 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory magic damage
             elseif II  == GLORY_MAGIC_POWER_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call AddUnitMagicDmg (u,3)
+                    call AddUnitMagicDmg (u,5)
                     
                     
-                    set gloryBonus = gloryBonus + 3
+                    set gloryBonus = gloryBonus + 5
                 else
                     set ctrl = false
                 endif    
+
+                //glory Absolute Arcane count
+            elseif II  == GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Arcane, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Arcane, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                //glory Absolute Blood count
+            elseif II  == GLORY_ABSOLUTE_BLOOD_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Blood, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Blood, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                                //glory Absolute Dark count
+            elseif II  == GLORY_ABSOLUTE_DARK_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Dark, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Dark, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                                //glory Absolute Arcane count
+            elseif II  == GLORY_ABSOLUTE_COLD_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Cold, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Cold, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                                //glory Absolute Arcane count
+            elseif II  == GLORY_ABSOLUTE_EARTH_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Earth, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Earth, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                                //glory Absolute Arcane count
+            elseif II  == GLORY_ABSOLUTE_FIRE_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Fire, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Fire, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+
+            elseif II  == GLORY_ABSOLUTE_LIGHT_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Light, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Light, 0.05)
+
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                                //glory Absolute Arcane count
+            elseif II  == GLORY_ABSOLUTE_POISION_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Poison, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Poison, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                                //glory Absolute Arcane count
+            elseif II  == GLORY_ABSOLUTE_WATER_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Water, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Water, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                                //glory Absolute Arcane count
+            elseif II  == GLORY_ABSOLUTE_WILD_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Wild, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Wild, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
+                                //glory Absolute Arcane count
+            elseif II  == GLORY_ABSOLUTE_WIND_COUNT_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitAbsoluteBonusCount(u,Element_Wind, 1)
+                    call AddUnitAbsoluteEffective(u,Element_Wind, 0.05)
+                    
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif
 
                 //glory mana regen
             elseif II  == GLORY_MANA_REGENERATION_TOME_ITEM_ID then
@@ -213,6 +324,14 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif   
+                //glory luck
+            elseif II  == GLORY_LUCK_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitLuck(u, 0.01)
+                    set gloryBonus = gloryBonus + 1
+                else
+                    set ctrl = false
+                endif  
 
                 //glory pvp bonus
             elseif II  == GLORY_PVP_BONUS_TOME_ITEM_ID then
@@ -229,10 +348,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory hit points
             elseif II  == GLORY_HIT_POINTS_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 150)
+                    call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 300)
                     
                     
-                    set gloryBonus = gloryBonus + 150
+                    set gloryBonus = gloryBonus + 300
                 else
                     set ctrl = false
                 endif      
@@ -240,10 +359,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory mana
             elseif II  == GLORY_MANA_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + 100)
+                    call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + 250)
                     
                     
-                    set gloryBonus = gloryBonus + 100
+                    set gloryBonus = gloryBonus + 250
                 else
                     set ctrl = false
                 endif  
@@ -251,10 +370,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory strength
             elseif II  == GLORY_STRENGTH_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call SetHeroStr(u, GetHeroStr(u, false) + 30, true)
+                    call SetHeroStr(u, GetHeroStr(u, false) + 50, true)
                     
                     
-                    set gloryBonus = gloryBonus + 30
+                    set gloryBonus = gloryBonus + 50
                 else
                     set ctrl = false
                 endif  
@@ -262,10 +381,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory agility
             elseif II  == GLORY_AGILITY_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call SetHeroAgi(u, GetHeroAgi(u, false) + 30, true)
+                    call SetHeroAgi(u, GetHeroAgi(u, false) + 50, true)
                     
                     
-                    set gloryBonus = gloryBonus + 30
+                    set gloryBonus = gloryBonus + 50
                 else
                     set ctrl = false
                 endif  
@@ -273,9 +392,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory intelligence
             elseif II  == GLORY_INTELLIGENCE_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call SetHeroInt(u, GetHeroInt(u, false) + 30, true)
+                    call SetHeroInt(u, GetHeroInt(u, false) + 50, true)
                     
-                    set gloryBonus = gloryBonus + 30
+                    set gloryBonus = gloryBonus + 50
                 else
                     set ctrl = false
                 endif  

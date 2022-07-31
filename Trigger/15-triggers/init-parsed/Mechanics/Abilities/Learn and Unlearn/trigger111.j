@@ -1,4 +1,4 @@
-library trigger111 initializer init requires RandomShit, Functions
+library trigger111 initializer init requires RandomShit, Functions, CustomEvent
 
     globals
         unit BuyingUnit = null
@@ -322,6 +322,7 @@ library trigger111 initializer init requires RandomShit, Functions
         local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
         local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
         local location unitLocation = GetUnitLoc(u)
+        local customEvent e = 0
 
         //call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
         if maxBuy and i < 30 then
@@ -348,6 +349,14 @@ library trigger111 initializer init requires RandomShit, Functions
         endif
 
         call SetupDummySpell(u, abil, i, new)
+
+        call UnitAddAbility(u, abil)
+        set e = customEvent.create()
+        set e.EventUnit = u
+        set e.LearnedAbilityIsNew = new
+        set e.EventSpellId = abil
+        call DispachEvent(CUSTOM_EVENT_LEARN_ABILITY, e)
+
         call FuncEditParam(abil,u)
         call AddSpecialEffectLocBJ(unitLocation,"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())

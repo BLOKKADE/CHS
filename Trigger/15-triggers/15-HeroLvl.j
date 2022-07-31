@@ -171,7 +171,7 @@ library heroLevel initializer init requires HeroLvlTable
             call AddUnitPhysPow(u,levelsGained * 3)
             call SetBonus(u, 0, 3 * heroLevel)
         elseif uid == NAGA_SIREN_UNIT_ID then  
-            call SetBonus(u, 0, 10 + (heroLevel * 0.1))   
+            call SetBonus(u, 0, 5 + (heroLevel * 0.05))   
             set i = prevLevel + 1
             loop
                 if ModuloInteger(i, 50) == 0 then
