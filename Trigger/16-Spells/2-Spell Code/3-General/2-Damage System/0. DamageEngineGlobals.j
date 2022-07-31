@@ -29,6 +29,9 @@ globals
     real DamageSourceLuck = 0
     real DamageTargetLuck = 0
 
+    // Sudden
+    boolean DamageIsSuddenDeath = false
+
     // Damage types
     boolean DamageIsAttack = false
     boolean DamageIsOnHit = false
