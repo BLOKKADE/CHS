@@ -411,7 +411,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     set i1 = R2I(i1 * GetUnitElementCount(u, Element_Water) * (1+ GetUnitAbsoluteEffective(u, Element_Water)))
-                    call SetHeroInt(u, GetHeroInt(u, false) + (5 * (i1 -i2)), false)
+                    call SetHeroInt(u, GetHeroInt(u, false) + (7 * (i1 -i2)), false)
                     call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +(30 * (i1 -i2)))
 
                     call SaveInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID,i1)

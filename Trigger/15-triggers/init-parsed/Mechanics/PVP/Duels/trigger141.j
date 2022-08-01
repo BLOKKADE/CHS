@@ -25,10 +25,10 @@ library trigger141 initializer init requires RandomShit, HpRegen
             call DisableTrigger(udg_trigger26)
             call CreateNUnitsAtLoc(1,SUDDEN_DEATH_UNIT_ID,GetOwningPlayer(DuelingHeroes[1]),hero1Location,bj_UNIT_FACING)
             call UnitApplyTimedLifeBJ(0.25,'BTLF',GetLastCreatedUnit())
-            call UnitDamageTargetBJ(GetLastCreatedUnit(),DuelingHeroes[2],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,DuelingHeroes[2])* udg_real03/2 + reg2/2 + 5 * udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
+            call UnitDamageTargetBJ(GetLastCreatedUnit(),DuelingHeroes[2],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,DuelingHeroes[2])* udg_real03/2 + reg2/2 + 100 * udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
             call CreateNUnitsAtLoc(1,SUDDEN_DEATH_UNIT_ID,GetOwningPlayer(DuelingHeroes[2]),hero2Location,bj_UNIT_FACING)
             call UnitApplyTimedLifeBJ(0.25,'BTLF',GetLastCreatedUnit())
-            call UnitDamageTargetBJ(GetLastCreatedUnit(),DuelingHeroes[1],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,DuelingHeroes[1])* udg_real03/2 + reg1/2 + 5 * udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
+            call UnitDamageTargetBJ(GetLastCreatedUnit(),DuelingHeroes[1],(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,DuelingHeroes[1])* udg_real03/2 + reg1/2 + 100 * udg_real03),ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL)
             call EnableTrigger(udg_trigger11)
             call EnableTrigger(udg_trigger26)
 

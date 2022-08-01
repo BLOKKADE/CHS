@@ -111,8 +111,8 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Water
         if GetUnitAbilityLevel(u,ABSOLUTE_WATER_ABILITY_ID) > 0 and IsSpellElement(u,id, Element_Water) then
-            call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .005 * (1 + GetUnitAbsoluteEffective(u,Element_Fire)))
-            call TempBonus.create(u, BONUS_INTELLIGENCE,15 * (1 + GetUnitAbsoluteEffective(u,Element_Water)),9, ABSOLUTE_WATER_ABILITY_ID)
+            call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .005 * (1 + GetUnitAbsoluteEffective(u,Element_Water)))
+            call TempBonus.create(u, BONUS_INTELLIGENCE,20 * (1 + GetUnitAbsoluteEffective(u,Element_Water)),9, ABSOLUTE_WATER_ABILITY_ID)
         endif      
         
         //Absolute Wind
@@ -138,14 +138,14 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Light
         if GetUnitAbilityLevel(u,ABSOLUTE_LIGHT_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Light) then
-            call SetUnitState(u,UNIT_STATE_LIFE,GetUnitState(u,UNIT_STATE_LIFE) + (GetUnitState(u,UNIT_STATE_LIFE))* .04 * (1 + GetUnitAbsoluteEffective(u,Element_Fire)))
+            call SetUnitState(u,UNIT_STATE_LIFE,GetUnitState(u,UNIT_STATE_LIFE) + (GetUnitState(u,UNIT_STATE_LIFE))* .04 * (1 + GetUnitAbsoluteEffective(u,Element_Light)))
         endif 
 
         //Absolute Wild
         if GetUnitAbilityLevel(u,ABSOLUTE_WILD_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Wild) then
             set U = CreateUnit( GetOwningPlayer(u),'h01N',GetUnitX(u)+ 40 * CosBJ(- 30 + GetUnitFacing(u)),GetUnitY(u)+ 40 * SinBJ(- 30 + GetUnitFacing(u)),GetUnitFacing(u) )
-            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 1000 + R2I(GetHeroLevel(u)*(1000) * (1 + GetUnitAbsoluteEffective(u,Element_Fire))))
-            call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 150 + R2I((50)* GetHeroLevel(u) * (1 + GetUnitAbsoluteEffective(u,Element_Fire))) ,0)
+            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 1000 + R2I(GetHeroLevel(u)*(1000) * (1 + GetUnitAbsoluteEffective(u,Element_Wild))))
+            call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 150 + R2I((50)* GetHeroLevel(u) * (1 + GetUnitAbsoluteEffective(u,Element_Wild))) ,0)
             call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
             call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,15)
         endif   

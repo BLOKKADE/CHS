@@ -200,7 +200,7 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageSource, BACKSTAB_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack and not DamageIsOnHit then
             set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
-            if distance < 220 and  RAbsBJ(GetUnitFacing(DamageTarget) - GetUnitFacing(DamageSource)) < 40 then
+            if distance < 220 and  RAbsBJ(GetUnitFacing(DamageTarget) - GetUnitFacing(DamageSource)) < 85 then
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", DamageTarget, "chest"))
                 set Damage.index.damage = Damage.index.damage * (1 +  0.05 * I2R(i2)) + 20 * i1
             endif
