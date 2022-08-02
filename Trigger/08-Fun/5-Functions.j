@@ -282,7 +282,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
          //Mana gem
          set i1 = GetValidEndOfRoundItems(u,MANA_GEM_ITEM_ID) 
          if i1 > 0 then
-             call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +   250 * i1)
+             call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +   275 * i1)
          endif
 
          //Rapira

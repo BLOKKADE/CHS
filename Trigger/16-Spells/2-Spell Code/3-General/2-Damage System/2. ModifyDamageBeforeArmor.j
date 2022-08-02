@@ -639,7 +639,7 @@ scope ModifyDamageBeforeArmor initializer init
             
             set r1 = R2I(I2R(i1) * 0.5 * GetUnitElementCount(DamageSource, Element_Arcane)) * (1 + GetUnitAbsoluteEffective(DamageSource, Element_Arcane)) * r1
             if r1 > 0 then
-                set Damage.index.damage =   r1
+                set Damage.index.damage = Damage.index.damage + r1
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))		
             endif
         endif
