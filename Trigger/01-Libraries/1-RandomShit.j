@@ -389,8 +389,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             exitwhen i > 10
         endloop
 
-        call DisplayTextToPlayer(GetLocalPlayer(), 0,0, R2S(total))
-
         return total
     endfunction
 

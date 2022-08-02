@@ -497,17 +497,6 @@ scope ModifyDamageBeforeArmor initializer init
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
         endif
 
-        // absolute Arcane
-        set i1 = GetUnitAbilityLevel(DamageSource, ABSOLUTE_ARCANE_ABILITY_ID)
-        if i1 > 0 then
-            set r1 = R2I(i1 * GetUnitElementCount(DamageSource, Element_Arcane)) * (1 + GetUnitAbsoluteEffective(DamageSource, Element_Arcane)) * GetHeroTotalAbilitiesCooldown(DamageSource)
-            if r1 > 0 then
-                set Damage.index.damage =   r1
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))		
-            endif
-            
-        endif
-
         //Naga Siren passive
         if DamageSourceTypeId == NAGA_SIREN_UNIT_ID and Damage.index.isSpell then
             set Damage.index.damage = Damage.index.damage + (GetAttackDamage(DamageSource) * (0.05 + (0.0005 * GetHeroLevel(DamageSource))))
@@ -635,6 +624,23 @@ scope ModifyDamageBeforeArmor initializer init
                 //call BJDebugMsg("magic dmg pre prot: " + R2S(Damage.index.damage))
                 set Damage.index.damage =   Damage.index.damage*( 50 /(50 + (GetUnitMagicDef(DamageTarget) * DamageTargetMagicRes)) )
                 //call BJDebugMsg("magic dmg post prot: " + R2S(Damage.index.damage))
+            endif
+        endif
+
+
+        // absolute Arcane
+        set i1 = GetUnitAbilityLevel(DamageSource, ABSOLUTE_ARCANE_ABILITY_ID)
+        if i1 > 0 and not DamageIsOnHit then
+            set r1 = GetHeroTotalAbilitiesCooldown(DamageSource)
+            
+            if r1 > 300 then
+                set r1 = 300 + (r1 - 300)/2
+            endif
+            
+            set r1 = R2I(I2R(i1) * 0.5 * GetUnitElementCount(DamageSource, Element_Arcane)) * (1 + GetUnitAbsoluteEffective(DamageSource, Element_Arcane)) * r1
+            if r1 > 0 then
+                set Damage.index.damage =   r1
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))		
             endif
         endif
 
