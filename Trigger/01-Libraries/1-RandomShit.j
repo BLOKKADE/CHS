@@ -458,7 +458,7 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
         //Mauler passive
         if GetUnitTypeId(u) == MAULER_UNIT_ID and (id == Element_Light or (id == Element_Dark and UnitHasItemS(u, 'I0AM'))) then
-            set elementCount = elementCount + R2I(GetHeroLevel(u) / 8)
+            set elementCount = elementCount + R2I(GetHeroLevel(u) / 10)
         endif
 
         //Poison Runestone

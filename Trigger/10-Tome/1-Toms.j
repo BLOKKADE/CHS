@@ -359,10 +359,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory mana
             elseif II  == GLORY_MANA_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + 250)
-                    
-                    
-                    set gloryBonus = gloryBonus + 250
+                    call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + 200)
+                    set gloryBonus = gloryBonus + 200
                 else
                     set ctrl = false
                 endif  

@@ -18,10 +18,10 @@ library HeroData initializer init
         
         call SaveStr(HT_data,MAULER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroPaladin.blp" )       // paladin
         call SaveStr(HT_data,MAULER_UNIT_ID,2, "|cff00ffffPassive|r: Lightbringer: Gets a free point towards the [|cffd2d2d2Light|r] element just for existing. ")
-        call SaveStr(HT_data,MAULER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 8 levels|r) Lightbringer: +1 point towards [|cffd2d2d2Light|r].")   
+        call SaveStr(HT_data,MAULER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Lightbringer: +1 point towards [|cffd2d2d2Light|r].")   
     
         call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroBloodElfPrince.blp" )       // mage
-        call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,2, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 1000 total mana ")
+        call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,2, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 30 intelligence")
         call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +250 mana." )   
         
         call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )       // mortal team
@@ -91,8 +91,8 @@ library HeroData initializer init
         call SaveStr(HT_data,FALLEN_RANGER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
         
         call SaveStr(HT_data,HUNTRESS_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )       // Luna
-        call SaveStr(HT_data,HUNTRESS_UNIT_ID,2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 50% of her attack in |cffff00ffmagic damage|r. ")
-        call SaveStr(HT_data,HUNTRESS_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
+        call SaveStr(HT_data,HUNTRESS_UNIT_ID,2, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 25% of her attack in |cffff00ffmagic damage|r. ")
+        call SaveStr(HT_data,HUNTRESS_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.25% of her attack damage" )
             
         call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )       // Brute Skelet
         call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,2, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 20% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons dies the Hero restores 2% of its max HP and the summon explodes, dealing 50% of its attack damage as |cffff00ffmagic damage|r to enemies.")
@@ -112,7 +112,7 @@ library HeroData initializer init
             
         call SaveStr(HT_data,WITCH_DOCTOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNOrcWarlockRed.blp" )       // warlock
         call SaveStr(HT_data,WITCH_DOCTOR_UNIT_ID,2, "|cff00ffffPassive|r: Absolute Magic: Starts with a bonus absolute slot.")
-        call SaveStr(HT_data,WITCH_DOCTOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 25 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 20 levels|r) Gets a bonus Absolute slot. (max 10)" ) 
+        call SaveStr(HT_data,WITCH_DOCTOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 25 levels|r) Gets a bonus Absolute slot. (max 10)" ) 
         
         call SaveStr(HT_data,RANGER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )       // sylvane
         call SaveStr(HT_data,RANGER_UNIT_ID,2, "|cff00ffffPassive|r: Ranger Crit: 11% chance to deal 5% bonus |cffff8080physical damage|r. [|cff80ff80Luck|r][|cff00ffffCrit|r]")
@@ -196,7 +196,7 @@ library HeroData initializer init
         call SaveStr(HT_data,SEER_UNIT_ID,2, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0Most spells are affected by enemy armor, and not the Hero's magic power. Seer's passive can be disabled by the Staff of Power.|r" )
     
         call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )       //Arena master
-        call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Passionate Student: All Rings in PVE Shop I are twice as effective.")
+        call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Passionate Student: All Rings in PVE Shop I are twice as effective.(50% for Arena Ring)")
         call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +200 glory." )
     endfunction
 endlibrary

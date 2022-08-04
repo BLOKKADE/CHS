@@ -604,6 +604,26 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        // Absolute Arcane
+        set i1 = GetUnitAbilityLevel(DamageSource, ABSOLUTE_ARCANE_ABILITY_ID)
+        if i1 > 0 and not DamageIsOnHit then
+            set r1 = GetHeroTotalAbilitiesCooldown(DamageSource)
+            
+            if r1 > 200 then
+                set r1 = 200 + (r1 - 200)/2
+            endif
+            set r1 = R2I(I2R(i1) * 0.5 * GetUnitElementCount(DamageSource, Element_Arcane)) * (1 + GetUnitAbsoluteEffective(DamageSource, Element_Arcane)) * r1
+            if r1 > Damage.index.damage * 3 then
+                set r1 = Damage.index.damage * 3
+            endif
+            if r1 > 0 then
+                set Damage.index.damage = Damage.index.damage + r1
+                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))
+                endif		
+            endif
+        endif
+
         if IsMagicDamage() then 
             //Magic Power
             if DamageSourceMagicPower != 1 or GetUnitMagicDmg(DamageSource) > 0 then
@@ -624,23 +644,6 @@ scope ModifyDamageBeforeArmor initializer init
                 //call BJDebugMsg("magic dmg pre prot: " + R2S(Damage.index.damage))
                 set Damage.index.damage =   Damage.index.damage*( 50 /(50 + (GetUnitMagicDef(DamageTarget) * DamageTargetMagicRes)) )
                 //call BJDebugMsg("magic dmg post prot: " + R2S(Damage.index.damage))
-            endif
-        endif
-
-
-        // absolute Arcane
-        set i1 = GetUnitAbilityLevel(DamageSource, ABSOLUTE_ARCANE_ABILITY_ID)
-        if i1 > 0 and not DamageIsOnHit then
-            set r1 = GetHeroTotalAbilitiesCooldown(DamageSource)
-            
-            if r1 > 300 then
-                set r1 = 300 + (r1 - 300)/2
-            endif
-            
-            set r1 = R2I(I2R(i1) * 0.5 * GetUnitElementCount(DamageSource, Element_Arcane)) * (1 + GetUnitAbsoluteEffective(DamageSource, Element_Arcane)) * r1
-            if r1 > 0 then
-                set Damage.index.damage = Damage.index.damage + r1
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))		
             endif
         endif
 

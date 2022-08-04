@@ -38,9 +38,12 @@ library CritDamage requires RandomShit
         endif
 
         set i = GetUnitAbilityLevel(DamageSource, POWER_OF_WATER_ABILITY_ID) //Power of water
-        if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
-            set critDmg = critDmg + 50*i + ((BlzGetUnitMaxMana(DamageSource)*i * 0.4)/100 ) 
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile.mdl", DamageTarget, "chest"))
+        if  BlzGetUnitAbilityCooldownRemaining(DamageSource,POWER_OF_WATER_ABILITY_ID) <= 0 and i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+           call AbilStartCD(DamageSource,POWER_OF_WATER_ABILITY_ID, 2)
+            set critDmg = critDmg + 50*i + ((BlzGetUnitMaxMana(DamageSource)*i * 0.4)/100 )
+            if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile.mdl", DamageTarget, "chest"))
+            endif
         endif
 
         //PYromancer Scorched Earth
