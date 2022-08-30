@@ -4,8 +4,8 @@ library ContractLiving initializer init requires TempAbilSystem, RandomShit
         Table ContractLivingTick
     endglobals
 
-    function IsContractLivingAvailable takes unit u returns boolean
-        return GetUnitAbilityLevel(u, CONTRACT_LIVING_ABIL_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u, CONTRACT_LIVING_ABIL_ID) == 0 and GetUnitStatePercent(u, UNIT_STATE_LIFE, UNIT_STATE_MAX_LIFE) < 50
+    function IsContractLivingAvailable takes unit u, real damage returns boolean
+        return GetUnitAbilityLevel(u, CONTRACT_LIVING_ABIL_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u, CONTRACT_LIVING_ABIL_ID) == 0 and (GetUnitState(u, UNIT_STATE_LIFE) - damage) / GetUnitState(u, UNIT_STATE_MAX_LIFE) * 100.0 < 50
     endfunction
 
     function ActivateContractLiving takes unit u returns nothing
