@@ -44,7 +44,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             call CastManaStarvation(caster, target, lvl)
             return true
             //Midas Touch
-        elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false then
+        elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false and (not IsUnitType(target, UNIT_TYPE_HERO)) then
             call CastMidasTouch(caster, target, lvl)
             return true
             //Holy Light
