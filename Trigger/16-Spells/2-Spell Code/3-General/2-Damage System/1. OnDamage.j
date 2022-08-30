@@ -22,7 +22,7 @@ scope OnDamage initializer init
             endif
 
             //all non phys dmg = magic
-            if Damage.index.isSpell and not IsPhysDamage() then
+            if Damage.index.isSpell and ((not IsPhysDamage()) or DamageSourceAbility == VOLCANO_ABILITY_ID) then
                 set Damage.index.damageType = DAMAGE_TYPE_MAGIC
             endif
 

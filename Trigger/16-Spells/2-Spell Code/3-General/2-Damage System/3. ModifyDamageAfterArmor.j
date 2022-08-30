@@ -62,6 +62,11 @@ scope ModifyDamageAfterArmor initializer init
             set vampCount = vampCount + 1	
         endif
 
+        //Light Magic Shield
+        if UnitHasItemS(DamageTarget,'I06K') and BlzGetUnitArmor(DamageTarget)<= 50  then
+            set Damage.index.amount = Damage.index.amount * 0.5
+        endif
+
         //Medal of Honor
         if LoadInteger(HTi,GetHandleId(DamageTargetHero),2) == 1 then 
             set Damage.index.amount = Damage.index.amount * 0.66
@@ -502,7 +507,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Contract of the Living
-        if IsContractLivingAvailable(DamageTarget) then
+        if IsContractLivingAvailable(DamageTarget, Damage.index.amount) then
             call ActivateContractLiving(DamageTarget)
             set Damage.index.amount = 0
         endif

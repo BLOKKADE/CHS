@@ -103,9 +103,9 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         if GetUnitAbilityLevel(u,ABSOLUTE_FIRE_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Fire) then
             if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                 set calc = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
-                call TempBonus.create(u, BONUS_MAGICPOW, (4 * (1 + (0.005 * GetHeroLevel(u)))) * calc, 10, ABSOLUTE_FIRE_ABILITY_ID)
+                call TempBonus.create(u, BONUS_MAGICPOW, (2 * (1 + (0.005 * GetHeroLevel(u)))) * calc, 10, ABSOLUTE_FIRE_ABILITY_ID)
             else
-                call TempBonus.create(u, BONUS_MAGICPOW, 4, 10, ABSOLUTE_FIRE_ABILITY_ID)
+                call TempBonus.create(u, BONUS_MAGICPOW, 2, 10, ABSOLUTE_FIRE_ABILITY_ID)
             endif
         endif
         

@@ -195,7 +195,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //glory magic damage
             elseif II  == GLORY_MAGIC_POWER_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call AddUnitMagicDmg (u,3)
+                    call AddUnitMagicDmg (u,2)
                     
                     
                     set gloryBonus = gloryBonus + 3

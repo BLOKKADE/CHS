@@ -5,8 +5,8 @@ library PowerRune requires CustomState, TempStateBonus
       
       //call AddRuneBonus(GetHandleId(u), BONUS_MAGICPOW, 5 * power)
       //call AddRuneBonus(GetHandleId(u), BONUS_PHYSPOW, 5 * power) 
-      call TempBonus.create(u, BONUS_MAGICPOW, 5 * power, StatRuneDuration, Runes[Power_Rune_Id])
-      call TempBonus.create(u, BONUS_PHYSPOW, 5 * power, StatRuneDuration, Runes[Power_Rune_Id])
+      call TempBonus.create(u, BONUS_MAGICPOW, 2 * power, StatRuneDuration, Runes[Power_Rune_Id])
+      call TempBonus.create(u, BONUS_PHYSPOW, 2 * power, StatRuneDuration, Runes[Power_Rune_Id])
       set u = null
       return false
    endfunction

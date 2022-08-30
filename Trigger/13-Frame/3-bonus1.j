@@ -34,7 +34,7 @@ library HeroData initializer init
         
         call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )       // avatar
         call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,2, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power.")
-        call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.3 magic protection, +0.75 magic power." )                    
+        call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.3 magic protection, +0.3 magic power." )                    
             
         call SaveStr(HT_data,DEMON_HUNTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp" )       // Demon Hunter
         call SaveStr(HT_data,DEMON_HUNTER_UNIT_ID,2, "|cff00ffffPassive|r: Feedback: Every time the Hero attacks it drains enemy mana, giving it to himself. ")
@@ -115,8 +115,8 @@ library HeroData initializer init
         call SaveStr(HT_data,WITCH_DOCTOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 25 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 20 levels|r) Gets a bonus Absolute slot. (max 10)" ) 
         
         call SaveStr(HT_data,RANGER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )       // sylvane
-        call SaveStr(HT_data,RANGER_UNIT_ID,2, "|cff00ffffPassive|r: Ranger Crit: 11% chance to deal 5% bonus |cffff8080physical damage|r. [|cff80ff80Luck|r][|cff00ffffCrit|r]")
-        call SaveStr(HT_data,RANGER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +5% base damage to all critical hits.")       
+        call SaveStr(HT_data,RANGER_UNIT_ID,2, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus |cffff8080physical damage|r. [|cff80ff80Luck|r][|cff00ffffCrit|r]")
+        call SaveStr(HT_data,RANGER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +2% base damage to all critical hits.")       
         
         call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNUnbroken.blp" )       // void
         call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,2, "|cff00ffffPassive|r: Void Bash: When the Hero damages an enemy it has a 20% chance to deal 50 bonus |cffff00ffmagical damage|r and stun it for 0.2 seconds. [|cff80ff80Luck|r]")
@@ -148,7 +148,7 @@ library HeroData initializer init
         call SaveStr(HT_data,GREEDY_GOBLIN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
 
         call SaveStr(HT_data,CENTAUR_ARCHER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNCentaurArcher.blp" )       // Cent archer
-        call SaveStr(HT_data,CENTAUR_ARCHER_UNIT_ID,2, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus |cffff8080physical damage|r + 6% of the targets total hit points once every 2 seconds.")
+        call SaveStr(HT_data,CENTAUR_ARCHER_UNIT_ID,2, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus |cffff8080physical damage|r + 6% of the targets total hit points once every 2 seconds. [|cff00ffffCrit|r]")
         call SaveStr(HT_data,CENTAUR_ARCHER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Horsepower: +5% damage." )
 
         call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNOgre.blp" )       // ogre
@@ -179,7 +179,7 @@ library HeroData initializer init
         call SaveStr(HT_data,MURLOC_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Fish Hook: +1 stat per attack." )
         
         call SaveStr(HT_data,MEDIVH_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )       //Mediv
-        call SaveStr(HT_data,MEDIVH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +2 magic power." )
+        call SaveStr(HT_data,MEDIVH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +1 magic power." )
         
         call SaveStr(HT_data,GHOUL_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )       //ghoul
         call SaveStr(HT_data,GHOUL_UNIT_ID,2, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's maximum hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it.")

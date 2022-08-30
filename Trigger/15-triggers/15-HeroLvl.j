@@ -336,7 +336,7 @@ library heroLevel initializer init requires HeroLvlTable
             call UpdateBonus(u, 0, 0.5 * levelsGained)
             call SetBonus(u, 1, 98 + (heroLevel * 2))
         elseif uid == MEDIVH_UNIT_ID then
-            call AddUnitMagicDmg(u,2 * levelsGained)
+            call AddUnitMagicDmg(u,1 * levelsGained)
             call UpdateBonus(u, 0, 2 * levelsGained)   
         endif
         

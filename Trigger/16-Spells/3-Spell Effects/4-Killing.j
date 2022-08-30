@@ -1,18 +1,4 @@
 scope Killing initializer init    
-    function TimerMagDmg takes nothing returns nothing
-        local timer t = GetExpiredTimer()
-        local unit u = LoadUnitHandle(HT,GetHandleId(t),1)
-
-        call AddUnitMagicDmg(u,- 15 * LoadInteger(HT,GetHandleId(t),2))
-
-
-        call FlushChildHashtable(HT,GetHandleId(t))
-        call ReleaseTimer(t)
-
-        set t = null
-        set u = null
-    endfunction
-
     function Trig_Killing_Actions takes nothing returns nothing
         local unit target = GetTriggerUnit()
         local integer targetId = GetHandleId(target)
@@ -78,7 +64,7 @@ scope Killing initializer init
             set i = UnitHasItemI( killingHero,'I07E') 
             if i > 0 and GetOwningPlayer(target) == Player(11) then
 
-                call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 15, 10, 'I07E')
+                call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 7, 10, 'I07E')
             endif
         endif
         set t = null

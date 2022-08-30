@@ -385,8 +385,13 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //Contract of the Living
-                if IsContractLivingAvailable(u) then
+                if IsContractLivingAvailable(u, 0) then
                     call ActivateContractLiving(u)
+                endif
+
+                if TestFx != null then
+                    set r1 = GetUnitLifePercent(u) * 2.55
+                    call BlzSetSpecialEffectColor(TestFx, 255, 255, R2I(r1))
                 endif
 
                 //Absolute Fire
@@ -399,7 +404,7 @@ scope LongPeriodCheck initializer init
                     else
                         set i1 = i1 * GetUnitElementCount(u, Element_Fire)
                     endif
-                    call AddUnitMagicDmg(u ,   0.5 * I2R(i1 - i2)  )	
+                    call AddUnitMagicDmg(u, 0.5 * I2R(i1 - i2))	
                     call SaveInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
                 endif
 

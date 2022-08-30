@@ -225,11 +225,6 @@ scope ModifyDamageBeforeArmor initializer init
             call ActivateAncientBlood(DamageTarget, i1)
         endif
 
-         //Light Magic Shield
-        if UnitHasItemS(DamageTarget,'I06K') and BlzGetUnitArmor(DamageTarget)<= 50  then
-            set Damage.index.damage =   Damage.index.damage* 0.5
-        endif
-
         //Centuar Archer passive
         if DamageSourceTypeId == CENTAUR_ARCHER_UNIT_ID and Damage.index.isAttack then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08T') <= 0 then
@@ -296,10 +291,10 @@ scope ModifyDamageBeforeArmor initializer init
         //Cruelty
         set i1 = GetUnitAbilityLevel(DamageSource,CRUELTY_ABILITY_ID)
         if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL and (BlzGetUnitAbilityCooldownRemaining(DamageSource,CRUELTY_ABILITY_ID) <= 0.001 or CheckTimerZero(DamageSourceHero,CRUELTY_ABILITY_ID) ) then
-            set Damage.index.damage = Damage.index.damage + Damage.index.damage*(2.5 + I2R(i1)/ 2)
+            set Damage.index.damage = Damage.index.damage + Damage.index.damage*(0.5 + (0.1 * i1))
             call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", DamageTarget, "chest"))
             if ZetoTimerStart(DamageSource,CRUELTY_ABILITY_ID) then
-                call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 6 )
+                call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 3)
             endif
         endif
 
@@ -307,28 +302,6 @@ scope ModifyDamageBeforeArmor initializer init
         set i = GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID)
         if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison) then
             set Damage.index.damage = Damage.index.damage * (1 + ((i * 0.01) * GetUnitElementCount(DamageSource, Element_Poison)))
-        endif
-
-        //Trident of Pain
-        if UnitHasItemS( DamageSource,'I061' )  then
-            if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
-                if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
-                    call AbilStartCD(DamageSource, 'A08X', 12)
-                    call ElemFuncStart(DamageSource,'I061')
-                    set Damage.index.damage = Damage.index.damage * 2.6
-                    call CreateTextTagTimer( R2S(Damage.index.damage) + "!",1,GetUnitX(DamageTarget),GetUnitY(DamageTarget),50,1)
-                elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Y') <= 0 then
-                    call AbilStartCD(DamageSource, 'A08Y', 12)
-                    call ElemFuncStart(DamageSource,'I061')
-                    set Damage.index.damage = Damage.index.damage * 2.6
-                    call CreateTextTagTimer( R2S(Damage.index.damage) + "!",1,GetUnitX(DamageTarget),GetUnitY(DamageTarget),50,1)
-                elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Z') <= 0 then
-                    call AbilStartCD(DamageSource, 'A08Z', 12)
-                    call ElemFuncStart(DamageSource,'I061')
-                    set Damage.index.damage = Damage.index.damage * 2.6
-                    call CreateTextTagTimer( R2S(Damage.index.damage) + "!",1,GetUnitX(DamageTarget),GetUnitY(DamageTarget),50,1)
-                endif
-            endif
         endif
 
         //Scorched Scimitar
@@ -365,7 +338,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Banish magic damage bonus
         if GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0 and IsMagicDamage() then
-            set Damage.index.damage =  Damage.index.damage * 1.5
+            set Damage.index.damage = Damage.index.damage * 1.5
         endif
 
         //Ice Armor
@@ -537,21 +510,6 @@ scope ModifyDamageBeforeArmor initializer init
                 set Damage.index.damage =   Damage.index.damage*(DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100 )
                 //call BJDebugMsg("src: " + GetUnitName(DamageSource) + "dmg: " + R2S(Damage.index.damage) + "magic pow: " + R2S((DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100 )))
             endif   
-
-            //Magic Resistance
-            if GetUnitMagicDef(DamageTarget) > 0 then
-
-                //Fatal Flaw
-                set i1 = GetUnitAbilityLevel(DamageSource,FATAL_FLA_ABILITY_ID)
-                if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, FATAL_FLA_ABILITY_ID) == 0 then
-                    set DamageTargetMagicRes = DamageTargetMagicRes * (1 - (0.025 * i1))
-                    call AbilStartCD(DamageSource, FATAL_FLA_ABILITY_ID, 3)
-                endif
-
-                //call BJDebugMsg("magic dmg pre prot: " + R2S(Damage.index.damage))
-                set Damage.index.damage =   Damage.index.damage*( 50 /(50 + (GetUnitMagicDef(DamageTarget) * DamageTargetMagicRes)) )
-                //call BJDebugMsg("magic dmg post prot: " + R2S(Damage.index.damage))
-            endif
         endif
 
         //Block
@@ -616,7 +574,7 @@ scope ModifyDamageBeforeArmor initializer init
 
                 call SetBuff(DamageTarget,3,3)
                 //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitMagicDmg(DamageSource)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitMagicDmg(DamageSource)* 5, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1)
+                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitMagicDmg(DamageSource)* 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1)
             endif
 
             //Envenomed Weapons heroes
@@ -663,6 +621,21 @@ scope ModifyDamageBeforeArmor initializer init
                     call SetUnitState(DamageTarget,UNIT_STATE_MANA,GetUnitState(DamageTarget,UNIT_STATE_MANA)- 750 )
                 endif
             endif
+        endif
+
+        //Magic Resistance
+        if IsMagicDamage() and GetUnitMagicDef(DamageTarget) > 0 then 
+
+            //Fatal Flaw
+            set i1 = GetUnitAbilityLevel(DamageSource,FATAL_FLA_ABILITY_ID)
+            if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, FATAL_FLA_ABILITY_ID) == 0 then
+                set DamageTargetMagicRes = DamageTargetMagicRes * (1 - (0.025 * i1))
+                call AbilStartCD(DamageSource, FATAL_FLA_ABILITY_ID, 3)
+            endif
+
+            //call BJDebugMsg("magic dmg pre prot: " + R2S(Damage.index.damage))
+            set Damage.index.damage =   Damage.index.damage*( 50 /(50 + (GetUnitMagicDef(DamageTarget) * DamageTargetMagicRes)) )
+            //call BJDebugMsg("magic dmg post prot: " + R2S(Damage.index.damage))
         endif
         //call BJDebugMsg("MOD1.1 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
     endfunction
