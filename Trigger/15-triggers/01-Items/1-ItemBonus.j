@@ -243,6 +243,28 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi, hid, itemId,i)	
 			
 
+		elseif itemId == ORB_OF_ELEMENTS then
+			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set prevCount = LoadInteger(HTi,hid, itemId) 
+			call AddUnitAbsoluteBonusCount(u,Element_Fire, 2*(i-prevCount))
+			call AddUnitAbsoluteBonusCount(u,Element_Water, 2*(i-prevCount))
+			call AddUnitAbsoluteBonusCount(u,Element_Earth, 2*(i-prevCount))
+			call AddUnitAbsoluteBonusCount(u,Element_Wind, 2*(i-prevCount))
+			call AddUnitAbsoluteEffective(u, Element_Fire,  0.1*I2R(i-prevCount))
+			call AddUnitAbsoluteEffective(u, Element_Water,  0.1*I2R(i-prevCount))
+			call AddUnitAbsoluteEffective(u, Element_Earth,  0.1*I2R(i-prevCount))
+			call AddUnitAbsoluteEffective(u, Element_Wind,  0.1*I2R(i-prevCount))
+
+			call SaveInteger(HTi,hid, itemId,i)	
+
+		elseif itemId == SHADOW_BLADE_ITEM_ID then
+			set i = UnitHasItemI(u ,itemId )
+			set prevCount = LoadInteger(HTi, hid, itemId) 
+			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 3000*(i - prevCount), 0 )
+			call AddUnitBonus(u, BONUS_DAMAGE, 10000 * (i - prevCount))
+			call AddUnitEvasion(u ,   20 * I2R(i - prevCount)  )
+			call SaveInteger(HTi, hid, itemId,i)	
+
 			//Magic Amulet
 		elseif itemId == 'I07B' then
 
@@ -284,7 +306,21 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,hid, itemId,i)	
 			call RegisterEndOfRoundItem(pid, it)
 
-			//Blokkades Shield
+		elseif itemId == MANA_GEM_ITEM_ID then
+			call RegisterEndOfRoundItem(pid, it)
+			//Leather Armor
+		elseif itemId == 'I0CM' then
+			call RegisterEndOfRoundItem(pid, it)
+			//Rapira
+		elseif itemId == RAPIRA_ITEM_ID then
+			set i = UnitHasItemI(u ,itemId )
+			set prevCount = LoadInteger(HTi,hid, itemId) 
+			call AddUnitBonus(u, BONUS_DAMAGE, 300 * (i - prevCount))
+			call SaveInteger(HTi,hid, itemId,i)	
+
+			call RegisterEndOfRoundItem(pid, it)
+
+			//Blokkades Shield - imba
 		elseif itemId == BLOKKADE_SHIELD_ITEM_ID then
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid, itemId) 

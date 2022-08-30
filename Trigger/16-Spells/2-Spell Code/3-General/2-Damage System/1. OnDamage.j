@@ -144,12 +144,15 @@ scope OnDamage initializer init
             return
         endif
 
+        set DamageIsSuddenDeath = DamageSourceTypeId == SUDDEN_DEATH_UNIT_ID
+
         //modified damage source after this, so can't detect dummy units, those need to go ^^^
         if DamageSourceTypeId == PRIEST_1_UNIT_ID or DamageSourceTypeId == SUDDEN_DEATH_UNIT_ID or DamageSourceTypeId == 'n01L' then
             set DamageSource = DamageSourceHero
             set DamageSourceTypeId = GetUnitTypeId(DamageSource)
             set DamageSourceId = GetHandleId(DamageSource)
         endif
+
 
         set DamageSourceLuck = GetUnitLuck(DamageSource)
         set DamageTargetLuck = GetUnitLuck(DamageTarget)

@@ -41,12 +41,12 @@ library heroLevel initializer init requires HeroLvlTable
         local integer j = 0
 
         loop
-            if ModuloInteger(i, 20) == 0 then
+            if ModuloInteger(i, 25) == 0 then
                 call AddHeroMaxAbsoluteAbility(u)
                 call UpdateBonus(u, 0, 1)
             endif
 
-            if ModuloInteger(i, 25) == 0 then
+            if ModuloInteger(i, 30) == 0 then
                 set j = 0
                 loop
                     set j = j + 1
@@ -154,7 +154,7 @@ library heroLevel initializer init requires HeroLvlTable
         elseif uid == MAULER_UNIT_ID then  
             set i = prevLevel + 1
             loop
-                if ModuloInteger(i, 8) == 0 then
+                if ModuloInteger(i, 10) == 0 then
                     call UpdateBonus(u, 0, 1)
                     call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,(ClassAbil[8] + " |cffffcc00bonus acquired"))
                 endif
@@ -171,7 +171,7 @@ library heroLevel initializer init requires HeroLvlTable
             call AddUnitPhysPow(u,levelsGained * 3)
             call SetBonus(u, 0, 3 * heroLevel)
         elseif uid == NAGA_SIREN_UNIT_ID then  
-            call SetBonus(u, 0, 10 + (heroLevel * 0.1))   
+            call SetBonus(u, 0, 5 + (heroLevel * 0.05))   
             set i = prevLevel + 1
             loop
                 if ModuloInteger(i, 50) == 0 then
@@ -262,7 +262,7 @@ library heroLevel initializer init requires HeroLvlTable
             call SetUnitAbilityLevel(u,'A031',1)
             call SetBonus(u, 0, heroLevel * 3)   
         elseif uid == HUNTRESS_UNIT_ID then         
-            call SetBonus(u, 0, 49.5 + (heroLevel * 0.5))   
+            call SetBonus(u, 0, 24.5 + (heroLevel * 0.25))   
         elseif uid == SKELETON_BRUTE_UNIT_ID then   
             call SetBonus(u, 0, 1 + (heroLevel * 0.01))   
             call SetBonus(u, 1, 2 + (heroLevel * 0.05))   

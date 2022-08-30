@@ -1084,6 +1084,34 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //187 - Martial Theft 
         call SaveAbilData(MARTIAL_THEFT_ABILITY_ID, MARTIAL_THEFT_ITEM_ID, false, 0, 0, false, Order_None, null)
         //call SetLastObjectElement(Element_Energy, 1)
+
+        //188 - Destryction Block 
+        call SaveAbilData(DESTRUCTION_BLOCK_ABILITY_ID, DESTRUCTION_BLOCK_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Dark, 1)
+
+        //189 - Dark Seal
+        call SaveAbilData(DARK_SEAL_ABILITY_ID, DARK_SEAL_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Dark, 1)
+
+        //190 - Shadow Step
+        call SaveAbilData(SHADOW_STEP_ABILITY_ID, SHADOW_STEP_ITEM_ID , false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Dark, 2)
+
+        //191 - Energy Shield
+        call SaveAbilData(ENERGY_SHIELD_ABILITY_ID, ENERGY_SHIELD_ITEM_ID , false, 0, 0, false, Order_None, null)
+
+        //192 - Backstab
+        call SaveAbilData(BACKSTAB_ABILITY_ID, BACKSTAB_ITEM_ID , false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Blood, 1)
+
+        //193 - Shadow dance
+         call SaveAbilData(SHADOW_DANCE_ABILITY_ID, SHADOW_DANCE_ITEM_ID , false, 0, 0, false, Order_None, null)
+         call SetLastObjectElement(Element_Dark, 1)
+
+        //194 - Power of water
+        call SaveAbilData(POWER_OF_WATER_ABILITY_ID, POWER_OF_WATER_ITEM_ID , false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Water, 1)
+
     endfunction
 
     function InitHeroElements takes nothing returns nothing

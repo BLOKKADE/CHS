@@ -8,7 +8,10 @@ scope ModifyDamageBeforeArmor initializer init
         local real blockDamage = 0
         local real r1 = 0
         local integer i1 = 0
+        local integer i2 = 0
         local integer i = 0
+        local DarkSeal ds = 0
+        local real distance = 0
 
         //Contract of the Living no damage
         if GetUnitAbilityLevel(DamageSource, CONTRACT_LIVING_BUFF_ID) > 0 or GetUnitAbilityLevel(DamageTarget, CONTRACT_LIVING_BUFF_ID) > 0 then
@@ -95,8 +98,18 @@ scope ModifyDamageBeforeArmor initializer init
             endif 
         endif 
 
+        //Shadow dance - start shadow form
+        set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
+        if i1 > 0 and  BlzGetUnitAbilityCooldownRemaining(DamageSource,SHADOW_DANCE_ABILITY_ID) <= 0 and Damage.index.isAttack and not DamageIsOnHit then
+            set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
+            if distance < 230  then
+                call UnitAddForm(DamageSource, FORM_SHADOW, 2.9 + I2R(i1)/ 10)
+                call AbilStartCD(DamageSource,SHADOW_DANCE_ABILITY_ID, 13) 
+            endif
+        endif
+
         //Evasion & miss TODO: clean this up
-        if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0) and (GetUnitEvasion(DamageTarget) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitMissChance(DamageSource) > 0) then
+        if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemS(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and (GetUnitEvasion(DamageTarget) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitMissChance(DamageSource) > 0) then
             call Evade()
             
             if Damage.index.damage == 0 then
@@ -130,6 +143,10 @@ scope ModifyDamageBeforeArmor initializer init
         if Damage.index.damage <= 0 or ((GetUnitAbilityLevel(DamageTarget, 'B028') > 0 or GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0) and IsPhysDamage()) then
             set Damage.index.damage = 0
             return
+        endif
+
+        if GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 1 and CalculateDistance(GetUnitX(DamageTargetHero), GetWidgetX(DamageSource), GetUnitY(DamageTargetHero), GetWidgetY(DamageSource)) >= 300 then
+            set Damage.index.damage = Damage.index.damage - (Damage.index.damage * (0.05 + GetUnitAbilityLevel(DamageTargetHero, ENERGY_SHIELD_ABILITY_ID) * 0.01))
         endif
 
         //Divine Bubble
@@ -170,6 +187,24 @@ scope ModifyDamageBeforeArmor initializer init
             call PeriodicDamage.create(DamageSource, DamageTarget, 0.0333 * Damage.index.damage, true, 0.1, 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
         endif
 */
+
+
+        set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
+        if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 then
+            set Damage.index.damage = Damage.index.damage + 50 * i1
+            call SetUnitX(DamageSource, GetWidgetX(DamageTarget) - 65 * CosBJ(GetUnitFacing(DamageTarget)))
+            call SetUnitY(DamageSource, GetWidgetY(DamageTarget) - 65 * SinBJ(GetUnitFacing(DamageTarget))) 
+            call BlzSetUnitFacingEx( DamageSource, GetUnitFacing(DamageTarget))
+        endif
+    
+        set i1 = GetUnitAbilityLevel(DamageSource, BACKSTAB_ABILITY_ID)
+        if i1 > 0 and Damage.index.isAttack and not DamageIsOnHit then
+            set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
+            if distance < 220 and  RAbsBJ(GetUnitFacing(DamageTarget) - GetUnitFacing(DamageSource)) < 85 then
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", DamageTarget, "chest"))
+                set Damage.index.damage = Damage.index.damage * (1 +  0.05 * I2R(i2)) + 20 * i1
+            endif
+        endif
 
         //Crushing Wave
         set i1 = GetUnitAbilityLevel(DamageSource, CRUSHING_WAVE_ABILITY_ID)
@@ -296,10 +331,10 @@ scope ModifyDamageBeforeArmor initializer init
         //Cruelty
         set i1 = GetUnitAbilityLevel(DamageSource,CRUELTY_ABILITY_ID)
         if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL and (BlzGetUnitAbilityCooldownRemaining(DamageSource,CRUELTY_ABILITY_ID) <= 0.001 or CheckTimerZero(DamageSourceHero,CRUELTY_ABILITY_ID) ) then
-            set Damage.index.damage = Damage.index.damage + Damage.index.damage*(2.5 + I2R(i1)/ 2)
+            set Damage.index.damage = Damage.index.damage + Damage.index.damage*(2.8 + I2R(i1)/ 5)
             call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", DamageTarget, "chest"))
             if ZetoTimerStart(DamageSource,CRUELTY_ABILITY_ID) then
-                call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 6 )
+                call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 4 )
             endif
         endif
 
@@ -368,6 +403,44 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage =  Damage.index.damage * 1.5
         endif
 
+
+        //Dark seal
+        if GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DARK_SEAL_ABILITY_ID) <= 0 and IsHeroUnitId(DamageTargetTypeId) and not DamageIsOnHit then
+            set i1 =  2 * GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID)
+            set ds = LoadInteger(HT, DamageTargetId, DARK_SEAL_ABILITY_ID)
+            if ds == 0 then
+                set ds = DarkSeal.create()
+                call SaveInteger(HT, DamageTargetId, DARK_SEAL_ABILITY_ID, ds)
+            endif
+            call ds.Execute(DamageTarget, 2 * GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID))
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
+            call AbilStartCD(DamageSource,DARK_SEAL_ABILITY_ID, 9) 
+        endif
+
+        //Dark seal curse
+        if GetUnitAbilityLevel(DamageTarget, DARK_SEAL_ABILITY_ID) > 0 then
+            set r1 = I2R(GetHeroStr(DamageTarget, true) + GetHeroAgi(DamageTarget, true) + GetHeroInt(DamageTarget, true))
+            if (r1 < 0) then
+                set r1 = -r1
+            endif
+            set Damage.index.damage =  Damage.index.damage + (r1/10)
+        endif
+        
+
+        //Destroy block
+        if GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID) <= 0 and not DamageIsOnHit then
+            set r1 =  -10 * GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)
+            if (GetUnitBlock(DamageTarget) < 0) then
+                set r1 = r1 * 0.5
+            endif
+            call AddUnitBlock(DamageTarget, r1)
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
+            if IsHeroUnitId(DamageTargetTypeId) then
+                call SaveReal(HT, DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID,  LoadReal(HT,DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID)  + r1)
+                call AbilStartCD(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID, 12) 
+            endif
+        endif
+
         //Ice Armor
         if GetUnitAbilityLevel(DamageTarget,ICE_ARMOR_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_ARMOR_ABILITY_ID) <= 0    then
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
@@ -426,7 +499,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Naga Siren passive
         if DamageSourceTypeId == NAGA_SIREN_UNIT_ID and Damage.index.isSpell then
-            set Damage.index.damage = Damage.index.damage + (GetAttackDamage(DamageSource) * (0.1 + (0.001 * GetHeroLevel(DamageSource))))
+            set Damage.index.damage = Damage.index.damage + (GetAttackDamage(DamageSource) * (0.05 + (0.0005 * GetHeroLevel(DamageSource))))
         endif
 
         //Grom Hellscream
@@ -531,6 +604,26 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        // Absolute Arcane
+        set i1 = GetUnitAbilityLevel(DamageSource, ABSOLUTE_ARCANE_ABILITY_ID)
+        if i1 > 0 and not DamageIsOnHit then
+            set r1 = GetHeroTotalAbilitiesCooldown(DamageSource)
+            
+            if r1 > 200 then
+                set r1 = 200 + (r1 - 200)/2
+            endif
+            set r1 = R2I(I2R(i1) * 0.5 * GetUnitElementCount(DamageSource, Element_Arcane)) * (1 + GetUnitAbsoluteEffective(DamageSource, Element_Arcane)) * r1
+            if r1 > Damage.index.damage * 3 then
+                set r1 = Damage.index.damage * 3
+            endif
+            if r1 > 0 then
+                set Damage.index.damage = Damage.index.damage + r1
+                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))
+                endif		
+            endif
+        endif
+
         if IsMagicDamage() then 
             //Magic Power
             if DamageSourceMagicPower != 1 or GetUnitMagicDmg(DamageSource) > 0 then
@@ -558,6 +651,16 @@ scope ModifyDamageBeforeArmor initializer init
         if GetUnitBlock(DamageTarget) != 0 and (not DamageIsTrue) then	
             set blockDamage = GetUnitBlock(DamageTarget)
 
+            
+            if DamageIsSuddenDeath then
+                set blockDamage = blockDamage / 2
+            endif
+
+            //Destruction block curse
+            if GetUnitAbilityLevel(DamageTarget, DESTRUCTION_BLOCK_ABILITY_ID) > 0 then
+                set blockDamage = blockDamage / 2
+            endif
+
             //Sword of Bloodthirst
             if UnitHasItemS(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) then
                 set blockDamage = blockDamage * 0.7
@@ -566,9 +669,9 @@ scope ModifyDamageBeforeArmor initializer init
             //call BJDebugMsg(GetUnitName(DamageTarget) + ", block:  " + R2S(GetUnitBlock(DamageTarget)) + ", calc: " + R2S(blockDamage))
             //Absolute Dark
             set i1 = GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_DARK_ABILITY_ID)
-            if i1 > 0 and GetUnitAbilityLevel(DamageSourceHero, NULL_VOID_ORB_BUFF_ID) == 0 then
-                set blockDamage = blockDamage * (1 - ((0.009 + (0.001 * i1)) * GetUnitElementCount(DamageSourceHero, Element_Dark)))
-            endif
+            //if i1 > 0 and GetUnitAbilityLevel(DamageSourceHero, NULL_VOID_ORB_BUFF_ID) == 0 then
+            //    set blockDamage = blockDamage * (1 - ((0.009 + (0.001 * i1)) * GetUnitElementCount(DamageSourceHero, Element_Dark)))
+            //endif
 
             //Skeleton Warmage
             set i1 = GetUnitAbilityLevel(DamageSourceHero, BLACK_ARROW_PASSIVE_ABILITY_ID)

@@ -122,15 +122,15 @@ scope AttackController initializer init
         //Magical Blade
         set i1 = UnitHasItemI( u2,'I06I' )
         if i1 > 0 then
-            call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA)- 50 * i1  )
-            call SetUnitState(u2, UNIT_STATE_MANA, GetUnitState(u2, UNIT_STATE_MANA)+ 50 * i1  )
+            call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA)- 200 * i1  )
+            //call SetUnitState(u2, UNIT_STATE_MANA, GetUnitState(u2, UNIT_STATE_MANA)+ 50 * i1  )
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", u, "head"))
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", u2, "head"))
         endif
         
         //Huntress
         if GetUnitTypeId(u2) == HUNTRESS_UNIT_ID then
-            call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.495 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
+            call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.245 + (0.0025 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
         endif
 
         //Pyromancer

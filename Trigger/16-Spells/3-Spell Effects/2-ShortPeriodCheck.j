@@ -167,8 +167,8 @@ scope ShortPeriodCheck initializer init
 
                 //Blood Elf Mage
                 if uid == BLOOD_MAGE_UNIT_ID then
-                    set i1 = R2I(GetUnitState(u, UNIT_STATE_MAX_MANA))
-                    set i1 = R2I((i1 - ModuloInteger(i1, 1000)) / 1000)
+                    set i1 = GetHeroInt(u, true)
+                    set i1 = R2I((i1 - ModuloInteger(i1, 30)) / 30)
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
                         call AddUnitMagicDmg(u, 0 - i2)

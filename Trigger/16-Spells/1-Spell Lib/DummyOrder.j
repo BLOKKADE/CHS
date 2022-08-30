@@ -86,6 +86,12 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             return this
         endmethod 
 
+        method setAbilityStringField takes integer abilityId, abilitystringlevelfield field, string value returns thistype
+            call SetAbilityStringField(this.dummy, abilityId, GetUnitAbilityLevel(this.dummy, abilityId), field, value)
+
+            return this
+        endmethod 
+
         //do not use more than once per dummy
         method addActiveAbility takes integer abilityId, integer level, integer order returns thistype
             if not this.abilSet then

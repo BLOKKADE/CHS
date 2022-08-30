@@ -1,4 +1,4 @@
-library trigger115 initializer init requires RandomShit, Functions, SpellsLearned
+library trigger115 initializer init requires RandomShit, Functions, SpellsLearned, CustomEvent
 
     function Trig_Unlearn_Ability_Conditions takes nothing returns boolean
         if(not('I00P'==GetItemTypeId(GetManipulatedItem())))then
@@ -33,6 +33,7 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
         local unit u = GetTriggerUnit()
         local player p = GetOwningPlayer(u)
         local integer Pid = GetConvertedPlayerId(p)
+        local customEvent ce = 0
     
         if(Trig_Unlearn_Ability_Func001C()) and AbilityMode != 2 then
     
@@ -50,6 +51,12 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
                 call UnitRemoveAbilityBJ(PlayerLastLearnedSpell[Pid],u)
                 call FunResetAbility (PlayerLastLearnedSpell[Pid],u)
                 call RemoveDummyspell(u, PlayerLastLearnedSpell[Pid])
+
+                set ce = customEvent.create()
+                set ce.EventUnit = u
+                set ce.EventSpellId = PlayerLastLearnedSpell[Pid]
+
+                call DispachEvent(CUSTOM_EVENT_UNLEARN_ABILITY, ce)
 
                 if AbilityMode == 1 then
                     call RemoveItemFromUpgradeShop(Pid - 1, GetItemFromAbility(PlayerLastLearnedSpell[Pid]))

@@ -25,7 +25,7 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
     endfunction
 
     function UpdateSuddenDeathTimer takes nothing returns nothing
-        local real duration = 60
+        local real duration = 30
         set level = level + 1
         set SuddenDeathEnabled = true
         call TimerDialogSetTitle(SuddenDeathDialog, "Creep enrage level " + I2S(level))

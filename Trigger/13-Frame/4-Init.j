@@ -280,6 +280,9 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 							set i1 = GetAbsoluteElement(i3)
 							set i2 = GetUnitElementCount(SpellU, i1)
 							set ToolTipS = ToolTipS + "|n|n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
+
+
+							set ToolTipS = ToolTipS + "|n|cffd0ff00Additional bonus|r: " + R2SW((100 * GetUnitAbsoluteEffective(SpellU, i1)), 1, 1) + "|cffd0ff00%|r"
 						endif
 
 						if GetLocalPlayer() == GetTriggerPlayer() then	

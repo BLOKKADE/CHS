@@ -1,4 +1,4 @@
-library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, BoneArmor
+library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, BoneArmor, CustomEvent
     globals
         hashtable HT_timerSpell = InitHashtable()
         integer array RoundTimer
@@ -205,7 +205,7 @@ function FunctionTimerSpell takes nothing returns nothing
         call DestroyEffect(AddSpecialEffect(FX_BLINK, r4, r5))
         set U = CreateUnit(GetOwningPlayer(Herou), 'e001', r4, r5, GetUnitFacing(Herou))
 
-        call BlzSetUnitAttackCooldown(U, BlzGetUnitAttackCooldown(U,0) * (8 / (8.9 + (heroLevel / 2))), 0)
+        call BlzSetUnitAttackCooldown(U, BlzGetUnitAttackCooldown(U,0) * (8 / (8.9 + (heroLevel / 3))), 0)
         call SetUnitAbilityLevelSwapped('A000',U,R2I(GetHeroLevel(Herou)/ 3))
         call SetUnitBonusReal(U, BONUS_ATTACK_SPEED, GetHeroLevel(Herou) * 0.03)
     endif
@@ -214,7 +214,7 @@ function FunctionTimerSpell takes nothing returns nothing
     set i1 = UnitHasItemI( Herou,'I06I' )
     if i1 > 0 then
         call ElemFuncStart(Herou,'I06I')
-        call SetUnitState(Herou, UNIT_STATE_MANA, GetUnitState(Herou, UNIT_STATE_MANA)- 35000 * i1  )
+        call SetUnitState(Herou, UNIT_STATE_MANA, GetUnitState(Herou, UNIT_STATE_MANA)- 70000 * i1  )
     endif
         
     //Armor of Ancestors
@@ -287,6 +287,11 @@ endfunction
 
 function FixAbilityU takes unit u returns nothing
     local integer i1 = 0
+    local real r1 = 0
+    local DarkSeal = ds = 0
+    local customEvent e = customEvent.create()
+    set e.EventUnit = u
+    call DispachEvent(CUSTOM_EVENT_FIX_START_ROUND, e)
 
     set i1 = LoadInteger(HT,GetHandleId(u),54021)
         
@@ -295,6 +300,12 @@ function FixAbilityU takes unit u returns nothing
         call SetHeroAgi(u,GetHeroAgi(u,false)- i1,false)
         call SetHeroInt(u,GetHeroInt(u,false)- i1,false)
         call SaveInteger(HT,GetHandleId(u),54021,0)
+    endif
+
+    set r1 = LoadReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID)
+    if r1 != 0 then 
+        call AddUnitBlock(u, -r1)
+        call SaveReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID,0)
     endif
 endfunction
 //i1 = 1 = battle royale
