@@ -1,6 +1,6 @@
 scope Quests initializer init
     globals
-        string VERSION = "CHS 1.9.30-beta5-fix3"
+        string VERSION = "CHS 1.9.30-beta5-fix4"
     endglobals
 
     function AddQuest takes string title, string description, string icon, boolean required, boolean discovered, boolean completed returns nothing
@@ -47,8 +47,8 @@ scope Quests initializer init
         call AddQuestItem(bj_lastCreatedQuest, "Thanks to N1 for making the ability draft mode.", false)
         call AddQuestItem(bj_lastCreatedQuest, "Thanks to Komoset for making the loading screen.", false)
         call AddQuestItem(bj_lastCreatedQuest, "This list is incomplete. Is your name missing? Let us know.", false)
-
-        call AddQuest("Selected Mode", "", "ReplaceableTextures\\CommandButtons\\BTNWisp.blp", false, true, false)
+//added "Mode" as filler text. Clicking on empty  quests crashes the game from 1.33 
+        call AddQuest("Selected Mode", "Mode", "ReplaceableTextures\\CommandButtons\\BTNWisp.blp", false, true, false)
     endfunction
     
     private function init takes nothing returns nothing

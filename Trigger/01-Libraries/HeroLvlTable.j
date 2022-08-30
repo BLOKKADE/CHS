@@ -61,7 +61,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr(MAULER_UNIT_ID, 0, "|cffe7544aLight bonus|r: ,0,")
 
-        call SetBonusStr(BLOOD_MAGE_UNIT_ID, 0, "|cffe7544aMana bonus|r: ,0,")
+        call SetBonusStr(BLOOD_MAGE_UNIT_ID, 0, "|cffe7544aBonus Intelligence|r: ,0,")
 
         call SetBonusStr(MORTAR_TEAM_UNIT_ID, 0, "|cffe7544aDamage bonus|r: ,0,%%")
 
@@ -158,7 +158,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
 
         call SetBonusStr(OGRE_MAGE_UNIT_ID, 0, "|cffe7544aChance|r: ,0,%%")
 
-        call SetBonusStr(TROLL_BERSERKER_UNIT_ID, 0, "|cffe7544aAttack speed bonus|r: ,0,%%")
+        call SetBonusStr(TROLL_BERSERKER_UNIT_ID, 0, "|cffe7544aAttack cooldown reduction bonus|r: ,0,%%")
 
         call SetBonusStr(YETI_UNIT_ID, 0, "|cffe7544aStrength bonus|r: ,0,")
         call SetBonusStr(YETI_UNIT_ID, 1, "|cffd6e049Armor limit|r: ,0,")

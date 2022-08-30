@@ -260,8 +260,8 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		elseif itemId == SHADOW_BLADE_ITEM_ID then
 			set i = UnitHasItemI(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
-			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 3000*(i - prevCount), 0 )
-			call AddUnitBonus(u, BONUS_DAMAGE, 10000 * (i - prevCount))
+			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1500*(i - prevCount), 0 )
+			call AddUnitBonus(u, BONUS_DAMAGE, 6000 * (i - prevCount))
 			call AddUnitEvasion(u ,   20 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
 
@@ -574,7 +574,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		elseif itemId == 'I06H' then
 			set i = UnitHasItemI(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
-			call AddUnitBonus(u, BONUS_DAMAGE, -300 * (i - prevCount))
+			//call AddUnitBonus(u, BONUS_DAMAGE, -300 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		/*//Titanium Armor

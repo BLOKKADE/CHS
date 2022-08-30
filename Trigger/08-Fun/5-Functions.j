@@ -73,7 +73,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if abilId == DRUNKEN_MASTER_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            call AddUnitEvasion(u ,   I2R(i1 - i2)  )	
+            call AddUnitEvasion(u ,   1.5 * I2R(i1 - i2)  )	
             call SaveInteger(HT,hid, abilId,i1)
         endif 
 
@@ -123,7 +123,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if abilId == SPIKED_CARAPACE_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT, hid, abilId)
-            call AddUnitBonus(u, BONUS_ARMOR, 4 * (i1 - i2))
+            call AddUnitBonus(u, BONUS_ARMOR, 7 * (i1 - i2))
             call SaveInteger(HT, hid, abilId, i1)
         endif
 

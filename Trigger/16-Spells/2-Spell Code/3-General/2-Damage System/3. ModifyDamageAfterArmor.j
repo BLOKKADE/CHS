@@ -320,7 +320,7 @@ scope ModifyDamageAfterArmor initializer init
                 //Bash
                 set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)  
                 if i > 0 and GetRandomReal(0, 100) <= I2R(i) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
-                    call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) / 2, ABILITY_RLF_DAMAGE_HTB1 )
+                    call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
                 endif
 
                 //Volcanic Armor
@@ -371,7 +371,8 @@ scope ModifyDamageAfterArmor initializer init
                 if i > 0 and Damage.index.isAttack then
                     set udg_NextDamageType = DamageType_Onhit
                     set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
-                    set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
+                    //set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
+                    set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID)))
                     //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                     call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                 endif

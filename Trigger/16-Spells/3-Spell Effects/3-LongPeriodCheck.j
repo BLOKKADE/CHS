@@ -35,7 +35,12 @@ scope LongPeriodCheck initializer init
 
         //Troll passive
         if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID then
-            set r2 = r2 * 100 /(I2R(100 + GetHeroLevel(u))) 
+            set r2 = r2 * 100 /(I2R(100 + GetHeroLevel(u)))
+        endif
+
+        //Berserk Attack CD
+        if GetUnitAbilityLevel(u, BERSERK_BUFF_ID) > 0 then
+                set r2 = r2 * 0.5
         endif
 
         //  call DisplayTextToPlayer(GetLocalPlayer(),0,0,R2S(r2))
@@ -71,6 +76,13 @@ scope LongPeriodCheck initializer init
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_ELEMENT_ABILITY_ID) <= 0 and CheckProc(u, 600) then
                 call UseAncientElement(u, i)
             endif
+
+            //Arcane Strike
+            set i = GetUnitAbilityLevel(u, ARCANE_STRIKE_ABILITY_ID)
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, ARCANE_STRIKE_ABILITY_ID) <= 0 then
+                call UseArcaneStrike(u, i)
+            endif
+
 
             //Runestone of Creation
             if GetUnitAbilityLevel(u,'A073') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A073') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
@@ -411,7 +423,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     set i1 = R2I(i1 * GetUnitElementCount(u, Element_Water) * (1+ GetUnitAbsoluteEffective(u, Element_Water)))
-                    call SetHeroInt(u, GetHeroInt(u, false) + (7 * (i1 -i2)), false)
+                    call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)), false)
                     call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +(30 * (i1 -i2)))
 
                     call SaveInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID,i1)
@@ -551,3 +563,4 @@ scope LongPeriodCheck initializer init
         set trg = null
     endfunction
 endscope
+

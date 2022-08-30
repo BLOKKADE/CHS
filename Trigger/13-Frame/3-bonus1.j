@@ -22,7 +22,7 @@ library HeroData initializer init
     
         call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroBloodElfPrince.blp" )       // mage
         call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,2, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 30 intelligence")
-        call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +250 mana." )   
+        call SaveStr(HT_data,BLOOD_MAGE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +7 intelligence." )   
         
         call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )       // mortal team
         call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,2, "|cff00ffffPassive|r: Mortar Might: Increases physical power. ")
@@ -65,7 +65,7 @@ library HeroData initializer init
         call SaveStr(HT_data,THUNDER_WITCH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Thunder Bolt: +30 damage. (|cff68eef3Every 30 levels|r) +1 target." )
                 
         call SaveStr(HT_data,WOLF_RIDER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNThrall.blp" )       // Trall
-        call SaveStr(HT_data,WOLF_RIDER_UNIT_ID,2, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 6 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 50% of its highest stat when they drop lower.")
+        call SaveStr(HT_data,WOLF_RIDER_UNIT_ID,2, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 6 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 35% of its highest stat when they drop lower.")
         call SaveStr(HT_data,WOLF_RIDER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained." )
                 
         call SaveStr(HT_data,BLADE_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )       // Blade master
@@ -156,7 +156,7 @@ library HeroData initializer init
         call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )       //Xesil
-        call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n||cffc0c0c0 half the chance for [|cff80ff80Luck|r]")
+        call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|cffc0c0c0half the chance for [|cff80ff80Luck|r]")
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
 
         call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )       //OGRE MAGE
@@ -164,7 +164,7 @@ library HeroData initializer init
         call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Ogre's Luck: +2% chance." )
 
         call SaveStr(HT_data,TROLL_BERSERKER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp" )       //OGRE MAGE
-        call SaveStr(HT_data,TROLL_BERSERKER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +1% base attack speed." )
+        call SaveStr(HT_data,TROLL_BERSERKER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +1% attack cooldown reduction." )
 
         call SaveStr(HT_data,YETI_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )       //Yeti
         call SaveStr(HT_data,YETI_UNIT_ID,2, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength if it hass less than 50 armor. Gains +10% strength and +10% armor limit from its passive for every [|cff8080ffCold|r] spell it has.")
@@ -196,7 +196,7 @@ library HeroData initializer init
         call SaveStr(HT_data,SEER_UNIT_ID,2, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0Most spells are affected by enemy armor, and not the Hero's magic power. Seer's passive can be disabled by the Staff of Power.|r" )
     
         call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )       //Arena master
-        call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Passionate Student: All Rings in PVE Shop I are twice as effective.(50% for Arena Ring)")
+        call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,2, "|cff00ffffPassive|r: Passionate Student: All Rings in PVE Shop I are twice as effective.")
         call SaveStr(HT_data,ARENA_MASTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +200 glory." )
     endfunction
 endlibrary

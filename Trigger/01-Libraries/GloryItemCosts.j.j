@@ -39,7 +39,7 @@ library GloryItemCosts initializer init requires Glory
         set GloryItemCosts = Table.create()
 
 
-        set GloryItemCosts[GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID] = 8000
+        set GloryItemCosts[GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID] = 10000
         set GloryItemCosts[GLORY_ABSOLUTE_BLOOD_COUNT_TOME_ITEM_ID] = 6000
         set GloryItemCosts[GLORY_ABSOLUTE_DARK_COUNT_TOME_ITEM_ID] = 7000
         set GloryItemCosts[GLORY_ABSOLUTE_EARTH_COUNT_TOME_ITEM_ID] = 6000
@@ -48,7 +48,7 @@ library GloryItemCosts initializer init requires Glory
         set GloryItemCosts[GLORY_ABSOLUTE_LIGHT_COUNT_TOME_ITEM_ID] = 6000
         set GloryItemCosts[GLORY_ABSOLUTE_POISION_COUNT_TOME_ITEM_ID] = 7000
         set GloryItemCosts[GLORY_ABSOLUTE_WATER_COUNT_TOME_ITEM_ID] = 6000
-        set GloryItemCosts[GLORY_ABSOLUTE_WILD_COUNT_TOME_ITEM_ID] = 7000
+        set GloryItemCosts[GLORY_ABSOLUTE_WILD_COUNT_TOME_ITEM_ID] = 10000
         set GloryItemCosts[GLORY_ABSOLUTE_WIND_COUNT_TOME_ITEM_ID] = 7000
 
         set GloryItemCosts[GLORY_ARMOR_TOME_ITEM_ID] = 1500

@@ -1038,7 +1038,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(ABSOLUTE_BLOOD_ABILITY_ID, ABSOLUTE_BLOOD_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
-        //177 - Absolute Arcane
+        //177 - Absolute Arcane 
         call SaveAbilData(ABSOLUTE_ARCANE_ABILITY_ID, ABSOLUTE_ARCANE_ITEM_ID, true, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
@@ -1111,6 +1111,10 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //194 - Power of water
         call SaveAbilData(POWER_OF_WATER_ABILITY_ID, POWER_OF_WATER_ITEM_ID , false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
+        
+        //195 - Arcane Strike
+        call SaveAbilData(ARCANE_STRIKE_ABILITY_ID, ARCANE_STRIKE_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Arcane, 1)
 
     endfunction
 

@@ -6,7 +6,7 @@ library SerpentWard requires CustomState, SpellFormula
         call AddUnitMagicDmg(u, 0.1 * totalLevel)
 
         call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + GetSpellValue(0, 7, abilityLevel) + (summonLevel * 30), 0)
-        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (10.1 + (totalLevel / 2))), 0)
+        //call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (10.1 + (totalLevel / 2))), 0)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 500)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
         call UnitAddAbility(u, SUMMON_MAGIC_DMG_ABILITY_ID)

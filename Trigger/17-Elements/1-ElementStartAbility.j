@@ -111,7 +111,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Water
         if GetUnitAbilityLevel(u,ABSOLUTE_WATER_ABILITY_ID) > 0 and IsSpellElement(u,id, Element_Water) then
-            call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .005 * (1 + GetUnitAbsoluteEffective(u,Element_Water)))
+            call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .02 * (1 + GetUnitAbsoluteEffective(u,Element_Water)))
             call TempBonus.create(u, BONUS_INTELLIGENCE,20 * (1 + GetUnitAbsoluteEffective(u,Element_Water)),9, ABSOLUTE_WATER_ABILITY_ID)
         endif      
         

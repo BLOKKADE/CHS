@@ -2,6 +2,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
     globals
         Table GloryRegenLevel
+        integer array MaxAbsolute
     endglobals
 
     function PlayerAddGold takes player p, integer i returns nothing
@@ -149,7 +150,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Glory armor
             elseif II  == GLORY_ARMOR_TOME_ITEM_ID then
                 if BuyGloryItem(pid, II) then
-                    call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 20)
+                    call BlzSetUnitArmor(u,BlzGetUnitArmor(u)+ 25)
                     
                     
                     set gloryBonus = gloryBonus + 25
@@ -205,113 +206,158 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory Absolute Arcane count
             elseif II  == GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Arcane, 1)
                     call AddUnitAbsoluteEffective(u,Element_Arcane, 0.05)
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
                     
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
                 //glory Absolute Blood count
             elseif II  == GLORY_ABSOLUTE_BLOOD_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Blood, 1)
                     call AddUnitAbsoluteEffective(u,Element_Blood, 0.05)
-                    
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
+
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
                                 //glory Absolute Dark count
             elseif II  == GLORY_ABSOLUTE_DARK_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Dark, 1)
                     call AddUnitAbsoluteEffective(u,Element_Dark, 0.05)
-                    
-                    set gloryBonus = gloryBonus + 1
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
+
+                    set gloryBonus = gloryBonus + 1 
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
-                                //glory Absolute Arcane count
+                                //glory Absolute cold count
             elseif II  == GLORY_ABSOLUTE_COLD_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Cold, 1)
                     call AddUnitAbsoluteEffective(u,Element_Cold, 0.05)
-                    
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
+
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
-                                //glory Absolute Arcane count
+                                //glory Absolute earth count
             elseif II  == GLORY_ABSOLUTE_EARTH_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Earth, 1)
                     call AddUnitAbsoluteEffective(u,Element_Earth, 0.05)
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
                     
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
-                                //glory Absolute Arcane count
+                                //glory fire Arcane count
             elseif II  == GLORY_ABSOLUTE_FIRE_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Fire, 1)
                     call AddUnitAbsoluteEffective(u,Element_Fire, 0.05)
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
                     
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
 
+                                //glory absolute light count
             elseif II  == GLORY_ABSOLUTE_LIGHT_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Light, 1)
                     call AddUnitAbsoluteEffective(u,Element_Light, 0.05)
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
 
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
-                                //glory Absolute Arcane count
+                                //glory poison Arcane count
             elseif II  == GLORY_ABSOLUTE_POISION_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Poison, 1)
                     call AddUnitAbsoluteEffective(u,Element_Poison, 0.05)
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
                     
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
-                                //glory Absolute Arcane count
+                                //glory water Arcane count
             elseif II  == GLORY_ABSOLUTE_WATER_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Water, 1)
                     call AddUnitAbsoluteEffective(u,Element_Water, 0.05)
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
                     
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
-                                //glory Absolute Arcane count
+                                //glory Absolute wild count
             elseif II  == GLORY_ABSOLUTE_WILD_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Wild, 1)
                     call AddUnitAbsoluteEffective(u,Element_Wild, 0.05)
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
                     
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
-                                //glory Absolute Arcane count
+                                //glory Absolute wind count
             elseif II  == GLORY_ABSOLUTE_WIND_COUNT_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if MaxAbsolute[pid] < 4 and BuyGloryItem(pid, II) then
                     call AddUnitAbsoluteBonusCount(u,Element_Wind, 1)
                     call AddUnitAbsoluteEffective(u,Element_Wind, 0.05)
+                    set MaxAbsolute[pid] = MaxAbsolute[pid] + 1
                     
                     set gloryBonus = gloryBonus + 1
                 else
                     set ctrl = false
+                    if MaxAbsolute[pid] > 3 then   
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                    endif
                 endif
 
                 //glory mana regen

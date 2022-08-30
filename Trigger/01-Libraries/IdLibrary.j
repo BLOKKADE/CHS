@@ -226,7 +226,7 @@ library IdLibrary initializer init
         // --- Unit IDs ---
 
         // --- Ability IDs ---
-        constant integer ABSOLUTE_ARCANE_ABILITY_ID                     = 'A0AB'
+        constant integer ABSOLUTE_ARCANE_ABILITY_ID                     = 'A0D8'
         constant integer ABSOLUTE_BLOOD_ABILITY_ID                      = 'A07R'
         constant integer ABSOLUTE_COLD_ABILITY_ID                       = 'A07V'
         constant integer ABSOLUTE_DARK_ABILITY_ID                       = 'A07Q'
@@ -248,6 +248,7 @@ library IdLibrary initializer init
         constant integer ANCIENT_TEACHING_ABILITY_ID                    = 'A05U'
         constant integer ANTI_MAGIC_SHEL_ABILITY_ID                     = 'Aam2'
         constant integer ARCANE_ASSAUL_ABILITY_ID                       = 'A098'
+        constant integer ARCANE_STRIKE_ABILITY_ID                       = 'A0AB'
         constant integer ATTACK_SPEED_BONUS_ABILITY_ID                  = 'A0A5'
         constant integer AURA_OF_FEAR_ABILITY_ID                        = 'A02K'
         constant integer AURA_OF_IMMORTALITY_ABILITY_ID                 = 'A02L'
@@ -489,7 +490,6 @@ library IdLibrary initializer init
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
 
         // --- Item IDs ---
-
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'
         constant integer ARCANE_INFUSED_SWORD_ITEM_ID                   = 'I0BN'
         constant integer MARTIAL_THEFT_ITEM_ID                          = 'I0BL'
@@ -497,7 +497,7 @@ library IdLibrary initializer init
         constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'
         constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BE'
         constant integer ABSOLUTE_ACORN_TOME_ITEM_ID                    = 'I09D'
-        constant integer ABSOLUTE_ARCANE_ITEM_ID                        = 'I0B2'
+        constant integer ABSOLUTE_ARCANE_ITEM_ID                        = 'I0CT'
         constant integer ABSOLUTE_BLOOD_ITEM_ID                         = 'I099'
         constant integer ABSOLUTE_COLD_ITEM_ID                          = 'I09F'
         constant integer ABSOLUTE_DARK_ITEM_ID                          = 'I098'
@@ -528,6 +528,7 @@ library IdLibrary initializer init
         constant integer ANCIENT_TEACHING_ITEM_ID                       = 'I07N'
         constant integer ANTI_MAGIC_SHEL_ITEM_ID                        = 'I03S'
         constant integer ARCANE_ASSAUL_ITEM_ID                          = 'I09Z'
+        constant integer ARCANE_STRIKE_ITEM_ID                          = 'I0B2'
         constant integer AURA_OF_FEAR_ITEM_ID                           = 'I04Y'
         constant integer AURA_OF_IMMORTALITY_ITEM_ID                    = 'I04X'
         constant integer AURA_OF_VULNERABILITY_ITEM_ID                  = 'I04Z'

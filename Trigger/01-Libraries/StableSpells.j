@@ -13,7 +13,7 @@ library StableSpells initializer init
         set StableSpells.boolean[DIVINE_SHIELD_ABILITY_ID] = true
         set StableSpells.boolean[DIVINE_BUBBLE_ABILITY_ID] = true
         set StableSpells.boolean[LAST_BREATHS_ABILITY_ID] = true
-        set StableSpells.boolean[ABSOLUTE_ARCANE_ABILITY_ID] = true
+        set StableSpells.boolean[ARCANE_STRIKE_ABILITY_ID] = true
         set StableSpells.boolean['A0AM'] = true
         set StableSpells.boolean['A08P'] = true
         set StableSpells.boolean['A08P'] = true

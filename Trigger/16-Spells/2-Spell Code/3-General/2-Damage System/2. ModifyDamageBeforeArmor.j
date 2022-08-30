@@ -250,7 +250,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Cutting
         set i1 = GetUnitAbilityLevel(DamageSource,CUTTING_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack and GetRandomReal(1,100) < 20 * DamageSourceLuck then
-            set Damage.index.damage = Damage.index.damage+ i1 * 100
+            set Damage.index.damage = Damage.index.damage+ (i1 * 100) * (1 + 0.02 * GetHeroLevel(DamageSource))
             set DamageIsCutting = true
         endif
 
@@ -261,7 +261,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
          //Light Magic Shield
-        if UnitHasItemS(DamageTarget,'I06K') and BlzGetUnitArmor(DamageTarget)<= 50  then
+        if UnitHasItemS(DamageTarget,'I06K') and BlzGetUnitArmor(DamageTarget)<= (50 + GetHeroLevel(DamageTarget))  then
             set Damage.index.damage =   Damage.index.damage* 0.5
         endif
 
@@ -304,7 +304,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Hammer of Chaos
         if UnitHasItemS( DamageSource,'I06H' ) and Damage.index.isAttack then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource,'A04Y') <= 0 then
-                call AbilStartCD(DamageSource,'A04Y', 8 )
+                call AbilStartCD(DamageSource,'A04Y', 3 )
                 call USOrder4field(DamageSource,GetUnitX(DamageTarget),GetUnitY(DamageTarget),'A04R',"stomp",Damage.index.damage,ABILITY_RLF_DAMAGE_INCREASE,500,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,0.05,ABILITY_RLF_DURATION_NORMAL)
             endif       
         endif   
@@ -604,15 +604,15 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        // Absolute Arcane
-        set i1 = GetUnitAbilityLevel(DamageSource, ABSOLUTE_ARCANE_ABILITY_ID)
+        // Arcane Strike. Snowww made this the new Absolute Arcane. Reverted it back and changed it a bit without many problems hopefully.
+        set i1 = GetUnitAbilityLevel(DamageSource, ARCANE_STRIKE_ABILITY_ID)
         if i1 > 0 and not DamageIsOnHit then
             set r1 = GetHeroTotalAbilitiesCooldown(DamageSource)
             
             if r1 > 200 then
                 set r1 = 200 + (r1 - 200)/2
             endif
-            set r1 = R2I(I2R(i1) * 0.5 * GetUnitElementCount(DamageSource, Element_Arcane)) * (1 + GetUnitAbsoluteEffective(DamageSource, Element_Arcane)) * r1
+            set r1 = R2I(I2R(i1) * 1 ) * r1
             if r1 > Damage.index.damage * 3 then
                 set r1 = Damage.index.damage * 3
             endif

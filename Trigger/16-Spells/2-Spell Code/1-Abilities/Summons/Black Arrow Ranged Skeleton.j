@@ -4,12 +4,12 @@ library BlackArrowRangedSkeleton requires CustomState, SpellFormula
         local integer abilityLevel = IMinBJ(totalLevel, 30)
 
         call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + GetSpellValue(0, 9, abilityLevel) + (summonLevel * 60), 0)
-        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8. / (8. + (totalLevel / 2))), 0)
+        //call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8. / (8. + (totalLevel / 2))), 0)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 500)
-        call AddUnitMagicDef(u,5 * totalLevel)
+        //call AddUnitMagicDef(u,5 * totalLevel)
         call AddUnitMagicDmg(u, 0.1 * totalLevel)
-        call AddUnitEvasion(u,5 * totalLevel)
+        //call AddUnitEvasion(u,5 * totalLevel)
         call UnitAddAbility(u, SUMMON_MAGIC_DMG_ABILITY_ID)
 
         /*call UnitAddAbility(u, 'A06I')

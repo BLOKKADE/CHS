@@ -6,5 +6,4 @@ globals
 
 	integer array BonusNeutralPlayer
 
-
 endglobals

@@ -501,17 +501,17 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         local real timeBonus = 0
 
         //Absolute Arcane
-        //if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
-        //    set i = GetUnitElementCount(u, Element_Arcane)
-        //    loop
-        //        set ResCD = ResCD * (1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))))
-        //        set i = i - 1
-        //        exitwhen i <= 0
-        //    endloop
-        //    if ResCD < 0.1 then
-        //        set ResCD = 0.1
-        //    endif
-        //endif
+        if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
+            set i = GetUnitElementCount(u, Element_Arcane)
+            loop
+                set ResCD = ResCD * (1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID)* (1 + GetUnitAbsoluteEffective(u, Element_Arcane)))))
+                set i = i - 1
+                exitwhen i <= 0
+            endloop
+            if ResCD < 0.1 then
+                set ResCD = 0.1
+            endif
+        endif
 
         if active then
             //Frost Bolt
@@ -533,10 +533,11 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
                 set ResCD = ResCD * 0.5
             endif
 
-            //Fan
-            if UnitHasItemS(u,'I08Z') and IsObjectElement(id,Element_Wind) then
+            //Fan (this was duplicated for some reason)
+            /*//if UnitHasItemS(u,'I08Z') and IsObjectElement(id,Element_Wind) then
                 set ResCD = ResCD * 0.65
             endif   
+            */
 
             //Cheater Magic
             if GetUnitAbilityLevel(u, 'A08G') > 0 and IsSpellResettable(id) then
