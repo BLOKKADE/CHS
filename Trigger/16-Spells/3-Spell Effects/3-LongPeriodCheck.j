@@ -400,7 +400,7 @@ scope LongPeriodCheck initializer init
                 endif
 
                 //Contract of the Living
-                if IsContractLivingAvailable(u) then
+                if IsContractLivingAvailable(u, 0) then
                     call ActivateContractLiving(u)
                 endif
 

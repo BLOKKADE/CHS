@@ -503,7 +503,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Contract of the Living
-        if IsContractLivingAvailable(DamageTarget) then
+        if IsContractLivingAvailable(DamageTarget, Damage.index.amount) then
             call ActivateContractLiving(DamageTarget)
             set Damage.index.amount = 0
         endif
