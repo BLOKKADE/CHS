@@ -32,7 +32,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         local location arenaLocation = GetRectCenter(udg_rect09)
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
 
-        //call BJDebugMsg(B2S(ReviveHeroLoc(u,arenaLocation,true)))
+        call ReviveHeroLoc(u,arenaLocation,true)
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
         call FixDeath(u)
