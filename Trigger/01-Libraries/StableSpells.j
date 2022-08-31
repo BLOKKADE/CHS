@@ -30,7 +30,7 @@ library StableSpells initializer init
         set StableSpells.boolean['A0BA'] = true
         set StableSpells.boolean[CONTRACT_LIVING_ABIL_ID] = true
         set StableSpells.boolean[REINCARNATION_ABILITY_ID] = true
-        set StableSpells.boolean[ANCIENT_RUNES_ABILITY_ID] = true
+        //set StableSpells.boolean[ANCIENT_RUNES_ABILITY_ID] = true
         set StableSpells.boolean[DESTRUCTION_BLOCK_ABILITY_ID] = true
         set StableSpells.boolean[DARK_SEAL_ABILITY_ID] = true
         //set StableSpells.boolean['A085'] = true

@@ -88,7 +88,7 @@ scope LongPeriodCheck initializer init
             if GetUnitAbilityLevel(u,'A073') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A073') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
                 call CreateRandomRune(0,GetUnitX(u),GetUnitY(u),u )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 2000)
-                call AbilStartCD(u,'A073',20 ) 
+                call AbilStartCD(u,'A073',10 ) 
             endif
             
             //Earthquake

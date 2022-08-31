@@ -334,6 +334,8 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitMagicDef(u ,   50 * I2R(i - prevCount)  )		
 			call SaveInteger(HTi,hid, itemId,i)	
+			//Avoid item CD resetting, dunno how to make it the actual remaining cd but probably not necessary, just don't drop the item 4Head
+			call AbilStartCD(u, CONTRACT_LIVING_ABIL_ID, 60)
 			
 			//Fishing Rod
 		elseif itemId == 'I07T' then

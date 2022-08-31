@@ -53,7 +53,7 @@ library HeroData initializer init
         call SaveStr(HT_data,TAUREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Spirit Mage: +0.0025 Rune Power per active spell. +0.05% damage per [Element]")
         
         call SaveStr(HT_data,MYSTIC_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )       // Mystic
-        call SaveStr(HT_data,MYSTIC_UNIT_ID,2, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons an invulnerable Faerie Dragon to aid it in battle.")
+        call SaveStr(HT_data,MYSTIC_UNIT_ID,2, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons a Faerie Dragon to aid it in battle. The Faerie Dragon revives infinitely with an 8 second respawn time.")
         call SaveStr(HT_data,MYSTIC_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: Bonus attack speed. (|cff68eef3Every 3 levels|r) increases Faerie Dragon damage." )
             
         call SaveStr(HT_data,PIT_LORD_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )       // Pit Lord
@@ -182,7 +182,7 @@ library HeroData initializer init
         call SaveStr(HT_data,MEDIVH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +2 magic power." )
         
         call SaveStr(HT_data,GHOUL_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )       //ghoul
-        call SaveStr(HT_data,GHOUL_UNIT_ID,2, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's maximum hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it.")
+        call SaveStr(HT_data,GHOUL_UNIT_ID,2, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's current hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it.")
         call SaveStr(HT_data,GHOUL_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Cannibal Frenzy: +0.025% attack damage." )
 
         call SaveStr(HT_data,BANSHEE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp" )       //banshee

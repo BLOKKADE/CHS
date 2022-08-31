@@ -135,7 +135,8 @@ scope ModifyDamageAfterArmor initializer init
         if DamageSourceTypeId == GHOUL_UNIT_ID and Damage.index.isAttack then
             //call BJDebugMsg(GetUnitName(DamageSource) + " Damage.index.isAttack " + GetUnitName(DamageTarget) + ": " + I2S(DamageTargetId))
             set i = GetHeroLevel(DamageSource)
-            set r2 = BlzGetUnitMaxHP(DamageTarget) * (0.025 + (0.00025 * i))
+            //set r2 = BlzGetUnitMaxHP(DamageTarget) * (0.025 + (0.00025 * i))
+            set r2 = (GetWidgetLife(DamageTarget)/ 100) * (2.5 + (0.025 * i))
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
             set Damage.index.amount = Damage.index.amount + r2 
