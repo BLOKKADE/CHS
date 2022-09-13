@@ -6,7 +6,7 @@ library DisableSpells
 
     function DisableEconomicSpells takes integer playerNumber returns nothing
         local integer max = EconomicSpellIndex.integer[0]
-        local integer i = 0
+        local integer i = 1
 
         loop
             call DisableSpell(playerNumber, EconomicSpellIndex.integer[i])
