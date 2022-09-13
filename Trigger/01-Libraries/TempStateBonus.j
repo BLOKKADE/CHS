@@ -25,7 +25,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         constant integer BONUS_HEALTHREGEN              = 18
         constant integer BONUS_MANAREGEN                = 19
         constant integer BONUS_ATTACKSPEED              = 20
-        constant integer BONUS_NEGATIVEHPREGEN          = 21 hello
+        constant integer BONUS_NEGATIVEHPREGEN          = 21
         */
         HashTable TempBonusTable
     endglobals
