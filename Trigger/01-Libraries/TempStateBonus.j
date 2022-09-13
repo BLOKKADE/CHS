@@ -56,7 +56,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         endmethod  
 
         private method updateState takes nothing returns nothing
-            if state < 11 then
+            if state < 11 or state == 21 then
                 call SaveReal(HT_unitstate, this.sourceId, this.state, LoadReal(HT_unitstate, this.sourceId, this.state) + this.bonus)
             else
                 if state < 18 then
