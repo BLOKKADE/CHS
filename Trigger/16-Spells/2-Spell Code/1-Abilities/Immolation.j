@@ -42,13 +42,13 @@ library Immolation initializer init requires ToggleAbility
                 //call BJDebugMsg("dmg")
                 call GroupClear(ENUM_GROUP)
                 call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(this.source), GetUnitY(this.source), 245 + (5 * this.level), Player(pid), false, Target_Enemy)
-                call SetUnitState(this.source, UNIT_STATE_MANA, GetUnitState(this.source, UNIT_STATE_MANA) - (manaCost / 3))
+                call SetUnitState(this.source, UNIT_STATE_MANA, GetUnitState(this.source, UNIT_STATE_MANA) - (manaCost))
                 loop
                     set p = FirstOfGroup(ENUM_GROUP)
                     exitwhen p == null
                     set udg_NextDamageAbilitySource = IMMOLATION_ABILITY_ID
                     call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\NightElf\\Immolation\\ImmolationDamage.mdl", p, "head"))
-                    call Damage.applyMagic(this.source, p, GetSpellValue(45, 7, this.level), DAMAGE_TYPE_MAGIC)
+                    call Damage.applyMagic(this.source, p, GetSpellValue(40, 13, this.level), DAMAGE_TYPE_MAGIC)
                     call GroupRemoveUnit(ENUM_GROUP, p)
                 endloop
             endif
@@ -57,7 +57,7 @@ library Immolation initializer init requires ToggleAbility
 
         private method periodic takes nothing returns nothing
             if T32_Tick > this.tick and (not HasPlayerFinishedLevel(this.source, Player(pid))) then
-                set this.tick = T32_Tick + 11
+                set this.tick = T32_Tick + 32
                 call this.damage()
             endif
         endmethod 

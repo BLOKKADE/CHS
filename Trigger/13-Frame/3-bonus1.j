@@ -53,7 +53,7 @@ library HeroData initializer init
         call SaveStr(HT_data,TAUREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Spirit Mage: +0.0025 Rune Power per active spell. +0.05% damage per [Element]")
         
         call SaveStr(HT_data,MYSTIC_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )       // Mystic
-        call SaveStr(HT_data,MYSTIC_UNIT_ID,2, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons a Faerie Dragon to aid it in battle. The Faerie Dragon revives infinitely with an 8 second respawn time.")
+        call SaveStr(HT_data,MYSTIC_UNIT_ID,2, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons a Faerie Dragon to aid it in battle. The Faerie Dragon can be targeted but can not be damaged.")
         call SaveStr(HT_data,MYSTIC_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: Bonus attack speed. (|cff68eef3Every 3 levels|r) increases Faerie Dragon damage." )
             
         call SaveStr(HT_data,PIT_LORD_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )       // Pit Lord
@@ -156,7 +156,7 @@ library HeroData initializer init
         call SaveStr(HT_data,OGRE_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )       //Xesil
-        call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|cffc0c0c0half the chance for [|cff80ff80Luck|r]")
+        call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,2, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|cffc0c0c0Reset chance can not go over 90%.")
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
 
         call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )       //OGRE MAGE

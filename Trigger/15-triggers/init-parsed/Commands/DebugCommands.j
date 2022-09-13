@@ -228,7 +228,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
           set u = PlayerHeroes[pid + 1]
           if GetPlayerController(Player(pid)) == MAP_CONTROL_COMPUTER and u != null then
             call SetHeroLevel(u, GetHeroLevel(u) + 200, true)
-            /*call UnitAddAbility(u, ARCANE_ASSAUL_ABILITY_ID)
+            call UnitAddAbility(u, ARCANE_ASSAUL_ABILITY_ID)
             call UnitAddAbility(u, LAST_BREATHS_ABILITY_ID)
             call UnitAddAbility(u, TRUESHOT_AURA_ABILITY_ID)
             call UnitAddAbility(u, ICE_ARMOR_ABILITY_ID)
@@ -236,8 +236,9 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call UnitAddAbility(u, FAST_MAGIC_ABILITY_ID)
             call UnitAddAbility(u, UNHOLY_AURA_ABILITY_ID)
             call UnitAddAbility(u, DIVINE_BUBBLE_ABILITY_ID)
+            call UnitAddAbility(u, CORROSIVE_SKIN_ABILITY_ID)
 
-
+            call SetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID, 30)
             call SetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID, 30)
             call SetUnitAbilityLevel(u, DIVINE_BUBBLE_ABILITY_ID, 30)
             call SetUnitAbilityLevel(u, ARCANE_ASSAUL_ABILITY_ID, 30)
@@ -246,7 +247,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call SetUnitAbilityLevel(u, ICE_ARMOR_ABILITY_ID, 30)
             call SetUnitAbilityLevel(u, DIVINE_GIFT_ABILITY_ID, 30)
             call SetUnitAbilityLevel(u, FAST_MAGIC_ABILITY_ID, 30)
-            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (100000 ))*/
+            //call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (100000 ))
             //call UnitAddAbility(u, ABSOLUTE_POISON_ABILITY_ID)
             //call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
             //call UnitAddAbility(u, ANCIENT_ELEMENT_ABILITY_ID)
@@ -255,9 +256,9 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             //call SetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID, 30)
             //call UnitAddItem(u,CreateItem('I0B8',0,0))
             //call UnitAddItem(u,CreateItem('i0bu',0,0))
-            call SetHeroInt(u, GetHeroInt(u, false) + 1000, true)
-            call SetHeroStr(u, GetHeroStr(u, false) + 1000, true)
-            call SetHeroAgi(u, GetHeroAgi(u, false) + 1000, true)
+            call SetHeroInt(u, GetHeroInt(u, false) + 10000, true)
+            call SetHeroStr(u, GetHeroStr(u, false) + 10000, true)
+            call SetHeroAgi(u, GetHeroAgi(u, false) + 10000, true)
             set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
                     call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 50)
             endif

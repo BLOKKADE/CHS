@@ -93,6 +93,13 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (1500 * I2R(i - prevCount) ))
 			call SaveInteger(HTi, hid, itemId,i)
 
+			//Staff of the archmage of water
+		elseif itemId == 'I08Y' then
+			set i = UnitHasItemI(u ,itemId )
+			set prevCount = LoadInteger(HTi, hid, itemId) 
+			call AddUnitBonusReal(u, BONUS_MANA_REGEN, (500 * I2R(i - prevCount) ))
+			call SaveInteger(HTi, hid, itemId,i)	
+
 			//Sword of Bloodthirst
 		elseif itemId == SWORD_OF_BLOODTHRIST_ITEM_ID then
 			set i = UnitHasItemI(u, itemId)

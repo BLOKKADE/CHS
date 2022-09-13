@@ -102,7 +102,7 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr(BLADE_MASTER_UNIT_ID, 2, "|cff4daed4Attacks required|r: ,0,")
 
         call SetBonusStr(ORC_CHAMPION_UNIT_ID, 0, "|cffe7544aArmor bonus|r: ,0,")
-        call SetBonusStr(ORC_CHAMPION_UNIT_ID, 1, "|cffd6e049hit point regeneration bonus|r: ,0,")
+        call SetBonusStr(ORC_CHAMPION_UNIT_ID, 1, "|cffd6e049Hit point regeneration bonus|r: ,0,")
         call SetBonusStr(ORC_CHAMPION_UNIT_ID, 2, "|cff4daed4Strength damage bonus|r: ,0,%%")
 
         call SetBonusStr(TROLL_HEADHUNTER_UNIT_ID, 0, "|cffe7544aRegeneration bonus|r: ,0,%%")

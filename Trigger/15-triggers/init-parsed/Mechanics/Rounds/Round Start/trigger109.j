@@ -132,8 +132,8 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call ForForce(GetPlayersAll(),function Trig_Start_Level_Func011A)
 
         if(Trig_Start_Level_Func013C())then
-            set udg_integer59 =((125 * RoundNumber)/ RoundCreepNumber)
-            set udg_integer61 =((125 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
+            set udg_integer59 =((200 * RoundNumber)/ RoundCreepNumber)
+            set udg_integer61 =((200 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
         else
             set udg_integer59 =((80 * RoundNumber)/ RoundCreepNumber)
             set udg_integer61 =((80 * RoundNumber)-(udg_integer59 * RoundCreepNumber))

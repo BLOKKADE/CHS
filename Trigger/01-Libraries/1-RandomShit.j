@@ -570,18 +570,16 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endif
 
         //Xesil's Legacy
-        if IsSpellResettable(id) and ((GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * (1 + ((luck - 1)/2)) ) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= xesilChance * luck)) then
+        if IsSpellResettable(id) and ((GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= RMinBJ(xesilChance * luck, 90))) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
         
         //Staff of Water
-        if UnitHasItemS(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) then
-            if GetRandomReal(0,100) <= 40 * luck then
-                set ResCD = 0.001
-            endif
+        if UnitHasItemS(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0,100) <= RMinBJ(40 * luck, 90 ) then
+            set ResCD = 0.001
         endif
-        
+
         //Fan
         if UnitHasItemS(u,'I08Z') and IsObjectElement(id,Element_Wind) then
             set ResCD = ResCD * 0.65

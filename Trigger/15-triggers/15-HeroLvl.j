@@ -164,7 +164,7 @@ library heroLevel initializer init requires HeroLvlTable
             endloop
 
         elseif uid == BLOOD_MAGE_UNIT_ID then  
-            call SetBonus(u, 0, (levelsGained * 7))
+            call UpdateBonus(u, 0, (levelsGained * 7))
             call SetHeroInt(u,GetHeroInt(u,false)+ (7 * levelsGained),false) 
             //call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (levelsGained * 250))
             

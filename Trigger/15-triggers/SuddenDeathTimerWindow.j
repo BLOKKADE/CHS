@@ -31,11 +31,13 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
         call TimerDialogSetTitle(SuddenDeathDialog, "Creep enrage level " + I2S(level))
         if level == 2 then
             call PlayerText("|cffffee00Sudden Death Level 1|r: Midas Touch disabled")
-            set duration = 30
+            set duration = 15
         elseif level == 3 then
             call PlayerText("|cffff9900Sudden Death Level 2|r: Creeps get Critical Strike and max movespeed")
+            set duration = 15
         elseif level == 4 then
             call PlayerText("|cffff6600Sudden Death Level 3|r: Creeps get attack damage bonus")
+            set duration = 15
         elseif level == 5 then
             call PlayerText("|cffff0000Sudden Death Level 4|r: 20% current hit point drain every 0.25 seconds.")
             return
