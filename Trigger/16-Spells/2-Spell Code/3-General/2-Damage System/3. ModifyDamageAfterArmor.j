@@ -198,6 +198,17 @@ scope ModifyDamageAfterArmor initializer init
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", DamageTarget, "chest"))
         endif
 
+        //Devastating Blow
+        if GetUnitAbilityLevel(DamageSourceHero,    DEVASTATING_BLOW_ABILITY_ID) > 0 and (BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 or CheckTimerZero(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID)) then
+            if ZetoTimerStart(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID) then
+                call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,5)
+            endif
+            set r1 = BlzGetUnitMaxHP(DamageTarget)
+            set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.08)
+            call Damage.applyMagic(DamageTarget, DamageSource, r2, DAMAGE_TYPE_MAGIC)
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
+        endif
+        
         //Frostmourne
         if GetUnitAbilityLevel(DamageSourceHero ,'A02C') >= 1 then
             set r2 = (Damage.index.amount / 4)	

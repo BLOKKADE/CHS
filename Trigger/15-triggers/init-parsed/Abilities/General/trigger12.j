@@ -1,6 +1,6 @@
 library trigger12 initializer init requires RandomShit
 
-    function Trig_Devastating_Blow_Ennhance_Actions takes nothing returns nothing
+    /*function Trig_Devastating_Blow_Ennhance_Actions takes nothing returns nothing
         set udg_integer53 = 1
         loop
             exitwhen udg_integer53 > 8
@@ -25,5 +25,5 @@ library trigger12 initializer init requires RandomShit
         call TriggerAddAction(udg_trigger12,function Trig_Devastating_Blow_Ennhance_Actions)
     endfunction
 
-
+*/
 endlibrary
