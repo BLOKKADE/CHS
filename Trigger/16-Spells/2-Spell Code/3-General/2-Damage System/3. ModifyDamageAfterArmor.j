@@ -205,7 +205,7 @@ scope ModifyDamageAfterArmor initializer init
             endif
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.08)
-            call Damage.applyMagic(DamageTarget, DamageSource, r2, DAMAGE_TYPE_MAGIC)
+            call Damage.applyMagic(DamageSource, DamageTarget, r2, DAMAGE_TYPE_MAGIC)
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
         endif
         
