@@ -181,28 +181,22 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Heavy Blow
-        if GetUnitAbilityLevel(DamageSource  ,HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and (BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 or CheckTimerZero(DamageSourceHero,HEAVY_BLOW_ABILITY_ID)) then
-            if ZetoTimerStart(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) then
-                call AbilStartCD(DamageSource,HEAVY_BLOW_ABILITY_ID,0.3)
-            endif
+        if GetUnitAbilityLevel(DamageSource, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
+            call AbilStartCD(DamageSource,HEAVY_BLOW_ABILITY_ID,0.3)
             set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSource  ,HEAVY_BLOW_ABILITY_ID)
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Orc\\Devour\\DevourEffectArt.mdl", DamageTarget, "chest"))
         endif
         
         //Combustion
-        if GetUnitAbilityLevel(DamageSourceHero   ,COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and (BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 or CheckTimerZero(DamageSourceHero,COMBUSTION_ABILITY_ID)) then
-            if ZetoTimerStart(DamageSourceHero,COMBUSTION_ABILITY_ID) then
-                call AbilStartCD(DamageSourceHero,COMBUSTION_ABILITY_ID,0.3)
-            endif
+        if GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 then
+            call AbilStartCD(DamageSourceHero,COMBUSTION_ABILITY_ID,0.3)
             set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero   ,COMBUSTION_ABILITY_ID)
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", DamageTarget, "chest"))
         endif
 
         //Devastating Blow
-        if GetUnitAbilityLevel(DamageSourceHero,    DEVASTATING_BLOW_ABILITY_ID) > 0 and (BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 or CheckTimerZero(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID)) then
-            if ZetoTimerStart(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID) then
-                call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,5)
-            endif
+        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 then
+            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,5)
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.08)
             call Damage.applyMagic(DamageSource, DamageTarget, r2, DAMAGE_TYPE_MAGIC)
