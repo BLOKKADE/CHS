@@ -1,4 +1,4 @@
-library trigger13 initializer init requires RandomShit
+/*library trigger13 initializer init requires RandomShit
 
     function Trig_Devastating_Blow_Add_Conditions takes nothing returns boolean
         if(not(IsUnitInGroup(GetTriggerUnit(),udg_group06)!=true))then
@@ -22,4 +22,4 @@ library trigger13 initializer init requires RandomShit
     endfunction
 
 
-endlibrary
+endlibrary*/

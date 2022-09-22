@@ -1,6 +1,6 @@
-library trigger11 initializer init requires RandomShit
+/*library trigger11 initializer init requires RandomShit
 
-    /*function Trig_Devastating_Blow_Conditions takes nothing returns boolean
+    function Trig_Devastating_Blow_Conditions takes nothing returns boolean
         if(not(GetUnitAbilityLevelSwapped('A050',GetEventDamageSource())> 0))then
             return false
         endif
@@ -50,6 +50,6 @@ library trigger11 initializer init requires RandomShit
         call TriggerAddCondition(udg_trigger11,Condition(function Trig_Devastating_Blow_Conditions))
         call TriggerAddAction(udg_trigger11,function Trig_Devastating_Blow_Actions)
     endfunction
-*/
 
-endlibrary
+
+endlibrary*/
