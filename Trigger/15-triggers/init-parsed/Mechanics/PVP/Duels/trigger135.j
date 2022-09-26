@@ -292,6 +292,8 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
             call PlaySoundBJ(udg_sound07)
             call ConditionalTriggerExecute(udg_trigger138)
             call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + (I2S(udg_integer15) + " gold|r")))
+            call DisplayTimedTextToForce(GetPlayersAll(),10.00,"|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
+
             call ConditionalTriggerExecute(udg_trigger136)
         else
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())

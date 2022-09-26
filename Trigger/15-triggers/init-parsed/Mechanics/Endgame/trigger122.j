@@ -157,6 +157,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
                 call ps.addBRWin()
 
                 call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+(" has |cffc2154f" + I2S(ps.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(ps.getAllBRWins()) + "|r all time for this game mode"))))
+                call DisplayTimedTextToForce(GetPlayersAll(),30,"|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
             endif
 
         endif
