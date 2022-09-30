@@ -9,8 +9,8 @@ library BattleRoar requires RuneInit
         loop
             set p = FirstOfGroup(ENUM_GROUP)
             exitwhen p == null
-            call UniqueTempBonus(p, BONUS_DAMAGE, GetSpellValue(50, 20, lvl), 10, BATTLE_ROAR_ABILITY_ID, BATTLE_ROAR_BUFF_ID)
-            call UniqueTempBonus(p, BONUS_ARMOR, GetSpellValue(5, 1, lvl), 10, BATTLE_ROAR_ABILITY_ID, BATTLE_ROAR_BUFF_ID)
+            call UniqueTempBonus(p, BONUS_DAMAGE, GetSpellValue(50, 20, lvl) * (1 + I2R(GetHeroLevel(caster))/100), 10, BATTLE_ROAR_ABILITY_ID, BATTLE_ROAR_BUFF_ID)
+            call UniqueTempBonus(p, BONUS_ARMOR, GetSpellValue(5, 1, lvl)* (1 + I2R(GetHeroLevel(caster))/100), 10, BATTLE_ROAR_ABILITY_ID, BATTLE_ROAR_BUFF_ID)
 
             call GroupRemoveUnit(ENUM_GROUP, p)
         endloop
