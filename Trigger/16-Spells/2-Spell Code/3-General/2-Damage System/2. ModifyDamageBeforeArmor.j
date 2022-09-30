@@ -438,9 +438,11 @@ scope ModifyDamageBeforeArmor initializer init
                 set r1 = r1 * 0.5
             endif
             call AddUnitBlock(DamageTarget, r1)
+            call AddUnitBlock(DamageSource, r1/2)
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
             if IsHeroUnitId(DamageTargetTypeId) then
                 call SaveReal(HT, DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID,  LoadReal(HT,DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID)  + r1)
+                call SaveReal(HT, DamageSourceId, DESTRUCTION_BLOCK_ABILITY_ID,  LoadReal(HT,DamageSourceId, DESTRUCTION_BLOCK_ABILITY_ID)  + r1/2)
                 call AbilStartCD(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID, 12) 
             endif
         endif
@@ -659,12 +661,12 @@ scope ModifyDamageBeforeArmor initializer init
             if DamageIsSuddenDeath then
                 set blockDamage = blockDamage / 2
             endif
-
+            /*
             //Destruction block curse
             if GetUnitAbilityLevel(DamageTarget, DESTRUCTION_BLOCK_ABILITY_ID) > 0 then
                 set blockDamage = blockDamage / 2
             endif
-
+            */
             //Sword of Bloodthirst
             if UnitHasItemS(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) then
                 set blockDamage = blockDamage * 0.7
