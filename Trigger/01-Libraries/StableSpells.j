@@ -35,5 +35,6 @@ library StableSpells initializer init
         set StableSpells.boolean[DARK_SEAL_ABILITY_ID] = true
         set StableSpells.boolean['A085'] = true
         set StableSpells.boolean['A049'] = true
+        set StableSpells.boolean[DEVASTATING_BLOW_ABILITY_ID] = true
     endfunction
 endlibrary
