@@ -6,7 +6,7 @@ library ShadowStep initializer init requires RandomShit, CustomEvent
         local real dist = 0
         local integer lvl = GetUnitAbilityLevel(u1, SHADOW_STEP_ABILITY_ID)
 
-        if lvl > 0 then
+        if lvl > 0 and CheckIfCastAllowed(u1) == false then
             set dist =  CalculateDistance(GetUnitX(u1), GetWidgetX(u2), GetUnitY(u1), GetWidgetY(u2))
             if GetWidgetLife(u2) > 0.025 and u2 != null and dist <= 900 and dist >= 125 and (BlzGetUnitAbilityCooldownRemaining(u1, SHADOW_STEP_ABILITY_ID) <= 0 or UnitHasForm(u1, FORM_SHADOW)) then
                 set e1 = AddSpecialEffectTargetFix("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u1, "hand right")
