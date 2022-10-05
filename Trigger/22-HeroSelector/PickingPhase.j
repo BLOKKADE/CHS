@@ -24,6 +24,14 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
         endif
     endfunction
 
+    function DestroyHeroSelector takes nothing returns nothing
+        local timer t = GetExpiredTimer()
+        call HeroSelectorDestroy()
+        call HeroInfoDestroy()
+        call ReleaseTimer(t)
+        set t = null
+    endfunction
+
     function Trig_Picking_Phase_Copy_Actions takes nothing returns nothing
         set Count = ( 25 - GetTriggerExecCount(GetTriggeringTrigger()) )
         call HeroSelectorSetTitleText( GetLocalizedString("DEFAULTTIMERDIALOGTEXT")+": " +I2S( Count))
@@ -37,8 +45,8 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
             // Pick everyone
             call ForForce( GetPlayersAll(), function Trig_Picking_Phase_Copy_Func005Func002A )
             call DisableTrigger( GetTriggeringTrigger() )
-            call HeroSelectorDestroy()
-            call HeroInfoDestroy()
+            call HeroSelectorShow(false)
+            call TimerStart(NewTimer(), 1, false, function DestroyHeroSelector)
         endif
     endfunction
 
