@@ -119,7 +119,8 @@ library HeroLvlTable initializer init requires Table, RandomShit
         call SetBonusStr(SKELETON_BRUTE_UNIT_ID, 1, "|cffd6e049Hit points restored|r: ,0,%%")
         call SetBonusStr(SKELETON_BRUTE_UNIT_ID, 2, "|cff4daed4Explosion damage|r: ,0,")
 
-        call SetBonusStr(SORCERER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
+        call SetBonusStr(SORCERER_UNIT_ID, 0, "|cffd6e049Cooldown|r: ,0,")
+        call SetBonusStr(SORCERER_UNIT_ID, 1, "|cffe7544aSpells Casted|r: ,0,")
 
         call SetBonusStr(URSA_WARRIOR_UNIT_ID, 0, "|cffe7544aAttack damage bonus|r: ,0,")
 

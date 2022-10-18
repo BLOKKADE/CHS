@@ -51,6 +51,7 @@ scope LongPeriodCheck initializer init
 
     function AABfunction takes unit u returns nothing
         local integer i
+        local integer hid = GetHandleId(u)
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
             //Mysterious Talent
             set i = GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID)
@@ -58,7 +59,11 @@ scope LongPeriodCheck initializer init
                 call MysteriousTalentActivate(u)
                 call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - i) 
             endif
-
+            //Sorcerer Passive (uses same spell as thunderwitch for now (A08P), not sure if it matters, easy to change)
+            if GetUnitTypeId(u) == SORCERER_UNIT_ID and GetActiveAbilityCount(u) > 0 and CheckProc(u, 2000) and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') <= 0.001 then
+                call SorcererPassive(u,hid)
+                call AbilStartCD(u, 'A08P', RMaxBJ(15, 130 - I2R(GetHeroLevel(u) / 2)))
+            endif
             //Holy Shield
             if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 then
                 call UseSpellsHolyShield(u)

@@ -217,6 +217,19 @@ library heroLevel initializer init requires HeroLvlTable
 
             call SetBonus(u, 0, heroLevel * 30)
             call SetBonus(u, 1, ThunderBoltTargets[hid] + 1)
+        elseif uid == SORCERER_UNIT_ID then      
+            set i = prevLevel + 1
+            loop
+                if ModuloInteger(i, 35) == 0 then
+                    set SorcererAmount[hid] = SorcererAmount[hid] + 1
+                endif
+    
+                set i = i + 1
+                exitwhen i >= heroLevel + 1
+            endloop
+
+            call SetBonus(u, 0, RMaxBJ(130 - heroLevel * 0.5, 15))
+            call SetBonus(u, 1, SorcererAmount[hid] + 1)
         elseif uid == WOLF_RIDER_UNIT_ID then       
             call SetBonus(u, 1, 10 + heroLevel)
             call SetBonus(u, 2, 6 + (0.01 * heroLevel))

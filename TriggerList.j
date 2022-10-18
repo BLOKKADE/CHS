@@ -72,6 +72,7 @@
 //! import "C:\CHS\CHS\Trigger\11-Heros\PandaSkin.j"
 //! import "C:\CHS\CHS\Trigger\11-Heros\Pyromancer.j"
 //! import "C:\CHS\CHS\Trigger\11-Heros\SkeletonBrute.j"
+//! import "C:\CHS\CHS\Trigger\11-Heros\Sorcerer.j"
 //! import "C:\CHS\CHS\Trigger\11-Heros\SpiritTauren.j"
 //! import "C:\CHS\CHS\Trigger\11-Heros\Thunder Witch.j"
 //! import "C:\CHS\CHS\Trigger\11-Heros\UrsaWarrior.j"
