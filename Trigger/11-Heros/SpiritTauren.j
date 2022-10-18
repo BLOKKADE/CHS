@@ -4,7 +4,7 @@ library SpiritTauren initializer init requires IdLibrary, RandomShit
         Table SpiritTaurenBonus
     endglobals
 
-    private function GetActiveAbilityCount takes unit u returns integer
+    function GetActiveAbilityCount takes unit u returns integer
         local integer i = 0
         local integer abilId = 0
         local integer count = 0
