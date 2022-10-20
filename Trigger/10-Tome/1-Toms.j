@@ -104,6 +104,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         local real gloryBonus = 0
         local boolean maxLevel = GetHeroLevel(u) == 600
         local boolean expTome = false
+        local string max = "|cffff0000You already have 4 Glory Absolute Bonuses|r"
 
         if ((GetItemType(It) == ITEM_TYPE_POWERUP or GetItemType(It) == ITEM_TYPE_CAMPAIGN) and not IsHeroUnitId(GetUnitTypeId(u))) then
             set u = null
@@ -215,7 +216,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                 //glory Absolute Blood count
@@ -229,7 +230,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                                 //glory Absolute Dark count
@@ -243,7 +244,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                                 //glory Absolute cold count
@@ -257,7 +258,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                                 //glory Absolute earth count
@@ -271,7 +272,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                                 //glory fire Arcane count
@@ -285,7 +286,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
 
@@ -300,7 +301,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                                 //glory poison Arcane count
@@ -314,7 +315,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                                 //glory water Arcane count
@@ -328,7 +329,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                                 //glory Absolute wild count
@@ -342,7 +343,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
                                 //glory Absolute wind count
@@ -356,7 +357,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                     if MaxAbsolute[pid] > 3 then   
-                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, "|cffff0000You already have 4 Glory Absolute Bonuses|r")
+                        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2.0, max)
                     endif
                 endif
 
