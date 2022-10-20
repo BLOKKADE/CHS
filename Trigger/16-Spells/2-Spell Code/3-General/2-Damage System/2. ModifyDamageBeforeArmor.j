@@ -505,7 +505,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Naga Siren passive
         if DamageSourceTypeId == NAGA_SIREN_UNIT_ID and Damage.index.isSpell then
-            set Damage.index.damage = Damage.index.damage + (GetAttackDamage(DamageSource) * (0.05 + (0.0005 * GetHeroLevel(DamageSource))))
+            set Damage.index.damage = Damage.index.damage + (GetAttackDamage(DamageSource) * (0.1 + (0.001 * GetHeroLevel(DamageSource))))
         endif
 
         //Grom Hellscream

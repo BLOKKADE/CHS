@@ -29,8 +29,8 @@ library HeroData initializer init
         call SaveStr(HT_data,MORTAR_TEAM_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Mortar Might: +2 physical power bonus." )    
                     
         call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )       // naga
-        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,2, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 5% of her attack damage is added to all spell damage dealt. ")
-        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Water Addiction: +0.05% attack damage added to spell damage. (Every 50 levels) + 1 bonus attack damage per intelligence" )
+        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,2, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. ")
+        call SaveStr(HT_data,NAGA_SIREN_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Water Addiction: +0.1% attack damage added to spell damage. (Every 50 levels) + 1 bonus attack damage per intelligence" )
         
         call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )       // avatar
         call SaveStr(HT_data,AVATAR_SPIRIT_UNIT_ID,2, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power.")

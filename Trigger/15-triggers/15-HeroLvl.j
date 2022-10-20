@@ -172,17 +172,17 @@ library heroLevel initializer init requires HeroLvlTable
             call AddUnitPhysPow(u,levelsGained * 3)
             call SetBonus(u, 0, 3 * heroLevel)
         elseif uid == NAGA_SIREN_UNIT_ID then  
-            call SetBonus(u, 0, 5 + (heroLevel * 0.05))   
             set i = prevLevel + 1
             loop
                 if ModuloInteger(i, 50) == 0 then
                     set NagaSirenBonus[hid] = NagaSirenBonus[hid] + 1
-                    call UpdateBonus(u, 1, 1)
                 endif
 
                 set i = i + 1
                 exitwhen i >= heroLevel + 1
             endloop
+            call SetBonus(u, 0, 10 + (heroLevel * 0.1))   
+            call SetBonus(u, 1, NagaSirenBonus[hid])
         elseif uid == DEMON_HUNTER_UNIT_ID then 
             call SetBonus(u, 0, heroLevel * 20)
         elseif uid == DEADLORD_UNIT_ID then   
@@ -281,8 +281,6 @@ library heroLevel initializer init requires HeroLvlTable
             call SetBonus(u, 0, 1 + (heroLevel * 0.01))   
             call SetBonus(u, 1, 2 + (heroLevel * 0.05))   
             call SetBonus(u, 2, 50 + heroLevel)   
-        elseif uid == SORCERER_UNIT_ID then   
-            call SetBonus(u, 0, heroLevel * 50)   
         elseif uid == URSA_WARRIOR_UNIT_ID then     
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + (10 * levelsGained) ,0)  
             call UpdateBonus(u, 0, 10 * levelsGained)  
