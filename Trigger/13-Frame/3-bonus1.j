@@ -99,7 +99,7 @@ library HeroData initializer init
         call SaveStr(HT_data,SKELETON_BRUTE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Reinforced Bone: +0.01 second invulnerability. +0.05% of maximum hit points restored. +1% of attack damage explosion damage." )
                 
         call SaveStr(HT_data,SORCERER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNJaina.blp" )       // Sorser
-        call SaveStr(HT_data,SORCERER_UNIT_ID,2, "|cff00ffffPassive|r: Mysterious Sorcery: Once every 130 seconds automatically cast 1 of your active spells. |cffc0c0c0Can cast the same spell multiple times. Max 15 seconds cooldown.|r[|cff96ffffStable|r]")
+        call SaveStr(HT_data,SORCERER_UNIT_ID,2, "|cff00ffffPassive|r: Mysterious Sorcery: Once every 130 seconds automatically cast 1 of your active spells. |cffc0c0c0Cannot cast abilities with the|r [|cffffff00plain|r] |cffc0c0c0or |r |n[|cff96ffffStable|r] |cffc0c0c0tag.|r |cffc0c0c0Can cast the same spell multiple times. Max 15 seconds cooldown.|r[|cff96ffffStable|r]")
         call SaveStr(HT_data,SORCERER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Mysterious Sorcery: 0.5 seconds cooldown reduction. (|cff68eef3Every 35 levels|r) +1 target." )
                     
         call SaveStr(HT_data,URSA_WARRIOR_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp" )       // Ursa
@@ -115,7 +115,7 @@ library HeroData initializer init
         call SaveStr(HT_data,WITCH_DOCTOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 25 levels|r) Gets a bonus Absolute slot. (max 10)" ) 
         
         call SaveStr(HT_data,RANGER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )       // sylvane
-        call SaveStr(HT_data,RANGER_UNIT_ID,2, "|cff00ffffPassive|r: Ranger Crit: 11% chance to deal 5% bonus |cffff8080physical damage|r. [|cff80ff80Luck|r][|cff00ffffCrit|r]")
+        call SaveStr(HT_data,RANGER_UNIT_ID,2, "|cff00ffffPassive|r: Ranger Crit: 11% chance to deal 5% bonus damage. [|cff80ff80Luck|r][|cff00ffffCrit|r]")
         call SaveStr(HT_data,RANGER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +5% base damage to all critical hits.")       
         
         call SaveStr(HT_data,DARK_HUNTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNUnbroken.blp" )       // void
