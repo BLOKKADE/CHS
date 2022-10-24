@@ -167,7 +167,7 @@ library HeroData initializer init
         call SaveStr(HT_data,TROLL_BERSERKER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +1% attack cooldown reduction." )
 
         call SaveStr(HT_data,YETI_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )       //Yeti
-        call SaveStr(HT_data,YETI_UNIT_ID,2, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength if it hass less than 50 armor. Gains +10% strength and +10% armor limit from its passive for every [|cff8080ffCold|r] spell it has.")
+        call SaveStr(HT_data,YETI_UNIT_ID,2, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength and immunity to |cffff8080physical|r [|cff00ffffCrit|r] damage if it hass less than 50 armor. Gains +10% strength and +10% armor limit from its passive for every [|cff8080ffCold|r] spell it has.")
         call SaveStr(HT_data,YETI_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus strength, +2 armor limit." )
         
         call SaveStr(HT_data,SATYR_TRICKSTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSatyr.blp" )       //Satyr
@@ -179,6 +179,7 @@ library HeroData initializer init
         call SaveStr(HT_data,MURLOC_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Fish Hook: +1 stat per attack." )
         
         call SaveStr(HT_data,MEDIVH_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )       //Mediv
+        call SaveStr(HT_data,MEDIVH_UNIT_ID,2, "|cff00ffffPassive|r: Maximum Magic: Gives the hero +5 magic power but the hero can't deal [|cff00ffffCrit|r] damage" )  
         call SaveStr(HT_data,MEDIVH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +2 magic power." )
         
         call SaveStr(HT_data,GHOUL_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )       //ghoul

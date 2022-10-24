@@ -94,6 +94,13 @@ library CritDamage requires RandomShit
                 set critDmg = critDmg + Dmg
             endif
 
+            //Yeti
+            set i = GetUnitAbilityLevel(DamageTarget,'A092') 
+            if i > 0 then
+                set critDmg = 0
+            endif    
+            
+
         elseif magicDmgType then
             //Archmage Staff
             if UnitHasItemS(DamageSource,'I086') and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
@@ -117,6 +124,11 @@ library CritDamage requires RandomShit
 
         //Anti-Magic Cape
         if UnitHasItemS(DamageSource,'I092')  then
+            set critDmg = 0
+        endif
+
+        //Medivh
+        if GetUnitTypeId(DamageSource) == MEDIVH_UNIT_ID then
             set critDmg = 0
         endif
         
