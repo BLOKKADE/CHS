@@ -214,6 +214,7 @@
 //! import "C:\CHS\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Death Pact.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Dousing Hex.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Energy Lure.j"
+//! import "C:\CHS\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Eruption.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Extradimensional Cooperation.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\HolyLight.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\2-Spell Code\1-Abilities\Immolation.j"

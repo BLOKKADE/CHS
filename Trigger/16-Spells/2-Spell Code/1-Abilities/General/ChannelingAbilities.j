@@ -13,7 +13,7 @@ library ChannelingAbilities initializer init requires CastSpellOnTarget
         set AssociatedAbil[MONSOON_ABILITY_ID] = MONSOON_DUMMY_ABILITY_ID//Monsoon
         set AssociatedAbil[RAIN_OF_FIRE_ABILITY_ID] = RAIN_OF_FIRE_DUMMY_ABILITY_ID//Rain of Fire
         set AssociatedAbil[STAMPEDE_ABILITY_ID] = STAMPEDE_DUMMY_ABILITY_ID//Stampede
-        set AssociatedAbil[VOLCANO_ABILITY_ID] = VOLCANO_DUMMY_ABILITY_ID//Volcano
+        //set AssociatedAbil[VOLCANO_ABILITY_ID] = VOLCANO_DUMMY_ABILITY_ID//Volcano
         set AssociatedAbil[CLUSTER_ROCKETS_ABILITY_ID] = CLUSTER_ROCKETS_DUMMY_ABILITY_ID//Cluster Rockets
         set AssociatedAbil[ACID_SPRAY_ABILITY_ID] = ACID_SPRAY_DUMMY_ABILITY_ID//Acid Spray
     endfunction

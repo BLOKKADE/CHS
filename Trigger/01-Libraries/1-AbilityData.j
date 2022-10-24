@@ -621,13 +621,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, LIGHTNING_SHIELD_ITEM_ID, false, Target_Any, 1, false, Order_Target, "lightningshield")
         call SetLastObjectElement(Element_Wind, 2)
         call SetLastAbilityNotReplaceable()
-
-        //85 - Volcano 
-        call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
-        call SetLastObjectElement(Element_Fire, 1)
-        call SetLastObjectElement(Element_Earth, 1)
-        //call SaveDummyAbilOrder(VOLCANO_DUMMY_ABILITY_ID, "volcano")
-
+        
         //86 - Ensnare 
         call SaveAbilData(ENSNARE_ABILITY_ID, ENSNARE_ITEM_ID, false, 0, 1, true, Order_Target, "ensnare")
 
@@ -1115,6 +1109,11 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //195 - Arcane Strike
         call SaveAbilData(ARCANE_STRIKE_ABILITY_ID, ARCANE_STRIKE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
+
+         //196 - Eruption
+         call SaveAbilData(ERUPTION_ABILITY_ID, ERUPTION_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
+         call SetLastObjectElement(Element_Fire, 1)
+         call SetLastObjectElement(Element_Earth, 1)
 
     endfunction
 

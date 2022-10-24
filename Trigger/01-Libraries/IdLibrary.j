@@ -423,7 +423,6 @@ library IdLibrary initializer init
         constant integer UNHOLY_FRENZY_ABILITY_ID                       = 'Auhf'
         constant integer UNLIMITED_AGON_ABILITY_ID                      = 'A0AQ'
         constant integer VAMPIRISM_ABILITY_ID                           = 'AUav'
-        constant integer VOLCANO_ABILITY_ID                             = 'ANvc'
         constant integer WAR_DRUMS_ABILITY_ID                           = 'Aakb'
         constant integer WAR_STOMP_ABILITY_ID                           = 'AOws'
         constant integer WHIRLWIND_ABILITY_ID                           = 'A025'
@@ -432,6 +431,7 @@ library IdLibrary initializer init
         constant integer WIZARDBANE_AURA_ABILITY_ID                     = 'A088'
         constant integer MARTIAL_THEFT_ABILITY_ID                       = 'A05S'
         constant integer SUMMON_MAGIC_DMG_ABILITY_ID                    = 'A0CQ'
+        constant integer ERUPTION_ABILITY_ID                            = 'A0DA'
         
         // Dummy Abilities
         constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'
@@ -443,9 +443,9 @@ library IdLibrary initializer init
         constant integer STAMPEDE_DUMMY_ABILITY_ID                      = 'ANst'
         constant integer STARFALL_DUMMY_ABILITY_ID                      = 'AEsf'
         constant integer TRANQUILITY_DUMMY_ABILITY_ID                   = 'AEtq'
-        constant integer VOLCANO_DUMMY_ABILITY_ID                       = 'ANvc'
         constant integer STUN_ABILITY_ID                                = 'A0C2'
         constant integer CARBEE_SPIKED_CARAP_ABILITY_ID                 = 'A0CD'
+        constant integer ERUPTION_IMMUNE_ABILITY_ID                     = 'A0D9'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
@@ -768,7 +768,6 @@ library IdLibrary initializer init
         constant integer VAMPIRISM_ITEM_ID                              = 'I00J'
         constant integer VIGOUR_TOKEN_ITEM_ID                           = 'I0A2'
         constant integer VIGOUR_TOKEN_TOME_ITEM_ID                      = 'I0A4'
-        constant integer VOLCANO_ITEM_ID                                = 'I039'
         constant integer WAR_DRUMS_ITEM_ID                              = 'I002'
         constant integer WAR_STOMP_ITEM_ID                              = 'I00K'
         constant integer WHIRLWIND_ITEM_ID                              = 'I02B'
@@ -780,6 +779,7 @@ library IdLibrary initializer init
         constant integer SCORCHED_SCIMITAR_ITEM_ID                      = 'I0BO'
         constant integer DRUIDIC_FOCUS_ITEM_ID                          = 'I0BW'
         constant integer BANNER_OF_MANY_ITEM_ID                         = 'I0BY'
+        constant integer ERUPTION_ITEM_ID                               = 'I039'
         
         // --- Item IDs ---
 
@@ -870,7 +870,6 @@ library IdLibrary initializer init
         constant integer TORNADO_SLOW_AURA_BUFF_ID                      = 'Basl'
         constant integer UNHOLY_FRENZY_BUFF_ID                          = 'BUhf'
         constant integer VIGOUR_TOKEN_BUFF_ID                           = 'B01P'
-        constant integer VOLCANO_BUFF_ID                                = 'BNvc'
         constant integer WEB_AIR_BUFF_ID                                = 'Bwea'
         constant integer WEB_GROUND_BUFF_ID                             = 'Bweb'
         constant integer WHIRLWIND_BUFF_ID                              = 'B005'
@@ -878,13 +877,13 @@ library IdLibrary initializer init
         constant integer DECAYING_SCYTHE_BUFF_ID                        = 'B02D'
         constant integer DECAYING_SCYTHE_BUFF2_ID                       = 'B02E'
         constant integer DRUIDIC_FOCUS_BUFF_ID                          = 'B02F'
+        constant integer ERUPTION_IMMUNE_BUFF_ID                        = 'B02O'
 
         // --- Buff IDs ---
 
         // --- Groups --- A place for groups that contains IDs from random places
 
         StaticIdGroup ECONOMIC_ABILITIES
-        StaticIdGroup TAUREN_ABILITIES
 
         // --- Groups ---
 
@@ -1099,21 +1098,6 @@ library IdLibrary initializer init
         call ECONOMIC_ABILITIES.add(LEARNABILITY_ABILITY_ID)
         call ECONOMIC_ABILITIES.add(MIDAS_TOUCH_ABILITY_ID)
         call ECONOMIC_ABILITIES.add(PILLAGE_ABILITY_ID)
-
-        // Tauren Abilities
-        set TAUREN_ABILITIES = StaticIdGroup.create()
-        call TAUREN_ABILITIES.add(SPIRIT_LINK_ABILITY_ID)
-        call TAUREN_ABILITIES.add(UNHOLY_FRENZY_ABILITY_ID)
-        call TAUREN_ABILITIES.add(SHOCKWAVE_ABILITY_ID)
-        call TAUREN_ABILITIES.add(ENTAGLING_ROOTS_ABILITY_ID)
-        call TAUREN_ABILITIES.add(LIFE_DRAIN_ABILITY_ID)
-        call TAUREN_ABILITIES.add(IMMOLATION_ABILITY_ID)
-        call TAUREN_ABILITIES.add(STORM_BOLT_ABILITY_ID)
-        call TAUREN_ABILITIES.add(CLUSTER_ROCKETS_ABILITY_ID)
-        call TAUREN_ABILITIES.add(LIGHTNING_SHIELD_ABILITY_ID)
-        call TAUREN_ABILITIES.add(PLAGUE_ABILITY_ID)
-        call TAUREN_ABILITIES.add(VOLCANO_ABILITY_ID)
-        call TAUREN_ABILITIES.add(MIRROR_IMAGE_ABILITY_ID)
 
         set ACTIVE_SPELL_DUMMY_ABILITIES = StaticIdGroup.create()
         call ACTIVE_SPELL_DUMMY_ABILITIES.add(ACTIVE_SPELL_DUMMY_0)

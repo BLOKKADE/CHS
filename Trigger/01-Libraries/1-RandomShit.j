@@ -216,7 +216,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call UnitRemoveAbility(u, SOUL_BURN_BUFF_ID)
         call UnitRemoveAbility(u, ACID_BOMB_BUFF_ID)
         call UnitRemoveAbility(u, INCINERATE_BUFF_ID)
-        call UnitRemoveAbility(u, VOLCANO_BUFF_ID)
         call UnitRemoveAbility(u, STUNNED_CUSTOM_BUFF_ID)
         call UnitRemoveAbility(u, FEAR_AURA_BUFF_ID)
         call UnitRemoveAbility(u, SLOW_AURA_BUFF_ID)

@@ -39,98 +39,98 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
                 set RandomSpellLoc = null
             endif
             return true
-            //Mana Starvation
+        //Mana Starvation
         elseif abilId == MANA_STARVATIO_ABILITY_ID then
             call CastManaStarvation(caster, target, lvl)
             return true
-            //Midas Touch
+        //Midas Touch
         elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false and (not IsUnitType(target, UNIT_TYPE_HERO)) then
             call CastMidasTouch(caster, target, lvl)
             return true
-            //Holy Light
+        //Holy Light
         elseif abilId == HOLY_LIGHT_ABILITY_ID then
             call CastHolyLight(caster, target, lvl)
             return true
-            //Parasite
+        //Parasite
         elseif abilId == PARASITE_ABILITY_ID then
             call CastParasite(caster, target, lvl)
             return true
-            //Lightning Shield
+        //Lightning Shield
         elseif abilId == LIGHTNING_SHIELD_ABILITY_ID then
             call CastLightningShield(caster, target, lvl)
             return true
-            //Plague
+        //Plague
         elseif abilId == PLAGUE_ABILITY_ID then
             call CastPlague(caster, x, y, lvl)
             return true
-            //Dousing Hex
+        //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(caster, target, lvl)
             return true
-            //Inner Fire
+        //Inner Fire
         elseif abilId == INNER_FIRE_ABILITY_ID then
             call CastInnerFire(caster, target, lvl)
             return true
-            //Battle Roar
+        //Battle Roar
         elseif abilId == BATTLE_ROAR_ABILITY_ID then
             call CastBattleRoar(caster, abilId, lvl)
             return true
-            //Cyclone
+        //Cyclone
         elseif abilId == CYCLONE_ABILITY_ID then
             call Cyclone(caster, x, y)
             return true
-            //Ancient Axe
+        //Ancient Axe
         elseif abilId == 'A096' then
             call AncientAxe(caster)
             return true
-            //Ancient Dagger
+        //Ancient Dagger
         elseif abilId == 'A097' then
             call AncientDagger(caster)
             return true
-            //Death Pact
+        //Death Pact
         elseif abilId == DEATH_PACT_ABILITY_ID then
             call CastDeathPact(caster, target, lvl)
             return true
-            //Ancient Staff
+        //Ancient Staff
         elseif abilId == 'A094' then
             call AncientStaff(caster)
             return true
-            //ShadowBlade
+        //ShadowBlade
         elseif abilId == 'A0D2' then
             call ShadowBlade(caster)
-            //Reset Time
+        //Reset Time
         elseif abilId == RESET_TIME_ABILITY_ID then
             call ResetTime(caster)
             return true
-            //Energy Trap
+        //Energy Trap
         elseif abilId == ENERGY_TRAP_ABILITY_ID then
             call CastEnergyTrap(caster, x, y, lvl)
             return true
-            //Spirit Link
+        //Spirit Link
         elseif abilId == SPIRIT_LINK_ABILITY_ID then
             call CastSpiritLink(caster, lvl)
             return true
-            //Blink Strike
+        //Blink Strike
         elseif abilId == BLINK_STRIKE_ABILITY_ID or abilId == 'A06I' then
             call BlinkStrike(caster, lvl)
             return true
-            //Whirlwind
+        //Whirlwind
         elseif abilId == 'A025' then
             call CastWhirlwind(caster, x, y, lvl)
             return true
-            //Extra dimensional cooperation
+        //Extra dimensional cooperation
         elseif abilId == EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
             call ExtradimensionalCooperation(caster, abilId, lvl)
             return true
-            //Frost Bolt
+        //Frost Bolt
         elseif abilId == FROST_BOLT_ABILITY_ID then
             call UsFrostBolt(caster,target,120 * lvl * (1 + 0.25 * R2I(GetUnitElementCount(caster,Element_Dark))), GetUnitElementCount(caster,Element_Cold))
             return true
-            //Sand of time
+        //Sand of time
         elseif abilId == SAND_OF_TIME_ABILITY_ID then
             call SandRefreshAbility(caster,1.75 + 0.25 * lvl)
             return true
-            //Purge dummy
+        //Purge dummy
         elseif abilId == 'A08A' then
             //remove last breath
             if GetUnitAbilityLevel(target, 'A08B') > 0 and IsUnitEnemy(target, GetOwningPlayer(caster)) then
@@ -145,10 +145,14 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             endif
 
             return true
-            //Purge wait
+        //Purge wait
         elseif abilId == PURGE_ABILITY_ID then
             call Purge(caster, target)    
             return true  
+        //Eruption
+        elseif abilId == ERUPTION_ABILITY_ID then
+            call CastEruption(caster, x, y)
+            return true
         endif
 
         return false
