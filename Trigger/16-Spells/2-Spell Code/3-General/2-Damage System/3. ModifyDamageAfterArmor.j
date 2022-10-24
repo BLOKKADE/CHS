@@ -227,13 +227,6 @@ scope ModifyDamageAfterArmor initializer init
             call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Other\\PandarenBrewmasterBlood\\PandarenBrewmasterBlood.mdl", DamageTarget, "chest"))
         endif 
 
-        if vampCount > 0 then
-            if not IsFxOnCooldownSet(DamageSourceId, 0, 1) then
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
-            endif
-            call Vamp(DamageSource, DamageTarget, vampAmount)
-        endif
-
         //Blademaster
         if DamageSourceTypeId == BLADE_MASTER_UNIT_ID and BladestormReady(DamageSource) and Damage.index.isAttack then
             call BladestormDamage(DamageSource, Damage.index.amount , IsMagicDamage())
@@ -513,11 +506,12 @@ scope ModifyDamageAfterArmor initializer init
             call ActivateContractLiving(DamageTarget)
             set Damage.index.amount = 0
         endif
-
-        //Last Breath
-        set i = GetUnitAbilityLevel(DamageTarget, LAST_BREATHS_ABILITY_ID)
-        if i > 0 then
-            call LastBreath(DamageTarget, i)
+        
+        if vampCount > 0 and Damage.index.amount > 0 then
+            if not IsFxOnCooldownSet(DamageSourceId, 0, 1) then
+                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
+            endif
+            call Vamp(DamageSource, DamageTarget, vampAmount)
         endif
 
         //call BJDebugMsg("MOD4.0 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
