@@ -85,8 +85,5 @@ library BuffSystem initializer init requires TimerUtils
 
         set DeBufLvlA[9] = 'A09S'
         set DeBufLvl[9] = WISDOM_CHESTPLATE_BUFF_ID
-
-        set DeBufLvlA[10] = ERUPTION_IMMUNE_ABILITY_ID
-        set DeBufLvl[10] = ERUPTION_IMMUNE_BUFF_ID
     endfunction
 endlibrary
