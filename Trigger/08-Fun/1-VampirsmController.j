@@ -6,7 +6,7 @@ library Vampirism requires RandomShit
         
         //Bloodstone passive
         if UnitHasItemS(target, 'I0AK') then
-            set amount = amount * 0.7
+            set amount = amount * 0.4
         endif
 
         set i1 = GetUnitAbilityLevel(target, DOME_OF_PROTECTION_ABILITY_ID)
@@ -44,7 +44,5 @@ library Vampirism requires RandomShit
         endif
 
         call SetWidgetLife(source,GetWidgetLife(source)+ amount )
-        set source = null
-        set target = null
     endfunction
 endlibrary
