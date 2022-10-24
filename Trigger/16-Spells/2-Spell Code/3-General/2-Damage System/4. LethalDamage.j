@@ -29,6 +29,14 @@ scope LethalDamage initializer init
             call CheckBattleRunestoneCount(DamageSourceHero, GetHandleId(DamageSourceHero))
         endif
 
+        //Last Breath
+        set i = GetUnitAbilityLevel(DamageTarget, LAST_BREATHS_ABILITY_ID)
+        if i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,LAST_BREATHS_ABILITY_ID) == 0 then
+            set udg_LethalDamageHP = 100
+            call AbilStartCD(DamageTarget, LAST_BREATHS_ABILITY_ID, 60)
+            call TempAbil.create(DamageTarget, 'A08B', 0.8 + (0.2 * i))
+        endif
+
         if DamageTargetPid != 11 and DamageTarget == DamageTargetHero then
             call DamageText(true)
         endif

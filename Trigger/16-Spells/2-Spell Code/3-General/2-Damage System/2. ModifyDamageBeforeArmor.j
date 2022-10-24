@@ -18,11 +18,19 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = 0
             return
         endif
+
+        //Last Breath no damage
+        if GetUnitAbilityLevel(DamageTarget, 'A08B') > 0 then
+            set Damage.index.damage = 0
+            return
+        endif
+
         //Faerie Dragon
         if GetUnitTypeId(Damage.target) == 'e001' then
             set Damage.index.damage = 0
             return
         endif
+
         //Conquerors Bamboo Stick
         if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and IsUnitType(DamageSource, UNIT_TYPE_HERO) == false and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
             //call BJDebugMsg("conq bamboo stick immune")

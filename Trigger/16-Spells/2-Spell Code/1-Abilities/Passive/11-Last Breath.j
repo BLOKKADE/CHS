@@ -1,4 +1,4 @@
-function LastBreathEnd takes nothing returns nothing
+/*function LastBreathEnd takes nothing returns nothing
     local timer tim = GetExpiredTimer()
     local unit u = LoadUnitHandle(HT,GetHandleId(tim),1)
     local effect eff = LoadEffectHandle(HT,GetHandleId(tim),2)
@@ -18,26 +18,23 @@ function LastBreath takes unit target, integer level returns nothing
     local timer t
     local real Hp
 
-    if LoadInteger(HT,GetHandleId(target),LAST_BREATHS_ABILITY_ID) == 1 and GetUnitAbilityLevel(target, 'A08B') > 0 then
-        set Hp = GetWidgetLife(target)
-        set Hp = Hp - Damage.index.damage
+    if GetUnitAbilityLevel(target, 'A08B') > 0 then
+        set Hp = GetWidgetLife(target) - Damage.index.damage
+       
         if Hp < 100 then
             set Hp = 100
         endif
+
         call SetWidgetLife(target,Hp)
-        set Damage.index.damage = 0
+        set Damage.index.amount = 0
     elseif GetWidgetLife(target) <= Damage.index.damage and BlzGetUnitAbilityCooldownRemaining(target,LAST_BREATHS_ABILITY_ID) <= 0.501 then
-        set t = NewTimer()
-        set Damage.index.damage = 0
         call SetWidgetLife(target, 100)
         call AbilStartCD(target,LAST_BREATHS_ABILITY_ID, 60 + BlzGetUnitAbilityCooldownRemaining(target,LAST_BREATHS_ABILITY_ID) )  
-        call SaveInteger(HT,GetHandleId(target),LAST_BREATHS_ABILITY_ID,1)	             
-        call SaveUnitHandle(HT,GetHandleId(t),1, target)
-        call SaveEffectHandle(HT,GetHandleId(t),2,AddSpecialEffectTarget("war3mapImported\\Effect_ShieldBuff_Purple.mdx" , target , "overhead" ) ) 
-        call UnitAddAbility(target, 'A08B')
-        call TimerStart(t,0.8 + 0.2 * level,false, function LastBreathEnd)
+        call TempAbil.create(target, 'A08B', 0.8 + 0.2 * level)
+        call TimerStart(t,,false, function LastBreathEnd)
 
         set t = null
     endif
 
 endfunction
+*/
