@@ -1,6 +1,7 @@
 library Multicast requires T32, RandomShit, AbilityChannel
     globals
         private integer MulticastInterval = 8
+        private real MulticastManaCost = 0.5
     endglobals
 
     struct Multicast extends array
@@ -15,6 +16,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
         integer count
         integer interval
         boolean mono
+        real manaCost
         real x
         real y
 
@@ -52,7 +54,9 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 call dummy.point(this.x, this.y)
             endif
 
-            call dummy.activate()
+            if dummy.activate() then
+                call SetUnitState(this.caster, UNIT_STATE_MANA, GetUnitState(this.caster, UNIT_STATE_MANA) - this.manaCost)
+            endif
         endmethod
 
         private method checkSpell takes nothing returns boolean
@@ -65,7 +69,9 @@ library Multicast requires T32, RandomShit, AbilityChannel
             endif
 
             if not AbilityChannel(this.caster, this.target, this.x, this.y, this.abilId, this.abilLevel) then
-                call this.castSpell()
+                if GetUnitState(this.caster, UNIT_STATE_MANA) > this.manaCost then
+                    call this.castSpell()
+                endif
             endif
 
             return true
@@ -100,6 +106,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
             set this.abilLevel = abilLvl
             set this.abilOrder = abilOrder
             set this.orderType = orderType
+            set this.manaCost = BlzGetAbilityManaCost(this.abilId, this.abilLevel - 1) * MulticastManaCost
 
             if IsAbilityMono(abilId) then
                 set this.mono = true

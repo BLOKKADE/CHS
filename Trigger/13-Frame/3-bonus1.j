@@ -160,7 +160,7 @@ library HeroData initializer init
         call SaveStr(HT_data,TIME_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
 
         call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )       //OGRE MAGE
-        call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,2, "|cff00ffffPassive|r: Ogre's Luck: Whenever the Hero casts an ability it has a 15% chance to cast it again. [|cff80ff80Luck|r] ")
+        call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,2, "|cff00ffffPassive|r: Ogre's Luck: Whenever the Hero casts an ability it has a 15% chance to cast it again at 50% mana cost. [|cff80ff80Luck|r] ")
         call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Ogre's Luck: +2% chance." )
 
         call SaveStr(HT_data,TROLL_BERSERKER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp" )       //OGRE MAGE
