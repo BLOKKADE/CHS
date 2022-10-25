@@ -1,6 +1,6 @@
 scope Quests initializer init
     globals
-        string VERSION = "CHS 1.9.30-beta5-fix7"
+        string VERSION = "CHS 1.9.30-beta5-fix8"
     endglobals
 
     function AddQuest takes string title, string description, string icon, boolean required, boolean discovered, boolean completed returns nothing
