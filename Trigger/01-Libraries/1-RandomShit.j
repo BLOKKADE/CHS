@@ -473,6 +473,11 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
             set elementCount = elementCount + 3
         endif
 
+        //Fan
+        if id == Element_Wind and UnitHasItemS(u,'I08Z') then
+            set elementCount = elementCount + 2
+        endif
+
         //Witch Doctor passive
         if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
             set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
@@ -581,11 +586,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         if UnitHasItemS(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0,100) <= RMinBJ(40 * luck, 90 ) then
             set ResCD = 0.001
         endif
-
-        //Fan
-        if UnitHasItemS(u,'I08Z') and IsObjectElement(id,Element_Wind) then
-            set ResCD = ResCD * 0.65
-        endif  
 
         //Dousing Hex
         if GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 then
