@@ -50,7 +50,9 @@ library ConqBambooStick initializer init requires CustomState, Utility
         private method setVulnerable takes unit enemyHero, integer enemyHid returns nothing
             //call BJDebugMsg(GetUnitName(this.source) + " set vul: " + GetUnitName(enemyHero))
             set ConqBambStick[this.hid].boolean[enemyHid] = false
-            set ConqBambStickLightning[this.hid].integer[enemyHid] = Lightning.unitToUnit(this.source, enemyHero, 0., 0., false, 0., "SPLK", 0)
+            if GetLightning(this.hid, enemyHid) == 0 then
+                set ConqBambStickLightning[this.hid].integer[enemyHid] = Lightning.unitToUnit(this.source, enemyHero, 0., 0., false, 0., "SPLK", 0)
+            endif
         endmethod
 
         private method setImmune takes unit enemyHero, integer enemyHid returns nothing
