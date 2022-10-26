@@ -493,7 +493,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Fan of Knives
         if DamageSourceAbility == FAN_OF_KNIVES_ABILITY_ID then
-            set Damage.index.amount = FanOfKnives(DamageSource, DamageTarget, Damage.index.amount, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
+            set Damage.index.amount = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.amount, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
         endif
 
         //Lich

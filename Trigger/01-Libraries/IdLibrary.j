@@ -784,6 +784,7 @@ library IdLibrary initializer init
         // --- Item IDs ---
 
         // --- Buff IDs ---
+        constant integer FAN_OF_KNIVES_BUFF_ID                          = 'A0DB'
         constant integer CONQ_BAMBOO_STICK_BUFF_ID                      = 'B02J'
         constant integer CONTRACT_LIVING_BUFF_ID                        = 'A059'
         constant integer ACID_BOMB_BUFF_ID                              = 'BNab'
