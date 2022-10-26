@@ -17,7 +17,7 @@ library Sorcerer initializer init requires RandomShit, AbilityData, CastSpellOnT
             if IsAbilityCasteable(abilId,false) and IsSpellResettable(abilId) then
                 call CastSpellAuto(caster, null, abilId, GetUnitAbilityLevel(caster, abilId), 0, 0, -1)
                 set i2 = i2 + 1
-                call BJDebugMsg("casted " + GetObjectName(abilId) + " " + I2S(i2))
+                //call BJDebugMsg("casted " + GetObjectName(abilId) + " " + I2S(i2))
             endif
             exitwhen i2 == 1 + SorcererAmount[hid]
         endloop

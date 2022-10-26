@@ -28,7 +28,7 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
                     call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", p, "chest"))
                     call Damage.applyMagic(this.source, p, GetSpellValue(50, 10, this.level), DAMAGE_TYPE_MAGIC)
                     call DummyOrder.create(this.source, GetUnitX(p), GetUnitY(p), GetUnitFacing(p), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 0.5).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 0.5).target(p).activate()
-                    call TempAbil.create(this.source, ERUPTION_IMMUNE_ABILITY_ID, 1)
+                    call TempAbil.create(p, ERUPTION_IMMUNE_ABILITY_ID, 1)
                     call GroupRemoveUnit(ENUM_GROUP, p)
                 endif
                 set i = i + 1
