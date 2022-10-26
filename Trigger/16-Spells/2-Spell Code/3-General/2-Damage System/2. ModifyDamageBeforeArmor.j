@@ -491,6 +491,11 @@ scope ModifyDamageBeforeArmor initializer init
             call TempBonus.create(DamageTarget, BONUS_BLOCK,0 - GetUnitBlock(DamageTarget) * 0.2, 1, 'A047')
         endif
 
+        //Fan of Knives
+        if DamageSourceAbility == FAN_OF_KNIVES_ABILITY_ID then
+            set Damage.index.amount = FanOfKnives(DamageSource, DamageTarget, Damage.index.amount, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
+        endif
+
         //Lich
         /*if GetUnitTypeId(DamageSource) == LICH_UNIT_ID and IsMagicDamage() then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08W') <= 0 then
