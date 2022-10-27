@@ -3,7 +3,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
     
     globals
         //integer array PlayerHotkeys
-        boolean array HoldCtrl
+        boolean array HoldShift
         Table HoldShiftStructTable
         //boolean array HotKeyMode
     endglobals
@@ -22,7 +22,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
         endmethod
 
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or HoldCtrl[this.pid] == false then
+            if T32_Tick > this.endTick or HoldShift[this.pid] == false then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -38,8 +38,8 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
         endmethod
         
         method destroy takes nothing returns nothing
-            if HoldCtrl[this.pid] then
-                set HoldCtrl[this.pid] = false
+            if HoldShift[this.pid] then
+                set HoldShift[this.pid] = false
             endif
             set HoldShiftStructTable[this.pid] = 0
             call this.recycle()
@@ -53,9 +53,9 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
         integer lastTick = 0
     endglobals
 
-    private function CtrlDown takes nothing returns nothing
+    private function ShiftDown takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        set HoldCtrl[pid] = true
+        set HoldShift[pid] = true
         set lastTick = T32_Tick
         if GetHoldShiftStruct(pid) == 0 then
             set HoldShiftStructTable[pid] = HoldShiftStruct.create(pid)
@@ -64,10 +64,10 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
         endif
     endfunction
 
-    private function CtrlRelease takes nothing returns nothing
+    private function ShiftRelease takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        if HoldCtrl[pid] == true then
-            set HoldCtrl[pid] = false
+        if HoldShift[pid] == true then
+            set HoldShift[pid] = false
         endif
     endfunction
 
@@ -124,8 +124,8 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
         set trg3 = null
         set trg4 = null
         set trg5 = null
-        call TriggerAddAction(trg1, function CtrlDown)
-        call TriggerAddAction(trg2, function CtrlRelease)
+        call TriggerAddAction(trg1, function ShiftDown)
+        call TriggerAddAction(trg2, function ShiftRelease)
         set trg1 = null
         set trg2 = null
     endfunction

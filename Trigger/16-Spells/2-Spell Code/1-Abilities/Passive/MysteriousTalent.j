@@ -55,7 +55,7 @@ library MysteriousTalent requires RandomShit, AbilityData, CastSpellOnTarget
 
     function MysteriousTalentCast takes unit caster returns nothing
         local integer pid = GetPlayerId(GetOwningPlayer(caster))
-        local boolean shift = HoldCtrl[pid]
+        local boolean shift = HoldShift[pid]
         local integer hid = GetHandleId(caster)
 
         if shift then

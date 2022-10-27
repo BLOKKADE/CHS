@@ -378,15 +378,10 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
         loop
             set abilId = GetInfoHeroSpell(u, i)
-            set abilIdCurrent = GetAssociatedSpell(u,abilId)
+            set abilIdCurrent = CheckAssociatedSpell(u,abilId)
 
-            if (abilIdCurrent == 0) then
-                set abilIdCurrent = abilId
-            endif
-
-            if (abilIdCurrent != 0) then
-                set total = total + BlzGetUnitAbilityCooldownRemaining(u, abilIdCurrent)
-            endif
+            set total = total + BlzGetUnitAbilityCooldownRemaining(u, abilIdCurrent)
+ 
             set i = i + 1
             exitwhen i > 10
         endloop
@@ -749,11 +744,8 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         
         loop
             exitwhen i1 > 10
-            set id = GetInfoHeroSpell(u ,i1)
-            set dummyAbilId = GetAssociatedSpell(u, id)
-            if dummyAbilId != 0 then
-                set id = dummyAbilId
-            endif
+            set id = CheckAssociatedSpell(u, GetInfoHeroSpell(u ,i1))
+
             call BlzStartUnitAbilityCooldown(u,id, cd + BlzGetUnitAbilityCooldownRemaining(u,id))
 
             set i1 = i1 + 1

@@ -167,9 +167,9 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local real targetX = GetSpellTargetX()
         local real targetY = GetSpellTargetY()
         local integer abilId = GetSpellAbilityId()
-        local integer abilLvl = GetUnitAbilityLevel(caster, abilId)
+        local integer abilLvl
         local location spelLLoc = GetSpellTargetLoc()
-        local integer dummyAbilId = 0
+        local boolean dummyAbilId = GetAssociatedSpell(caster, abilId) != 0
         local integer lvl = 0
         local boolean abilityChanneled = false
         //call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
@@ -177,12 +177,9 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         if not ToggleSpell(caster, abilId) then
             if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
 
-                set dummyAbilId = GetAssociatedSpell(caster, abilId)
-                if dummyAbilId != 0 then
-                    set abilId = dummyAbilId
-                    set abilLvl = GetUnitAbilityLevel(caster, abilId)
+                set abilId = CheckAssociatedSpell(caster, abilId)
+                set abilLvl = GetUnitAbilityLevel(caster, abilId)
                     //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
-                endif
                 
                 //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
                 set abilityChanneled = AbilityChannel(caster,target,targetX,targetY,abilId, abilLvl)
@@ -191,9 +188,9 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     //call BJDebugMsg("caster: " + GetUnitName(caster))
                     call ElementStartAbility(caster, abilId)
 
-                    if (not abilityChanneled) and dummyAbilId != 0 then
+                    if (not abilityChanneled) and dummyAbilId then
                         //call BJDebugMsg("channel")
-                        call CastSpell(caster, target, abilId, abilLvl, GetAbilityOrderType(dummyAbilId), targetX, targetY).activate()
+                        call CastSpell(caster, target, abilId, abilLvl, GetAbilityOrderType(abilId), targetX, targetY).activate()
                     endif
 
                     if GetUnitAbilityLevel(caster, ABSOLUTE_POISON_ABILITY_ID) > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then

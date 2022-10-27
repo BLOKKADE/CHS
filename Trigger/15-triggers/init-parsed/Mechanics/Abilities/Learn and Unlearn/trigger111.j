@@ -1,4 +1,4 @@
-library trigger111 initializer init requires RandomShit, Functions, CustomEvent
+library trigger111 initializer init requires RandomShit, Functions, CustomEvent, AbilityCommand
 
     globals
         unit BuyingUnit = null
@@ -350,6 +350,10 @@ library trigger111 initializer init requires RandomShit, Functions, CustomEvent
 
         call SetupDummySpell(u, abil, i, new)
 
+        if new then
+            call InitializeAbilityCommand(u, abil)
+        endif
+
         call UnitAddAbility(u, abil)
         set e = customEvent.create()
         set e.EventUnit = u
@@ -433,7 +437,7 @@ library trigger111 initializer init requires RandomShit, Functions, CustomEvent
             return
         endif
         set abilLevel = GetUnitAbilityLevel(BuyingUnit, BoughtAbility)
-        if HoldCtrl[GetPlayerId(GetOwningPlayer(BuyingUnit))] /*and not ARLearningAbil*/ then
+        if HoldShift[GetPlayerId(GetOwningPlayer(BuyingUnit))] /*and not ARLearningAbil*/ then
             set maxAbil = true
         endif
 

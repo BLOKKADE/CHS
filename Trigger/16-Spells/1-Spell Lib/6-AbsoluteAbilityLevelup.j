@@ -69,7 +69,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
                 if abilityLevel > 0 then
                 
                     if abilityLevel < 30 then
-                        call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], false)
+                        call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldShift[GetPlayerId(GetOwningPlayer(u))], false)
                     else
                         call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
                         call ResourseRefresh(GetOwningPlayer(u) )
@@ -80,7 +80,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
                     if counter < 10 and counter <= GetHeroMaxAbsoluteAbility(u) then
                         //call BJDebugMsg("aalu add")
                         call SaveInteger(HT,GetHandleId(u),941561,counter + 1 )
-                        call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldCtrl[GetPlayerId(GetOwningPlayer(u))], true)
+                        call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldShift[GetPlayerId(GetOwningPlayer(u))], true)
                         if counter == 0 then
                             call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "You can |cff9dff00find the Absolute ability|r when you hover over the icon on the |cff00e1fftop left of your screen|r below the Info (F9) button.")
                         endif

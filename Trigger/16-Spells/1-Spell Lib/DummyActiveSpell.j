@@ -14,6 +14,15 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
         return UnitDummySpells[GetHandleId(u)].integer[abilId]
     endfunction
 
+    function CheckAssociatedSpell takes unit u, integer abilId returns integer
+        local integer dummyAbilId = UnitDummySpells[GetHandleId(u)].integer[abilId]
+        if dummyAbilId == 0 then
+            return abilId
+        else
+            return dummyAbilId
+        endif
+    endfunction
+
     function GetAvailableDummySpellList takes unit u, integer dummySpellType returns IntegerList
         return HeroAvailableDummySpells[dummySpellType][GetHandleId(u)]
     endfunction

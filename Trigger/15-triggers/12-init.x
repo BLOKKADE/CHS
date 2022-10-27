@@ -8395,7 +8395,7 @@ function Trig_Learn_Ability_Actions takes nothing returns nothing
         return
     endif
     set abilLevel = GetUnitAbilityLevel(GetTriggerUnit(), BoughtAbility)
-    if HoldCtrl[GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] then
+    if HoldShift[GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] then
         set maxAbil = true
     endif
     if(Trig_Learn_Ability_Func008C())then

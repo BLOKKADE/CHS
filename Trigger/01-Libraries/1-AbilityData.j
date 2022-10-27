@@ -1259,6 +1259,30 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveCreepAbilityData(THUNDER_CLAP_CREEP_ABILITY_ID, Target_Enemy, Order_Instant, "thunderclap")
     endfunction
 
+    function InitDummySpellAbilities takes nothing returns nothing
+        call SaveDummyAbilOrder('A0BJ', "charm")
+        call SaveDummyAbilOrder('A0BL', "chemicalrage")
+        call SaveDummyAbilOrder('A0BO', "channel")
+        call SaveDummyAbilOrder('A0BN', "chainlightning")
+        call SaveDummyAbilOrder('A0BM', "carrionswarm")
+        call SaveDummyAbilOrder('A0BG', "cloudoffog")
+        call SaveDummyAbilOrder('A0BH', "controlmagic")
+        call SaveDummyAbilOrder('A0BI', "creepthunderclap")
+        call SaveDummyAbilOrder('A0BP', "corporealform")
+        call SaveDummyAbilOrder('A0BK', "corrosivebreath")
+
+        call SaveDummyAbilOrder('A0BX', "rejuvination")
+        call SaveDummyAbilOrder('A0BV', "root")
+        call SaveDummyAbilOrder('A0BZ', "renew")
+        call SaveDummyAbilOrder('A0BW', "repair")
+        call SaveDummyAbilOrder('A0BY', "recharge")
+        call SaveDummyAbilOrder('A0BQ', "ravenform")
+        call SaveDummyAbilOrder('A0BR', "restoration")
+        call SaveDummyAbilOrder('A0BS', "replenish")
+        call SaveDummyAbilOrder('A0BT', "revenge")
+        call SaveDummyAbilOrder('A0BU', "robogoblin")
+    endfunction
+
     private function init takes nothing returns nothing
         set ChaosData = HashTable.create()
         set ChaosDataEnemy = HashTable.create()
@@ -1271,6 +1295,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call InitCreepAbilities()
         call InitDummyAbilElements()
         call InitHeroElements()
+        call InitDummySpellAbilities()
     endfunction
 endlibrary
 

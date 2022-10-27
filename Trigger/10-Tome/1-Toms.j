@@ -113,7 +113,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 			return
 		endif
 
-        if HoldCtrl[pid] then
+        if HoldShift[pid] then
             set ctrl = true
         endif
 
