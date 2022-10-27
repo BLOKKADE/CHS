@@ -528,7 +528,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		elseif itemId == 'I08Z' then
 			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
-			call AddUnitEvasion(u ,   30 * I2R(i - prevCount)  )
+			call AddUnitEvasion(u ,   15 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
 		     
 		

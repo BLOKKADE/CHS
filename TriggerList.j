@@ -146,6 +146,7 @@
 //! import "C:\CHS\CHS\Trigger\16-Spells\1-Spell Lib\6-AbsoluteAbilityLevelup.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\1-Spell Lib\7-PhoenixProccCheck.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\1-Spell Lib\8-Timer Functions.j"
+//! import "C:\CHS\CHS\Trigger\16-Spells\1-Spell Lib\AbilityCommand.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\1-Spell Lib\BuffLevel.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\1-Spell Lib\CastSpellOnTarget.j"
 //! import "C:\CHS\CHS\Trigger\16-Spells\1-Spell Lib\DelayedBuffRemoval.j"
