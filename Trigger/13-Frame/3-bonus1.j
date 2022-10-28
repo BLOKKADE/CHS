@@ -179,8 +179,8 @@ library HeroData initializer init
         call SaveStr(HT_data,MURLOC_WARRIOR_UNIT_ID,3, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Fish Hook: +1 stat per attack." )
         
         call SaveStr(HT_data,MEDIVH_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )       //Mediv
-        call SaveStr(HT_data,MEDIVH_UNIT_ID,2, "|cff00ffffPassive|r: Maximum Magic: Gives the hero +5 magic power but the hero can't deal [|cff00ffffCrit|r] damage" )  
-        call SaveStr(HT_data,MEDIVH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +2 magic power." )
+        call SaveStr(HT_data,MEDIVH_UNIT_ID,2, "|cff00ffffPassive|r: Maximum Magic: Gives the hero +15 magic power but the hero can't deal [|cff00ffffCrit|r] damage" )  
+        call SaveStr(HT_data,MEDIVH_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +4 magic power." )
         
         call SaveStr(HT_data,GHOUL_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )       //ghoul
         call SaveStr(HT_data,GHOUL_UNIT_ID,2, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's current hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it.")

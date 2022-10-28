@@ -218,7 +218,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Medivh
         if GetUnitTypeId(u) == MEDIVH_UNIT_ID then
-            call AddUnitMagicDmg(u,5)
+            call AddUnitMagicDmg(u,15)
         endif
 
         //Pit Lord
