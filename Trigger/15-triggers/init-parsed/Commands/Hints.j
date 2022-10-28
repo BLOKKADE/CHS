@@ -49,11 +49,12 @@ library Hints initializer init
         set Hints[14]= "|cffe9ec45Thorns/Reflection/Wizardbane|r wave incoming? Look into |cff45ec53magic immunity|r! For example the |cff45c5ecAnti-Magic Flag|r item."
         set Hints[15]= "We have a |cffecb745wiki|r containing lists and descriptions of all |cff45ec53heroes|r, |cffec6645abilities|r and |cff45c5ecitems|r. Go to |cffca45ecchs-wiki.com|r."
         set Hints[16]= "Items |cffca45ecdropped on the ground|r during |cffecb745creep rounds|r will |cff45c5ecautomatically be sold|r for you at the |cff45ec53start of the next round|r."
-        set limit1 = 16
-        set Hints[17]= "You receive gold when you win in Pvp!"
-        set limit2 = 17
-        set Hints[18]= "Players surviving all levels will settle the score in a battle royal."
-        set limit3 = 18
+        set Hints[17]= "Holding |cff45ec53SHIFT|r when using a self-targetable spell such as Rejuvenation and Inner Fire or an AOE spell such as blizzard it will cast on yourself!"
+        set limit1 = 17
+        set Hints[18]= "You receive gold when you win in Pvp!"
+        set limit2 = 18
+        set Hints[19]= "Players surviving all levels will settle the score in a battle royal."
+        set limit3 = 19
         call HintDisableInit()
     endfunction
 endlibrary
