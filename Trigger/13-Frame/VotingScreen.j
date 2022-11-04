@@ -458,14 +458,14 @@ library VotingScreen initializer init requires FrameInit, VotingResults
         call CreateRoundButton("25 rounds", "The game lasts 25 rounds with 5 rounds of PvP and a battle royale at the end. |n|nLasts around 30 minutes on average.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAAbilities|r")
-        call CreateAbilityButton("Pick", "Every player can choose their abilities to learn from any of the ability shops.", true)
+        call CreateAbilityButton("Pick", "Every player can choose their abilities to learn from any of the ability shops.", false)
         call CreateAbilityButton("Random", "Every player can only buy a random ability from either of the Power Up Shops.", false)
-        call CreateAbilityButton("Draft", "You get to choose between 5 spells each time.|nDraft spells refresh each time you buy one.|nEach spell only shows up once per game per player.", false)
+        call CreateAbilityButton("Draft", "You get to choose between 5 spells each time.|nDraft spells refresh each time you buy one.|nEach spell only shows up once per game per player.", true)
 
         call CreateVotingButtonCategory("|cffD26EFAHeroes|r")
-        call CreateHeroButton("Pick", "Every player can choose any hero.", true)
+        call CreateHeroButton("Pick", "Every player can choose any hero.", false)
         call CreateHeroButton("Random", "Every player gets a random hero and 300 bonus starting gold.", false)
-        call CreateHeroButton("Draft", "Every player gets 5 random heroes to choose from.", false)
+        call CreateHeroButton("Draft", "Every player gets 5 random heroes to choose from.", true)
         call CreateHeroButton("Same-Draft", "Every player gets the same 5 random heroes to choose from.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAIncome|r")
