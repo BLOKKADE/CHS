@@ -540,7 +540,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Cold Arrow
         set i1 = GetUnitAbilityLevel(DamageTarget, COLD_ARROWS_STACKING_BUFF_ID)
-        if i1 > 0 and GetRandomInt(1, 100) < 20 then
+        if i1 > 0 and GetRandomInt(1, 100) < 20 * DamageSourceLuck then
             set Damage.index.damage = Damage.index.damage * 2
             call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\FrostArmor\\FrostArmorDamage.mdl", DamageTarget, "chest"))
         endif
