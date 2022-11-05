@@ -200,10 +200,21 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call AddUnitMagicDmg (u,2)
                     
                     
-                    set gloryBonus = gloryBonus + 5
+                    set gloryBonus = gloryBonus + 2
                 else
                     set ctrl = false
-                endif    
+                endif 
+
+                //glory phys power
+            elseif II  == GLORY_PHYS_POWER_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    call AddUnitPhysPow(u,2)
+                    
+                    
+                    set gloryBonus = gloryBonus + 2
+                else
+                    set ctrl = false
+                endif  
 
                 //glory Absolute Arcane count
             elseif II  == GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID then

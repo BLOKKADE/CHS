@@ -56,6 +56,7 @@ library GloryItemCosts initializer init requires Glory
         set GloryItemCosts[GLORY_HIT_POINT_REGENERATION_TOME_ITEM_ID] = 1500
         set GloryItemCosts[GLORY_MAGIC_PROTECTION_TOME_ITEM_ID] = 1500
         set GloryItemCosts[GLORY_MAGIC_POWER_TOME_ITEM_ID] = 1500
+        set GloryItemCosts[GLORY_PHYS_POWER_TOME_ITEM_ID] = 1500
         set GloryItemCosts[GLORY_MANA_REGENERATION_TOME_ITEM_ID] = 1500
         set GloryItemCosts[GLORY_HIT_POINTS_TOME_ITEM_ID] = 100
         set GloryItemCosts[GLORY_MANA_TOME_ITEM_ID] = 100

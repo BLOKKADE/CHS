@@ -1,4 +1,4 @@
-library CritDamage requires RandomShit
+library CritDamage requires RandomShit, Vampirism
 
     function SetCritDamage takes nothing returns nothing
         local boolean magicDmgType = IsMagicDamage()

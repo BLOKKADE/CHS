@@ -6,7 +6,7 @@
 //! import "C:\CHS\CHS\Trigger\01-Libraries\5-PlayerInfo.j"
 //! import "C:\CHS\CHS\Trigger\01-Libraries\Absolutes.j"
 //! import "C:\CHS\CHS\Trigger\01-Libraries\Alloc.j"
-//! import "C:\CHS\CHS\Trigger\01-Libraries\AllowAbilityCheck.j"
+//! import "C:\CHS\CHS\Trigger\01-Libraries\AllowCasting.j"
 //! import "C:\CHS\CHS\Trigger\01-Libraries\BigNum.j"
 //! import "C:\CHS\CHS\Trigger\01-Libraries\Command.j"
 //! import "C:\CHS\CHS\Trigger\01-Libraries\CustomEvent.j"
