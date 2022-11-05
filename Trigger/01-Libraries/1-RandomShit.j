@@ -475,7 +475,11 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
         //Witch Doctor passive
         if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
-            set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
+            if (id == Element_Light or id == Element_Dark) and UnitHasItemS(u, 'I0AM') then
+                set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, Element_Light) + GetWitchDoctorAbsoluteLevel(u, Element_Dark)
+            else
+                set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
+            endif
         endif
 
         //Counts

@@ -17,8 +17,6 @@ library DivineBubble initializer init requires T32, RandomShit
         integer endTick
         boolean enabled
     
-        
-    
         private method periodic takes nothing returns nothing
             call RemoveDebuff(this.source, 1)
             if T32_Tick > this.endTick then

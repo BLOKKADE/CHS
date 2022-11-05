@@ -33,7 +33,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Fishing Rod
-        if (not DamageIsOnHit) and UnitHasItemS(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
+        if (not IsOnHitDamage()) and UnitHasItemS(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
             //call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))
             if DistanceBetweenUnits(DamageSource, DamageTarget) < 1200 and DistanceBetweenUnits(DamageSource, DamageTarget) > 80 then
                 set r1 = (bj_RADTODEG * GetAngleToTarget(DamageSource, DamageTarget)) + 180
@@ -299,33 +299,35 @@ scope ModifyDamageAfterArmor initializer init
             set r2 = 1
         endif
 
-        if (not DamageIsOnHit) and Damage.index.amount > 0 then
+        if IsNotOnHitOrIsDivineBubbleOnHit() and Damage.index.amount > 0 then
             if IsPhysDamage() then
 
-                 //Pulverize
-                set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
-                if i > 0 and GetRandomReal(0, 100) <= 20 * DamageSourceLuck then
-                    call DestroyEffect(AddSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
-                    call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitBlock(DamageSource)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID)
-                endif
+                if not IsOnHitDamage() then
+                    //Pulverize
+                    set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
+                    if i > 0 and GetRandomReal(0, 100) <= 20 * DamageSourceLuck then
+                        call DestroyEffect(AddSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
+                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitBlock(DamageSource)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID)
+                    endif
 
-                //Destruction
-                set i = GetUnitAbilityLevel(DamageSource, DESTRUCTION_ABILITY_ID) 
-                if i > 0 and GetRandomReal(0, 100) <= 15 * DamageSourceLuck then
-                    call DestroyEffect(AddSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
-                    call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID)
-                endif
-                
-                //Bash
-                set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)  
-                if i > 0 and GetRandomReal(0, 100) <= I2R(i) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
-                    call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
-                endif
+                    //Destruction
+                    set i = GetUnitAbilityLevel(DamageSource, DESTRUCTION_ABILITY_ID) 
+                    if i > 0 and GetRandomReal(0, 100) <= 15 * DamageSourceLuck then
+                        call DestroyEffect(AddSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
+                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID)
+                    endif
+                    
+                    //Bash
+                    set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)  
+                    if i > 0 and GetRandomReal(0, 100) <= I2R(i) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+                        call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
+                    endif
 
-                //Volcanic Armor
-                if UnitHasItemS(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
-                    call ActivateVolcanicArmor(DamageSource, DamageTarget)
-                endif    
+                    //Volcanic Armor
+                    if UnitHasItemS(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
+                        call ActivateVolcanicArmor(DamageSource, DamageTarget)
+                    endif    
+                endif
 
                 //Thorns
                 if (GetUnitAbilityLevel(DamageTarget, 'B01C') > 0 and IsUnitType(DamageSource, UNIT_TYPE_MELEE_ATTACKER)) then
@@ -407,7 +409,7 @@ scope ModifyDamageAfterArmor initializer init
 
             //Dark Hunter Bash
             if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
-                //call BJDebugMsg("src: " + GetUnitName(DamageSource) + " doh: " + B2S(DamageIsOnHit) + " dmg: " + R2S(Damage.index.damage))
+                //call BJDebugMsg("src: " + GetUnitName(DamageSource) + " doh: " + I2S(DamageIsOnHit) + " dmg: " + R2S(Damage.index.damage))
                 call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", 50 * GetHeroLevel(DamageSource), ABILITY_RLF_DAMAGE_HTB1 )
             endif
         endif

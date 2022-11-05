@@ -1,4 +1,4 @@
-library FanOfKnives
+library FanOfKnives requires EditAbilityInfo
     function FanOfKnivesDamageBonus takes unit source, unit target, real damage, integer level returns real
         local real bonus = ((level * 0.0035) + 0.045)
         local real prevDamage = BlzGetAbilityRealLevelField(BlzGetUnitAbility(target, FAN_OF_KNIVES_BUFF_ID), ABILITY_RLF_CAST_RANGE, 0)

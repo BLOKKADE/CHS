@@ -60,7 +60,7 @@ scope LongPeriodCheck initializer init
                 call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - i) 
             endif
             //Sorcerer Passive (uses same spell as thunderwitch for now (A08P), not sure if it matters, easy to change)
-            if GetUnitTypeId(u) == SORCERER_UNIT_ID and GetActiveAbilityCount(u) > 0 and CheckProc(u, 2000) and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') <= 0.001 then
+            if GetUnitTypeId(u) == SORCERER_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and GetActiveAbilityCount(u) > 0 and CheckProc(u, 600) then
                 call SorcererPassive(u,hid)
                 call AbilStartCD(u, 'A08P', RMaxBJ(15, 130 - I2R(GetHeroLevel(u) / 2)))
             endif

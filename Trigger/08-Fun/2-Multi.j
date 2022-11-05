@@ -62,7 +62,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
         private method checkSpell takes nothing returns boolean
             if this.orderType == 1 and this.mono then
                 //call BJDebugMsg("new trgt: " + GetUnitName(this.target) + " count: " + I2S(this.count))
-                if not GetNewTarget(GetAbilityRange(this.caster, this.abilId)) then
+                if not GetNewTarget(GetAbilityRealField(this.caster, this.abilId, this.abilLevel, ABILITY_RLF_CAST_RANGE)) then
                     //call BJDebugMsg("end")
                     return false
                 endif
