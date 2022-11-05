@@ -156,7 +156,7 @@ library GetRandomUnit initializer init requires UnitHelpers
             call RUH.checkMagicImmune()
         endif
 
-        //call BJDebugMsg("range: " + R2S(range))
+        //call BJDebugMsg("range: " + R2S(range) + ", tt: " + I2S(targetType) + ", x: " + R2S(x) + ", y: " + R2S(y) + ", player: " + GetPlayerName(p))
         call RUH.EnumUnits(x, y, range, targetType, p)
         return RUH.GetRandomUnit(false)
     endfunction

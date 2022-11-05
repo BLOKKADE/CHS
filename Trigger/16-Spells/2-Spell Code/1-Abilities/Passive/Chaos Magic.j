@@ -5,7 +5,6 @@ library ChaosMagic requires UnitHelpers, AbilityData, CastSpellOnTarget, RandomS
 
     function CastRandomSpell takes unit caster, integer abilCast, unit target, location spellLoc, boolean banInstant, integer chaosLevel returns nothing
         local integer abilId = 0
-        local real range = GetAbilityRange(caster, abilCast)
 
         if banInstant then
             if target != null and IsUnitTargettable(target) then
@@ -17,7 +16,7 @@ library ChaosMagic requires UnitHelpers, AbilityData, CastSpellOnTarget, RandomS
             set abilId = GetRandomChaosAbility(0, Target_Any)
         endif
 
-        if CastSpellAuto(caster, target, abilId, chaosLevel, GetLocationX(spellLoc), GetLocationY(spellLoc), range) then
+        if CastSpellAuto(caster, target, abilId, chaosLevel, GetLocationX(spellLoc), GetLocationY(spellLoc), -1) then
             call CreateTextTagTimerColor(GetObjectName(abilId) + "!?", 1, GetUnitX(caster), GetUnitY(caster), 50, 1, GetRandomInt(100,255), GetRandomInt(100,255),GetRandomInt(100,255))
         endif
             /*if target != null and IsUnitTargettable(target) then

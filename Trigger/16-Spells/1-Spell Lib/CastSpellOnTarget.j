@@ -1,9 +1,5 @@
 library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
 
-    function GetAbilityRange takes unit u, integer abilityId returns real
-        return BlzGetAbilityRealLevelField(BlzGetUnitAbility(u, abilityId), ABILITY_RLF_CAST_RANGE, GetUnitAbilityLevel(u, abilityId) - 1)
-    endfunction
-
     //make sure to .activate() after calling this
     function CastSpell takes unit caster, unit target, integer abilId, integer level, integer orderType, real targetX, real targetY returns DummyOrder
         local integer order = GetAbilityOrder(abilId)
@@ -41,7 +37,7 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
             set targetType = GetAbilityTargetType(abilId)
 
             if range == -1 then
-                set range = GetAbilityRange(caster, abilId)
+                set range = GetAbilityRealField(caster, abilId, abilLevel, ABILITY_RLF_CAST_RANGE)
             elseif range > 600 then
                 set range = 600
             endif
