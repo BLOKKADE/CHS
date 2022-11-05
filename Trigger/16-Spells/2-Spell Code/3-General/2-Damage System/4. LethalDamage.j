@@ -6,6 +6,7 @@ scope LethalDamage initializer init
 
     private function LethalDamage takes nothing returns nothing
         local integer i = 0
+        local boolean negated = false
 
         //Skeleton Battlemaster (Black Arrow)
         set i = GetUnitAbilityLevel(DamageTargetHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
@@ -33,11 +34,12 @@ scope LethalDamage initializer init
         set i = GetUnitAbilityLevel(DamageTarget, LAST_BREATHS_ABILITY_ID)
         if i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,LAST_BREATHS_ABILITY_ID) == 0 then
             set udg_LethalDamageHP = 100
+            set negated = true
             call AbilStartCD(DamageTarget, LAST_BREATHS_ABILITY_ID, 60)
             call TempAbil.create(DamageTarget, 'A08B', 0.8 + (0.2 * i))
         endif
 
-        if DamageTargetPid != 11 and DamageTarget == DamageTargetHero then
+        if DamageTargetPid != 11 and DamageTarget == DamageTargetHero and negated == false then
             call DamageText(true)
         endif
 
