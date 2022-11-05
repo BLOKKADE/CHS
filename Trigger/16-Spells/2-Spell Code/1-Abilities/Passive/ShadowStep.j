@@ -61,7 +61,9 @@ library ShadowStep initializer init requires RandomShit, CustomEvent
         local unit u1 = LoadUnitHandle(HT,GetHandleId(t), 1)
         local unit u2 = LoadUnitHandle(HT,GetHandleId(t), 2)
 
-        call teleport(u1,u2)
+        if CurrentlyFighting[GetPlayerId(GetOwningPlayer(u1))] then
+            call teleport(u1,u2)
+        endif
 
         set t = null
         set u1 = null

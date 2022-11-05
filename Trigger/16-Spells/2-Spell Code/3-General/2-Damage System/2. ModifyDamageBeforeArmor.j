@@ -200,7 +200,6 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 */
 
-
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
         if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 then
             set Damage.index.damage = Damage.index.damage + 50 * i1
@@ -403,10 +402,10 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Pvp Bonus
         if DamageTargetPid != 11 and DamageSourcePid != 11 then
-            set Damage.index.damage = Damage.index.damage+  (Damage.index.damage*(GetUnitPvpBonus(DamageSource)- GetUnitPvpBonus(DamageTarget)  )/ 100)
+            set Damage.index.damage = RMaxBJ(Damage.index.damage+  (Damage.index.damage*(GetUnitPvpBonus(DamageSource)- GetUnitPvpBonus(DamageTarget)  )/ 100), 0)
         endif 
 
-        if Damage.index.damage == 0 then
+        if Damage.index.damage <= 0 then
             return
         endif
 
