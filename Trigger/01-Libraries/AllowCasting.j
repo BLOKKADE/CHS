@@ -1,4 +1,9 @@
-library AllowCastCheck
+library AllowCasting
+
+    globals
+        boolean array CurrentlyFighting
+    endglobals
+
     private function CheckUnitGroup takes unit u returns boolean
         if(not(IsUnitInGroup(u,DuelingHeroGroup)!=true))then
             return false
@@ -43,5 +48,25 @@ library AllowCastCheck
     
     function Trig_Disable_Abilities_Func001C takes unit u returns boolean
         return CheckIfCastAllowed(u)
+    endfunction
+
+    function SetCurrentlyFighting takes player p, boolean b returns nothing
+        set CurrentlyFighting[GetPlayerId(p)] = b
+        //call BJDebugMsg(GetPlayerName(p) + ", currently fighting: " + B2S(b))
+    endfunction
+
+    function SetAllCurrentlyFighting takes boolean b returns nothing
+        local integer i = 0
+        loop
+            set CurrentlyFighting[i] = b
+            //call BJDebugMsg(GetPlayerName(Player(i)) + ", currently fighting: " + B2S(b))
+            set i = i + 1
+            exitwhen i > 8
+        endloop
+    endfunction
+
+    function HasPlayerFinishedLevel takes unit u, player p returns boolean
+        return CurrentlyFighting[GetPlayerId(p)] == false
+        //return (IsPlayerInForce(p,RoundPlayersCompleted) and BrStarted == false and DuelingHeroes[2] != u and DuelingHeroes[1] != u and PvpPrepare = false) or BattleRoyal = true
     endfunction
 endlibrary

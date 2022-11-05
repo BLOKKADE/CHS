@@ -1,4 +1,4 @@
-library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyRecycler, DummyId
+library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyRecycler, DummyId, AllowCasting
  
     //============================================================================
 
@@ -130,7 +130,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
                     call this.destroy()
                 endif
             else
-                if T32_Tick > this.endTick then
+                if T32_Tick > this.endTick or this.stopDummy or HasPlayerFinishedLevel(this.source, Player(this.pid)) then
                     set this.destroyDummy = true
                     set this.endTick = T32_Tick + (5 * 32)
                     call this.resetDummy()

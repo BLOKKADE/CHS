@@ -1,7 +1,5 @@
 library Utility requires NewBonus, FixDeleteUnit
     globals
-        boolean array CurrentlyFighting
-
         integer Stat_Strength = 0
         integer Stat_Agility = 1
         integer Stat_Intelligence = 2
@@ -91,26 +89,6 @@ library Utility requires NewBonus, FixDeleteUnit
         else
             return "false"
         endif
-    endfunction
-
-    function SetCurrentlyFighting takes player p, boolean b returns nothing
-        set CurrentlyFighting[GetPlayerId(p)] = b
-        //call BJDebugMsg(GetPlayerName(p) + ", currently fighting: " + B2S(b))
-    endfunction
-
-    function SetAllCurrentlyFighting takes boolean b returns nothing
-        local integer i = 0
-        loop
-            set CurrentlyFighting[i] = b
-            //call BJDebugMsg(GetPlayerName(Player(i)) + ", currently fighting: " + B2S(b))
-            set i = i + 1
-            exitwhen i > 8
-        endloop
-    endfunction
-
-    function HasPlayerFinishedLevel takes unit u, player p returns boolean
-        return CurrentlyFighting[GetPlayerId(p)] == false
-        //return (IsPlayerInForce(p,RoundPlayersCompleted) and BrStarted == false and DuelingHeroes[2] != u and DuelingHeroes[1] != u and PvpPrepare = false) or BattleRoyal = true
     endfunction
 
     function GetUnitDamage takes unit u, integer weaponIndex returns real
