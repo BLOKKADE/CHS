@@ -228,7 +228,7 @@ library heroLevel initializer init requires HeroLvlTable
                 exitwhen i >= heroLevel + 1
             endloop
 
-            call SetBonus(u, 0, RMaxBJ(130 - heroLevel * 0.5, 15))
+            call SetBonus(u, 0, RMaxBJ(50 - heroLevel * 0.2, 15))
             call SetBonus(u, 1, SorcererAmount[hid] + 1)
         elseif uid == WOLF_RIDER_UNIT_ID then       
             call SetBonus(u, 1, 10 + heroLevel)
