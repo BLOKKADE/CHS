@@ -62,7 +62,7 @@ scope LongPeriodCheck initializer init
             //Sorcerer Passive (uses same spell as thunderwitch for now (A08P), not sure if it matters, easy to change)
             if GetUnitTypeId(u) == SORCERER_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and GetActiveAbilityCount(u) > 0 and CheckProc(u, 600) then
                 call SorcererPassive(u,hid)
-                call AbilStartCD(u, 'A08P', RMaxBJ(15, 130 - I2R(GetHeroLevel(u) / 2)))
+                call AbilStartCD(u, 'A08P', RMaxBJ(15, 50 - I2R(GetHeroLevel(u) / 5)))
             endif
             //Holy Shield
             if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 then
