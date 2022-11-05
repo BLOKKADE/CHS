@@ -150,7 +150,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         if SummonArmor[pid] > 0 then
-            call BlzSetUnitArmor(u, SummonArmor[pid] * 2)
+            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 2))
         endif
 
         if SummonDamage[pid] > 0 then
