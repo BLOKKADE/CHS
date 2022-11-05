@@ -16,9 +16,9 @@ library CritDamage requires RandomShit
         //Ranger passive
         set i = GetUnitAbilityLevel(DamageSource,'A033') //HeroPassive
         if i > 0 then
-            set baseCritAmount = baseCritAmount + 0.05 * I2R(GetHeroLevel(DamageSource))
-            if GetRandomReal(0,100) <= 11 * DamageSourceLuck + baseCritChance then
-                set critDmg = critDmg + Dmg * 0.05
+            set baseCritAmount = baseCritAmount + 0.02 * I2R(GetHeroLevel(DamageSource))
+            if GetRandomReal(0,100) <= 15 * DamageSourceLuck + baseCritChance then
+                set critDmg = critDmg + Dmg * 0.1
             endif
         endif 
 
@@ -26,13 +26,13 @@ library CritDamage requires RandomShit
         if UnitHasItemS(DamageSource,'I082') then
             set baseCritAmount = baseCritAmount + 1.5
             set baseCritChance = baseCritChance + 5
-            set lifesteal = 0.05
+            set lifesteal = 0.15
         endif
 
         //Aura of Vulnerability
         if GetUnitAbilityLevel(DamageTarget ,'B00E') > 0 then
-            if GetRandomReal(0,100) <= 10 * DamageSourceLuck then
-                set critDmg = critDmg + (Dmg * (1.8 + (0.2 * GetUnitAbilityLevel(DamageSourceHero, AURA_OF_VULNERABILITY_ABILITY_ID))))
+            if GetRandomReal(0,100) <= 15 * DamageSourceLuck + baseCritChance then
+                set critDmg = critDmg + (Dmg * (0.5 + (0.05 * GetUnitAbilityLevel(DamageSourceHero, AURA_OF_VULNERABILITY_ABILITY_ID))))
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", DamageTarget, "chest"))
             endif
         endif
@@ -52,6 +52,23 @@ library CritDamage requires RandomShit
         endif
 
         if IsPhysDamage() then
+
+            //Trident of Pain
+            if UnitHasItemS(DamageSource, 'I061')  then
+                if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
+                    if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
+                        call AbilStartCD(DamageSource, 'A08X', 12)
+                        set critDmg = critDmg + Dmg
+                    elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Y') <= 0 then
+                        call AbilStartCD(DamageSource, 'A08Y', 12)
+                        set critDmg = critDmg + Dmg
+                    elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Z') <= 0 then
+                        call AbilStartCD(DamageSource, 'A08Z', 12)
+                        set critDmg = critDmg + Dmg
+                    endif
+                endif
+            endif
+
             //Creep Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,'ACct') //Critical Strike 
             if i > 0 and GetRandomReal(0,100) <= 10 * DamageSourceLuck + baseCritChance then
@@ -67,7 +84,7 @@ library CritDamage requires RandomShit
             //Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,CRITICAL_STRIKE_ABILITY_ID) //Critical Strike 
             if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
-                set critDmg = critDmg + Dmg *(1.7 + 0.3 * I2R(i))
+                set critDmg = critDmg + Dmg *(0.9 + 0.1 * I2R(i))
             endif
             
             //Drunken Master
@@ -78,14 +95,14 @@ library CritDamage requires RandomShit
             
             //Frostmourne
             set i = GetUnitAbilityLevel(DamageSource,'A02C') //Frostmorn
-            if i > 0 and GetRandomReal(0,100) <= 5 * DamageSourceLuck + baseCritChance then
-                set critDmg = critDmg + Dmg * 9
+            if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+                set critDmg = critDmg + Dmg * 2
             endif    
             
             //Battle Axe
             set i = GetUnitAbilityLevel(DamageSource,'A05D')
             if i > 0 and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
-                set critDmg = critDmg + Dmg * 4
+                set critDmg = critDmg + Dmg * 2
             endif   
             
             //Aduxxor Legendary Blade
@@ -104,13 +121,13 @@ library CritDamage requires RandomShit
         elseif magicDmgType then
             //Archmage Staff
             if UnitHasItemS(DamageSource,'I086') and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
-                set critDmg = critDmg + Dmg * 1.5
+                set critDmg = critDmg + Dmg
             endif
             
             //Magic Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,MAGIC_CRITICAL_HIT_ABILITY_ID)
-            if i > 0 and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
-                set critDmg = critDmg + Dmg *(1.5 + 0.1 * I2R(i))
+            if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+                set critDmg = critDmg + Dmg *(0.5 + 0.08 * I2R(i))
             endif
         endif
 
@@ -157,8 +174,8 @@ library CritDamage requires RandomShit
 
             set DamageShowText = true
 
-            if lifesteal > 0 then
-                call SetWidgetLife(DamageSource, GetWidgetLife(DamageSource) + GetEventDamage()* lifesteal )
+            if lifesteal > 0 and critDmg > 0 then
+                call Vamp(DamageSource, DamageTarget, critDmg * lifesteal)
             endif
         endif
     endfunction

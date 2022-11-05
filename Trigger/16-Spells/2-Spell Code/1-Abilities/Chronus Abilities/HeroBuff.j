@@ -35,7 +35,7 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
 
             call ElemFuncStart(this.source, HERO_BUFF_ABILITY_ID)
 
-            set this.bonus1 = R2I(1.5 * abilLevel*(1 + 0.009 * heroLevel))
+            set this.bonus1 = R2I(0.75 * abilLevel*(1 + 0.009 * heroLevel))
             set this.bonus2 = R2I(1.2 * abilLevel*(1 + 0.009 * heroLevel))
             set this.endTick = T32_Tick + R2I(duration * 32)
             set this.startTick = T32_Tick

@@ -20,9 +20,9 @@ library AbsoluteArcane requires CustomState, DivineBubble
             set this.source = source
             set this.target = target
             if IsUnitType(this.target, UNIT_TYPE_HERO) then
-                set this.bonus = 1 * GetUnitElementCount(this.source, Element_Arcane)
+                set this.bonus = 0.5 * GetUnitElementCount(this.source, Element_Arcane)
             else
-                set this.bonus = 0.1 * GetUnitElementCount(this.source, Element_Arcane)
+                set this.bonus = 0.05 * GetUnitElementCount(this.source, Element_Arcane)
             endif
             if GetUnitMagicDmg(this.target) - this.bonus > 0 then
                 call AddUnitMagicDmg(this.source, this.bonus)

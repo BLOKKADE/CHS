@@ -118,8 +118,8 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
          //Wild Defense
         if SummonWildDefense[pid] > 0 then
-            call AddUnitMagicDef(u,10 * SummonWildDefense[pid])
-            call AddUnitEvasion(u,1 * SummonWildDefense[pid])
+            call AddUnitMagicDef(u,3 * SummonWildDefense[pid])
+            call AddUnitEvasion(u,0.5 * SummonWildDefense[pid])
             call AddUnitBlock(u,10 * SummonWildDefense[pid])
             call AddSummonAbility(u, WILD_DEFENSE_ABILITY_ID, SummonWildDefense[pid])
         endif
@@ -145,16 +145,16 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         if SummonHitPoints[pid] > 0 then
-            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
+            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 50)
             call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
         endif
 
         if SummonArmor[pid] > 0 then
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 2))
+            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 1))
         endif
 
         if SummonDamage[pid] > 0 then
-            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
+            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (3 * SummonDamage[pid]), 0)
         endif
 
         //wild Defense

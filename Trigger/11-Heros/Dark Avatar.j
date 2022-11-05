@@ -65,7 +65,7 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable
                 call ResetAvatar(hid, u, 2)
             endif
 
-            set rBonus = (heroLevel * 0.75)
+            set rBonus = (heroLevel * 0.3)
             if rBonus != AvatarMode[hid].real[3] then
                 call AddUnitMagicDmg(u, 0 - AvatarMode[hid].real[3] + rBonus)
                 set AvatarMode[hid].real[3] = rBonus

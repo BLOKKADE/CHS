@@ -8,7 +8,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         boolean array dummyEnabled
         integer array CreatedDummies
         boolean CreepEnrageEnabled = true
-
+        effect TestFx
         boolean DebugMsgMode = false
     endglobals
     //===========================================================================
@@ -198,6 +198,8 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     endfunction
 
     function RandomDebugCommand takes Args args returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+        set TestFx = AddSpecialEffectTarget("war3mapImported\\EnergyShield_Full.mdx", PlayerHeroes[pid + 1], "origin")
         if GetLocalPlayer() == GetTriggerPlayer() then
             set DebugMsgMode = true
         endif

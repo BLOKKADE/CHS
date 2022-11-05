@@ -409,6 +409,11 @@ scope LongPeriodCheck initializer init
                     call ActivateContractLiving(u)
                 endif
 
+                if TestFx != null then
+                    set r1 = GetUnitLifePercent(u) * 2.55
+                    call BlzSetSpecialEffectColor(TestFx, 255, 255, R2I(r1))
+                endif
+
                 //Absolute Fire
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_FIRE_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID)
@@ -419,7 +424,7 @@ scope LongPeriodCheck initializer init
                     else
                         set i1 = R2I(i1 * GetUnitElementCount(u, Element_Fire) * (1+ GetUnitAbsoluteEffective(u, Element_Fire)))
                     endif
-                    call AddUnitMagicDmg(u ,   0.5 * I2R(i1 - i2)  )	
+                    call AddUnitMagicDmg(u, 0.5 * I2R(i1 - i2))	
                     call SaveInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
                 endif
 
