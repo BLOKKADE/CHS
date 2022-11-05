@@ -341,7 +341,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call Hints_DisplayHint(pid)
         endif
 
-        if (RoundNumber == 15 or RoundNumber == 30) then
+        if (RoundNumber == 16 or RoundNumber == 32) then
             set Lives[pid] = Lives[pid] + 1
             call DisplayTextToPlayer(p,0,0,"|cff85ff3eRound|r: " + I2S(RoundNumber) + "|r: |cffecff3e+1 life|r for you being you.")
         endif
