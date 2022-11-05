@@ -39,7 +39,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Extradimensional Cooperation
-        if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not DamageIsOnHit) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
+        if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not IsOnHitDamage()) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
             call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, IsMagicDamage())
         endif
 
@@ -112,7 +112,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Shadow dance - start shadow form
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
-        if i1 > 0 and  BlzGetUnitAbilityCooldownRemaining(DamageSource,SHADOW_DANCE_ABILITY_ID) <= 0 and Damage.index.isAttack and not DamageIsOnHit then
+        if i1 > 0 and  BlzGetUnitAbilityCooldownRemaining(DamageSource,SHADOW_DANCE_ABILITY_ID) <= 0 and Damage.index.isAttack and not IsOnHitDamage() then
             set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
             if distance < 230  then
                 call UnitAddForm(DamageSource, FORM_SHADOW, 2.9 + I2R(i1)/ 10)
@@ -166,11 +166,11 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0 or UnitHasItemS(DamageTarget, 'I095') then
             if IsUnitDivineBubbled(DamageTarget) then
                 call RemoveDebuff(DamageTarget, 1) 
-                set DamageIsOnHit = true
+                set DamageIsOnHit = 2
             endif
 
             if (i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,DIVINE_BUBBLE_ABILITY_ID) <= 0.001) or (i1 == 0 and UnitHasItemS(DamageTarget, 'I095') and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A0AP') == 0) then
-                set DamageIsOnHit = true
+                set DamageIsOnHit = 2
                 call RemoveDebuff(DamageTarget, 1) 
                 if UnitHasItemS(DamageTarget, 'I095') then
                     set i1 = 1
@@ -209,7 +209,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
     
         set i1 = GetUnitAbilityLevel(DamageSource, BACKSTAB_ABILITY_ID)
-        if i1 > 0 and Damage.index.isAttack and not DamageIsOnHit then
+        if i1 > 0 and Damage.index.isAttack and not IsOnHitDamage() then
             set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
             if distance < 220 and  RAbsBJ(GetUnitFacing(DamageTarget) - GetUnitFacing(DamageSource)) < 85 then
                 call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", DamageTarget, "chest"))
@@ -416,7 +416,7 @@ scope ModifyDamageBeforeArmor initializer init
 
 
         //Dark seal
-        if GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DARK_SEAL_ABILITY_ID) <= 0 and IsHeroUnitId(DamageTargetTypeId) and not DamageIsOnHit then
+        if GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DARK_SEAL_ABILITY_ID) <= 0 and IsHeroUnitId(DamageTargetTypeId) and not IsOnHitDamage() then
             set i1 =  2 * GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID)
             set ds = LoadInteger(HT, DamageTargetId, DARK_SEAL_ABILITY_ID)
             if ds == 0 then
@@ -439,7 +439,7 @@ scope ModifyDamageBeforeArmor initializer init
         
 
         //Destroy block
-        if GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID) <= 0 and not DamageIsOnHit then
+        if GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID) <= 0 and not IsOnHitDamage() then
             set r1 =  -10 * GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)
             if (GetUnitBlock(DamageTarget) < 0) then
                 set r1 = r1 * 0.5
@@ -580,7 +580,7 @@ scope ModifyDamageBeforeArmor initializer init
             call PoisonSpellCast(DamageSource, DamageTarget)
         endif
 
-        if IsPhysDamage() and (not DamageIsOnHit) then
+        if IsPhysDamage() and (not IsOnHitDamage()) then
             //Incinerate
             set i1 = GetUnitAbilityLevel(DamageSource,INCINERATE_ABILITY_ID) + GetUnitAbilityLevel(DamageSource, 'A0C8')
             if i1 > 0 then
@@ -624,7 +624,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         // Arcane Strike. Snowww made this the new Absolute Arcane. Reverted it back and changed it a bit without many problems hopefully.
         set i1 = GetUnitAbilityLevel(DamageSource, ARCANE_STRIKE_ABILITY_ID)
-        if i1 > 0 and not DamageIsOnHit then
+        if i1 > 0 and not IsOnHitDamage() then
             set r1 = GetHeroTotalAbilitiesCooldown(DamageSource)
             
             if r1 > 200 then
@@ -729,7 +729,7 @@ scope ModifyDamageBeforeArmor initializer init
             call MartialRetributionStore(DamageTarget, Damage.index.damage * 0.5)
         endif
 
-        if (not DamageIsOnHit) and IsUnitEnemy(DamageTarget, GetOwningPlayer(DamageSource)) then   
+        if (not IsOnHitDamage()) and IsUnitEnemy(DamageTarget, GetOwningPlayer(DamageSource)) then   
 
             //Liquid Fire
             set i1 = GetUnitAbilityLevel(DamageSource,LIQUID_FIRE_ABILITY_ID)

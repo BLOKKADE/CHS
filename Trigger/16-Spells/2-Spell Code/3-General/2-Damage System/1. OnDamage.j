@@ -66,9 +66,9 @@ scope OnDamage initializer init
         set DamageShowText = false
 
         if Damage.index.userType == DamageType_Onhit then
-            set DamageIsOnHit = true
+            set DamageIsOnHit = 1
         else
-            set DamageIsOnHit = false
+            set DamageIsOnHit = 0
         endif
 
         //some abilities like faerie fire start a 0 damage event this negates that

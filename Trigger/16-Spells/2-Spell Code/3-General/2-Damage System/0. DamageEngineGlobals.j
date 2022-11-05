@@ -34,7 +34,7 @@ globals
 
     // Damage types
     boolean DamageIsAttack = false
-    boolean DamageIsOnHit = false
+    integer DamageIsOnHit = 0
     boolean DamageIsTrue = false
     boolean DamageIsCutting = false
 
