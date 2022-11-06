@@ -482,15 +482,17 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif*/
 
-        //Air Force
-        if GetUnitAbilityLevel(DamageSourceHero  ,HERO_FORCE_ABILITY_ID) >= 1 then
-            if GetUnitAbilityLevel(DamageTarget,'Bams') > 0 or GetUnitAbilityLevel(DamageTarget,ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
+        //Hero Force
+        set i1 = GetUnitAbilityLevel(DamageSourceHero, HERO_FORCE_ABILITY_ID)
+        if i1 > 0 then
+            set i2 = GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)
+            if GetUnitAbilityLevel(DamageTarget, 'Bams') > 0 or GetUnitAbilityLevel(DamageTarget, ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
 
-                set Damage.index.damage =   Damage.index.damage  + (I2R(GetUnitAbilityLevel(DamageSourceHero  ,HERO_FORCE_ABILITY_ID))* GetHeroAgi(DamageSourceHero,true))/ 40
+                set Damage.index.damage = Damage.index.damage  + (i1 * i2)/ 40
             else
-                set Damage.index.damage =   Damage.index.damage  + (I2R(GetUnitAbilityLevel(DamageSourceHero  ,HERO_FORCE_ABILITY_ID))* GetHeroAgi(DamageSourceHero,true))/ 20
+                set Damage.index.damage = Damage.index.damage  + (i1 * i2)/ 20
             endif
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
+            call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
         endif
 
         //Naga Siren passive

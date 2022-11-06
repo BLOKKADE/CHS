@@ -681,7 +681,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(THUNDER_FORCE_ABILITY_ID, THUNDER_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
-        //102 - Air Force 
+        //102 - Hero Force 
         call SaveAbilData(HERO_FORCE_ABILITY_ID, HERO_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
