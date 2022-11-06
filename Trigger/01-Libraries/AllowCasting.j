@@ -18,7 +18,7 @@ library AllowCasting
         if((u==udg_unit05))then
             return true
         endif
-        if((RectContainsUnit(udg_rect09,u)==true))then
+        if((RectContainsUnit(RectMidArena,u)==true))then
             return true
         endif
         if(CheckUnitGroup(u))then

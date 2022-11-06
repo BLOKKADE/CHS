@@ -94,7 +94,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func018C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         if(not(ElimModeEnabled==false))then
@@ -219,7 +219,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
 
 
     function Trig_Level_Completed_Func001Func023C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         if(not(ElimModeEnabled==false))then

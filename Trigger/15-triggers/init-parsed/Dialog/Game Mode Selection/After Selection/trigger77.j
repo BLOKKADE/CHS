@@ -246,7 +246,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             set udg_strings02[1]= "Mode: Immortal|r"
         endif
 
-        if(udg_boolean08 == true) then // Is short game
+        if(GameModeShort == true) then // Is short game
             set udg_strings02[1] = udg_strings02[1] + " (25 Levels)|r"
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")

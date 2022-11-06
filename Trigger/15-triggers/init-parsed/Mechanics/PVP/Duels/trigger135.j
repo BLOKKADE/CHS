@@ -17,7 +17,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
 
 
     function Trig_End_PvP_Func019A takes nothing returns nothing
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(udg_rect09),0.20)
+        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(RectMidArena),0.20)
     endfunction
 
 
@@ -81,7 +81,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
 
     function Trig_End_PvP_Func026Func007A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
-        local location arenaLocation = GetRectCenter(udg_rect09)
+        local location arenaLocation = GetRectCenter(RectMidArena)
 
         call SetUnitPositionLoc(GetEnumUnit(),arenaLocation)
 
@@ -103,7 +103,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
 
 
     function Trig_End_PvP_Func026Func016C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true
@@ -127,7 +127,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         local real bonus = 1
         local item tempItem = null
         local PlayerStats ps
-        local location arenaLocation = GetRectCenter(udg_rect09)
+        local location arenaLocation = GetRectCenter(RectMidArena)
 
         if(Trig_End_PvP_Func001C())then
             set udg_unit05 = DuelingHeroes[2]

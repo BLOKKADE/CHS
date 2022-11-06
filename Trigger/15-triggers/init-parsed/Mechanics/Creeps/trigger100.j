@@ -1,7 +1,7 @@
 library trigger100 initializer init requires RandomShit
 
     function Trig_Add_Unit_Power_Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true

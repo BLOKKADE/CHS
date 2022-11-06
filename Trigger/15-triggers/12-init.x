@@ -206,8 +206,8 @@ function InitGlobals3 takes nothing returns nothing
         set udg_integers12[i]= 0
         set i = i + 1
     endloop
-    set udg_boolean08 = false
-    set udg_integer39 = 0
+    set GameModeShort = false
+    set SuddenDeathTick = 0
     set udg_dialog04 = DialogCreate()
     set udg_group05 = CreateGroup()
     set udg_integer40 = 0
@@ -223,7 +223,7 @@ function InitGlobals3 takes nothing returns nothing
     set udg_integer47 = 0
     set udg_force07 = CreateForce()
     set udg_boolean12 = false
-    set udg_integer48 = 0
+    set RoundClearXpBonus = 0
     set RoundCreepChanceSlow = 0
     set RoundCreepChanceBigBadV = 0
     set RoundCreepChanceFaerieFire = 0
@@ -238,9 +238,9 @@ function InitGlobals3 takes nothing returns nothing
     set udg_group06 = CreateGroup()
     set RoundCreepChanceBlink = 0
     set RoundCreepChanceThunderClap = 0
-    set udg_integer56 = 0
+    set BettingPlayerCount = 0
     set udg_group07 = CreateGroup()
-    set udg_group08 = CreateGroup()
+    set GroupEmptyArenaCheck = CreateGroup()
     set udg_real03 = 0
     set i = 0
     loop
@@ -418,8 +418,8 @@ function InitGlobals2 takes nothing returns nothing
         set udg_integers12[i]= 0
         set i = i + 1
     endloop
-    set udg_boolean08 = false
-    set udg_integer39 = 0
+    set GameModeShort = false
+    set SuddenDeathTick = 0
     set udg_dialog04 = DialogCreate()
     set udg_group05 = CreateGroup()
     set udg_integer40 = 0
@@ -435,7 +435,7 @@ function InitGlobals2 takes nothing returns nothing
     set udg_integer47 = 0
     set udg_force07 = CreateForce()
     set udg_boolean12 = false
-    set udg_integer48 = 0
+    set RoundClearXpBonus = 0
     set RoundCreepChanceSlow = 0
     set RoundCreepChanceBigBadV = 0
     set RoundCreepChanceFaerieFire = 0
@@ -450,9 +450,9 @@ function InitGlobals2 takes nothing returns nothing
     set udg_group06 = CreateGroup()
     set RoundCreepChanceBlink = 0
     set RoundCreepChanceThunderClap = 0
-    set udg_integer56 = 0
+    set BettingPlayerCount = 0
     set udg_group07 = CreateGroup()
-    set udg_group08 = CreateGroup()
+    set GroupEmptyArenaCheck = CreateGroup()
     set udg_real03 = 0
     set udg_integer57 = 0
     set udg_integer58 = 0
@@ -752,15 +752,15 @@ endfunction
 
 function CreateRegions2 takes nothing returns nothing
     local weathereffect we
-    set udg_rect01 = Rect(- 4384.0,2400.0,- 2784.0,4000.0)
-    set udg_rect02 = Rect(- 800.0,2400.0,800.0,4000.0)
-    set udg_rect03 = Rect(2784.0,2400.0,4384.0,4000.0)
-    set udg_rect04 = Rect(2784.0,- 1056.0,4384.0,544.0)
-    set udg_rect05 = Rect(2784.0,- 4512.0,4384.0,- 2912.0)
-    set udg_rect06 = Rect(- 800.0,- 4512.0,800.0,- 2912.0)
-    set udg_rect07 = Rect(- 4384.0,- 4512.0,- 2784.0,- 2912.0)
-    set udg_rect08 = Rect(- 4384.0,- 1056.0,- 2784.0,544.0)
-    set udg_rect09 = Rect(- 1696.0,- 1952.0,1696.0,1440.0)
+    set RectP1Arena = Rect(- 4384.0,2400.0,- 2784.0,4000.0)
+    set RectP2Arena = Rect(- 800.0,2400.0,800.0,4000.0)
+    set RectP3Arena = Rect(2784.0,2400.0,4384.0,4000.0)
+    set RectP4Arena = Rect(2784.0,- 1056.0,4384.0,544.0)
+    set RectP5Arena = Rect(2784.0,- 4512.0,4384.0,- 2912.0)
+    set RectP6Arena = Rect(- 800.0,- 4512.0,800.0,- 2912.0)
+    set RectP7Arena = Rect(- 4384.0,- 4512.0,- 2784.0,- 2912.0)
+    set RectP8Arena = Rect(- 4384.0,- 1056.0,- 2784.0,544.0)
+    set RectMidArena = Rect(- 1696.0,- 1952.0,1696.0,1440.0)
 endfunction
 
 function Trig_Antimagic_Shell_Func001001002 takes nothing returns boolean
@@ -1250,7 +1250,7 @@ function Trig_Plague_Func002Func001C takes nothing returns boolean
     if(not Trig_Plague_Func002Func001Func001C())then
         return false
     endif
-    if(not(RectContainsUnit(udg_rect09,GetTriggerUnit())==true))then
+    if(not(RectContainsUnit(RectMidArena,GetTriggerUnit())==true))then
         return false
     endif
     return true
@@ -1263,7 +1263,7 @@ function Trig_Plague_Func002Func002C takes nothing returns boolean
     if(not(ElimPvpStarted==false))then
         return false
     endif
-    if(not(RectContainsUnit(udg_rect09,GetTriggerUnit())!=true))then
+    if(not(RectContainsUnit(RectMidArena,GetTriggerUnit())!=true))then
         return false
     endif
     return true
@@ -1726,7 +1726,7 @@ function Trig_Ward_Location_Func001Func003C takes nothing returns boolean
     if((RectContainsUnit(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())==true))then
         return true
     endif
-    if((RectContainsUnit(udg_rect09,GetTriggerUnit())==true))then
+    if((RectContainsUnit(RectMidArena,GetTriggerUnit())==true))then
         return true
     endif
     return false
@@ -1840,7 +1840,7 @@ function Trig_Disable_Abilities_Func001Func003Func003C takes nothing returns boo
     if((GetTriggerUnit()==udg_unit05))then
         return true
     endif
-    if((RectContainsUnit(udg_rect09,GetTriggerUnit())==true))then
+    if((RectContainsUnit(RectMidArena,GetTriggerUnit())==true))then
         return true
     endif
     if(Trig_Disable_Abilities_Func001Func003Func003Func003C())then
@@ -2090,7 +2090,7 @@ function Trig_Remove_Dummies_Conditions takes nothing returns boolean
     if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then
         return false
     endif
-    if(not(IsUnitInGroup(GetTriggerUnit(),udg_group08)!=true))then
+    if(not(IsUnitInGroup(GetTriggerUnit(),GroupEmptyArenaCheck)!=true))then
         return false
     endif
     return true
@@ -2172,7 +2172,7 @@ endfunction
 function Trig_Battle_Royal_Func017A takes nothing returns nothing
     set udg_unit01 = GetEnumUnit()
     call ConditionalTriggerExecute(udg_trigger82)
-    call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),750.00,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
+    call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),750.00,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(RectMidArena))
     call SelectUnitForPlayerSingle(GetEnumUnit(),GetOwningPlayer(GetEnumUnit()))
     call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetEnumUnit()),GetUnitLoc(GetEnumUnit()),0.50)
 endfunction
@@ -2664,31 +2664,31 @@ function Trig_Place_Bet_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Eligible_Amount_Func003C takes nothing returns boolean
-    if(not((udg_integer62 - udg_integer56)>((udg_integer62 - udg_integer56)- 5)))then
+    if(not((udg_integer62 - BettingPlayerCount)>((udg_integer62 - BettingPlayerCount)- 5)))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Eligible_Amount_Actions takes nothing returns nothing
-    set udg_integer56 = 5
+    set BettingPlayerCount = 5
     //call ConditionalTriggerExecute(udg_trigger53)
     if(Trig_Eligible_Amount_Func003C())then
-        set udg_integer62 = udg_integer56
+        set udg_integer62 = BettingPlayerCount
     else
-        set udg_integer62 =(udg_integer56 - 5)
+        set udg_integer62 =(BettingPlayerCount - 5)
     endif
 endfunction
 
 function Trig_Eligible_Amount_Loop_Conditions takes nothing returns boolean
-    if(not(udg_integer56 < udg_integer62))then
+    if(not(BettingPlayerCount < udg_integer62))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Eligible_Amount_Loop_Actions takes nothing returns nothing
-    set udg_integer56 =(udg_integer56 + 5)
+    set BettingPlayerCount =(BettingPlayerCount + 5)
     call ConditionalTriggerExecute(GetTriggeringTrigger())
 endfunction
 
@@ -3666,7 +3666,7 @@ function Trig_Dialog_Complete_Func008Func003Func014A takes nothing returns nothi
 endfunction
 
 function Trig_Dialog_Complete_Func008Func003C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -3909,7 +3909,7 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
                 else
                     call DoNothing()
                 endif
-                set udg_boolean08 = true
+                set GameModeShort = true
             else
                 set udg_strings02[1]= "Mode: Death Match (Normal)|r"
                 call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
@@ -3961,7 +3961,7 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
                 else
                     call DoNothing()
                 endif
-                set udg_boolean08 = false
+                set GameModeShort = false
             endif
             call DisplayTimedTextToForce(GetPlayersAll(),15,"|c00ff2c2cDeath Match mode will likely be removed in the future! Let us know on discord if you disagree.|r")
             call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func006Func004Func006001001)),function Trig_Dialog_Complete_Func006Func004Func006A)
@@ -3972,10 +3972,10 @@ function Trig_Dialog_Complete_Actions takes nothing returns nothing
     if(Trig_Dialog_Complete_Func008C())then
         if(Trig_Dialog_Complete_Func008Func002C())then
             call DisableTrigger(GetTriggeringTrigger())
-            set udg_boolean08 = true
+            set GameModeShort = true
         else
             call DisableTrigger(GetTriggeringTrigger())
-            set udg_boolean08 = false
+            set GameModeShort = false
         endif
 
         //boolean08
@@ -4402,7 +4402,7 @@ function Trig_Hero_Dies_Conditions takes nothing returns boolean
     endif
     //udg_boolean07
     if ModeNoDeath == true and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(GetDyingUnit())) != PLAYER_SLOT_STATE_LEFT then
-        call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
+        call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(RectMidArena),true)
         call FixDeath(GetDyingUnit())
         call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
 
@@ -4417,7 +4417,7 @@ function Trig_Hero_Dies_Conditions takes nothing returns boolean
         set RoundLiveLost[pid] = true
 
         set DeathReviveInvul.boolean[pid] = true
-        call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
+        call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(RectMidArena),true)
         call FixDeath(GetDyingUnit())
         call PanCameraToForPlayer(GetOwningPlayer(GetDyingUnit()),GetUnitX(GetDyingUnit()),GetUnitY(GetDyingUnit()))
         call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[pid + 1],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
@@ -4513,7 +4513,7 @@ function Trig_Hero_Dies_Func014Func001Func004001 takes nothing returns boolean
 endfunction
 
 function Trig_Hero_Dies_Func014Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -4929,7 +4929,7 @@ function Trig_Display_Hint_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Hint_Initialization_Func019C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -5209,14 +5209,14 @@ function Trig_Melee_Initialization_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Player_Region_Initialization_Actions takes nothing returns nothing
-    set PlayerArenaRects[1]= udg_rect01
-    set PlayerArenaRects[2]= udg_rect02
-    set PlayerArenaRects[3]= udg_rect03
-    set PlayerArenaRects[4]= udg_rect04
-    set PlayerArenaRects[5]= udg_rect05
-    set PlayerArenaRects[6]= udg_rect06
-    set PlayerArenaRects[7]= udg_rect07
-    set PlayerArenaRects[8]= udg_rect08
+    set PlayerArenaRects[1]= RectP1Arena
+    set PlayerArenaRects[2]= RectP2Arena
+    set PlayerArenaRects[3]= RectP3Arena
+    set PlayerArenaRects[4]= RectP4Arena
+    set PlayerArenaRects[5]= RectP5Arena
+    set PlayerArenaRects[6]= RectP6Arena
+    set PlayerArenaRects[7]= RectP7Arena
+    set PlayerArenaRects[8]= RectP8Arena
 endfunction
 
 
@@ -5785,7 +5785,7 @@ function Trig_Add_Unit_Power_Func001Func009C takes nothing returns boolean
 endfunction
 
 function Trig_Add_Unit_Power_Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -5975,7 +5975,7 @@ function Trig_Creep_AutoCast_Func001001002 takes nothing returns boolean
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func001Func002Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -6074,7 +6074,7 @@ function Trig_Creep_AutoCast_Func001Func002C takes nothing returns boolean
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func003Func002Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -6131,7 +6131,7 @@ function Trig_Creep_AutoCast_Func001Func003C takes nothing returns boolean
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func004Func002Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -6172,7 +6172,7 @@ function Trig_Creep_AutoCast_Func001Func004C takes nothing returns boolean
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func005Func002Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -6298,7 +6298,7 @@ function Trig_Creep_AutoCast_Func001Func007C takes nothing returns boolean
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func008Func002Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -6375,7 +6375,7 @@ function Trig_Creep_AutoCast_Func001Func009Func002Func001Func001001001003 takes 
 endfunction
 
 function Trig_Creep_AutoCast_Func001Func009Func002Func001Func002C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -7161,7 +7161,7 @@ function Trig_Bonus_Exp_Func001Func002A takes nothing returns nothing
 endfunction
 
 function Trig_Bonus_Exp_Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -7176,7 +7176,7 @@ function Trig_Bonus_Exp_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Complete_Level_Move_Conditions takes nothing returns boolean
-    if(not(IsUnitInGroup(GetTriggerUnit(),udg_group08)==true))then
+    if(not(IsUnitInGroup(GetTriggerUnit(),GroupEmptyArenaCheck)==true))then
         return false
     endif
     return true
@@ -7193,7 +7193,7 @@ function Trig_Complete_Level_Move_Func005Func001C takes nothing returns boolean
     if((ElimModeEnabled==true))then
         return true
     endif
-    if((udg_boolean08==true))then
+    if((GameModeShort==true))then
         return true
     endif
     return false
@@ -7239,8 +7239,8 @@ function Trig_Complete_Level_Move_Actions takes nothing returns nothing
 
     if(Trig_Complete_Level_Move_Func003C())then
         call RemoveDebuff(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))], 0)
-        call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetRectCenter(udg_rect09))
-        call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),GetRectCenter(udg_rect09),0.20)
+        call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetRectCenter(RectMidArena))
+        call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),GetRectCenter(RectMidArena),0.20)
     endif
     if(Trig_Complete_Level_Move_Func005C())then
         if(Trig_Complete_Level_Move_Func005Func003C())then
@@ -7331,15 +7331,15 @@ function Trig_Complete_Level_Player_Func001001 takes nothing returns boolean
 endfunction
 
 function Trig_Complete_Level_Player_Func004001 takes nothing returns boolean
-    return(udg_integer56 > 3)
+    return(BettingPlayerCount > 3)
 endfunction
 
 function Trig_Complete_Level_Player_Func005Func004001 takes nothing returns boolean
-    return(udg_boolean08==false)
+    return(GameModeShort==false)
 endfunction
 
 function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
-    if(not(CountPlayersInForceBJ(RoundPlayersCompleted)< udg_integer56))then
+    if(not(CountPlayersInForceBJ(RoundPlayersCompleted)< BettingPlayerCount))then
         return false
     endif
     //	if(not(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])!='N00K'))then
@@ -7349,7 +7349,7 @@ function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
 endfunction
 
 function Trig_Complete_Level_Player_Func010C takes nothing returns boolean
-    if(not(udg_integer48==0))then
+    if(not(RoundClearXpBonus==0))then
         return false
     endif
     return true
@@ -7372,22 +7372,22 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
     else
         call DoNothing()
     endif
-    set udg_integer56 =(PlayerCount / 2)
+    set BettingPlayerCount =(PlayerCount / 2)
     if(Trig_Complete_Level_Player_Func004001())then
-        set udg_integer56 = 3
+        set BettingPlayerCount = 3
     else
         call DoNothing()
     endif
     if(Trig_Complete_Level_Player_Func005C())then
-        set udg_integer48 =((PlayerCount -(1 + CountPlayersInForceBJ(RoundPlayersCompleted)))*(RoundNumber * 5))
-        set udg_integer48 =(udg_integer48 * RoundNumber)
+        set RoundClearXpBonus =((PlayerCount -(1 + CountPlayersInForceBJ(RoundPlayersCompleted)))*(RoundNumber * 5))
+        set RoundClearXpBonus =(RoundClearXpBonus * RoundNumber)
         if(Trig_Complete_Level_Player_Func005Func004001())then
-            set udg_integer48 =(udg_integer48 / 2)
+            set RoundClearXpBonus =(RoundClearXpBonus / 2)
         else
             call DoNothing()
         endif
     else
-        set udg_integer48 = 0
+        set RoundClearXpBonus = 0
     endif
     call ForceAddPlayerSimple(p,RoundPlayersCompleted)
     call SetCurrentlyFighting(p, false)
@@ -7400,13 +7400,13 @@ function Trig_Complete_Level_Player_Actions takes nothing returns nothing
         if(Trig_Complete_Level_Player_Func010C())then
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ " |cffffcc00survived the level!|r")))
         else
-            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00survived the level!|r |cff7bff00(+" +(I2S(udg_integer48)+ " exp)|r")))))
-            call AddHeroXPSwapped(udg_integer48,PlayerHeroes[pid + 1],true)
+            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00survived the level!|r |cff7bff00(+" +(I2S(RoundClearXpBonus)+ " exp)|r")))))
+            call AddHeroXPSwapped(RoundClearXpBonus,PlayerHeroes[pid + 1],true)
         endif
     endif
     call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,p,GetRectCenter(GetPlayableMapRect()),bj_UNIT_FACING)
     call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
-    call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group08)
+    call GroupAddUnitSimple(GetLastCreatedUnit(),GroupEmptyArenaCheck)
 endfunction
 
 function Trig_Level_Completed_Func001Func001001001 takes nothing returns boolean
@@ -7595,7 +7595,7 @@ function Trig_Level_Completed_Func001Func018Func002C takes nothing returns boole
 endfunction
 
 function Trig_Level_Completed_Func001Func018C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     if(not(ElimModeEnabled==false))then
@@ -7639,7 +7639,7 @@ function Trig_Level_Completed_Func001Func023Func002C takes nothing returns boole
 endfunction
 
 function Trig_Level_Completed_Func001Func023C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     if(not(ElimModeEnabled==false))then
@@ -7773,7 +7773,7 @@ function Trig_Start_Level_Func013Func001C takes nothing returns boolean
     if((ElimModeEnabled==true))then
         return true
     endif
-    if((udg_boolean08==true))then
+    if((GameModeShort==true))then
         return true
     endif
     return false
@@ -7943,7 +7943,7 @@ function Trig_Start_Level_Actions takes nothing returns nothing
     call ForGroupBJ(udg_group05,function Trig_Start_Level_Func018A)
     call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartFunctionSpells)
     call ConditionalTriggerExecute(udg_trigger98)
-    set udg_integer39 = 0
+    set SuddenDeathTick = 0
     call EnableTrigger(udg_trigger110)
     call StartSuddenDeathTimer()
     call EnableTrigger(udg_trigger116)
@@ -7980,29 +7980,29 @@ function Trig_Sudden_Death_Timer_Func002Func002Func002Func001A takes nothing ret
 endfunction
 
 function Trig_Sudden_Death_Timer_Func002Func002Func002C takes nothing returns boolean
-    if(not(udg_integer39 >= 720))then
+    if(not(SuddenDeathTick >= 720))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Sudden_Death_Timer_Func002Func002C takes nothing returns boolean
-    if(not(udg_integer39 >= 480))then
+    if(not(SuddenDeathTick >= 480))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Sudden_Death_Timer_Func002C takes nothing returns boolean
-    if(not(udg_integer39 >= 240))then
+    if(not(SuddenDeathTick >= 240))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Sudden_Death_Timer_Actions takes nothing returns nothing
-    set udg_integer39 =(udg_integer39 + 1)
-    if udg_integer39 == 120 or udg_integer39 == 240 or udg_integer39 == 480 or udg_integer39 == 720 then
+    set SuddenDeathTick =(SuddenDeathTick + 1)
+    if SuddenDeathTick == 120 or SuddenDeathTick == 240 or SuddenDeathTick == 480 or SuddenDeathTick == 720 then
         call UpdateSuddenDeathTimer()
     endif
     if(Trig_Sudden_Death_Timer_Func002C())then
@@ -8819,7 +8819,7 @@ function Trig_AntiStuck_Actions takes nothing returns nothing
     set AntiStuckPlayerId = 1
     loop
         exitwhen AntiStuckPlayerId > 8
-        if RectContainsUnit(udg_rect09, PlayerHeroes[AntiStuckPlayerId]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
+        if RectContainsUnit(RectMidArena, PlayerHeroes[AntiStuckPlayerId]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
             call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
         endif
 
@@ -8935,7 +8935,7 @@ function Trig_End_Game_Func003Func007Func001C takes nothing returns boolean
 endfunction
 
 function Trig_End_Game_Func003Func007Func002C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     if(not(RoundNumber==25))then
@@ -8948,7 +8948,7 @@ function Trig_End_Game_Func003Func007Func002C takes nothing returns boolean
 endfunction
 
 function Trig_End_Game_Func003Func007Func003C takes nothing returns boolean
-    if(not(udg_boolean08==false))then
+    if(not(GameModeShort==false))then
         return false
     endif
     if(not(RoundNumber==50))then
@@ -9045,7 +9045,7 @@ function Trig_Victory_Func001Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Victory_Func001Func002Func003Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     if(not(RoundNumber==25))then
@@ -9058,7 +9058,7 @@ function Trig_Victory_Func001Func002Func003Func001C takes nothing returns boolea
 endfunction
 
 function Trig_Victory_Func001Func002Func003Func002C takes nothing returns boolean
-    if(not(udg_boolean08==false))then
+    if(not(GameModeShort==false))then
         return false
     endif
     if(not(RoundNumber==50))then
@@ -9196,17 +9196,17 @@ function Trig_Camera_Command_Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Camera_Command_Func002Func001C takes nothing returns boolean
-    if(not(S2I(SubStringBJ(GetEventPlayerChatString(),udg_integer56,StringLength(GetEventPlayerChatString())))> 2800))then
+    if(not(S2I(SubStringBJ(GetEventPlayerChatString(),BettingPlayerCount,StringLength(GetEventPlayerChatString())))> 2800))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Camera_Command_Func002C takes nothing returns boolean
-    if(not(S2I(SubStringBJ(GetEventPlayerChatString(),udg_integer56,StringLength(GetEventPlayerChatString())))>= 1650))then
+    if(not(S2I(SubStringBJ(GetEventPlayerChatString(),BettingPlayerCount,StringLength(GetEventPlayerChatString())))>= 1650))then
         return false
     endif
-    if(not(S2I(SubStringBJ(GetEventPlayerChatString(),udg_integer56,StringLength(GetEventPlayerChatString())))<= 2800))then
+    if(not(S2I(SubStringBJ(GetEventPlayerChatString(),BettingPlayerCount,StringLength(GetEventPlayerChatString())))<= 2800))then
         return false
     endif
     return true
@@ -9214,12 +9214,12 @@ endfunction
 
 function Trig_Camera_Command_Actions takes nothing returns nothing
     if(Trig_Camera_Command_Func001C())then
-        set udg_integer56 = 9
+        set BettingPlayerCount = 9
     else
-        set udg_integer56 = 6
+        set BettingPlayerCount = 6
     endif
     if(Trig_Camera_Command_Func002C())then
-        call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,S2R(SubStringBJ(GetEventPlayerChatString(),udg_integer56,StringLength(GetEventPlayerChatString()))),0.50)
+        call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,S2R(SubStringBJ(GetEventPlayerChatString(),BettingPlayerCount,StringLength(GetEventPlayerChatString()))),0.50)
     else
         if(Trig_Camera_Command_Func002Func001C())then
             call SetCameraFieldForPlayer(GetTriggerPlayer(),CAMERA_FIELD_TARGET_DISTANCE,2800.00,0.50)
@@ -9637,7 +9637,7 @@ function Trig_PvP_Func004Func001Func006001 takes nothing returns boolean
 endfunction
 
 function Trig_PvP_Func004Func001C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -9752,7 +9752,7 @@ function Trig_End_PvP_Func001C takes nothing returns boolean
 endfunction
 
 function Trig_End_PvP_Func019A takes nothing returns nothing
-    call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(udg_rect09),0.20)
+    call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(RectMidArena),0.20)
 endfunction
 
 function Trig_End_PvP_Func021Func001Func001C takes nothing returns boolean
@@ -9802,7 +9802,7 @@ function Trig_End_PvP_Func026Func007001002 takes nothing returns boolean
 endfunction
 
 function Trig_End_PvP_Func026Func007A takes nothing returns nothing
-    call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(udg_rect09))
+    call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(RectMidArena))
 endfunction
 
 function Trig_End_PvP_Func026Func008Func003C takes nothing returns boolean
@@ -10012,7 +10012,7 @@ function Trig_End_PvP_Func026Func016Func002C takes nothing returns boolean
 endfunction
 
 function Trig_End_PvP_Func026Func016C takes nothing returns boolean
-    if(not(udg_boolean08==true))then
+    if(not(GameModeShort==true))then
         return false
     endif
     return true
@@ -10072,9 +10072,9 @@ function Trig_End_PvP_Actions takes nothing returns nothing
     call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[1]),GetOwningPlayer(DuelingHeroes[2]),bj_ALLIANCE_UNALLIED)
     call SetPlayerAllianceStateBJ(GetOwningPlayer(DuelingHeroes[2]),GetOwningPlayer(DuelingHeroes[1]),bj_ALLIANCE_UNALLIED)
     call ForForce(GetPlayersAll(),function Trig_End_PvP_Func019A)
-    call SetUnitPositionLoc(udg_unit05,GetRectCenter(udg_rect09))
+    call SetUnitPositionLoc(udg_unit05,GetRectCenter(RectMidArena))
     if(Trig_End_PvP_Func021C())then
-        call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(udg_rect09),true)
+        call ReviveHeroLoc(GetDyingUnit(),GetRectCenter(RectMidArena),true)
         call FixDeath(GetDyingUnit())
         set PvpEndIndex = 1
         loop
@@ -10497,7 +10497,7 @@ function Trig_PvP_Battle_Actions takes nothing returns nothing
         set udg_boolean18 = false
         call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func041A)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        set udg_integer39 = 0
+        set SuddenDeathTick = 0
         set udg_real03 = 0.02
         call EnableTrigger(udg_trigger140)
         call EnableTrigger(udg_trigger141)
@@ -10595,7 +10595,7 @@ function Trig_Receive_Prize_Func002Func002Func001C takes nothing returns boolean
 endfunction
 
 function Trig_Receive_Prize_Func002Func003Func001C takes nothing returns boolean
-    if(not(udg_integer56 > 0))then
+    if(not(BettingPlayerCount > 0))then
         return false
     endif
     if(not(IsUnitAliveBJ(GetEnumUnit())==true))then
@@ -10653,7 +10653,7 @@ function Trig_Sudden_Death_Damage_PvP_Conditions takes nothing returns boolean
     if ( not ( IsTriggerEnabled(udg_trigger141) == true ) ) then
         return false
     endif
-    if ( not ( udg_integer39 >= 240 ) ) then
+    if ( not ( SuddenDeathTick >= 240 ) ) then
         return false
     endif
     return true
@@ -10665,14 +10665,14 @@ function Trig_Sudden_Death_Damage_PvP_Actions takes nothing returns nothing
 endfunction
 
 function Trig_Sudden_Death_Timer_PvP_Func002C takes nothing returns boolean
-    if(not(udg_integer39 >= 240))then
+    if(not(SuddenDeathTick >= 240))then
         return false
     endif
     return true
 endfunction
 
 function Trig_Sudden_Death_Timer_PvP_Actions takes nothing returns nothing
-    set udg_integer39 =(udg_integer39 + 1)
+    set SuddenDeathTick =(SuddenDeathTick + 1)
     if(Trig_Sudden_Death_Timer_PvP_Func002C())then
         call DisableTrigger(udg_trigger11)
         call DisableTrigger(udg_trigger26)
@@ -10862,7 +10862,7 @@ function Trig_Update_Items_Func001Func001C takes nothing returns boolean
     if((ElimModeEnabled==true))then
         return true
     endif
-    if((udg_boolean08==true))then
+    if((GameModeShort==true))then
         return true
     endif
     return false
@@ -11206,7 +11206,7 @@ function Trig_Elimination_Func020A takes nothing returns nothing
     set ElimPlayerCount =(ElimPlayerCount + 1)
     set udg_unit01 = GetEnumUnit()
     call ConditionalTriggerExecute(udg_trigger82)
-    call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),750.00,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(udg_rect09))
+    call SetUnitPositionLocFacingLocBJ(GetEnumUnit(),PolarProjectionBJ(GetRectCenter(GetPlayableMapRect()),750.00,(((I2R(GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit())))- 1)*- 45.00)- 225.00)),GetRectCenter(RectMidArena))
     call SelectUnitForPlayerSingle(GetEnumUnit(),GetOwningPlayer(GetEnumUnit()))
     call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetEnumUnit()),GetUnitLoc(GetEnumUnit()),0.50)
 endfunction
@@ -11429,7 +11429,7 @@ endfunction
 function Trig_Hero_Dies_Elimination_Func030A takes nothing returns nothing
     set udg_unit01 = GetEnumUnit()
     call ConditionalTriggerExecute(udg_trigger82)
-    call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(udg_rect09))
+    call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(RectMidArena))
     call SelectUnitForPlayerSingle(GetEnumUnit(),GetOwningPlayer(GetEnumUnit()))
     call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetEnumUnit()),GetUnitLoc(GetEnumUnit()),0.50)
     call SuspendHeroXPBJ(false,GetEnumUnit())
@@ -12270,7 +12270,7 @@ function main2 takes nothing returns nothing
     call TriggerRegisterTimerEventPeriodic(udg_trigger141,0.25)
     call TriggerAddAction(udg_trigger141,function Trig_Sudden_Death_Timer_PvP_Actions)
     set udg_trigger142 = CreateTrigger()
-    call TriggerRegisterEnterRectSimple(udg_trigger142,udg_rect09)
+    call TriggerRegisterEnterRectSimple(udg_trigger142,RectMidArena)
     call TriggerAddCondition(udg_trigger142,Condition(function Trig_Enter_Center_Conditions))
     call TriggerAddAction(udg_trigger142,function Trig_Enter_Center_Actions)
     set udg_trigger143 = CreateTrigger()
@@ -12281,7 +12281,7 @@ function main2 takes nothing returns nothing
     call TriggerAddCondition(udg_trigger144,Condition(function Trig_Remove_Power_Ups_Conditions))
     call TriggerAddAction(udg_trigger144,function Trig_Remove_Power_Ups_Actions)
     set udg_trigger145 = CreateTrigger()
-    call TriggerRegisterEnterRectSimple(udg_trigger145,udg_rect09)
+    call TriggerRegisterEnterRectSimple(udg_trigger145,RectMidArena)
     call TriggerAddCondition(udg_trigger145,Condition(function Trig_Remove_Units_From_Center_Conditions))
     call TriggerAddAction(udg_trigger145,function Trig_Remove_Units_From_Center_Actions)
     set udg_trigger146 = CreateTrigger()

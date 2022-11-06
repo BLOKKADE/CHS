@@ -12,7 +12,7 @@ library trigger105 initializer init requires RandomShit
 
 
     function Trig_Bonus_Exp_Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true

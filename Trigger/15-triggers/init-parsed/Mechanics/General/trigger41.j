@@ -7,7 +7,7 @@ library trigger41 initializer init requires RandomShit
         if(not(GetUnitTypeId(GetTriggerUnit())!=PRIEST_1_UNIT_ID))then
             return false
         endif
-        if(not(IsUnitInGroup(GetTriggerUnit(),udg_group08)!=true))then
+        if(not(IsUnitInGroup(GetTriggerUnit(),GroupEmptyArenaCheck)!=true))then
             return false
         endif
         return true

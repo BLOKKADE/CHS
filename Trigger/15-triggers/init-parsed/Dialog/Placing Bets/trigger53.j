@@ -1,7 +1,7 @@
-library trigger53 initializer init requires RandomShit
+/*library trigger53 initializer init requires RandomShit
 
     function Trig_Eligible_Amount_Loop_Conditions takes nothing returns boolean
-        if(not(udg_integer56 < udg_integer62))then
+        if(not(BettingPlayerCount < udg_integer62))then
             return false
         endif
         return true
@@ -9,7 +9,7 @@ library trigger53 initializer init requires RandomShit
 
 
     function Trig_Eligible_Amount_Loop_Actions takes nothing returns nothing
-        set udg_integer56 =(udg_integer56 + 5)
+        set BettingPlayerCount =(BettingPlayerCount + 5)
         call ConditionalTriggerExecute(GetTriggeringTrigger())
     endfunction
 
@@ -22,3 +22,4 @@ library trigger53 initializer init requires RandomShit
 
 
 endlibrary
+*/

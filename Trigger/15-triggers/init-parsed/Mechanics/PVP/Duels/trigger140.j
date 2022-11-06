@@ -4,7 +4,7 @@ library trigger140 initializer init requires RandomShit
         if ( not ( IsTriggerEnabled(udg_trigger141) == true ) ) then
             return false
         endif
-        if ( not ( udg_integer39 >= 120 ) ) then
+        if ( not ( SuddenDeathTick >= 120 ) ) then
             return false
         endif
         return true

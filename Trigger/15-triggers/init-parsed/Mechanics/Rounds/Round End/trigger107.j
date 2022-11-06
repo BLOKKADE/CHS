@@ -49,12 +49,12 @@ library trigger107 initializer init requires RandomShit
 
 
     function Trig_Complete_Level_Player_Func004001 takes nothing returns boolean
-        return(udg_integer56 > 3)
+        return(BettingPlayerCount > 3)
     endfunction
 
 
     function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
-        if(not(CountPlayersInForceBJ(RoundPlayersCompleted)< udg_integer56))then
+        if(not(CountPlayersInForceBJ(RoundPlayersCompleted)< BettingPlayerCount))then
             return false
         endif
         //	if(not(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])!='N00K'))then
@@ -65,12 +65,12 @@ library trigger107 initializer init requires RandomShit
 
 
     function Trig_Complete_Level_Player_Func005Func004001 takes nothing returns boolean
-        return(udg_boolean08==false)
+        return(GameModeShort==false)
     endfunction
 
 
     function Trig_Complete_Level_Player_Func010C takes nothing returns boolean
-        if(not(udg_integer48==0))then
+        if(not(RoundClearXpBonus==0))then
             return false
         endif
         return true
@@ -87,22 +87,22 @@ library trigger107 initializer init requires RandomShit
         else
             call DoNothing()
         endif
-        set udg_integer56 =(PlayerCount / 2)
+        set BettingPlayerCount =(PlayerCount / 2)
         if(Trig_Complete_Level_Player_Func004001())then
-            set udg_integer56 = 3
+            set BettingPlayerCount = 3
         else
             call DoNothing()
         endif
         if(Trig_Complete_Level_Player_Func005C())then
-            set udg_integer48 =((PlayerCount -(1 + CountPlayersInForceBJ(RoundPlayersCompleted)))*(RoundNumber * 5))
-            set udg_integer48 =(udg_integer48 * RoundNumber)
+            set RoundClearXpBonus =((PlayerCount -(1 + CountPlayersInForceBJ(RoundPlayersCompleted)))*(RoundNumber * 5))
+            set RoundClearXpBonus =(RoundClearXpBonus * RoundNumber)
             if(Trig_Complete_Level_Player_Func005Func004001())then
-                set udg_integer48 =(udg_integer48 / 2)
+                set RoundClearXpBonus =(RoundClearXpBonus / 2)
             else
                 call DoNothing()
             endif
         else
-            set udg_integer48 = 0
+            set RoundClearXpBonus = 0
         endif
         call ForceAddPlayerSimple(p,RoundPlayersCompleted)
         call SetCurrentlyFighting(p, false)
@@ -115,13 +115,13 @@ library trigger107 initializer init requires RandomShit
             if(Trig_Complete_Level_Player_Func010C())then
                 call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ " |cffffcc00survived the level!|r")))
             else
-                call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00survived the level!|r |cff7bff00(+" +(I2S(udg_integer48)+ " exp)|r")))))
-                call AddHeroXPSwapped(udg_integer48,PlayerHeroes[pid + 1],true)
+                call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00survived the level!|r |cff7bff00(+" +(I2S(RoundClearXpBonus)+ " exp)|r")))))
+                call AddHeroXPSwapped(RoundClearXpBonus,PlayerHeroes[pid + 1],true)
             endif
         endif
         call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,p,arenaLocation,bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
-        call GroupAddUnitSimple(GetLastCreatedUnit(),udg_group08)
+        call GroupAddUnitSimple(GetLastCreatedUnit(),GroupEmptyArenaCheck)
 
         call RemoveLocation(arenaLocation)
         set arenaLocation = null

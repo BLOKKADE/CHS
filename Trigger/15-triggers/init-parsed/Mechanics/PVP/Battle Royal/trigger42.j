@@ -76,7 +76,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
 
     function Trig_Battle_Royal_Func017A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
-        local location arenaLocation = GetRectCenter(udg_rect09)
+        local location arenaLocation = GetRectCenter(RectMidArena)
         local location unitLocation = GetUnitLoc(GetEnumUnit())
         local location playableAreaLocation = GetRectCenter(GetPlayableMapRect())
 
@@ -137,7 +137,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
     function Trig_Battle_Royal_Func033A takes nothing returns nothing
         call PauseUnit(GetEnumUnit(), false)
         call SetUnitInvulnerable(GetEnumUnit(),false)
-        call RectLeaveDetection.create(GetEnumUnit(), udg_rect09)
+        call RectLeaveDetection.create(GetEnumUnit(), RectMidArena)
         call StartFunctionSpell(GetEnumUnit(),1)
     endfunction
 

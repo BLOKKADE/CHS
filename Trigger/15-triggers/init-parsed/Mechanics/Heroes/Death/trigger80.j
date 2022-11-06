@@ -29,7 +29,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
     function EnableDeathTrigger takes nothing returns nothing
         local integer pid = GetTimerData(GetExpiredTimer())
         local unit u = PlayerHeroes[pid+1]
-        local location arenaLocation = GetRectCenter(udg_rect09)
+        local location arenaLocation = GetRectCenter(RectMidArena)
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
 
         call ReviveHeroLoc(u,arenaLocation,true)
@@ -61,7 +61,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         
         //immortal mode
         if ModeNoDeath == true and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
-            set arenaLocation = GetRectCenter(udg_rect09)
+            set arenaLocation = GetRectCenter(RectMidArena)
             call ReviveHeroLoc(u,arenaLocation,true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
@@ -157,7 +157,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
 
 
     function Trig_Hero_Dies_Func014Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true

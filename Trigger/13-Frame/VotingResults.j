@@ -309,7 +309,7 @@ library VotingResults initializer init
         set HeroBanningMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
 
         // Set the weird global variables based off of the results
-        set udg_boolean08 = RoundMode == 2 // Boolean that flags if the game is short
+        set GameModeShort = RoundMode == 2 // Boolean that flags if the game is short
         //set ElimModeEnabled = ImmortalMode == 1 // Boolean that flags if people should lose lives
         set ModeNoDeath = ImmortalMode == 2 // Another legacy variable to set to prevent breaking everything
         //set udg_boolean07 = false

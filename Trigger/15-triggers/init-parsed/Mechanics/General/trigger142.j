@@ -17,7 +17,7 @@ library trigger142 initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set udg_trigger142 = CreateTrigger()
-        call TriggerRegisterEnterRectSimple(udg_trigger142,udg_rect09)
+        call TriggerRegisterEnterRectSimple(udg_trigger142,RectMidArena)
         call TriggerAddCondition(udg_trigger142,Condition(function Trig_Enter_Center_Conditions))
         call TriggerAddAction(udg_trigger142,function Trig_Enter_Center_Actions)
     endfunction
