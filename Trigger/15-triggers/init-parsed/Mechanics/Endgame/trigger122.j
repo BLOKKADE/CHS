@@ -113,27 +113,21 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         endif
     endfunction
 
-    function GetWinner takes nothing returns player
+    function GetWinner takes nothing returns nothing
         local integer i = 1
 
         loop
             if UnitAlive(PlayerHeroes[i]) then
-                if DebugMsgMode then
-                    call BJDebugMsg(GetUnitName(PlayerHeroes[i]) + "win?")
-                endif
+                set WinningPlayer = Player(i)
             endif
 
             set i = i + 1
             exitwhen i > 8
         endloop
-
-        return Player(0)
     endfunction
     
     function Trig_Victory_Actions takes nothing returns nothing
         local PlayerStats ps
-
-        call GetWinner()
 
         set udg_boolean11 = true
         call DisableTrigger(GetTriggeringTrigger())
@@ -148,6 +142,9 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(Trig_Victory_Func012C())then
             call DisplayTimedTextToForce(GetPlayersAll(),30,("|cffffcc00" +("You survived all levels! Congratulations!!")))
         else
+            //test
+            call GetWinner()
+
             call DisplayTimedTextToForce(GetPlayersAll(),30,GameDescription)
             call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
 
