@@ -496,7 +496,7 @@ scope ModifyDamageAfterArmor initializer init
         
         //Thunder Force
         set i1 = GetUnitAbilityLevel(DamageSource, THUNDER_FORCE_ABILITY_ID)
-        if i1 >= 0 and Damage.index.isAttack then
+        if i1 > 0 and Damage.index.isAttack then
             call UsOrderU(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroAgi(DamageSource,true) * (0.2 + (0.08 * i1)), ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif
 
