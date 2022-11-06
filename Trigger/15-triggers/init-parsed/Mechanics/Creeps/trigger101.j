@@ -5,7 +5,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func001Func002Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true
@@ -104,7 +104,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func003Func002Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true
@@ -161,7 +161,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func004Func002Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true
@@ -202,7 +202,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func005Func002Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true
@@ -336,7 +336,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func008Func002Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true
@@ -413,7 +413,7 @@ library trigger101 initializer init requires RandomShit
     endfunction
     
     function Trig_Creep_AutoCast_Func001Func009Func002Func001Func002C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true

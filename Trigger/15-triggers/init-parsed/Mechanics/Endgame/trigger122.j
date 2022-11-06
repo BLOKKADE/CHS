@@ -18,7 +18,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
 
 
     function Trig_Victory_Func001Func002Func003Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         if(not(RoundNumber==25))then
@@ -32,7 +32,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
 
 
     function Trig_Victory_Func001Func002Func003Func002C takes nothing returns boolean
-        if(not(udg_boolean08==false))then
+        if(not(GameModeShort==false))then
             return false
         endif
         if(not(RoundNumber==50))then

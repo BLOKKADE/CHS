@@ -50,7 +50,7 @@ library trigger145 initializer init requires RandomShit, IdLibrary
 
     private function init takes nothing returns nothing
         set udg_trigger145 = CreateTrigger()
-        call TriggerRegisterEnterRectSimple(udg_trigger145,udg_rect09)
+        call TriggerRegisterEnterRectSimple(udg_trigger145,RectMidArena)
         call TriggerAddCondition(udg_trigger145,Condition(function Trig_Remove_Units_From_Center_Conditions))
     endfunction
 endlibrary

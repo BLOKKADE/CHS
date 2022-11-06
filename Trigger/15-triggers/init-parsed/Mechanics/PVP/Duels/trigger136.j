@@ -349,7 +349,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
             set udg_boolean18 = false
             call ForForce(GetPlayersAll(),function Trig_PvP_Battle_Func001Func041A)
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-            set udg_integer39 = 0
+            set SuddenDeathTick = 0
             set udg_real03 = 0.02
             call EnableTrigger(udg_trigger140)
             call EnableTrigger(udg_trigger141)

@@ -9,7 +9,7 @@ library trigger138 initializer init requires RandomShit
 
 
     function Trig_Receive_Prize_Func002Func003Func001C takes nothing returns boolean
-        if(not(udg_integer56 > 0))then
+        if(not(BettingPlayerCount > 0))then
             return false
         endif
         if(not(IsUnitAliveBJ(GetEnumUnit())==true))then

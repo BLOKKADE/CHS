@@ -1,7 +1,7 @@
-library trigger52 initializer init requires RandomShit
+/*library trigger52 initializer init requires RandomShit
 
     function Trig_Eligible_Amount_Func003C takes nothing returns boolean
-        if(not((udg_integer62 - udg_integer56)>((udg_integer62 - udg_integer56)- 5)))then
+        if(not((udg_integer62 - BettingPlayerCount)>((udg_integer62 - BettingPlayerCount)- 5)))then
             return false
         endif
         return true
@@ -9,12 +9,12 @@ library trigger52 initializer init requires RandomShit
 
 
     function Trig_Eligible_Amount_Actions takes nothing returns nothing
-        set udg_integer56 = 5
+        set BettingPlayerCount = 5
         //call ConditionalTriggerExecute(udg_trigger53)
         if(Trig_Eligible_Amount_Func003C())then
-            set udg_integer62 = udg_integer56
+            set udg_integer62 = BettingPlayerCount
         else
-            set udg_integer62 =(udg_integer56 - 5)
+            set udg_integer62 =(BettingPlayerCount - 5)
         endif
     endfunction
 
@@ -26,3 +26,4 @@ library trigger52 initializer init requires RandomShit
 
 
 endlibrary
+*/

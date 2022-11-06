@@ -1,7 +1,7 @@
 library trigger110 initializer init requires RandomShit
 
     function Trig_Sudden_Death_Timer_Func002C takes nothing returns boolean
-        if(not(udg_integer39 >= 120))then
+        if(not(SuddenDeathTick >= 120))then
             return false
         endif
         return true
@@ -21,7 +21,7 @@ library trigger110 initializer init requires RandomShit
 
 
     function Trig_Sudden_Death_Timer_Func002Func002C takes nothing returns boolean
-        if(not(udg_integer39 >= 240))then
+        if(not(SuddenDeathTick >= 240))then
             return false
         endif
         return true
@@ -44,7 +44,7 @@ library trigger110 initializer init requires RandomShit
 
 
     function Trig_Sudden_Death_Timer_Func002Func002Func002C takes nothing returns boolean
-        if(not(udg_integer39 >= 300))then
+        if(not(SuddenDeathTick >= 300))then
             return false
         endif
         return true
@@ -66,9 +66,9 @@ library trigger110 initializer init requires RandomShit
 
 
     function Trig_Sudden_Death_Timer_Actions takes nothing returns nothing
-        set udg_integer39 =(udg_integer39 + 1)
+        set SuddenDeathTick =(SuddenDeathTick + 1)
         if CreepEnrageEnabled then
-            if udg_integer39 == 120 or udg_integer39 == 180 or udg_integer39 == 240 or udg_integer39 == 300 then
+            if SuddenDeathTick == 120 or SuddenDeathTick == 180 or SuddenDeathTick == 240 or SuddenDeathTick == 300 then
                 call UpdateSuddenDeathTimer()
             endif
             if(Trig_Sudden_Death_Timer_Func002C())then

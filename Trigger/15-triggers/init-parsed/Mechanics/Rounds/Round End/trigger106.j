@@ -1,7 +1,7 @@
 library trigger106 initializer init requires RandomShit, Functions
 
     function Trig_Complete_Level_Move_Conditions takes nothing returns boolean
-        if(not(IsUnitInGroup(GetTriggerUnit(),udg_group08)==true))then
+        if(not(IsUnitInGroup(GetTriggerUnit(),GroupEmptyArenaCheck)==true))then
             return false
         endif
         return true
@@ -20,7 +20,7 @@ library trigger106 initializer init requires RandomShit, Functions
         if((ElimModeEnabled==true))then
             return true
         endif
-        if((udg_boolean08==true))then
+        if((GameModeShort==true))then
             return true
         endif
         return false
@@ -73,7 +73,7 @@ library trigger106 initializer init requires RandomShit, Functions
         local location arenaLocation
 
         if(Trig_Complete_Level_Move_Func003C())then
-            set arenaLocation = GetRectCenter(udg_rect09)
+            set arenaLocation = GetRectCenter(RectMidArena)
 
             call RemoveDebuff(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))], 0)
             call SetUnitPositionLoc(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],arenaLocation)

@@ -52,7 +52,7 @@ library Glory initializer initLState
 
         call ResourseRefresh(GetOwningPlayer(u)) 
 
-        if udg_boolean08 == true then
+        if GameModeShort == true then
             if WinCount[pid] != RoundNumber then
                 set Glory[pid] = Glory[pid] + 4000 + ((RoundNumber / 5)- 1)* 2000
                 set WinCount[pid] = RoundNumber 

@@ -11,7 +11,7 @@ library trigger134 initializer init requires RandomShit
 
 
     function Trig_PvP_Func004Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         return true

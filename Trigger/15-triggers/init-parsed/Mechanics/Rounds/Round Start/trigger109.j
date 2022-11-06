@@ -37,7 +37,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         if((ElimModeEnabled==true))then
             return true
         endif
-        if((udg_boolean08==true))then
+        if((GameModeShort==true))then
             return true
         endif
         return false
@@ -172,7 +172,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call ForGroupBJ(udg_group05,function Trig_Start_Level_Func018A)
         call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartFunctionSpells)
         call ConditionalTriggerExecute(udg_trigger98)
-        set udg_integer39 = 0
+        set SuddenDeathTick = 0
         call EnableTrigger(udg_trigger110)
         call StartSuddenDeathTimer()
         call EnableTrigger(udg_trigger116)

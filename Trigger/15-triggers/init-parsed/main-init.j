@@ -103,8 +103,8 @@ library OldInitialization initializer main3
         force udg_force06= null
         string array udg_strings01
         integer array udg_integers12
-        boolean udg_boolean08= false
-        integer udg_integer39= 0
+        boolean GameModeShort= false
+        integer SuddenDeathTick= 0
         dialog udg_dialog04= null
         button array udg_buttons03
         group udg_group05= null
@@ -121,7 +121,7 @@ library OldInitialization initializer main3
         integer udg_integer47= 0
         force udg_force07= null
         boolean udg_boolean12= false
-        integer udg_integer48= 0
+        integer RoundClearXpBonus= 0
         integer RoundCreepChanceSlow= 0
         integer RoundCreepChanceBigBadV= 0
         integer RoundCreepChanceFaerieFire= 0
@@ -133,10 +133,10 @@ library OldInitialization initializer main3
         group udg_group06= null
         integer RoundCreepChanceBlink= 0
         integer RoundCreepChanceThunderClap= 0
-        integer udg_integer56= 0
+        integer BettingPlayerCount= 0
         group udg_group07= null
         sound array udg_sounds01
-        group udg_group08= null
+        group GroupEmptyArenaCheck= null
         real udg_real03= 0
         unit udg_unit02= null
         integer array udg_integers14
@@ -167,15 +167,15 @@ library OldInitialization initializer main3
         boolean udg_boolean18= false
         unit udg_unit05= null
         integer udg_integer63= 0
-        rect udg_rect01= null
-        rect udg_rect02= null
-        rect udg_rect03= null
-        rect udg_rect04= null
-        rect udg_rect05= null
-        rect udg_rect06= null
-        rect udg_rect07= null
-        rect udg_rect08= null
-        rect udg_rect09= null
+        rect RectP1Arena= null
+        rect RectP2Arena= null
+        rect RectP3Arena= null
+        rect RectP4Arena= null
+        rect RectP5Arena= null
+        rect RectP6Arena= null
+        rect RectP7Arena= null
+        rect RectP8Arena= null
+        rect RectMidArena= null
         camerasetup udg_camerasetup01= null
         sound udg_sound01= null
         sound udg_sound02= null
@@ -588,8 +588,8 @@ library OldInitialization initializer main3
             set udg_integers12[i]= 0
             set i = i + 1
         endloop
-        set udg_boolean08 = false
-        set udg_integer39 = 0
+        set GameModeShort = false
+        set SuddenDeathTick = 0
         set udg_dialog04 = DialogCreate()
         set udg_group05 = CreateGroup()
         set udg_integer40 = 0
@@ -605,7 +605,7 @@ library OldInitialization initializer main3
         set udg_integer47 = 0
         set udg_force07 = CreateForce()
         set udg_boolean12 = false
-        set udg_integer48 = 0
+        set RoundClearXpBonus = 0
         set RoundCreepChanceSlow = 0
         set RoundCreepChanceBigBadV = 0
         set RoundCreepChanceFaerieFire = 0
@@ -620,9 +620,9 @@ library OldInitialization initializer main3
         set udg_group06 = CreateGroup()
         set RoundCreepChanceBlink = 0
         set RoundCreepChanceThunderClap = 0
-        set udg_integer56 = 0
+        set BettingPlayerCount = 0
         set udg_group07 = CreateGroup()
-        set udg_group08 = CreateGroup()
+        set GroupEmptyArenaCheck = CreateGroup()
         set udg_real03 = 0
         set i = 0
         loop
@@ -787,8 +787,8 @@ library OldInitialization initializer main3
             set udg_integers12[i]= 0
             set i = i + 1
         endloop
-        set udg_boolean08 = false
-        set udg_integer39 = 0
+        set GameModeShort = false
+        set SuddenDeathTick = 0
         set udg_dialog04 = DialogCreate()
         set udg_group05 = CreateGroup()
         set udg_integer40 = 0
@@ -804,7 +804,7 @@ library OldInitialization initializer main3
         set udg_integer47 = 0
         set udg_force07 = CreateForce()
         set udg_boolean12 = false
-        set udg_integer48 = 0
+        set RoundClearXpBonus = 0
         set RoundCreepChanceSlow = 0
         set RoundCreepChanceBigBadV = 0
         set RoundCreepChanceFaerieFire = 0
@@ -819,9 +819,9 @@ library OldInitialization initializer main3
         set udg_group06 = CreateGroup()
         set RoundCreepChanceBlink = 0
         set RoundCreepChanceThunderClap = 0
-        set udg_integer56 = 0
+        set BettingPlayerCount = 0
         set udg_group07 = CreateGroup()
-        set udg_group08 = CreateGroup()
+        set GroupEmptyArenaCheck = CreateGroup()
         set udg_real03 = 0
         set udg_integer57 = 0
         set udg_integer58 = 0
@@ -863,15 +863,15 @@ library OldInitialization initializer main3
 
     function CreateRegions2 takes nothing returns nothing
         local weathereffect we
-        set udg_rect01 = Rect(- 4384.0,2400.0,- 2784.0,4000.0)
-        set udg_rect02 = Rect(- 800.0,2400.0,800.0,4000.0)
-        set udg_rect03 = Rect(2784.0,2400.0,4384.0,4000.0)
-        set udg_rect04 = Rect(2784.0,- 1056.0,4384.0,544.0)
-        set udg_rect05 = Rect(2784.0,- 4512.0,4384.0,- 2912.0)
-        set udg_rect06 = Rect(- 800.0,- 4512.0,800.0,- 2912.0)
-        set udg_rect07 = Rect(- 4384.0,- 4512.0,- 2784.0,- 2912.0)
-        set udg_rect08 = Rect(- 4384.0,- 1056.0,- 2784.0,544.0)
-        set udg_rect09 = Rect(- 1696.0,- 1952.0,1696.0,1440.0)
+        set RectP1Arena = Rect(- 4384.0,2400.0,- 2784.0,4000.0)
+        set RectP2Arena = Rect(- 800.0,2400.0,800.0,4000.0)
+        set RectP3Arena = Rect(2784.0,2400.0,4384.0,4000.0)
+        set RectP4Arena = Rect(2784.0,- 1056.0,4384.0,544.0)
+        set RectP5Arena = Rect(2784.0,- 4512.0,4384.0,- 2912.0)
+        set RectP6Arena = Rect(- 800.0,- 4512.0,800.0,- 2912.0)
+        set RectP7Arena = Rect(- 4384.0,- 4512.0,- 2784.0,- 2912.0)
+        set RectP8Arena = Rect(- 4384.0,- 1056.0,- 2784.0,544.0)
+        set RectMidArena = Rect(- 1696.0,- 1952.0,1696.0,1440.0)
     endfunction
 
     function Trig_Pulverize_Func001C takes nothing returns boolean

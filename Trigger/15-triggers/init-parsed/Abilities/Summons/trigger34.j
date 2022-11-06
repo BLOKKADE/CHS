@@ -32,7 +32,7 @@ library trigger34 initializer init requires RandomShit
         if((RectContainsUnit(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))],GetTriggerUnit())==true))then
             return true
         endif
-        if((RectContainsUnit(udg_rect09,GetTriggerUnit())==true))then
+        if((RectContainsUnit(RectMidArena,GetTriggerUnit())==true))then
             return true
         endif
         return false

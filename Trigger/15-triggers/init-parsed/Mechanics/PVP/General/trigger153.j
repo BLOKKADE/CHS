@@ -134,10 +134,10 @@
 
         set udg_unit01 = GetEnumUnit()
         call ConditionalTriggerExecute(udg_trigger82)
-        call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(udg_rect09))
+        call SetUnitPositionLoc(GetEnumUnit(),GetRectCenter(RectMidArena))
 
         if (ps.getPet() != null) then
-            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(udg_rect09))
+            call SetUnitPositionLoc(ps.getPet(),GetRectCenter(RectMidArena))
         endif
 
         call SelectUnitForPlayerSingle(GetEnumUnit(),GetOwningPlayer(GetEnumUnit()))
