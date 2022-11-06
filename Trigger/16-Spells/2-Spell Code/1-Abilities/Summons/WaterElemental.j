@@ -8,5 +8,8 @@ library WaterElemental requires CustomState, SpellFormula
         call BlzSetUnitAttackCooldown(u,BlzGetUnitAttackCooldown(u,0)*(8 /(8.9 + I2R(totalLevel)))  ,0)
         call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u)+ totalLevel * 700)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
+
+        call UnitAddAbility(u, ICE_ARMOR_SUMMON_ABILITY_ID)
+        call SetUnitAbilityLevel(u, ICE_ARMOR_SUMMON_ABILITY_ID, abilityLevel)
     endfunction
 endlibrary

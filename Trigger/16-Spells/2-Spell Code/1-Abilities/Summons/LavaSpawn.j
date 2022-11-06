@@ -10,5 +10,8 @@ library LavaSpawn requires CustomState, SpellFormula
 
         call UnitAddAbility(u, 'A0C8')
         call SetUnitAbilityLevel(u, 'A0C8', IMinBJ(R2I(totalLevel / 3), 60))
+
+        call UnitAddAbility(u, LAST_BREATHS_ABILITY_ID)
+        call SetUnitAbilityLevel(u, LAST_BREATHS_ABILITY_ID, abilityLevel)
     endfunction
 endlibrary

@@ -430,6 +430,14 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Ice Armor
+        set i1 = GetUnitAbilityLevel(DamageTarget,ICE_ARMOR_SUMMON_ABILITY_ID)
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_ARMOR_SUMMON_ABILITY_ID) <= 0 then
+            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
+            set Damage.index.damage = Damage.index.damage * 0.2
+            call AbilStartCD(DamageTarget, ICE_ARMOR_SUMMON_ABILITY_ID, 2.05 - (0.05 * i1))
+        endif
+
+        //Ice Force
         set i1 = GetUnitAbilityLevel(DamageTarget,ICE_FORCE_ABILITY_ID)
         if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_FORCE_ABILITY_ID) <= 0 then
             set r1 = (1 - (500 / (500 + GetHeroInt(DamageTarget, true))))

@@ -15,5 +15,8 @@ library Phoenix requires CustomState, SpellFormula
 
         call SetPlayerAbilityAvailable(GetOwningPlayer(u), 'Apxf', false)
         call SetPlayerAbilityAvailable(GetOwningPlayer(u), 'Apxf', true)
+
+        call UnitAddAbility(u, REINCARNATION_ABILITY_ID)
+        call SetUnitAbilityLevel(u, REINCARNATION_ABILITY_ID, abilityLevel)
     endfunction
 endlibrary
