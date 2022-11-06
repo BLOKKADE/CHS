@@ -145,6 +145,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         if SummonDomeProtection[pid] > 0 then
             call AddSummonAbility(u, DOME_OF_PROTECTION_ABILITY_ID, SummonDomeProtection[pid])
         endif
+        */
 
         if SummonHitPoints[pid] > 0 then
             call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 50)
@@ -157,7 +158,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         if SummonDamage[pid] > 0 then
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (3 * SummonDamage[pid]), 0)
-        endif*/
+        endif
 
         //wild Defense
         if wild != 1 then      

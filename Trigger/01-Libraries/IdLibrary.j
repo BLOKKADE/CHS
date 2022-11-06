@@ -433,6 +433,7 @@ library IdLibrary initializer init
         constant integer SUMMON_MAGIC_DMG_ABILITY_ID                    = 'A0CQ'
         constant integer ERUPTION_ABILITY_ID                            = 'A0DA'
         constant integer WILD_DEFENSE_SUMMON_ABILITY_ID                 = 'A06X'
+        constant integer ICE_ARMOR_SUMMON_ABILITY_ID                    = 'A0CY'
         
         // Dummy Abilities
         constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'
