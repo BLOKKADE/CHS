@@ -225,9 +225,9 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call Urn(caster)
                     endif   
 
-                    if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
+                    /*if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
                         call MysteriousTalentCast(caster)
-                    endif
+                    endif*/
 
                     if abilId == 'A09Q' then
                         call StaffOfPowerCast(caster)
