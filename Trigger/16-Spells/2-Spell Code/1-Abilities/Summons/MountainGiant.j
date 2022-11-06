@@ -10,5 +10,6 @@ library MountainGiant requires CustomState, SpellFormula
         call AddUnitBlock(u, GetSpellValue(200, 20, abilityLevel) + (500 * summonLevel))
 
         call SetUnitAbilityLevel(u, 'A06H', IMinBJ(R2I(totalLevel / 3), 60))
+        call IssueImmediateOrderById(u, 852520)
     endfunction
 endlibrary
