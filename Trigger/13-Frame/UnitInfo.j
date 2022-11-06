@@ -178,7 +178,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		call InitDataInfoPanel(1 , "Damage: " , "ReplaceableTextures\\CommandButtons\\BTNAttack.blp" , "")
 		call InitDataInfoPanel(2 , "Attack cooldown: " , "ReplaceableTextures\\CommandButtons\\BTNHoldPosition.blp" , "Time between the unit's attacks / Time to start the effect of a spell.\nAbilities and items can affect these values making them inaccurate.")
 		call InitDataInfoPanel(3 , "Armor: " , "ReplaceableTextures\\CommandButtons\\BTNStop.blp" , "")
-		call InitDataInfoPanel(4 , "Block: " , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , "Flat Damage reduction applied to all damage taken.\nBlock is calculated before armor but after magic protection.")
+		call InitDataInfoPanel(4 , "Block: " , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , "Flat Damage reduction applied to all damage taken.\nBlock is calculated before armor and magic protection.")
 		call InitDataInfoPanel(5 , "Pvp bonus: " , "BTNHUHoldPosition.blp" , "Increases damage dealt to enemy heroes\nReduces damage taken from enemy heroes. ")
 		call InitDataInfoPanel(6 , "Strength: " , "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower" , "")
 		call InitDataInfoPanel(7 , "Agility: " , "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility" , "")
