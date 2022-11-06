@@ -223,7 +223,11 @@ scope ModifyDamageBeforeArmor initializer init
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * i1))))
         endif
 
-        
+        //Monsoon
+        set i1 = GetUnitAbilityLevel(DamageSource, MONSOON_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == MONSOON_ABILITY_ID then
+            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.03)))
+        endif
 
         //Sword of Bloodthirst
         set i1 = UnitHasItemI(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
