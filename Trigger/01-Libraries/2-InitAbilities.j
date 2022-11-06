@@ -118,7 +118,7 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers08[99]= FINISHING_BLOW_ABILITY_ID
 	set udg_integers08[100]= MEGA_SPEED_ABILITY_ID
 	set udg_integers08[101]= THUNDER_FORCE_ABILITY_ID
-	set udg_integers08[102]= AIR_FORCE_ABILITY_ID
+	set udg_integers08[102]= HERO_FORCE_ABILITY_ID
 	set udg_integers08[103]= FIRE_FORCE_ABILITY_ID    
 	set udg_integers08[104]= LEARNABILITY_ABILITY_ID  
 	set udg_integers08[105]= MANA_BONUS_ABILITY_ID    
@@ -241,7 +241,7 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers09[99]= FINISHING_BLOW_ITEM_ID
 	set udg_integers09[100]= MEGA_SPEED_ITEM_ID
 	set udg_integers09[101]= THUNDER_FORCE_ITEM_ID
-	set udg_integers09[102]= AIR_FORCE_ITEM_ID
+	set udg_integers09[102]= HERO_FORCE_ITEM_ID
 	set udg_integers09[103]= FIRE_FORCE_ITEM_ID
 	set udg_integers09[104]= LEARNABILITY_ITEM_ID   
 	set udg_integers09[105]= MANA_BONUS_ITEM_ID      
@@ -314,8 +314,8 @@ function Trig_Spell_Initialization_Actions takes nothing returns nothing
 	set udg_integers08[137]= MONSOON_DUMMY_ABILITY_ID 
 	set udg_integers09[137]= MONSOON_ITEM_ID 
 
-	set udg_integers08[138]= ICE_ARMOR_ABILITY_ID 
-	set udg_integers09[138]= ICE_ARMOR_ITEM_ID 
+	set udg_integers08[138]= ICE_FORCE_ABILITY_ID 
+	set udg_integers09[138]= ICE_FORCE_ITEM_ID 
 
 
 	set udg_integers08[139]= LAST_BREATHS_ABILITY_ID 

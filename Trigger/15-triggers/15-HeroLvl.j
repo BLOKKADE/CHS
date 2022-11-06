@@ -88,7 +88,7 @@ library heroLevel initializer init requires HeroLvlTable
         set t = null
     endfunction
 
-    function UpdateAbilityDesc takes unit h, player p, integer heroLvl returns nothing
+    function UpdateAbilityDescriptionLevelup takes unit h, player p, integer heroLvl returns nothing
         local integer abilLvl
         local integer abilId
         local string s
@@ -99,6 +99,12 @@ library heroLevel initializer init requires HeroLvlTable
             set s = GetAbilityDescription(abilId, abilLvl - 1)
             set s = UpdateAbilityDescription(s, p, abilId, ",s00,", R2I(SpellData[GetHandleId(h)].real[3]), abilLvl)
             call UpdateAbilityDescription(s, p, abilId, ",s01,", R2I((300 * abilLvl) * (1 + 0.02 * heroLvl)), abilLvl)
+        endif
+
+        set abilId = ICE_FORCE_ABILITY_ID
+        set abilLvl = GetUnitAbilityLevel(h, abilId)
+        if abilLvl > 0 then
+            call UpdateAbilityDescription(GetAbilityDescription(abilId, abilLvl - 1), p, abilId, ",s01,", R2I((1 - (500 / (500 + GetHeroInt(h, true)))) * 100), abilLvl)
         endif
     endfunction
 
@@ -352,7 +358,7 @@ library heroLevel initializer init requires HeroLvlTable
             call UpdateBonus(u, 0, 2 * levelsGained)   
         endif
         
-        call UpdateAbilityDesc(u, p, GetHeroLevel(u))
+        call UpdateAbilityDescriptionLevelup(u, p, GetHeroLevel(u))
         set LastLvlHero[pid] = heroLevel  
 
         set u = null

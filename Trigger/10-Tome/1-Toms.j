@@ -551,7 +551,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set ctrl = false
                 endif
                 //Summon Ice Armor
-            elseif II == SUMMON_ICE_ARMOR_ITEM_ID then
+            elseif II == SUMMON_ICE_FORCE_ITEM_ID then
                 if SummonIceArmor[pid] < 30 then
                     set SummonIceArmor[pid] = SummonIceArmor[pid] + 1
                     set summonUpgradeBonus = SummonIceArmor[pid]

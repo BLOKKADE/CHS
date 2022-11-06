@@ -446,6 +446,11 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
         //Hero element
         set elementCount = elementCount + GetObjectElementCount(GetUnitTypeId(u), id)
+
+        //Hero Force
+        if GetUnitAbilityLevel(u, HERO_FORCE_ABILITY_ID) > 0 then
+            set elementCount = elementCount + GetObjectElementCount(GetUnitTypeId(u), id)
+        endif
         
         loop
             exitwhen i > 20 

@@ -140,8 +140,8 @@ scope AttackController initializer init
 
         //Fire Force
         set i1 = GetUnitAbilityLevel(u,FIRE_FORCE_ABILITY_ID )
-        if i1 > 0 and (GetRandomReal(1,100)<= 12 * luck) then
-            call USOrderA(u,GetUnitX(u),GetUnitY(u),'A0C0',"fanofknives",  GetHeroStr(u,true)*(60 + 20 * I2R(i1))/ 100, ConvertAbilityRealLevelField('Ocl1') )
+        if i1 > 0 and (GetRandomReal(1,100)<= 25 * luck) then
+            call USOrderA(u,GetUnitX(u),GetUnitY(u),'A0C0',"fanofknives",  GetHeroStr(u,true) * (0.62 + (0.08 * i1)), ConvertAbilityRealLevelField('Ocl1') )
         endif
         set u = null
         set u2 = null

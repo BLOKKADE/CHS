@@ -682,7 +682,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Wind, 1)
 
         //102 - Air Force 
-        call SaveAbilData(AIR_FORCE_ABILITY_ID, AIR_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SaveAbilData(HERO_FORCE_ABILITY_ID, HERO_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Wind, 1)
 
         //103 - Fire Force 
@@ -843,7 +843,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //call SaveDummyAbilOrder(MONSOON_DUMMY_ABILITY_ID, "monsoon")
 
         //138 - Ice Armor 
-        call SaveAbilData(ICE_ARMOR_ABILITY_ID, ICE_ARMOR_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ICE_FORCE_ABILITY_ID, ICE_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
 

@@ -489,18 +489,21 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Stone Protection
-        if GetUnitAbilityLevel(DamageTarget,STONE_PROTECTION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,STONE_PROTECTION_ABILITY_ID)<= 0.001 then
+        set i1 = GetUnitAbilityLevel(DamageSource, STONE_PROTECTION_ABILITY_ID)
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,STONE_PROTECTION_ABILITY_ID) == 0 then
             call CastStoneProtect(DamageTarget, DamageSource)
         endif
         
         //Thunder Force
-        if GetUnitAbilityLevel(DamageSource,THUNDER_FORCE_ABILITY_ID ) >= 1 and Damage.index.isAttack then
-            call UsOrderU(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroInt(DamageSource,true)*(20 + 8 * I2R(GetUnitAbilityLevel(DamageSource,THUNDER_FORCE_ABILITY_ID )))/ 100, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
+        set i1 = GetUnitAbilityLevel(DamageSource, THUNDER_FORCE_ABILITY_ID)
+        if i1 >= 0 and Damage.index.isAttack then
+            call UsOrderU(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroAgi(DamageSource,true) * (0.2 + (0.08 * i1)), ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif
 
         //Finishing Blow
-        if Damage.index.amount > 0 and GetUnitAbilityLevel(DamageSourceHero , FINISHING_BLOW_ABILITY_ID) >= 1 then
-            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE)     <= R2I(GetUnitAbilityLevel(DamageSourceHero , FINISHING_BLOW_ABILITY_ID))  then
+        set i1 = GetUnitAbilityLevel(DamageSource, FINISHING_BLOW_ABILITY_ID)
+        if Damage.index.amount > 0 and i1 > 0 then
+            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= i1  then
                 set Damage.index.amount = 9999999
                 if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
                     call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))

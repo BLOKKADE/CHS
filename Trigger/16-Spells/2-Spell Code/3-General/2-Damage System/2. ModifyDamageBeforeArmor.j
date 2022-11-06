@@ -430,10 +430,13 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Ice Armor
-        if GetUnitAbilityLevel(DamageTarget,ICE_ARMOR_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_ARMOR_ABILITY_ID) <= 0    then
+        set i1 = GetUnitAbilityLevel(DamageTarget,ICE_FORCE_ABILITY_ID)
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_FORCE_ABILITY_ID) <= 0 then
+            set r1 = (1 - (500 / (500 + GetHeroInt(DamageTarget, true))))
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
-            set Damage.index.damage =  Damage.index.damage / 5
-            call AbilStartCD(DamageTarget,ICE_ARMOR_ABILITY_ID, 2.05 - 0.05 * I2R(GetUnitAbilityLevel(DamageTarget,ICE_ARMOR_ABILITY_ID)) )
+            set Damage.index.damage = Damage.index.damage * r1
+            call AbilStartCD(DamageTarget, ICE_FORCE_ABILITY_ID, 2.05 - (0.05 * i1))
+            call UpdateAbilityDescription(GetAbilityDescription(ICE_FORCE_ABILITY_ID, i1 - 1), Player(DamageTargetPid), ICE_FORCE_ABILITY_ID, ",s01,", R2I(r1 * 100), i1)
         endif  
 
         //Blessed Protection
@@ -480,12 +483,12 @@ scope ModifyDamageBeforeArmor initializer init
         endif*/
 
         //Air Force
-        if GetUnitAbilityLevel(DamageSourceHero  ,AIR_FORCE_ABILITY_ID) >= 1 then
+        if GetUnitAbilityLevel(DamageSourceHero  ,HERO_FORCE_ABILITY_ID) >= 1 then
             if GetUnitAbilityLevel(DamageTarget,'Bams') > 0 or GetUnitAbilityLevel(DamageTarget,ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
 
-                set Damage.index.damage =   Damage.index.damage  + (I2R(GetUnitAbilityLevel(DamageSourceHero  ,AIR_FORCE_ABILITY_ID))* GetHeroAgi(DamageSourceHero,true))/ 40
+                set Damage.index.damage =   Damage.index.damage  + (I2R(GetUnitAbilityLevel(DamageSourceHero  ,HERO_FORCE_ABILITY_ID))* GetHeroAgi(DamageSourceHero,true))/ 40
             else
-                set Damage.index.damage =   Damage.index.damage  + (I2R(GetUnitAbilityLevel(DamageSourceHero  ,AIR_FORCE_ABILITY_ID))* GetHeroAgi(DamageSourceHero,true))/ 20
+                set Damage.index.damage =   Damage.index.damage  + (I2R(GetUnitAbilityLevel(DamageSourceHero  ,HERO_FORCE_ABILITY_ID))* GetHeroAgi(DamageSourceHero,true))/ 20
             endif
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
         endif

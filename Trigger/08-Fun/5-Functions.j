@@ -149,6 +149,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
 
     function FuncEditParam takes integer abilId, unit u returns nothing
         local integer NumAbility
+        local integer level = GetUnitAbilityLevel(u, abilId)
 
         if IsUnitType(u, UNIT_TYPE_HERO) and IsAbsolute(abilId) == false then
             call AddSpellPlayerInfo(abilId,u,0)
@@ -157,25 +158,33 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         endif
 
         if IsAbilityEnabled(u, abilId) then
-            call ToggleUpdateDescription(GetOwningPlayer(u), abilId, GetUnitAbilityLevel(u, abilId))
+            call ToggleUpdateDescription(GetOwningPlayer(u), abilId, level)
         endif
 
         call SetSkillParameters(u, abilId)
 
-        if abilId == MYSTERIOUS_TALENT_ABILITY_ID or abilId == ANCIENT_TEACHING_ABILITY_ID or abilId == TIME_MANIPULATION_ABILITY_ID and GetUnitAbilityLevel(u,abilId) == 1 then
+        if abilId == MYSTERIOUS_TALENT_ABILITY_ID or abilId == ANCIENT_TEACHING_ABILITY_ID or abilId == TIME_MANIPULATION_ABILITY_ID and level == 1 then
             call BlzStartUnitAbilityCooldown(u,abilId,60)
         endif
 
-        if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
+        /*if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
             call MysteriousTalentUpdateDesc(u)
-        endif
+        endif*/
 
         if abilId == MEGA_SPEED_ABILITY_ID then     
             if LoadReal(HT, GetHandleId(u),1 ) == 0 then 
                 call SaveReal(HT,GetHandleId(u),1, BlzGetUnitAttackCooldown(u,0)    )
             endif
-            call SaveReal(HT,GetHandleId(u),MEGA_SPEED_ABILITY_ID, 0.02 * I2R(GetUnitAbilityLevel(u,abilId))   )	
+            call SaveReal(HT, GetHandleId(u), MEGA_SPEED_ABILITY_ID, 0.02 * level)	
             //     call BlzSetUnitAttackCooldown(u, 0.92 - (0.02*I2R(GetUnitAbilityLevel(u,abilId)) ),0  )
+        endif
+
+        if abilId == ICE_FORCE_ABILITY_ID then
+            call UpdateAbilityDescription(GetAbilityDescription(ICE_FORCE_ABILITY_ID, level - 1), GetOwningPlayer(u), ICE_FORCE_ABILITY_ID, ",s01,", R2I((1 - (500 / (500 + GetHeroInt(u, true)))) * 100), level)
+        endif
+
+        if abilId == MARTIAL_RETRIBUTION_ABILITY_ID then
+            call UpdateAbilityDescription(GetAbilityDescription(ICE_FORCE_ABILITY_ID, level - 1), GetOwningPlayer(u), ICE_FORCE_ABILITY_ID, ",s01,", R2I((1 - (500 / (500 + GetHeroInt(u, true)))) * 100), level)
         endif
 
         call PandaSkin_CheckAbilitiesAndItems(u)

@@ -139,7 +139,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         if SummonIceArmor[pid] > 0 then
-            call AddSummonAbility(u, ICE_ARMOR_ABILITY_ID, SummonIceArmor[pid])
+            call AddSummonAbility(u, ICE_FORCE_ABILITY_ID, SummonIceArmor[pid])
         endif
 
         if SummonDomeProtection[pid] > 0 then
