@@ -63,24 +63,21 @@ library trigger107 initializer init requires RandomShit
         return true
     endfunction
 
-
-    function Trig_Complete_Level_Player_Func005Func004001 takes nothing returns boolean
-        return(GameModeShort==false)
-    endfunction
-
-
-    function Trig_Complete_Level_Player_Func010C takes nothing returns boolean
-        if(not(RoundClearXpBonus==0))then
-            return false
-        endif
-        return true
-    endfunction
-
-
     function Trig_Complete_Level_Player_Actions takes nothing returns nothing
         local player p = GetOwningPlayer(GetKillingUnit())
         local integer pid = GetPlayerId(p)
         local location arenaLocation = GetRectCenter(GetPlayableMapRect())
+        local real duration = (T32_Tick - RoundStartTick) / 32
+        local real playerCountSub = RMaxBJ(8 - (0.5 * duration), 0)
+        local integer roundClearXpBonus = R2I(playerCountSub * (5 * Pow(RoundNumber, 2)))
+
+        if p == GetLocalPlayer() then
+            call ToggleXpBonusFrame(false)
+        endif
+
+        if GetUnitTypeId(GetKillingUnit()) == TINKER_UNIT_ID then
+            set roundClearXpBonus = roundClearXpBonus * 2
+        endif
 
         if(Trig_Complete_Level_Player_Func001001())then
             set udg_boolean09 = false
@@ -93,17 +90,7 @@ library trigger107 initializer init requires RandomShit
         else
             call DoNothing()
         endif
-        if(Trig_Complete_Level_Player_Func005C())then
-            set RoundClearXpBonus =((PlayerCount -(1 + CountPlayersInForceBJ(RoundPlayersCompleted)))*(RoundNumber * 5))
-            set RoundClearXpBonus =(RoundClearXpBonus * RoundNumber)
-            if(Trig_Complete_Level_Player_Func005Func004001())then
-                set RoundClearXpBonus =(RoundClearXpBonus / 2)
-            else
-                call DoNothing()
-            endif
-        else
-            set RoundClearXpBonus = 0
-        endif
+
         call ForceAddPlayerSimple(p,RoundPlayersCompleted)
         call SetCurrentlyFighting(p, false)
         set RoundFinishedCount =(RoundFinishedCount + 1)
@@ -112,11 +99,11 @@ library trigger107 initializer init requires RandomShit
             set RoundLiveLost[pid] = false
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ " |cffff7300died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")))
         else
-            if(Trig_Complete_Level_Player_Func010C())then
+            if roundClearXpBonus == 0 then
                 call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ " |cffffcc00survived the level!|r")))
             else
-                call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00survived the level!|r |cff7bff00(+" +(I2S(RoundClearXpBonus)+ " exp)|r")))))
-                call AddHeroXPSwapped(RoundClearXpBonus,PlayerHeroes[pid + 1],true)
+                call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00survived the level!|r |cff7bff00(+" +(I2S(roundClearXpBonus)+ " exp)|r")))))
+                call AddHeroXPSwapped(roundClearXpBonus,PlayerHeroes[pid + 1],true)
             endif
         endif
         call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,p,arenaLocation,bj_UNIT_FACING)

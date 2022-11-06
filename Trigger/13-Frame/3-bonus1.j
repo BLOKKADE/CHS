@@ -81,6 +81,7 @@ library HeroData initializer init
         call SaveStr(HT_data,TROLL_HEADHUNTER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Troll Anatomy: +1.5% strength conversion." )
                         
         call SaveStr(HT_data,TINKER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp" )       // Tinker
+        call SaveStr(HT_data,TINKER_UNIT_ID,2, "|cff00ffffPassive|r: Quick Learner: Gains double the round clear experience bonus.")
         call SaveStr(HT_data,TINKER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Gains 55 * hero level experience." )
         
         call SaveStr(HT_data,BEAST_MASTER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNBeastMaster.blp" )       // Beast master

@@ -121,7 +121,6 @@ library OldInitialization initializer main3
         integer udg_integer47= 0
         force udg_force07= null
         boolean udg_boolean12= false
-        integer RoundClearXpBonus= 0
         integer RoundCreepChanceSlow= 0
         integer RoundCreepChanceBigBadV= 0
         integer RoundCreepChanceFaerieFire= 0
@@ -605,7 +604,6 @@ library OldInitialization initializer main3
         set udg_integer47 = 0
         set udg_force07 = CreateForce()
         set udg_boolean12 = false
-        set RoundClearXpBonus = 0
         set RoundCreepChanceSlow = 0
         set RoundCreepChanceBigBadV = 0
         set RoundCreepChanceFaerieFire = 0
@@ -804,7 +802,6 @@ library OldInitialization initializer main3
         set udg_integer47 = 0
         set udg_force07 = CreateForce()
         set udg_boolean12 = false
-        set RoundClearXpBonus = 0
         set RoundCreepChanceSlow = 0
         set RoundCreepChanceBigBadV = 0
         set RoundCreepChanceFaerieFire = 0

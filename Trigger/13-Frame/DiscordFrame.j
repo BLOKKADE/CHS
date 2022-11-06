@@ -1,4 +1,4 @@
-library DiscordFrame initializer init
+library DiscordFrame initializer init requires FrameLoader
 
     globals
         private framehandle frameDiscordText

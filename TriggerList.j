@@ -88,6 +88,7 @@
 //! import "C:\CHS\CHS\Trigger\13-Frame\UnitInfo.j"
 //! import "C:\CHS\CHS\Trigger\13-Frame\VotingResults.j"
 //! import "C:\CHS\CHS\Trigger\13-Frame\VotingScreen.j"
+//! import "C:\CHS\CHS\Trigger\13-Frame\XpBonusUI.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\04-Cooldown.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\06-FixUnit.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\07-InitHash.j"

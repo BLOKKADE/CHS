@@ -1,5 +1,9 @@
 library trigger109 initializer init requires RandomShit, StartFunction, SellItems, DebugCode, HeroSelectorAction
 
+    globals
+        integer RoundStartTick
+    endglobals
+
     function Trig_Start_Level_Conditions takes nothing returns boolean
         if(not(udg_boolean09==false))then
             return false
@@ -173,8 +177,12 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartFunctionSpells)
         call ConditionalTriggerExecute(udg_trigger98)
         set SuddenDeathTick = 0
+        set RoundStartTick = T32_Tick
+        call BJDebugMsg("round start tick")
         call EnableTrigger(udg_trigger110)
         call StartSuddenDeathTimer()
+        call ToggleXpBonusFrame(true)
+        call ToggleXpBonusframeUpdate(true)
         call EnableTrigger(udg_trigger116)
         call EnableTrigger(udg_trigger103)
     endfunction
