@@ -519,7 +519,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call PlayerAddGold( GetOwningPlayer(u),8000)  
                     set ctrl = false
                 endif
-
+            /*
                 //Summon Attack
             elseif II == SUMMON_ATTACK_BONUS_ITEM_ID then
                 set SummonDamage[pid] = SummonDamage[pid] + 1
@@ -586,7 +586,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call PlayerReturnLumber(It, II, p)
                     set ctrl = false
                 endif
-
+                */
                 //Manual of health
             elseif II == 'manh' then 
                 call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 50)

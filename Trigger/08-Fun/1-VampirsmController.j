@@ -9,7 +9,7 @@ library Vampirism requires RandomShit
             set amount = amount * 0.4
         endif
 
-        set i1 = GetUnitAbilityLevel(target, DOME_OF_PROTECTION_ABILITY_ID)
+        set i1 = GetUnitAbilityLevel(target, WILD_DEFENSE_SUMMON_ABILITY_ID)
         if i1 > 0 then
             set amount = amount * (1 - (0.175 + (0.0175 * i1)))
         endif

@@ -426,12 +426,13 @@ library IdLibrary initializer init
         constant integer WAR_DRUMS_ABILITY_ID                           = 'Aakb'
         constant integer WAR_STOMP_ABILITY_ID                           = 'AOws'
         constant integer WHIRLWIND_ABILITY_ID                           = 'A025'
-        constant integer WILD_DEFENSE_ABILITY_ID                        = 'A06X'
+        constant integer WILD_DEFENSE_ABILITY_ID                        = 'A0B9'
         constant integer WIND_WALK_ABILITY_ID                           = 'AOwk'
         constant integer WIZARDBANE_AURA_ABILITY_ID                     = 'A088'
         constant integer MARTIAL_THEFT_ABILITY_ID                       = 'A05S'
         constant integer SUMMON_MAGIC_DMG_ABILITY_ID                    = 'A0CQ'
         constant integer ERUPTION_ABILITY_ID                            = 'A0DA'
+        constant integer WILD_DEFENSE_SUMMON_ABILITY_ID                 = 'A06X'
         
         // Dummy Abilities
         constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'
@@ -741,7 +742,7 @@ library IdLibrary initializer init
         constant integer SUMMON_MOUNTAIN_GIANT_ITEM_ID                  = 'I03Y'
         constant integer SUMMON_QUILBEAST_ITEM_ID                       = 'I031'
         constant integer SUMMON_WATER_ELEMENTAL_ITEM_ID                 = 'I00S'
-        constant integer SUMMON_WILD_DEFENSE_ITEM_ID                    = 'I087'
+        constant integer WILD_DEFENSE_ITEM_ID                           = 'I087'
         constant integer SWORD_OF_BLOODTHRIST_ITEM_ID                   = 'I0AI'
         constant integer SWORD_OF_BLOODTHRIST_TOME_ITEM_ID              = 'I0AG'
         constant integer TEMPORARY_INVISIBILITY_ITEM_ID                 = 'I05O'

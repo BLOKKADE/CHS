@@ -1115,6 +1115,9 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
          call SetLastObjectElement(Element_Fire, 1)
          call SetLastObjectElement(Element_Earth, 1)
 
+         //196 - Wild Defense
+         call SaveAbilData(WILD_DEFENSE_ABILITY_ID, WILD_DEFENSE_ITEM_ID, false, 0, 0, false, Order_None, null)
+         call SetLastObjectElement(Element_Wild, 2)
     endfunction
 
     function InitHeroElements takes nothing returns nothing

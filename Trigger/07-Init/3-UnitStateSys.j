@@ -117,13 +117,15 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
          //Wild Defense
-        if SummonWildDefense[pid] > 0 then
-            call AddUnitMagicDef(u,3 * SummonWildDefense[pid])
-            call AddUnitEvasion(u,0.5 * SummonWildDefense[pid])
-            call AddUnitBlock(u,10 * SummonWildDefense[pid])
-            call AddSummonAbility(u, WILD_DEFENSE_ABILITY_ID, SummonWildDefense[pid])
+         set i2 = GetUnitAbilityLevel(hero, WILD_DEFENSE_ABILITY_ID)
+         if i2 > 0 then
+            call AddUnitMagicDef(u,3 * i2)
+            call AddUnitEvasion(u,0.5 * i2)
+            call AddUnitBlock(u,10 * i2)
+            call AddSummonAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID, i2)
         endif
 
+        /*
         if SummonCrit[pid] > 0 and i != PHOENIX_1_UNIT_ID then
             call AddSummonAbility(u, CRITICAL_STRIKE_ABILITY_ID, SummonCrit[pid])
         endif
@@ -155,7 +157,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         if SummonDamage[pid] > 0 then
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (3 * SummonDamage[pid]), 0)
-        endif
+        endif*/
 
         //wild Defense
         if wild != 1 then      
