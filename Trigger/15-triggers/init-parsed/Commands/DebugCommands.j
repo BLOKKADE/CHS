@@ -8,7 +8,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         boolean array dummyEnabled
         integer array CreatedDummies
         boolean CreepEnrageEnabled = true
-        effect TestFx
+        effect TestFx = null
         boolean DebugMsgMode = false
     endglobals
     //===========================================================================
