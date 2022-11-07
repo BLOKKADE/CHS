@@ -148,7 +148,7 @@ function FunctionTimerSpell takes nothing returns nothing
     endif
         
     //Shining Runestone
-    set i1 = UnitHasItemI( Herou,'I08L' )
+    set i1 = GetUnitITemTypeCount( Herou,'I08L' )
     set i = 0
     if i1 > 0 then
         //call ElemFuncStart(Herou,'I08L')
@@ -165,7 +165,7 @@ function FunctionTimerSpell takes nothing returns nothing
     endif
         
     //Bone Armor
-    if UnitHasItemS(Herou,'I07O') then
+    if UnitHasItemType(Herou,'I07O') then
         call ElemFuncStart(Herou,'I07O')
         set U = CreateUnit(GetOwningPlayer(Herou),'u003',GetUnitX(Herou),GetUnitY(Herou),0)
         call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,40 * ChronusLevel)
@@ -211,14 +211,14 @@ function FunctionTimerSpell takes nothing returns nothing
     endif
 
     //Magic Blade
-    set i1 = UnitHasItemI( Herou,'I06I' )
+    set i1 = GetUnitITemTypeCount( Herou,'I06I' )
     if i1 > 0 then
         call ElemFuncStart(Herou,'I06I')
         call SetUnitState(Herou, UNIT_STATE_MANA, GetUnitState(Herou, UNIT_STATE_MANA)- 70000 * i1  )
     endif
         
     //Armor of Ancestors
-    set i1 = UnitHasItemI( Herou,'I07G' )
+    set i1 = GetUnitITemTypeCount( Herou,'I07G' )
     if i1 > 0 then
         call ElemFuncStart(Herou,'I07G')
         call BlzSetUnitArmor(Herou,BlzGetUnitArmor(Herou)+ i1 * 20 * RoundCreepNumber )
@@ -227,7 +227,7 @@ function FunctionTimerSpell takes nothing returns nothing
     endif
 
     //Arcane Infused Sword
-    set i1 = UnitHasItemI( Herou, ARCANE_INFUSED_SWORD_ITEM_ID )
+    set i1 = GetUnitITemTypeCount( Herou, ARCANE_INFUSED_SWORD_ITEM_ID )
     if i1 > 0 then
         set i = R2I((GetUnitDamage(Herou, 0) - LoadInteger(HT,hid,ARCANE_INFUSED_SWORD_ITEM_ID))* 0.05 * RoundCreepNumber)
         call AddUnitBonus(Herou, BONUS_DAMAGE, i)
@@ -235,7 +235,7 @@ function FunctionTimerSpell takes nothing returns nothing
     endif
         
     //Book of Necromancy
-    set i1 = UnitHasItemI( Herou,'I06J' )
+    set i1 = GetUnitITemTypeCount( Herou,'I06J' )
     if i1 > 0 then
         call ElemFuncStart(Herou,'I06J')
         set SummonDamage[pid] = SummonDamage[pid] + i1

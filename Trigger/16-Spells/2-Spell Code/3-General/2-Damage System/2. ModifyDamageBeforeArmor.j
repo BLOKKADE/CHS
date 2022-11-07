@@ -66,7 +66,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif	
 
         //Null Void Orb
-        if UnitHasItemS(DamageTarget, 'I0AL') then
+        if UnitHasItemType(DamageTarget, 'I0AL') then
             if GetRandomInt(1,100) <= 10 * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
@@ -77,7 +77,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Runic Bracer
-        if UnitHasItemS(DamageTarget, 'I04C') then
+        if UnitHasItemType(DamageTarget, 'I04C') then
             if Damage.index.damageType == DAMAGE_TYPE_MAGIC and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0CP') == 0 then
                 call RemoveDebuff(DamageTarget, 1)
                 call AbilStartCD(DamageTarget, 'A0CP', 10)
@@ -86,7 +86,7 @@ scope ModifyDamageBeforeArmor initializer init
                 return
             endif
         //Dark Shield
-        elseif UnitHasItemS( DamageTarget,'I060' )  then
+        elseif UnitHasItemType( DamageTarget,'I060' )  then
             if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
                 if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08R') <= 0 then
                     call AbilStartCD(DamageTarget, 'A08R', 1)
@@ -121,7 +121,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Evasion & miss TODO: clean this up
-        if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemS(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and (GetUnitEvasion(DamageTarget) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitMissChance(DamageSource) > 0) then
+        if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemType(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and (GetUnitEvasion(DamageTarget) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitMissChance(DamageSource) > 0) then
             call Evade()
             
             if Damage.index.damage == 0 then
@@ -136,7 +136,7 @@ scope ModifyDamageBeforeArmor initializer init
             if i1 > 0 and DamageSourceAbility != ARCANE_ASSAUL_ABILITY_ID then
                 call ArcaneAssault(DamageSource, DamageTarget, DamageSourceAbility, Damage.index.damage, i1)
             //arcane infused sword
-            elseif i1 == 0 and DamageSourceAbility != ARCANE_ASSAUL_ABILITY_ID and UnitHasItemS(DamageSource, 'I0BN') then
+            elseif i1 == 0 and DamageSourceAbility != ARCANE_ASSAUL_ABILITY_ID and UnitHasItemType(DamageSource, 'I0BN') then
                 call ArcaneAssault(DamageSource, DamageTarget, DamageSourceAbility, Damage.index.damage, 8)
             endif
 
@@ -163,21 +163,21 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Divine Bubble
         set i1 = GetUnitAbilityLevel(DamageTarget,DIVINE_BUBBLE_ABILITY_ID)
-        if i1 > 0 or UnitHasItemS(DamageTarget, 'I095') then
+        if i1 > 0 or UnitHasItemType(DamageTarget, 'I095') then
             if IsUnitDivineBubbled(DamageTarget) then
                 call RemoveDebuff(DamageTarget, 1) 
                 set DamageIsOnHit = 2
             endif
 
-            if (i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,DIVINE_BUBBLE_ABILITY_ID) <= 0.001) or (i1 == 0 and UnitHasItemS(DamageTarget, 'I095') and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A0AP') == 0) then
+            if (i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,DIVINE_BUBBLE_ABILITY_ID) <= 0.001) or (i1 == 0 and UnitHasItemType(DamageTarget, 'I095') and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A0AP') == 0) then
                 set DamageIsOnHit = 2
                 call RemoveDebuff(DamageTarget, 1) 
-                if UnitHasItemS(DamageTarget, 'I095') then
+                if UnitHasItemType(DamageTarget, 'I095') then
                     set i1 = 1
                 else
                     set i1 = 0
                 endif
-                if UnitHasItemS(DamageTarget, 'I095') and GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) == 0 then
+                if UnitHasItemType(DamageTarget, 'I095') and GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) == 0 then
                     if IsUnitDivineBubbled(DamageTarget) then
                         set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + (32 * i1)
                     else
@@ -245,7 +245,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Sword of Bloodthirst
-        set i1 = UnitHasItemI(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
+        set i1 = GetUnitITemTypeCount(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
         if i1 > 0 and IsPhysDamage() then
             set Damage.index.damage = Damage.index.damage + 900 * i1
         endif
@@ -315,19 +315,19 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Druidic Focus
-        if UnitHasItemS(DamageSource, DRUIDIC_FOCUS_ITEM_ID) and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Wild) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Earth)) then
+        if UnitHasItemType(DamageSource, DRUIDIC_FOCUS_ITEM_ID) and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Wild) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Earth)) then
             set Damage.index.damage = Damage.index.damage * 1.5
         endif
 
         //Hero's Hammer
-        set i1 = UnitHasItemI( DamageSource,'I064' )
+        set i1 = GetUnitITemTypeCount( DamageSource,'I064' )
         if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then 
             set Damage.index.damage = Damage.index.damage + (i1 * (3 * GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)))
             call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\BallistaMissile\\BallistaMissileTarget.mdl", DamageTarget, "chest"))  
         endif
 
         //Hammer of Chaos
-        if UnitHasItemS( DamageSource,'I06H' ) and Damage.index.isAttack then
+        if UnitHasItemType( DamageSource,'I06H' ) and Damage.index.isAttack then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource,'A04Y') <= 0 then
                 call AbilStartCD(DamageSource,'A04Y', 3 )
                 call USOrder4field(DamageSource,GetUnitX(DamageTarget),GetUnitY(DamageTarget),'A04R',"stomp",Damage.index.damage,ABILITY_RLF_DAMAGE_INCREASE,500,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,0.05,ABILITY_RLF_DURATION_NORMAL)
@@ -548,19 +548,19 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Vigour Token
-        set i1 = UnitHasItemI(DamageSource, VIGOUR_TOKEN_ITEM_ID)
+        set i1 = GetUnitITemTypeCount(DamageSource, VIGOUR_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitMaxHP(DamageSource) < BlzGetUnitMaxHP(DamageTarget) then
             set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
         endif
 
         //Flimsy Token
-        set i1 = UnitHasItemI(DamageSource, FLIMSY_TOKEN_ITEM_ID)
+        set i1 = GetUnitITemTypeCount(DamageSource, FLIMSY_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitArmor(DamageSource) < BlzGetUnitArmor(DamageTarget) then
             set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
         endif
 
         //Spellbane Token
-        set i1 = UnitHasItemI(DamageSource, SPELL_BANE_TOKEN_ITEM_ID)
+        set i1 = GetUnitITemTypeCount(DamageSource, SPELL_BANE_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitMaxMana(DamageSource) < BlzGetUnitMaxMana(DamageTarget) then
             set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
         endif
@@ -668,7 +668,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
             */
             //Sword of Bloodthirst
-            if UnitHasItemS(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) then
+            if UnitHasItemType(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) then
                 set blockDamage = blockDamage * 0.7
             endif
 
@@ -708,7 +708,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Wisdom Chestplate
-        if IsMagicDamage() and UnitHasItemS(DamageTarget, WISDOM_CHESTPLATE_ITEM_ID) then 
+        if IsMagicDamage() and UnitHasItemType(DamageTarget, WISDOM_CHESTPLATE_ITEM_ID) then 
             call ActivateWisdomChestplate(DamageTarget, Damage.index.damage)
         endif
 
@@ -761,7 +761,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif 
 
         //Mystical armor
-        set i1 = UnitHasItemI( DamageTarget,'I06E' )
+        set i1 = GetUnitITemTypeCount( DamageTarget,'I06E' )
         if i1 > 0  then
             if GetRandomReal(1,100)  <= i1 * 8 * DamageSourceLuck then
                 if GetUnitState(DamageTarget,UNIT_STATE_MANA) >= 750 then

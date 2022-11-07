@@ -120,7 +120,7 @@ scope AttackController initializer init
         endif
         
         //Magical Blade
-        set i1 = UnitHasItemI( u2,'I06I' )
+        set i1 = GetUnitITemTypeCount( u2,'I06I' )
         if i1 > 0 then
             call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA)- 200 * i1  )
             //call SetUnitState(u2, UNIT_STATE_MANA, GetUnitState(u2, UNIT_STATE_MANA)+ 50 * i1  )

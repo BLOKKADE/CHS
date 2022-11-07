@@ -54,14 +54,14 @@ scope Killing initializer init
             endif
 
             //Strong Chest Mail
-            set i = UnitHasItemI(killingHero,'I079') 
+            set i = GetUnitITemTypeCount(killingHero,'I079') 
             if i > 0 and killer != null then
                 call Vamp(killingHero, target, BlzGetUnitMaxHP(killingHero)* 0.1 * I2R(i))
                 call DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", killingHero, "chest"))      
             endif
 
             //Amulet of the Night
-            set i = UnitHasItemI( killingHero,'I07E') 
+            set i = GetUnitITemTypeCount( killingHero,'I07E') 
             if i > 0 and GetOwningPlayer(target) == Player(11) then
 
                 call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 7, 10, 'I07E')

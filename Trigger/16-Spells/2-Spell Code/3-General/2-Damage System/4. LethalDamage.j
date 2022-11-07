@@ -16,17 +16,17 @@ scope LethalDamage initializer init
         endif
 
         //Magic Necklace
-        if UnitHasItemS(DamageSourceHero, 'I05G') and IsMagicDamage() then
+        if UnitHasItemType(DamageSourceHero, 'I05G') and IsMagicDamage() then
             set MagicNecklaceBonus.boolean[GetHandleId(DamageTarget)] = true
         endif
 
         //Chest of Greed
-        if UnitHasItemS(DamageSourceHero, 'I05A') and IsPhysDamage() then
+        if UnitHasItemType(DamageSourceHero, 'I05A') and IsPhysDamage() then
             set ChestOfGreedBonus.boolean[GetHandleId(DamageTarget)] = true
         endif
 
         //Battle Runestone
-        if UnitHasItemS(DamageSourceHero, 'I0BX') then
+        if UnitHasItemType(DamageSourceHero, 'I0BX') then
             call CheckBattleRunestoneCount(DamageSourceHero, GetHandleId(DamageSourceHero))
         endif
 

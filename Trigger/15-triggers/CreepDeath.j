@@ -85,7 +85,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif
         
         //Golden Ring
-        set itemCount = UnitHasItemI(killingHero, 'I04R')
+        set itemCount = GetUnitITemTypeCount(killingHero, 'I04R')
         if itemCount > 0 then
             if GetUnitTypeId(killingHero) == ARENA_MASTER_UNIT_ID then
                 set goldBounty = goldBounty + (20 * itemCount)
@@ -95,7 +95,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif
 
         //Urn of Memories
-        set itemCount = UnitHasItemI(killingHero, 'I05U')
+        set itemCount = GetUnitITemTypeCount(killingHero, 'I05U')
         if itemCount > 0 then
             if pillageBonus == 0 then
                 set expBounty = expBounty + ((2 * GetHeroLevel(killingHero)) * itemCount)
@@ -105,7 +105,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif
 
         //Chest of Gread
-        /*set itemCount = UnitHasItemI(killingHero, 'I05A')
+        /*set itemCount = GetUnitITemTypeCount(killingHero, 'I05A')
         if itemCount > 0 then
             set goldBounty = goldBounty + (50 * itemCount)
             set expBounty = expBounty + (50 * itemCount)
@@ -122,7 +122,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         set expBounty = R2I(expBounty * (1 + (GetMagicNecklaceBonus(killingHero, dyingUnit) + GetLearnabilityBonus(killingHero))))
         //call BJDebugMsg("cd xp bonus post: " + I2S(expBounty))
 
-        if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05A') then
+        if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemType(killingHero, 'I05A') then
             set goldBounty = R2I(goldBounty * CgBonus)
         endif
         
@@ -139,7 +139,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         local real bonus = 1
         set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
         call CreepDeath_BountyText(killingHero, dyingUnit, GetMidasTouch(GetHandleId(dyingUnit)).bonus)
-        if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemS(killingHero, 'I05A') then
+        if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemType(killingHero, 'I05A') then
             set bonus = CgBonus
         endif
         call SetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD) + R2I(GetMidasTouch(GetHandleId(dyingUnit)).bonus * bonus))

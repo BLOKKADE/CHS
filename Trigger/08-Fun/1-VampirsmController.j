@@ -5,7 +5,7 @@ library Vampirism requires RandomShit
         local integer i1 = 0
         
         //Bloodstone passive
-        if UnitHasItemS(target, 'I0AK') then
+        if UnitHasItemType(target, 'I0AK') then
             set amount = amount * 0.4
         endif
 

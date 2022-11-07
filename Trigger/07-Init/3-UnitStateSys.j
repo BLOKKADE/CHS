@@ -29,7 +29,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         local integer totalLevel = 0
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         local unit hero = PlayerHeroes[pid + 1]
-        local integer UpgradeU = 15 * UnitHasItemI(hero,'I07K')
+        local integer UpgradeU = 15 * GetUnitITemTypeCount(hero,'I07K')
         local real wild = 1 + GetUnitSummonStronger(hero)/ 100
         local real r1
 
@@ -180,7 +180,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         //Banner of Many
-        if UnitHasItemS(hero, BANNER_OF_MANY_ITEM_ID) then
+        if UnitHasItemType(hero, BANNER_OF_MANY_ITEM_ID) then
 
             if GetUnitAbilityLevel(u, ENDURANCE_AURA_ABILITY_ID) == 0 then
                 call AddUnitBonusReal(u, BONUS_ATTACK_SPEED, 1.5)

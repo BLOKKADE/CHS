@@ -23,7 +23,7 @@ scope ModifyDamageAfterArmor initializer init
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
         //Strong Chest Mail
-        if UnitHasItemS(DamageTarget,'I07P') and IsPhysDamage() and IsHeroUnitId(DamageSourceTypeId) == false then   
+        if UnitHasItemType(DamageTarget,'I07P') and IsPhysDamage() and IsHeroUnitId(DamageSourceTypeId) == false then   
             set Damage.index.amount = Damage.index.amount / 2
         endif
 
@@ -33,7 +33,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Fishing Rod
-        if (not IsOnHitDamage()) and UnitHasItemS(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
+        if (not IsOnHitDamage()) and UnitHasItemType(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
             //call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))
             if DistanceBetweenUnits(DamageSource, DamageTarget) < 1200 and DistanceBetweenUnits(DamageSource, DamageTarget) > 80 then
                 set r1 = (bj_RADTODEG * GetAngleToTarget(DamageSource, DamageTarget)) + 180
@@ -63,7 +63,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Light Magic Shield
-        if UnitHasItemS(DamageTarget,'I06K') and BlzGetUnitArmor(DamageTarget)<= (50 + GetHeroLevel(DamageTarget))  then
+        if UnitHasItemType(DamageTarget,'I06K') and BlzGetUnitArmor(DamageTarget)<= (50 + GetHeroLevel(DamageTarget))  then
             set Damage.index.amount = Damage.index.amount * 0.5
         endif
 
@@ -123,7 +123,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Soul Reaper
-        if UnitHasItemS(DamageSource, 'I01C') and Damage.index.isAttack then
+        if UnitHasItemType(DamageSource, 'I01C') and Damage.index.isAttack then
             set r2 = Damage.index.amount * 0.5
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
@@ -148,7 +148,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Bone Armor Skeleton Defender
-        if UnitHasItemS(DamageTarget, 'I07O') then
+        if UnitHasItemType(DamageTarget, 'I07O') then
             set i = GetBoneArmorStruct(GetHandleId(DamageTargetHero)).groupSize
             if i > 0 and IsHeroUnitId(DamageTargetTypeId) then
                 if i > 12 then
@@ -159,7 +159,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Wild Runestone
-        if UnitHasItemS(DamageTargetHero, 'I0B6') and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
+        if UnitHasItemType(DamageTargetHero, 'I0B6') and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
             set Damage.index.amount = Damage.index.amount * 0.7
         endif
         
@@ -170,7 +170,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Bloody Axe
         if IsPhysDamage() and IsHeroUnitId(DamageTargetTypeId) == false then
-            set i = UnitHasItemI( DamageSource,'I078') 
+            set i = GetUnitITemTypeCount( DamageSource,'I078') 
             if i > 0 then
                 set r2 = Damage.index.amount * (0.25 * I2R(i))
                 set vampAmount = vampAmount + r2
@@ -216,7 +216,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
         
         //Heavy Mace
-        set i = UnitHasItemI( DamageSource,'I07I') 
+        set i = GetUnitITemTypeCount( DamageSource,'I07I') 
         if i > 0 and IsUnitType(DamageSource,UNIT_TYPE_MELEE_ATTACKER) then
             set r1 =  (GetWidgetLife(DamageTarget)/ 100)* 1.5 * I2R(i)  
             set vampAmount = vampAmount + r1
@@ -329,7 +329,7 @@ scope ModifyDamageAfterArmor initializer init
                     endif
 
                     //Volcanic Armor
-                    if UnitHasItemS(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
+                    if UnitHasItemType(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
                         call ActivateVolcanicArmor(DamageSource, DamageTarget)
                     endif    
                 endif
@@ -431,7 +431,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
             
         //Holy Chain Mail
-        if UnitHasItemS(DamageTarget,'I07U') then   
+        if UnitHasItemType(DamageTarget,'I07U') then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
                 if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget)/ 5 then
                     set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 5
@@ -484,7 +484,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Flimsy Token
-        if UnitHasItemS(DamageTarget, FLIMSY_TOKEN_ITEM_ID) and GetUnitAbilityLevel(DamageSource, FLIMSY_TOKEN_BUFF_ID) == 0 then
+        if UnitHasItemType(DamageTarget, FLIMSY_TOKEN_ITEM_ID) and GetUnitAbilityLevel(DamageSource, FLIMSY_TOKEN_BUFF_ID) == 0 then
             call FlimsyToken(DamageTarget, DamageSource)
         endif
 

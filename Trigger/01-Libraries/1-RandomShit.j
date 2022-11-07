@@ -366,12 +366,12 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
             endif
 
             //Fishing Rod and Blink Strike
-            if UnitHasItemS(u, 'I07T') and id == BLINK_STRIKE_ABILITY_ID then
+            if UnitHasItemType(u, 'I07T') and id == BLINK_STRIKE_ABILITY_ID then
                 set ResCD = ResCD * 0.5
             endif
 
             //Fan (this was duplicated for some reason)
-            /*//if UnitHasItemS(u,'I08Z') and IsObjectElement(id,Element_Wind) then
+            /*//if UnitHasItemType(u,'I08Z') and IsObjectElement(id,Element_Wind) then
                 set ResCD = ResCD * 0.65
             endif   
             */
@@ -407,13 +407,13 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
         endif
 
         //Xesil's Legacy
-        if IsSpellResettable(id) and ((GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemS(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= RMinBJ(xesilChance * luck, 90))) then
+        if IsSpellResettable(id) and ((GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemType(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= RMinBJ(xesilChance * luck, 90))) then
             set ResCD = 0.001
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
         
         //Staff of Water
-        if UnitHasItemS(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0,100) <= RMinBJ(40 * luck, 90 ) then
+        if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0,100) <= RMinBJ(40 * luck, 90 ) then
             set ResCD = 0.001
         endif
 

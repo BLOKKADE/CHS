@@ -23,7 +23,7 @@ library CritDamage requires RandomShit, Vampirism
         endif 
 
         //Wanderers Cape
-        if UnitHasItemS(DamageSource,'I082') then
+        if UnitHasItemType(DamageSource,'I082') then
             set baseCritAmount = baseCritAmount + 1.5
             set baseCritChance = baseCritChance + 5
             set lifesteal = 0.15
@@ -54,7 +54,7 @@ library CritDamage requires RandomShit, Vampirism
         if IsPhysDamage() then
 
             //Trident of Pain
-            if UnitHasItemS(DamageSource, 'I061')  then
+            if UnitHasItemType(DamageSource, 'I061')  then
                 if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
                     if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
                         call AbilStartCD(DamageSource, 'A08X', 12)
@@ -120,7 +120,7 @@ library CritDamage requires RandomShit, Vampirism
 
         elseif magicDmgType then
             //Archmage Staff
-            if UnitHasItemS(DamageSource,'I086') and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
+            if UnitHasItemType(DamageSource,'I086') and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
                 set critDmg = critDmg + Dmg
             endif
             
@@ -132,7 +132,7 @@ library CritDamage requires RandomShit, Vampirism
         endif
 
         //Shadow Chain Mail
-        if UnitHasItemS(DamageTarget,'I084') then
+        if UnitHasItemType(DamageTarget,'I084') then
             if GetRandomReal(0,100) <= 50 * DamageSourceLuck then
                 set critDmg = 0
             endif
@@ -140,7 +140,7 @@ library CritDamage requires RandomShit, Vampirism
         endif
 
         //Anti-Magic Cape
-        if UnitHasItemS(DamageSource,'I092')  then
+        if UnitHasItemType(DamageSource,'I092')  then
             set critDmg = 0
         endif
 
@@ -161,7 +161,7 @@ library CritDamage requires RandomShit, Vampirism
             endif
 
             //Mithril Helmet
-            if UnitHasItemS(DamageTarget, 'I091') then
+            if UnitHasItemType(DamageTarget, 'I091') then
                 if T32_Tick - MithrilHelmetCooldown[DamageTargetId] > 32 then
                     set MithrilHelmetCooldown[DamageTargetId] = T32_Tick
                 else

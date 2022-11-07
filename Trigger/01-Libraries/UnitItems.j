@@ -16,7 +16,7 @@ library UnitItems
     endfunction
 
     //Check if u has item id
-    function UnitHasItemS takes unit u, integer id returns boolean 
+    function UnitHasItemType takes unit u, integer id returns boolean 
         local integer i = 0
 
         loop
@@ -31,7 +31,7 @@ library UnitItems
     endfunction
 
     //Check how many u has of item id
-    function UnitHasItemI takes unit u, integer id returns integer
+    function GetUnitITemTypeCount takes unit u, integer id returns integer
         local integer i = 0
         local integer count = 0
 

@@ -209,7 +209,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call GetRetaliationSource(caster, target, abilId, abilLvl)
                     endif
 
-                    if UnitHasItemS(caster, 'I0B7') then
+                    if UnitHasItemType(caster, 'I0B7') then
                         call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
                     endif
 
@@ -253,17 +253,17 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call CastConqBambooStick(caster)
                     endif
 
-                    if UnitHasItemS(caster, 'I03O') then
+                    if UnitHasItemType(caster, 'I03O') then
                         call ActivateMoonstone(caster)
                     endif
 
-                    if UnitHasItemS(caster, 'I03R') then
+                    if UnitHasItemType(caster, 'I03R') then
                         call ActivateScepterOfConfusion(caster)
                     endif
 
                     if IsAbilityCasteable(abilId, false) then
                         //Wizard's Gemstone
-                        if UnitHasItemS(caster, 'I0BQ') then
+                        if UnitHasItemType(caster, 'I0BQ') then
                             if BlzGetUnitAbilityCooldownRemaining(caster, 'A0CS') == 0 then
                                 call ActivateStatRune(caster)
                                 call AbilStartCD(caster, 'A0CS', 5) 
@@ -271,7 +271,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         endif
                         
                         //multicast
-                        if (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemS(caster, 'I08X'))  and abilId != RESET_TIME_ABILITY_ID then
+                        if (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemType(caster, 'I08X'))  and abilId != RESET_TIME_ABILITY_ID then
                             call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                         endif
                     endif

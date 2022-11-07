@@ -270,7 +270,7 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
         local boolean b  = true
         
         if override == false then
-            if BlzIsUnitInvulnerable(targ) or GetUnitAbilityLevel(targ, 'BEer') > 0 or GetUnitAbilityLevel(targ, HARDENED_SKIN_ABILITY_ID) > 0 or UnitHasItemS(targ, 'I090') then
+            if BlzIsUnitInvulnerable(targ) or GetUnitAbilityLevel(targ, 'BEer') > 0 or GetUnitAbilityLevel(targ, HARDENED_SKIN_ABILITY_ID) > 0 or UnitHasItemType(targ, 'I090') then
                 return false
             endif
         endif

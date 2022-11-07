@@ -17,7 +17,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 		//Mask of Death
 		if itemId == 'I04T' then
-			if UnitHasItemS(u ,itemId ) then
+			if UnitHasItemType(u ,itemId ) then
 				call SaveInteger(HTi, hid, itemId,1)
 			else
 				call SaveInteger(HTi, hid, itemId,0)
@@ -25,7 +25,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Medal of Honour
 		elseif itemId == 'I04U' then
-			if UnitHasItemS(u ,itemId ) then
+			if UnitHasItemType(u ,itemId ) then
 				call SaveInteger(HTi, hid, itemId,1)
 			else
 				call SaveInteger(HTi, hid, itemId,0)
@@ -34,7 +34,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Staff of Absolute Magic
 		elseif itemId == 'I05E' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u ,   25 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -42,7 +42,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Staff of Lightning
 		elseif itemId == 'I05C' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u ,   15 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -50,7 +50,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Robe of the ARchmage
 		elseif itemId == 'I05B' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u ,   30 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -58,7 +58,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Runic Bracer
 		elseif itemId == 'I04C' then
-			set i = UnitHasItemI(u ,itemId ) 
+			set i = GetUnitITemTypeCount(u ,itemId ) 
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDef(u ,   10 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -66,14 +66,14 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Scroll of Transformation
 		elseif itemId == 'I065' then
-			set i = UnitHasItemI(u ,itemId ) 
+			set i = GetUnitITemTypeCount(u ,itemId ) 
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitMagicDef(u ,   25 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi,hid, itemId,i)	
 
 			//Magic Necklace
 		elseif itemId == 'I05G' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDef(u ,   75 * I2R(i - prevCount)  )	
 			set MnXpBonus.real[hid] = MnXpBonus.real[hid] + (0.2 * I2R(i - prevCount))
@@ -81,28 +81,28 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Legendary Shield
 		elseif itemId == 'I059' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBlock(u ,   500 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
 
 			//Grass of Immortality
 		elseif itemId == 'I04N' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (1500 * I2R(i - prevCount) ))
 			call SaveInteger(HTi, hid, itemId,i)
 
 			//Staff of the archmage of water
 		elseif itemId == 'I08Y' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonusReal(u, BONUS_MANA_REGEN, (500 * I2R(i - prevCount) ))
 			call SaveInteger(HTi, hid, itemId,i)	
 
 			//Sword of Bloodthirst
 		elseif itemId == SWORD_OF_BLOODTHRIST_ITEM_ID then
-			set i = UnitHasItemI(u, itemId)
+			set i = GetUnitITemTypeCount(u, itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId)
 			set r = GetHeroPrimaryStat(u)
 			call SetHeroStat(u, r, GetHeroStatBJ(r, u, false) + 300 * (i - prevCount))
@@ -110,7 +110,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Wisdom Chestplate
 		elseif itemId == WISDOM_CHESTPLATE_ITEM_ID then
-			set i = UnitHasItemI(u, itemId)
+			set i = GetUnitITemTypeCount(u, itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId)
 			call AddUnitBlock(u, 800 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)
@@ -118,7 +118,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Mask of Protection
 		elseif itemId == MASK_OF_PROTECTION_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u ,   35 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -126,21 +126,21 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Mask of Elusion
 		elseif itemId == MASK_OF_ELUSION_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitEvasion(u, 40 * I2R(i - prevCount))
 			call SaveInteger(HTi, hid, itemId,i)	
 
 			//Flimsy Token
 		elseif itemId == FLIMSY_TOKEN_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitEvasion(u, 30 * I2R(i - prevCount))
 			call SaveInteger(HTi,hid,itemId,i)	
 
 			//Spellbane Token
 		elseif itemId == SPELL_BANE_TOKEN_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid,itemId) 
 			call AddUnitMagicDef(u, 40 * I2R(i - prevCount))
 			call SaveInteger(HTi,hid,itemId,i)	
@@ -148,7 +148,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Ancient Dagger
 		elseif itemId == ANCIENT_DAGGER_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*(i-prevCount)
@@ -162,7 +162,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Ancient Axe
 		elseif itemId == ANCIENT_AXE_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*(i-prevCount)
@@ -176,7 +176,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Ring of Musculature
 		elseif itemId == 'I071' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
@@ -192,7 +192,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Ring of the Bookworm
 		elseif itemId == 'I072' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
@@ -208,7 +208,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Trainers Ring
 		elseif itemId == 'I073' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
@@ -224,7 +224,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Arena Ring
 		elseif itemId == 'I0AF' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 
 			call RegisterEndOfRoundItem(pid, it)
@@ -234,7 +234,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Gladiator Helmet
 		elseif itemId == 'I07A' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 	
 			if i > 0 then
 				if GetUnitAbilityLevel(u,'A05K') == 0 then
@@ -251,7 +251,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			
 
 		elseif itemId == ORB_OF_ELEMENTS then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitAbsoluteBonusCount(u,Element_Fire, 2*(i-prevCount))
 			call AddUnitAbsoluteBonusCount(u,Element_Water, 2*(i-prevCount))
@@ -265,7 +265,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call SaveInteger(HTi,hid, itemId,i)	
 
 		elseif itemId == SHADOW_BLADE_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1500*(i - prevCount), 0 )
 			call AddUnitBonus(u, BONUS_DAMAGE, 6000 * (i - prevCount))
@@ -275,7 +275,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			//Magic Amulet
 		elseif itemId == 'I07B' then
 
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u ,   10 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -284,7 +284,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			//Night Amulet
 		elseif itemId == 'I07E' then
 
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u ,   5 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -292,14 +292,14 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Armor of the Ancestors
 		elseif itemId == 'I07G' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBlock(u ,   50 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
 		
 			//Obsidian Armor
 		elseif itemId == 'I07H' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitBlock(u ,   200 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi,hid, itemId,i)	
@@ -307,7 +307,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Golden Armor
 		elseif itemId == 'I0C1' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitMagicDef(u ,   10 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi,hid, itemId,i)	
@@ -320,7 +320,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			call RegisterEndOfRoundItem(pid, it)
 			//Rapira
 		elseif itemId == RAPIRA_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 300 * (i - prevCount))
 			call SaveInteger(HTi,hid, itemId,i)	
@@ -329,7 +329,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Blokkades Shield - imba
 		elseif itemId == BLOKKADE_SHIELD_ITEM_ID then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitBlock(u ,   1000 * I2R(i - prevCount)  )	
 			call AddUnitMagicDef(u ,   30 * I2R(i - prevCount)  )		
@@ -337,7 +337,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Contract of the Living
 		elseif itemId == CONTRACT_LIVING_ITEM_ID then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitMagicDef(u ,   50 * I2R(i - prevCount)  )		
 			call SaveInteger(HTi,hid, itemId,i)	
@@ -346,7 +346,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			
 			//Fishing Rod
 		elseif itemId == 'I07T' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitEvasion(u ,   10 * I2R(i - prevCount)  )
 			call AddUnitBonus(u, BONUS_DAMAGE, 800 * (i - prevCount))
@@ -356,7 +356,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Snowww's wand
 		elseif itemId == 'I07V' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			
 			call AddUnitMagicDmg(u ,   60 * I2R(i - prevCount)  )	
@@ -365,7 +365,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Holy Shield
 		elseif itemId == 'I07W' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			
 			call AddUnitMagicDef(u ,   50 * I2R(i - prevCount)  )	
@@ -376,7 +376,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Light Armor
 		elseif itemId == 'I076' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitEvasion(u ,   10 * I2R(i - prevCount)  )
 			call AddUnitMagicDef(u ,   10 * I2R(i - prevCount)  )		
@@ -385,14 +385,14 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Unusual Wooden Shield
 		elseif itemId == 'I077' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBlock(u ,   30 * I2R(i - prevCount)  )	
 			call SaveInteger(HTi, hid, itemId,i)	
 		
 			//Universal Chain Mail
 		elseif itemId == 'I07Y' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			if i > 2 then
 				set i = 2
 			endif
@@ -405,7 +405,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Ancient Staff
 		elseif itemId == ANCIENT_STAFF_ITEM_ID then
-			set i = UnitHasItemI(u ,itemId ) 
+			set i = GetUnitITemTypeCount(u ,itemId ) 
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*(i-prevCount)
 			call AddUnitPvpBonus(u, 5 *(i - prevCount))
@@ -417,7 +417,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Staff of Power
 		elseif itemId == 'I080' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			if i > 1 then
 				set i = 1
 				call BlzSetUnitWeaponIntegerField(u,UNIT_WEAPON_IF_ATTACK_ATTACK_TYPE,0,7)
@@ -429,35 +429,35 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Good Luck Charm
 		elseif itemId == 'I083' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitLuck(u ,   0.15 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
 		   
 			//Shining Runestone
 		elseif itemId == 'I08L' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitPowerRune(u ,   50 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
 		   
 			//runestone of Creation
 		elseif itemId == 'I08N' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitPowerRune(u ,   75 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
 
 			//Guide to Rune Master
 		elseif itemId == 'I0BZ' then
-			set i = UnitHasItemI(u ,itemId )
+			set i = GetUnitITemTypeCount(u ,itemId )
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitPowerRune(u ,   50 * I2R(i - prevCount)  )
 			call SaveInteger(HTi,hid, itemId,i)	
 
 			//Conqueror's Bamboo Stick
 		elseif itemId == 'I0C2' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid, itemId) 
 			call AddUnitEvasion(u, 20 * I2R(i - prevCount))
 			call AddUnitMagicDef(u, 30  * I2R(i - prevCount))
@@ -467,7 +467,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		 
 			/*
 			if itemId == 'I08P' then
-				if UnitHasItemS(u ,itemId ) then
+				if UnitHasItemType(u ,itemId ) then
 					set i = 1 
 				else
 					set i = 0
@@ -477,7 +477,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 				call SaveInteger(HTi, hid, itemId,i)	
 			endif 
 			if itemId == 'I08Q' then
-				if UnitHasItemS(u ,itemId ) then
+				if UnitHasItemType(u ,itemId ) then
 					set i = 1 
 				else
 					set i = 0
@@ -487,7 +487,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 				call SaveInteger(HTi, hid, itemId,i)	
 			endif     
 			if itemId == 'I08R' then
-				if UnitHasItemS(u ,itemId ) then
+				if UnitHasItemType(u ,itemId ) then
 					set i = 1 
 				else
 					set i = 0
@@ -498,7 +498,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 			endif  
 		
 			if itemId == 'I08S' then
-				if UnitHasItemS(u ,itemId ) then
+				if UnitHasItemType(u ,itemId ) then
 					set i = 1 
 				else
 					set i = 0
@@ -510,7 +510,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Runestones
 		elseif itemId == 'I08P' or itemId == 'I0B8' or itemId == 'I0B7' or itemId == 'I0B6' or itemId == 'I095' or itemId == 'I0B5' or itemId == 'I08S' or itemId == 'I08R' or itemId == 'I08Q' or itemId == 'I0BX' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid,itemId) 
 			call AddUnitPowerRune(u ,   100 * I2R(i - prevCount)  )
 			call SaveInteger(HTi,hid,itemId,i)	
@@ -518,7 +518,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Blaze Staff
 		elseif itemId == 'I08X' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u ,   15 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -526,7 +526,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Fan
 		elseif itemId == 'I08Z' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitEvasion(u ,   15 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -534,7 +534,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Stone Helmet
 		elseif itemId == 'I090' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBlock(u ,   1000 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -542,7 +542,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Mithril Helmet
 		elseif itemId == 'I091' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDef(u ,   50 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId,i)	
@@ -550,7 +550,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//anti-magic Cape
 		elseif itemId == 'I092' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u ,0 - 25 * I2R(i - prevCount)  )
 			call AddUnitMagicDef(u ,200 * I2R(i - prevCount)  )
@@ -558,7 +558,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 
 			//Hero's hammer
 		elseif itemId == 'I064' then
-			set i = IMinBJ(UnitHasItemI(u ,itemId ), 1)
+			set i = IMinBJ(GetUnitITemTypeCount(u ,itemId ), 1)
 			set prevCount = LoadInteger(HTi,hid,itemId) 
 			call AddUnitPhysPow(u ,   60 * I2R(i - prevCount)  )
 			set r = GetHeroPrimaryStat(u)
@@ -567,105 +567,105 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Heart of Darkness
 		elseif itemId == 'I04V' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 150 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Hammer of the Gods
 		elseif itemId == 'I066' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 10000 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Hammer of Chaos
 		elseif itemId == 'I06H' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			//call AddUnitBonus(u, BONUS_DAMAGE, -300 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		/*//Titanium Armor
 		elseif itemId == 'I07M' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, -500 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	*/
 
 		//Titanium Spike
 		elseif itemId == TITANIUM_SPIKE_ITEM_ID then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (1000 * (i - prevCount)), 0)
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Heavy Mace
 		elseif itemId == 'I07I' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 350 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Speed Blade
 		elseif itemId == 'I06B' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 750 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Bloody Axe
 		elseif itemId == 'I078' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 100 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Battle Axe
 		elseif itemId == 'I075' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 30 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Reaver's Axe
 		elseif itemId == 'I04A' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 150 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 			//Aduxxors Blade
 		elseif itemId == 'I015' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 34 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 			//Soul Reaper
 		elseif itemId == 'I01C' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 80 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 			//Null Void Orb
 		elseif itemId == 'I0AL' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDef(u ,   40 * I2R(i - prevCount)  )
 			call SaveInteger(HTi, hid, itemId, i)
 
 		//Rapier of the Gods
 		elseif itemId == 'I01E' then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitBonus(u, BONUS_DAMAGE, 120 * (i - prevCount))
 			call SaveInteger(HTi, hid, itemId, i)	
 
 		//Scorched Scimitar
 		elseif itemId == SCORCHED_SCIMITAR_ITEM_ID then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			call AddUnitMagicDmg(u , 20 * I2R(i - prevCount))
 			call AddUnitPhysPow(u, 20 * I2R(i - prevCount))
@@ -673,7 +673,7 @@ library ItemBonus initializer init requires CustomState, RandomShit, LevelUpStat
 		
 			//Druidic Focus
 		elseif itemId == DRUIDIC_FOCUS_ITEM_ID then
-			set i = UnitHasItemI(u , itemId)
+			set i = GetUnitITemTypeCount(u , itemId)
 			set prevCount = LoadInteger(HTi, hid, itemId) 
 			if i <= 0 then
 				call UnitRemoveAbility(u, DRUIDIC_FOCUS_ABILITY_ID)

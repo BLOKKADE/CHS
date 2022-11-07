@@ -51,12 +51,12 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
         else
 
             //Fan
-            if UnitHasItemS(DamageTarget,'I08Z') and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0DC') == 0 then
+            if UnitHasItemType(DamageTarget,'I08Z') and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0DC') == 0 then
                 call ActivateFan(DamageTarget)
             endif
 
             //Lucky Pants
-            if UnitHasItemS(DamageTarget, LUCKY_PANTS_ITEM_ID) then
+            if UnitHasItemType(DamageTarget, LUCKY_PANTS_ITEM_ID) then
                 call ActivateLuckyPants(DamageTarget)
             endif
 

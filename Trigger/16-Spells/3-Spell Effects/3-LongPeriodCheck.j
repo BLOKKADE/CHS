@@ -3,7 +3,7 @@ scope LongPeriodCheck initializer init
         local real r1 = LoadReal(HT, GetHandleId(u),- 1001 )
         local real r2 = 0
         local integer i1 = GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID)
-        local real i2 = UnitHasItemI(u,'I066')
+        local real i2 = GetUnitITemTypeCount(u,'I066')
 
         if i1 > 0 then
             set r2 = r1 - MegaSpeedBonus(u, i1, r1)
@@ -29,7 +29,7 @@ scope LongPeriodCheck initializer init
         endif
 
         //Speed Blade passive
-        if UnitHasItemS(u,'I06B') then
+        if UnitHasItemType(u,'I06B') then
             set r2 = r2 * 0.8
         endif
 
@@ -366,8 +366,8 @@ scope LongPeriodCheck initializer init
                 if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
                     //Drain aura
                     set i1 = GetUnitAbilityLevel(u ,DRAIN_AURA_ABILITY_ID)
-                    if i1 >= 1 or UnitHasItemS(u, 'I0B5') then
-                        if UnitHasItemS(u, 'I0B5') then
+                    if i1 >= 1 or UnitHasItemType(u, 'I0B5') then
+                        if UnitHasItemType(u, 'I0B5') then
                             call AoeDrainAura(u, (I2R(i1) * 0.0001) + 0.001,500,true)
                         else
                             call AoeDrainAura(u, (I2R(i1) * 0.0001),500,true)

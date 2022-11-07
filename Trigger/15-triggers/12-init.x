@@ -1189,7 +1189,7 @@ library Pillage requires RandomShit
             set expBounty = expBounty +    ( 35 * GetUnitAbilityLevel(Gku,'A02W') * 70 )/(70 + RemBon + GetUnitAbilityLevel(Gku,'Asal')   )	
         endif	
 
-        set itemCount = UnitHasItemI(Gku, 'I04R')
+        set itemCount = GetUnitITemTypeCount(Gku, 'I04R')
         if itemCount > 0 then
             set RingBonus = RingBonus + 10 * itemCount
         endif
@@ -1204,7 +1204,7 @@ library Pillage requires RandomShit
             call AdjustPlayerStateBJ(PilageBonus,GetOwningPlayer(Gku),PLAYER_STATE_RESOURCE_GOLD)
         endif  
 
-        set itemCount = UnitHasItemI(Gku, 'I05U')
+        set itemCount = GetUnitITemTypeCount(Gku, 'I05U')
         if itemCount > 0 then
             if PilageBonus == 0 then
                 set GG_d1 = GG_d1 +  (2 * GetHeroLevel(Gku)) * itemCount
@@ -1213,7 +1213,7 @@ library Pillage requires RandomShit
             endif
         endif
 
-        set itemCount = UnitHasItemI(Gku, 'I05A')
+        set itemCount = GetUnitITemTypeCount(Gku, 'I05A')
         if itemCount > 0 then
             set udg_integer60 = udg_integer60 + (50 * itemCount)
             set GG_d1 = GG_d1 + (50 * itemCount)

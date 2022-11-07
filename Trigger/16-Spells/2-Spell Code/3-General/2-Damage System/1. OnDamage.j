@@ -12,7 +12,7 @@ scope OnDamage initializer init
             endif
 
             //Staff of Power
-            if UnitHasItemS(u, 'I080') and Damage.index.damageType != DAMAGE_TYPE_MAGIC then
+            if UnitHasItemType(u, 'I080') and Damage.index.damageType != DAMAGE_TYPE_MAGIC then
                 if DamageSourceTypeId != SEER_UNIT_ID then
                     set StaffOfPowerCritNegate = true
                 endif
