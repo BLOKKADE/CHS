@@ -1,4 +1,4 @@
-library AoeDamage requires Vampirism
+library AoeDamage requires Vampirism, DivineBubble, DamageEngine
     globals
         unit Aoe_Source = null
         real Aoe_DamageAmount = 0

@@ -1,5 +1,9 @@
 library UnitItems
 
+    function UnitHasInventorySpace takes unit u returns boolean
+        return UnitItemInSlot(u, 0) == null or UnitItemInSlot(u, 1) == null or UnitItemInSlot(u, 2) == null or UnitItemInSlot(u, 3) == null or UnitItemInSlot(u, 4) == null or UnitItemInSlot(u, 5) == null
+    endfunction
+
     //Get first item of u with id
     function GetUnitItem takes unit u, integer id returns item 
         local integer i = 0

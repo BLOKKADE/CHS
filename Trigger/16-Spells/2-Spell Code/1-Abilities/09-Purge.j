@@ -38,7 +38,7 @@ library Purge requires RandomShit
         call TimerStart(t, delay, false, function PurgeCast)    
         
         if delay > 0 then
-            call AddSpecialEffectTargetTimer("Abilities\\Spells\\Items\\AIlb\\AIlbTarget.mdl", target, "overhead", delay, false)
+            call TempFx.target("Abilities\\Spells\\Items\\AIlb\\AIlbTarget.mdl", target, "overhead", delay, false)
         endif
         
         if delay > 1 then

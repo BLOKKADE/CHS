@@ -33,7 +33,7 @@ library CritDamage requires RandomShit, Vampirism
         if GetUnitAbilityLevel(DamageTarget ,'B00E') > 0 then
             if GetRandomReal(0,100) <= 15 * DamageSourceLuck + baseCritChance then
                 set critDmg = critDmg + (Dmg * (0.5 + (0.05 * GetUnitAbilityLevel(DamageSourceHero, AURA_OF_VULNERABILITY_ABILITY_ID))))
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", DamageTarget, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", DamageTarget, "chest"))
             endif
         endif
 
@@ -42,7 +42,7 @@ library CritDamage requires RandomShit, Vampirism
            call AbilStartCD(DamageSource,POWER_OF_WATER_ABILITY_ID, 2)
             set critDmg = critDmg + 50*i + ((BlzGetUnitMaxMana(DamageSource)*i * 0.4)/100 )
             if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile.mdl", DamageTarget, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile.mdl", DamageTarget, "chest"))
             endif
         endif
 

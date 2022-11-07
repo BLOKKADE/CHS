@@ -1,4 +1,4 @@
-library PeriodicDamage initializer init requires RandomShit
+library PeriodicDamage initializer init requires DivineBubble, DamageEngine, HideEffects
     
     globals
         HashTable PeriodicCounter
@@ -33,7 +33,7 @@ library PeriodicDamage initializer init requires RandomShit
                     call Damage.applyPhys(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 endif
                 if this.fx != null then
-                    call DestroyEffect(AddSpecialEffectTargetFix(this.fx, this.target, attachPoint))
+                    call DestroyEffect(AddLocalizedSpecialEffectTarget(this.fx, this.target, attachPoint))
                 endif
             endif
         endmethod
@@ -54,7 +54,7 @@ library PeriodicDamage initializer init requires RandomShit
         method addFx takes string fx, string attachPoint returns thistype
             set this.fx = fx
             set this.attachPoint = attachPoint
-            call DestroyEffect(AddSpecialEffectTargetFix(fx, this.target, attachPoint))
+            call DestroyEffect(AddLocalizedSpecialEffectTarget(fx, this.target, attachPoint))
             return this
         endmethod
 

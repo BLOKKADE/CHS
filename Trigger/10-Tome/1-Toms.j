@@ -651,7 +651,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         
         //Ancient Staff
         if II  == ANCIENT_STAFF_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(ANCIENT_STAFF_ITEM_ID,0,0))
                 
             else
@@ -660,7 +660,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
             //Ancient Dagger
         elseif II  == ANCIENT_DAGGER_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(ANCIENT_DAGGER_ITEM_ID,0,0))
                 
             else
@@ -669,7 +669,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
             //Ancient Axe
         elseif II  == ANCIENT_AXE_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(ANCIENT_AXE_ITEM_ID,0,0))
                 
             else
@@ -678,7 +678,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
             //Vigour Token
         elseif II  == VIGOUR_TOKEN_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(VIGOUR_TOKEN_ITEM_ID,0,0))
                 
             else
@@ -687,7 +687,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
             //Flimsy Token
         elseif II  == FLIMSY_TOKEN_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(FLIMSY_TOKEN_ITEM_ID,0,0))
                 
             else
@@ -696,7 +696,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
             //Spellbane Token
         elseif II  == SPELLBANE_TOKEN_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(SPELL_BANE_TOKEN_ITEM_ID,0,0))
                 
             else
@@ -705,7 +705,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
             //Mask of Elusion
         elseif II  == MASK_OF_ELUSION_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(MASK_OF_ELUSION_ITEM_ID,0,0))
                 
             else
@@ -714,7 +714,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
             //Mask of Vitality
         elseif II  == MASK_OF_VITALITY_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(MASK_OF_VITALITY_ITEM_ID,0,0))
                 
             else
@@ -722,7 +722,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif
             //Mask of Protection
         elseif II  == MASK_OF_PROTECTION_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(MASK_OF_PROTECTION_ITEM_ID,0,0))
                 
             else
@@ -730,7 +730,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif	
             //Sword of Blodthirst
         elseif II  == SWORD_OF_BLOODTHRIST_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(SWORD_OF_BLOODTHRIST_ITEM_ID,0,0))
                 
             else
@@ -738,7 +738,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif
             //Wisdom Chestplate
         elseif II  == WISDOM_CHESTPLATE_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(WISDOM_CHESTPLATE_ITEM_ID,0,0))
                 
             else
@@ -746,7 +746,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif
             //Lucky Pants
         elseif II  == LUCKY_PANTS_TOME_ITEM_ID then   
-            if UnitHasFullItems(u) == false and BuyGloryItem(pid, II) then
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
                 call UnitAddItem(u,CreateItem(LUCKY_PANTS_ITEM_ID,0,0))
                 
             else
@@ -755,7 +755,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif	
             //Ankh of Reincarnation
         elseif II == 'I0BH' then
-            if (not AnkhLimitReached.boolean[GetHandleId(u)]) and UnitHasFullItems(u) == false then
+            if (not AnkhLimitReached.boolean[GetHandleId(u)]) and UnitHasInventorySpace(u) then
                 set It = GetUnitItem(u, 'ankh')
                 if It != null then
                     call SetItemCharges(It, GetItemCharges(It) + 1)

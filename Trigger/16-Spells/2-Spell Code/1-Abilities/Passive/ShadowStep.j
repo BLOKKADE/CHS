@@ -10,8 +10,8 @@ library ShadowStep initializer init requires RandomShit, CustomEvent
             set dist =  CalculateDistance(GetUnitX(u1), GetUnitX(u2), GetUnitY(u1), GetUnitY(u2))
 
             if GetWidgetLife(u2) > 0.025 and u2 != null and dist <= 900 and dist >= 125 and (BlzGetUnitAbilityCooldownRemaining(u1, SHADOW_STEP_ABILITY_ID) <= 0 or UnitHasForm(u1, FORM_SHADOW)) then
-                set e1 = AddSpecialEffectTargetFix("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u1, "hand right")
-                set e2 = AddSpecialEffectTargetFix("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u1, "hand left")
+                set e1 = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u1, "hand right")
+                set e2 = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u1, "hand left")
                 call SetUnitX(u1, GetUnitX(u2) - 65 * CosBJ(GetUnitFacing(u1)))
                 call SetUnitY(u1, GetUnitY(u2) - 65 * SinBJ(GetUnitFacing(u1)))
                 call DestroyEffect(e1) 

@@ -43,7 +43,7 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
             set target = FirstOfGroup(ENUM_GROUP)
             exitwhen target == null
             
-            call DestroyEffect(AddSpecialEffectTargetFix(FX_AA, target, "chest"))
+            call DestroyEffect(AddLocalizedSpecialEffectTarget(FX_AA, target, "chest"))
             if targets > 0 then
                 set targets = targets - 1
                 //set GLOB_typeDmg = 2

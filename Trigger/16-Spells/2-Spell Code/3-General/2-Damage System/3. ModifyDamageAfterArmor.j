@@ -51,7 +51,7 @@ scope ModifyDamageAfterArmor initializer init
         if GetUnitAbilityLevel(DamageTarget ,'B00E') >= 1 then
             if GetRandomReal(0,100) <= 5 * luck then
                 set Damage.index.amount = Damage.index.amount * (1 + (0.5 * GetUnitAbilityLevel(DamageSourceHero  ,AURA_OF_VULNERABILITY_ABILITY_ID))))
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", DamageTarget, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", DamageTarget, "chest"))
             endif
         endif*/
 
@@ -102,7 +102,7 @@ scope ModifyDamageAfterArmor initializer init
                 if BlokShieldAttackCount[DamageTargetId] >= 3 then
                     set BlokShieldAttackCount[DamageTargetId] = 0
                     set Damage.index.damage = 0
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
                     return
                 endif
             endif
@@ -189,14 +189,14 @@ scope ModifyDamageAfterArmor initializer init
         if GetUnitAbilityLevel(DamageSource, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
             call AbilStartCD(DamageSource,HEAVY_BLOW_ABILITY_ID,0.3)
             set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSource  ,HEAVY_BLOW_ABILITY_ID)
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Orc\\Devour\\DevourEffectArt.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\Devour\\DevourEffectArt.mdl", DamageTarget, "chest"))
         endif
         
         //Combustion
         if GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 then
             call AbilStartCD(DamageSourceHero,COMBUSTION_ABILITY_ID,0.3)
             set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero   ,COMBUSTION_ABILITY_ID)
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", DamageTarget, "chest"))
         endif
 
         //Devastating Blow
@@ -205,7 +205,7 @@ scope ModifyDamageAfterArmor initializer init
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.08)
             call Damage.applyMagic(DamageSource, DamageTarget, r2, DAMAGE_TYPE_MAGIC)
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
         endif
         
         //Frostmourne
@@ -229,7 +229,7 @@ scope ModifyDamageAfterArmor initializer init
             set r2 = Damage.index.amount / 2
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1 
-            call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Other\\PandarenBrewmasterBlood\\PandarenBrewmasterBlood.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Other\\PandarenBrewmasterBlood\\PandarenBrewmasterBlood.mdl", DamageTarget, "chest"))
         endif 
 
         //Blademaster
@@ -402,7 +402,7 @@ scope ModifyDamageAfterArmor initializer init
                         call Damage.applyMagic(DamageTarget,DamageSource, r3, DAMAGE_TYPE_MAGIC)
                     endif
                     //call BJDebugMsg("wb damage: " + R2S(r3) + " mult: " + R2S(r2) + " reduce: " + R2S(r1))
-                    call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", DamageSource, "chest"))
+                    call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", DamageSource, "chest"))
                 endif
             endif
 
@@ -506,7 +506,7 @@ scope ModifyDamageAfterArmor initializer init
             if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= i1  then
                 set Damage.index.amount = 9999999
                 if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
-                    call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
                 endif
             endif
         endif
@@ -519,7 +519,7 @@ scope ModifyDamageAfterArmor initializer init
         
         if vampCount > 0 and Damage.index.amount > 0 then
             if not IsFxOnCooldownSet(DamageSourceId, 0, 1) then
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
             endif
             call Vamp(DamageSource, DamageTarget, vampAmount)
         endif

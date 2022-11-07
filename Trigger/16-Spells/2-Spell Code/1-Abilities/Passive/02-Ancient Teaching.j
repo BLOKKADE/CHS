@@ -40,11 +40,6 @@ library AncientTeaching initializer init requires RandomShit, StableSpells, Togg
         local integer abilId = GetSpellAbilityId()
         local timer t = null
 
-        /*Sorcerer old passive
-        if (not IsToggleSpell(abilId)) and GetUnitTypeId(GetTriggerUnit() ) == SORCERER_UNIT_ID then
-            call USOrderA(GetTriggerUnit(),GetUnitX(GetTriggerUnit()),GetUnitY(GetTriggerUnit()),'A037',"fanofknives",  GetHeroLevel(GetTriggerUnit())* 50 , ConvertAbilityRealLevelField('Ocl1') )
-        endif*/
-
         if abilId != RESET_TIME_ABILITY_ID then
             if GetUnitAbilityLevel(u,ANCIENT_TEACHING_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(u,ANCIENT_TEACHING_ABILITY_ID)<= 0.001 then
                 set t = NewTimer()

@@ -24,7 +24,7 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
                 if p != null and GetUnitAbilityLevel(p, ERUPTION_IMMUNE_BUFF_ID) == 0 then
                     set udg_NextDamageAbilitySource = ERUPTION_ABILITY_ID
                     //call BJDebugMsg("DMG: " + I2S(GetHandleId(p)))
-                    call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", p, "chest"))
+                    call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", p, "chest"))
                     call Damage.applyMagic(this.source, p, GetSpellValue(50, 10, this.level), DAMAGE_TYPE_MAGIC)
                     call DummyOrder.create(this.source, GetUnitX(p), GetUnitY(p), GetUnitFacing(p), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 0.5).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 0.5).target(p).activate()
                     call TempAbil.create(p, ERUPTION_IMMUNE_ABILITY_ID, 1)

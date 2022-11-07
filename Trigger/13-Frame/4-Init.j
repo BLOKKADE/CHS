@@ -268,7 +268,6 @@ library FrameInit initializer init requires RandomShit, CustomState, GetObjectEl
 					if NumPlayerLast[PlID] != 11 then
 						set SpellU = PlayerHeroes[NumPlayerLast[PlID]+ 1]
 						set i3 = GetHeroSpellAtPosition(SpellU ,NumButton - 100) 
-						set SpellCP[PlID] = i3
 						set temp = GetObjectelementsAsString(SpellU, i3, true)
 						if temp != "" and temp != null then
 							set ToolTipS = ToolTipS + temp + "|n"
@@ -294,7 +293,6 @@ library FrameInit initializer init requires RandomShit, CustomState, GetObjectEl
 					else
 						set SpellU = selectedUnit[PlID]
 						set i3 = roundAbilities[NumButton - 100]
-						set SpellCP[PlID] = i3
 						set ToolTipS = BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 )
 
 						if GetLocalPlayer() == GetTriggerPlayer() then	

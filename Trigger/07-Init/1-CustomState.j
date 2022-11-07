@@ -104,10 +104,10 @@ library CustomState requires TimerUtils
         call SaveReal(HT_unitstate,GetHandleId(u),5, 1)
     endfunction
 
-    //function GetUnitLuck takes unit u returns real
-    //    return LoadReal(HT_unitstate,GetHandleId(u),5)+1
-    //endfunction
-
+    function GetUnitLuck takes unit u returns real
+        return LoadReal(HT_unitstate,GetHandleId(u),5)+ 1
+    endfunction
+    
     function AddUnitLuck takes unit u,real r returns nothing
         call SaveReal(HT_unitstate,GetHandleId(u),5,LoadReal(HT_unitstate,GetHandleId(u),5)+ r)
     endfunction

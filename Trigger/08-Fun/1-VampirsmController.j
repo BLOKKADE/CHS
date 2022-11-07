@@ -1,4 +1,4 @@
-library Vampirism requires RandomShit
+library Vampirism requires UnitItems, DivineBubble
     function Vamp takes unit source, unit target, real amount returns nothing
         local real V1 = 0
         local real V2 = 0

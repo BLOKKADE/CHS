@@ -88,7 +88,7 @@ scope ShortPeriodCheck initializer init
                         if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
                             call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
                             call SetWidgetLife(u,GetWidgetLife(u)+ 2500 * i1)
-                            call AddSpecialEffectTargetTimer( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
+                            call TempFx.target( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
                             call RemoveDebuff( u, 1)
                         endif
                     endif

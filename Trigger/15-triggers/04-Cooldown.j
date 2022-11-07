@@ -1,4 +1,4 @@
-library Cooldown requires RandomShit  
+library Cooldown requires  HeroAbilityCooldown, DummyActiveSpell
     globals
         hashtable HT_SPELC = InitHashtable()
     endglobals

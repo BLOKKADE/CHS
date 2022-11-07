@@ -74,6 +74,10 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         return AbilityIndex[GetRandomInt(1, AbilityIndex[0])]
     endfunction
 
+    function ObjectHasElement takes integer objectId returns boolean
+        return ElementData[objectId].boolean[0]
+    endfunction
+
     //Checks if the object (ability, item, unit) has an element
     function IsObjectElement takes integer objectId, integer element returns boolean
         return ElementData[element].integer[objectId] != 0
@@ -146,7 +150,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
     //typ = order type (none target point instant)
     //element = ability element
     //order = ability order
-    function SaveAbilData takes integer abilId, integer itemId, boolean absolute, integer targetType, integer mono, boolean chaos, integer typ, string order returns nothing
+    private function SaveAbilData takes integer abilId, integer itemId, boolean absolute, integer targetType, integer mono, boolean chaos, integer typ, string order returns nothing
         local integer index = 0
         set LastObject = abilId
         set ItemData[itemId] = abilId
@@ -191,7 +195,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         endif
     endfunction
 
-    function SaveCreepAbilityData takes integer abilId, integer targetType, integer typ, string order returns nothing
+    private function SaveCreepAbilityData takes integer abilId, integer targetType, integer typ, string order returns nothing
         set AbilityData[abilId].integer[1] = OrderId(order)
         set AbilityData[abilId].integer[2] = typ
         set AbilityData[abilId].integer[5] = targetType
@@ -201,27 +205,29 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         endif
     endfunction
 
-    function SaveDummyAbilOrder takes integer abilId, string order returns nothing
+    private function SaveDummyAbilOrder takes integer abilId, string order returns nothing
         set AbilityData[abilId].integer[1] = OrderId(order)
     endfunction
 
-    function SetLastObjectElement takes integer element, integer count returns nothing
+    private function SetLastObjectElement takes integer element, integer count returns nothing
+        set ElementData[LastObject].boolean[0] = true
         set ElementData[element].integer[LastObject] = count
     endfunction
 
-    function SetLastAbilityNotReplaceable takes nothing returns nothing
+    private function SetLastAbilityNotReplaceable takes nothing returns nothing
         set AbilityData[LastObject].boolean[6] = true
     endfunction
 
-    function SetLastAbilityManifoldable takes nothing returns nothing
+    private function SetLastAbilityManifoldable takes nothing returns nothing
         set AbilityData[LastObject].boolean[7] = true
     endfunction
 
-    function SetLastAbilityPlain takes nothing returns nothing
+    private function SetLastAbilityPlain takes nothing returns nothing
         set AbilityData[LastObject].boolean[8] = true
     endfunction
 
-    function SetObjectElement takes integer objectId, integer element, integer count returns nothing
+    private function SetObjectElement takes integer objectId, integer element, integer count returns nothing
+        set ElementData[objectId].boolean[0] = true
         set ElementData[element].integer[objectId] = count
     endfunction
 

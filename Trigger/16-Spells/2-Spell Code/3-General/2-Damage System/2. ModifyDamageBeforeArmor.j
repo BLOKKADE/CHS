@@ -48,7 +48,7 @@ scope ModifyDamageBeforeArmor initializer init
             if GetRandomReal(1,100) <= 14 * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
                 endif
                 return
             endif		
@@ -59,7 +59,7 @@ scope ModifyDamageBeforeArmor initializer init
             if GetRandomInt(1,100) <= GetUnitAbilityLevel(DamageTargetHero  ,AURA_OF_IMMORTALITY_ABILITY_ID) then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
                 endif
                 return			
             endif		
@@ -70,7 +70,7 @@ scope ModifyDamageBeforeArmor initializer init
             if GetRandomInt(1,100) <= 10 * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
                 endif
                 return			
             endif		
@@ -82,7 +82,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call RemoveDebuff(DamageTarget, 1)
                 call AbilStartCD(DamageTarget, 'A0CP', 10)
                 set Damage.index.damage = 0
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
                 return
             endif
         //Dark Shield
@@ -91,21 +91,21 @@ scope ModifyDamageBeforeArmor initializer init
                 if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08R') <= 0 then
                     call AbilStartCD(DamageTarget, 'A08R', 1)
                     set Damage.index.damage = 0
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
                     return
                 endif 
             else 
                 if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08Q') <= 0 then
                     call AbilStartCD(DamageTarget, 'A08Q', 3)
                     set Damage.index.damage = 0
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
                     return
                 endif 
             endif      
             if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08S') <= 0 then
                 call AbilStartCD(DamageTarget, 'A08S', 10)
                 call RemoveDebuff(DamageTarget, 1)  
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
                 return
             endif 
         endif 
@@ -212,7 +212,7 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0 and Damage.index.isAttack and not IsOnHitDamage() then
             set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
             if distance < 220 and  RAbsBJ(GetUnitFacing(DamageTarget) - GetUnitFacing(DamageSource)) < 85 then
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", DamageTarget, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", DamageTarget, "chest"))
                 set Damage.index.damage = Damage.index.damage * (1 +  0.05 * I2R(i2)) + 20 * i1
             endif
         endif
@@ -296,7 +296,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call AbilStartCD(DamageSource, 'A08T', 2)
                 call ElemFuncStart(DamageSource,CENTAUR_ARCHER_UNIT_ID)
                 set Damage.index.damage = Damage.index.damage + (BlzGetUnitMaxHP(DamageTarget) * 0.06) + (Damage.index.damage * (1 + (0.05 * GetHeroLevel(DamageSource))))
-                call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", DamageTarget, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", DamageTarget, "chest"))
             endif
         endif  
 
@@ -323,7 +323,7 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitITemTypeCount( DamageSource,'I064' )
         if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then 
             set Damage.index.damage = Damage.index.damage + (i1 * (3 * GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)))
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\BallistaMissile\\BallistaMissileTarget.mdl", DamageTarget, "chest"))  
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\BallistaMissile\\BallistaMissileTarget.mdl", DamageTarget, "chest"))  
         endif
 
         //Hammer of Chaos
@@ -357,7 +357,7 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageSource,CRUELTY_ABILITY_ID)
         if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL and (BlzGetUnitAbilityCooldownRemaining(DamageSource,CRUELTY_ABILITY_ID) <= 0.001 or CheckTimerZero(DamageSourceHero,CRUELTY_ABILITY_ID) ) then
             set Damage.index.damage = Damage.index.damage + Damage.index.damage*(0.5 + (0.1 * i1))
-            call DestroyEffect( AddSpecialEffectTargetFix("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", DamageTarget, "chest"))
             if ZetoTimerStart(DamageSource,CRUELTY_ABILITY_ID) then
                 call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 3)
             endif
@@ -415,7 +415,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call SaveInteger(HT, DamageTargetId, DARK_SEAL_ABILITY_ID, ds)
             endif
             call ds.Execute(DamageTarget, 2 * GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID))
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
             call AbilStartCD(DamageSource,DARK_SEAL_ABILITY_ID, 9) 
         endif
 
@@ -435,7 +435,7 @@ scope ModifyDamageBeforeArmor initializer init
                 set r1 = r1 * 0.5
             endif
             call AddUnitBlock(DamageTarget, r1)
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
             if IsHeroUnitId(DamageTargetTypeId) then
                 call AddUnitBlock(DamageSource, r1/2)
                 call SaveReal(HT, DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID,  LoadReal(HT,DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID)  + r1)
@@ -447,7 +447,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Ice Armor
         set i1 = GetUnitAbilityLevel(DamageTarget,ICE_ARMOR_SUMMON_ABILITY_ID)
         if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_ARMOR_SUMMON_ABILITY_ID) <= 0 then
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
             set Damage.index.damage = Damage.index.damage * 0.2
             call AbilStartCD(DamageTarget, ICE_ARMOR_SUMMON_ABILITY_ID, 2.05 - (0.05 * i1))
         endif
@@ -456,7 +456,7 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageTarget,ICE_FORCE_ABILITY_ID)
         if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_FORCE_ABILITY_ID) <= 0 then
             set r1 = (1 - (500 / (500 + GetHeroInt(DamageTarget, true))))
-            call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
             set Damage.index.damage = Damage.index.damage * r1
             call AbilStartCD(DamageTarget, ICE_FORCE_ABILITY_ID, 2.05 - (0.05 * i1))
             call UpdateAbilityDescription(GetAbilityDescription(ICE_FORCE_ABILITY_ID, i1 - 1), Player(DamageTargetPid), ICE_FORCE_ABILITY_ID, ",s01,", R2I(r1 * 100), i1)
@@ -515,7 +515,7 @@ scope ModifyDamageBeforeArmor initializer init
             else
                 set Damage.index.damage = Damage.index.damage  + (i1 * i2)/ 20
             endif
-            call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
         endif
 
         //Naga Siren passive
@@ -526,7 +526,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Grom Hellscream
         if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID then
             set Damage.index.damage = Damage.index.damage + (GetHeroStr(DamageSourceHero, true) * (0.1 + (0.01 * GetHeroLevel(DamageSourceHero))))
-            call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
         endif
 
         //Robes of the Archmage
@@ -544,7 +544,7 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageTarget, COLD_ARROWS_STACKING_BUFF_ID)
         if i1 > 0 and GetRandomInt(1, 100) < 20 * DamageSourceLuck then
             set Damage.index.damage = Damage.index.damage * 2
-            call DestroyEffect(AddSpecialEffectTargetFix("Abilities\\Spells\\Undead\\FrostArmor\\FrostArmorDamage.mdl", DamageTarget, "chest"))
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\FrostArmor\\FrostArmorDamage.mdl", DamageTarget, "chest"))
         endif
 
         //Vigour Token
@@ -608,7 +608,7 @@ scope ModifyDamageBeforeArmor initializer init
         if DamageTargetTypeId == ROCK_GOLEM_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0AH') == 0 then
             call AbilStartCD(DamageTarget, 'A0AH', 1)
             call ElementStartAbility(DamageTarget, ROCK_GOLEM_UNIT_ID)
-            call DestroyEffect(AddSpecialEffectFix("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
+            call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
             call AreaDamagePhys(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitBlock(DamageTarget) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, ROCK_GOLEM_UNIT_ID)
         endif
 
@@ -640,7 +640,7 @@ scope ModifyDamageBeforeArmor initializer init
             if r1 > 0 then
                 set Damage.index.damage = Damage.index.damage + r1
                 if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
-                    call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))
                 endif		
             endif
         endif
@@ -756,7 +756,7 @@ scope ModifyDamageBeforeArmor initializer init
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = FROSTBITE_OF_THE_SOUL_ABILITY_ID
                 call Damage.applyMagic(DamageTarget, DamageSource, 200 * i1, DAMAGE_TYPE_MAGIC)
-                call DestroyEffect( AddSpecialEffectTargetFix("Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl", DamageSource, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl", DamageSource, "chest"))
             endif
         endif 
 
