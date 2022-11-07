@@ -165,6 +165,7 @@ library HeroData initializer init
         call SaveStr(HT_data,OGRE_MAGE_UNIT_ID,3, "|cffffff00Level Up Bonus|r: Ogre's Luck: +2% chance." )
 
         call SaveStr(HT_data,TROLL_BERSERKER_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp" )       //OGRE MAGE
+        call SaveStr(HT_data,TROLL_BERSERKER_UNIT_ID,2, "|cff00ffffPassive|r: Steadfast Pacing: Starts with maximum movement speed. Its movement speed can't be lowered by enemy abilities or items." )  
         call SaveStr(HT_data,TROLL_BERSERKER_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +1% attack cooldown reduction." )
 
         call SaveStr(HT_data,YETI_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )       //Yeti
