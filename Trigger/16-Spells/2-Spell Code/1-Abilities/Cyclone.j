@@ -10,7 +10,7 @@ library Cyclone requires AoeDamage
 
             if ticks == 0 then
                 set ticks = 15
-                call MoveToPointAoE(caster, GetUnitX(u), GetUnitY(u), 350)
+                call MoveToPointAoE(caster, GetUnitX(u), GetUnitY(u), 350, false, Target_Enemy, false)
             endif
         else
             call FlushChildHashtable(HT,GetHandleId(t))

@@ -27,7 +27,7 @@ library KnockbackHelper initializer init requires Knockback, GroupUtils
     endfunction
 
 //this is copied from the pre-remake AAA, I'm not sure what to name r2, r3, r4
-    function MoveToPointAoE takes unit u,real x,real y,real area returns nothing
+    function MoveToPointAoE takes unit u,real x,real y,real area, boolean allowMagicImmune, integer Target_Type, boolean OverrideKnockback returns nothing
         local unit p
         local real angle
         local real r2
@@ -35,7 +35,7 @@ library KnockbackHelper initializer init requires Knockback, GroupUtils
         local real newY
         
         call GroupClear(ENUM_GROUP)
-        call GroupUnitsInArea(ENUM_GROUP , x , y , area)
+        call EnumTargettableUnitsInRange(ENUM_GROUP, x, y, area, GetOwningPlayer(u), false, Target_Type)
         loop
             set p=FirstOfGroup(ENUM_GROUP)
             exitwhen p == null
@@ -45,7 +45,13 @@ library KnockbackHelper initializer init requires Knockback, GroupUtils
             set newY=y - GetUnitY(p)
             set r2=SquareRoot(newX * newX + newY * newY)
             if r2 > 25. then
-                call KnockbackTarget(u , p , angle , r2 * 2 , r2 * 2.4 , false , false , false , false)
+                if OverrideKnockback then
+                    call KnockbackTarget(u , p , angle , r2 * 2 , r2 * 2.4 , false , false , false , false)
+                else
+                    if not IsKnockedBack(p) then
+                        call KnockbackTarget(u , p , angle , r2 * 2 , r2 * 2.4 , false , false , false , false)
+                    endif
+                endif
             endif
 
             call GroupRemoveUnit(ENUM_GROUP, p)
@@ -54,17 +60,23 @@ library KnockbackHelper initializer init requires Knockback, GroupUtils
     endfunction
 
     //this is copied from the pre-remake AAA
-    function MoveFromPointAoE takes unit u,real x,real y,real area,real startspeed,real decrement returns nothing
+    function MoveFromPointAoE takes unit u,real x,real y,real area,real startspeed,real decrement, boolean allowMagicImmune, integer Target_Type, boolean OverrideKnockback returns nothing
         local unit p
         local real angle
         
         call GroupClear(ENUM_GROUP)
-        call GroupUnitsInArea(ENUM_GROUP , x , y , area)
+        call EnumTargettableUnitsInRange(ENUM_GROUP, x, y, area, GetOwningPlayer(u), false, Target_Type)
         loop
             set p=FirstOfGroup(ENUM_GROUP)
             exitwhen p == null
             set angle=57.29582 * Atan2(GetUnitY(p) - y, GetUnitX(p) - x)
-            call KnockbackTarget(u , p , angle , startspeed , decrement , false , false , false , false)
+            if OverrideKnockback then
+                call KnockbackTarget(u , p , angle , startspeed , decrement , false , false , false , false)
+            else
+                if not IsKnockedBack(p) then
+                    call KnockbackTarget(u , p , angle , startspeed , decrement , false , false , false , false)
+                endif
+            endif
             call GroupRemoveUnit(ENUM_GROUP, p)
         endloop
         set p=null
