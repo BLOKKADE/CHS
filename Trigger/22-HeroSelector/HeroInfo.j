@@ -1,4 +1,4 @@
-library HeroInfo initializer init_function requires GetClass
+library HeroInfo initializer init_function requires GetObjectElement
     // 1.3
     //Plugin for  by Tasyen
     //This Creates a TextDisplay which displays the name and the Extended tooltip of selected units
@@ -184,7 +184,7 @@ library HeroInfo initializer init_function requires GetClass
         if GetLocalPlayer() == p then
             call BlzFrameSetText(TextDisplay, DescHeroNamePrefix + GetObjectName(unitCode) + DescHeroNameSufix)
 
-            set descriptionTemp = GetClassification(null, unitCode, false)
+            set descriptionTemp = GetObjectElements(null, unitCode, false)
             if descriptionTemp != "" then
                 set description = description + descriptionTemp + "|n"
             endif

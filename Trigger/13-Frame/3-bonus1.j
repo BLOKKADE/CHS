@@ -5,8 +5,8 @@ library HeroData initializer init
 
     private function init takes nothing returns nothing
         call SaveStr(HT_data,LIEUTENANT_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNSpellBreaker.blp" )        //letinant
-        //call SaveStr(HT_data,LIEUTENANT_UNIT_ID,2, "|cff00ffffPassive|r: Disease Cloud: Deals |cffff00ffmagic damage|r to nearby enemies every second. ")
-        call SaveStr(HT_data,LIEUTENANT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +8 to two random stats." )
+        call SaveStr(HT_data,LIEUTENANT_UNIT_ID,2, "|cff00ffffPassive|r: Battlemaster: Gains bonus +1 bonus attack damage per point in agility and intelligence.")
+        call SaveStr(HT_data,LIEUTENANT_UNIT_ID,3, "|cffffff00Level Up Bonus|r: +5 to two random stats. (|cff68eef3Every 10 levels|r) Battlemaster: +1 bonus to each stat on level up." )
 
         call SaveStr(HT_data,ABOMINATION_UNIT_ID,1, "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp" )       // amb
         call SaveStr(HT_data,ABOMINATION_UNIT_ID,2, "|cff00ffffPassive|r: Disease Cloud: Deals |cffff00ffmagic damage|r to nearby enemies every second. ")

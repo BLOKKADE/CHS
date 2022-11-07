@@ -176,6 +176,15 @@ scope ShortPeriodCheck initializer init
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
 
+                    //Letinant passive
+                elseif uid == LIEUTENANT_UNIT_ID then
+                    set i1 = GetHeroInt(u, true) + GetHeroAgi(u, true)
+                    set i2 = LoadInteger(DataUnitHT, hid, 542)
+                    if i1 != i2 then
+                        call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) - i2 + i1, 0)
+                        call SaveInteger(DataUnitHT, hid, 542, i1)
+                    endif
+
                     //Head Hunter
                 elseif uid == TROLL_HEADHUNTER_UNIT_ID then
                     set i1 = R2I(GetHeroStr(u, true) * (0.4 + (0.015 * GetHeroLevel(u))))

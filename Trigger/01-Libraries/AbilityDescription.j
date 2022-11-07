@@ -1,4 +1,4 @@
-library AbilityDescription requires RandomShit
+library AbilityDescription requires ReplaceTextLib
     globals
         hashtable HT_des = InitHashtable()
 

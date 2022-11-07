@@ -1,4 +1,4 @@
-library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpells, IdLibrary
+library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary, GetObjectElement
     globals
 
         integer array SpellCP
@@ -15,23 +15,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         unit GLOB_DEBUF = null
 
     endglobals
-
-    function ReplaceText takes string stringToReplace, string value, string inputString returns string
-        local integer Lenght = StringLength(stringToReplace)
-        local integer Lenght3 = StringLength(inputString)
-        local integer lp = 0
-        
-        
-        loop
-            exitwhen lp > Lenght3
-            if SubString(inputString,lp,lp + Lenght) == stringToReplace then
-                return SubString(inputString,0,lp) + value + SubString(inputString,lp + Lenght,Lenght3)
-            endif
-            set lp = lp + 1
-        endloop
-        
-        return inputString
-    endfunction
 
     function CreateTextTagTimer takes string Text, real Height, real x1, real y1,real z1, real time returns nothing
         local texttag floatingText = CreateTextTag()
@@ -62,51 +45,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
 
         set floatingText = null
     endfunction
-
-    function GetUnitItem takes unit u, integer id returns item 
-        local integer i = 0
-
-        loop
-            if GetItemTypeId(UnitItemInSlot(u, i)) == id then
-                return UnitItemInSlot(u, i)
-            endif
-            set i = i + 1
-            exitwhen i > 5
-        endloop
-
-        return null
-    endfunction
-
-    function UnitHasItemS takes unit u, integer id returns boolean 
-        local integer i = 0
-
-        loop
-            if GetItemTypeId(UnitItemInSlot(u, i)) == id then
-                return true
-            endif
-            set i = i + 1
-            exitwhen i > 5
-        endloop
-
-        return false
-    endfunction
-
-
-    function UnitHasItemI takes unit u, integer id returns integer
-        local integer i = 0
-        local integer count = 0
-
-        loop
-            if GetItemTypeId(UnitItemInSlot(u, i)) == id then
-                set count = count + 1
-            endif
-            set i = i + 1
-            exitwhen i > 5
-        endloop
-
-        return count
-    endfunction
-
 
     function EndHeroTempAgi takes nothing returns nothing
         local timer t = GetExpiredTimer()
@@ -362,14 +300,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         call dummy.target(u2).activate()
     endfunction
 
-    function GetInfoHeroSpell takes unit u, integer num returns integer
-        return LoadInteger(HT_SpellPlayer,GetHandleId(u),num)
-    endfunction
-
-    function GetNumHeroSpell takes unit u,integer id returns integer
-        return LoadInteger(HT_SpellPlayer,GetHandleId(u),id)
-    endfunction
-
     function GetHeroTotalAbilitiesCooldown takes unit u returns real
         local real total = 0
         local integer abilId
@@ -387,110 +317,6 @@ library RandomShit requires WitchDoctor, AbilityData, SpellbaneToken, StableSpel
         endloop
 
         return total
-    endfunction
-
-    function IsSpellElement takes unit u, integer abilId, integer id returns boolean
-
-        //Null Void Orb
-        if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
-            return false
-        endif
-
-        //Pretty Bright Gem : Light to Dark and Dark to Light
-        if UnitHasItemS(u, 'I0AM') then
-            if (id == Element_Light and IsObjectElement(abilId, Element_Dark)) or (id == Element_Dark and IsObjectElement(abilId, Element_Light)) then
-                return true
-            endif
-        endif
-        
-        if IsObjectElement(abilId, id) then
-            return true
-        endif
-
-        return false
-    endfunction
-
-    function GetSpellElementCount takes unit u, integer abilId, integer id returns integer
-
-        //Pretty Bright Gem : Light to Dark and Dark to Light
-        if (id == Element_Light or id == Element_Dark) and UnitHasItemS(u, 'I0AM') then
-            if (id == Element_Light and IsObjectElement(abilId, Element_Dark)) then
-                return GetObjectElementCount(abilId, Element_Dark)
-            elseif (id == Element_Dark and IsObjectElement(abilId, Element_Light)) then
-                return GetObjectElementCount(abilId, Element_Light)
-            endif
-        endif
-
-        return GetObjectElementCount(abilId, id)
-    endfunction
-    
-    function GetUnitElementCount takes unit u, integer id returns integer 
-        local integer abilId = 0
-        local integer i = 1
-        local integer elementCount = 0
-
-        //Null Void Orb
-        if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
-            return 0
-        endif
-
-        //Pretty Bright Gem +1 to dark and light
-        if UnitHasItemS(u, 'I0AM') and (id == Element_Light or id == Element_Dark) then
-            set elementCount = elementCount + 1
-        endif
-
-        //Ancient Element
-        if GetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, GetElementAbsolute(id)) > 0 then
-            set elementCount = elementCount + 2
-        endif
-
-        //Hero element
-        set elementCount = elementCount + GetObjectElementCount(GetUnitTypeId(u), id)
-
-        //Hero Force
-        if GetUnitAbilityLevel(u, HERO_FORCE_ABILITY_ID) > 0 then
-            set elementCount = elementCount + GetObjectElementCount(GetUnitTypeId(u), id)
-        endif
-        
-        loop
-            exitwhen i > 20 
-            set elementCount = elementCount + GetSpellElementCount(u, GetInfoHeroSpell(u, i), id)  
-            set i = i + 1
-        endloop
-
-        //Mauler passive
-        if GetUnitTypeId(u) == MAULER_UNIT_ID and (id == Element_Light or (id == Element_Dark and UnitHasItemS(u, 'I0AM'))) then
-            set elementCount = elementCount + R2I(GetHeroLevel(u) / 10)
-        endif
-
-        //Poison Runestone
-        if id == Element_Poison and UnitHasItemS(u, 'I0B8') then
-            set elementCount = elementCount + 2
-        endif
-
-        //Goblet of Blood
-        if id == Element_Blood and UnitHasItemS(u, 'I0B9') then
-            set elementCount = elementCount + 3
-        endif
-
-        //Fan
-        if id == Element_Wind and UnitHasItemS(u,'I08Z') then
-            set elementCount = elementCount + 2
-        endif
-
-        //Witch Doctor passive
-        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
-            if (id == Element_Light or id == Element_Dark) and UnitHasItemS(u, 'I0AM') then
-                set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, Element_Light) + GetWitchDoctorAbsoluteLevel(u, Element_Dark)
-            else
-                set elementCount = elementCount + GetWitchDoctorAbsoluteLevel(u, id)
-            endif
-        endif
-
-        //Counts
-        set elementCount = elementCount + GetUnitAbsoluteBonusCount(u, id)
-        
-        return elementCount 
     endfunction
 
     function GetUnitLuck takes unit u returns real

@@ -1,4 +1,4 @@
-library ElementTexts initializer init
+library ElementColorCode initializer init
     globals
         string array ClassAbil
     endglobals

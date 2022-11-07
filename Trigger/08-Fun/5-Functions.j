@@ -1,27 +1,7 @@
-library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent
+library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
     globals 
-        hashtable HT_SpellPlayer = InitHashtable()
         integer RectPid
     endglobals
-
-    function LoadCountHeroSpell takes unit u,integer list returns integer 
-        return LoadInteger(HT_SpellPlayer,GetHandleId(u),- list)
-    endfunction
-
-    function SetInfoHeroSpell takes unit u, integer num, integer id returns nothing
-        call SaveInteger(HT_SpellPlayer,GetHandleId(u),num,id)
-        call SaveInteger(HT_SpellPlayer,GetHandleId(u),id,num)
-    endfunction
-
-    function SaveCountHeroSpell takes unit u,integer count,integer list returns nothing 
-        call SaveInteger(HT_SpellPlayer,GetHandleId(u),- list,count)
-    endfunction
-
-    function RemoveInfoHeroSpell takes unit u, integer id returns nothing
-        local integer num = LoadInteger(HT_SpellPlayer,GetHandleId(u),id)
-        call SaveInteger(HT_SpellPlayer,GetHandleId(u),num,0)
-        call SaveInteger(HT_SpellPlayer,GetHandleId(u),id,0)
-    endfunction
 
     function AddSpellPlayerInfo takes integer id, unit u, integer list returns nothing
         local integer i1 = 1 + 10 * list

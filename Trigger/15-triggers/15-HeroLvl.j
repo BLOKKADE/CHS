@@ -1,92 +1,7 @@
-library heroLevel initializer init requires HeroLvlTable
+library heroLevel initializer init requires HeroLvlTable, Tinker, WitchDoctor, SpiritTauren, Letinant
     globals
         integer array LastLvlHero
     endglobals
-
-    function LeutenantBonus takes unit u, integer levels returns nothing
-        local integer RandomI
-        local integer i = 0
-
-        loop
-            set RandomI = GetRandomInt(1,3)
-            if RandomI == 1 then
-                call SetHeroStr(u,GetHeroStr(u,false)+ 8,false) 
-                call UpdateBonus(u, 0, 8)
-            elseif RandomI == 2 then
-                call SetHeroAgi(u,GetHeroAgi(u,false)+ 8,false)  
-                call UpdateBonus(u, 1, 8) 
-            elseif RandomI == 3 then    
-                call SetHeroInt(u,GetHeroInt(u,false)+ 8,false) 
-                call UpdateBonus(u, 2, 8)  
-            endif
-            set RandomI = GetRandomInt(1,3)
-            if RandomI == 1 then
-                call SetHeroStr(u,GetHeroStr(u,false)+ 8,false) 
-                call UpdateBonus(u, 0, 8)
-            elseif RandomI == 2 then
-                call SetHeroAgi(u,GetHeroAgi(u,false)+ 8,false)   
-                call UpdateBonus(u, 1, 8)
-            elseif RandomI == 3 then    
-                call SetHeroInt(u,GetHeroInt(u,false)+ 8,false)   
-                call UpdateBonus(u, 2, 8)
-            endif
-            
-            set i = i + 1
-            exitwhen i >= levels
-        endloop
-    endfunction
-
-    function WitchDoctorLevelup takes unit u, integer prevLevel, integer heroLevel returns nothing
-        local integer i = prevLevel
-        local integer j = 0
-
-        loop
-            if ModuloInteger(i, 25) == 0 then
-                call AddHeroMaxAbsoluteAbility(u)
-                call UpdateBonus(u, 0, 1)
-            endif
-
-            if ModuloInteger(i, 30) == 0 then
-                set j = 0
-                loop
-                    set j = j + 1
-                    exitwhen j > 15
-
-                    if WitchDoctorHasAbsolute(u, j) then
-                        call AddWitchDoctorAbsoluteLevel(u, j)
-                    endif                
-                endloop
-            endif
-
-            set i = i + 1
-            exitwhen i >= heroLevel
-        endloop
-    endfunction
-
-    struct TinkerData
-        unit u
-        integer xp
-    endstruct
-
-    function TinkerBonus takes nothing returns nothing
-        local timer t = GetExpiredTimer()
-        local TinkerData td = GetTimerData(t)
-        call AddHeroXP(td.u, td.xp, true)
-        set td.u = null
-        call ReleaseTimer(t)
-        call td.destroy()
-        set t = null
-    endfunction
-
-    function TinkerTimer takes unit u, integer xp returns nothing
-        local timer t = NewTimer()
-        local TinkerData td = TinkerData.create()
-        set td.u = u
-        set td.xp = xp
-        call SetTimerData(t, td)
-        call TimerStart(t, 0.1, false, function TinkerBonus)
-        set t = null
-    endfunction
 
     function UpdateAbilityDescriptionLevelup takes unit h, player p, integer heroLvl returns nothing
         local integer abilLvl
@@ -106,15 +21,6 @@ library heroLevel initializer init requires HeroLvlTable
         if abilLvl > 0 then
             call UpdateAbilityDescription(GetAbilityDescription(abilId, abilLvl - 1), p, abilId, ",s01,", R2I((1 - (500 / (500 + GetHeroInt(h, true)))) * 100), abilLvl)
         endif
-    endfunction
-
-    function LevelBonusLoop takes unit u, integer levelsGained returns nothing
-        local integer i = 0
-        loop
-
-            set i = i + 1
-            exitwhen i >= levelsGained
-        endloop
     endfunction
 
     function Trig_HeroLvl_Actions takes nothing returns nothing
@@ -152,7 +58,7 @@ library heroLevel initializer init requires HeroLvlTable
         call SetHeroInt(u, GetHeroInt(u, false) + R2I(levelsGained * GetIntelligenceLevelBonus(u)), true)
         
         if uid == LIEUTENANT_UNIT_ID then //Letinant    
-            call LeutenantBonus(u, levelsGained)
+            call LetinantBonus(u, levelsGained)
         elseif uid == ABOMINATION_UNIT_ID then
             call SetBonus(u, 0, 40 * (heroLevel))
         elseif uid == DRUID_OF_THE_CLAY_UNIT_ID then

@@ -1,4 +1,4 @@
-library FrameInit initializer init requires RandomShit, CustomState, GetClass, ElementTexts, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking, SellItems
+library FrameInit initializer init requires RandomShit, CustomState, GetObjectElement, ElementColorCode, HeroLvlTable, UnitPanelInfo, RuneInit, HeroData, PlayerTracking, SellItems
 	globals
 		// Hat/Pet main frame
 		framehandle MainAchievementFrameHandle 
@@ -121,7 +121,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 			/*//Hero icon
 			if NumButton == 0 then
 				set SpellU = PlayerHeroes[PlID + 1]
-				set ToolTipS = GetClassification(SpellU, GetUnitTypeId(SpellU), false) + "|n"
+				set ToolTipS = GetObjectElements(SpellU, GetUnitTypeId(SpellU), false) + "|n"
 				set temp = LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
 				if temp != "" and temp != null then
 					set ToolTipS = ToolTipS + temp + "|n"
@@ -230,7 +230,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 					endif
 				elseif NumButton == 100 then
 					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
-					set temp = GetClassification(SpellU, GetUnitTypeId(SpellU), false)
+					set temp = GetObjectElements(SpellU, GetUnitTypeId(SpellU), false)
 					if temp != "" and temp != null then
 						set ToolTipS = ToolTipS + temp + "|n"
 					endif
@@ -269,7 +269,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetClass, E
 						set SpellU = PlayerHeroes[NumPlayerLast[PlID]+ 1]
 						set i3 = GetInfoHeroSpell(SpellU ,NumButton - 100) 
 						set SpellCP[PlID] = i3
-						set temp = GetClassification(SpellU, i3, true)
+						set temp = GetObjectElements(SpellU, i3, true)
 						if temp != "" and temp != null then
 							set ToolTipS = ToolTipS + temp + "|n"
 						endif

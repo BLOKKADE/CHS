@@ -1,4 +1,4 @@
-library DarkAvatar initializer init requires CustomState, HeroLvlTable
+library DarkAvatar initializer init requires CustomState, HeroLvlTable, GetObjectElement
 
     globals
         HashTable AvatarMode

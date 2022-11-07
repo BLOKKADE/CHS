@@ -4162,7 +4162,7 @@ function Trig_Choose_Hero_Actions takes nothing returns nothing
     else
 
         /*
-        set ToolTipS = "|cffff0000" + GetObjectName(GetUnitTypeId( GetTriggerUnit() )) + "|r\n" + GetClassification(GetUnitTypeId( GetTriggerUnit() ))  + "\n" + LoadStr(HT_data,GetUnitTypeId( GetTriggerUnit() ),2 )   + "\n"
+        set ToolTipS = "|cffff0000" + GetObjectName(GetUnitTypeId( GetTriggerUnit() )) + "|r\n" + GetObjectElements(GetUnitTypeId( GetTriggerUnit() ))  + "\n" + LoadStr(HT_data,GetUnitTypeId( GetTriggerUnit() ),2 )   + "\n"
         set ToolTipS = ToolTipS + "|cff0000ffHero attributes|r  \n"
         set ToolTipS = ToolTipS + "Str per level - " + R2S(BlzGetUnitRealField( GetTriggerUnit(),ConvertUnitRealField('ustp')))+ "\n"
         set ToolTipS = ToolTipS + "Agi per level - " + R2S(BlzGetUnitRealField( GetTriggerUnit(),ConvertUnitRealField('uagp')))+ "\n"
