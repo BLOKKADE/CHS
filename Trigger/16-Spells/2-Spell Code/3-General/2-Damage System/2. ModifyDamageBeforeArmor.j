@@ -223,6 +223,21 @@ scope ModifyDamageBeforeArmor initializer init
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * i1))))
         endif
 
+        //Blizzard
+        if DamageSourceAbility == BLIZZARD_ABILITY_ID then
+            call UnitRemoveAbility(DamageTarget, 'BHbz')
+        endif
+
+        //Flame Strike
+        if DamageSourceAbility == FLAME_STRIKE_ABILITY_ID then
+            call UnitRemoveAbility(DamageTarget, 'BHfs')
+        endif
+
+        //Rain of Fire
+        if DamageSourceAbility == RAIN_OF_FIRE_ABILITY_ID then
+            call UnitRemoveAbility(DamageTarget, 'BNrf')
+        endif
+
         //Monsoon
         set i1 = GetUnitAbilityLevel(DamageSource, MONSOON_ABILITY_ID)
         if i1 > 0 and DamageSourceAbility == MONSOON_ABILITY_ID then
