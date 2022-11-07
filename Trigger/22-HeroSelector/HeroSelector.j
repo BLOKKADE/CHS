@@ -1516,10 +1516,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         call DestroyTimer(GetExpiredTimer())
         call ExecuteFunc("HeroSelectorAction_InitHeroes")
         call HeroSelectorInit()
-        
-        static if LIBRARY_FrameLoader then
-            call FrameLoaderAdd(function HeroSelectorInit)
-        endif
     endfunction
     private function init_function takes nothing returns nothing
         
