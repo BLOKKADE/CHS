@@ -420,9 +420,9 @@ scope LongPeriodCheck initializer init
                 if i1 >= 1 or i2 != 0 then
                     if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                         set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
-                        set i1 = R2I((1+ GetUnitAbsoluteEffective(u, Element_Fire)) * (i1 * GetUnitElementCount(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
+                        set i1 = R2I(/*(1+ GetUnitAbsoluteEffective(u, Element_Fire)) * */(i1 * GetUnitElementCount(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
                     else
-                        set i1 = R2I(i1 * GetUnitElementCount(u, Element_Fire) * (1+ GetUnitAbsoluteEffective(u, Element_Fire)))
+                        set i1 = R2I(i1 * GetUnitElementCount(u, Element_Fire)/* * (1+ GetUnitAbsoluteEffective(u, Element_Fire))*/)
                     endif
                     call AddUnitMagicDmg(u, 0.5 * I2R(i1 - i2))	
                     call SaveInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
@@ -432,7 +432,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WATER_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WATER_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = R2I(i1 * GetUnitElementCount(u, Element_Water) * (1+ GetUnitAbsoluteEffective(u, Element_Water)))
+                    set i1 = R2I(i1 * GetUnitElementCount(u, Element_Water)/* * (1+ GetUnitAbsoluteEffective(u, Element_Water))*/)
                     call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)), false)
                     call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +(30 * (i1 -i2)))
 
@@ -443,7 +443,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WIND_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = R2I(i1 * GetUnitElementCount(u, Element_Wind) * (1+ GetUnitAbsoluteEffective(u, Element_Wind)))
+                    set i1 = R2I(i1 * GetUnitElementCount(u, Element_Wind)/* * (1+ GetUnitAbsoluteEffective(u, Element_Wind))*/)
                     call AddUnitEvasion(u ,   0.25 * I2R(i1 - i2)  )
                     call SetHeroAgi(u,GetHeroAgi(u,false)+ 10 *(i1 - i2),false     )
                     call SaveInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID,i1)	
@@ -453,7 +453,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_EARTH_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = R2I(i1 * GetUnitElementCount(u, Element_Earth) * (1+ GetUnitAbsoluteEffective(u, Element_Earth)))
+                    set i1 = R2I(i1 * GetUnitElementCount(u, Element_Earth)/* * (1+ GetUnitAbsoluteEffective(u, Element_Earth))*/)
                     call AddUnitBlock(u ,   20 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID,i1)	
                 endif
@@ -462,7 +462,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_BLOOD_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = R2I(i1 * GetUnitElementCount(u, Element_Blood) * (1+ GetUnitAbsoluteEffective(u, Element_Blood)))
+                    set i1 = R2I(i1 * GetUnitElementCount(u, Element_Blood)/* * (1+ GetUnitAbsoluteEffective(u, Element_Blood))*/)
                     call SetHeroStr(u,GetHeroStr(u,false)+ 10 *(i1 - i2),false     )
                     call SaveInteger(HT,hid,ABSOLUTE_BLOOD_ABILITY_ID,i1)	
                 endif
@@ -498,7 +498,7 @@ scope LongPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WILD_ABILITY_ID)
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
-                    set i1 = R2I (i1 * GetUnitElementCount(u, Element_Wild) * (1+ GetUnitAbsoluteEffective(u, Element_Wild)))
+                    set i1 = R2I (i1 * GetUnitElementCount(u, Element_Wild)/* * (1+ GetUnitAbsoluteEffective(u, Element_Wild))*/)
                     call AddUnitSummonStronger(u ,   1 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID,i1)	
                 endif

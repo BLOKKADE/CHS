@@ -34,7 +34,7 @@ library AbsoluteDarkDebuff initializer init requires RandomShit, UnitHelpers
     public function AbsoluteDarkDebuffExecute takes unit u returns nothing
         local unit u2 = null
         local AbsoluteDarkDebuf a = 0
-        local real bonus = I2R(GetUnitAbilityLevel(u, ABSOLUTE_DARK_ABILITY_ID) * GetUnitElementCount(u, Element_Dark)) * (1 + GetUnitAbsoluteEffective(u, Element_Dark))
+        local real bonus = I2R(GetUnitAbilityLevel(u, ABSOLUTE_DARK_ABILITY_ID) * GetUnitElementCount(u, Element_Dark))/* * (1 + GetUnitAbsoluteEffective(u, Element_Dark))*/
         call EnumTargettableUnitsInRange(DebuffGroup, GetUnitX(u), GetUnitY(u), 600, GetOwningPlayer(u), false, Target_Enemy)
         loop
             set u2 = FirstOfGroup(DebuffGroup)

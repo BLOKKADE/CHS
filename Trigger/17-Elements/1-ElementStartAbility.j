@@ -103,32 +103,32 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         if GetUnitAbilityLevel(u,ABSOLUTE_FIRE_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Fire) then
             if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                 set calc = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
-                call TempBonus.create(u, BONUS_MAGICPOW, (2 * (1 + GetUnitAbsoluteEffective(u,Element_Fire) + (0.005 * GetHeroLevel(u)))) * calc, 10, ABSOLUTE_FIRE_ABILITY_ID)
+                call TempBonus.create(u, BONUS_MAGICPOW, (2 * (1 + /*GetUnitAbsoluteEffective(u,Element_Fire) + */(0.005 * GetHeroLevel(u)))) * calc, 10, ABSOLUTE_FIRE_ABILITY_ID)
             else
-                call TempBonus.create(u, BONUS_MAGICPOW, 2 * (1 + GetUnitAbsoluteEffective(u,Element_Fire)), 10, ABSOLUTE_FIRE_ABILITY_ID)
+                call TempBonus.create(u, BONUS_MAGICPOW, 2 /* (1 + GetUnitAbsoluteEffective(u,Element_Fire))*/, 10, ABSOLUTE_FIRE_ABILITY_ID)
             endif
         endif
         
         //Absolute Water
         if GetUnitAbilityLevel(u,ABSOLUTE_WATER_ABILITY_ID) > 0 and IsSpellElement(u,id, Element_Water) then
             call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .02 * (1 + GetUnitAbsoluteEffective(u,Element_Water)))
-            call TempBonus.create(u, BONUS_INTELLIGENCE,20 * (1 + GetUnitAbsoluteEffective(u,Element_Water)),9, ABSOLUTE_WATER_ABILITY_ID)
+            call TempBonus.create(u, BONUS_INTELLIGENCE,20 /* (1 + GetUnitAbsoluteEffective(u,Element_Water))*/,9, ABSOLUTE_WATER_ABILITY_ID)
         endif      
         
         //Absolute Wind
         if GetUnitAbilityLevel(u,ABSOLUTE_WIND_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Wind) then
-            call TempBonus.create(u, BONUS_AGILITY,25 * (1 + GetUnitAbsoluteEffective(u,Element_Wind)),9, ABSOLUTE_WIND_ABILITY_ID)
-            call TempBonus.create(u, BONUS_EVASION,5 * (1 + GetUnitAbsoluteEffective(u,Element_Wind)),9, ABSOLUTE_WIND_ABILITY_ID)
+            call TempBonus.create(u, BONUS_AGILITY,25 /** (1 + GetUnitAbsoluteEffective(u,Element_Wind))*/,9, ABSOLUTE_WIND_ABILITY_ID)
+            call TempBonus.create(u, BONUS_EVASION,5 /** (1 + GetUnitAbsoluteEffective(u,Element_Wind))*/,9, ABSOLUTE_WIND_ABILITY_ID)
         endif   
         
         //Absolute Earth
         if GetUnitAbilityLevel(u,ABSOLUTE_EARTH_ABILITY_ID) > 0 and IsSpellElement(u,id, Element_Earth) then
-            call TempBonus.create(u,BONUS_BLOCK, 50 * (1 + GetUnitAbsoluteEffective(u,Element_Earth)),15, ABSOLUTE_EARTH_ABILITY_ID)
+            call TempBonus.create(u,BONUS_BLOCK, 50 /** (1 + GetUnitAbsoluteEffective(u,Element_Earth))*/,15, ABSOLUTE_EARTH_ABILITY_ID)
         endif     
         
         //Absolute Dark
         if GetUnitAbilityLevel(u,ABSOLUTE_DARK_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Dark) then
-            call AoeDrainAura2(u,8 * (1 + GetUnitAbsoluteEffective(u,Element_Dark)),500,false)
+            call AoeDrainAura2(u,8/* * (1 + GetUnitAbsoluteEffective(u,Element_Dark))*/,500,false)
         endif           
         
         //Absolute Cold
@@ -138,14 +138,14 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Light
         if GetUnitAbilityLevel(u,ABSOLUTE_LIGHT_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Light) then
-            call SetUnitState(u,UNIT_STATE_LIFE,GetUnitState(u,UNIT_STATE_LIFE) + (GetUnitState(u,UNIT_STATE_LIFE))* .04 * (1 + GetUnitAbsoluteEffective(u,Element_Light)))
+            call SetUnitState(u,UNIT_STATE_LIFE,GetUnitState(u,UNIT_STATE_LIFE) + (GetUnitState(u,UNIT_STATE_LIFE))* .04 /** (1 + GetUnitAbsoluteEffective(u,Element_Light))*/)
         endif 
 
         //Absolute Wild
         if GetUnitAbilityLevel(u,ABSOLUTE_WILD_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Wild) then
             set U = CreateUnit( GetOwningPlayer(u),'h01N',GetUnitX(u)+ 40 * CosBJ(- 30 + GetUnitFacing(u)),GetUnitY(u)+ 40 * SinBJ(- 30 + GetUnitFacing(u)),GetUnitFacing(u) )
-            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 1000 + R2I(GetHeroLevel(u)*(1000) * (1 + GetUnitAbsoluteEffective(u,Element_Wild))))
-            call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 150 + R2I((50)* GetHeroLevel(u) * (1 + GetUnitAbsoluteEffective(u,Element_Wild))) ,0)
+            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 1000 + R2I(GetHeroLevel(u)*(1000)/* * (1 + GetUnitAbsoluteEffective(u,Element_Wild))*/))
+            call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 150 + R2I((50)* GetHeroLevel(u) /** (1 + GetUnitAbsoluteEffective(u,Element_Wild))*/) ,0)
             call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
             call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,15)
         endif   
