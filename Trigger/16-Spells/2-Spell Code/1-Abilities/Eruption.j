@@ -14,7 +14,6 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
         private method damage takes nothing returns nothing
             local unit p
             local integer i = 0
-            set this.level = GetUnitAbilityLevel(this.source, ERUPTION_ABILITY_ID)
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, this.x, this.y, 600, Player(this.pid), false, Target_Enemy)
             //call BJDebugMsg("sldmg")
@@ -47,13 +46,14 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
             endif
         endmethod 
 
-        static method create takes unit source, real x, real y returns thistype
+        static method create takes unit source, real x, real y, integer level returns thistype
             local thistype this = thistype.setup()
            // call BJDebugMsg("sl start")
             set this.source = source
             set this.target = target
             set this.endTick = T32_Tick + (12 * 32)
             set this.tick = T32_Tick + 16
+            set this.level = level
             set this.x = x
             set this.y = y
             set this.maxUnits = 3
@@ -77,7 +77,7 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
         implement Recycle
     endstruct
 
-    function CastEruption takes unit caster, real x, real y returns nothing
-        call EruptionStruct.create(caster, x, y)
+    function CastEruption takes unit caster, real x, real y, integer level returns nothing
+        call EruptionStruct.create(caster, x, y, level)
     endfunction
 endlibrary

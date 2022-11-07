@@ -77,7 +77,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             return true
         //Cyclone
         elseif abilId == CYCLONE_ABILITY_ID then
-            call Cyclone(caster, x, y)
+            call Cyclone(caster, x, y, lvl)
             return true
         //Ancient Axe
         elseif abilId == 'A096' then
@@ -151,7 +151,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             return true  
         //Eruption
         elseif abilId == ERUPTION_ABILITY_ID then
-            call CastEruption(caster, x, y)
+            call CastEruption(caster, x, y, lvl)
             return true
         endif
 
