@@ -267,7 +267,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetObjectEl
 				elseif NumButton > 100 and NumButton <= 120 then
 					if NumPlayerLast[PlID] != 11 then
 						set SpellU = PlayerHeroes[NumPlayerLast[PlID]+ 1]
-						set i3 = GetInfoHeroSpell(SpellU ,NumButton - 100) 
+						set i3 = GetHeroSpellAtPosition(SpellU ,NumButton - 100) 
 						set SpellCP[PlID] = i3
 						set temp = GetObjectElements(SpellU, i3, true)
 						if temp != "" and temp != null then

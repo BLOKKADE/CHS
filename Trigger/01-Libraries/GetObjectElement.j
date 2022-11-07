@@ -87,7 +87,7 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         
         loop
             exitwhen i > 20 
-            set elementCount = elementCount + GetSpellElementCount(u, GetInfoHeroSpell(u, i), id)  
+            set elementCount = elementCount + GetSpellElementCount(u, GetHeroSpellAtPosition(u, i), id)  
             set i = i + 1
         endloop
 

@@ -74,7 +74,7 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, F
             endif
 
             call ps.setCurrentHatEffect(AddSpecialEffectTarget(HatIndexes[hatIndex], PlayerHeroes[heroPlayerId], "head"))
-            call BlzSetSpecialEffectScale(ps.getCurrentHatEffect(), 2.0) // Current scaling is 200%. We can add customization to this per hat if needed
+            call BlzSetSpecialEffectScale(ps.getCurrentHatEffect(), 2.0) // NewPosition scaling is 200%. We can add customization to this per hat if needed
             call ps.setHatIndex(hatIndex)
         else
             // Player took the hat off

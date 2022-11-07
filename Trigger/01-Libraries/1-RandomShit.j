@@ -307,7 +307,7 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
         local integer i = 0
 
         loop
-            set abilId = GetInfoHeroSpell(u, i)
+            set abilId = GetHeroSpellAtPosition(u, i)
             set abilIdCurrent = CheckAssociatedSpell(u,abilId)
 
             set total = total + BlzGetUnitAbilityCooldownRemaining(u, abilIdCurrent)
@@ -563,7 +563,7 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
         local integer i = 0
         local integer abilId = 0
         loop
-            set abilId = GetInfoHeroSpell(u, i)
+            set abilId = GetHeroSpellAtPosition(u, i)
             if abilId != 0 then
                 call UnitRemoveAbility(u, abilId)
             endif
@@ -579,7 +579,7 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
         
         loop
             exitwhen i1 > 10
-            set id = CheckAssociatedSpell(u, GetInfoHeroSpell(u ,i1))
+            set id = CheckAssociatedSpell(u, GetHeroSpellAtPosition(u ,i1))
 
             call BlzStartUnitAbilityCooldown(u,id, cd + BlzGetUnitAbilityCooldownRemaining(u,id))
 

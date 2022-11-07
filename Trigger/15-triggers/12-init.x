@@ -8743,13 +8743,13 @@ function Trig_Unlearn_Ability_Actions takes nothing returns nothing
 
     if(Trig_Unlearn_Ability_Func001C()) and AbilityMode != 2 then
 
-        set CountS = LoadCountHeroSpell(GetTriggerUnit(), 0)
+        set CountS = GetHeroSpellListCount(GetTriggerUnit(), 0)
         if CountS > 0 then
 
             set HeroAbilityCount[Pid]=(HeroAbilityCount[Pid]- 1)
             set PlayerLastLearnedSpell[Pid] = GetLastLearnedSpell(GetTriggerUnit(), SpellList_Normal, true)
-            call SetInfoHeroSpell(GetTriggerUnit(),CountS,0 )
-            call SaveCountHeroSpell(GetTriggerUnit() ,CountS - 1,0 ) 
+            call SetHeroSpellPosition(GetTriggerUnit(),CountS,0 )
+            call SetHeroSpellListCount(GetTriggerUnit() ,CountS - 1,0 ) 
 
             call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[Pid], GetUnitAbilityLevel(GetTriggerUnit(), PlayerLastLearnedSpell[Pid]) - 1))
             call AddSpecialEffectTargetUnitBJ("origin",GetTriggerUnit(),"Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl")

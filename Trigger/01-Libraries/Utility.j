@@ -52,7 +52,7 @@ library Utility requires NewBonus, FixDeleteUnit
     endfunction
 
     /*function GetHeroSpellByIndex takes unit u, integer index returns integer
-        local integer abilId = GetInfoHeroSpell(u, index)
+        local integer abilId = GetHeroSpellAtPosition(u, index)
         local integer dummyAbilId = GetAssociatedSpell(u, abilId)
         if dummyAbilId != 0 then
             return dummyAbilId

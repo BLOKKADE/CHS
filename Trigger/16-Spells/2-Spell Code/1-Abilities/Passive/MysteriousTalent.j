@@ -15,7 +15,7 @@ library MysteriousTalent requires RandomShit, AbilityData, CastSpellOnTarget
         local real range = 0
         
         loop
-            set abilId = GetInfoHeroSpell(caster, i)
+            set abilId = GetHeroSpellAtPosition(caster, i)
             if IsSpellResettable(abilId) then
                 call CastSpellAuto(caster, null, abilId, GetUnitAbilityLevel(caster, abilId), 0, 0, -1)
             endif 

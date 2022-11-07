@@ -9,7 +9,7 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
         if PlayerLastLearnedSpell[pid + 1] == abilId then
             set PlayerLastLearnedSpell[pid + 1] = GetLastLearnedSpell(u, SpellList_Normal, false)
         endif
-        call SaveCountHeroSpell(u ,LoadCountHeroSpell(u,0) - 1 ,0 ) 
+        call SetHeroSpellListCount(u ,GetHeroSpellListCount(u,0) - 1 ,0 ) 
         call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(abilId, GetUnitAbilityLevel(u, abilId) - 1))    
         call UnitRemoveAbilityBJ(abilId,u)
         call FunResetAbility (abilId,u)
@@ -19,7 +19,7 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
         local integer id = 0
 
         loop
-            set id = GetInfoHeroSpell(u, i)
+            set id = GetHeroSpellAtPosition(u, i)
             set i = i + 1
             exitwhen id != 0 or i > 10
         endloop
@@ -31,12 +31,12 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
         local integer id = 0
 
         loop
-            set id = GetInfoHeroSpell(u ,i)
+            set id = GetHeroSpellAtPosition(u ,i)
             if id == 0 then
                 set id = GetNextSpell(u, i)
                 if id != 0 then
-                    call RemoveInfoHeroSpell(u, id)
-                    call SetInfoHeroSpell(u, i, id)
+                    call ResetHeroSpellPosition(u, id)
+                    call SetHeroSpellPosition(u, i, id)
                 endif
             endif
             set i = i + 1

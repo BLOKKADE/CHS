@@ -8,7 +8,7 @@ library Sorcerer initializer init requires RandomShit, AbilityData, CastSpellOnT
         local integer abilId = 0
         local integer count = 0
         loop
-            set abilId = GetInfoHeroSpell(u, i)
+            set abilId = GetHeroSpellAtPosition(u, i)
             if abilId != 0 and IsAbilityCasteable(abilId, true) and IsSpellResettable(abilId) then
                 set count = count + 1
             endif
@@ -35,7 +35,7 @@ library Sorcerer initializer init requires RandomShit, AbilityData, CastSpellOnT
         if StableActiveCheck(caster) then
             loop
                 set i = GetRandomInt(1,10)
-                set abilId = GetInfoHeroSpell(caster, i)
+                set abilId = GetHeroSpellAtPosition(caster, i)
                 if IsAbilityCasteable(abilId,false) and IsSpellResettable(abilId) then
                     call CastSpellAuto(caster, null, abilId, GetUnitAbilityLevel(caster, abilId), 0, 0, 600)
                     set i2 = i2 + 1

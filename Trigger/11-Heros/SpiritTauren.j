@@ -9,7 +9,7 @@ library SpiritTauren initializer init requires IdLibrary, RandomShit
         local integer abilId = 0
         local integer count = 0
         loop
-            set abilId = GetInfoHeroSpell(u, i)
+            set abilId = GetHeroSpellAtPosition(u, i)
             if abilId != 0 and IsAbilityCasteable(abilId, true) then
                 set count = count + 1
             endif

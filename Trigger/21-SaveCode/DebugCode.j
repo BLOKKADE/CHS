@@ -29,7 +29,7 @@ library DebugCode requires RandomShit, OldInitialization
 
                 // Save the abilities
                 loop
-                    set name = GetObjectName(GetInfoHeroSpell(playerHero, index))
+                    set name = GetObjectName(GetHeroSpellAtPosition(playerHero, index))
 
                     if (name == "Default string") then
                         set debugCode = debugCode + "NA|"

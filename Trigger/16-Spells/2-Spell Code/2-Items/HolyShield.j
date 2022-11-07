@@ -18,7 +18,7 @@ library HolyShield initializer init requires RandomShit, AbilityData, CastSpellO
         local integer i = 0
 
         loop             
-            if GetNumHeroSpell(caster, HolyShieldS[i]) != 0 then
+            if GetHeroPositionOfSpell(caster, HolyShieldS[i]) != 0 then
                 call CastSpell(caster, caster, HolyShieldS[i], GetUnitAbilityLevel(caster,HolyShieldS[i]), GetAbilityOrderType(HolyShieldS[i]), GetUnitX(caster), GetUnitY(caster)).activate()
             endif
             set i = i + 1

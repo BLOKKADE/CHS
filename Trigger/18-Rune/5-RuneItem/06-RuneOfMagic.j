@@ -12,7 +12,7 @@ library MagicRune requires RandomShit
         
         loop
             exitwhen i1 > 10
-            set SpellId = GetInfoHeroSpell(u ,i1)
+            set SpellId = GetHeroSpellAtPosition(u ,i1)
             if IsSpellResettable(SpellId) then
                 set SpellId = GetAssociatedSpell(u, SpellId)
 

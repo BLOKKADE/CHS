@@ -134,7 +134,7 @@ scope LongPeriodCheck initializer init
         else
             loop
                 exitwhen i1 > 21
-                set SpellId = GetInfoHeroSpell(PlayerHeroes[NumPlayerLast[i] + 1] , i1)
+                set SpellId = GetHeroSpellAtPosition(PlayerHeroes[NumPlayerLast[i] + 1] , i1)
                 if SpellId != 0 then
                     set textureS = BlzGetAbilityIcon(SpellId)
 

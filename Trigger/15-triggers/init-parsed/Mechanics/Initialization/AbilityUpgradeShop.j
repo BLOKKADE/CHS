@@ -12,7 +12,7 @@ library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
         local integer itemId = 0
         local integer i = 0
         loop
-            set itemId = GetItemFromAbility(GetInfoHeroSpell(u, i))
+            set itemId = GetItemFromAbility(GetHeroSpellAtPosition(u, i))
 
             if itemId != 0 then
                 call RemoveItemFromStock(udg_Draft_UpgradeBuildings[pid + 1], itemId)

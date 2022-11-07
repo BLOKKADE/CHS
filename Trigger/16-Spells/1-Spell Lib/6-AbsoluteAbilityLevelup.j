@@ -1,10 +1,10 @@
 library LearnAbsolute initializer init requires SpellsLearned, Functions
     function UnlearnAbsolute takes unit u, integer id returns nothing
-        local integer count = LoadCountHeroSpell(u, 1)
+        local integer count = GetHeroSpellListCount(u, 1)
         call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"|cfff76863Removed |r" + BlzGetAbilityTooltip(id, GetUnitAbilityLevel(u, id) - 1))
         call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", u, "origin"))
         call UnitRemoveAbility(u, id)
-        call SaveCountHeroSpell(u,count - 1,1)
+        call SetHeroSpellListCount(u,count - 1,1)
         call SaveInteger(HT,GetHandleId(u),941561, LoadInteger(HT,GetHandleId(u),941561)  - 1 )
         call FunResetAbility(id,u)
     endfunction
@@ -30,7 +30,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
         if new then
             call UnitAddAbility(u, abil)
             call BlzUnitDisableAbility(u,abil,false,true)
-            call AddSpellPlayerInfo(abil,u,1)
+            call UpdateHeroSpellList(abil,u,1)
             call SpellLearnedFunc(u, abil)
             
         endif

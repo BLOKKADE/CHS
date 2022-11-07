@@ -231,7 +231,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
             if realUnit then
                 call SaveInteger(HT,GetHandleId(u),941561, 1)
-                call AddSpellPlayerInfo(ABSOLUTE_FIRE_ABILITY_ID,u,1)
+                call UpdateHeroSpellList(ABSOLUTE_FIRE_ABILITY_ID,u,1)
                 call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID,u)
                 call AddHeroMaxAbsoluteAbility(u)
             endif
@@ -244,7 +244,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
             if realUnit then
                 call SaveInteger(HT,GetHandleId(u),941561, 1)
-                call AddSpellPlayerInfo(ABSOLUTE_WATER_ABILITY_ID,u,1)
+                call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID,u,1)
                 call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID,u)
                 call AddHeroMaxAbsoluteAbility(u)
                 set NagaSirenBonus[GetHandleId(u)] = 1

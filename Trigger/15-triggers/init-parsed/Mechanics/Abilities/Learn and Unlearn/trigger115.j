@@ -37,13 +37,13 @@ library trigger115 initializer init requires RandomShit, Functions, SpellsLearne
     
         if(Trig_Unlearn_Ability_Func001C()) and AbilityMode != 2 then
     
-            set CountS = LoadCountHeroSpell(u, 0)
+            set CountS = GetHeroSpellListCount(u, 0)
             if CountS > 0 then
     
                 set HeroAbilityCount[Pid]=(HeroAbilityCount[Pid]- 1)
                 set PlayerLastLearnedSpell[Pid] = GetLastLearnedSpell(u, SpellList_Normal, true)
-                call SetInfoHeroSpell(u,CountS,0 )
-                call SaveCountHeroSpell(u ,CountS - 1,0 ) 
+                call SetHeroSpellPosition(u,CountS,0 )
+                call SetHeroSpellListCount(u ,CountS - 1,0 ) 
     
                 call DisplayTimedTextToPlayer(p, 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[Pid], GetUnitAbilityLevel(u, PlayerLastLearnedSpell[Pid]) - 1))
                 call AddSpecialEffectTargetUnitBJ("origin",u,"Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl")

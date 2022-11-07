@@ -12,7 +12,7 @@ library AncientElement initializer init requires RandomShit, AbsoluteElements, A
         local integer absoluteCount = LoadInteger(HT, GetHandleId(caster), 941561)
 
         if absoluteCount > 0 then
-            return GetAbsoluteElement(GetInfoHeroSpell(caster, (10) + GetRandomInt(1, absoluteCount)))
+            return GetAbsoluteElement(GetHeroSpellAtPosition(caster, (10) + GetRandomInt(1, absoluteCount)))
         else
             return GetRandomInt(1, Element_Maximum)
         endif

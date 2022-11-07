@@ -5,8 +5,8 @@ library SpellsLearned requires RandomShit, Functions
     endglobals
 
     function GetLastLearnedSpell takes unit u, integer spellList, boolean remove returns integer
-        local integer i = LoadCountHeroSpell(u, spellList)
-        local integer spellId = GetInfoHeroSpell(u, (spellList * 10) + i)
+        local integer i = GetHeroSpellListCount(u, spellList)
+        local integer spellId = GetHeroSpellAtPosition(u, (spellList * 10) + i)
 
         loop
             if spellId != 0 then
@@ -14,7 +14,7 @@ library SpellsLearned requires RandomShit, Functions
             endif
             
             set i = i - 1
-            set spellId = GetInfoHeroSpell(u, (spellList * 10) + i)
+            set spellId = GetHeroSpellAtPosition(u, (spellList * 10) + i)
             exitwhen i <= 10 * spellList
         endloop
 

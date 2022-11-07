@@ -3,34 +3,6 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         integer RectPid
     endglobals
 
-    function AddSpellPlayerInfo takes integer id, unit u, integer list returns nothing
-        local integer i1 = 1 + 10 * list
-        local integer Count = LoadCountHeroSpell(u,list)
-        local integer Current = 1
-        local integer InfoId 
-        local boolean HaveSpell = false
-        loop
-            set InfoId = GetInfoHeroSpell(u,i1)
-            if  (InfoId == 0) and (Current == 0) then
-                set Current = i1
-            endif
-
-            if id == InfoId then
-                set HaveSpell = true
-            endif
-
-            set i1 = i1 + 1
-            exitwhen  (i1 > 10 + 10 * list) or  (HaveSpell)
-        endloop
-        if HaveSpell == false then
-            set Count = Count + 1
-            call SaveCountHeroSpell(u,Count,list)
-            call SetInfoHeroSpell(u,Count + list * 10,id)
-        endif 
-
-        //  call DisplayTextToPlayer(GetLocalPlayer(),0,0,I2S(LoadCountHeroSpell(u) ))
-    endfunction
-
     function SpellLearnedFunc takes unit u, integer abilId returns nothing
 
         if GetUnitTypeId(u) == TAUREN_UNIT_ID then
@@ -132,9 +104,9 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         local integer level = GetUnitAbilityLevel(u, abilId)
 
         if IsUnitType(u, UNIT_TYPE_HERO) and IsAbsolute(abilId) == false then
-            call AddSpellPlayerInfo(abilId,u,0)
+            call UpdateHeroSpellList(abilId,u,0)
 
-            //call SetChanellOrder(u,abilId,GetInfoHeroSpell(u,abilId)  )
+            //call SetChanellOrder(u,abilId,GetHeroSpellAtPosition(u,abilId)  )
         endif
 
         if IsAbilityEnabled(u, abilId) then
@@ -172,7 +144,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
 
     function FunResetAbility takes integer abilId, unit u returns nothing
 
-        call RemoveInfoHeroSpell(u,abilId)
+        call ResetHeroSpellPosition(u,abilId)
 
         call SetSkillParameters(u, abilId)
 

@@ -201,7 +201,7 @@ library SaveBuild requires Table, RandomShit, CustomState
             //call BJDebugMsg("created")
             set i = 1
             loop
-                set objectId = GetInfoHeroSpell(this.hero, i)
+                set objectId = GetHeroSpellAtPosition(this.hero, i)
                 set lvl = GetUnitAbilityLevel(this.hero, objectId)
                 if objectId != 0 then
                     //call BJDebugMsg("abil id: " + GetObjectName(objectId) + " lvl: " + I2S(lvl) + " round: " + I2S(round) + "obj: " + I2S(this.abilities[round]))

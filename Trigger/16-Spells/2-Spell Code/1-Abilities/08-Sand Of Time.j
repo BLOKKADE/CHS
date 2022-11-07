@@ -22,7 +22,7 @@ library SandOfTime requires RandomShit
     
         loop
             exitwhen i1 > 10
-            set SpellId = GetInfoHeroSpell(hero ,i1)
+            set SpellId = GetHeroSpellAtPosition(hero ,i1)
             if SpellId != 0 and IsSpellResettable(SpellId) then
                 call ResetSpell(hero, CheckAssociatedSpell(hero, SpellId), time, true)
             endif
