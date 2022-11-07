@@ -26,6 +26,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         return PassiveBonusStr[uid].string[index]
     endfunction
 
+    // replaces ,0, of the description of a unit u's passive with the updated value
     function GetPassiveStr takes unit u returns string
         local string s = "|n"
         local integer i = 0
@@ -45,12 +46,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         return s
     endfunction
 
-    private function init takes nothing returns nothing
-        set PassiveBonus = HashTable.create()
-        set PassiveBonusStr = HashTable.create()
-        set PassiveBonusIndex = Table.create()
-
-        //,0, for entry
+    // ,0, is what is edited
+    private function SetupHeroEditableStats takes nothing returns nothing
         call SetBonusStr(LIEUTENANT_UNIT_ID, 0, "|cffe7544aStrength bonus|r: ,0,")
         call SetBonusStr(LIEUTENANT_UNIT_ID, 1, "|cffd6e049Agility bonus|r: ,0,")
         call SetBonusStr(LIEUTENANT_UNIT_ID, 2, "|cff4daed4Intelligence bonus|r: ,0,")
@@ -179,5 +176,13 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(GRUNT_UNIT_ID, 2, "|cff4daed4Duration|r: ,0, seconds")
 
         call SetBonusStr(ARENA_MASTER_UNIT_ID, 0, "|cffe7544aTotal glory gained|r: ,0,")
+    endfunction
+
+    private function init takes nothing returns nothing
+        set PassiveBonus = HashTable.create()
+        set PassiveBonusStr = HashTable.create()
+        set PassiveBonusIndex = Table.create()
+
+        call SetupHeroEditableStats()
     endfunction
 endlibrary

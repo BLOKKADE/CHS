@@ -50,7 +50,6 @@
 //! import "C:\CHS\CHS\Trigger\01-Libraries\ToggleSpellList.j"
 //! import "C:\CHS\CHS\Trigger\01-Libraries\UnitItems.j"
 //! import "C:\CHS\CHS\Trigger\01-Libraries\Utility.j"
-//! import "C:\CHS\CHS\Trigger\03-FixFunction\1-Debug.j"
 //! import "C:\CHS\CHS\Trigger\03-FixFunction\2-Fix.j"
 //! import "C:\CHS\CHS\Trigger\04-Buffs\1-Damage.j"
 //! import "C:\CHS\CHS\Trigger\04-Buffs\2-BuffSys.j"

@@ -31,7 +31,7 @@ library ToggleAbility initializer init requires AbilityDescription
     function ToggleAbility takes unit u, integer abilId, integer lvl returns nothing
         local integer hid = GetHandleId(u)
         local player p = GetOwningPlayer(u)
-        call SaveAbilityDescription(abilId, lvl)
+        call SetAbilityDescription(abilId, lvl)
 
         if AbilityStorage[abilId].boolean[0] == false then
             call FirstTimeSetup(abilId)

@@ -18,7 +18,7 @@ library MouseHoverInfo requires TimerUtils, GetObjectElement, RandomShit
         if PlayerHeroes[GetPlayerId(p) + 1] == null then
             call ClearTextMessages()
             set heroInfo = heroInfo + "|cff56fc6c" + GetHeroProperName(u) + "|r the |cff00c3ff" + GetObjectName(GetUnitTypeId( u )) + "|r\n"
-            set temp = GetObjectElements(u, GetUnitTypeId( u ), false)
+            set temp = GetObjectelementsAsString(u, GetUnitTypeId( u ), false)
             if temp != "" then
                 set heroInfo = heroInfo + temp + "\n"
             endif

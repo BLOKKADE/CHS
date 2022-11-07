@@ -30,15 +30,7 @@ library GloryItemCosts initializer init requires Glory
         endif
     endfunction
 
-    private function init takes nothing returns nothing
-        local trigger trg = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ( trg, EVENT_PLAYER_UNIT_PAWN_ITEM  )
-        call TriggerAddAction(trg, function RefundGlory)
-        set trg = null
-
-        set GloryItemCosts = Table.create()
-
-
+    private function SetupGloryItemCosts takes nothing returns nothing
         set GloryItemCosts[GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID] = 10000
         set GloryItemCosts[GLORY_ABSOLUTE_BLOOD_COUNT_TOME_ITEM_ID] = 6000
         set GloryItemCosts[GLORY_ABSOLUTE_DARK_COUNT_TOME_ITEM_ID] = 7000
@@ -94,5 +86,16 @@ library GloryItemCosts initializer init requires Glory
         set GloryItemCosts[SWORD_OF_BLOODTHRIST_ITEM_ID] = 10000
         set GloryItemCosts[WISDOM_CHESTPLATE_ITEM_ID] = 10000
         set GloryItemCosts[LUCKY_PANTS_ITEM_ID] = 10000
+    endfunction
+
+    private function init takes nothing returns nothing
+        local trigger trg = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ( trg, EVENT_PLAYER_UNIT_PAWN_ITEM  )
+        call TriggerAddAction(trg, function RefundGlory)
+        set trg = null
+
+        set GloryItemCosts = Table.create()
+
+        call SetupGloryItemCosts()
     endfunction
 endlibrary

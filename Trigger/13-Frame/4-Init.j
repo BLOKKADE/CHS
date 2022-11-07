@@ -121,7 +121,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetObjectEl
 			/*//Hero icon
 			if NumButton == 0 then
 				set SpellU = PlayerHeroes[PlID + 1]
-				set ToolTipS = GetObjectElements(SpellU, GetUnitTypeId(SpellU), false) + "|n"
+				set ToolTipS = GetObjectelementsAsString(SpellU, GetUnitTypeId(SpellU), false) + "|n"
 				set temp = LoadStr(HT_data, GetUnitTypeId(SpellU), 2)
 				if temp != "" and temp != null then
 					set ToolTipS = ToolTipS + temp + "|n"
@@ -230,7 +230,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetObjectEl
 					endif
 				elseif NumButton == 100 then
 					set SpellU = PlayerHeroes[NumPlayerLast[PlID] + 1]
-					set temp = GetObjectElements(SpellU, GetUnitTypeId(SpellU), false)
+					set temp = GetObjectelementsAsString(SpellU, GetUnitTypeId(SpellU), false)
 					if temp != "" and temp != null then
 						set ToolTipS = ToolTipS + temp + "|n"
 					endif
@@ -269,7 +269,7 @@ library FrameInit initializer init requires RandomShit, CustomState, GetObjectEl
 						set SpellU = PlayerHeroes[NumPlayerLast[PlID]+ 1]
 						set i3 = GetHeroSpellAtPosition(SpellU ,NumButton - 100) 
 						set SpellCP[PlID] = i3
-						set temp = GetObjectElements(SpellU, i3, true)
+						set temp = GetObjectelementsAsString(SpellU, i3, true)
 						if temp != "" and temp != null then
 							set ToolTipS = ToolTipS + temp + "|n"
 						endif

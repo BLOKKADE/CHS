@@ -24,21 +24,24 @@ library AbsoluteElements initializer init requires Table
         set AbsoluteElements[absoluteId] = elementId
     endfunction
 
+    private function SetupAbsolutes takes nothing returns nothing
+        call InitializeAbsolute(Element_Fire, ABSOLUTE_FIRE_ABILITY_ID)
+        call InitializeAbsolute(Element_Water, ABSOLUTE_WATER_ABILITY_ID)
+        call InitializeAbsolute(Element_Wind, ABSOLUTE_WIND_ABILITY_ID)
+        call InitializeAbsolute(Element_Earth, ABSOLUTE_EARTH_ABILITY_ID)
+        call InitializeAbsolute(Element_Wild, ABSOLUTE_WILD_ABILITY_ID)
+        call InitializeAbsolute(Element_Dark, ABSOLUTE_DARK_ABILITY_ID)
+        call InitializeAbsolute(Element_Light, ABSOLUTE_LIGHT_ABILITY_ID)
+        call InitializeAbsolute(Element_Cold, ABSOLUTE_COLD_ABILITY_ID)
+        call InitializeAbsolute(Element_Blood, ABSOLUTE_BLOOD_ABILITY_ID)
+        call InitializeAbsolute(Element_Arcane, ABSOLUTE_ARCANE_ABILITY_ID)
+        call InitializeAbsolute(Element_Poison, ABSOLUTE_POISON_ABILITY_ID)
+    endfunction
+
     private function init takes nothing returns nothing
         set ElementAbsolutes = Table.create()
         set AbsoluteElements = Table.create()
 
-        call InitializeAbsolute(1, ABSOLUTE_FIRE_ABILITY_ID)
-        call InitializeAbsolute(2, ABSOLUTE_WATER_ABILITY_ID)
-        call InitializeAbsolute(3, ABSOLUTE_WIND_ABILITY_ID)
-        call InitializeAbsolute(4, ABSOLUTE_EARTH_ABILITY_ID)
-        call InitializeAbsolute(5, ABSOLUTE_WILD_ABILITY_ID)
-
-        call InitializeAbsolute(7, ABSOLUTE_DARK_ABILITY_ID)
-        call InitializeAbsolute(8, ABSOLUTE_LIGHT_ABILITY_ID)
-        call InitializeAbsolute(9, ABSOLUTE_COLD_ABILITY_ID)
-        call InitializeAbsolute(11, ABSOLUTE_BLOOD_ABILITY_ID)
-        call InitializeAbsolute(Element_Arcane, ABSOLUTE_ARCANE_ABILITY_ID)
-        call InitializeAbsolute(Element_Poison, ABSOLUTE_POISON_ABILITY_ID)
+        call SetupAbsolutes()
     endfunction
 endlibrary

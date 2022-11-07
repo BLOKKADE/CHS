@@ -1,20 +1,19 @@
 library AbilityDescription requires ReplaceTextLib
     globals
-        hashtable HT_des = InitHashtable()
-
+        HashTable AbilityDescription
     endglobals
 
-    function SaveAbilityDescription takes integer abilId, integer lvl returns nothing
-        if LoadStr(HT_des, abilId, lvl) == null then
-            call SaveStr(HT_des, abilId, lvl, BlzGetAbilityExtendedTooltip(abilId, lvl))
+    function SetAbilityDescription takes integer abilId, integer lvl returns nothing
+        if AbilityDescription[abilId].string[lvl] != null then
+            set AbilityDescription[abilId].string[lvl] = BlzGetAbilityExtendedTooltip(abilId, lvl)
         endif
     endfunction
 
-    function GetAbilityDescription takes integer id, integer lvl returns string
-        call SaveAbilityDescription(id, lvl)
+    function GetAbilityDescription takes integer abilId, integer lvl returns string
+        call SetAbilityDescription(abilId, lvl)
         
         //call BJDebugMsg("loaded string")
-        return LoadStr(HT_des,id,lvl)
+        return AbilityDescription[abilId].string[lvl]
     endfunction
 
     function UpdateAbilityDescription takes string s, player p, integer abilId, string valKey, integer value, integer level returns string
@@ -24,7 +23,6 @@ library AbilityDescription requires ReplaceTextLib
             call BlzSetAbilityExtendedTooltip(abilId, s, level - 1)
         endif
 
-        //call BJDebugMsg(s)
         return s
     endfunction
 
@@ -35,7 +33,6 @@ library AbilityDescription requires ReplaceTextLib
             call BlzSetAbilityExtendedTooltip(abilId, s, level - 1)
         endif
 
-        //call BJDebugMsg(s)
         return s
     endfunction
 
