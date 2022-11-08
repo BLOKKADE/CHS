@@ -16,7 +16,7 @@ library AncientAxe requires DummyOrder, RandomShit
         local DummyOrder dummy = DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 1)
         //call BJDebugMsg("ancient axe")
         call dummy.addActiveAbility(abilId, 1, 852127)
-        call dummy.setAbilityRealField(abilId, ABILITY_RLF_DAMAGE_WRS1, GetHeroStr(u, true) * CalculateDmg(GetUnitITemTypeCount(u, ANCIENT_AXE_ITEM_ID)))
+        call dummy.setAbilityRealField(abilId, ABILITY_RLF_DAMAGE_WRS1, GetHeroStr(u, true) * CalculateDmg(GetUnitItemTypeCount(u, ANCIENT_AXE_ITEM_ID)))
         call dummy.instant()
         call dummy.activate()
     endfunction

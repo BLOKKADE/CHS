@@ -111,10 +111,10 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         endif
             
         //Shining Runestone
-        set i1 = GetUnitITemTypeCount( Herou,'I08L' )
+        set i1 = GetUnitItemTypeCount( Herou,SHINING_RUNESTONE_ITEM_ID )
         set i = 0
         if i1 > 0 then
-            //call ElemFuncStart(Herou,'I08L')
+            //call ElemFuncStart(Herou,SHINING_RUNESTONE_ITEM_ID)
             loop 
                 exitwhen i >= R2I(i1)
                 call CreateRandomRune(0,GetRandomReal(- 100,100)+ GetUnitX(Herou) ,GetRandomReal(- 100,100)+ GetUnitY(Herou)   ,Herou)
@@ -174,14 +174,14 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         endif
 
         //Magic Blade
-        set i1 = GetUnitITemTypeCount( Herou,'I06I' )
+        set i1 = GetUnitItemTypeCount( Herou,'I06I' )
         if i1 > 0 then
             call ElemFuncStart(Herou,'I06I')
             call SetUnitState(Herou, UNIT_STATE_MANA, GetUnitState(Herou, UNIT_STATE_MANA)- 70000 * i1  )
         endif
             
         //Armor of Ancestors
-        set i1 = GetUnitITemTypeCount( Herou,'I07G' )
+        set i1 = GetUnitItemTypeCount( Herou,'I07G' )
         if i1 > 0 then
             call ElemFuncStart(Herou,'I07G')
             call BlzSetUnitArmor(Herou,BlzGetUnitArmor(Herou)+ i1 * 20 * RoundCreepNumber )
@@ -190,7 +190,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         endif
 
         //Arcane Infused Sword
-        set i1 = GetUnitITemTypeCount( Herou, ARCANE_INFUSED_SWORD_ITEM_ID )
+        set i1 = GetUnitItemTypeCount( Herou, ARCANE_INFUSED_SWORD_ITEM_ID )
         if i1 > 0 then
             set i = R2I((GetUnitDamage(Herou, 0) - LoadInteger(HT,hid,ARCANE_INFUSED_SWORD_ITEM_ID))* 0.05 * RoundCreepNumber)
             call AddUnitBonus(Herou, BONUS_DAMAGE, i)
@@ -198,7 +198,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         endif
             
         //Book of Necromancy
-        set i1 = GetUnitITemTypeCount( Herou,'I06J' )
+        set i1 = GetUnitItemTypeCount( Herou,'I06J' )
         if i1 > 0 then
             call ElemFuncStart(Herou,'I06J')
             set SummonDamage[pid] = SummonDamage[pid] + i1

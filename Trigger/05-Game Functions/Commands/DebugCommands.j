@@ -256,7 +256,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             //call SetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID, 30)
             //call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, 30)
             //call SetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID, 30)
-            //call UnitAddItem(u,CreateItem('I0B8',0,0))
+            //call UnitAddItem(u,CreateItem(POISON_RUNESTONE_ITEM_ID,0,0))
             //call UnitAddItem(u,CreateItem('i0bu',0,0))
             call SetHeroInt(u, GetHeroInt(u, false) + 10000, true)
             call SetHeroStr(u, GetHeroStr(u, false) + 10000, true)

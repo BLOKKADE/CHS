@@ -35,7 +35,7 @@ library UnitItems
     endfunction
 
     //Check how many u has of item id
-    function GetUnitITemTypeCount takes unit u, integer id returns integer
+    function GetUnitItemTypeCount takes unit u, integer id returns integer
         local integer i = 0
         local integer count = 0
 

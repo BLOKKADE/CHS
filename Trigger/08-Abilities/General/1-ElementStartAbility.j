@@ -19,7 +19,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Fire Runestone
-        if UnitHasItemType(u,'I08P') and IsSpellElement(u,id, Element_Fire) then            
+        if UnitHasItemType(u,FIRE_RUNESTONE_ITEM_ID) and IsSpellElement(u,id, Element_Fire) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A076') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,3)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
@@ -28,7 +28,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Water Runestone
-        if UnitHasItemType(u,'I08Q') and IsSpellElement(u,id,Element_Water) then            
+        if UnitHasItemType(u,WATER_RUNESTONE_ITEM_ID) and IsSpellElement(u,id,Element_Water) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A077') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,9)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
@@ -37,7 +37,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Earth Runestone
-        if UnitHasItemType(u,'I08R') and IsSpellElement(u,id,Element_Earth) then            
+        if UnitHasItemType(u,EARTH_RUNESTONE_ITEM_ID) and IsSpellElement(u,id,Element_Earth) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A078') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,8)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
@@ -46,7 +46,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
         
         //Wind Runestone
-        if UnitHasItemType(u,'I08S') and IsSpellElement(u,id,Element_Wind) then            
+        if UnitHasItemType(u,WIND_RUNESTONE_ITEM_ID) and IsSpellElement(u,id,Element_Wind) then            
             if BlzGetUnitAbilityCooldownRemaining(u,'A079') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 500 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,10)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 500)
@@ -55,7 +55,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
 
         //Wild Runestone
-        if UnitHasItemType(u, 'I0B6') and IsSpellElement(u, id, Element_Wild) then
+        if UnitHasItemType(u, WILD_RUNESTONE_ITEM_ID) and IsSpellElement(u, id, Element_Wild) then
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AN') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 500 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 15)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 500)
@@ -64,7 +64,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
 
         //Light Runestone
-        if UnitHasItemType(u, 'I095') and IsSpellElement(u, id, Element_Light) then
+        if UnitHasItemType(u, LIGHT_RUNESTONE_ITEM_ID) and IsSpellElement(u, id, Element_Light) then
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AK') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 13)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
@@ -73,7 +73,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
 
         //Dark Runestone
-        if UnitHasItemType(u, 'I0B5') and IsSpellElement(u, id, Element_Dark) then
+        if UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) and IsSpellElement(u, id, Element_Dark) then
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AL') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 12)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
@@ -82,7 +82,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
 
         //Poison Runestone
-        if UnitHasItemType(u, 'I0B8') and IsSpellElement(u, id, Element_Poison) then
+        if UnitHasItemType(u, POISON_RUNESTONE_ITEM_ID) and IsSpellElement(u, id, Element_Poison) then
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AO') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 14)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
@@ -91,7 +91,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         endif
 
         //Arcane Runestone
-        if UnitHasItemType(u, 'I0B7') and IsSpellElement(u, id, Element_Arcane) then
+        if UnitHasItemType(u, ARCANE_RUNESTONE_ITEM_ID) and IsSpellElement(u, id, Element_Arcane) then
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AM') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, 5)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)

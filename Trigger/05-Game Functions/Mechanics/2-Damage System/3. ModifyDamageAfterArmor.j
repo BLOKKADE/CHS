@@ -159,7 +159,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Wild Runestone
-        if UnitHasItemType(DamageTargetHero, 'I0B6') and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
+        if UnitHasItemType(DamageTargetHero, WILD_RUNESTONE_ITEM_ID) and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
             set Damage.index.amount = Damage.index.amount * 0.7
         endif
         
@@ -170,7 +170,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Bloody Axe
         if IsPhysDamage() and IsHeroUnitId(DamageTargetTypeId) == false then
-            set i = GetUnitITemTypeCount( DamageSource,'I078') 
+            set i = GetUnitItemTypeCount( DamageSource,'I078') 
             if i > 0 then
                 set r2 = Damage.index.amount * (0.25 * I2R(i))
                 set vampAmount = vampAmount + r2
@@ -216,7 +216,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
         
         //Heavy Mace
-        set i = GetUnitITemTypeCount( DamageSource,'I07I') 
+        set i = GetUnitItemTypeCount( DamageSource,'I07I') 
         if i > 0 and IsUnitType(DamageSource,UNIT_TYPE_MELEE_ATTACKER) then
             set r1 =  (GetWidgetLife(DamageTarget)/ 100)* 1.5 * I2R(i)  
             set vampAmount = vampAmount + r1

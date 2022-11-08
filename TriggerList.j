@@ -63,6 +63,7 @@
 //! import "C:\CHS\CHS\Trigger\09-Items\ContractOfTheLiving.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\DecayingScythe.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\DruidicFocus.j"
+//! import "C:\CHS\CHS\Trigger\09-Items\ElementalOrb.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\Fan.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\FlimsyToken.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\GobletOfBlood.j"

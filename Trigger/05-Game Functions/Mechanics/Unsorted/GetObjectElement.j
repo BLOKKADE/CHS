@@ -1,4 +1,4 @@
-library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomState, HeroAbilityTable
+library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomState, HeroAbilityTable, ElementalOrb
 
     function IsSpellElement takes unit u, integer abilId, integer elementId returns boolean
 
@@ -62,9 +62,19 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         local integer i = 1
         local integer elementCount = 0
 
-        //Null Void Orb
+        //Null Void Orb active effect
         if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
             return 0
+        endif
+
+        //Null void orb passive effect
+        if GetUnitAbilityLevel(u, 'B02R') > 0 then
+            set elementCount = elementCount - 2
+        endif
+
+        //Elemental Orb
+        if UnitHasItemType(u, 'I0CQ') and IsSpellElement(u, GetElementalOrbAbil(u), elementId) then
+            set elementCount = elementCount + 2
         endif
 
         //Pretty Bright Gem +1 to dark and light
@@ -97,7 +107,7 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         endif
 
         //Poison Runestone
-        if elementId == Element_Poison and UnitHasItemType(u, 'I0B8') then
+        if elementId == Element_Poison and UnitHasItemType(u, POISON_RUNESTONE_ITEM_ID) then
             set elementCount = elementCount + 2
         endif
 

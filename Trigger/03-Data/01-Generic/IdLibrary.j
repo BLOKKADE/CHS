@@ -782,9 +782,19 @@ library IdLibrary initializer init
         constant integer SCORCHED_SCIMITAR_ITEM_ID                      = 'I0BO'
         constant integer DRUIDIC_FOCUS_ITEM_ID                          = 'I0BW'
         constant integer BANNER_OF_MANY_ITEM_ID                         = 'I0BY'
+        constant integer ARCANE_RUNESTONE_ITEM_ID                       = 'I0B7'
+        constant integer DARK_RUNESTONE_ITEM_ID                         = 'I0B5'
+        constant integer LIGHT_RUNESTONE_ITEM_ID                        = 'I095'
+        constant integer POISON_RUNESTONE_ITEM_ID                       = 'I0B8'
+        constant integer WILD_RUNESTONE_ITEM_ID                         = 'I0B6'
+        constant integer SHINING_RUNESTONE_ITEM_ID                      = 'I08L'
+        constant integer MYSTERIOUS_RUNESTONE_ITEM_ID                   = 'I08M'
+        constant integer RUNESTONE_OF_CREATION_ITEM_ID                  = 'I08N'
+        constant integer FIRE_RUNESTONE_ITEM_ID                         = 'I08P'
+        constant integer WATER_RUNESTONE_ITEM_ID                        = 'I08Q'
+        constant integer EARTH_RUNESTONE_ITEM_ID                        = 'I08R'
+        constant integer WIND_RUNESTONE_ITEM_ID                         = 'I08S'
         constant integer ERUPTION_ITEM_ID                               = 'I039'
-        
-        // --- Item IDs ---
 
         // --- Buff IDs ---
         constant integer FAN_OF_KNIVES_BUFF_ID                          = 'A0DB'

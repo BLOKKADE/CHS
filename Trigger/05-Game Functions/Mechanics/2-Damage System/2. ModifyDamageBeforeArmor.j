@@ -163,21 +163,21 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Divine Bubble
         set i1 = GetUnitAbilityLevel(DamageTarget,DIVINE_BUBBLE_ABILITY_ID)
-        if i1 > 0 or UnitHasItemType(DamageTarget, 'I095') then
+        if i1 > 0 or UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
             if IsUnitDivineBubbled(DamageTarget) then
                 call RemoveDebuff(DamageTarget, 1) 
                 set DamageIsOnHit = 2
             endif
 
-            if (i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,DIVINE_BUBBLE_ABILITY_ID) <= 0.001) or (i1 == 0 and UnitHasItemType(DamageTarget, 'I095') and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A0AP') == 0) then
+            if (i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,DIVINE_BUBBLE_ABILITY_ID) <= 0.001) or (i1 == 0 and UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A0AP') == 0) then
                 set DamageIsOnHit = 2
                 call RemoveDebuff(DamageTarget, 1) 
-                if UnitHasItemType(DamageTarget, 'I095') then
+                if UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
                     set i1 = 1
                 else
                     set i1 = 0
                 endif
-                if UnitHasItemType(DamageTarget, 'I095') and GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) == 0 then
+                if UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) and GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) == 0 then
                     if IsUnitDivineBubbled(DamageTarget) then
                         set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + (32 * i1)
                     else
@@ -245,7 +245,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Sword of Bloodthirst
-        set i1 = GetUnitITemTypeCount(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
+        set i1 = GetUnitItemTypeCount(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
         if i1 > 0 and IsPhysDamage() then
             set Damage.index.damage = Damage.index.damage + 900 * i1
         endif
@@ -320,7 +320,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Hero's Hammer
-        set i1 = GetUnitITemTypeCount( DamageSource,'I064' )
+        set i1 = GetUnitItemTypeCount( DamageSource,'I064' )
         if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then 
             set Damage.index.damage = Damage.index.damage + (i1 * (3 * GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)))
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\BallistaMissile\\BallistaMissileTarget.mdl", DamageTarget, "chest"))  
@@ -546,19 +546,19 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Vigour Token
-        set i1 = GetUnitITemTypeCount(DamageSource, VIGOUR_TOKEN_ITEM_ID)
+        set i1 = GetUnitItemTypeCount(DamageSource, VIGOUR_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitMaxHP(DamageSource) < BlzGetUnitMaxHP(DamageTarget) then
             set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
         endif
 
         //Flimsy Token
-        set i1 = GetUnitITemTypeCount(DamageSource, FLIMSY_TOKEN_ITEM_ID)
+        set i1 = GetUnitItemTypeCount(DamageSource, FLIMSY_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitArmor(DamageSource) < BlzGetUnitArmor(DamageTarget) then
             set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
         endif
 
         //Spellbane Token
-        set i1 = GetUnitITemTypeCount(DamageSource, SPELL_BANE_TOKEN_ITEM_ID)
+        set i1 = GetUnitItemTypeCount(DamageSource, SPELL_BANE_TOKEN_ITEM_ID)
         if i1 > 0 and BlzGetUnitMaxMana(DamageSource) < BlzGetUnitMaxMana(DamageTarget) then
             set Damage.index.damage = Damage.index.damage * (1 + (0.5 * i1))
         endif
@@ -759,7 +759,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif 
 
         //Mystical armor
-        set i1 = GetUnitITemTypeCount( DamageTarget,'I06E' )
+        set i1 = GetUnitItemTypeCount( DamageTarget,'I06E' )
         if i1 > 0  then
             if GetRandomReal(1,100)  <= i1 * 8 * DamageSourceLuck then
                 if GetUnitState(DamageTarget,UNIT_STATE_MANA) >= 750 then

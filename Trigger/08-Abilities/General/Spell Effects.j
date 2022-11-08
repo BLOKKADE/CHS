@@ -206,7 +206,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call GetRetaliationSource(caster, target, abilId, abilLvl)
                     endif
 
-                    if UnitHasItemType(caster, 'I0B7') then
+                    if UnitHasItemType(caster, ARCANE_RUNESTONE_ITEM_ID) then
                         call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
                     endif
 

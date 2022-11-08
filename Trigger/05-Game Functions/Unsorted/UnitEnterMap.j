@@ -25,7 +25,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         local integer totalLevel = 0
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         local unit hero = PlayerHeroes[pid + 1]
-        local integer UpgradeU = 15 * GetUnitITemTypeCount(hero,'I07K')
+        local integer UpgradeU = 15 * GetUnitItemTypeCount(hero,'I07K')
         local real wild = 1 + GetUnitCustomState(hero, BONUS_SUMMONPOW)/ 100
         local real r1
 

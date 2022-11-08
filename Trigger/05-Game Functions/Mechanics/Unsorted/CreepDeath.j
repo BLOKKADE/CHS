@@ -85,7 +85,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif
         
         //Golden Ring
-        set itemCount = GetUnitITemTypeCount(killingHero, 'I04R')
+        set itemCount = GetUnitItemTypeCount(killingHero, 'I04R')
         if itemCount > 0 then
             if GetUnitTypeId(killingHero) == ARENA_MASTER_UNIT_ID then
                 set goldBounty = goldBounty + (20 * itemCount)
@@ -95,7 +95,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif
 
         //Urn of Memories
-        set itemCount = GetUnitITemTypeCount(killingHero, 'I05U')
+        set itemCount = GetUnitItemTypeCount(killingHero, 'I05U')
         if itemCount > 0 then
             if pillageBonus == 0 then
                 set expBounty = expBounty + ((2 * GetHeroLevel(killingHero)) * itemCount)
@@ -105,7 +105,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif
 
         //Chest of Gread
-        /*set itemCount = GetUnitITemTypeCount(killingHero, 'I05A')
+        /*set itemCount = GetUnitItemTypeCount(killingHero, 'I05A')
         if itemCount > 0 then
             set goldBounty = goldBounty + (50 * itemCount)
             set expBounty = expBounty + (50 * itemCount)

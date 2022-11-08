@@ -3,7 +3,7 @@ scope LongPeriodCheck initializer init
         local real r1 = LoadReal(HT, GetHandleId(u),- 1001 )
         local real r2 = 0
         local integer i1 = GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID)
-        local real i2 = GetUnitITemTypeCount(u,'I066')
+        local real i2 = GetUnitItemTypeCount(u,'I066')
 
         if i1 > 0 then
             set r2 = r1 - MegaSpeedBonus(u, i1, r1)
@@ -366,8 +366,8 @@ scope LongPeriodCheck initializer init
                 if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
                     //Drain aura
                     set i1 = GetUnitAbilityLevel(u, DRAIN_AURA_ABILITY_ID)
-                    if i1 > 0 or UnitHasItemType(u, 'I0B5') then
-                        if UnitHasItemType(u, 'I0B5') then
+                    if i1 > 0 or UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) then
+                        if UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) then
                             call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i1 * 0.01) + 0.1, 500, true)
                         else
                             call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i1 * 0.01), 500, true)
