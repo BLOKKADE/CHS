@@ -152,7 +152,7 @@ library OldInitialization initializer main3
         boolean udg_boolean15= false
         player udg_player03= null
         dialog HeroModeDialog= null
-        boolean udg_boolean16= false
+        boolean RandomHeroMode= false
         integer array udg_integers15
         integer array udg_integers16
         integer udg_integer62= 0
@@ -639,7 +639,7 @@ library OldInitialization initializer main3
         set udg_dialog06 = DialogCreate()
         set udg_boolean15 = false
         set HeroModeDialog = DialogCreate()
-        set udg_boolean16 = false
+        set RandomHeroMode = false
         set i = 0
         loop
             exitwhen(i > 1)
@@ -831,7 +831,7 @@ library OldInitialization initializer main3
         set udg_dialog06 = DialogCreate()
         set udg_boolean15 = false
         set HeroModeDialog = DialogCreate()
-        set udg_boolean16 = false
+        set RandomHeroMode = false
         set i = 0
         loop
             exitwhen(i > 1)

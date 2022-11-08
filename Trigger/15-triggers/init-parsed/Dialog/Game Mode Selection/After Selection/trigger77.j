@@ -180,7 +180,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
     endfunction
 
     function Trig_Dialog_Complete_Func023001 takes nothing returns boolean
-        return(udg_boolean16==false)
+        return(RandomHeroMode==false)
     endfunction
 
 
@@ -336,25 +336,25 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
         if HeroMode == 2 then // Random hero
             call BanningPhase_TryEnablingBanningPhase()
 
-            set udg_boolean16 = true
+            set RandomHeroMode = true
             set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Random Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 1 then // Pick hero
             call BanningPhase_TryEnablingBanningPhase()
 
-            set udg_boolean16 = false
+            set RandomHeroMode = false
             set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Pick Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 3 then // Draft hero
             call BanningPhase_TryEnablingBanningPhase()
 
-            set udg_boolean16 = false
+            set RandomHeroMode = false
             set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Draft Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 4 then // Same-Draft hero
             call BanningPhase_TryEnablingBanningPhase()
 
-            set udg_boolean16 = false
+            set RandomHeroMode = false
             set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Same-Draft Hero|r")
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         endif

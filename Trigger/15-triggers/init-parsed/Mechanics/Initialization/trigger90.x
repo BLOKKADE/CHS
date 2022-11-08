@@ -89,7 +89,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
         call TriggerSleepAction(0.50)
 
         if(SpawnedHeroCount < PlayerCount)then
-            if(udg_boolean16)then
+            if(RandomHeroMode)then
                 return
             endif
 

@@ -5,7 +5,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
     endglobals
 
     function Trig_Spawn_Hero_Func005C takes nothing returns boolean
-        if(not(udg_boolean16==false))then
+        if(not(RandomHeroMode==false))then
             return false
         endif
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then

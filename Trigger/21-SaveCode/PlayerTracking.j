@@ -2,7 +2,7 @@ library PlayerTracking initializer init requires OldInitialization
     
     // OldInitialization contains values about what mode is selected
     // AbilityMode -> Pick == 1, AR == 0, Draft == 2
-    // udg_boolean16 -> true == Random Hero, false == Pick Hero
+    // RandomHeroMode -> true == Random Hero, false == Pick Hero
 
     globals
         constant integer CURRENT_GAME_VERSION = 1 // This value needs to have an index value in the game version string lookup
