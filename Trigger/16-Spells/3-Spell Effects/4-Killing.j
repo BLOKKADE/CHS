@@ -26,7 +26,7 @@ scope Killing initializer init
         //Incinerate
         if LoadInteger(HT,GetHandleId(target),- 300004)+ 160 > T32_Tick then
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", target, "head"))
-            call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, INCINERATE_ABILITY_ID)
+            call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, INCINERATE_ABILITY_ID, true)
         endif
         
         //Black Arrow
@@ -40,7 +40,7 @@ scope Killing initializer init
             //Skeleton Brute
             if GetUnitTypeId(targetHero) == SKELETON_BRUTE_UNIT_ID then
                 call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + ( (0.02 + (0.0005 * GetHeroLevel(targetHero))) * BlzGetUnitMaxHP(targetHero)))
-                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), GetUnitDamage(target, 0) * (0.5 + (0.01 * GetHeroLevel(targetHero))), 400, false, SKELETON_BRUTE_UNIT_ID)
+                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), GetUnitDamage(target, 0) * (0.5 + (0.01 * GetHeroLevel(targetHero))), 400, false, SKELETON_BRUTE_UNIT_ID, true)
                 set fx = AddLocalizedSpecialEffect("war3mapImported\\Arcane Explosion.mdx", GetUnitX(target), GetUnitY(target))
                 call BlzSetSpecialEffectTimeScale(fx, 2)
                 call DestroyEffect(fx)

@@ -1,4 +1,22 @@
 library LearnAbsolute initializer init requires SpellsLearned, Functions
+
+    //Absolute limit
+    function GetHeroMaxAbsoluteAbility takes unit u returns integer
+        return LoadInteger(HT,GetHandleId(u),- 8852352)
+    endfunction
+
+    function AddHeroMaxAbsoluteAbility takes unit u returns boolean 
+        if GetHeroMaxAbsoluteAbility(u) < 10 then
+
+            call SaveInteger(HT,GetHandleId(u),- 8852352,LoadInteger(HT,GetHandleId(u),- 8852352)+ 1)
+            call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,("|cffffcc00An extra Absolute Ability slot is available."))
+            return true
+        else
+            return false
+
+        endif
+    endfunction
+
     function UnlearnAbsolute takes unit u, integer id returns nothing
         local integer count = GetHeroSpellListCount(u, 1)
         call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"|cfff76863Removed |r" + BlzGetAbilityTooltip(id, GetUnitAbilityLevel(u, id) - 1))

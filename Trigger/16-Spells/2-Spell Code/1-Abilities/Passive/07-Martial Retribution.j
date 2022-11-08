@@ -1,8 +1,8 @@
-library MartialRetribution requires AoeDamage, RandomShit, AbilityDescription
+library MartialRetribution requires AreaDamage, HideEffects, AbilityDescription, Cooldown
     function MartialRetributionDamage takes unit source, integer handleId, real damage returns nothing
         local effect fx
         
-        call AreaDamagePhys(source, GetUnitX(source), GetUnitY(source), damage, 600, MARTIAL_RETRIBUTION_ABILITY_ID)
+        call AreaDamage(source, GetUnitX(source), GetUnitY(source), damage, 600, false, MARTIAL_RETRIBUTION_ABILITY_ID, false)
         set fx = AddLocalizedSpecialEffect("war3mapImported\\EarthNova.mdx", GetUnitX(source), GetUnitY(source))
         call BlzSetSpecialEffectScale(fx, 0.5)
         call DestroyEffect(fx)

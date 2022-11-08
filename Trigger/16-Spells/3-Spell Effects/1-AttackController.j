@@ -115,7 +115,7 @@ scope AttackController initializer init
         //Cold Wind
         set i1 = GetUnitAbilityLevel(u2,COLD_WIND_ABILITY_ID)
         if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(u2,COLD_WIND_ABILITY_ID) <= 0.001  then
-            call AreaDamagePhys(u2,GetUnitX(u2),GetUnitY(u2), GetSpellValue(80, 14, i1),500,COLD_WIND_ABILITY_ID)
+            call AreaDamage(u2, GetUnitX(u2), GetUnitY(u2), GetSpellValue(80, 14, i1), 500, false, COLD_WIND_ABILITY_ID, false)
             call AbilStartCD(u2,COLD_WIND_ABILITY_ID,1 ) 
         endif
         

@@ -365,12 +365,12 @@ scope LongPeriodCheck initializer init
 
                 if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
                     //Drain aura
-                    set i1 = GetUnitAbilityLevel(u ,DRAIN_AURA_ABILITY_ID)
-                    if i1 >= 1 or UnitHasItemType(u, 'I0B5') then
+                    set i1 = GetUnitAbilityLevel(u, DRAIN_AURA_ABILITY_ID)
+                    if i1 > 0 or UnitHasItemType(u, 'I0B5') then
                         if UnitHasItemType(u, 'I0B5') then
-                            call AoeDrainAura(u, (I2R(i1) * 0.0001) + 0.001,500,true)
+                            call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i1 * 0.01) + 0.1, 500, true)
                         else
-                            call AoeDrainAura(u, (I2R(i1) * 0.0001),500,true)
+                            call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i1 * 0.01), 500, true)
                         endif
                     endif
                 endif

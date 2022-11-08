@@ -1,19 +1,14 @@
-library HeroForm initializer init requires HideEffects
+library HeroForm requires HideEffects
     globals
         hashtable HTforms = InitHashtable()
-
         integer FORM_SHADOW = 1
     endglobals
-
 
     struct HeroForm
         integer idForm = 0
         timer t = CreateTimer()
         unit u = null
         effect array eff[8] 
-
-
-
     endstruct
 
     private function getForm takes unit u, integer id returns HeroForm
@@ -31,7 +26,6 @@ library HeroForm initializer init requires HideEffects
     function UnitHasForm takes unit u, integer id returns boolean
         return LoadInteger(HTforms, GetHandleId(u), id) != 0
     endfunction
-
 
     private function EndForm takes nothing returns nothing
         local timer t = GetExpiredTimer()
@@ -51,7 +45,6 @@ library HeroForm initializer init requires HideEffects
         call f.destroy()
         set t = null
     endfunction
-
 
     function UnitAddTimeForm takes unit u, integer formId, real duration returns nothing
         local HeroForm f = getForm(u, formId)
@@ -86,9 +79,5 @@ library HeroForm initializer init requires HideEffects
         endif
 
         call TimerStart(f.t, duration, false, function EndForm )
-    endfunction
-
-    private function init takes nothing returns nothing
-
     endfunction
 endlibrary

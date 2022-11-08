@@ -1,4 +1,4 @@
-library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpells
+library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpells, LearnAbsolute
     globals
         integer array SkeletonDefender
         boolean array bnos_a

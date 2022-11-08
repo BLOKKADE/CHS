@@ -1,4 +1,4 @@
-library ExtradimensionalCooperation initializer init requires RandomShit, DamageEngine
+library ExtradimensionalCooperation initializer init requires DamageEngine, HideEffects
     globals
         constant string FX_BLINK = "Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl"
         constant string FX_BLINK_TARGET = "Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl"

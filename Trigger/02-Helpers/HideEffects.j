@@ -1,6 +1,6 @@
 library HideEffects requires T32
 
-    //Hides the effect if a player has disabled fx
+    //Hides the effect if a player has disabled fx with -de
     function AddLocalizedSpecialEffect takes string modelName, real x, real y returns effect
         if not EffectVisible then
             set modelName = ""
@@ -9,7 +9,7 @@ library HideEffects requires T32
         return AddSpecialEffect(modelName, x, y)
     endfunction
 
-    //Hides the effect if a player has disabled fx
+    //Hides the effect if a player has disabled fx with -de
     function AddLocalizedSpecialEffectTarget takes string modelName, unit u, string attachmentPointName returns effect
         if not EffectVisible then
             set modelName = ""

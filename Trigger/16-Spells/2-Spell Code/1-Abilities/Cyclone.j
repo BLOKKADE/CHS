@@ -1,4 +1,4 @@
-library Cyclone requires AoeDamage
+library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
     struct CycloneStruct extends array
         unit source
         integer damageTick
@@ -13,7 +13,7 @@ library Cyclone requires AoeDamage
         private method periodic takes nothing returns nothing
                 if T32_Tick > this.damageTick then
                     set this.damageTick = T32_Tick + 6
-                    call AreaDamage(this.source, this.x, this.y, this.damage, 350, false, CYCLONE_ABILITY_ID)
+                    call AreaDamage(this.source, this.x, this.y, this.damage, 350, false, CYCLONE_ABILITY_ID, true)
                 endif
                 if T32_Tick > this.pullTick then
                     set this.pullTick = T32_Tick + (3 * 32)

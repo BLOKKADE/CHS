@@ -1,4 +1,4 @@
-library Blademaster initializer init requires AoeDamage, RandomShit
+library Blademaster initializer init requires AreaDamage, RandomShit
     globals
         Table BladestormAttackCounter
         Table BladestormAttackLimit
@@ -20,11 +20,7 @@ library Blademaster initializer init requires AoeDamage, RandomShit
         endif
         
         call ElemFuncStart(u, BLADE_MASTER_UNIT_ID)
-        if magic then
-            call AreaDamage(u, x, y, (damage * 0.5) + (35 * GetHeroLevel(u)), 297 + (3 * GetHeroLevel(u)), false, BLADE_MASTER_UNIT_ID)
-        else
-            call AreaDamagePhys(u, x, y, (damage * 0.5) + (35 * GetHeroLevel(u)), 297 + (3 * GetHeroLevel(u)), BLADE_MASTER_UNIT_ID)
-        endif
+        call AreaDamage(u, x, y, (damage * 0.5) + (35 * GetHeroLevel(u)), 297 + (3 * GetHeroLevel(u)), false, BLADE_MASTER_UNIT_ID, magic)
 
         set dummy = null
     endfunction

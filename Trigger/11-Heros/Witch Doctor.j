@@ -1,4 +1,4 @@
-library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTable, CustomState
+library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTable, CustomState, LearnAbsolute
     globals
         HashTable WitchDoctorAbsoluteLevel
     endglobals

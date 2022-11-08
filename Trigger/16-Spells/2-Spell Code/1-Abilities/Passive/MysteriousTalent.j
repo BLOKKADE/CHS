@@ -1,4 +1,4 @@
-library MysteriousTalent requires RandomShit, AbilityData, CastSpellOnTarget
+library MysteriousTalent requires HeroAbilityTable, AbilityData, CastSpellOnTarget, StableSpells, AbilityDescription
 
     globals
         HashTable MysteriousTalentMode

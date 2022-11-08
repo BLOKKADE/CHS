@@ -8,7 +8,7 @@
 //*                                                                            *
 //******************************************************************************
 
-library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, RandomShit
+library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, UnitItems
     globals
         //*********************************************************
         //* These are the configuration constants for the system

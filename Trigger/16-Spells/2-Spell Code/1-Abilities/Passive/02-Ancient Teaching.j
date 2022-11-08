@@ -1,4 +1,4 @@
-library AncientTeaching initializer init requires RandomShit, StableSpells, ToggleSpell
+library AncientTeaching initializer init requires Cooldown, StableSpells, ToggleSpell
     function ResetAbility_A05U takes unit u,integer abilId returns nothing
         local integer OgAbilId = GetAssociatedSpell(u, abilId)
         local integer tempAbilId = abilId

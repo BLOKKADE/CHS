@@ -1,4 +1,4 @@
-library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
+library Functions requires ExtradimensionalCooperation, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
     globals 
         integer RectPid
         integer array Lives
@@ -50,10 +50,6 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
             call AddUnitCustomState(u , BONUS_LUCK,   0.01 * I2R(i1 - i2)  )	
             call SaveInteger(HT,hid, abilId,i1)
         endif 
-
-        if abilId == ABSOLUTE_POISON_ABILITY_ID then
-            call AbsolutePoisonLearned(u)
-        endif
 
         if abilId == DEMOLISH_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)

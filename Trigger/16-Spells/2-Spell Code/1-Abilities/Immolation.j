@@ -1,4 +1,4 @@
-library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHelpers, RandomShit
+library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHelpers, HideEffects
     globals
         Table ImmolationTable
     endglobals

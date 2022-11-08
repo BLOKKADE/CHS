@@ -19,7 +19,6 @@ scope BoolexprInit initializer init
 
     function Trig_InitBoolx_Actions takes nothing returns nothing
         call InitBoolExpr()
-        call InitDamageArea()
     endfunction
 
     //===========================================================================

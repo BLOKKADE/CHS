@@ -609,7 +609,7 @@ scope ModifyDamageBeforeArmor initializer init
             call AbilStartCD(DamageTarget, 'A0AH', 1)
             call ElementStartAbility(DamageTarget, ROCK_GOLEM_UNIT_ID)
             call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
-            call AreaDamagePhys(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitCustomState(DamageTarget, BONUS_BLOCK) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, ROCK_GOLEM_UNIT_ID)
+            call AreaDamage(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitCustomState(DamageTarget, BONUS_BLOCK) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, false, ROCK_GOLEM_UNIT_ID, false)
         endif
 
         //Spirit Link

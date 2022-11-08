@@ -1,4 +1,4 @@
-library SpiritTauren initializer init requires IdLibrary, RandomShit
+library SpiritTauren initializer init requires IdLibrary, CustomState, AbilityData, HeroAbilityTable
 
     globals
         Table SpiritTaurenBonus

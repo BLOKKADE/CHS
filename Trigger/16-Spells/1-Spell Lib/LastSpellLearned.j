@@ -1,4 +1,4 @@
-library SpellsLearned requires RandomShit, Functions
+library SpellsLearned requires HeroAbilityTable
     globals
         integer SpellList_Normal = 0
         integer SpellList_Absolute = 1

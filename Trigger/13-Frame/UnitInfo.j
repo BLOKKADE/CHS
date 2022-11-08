@@ -1,4 +1,4 @@
-library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
+library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory, LearnAbsolute
 	globals
 		boolean isReforged
 

@@ -14,8 +14,6 @@ library CustomEvent
         integer EventSpellId = 0
         boolean LearnedAbilityIsNew = false
     endstruct
-    
-
 
     function DispachEvent takes integer s, customEvent e returns nothing
         local trigger tr = null
@@ -37,7 +35,6 @@ library CustomEvent
         return LoadInteger(htE, GetHandleId(t), 1)
     endfunction
 
-
     function EventSubscriber takes integer e, code fun returns nothing
         local trigger tr = LoadTriggerHandle(htE, e, 0)
         if tr == null then
@@ -46,7 +43,5 @@ library CustomEvent
         endif
         call TriggerAddCondition(tr, Condition(fun))
     endfunction
-
-
 endlibrary
 

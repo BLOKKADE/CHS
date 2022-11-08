@@ -1,4 +1,4 @@
-library KnockbackHelper initializer init requires Knockback, GroupUtils
+library KnockbackHelper initializer init requires Knockback, GroupUtils, UnitHelpers
 
     globals
         Table KnockbackImmunityLevel

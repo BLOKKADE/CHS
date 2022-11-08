@@ -1,4 +1,4 @@
-library PandaSkin initializer init requires RandomShit
+library PandaSkin initializer init
 
     globals
         Table PandaSkinEnabled

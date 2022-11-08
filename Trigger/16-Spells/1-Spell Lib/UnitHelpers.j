@@ -1,4 +1,4 @@
-library UnitHelpers initializer init requires Utility, RandomShit
+library UnitHelpers initializer init requires Utility, GroupUtils
     globals
         boolexpr IsUnitSpellTargetFilter
         boolexpr IsUnitTargetFilter

@@ -65,7 +65,6 @@ library DebuffTypes
         call UnitRemoveAbility(u, RAIN_OF_FIRE_BUFF_ID)
         call UnitRemoveAbility(u, STUNNED_BUFF_ID)
         call UnitRemoveAbility(u, PARASITE_MINION_BUFF_ID)
-        // call UnitRemoveAbility(u, 'BPpa') Does not exist
         call UnitRemoveAbility(u, RAIN_OF_FIRE_BUFF_ID)
         call UnitRemoveAbility(u, STUNNED_PAUSE_BUFF_ID)
         call UnitRemoveAbility(u, SILENCE_BUFF_ID)

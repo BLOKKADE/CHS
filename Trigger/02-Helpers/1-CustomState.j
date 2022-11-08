@@ -15,6 +15,7 @@ library CustomState initializer init requires TimerUtils
         constant integer BONUS_MISSCHANCE               = 10
         //11-20 are in NewBonus.j
         /*
+        DO NOT USE WITH the UNITCUSTOMSTATE functions
         constant integer BONUS_DAMAGE                   = 11
         constant integer BONUS_ARMOR                    = 12
         constant integer BONUS_AGILITY                  = 13
@@ -41,12 +42,9 @@ library CustomState initializer init requires TimerUtils
         set CustomUnitState[GetHandleId(u)].real[stat] = GetUnitCustomState(u, stat) + value
     endfunction
 
-    function ResetUnitCustomState takes unit u returns nothing
-        call CustomUnitState.remove(GetHandleId(u))
-    endfunction
-
     //Absolute count bonus 100-149
     function SetUnitAbsoluteBonusCount takes unit u,integer id, integer i returns nothing
+        
         call SaveInteger(HT_unitstate,GetHandleId(u),100+id,i)
     endfunction
     
@@ -58,21 +56,8 @@ library CustomState initializer init requires TimerUtils
          call SaveInteger(HT_unitstate,GetHandleId(u),100+id,LoadInteger(HT_unitstate,GetHandleId(u),100+id)+ i)
      endfunction
 
-    //Absolute limit
-    function GetHeroMaxAbsoluteAbility takes unit u returns integer
-        return LoadInteger(HT,GetHandleId(u),- 8852352)
-    endfunction
-
-    function AddHeroMaxAbsoluteAbility takes unit u returns boolean 
-        if GetHeroMaxAbsoluteAbility(u) < 10 then
-
-            call SaveInteger(HT,GetHandleId(u),- 8852352,LoadInteger(HT,GetHandleId(u),- 8852352)+ 1)
-            call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,("|cffffcc00An extra Absolute Ability slot is available."))
-            return true
-        else
-            return false
-
-        endif
+    function ResetUnitCustomState takes unit u returns nothing
+        call CustomUnitState.remove(GetHandleId(u))
     endfunction
 
     private function init takes nothing returns nothing
