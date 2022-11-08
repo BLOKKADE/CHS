@@ -13,9 +13,6 @@
         if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true))then
             return false
         endif
-        if(not(udg_boolean07==true))then
-            return false
-        endif
         return true
     endfunction
 

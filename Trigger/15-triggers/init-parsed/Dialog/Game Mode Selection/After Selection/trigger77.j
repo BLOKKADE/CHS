@@ -84,9 +84,6 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
         if(not(ElimModeEnabled==false))then
             return false
         endif
-        if(not(udg_boolean07==false))then
-            return false
-        endif
         return true
     endfunction
 
@@ -233,7 +230,6 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
         set ModeDescriptionBuilder[0]= ""
         call ClearTextMessagesBJ(GetPlayersAll())
         set ElimModeEnabled = false
-        set udg_boolean07 = false
 
         // This will average all of the votes and set the needed variables
         call VotingResults_CountVotes()

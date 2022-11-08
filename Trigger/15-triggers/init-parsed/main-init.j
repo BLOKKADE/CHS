@@ -99,7 +99,6 @@ library OldInitialization initializer main3
         integer array udg_integers11
         string udg_string01
         integer udg_integer38= 0
-        boolean udg_boolean07= false
         force udg_force06= null
         string array udg_strings01
         integer array udg_integers12
@@ -573,7 +572,6 @@ library OldInitialization initializer main3
         endloop
         set udg_string01 = ""
         set udg_integer38 = 0
-        set udg_boolean07 = false
         set udg_force06 = CreateForce()
         set i = 0
         loop
@@ -771,7 +769,6 @@ library OldInitialization initializer main3
         endloop
         set udg_string01 = ""
         set udg_integer38 = 0
-        set udg_boolean07 = false
         set udg_force06 = CreateForce()
         set i = 0
         loop

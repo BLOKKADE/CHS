@@ -12,9 +12,6 @@ library trigger119 initializer init requires RandomShit
 
 
     function Trig_End_Game_Func003Func007Func001C takes nothing returns boolean
-        if((udg_boolean07==true))then
-            return true
-        endif
         if((ElimModeEnabled==true))then
             return true
         endif

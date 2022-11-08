@@ -312,7 +312,6 @@ library VotingResults initializer init
         set GameModeShort = RoundMode == 2 // Boolean that flags if the game is short
         //set ElimModeEnabled = ImmortalMode == 1 // Boolean that flags if people should lose lives
         set ModeNoDeath = ImmortalMode == 2 // Another legacy variable to set to prevent breaking everything
-        //set udg_boolean07 = false
 
         call SetGameModeDescription()
     endfunction

@@ -55,14 +55,12 @@ library trigger134 initializer init requires RandomShit
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Func002001002)),function Trig_PvP_Func002A)
         call ForGroupBJ(DuelWinners,function AwardDuelWinners)
         call GroupClear(DuelWinners)
-        if(udg_boolean07==true)then
-            call DisplayTextToForce(GetPlayersAll(),"|cffffcc00Death Match - Survive to advance to the next level!")
-        else
+        
             /*
             call UpdatePlayerCount()
             call MoveRoundRobin()
             call DisplayDuelNemesis()*/
-        endif
+            
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
         call StartTimerBJ(GetLastCreatedTimerBJ(),false,25.00)

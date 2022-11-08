@@ -60,7 +60,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         call StopRectLeaveDetection(GetHandleId(u))
         
         //immortal mode
-        if ModeNoDeath == true and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
+        if ModeNoDeath == true and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
             set arenaLocation = GetRectCenter(RectMidArena)
             call ReviveHeroLoc(u,arenaLocation,true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
@@ -76,7 +76,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
             return false
         endif
     
-        if Lives[GetPlayerId(GetOwningPlayer(u))] > 0 and udg_boolean07 == false and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
+        if Lives[GetPlayerId(GetOwningPlayer(u))] > 0 and BrStarted == false and GetPlayerSlotState(GetOwningPlayer(u)) != PLAYER_SLOT_STATE_LEFT then
             call TimerStart(NewTimerEx(pid), 1, false, function EnableDeathTrigger)
             set RoundLiveLost[pid] = true
             
@@ -145,14 +145,6 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
         call ResourseRefresh(GetEnumPlayer()) 
-    endfunction
-
-
-    function Trig_Hero_Dies_Func014C takes nothing returns boolean
-        if(not(udg_boolean07==true))then
-            return false
-        endif
-        return true
     endfunction
 
 
@@ -281,32 +273,24 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
             call ForForce(GetPlayersMatching(Condition(function Trig_Hero_Dies_Func013Func002001001)),function Trig_Hero_Dies_Func013Func002A)
         endif
     
-        if(Trig_Hero_Dies_Func014C())then
-            if(Trig_Hero_Dies_Func014Func001C())then
-                if(Trig_Hero_Dies_Func014Func001Func003001())then
-                    set UnknownInteger01 =(5 *(udg_integer41 + 1))
-                else
-                    call DoNothing()
-                endif
-                if(Trig_Hero_Dies_Func014Func001Func004001())then
-                    set UnknownInteger01 =(5 *(udg_integer41 + 2))
-                else
-                    call DoNothing()
-                endif
-            else
-                if(Trig_Hero_Dies_Func014Func001Func001001())then
-                    set UnknownInteger01 =(10 *(udg_integer41 + 1))
-                else
-                    call DoNothing()
-                endif
-                if(Trig_Hero_Dies_Func014Func001Func002001())then
-                    set UnknownInteger01 =(10 *(udg_integer41 + 2))
-                else
-                    call DoNothing()
-                endif
+        if(Trig_Hero_Dies_Func014Func001C())then
+            if(Trig_Hero_Dies_Func014Func001Func003001())then
+                set UnknownInteger01 =(5 *(udg_integer41 + 1))
             endif
-            call ForForce(GetPlayersMatching(Condition(function Trig_Hero_Dies_Func014Func002001001)),function Trig_Hero_Dies_Func014Func002A)
+            if(Trig_Hero_Dies_Func014Func001Func004001())then
+                set UnknownInteger01 =(5 *(udg_integer41 + 2))
+            endif
+        else
+            if(Trig_Hero_Dies_Func014Func001Func001001())then
+                set UnknownInteger01 =(10 *(udg_integer41 + 1))
+            endif
+            if(Trig_Hero_Dies_Func014Func001Func002001())then
+                set UnknownInteger01 =(10 *(udg_integer41 + 2))
+            endif
         endif
+            
+        call ForForce(GetPlayersMatching(Condition(function Trig_Hero_Dies_Func014Func002001001)),function Trig_Hero_Dies_Func014Func002A)
+
     
         if(Trig_Hero_Dies_Func016C())then
             call ConditionalTriggerExecute(udg_trigger122)

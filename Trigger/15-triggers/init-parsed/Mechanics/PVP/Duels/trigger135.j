@@ -91,78 +91,51 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
             call SetUnitPositionLoc(ps.getPet(),arenaLocation)
         endif
 
-        if(udg_boolean07==false)then
-            set ps = PlayerStats.forPlayer(GetOwningPlayer(GetDyingUnit()))
+        set ps = PlayerStats.forPlayer(GetOwningPlayer(GetDyingUnit()))
 
-            if (ps.getPet() != null) then
-                call SetUnitPositionLoc(ps.getPet(),arenaLocation)
-            endif
-            
-            call ReviveHeroLoc(GetDyingUnit(),arenaLocation,true)
-            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(GetDyingUnit()), false)
-
-            call FixAbominationPassive(GetDyingUnit())
-            set PvpEndIndex = 1
-            loop
-                exitwhen PvpEndIndex > 6
-                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex))
-                call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex))
-
-                if GetPlayerSlotState(GetOwningPlayer(DuelingHeroes[1])) != PLAYER_SLOT_STATE_LEFT then
-                    set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds1[PvpEndIndex],DuelingHeroes[1])
-
-                    if ItemStacksP1[PvpEndIndex] > 1 then
-                        call SetItemCharges(tempItem, ItemStacksP1[PvpEndIndex])
-                    endif
-                    
-                    if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),PvpEndIndex) then
-                        //call BJDebugMsg("1a item move success")
-                    else
-                        //call BJDebugMsg("1a item move fail")
-                    endif
-                endif
-
-                if GetPlayerSlotState(GetOwningPlayer(DuelingHeroes[2])) != PLAYER_SLOT_STATE_LEFT then
-                    set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds2[PvpEndIndex],DuelingHeroes[2])
-
-                    if ItemStacksP2[PvpEndIndex] > 1 then
-                        call SetItemCharges(tempItem, ItemStacksP2[PvpEndIndex])
-                    endif
-
-                    if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),PvpEndIndex) then
-                        //call BJDebugMsg("2a item move success")
-                    else
-                        //call BJDebugMsg("2a item move fail")
-                    endif
-                endif
-                set PvpEndIndex = PvpEndIndex + 1
-            endloop
-        else
-            set PvpEndIndex = 1
-            loop
-                exitwhen PvpEndIndex > 6
-                if(DuelingHeroes[1]==udg_unit05)then
-                    call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex))
-                    call UnitAddItemByIdSwapped(DuelHeroItemIds1[PvpEndIndex],DuelingHeroes[1])
-                    if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),PvpEndIndex) then
-                        //call BJDebugMsg("1b item move success")
-                    else
-                       //call BJDebugMsg("1b item move fail")
-                    endif
-                else
-                    call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex))
-                    call UnitAddItemByIdSwapped(DuelHeroItemIds2[PvpEndIndex],DuelingHeroes[2])
-                    if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),PvpEndIndex) then
-                        //call BJDebugMsg("2b item move success")
-                    else
-                        //call BJDebugMsg("2b item move fail")
-                    endif
-                endif
-                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex), true)
-                call SetItemPawnable(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex), true)
-                set PvpEndIndex = PvpEndIndex + 1
-            endloop
+        if (ps.getPet() != null) then
+            call SetUnitPositionLoc(ps.getPet(),arenaLocation)
         endif
+        
+        call ReviveHeroLoc(GetDyingUnit(),arenaLocation,true)
+        call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(GetDyingUnit()), false)
+
+        call FixAbominationPassive(GetDyingUnit())
+        set PvpEndIndex = 1
+        loop
+            exitwhen PvpEndIndex > 6
+            call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex))
+            call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[2],PvpEndIndex))
+
+            if GetPlayerSlotState(GetOwningPlayer(DuelingHeroes[1])) != PLAYER_SLOT_STATE_LEFT then
+                set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds1[PvpEndIndex],DuelingHeroes[1])
+
+                if ItemStacksP1[PvpEndIndex] > 1 then
+                    call SetItemCharges(tempItem, ItemStacksP1[PvpEndIndex])
+                endif
+                
+                if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),PvpEndIndex) then
+                    //call BJDebugMsg("1a item move success")
+                else
+                    //call BJDebugMsg("1a item move fail")
+                endif
+            endif
+
+            if GetPlayerSlotState(GetOwningPlayer(DuelingHeroes[2])) != PLAYER_SLOT_STATE_LEFT then
+                set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds2[PvpEndIndex],DuelingHeroes[2])
+
+                if ItemStacksP2[PvpEndIndex] > 1 then
+                    call SetItemCharges(tempItem, ItemStacksP2[PvpEndIndex])
+                endif
+
+                if UnitDropItemSlotBJ(DuelingHeroes[2],GetLastCreatedItem(),PvpEndIndex) then
+                    //call BJDebugMsg("2a item move success")
+                else
+                    //call BJDebugMsg("2a item move fail")
+                endif
+            endif
+            set PvpEndIndex = PvpEndIndex + 1
+        endloop
 
         call RemoveLocation(arenaLocation)
         set arenaLocation = null
@@ -198,9 +171,8 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
             else
                 set udg_integer15 = DuelGoldReward[RoundNumber]		
             endif
-            if(udg_boolean07==false)then
-                call ForGroupBJ(DuelWinners,function Trig_End_PvP_Func026Func018Func002A)
-            endif
+            
+            call ForGroupBJ(DuelWinners,function Trig_End_PvP_Func026Func018Func002A)
             call PlaySoundBJ(udg_sound07)
             call ConditionalTriggerExecute(udg_trigger138)
             call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + (I2S(udg_integer15) + " gold|r")))
