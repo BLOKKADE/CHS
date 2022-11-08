@@ -9,119 +9,40 @@ library trigger134 initializer init requires RandomShit
         call GroupAddUnitSimple(GetEnumUnit(),PotentialDuelHeroes)
     endfunction
 
-
-    function Trig_PvP_Func004Func001C takes nothing returns boolean
-        if(not(GameModeShort==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_PvP_Func004Func001Func004001 takes nothing returns boolean
-        return(RoundNumber==10)
-    endfunction
-
-
-    function Trig_PvP_Func004Func001Func005001 takes nothing returns boolean
-        return(RoundNumber==15)
-    endfunction
-
-
-    function Trig_PvP_Func004Func001Func006001 takes nothing returns boolean
-        return(RoundNumber==20)
-    endfunction
-
-
-    function Trig_PvP_Func004Func001Func001001 takes nothing returns boolean
-        return(RoundNumber==20)
-    endfunction
-
-
-    function Trig_PvP_Func004Func001Func002001 takes nothing returns boolean
-        return(RoundNumber==30)
-    endfunction
-
-
-    function Trig_PvP_Func004Func001Func003001 takes nothing returns boolean
-        return(RoundNumber==40)
-    endfunction
-
-
-    function Trig_PvP_Func004Func002001 takes nothing returns boolean
-        return(udg_integer15=='I01D')
-    endfunction
-
-
-    function Trig_PvP_Func004Func003001 takes nothing returns boolean
-        return(udg_integer15=='I01C')
-    endfunction
-
-
-    function Trig_PvP_Func004Func004001 takes nothing returns boolean
-        return(udg_integer15=='I01E')
-    endfunction
-
-
-    function Trig_PvP_Func004A takes nothing returns nothing
-        if(Trig_PvP_Func004Func001C())then
-            if(Trig_PvP_Func004Func001Func004001())then
-                call AdjustPlayerStateBJ(200,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-            else
-                call DoNothing()
-            endif
-            if(Trig_PvP_Func004Func001Func005001())then
-                call AdjustPlayerStateBJ(400,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-            else
-                call DoNothing()
-            endif
-            if(Trig_PvP_Func004Func001Func006001())then
-                call AdjustPlayerStateBJ(800,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-            else
-                call DoNothing()
+    function AwardDuelWinners takes nothing returns nothing
+        local player awardingPlayer = GetOwningPlayer(GetEnumUnit())
+        
+        // Award gold
+        if(GameModeShort==true)then
+            if(RoundNumber==10)then
+                call AdjustPlayerStateBJ(200,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
+            elseif(RoundNumber==15)then
+                call AdjustPlayerStateBJ(400,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
+            elseif(RoundNumber==20)then
+                call AdjustPlayerStateBJ(800,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
             endif
         else
-            if(Trig_PvP_Func004Func001Func001001())then
-                call AdjustPlayerStateBJ(200,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-            else
-                call DoNothing()
-            endif
-            if(Trig_PvP_Func004Func001Func002001())then
-                call AdjustPlayerStateBJ(400,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-            else
-                call DoNothing()
-            endif
-            if(Trig_PvP_Func004Func001Func003001())then
-                call AdjustPlayerStateBJ(800,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-            else
-                call DoNothing()
+            if(RoundNumber==20)then
+                call AdjustPlayerStateBJ(200,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
+            elseif(RoundNumber==30)then
+                call AdjustPlayerStateBJ(400,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
+            elseif(RoundNumber==40)then
+                call AdjustPlayerStateBJ(800,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
             endif
         endif
-        if(Trig_PvP_Func004Func002001())then
-            call AdjustPlayerStateBJ(1400,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-        else
-            call DoNothing()
-        endif
-        if(Trig_PvP_Func004Func003001())then
-            call AdjustPlayerStateBJ(1750,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-        else
-            call DoNothing()
-        endif
-        if(Trig_PvP_Func004Func004001())then
-            call AdjustPlayerStateBJ(2750,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_GOLD)
-        else
-            call DoNothing()
+
+        // Award bonus gold? Makes no sense since this variables is only assigned from DuelReward which is just an array of ints
+        if(udg_integer15=='I01D')then // Armor of the goddess
+            call AdjustPlayerStateBJ(1400,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
+        elseif(udg_integer15=='I01C')then // Soul reparer
+            call AdjustPlayerStateBJ(1750,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
+        elseif(udg_integer15=='I01E')then // Rapier of the gods
+            call AdjustPlayerStateBJ(2750,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
         endif
     
-        call ResourseRefresh(GetOwningPlayer(GetEnumUnit()) )
-    endfunction
+        call ResourseRefresh(awardingPlayer )
 
-
-    function Trig_PvP_Func007C takes nothing returns boolean
-        if(not(udg_boolean07==true))then
-            return false
-        endif
-        return true
+        set awardingPlayer = null
     endfunction
 
     function Trig_PvP_Func002001002 takes nothing returns boolean
@@ -132,9 +53,9 @@ library trigger134 initializer init requires RandomShit
     function Trig_PvP_Actions takes nothing returns nothing
         call TriggerSleepAction(5.00)
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Func002001002)),function Trig_PvP_Func002A)
-        call ForGroupBJ(DuelWinners,function Trig_PvP_Func004A)
+        call ForGroupBJ(DuelWinners,function AwardDuelWinners)
         call GroupClear(DuelWinners)
-        if(Trig_PvP_Func007C())then
+        if(udg_boolean07==true)then
             call DisplayTextToForce(GetPlayersAll(),"|cffffcc00Death Match - Survive to advance to the next level!")
         else
             /*

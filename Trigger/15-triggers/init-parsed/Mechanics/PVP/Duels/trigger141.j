@@ -1,13 +1,5 @@
 library trigger141 initializer init requires RandomShit, HpRegen
 
-    function Trig_Sudden_Death_Timer_PvP_Func002C takes nothing returns boolean
-        if(not(SuddenDeathTick >= 120))then
-            return false
-        endif
-        return true
-    endfunction
-
-
     function Trig_Sudden_Death_Timer_PvP_Actions takes nothing returns nothing
         local location hero1Location
         local location hero2Location
@@ -15,10 +7,9 @@ library trigger141 initializer init requires RandomShit, HpRegen
         local real reg2 = 0
 
         set SuddenDeathTick =(SuddenDeathTick + 1)
-        if(Trig_Sudden_Death_Timer_PvP_Func002C())then
+        if(SuddenDeathTick >= 120)then
             set hero1Location = GetUnitLoc(DuelingHeroes[1])
             set hero2Location = GetUnitLoc(DuelingHeroes[2])
-
 
             call DisableTrigger(udg_trigger11)
             call DisableTrigger(udg_trigger26)

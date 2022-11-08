@@ -1,4 +1,4 @@
-library trigger136 initializer init requires RandomShit, StartFunction, DebugCode
+library trigger136 initializer init requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility
 
     globals
         integer array ItemStacksP1
@@ -6,132 +6,21 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
         integer duelRectId
     endglobals
 
-    function Trig_PvP_Battle_Func001C takes nothing returns boolean
-        if(not(CountUnitsInGroup(PotentialDuelHeroes)>= 1))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_PvP_Battle_Func001Func008002001002001 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func008002001002002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func008002001002002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func008002001002002002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func008002001002002002002002 takes nothing returns boolean
-        return(IsUnitInGroup(GetFilterUnit(),PotentialDuelHeroes)==true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func008002001002002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func008002001002002002002001(),Trig_PvP_Battle_Func001Func008002001002002002002002())
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func008002001002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func008002001002002002001(),Trig_PvP_Battle_Func001Func008002001002002002002())
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func008002001002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func008002001002002001(),Trig_PvP_Battle_Func001Func008002001002002002())
-    endfunction
-    
     function Trig_PvP_Battle_Func001Func008002001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func008002001002001(),Trig_PvP_Battle_Func001Func008002001002002())
-    endfunction
-
-
-    function Trig_PvP_Battle_Func001Func010C takes nothing returns boolean
-        if(not(CountUnitsInGroup(PotentialDuelHeroes)>= 1))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_PvP_Battle_Func001Func010Func003002001002001 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func003002001002002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func003002001002002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func003002001002002002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func003002001002002002002002 takes nothing returns boolean
-        return(IsUnitInGroup(GetFilterUnit(),PotentialDuelHeroes)==true) and GetFilterUnit() != DuelingHeroes[1]
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func003002001002002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func003002001002002002002001(),Trig_PvP_Battle_Func001Func010Func003002001002002002002002())
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func003002001002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func003002001002002002001(),Trig_PvP_Battle_Func001Func010Func003002001002002002002())
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func003002001002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func003002001002002001(),Trig_PvP_Battle_Func001Func010Func003002001002002002())
+        return IsAlivePlayerHero(GetFilterUnit()) and (IsUnitInGroup(GetFilterUnit(),PotentialDuelHeroes)==true)
     endfunction
     
     function Trig_PvP_Battle_Func001Func010Func003002001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func003002001002001(),Trig_PvP_Battle_Func001Func010Func003002001002002())
+        return IsAlivePlayerHero(GetFilterUnit()) and (IsUnitInGroup(GetFilterUnit(),PotentialDuelHeroes)==true) and GetFilterUnit() != DuelingHeroes[1]
     endfunction
 
-
-    function Trig_PvP_Battle_Func001Func010Func001002001002001 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func001002001002002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func001002001002002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func001002001002002002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func001002001002002002002002 takes nothing returns boolean
-        return IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DuelLosers) and GetFilterUnit() != DuelingHeroes[1]
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func001002001002002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func001002001002002002002001(),Trig_PvP_Battle_Func001Func010Func001002001002002002002002())
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func001002001002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func001002001002002002001(),Trig_PvP_Battle_Func001Func010Func001002001002002002002())
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func010Func001002001002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func001002001002002001(),Trig_PvP_Battle_Func001Func010Func001002001002002002())
-    endfunction
-    
     function Trig_PvP_Battle_Func001Func010Func001002001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func010Func001002001002001(),Trig_PvP_Battle_Func001Func010Func001002001002002())
+        return IsAlivePlayerHero(GetFilterUnit()) and IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DuelLosers) and GetFilterUnit() != DuelingHeroes[1]
     endfunction
 
+    function GetPvpEnemy takes nothing returns boolean
+        return IsAlivePlayerHero(GetFilterUnit()) and GetFilterUnit() != DuelingHeroes[1]
+    endfunction
 
     function TempDuelDebug takes nothing returns string
         local integer i = 0
@@ -154,12 +43,6 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
         return debugText
     endfunction
 
-
-    function GetPvpEnemy takes nothing returns boolean
-        return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and UnitAlive(GetFilterUnit()) and GetFilterUnit() != DuelingHeroes[1] and GetOwningPlayer(GetFilterUnit()) != Player(8) and GetOwningPlayer(GetFilterUnit()) != Player(11) 
-    endfunction
-
-
     function Trig_PvP_Battle_Func001Func017A takes nothing returns nothing
         call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(PlayerArenaRects[duelRectId]),0.20)
     endfunction
@@ -168,70 +51,15 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
         call RemoveItem(GetEnumItem())
     endfunction
 
-
-    function Trig_PvP_Battle_Func001Func031C takes nothing returns boolean
-        if(not(BettingEnabled==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_PvP_Battle_Func001Func031Func003Func001C takes nothing returns boolean
-        if(not(GetForLoopIndexA()==1))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_PvP_Battle_Func001Func031Func006001001001 takes nothing returns boolean
-        return(GetOwningPlayer(DuelingHeroes[1])!=GetFilterPlayer())
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func031Func006001001002001 takes nothing returns boolean
-        return(GetOwningPlayer(DuelingHeroes[2])!=GetFilterPlayer())
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func031Func006001001002002 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),DefeatedPlayers)!=true)
-    endfunction
-    
-    function Trig_PvP_Battle_Func001Func031Func006001001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func031Func006001001002001(),Trig_PvP_Battle_Func001Func031Func006001001002002())
-    endfunction
-    
     function Trig_PvP_Battle_Func001Func031Func006001001 takes nothing returns boolean
-        return GetBooleanAnd(Trig_PvP_Battle_Func001Func031Func006001001001(),Trig_PvP_Battle_Func001Func031Func006001001002())
+        return (GetOwningPlayer(DuelingHeroes[1])!=GetFilterPlayer()) and (GetOwningPlayer(DuelingHeroes[2])!=GetFilterPlayer()) and (IsPlayerInForce(GetFilterPlayer(),DefeatedPlayers)!=true)
     endfunction
-
-
-    function Trig_PvP_Battle_Func001Func031Func006Func001Func001C takes nothing returns boolean
-        if((GetPlayerState(GetEnumPlayer(),PLAYER_STATE_RESOURCE_GOLD)> 0))then
-            return true
-        endif
-        if((GetPlayerState(GetEnumPlayer(),PLAYER_STATE_RESOURCE_LUMBER)> 0))then
-            return true
-        endif
-        return false
-    endfunction
-
-
-    function Trig_PvP_Battle_Func001Func031Func006Func001C takes nothing returns boolean
-        if(not Trig_PvP_Battle_Func001Func031Func006Func001Func001C())then
-            return false
-        endif
-        return true
-    endfunction
-
 
     function Trig_PvP_Battle_Func001Func031Func006A takes nothing returns nothing
-        if(Trig_PvP_Battle_Func001Func031Func006Func001C())then
+        if(GetPlayerState(GetEnumPlayer(),PLAYER_STATE_RESOURCE_GOLD)> 0 or GetPlayerState(GetEnumPlayer(),PLAYER_STATE_RESOURCE_LUMBER)> 0)then
             call DialogDisplayBJ(true,Dialogs[1],GetEnumPlayer())
-        else
         endif
     endfunction
-
 
     function Trig_PvP_Battle_Func001Func041A takes nothing returns nothing
         set bj_forLoopAIndex = 1
@@ -252,10 +80,10 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
     function Trig_PvP_Battle_Actions takes nothing returns nothing
         local PlayerStats ps
 
-        if(Trig_PvP_Battle_Func001C())then
+        if(CountUnitsInGroup(PotentialDuelHeroes)>= 1)then
             set DuelingHeroes[1]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func008002001002)))
             call GroupRemoveUnitSimple(DuelingHeroes[1],PotentialDuelHeroes)
-            if(Trig_PvP_Battle_Func001Func010C())then
+            if(CountUnitsInGroup(PotentialDuelHeroes)>= 1)then
                 set DuelingHeroes[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func003002001002)))
             else
                 set DuelingHeroes[2]= GroupPickRandomUnit(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Battle_Func001Func010Func001002001002)))
@@ -320,14 +148,14 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
             endloop
             call TriggerSleepAction(0.20)
             set udg_boolean18 = true
-            if(Trig_PvP_Battle_Func001Func031C())then
+            if(BettingEnabled==true)then
                 call DialogClearBJ(Dialogs[1])
                 call DialogSetMessageBJ(Dialogs[1],"Betting Menu")
                 set bj_forLoopAIndex = 1
                 set bj_forLoopAIndexEnd = 2
                 loop
                     exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
-                    if(Trig_PvP_Battle_Func001Func031Func003Func001C())then
+                    if(GetForLoopIndexA()==1)then
                         call DialogAddButtonBJ(Dialogs[1],("<< " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r   ")))
                     else
                         call DialogAddButtonBJ(Dialogs[1],("   " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[GetForLoopIndexA()]))+ "|r >>")))
@@ -369,10 +197,8 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
                 set bj_forLoopAIndex = bj_forLoopAIndex + 1
             endloop
         else
-            if(Trig_PvP_Battle_Func001Func001001())then
+            if(IsTriggerEnabled(udg_trigger119)==false)then
                 return
-            else
-                call DoNothing()
             endif
             call ConditionalTriggerExecute(udg_trigger103)
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")

@@ -1,29 +1,8 @@
-library trigger43 initializer init requires RandomShit
-
-    function Trig_Hero_Dies_Battle_Royal_Func007C takes nothing returns boolean
-        if(not(BrStarted==true))then
-            return false
-        endif
-        if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
-            return false
-        endif
-        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(8)))then
-            return false
-        endif
-        if(not(GetOwningPlayer(GetTriggerUnit())!=Player(11)))then
-            return false
-        endif
-        return true
-    endfunction
-
+library trigger43 initializer init requires RandomShit, UnitFilteringUtility
 
     function Trig_Hero_Dies_Battle_Royal_Conditions takes nothing returns boolean
-        if(not Trig_Hero_Dies_Battle_Royal_Func007C())then
-            return false
-        endif
-        return true
+        return BrStarted ==true and IsPlayerHero(GetTriggerUnit())
     endfunction
-
 
     function Trig_Hero_Dies_Battle_Royal_Func004A takes nothing returns nothing
         local unit u = GetEnumUnit()
@@ -43,7 +22,6 @@ library trigger43 initializer init requires RandomShit
         set u = null
     endfunction
 
-
     function Trig_Hero_Dies_Battle_Royal_Actions takes nothing returns nothing
         call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),DefeatedPlayers)
         set PlayerCount =(PlayerCount - 1)
@@ -53,7 +31,6 @@ library trigger43 initializer init requires RandomShit
         call ConditionalTriggerExecute(udg_trigger122)
     endfunction
 
-
     private function init takes nothing returns nothing
         set udg_trigger43 = CreateTrigger()
         call DisableTrigger(udg_trigger43)
@@ -61,6 +38,5 @@ library trigger43 initializer init requires RandomShit
         call TriggerAddCondition(udg_trigger43,Condition(function Trig_Hero_Dies_Battle_Royal_Conditions))
         call TriggerAddAction(udg_trigger43,function Trig_Hero_Dies_Battle_Royal_Actions)
     endfunction
-
 
 endlibrary

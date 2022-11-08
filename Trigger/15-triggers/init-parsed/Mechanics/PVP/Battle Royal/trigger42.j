@@ -1,4 +1,4 @@
-library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
+library trigger42 initializer init requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility
 
     function Trig_Battle_Royal_Func015001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)==true)
@@ -9,70 +9,22 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call DeleteUnit(GetEnumUnit())
     endfunction
 
-
-    function Trig_Battle_Royal_Func016Func001001002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
-    endfunction
-    
-    function Trig_Battle_Royal_Func016Func001001002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
-    endfunction
-    
-    function Trig_Battle_Royal_Func016Func001001002002002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_Battle_Royal_Func016Func001001002002002002 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
-    endfunction
-    
-    function Trig_Battle_Royal_Func016Func001001002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func016Func001001002002002001(),Trig_Battle_Royal_Func016Func001001002002002002())
-    endfunction
-    
-    function Trig_Battle_Royal_Func016Func001001002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func016Func001001002002001(),Trig_Battle_Royal_Func016Func001001002002002())
-    endfunction
-    
     function Trig_Battle_Royal_Func016Func001001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func016Func001001002001(),Trig_Battle_Royal_Func016Func001001002002())
+        return IsAlivePlayerHero(GetFilterUnit())
     endfunction
 
+    function Trig_Battle_Royal_Func017001002 takes nothing returns boolean
+        return IsAlivePlayerHero(GetFilterUnit())
+    endfunction
+        
+    function Trig_Battle_Royal_Func033001002 takes nothing returns boolean
+        return IsAlivePlayerHero(GetFilterUnit())
+    endfunction
 
     function Trig_Battle_Royal_Func016Func001A takes nothing returns nothing
         set BrPlayerCount =(BrPlayerCount + 1)
         call SetPlayerAllianceStateBJ(GetOwningPlayer(GetEnumUnit()),ConvertedPlayer(GetForLoopIndexA()),bj_ALLIANCE_UNALLIED)
     endfunction
-
-
-    function Trig_Battle_Royal_Func017001002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
-    endfunction
-    
-    function Trig_Battle_Royal_Func017001002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
-    endfunction
-    
-    function Trig_Battle_Royal_Func017001002002002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_Battle_Royal_Func017001002002002002 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
-    endfunction
-    
-    function Trig_Battle_Royal_Func017001002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func017001002002002001(),Trig_Battle_Royal_Func017001002002002002())
-    endfunction
-    
-    function Trig_Battle_Royal_Func017001002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func017001002002001(),Trig_Battle_Royal_Func017001002002002())
-    endfunction
-    
-    function Trig_Battle_Royal_Func017001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func017001002001(),Trig_Battle_Royal_Func017001002002())
-    endfunction
-
 
     function Trig_Battle_Royal_Func017A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
@@ -104,36 +56,6 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call RemoveItem(GetEnumItem())
     endfunction
 
-
-    function Trig_Battle_Royal_Func033001002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
-    endfunction
-    
-    function Trig_Battle_Royal_Func033001002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(11))
-    endfunction
-    
-    function Trig_Battle_Royal_Func033001002002002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_Battle_Royal_Func033001002002002002 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
-    endfunction
-    
-    function Trig_Battle_Royal_Func033001002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func033001002002002001(),Trig_Battle_Royal_Func033001002002002002())
-    endfunction
-    
-    function Trig_Battle_Royal_Func033001002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func033001002002001(),Trig_Battle_Royal_Func033001002002002())
-    endfunction
-    
-    function Trig_Battle_Royal_Func033001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Battle_Royal_Func033001002001(),Trig_Battle_Royal_Func033001002002())
-    endfunction
-
-
     function Trig_Battle_Royal_Func033A takes nothing returns nothing
         call PauseUnit(GetEnumUnit(), false)
         call SetUnitInvulnerable(GetEnumUnit(),false)
@@ -141,12 +63,8 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call StartFunctionSpell(GetEnumUnit(),1)
     endfunction
 
-
     function Trig_Battle_Royal_Func034C takes nothing returns boolean
-        if(not(BrPlayerCount==1))then
-            return false
-        endif
-        return true
+        return BrPlayerCount==1
     endfunction
 
     function ShowDraftBuildings takes boolean b returns nothing

@@ -1,25 +1,13 @@
 library trigger139 initializer init requires RandomShit
 
     function Trig_Drop_Prize_Item_Conditions takes nothing returns boolean
-        if(not(IsItemOwned(GetManipulatedItem())==true))then
-            return false
-        endif
-        return true
+        return IsItemOwned(GetManipulatedItem())==true
     endfunction
-
-
-    function Trig_Drop_Prize_Item_Func001C takes nothing returns boolean
-        if(not(udg_items01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]==GetManipulatedItem()))then
-            return false
-        endif
-        return true
-    endfunction
-
 
     function Trig_Drop_Prize_Item_Actions takes nothing returns nothing
         local location unitLocation = GetUnitLoc(GetTriggerUnit())
 
-        if(Trig_Drop_Prize_Item_Func001C())then
+        if(udg_items01[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]==GetManipulatedItem())then
             call UnitDropItemPointLoc(GetTriggerUnit(),GetManipulatedItem(),unitLocation)
             call UnitAddItemByIdSwapped(GetItemTypeId(GetManipulatedItem()),GetTriggerUnit())
             call RemoveItem(GetManipulatedItem())

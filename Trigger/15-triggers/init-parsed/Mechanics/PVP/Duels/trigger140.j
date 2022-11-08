@@ -1,13 +1,7 @@
 library trigger140 initializer init requires RandomShit
 
     function Trig_Sudden_Death_Damage_PvP_Conditions takes nothing returns boolean
-        if ( not ( IsTriggerEnabled(udg_trigger141) == true ) ) then
-            return false
-        endif
-        if ( not ( SuddenDeathTick >= 120 ) ) then
-            return false
-        endif
-        return true
+        return (IsTriggerEnabled(udg_trigger141) == true) and SuddenDeathTick >= 120
     endfunction
 
 

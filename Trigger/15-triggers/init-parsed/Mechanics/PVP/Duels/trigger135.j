@@ -1,83 +1,20 @@
-library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame
+library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility
 
     function Trig_End_PvP_Conditions takes nothing returns boolean
-        if(not(IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true))then
-            return false
-        endif
-        return true
+        return IsUnitInGroup(GetTriggerUnit(),DuelingHeroGroup)==true
     endfunction
-
-
-    function Trig_End_PvP_Func001C takes nothing returns boolean
-        if(not(DuelingHeroes[1]==GetTriggerUnit()))then
-            return false
-        endif
-        return true
-    endfunction
-
 
     function Trig_End_PvP_Func019A takes nothing returns nothing
         call PanCameraToTimedLocForPlayer(GetEnumPlayer(),GetRectCenter(RectMidArena),0.20)
     endfunction
 
-
-    function Trig_End_PvP_Func021C takes nothing returns boolean
-        if(not(udg_boolean07==false))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_End_PvP_Func021Func001Func001C takes nothing returns boolean
-        if(not(DuelingHeroes[1]==udg_unit05))then
-            return false
-        endif
-        return true
-    endfunction
-
-
     function Trig_End_PvP_Func024Func001A takes nothing returns nothing
         call RemoveItem(GetEnumItem())
     endfunction
-
-
-    function Trig_End_PvP_Func026C takes nothing returns boolean
-        if(not(CountUnitsInGroup(PotentialDuelHeroes)==0))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_End_PvP_Func026Func007001002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
-    endfunction
-    
-    function Trig_End_PvP_Func026Func007001002002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())==Player(11))
-    endfunction
-    
-    function Trig_End_PvP_Func026Func007001002002002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_End_PvP_Func026Func007001002002002002 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
-    endfunction
-    
-    function Trig_End_PvP_Func026Func007001002002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_End_PvP_Func026Func007001002002002001(),Trig_End_PvP_Func026Func007001002002002002())
-    endfunction
-    
-    function Trig_End_PvP_Func026Func007001002002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_End_PvP_Func026Func007001002002001(),Trig_End_PvP_Func026Func007001002002002())
-    endfunction
     
     function Trig_End_PvP_Func026Func007001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_End_PvP_Func026Func007001002001(),Trig_End_PvP_Func026Func007001002002())
+        return IsAlivePlayerHero(GetFilterUnit())
     endfunction
-
 
     function Trig_End_PvP_Func026Func007A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
@@ -93,31 +30,6 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         set arenaLocation = null
     endfunction
 
-
-    function Trig_End_PvP_Func026Func008C takes nothing returns boolean
-        if(not(PlayerCount > 1))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_End_PvP_Func026Func016C takes nothing returns boolean
-        if(not(GameModeShort==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_End_PvP_Func026Func018C takes nothing returns boolean
-        if(not(udg_boolean07==false))then
-            return false
-        endif
-        return true
-    endfunction
-
-
     function Trig_End_PvP_Func026Func018Func002A takes nothing returns nothing
         call AddSpecialEffectTargetUnitBJ("origin",GetEnumUnit(),"Abilities\\Spells\\Human\\Resurrect\\ResurrectCaster.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
@@ -129,7 +41,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         local PlayerStats ps
         local location arenaLocation = GetRectCenter(RectMidArena)
 
-        if(Trig_End_PvP_Func001C())then
+        if(DuelingHeroes[1]==GetTriggerUnit())then
             set udg_unit05 = DuelingHeroes[2]
         else
             set udg_unit05 = DuelingHeroes[1]
@@ -179,7 +91,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
             call SetUnitPositionLoc(ps.getPet(),arenaLocation)
         endif
 
-        if(Trig_End_PvP_Func021C())then
+        if(udg_boolean07==false)then
             set ps = PlayerStats.forPlayer(GetOwningPlayer(GetDyingUnit()))
 
             if (ps.getPet() != null) then
@@ -229,7 +141,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
             set PvpEndIndex = 1
             loop
                 exitwhen PvpEndIndex > 6
-                if(Trig_End_PvP_Func021Func001Func001C())then
+                if(DuelingHeroes[1]==udg_unit05)then
                     call RemoveItem(UnitItemInSlotBJ(DuelingHeroes[1],PvpEndIndex))
                     call UnitAddItemByIdSwapped(DuelHeroItemIds1[PvpEndIndex],DuelingHeroes[1])
                     if UnitDropItemSlotBJ(DuelingHeroes[1],GetLastCreatedItem(),PvpEndIndex) then
@@ -269,10 +181,10 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
         set udg_unit05 = null
         call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[1]), false)
         call SetCurrentlyFighting(GetOwningPlayer(DuelingHeroes[2]), false)
-        if(Trig_End_PvP_Func026C())then
+        if(CountUnitsInGroup(PotentialDuelHeroes)==0)then
             call TriggerSleepAction(2)
             call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_End_PvP_Func026Func007001002)),function Trig_End_PvP_Func026Func007A)
-            if(Trig_End_PvP_Func026Func008C())then
+            if(PlayerCount > 1)then
             else
                 return
             endif
@@ -281,12 +193,12 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
             call TriggerSleepAction(1.00)
     
-            if(Trig_End_PvP_Func026Func016C())then
+            if(GameModeShort==true)then
                 set udg_integer15 = DuelGoldReward[RoundNumber]
             else
                 set udg_integer15 = DuelGoldReward[RoundNumber]		
             endif
-            if(Trig_End_PvP_Func026Func018C())then
+            if(udg_boolean07==false)then
                 call ForGroupBJ(DuelWinners,function Trig_End_PvP_Func026Func018Func002A)
             endif
             call PlaySoundBJ(udg_sound07)
