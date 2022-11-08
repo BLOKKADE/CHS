@@ -158,7 +158,7 @@ library OldInitialization initializer main3
         integer udg_integer62= 0
         real udg_real04= 0
         boolean udg_boolean17= false
-        string array udg_strings02
+        string array ModeDescriptionBuilder
         unit udg_unit03= null
         group udg_group09= null
         location udg_location02= null
@@ -658,7 +658,7 @@ library OldInitialization initializer main3
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_strings02[i]= ""
+            set ModeDescriptionBuilder[i]= ""
             set i = i + 1
         endloop
         set udg_group09 = CreateGroup()
@@ -850,7 +850,7 @@ library OldInitialization initializer main3
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_strings02[i]= ""
+            set ModeDescriptionBuilder[i]= ""
             set i = i + 1
         endloop
         set udg_group09 = CreateGroup()

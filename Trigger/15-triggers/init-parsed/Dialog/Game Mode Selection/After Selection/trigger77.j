@@ -230,7 +230,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
     function Trig_Dialog_Complete_Actions takes nothing returns nothing
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call DisableTrigger(GetTriggeringTrigger())
-        set udg_strings02[0]= ""
+        set ModeDescriptionBuilder[0]= ""
         call ClearTextMessagesBJ(GetPlayersAll())
         set ElimModeEnabled = false
         set udg_boolean07 = false
@@ -241,14 +241,14 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
         call DisableTrigger(GetTriggeringTrigger())
 
         if ImmortalMode == 1 then
-            set udg_strings02[1]= "Mode: Normal|r"
+            set ModeDescriptionBuilder[1]= "Mode: Normal|r"
         else
-            set udg_strings02[1]= "Mode: Immortal|r"
+            set ModeDescriptionBuilder[1]= "Mode: Immortal|r"
         endif
 
         if(GameModeShort == true) then // Is short game
-            set udg_strings02[1] = udg_strings02[1] + " (25 Levels)|r"
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            set ModeDescriptionBuilder[1] = ModeDescriptionBuilder[1] + " (25 Levels)|r"
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
             set Lives[0] = 1
             set Lives[1] = 1
@@ -260,18 +260,18 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             set Lives[7] = 1
             set Lives[8] = 1
             set BattleRoyalRound = 25
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "PvP: Every 5th Level|r"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "PvP: Every 5th Level|r"
             if(InitialPlayerCount==1)then
-                set udg_strings02[1]= "PvP: None|r"
+                set ModeDescriptionBuilder[1]= "PvP: None|r"
             endif
 
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
             call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func014001001)),function Trig_Dialog_Complete_Func008Func003Func014A)
         else // Is long game
             set BattleRoyalRound = 50
-            set udg_strings02[1] = udg_strings02[1] + " (50 Levels)|r"
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            set ModeDescriptionBuilder[1] = ModeDescriptionBuilder[1] + " (50 Levels)|r"
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
             set Lives[0] = 1
             set Lives[1] = 1
@@ -282,32 +282,32 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             set Lives[6] = 1
             set Lives[7] = 1
             set Lives[8] = 1	       	
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "PvP: Every 5th Level|r"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "PvP: Every 5th Level|r"
             if(InitialPlayerCount==1)then
-                set udg_strings02[1]= "PvP: None|r"
+                set ModeDescriptionBuilder[1]= "PvP: None|r"
             endif
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
             call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func008001001)),function Trig_Dialog_Complete_Func008Func003Func008A)
         endif
 
         // Income mode settings
         // To prevent breaking everything else, set the IncomeMode value to the old voting system
         if IncomeMode == 3 then // Global
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Creep Upgrades: Enabled"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Creep Upgrades: Enabled"
             set IncomeMode = 0
         elseif IncomeMode == 2 then // Individual
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Creep Upgrades: Individual"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Creep Upgrades: Individual"
             set IncomeMode = 1
         elseif IncomeMode == 1 then // Auto-Eco
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Creep Upgrades: Economy"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Creep Upgrades: Economy"
             set IncomeMode = 3
         elseif IncomeMode == 4 then // Disabled
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Creep Upgrades: Disabled"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Creep Upgrades: Disabled"
             set IncomeMode = 2
         endif
 
@@ -315,19 +315,19 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
         // To prevent breaking everything else, set the AbilityMode value to the old voting system
         if AbilityMode == 2 then // Random abilities
             set ArNotLearningAbil = true
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Type: Random Abilities"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Type: Random Abilities"
             set AbilityMode = 0
         elseif AbilityMode == 1 then // Pick abilities
             set ArNotLearningAbil = false
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Type: Pick Abilities"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Type: Pick Abilities"
             set AbilityMode = 1
             call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
         elseif AbilityMode == 3 then // Draft abilities
             set ArNotLearningAbil = false
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Type: Draft Abilities"
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Type: Draft Abilities"
             set AbilityMode = 2
             call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
         endif
@@ -337,46 +337,46 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             call BanningPhase_TryEnablingBanningPhase()
 
             set udg_boolean16 = true
-            set udg_strings02[1]=(udg_strings02[1]+ ", Random Hero|r")
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Random Hero|r")
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 1 then // Pick hero
             call BanningPhase_TryEnablingBanningPhase()
 
             set udg_boolean16 = false
-            set udg_strings02[1]=(udg_strings02[1]+ ", Pick Hero|r")
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Pick Hero|r")
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 3 then // Draft hero
             call BanningPhase_TryEnablingBanningPhase()
 
             set udg_boolean16 = false
-            set udg_strings02[1]=(udg_strings02[1]+ ", Draft Hero|r")
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Draft Hero|r")
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 4 then // Same-Draft hero
             call BanningPhase_TryEnablingBanningPhase()
 
             set udg_boolean16 = false
-            set udg_strings02[1]=(udg_strings02[1]+ ", Same-Draft Hero|r")
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Same-Draft Hero|r")
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         endif
 
         // PVP betting mode settings
         if(Trig_Dialog_Complete_Func014C())then
             set BettingEnabled = false
             set udg_boolean14 = false
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Betting: Disabled|r"
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Betting: Disabled|r"
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         else
             set BettingEnabled = true
             set udg_boolean14 = false
-            set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
-            set udg_strings02[1]= "Betting: Enabled (Hidden)|r"
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
+            set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
+            set ModeDescriptionBuilder[1]= "Betting: Enabled (Hidden)|r"
+            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         endif
 
         call PlaySoundBJ(udg_sound03)
-        set udg_strings02[0]=(udg_strings02[0]+ udg_strings02[1])
-        call QuestSetDescriptionBJ(GetLastCreatedQuestBJ(),udg_strings02[0])
+        set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+ ModeDescriptionBuilder[1])
+        call QuestSetDescriptionBJ(GetLastCreatedQuestBJ(),ModeDescriptionBuilder[0])
         call QuestSetDiscoveredBJ(GetLastCreatedQuestBJ(),true)
         
         if(Trig_Dialog_Complete_Func023001())then
