@@ -3,7 +3,7 @@ scope NoBets initializer init
     function NoBets takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         if pid == 0 and RoundNumber < 5 then
-            set udg_boolean13 = false
+            set BettingEnabled = false
             call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, "|ccffdef31Betting disabled.|r")
             call DestroyTrigger(GetTriggeringTrigger())
         endif

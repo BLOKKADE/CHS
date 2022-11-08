@@ -145,7 +145,7 @@ library OldInitialization initializer main3
         integer udg_integer60= 0
         integer udg_integer61= 0
         dialog BettingModeDialog= null
-        boolean udg_boolean13= false
+        boolean BettingEnabled= false
         boolean udg_boolean14= false
         dialog udg_dialog06= null
         button array udg_buttons04
@@ -634,7 +634,7 @@ library OldInitialization initializer main3
         set udg_integer60 = 0
         set udg_integer61 = 0
         set BettingModeDialog = DialogCreate()
-        set udg_boolean13 = false
+        set BettingEnabled = false
         set udg_boolean14 = false
         set udg_dialog06 = DialogCreate()
         set udg_boolean15 = false
@@ -826,7 +826,7 @@ library OldInitialization initializer main3
         set udg_integer60 = 0
         set udg_integer61 = 0
         set BettingModeDialog = DialogCreate()
-        set udg_boolean13 = false
+        set BettingEnabled = false
         set udg_boolean14 = false
         set udg_dialog06 = DialogCreate()
         set udg_boolean15 = false

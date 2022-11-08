@@ -361,13 +361,13 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
 
         // PVP betting mode settings
         if(Trig_Dialog_Complete_Func014C())then
-            set udg_boolean13 = false
+            set BettingEnabled = false
             set udg_boolean14 = false
             set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
             set udg_strings02[1]= "Betting: Disabled|r"
             call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + udg_strings02[1]))
         else
-            set udg_boolean13 = true
+            set BettingEnabled = true
             set udg_boolean14 = false
             set udg_strings02[0]=(udg_strings02[0]+(udg_strings02[1]+ "|n"))
             set udg_strings02[1]= "Betting: Enabled (Hidden)|r"

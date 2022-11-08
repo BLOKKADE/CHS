@@ -170,7 +170,7 @@ library trigger136 initializer init requires RandomShit, StartFunction, DebugCod
 
 
     function Trig_PvP_Battle_Func001Func031C takes nothing returns boolean
-        if(not(udg_boolean13==true))then
+        if(not(BettingEnabled==true))then
             return false
         endif
         return true

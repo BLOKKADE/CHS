@@ -1,7 +1,7 @@
 library trigger54 initializer init requires RandomShit
 
     function Trig_Betting_Complete_Conditions takes nothing returns boolean
-        if(not(udg_boolean13==true))then
+        if(not(BettingEnabled==true))then
             return false
         endif
         return true
