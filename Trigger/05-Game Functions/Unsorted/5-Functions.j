@@ -1,4 +1,4 @@
-library Functions requires ExtradimensionalCooperation, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
+library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
     globals 
         integer RectPid
         integer array Lives
@@ -8,6 +8,10 @@ library Functions requires ExtradimensionalCooperation, SpiritTauren, Immolation
 
         if GetUnitTypeId(u) == TAUREN_UNIT_ID then
             call UpdateSpiritTaurenRuneBonus(u)
+        endif
+
+        if GetUnitTypeId(u) == SORCERER_UNIT_ID then
+            call SetSorcererPassiveSpells(u, abilId)
         endif
     endfunction
 
@@ -149,6 +153,10 @@ library Functions requires ExtradimensionalCooperation, SpiritTauren, Immolation
 
         if GetUnitTypeId(u) == TAUREN_UNIT_ID then
             call UpdateSpiritTaurenRuneBonus(u)
+        endif
+
+        if GetUnitTypeId(u) == SORCERER_UNIT_ID then
+            call RemoveSorcererPassiveSpell(u, abilId)
         endif
 
         /*if abilId == MEGA_SPEED_ABILITY_ID then

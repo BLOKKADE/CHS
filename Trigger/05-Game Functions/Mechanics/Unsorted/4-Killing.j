@@ -1,4 +1,4 @@
-scope Killing initializer init    
+library Killing initializer init requires AllowCasting, HideEffects, AreaDamage, Dreadlord, BlackArrow, NecromancerArmy, Vampirism, TempStateBonus
     function Trig_Killing_Actions takes nothing returns nothing
         local unit target = GetTriggerUnit()
         local integer targetId = GetHandleId(target)
@@ -88,4 +88,4 @@ scope Killing initializer init
         call TriggerAddAction( trg, function Trig_Killing_Actions )
         set trg = null
     endfunction
-endscope
+endlibrary

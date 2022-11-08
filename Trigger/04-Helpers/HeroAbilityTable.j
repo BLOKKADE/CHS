@@ -4,12 +4,12 @@ library HeroAbilityTable initializer init requires Table
         HashTable HeroAbilityTable
     endglobals
 
-    //gets the spell at position pos, 0-10 = regular spells, 10-20 = absolute
+    //gets the spell at position pos, 1-10 = regular spells, 11-20 = absolute
     function GetHeroSpellAtPosition takes unit u, integer pos returns integer
         return HeroAbilityTable[GetHandleId(u)].integer[pos]
     endfunction
 
-    //gets the position of a spell, 0-10 = regular spells, 10-20 = absolute
+    //gets the position of a spell, 1-10 = regular spells, 11-20 = absolute
     function GetHeroPositionOfSpell takes unit u,integer id returns integer
         return HeroAbilityTable[GetHandleId(u)].integer[id]
     endfunction

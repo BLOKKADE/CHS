@@ -194,13 +194,10 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
     endfunction
 
     function Trig_UnitStateSys_Actions takes nothing returns nothing
-        ///call UnitAddAbility(GetTriggerUnit(),'A06K')
         local unit u = GetTriggerUnit()
-        local timer t = null
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         local boolean realUnit = IsUnitIllusion(u) == false
-        //call UnitAddAbility(u,'A057')
-        //call BlzUnitDisableAbility(u,'A057',false,true)
+        local integer hid = GetHandleId(u)
 
         //Illusion
         if (not realUnit) and IsUnitType(u, UNIT_TYPE_HERO) then
@@ -226,7 +223,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call BlzUnitDisableAbility(u,ABSOLUTE_FIRE_ABILITY_ID,false,true)
 
             if realUnit then
-                call SaveInteger(HT,GetHandleId(u),941561, 1)
+                call SaveInteger(HT,hid,941561, 1)
                 call UpdateHeroSpellList(ABSOLUTE_FIRE_ABILITY_ID,u,1)
                 call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID,u)
                 call AddHeroMaxAbsoluteAbility(u)
@@ -239,11 +236,11 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call BlzUnitDisableAbility(u,ABSOLUTE_WATER_ABILITY_ID,false,true)
 
             if realUnit then
-                call SaveInteger(HT,GetHandleId(u),941561, 1)
+                call SaveInteger(HT,hid,941561, 1)
                 call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID,u,1)
                 call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID,u)
                 call AddHeroMaxAbsoluteAbility(u)
-                set NagaSirenBonus[GetHandleId(u)] = 1
+                set NagaSirenBonus[hid] = 1
             endif
         endif
 
@@ -260,12 +257,16 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         //Blademaster
         if GetUnitTypeId(u) == BLADE_MASTER_UNIT_ID and realUnit then
-            set BladestormAttackLimit[GetHandleId(u)] = 9
+            set BladestormAttackLimit[hid] = 9
         endif
 
         //Thunder Witch
         if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID and realUnit then
-            set ThunderBoltTargets[GetHandleId(u)] = 1
+            set ThunderBoltTargets[hid] = 1
+        endif
+
+        if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
+            set SorcererAmount[hid] = 1
         endif
 
         //Mortar Team
@@ -278,7 +279,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call SummonUnit(u)
         endif
 
-        set t = null
         set u = null
     endfunction
 

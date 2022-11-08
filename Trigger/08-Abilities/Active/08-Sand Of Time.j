@@ -30,7 +30,7 @@ library SandOfTime requires RandomShit
         endloop
 
         //Ogre Warrior
-        if GetUnitTypeId(hero) == OGRE_WARRIOR_UNIT_ID then
+        if GetUnitAbilityLevel(hero, 'A08U') > 0 then
             call ResetSpell(hero, 'A08U', time, true)
         endif
 
@@ -40,17 +40,17 @@ library SandOfTime requires RandomShit
         endif*/
 
         //Centaur
-        if GetUnitTypeId(hero) == CENTAUR_ARCHER_UNIT_ID then
+        if GetUnitAbilityLevel(hero, 'A08T') > 0 then
             call ResetSpell(hero, 'A08T', time, true)
         endif
 
         //Thunder Witch
-        if GetUnitTypeId(hero) == THUNDER_WITCH_UNIT_ID then
+        if GetUnitAbilityLevel(hero, 'A08P') > 0 then
             call ResetSpell(hero, 'A08P', time, true)
         endif
 
         //Lich
-        if GetUnitTypeId(hero) == LICH_UNIT_ID then
+        if GetUnitAbilityLevel(hero, 'A08W') > 0 then
             call ResetSpell(hero, 'A08W', time, true)
         endif
     endfunction

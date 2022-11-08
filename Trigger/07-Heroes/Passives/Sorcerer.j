@@ -1,55 +1,69 @@
-library Sorcerer initializer init requires RandomShit, AbilityData, CastSpellOnTarget
+library Sorcerer initializer init requires AbilityData, CastSpellOnTarget, StableSpells, ListT
     globals
         Table SorcererAmount
+        Table SorcererList
     endglobals
 
-    function StableActiveCheck takes unit u returns boolean
-        local integer i = 0
-        local integer abilId = 0
-        local integer count = 0
-        loop
-            set abilId = GetHeroSpellAtPosition(u, i)
-            if abilId != 0 and IsAbilityCasteable(abilId, true) and IsSpellResettable(abilId) then
-                set count = count + 1
-            endif
-            set i = i + 1
-            exitwhen i > 10
-        endloop
+    private function GetSorcererList takes integer hid returns IntegerList
+        return SorcererList[hid]
+    endfunction
 
-        if count >= 1 then
-            return true
-        else 
-            return false
+    function SorcererHasActiveSpells takes unit u returns boolean
+        //call BJDebugMsg("sorcerer list empty?: " + B2S(GetSorcererList(GetHandleId(u)).empty()))
+        return not GetSorcererList(GetHandleId(u)).empty()
+    endfunction
+
+    function RemoveSorcererPassiveSpell takes unit u, integer abilId returns nothing
+        local integer hid = GetHandleId(u)
+        local IntegerList sorcererList = GetSorcererList(hid)
+        if sorcererList != 0 then
+            call sorcererList.removeElem(abilId)
         endif
     endfunction
 
+    function SetSorcererPassiveSpells takes unit u, integer abilId returns nothing
+        local integer hid = GetHandleId(u)
+        local IntegerList sorcererList = 0
+        if IsAbilityCasteable(abilId, false) and IsSpellResettable(abilId) then
+            if SorcererList[hid] == 0 then
+                set sorcererList = sorcererList.create()
+                set SorcererList[hid] = sorcererList
+                //call BJDebugMsg("created sorcerer list: ")
+            endif
+            //call BJDebugMsg("add: " + GetObjectName(abilId) + " added to sorcerer list")
+            call GetSorcererList(hid).push(abilId)
+        endif
+    endfunction
     
     function SorcererPassive takes unit caster, integer hid returns nothing
         local integer i = 0
-        local integer i2 = 0
-        local integer abilId
-        local unit target
-        local integer orderType = 0
-        local real range = 0
-        
-        if StableActiveCheck(caster) then
+        local integer amount = SorcererAmount[hid]
+        local IntegerList sorcererList = GetSorcererList(hid)
+        local integer random = GetRandomInt(0, sorcererList.size() - 1)
+        local IntegerListItem node = sorcererList.first
+        local integer abilId = 0
+
+        loop
+            set random = GetRandomInt(0, sorcererList.size() - 1)
+            set node = sorcererList.first
+            set abilId = 0
+
             loop
-                set i = GetRandomInt(1,10)
-                set abilId = GetHeroSpellAtPosition(caster, i)
-                if IsAbilityCasteable(abilId,false) and IsSpellResettable(abilId) then
-                    call CastSpellAuto(caster, null, abilId, GetUnitAbilityLevel(caster, abilId), 0, 0, 600)
-                    set i2 = i2 + 1
-                    //call BJDebugMsg("casted " + GetObjectName(abilId) + " " + I2S(i2))
-                endif
-                exitwhen i2 == 1 + SorcererAmount[hid]
+                set abilId = node.data
+                exitwhen i == random
+                set node = node.next
+                set i = i + 1
             endloop
-        endif
-        
-        set target = null
+
+            call CastSpellAuto(caster, null, abilId, GetUnitAbilityLevel(caster, abilId), 0, 0, 600)
+            set amount = amount - 1
+            exitwhen amount == 0
+        endloop
     endfunction
 
     private function init takes nothing returns nothing
         set SorcererAmount = Table.create()
+        set SorcererList = Table.create()
     endfunction
 
 endlibrary
