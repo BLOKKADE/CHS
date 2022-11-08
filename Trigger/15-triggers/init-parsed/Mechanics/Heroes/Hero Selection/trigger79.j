@@ -131,8 +131,8 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         call ResourseRefresh( udg_player02   )
 
         if GetLocalPlayer() == GetOwningPlayer(hero) then
-            call BlzFrameSetVisible(SpellUP[0] ,true )
-            call BlzFrameSetTexture(SpellFR[0], GetHeroPassiveDescription(GetUnitTypeId(hero) ,HeroPassive_Icon)  , 0, true)
+            call BlzFrameSetVisible(ButtonParentId[0] ,true )
+            call BlzFrameSetTexture(ButtonId[0], GetHeroPassiveDescription(GetUnitTypeId(hero) ,HeroPassive_Icon)  , 0, true)
     
         endif
     

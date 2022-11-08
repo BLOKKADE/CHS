@@ -183,14 +183,14 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, F
             // We are hijacking the tooltip window that we use for almost everything else in the game from FrameInit
             if GetLocalPlayer() == GetTriggerPlayer() then	
                 call BlzFrameSetText(TooltipTitleFrame, requirementDescription)
-                call BlzFrameSetSize(Tooltip, 0.29, GetTooltipSize(requirementDescription))
-                call BlzFrameSetVisible(Tooltip, true)
+                call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(requirementDescription))
+                call BlzFrameSetVisible(TooltipFrame, true)
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then
             // Empty the text box
             if GetLocalPlayer() == GetTriggerPlayer() then	
                 call BlzFrameSetText(TooltipTextFrame, "")
-                call BlzFrameSetVisible(Tooltip, false)
+                call BlzFrameSetVisible(TooltipFrame, false)
             endif
         endif
     endfunction

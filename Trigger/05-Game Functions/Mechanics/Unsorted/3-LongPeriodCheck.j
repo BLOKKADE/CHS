@@ -121,12 +121,12 @@ scope LongPeriodCheck initializer init
                     set textureS = BlzGetAbilityIcon(SpellId)
 
                     if GetLocalPlayer() == Pl then
-                        call BlzFrameSetVisible(SpellUP[100 + i1], true)
-                        call BlzFrameSetTexture(SpellFR[100 + i1], textureS, 0, true)
+                        call BlzFrameSetVisible(ButtonParentId[100 + i1], true)
+                        call BlzFrameSetTexture(ButtonId[100 + i1], textureS, 0, true)
                     endif
                 else
                     if GetLocalPlayer() == Pl then
-                        call BlzFrameSetVisible(SpellUP[100 + i1], false)
+                        call BlzFrameSetVisible(ButtonParentId[100 + i1], false)
                     endif
                 endif
                 set i1 = i1 + 1
@@ -139,12 +139,12 @@ scope LongPeriodCheck initializer init
                     set textureS = BlzGetAbilityIcon(SpellId)
 
                     if GetLocalPlayer() == Pl then
-                        call BlzFrameSetVisible(SpellUP[100 + i1], true)
-                        call BlzFrameSetTexture(SpellFR[100 + i1], textureS, 0, true)
+                        call BlzFrameSetVisible(ButtonParentId[100 + i1], true)
+                        call BlzFrameSetTexture(ButtonId[100 + i1], textureS, 0, true)
                     endif
                 else
                     if GetLocalPlayer() == Pl then
-                        call BlzFrameSetVisible(SpellUP[100 + i1], false)
+                        call BlzFrameSetVisible(ButtonParentId[100 + i1], false)
                     endif
                 endif
                 set i1 = i1 + 1
@@ -157,32 +157,32 @@ scope LongPeriodCheck initializer init
             //Show element count, win counts or hero passive
             if unitId != 0 then
                 set textureS = GetHeroPassiveDescription(unitId, HeroPassive_Icon)
-                call BlzFrameSetVisible(SpellUP[38], true) // Element count
-                call BlzFrameSetVisible(SpellUP[39], true) // Win Counts
-                call BlzFrameSetVisible(SpellUP[100], true) // Hero passive/description
-                call BlzFrameSetTexture(SpellFR[100], textureS, 0, true)
+                call BlzFrameSetVisible(ButtonParentId[38], true) // Element count
+                call BlzFrameSetVisible(ButtonParentId[39], true) // Win Counts
+                call BlzFrameSetVisible(ButtonParentId[100], true) // Hero passive/description
+                call BlzFrameSetTexture(ButtonId[100], textureS, 0, true)
             else
-                call BlzFrameSetVisible(SpellUP[38], false) // Element count
-                call BlzFrameSetVisible(SpellUP[39], false) // Win Counts
-                call BlzFrameSetVisible(SpellUP[100], false) // Hero passive/description
+                call BlzFrameSetVisible(ButtonParentId[38], false) // Element count
+                call BlzFrameSetVisible(ButtonParentId[39], false) // Win Counts
+                call BlzFrameSetVisible(ButtonParentId[100], false) // Hero passive/description
             endif
 
             //show creep info button
             if ShowCreepAbilButton[i] then
-                call BlzFrameSetVisible(SpellUP[2], true)
+                call BlzFrameSetVisible(ButtonParentId[2], true)
             else
-                call BlzFrameSetVisible(SpellUP[2], false)
+                call BlzFrameSetVisible(ButtonParentId[2], false)
             endif
 
             //show sell all items/convert gold/lumber button
             if (ShopsCreated == false or BrStarted) then
-                call BlzFrameSetVisible(SpellUP[3], false)
-                call BlzFrameSetVisible(SpellUP[36], false)
-                call BlzFrameSetVisible(SpellUP[37], false)
-            else//if not BlzFrameIsVisible(SpellUP[3]) then
-                call BlzFrameSetVisible(SpellUP[3], true)
-                call BlzFrameSetVisible(SpellUP[36], true)
-                call BlzFrameSetVisible(SpellUP[37], true)
+                call BlzFrameSetVisible(ButtonParentId[3], false)
+                call BlzFrameSetVisible(ButtonParentId[36], false)
+                call BlzFrameSetVisible(ButtonParentId[37], false)
+            else//if not BlzFrameIsVisible(ButtonParentId[3]) then
+                call BlzFrameSetVisible(ButtonParentId[3], true)
+                call BlzFrameSetVisible(ButtonParentId[36], true)
+                call BlzFrameSetVisible(ButtonParentId[37], true)
             endif
         endif
 
