@@ -1,4 +1,4 @@
-library ScepterOfConfusion requires BuffSystem, CustomState
+library ScepterOfConfusion requires DummyOrder, CustomState
     function ActivateScepterOfConfusion takes unit source returns nothing
         local DummyOrder dummyOrder
         if GetRandomInt(1,100) < 75 then

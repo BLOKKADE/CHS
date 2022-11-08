@@ -1,6 +1,7 @@
 library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
     globals 
         integer RectPid
+        integer array Lives
     endglobals
 
     function SpellLearnedFunc takes unit u, integer abilId returns nothing

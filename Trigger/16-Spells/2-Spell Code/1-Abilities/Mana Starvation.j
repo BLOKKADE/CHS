@@ -75,7 +75,7 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
         call dummy.setAbilityRealField('A09N', ABILITY_RLF_DURATION_NORMAL, duration)
         call dummy.target(target)
         call dummy.activate()
-        call SetBuff(caster, 8, duration + 8)
+        call TempAbil.create(caster, 'A09R', duration + 8)
         call ManaStarvationStruct.create(caster, target, duration)
     endfunction
 endlibrary

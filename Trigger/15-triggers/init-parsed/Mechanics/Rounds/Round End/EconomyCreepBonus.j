@@ -1,5 +1,11 @@
 library EconomyCreepBonus 
 
+    globals
+        integer array Income
+        integer BonusNeutral = 0
+        integer array BonusNeutralPlayer
+    endglobals
+
     function SetEconomyCreepBonus takes nothing returns nothing
         local integer i = 0
         local integer i1 = 0

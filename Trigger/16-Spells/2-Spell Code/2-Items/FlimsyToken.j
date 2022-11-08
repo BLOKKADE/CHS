@@ -1,4 +1,4 @@
-library FlimsyToken initializer init requires BuffSystem
+library FlimsyToken initializer init requires TempAbilSystem
     globals
         Table FlimsyTargets
     endglobals
@@ -50,7 +50,7 @@ library FlimsyToken initializer init requires BuffSystem
 
     function FlimsyToken takes unit source, unit target returns nothing
         //call BJDebugMsg("flimsy: " + GetUnitName(target))
-        call SetBuff(target, 6, 5)
+        call TempAbil.create(target, 'A09B', 5)
         if not IsUnitType(target, UNIT_TYPE_HERO) then
             if GetFlimsyStruct(GetHandleId(target)) == 0 then
                 set FlimsyTargets[GetHandleId(target)] = FlimsyTokenStruct.create(target)

@@ -1,4 +1,4 @@
-library AncientBlood initializer init requires BuffSystem, CustomState, Utility
+library AncientBlood initializer init requires BuffLevel, CustomState, Utility
 
     globals
         Table AncientBloodStacks

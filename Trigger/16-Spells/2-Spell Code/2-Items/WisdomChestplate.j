@@ -1,4 +1,4 @@
-library WisdomChestplate initializer init requires BuffSystem, CustomState, RandomShit
+library WisdomChestplate initializer init requires TempAbilSystem, CustomState, RandomShit
     globals
         Table WisdomChestplateTable
     endglobals
@@ -11,7 +11,7 @@ library WisdomChestplate initializer init requires BuffSystem, CustomState, Rand
         local integer handleId = GetHandleId(target)
         //local item it
         local real bonus = damage * 0.4
-        call SetBuff(target, 9, 5)
+        call TempAbil.create(target, 'A09S', 5)
         if GetCustomStateBonus(handleId) == 0 or GetCustomStateBonus(handleId).enabled == false then
             //set it = GetItemOfTypeFromUnitBJ(target, WISDOM_CHESTPLATE_ITEM_ID)
             set WisdomChestplateTable[handleId] = TempBonus.create(target, BONUS_BLOCK, damage * 0.4, 5, WISDOM_CHESTPLATE_ITEM_ID)
