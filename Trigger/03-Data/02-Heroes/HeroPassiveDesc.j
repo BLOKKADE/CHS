@@ -169,7 +169,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(OGRE_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
         call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )
-        call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset a spells cooldown when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|cffc0c0c0Reset chance can not go over 90%.")
+        call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset the cooldown of an ability/item when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|cffc0c0c0Reset chance can not go over 90%.")
         call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
 
         call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )
