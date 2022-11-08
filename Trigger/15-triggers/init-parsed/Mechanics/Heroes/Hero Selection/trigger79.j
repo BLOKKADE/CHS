@@ -132,7 +132,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
 
         if GetLocalPlayer() == GetOwningPlayer(hero) then
             call BlzFrameSetVisible(SpellUP[0] ,true )
-            call BlzFrameSetTexture(SpellFR[0], LoadStr(HT_data,GetUnitTypeId(hero) ,1 )  , 0, true)
+            call BlzFrameSetTexture(SpellFR[0], GetHeroPassiveDescription(GetUnitTypeId(hero) ,HeroPassive_Icon)  , 0, true)
     
         endif
     

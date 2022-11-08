@@ -35,7 +35,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         call ReviveHeroLoc(u,arenaLocation,true)
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
-        call FixDeath(u)
+        call FixAbominationPassive(u)
         call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
         call ReleaseTimer(GetExpiredTimer())
 
@@ -65,7 +65,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
             call ReviveHeroLoc(u,arenaLocation,true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
-            call FixDeath(u)
+            call FixAbominationPassive(u)
             call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
 
             call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[pid + 1], Condition( function RemoveUnitsInArena))

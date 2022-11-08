@@ -6,7 +6,7 @@ library trigger36 initializer init requires RandomShit, DummyActiveSpell
             call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 20, "|cffffcc00Caster movement has been disabled.|r")
             return
         endif
-        if(Trig_Disable_Abilities_Func001C(GetTriggerUnit())) then
+        if CheckIfCastAllowed(GetTriggerUnit()) then
             call IssueImmediateOrderBJ(GetTriggerUnit(),"stop")
             //call BJDebugMsg(GetUnitName(GetTriggerUnit()) +  "disable abilities stop")
         else

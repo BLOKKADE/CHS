@@ -1,4 +1,4 @@
-scope ToggleDmgTxt initializer init
+library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNames, Command
     //===========================================================================
     globals
         boolean ShowDmgText = false
@@ -70,4 +70,4 @@ scope ToggleDmgTxt initializer init
     private function init takes nothing returns nothing
         call Command.create(CommandHandler.ToggleDmgTxt).name("DamageText").handles("damagetext").handles("dt").help("dt", "Toggles text display for damage taken by your hero. (can lag)")
     endfunction
-endscope
+endlibrary

@@ -101,7 +101,7 @@ library trigger135 initializer init requires RandomShit, PlayerTracking, CreepDe
             call ReviveHeroLoc(GetDyingUnit(),arenaLocation,true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(GetDyingUnit()), false)
 
-            call FixDeath(GetDyingUnit())
+            call FixAbominationPassive(GetDyingUnit())
             set PvpEndIndex = 1
             loop
                 exitwhen PvpEndIndex > 6

@@ -1,25 +1,19 @@
-library heroLevel initializer init requires HeroLvlTable, Tinker, WitchDoctor, SpiritTauren, Letinant
+library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor, SpiritTauren, Letinant, MartialRetribution
     globals
         integer array LastLvlHero
     endglobals
 
     function UpdateAbilityDescriptionLevelup takes unit h, player p, integer heroLvl returns nothing
         local integer abilLvl
-        local integer abilId
-        local string s
         
-        set abilId = MARTIAL_RETRIBUTION_ABILITY_ID
-        set abilLvl = GetUnitAbilityLevel(h, abilId)
+        set abilLvl = GetUnitAbilityLevel(h, MARTIAL_RETRIBUTION_ABILITY_ID)
         if abilLvl > 0 then
-            set s = GetAbilityDescription(abilId, abilLvl - 1)
-            set s = UpdateAbilityDescription(s, p, abilId, ",s00,", R2I(SpellData[GetHandleId(h)].real[3]), abilLvl)
-            call UpdateAbilityDescription(s, p, abilId, ",s01,", R2I((300 * abilLvl) * (1 + 0.02 * heroLvl)), abilLvl)
+            call UpdateMartialRetributionText(GetHandleId(h), p, abilLvl, heroLvl)
         endif
 
-        set abilId = ICE_FORCE_ABILITY_ID
-        set abilLvl = GetUnitAbilityLevel(h, abilId)
+        set abilLvl = GetUnitAbilityLevel(h, ICE_FORCE_ABILITY_ID)
         if abilLvl > 0 then
-            call UpdateAbilityDescription(GetAbilityDescription(abilId, abilLvl - 1), p, abilId, ",s01,", R2I((1 - (500 / (500 + GetHeroInt(h, true)))) * 100), abilLvl)
+            call UpdateAbilityDescription(GetAbilityDescription(ICE_FORCE_ABILITY_ID, abilLvl - 1), p, ICE_FORCE_ABILITY_ID, ",s01,", R2I((1 - (500 / (500 + GetHeroInt(h, true)))) * 100), abilLvl)
         endif
     endfunction
 
