@@ -4,9 +4,6 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
         unit Global_u = null
 
         boolean EffectVisible = true
-
-        unit GLOB_DEBUF = null
-
     endglobals
 
     function ElemFuncStart takes unit u, integer id returns nothing
