@@ -24,7 +24,7 @@ library AncientElement initializer init requires RandomShit, AbsoluteElements, A
         //call BJDebugMsg("ae: " + I2S(element))
         call CreateTextTagTimerColor(ClassAbil[elementId],1,GetUnitX(caster),GetUnitY(caster),80,1,255,255,255)
         call AreaDamage(caster, GetUnitX(caster), GetUnitY(caster), GetSpellValue(40, 5, level), 600, false, element)
-        call DestroyEffect(AddSpecialEffect(GetAncientElementFx(), GetUnitX(caster), GetUnitY(caster)))
+        call DestroyEffect(AddLocalizedSpecialEffect(GetAncientElementFx(), GetUnitX(caster), GetUnitY(caster)))
         call AbilStartCD(caster, ANCIENT_ELEMENT_ABILITY_ID, 2)
     endfunction
 

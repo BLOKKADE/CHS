@@ -58,7 +58,7 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
             set this.y = y
             set this.maxUnits = 3
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
-            set this.fx = AddSpecialEffect("Abilities\\Spells\\Orc\\EarthQuake\\EarthQuakeTarget.mdl", this.x, this.y)
+            set this.fx = AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\EarthQuake\\EarthQuakeTarget.mdl", this.x, this.y)
 
             call this.startPeriodic()
             return this

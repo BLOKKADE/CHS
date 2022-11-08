@@ -11,7 +11,7 @@ library ContractLiving initializer init requires TempAbilSystem, RandomShit, Her
     function ActivateContractLiving takes unit u returns nothing
         local ability abil = BlzGetUnitAbility(u, CONTRACT_LIVING_ABIL_ID)
         call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_MAX_LIFE))
-        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl", GetUnitX(u), GetUnitY(u)))
+        call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl", GetUnitX(u), GetUnitY(u)))
         call AbilStartCD(u, CONTRACT_LIVING_ABIL_ID, 90 + GetAbilityCooldownBonus(abil))
         call SetAbilityCooldownBonus(abil, 5)
         call TempAbil.create(u, CONTRACT_LIVING_BUFF_ID, 5)

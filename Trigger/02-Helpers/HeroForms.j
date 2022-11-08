@@ -1,4 +1,4 @@
-library HeroForm initializer init
+library HeroForm initializer init requires HideEffects
     globals
         hashtable HTforms = InitHashtable()
 
@@ -72,13 +72,13 @@ library HeroForm initializer init
 
             if formId == FORM_SHADOW then
                 set f.idForm = FORM_SHADOW
-                set f.eff[0] = AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "hand left")
-                set f.eff[1] = AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "hand right")
-                set f.eff[2] = AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "weapon")
-                set f.eff[3] = AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "foot left")
-                set f.eff[4] = AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "foot right")
-                set f.eff[5] = AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "chest")
-                set f.eff[6] = AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "head")
+                set f.eff[0] = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "hand left")
+                set f.eff[1] = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "hand right")
+                set f.eff[2] = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "weapon")
+                set f.eff[3] = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "foot left")
+                set f.eff[4] = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "foot right")
+                set f.eff[5] = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "chest")
+                set f.eff[6] = AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", u, "head")
                 set f.eff[7] = null
             endif
         elseif duration < TimerGetRemaining(f.t) then

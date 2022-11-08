@@ -114,7 +114,7 @@ library HeroAbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObje
         //Xesil's Legacy
         if IsSpellResettable(id) and ((GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemType(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= RMinBJ(xesilChance * luck, 90))) then
             set ResCD = 0.001
-            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
         endif 
         
         //Staff of Water

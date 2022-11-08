@@ -42,7 +42,7 @@ library ExtradimensionalCooperation initializer init requires RandomShit, Damage
 
             set this.ssdummy = CreateUnit(GetOwningPlayer(caster), 'h00B', this.newX, this.newY, angle)
             call SetUnitVertexColor(this.ssdummy, 100, 100, 150, 100)
-            call DestroyEffect(AddSpecialEffect(FX_BLINK, this.newX, this.newY))
+            call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, this.newX, this.newY))
             call SetUnitAnimation(this.ssdummy, "attack")
             call UnitApplyTimedLife(this.ssdummy, 'BTLF', 0.3)
             call SetUnitTimeScale(this.ssdummy, 3.)

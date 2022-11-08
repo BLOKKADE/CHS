@@ -25,7 +25,7 @@ library UrsaBleed requires TimerUtils
                         set GLOB_typeDmg = 2
                         call UnitDamageTarget(this.caster, this.target, this.dmg, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, null)
                     endif
-                    call DestroyEffect(AddSpecialEffectTarget(FX_Bleed, this.target, "head"))
+                    call DestroyEffect(AddLocalizedSpecialEffectTarget(FX_Bleed, this.target, "head"))
                 endif
 
                 set this.limit = this.limit - 1
@@ -53,7 +53,7 @@ library UrsaBleed requires TimerUtils
             set this.caster = caster
             set this.limit = 3
 
-            call DestroyEffect(AddSpecialEffectTarget(FX_Bleed, this.target, "head"))
+            call DestroyEffect(AddLocalizedSpecialEffectTarget(FX_Bleed, this.target, "head"))
 
             set this.endTick = T32_Tick + 32
             call this.startPeriodic()

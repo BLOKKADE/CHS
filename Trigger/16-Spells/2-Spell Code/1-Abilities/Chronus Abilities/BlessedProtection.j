@@ -17,7 +17,7 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
             local thistype this = thistype.setup()
             
             set this.source = source
-            set this.fx = AddSpecialEffectTarget("Soul Armor Divine_opt.mdx", this.source, "head")
+            set this.fx = AddLocalizedSpecialEffectTarget("Soul Armor Divine_opt.mdx", this.source, "head")
             call RegisterBuff(this.source, 'A0AF')
             if GetBuffLevel(this.source, 'A0AF') == 1 then
                 call UnitAddAbility(this.source, 'A0AF')

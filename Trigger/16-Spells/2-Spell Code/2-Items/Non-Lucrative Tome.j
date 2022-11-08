@@ -100,7 +100,7 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
 
             //call SpellsLearnedDebug("post nl", u, 0)
 
-            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", u, "origin"))
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", u, "origin"))
         else
             call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"The |cfff76863Non-Lucrative Tome|r can only be used once per game.")
             call SetPlayerState(GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD) + 20000)

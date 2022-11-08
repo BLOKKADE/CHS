@@ -3,7 +3,7 @@ library MartialRetribution requires AoeDamage, RandomShit, AbilityDescription
         local effect fx
         
         call AreaDamagePhys(source, GetUnitX(source), GetUnitY(source), damage, 600, MARTIAL_RETRIBUTION_ABILITY_ID)
-        set fx = AddSpecialEffect("war3mapImported\\EarthNova.mdx", GetUnitX(source), GetUnitY(source))
+        set fx = AddLocalizedSpecialEffect("war3mapImported\\EarthNova.mdx", GetUnitX(source), GetUnitY(source))
         call BlzSetSpecialEffectScale(fx, 0.5)
         call DestroyEffect(fx)
         set SpellData[handleId].real[3] = SpellData[handleId].real[3] - damage 

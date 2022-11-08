@@ -17,7 +17,7 @@ library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHe
         boolean enabled
 
         method enable takes nothing returns nothing
-            set this.fx = AddSpecialEffectTarget("Abilities\\Spells\\NightElf\\Immolation\\ImmolationTarget.mdl", this.source, "origin")
+            set this.fx = AddLocalizedSpecialEffectTarget("Abilities\\Spells\\NightElf\\Immolation\\ImmolationTarget.mdl", this.source, "origin")
             set this.enabled = true
             //call BJDebugMsg("enabled")
             set this.level = GetUnitAbilityLevel(this.source, IMMOLATION_ABILITY_ID)

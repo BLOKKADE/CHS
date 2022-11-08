@@ -15,8 +15,8 @@ library BlinkStrike initializer init requires RandomShit, GetRandomUnit
         local real newY = GetUnitY(target) + 80.00 * Cos(angle *(3.14159 / 180.00))
         set angle = Atan2(GetUnitY(target) - newY, GetUnitX(target) - newX)*(180.00 / 3.14159)
 
-        call DestroyEffect(AddSpecialEffect(FX_BLINK, GetUnitX(caster), GetUnitY(caster)))
-        call DestroyEffect(AddSpecialEffect(FX_BLINK, newX, newY))
+        call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, GetUnitX(caster), GetUnitY(caster)))
+        call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, newX, newY))
 
         call SetUnitX(caster, newX)
         call SetUnitY(caster, newY)

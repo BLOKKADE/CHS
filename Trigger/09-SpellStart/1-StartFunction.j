@@ -187,14 +187,14 @@ function FunctionTimerSpell takes nothing returns nothing
         call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) - 10 + R2I((abilLevel * 100)*(1 +(heroLevel * 0.038)) ),0)
         call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
         call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,(8 + (heroLevel * 0.09)) * ChronusLevel)
-        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))
+        call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))
 
         set U = CreateUnit( GetOwningPlayer(Herou),'h01A',GetUnitX(Herou)+ 40 * CosBJ(30 + GetUnitFacing(Herou)),GetUnitY(Herou)+ 40 * SinBJ(30 + GetUnitFacing(Herou)),GetUnitFacing(Herou) )
         call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 500 + R2I((abilLevel * 10000)*(1 +(heroLevel * 0.038) )) )
         call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) - 10 + R2I((abilLevel * 100)*(1 +(heroLevel * 0.038)) ),0)
         call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
         call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,(8 + (heroLevel * 0.09)) * ChronusLevel)
-        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))  
+        call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))  
         set chronusActivated = true     
     endif
 
@@ -202,7 +202,7 @@ function FunctionTimerSpell takes nothing returns nothing
     if GetUnitTypeId(Herou) == MYSTIC_UNIT_ID then
         set r4 = GetUnitX(Herou)+ 40 * CosBJ(- 30 + GetUnitFacing(Herou))
         set r5 = GetUnitY(Herou)+ 40 * SinBJ(- 30 + GetUnitFacing(Herou))
-        call DestroyEffect(AddSpecialEffect(FX_BLINK, r4, r5))
+        call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, r4, r5))
         set U = CreateUnit(GetOwningPlayer(Herou), 'e001', r4, r5, GetUnitFacing(Herou))
 
         call BlzSetUnitAttackCooldown(U, BlzGetUnitAttackCooldown(U,0) * (8 / (8.9 + (heroLevel / 3))), 0)

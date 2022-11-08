@@ -29,8 +29,8 @@ library RegionLeaveDetect initializer init requires KnockbackHelper
             local real x = GetUnitX(this.u)
             local real y = GetUnitY(this.u)
             if not RectContainsCoords(r, x, y) then
-                call DestroyEffect(AddSpecialEffect(FX_BLINK, x, y))
-                call DestroyEffect(AddSpecialEffect(FX_BLINK, this.lastValidX, this.lastValidY))
+                call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, x, y))
+                call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, this.lastValidX, this.lastValidY))
 
                 call SetUnitX(this.u, this.lastValidX)
                 call SetUnitY(this.u, this.lastValidY)

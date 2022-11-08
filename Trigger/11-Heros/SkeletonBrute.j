@@ -18,7 +18,7 @@ library SkeletonBrute requires RandomShit
             set this.source = source
             set this.endTick = T32_Tick + R2I((1 + (0.01 * GetHeroLevel(this.source))) * 32)
             call UnitAddAbility(this.source, 'A0BB')
-            set this.fx = AddSpecialEffectTarget("Abilities\\Spells\\Human\\DivineShield\\DivineShieldTarget.mdl", this.source, "origin")
+            set this.fx = AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\DivineShield\\DivineShieldTarget.mdl", this.source, "origin")
             call this.startPeriodic()
             return this
         endmethod

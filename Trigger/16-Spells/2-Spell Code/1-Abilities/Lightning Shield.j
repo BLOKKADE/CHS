@@ -46,7 +46,7 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula
             set this.endTick = T32_Tick + (8 * 32)
             set this.tick = T32_Tick + 32
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
-            set this.fx = AddSpecialEffectTarget("Abilities\\Spells\\Orc\\LightningShield\\LightningShieldTarget.mdl", this.target, "origin")
+            set this.fx = AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\LightningShield\\LightningShieldTarget.mdl", this.target, "origin")
 
             call this.startPeriodic()
             return this

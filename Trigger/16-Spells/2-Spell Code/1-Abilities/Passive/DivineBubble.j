@@ -28,7 +28,7 @@ library DivineBubble initializer init requires T32, HeroAbilityCooldown, UnitIte
         static method create takes unit source, real duration, integer abilId returns thistype
             local thistype this = thistype.setup()
             set this.source = source
-            set this.fx = AddSpecialEffectTarget( "RighteousGuard.mdx" , this.source , "origin" )
+            set this.fx = AddLocalizedSpecialEffectTarget( "RighteousGuard.mdx" , this.source , "origin" )
             call UnitAddAbility(this.source, 'A08C')
             set this.enabled = true
             call AbilStartCD(this.source, abilId, 30.69 - (0.69 * GetUnitAbilityLevel(this.source, abilId))) 

@@ -53,7 +53,7 @@ library Avatar initializer init requires NewBonus, RandomShit, RemoveBuffDelay
             set this.damageBonus = 0 - 50 + (80 * level)
             set this.armorBonus = 20 * level
             set this.hpBonus = 400 * level
-            call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Avatar\\AvatarCaster.mdl", GetUnitX(this.source), GetUnitY(this.source)))
+            call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Human\\Avatar\\AvatarCaster.mdl", GetUnitX(this.source), GetUnitY(this.source)))
             call this.updateBonuses()
             set this.enabled = true
             set this.endTick = T32_Tick + R2I(6.5 * 32)   

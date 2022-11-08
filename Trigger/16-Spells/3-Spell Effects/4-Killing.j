@@ -41,7 +41,7 @@ scope Killing initializer init
             if GetUnitTypeId(targetHero) == SKELETON_BRUTE_UNIT_ID then
                 call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + ( (0.02 + (0.0005 * GetHeroLevel(targetHero))) * BlzGetUnitMaxHP(targetHero)))
                 call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), GetUnitDamage(target, 0) * (0.5 + (0.01 * GetHeroLevel(targetHero))), 400, false, SKELETON_BRUTE_UNIT_ID)
-                set fx = AddSpecialEffect("war3mapImported\\Arcane Explosion.mdx", GetUnitX(target), GetUnitY(target))
+                set fx = AddLocalizedSpecialEffect("war3mapImported\\Arcane Explosion.mdx", GetUnitX(target), GetUnitY(target))
                 call BlzSetSpecialEffectTimeScale(fx, 2)
                 call DestroyEffect(fx)
                 set fx = null
@@ -57,7 +57,7 @@ scope Killing initializer init
             set i = GetUnitITemTypeCount(killingHero,'I079') 
             if i > 0 and killer != null then
                 call Vamp(killingHero, target, BlzGetUnitMaxHP(killingHero)* 0.1 * I2R(i))
-                call DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", killingHero, "chest"))      
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", killingHero, "chest"))      
             endif
 
             //Amulet of the Night

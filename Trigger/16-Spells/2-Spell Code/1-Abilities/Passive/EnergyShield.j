@@ -28,7 +28,7 @@ library EnergyShield initializer init requires RandomShit, CustomEvent
         local timer t = null
 
         if e.EventSpellId == ENERGY_SHIELD_ABILITY_ID and e.LearnedAbilityIsNew then
-            set eff = AddSpecialEffect("war3mapImported\\Ubershield Azure.mdx", GetUnitX(e.EventUnit), GetUnitY(e.EventUnit))
+            set eff = AddLocalizedSpecialEffect("war3mapImported\\Ubershield Azure.mdx", GetUnitX(e.EventUnit), GetUnitY(e.EventUnit))
             call SaveEffectHandle(HT, GetHandleId(e.EventUnit), ENERGY_SHIELD_ABILITY_ID, eff)
             set t = CreateTimer()
             call SaveUnitHandle(HT,GetHandleId(t), 1, e.EventUnit)
