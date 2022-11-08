@@ -1,4 +1,4 @@
-library VotingScreen initializer init requires FrameInit, VotingResults
+library VotingScreen initializer init requires IconFrames, VotingResults
 
     globals 
         // hastables for each type of vote. Stores the handleid of the framehandle to determine which type of vote it is
@@ -188,7 +188,7 @@ library VotingScreen initializer init requires FrameInit, VotingResults
 
             call SetButtonVote(pv, buttonType, index)
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
-            // We are hijacking the tooltip window that we use for almost everything else in the game from FrameInit
+            // We are hijacking the tooltip window that we use for almost everything else in the game from IconFrames
             if GetLocalPlayer() == GetTriggerPlayer() then	
                 call BlzFrameSetText(VoteDescriptionTextDisplay, VotingDescriptions[index])
             endif

@@ -1,4 +1,4 @@
-library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, FrameInit, MathRound, Table, PetFollow
+library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, IconFrames, MathRound, Table, PetFollow
 
     globals 
         // hastables for each type of achievement. It's how we determine what type of achievement it is when a button is selected
@@ -180,7 +180,7 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, F
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
             set requirementDescription = hr.getRequirementDescription(ps)
 
-            // We are hijacking the tooltip window that we use for almost everything else in the game from FrameInit
+            // We are hijacking the tooltip window that we use for almost everything else in the game from IconFrames
             if GetLocalPlayer() == GetTriggerPlayer() then	
                 call BlzFrameSetText(TooltipTitleFrame, requirementDescription)
                 call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(requirementDescription))

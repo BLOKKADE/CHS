@@ -1,4 +1,4 @@
-library FrameInit initializer init requires RandomShit, CustomState, GetObjectElement, ElementColorCode, HeroLvlTable, UnitPanelInfo, RuneInit, HeroPassiveDesc, PlayerTracking, SellItems
+library IconFrames initializer init requires RandomShit, CustomState, GetObjectElement, ElementColorCode, HeroLvlTable, UnitInfoPanel, RuneInit, HeroPassiveDesc, PlayerTracking, SellItems
 	globals
 		// Hat/Pet main frame
 		framehandle MainAchievementFrameHandle 
@@ -11,7 +11,6 @@ library FrameInit initializer init requires RandomShit, CustomState, GetObjectEl
 		trigger ButtonTrigger = null
 
 		boolean array ShowCreepAbilButton
-
 
 		framehandle array ButtonId 
 		framehandle array ButtonParentId 

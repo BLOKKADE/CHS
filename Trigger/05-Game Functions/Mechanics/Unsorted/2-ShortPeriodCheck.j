@@ -140,7 +140,7 @@ scope ShortPeriodCheck initializer init
 
                 //glory hp regen
                 if GloryRegenLevel[hid] > 0 then
-                    set r2 = LoadReal(DataUnitHT, hid, 1000)
+                    set r2 = GetUnitCustomState(u, BONUS_GLORYREGEN)
                     set r1 = GetUnitPositiveHpRegen(u) - r2
                     
                     if uid == TROLL_HEADHUNTER_UNIT_ID then
@@ -151,7 +151,7 @@ scope ShortPeriodCheck initializer init
                     if r1 != r2 then
                         call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - r2 + r1)
                         //call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
-                        call SaveReal(DataUnitHT, hid, 1000, r1)
+                        call SetUnitCustomState(u, BONUS_GLORYREGEN, r1)
                     endif
                 endif
 

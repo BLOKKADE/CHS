@@ -1,54 +1,43 @@
-library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory, LearnAbsolute
+library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAbsolute
 	globals
 		boolean isReforged
 
-		framehandle unitInfo
-		framehandle parent
+		private framehandle UnitInfoFrame
+		private framehandle UnitInfoParentFrame
 
-		framehandle tooltipBox
-		framehandle tooltipText
+		private framehandle tooltipBox
+		private framehandle tooltipText
 
-		framehandle array UnitPanels
+		private string array DataIcon
+		private string array DataDesc
+		private string array DataLabel
+		private string array CustomStateValue
 
-		string array DataIcon
-		string array DataDesc
-		string array DataLabel
-		string array CustomInfoT1
+		private framehandle array ButtonUI
+		private framehandle array ToolTipUI
+		private framehandle array ToolTextUI
+		private framehandle array IconUI
+		private framehandle array TextUI
+		private framehandle array TooltipTextUI   
 
-		framehandle array ButtonUI
-		framehandle array ToolTipUI
-		framehandle array ToolTextUI
-		framehandle array IconUI
-		framehandle array TextUI
-		framehandle array TooltipTextUI   
+		private group gUI = CreateGroup()
+		private unit UnitInfoUnit = null
 
-		group gUI = CreateGroup()
-		unit UnitInfoUnit = null
-
-		string ToolTipA = ""
-		unit array UnitArrayUpdate
-
-		string array statColour
+		private string ToolTipA = ""
+		private string array statColour
 	endglobals
 
-	/*function UnitInfoGetUnit takes player p returns unit
-		call GroupEnumUnitsSelected(gUI, p, null)
-		set UnitInfoUnit = FirstOfGroup(gUI)
-		call GroupClear(gUI)
-		return UnitInfoUnit
-	endfunction*/
-
 	function GameUIStandart takes nothing returns nothing 
-		set parent = BlzCreateFrameByType("SIMPLEFRAME", "", unitInfo, "", 0) 
-		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconDamage", 0), parent)
-		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconDamage", 1), parent)
-		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconArmor", 2), parent)
-		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconRank", 3), parent)
-		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconFood", 4), parent)
-		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconGold", 5), parent)
-		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconHero", 6), parent)
-		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconAlly", 7), parent)  
-		call BlzFrameSetVisible(parent, false)
+		set UnitInfoParentFrame = BlzCreateFrameByType("SIMPLEFRAME", "", UnitInfoFrame, "", 0) 
+		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconDamage", 0), UnitInfoParentFrame)
+		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconDamage", 1), UnitInfoParentFrame)
+		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconArmor", 2), UnitInfoParentFrame)
+		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconRank", 3), UnitInfoParentFrame)
+		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconFood", 4), UnitInfoParentFrame)
+		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconGold", 5), UnitInfoParentFrame)
+		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconHero", 6), UnitInfoParentFrame)
+		call BlzFrameSetParent(BlzGetFrameByName("SimpleInfoPanelIconAlly", 7), UnitInfoParentFrame)  
+		call BlzFrameSetVisible(UnitInfoParentFrame, false)
 	endfunction
 
 	function ExtraFieldInfo takes unit u returns string
@@ -110,21 +99,21 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 	endfunction
 
 	function UpdateTooltipText takes unit u returns nothing
-		set CustomInfoT1[1] = R2S(100 * (1 - (50 /(50 + GetUnitCustomState(u, BONUS_EVASION)))))
+		set CustomStateValue[1] = R2S(100 * (1 - (50 /(50 + GetUnitCustomState(u, BONUS_EVASION)))))
 
 		if BlzGetUnitArmor(u) >= 0 and not BlzIsUnitInvulnerable(u) then
-			set CustomInfoT1[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
+			set CustomStateValue[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
 		else
-			set CustomInfoT1[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
+			set CustomStateValue[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
 		endif
 
-		set CustomInfoT1[3] = R2S(GetUnitCustomState(u, BONUS_MAGICPOW))
-		set CustomInfoT1[4] = R2S( (1 - (50 / ( 50 + GetUnitCustomState(u, BONUS_MAGICRES) ))) * 100 )
-		set CustomInfoT1[5] = ExtraFieldInfo(u)
-		set CustomInfoT1[6] = StrInfo(u)
-		set CustomInfoT1[7] = AgiInfo(u)
-		set CustomInfoT1[8] = IntInfo(u)
-		set CustomInfoT1[9] = DmgInfo(u)
+		set CustomStateValue[3] = R2S(GetUnitCustomState(u, BONUS_MAGICPOW))
+		set CustomStateValue[4] = R2S( (1 - (50 / ( 50 + GetUnitCustomState(u, BONUS_MAGICRES) ))) * 100 )
+		set CustomStateValue[5] = ExtraFieldInfo(u)
+		set CustomStateValue[6] = StrInfo(u)
+		set CustomStateValue[7] = AgiInfo(u)
+		set CustomStateValue[8] = IntInfo(u)
+		set CustomStateValue[9] = DmgInfo(u)
 	endfunction
 
 	function UpdateTextRelaese takes unit u returns nothing
@@ -207,24 +196,24 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 				set VisibleFrame = true
 				set ToolTipA = DataLabel[currentFrame] + BlzFrameGetText(TextUI[currentFrame]) + "\n------------------------------\n" + DataDesc[currentFrame]
 				if currentFrame == 3 then
-					set ToolTipA = ToolTipA + CustomInfoT1[2] + "%%|r."
+					set ToolTipA = ToolTipA + CustomStateValue[2] + "%%|r."
 				elseif currentFrame == 1 then
-					set ToolTipA = ToolTipA + CustomInfoT1[9]
+					set ToolTipA = ToolTipA + CustomStateValue[9]
 				elseif currentFrame == 6 then
-					set ToolTipA = ToolTipA + CustomInfoT1[6]
+					set ToolTipA = ToolTipA + CustomStateValue[6]
 				elseif currentFrame == 7 then
-					set ToolTipA = ToolTipA + CustomInfoT1[7]
+					set ToolTipA = ToolTipA + CustomStateValue[7]
 				elseif currentFrame == 8 then
-					set ToolTipA = ToolTipA + CustomInfoT1[8]
+					set ToolTipA = ToolTipA + CustomStateValue[8]
 				elseif currentFrame == 9 then
-					set ToolTipA = ToolTipA + CustomInfoT1[3] + "%%|r."
+					set ToolTipA = ToolTipA + CustomStateValue[3] + "%%|r."
 				elseif currentFrame == 10 then
-					set ToolTipA = ToolTipA + CustomInfoT1[4] + "%%|r."
+					set ToolTipA = ToolTipA + CustomStateValue[4] + "%%|r."
 				elseif currentFrame == 11 then
-					set ToolTipA = ToolTipA + CustomInfoT1[1] + "%%|r."
+					set ToolTipA = ToolTipA + CustomStateValue[1] + "%%|r."
 				elseif currentFrame == 12 then
 					set ToolTipA = "More info\n------------------------------\n" + DataDesc[currentFrame]
-					set ToolTipA = ToolTipA + CustomInfoT1[5]
+					set ToolTipA = ToolTipA + CustomStateValue[5]
 				endif
 				call BlzFrameSetText(tooltipText, ToolTipA)
 			endif
@@ -256,7 +245,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		set isReforged = GetLocalizedString("REFORGED") != "REFORGED"      
 		call BlzLoadTOCFile("war3mapImported\\UnitInfoPanels.toc")
 		call BlzLoadTOCFile("war3mapimported\\BoxedText.toc")
-		set unitInfo = BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0)   
+		set UnitInfoFrame = BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0)   
 		call BlzGetFrameByName("InfoPanelIconValue", 0)
 		call BlzGetFrameByName("InfoPanelIconValue", 2)
 		call BlzGetFrameByName("InfoPanelIconHeroStrengthValue", 6)
