@@ -1,4 +1,4 @@
-library AbilityDescription requires ReplaceTextLib
+library AbilityDescription initializer init requires ReplaceTextLib
     globals
         HashTable AbilityDescription
     endglobals
@@ -40,5 +40,9 @@ library AbilityDescription requires ReplaceTextLib
         if GetLocalPlayer() == p then
             call BlzSetAbilityExtendedTooltip(abilId, GetAbilityDescription(abilId, level), level)
         endif
+    endfunction
+
+    private function init takes nothing returns nothing
+        set AbilityDescription = HashTable.create()
     endfunction
 endlibrary
