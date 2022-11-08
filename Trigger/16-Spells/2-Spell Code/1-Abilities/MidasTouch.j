@@ -32,9 +32,9 @@ library MidasTouch initializer init requires DummyOrder, RandomShit
             endif
             call SetUnitMaxHp(this.target, BlzGetUnitMaxHP(this.target) + R2I(this.hpBonus * multiplier)) 
             call BlzSetUnitArmor(this.target, BlzGetUnitArmor(this.target) + (this.armorBonus * multiplier))
-            call SetUnitBlock(this.target, GetUnitBlock(this.target) + (this.blockBonus * multiplier))
-            call SetUnitMagicDef(this.target, GetUnitMagicDef(this.target) + (this.magicDefBonus * multiplier))
-            call SetUnitMagicDmg(this.target, GetUnitMagicDmg(this.target) + (this.magicDmgBonus * multiplier))
+            call SetUnitCustomState(this.target, BONUS_BLOCK, GetUnitCustomState(this.target, BONUS_BLOCK) + (this.blockBonus * multiplier))
+            call SetUnitCustomState(this.target, BONUS_MAGICRES, GetUnitCustomState(this.target, BONUS_MAGICRES) + (this.magicDefBonus * multiplier))
+            call SetUnitCustomState(this.target, BONUS_MAGICPOW, GetUnitCustomState(this.target, BONUS_MAGICPOW) + (this.magicDmgBonus * multiplier))
             call BlzSetUnitBaseDamage(this.target, BlzGetUnitBaseDamage(this.target, 0) + R2I(this.dmgBonus * multiplier), 0)
         endmethod
 
@@ -57,11 +57,11 @@ library MidasTouch initializer init requires DummyOrder, RandomShit
             //call BJDebugMsg("hp: +" + I2S(this.hpBonus))
             set this.armorBonus = BlzGetUnitArmor(this.target) * MidasBonus
             //call BJDebugMsg("armor: +" + R2S(this.armorBonus))
-            set this.blockBonus = GetUnitBlock(this.target) * MidasBonus
+            set this.blockBonus = GetUnitCustomState(this.target, BONUS_BLOCK) * MidasBonus
             //call BJDebugMsg("block: +" + R2S(this.blockBonus))
-            set this.magicDefBonus = GetUnitMagicDef(this.target) * MidasBonus
+            set this.magicDefBonus = GetUnitCustomState(this.target, BONUS_MAGICRES) * MidasBonus
             //call BJDebugMsg("magicdef: +"  + R2S(this.magicDefBonus))
-            set this.magicDmgBonus = GetUnitMagicDmg(this.target) * MidasBonus
+            set this.magicDmgBonus = GetUnitCustomState(this.target, BONUS_MAGICPOW) * MidasBonus
             //call BJDebugMsg("magicdmg: +" + R2S(this.magicDmgBonus))
             set this.dmgBonus = R2I(BlzGetUnitBaseDamage(this.target, 0) * MidasBonus)
             //call BJDebugMsg("dmg: +" + I2S(this.dmgBonus))

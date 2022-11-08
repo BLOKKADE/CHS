@@ -7,9 +7,9 @@ library CarrionBeetle requires CustomState, SpellFormula
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + (totalLevel / 2))), 0)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 10 * totalLevel)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 400)
-        call AddUnitBlock(u, GetSpellValue(100, 10, abilityLevel) + (summonLevel * 200))
-        call AddUnitMagicDef(u,totalLevel * 2)
-        call AddUnitEvasion(u,totalLevel * 2)
+        call AddUnitCustomState(u, BONUS_BLOCK, GetSpellValue(100, 10, abilityLevel) + (summonLevel * 200))
+        call AddUnitCustomState(u, BONUS_MAGICRES,totalLevel * 2)
+        call AddUnitCustomState(u, BONUS_EVASION,totalLevel * 2)
 
         call UnitAddAbility(u, CARBEE_SPIKED_CARAP_ABILITY_ID)
         call SetUnitAbilityLevel(u, CARBEE_SPIKED_CARAP_ABILITY_ID, IMinBJ(R2I(totalLevel / 2), 30))

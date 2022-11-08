@@ -10,7 +10,7 @@ scope LethalDamage initializer init
 
         //Skeleton Battlemaster (Black Arrow)
         set i = GetUnitAbilityLevel(DamageTargetHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
-        if i > 0 and GetUnitAbilityLevel(DamageTarget, 'A0AX') > 0 and GetRandomInt(1,100) < (i + 10) * GetUnitLuck(DamageTargetHero) then
+        if i > 0 and GetUnitAbilityLevel(DamageTarget, 'A0AX') > 0 and GetRandomInt(1,100) < (i + 10) * GetUnitCustomState(DamageTargetHero, BONUS_LUCK) then
             set udg_LethalDamageHP = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE)
             return
         endif

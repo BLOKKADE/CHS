@@ -18,35 +18,35 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if abilId == EVASION_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            call AddUnitEvasion(u ,   2 * I2R(i1 - i2)  )	
+            call AddUnitCustomState(u , BONUS_EVASION,   2 * I2R(i1 - i2)  )	
             call SaveInteger(HT,hid, abilId,i1)
         endif
 
         if abilId == DRUNKEN_MASTER_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            call AddUnitEvasion(u ,   1.5 * I2R(i1 - i2)  )	
+            call AddUnitCustomState(u , BONUS_EVASION,   1.5 * I2R(i1 - i2)  )	
             call SaveInteger(HT,hid, abilId,i1)
         endif 
 
         if abilId == HARDENED_SKIN_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            call AddUnitBlock(u ,   50 * I2R(i1 - i2)  )	
+            call AddUnitCustomState(u , BONUS_BLOCK,   50 * I2R(i1 - i2)  )	
             call SaveInteger(HT,hid, abilId,i1)
         endif 
 
         if abilId == FIRE_SHIELD_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            call AddUnitMagicDef(u ,   3 * I2R(i1 - i2)  )	
+            call AddUnitCustomState(u , BONUS_MAGICRES,   3 * I2R(i1 - i2)  )	
             call SaveInteger(HT,hid, abilId,i1)
         endif 
 
         if abilId == MEGA_LUCK_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u,abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            call AddUnitLuck(u ,   0.01 * I2R(i1 - i2)  )	
+            call AddUnitCustomState(u , BONUS_LUCK,   0.01 * I2R(i1 - i2)  )	
             call SaveInteger(HT,hid, abilId,i1)
         endif 
 
@@ -57,7 +57,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         if abilId == DEMOLISH_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT,hid, abilId) 
-            call AddUnitPhysPow(u, 3 * I2R(i1 - i2))
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 3 * I2R(i1 - i2))
             call SaveInteger(HT,hid, abilId,i1)
         endif
 
@@ -195,7 +195,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         set i1 = LoadInteger(HT,GetHandleId(u),54001)
         if i1 != 0 then 
             call BlzSetUnitArmor(u,BlzGetUnitArmor(u)- i1)
-            call AddUnitBlock(u,- i1)
+            call AddUnitCustomState(u, BONUS_BLOCK,- i1)
             call SaveInteger(HT,GetHandleId(u),54001,0)
         endif
 
@@ -208,7 +208,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
 
         set r1 = LoadReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID)
         if r1 != 0 then 
-            call AddUnitBlock(u, -r1)
+            call AddUnitCustomState(u, BONUS_BLOCK, -r1)
             call SaveReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID,0)
         endif
 
@@ -231,7 +231,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
         //Obsidian Armor
         set i1 = GetValidEndOfRoundItems(u,'I07H') 
         if i1 > 0 then
-            call AddUnitBlock(u,20 * i1)
+            call AddUnitCustomState(u, BONUS_BLOCK,20 * i1)
         endif
 
         //Leather Armor
@@ -255,7 +255,7 @@ library Functions requires RandomShit, ExtradimensionalCooperation, EndOfRoundIt
          //Golden Armor
          set i1 = GetValidEndOfRoundItems(u,'I0C1') 
          if i1 > 0 then
-             call AddUnitMagicDef(u,1 * i1)
+             call AddUnitCustomState(u, BONUS_MAGICRES,1 * i1)
          endif
 
         //Extra-dimensional Cooperation

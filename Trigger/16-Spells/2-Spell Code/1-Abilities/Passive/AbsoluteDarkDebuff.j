@@ -18,9 +18,9 @@ library AbsoluteDarkDebuff initializer init requires RandomShit, UnitHelpers
         local timer t = GetExpiredTimer()
         local AbsoluteDarkDebuf a = LoadInteger(HT, GetHandleId(t), 1)
         set a.power = 0
-        call AddUnitBlock(a.u, a.block)
+        call AddUnitCustomState(a.u, BONUS_BLOCK, a.block)
         set a.block = 0
-        call AddUnitMagicDef(a.u, a.magick)
+        call AddUnitCustomState(a.u, BONUS_MAGICRES, a.magick)
         set a.magick = 0
         call BlzSetUnitArmor(a.u, BlzGetUnitArmor(a.u) +a.armor)
         set a.armor = 0
@@ -54,10 +54,10 @@ library AbsoluteDarkDebuff initializer init requires RandomShit, UnitHelpers
                 call SaveInteger(HT, GetHandleId(a.t), 1, a)
 
                 set a.block = 5*bonus
-                call AddUnitBlock(u2, -a.block)
+                call AddUnitCustomState(u2, BONUS_BLOCK, -a.block)
 
                 set a.magick = 0.2 * bonus
-                call AddUnitMagicDef(u2, -a.magick)
+                call AddUnitCustomState(u2, BONUS_MAGICRES, -a.magick)
 
                 set a.armor = bonus
                 call BlzSetUnitArmor(u2, BlzGetUnitArmor(u2) - a.armor)

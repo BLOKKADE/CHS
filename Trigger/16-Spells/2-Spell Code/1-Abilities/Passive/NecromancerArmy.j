@@ -44,10 +44,10 @@ library NecromancerArmy initializer init requires CustomState
             call BlzSetUnitArmor(summon, BlzGetUnitArmor(dyingUnit))
             call BlzSetUnitAttackCooldown(summon, BlzGetUnitAttackCooldown(dyingUnit, 0), 0)
 
-            call AddUnitMagicDmg(summon, GetUnitMagicDmg(dyingUnit))
-            call AddUnitMagicDef(summon, GetUnitMagicDef(dyingUnit) - (10 * SummonWildDefense[pid]))
-            call AddUnitEvasion(summon, GetUnitEvasion(dyingUnit) - (1 * SummonWildDefense[pid]))
-            call AddUnitBlock(summon, GetUnitBlock(dyingUnit) - (10 * SummonWildDefense[pid]))
+            call AddUnitCustomState(summon, BONUS_MAGICPOW, GetUnitCustomState(dyingUnit, BONUS_MAGICPOW))
+            call AddUnitCustomState(summon, BONUS_MAGICRES, GetUnitCustomState(dyingUnit, BONUS_MAGICRES) - (10 * SummonWildDefense[pid]))
+            call AddUnitCustomState(summon, BONUS_EVASION, GetUnitCustomState(dyingUnit, BONUS_EVASION) - (1 * SummonWildDefense[pid]))
+            call AddUnitCustomState(summon, BONUS_BLOCK, GetUnitCustomState(dyingUnit, BONUS_BLOCK) - (10 * SummonWildDefense[pid]))
         endif
 
         set summon = null

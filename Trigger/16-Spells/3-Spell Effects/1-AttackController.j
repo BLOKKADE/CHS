@@ -5,7 +5,7 @@ scope AttackController initializer init
         local unit u = LoadUnitHandle(HT,i,1)
         local integer bonus = LoadInteger(HT,i,2)
         
-        call AddUnitEvasion(u,- bonus)
+        call AddUnitCustomState(u, BONUS_EVASION,- bonus)
         call UnitRemoveAbility(u, 'A08D')
         call UnitRemoveAbility(u, 'B01F')
         call ReleaseTimer(t)
@@ -39,7 +39,7 @@ scope AttackController initializer init
         local unit u = GetTriggerUnit()
         local unit u2 = GetAttacker()
         local unit attackerHero = PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer( u2  )  )]
-        local real luck = GetUnitLuck(u)
+        local real luck = GetUnitCustomState(u, BONUS_LUCK)
         
         
         
@@ -105,7 +105,7 @@ scope AttackController initializer init
             
             call SaveUnitHandle(HT,GetHandleId(t),1,u)
             call SaveInteger(HT,GetHandleId(t),2,i1* 10)
-            call AddUnitEvasion(u,10 * i1)
+            call AddUnitCustomState(u, BONUS_EVASION,10 * i1)
             call AbilStartCD(u,REACTION_ABILITY_ID,8)
             call UnitAddAbility(u, 'A08D')
             call TimerStart(t,2.5,false,function EndEvasionTimer )

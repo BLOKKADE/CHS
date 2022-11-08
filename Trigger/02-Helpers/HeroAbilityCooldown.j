@@ -35,7 +35,7 @@ library HeroAbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObje
     endfunction
 
     function CalculateCooldown takes unit u, integer id, real cd, boolean active returns real
-        local real luck = GetUnitLuck(u)
+        local real luck = GetUnitCustomState(u, BONUS_LUCK)
         local real xesilChance = - 1
         local real time = cd
         local real ResCD = 1

@@ -12,7 +12,7 @@ library ThunderWitch initializer init requires ElementalAbility, RandomShit
         call dummy.setAbilityRealField('A036', ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, (30 + GetHeroLevel(u) * 30))
         //call BJDebugMsg("targets:" + I2S(ThunderBoltTargets[hid]))
         call dummy.setAbilityIntegerField('A036', ABILITY_ILF_MAXIMUM_NUMBER_OF_TARGETS_EFK3, ThunderBoltTargets[hid])
-        call AddUnitMagicDmg(dummy.dummy, GetUnitMagicDmg(u))
+        call AddUnitCustomState(dummy.dummy, BONUS_MAGICPOW, GetUnitCustomState(u, BONUS_MAGICPOW))
         call dummy.instant().activate()
         call AbilStartCD(u, 'A08P', 1)
     endfunction

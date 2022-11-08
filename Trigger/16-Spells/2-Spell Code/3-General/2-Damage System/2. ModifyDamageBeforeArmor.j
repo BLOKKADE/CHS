@@ -121,7 +121,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Evasion & miss TODO: clean this up
-        if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemType(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and (GetUnitEvasion(DamageTarget) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitMissChance(DamageSource) > 0) then
+        if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemType(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and (GetUnitCustomState(DamageTarget, BONUS_EVASION) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitCustomState(DamageSource, BONUS_MISSCHANCE) > 0) then
             call Evade()
             
             if Damage.index.damage == 0 then
@@ -394,7 +394,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Pvp Bonus
         if DamageTargetPid != 11 and DamageSourcePid != 11 then
-            set Damage.index.damage = RMaxBJ(Damage.index.damage+  (Damage.index.damage*(GetUnitPvpBonus(DamageSource)- GetUnitPvpBonus(DamageTarget)  )/ 100), 0)
+            set Damage.index.damage = RMaxBJ(Damage.index.damage+  (Damage.index.damage*(GetUnitCustomState(DamageSource, BONUS_PVP)- GetUnitCustomState(DamageTarget, BONUS_PVP)  )/ 100), 0)
         endif 
 
         if Damage.index.damage <= 0 then
@@ -431,13 +431,13 @@ scope ModifyDamageBeforeArmor initializer init
         //Destroy block
         if GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID) <= 0 and not IsOnHitDamage() then
             set r1 =  -10 * GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)
-            if (GetUnitBlock(DamageTarget) < 0) then
+            if (GetUnitCustomState(DamageTarget, BONUS_BLOCK) < 0) then
                 set r1 = r1 * 0.5
             endif
-            call AddUnitBlock(DamageTarget, r1)
+            call AddUnitCustomState(DamageTarget, BONUS_BLOCK, r1)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
             if IsHeroUnitId(DamageTargetTypeId) then
-                call AddUnitBlock(DamageSource, r1/2)
+                call AddUnitCustomState(DamageSource, BONUS_BLOCK, r1/2)
                 call SaveReal(HT, DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID,  LoadReal(HT,DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID)  + r1)
                 call SaveReal(HT, DamageSourceId, DESTRUCTION_BLOCK_ABILITY_ID,  LoadReal(HT,DamageSourceId, DESTRUCTION_BLOCK_ABILITY_ID)  + r1/2)
                 call AbilStartCD(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID, 12) 
@@ -487,8 +487,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif*/
 
         //Ogre Warrior Stomp block ignore
-        if DamageSourceAbility == 'A047' and GetUnitBlock(DamageTarget) > 0 then
-            call TempBonus.create(DamageTarget, BONUS_BLOCK,0 - GetUnitBlock(DamageTarget) * 0.2, 1, 'A047')
+        if DamageSourceAbility == 'A047' and GetUnitCustomState(DamageTarget, BONUS_BLOCK) > 0 then
+            call TempBonus.create(DamageTarget, BONUS_BLOCK,0 - GetUnitCustomState(DamageTarget, BONUS_BLOCK) * 0.2, 1, 'A047')
         endif
 
         //Fan of Knives
@@ -535,9 +535,9 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         /*//Pit Lord Magic power for phys
-        if GetUnitTypeId(DamageSource) == PIT_LORD_UNIT_ID and IsPhysDamage() and (DamageSourceMagicPower != 1 or GetUnitMagicDmg(DamageSource) > 0) then
+        if GetUnitTypeId(DamageSource) == PIT_LORD_UNIT_ID and IsPhysDamage() and (DamageSourceMagicPower != 1 or GetUnitCustomState(DamageSource, BONUS_MAGICPOW) > 0) then
             set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(DamageSource, Element_Water), 0)
-            set Damage.index.damage = Damage.index.damage* ((DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100) * r1))
+            set Damage.index.damage = Damage.index.damage* ((DamageSourceMagicPower + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)/ 100) * r1))
         endif   */
 
         //Cold Arrow
@@ -609,7 +609,7 @@ scope ModifyDamageBeforeArmor initializer init
             call AbilStartCD(DamageTarget, 'A0AH', 1)
             call ElementStartAbility(DamageTarget, ROCK_GOLEM_UNIT_ID)
             call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
-            call AreaDamagePhys(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitBlock(DamageTarget) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, ROCK_GOLEM_UNIT_ID)
+            call AreaDamagePhys(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitCustomState(DamageTarget, BONUS_BLOCK) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, ROCK_GOLEM_UNIT_ID)
         endif
 
         //Spirit Link
@@ -619,7 +619,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Physical Power
         if IsPhysDamage() then
-            set DamageSourcePhysPower = DamageSourcePhysPower + GetUnitPhysPow(DamageSource)
+            set DamageSourcePhysPower = DamageSourcePhysPower + GetUnitCustomState(DamageSource, BONUS_PHYSPOW)
             if DamageSourcePhysPower != 0 then
                 set Damage.index.damage = Damage.index.damage * (1 + (DamageSourcePhysPower * 0.01))
             endif
@@ -647,15 +647,15 @@ scope ModifyDamageBeforeArmor initializer init
 
         if IsMagicDamage() then 
             //Magic Power
-            if DamageSourceMagicPower != 1 or GetUnitMagicDmg(DamageSource) > 0 then
-                set Damage.index.damage =   Damage.index.damage*(DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100 )
-                //call BJDebugMsg("src: " + GetUnitName(DamageSource) + "dmg: " + R2S(Damage.index.damage) + "magic pow: " + R2S((DamageSourceMagicPower + GetUnitMagicDmg(DamageSource)/ 100 )))
+            if DamageSourceMagicPower != 1 or GetUnitCustomState(DamageSource, BONUS_MAGICPOW) > 0 then
+                set Damage.index.damage =   Damage.index.damage*(DamageSourceMagicPower + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)/ 100 )
+                //call BJDebugMsg("src: " + GetUnitName(DamageSource) + "dmg: " + R2S(Damage.index.damage) + "magic pow: " + R2S((DamageSourceMagicPower + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)/ 100 )))
             endif   
         endif
 
         //Block
-        if GetUnitBlock(DamageTarget) != 0 and (not DamageIsTrue) then	
-            set blockDamage = GetUnitBlock(DamageTarget)
+        if GetUnitCustomState(DamageTarget, BONUS_BLOCK) != 0 and (not DamageIsTrue) then	
+            set blockDamage = GetUnitCustomState(DamageTarget, BONUS_BLOCK)
 
             
             if DamageIsSuddenDeath then
@@ -672,7 +672,7 @@ scope ModifyDamageBeforeArmor initializer init
                 set blockDamage = blockDamage * 0.7
             endif
 
-            //call BJDebugMsg(GetUnitName(DamageTarget) + ", block:  " + R2S(GetUnitBlock(DamageTarget)) + ", calc: " + R2S(blockDamage))
+            //call BJDebugMsg(GetUnitName(DamageTarget) + ", block:  " + R2S(GetUnitCustomState(DamageTarget, BONUS_BLOCK)) + ", calc: " + R2S(blockDamage))
             //Absolute Dark
             set i1 = GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_DARK_ABILITY_ID)
             //if i1 > 0 and GetUnitAbilityLevel(DamageSourceHero, NULL_VOID_ORB_BUFF_ID) == 0 then
@@ -724,8 +724,8 @@ scope ModifyDamageBeforeArmor initializer init
             if IsPhysDamage() and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, LIQUID_FIRE_ABILITY_ID) == 0 then
 
                 call SetBuff(DamageTarget,3,3)
-                //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitMagicDmg(DamageSource)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitMagicDmg(DamageSource)* 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1)
+                //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitCustomState(DamageSource, BONUS_MAGICPOW)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
+                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)* 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1)
             endif
 
             //Envenomed Weapons heroes
@@ -775,7 +775,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Magic Resistance
-        if IsMagicDamage() and GetUnitMagicDef(DamageTarget) > 0 then 
+        if IsMagicDamage() and GetUnitCustomState(DamageTarget, BONUS_MAGICRES) > 0 then 
 
             //Fatal Flaw
             set i1 = GetUnitAbilityLevel(DamageSource,FATAL_FLA_ABILITY_ID)
@@ -785,7 +785,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
 
             //call BJDebugMsg("magic dmg pre prot: " + R2S(Damage.index.damage))
-            set Damage.index.damage =   Damage.index.damage*( 50 /(50 + (GetUnitMagicDef(DamageTarget) * DamageTargetMagicRes)) )
+            set Damage.index.damage =   Damage.index.damage*( 50 /(50 + (GetUnitCustomState(DamageTarget, BONUS_MAGICRES) * DamageTargetMagicRes)) )
             //call BJDebugMsg("magic dmg post prot: " + R2S(Damage.index.damage))
         endif
         //call BJDebugMsg("MOD1.1 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))

@@ -298,7 +298,7 @@ scope ModifyDamageAfterArmor initializer init
             endif
 
             if IsMagicDamage() then
-                set r2 = 1 + (GetUnitMagicDef(DamageTarget) * 0.01)
+                set r2 = 1 + (GetUnitCustomState(DamageTarget, BONUS_MAGICRES) * 0.01)
             endif
         else
             set r2 = 1
@@ -312,7 +312,7 @@ scope ModifyDamageAfterArmor initializer init
                     set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
                     if i > 0 and GetRandomReal(0, 100) <= 20 * DamageSourceLuck then
                         call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
-                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitBlock(DamageSource)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID)
+                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID)
                     endif
 
                     //Destruction

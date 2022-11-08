@@ -850,7 +850,7 @@ endfunction
 
 
 function Trig_Corrosive_Skin_Actions takes nothing returns nothing
-    local real luck = GetUnitLuck(GetTriggerUnit())
+    local real luck = GetUnitCustomState(GetTriggerUnit(), BONUS_LUCK)
     local real bonus
     if GetRandomReal(0,100) <= 35 * luck then
         set bonus = PoisonBonus[GetHandleId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetAttackedUnitBJ()))])]
@@ -1148,7 +1148,7 @@ library Pillage requires RandomShit
         local unit Gku = PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]
         local player OwningUnit = GetOwningPlayer(Gku)     
         local integer pid = GetPlayerId(OwningUnit)
-        local real luck = GetUnitLuck(Gku)
+        local real luck = GetUnitCustomState(Gku, BONUS_LUCK)
         local integer itemCount = 0
 
 
@@ -5479,7 +5479,6 @@ function Trig_Add_Unit_Abilities_Actions takes nothing returns nothing
         call DoNothing()
     endif
     if(Trig_Add_Unit_Abilities_Func003001())then
-        call AddUnitEvasion (GetLastCreatedUnit(),20) 
         //	call UnitAddAbilityBJ('ACev',GetLastCreatedUnit())
     else
         call DoNothing()
@@ -6966,15 +6965,15 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
 
                 call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0) + damageBonus,0)
 
-                call AddUnitMagicDmg(GetLastCreatedUnit(), magicPowerBonus)
-                call AddUnitMagicDef(GetLastCreatedUnit(), magicDefBonus)
-                call AddUnitEvasion(GetLastCreatedUnit(), evasionBonus)	
-                call AddUnitBlock(GetLastCreatedUnit(), blockBonus)			
+                call AddUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICPOW, magicPowerBonus)
+                call AddUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus)
+                call AddUnitCustomState(GetLastCreatedUnit(), BONUS_EVASION, evasionBonus)	
+                call AddUnitCustomState(GetLastCreatedUnit(), BONUS_BLOCK, blockBonus)			
 
 
 
 
-                call AddUnitMagicDef(GetLastCreatedUnit(),0.25 *(RoundNumber))
+                call AddUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES,0.25 *(RoundNumber))
                 if RoundNumber < 3 then
                     call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)- 3,0)
 
@@ -7073,17 +7072,17 @@ function Trig_Generate_Next_Level_Actions takes nothing returns nothing
                     if BonusNeutral == 0 and BonusNeutralPlayer[udg_integer40 - 1] == 0 then
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1)) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) ) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1)) + "|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitBlock(GetLastCreatedUnit()))) + "|n"
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitMagicDmg(GetLastCreatedUnit()))) + "|n"
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitMagicDef(GetLastCreatedUnit()))) + "|n"
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitEvasion(GetLastCreatedUnit())))
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_BLOCK))) + "|n"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICPOW))) + "|n"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES))) + "|n"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_EVASION)))
                     else
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1) - damageBonus) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1) - damageBonus )) + " + |cfff19bb8" + I2S(R2I(damageBonus)) + "|r|n"
                         set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitBlock(GetLastCreatedUnit()) - blockBonus)) + " + |cff78729e" + I2S(R2I(blockBonus)) + "|r|n"
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitMagicDmg(GetLastCreatedUnit()) - magicPowerBonus)) + "+ |cff9bc7f1" + I2S(R2I(magicPowerBonus)) + "|r|n"
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitMagicDef(GetLastCreatedUnit()) - magicDefBonus)) + " + |cff9bf1a9" + I2S(R2I(magicDefBonus)) + "|r|n"
-                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitEvasion(GetLastCreatedUnit()) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_BLOCK) - blockBonus)) + " + |cff78729e" + I2S(R2I(blockBonus)) + "|r|n"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICPOW) - magicPowerBonus)) + "+ |cff9bc7f1" + I2S(R2I(magicPowerBonus)) + "|r|n"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES) - magicDefBonus)) + " + |cff9bf1a9" + I2S(R2I(magicDefBonus)) + "|r|n"
+                        set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_EVASION) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r"
                     endif
                     //call BJDebugMsg("e")
                     set s = s + RoundAbilities

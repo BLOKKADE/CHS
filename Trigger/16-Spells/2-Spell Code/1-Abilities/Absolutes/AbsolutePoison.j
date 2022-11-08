@@ -84,7 +84,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
                 //call BJDebugMsg("ap old: " + R2S(this.reduction) + " new: " + R2S(currentBonus))
                 //call BJDebugMsg("absolute poison: " + I2S(GetHandleId(this.target)) + " : " + GetUnitName(this.target))
                 //call BJDebugMsg("old red:" + R2S(this.reduction) + " new red: " + R2S(currentBonus))
-                call AddUnitNegativeHpRegen(this.target, 0 - this.reduction + currentBonus)
+                call AddUnitCustomState(this.target, BONUS_NEGATIVEHPREGEN, 0 - this.reduction + currentBonus)
                 //call AddUnitBonusReal(this.target, BONUS_HEALTH_REGEN, this.reduction)
                 //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
                 set this.reduction = currentBonus
@@ -114,7 +114,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
         method destroy takes nothing returns nothing
             set AbsolutePoisonTable[GetHandleId(this.target)] = 0
             //call BJDebugMsg("abs psn disable: " + GetUnitName(this.target))
-            call AddUnitNegativeHpRegen(this.target, 0 - this.reduction)
+            call AddUnitCustomState(this.target, BONUS_NEGATIVEHPREGEN, 0 - this.reduction)
             //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
             set this.target = null
             set this.source = null

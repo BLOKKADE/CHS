@@ -6,6 +6,6 @@ library HpRegen requires NewBonus
 
     //cannot be lower than 0
     function GetUnitTotalHpRegen takes unit u returns real
-        return RMaxBJ(GetUnitPositiveHpRegen(u) - GetUnitNegativeHpRegen(u), 0)
+        return RMaxBJ(GetUnitPositiveHpRegen(u) - GetUnitCustomState(u, BONUS_NEGATIVEHPREGEN), 0)
     endfunction
 endlibrary

@@ -38,18 +38,15 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
     function SetRunePower takes item it, real value returns nothing
         call SaveReal(HT,GetHandleId(it),2, value)
     endfunction
-    
-    function GetUnitPowerRune takes unit u returns real
-        return LoadReal(HT_unitstate,GetHandleId(u),6)
-    endfunction
+
 
     function CreateRune takes item rune, real power, real x, real y, unit owner, integer id returns item
         local player p = GetOwningPlayer(owner)
         local integer pid = GetPlayerId(p)
         set rune = CreateItem( Runes[id], x, y)
         set RuneIndex[GetHandleId(rune)] = pid
-        //call BJDebugMsg("rune: " + R2S(power) + "source: " + R2S(GetUnitPowerRune(owner)) + " lvl: " + I2S(GetHeroLevel(owner)) + " id: " + I2S(RuneIndex[GetHandleId(rune)]))
-        call SetRunePower(rune, power + GetUnitPowerRune(owner) + GetHeroLevel(owner))
+        //call BJDebugMsg("rune: " + R2S(power) + "source: " + R2S(GetUnitCustomState(u, BONUS_RUNEPOW)(owner)) + " lvl: " + I2S(GetHeroLevel(owner)) + " id: " + I2S(RuneIndex[GetHandleId(rune)]))
+        call SetRunePower(rune, power + GetUnitCustomState(owner, BONUS_RUNEPOW) + GetHeroLevel(owner))
         if GetLocalPlayer() != p then
             call BlzSetItemSkin(rune,'I06F')
         endif

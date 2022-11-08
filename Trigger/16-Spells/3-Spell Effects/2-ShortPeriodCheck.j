@@ -133,7 +133,7 @@ scope ShortPeriodCheck initializer init
                 if i1 > 0 or i2 != 0 then
                     set i1 = R2I(GetHeroStr(u, true) * 0.25) * i1
                     if i1 != i2 then
-                        call AddUnitBlock(u, i1 - i2)
+                        call AddUnitCustomState(u, BONUS_BLOCK, i1 - i2)
                         call SaveInteger(HT, hid, 'A05T', i1)	
                     endif
                 endif
@@ -171,8 +171,8 @@ scope ShortPeriodCheck initializer init
                     set i1 = R2I((i1 - ModuloInteger(i1, 30)) / 30)
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
-                        call AddUnitMagicDmg(u, 0 - i2)
-                        call AddUnitMagicDmg(u, i1)
+                        call AddUnitCustomState(u, BONUS_MAGICPOW, 0 - i2)
+                        call AddUnitCustomState(u, BONUS_MAGICPOW, i1)
                         call SaveInteger(DataUnitHT, hid, 542, i1)
                     endif
 
@@ -241,10 +241,10 @@ scope ShortPeriodCheck initializer init
                     //Rock Golem
                 elseif uid == ROCK_GOLEM_UNIT_ID then
                     set i1 = LoadInteger(DataUnitHT,hid,542)
-                    set i2 = R2I((GetUnitBlock(u) - i1) * (0.01 * GetHeroLevel(u)))
+                    set i2 = R2I((GetUnitCustomState(u, BONUS_BLOCK) - i1) * (0.01 * GetHeroLevel(u)))
                     if i1 != i2 then
-                        call AddUnitBlock(u, 0 - i1)
-                        call AddUnitBlock(u, i2)
+                        call AddUnitCustomState(u, BONUS_BLOCK, 0 - i1)
+                        call AddUnitCustomState(u, BONUS_BLOCK, i2)
                         call SaveInteger(DataUnitHT, hid, 542, i2)
                     endif
                 

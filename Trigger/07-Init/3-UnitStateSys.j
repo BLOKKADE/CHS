@@ -19,10 +19,6 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         call SetUnitAbilityLevel(u, abilId, level)
     endfunction
 
-    function ResetSummonStats takes unit u returns nothing
-        call FlushChildHashtable(HT_unitstate, GetHandleId(u))
-    endfunction
-
     function SummonUnit takes unit u returns nothing
         local integer i = GetUnitTypeId(u)
         local integer i2 = 0
@@ -30,11 +26,11 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         local unit hero = PlayerHeroes[pid + 1]
         local integer UpgradeU = 15 * GetUnitITemTypeCount(hero,'I07K')
-        local real wild = 1 + GetUnitSummonStronger(hero)/ 100
+        local real wild = 1 + GetUnitCustomState(hero, BONUS_SUMMONPOW)/ 100
         local real r1
 
         //Prevent super summons?
-        call ResetSummonStats(u)
+        call ResetUnitCustomState(u)
 
         //Beastmaster
         if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
@@ -43,19 +39,19 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Mortar Team
         if GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitPhysPow(u, 2 * GetHeroLevel(hero))  
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 2 * GetHeroLevel(hero))  
         endif
 
         //Druid of the Claw
         if GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
             set r1 = GetHeroLevel(hero) * 0.01
-            call AddUnitMagicDmg(u, (GetUnitMagicDmg(hero) * r1))
-            call AddUnitMagicDef(u, (GetUnitMagicDef(hero) * r1))
+            call AddUnitCustomState(u, BONUS_MAGICPOW, (GetUnitCustomState(hero, BONUS_MAGICPOW) * r1))
+            call AddUnitCustomState(u, BONUS_MAGICRES, (GetUnitCustomState(hero, BONUS_MAGICRES) * r1))
             call AddUnitBonus(u, BONUS_DAMAGE, R2I((GetUnitDamage(hero, 0) * r1)))
             call AddUnitBonus(u, BONUS_ARMOR, R2I((BlzGetUnitArmor(hero) * r1)))
         endif
 
-        call AddUnitPvpBonus(u, GetUnitPvpBonus(hero))
+        call AddUnitCustomState(u, BONUS_PVP, GetUnitCustomState(hero, BONUS_PVP))
 
         if SUMMONS.contains(i) then
             set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(i)) + UpgradeU
@@ -119,9 +115,9 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
          //Wild Defense
          set i2 = GetUnitAbilityLevel(hero, WILD_DEFENSE_ABILITY_ID)
          if i2 > 0 then
-            call AddUnitMagicDef(u,3 * i2)
-            call AddUnitEvasion(u,0.5 * i2)
-            call AddUnitBlock(u,10 * i2)
+            call AddUnitCustomState(u, BONUS_MAGICRES,3 * i2)
+            call AddUnitCustomState(u, BONUS_EVASION,0.5 * i2)
+            call AddUnitCustomState(u, BONUS_BLOCK,10 * i2)
             call AddSummonAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID, i2)
         endif
 
@@ -215,13 +211,13 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Rock Golem
         if GetUnitTypeId(u) == ROCK_GOLEM_UNIT_ID then
-            call AddUnitBlock(u,50)
-            call AddUnitMagicDef(u,15)
+            call AddUnitCustomState(u, BONUS_BLOCK,50)
+            call AddUnitCustomState(u, BONUS_MAGICRES,15)
         endif
 
         //Medivh
         if GetUnitTypeId(u) == MEDIVH_UNIT_ID then
-            call AddUnitMagicDmg(u,15)
+            call AddUnitCustomState(u, BONUS_MAGICPOW,15)
         endif
 
         //Pit Lord
@@ -253,7 +249,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Satyr Trickster
         if GetUnitTypeId(u) == SATYR_TRICKSTER_UNIT_ID then
-            call AddUnitEvasion(u,10)
+            call AddUnitCustomState(u, BONUS_EVASION,10)
         endif
 
         //Witch Doctor
@@ -274,7 +270,7 @@ library UnitStateSys initializer init requires RandomShit, Functions, SummonSpel
 
         //Mortar Team
         if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitPhysPow(u, 2)  
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 2)  
         endif
 
         //Summons

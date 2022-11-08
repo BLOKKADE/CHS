@@ -26,7 +26,7 @@ library SpiritTauren initializer init requires IdLibrary, RandomShit
         local integer hid = GetHandleId(u)
 
         if bonus != SpiritTaurenBonus.real[hid] then
-            call AddUnitPowerRune(u, bonus - SpiritTaurenBonus.real[hid])
+            call AddUnitCustomState(u, BONUS_RUNEPOW, bonus - SpiritTaurenBonus.real[hid])
             set SpiritTaurenBonus.real[hid] = bonus
         endif
     endfunction

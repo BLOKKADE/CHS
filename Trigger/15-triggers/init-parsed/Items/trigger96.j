@@ -21,7 +21,7 @@
 
     function Trig_Volcanic_Armor_Actions takes nothing returns nothing
         set RoundCreepAbilCastChance = GetRandomInt(1,100)
-        if RoundCreepAbilCastChance < 15 * GetUnitLuck(GetTriggerUnit()) then
+        if RoundCreepAbilCastChance < 15 * GetUnitCustomState(GetTriggerUnit(), BONUS_LUCK) then
             call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(GetTriggerUnit()),bj_UNIT_FACING)
             call UnitApplyTimedLifeBJ(5.00,'BTLF',GetLastCreatedUnit())
             call UnitAddAbilityBJ('A015',GetLastCreatedUnit())

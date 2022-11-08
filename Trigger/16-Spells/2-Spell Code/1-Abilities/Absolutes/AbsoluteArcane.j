@@ -24,9 +24,9 @@ library AbsoluteArcane requires CustomState, DivineBubble
             else
                 set this.bonus = 0.05 * GetUnitElementCount(this.source, Element_Arcane)
             endif
-            if GetUnitMagicDmg(this.target) - this.bonus > 0 then
-                call AddUnitMagicDmg(this.source, this.bonus)
-                call AddUnitMagicDmg(this.target, 0 - this.bonus)
+            if GetUnitCustomState(this.target, BONUS_MAGICPOW) - this.bonus > 0 then
+                call AddUnitCustomState(this.source, BONUS_MAGICPOW, this.bonus)
+                call AddUnitCustomState(this.target, BONUS_MAGICPOW, 0 - this.bonus)
             else
                 set this.bonus = 0
             endif
@@ -37,8 +37,8 @@ library AbsoluteArcane requires CustomState, DivineBubble
         endmethod
         
         method destroy takes nothing returns nothing
-            call AddUnitMagicDmg(this.source, 0 - this.bonus)
-            call AddUnitMagicDmg(this.target, this.bonus)
+            call AddUnitCustomState(this.source, BONUS_MAGICPOW, 0 - this.bonus)
+            call AddUnitCustomState(this.target, BONUS_MAGICPOW, this.bonus)
             set this.source = null
             set this.target = null
             call this.recycle()

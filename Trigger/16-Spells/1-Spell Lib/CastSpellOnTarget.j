@@ -9,7 +9,7 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
         call dummy.setAbilityRealField(abilId, ABILITY_RLF_CAST_RANGE, 99999)
 
         if RuneOfChaosMagicPower.real[pid] != 0 then
-            call AddUnitMagicDmg(dummy.dummy, RuneOfChaosMagicPower.real[pid])
+            call AddUnitCustomState(dummy.dummy, BONUS_MAGICPOW, RuneOfChaosMagicPower.real[pid])
         endif
 
         if orderType == Order_Instant then

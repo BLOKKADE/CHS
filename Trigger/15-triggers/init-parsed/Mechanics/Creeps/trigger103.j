@@ -427,70 +427,70 @@ library trigger103 initializer init requires RandomShit, Functions
     
                     call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0) + damageBonus,0)
     
-                    call SetUnitMagicDmg(GetLastCreatedUnit(), magicPowerBonus)
-                    call SetUnitEvasion(GetLastCreatedUnit(), evasionBonus)	
-                    call SetUnitBlock(GetLastCreatedUnit(), blockBonus + (1 *(RoundNumber)))
+                    call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICPOW, magicPowerBonus)
+                    call SetUnitCustomState(GetLastCreatedUnit(), BONUS_EVASION, evasionBonus)	
+                    call SetUnitCustomState(GetLastCreatedUnit(), BONUS_BLOCK, blockBonus + (1 *(RoundNumber)))
 
                     if wizardbaneDebug then
-                        call SetUnitMagicDmg(GetLastCreatedUnit(), 5000)
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICPOW, 5000)
                     endif
     
                     if RoundNumber < 3 then
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)- 3,0)
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.4 *(RoundNumber)))
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (0.4 *(RoundNumber)))
                     elseif RoundNumber < 8  then
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 1 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 3 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.5 *(RoundNumber)))
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (0.5 *(RoundNumber)))
                     elseif RoundNumber < 11  then
                         call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber / 3) 
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 2 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 8 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) ) 	
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.6 *(RoundNumber)))	
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (0.6 *(RoundNumber)))	
                     elseif RoundNumber < 19  then
                         call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 1) 
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 6 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 40 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )  
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.7 *(RoundNumber)))              	
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (0.7 *(RoundNumber)))              	
                     elseif RoundNumber < 24  then
                         call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 3) 
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 14 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 45 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )		    
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (0.8 *(RoundNumber)))
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (0.8 *(RoundNumber)))
                     elseif RoundNumber < 35  then
                         call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 5) 
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 55 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 75 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )				    
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (1. *(RoundNumber)))
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (1. *(RoundNumber)))
                     elseif RoundNumber < 41  then
                         call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 8) 
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 200 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 150 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )			
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (1.25 *(RoundNumber)))	    
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (1.25 *(RoundNumber)))	    
                     elseif RoundNumber < 45  then
                         call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 10) 
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 400 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 325 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (1.5 *(RoundNumber)))
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (1.5 *(RoundNumber)))
                     elseif RoundNumber < 49  then
                         call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 12) 
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 500 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 900 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	   
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (2 *(RoundNumber)))                              
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (2 *(RoundNumber)))                              
                     else
                         call BlzSetUnitArmor(GetLastCreatedUnit() , BlzGetUnitArmor(GetLastCreatedUnit()) + RoundNumber * 15) 
                         call BlzSetUnitBaseDamage(GetLastCreatedUnit(),BlzGetUnitBaseDamage(GetLastCreatedUnit(),0)+ 900 * RoundNumber,0)
                         call BlzSetUnitMaxHP(GetLastCreatedUnit(), BlzGetUnitMaxHP(GetLastCreatedUnit())+ 2500 * RoundNumber)
                         call SetWidgetLife(GetLastCreatedUnit(),BlzGetUnitMaxHP(GetLastCreatedUnit()) )	   
-                        call SetUnitMagicDef(GetLastCreatedUnit(), magicDefBonus + (2.5 *(RoundNumber)))          			    
+                        call SetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES, magicDefBonus + (2.5 *(RoundNumber)))          			    
                     endif
     
     
@@ -539,17 +539,17 @@ library trigger103 initializer init requires RandomShit, Functions
                         if BonusNeutral == 0 and BonusNeutralPlayer[udg_integer40 - 1] == 0 then
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1)) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) ) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1)) + "|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitBlock(GetLastCreatedUnit()))) + "|n"
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitMagicDmg(GetLastCreatedUnit()))) + "|n"
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitMagicDef(GetLastCreatedUnit()))) + "|n"
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitEvasion(GetLastCreatedUnit())))
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_BLOCK))) + "|n"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICPOW))) + "|n"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES))) + "|n"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_EVASION)))
                         else
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1) - damageBonus) + " - " + I2S(BlzGetUnitBaseDamage(GetLastCreatedUnit(), 0) + (BlzGetUnitDiceNumber(GetLastCreatedUnit(), 0) * BlzGetUnitDiceSides(GetLastCreatedUnit(), 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(GetLastCreatedUnit(), 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower)/ 2) - 1) - damageBonus )) + " + |cfff19bb8" + I2S(R2I(damageBonus)) + "|r|n"
                             set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(GetLastCreatedUnit()))) + "|n"
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitBlock(GetLastCreatedUnit()) - blockBonus)) + " + |cff78729e" + I2S(R2I(blockBonus)) + "|r|n"
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitMagicDmg(GetLastCreatedUnit()) - magicPowerBonus)) + "+ |cff9bc7f1" + I2S(R2I(magicPowerBonus)) + "|r|n"
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitMagicDef(GetLastCreatedUnit()) - magicDefBonus)) + " + |cff9bf1a9" + I2S(R2I(magicDefBonus)) + "|r|n"
-                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitEvasion(GetLastCreatedUnit()) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_BLOCK) - blockBonus)) + " + |cff78729e" + I2S(R2I(blockBonus)) + "|r|n"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICPOW) - magicPowerBonus)) + "+ |cff9bc7f1" + I2S(R2I(magicPowerBonus)) + "|r|n"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_MAGICRES) - magicDefBonus)) + " + |cff9bf1a9" + I2S(R2I(magicDefBonus)) + "|r|n"
+                            set RoundCreepInfo[udg_integer40 - 1] = RoundCreepInfo[udg_integer40 - 1] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitCustomState(GetLastCreatedUnit(), BONUS_EVASION) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r"
                         endif
                         //call BJDebugMsg("e")
                         set s = s + RoundAbilities

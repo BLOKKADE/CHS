@@ -7,9 +7,9 @@ library ClockwerkGoblin requires CustomState, SpellFormula
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + (totalLevel / 2))), 0)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 500)
-        call AddUnitMagicDmg(u, 45 * totalLevel)
-        call AddUnitMagicDef(u, 5 * totalLevel)
-        call AddUnitEvasion(u, 5 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICPOW, 45 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICRES, 5 * totalLevel)
+        call AddUnitCustomState(u, BONUS_EVASION, 5 * totalLevel)
 
         call SetUnitAbilityLevel(u, 'A00P', abilityLevel)
     endfunction

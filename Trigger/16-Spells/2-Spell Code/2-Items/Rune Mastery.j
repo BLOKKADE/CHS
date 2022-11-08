@@ -8,7 +8,7 @@ library RuneMaster initializer init requires RuneInit
         local item it = GetFilterItem()
         local real dx
         local real dy
-        local real luck = GetUnitLuck(RuneMasterCaster)
+        local real luck = GetUnitCustomState(RuneMasterCaster, BONUS_LUCK)
 
         //call BJDebugMsg("rune id: " + I2S(RuneIndex[GetHandleId(it)]))
         if GetItemType(it) == ITEM_TYPE_POWERUP and RuneIndex[GetHandleId(it)] == GetPlayerId(GetOwningPlayer(RuneMasterCaster)) then
@@ -16,7 +16,7 @@ library RuneMaster initializer init requires RuneInit
             set dy = GetItemY(it) - GetUnitY(RuneMasterCaster)
 
             if GetRandomInt(1, 100) < 10 * luck then
-                call UnitAddItem(RuneMasterCaster, CreateRandomRune(GetRunePower(it) - GetUnitPowerRune(RuneMasterCaster) - GetHeroLevel(RuneMasterCaster), GetUnitX(RuneMasterCaster), GetUnitY(RuneMasterCaster), RuneMasterCaster))
+                call UnitAddItem(RuneMasterCaster, CreateRandomRune(GetRunePower(it) - GetUnitCustomState(RuneMasterCaster, BONUS_RUNEPOW) - GetHeroLevel(RuneMasterCaster), GetUnitX(RuneMasterCaster), GetUnitY(RuneMasterCaster), RuneMasterCaster))
             endif
             //call BJDebugMsg("rune")
             if SquareRoot(dx * dx + dy * dy) < 500 then

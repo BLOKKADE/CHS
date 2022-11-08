@@ -8,7 +8,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
         local integer OGRE_i
         local integer OGRE_i2
 
-        local real luck = GetUnitLuck(caster)
+        local real luck = GetUnitCustomState(caster, BONUS_LUCK)
 
         if target == null then
             set orderType = 1

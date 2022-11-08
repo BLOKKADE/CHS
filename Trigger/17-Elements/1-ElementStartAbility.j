@@ -7,7 +7,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
     function ElementStartAbility takes unit u, integer id returns nothing
         local unit U = null
         local real calc = 0
-        local real luck = GetUnitLuck(u)
+        local real luck = GetUnitCustomState(u, BONUS_LUCK)
 
         if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
             return
@@ -111,7 +111,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Water
         if GetUnitAbilityLevel(u,ABSOLUTE_WATER_ABILITY_ID) > 0 and IsSpellElement(u,id, Element_Water) then
-            call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .02 * (1 + GetUnitAbsoluteEffective(u,Element_Water)))
+            call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .02)
             call TempBonus.create(u, BONUS_INTELLIGENCE,20 /* (1 + GetUnitAbsoluteEffective(u,Element_Water))*/,9, ABSOLUTE_WATER_ABILITY_ID)
         endif      
         
@@ -155,7 +155,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if GetRandomReal(0,100) <= 30 * luck then 
                 set U = CreateUnit( GetOwningPlayer(u),'h01M',GetUnitX(u)+ 40 * CosBJ(- 30 + GetUnitFacing(u)),GetUnitY(u)+ 40 * SinBJ(- 30 + GetUnitFacing(u)),GetUnitFacing(u) )
                 call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 3000 + GetHeroLevel(u)*(2500 + 50 * GetHeroLevel(u)))
-                call AddUnitBlock(U,100 + 50 * GetHeroLevel(u) )
+                call AddUnitCustomState(U, BONUS_BLOCK,100 + 50 * GetHeroLevel(u) )
                 call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 200 + (50 + GetHeroLevel(u))* GetHeroLevel(u) ,0)
                 call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
                 call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,30)

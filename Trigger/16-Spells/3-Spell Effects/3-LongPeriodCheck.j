@@ -240,7 +240,7 @@ scope LongPeriodCheck initializer init
 
                 //Guide To Rune Mastery
                 if GetUnitAbilityLevel(u ,'A09O') >= 1 then
-                    set i1 = R2I(100 + GetUnitPowerRune(u) + GetHeroLevel(u))
+                    set i1 = R2I(100 + GetUnitCustomState(u, BONUS_RUNEPOW) + GetHeroLevel(u))
                     set i2 = LoadInteger(HT, hid, 'A09O')
                     if i1 != i2 then
                         call SaveInteger(HT, hid, 'A09O', i1)
@@ -424,7 +424,7 @@ scope LongPeriodCheck initializer init
                     else
                         set i1 = R2I(i1 * GetUnitElementCount(u, Element_Fire)/* * (1+ GetUnitAbsoluteEffective(u, Element_Fire))*/)
                     endif
-                    call AddUnitMagicDmg(u, 0.5 * I2R(i1 - i2))	
+                    call AddUnitCustomState(u, BONUS_MAGICPOW, 0.5 * I2R(i1 - i2))	
                     call SaveInteger(HT,hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
                 endif
 
@@ -444,7 +444,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     set i1 = R2I(i1 * GetUnitElementCount(u, Element_Wind)/* * (1+ GetUnitAbsoluteEffective(u, Element_Wind))*/)
-                    call AddUnitEvasion(u ,   0.25 * I2R(i1 - i2)  )
+                    call AddUnitCustomState(u , BONUS_EVASION,   0.25 * I2R(i1 - i2)  )
                     call SetHeroAgi(u,GetHeroAgi(u,false)+ 10 *(i1 - i2),false     )
                     call SaveInteger(HT,hid,ABSOLUTE_WIND_ABILITY_ID,i1)	
                 endif
@@ -454,7 +454,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     set i1 = R2I(i1 * GetUnitElementCount(u, Element_Earth)/* * (1+ GetUnitAbsoluteEffective(u, Element_Earth))*/)
-                    call AddUnitBlock(u ,   20 * I2R(i1 - i2)  )	
+                    call AddUnitCustomState(u , BONUS_BLOCK,   20 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_EARTH_ABILITY_ID,i1)	
                 endif
 
@@ -499,7 +499,7 @@ scope LongPeriodCheck initializer init
                 set i2 = LoadInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID)
                 if i1 >= 1 or i2 != 0 then
                     set i1 = R2I (i1 * GetUnitElementCount(u, Element_Wild)/* * (1+ GetUnitAbsoluteEffective(u, Element_Wild))*/)
-                    call AddUnitSummonStronger(u ,   1 * I2R(i1 - i2)  )	
+                    call AddUnitCustomState(u , BONUS_SUMMONPOW,   1 * I2R(i1 - i2)  )	
                     call SaveInteger(HT,hid,ABSOLUTE_WILD_ABILITY_ID,i1)	
                 endif
 
@@ -513,11 +513,11 @@ scope LongPeriodCheck initializer init
                 //Pit Lord
                 if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                     set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
-                    set i1 = R2I(GetUnitMagicDmg(u) * r1)
+                    set i1 = R2I(GetUnitCustomState(u, BONUS_MAGICPOW) * r1)
                     set i2 = LoadInteger(HT,hid,PIT_LORD_UNIT_ID)
                     if i1 != i2 then
-                        call AddUnitPhysPow(u, 0 - i2)
-                        call AddUnitPhysPow(u, i1)
+                        call AddUnitCustomState(u, BONUS_PHYSPOW, 0 - i2)
+                        call AddUnitCustomState(u, BONUS_PHYSPOW, i1)
                         call SaveInteger(HT,hid,PIT_LORD_UNIT_ID,i1)	
                     endif
                 endif

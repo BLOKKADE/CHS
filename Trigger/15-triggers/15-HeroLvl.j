@@ -81,7 +81,7 @@ library heroLevel initializer init requires HeroLvlTable, Tinker, WitchDoctor, S
             //call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (levelsGained * 250))
             
         elseif uid == MORTAR_TEAM_UNIT_ID then  
-            call AddUnitPhysPow(u,levelsGained * 3)
+            call AddUnitCustomState(u, BONUS_PHYSPOW,levelsGained * 3)
             call SetBonus(u, 0, 3 * heroLevel)
         elseif uid == NAGA_SIREN_UNIT_ID then  
             set i = prevLevel + 1
@@ -256,11 +256,11 @@ library heroLevel initializer init requires HeroLvlTable, Tinker, WitchDoctor, S
         elseif uid == SEER_UNIT_ID then
 
         elseif uid == SATYR_TRICKSTER_UNIT_ID then
-            call AddUnitEvasion(u, 0.5 * levelsGained)
+            call AddUnitCustomState(u, BONUS_EVASION, 0.5 * levelsGained)
             call UpdateBonus(u, 0, 0.5 * levelsGained)
             call SetBonus(u, 1, 98 + (heroLevel * 2))
         elseif uid == MEDIVH_UNIT_ID then
-            call AddUnitMagicDmg(u,2 * levelsGained)
+            call AddUnitCustomState(u, BONUS_MAGICPOW,2 * levelsGained)
             call UpdateBonus(u, 0, 2 * levelsGained)   
         endif
         

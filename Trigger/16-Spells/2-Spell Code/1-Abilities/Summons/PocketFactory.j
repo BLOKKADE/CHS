@@ -5,6 +5,6 @@ library PocketFactory requires CustomState, SpellFormula
         
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + GetSpellValue(0, 150, abilityLevel) + (summonLevel * 3000))
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 20 * totalLevel)
-        call AddUnitMagicDef(u, 10 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICRES, 10 * totalLevel)
     endfunction
 endlibrary

@@ -24,8 +24,8 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
         endmethod  
 
         method resetBonus takes nothing returns nothing
-            call AddUnitMagicDmg(this.source, 0 - (this.bonus1))
-            call AddUnitMagicDef(this.source, 0 - (this.bonus2))
+            call AddUnitCustomState(this.source, BONUS_MAGICPOW, 0 - (this.bonus1))
+            call AddUnitCustomState(this.source, BONUS_MAGICRES, 0 - (this.bonus2))
         endmethod
 
         method setBonus takes boolean reset, integer abilLevel, real duration, real heroLevel returns nothing
@@ -41,8 +41,8 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
             set this.startTick = T32_Tick
             
             call USOrder4field(this.source,GetUnitX(this.source),GetUnitY(this.source),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,duration,ABILITY_RLF_DURATION_HERO, duration,ABILITY_RLF_DURATION_NORMAL)
-            call AddUnitMagicDmg(this.source, this.bonus1)
-            call AddUnitMagicDef(this.source, this.bonus2)
+            call AddUnitCustomState(this.source, BONUS_MAGICPOW, this.bonus1)
+            call AddUnitCustomState(this.source, BONUS_MAGICRES, this.bonus2)
         endmethod
     
         static method create takes unit source, integer abilLevel, integer heroLevel, real chronusLevel, real duration returns thistype

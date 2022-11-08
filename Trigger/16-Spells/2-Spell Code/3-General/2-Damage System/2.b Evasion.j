@@ -25,17 +25,17 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
     function GetEvasionChance takes nothing returns real
 
         if UnitHasForm(DamageSource, FORM_SHADOW) and GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID) > 0 then
-            return  1 - (50 /(50 + GetUnitEvasion(DamageTarget) / 2)) 
+            return  1 - (50 /(50 + GetUnitCustomState(DamageTarget, BONUS_EVASION) / 2)) 
         endif
 
-        return  1 - (50 /(50 + GetUnitEvasion(DamageTarget))) 
+        return  1 - (50 /(50 + GetUnitCustomState(DamageTarget, BONUS_EVASION))) 
     endfunction
 
     function Evade takes nothing returns nothing
         local real returnDamage = Damage.index.damage
         local integer abilLvl = 0
 
-        if GetUnitMissChance(DamageSource) > 0 and GetRandomReal(0, 100) > GetUnitMissChance(DamageSource) then
+        if GetUnitCustomState(DamageSource, BONUS_MISSCHANCE) > 0 and GetRandomReal(0, 100) > GetUnitCustomState(DamageSource, BONUS_MISSCHANCE) then
             return
         endif
 
@@ -46,7 +46,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
             endif
         endif
 
-        if GetUnitEvasion(DamageTarget) > 0 and GetRandomReal(0, 100) > GetEvasionChance() * 100 then
+        if GetUnitCustomState(DamageTarget, BONUS_EVASION) > 0 and GetRandomReal(0, 100) > GetEvasionChance() * 100 then
             return
         else
 

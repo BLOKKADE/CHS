@@ -114,7 +114,7 @@ library trigger99 initializer init requires RandomShit
             call DoNothing()
         endif
         if(Trig_Add_Unit_Abilities_Func003001())then
-            call AddUnitEvasion (GetLastCreatedUnit(),20) 
+            call AddUnitCustomState(GetLastCreatedUnit(), BONUS_EVASION, 20)
             //	call UnitAddAbilityBJ('ACev',GetLastCreatedUnit())
         else
             call DoNothing()

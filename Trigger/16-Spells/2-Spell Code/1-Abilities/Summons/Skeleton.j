@@ -7,8 +7,8 @@ library Skeleton requires CustomState, SpellFormula
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + (totalLevel / 2))), 0)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 10 * totalLevel)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 600)
-        call AddUnitEvasion(u, 5 * totalLevel)
-        call AddUnitMagicDef(u, 5 * totalLevel)
+        call AddUnitCustomState(u, BONUS_EVASION, 5 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICRES, 5 * totalLevel)
 
         /*call UnitAddAbility(u, 'A06I')
         call SetUnitAbilityLevel(u, 'A06I', IMinBJ(R2I(totalLevel / 3), 60))*/

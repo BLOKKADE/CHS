@@ -222,7 +222,7 @@ function FunctionTimerSpell takes nothing returns nothing
     if i1 > 0 then
         call ElemFuncStart(Herou,'I07G')
         call BlzSetUnitArmor(Herou,BlzGetUnitArmor(Herou)+ i1 * 20 * RoundCreepNumber )
-        call AddUnitBlock(Herou,i1 * 20 * RoundCreepNumber)
+        call AddUnitCustomState(Herou, BONUS_BLOCK,i1 * 20 * RoundCreepNumber)
         call SaveInteger(HT,hid,54001,LoadInteger(HT,hid,54001)+ i1 * 20 * RoundCreepNumber) 
     endif
 
@@ -308,7 +308,7 @@ function FixAbilityU takes unit u returns nothing
 
     set r1 = LoadReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID)
     if r1 != 0 then 
-        call AddUnitBlock(u, -r1)
+        call AddUnitCustomState(u, BONUS_BLOCK, -r1)
         call SaveReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID,0)
     endif
 endfunction

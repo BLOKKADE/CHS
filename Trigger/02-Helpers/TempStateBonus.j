@@ -12,7 +12,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         constant integer BONUS_LUCK                     = 5
         constant integer BONUS_RUNEPOW                  = 6
         constant integer BONUS_SUMMONPOW                = 7
-        constant integer BONUS_PVPBONUS                 = 8
+        constant integer BONUS_PVP                 = 8
         constant integer BONUS_PHYSPOW                  = 9
         constant integer BONUS_MISSCHANCE               = 10
         constant integer BONUS_DAMAGE                   = 11
@@ -57,7 +57,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
 
         private method updateState takes nothing returns nothing
             if state < 11 or state == 21 then
-                call SaveReal(HT_unitstate, this.sourceId, this.state, LoadReal(HT_unitstate, this.sourceId, this.state) + this.bonus)
+                call AddUnitCustomState(this.source, this.state, this.bonus)
             else
                 if state < 18 then
                     call AddUnitBonus(this.source, this.state, R2I(this.bonus))

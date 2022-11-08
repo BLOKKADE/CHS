@@ -102,7 +102,7 @@ scope OnDamage initializer init
         if not IsUnitType(DamageSource, UNIT_TYPE_HERO) then
             if DamageSourceTypeId == PRIEST_1_UNIT_ID then
                 set DamageSourceId = GetDummyId(DamageSource)
-                set DamageSourceMagicPower = DamageSourceMagicPower + (GetUnitMagicDmg(DamageSource) / 100)
+                set DamageSourceMagicPower = DamageSourceMagicPower + (GetUnitCustomState(DamageSource, BONUS_MAGICPOW) / 100)
             endif
             //call BJDebugMsg("get das: " + GetObjectName(DummyAbilitySource[DamageSourceId]))
             set DamageSourceAbility = DummyAbilitySource[DamageSourceId]
@@ -154,8 +154,8 @@ scope OnDamage initializer init
         endif
 
 
-        set DamageSourceLuck = GetUnitLuck(DamageSource)
-        set DamageTargetLuck = GetUnitLuck(DamageTarget)
+        set DamageSourceLuck = GetUnitCustomState(DamageSource, BONUS_LUCK)
+        set DamageTargetLuck = GetUnitCustomState(DamageTarget, BONUS_LUCK)
 
         call SetTypeDamage(DamageSource)
         /*

@@ -43,7 +43,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         local boolean pillage = false
         local player owner = GetOwningPlayer(killingHero)     
         local integer pid = GetPlayerId(owner)
-        local real luck = GetUnitLuck(killingHero)
+        local real luck = GetUnitCustomState(killingHero, BONUS_LUCK)
         local integer itemCount = 0
         
         //Creep upgrade xp bonus

@@ -59,9 +59,9 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		set s = s + "|cffe7694aIncome|r: " + I2S(Income[pid]) + "\n"
 		set s = s + "|cff4aa8e7Glory per Round|r: " + I2S(R2I(GetPlayerGloryBonus(pid))) + "\n"
 		set s = s + "|cff9b67faMovespeed|r: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"
-		set s = s + "|cffe7e44aPhysical Power|r: " + R2SW(100 + GetUnitPhysPow(u), 1, 1) + "\n"
-		set s = s + "|cffda4ae7Rune Power|r: " + R2SW((100 + GetUnitPowerRune(u) + GetHeroLevel(u)) / 100, 1, 2) + "\n"
-		set s = s + "|cff5ce74aLuck|r: +" + R2SW(((GetUnitLuck(u) - 1) * 100), 1, 1) + "%%\n"
+		set s = s + "|cffe7e44aPhysical Power|r: " + R2SW(100 + GetUnitCustomState(u, BONUS_PHYSPOW), 1, 1) + "\n"
+		set s = s + "|cffda4ae7Rune Power|r: " + R2SW((100 + GetUnitCustomState(u, BONUS_RUNEPOW) + GetHeroLevel(u)) / 100, 1, 2) + "\n"
+		set s = s + "|cff5ce74aLuck|r: +" + R2SW(((GetUnitCustomState(u, BONUS_LUCK) - 1) * 100), 1, 1) + "%%\n"
 		set s = s + "|cff6ac8ffAbsolute Slots|r: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1)
 
 		return s
@@ -110,7 +110,7 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 	endfunction
 
 	function UpdateTooltipText takes unit u returns nothing
-		set CustomInfoT1[1] = R2S(100 * GetUnitRealEvade(u))
+		set CustomInfoT1[1] = R2S(100 * (1 - (50 /(50 + GetUnitCustomState(u, BONUS_EVASION)))))
 
 		if BlzGetUnitArmor(u) >= 0 and not BlzIsUnitInvulnerable(u) then
 			set CustomInfoT1[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
@@ -118,8 +118,8 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 			set CustomInfoT1[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
 		endif
 
-		set CustomInfoT1[3] = R2S(GetUnitMagicDmg(u))
-		set CustomInfoT1[4] = R2S( (1 - (50 / ( 50 + GetUnitMagicDef(u) ))) * 100 )
+		set CustomInfoT1[3] = R2S(GetUnitCustomState(u, BONUS_MAGICPOW))
+		set CustomInfoT1[4] = R2S( (1 - (50 / ( 50 + GetUnitCustomState(u, BONUS_MAGICRES) ))) * 100 )
 		set CustomInfoT1[5] = ExtraFieldInfo(u)
 		set CustomInfoT1[6] = StrInfo(u)
 		set CustomInfoT1[7] = AgiInfo(u)
@@ -131,11 +131,11 @@ library UnitPanelInfo requires CustomState, RandomShit, RuneInit, Glory
 		call BlzFrameSetText(TextUI[1], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 0)))
 		call BlzFrameSetText(TextUI[2], R2SW(BlzGetUnitAttackCooldown(u, 0), 1, 2) + "/" + R2SW(BlzGetUnitRealField(u, UNIT_RF_CAST_POINT), 1, 2))
 		call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
-		call BlzFrameSetText(TextUI[4], R2SW(GetUnitBlock(u), 1, 0))
-		call BlzFrameSetText(TextUI[5], R2SW(GetUnitPvpBonus(u), 1, 1))
-		call BlzFrameSetText(TextUI[9], R2SW(GetUnitMagicDmg(u), 1, 1))
-		call BlzFrameSetText(TextUI[10], R2SW(GetUnitMagicDef(u), 1, 1))
-		call BlzFrameSetText(TextUI[11], R2SW(GetUnitEvasion(u), 1, 1))
+		call BlzFrameSetText(TextUI[4], R2SW(GetUnitCustomState(u, BONUS_BLOCK), 1, 0))
+		call BlzFrameSetText(TextUI[5], R2SW(GetUnitCustomState(u, BONUS_PVP), 1, 1))
+		call BlzFrameSetText(TextUI[9], R2SW(GetUnitCustomState(u, BONUS_MAGICPOW), 1, 1))
+		call BlzFrameSetText(TextUI[10], R2SW(GetUnitCustomState(u, BONUS_MAGICRES), 1, 1))
+		call BlzFrameSetText(TextUI[11], R2SW(GetUnitCustomState(u, BONUS_EVASION), 1, 1))
 
 		if IsHeroUnitId(GetUnitTypeId(u)) then
 			call BlzFrameSetText(TextUI[6], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroStrengthValue", 6)))

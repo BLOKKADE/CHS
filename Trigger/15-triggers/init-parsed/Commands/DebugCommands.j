@@ -63,10 +63,10 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call BlzSetUnitArmor(u, value)
             set s = "|cff7bff00" + GetUnitName(u) + "|r: " + R2S(value) + " armor"
         elseif command == "-dblo" then  
-            call SetUnitBlock(u, value)
+            call SetUnitCustomState(u, BONUS_BLOCK, value)
             set s = "|cff00ffea" + GetUnitName(u) + "|r: " + R2S(value) + " block"
         elseif command == "-dpvp" then
-            call SetUnitPvpBonus(u, value)
+            call SetUnitCustomState(u, BONUS_PVP, value)
             set s = "|cff00a2ff" + GetUnitName(u) + "|r: " + R2S(value) + " pvp bonus"
         elseif command == "-dstr" then
             call SetHeroStr(u, R2I(value), true)
@@ -78,13 +78,13 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call SetHeroInt(u, R2I(value), true)
             set s = "|cff3d91ff" + GetUnitName(u) + "|r: " + R2S(value) + " intelligence"
         elseif command == "-dmpo" then
-            call SetUnitMagicDmg(u, value)
+            call SetUnitCustomState(u, BONUS_MAGICPOW, value)
             set s = "|cffff3aff" + GetUnitName(u) + "|r: " + R2S(value) + " magic power"
         elseif command == "-dmpr" then
-            call SetUnitMagicDef(u, value)
+            call SetUnitCustomState(u, BONUS_MAGICRES, value)
             set s = "|cff00ff40" + GetUnitName(u) + "|r: " + R2S(value) + " magic protection"
         elseif command == "-deva" then
-            call SetUnitEvasion(u, value)
+            call SetUnitCustomState(u, BONUS_EVASION, value)
             set s = "|cff9e9e9e" + GetUnitName(u) + "|r: " + R2S(value) + " evasion"
         elseif command == "-dhpr" then  
             call SetUnitBonusReal(u, BONUS_HEALTH_REGEN, value)
@@ -93,7 +93,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call SetUnitBonusReal(u, BONUS_MANA_REGEN, value)
             set s = "|cff00a2ff" + GetUnitName(u) + "|r: " + R2S(value) + " mana regen"
         elseif command == "-dppo" then
-            call SetUnitPhysPow(u, value)
+            call SetUnitCustomState(u, BONUS_PHYSPOW, value)
             set s = "|cff00a2ff" + GetUnitName(u) + "|r: " + R2S(value) + " phys power"
         elseif command == "-help" then
             call DummyHelp(p)

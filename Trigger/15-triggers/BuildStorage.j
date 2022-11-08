@@ -168,15 +168,15 @@ library SaveBuild requires Table, RandomShit, CustomState
             set heroInfo[round].string[0] = I2S(BlzGetUnitBaseDamage(this.hero, 0) + BlzGetUnitDiceNumber(this.hero, 0)) + " - " + I2S(BlzGetUnitBaseDamage(this.hero, 0) + (BlzGetUnitDiceNumber(this.hero, 0) * BlzGetUnitDiceSides(this.hero, 0)))
             set heroInfo[round].string[1] = R2S(BlzGetUnitAttackCooldown(this.hero, 0))
             set heroInfo[round].string[2] = R2SW(BlzGetUnitArmor(this.hero), 1, 0)
-            set heroInfo[round].string[3] = R2SW(GetUnitBlock(this.hero), 1, 0)
+            set heroInfo[round].string[3] = R2SW(GetUnitCustomState(this.hero, BONUS_BLOCK), 1, 0)
             set heroInfo[round].string[4] = R2SW(GetUnitMoveSpeed(this.hero), 1, 0)
             set heroInfo[round].string[5] = I2S(GetHeroStr(this.hero, true))
             set heroInfo[round].string[6] = I2S(GetHeroAgi(this.hero, true))
             set heroInfo[round].string[7] = I2S(GetHeroInt(this.hero, true))
-            set heroInfo[round].string[8] = R2SW(GetUnitMagicDmg(this.hero), 1, 1)
-            set heroInfo[round].string[9] = R2SW(GetUnitMagicDef(this.hero), 1, 1)
-            set heroInfo[round].string[10] = R2SW(GetUnitEvasion(this.hero), 1, 1)
-            set heroInfo[round].string[11] = R2SW(GetUnitPvpBonus(this.hero), 1, 1)
+            set heroInfo[round].string[8] = R2SW(GetUnitCustomState(this.hero, BONUS_MAGICPOW), 1, 1)
+            set heroInfo[round].string[9] = R2SW(GetUnitCustomState(this.hero, BONUS_MAGICRES), 1, 1)
+            set heroInfo[round].string[10] = R2SW(GetUnitCustomState(this.hero, BONUS_EVASION), 1, 1)
+            set heroInfo[round].string[11] = R2SW(GetUnitCustomState(this.hero, BONUS_PVP), 1, 1)
         endmethod
 
         method export takes integer round returns string
