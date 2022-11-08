@@ -1,4 +1,4 @@
-library trigger34 initializer init requires RandomShit
+/*library trigger34 initializer init requires RandomShit
 
     function Trig_Ward_Location_Func002C takes nothing returns boolean
         if((GetUnitTypeId(GetTriggerUnit())=='ohwd'))then
@@ -107,3 +107,4 @@ library trigger34 initializer init requires RandomShit
 
 
 endlibrary
+*/

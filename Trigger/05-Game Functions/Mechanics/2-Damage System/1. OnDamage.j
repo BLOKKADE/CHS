@@ -72,7 +72,7 @@ scope OnDamage initializer init
         endif
 
         //some abilities like faerie fire start a 0 damage event this negates that
-        if Damage.index.damage == 0 or DeathReviveInvul.boolean[DamageTargetPid] then
+        if Damage.index.damage == 0 then
             return
         endif
 

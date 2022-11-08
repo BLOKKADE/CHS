@@ -28,6 +28,11 @@ scope Killing initializer init
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", target, "head"))
             call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, INCINERATE_ABILITY_ID, true)
         endif
+
+        //Dreadlord
+        if GetUnitTypeId(killingHero) == DEADLORD_UNIT_ID then
+            call DreadlordLifeSteal(killingHero, target)
+        endif
         
         //Black Arrow
         set i = GetUnitAbilityLevel(killingHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
