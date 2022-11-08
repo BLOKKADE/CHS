@@ -114,11 +114,11 @@ library trigger122 initializer init requires RandomShit, SaveCommand
     endfunction
 
     function GetWinner takes nothing returns nothing
-        local integer i = 1
+        local integer i = 0
 
         loop
-            if UnitAlive(PlayerHeroes[i]) then
-                call BJDebugMsg(GetPlayerName(Player(i)) + ", hero alive: " + GetUnitName(PlayerHeroes[i]))
+            if UnitAlive(PlayerHeroes[i+1]) then
+                call BJDebugMsg(GetPlayerName(Player(i)) + ", hero alive: " + GetUnitName(PlayerHeroes[i+1]))
                 set WinningPlayer = Player(i)
             endif
 
@@ -127,10 +127,9 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         endloop
     endfunction
 
-    function Victory takes nothing returns nothing
+    function Trig_Victory_Actions takes nothing returns nothing
             local PlayerStats ps
-            call ReleaseTimer(GetExpiredTimer())
-    
+
             set udg_boolean11 = true
             call DisableTrigger(udg_trigger118)
             call DisableTrigger(udg_trigger80)
@@ -169,12 +168,6 @@ library trigger122 initializer init requires RandomShit, SaveCommand
             // Save everyones codes
             call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
     endfunction
-    
-    function Trig_Victory_Actions takes nothing returns nothing
-        call DisableTrigger(GetTriggeringTrigger())
-        call TimerStart(NewTimer(), 1, false, function Victory)
-    endfunction
-
 
     private function init takes nothing returns nothing
         set udg_trigger122 = CreateTrigger()
