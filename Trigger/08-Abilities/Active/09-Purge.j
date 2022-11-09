@@ -30,9 +30,9 @@ library Purge requires RandomShit
         set target = null
     endfunction
 
-    function Purge takes unit source, unit target returns nothing
+    function Purge takes unit source, unit target, integer lvl returns nothing
         local timer t = NewTimer()
-        local real delay = 4.2 - (0.14 * GetUnitAbilityLevel(source, PURGE_ABILITY_ID))
+        local real delay = 4.2 - (0.14 * lvl)
         call SaveUnitHandle(HT,GetHandleId(t),1,source)
         call SaveUnitHandle(HT,GetHandleId(t),2,target)
         call TimerStart(t, delay, false, function PurgeCast)    
