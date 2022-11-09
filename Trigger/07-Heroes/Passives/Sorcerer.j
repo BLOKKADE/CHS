@@ -47,6 +47,7 @@ library Sorcerer initializer init requires AbilityData, CastSpellOnTarget, Stabl
             set random = GetRandomInt(0, sorcererList.size() - 1)
             set node = sorcererList.first
             set abilId = 0
+            set i = 0
 
             loop
                 set abilId = node.data
