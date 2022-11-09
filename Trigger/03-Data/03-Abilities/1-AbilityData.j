@@ -624,7 +624,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Light, 1)
 
         //84 - Lightning Shield 
-        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, LIGHTNING_SHIELD_ITEM_ID, false, Target_Any, 1, false, Order_Target, "lightningshield")
+        call SaveAbilData(LIGHTNING_SHIELD_ABILITY_ID, LIGHTNING_SHIELD_ITEM_ID, false, Target_Any, 1, false, Order_Target, "purge")
         call SetLastObjectElement(Element_Wind, 2)
         call SetLastAbilityNotReplaceable()
         
