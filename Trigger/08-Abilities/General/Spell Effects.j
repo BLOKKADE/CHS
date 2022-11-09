@@ -144,7 +144,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             return true
         //Purge wait
         elseif abilId == PURGE_ABILITY_ID then
-            call Purge(caster, target)    
+            call Purge(caster, target, lvl)    
             return true  
         //Eruption
         elseif abilId == ERUPTION_ABILITY_ID then

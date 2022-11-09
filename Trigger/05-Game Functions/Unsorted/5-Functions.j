@@ -234,31 +234,31 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         endif
 
         //Obsidian Armor
-        set i1 = GetValidEndOfRoundItems(u,'I07H') 
+        set i1 = GetValidEndOfRoundItems(u,'I0CW') 
         if i1 > 0 then
             call AddUnitCustomState(u, BONUS_BLOCK,20 * i1)
         endif
 
         //Leather Armor
-        set i1 = GetValidEndOfRoundItems(u,'I0CM') 
+        set i1 = GetValidEndOfRoundItems(u,'I0CY') 
         if i1 > 0 then
             call BlzSetUnitMaxHP(u,BlzGetUnitMaxHP(u) +   1200 * i1)
         endif
 
          //Mana gem
-         set i1 = GetValidEndOfRoundItems(u,MANA_GEM_ITEM_ID) 
+         set i1 = GetValidEndOfRoundItems(u, 'I0CX') 
          if i1 > 0 then
              call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +   275 * i1)
          endif
 
          //Rapira
-        set i1 = GetValidEndOfRoundItems(u,RAPIRA_ITEM_ID) 
+        set i1 = GetValidEndOfRoundItems(u, 'I0CZ') 
         if i1 > 0 then
             call AddUnitBonus(u, BONUS_DAMAGE, 40 * i1)
         endif
 
          //Golden Armor
-         set i1 = GetValidEndOfRoundItems(u,'I0C1') 
+         set i1 = GetValidEndOfRoundItems(u,'I0CV') 
          if i1 > 0 then
              call AddUnitCustomState(u, BONUS_MAGICRES,1 * i1)
          endif
