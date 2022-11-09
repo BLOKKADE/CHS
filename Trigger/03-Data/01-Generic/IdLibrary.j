@@ -824,7 +824,7 @@ library IdLibrary initializer init
         constant integer DISEASE_BUFF_ID                                = 'Bapl'
         constant integer DISEASE_CLOUD_BUFF_ID                          = 'Bplg'
         constant integer DOOM_BUFF_ID                                   = 'BNdo'
-        constant integer DOUSING_HEX_BUFF_ID                            = 'B01Y'
+        constant integer DOUSING_HEX_BUFF_ID                            = 'A0DD'
         constant integer DRUNKEN_HAZE_BUFF_ID                           = 'BNdh'
         constant integer EARTHQUAKE_BUFF_ID                             = 'BOeq'
         constant integer ENERGY_SHIELD_BUFF_ID                          = 'B02N'

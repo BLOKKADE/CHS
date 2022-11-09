@@ -42,6 +42,13 @@ library HeroAbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObje
         local integer i = 0
         local real timeBonus = 0
 
+        //Dousing Hex
+        if GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 then
+            call DousingHexActivated(u)
+            //call BJDebugMsg("cd bonus: " + R2S(DousingHexCooldown.real[GetHandleId(u)]))
+            return cd
+        endif
+
         //Absolute Arcane
         if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
             set i = GetUnitElementCount(u, Element_Arcane)
@@ -120,12 +127,6 @@ library HeroAbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObje
         //Staff of Water
         if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0,100) <= RMinBJ(40 * luck, 90 ) then
             set ResCD = 0.001
-        endif
-
-        //Dousing Hex
-        if GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 then
-            //call BJDebugMsg("cd bonus: " + R2S(DousingHexCooldown.real[GetHandleId(u)]))
-            set ResCD = ResCD * DousingHexCooldown.real[GetHandleId(u)]
         endif
 
         return (time * ResCD) + timeBonus

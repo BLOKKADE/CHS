@@ -27,11 +27,6 @@ scope ModifyDamageAfterArmor initializer init
             set Damage.index.amount = Damage.index.amount / 2
         endif
 
-        //Dousing Hex
-        if GetUnitAbilityLevel(DamageSource, DOUSING_HEX_BUFF_ID) > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
-            set Damage.index.damage = Damage.index.damage * DousingHexReduction.real[DamageSourceId]
-        endif
-
         //Fishing Rod
         if (not IsOnHitDamage()) and UnitHasItemType(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
             //call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))

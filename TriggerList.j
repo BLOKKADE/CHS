@@ -129,6 +129,7 @@
 //! import "C:\CHS\CHS\Trigger\03-Data\03-Abilities\SummonSpells.j"
 //! import "C:\CHS\CHS\Trigger\03-Data\03-Abilities\ToggleSpellList.j"
 //! import "C:\CHS\CHS\Trigger\03-Data\04-Items\GloryItemCosts.j.j"
+//! import "C:\CHS\CHS\Trigger\03-Data\04-Items\ReplaceItem.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Abilities\04-Cooldown.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Abilities\6-AbsoluteAbilityLevelup.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Abilities\AbilityCommand.j"
