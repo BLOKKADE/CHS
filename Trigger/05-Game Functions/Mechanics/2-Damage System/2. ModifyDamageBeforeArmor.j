@@ -200,6 +200,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 */
 
+        //Shadow Dance
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
         if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 then
             set Damage.index.damage = Damage.index.damage + 50 * i1
@@ -208,6 +209,7 @@ scope ModifyDamageBeforeArmor initializer init
             call BlzSetUnitFacingEx( DamageSource, GetUnitFacing(DamageTarget))
         endif
     
+        //Backstab
         set i1 = GetUnitAbilityLevel(DamageSource, BACKSTAB_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack and not IsOnHitDamage() then
             set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))

@@ -57,7 +57,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(DEADLORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Vampire: +0.5% lifesteal" )
         
         call InitHeroDesc(PYROMANCER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNChaosSpaceOrc.blp" )
-        call InitHeroDesc(PYROMANCER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Scorched Earth: Once every second when the Hero deals [|cffff0000Fire|r] damage it sets the ground on fire for 2 seconds. Units within the fire have a chance to miss any damage dealt and have a higher chance to get hit by crits. [|cff96ffffStable|r] The Pyromancer's attacks deal damage in a line.")
+        call InitHeroDesc(PYROMANCER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Scorched Earth: Once every second when the Hero deals [|cffff0000Fire|r] damage it sets the ground on fire for 2 seconds. Units within the fire have a chance to miss any damage dealt and have a higher chance to get hit by crits. [|cff96ffffStable|r] The Pyromancer's attacks deal [|cffff0000Fire|r] damage in a line.")
         call InitHeroDesc(PYROMANCER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +35 maximum attack damage. Scorched Earth: +0.5% miss chance, +0.1% crit chance. +1 area of effect." )
         
         call InitHeroDesc(TAUREN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSpiritWalker.blp" )
@@ -153,7 +153,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: At the start of every fight it deals |cffff00ffmagical damage|r and stuns all nearby heroes for 1 second and creeps for 2 seconds. ")
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: At the start of every fight it deals |cffff00ffmagical damage|r and stuns all heroes for 1 second and creeps for 2 seconds. ")
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun." )
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )
