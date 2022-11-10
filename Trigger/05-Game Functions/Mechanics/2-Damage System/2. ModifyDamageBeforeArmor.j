@@ -121,9 +121,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Evasion & miss TODO: clean this up
-        if (Damage.index.isAttack or 
-            GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemType(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and 
-            (GetUnitCustomState(DamageTarget, BONUS_EVASION) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitCustomState(DamageSource, BONUS_MISSCHANCE) > 0) then
+        if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemType(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and (GetUnitCustomState(DamageTarget, BONUS_EVASION) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitCustomState(DamageSource, BONUS_MISSCHANCE) > 0) then
             call Evade()
             
             if Damage.index.damage == 0 then
