@@ -219,7 +219,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         //Gnome
         if GetUnitTypeId(Herou) == GNOME_MASTER_UNIT_ID then
             call ElemFuncStart(Herou,GNOME_MASTER_UNIT_ID)
-            call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55 * heroLevel,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,1 +(heroLevel * 0.04),ABILITY_RLF_DURATION_HERO,2 +(heroLevel * 0.08),ABILITY_RLF_DURATION_NORMAL)
+            call DummyInstantCast4(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55 * heroLevel,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,1 +(heroLevel * 0.04),ABILITY_RLF_DURATION_HERO,2 +(heroLevel * 0.08),ABILITY_RLF_DURATION_NORMAL)
 
         endif
                 
@@ -227,7 +227,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         set abilLevel = GetUnitAbilityLevel(Herou,RAPID_RECOVERY_ABILITY_ID)    
         if abilLevel > 0 then
             call ElemFuncStart(Herou,RAPID_RECOVERY_ABILITY_ID)
-            call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_MANA_REGEN ,(10 +(heroLevel * 0.02))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(10 +(heroLevel * 0.02))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
+            call DummyInstantCast4(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03W',"battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_MANA_REGEN ,(10 +(heroLevel * 0.02))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(10 +(heroLevel * 0.02))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
             set chronusActivated = true
         endif
             
@@ -235,7 +235,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         set abilLevel = GetUnitAbilityLevel(Herou,DEMONS_CURSE_ABILITY_ID)    
         if abilLevel > 0 then
             call ElemFuncStart(Herou,DEMONS_CURSE_ABILITY_ID)
-            call USOrder4field(Herou,GetUnitX(Herou),GetUnitY(Herou),'A043',"howlofterror",0,ABILITY_RLF_DAMAGE_INCREASE_PERCENT_ROA1,(10 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_DAMAGE_HBZ2 ,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
+            call DummyInstantCast4(Herou,GetUnitX(Herou),GetUnitY(Herou),'A043',"howlofterror",0,ABILITY_RLF_DAMAGE_INCREASE_PERCENT_ROA1,(10 * abilLevel)*(1 + 0.02 * heroLevel),ABILITY_RLF_DAMAGE_HBZ2 ,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_HERO,(8 +(heroLevel * 0.09))* ChronusLevel,ABILITY_RLF_DURATION_NORMAL)
             set chronusActivated = true
         endif
 

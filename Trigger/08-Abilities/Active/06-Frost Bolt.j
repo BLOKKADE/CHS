@@ -1,5 +1,5 @@
 library FrostBolt requires RandomShit
-    function UsOrderUTimer51 takes unit u1, unit u2, real dmg returns nothing
+    function DummyTargetCast1Timer51 takes unit u1, unit u2, real dmg returns nothing
         local DummyOrder dummy = DummyOrder.create(u1, GetUnitX(u1), GetUnitY(u1), GetUnitFacing(u1), 6)
         call dummy.addActiveAbility('A07Y', 1, 852095)
         call dummy.setAbilityRealField('A07Y', ABILITY_RLF_DAMAGE_CTB1, dmg)
@@ -19,7 +19,7 @@ library FrostBolt requires RandomShit
             call ReleaseTimer(t)
         else 
             set count = count - 1 
-            call UsOrderUTimer51(u1,u2,LoadReal(HT,GetHandleId(t),2))   
+            call DummyTargetCast1Timer51(u1,u2,LoadReal(HT,GetHandleId(t),2))   
             call SaveInteger(HT,GetHandleId(t),1,count)
         endif
 

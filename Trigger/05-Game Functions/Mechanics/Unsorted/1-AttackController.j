@@ -130,7 +130,7 @@ scope AttackController initializer init
         
         //Huntress
         if GetUnitTypeId(u2) == HUNTRESS_UNIT_ID then
-            call USOrderA(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.245 + (0.0025 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
+            call DummyInstantCast1(u2,GetUnitX(u2),GetUnitY(u2),'A035',"fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.245 + (0.0025 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1') )
         endif
 
         //Pyromancer
@@ -141,7 +141,7 @@ scope AttackController initializer init
         //Fire Force
         set i1 = GetUnitAbilityLevel(u,FIRE_FORCE_ABILITY_ID )
         if i1 > 0 and (GetRandomReal(1,100)<= 25 * luck) then
-            call USOrderA(u,GetUnitX(u),GetUnitY(u),'A0C0',"fanofknives",  GetHeroStr(u,true) * (0.62 + (0.08 * i1)), ConvertAbilityRealLevelField('Ocl1') )
+            call DummyInstantCast1(u,GetUnitX(u),GetUnitY(u),'A0C0',"fanofknives",  GetHeroStr(u,true) * (0.62 + (0.08 * i1)), ConvertAbilityRealLevelField('Ocl1') )
         endif
         set u = null
         set u2 = null

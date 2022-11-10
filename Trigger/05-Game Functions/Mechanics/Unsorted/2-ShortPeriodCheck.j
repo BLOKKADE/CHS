@@ -50,7 +50,7 @@ scope ShortPeriodCheck initializer init
                     //Power of Ice
                     if GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID) >= 1 then
                         if CheckProc(u, 610) then
-                            call USOrderA(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
+                            call DummyInstantCast1(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
                         endif
                         
                     endif

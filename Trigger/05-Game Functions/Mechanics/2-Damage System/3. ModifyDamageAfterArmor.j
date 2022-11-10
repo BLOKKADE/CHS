@@ -248,7 +248,7 @@ scope ModifyDamageAfterArmor initializer init
                 set r1 = 6 - (0.5 * GetProcCheckCount())
                 call AbilStartCD(DamageSource, 'A08U', RMaxBJ(r1, 0))
                 //call BJDebugMsg("ow cd" + R2S(r1))
-                call USOrder4field(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A047', "stomp", GetHeroStr(DamageSource,true) + (60 * GetHeroLevel(DamageSource)), ABILITY_RLF_DAMAGE_INCREASE, 400, ABILITY_RLF_CAST_RANGE, 1, ABILITY_RLF_DURATION_HERO, 1, ABILITY_RLF_DURATION_NORMAL)
+                call DummyInstantCast4(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A047', "stomp", GetHeroStr(DamageSource,true) + (60 * GetHeroLevel(DamageSource)), ABILITY_RLF_DAMAGE_INCREASE, 400, ABILITY_RLF_CAST_RANGE, 1, ABILITY_RLF_DURATION_HERO, 1, ABILITY_RLF_DURATION_NORMAL)
             endif
         endif
 
@@ -256,7 +256,7 @@ scope ModifyDamageAfterArmor initializer init
         //call BJDebugMsg("dmg source ability:" + GetObjectName(DamageSourceAbility))
         if DamageSourceTypeId == LICH_UNIT_ID and DamageSourceAbility != 'A03J' and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < 25 * DamageSourceLuck then
             call ElemFuncStart(DamageSource,LICH_UNIT_ID)
-            call UsOrderU2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
+            call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
 
         //Magnetic Oscillation
@@ -320,7 +320,7 @@ scope ModifyDamageAfterArmor initializer init
                     //Bash
                     set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)  
                     if i > 0 and GetRandomReal(0, 100) <= I2R(i) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
-                        call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
+                        call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
                     endif
 
                     //Volcanic Armor
@@ -410,7 +410,7 @@ scope ModifyDamageAfterArmor initializer init
             //Dark Hunter Bash
             if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                 //call BJDebugMsg("src: " + GetUnitName(DamageSource) + " doh: " + I2S(DamageIsOnHit) + " dmg: " + R2S(Damage.index.damage))
-                call UsOrderU(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", 50 * GetHeroLevel(DamageSource), ABILITY_RLF_DAMAGE_HTB1 )
+                call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", 50 * GetHeroLevel(DamageSource), ABILITY_RLF_DAMAGE_HTB1 )
             endif
         endif
         
@@ -492,7 +492,7 @@ scope ModifyDamageAfterArmor initializer init
         //Thunder Force
         set i1 = GetUnitAbilityLevel(DamageSource, THUNDER_FORCE_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack then
-            call UsOrderU(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroAgi(DamageSource,true) * (0.2 + (0.08 * i1)), ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
+            call DummyTargetCast1(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroAgi(DamageSource,true) * (0.2 + (0.08 * i1)), ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif
 
         //Finishing Blow

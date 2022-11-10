@@ -40,7 +40,7 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
             set this.endTick = T32_Tick + R2I(duration * 32)
             set this.startTick = T32_Tick
             
-            call USOrder4field(this.source,GetUnitX(this.source),GetUnitY(this.source),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,duration,ABILITY_RLF_DURATION_HERO, duration,ABILITY_RLF_DURATION_NORMAL)
+            call DummyInstantCast4(this.source,GetUnitX(this.source),GetUnitY(this.source),'A03T',"battleroar",(100 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_DAMAGE_INCREASE,(10 * abilLevel)*(1 + 0.009 * heroLevel),ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_HTC2 ,duration,ABILITY_RLF_DURATION_HERO, duration,ABILITY_RLF_DURATION_NORMAL)
             call AddUnitCustomState(this.source, BONUS_MAGICPOW, this.bonus1)
             call AddUnitCustomState(this.source, BONUS_MAGICRES, this.bonus2)
         endmethod

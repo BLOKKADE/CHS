@@ -1,7 +1,7 @@
 library BloodRune requires RandomShit, UnitHelpers
     function CastBloodRune takes nothing returns boolean
         if IsUnitEnemy(GLOB_RUNE_U,GetOwningPlayer(GetFilterUnit())) and IsUnitTarget(GetFilterUnit()) then
-            call UsOrderU2(GLOB_RUNE_U, GetFilterUnit(), GetUnitX(GLOB_RUNE_U), GetUnitY(GLOB_RUNE_U), 'A0A6', "cripple", 1 + (1 * GLOB_RUNE_POWER), 1 + (1 * GLOB_RUNE_POWER),ABILITY_RLF_DURATION_NORMAL,ABILITY_RLF_DURATION_HERO)
+            call DummyTargetCast2(GLOB_RUNE_U, GetFilterUnit(), GetUnitX(GLOB_RUNE_U), GetUnitY(GLOB_RUNE_U), 'A0A6', "cripple", 1 + (1 * GLOB_RUNE_POWER), 1 + (1 * GLOB_RUNE_POWER),ABILITY_RLF_DURATION_NORMAL,ABILITY_RLF_DURATION_HERO)
         endif
         return false
     endfunction

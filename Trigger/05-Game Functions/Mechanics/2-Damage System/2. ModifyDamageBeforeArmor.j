@@ -330,7 +330,7 @@ scope ModifyDamageBeforeArmor initializer init
         if UnitHasItemType( DamageSource,'I06H' ) and Damage.index.isAttack then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource,'A04Y') <= 0 then
                 call AbilStartCD(DamageSource,'A04Y', 3 )
-                call USOrder4field(DamageSource,GetUnitX(DamageTarget),GetUnitY(DamageTarget),'A04R',"stomp",Damage.index.damage,ABILITY_RLF_DAMAGE_INCREASE,500,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,0.05,ABILITY_RLF_DURATION_NORMAL)
+                call DummyInstantCast4(DamageSource,GetUnitX(DamageTarget),GetUnitY(DamageTarget),'A04R',"stomp",Damage.index.damage,ABILITY_RLF_DAMAGE_INCREASE,500,ABILITY_RLF_CAST_RANGE ,1,ABILITY_RLF_DURATION_HERO,0.05,ABILITY_RLF_DURATION_NORMAL)
             endif       
         endif   
 
@@ -480,7 +480,7 @@ scope ModifyDamageBeforeArmor initializer init
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08V') <= 0 then
                 call AbilStartCD(DamageSource, 'A08V', 2)
                 call ElemFuncStart(DamageSource,PIT_LORD_UNIT_ID)
-                call UsOrderU2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A08N',"rainoffire", GetHeroLevel(DamageSource)* 40, GetHeroLevel(DamageSource)* 20, ABILITY_RLF_DAMAGE_HBZ2, ABILITY_RLF_DAMAGE_PER_SECOND_HBZ5)
+                call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A08N',"rainoffire", GetHeroLevel(DamageSource)* 40, GetHeroLevel(DamageSource)* 20, ABILITY_RLF_DAMAGE_HBZ2, ABILITY_RLF_DAMAGE_PER_SECOND_HBZ5)
             endif
         endif*/
 
@@ -499,7 +499,7 @@ scope ModifyDamageBeforeArmor initializer init
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08W') <= 0 then
                 call AbilStartCD(DamageSource, 'A08W', 6)
                 call ElemFuncStart(DamageSource,LICH_UNIT_ID)
-                call UsOrderU2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
+                call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
             endif
         endif*/
 
