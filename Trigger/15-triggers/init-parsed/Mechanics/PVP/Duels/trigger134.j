@@ -1,10 +1,5 @@
 library trigger134 initializer init requires RandomShit
 
-    function Trig_PvP_Func002001002001 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())!=Player(8))
-    endfunction
-
-
     function Trig_PvP_Func002A takes nothing returns nothing
         call GroupAddUnitSimple(GetEnumUnit(),PotentialDuelHeroes)
     endfunction
@@ -40,13 +35,13 @@ library trigger134 initializer init requires RandomShit
             call AdjustPlayerStateBJ(2750,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
         endif
     
-        call ResourseRefresh(awardingPlayer )
+        call ResourseRefresh(awardingPlayer)
 
         set awardingPlayer = null
     endfunction
 
     function Trig_PvP_Func002001002 takes nothing returns boolean
-        return IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO) and UnitAlive(GetFilterUnit()) and GetOwningPlayer(GetFilterUnit())!=Player(11) and GetOwningPlayer(GetFilterUnit())!=Player(8)
+        return IsAlivePlayerHero(GetFilterUnit())
     endfunction
 
 

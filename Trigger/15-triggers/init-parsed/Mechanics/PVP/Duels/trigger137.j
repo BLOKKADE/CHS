@@ -1,7 +1,7 @@
 library trigger137 initializer init requires RandomShit
 
     function Trig_PvP_No_Player_Func001Func001001002 takes nothing returns boolean
-        return (IsUnitAliveBJ(GetFilterUnit())==true) and (IsUnitInGroup(GetFilterUnit(),DuelingHeroGroup)==true) and ((GetPlayerSlotState(GetOwningPlayer(GetFilterUnit()))!=PLAYER_SLOT_STATE_PLAYING)) or (GetPlayerController(GetOwningPlayer(GetFilterUnit()))==MAP_CONTROL_COMPUTER)
+        return (IsUnitAliveBJ(GetFilterUnit())==true) and (IsUnitInGroup(GetFilterUnit(),DuelingHeroGroup)==true) and (((GetPlayerSlotState(GetOwningPlayer(GetFilterUnit()))!=PLAYER_SLOT_STATE_PLAYING)) or (GetPlayerController(GetOwningPlayer(GetFilterUnit()))==MAP_CONTROL_COMPUTER))
     endfunction
 
     function Trig_PvP_No_Player_Func001Func001A takes nothing returns nothing

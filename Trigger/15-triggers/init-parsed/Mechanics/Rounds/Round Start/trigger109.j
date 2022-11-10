@@ -5,29 +5,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
     endglobals
 
     function Trig_Start_Level_Conditions takes nothing returns boolean
-        if(not(udg_boolean09==false))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Start_Level_Func003Func001C takes nothing returns boolean
-        if(not(udg_boolean12==false))then
-            return false
-        endif
-        if(not(RoundNumber==1))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Start_Level_Func003C takes nothing returns boolean
-        if(not Trig_Start_Level_Func003Func001C())then
-            return false
-        endif
-        return true
+        return udg_boolean09==false
     endfunction
 
     function Trig_Start_Level_Func011A takes nothing returns nothing
@@ -36,50 +14,13 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call ResourseRefresh(GetEnumPlayer()) 
     endfunction
 
-
-    function Trig_Start_Level_Func013Func001C takes nothing returns boolean
-        if((ElimModeEnabled==true))then
-            return true
-        endif
-        if((GameModeShort==true))then
-            return true
-        endif
-        return false
-    endfunction
-
-
-    function Trig_Start_Level_Func013C takes nothing returns boolean
-        if(not Trig_Start_Level_Func013Func001C())then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Start_Level_Func015Func002001001001001 takes nothing returns boolean
-        return(GetFilterPlayer()!=Player(8))
-    endfunction
-    
-    function Trig_Start_Level_Func015Func002001001001002 takes nothing returns boolean
-        return(GetFilterPlayer()!=Player(11))
-    endfunction
-    
-    function Trig_Start_Level_Func015Func002001001001 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Start_Level_Func015Func002001001001001(),Trig_Start_Level_Func015Func002001001001002())
-    endfunction
-    
-    function Trig_Start_Level_Func015Func002001001002 takes nothing returns boolean
-        return(IsPlayerInForce(GetFilterPlayer(),DefeatedPlayers)!=true)
-    endfunction
-    
     function Trig_Start_Level_Func015Func002001001 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Start_Level_Func015Func002001001001(),Trig_Start_Level_Func015Func002001001002())
+        return (GetFilterPlayer()!=Player(8)) and (GetFilterPlayer()!=Player(11)) and (IsPlayerInForce(GetFilterPlayer(),DefeatedPlayers)!=true)
     endfunction
 
     function Trig_Start_Level_Func015Func002Func004A takes nothing returns nothing
         call RemoveItem(GetEnumItem())
     endfunction
-
 
     function Trig_Start_Level_Func015Func002A takes nothing returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(GetEnumPlayer())
@@ -120,7 +61,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         local timer t
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
 
-        if(Trig_Start_Level_Func003C())then
+        if(udg_boolean12==false and RoundNumber==1)then
             set udg_boolean12 = true
             set udg_boolean09 = true
 
@@ -135,7 +76,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call ConditionalTriggerExecute(udg_trigger146)
         call ForForce(GetPlayersAll(),function Trig_Start_Level_Func011A)
 
-        if(Trig_Start_Level_Func013C())then
+        if(ElimModeEnabled==true or GameModeShort==true)then
             set udg_integer59 =((200 * RoundNumber)/ RoundCreepNumber)
             set udg_integer61 =((200 * RoundNumber)-(udg_integer59 * RoundCreepNumber))
         else
