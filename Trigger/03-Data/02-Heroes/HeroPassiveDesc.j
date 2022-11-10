@@ -120,7 +120,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +10 attack damage." )
                             
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFleshGolem.blp" )
-        call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Construct: Receives 50% bonus hit points from its strength stat. Cannot take more than 10% of its maximum hit points in damage in one hit.")
+        call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Construct: Receives 50% bonus hit points from its strength stat. When it has more than 100.000 hit points it cannot take more than 10% of its maximum hit points in damage in one hit.")
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Construct: +1% bonus hit points from strength." )
             
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOrcWarlockRed.blp" )

@@ -424,6 +424,14 @@ scope ModifyDamageAfterArmor initializer init
                 set Damage.index.amount = 0
             endif 
         endif
+
+        //War Golem
+        if DamageTargetTypeId == WAR_GOLEM_UNIT_ID then
+            set r1 = BlzGetUnitMaxHP(DamageTarget)
+            if r1 > 100000 and Damage.index.amount > r1 * 0.1 then
+                set Damage.index.amount = r1 * 0.1
+            endif
+        endif
             
         //Holy Chain Mail
         if UnitHasItemType(DamageTarget,'I07U') then   
