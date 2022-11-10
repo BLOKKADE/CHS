@@ -121,7 +121,9 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Evasion & miss TODO: clean this up
-        if (Damage.index.isAttack or GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemType(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and (GetUnitCustomState(DamageTarget, BONUS_EVASION) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitCustomState(DamageSource, BONUS_MISSCHANCE) > 0) then
+        if (Damage.index.isAttack or 
+            GetUnitAbilityLevel(DamageTarget, 'B01T') > 0 or (UnitHasItemType(DamageTarget, SHADOW_BLADE_ITEM_ID) and UnitHasForm(DamageTarget, FORM_SHADOW))) and 
+            (GetUnitCustomState(DamageTarget, BONUS_EVASION) > 0 or GetUnitAbilityLevel(DamageSource, 'B027') > 0 or GetUnitCustomState(DamageSource, BONUS_MISSCHANCE) > 0) then
             call Evade()
             
             if Damage.index.damage == 0 then
@@ -157,8 +159,10 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
-        if GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 1 and CalculateDistance(GetUnitX(DamageTargetHero), GetWidgetX(DamageSource), GetUnitY(DamageTargetHero), GetWidgetY(DamageSource)) >= 300 then
-            set Damage.index.damage = Damage.index.damage - (Damage.index.damage * (0.05 + GetUnitAbilityLevel(DamageTargetHero, ENERGY_SHIELD_ABILITY_ID) * 0.01))
+        //Energy Shield
+        set i1 = GetUnitAbilityLevel(DamageTargetHero, ENERGY_SHIELD_ABILITY_ID)
+        if i1 > 0 and GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 1 and CalculateDistance(GetUnitX(DamageTargetHero), GetWidgetX(DamageSource), GetUnitY(DamageTargetHero), GetWidgetY(DamageSource)) >= 300 then
+            set Damage.index.damage = Damage.index.damage - (Damage.index.damage * (0.05 + (i1 * 0.01)))
         endif
 
         //Divine Bubble
@@ -254,6 +258,11 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Crits
         call SetCritDamage()
+
+        //Pyromancer fire attack
+        if DamageSourceTypeId == PYROMANCER_UNIT_ID and Damage.index.isAttack and DamageSourceAbility != PYROMANCER_UNIT_ID then
+            set DamageSourceAbility = PYROMANCER_UNIT_ID 
+        endif
 
         //Searing Arrows
         set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)
