@@ -1,18 +1,10 @@
 library trigger107 initializer init requires RandomShit
 
-    function Trig_Complete_Level_Player_Func006Func002001001002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-
-    function Trig_Complete_Level_Player_Func006Func002001001002002 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())==Player(11))
-    endfunction
-
     function Trig_Complete_Level_Player_Func006Func002001001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Complete_Level_Player_Func006Func002001001002001(),Trig_Complete_Level_Player_Func006Func002001001002002())
+        return (IsUnitAliveBJ(GetFilterUnit())==true) and (GetOwningPlayer(GetFilterUnit())==Player(11))
     endfunction
 
-    function Trig_Complete_Level_Player_Func006C takes nothing returns boolean
+    function Trig_Complete_Level_Player_Conditions takes nothing returns boolean
         if(not(GetOwningPlayer(GetTriggerUnit())==Player(11)))then
             return false
         endif
@@ -33,25 +25,6 @@ library trigger107 initializer init requires RandomShit
         endif
         return true
     endfunction
-
-
-    function Trig_Complete_Level_Player_Conditions takes nothing returns boolean
-        if(not Trig_Complete_Level_Player_Func006C())then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Complete_Level_Player_Func001001 takes nothing returns boolean
-        return(RoundNumber==5)
-    endfunction
-
-
-    function Trig_Complete_Level_Player_Func004001 takes nothing returns boolean
-        return(BettingPlayerCount > 3)
-    endfunction
-
 
     function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
         if(not(CountPlayersInForceBJ(RoundPlayersCompleted)< BettingPlayerCount))then
@@ -79,16 +52,12 @@ library trigger107 initializer init requires RandomShit
             set roundClearXpBonus = roundClearXpBonus * 2
         endif
 
-        if(Trig_Complete_Level_Player_Func001001())then
+        if(RoundNumber==5)then
             set udg_boolean09 = false
-        else
-            call DoNothing()
         endif
         set BettingPlayerCount =(PlayerCount / 2)
-        if(Trig_Complete_Level_Player_Func004001())then
+        if(BettingPlayerCount > 3)then
             set BettingPlayerCount = 3
-        else
-            call DoNothing()
         endif
 
         call ForceAddPlayerSimple(p,RoundPlayersCompleted)

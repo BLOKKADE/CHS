@@ -1,78 +1,15 @@
 library trigger106 initializer init requires RandomShit, Functions
 
     function Trig_Complete_Level_Move_Conditions takes nothing returns boolean
-        if(not(IsUnitInGroup(GetTriggerUnit(),GroupEmptyArenaCheck)==true))then
-            return false
-        endif
-        return true
+        return IsUnitInGroup(GetTriggerUnit(),GroupEmptyArenaCheck)==true
     endfunction
-
-
-    function Trig_Complete_Level_Move_Func003C takes nothing returns boolean
-        if(not(IsPlayerInForce(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),DefeatedPlayers)!=true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Complete_Level_Move_Func005Func001C takes nothing returns boolean
-        if((ElimModeEnabled==true))then
-            return true
-        endif
-        if((GameModeShort==true))then
-            return true
-        endif
-        return false
-    endfunction
-
-
-    function Trig_Complete_Level_Move_Func005C takes nothing returns boolean
-        if(not Trig_Complete_Level_Move_Func005Func001C())then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Complete_Level_Move_Func005Func003C takes nothing returns boolean
-        if(not(RoundNumber <= 1))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Complete_Level_Move_Func005Func003Func001C takes nothing returns boolean
-        if(not(RoundNumber < 4))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Complete_Level_Move_Func005Func002C takes nothing returns boolean
-        if(not(RoundNumber <= 1))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Complete_Level_Move_Func005Func002Func001C takes nothing returns boolean
-        if(not(RoundNumber < 8))then
-            return false
-        endif
-        return true
-    endfunction
-
 
     function Trig_Complete_Level_Move_Actions takes nothing returns nothing
         local integer pid = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetTriggerUnit()))
         local location arenaLocation
 
-        if(Trig_Complete_Level_Move_Func003C())then
+        if(IsPlayerInForce(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),DefeatedPlayers)!=true)then
             set arenaLocation = GetRectCenter(RectMidArena)
 
             call RemoveDebuff(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))], 0)
@@ -87,14 +24,15 @@ library trigger106 initializer init requires RandomShit, Functions
             call RemoveLocation(arenaLocation)
             set arenaLocation = null
         endif
-        if(Trig_Complete_Level_Move_Func005C())then
-            if(Trig_Complete_Level_Move_Func005Func003C())then
+
+        if(ElimModeEnabled==true or GameModeShort==true)then
+            if(RoundNumber <= 1)then
                 set LumberGained[pid] = 21 * RoundNumber
                 call AdjustPlayerStateBJ((21 * RoundNumber),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
                 //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(21*RoundNumber) + " lumber|r")
                 call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
             else
-                if(Trig_Complete_Level_Move_Func005Func003Func001C())then
+                if(RoundNumber < 4)then
                     set LumberGained[pid] = 11 * RoundNumber
                     call AdjustPlayerStateBJ((11 * RoundNumber),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
                     call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
@@ -105,13 +43,13 @@ library trigger106 initializer init requires RandomShit, Functions
                 endif
             endif
         else
-            if(Trig_Complete_Level_Move_Func005Func002C())then
+            if(RoundNumber <= 1)then
                 set LumberGained[pid] = 10 * RoundNumber
                 call AdjustPlayerStateBJ((10 * RoundNumber),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
                 //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(10*RoundNumber) + " lumber|r")
                 call ResourseRefresh(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))) )
             else
-                if(Trig_Complete_Level_Move_Func005Func002Func001C())then
+                if(RoundNumber < 8)then
                     set LumberGained[pid] = 6 * RoundNumber
                     call AdjustPlayerStateBJ((6 * RoundNumber),ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),PLAYER_STATE_RESOURCE_LUMBER)
                     //call DisplayTimedTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, 20, "|cff00aa0e+" + I2S(6*RoundNumber) + " lumber|r")
