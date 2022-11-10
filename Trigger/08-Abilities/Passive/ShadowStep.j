@@ -18,7 +18,7 @@ library ShadowStep initializer init requires RandomShit, CustomEvent
                 call DestroyEffect(e2)
 
                 if not UnitHasForm(u1, FORM_SHADOW) then
-                    call AbilStartCD(u1,SHADOW_STEP_ABILITY_ID, 9.25 - (I2R(lvl)*0.25) ) 
+                    call AbilStartCD(u1,SHADOW_STEP_ABILITY_ID, 15.3 - (I2R(lvl)*0.3) ) 
                 endif
             endif 
         endif
