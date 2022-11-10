@@ -10,8 +10,6 @@ scope ModifyDamageBeforeArmor initializer init
         local integer i1 = 0
         local integer i2 = 0
         local integer i = 0
-        local DarkSeal ds = 0
-        local real distance = 0
 
         //Contract of the Living no damage
         if GetUnitAbilityLevel(DamageSource, CONTRACT_LIVING_BUFF_ID) > 0 or GetUnitAbilityLevel(DamageTarget, CONTRACT_LIVING_BUFF_ID) > 0 then
@@ -113,8 +111,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Shadow dance - start shadow form
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
         if i1 > 0 and  BlzGetUnitAbilityCooldownRemaining(DamageSource,SHADOW_DANCE_ABILITY_ID) <= 0 and Damage.index.isAttack and not IsOnHitDamage() then
-            set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
-            if distance < 230  then
+            if CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource)) < 230  then
                 call UnitAddForm(DamageSource, FORM_SHADOW, 2.9 + I2R(i1)/ 10)
                 call AbilStartCD(DamageSource,SHADOW_DANCE_ABILITY_ID, 13) 
             endif
@@ -214,8 +211,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Backstab
         set i1 = GetUnitAbilityLevel(DamageSource, BACKSTAB_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack and not IsOnHitDamage() then
-            set distance = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
-            if distance < 220 and  RAbsBJ(GetUnitFacing(DamageTarget) - GetUnitFacing(DamageSource)) < 85 then
+            if CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource)) < 220 and  RAbsBJ(GetUnitFacing(DamageTarget) - GetUnitFacing(DamageSource)) < 85 then
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", DamageTarget, "chest"))
                 set Damage.index.damage = Damage.index.damage * (1 +  0.05 * I2R(i2)) + 20 * i1
             endif
@@ -413,44 +409,6 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = Damage.index.damage * 1.5
         endif
 
-        //Dark seal
-        if GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DARK_SEAL_ABILITY_ID) <= 0 and IsHeroUnitId(DamageTargetTypeId) and not IsOnHitDamage() then
-            set i1 =  2 * GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID)
-            set ds = LoadInteger(HT, DamageTargetId, DARK_SEAL_ABILITY_ID)
-            if ds == 0 then
-                set ds = DarkSeal.create()
-                call SaveInteger(HT, DamageTargetId, DARK_SEAL_ABILITY_ID, ds)
-            endif
-            call ds.Execute(DamageTarget, 2 * GetUnitAbilityLevel(DamageSource, DARK_SEAL_ABILITY_ID))
-            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
-            call AbilStartCD(DamageSource,DARK_SEAL_ABILITY_ID, 9) 
-        endif
-
-        //Dark seal curse
-        if GetUnitAbilityLevel(DamageTarget, DARK_SEAL_ABILITY_ID) > 0 then
-            set r1 = I2R(GetHeroStr(DamageTarget, true) + GetHeroAgi(DamageTarget, true) + GetHeroInt(DamageTarget, true))
-            if (r1 < 0) then
-                set r1 = -r1
-            endif
-            set Damage.index.damage =  Damage.index.damage + (r1/10)
-        endif
-
-        //Destroy block
-        if GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)> 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID) <= 0 and not IsOnHitDamage() then
-            set r1 =  -10 * GetUnitAbilityLevel(DamageSource, DESTRUCTION_BLOCK_ABILITY_ID)
-            if (GetUnitCustomState(DamageTarget, BONUS_BLOCK) < 0) then
-                set r1 = r1 * 0.5
-            endif
-            call AddUnitCustomState(DamageTarget, BONUS_BLOCK, r1)
-            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", DamageTarget, "chest"))
-            if IsHeroUnitId(DamageTargetTypeId) then
-                call AddUnitCustomState(DamageSource, BONUS_BLOCK, r1/2)
-                call SaveReal(HT, DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID,  LoadReal(HT,DamageTargetId, DESTRUCTION_BLOCK_ABILITY_ID)  + r1)
-                call SaveReal(HT, DamageSourceId, DESTRUCTION_BLOCK_ABILITY_ID,  LoadReal(HT,DamageSourceId, DESTRUCTION_BLOCK_ABILITY_ID)  + r1/2)
-                call AbilStartCD(DamageSource,DESTRUCTION_BLOCK_ABILITY_ID, 12) 
-            endif
-        endif
-
         //Ice Armor
         set i1 = GetUnitAbilityLevel(DamageTarget,ICE_ARMOR_SUMMON_ABILITY_ID)
         if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_ARMOR_SUMMON_ABILITY_ID) <= 0 then
@@ -495,7 +453,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Ogre Warrior Stomp block ignore
         if DamageSourceAbility == 'A047' and GetUnitCustomState(DamageTarget, BONUS_BLOCK) > 0 then
-            call TempBonus.create(DamageTarget, BONUS_BLOCK,0 - GetUnitCustomState(DamageTarget, BONUS_BLOCK) * 0.2, 1, 'A047')
+            call TempBonus.create(DamageTarget, BONUS_BLOCK,0 - GetUnitCustomState(DamageTarget, BONUS_BLOCK) * 0.2, 1, 'A047').activate()
         endif
 
         //Fan of Knives
@@ -668,12 +626,7 @@ scope ModifyDamageBeforeArmor initializer init
             if DamageIsSuddenDeath then
                 set blockDamage = blockDamage / 2
             endif
-            /*
-            //Destruction block curse
-            if GetUnitAbilityLevel(DamageTarget, DESTRUCTION_BLOCK_ABILITY_ID) > 0 then
-                set blockDamage = blockDamage / 2
-            endif
-            */
+
             //Sword of Bloodthirst
             if UnitHasItemType(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) then
                 set blockDamage = blockDamage * 0.7

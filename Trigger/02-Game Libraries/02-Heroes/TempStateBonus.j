@@ -43,19 +43,22 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         integer sourceId
         integer endTick
         integer startTick
+        real duration
         boolean buffLink
         integer buffId
         integer abilId
         boolean roundEnd
 
         private method periodic takes nothing returns nothing
-            if (not this.roundEnd and T32_Tick > this.endTick) or HasPlayerFinishedLevel(this.source, this.p) or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
+            if ((not this.roundEnd) and T32_Tick > this.endTick) or (this.p != Player(11) and HasPlayerFinishedLevel(this.source, this.p)) or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
+                //call BJDebugMsg("disable tb")
                 call this.stopPeriodic()
                 call this.destroy()
             endif
         endmethod  
 
         private method updateState takes nothing returns nothing
+            //call BJDebugMsg("state: " + I2S(this.state) +", bonus: " + R2S(this.bonus))
             if state < 11 or state == 21 then
                 call AddUnitCustomState(this.source, this.state, this.bonus)
             else
@@ -67,9 +70,19 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
             endif
         endmethod
 
-        method addBuffLink takes integer buffId returns nothing
+        method activate takes nothing returns thistype
+            call this.updateState()
+            set this.endTick = T32_Tick + R2I(this.duration * 32)
+            call this.startPeriodic()
+            //call BJDebugMsg("activate tb")
+            return this
+        endmethod
+
+        method addBuffLink takes integer buffId returns thistype
             set this.buffLink = true
             set this.buffId = buffId
+
+            return this
         endmethod
 
         private method setHashTable takes nothing returns nothing
@@ -80,6 +93,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
             set TempBonusTable[this.sourceId][this.abilId][this.state] = this
         endmethod
 
+        // 0 duration = end of round
         static method create takes unit source, integer state, real bonus, real duration, integer abilSource returns thistype
             local thistype this = thistype.setup()
 
@@ -94,12 +108,9 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
             set this.abilId = abilSource
             set this.p = GetOwningPlayer(source)
             set this.roundEnd = duration == 0.
+            set this.duration = duration
             call this.setHashTable()
-
-            call this.updateState()
-            
-            set this.endTick = T32_Tick + R2I(duration * 32)
-            call this.startPeriodic()
+            //call BJDebugMsg("create tb")
             return this
         endmethod
         
@@ -126,6 +137,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
             if buffLink != 0 then
                 call tBonus.addBuffLink(buffLink)
             endif
+            call tBonus.activate()
         elseif tBonus.enabled then
             //call BJDebugMsg("ba dur update")
             set tBonus.endTick = T32_Tick + R2I(duration * 32)

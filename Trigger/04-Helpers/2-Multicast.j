@@ -54,8 +54,11 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 call dummy.point(this.x, this.y)
             endif
 
+            //call BJDebugMsg("cast")
             if dummy.activate() then
                 call SetUnitState(this.caster, UNIT_STATE_MANA, GetUnitState(this.caster, UNIT_STATE_MANA) - this.manaCost)
+            else
+                //call BJDebugMsg("fail")
             endif
         endmethod
 

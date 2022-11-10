@@ -185,7 +185,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         local integer pid = GetPlayerId(p)
         local integer i1 = 0 
         local real r1 = 0
-        local DarkSeal ds = 0
         local real gloryBonus = 0
         local integer hid = GetHandleId(u)
         local customEvent e = customEvent.create()
@@ -209,12 +208,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         if i1 != 0 then 
             call AddUnitBonus(u, BONUS_DAMAGE, 0 - i1)
             call SaveInteger(HT,GetHandleId(u),ARCANE_INFUSED_SWORD_ITEM_ID,0)
-        endif
-
-        set r1 = LoadReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID)
-        if r1 != 0 then 
-            call AddUnitCustomState(u, BONUS_BLOCK, -r1)
-            call SaveReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID,0)
         endif
 
         //Murloc Warrior

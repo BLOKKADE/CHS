@@ -64,6 +64,14 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(caster, target, lvl)
             return true
+        //Dark Seal
+        elseif abilId == DARK_SEAL_ABILITY_ID then
+            call CastDarkSeal(caster, target, lvl)
+            return true
+        //Destruction of Block
+        elseif abilId == DESTRUCTION_BLOCK_ABILITY_ID then
+            call CastDestrOfBlock(caster, target, lvl)
+            return true
         //Inner Fire
         elseif abilId == INNER_FIRE_ABILITY_ID then
             call CastInnerFire(caster, target, lvl)

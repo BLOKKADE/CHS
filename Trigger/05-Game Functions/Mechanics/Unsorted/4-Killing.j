@@ -68,8 +68,7 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
             //Amulet of the Night
             set i = GetUnitItemTypeCount( killingHero,'I07E') 
             if i > 0 and GetOwningPlayer(target) == Player(11) then
-
-                call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 7, 10, 'I07E')
+                call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 7, 10, 'I07E').activate()
             endif
         endif
         set t = null

@@ -20,6 +20,4 @@ library trigger36 initializer init requires RandomShit, DummyActiveSpell
         call TriggerRegisterAnyUnitEventBJ(udg_trigger36,EVENT_PLAYER_UNIT_SPELL_CAST)
         call TriggerAddAction(udg_trigger36,function Trig_Disable_Abilities_Actions)
     endfunction
-
-
 endlibrary

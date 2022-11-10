@@ -480,7 +480,7 @@ scope ModifyDamageAfterArmor initializer init
                     set r3 = RMaxBJ(r3 + (r2 - r3), 0)
                 endif
                 if r3 > 0 then
-                    call TempBonus.create(DamageTarget, BONUS_NEGATIVEHPREGEN, r3, 7, DECAYING_SCYTHE_ABILITY_ID).addBuffLink(DECAYING_SCYTHE_BUFF_ID)
+                    call TempBonus.create(DamageTarget, BONUS_NEGATIVEHPREGEN, r3, 7, DECAYING_SCYTHE_ABILITY_ID).addBuffLink(DECAYING_SCYTHE_BUFF_ID).activate()
                 endif
                 //call BJDebugMsg("regen red: " + R2S(r3))
             endif

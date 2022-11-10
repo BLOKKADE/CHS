@@ -1085,17 +1085,18 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(MARTIAL_THEFT_ABILITY_ID, MARTIAL_THEFT_ITEM_ID, false, 0, 0, false, Order_None, null)
         //call SetLastObjectElement(Element_Energy, 1)
 
-        //188 - Destryction Block 
-        call SaveAbilData(DESTRUCTION_BLOCK_ABILITY_ID, DESTRUCTION_BLOCK_ITEM_ID, false, 0, 0, false, Order_None, null)
+        //188 - Destrution Block 
+        call SaveAbilData(DESTRUCTION_BLOCK_ABILITY_ID, DESTRUCTION_BLOCK_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
         call SetLastObjectElement(Element_Dark, 1)
 
         //189 - Dark Seal
-        call SaveAbilData(DARK_SEAL_ABILITY_ID, DARK_SEAL_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SaveAbilData(DARK_SEAL_ABILITY_ID, DARK_SEAL_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
         call SetLastObjectElement(Element_Dark, 1)
 
         //190 - Shadow Step
         call SaveAbilData(SHADOW_STEP_ABILITY_ID, SHADOW_STEP_ITEM_ID , false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Dark, 2)
+        call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Wind, 1)
 
         //191 - Energy Shield
         call SaveAbilData(ENERGY_SHIELD_ABILITY_ID, ENERGY_SHIELD_ITEM_ID , false, 0, 0, false, Order_None, null)

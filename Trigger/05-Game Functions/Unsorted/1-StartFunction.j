@@ -258,7 +258,6 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
     function FixAbilityU takes unit u returns nothing
         local integer i1 = 0
         local real r1 = 0
-        local DarkSeal = ds = 0
         local customEvent e = customEvent.create()
         set e.EventUnit = u
         call DispachEvent(CUSTOM_EVENT_FIX_START_ROUND, e)
@@ -270,12 +269,6 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
             call SetHeroAgi(u,GetHeroAgi(u,false)- i1,false)
             call SetHeroInt(u,GetHeroInt(u,false)- i1,false)
             call SaveInteger(HT,GetHandleId(u),54021,0)
-        endif
-
-        set r1 = LoadReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID)
-        if r1 != 0 then 
-            call AddUnitCustomState(u, BONUS_BLOCK, -r1)
-            call SaveReal(HT,GetHandleId(u),DESTRUCTION_BLOCK_ABILITY_ID,0)
         endif
     endfunction
     //i1 = 1 = battle royale
