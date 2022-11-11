@@ -28,8 +28,8 @@ library VotingResults initializer init
 
     struct PlayerVotes
         private integer RoundVote = 1 // 25 rounds
-        private integer AbilityVote = 1 // Pick
-        private integer HeroVote = 1 // Pick
+        private integer AbilityVote = 3 // Draft
+        private integer HeroVote = 3 // Draft
         private integer IncomeVote = 1 // Individual
         private integer ImmortalVote = 1 // Normal lives
         private integer PvpBettingVote = 1 // No betting
