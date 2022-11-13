@@ -4,7 +4,7 @@ library AbilityDescription initializer init requires ReplaceTextLib
     endglobals
 
     function SetAbilityDescription takes integer abilId, integer lvl returns nothing
-        if AbilityDescription[abilId].string[lvl] != null then
+        if AbilityDescription[abilId].string[lvl] == null then
             set AbilityDescription[abilId].string[lvl] = BlzGetAbilityExtendedTooltip(abilId, lvl)
         endif
     endfunction
