@@ -121,7 +121,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call TriggerSleepAction(2)
         set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
         set CountdownCount = 5
-        call ConditionalTriggerExecute(udg_trigger117)
+        call ConditionalTriggerExecute(PvpCountdownTimerTrigger)
         call TriggerSleepAction(5.00)
         call PlaySoundBJ(udg_sound08)
         call DisplayTimedTextToForce(GetPlayersAll(),1.00,"|cffffcc00GO!!!|r")
@@ -129,7 +129,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_Battle_Royal_Func033001002)),function Trig_Battle_Royal_Func033A)
         if(Trig_Battle_Royal_Func034C())then
             set PlayerCount = 1
-            call ConditionalTriggerExecute(udg_trigger122)
+            call ConditionalTriggerExecute(EndGameTrigger)
         else
         endif
 

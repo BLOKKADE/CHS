@@ -293,7 +293,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
 
     
         if(Trig_Hero_Dies_Func016C())then
-            call ConditionalTriggerExecute(udg_trigger122)
+            call ConditionalTriggerExecute(EndGameTrigger)
         endif
     
         call ConditionalTriggerExecute(udg_trigger118)

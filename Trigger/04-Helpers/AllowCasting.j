@@ -15,7 +15,7 @@ library AllowCasting
     endfunction
     
     private function CheckUnit takes unit u returns boolean
-        if((u==udg_unit05))then
+        if (IsUnitInGroup(u, DuelWinnerDisabled)==true) then
             return true
         endif
         if((RectContainsUnit(RectMidArena,u)==true))then

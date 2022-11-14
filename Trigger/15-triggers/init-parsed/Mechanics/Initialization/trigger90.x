@@ -105,7 +105,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
         call TriggerSleepAction(24.50)
         set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
         set CountdownCount = 5
-        call ConditionalTriggerExecute(udg_trigger117)
+        call ConditionalTriggerExecute(PvpCountdownTimerTrigger)
         call TriggerSleepAction(5.00)
 
         if(SpawnedHeroCount < PlayerCount and RoundNumber != 1) then

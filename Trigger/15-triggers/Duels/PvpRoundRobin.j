@@ -1,4 +1,4 @@
-library PvpRoundRobin requires ListT
+library PvpRoundRobin requires ListT, ForceHelper
 /*
 Round robin style tournament for more info see: https://en.wikipedia.org/wiki/Round-robin_tournament#Circle_method
 PlayerList = list of player ids that is moved around round robin style
@@ -13,6 +13,8 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 */
 
     globals
+        DuelGame CurrentDuel
+
         private boolean initialised = false
         IntegerList PlayerList
         IntegerList DuelGameList
@@ -22,8 +24,40 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         private constant integer TeamPlayerLimit = 2
     endglobals
 
+    function DisplayNemesisNames takes nothing returns nothing
+        local integer duelGameIndex = 0
+        local DuelGame currentDuelGame
+        local string team1ForceString
+        local string team2ForceString
+
+        loop
+            set currentDuelGame = DuelGameList[duelGameIndex]
+            set team1ForceString = ConvertForceToString(currentDuelGame.team1)
+            set team2ForceString = ConvertForceToString(currentDuelGame.team2)
+
+            // Display team2 opponents to team1
+            if (CountPlayersInForceBJ(currentDuelGame.team2) > 1) then
+                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "Your opponents are " + team2ForceString)
+            else
+                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "Your opponent is " + team2ForceString)
+            endif
+
+            // Display team1 opponents to team2
+            if (CountPlayersInForceBJ(currentDuelGame.team1) > 1) then
+                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "Your opponents are " + team1ForceString)
+            else
+                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "Your opponent is " + team1ForceString)
+            endif
+
+            set duelGameIndex = duelGameIndex + 1
+
+            exitwhen duelGameIndex == DuelGameList.size()
+        endloop
+    endfunction
+
     function GetNextDuel takes nothing returns DuelGame
         local DuelGame duelGame = DuelGameList.back()
+        set CurrentDuel = duelGame
         call DuelGameList.pop()
         return duelGame
     endfunction
@@ -31,18 +65,67 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
     struct DuelGame extends array
         force team1
         force team2
+        boolean isDuelOver
+        rect arena
 
         private static thistype recycle = 0
         private static integer instanceCount = 0
         private thistype next
 
-        /*
-        static method GetDuelGame takes integer id returns thistype
-            return thistype[id]
+        method getEnemyPlayerTeam takes player p returns force
+            if (IsPlayerInForce(p, this.team1)) then
+                return this.team2
+            elseif (IsPlayerInForce(p, this.team2)) then
+                return this.team1
+            else
+                return null
+            endif
         endmethod
-        */
 
-        static method create takes force team1, force team2 returns thistype
+        method getPlayerTeam takes player p returns force
+            if (IsPlayerInForce(p, this.team1)) then
+                return this.team1
+            elseif (IsPlayerInForce(p, this.team2)) then
+                return this.team2
+            else
+                return null
+            endif
+        endmethod
+
+        static method areAllDuelsOver takes nothing returns boolean
+            loop
+                set currentDuelGame = DuelGameList[duelGameIndex]
+    
+                if (not currentDuelGame.isDuelOver) then
+                    return false
+                endif
+    
+                set duelGameIndex = duelGameIndex + 1
+    
+                exitwhen duelGameIndex == DuelGameList.size()
+            endloop
+
+            return true
+        endmethod
+
+        static method getPlayerDuelGame takes player p returns thistype
+            local integer duelGameIndex = 0
+            local DuelGame currentDuelGame
+    
+            loop
+                set currentDuelGame = DuelGameList[duelGameIndex]
+    
+                if (IsPlayerInForce(p, currentDuelGame.team1) or IsPlayerInForce(p, currentDuelGame.team2)) then
+                    return currentDuelGame
+                endif
+    
+                set duelGameIndex = duelGameIndex + 1
+    
+                exitwhen duelGameIndex == DuelGameList.size()
+            endloop
+        endmethod
+
+        static method create takes force team1, force team2, rect arena returns thistype
             local thistype this
 
             if (recycle == 0) then
@@ -55,6 +138,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
             set this.team1 = team1
             set this.team2 = team2
+            set this.arena = arena
 
             return this
         endmethod
@@ -79,6 +163,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         local IntegerList tempPlayerList = IntegerList[PlayerList]
         local force team1
         local force team2
+        local integer playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
 
         call DuelGameList.clear()
 
@@ -96,7 +181,11 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
                 set j = j - 1
                 exitwhen j <= 0
             endloop
-            call DuelGameList.push(DuelGame.create(team1, team2))
+
+            call DuelGameList.push(DuelGame.create(team1, team2, PlayerArenaRects[playerArenaRectIndex]))
+
+            set playerArenaRectIndex = ModuloInteger(playerArenaRectIndex, 8)
+            set playerArenaRectIndex = playerArenaRectIndex + 1
             set i = i + 1
             exitwhen i >= limit
         endloop

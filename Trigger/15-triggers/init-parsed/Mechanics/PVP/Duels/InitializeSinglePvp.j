@@ -1,4 +1,4 @@
-library trigger134 initializer init requires RandomShit
+library InitializeSinglePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults
 
     function Trig_PvP_Func002A takes nothing returns nothing
         call GroupAddUnitSimple(GetEnumUnit(),PotentialDuelHeroes)
@@ -26,12 +26,12 @@ library trigger134 initializer init requires RandomShit
             endif
         endif
 
-        // Award bonus gold? Makes no sense since this variables is only assigned from DuelReward which is just an array of ints
-        if(udg_integer15=='I01D')then // Armor of the goddess
+        // Award bonus gold? Makes no sense since this variable is only assigned from DuelReward which is just an array of ints
+        if(PvpGoldWinAmount=='I01D')then // Armor of the goddess
             call AdjustPlayerStateBJ(1400,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
-        elseif(udg_integer15=='I01C')then // Soul reparer
+        elseif(PvpGoldWinAmount=='I01C')then // Soul reparer
             call AdjustPlayerStateBJ(1750,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
-        elseif(udg_integer15=='I01E')then // Rapier of the gods
+        elseif(PvpGoldWinAmount=='I01E')then // Rapier of the gods
             call AdjustPlayerStateBJ(2750,awardingPlayer,PLAYER_STATE_RESOURCE_GOLD)
         endif
     
@@ -51,24 +51,19 @@ library trigger134 initializer init requires RandomShit
         call ForGroupBJ(DuelWinners,function AwardDuelWinners)
         call GroupClear(DuelWinners)
         
-            /*
-            call UpdatePlayerCount()
-            call MoveRoundRobin()
-            call DisplayDuelNemesis()*/
-            
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
         call StartTimerBJ(GetLastCreatedTimerBJ(),false,25.00)
         call DisplayTimedTextToForce(GetPlayersAll(), 25, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
         call TriggerSleepAction(25.00)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        call ConditionalTriggerExecute(udg_trigger136)
+        call ConditionalTriggerExecute(StartSinglePvpDuelTrigger)
     endfunction
 
 
     private function init takes nothing returns nothing
-        set udg_trigger134 = CreateTrigger()
-        call TriggerAddAction(udg_trigger134,function Trig_PvP_Actions)
+        set InitializeSingleDuelsTrigger = CreateTrigger()
+        call TriggerAddAction(InitializeSingleDuelsTrigger,function Trig_PvP_Actions)
     endfunction
 
 

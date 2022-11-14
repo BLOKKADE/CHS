@@ -25,7 +25,7 @@ library trigger48 initializer init requires RandomShit
 
 
     function Trig_Place_Bet_Gold_Func001Func001001 takes nothing returns boolean
-        return(udg_boolean18!=true)
+        return(AllowBetSelection!=true)
     endfunction
 
 

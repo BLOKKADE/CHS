@@ -1,132 +1,52 @@
 library trigger54 initializer init requires RandomShit
 
     function Trig_Betting_Complete_Conditions takes nothing returns boolean
-        if(not(BettingEnabled==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001Func002C takes nothing returns boolean
-        if((udg_integers15[GetConvertedPlayerId(GetEnumPlayer())]> 0))then
-            return true
-        endif
-        if((udg_integers16[GetConvertedPlayerId(GetEnumPlayer())]> 0))then
-            return true
-        endif
-        return false
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001C takes nothing returns boolean
-        if(not Trig_Betting_Complete_Func002Func001Func002C())then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001Func001Func001Func001C takes nothing returns boolean
-        if(not(DuelingHeroes[1]==udg_unit05))then
-            return false
-        endif
-        if(not(IsPlayerInForce(GetEnumPlayer(),udg_force04)==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001Func001Func001Func002C takes nothing returns boolean
-        if(not(DuelingHeroes[2]==udg_unit05))then
-            return false
-        endif
-        if(not(IsPlayerInForce(GetEnumPlayer(),udg_force05)==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001Func001Func001C takes nothing returns boolean
-        if(Trig_Betting_Complete_Func002Func001Func001Func001Func001C())then
-            return true
-        endif
-        if(Trig_Betting_Complete_Func002Func001Func001Func001Func002C())then
-            return true
-        endif
-        return false
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001Func001C takes nothing returns boolean
-        if(not Trig_Betting_Complete_Func002Func001Func001Func001C())then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001Func001Func006C takes nothing returns boolean
-        if(not(udg_booleans04[GetConvertedPlayerId(GetEnumPlayer())]==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001Func001Func006Func003C takes nothing returns boolean
-        if(not(udg_booleans05[GetConvertedPlayerId(GetEnumPlayer())]==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Betting_Complete_Func002Func001Func001Func007C takes nothing returns boolean
-        if(not(udg_booleans05[GetConvertedPlayerId(GetEnumPlayer())]==true))then
-            return false
-        endif
-        return true
+        return BettingEnabled==true
     endfunction
 
 
     function Trig_Betting_Complete_Func002A takes nothing returns nothing
-        if(Trig_Betting_Complete_Func002Func001C())then
-            if(Trig_Betting_Complete_Func002Func001Func001C())then
-                set udg_string01 =(GetPlayerNameColour(GetEnumPlayer()))
-                set udg_string01 =(udg_string01 + " won: ")
-                call AddSpecialEffectTargetUnitBJ("origin",PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
+        local player currentPlayer = GetEnumPlayer()
+        local integer convertedPlayerId = GetConvertedPlayerId(currentPlayer)
+        local string winMessage
+
+        if (udg_integers15[convertedPlayerId] > 0 or udg_integers16[convertedPlayerId] > 0) then
+            //if ((IsUnitInGroup(DuelingHeroes[1], DuelWinnerDisabled)==true) and IsPlayerInForce(currentPlayer,udg_force04)==true) or ((IsUnitInGroup(DuelingHeroes[2], DuelWinnerDisabled)==true) and IsPlayerInForce(currentPlayer,udg_force05)==true))then
+                set winMessage = GetPlayerNameColour(currentPlayer)
+                set winMessage = winMessage + " won: "
+                call AddSpecialEffectTargetUnitBJ("origin",PlayerHeroes[convertedPlayerId],"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
                 call DestroyEffectBJ(GetLastCreatedEffectBJ())
-                if(Trig_Betting_Complete_Func002Func001Func001Func006C())then
-                    call AdjustPlayerStateBJ((udg_integers15[GetConvertedPlayerId(GetEnumPlayer())]* 2),GetEnumPlayer(),PLAYER_STATE_RESOURCE_GOLD)
-                    call ResourseRefresh(  GetEnumPlayer()    )
-                    set udg_string01 =(udg_string01 + I2S((udg_integers15[GetConvertedPlayerId(GetEnumPlayer())]* 2)))
-                    if(Trig_Betting_Complete_Func002Func001Func001Func006Func003C())then
-                        set udg_string01 =(udg_string01 + " gold and ")
-                    else
+                
+                if(udg_booleans04[convertedPlayerId]==true)then
+                    call AdjustPlayerStateBJ((udg_integers15[convertedPlayerId] * 2),currentPlayer,PLAYER_STATE_RESOURCE_GOLD)
+                    call ResourseRefresh(currentPlayer)
+                    set winMessage = winMessage + I2S((udg_integers15[convertedPlayerId]* 2))
+                    
+                    if(udg_booleans05[convertedPlayerId]==true)then
+                        set winMessage = winMessage + " gold and "
                     endif
-                else
                 endif
-                if(Trig_Betting_Complete_Func002Func001Func001Func007C())then
-                    call AdjustPlayerStateBJ((udg_integers16[GetConvertedPlayerId(GetEnumPlayer())]* 2),GetEnumPlayer(),PLAYER_STATE_RESOURCE_LUMBER)
-                    call ResourseRefresh( GetEnumPlayer()   )
-                    set udg_string01 =(udg_string01 + I2S((udg_integers16[GetConvertedPlayerId(GetEnumPlayer())]* 2)))
-                    set udg_string01 =(udg_string01 + " lumber!")
+
+                if(udg_booleans05[convertedPlayerId]==true)then
+                    call AdjustPlayerStateBJ((udg_integers16[convertedPlayerId]* 2),currentPlayer,PLAYER_STATE_RESOURCE_LUMBER)
+                    call ResourseRefresh(currentPlayer)
+                    set winMessage = winMessage + I2S((udg_integers16[convertedPlayerId] * 2))
+                    set winMessage = winMessage + " lumber!"
                 else
-                    set udg_string01 =(udg_string01 + " gold!")
+                    set winMessage = winMessage + " gold!"
                 endif
-                call DisplayTimedTextToForce(GetPlayersAll(),5.00,udg_string01)
-            else
-            endif
-        else
+
+                call DisplayTimedTextToForce(GetPlayersAll(),5.00,winMessage)
+            //endif
         endif
-        set udg_integers11[GetConvertedPlayerId(GetEnumPlayer())]= 0
-        set udg_integers15[GetConvertedPlayerId(GetEnumPlayer())]= 0
-        set udg_integers16[GetConvertedPlayerId(GetEnumPlayer())]= 0
-        set udg_booleans04[GetConvertedPlayerId(GetEnumPlayer())]= false
-        set udg_booleans05[GetConvertedPlayerId(GetEnumPlayer())]= false
+
+        set udg_integers11[convertedPlayerId] = 0
+        set udg_integers15[convertedPlayerId] = 0
+        set udg_integers16[convertedPlayerId] = 0
+        set udg_booleans04[convertedPlayerId] = false
+        set udg_booleans05[convertedPlayerId] = false
+
+        set currentPlayer = null
     endfunction
 
 
@@ -138,9 +58,9 @@ library trigger54 initializer init requires RandomShit
 
 
     private function init takes nothing returns nothing
-        set udg_trigger54 = CreateTrigger()
-        call TriggerAddCondition(udg_trigger54,Condition(function Trig_Betting_Complete_Conditions))
-        call TriggerAddAction(udg_trigger54,function Trig_Betting_Complete_Actions)
+        set DistributeBetsTrigger = CreateTrigger()
+        call TriggerAddCondition(DistributeBetsTrigger,Condition(function Trig_Betting_Complete_Conditions))
+        call TriggerAddAction(DistributeBetsTrigger,function Trig_Betting_Complete_Actions)
     endfunction
 
 

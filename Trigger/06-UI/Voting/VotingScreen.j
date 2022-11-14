@@ -10,6 +10,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         private integer ImmortalHandleId
         private integer PvpBettingHandleId
         private integer HeroBanningHandleId
+        private integer SimultaneousDuelHandleId
         private integer SubmitHandleId
 
         // Stores the selected and non-selected versions of every button
@@ -51,7 +52,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
 
         // Specifications for a checkbox
         private real CheckboxWidth = 0.025
-        private real CheckboxTextWidth = 0.1
+        private real CheckboxTextWidth = 0.15
         private real CheckboxSpacing = 0.005
 
         // Specifications for a category text
@@ -72,8 +73,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return LoadInteger(HeroButtonEventHandles, handleId, 1) // Hero
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
-        elseif (buttonType == 5 or buttonType == 6  or buttonType == 7) then
-            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning
+        elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8) then
+            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Simultaneous duels
         endif
 
         return 0
@@ -95,6 +96,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return 6 // PVP betting 
         elseif (handleId == HeroBanningHandleId) then
             return 7 // Hero banning
+        elseif (handleId == SimultaneousDuelHandleId) then
+            return 8 // Simultaneous Duels
         endif
 
         return 0
@@ -155,6 +158,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             call pv.setPvpBettingVote(value)
         elseif (handleId == HeroBanningHandleId) then // Hero Banning
             call pv.setHeroBanningVote(value)
+        elseif (handleId == SimultaneousDuelHandleId) then // Simultaneous Duels
+            call pv.setSimultaneousDuelVote(value)
         endif
     endfunction
 
@@ -332,12 +337,12 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         return selectedButtonFrameHandle
     endfunction
     
-    private function CreateVotingCheckbox takes string checkboxText, string description returns integer
+    private function CreateVotingCheckbox takes string checkboxText, string description, boolean preSelected returns integer
         // First create the checkbox
         local framehandle checkboxFrameHandle = BlzCreateFrame("QuestCheckBox", MainVotingFrameHandle, 0, 0) 
         local framehandle checkboxTextFrameHandle = BlzCreateFrameByType("TEXT", "CheckboxText", MainVotingFrameHandle, "", 0) 
         local integer checkboxFrameHandleId = GetHandleId(checkboxFrameHandle)
-
+        
         // Keep a count of every button we make
         set TotalButtonCount = TotalButtonCount + 1
 
@@ -475,9 +480,11 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         call CreateIncomeButton("Disabled", "Players can not buy creep upgrades or upgrade their end of round income in any way. Creeps gain no bonus power.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAOther Options|r")
-        set ImmortalHandleId = CreateVotingCheckbox("Immortal Mode", "Unlimited lives with immortal mode. Otherwise, you are given a few lives. Once you lose them all, you lose the game.")
-        set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches.")
-        set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.")
+        set ImmortalHandleId = CreateVotingCheckbox("Immortal Mode", "Unlimited lives with immortal mode. Otherwise, you are given a few lives. Once you lose them all, you lose the game.", false)
+        set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches.", false)
+        set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.", false)
+        call GoToNextRow()
+        set SimultaneousDuelHandleId = CreateVotingCheckbox("Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nThis will also disable PVP betting.", true)
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameMargin) + (IMinBJ(MaxColumnCount, TotalButtonCount) * ButtonWidth) + ((IMinBJ(MaxColumnCount, TotalButtonCount) - 1) * ButtonSpacing)

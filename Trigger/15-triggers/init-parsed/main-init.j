@@ -39,13 +39,13 @@ library OldInitialization initializer main3
         unit array ChooseHeroSelection
         force DefeatedPlayers= null
         group PotentialDuelHeroes= null
-        unit array DuelingHeroes
+        group DuelingHeroes= null
         integer RoundCreepAbilCastChance= 0
         integer array DuelHeroItemIds1
         integer array DuelHeroItemIds2
         group DuelingHeroGroup= null
         group DuelWinners= null
-        integer udg_integer15= 0
+        integer PvpGoldWinAmount= 0
         integer BrPlayerCount= 0
         boolean array udg_booleans01
         boolean BrStarted= false
@@ -135,7 +135,7 @@ library OldInitialization initializer main3
         group udg_group07= null
         sound array udg_sounds01
         group GroupEmptyArenaCheck= null
-        real udg_real03= 0
+        real SuddenDeathDamageMultiplier= 0
         unit udg_unit02= null
         integer array udg_integers14
         integer udg_integer57= 0
@@ -162,8 +162,9 @@ library OldInitialization initializer main3
         group udg_group09= null
         location udg_location02= null
         unit udg_unit04= null
-        boolean udg_boolean18= false
+        boolean AllowBetSelection= false
         unit udg_unit05= null
+        group DuelWinnerDisabled= null
         integer udg_integer63= 0
         rect RectP1Arena= null
         rect RectP2Arena= null
@@ -253,7 +254,7 @@ library OldInitialization initializer main3
         trigger udg_trigger51= null
         trigger udg_trigger52= null
         trigger udg_trigger53= null
-        trigger udg_trigger54= null
+        trigger DistributeBetsTrigger= null
         trigger udg_trigger55= null
         trigger udg_trigger56= null
         trigger udg_trigger57= null
@@ -315,12 +316,12 @@ library OldInitialization initializer main3
         trigger udg_trigger114= null
         trigger udg_trigger115= null
         trigger udg_trigger116= null
-        trigger udg_trigger117= null
+        trigger PvpCountdownTimerTrigger= null
         trigger udg_trigger118= null
         trigger udg_trigger119= null
         trigger udg_trigger120= null
         trigger udg_trigger121= null
-        trigger udg_trigger122= null
+        trigger EndGameTrigger= null
         trigger udg_trigger123= null
         trigger udg_trigger124= null
         trigger udg_trigger125= null
@@ -332,14 +333,15 @@ library OldInitialization initializer main3
         trigger udg_trigger131= null
         trigger udg_trigger132= null
         trigger udg_trigger133= null
-        trigger udg_trigger134= null
-        trigger udg_trigger135= null
-        trigger udg_trigger136= null
-        trigger udg_trigger137= null
+        trigger InitializeSingleDuelsTrigger= null
+        trigger SinglePvpHeroDeathTrigger= null
+        trigger SimultaneousPvpHeroDeathTrigger= null
+        trigger StartSinglePvpDuelTrigger= null
+        trigger StartSimultaneousPvpDuelTrigger= null
         trigger udg_trigger138= null
         trigger udg_trigger139= null
-        trigger udg_trigger140= null
-        trigger udg_trigger141= null
+        trigger UpdatePvpSuddenDeathDamageTrigger= null
+        trigger ApplyPvpSuddenDeathDamageTrigger= null
         trigger udg_trigger142= null
         trigger udg_trigger143= null
         trigger udg_trigger144= null
@@ -352,6 +354,7 @@ library OldInitialization initializer main3
         trigger udg_trigger151= null
         trigger udg_trigger152= null
         trigger udg_trigger153= null
+        trigger InitializeSimultaneousDuelsTrigger= null
         unit udg_unit06= null
         unit udg_unit07= null
         unit udg_unit08= null
@@ -453,6 +456,7 @@ library OldInitialization initializer main3
         
         set DefeatedPlayers = CreateForce()
         set PotentialDuelHeroes = CreateGroup()
+        set DuelingHeroes = CreateGroup()
         set RoundCreepAbilCastChance = 0
         set i = 0
         loop
@@ -468,7 +472,8 @@ library OldInitialization initializer main3
         endloop
         set DuelingHeroGroup = CreateGroup()
         set DuelWinners = CreateGroup()
-        set udg_integer15 = 0
+        set DuelWinnerDisabled = CreateGroup()
+        set PvpGoldWinAmount = 0
         set BrPlayerCount = 0
         set i = 0
         loop
@@ -619,7 +624,7 @@ library OldInitialization initializer main3
         set BettingPlayerCount = 0
         set udg_group07 = CreateGroup()
         set GroupEmptyArenaCheck = CreateGroup()
-        set udg_real03 = 0
+        set SuddenDeathDamageMultiplier = 0
         set i = 0
         loop
             exitwhen(i > 1)
@@ -660,7 +665,7 @@ library OldInitialization initializer main3
             set i = i + 1
         endloop
         set udg_group09 = CreateGroup()
-        set udg_boolean18 = false
+        set AllowBetSelection = false
         set udg_integer63 = 0
     endfunction
     function InitGlobals2 takes nothing returns nothing
@@ -687,9 +692,11 @@ library OldInitialization initializer main3
         
         set DefeatedPlayers = CreateForce()
         set PotentialDuelHeroes = CreateGroup()
+        set DuelingHeroes = CreateGroup()
         set RoundCreepAbilCastChance = 0
         set DuelingHeroGroup = CreateGroup()
         set DuelWinners = CreateGroup()
+        set DuelWinnerDisabled = CreateGroup()
         set BrPlayerCount = 0
 
         set BrStarted = false
@@ -816,7 +823,7 @@ library OldInitialization initializer main3
         set BettingPlayerCount = 0
         set udg_group07 = CreateGroup()
         set GroupEmptyArenaCheck = CreateGroup()
-        set udg_real03 = 0
+        set SuddenDeathDamageMultiplier = 0
         set udg_integer57 = 0
         set udg_integer58 = 0
         set udg_integer59 = 0
@@ -851,7 +858,7 @@ library OldInitialization initializer main3
             set i = i + 1
         endloop
         set udg_group09 = CreateGroup()
-        set udg_boolean18 = false
+        set AllowBetSelection = false
         set udg_integer63 = 0
     endfunction
 

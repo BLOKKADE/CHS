@@ -28,7 +28,7 @@ library trigger43 initializer init requires RandomShit, UnitFilteringUtility
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,("|cffffcc00" + GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit())) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit()))))
         call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_Battle_Royal_Func004A)
         call ShowDiscordFrames(GetOwningPlayer(GetTriggerUnit()), true)
-        call ConditionalTriggerExecute(udg_trigger122)
+        call ConditionalTriggerExecute(EndGameTrigger)
     endfunction
 
     private function init takes nothing returns nothing

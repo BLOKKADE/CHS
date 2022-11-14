@@ -1,4 +1,4 @@
-library trigger108 initializer init requires RandomShit, EconomyCreepBonus
+library trigger108 initializer init requires RandomShit, EconomyCreepBonus, VotingResults
 
     globals
         integer BattleRoyalRound = 50
@@ -72,7 +72,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
             call DisableTrigger(udg_trigger110)
             call StopSuddenDeathTimer()
             call DisableTrigger(udg_trigger116)
-            call ConditionalTriggerExecute(udg_trigger122)
+            call ConditionalTriggerExecute(EndGameTrigger)
             call ConditionalTriggerExecute(udg_trigger119)
             
             set RoundFinishedCount = 0
@@ -80,15 +80,27 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus
             if(GameModeShort==true and ElimModeEnabled==false)then
                 if(Trig_Level_Completed_Func001Func018Func002C())then
                     call GroupClear(DuelWinners)
-                    //pvp round
-                    call ConditionalTriggerExecute(udg_trigger134)
+                    
+                    if (SimultaneousDuelMode == 2) then
+                        // Simultaneous pvp duel round
+                        call ConditionalTriggerExecute(InitializeSimultaneousDuelsTrigger)
+                    else
+                        // Single pvp duel round
+                        call ConditionalTriggerExecute(InitializeSingleDuelsTrigger)
+                    endif
                     return
                 endif
             else
                 if(Trig_Level_Completed_Func001Func018Func001C())then
                     call GroupClear(DuelWinners)
-                    //pvp round
-                    call ConditionalTriggerExecute(udg_trigger134)
+                    
+                    if (SimultaneousDuelMode == 2) then
+                        // Simultaneous pvp duel round
+                        call ConditionalTriggerExecute(InitializeSimultaneousDuelsTrigger)
+                    else
+                        // Single pvp duel round
+                        call ConditionalTriggerExecute(InitializeSingleDuelsTrigger)
+                    endif
                     return
                 endif
             endif
