@@ -148,7 +148,7 @@ library VotingResults initializer init
 
         // Don't allow pvp betting with simultaneous duels
         if (PvpBettingMode == 1 or SimultaneousDuelMode == 2) then
-            set PvpBettingMode == 1
+            set PvpBettingMode = 1
             set GameDescription = GameDescription + "PVP Betting Off, "
         elseif (PvpBettingMode == 2) then
             set GameDescription = GameDescription + "PVP Betting On, "

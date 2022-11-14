@@ -25,9 +25,9 @@ library SinglePvpBetReward initializer init requires RandomShit
     endfunction
 
     private function init takes nothing returns nothing
-        set udg_trigger138 = CreateTrigger()
-        call TriggerAddCondition(udg_trigger138, Condition(function SinglePvpBetRewardConditions))
-        call TriggerAddAction(udg_trigger138, function SinglePvpBetRewardActions)
+        set SinglePvpBetRewardTrigger = CreateTrigger()
+        call TriggerAddCondition(SinglePvpBetRewardTrigger, Condition(function SinglePvpBetRewardConditions))
+        call TriggerAddAction(SinglePvpBetRewardTrigger, function SinglePvpBetRewardActions)
     endfunction
 
 endlibrary

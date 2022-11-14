@@ -1,6 +1,6 @@
 library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility
 
-    function PvpHeroDeathConditions takes nothing returns boolean
+    private function PvpHeroDeathConditions takes nothing returns boolean
         return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
     endfunction
 
@@ -66,27 +66,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call RemoveItem(GetEnumItem())
     endfunction
     
-    function Trig_End_PvP_Func026Func007001002 takes nothing returns boolean
-        return IsAlivePlayerHero(GetFilterUnit())
-    endfunction
-
-    function Trig_End_PvP_Func026Func007A takes nothing returns nothing
-        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetEnumUnit()))
-        local location arenaLocation = GetRectCenter(RectMidArena)
-
-        call SetUnitPositionLoc(GetEnumUnit(),arenaLocation)
-
-        if (ps.getPet() != null) then
-            call SetUnitPositionLoc(ps.getPet(),arenaLocation)
-        endif
-
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
-    endfunction
-
-    function Trig_End_PvP_Func026Func018Func002A takes nothing returns nothing
-        call AddSpecialEffectTargetUnitBJ("origin",GetEnumUnit(),"Abilities\\Spells\\Human\\Resurrect\\ResurrectCaster.mdl")
-        call DestroyEffectBJ(GetLastCreatedEffectBJ())
+    private function ShowWinningSpecialEffect takes nothing returns nothing
+        call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", GetEnumUnit(), "Abilities\\Spells\\Human\\Resurrect\\ResurrectCaster.mdl"))
     endfunction
 
     private function EndDuelActionsForWinningPlayer takes nothing returns nothing
@@ -208,37 +189,41 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Check if all single pvp rounds are over
         if (CountUnitsInGroup(PotentialDuelHeroes) == 0) then
             call TriggerSleepAction(2)
-            call ForGroup(GetUnitsInRectMatching(GetPlayableMapRect(), Condition(function Trig_End_PvP_Func026Func007001002)), function Trig_End_PvP_Func026Func007A)
-            if(PlayerCount > 1)then
-            else
-                return
-            endif
-            call ForceClear(DuelLosers)
-            set udg_integer41 =(udg_integer41 + 1)
-            call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+
+            set udg_integer41 = udg_integer41 + 1
+            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+
             call TriggerSleepAction(1.00)
     
-            if(GameModeShort==true)then
+            // This condition is absolutely pointless
+            if (GameModeShort == true) then
                 set PvpGoldWinAmount = DuelGoldReward[RoundNumber]
             else
                 set PvpGoldWinAmount = DuelGoldReward[RoundNumber]		
             endif
             
             // Show a fancy effect on the winners and give them their reward
-            call ForGroupBJ(DuelWinners,function Trig_End_PvP_Func026Func018Func002A)
+            call ForGroup(DuelWinners, function ShowWinningSpecialEffect)
             call PlaySoundBJ(udg_sound07)
-            call ConditionalTriggerExecute(udg_trigger138)
-            call DisplayTimedTextToForce(GetPlayersAll(),10.00,("|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + (I2S(PvpGoldWinAmount) + " gold|r")))
-            call DisplayTimedTextToForce(GetPlayersAll(),10.00,"|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
+            call ConditionalTriggerExecute(SinglePvpBetRewardTrigger)
+            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + I2S(PvpGoldWinAmount) + " gold|r")
+            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
 
-            call ConditionalTriggerExecute(StartSinglePvpDuelTrigger)
+            // Go to the next basic level
+            call ConditionalTriggerExecute(udg_trigger103) // Setup creeps for next wave
+            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
+            call StartTimerBJ(GetLastCreatedTimerBJ(), false, 30)
+            call TriggerSleepAction(30.00)
+            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+            call TriggerExecute(udg_trigger109)
         else
             // Go to the next pvp battle
-            call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next PvP Battle ...")
-            call StartTimerBJ(GetLastCreatedTimerBJ(),false,3.00)
+            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
+            call StartTimerBJ(GetLastCreatedTimerBJ(), false, 3.00)
             call TriggerSleepAction(3.00)
-            call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+
             call ConditionalTriggerExecute(StartSinglePvpDuelTrigger)
         endif
 
