@@ -80,27 +80,13 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus, Voti
             if(GameModeShort==true and ElimModeEnabled==false)then
                 if(Trig_Level_Completed_Func001Func018Func002C())then
                     call GroupClear(DuelWinners)
-                    
-                    if (SimultaneousDuelMode == 2) then
-                        // Simultaneous pvp duel round
-                        call ConditionalTriggerExecute(InitializeSimultaneousDuelsTrigger)
-                    else
-                        // Single pvp duel round
-                        call ConditionalTriggerExecute(InitializeSingleDuelsTrigger)
-                    endif
+                    call ConditionalTriggerExecute(InitializePvpTrigger)
                     return
                 endif
             else
                 if(Trig_Level_Completed_Func001Func018Func001C())then
                     call GroupClear(DuelWinners)
-                    
-                    if (SimultaneousDuelMode == 2) then
-                        // Simultaneous pvp duel round
-                        call ConditionalTriggerExecute(InitializeSimultaneousDuelsTrigger)
-                    else
-                        // Single pvp duel round
-                        call ConditionalTriggerExecute(InitializeSingleDuelsTrigger)
-                    endif
+                    call ConditionalTriggerExecute(InitializePvpTrigger)
                     return
                 endif
             endif

@@ -1,4 +1,4 @@
-library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility
+library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, OldInitialization, PvpHelper
 
     private function PvpHeroDeathConditions takes nothing returns boolean
         return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
@@ -41,10 +41,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call RemoveItem(UnitItemInSlot(playerHero, itemSlotIndex))
 
             if GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
-                set tempItem = UnitAddItemByIdSwapped(DuelHeroItemIds1[playerId + itemSlotIndex], playerHero)
+                set tempItem = UnitAddItemByIdSwapped(PreDuelItemIds[playerId + itemSlotIndex], playerHero)
 
-                if ItemStacksP1[playerId + itemSlotIndex] > 1 then
-                    call SetItemCharges(tempItem, ItemStacksP1[playerId + itemSlotIndex])
+                if PreDuelItemCharges[playerId + itemSlotIndex] > 1 then
+                    call SetItemCharges(tempItem, PreDuelItemCharges[playerId + itemSlotIndex])
                 endif
             endif
 
@@ -74,7 +74,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local unit playerHero = PlayerHeroes[GetPlayerId(GetEnumPlayer()) + 1]
 
         call GroupAddUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities
-        call GroupAddUnit(DuelWinners, winningUnit) // Collection of all winners
+        call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
         call SetUnitInvulnerable(playerHero, true)
 
         // Cleanup
@@ -93,7 +93,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
         // Midas Touch
         if deadUnitMidasTouch != 0 then
-            call CreepDeath_BountyText(winningUnit, deadUnit, deadUnitMidasTouch.bonus)
+            call CreepDeath_BountyText(playerHero, deadUnit, deadUnitMidasTouch.bonus)
             
             if ChestOfGreedBonus.boolean[GetHandleId(deadUnit)] then
                 set bonus = CgBonus
@@ -108,8 +108,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
-        // Save the code for everyone at the end so we don't call SaveCommand_AllDuelsEndedPlayerActions too much
-        call SaveCommand_AllDuelsEndedPlayerActions(currentPlayer, false)
+        // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
+        call SaveCommand_SaveCodeForPlayer(currentPlayer, false)
 
         // Stop the triggers for unit leaving an arena
         call StopRectLeaveDetection(GetHandleId(playerHero))
@@ -146,10 +146,12 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             
             // Add player unit to DuelWinnerDisabled, set invulnerable
             call ForForce(winningPlayerForce, function EndDuelActionsForWinningPlayer)
+
+            // TODO Display message about the duel being over
         else
             // Only show message to the two teams
-            call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnit) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
-            call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnit) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode")
+            call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(GetOwningPlayer(killingUnit)) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
+            // TODO call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnit) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode")
         endif
 
         // Stop the pvp properties once all fights are over
@@ -187,7 +189,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         endif
 
         // Check if all single pvp rounds are over
-        if (CountUnitsInGroup(PotentialDuelHeroes) == 0) then
+        if (DuelGameListRemaining.size() == 0) then
             call TriggerSleepAction(2)
 
             set udg_integer41 = udg_integer41 + 1
@@ -224,7 +226,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call TriggerSleepAction(3.00)
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
-            call ConditionalTriggerExecute(StartSinglePvpDuelTrigger)
+            // Start the next fight
+            call StartDuelGame(GetNextDuel())
         endif
 
         // Cleanup

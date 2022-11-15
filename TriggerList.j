@@ -397,7 +397,7 @@
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Battle Royal\trigger42.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Battle Royal\trigger43.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\ApplyPvpSuddenDeathDamage.j"
-//! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\InitializeSinglePvp.j"
+//! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\InitializePvp.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\PvpHelper.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\PvpHeroDeath.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\SinglePvpBetReward.j"

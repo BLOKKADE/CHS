@@ -101,9 +101,9 @@ library trigger51 initializer init requires RandomShit
             call DoNothing()
         endif
         if(Trig_Place_Bet_Func008C())then
-            call DisplayTimedTextToForce(GetPlayersAll(),2.00,("|c00F08000" +(GetPlayerNameColour(GetTriggerPlayer())+(" placed a bet on " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[1]))+ "!")))))
+            // TODO call DisplayTimedTextToForce(GetPlayersAll(),2.00,("|c00F08000" +(GetPlayerNameColour(GetTriggerPlayer())+(" placed a bet on " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[1]))+ "!")))))
         else
-            call DisplayTimedTextToForce(GetPlayersAll(),2.00,("|c00F08000" +(GetPlayerNameColour(GetTriggerPlayer())+(" placed a bet on " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[2]))+ "!")))))
+            // TODO call DisplayTimedTextToForce(GetPlayersAll(),2.00,("|c00F08000" +(GetPlayerNameColour(GetTriggerPlayer())+(" placed a bet on " +(GetPlayerNameColour(GetOwningPlayer(DuelingHeroes[2]))+ "!")))))
         endif
     endfunction
 

@@ -333,7 +333,7 @@ library OldInitialization initializer main3
         trigger udg_trigger131= null
         trigger udg_trigger132= null
         trigger udg_trigger133= null
-        trigger InitializeSingleDuelsTrigger= null
+        trigger InitializePvpTrigger= null
         trigger SinglePvpHeroDeathTrigger= null
         trigger SimultaneousPvpHeroDeathTrigger= null
         trigger StartSinglePvpDuelTrigger= null

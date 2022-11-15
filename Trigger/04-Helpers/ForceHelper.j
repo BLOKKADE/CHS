@@ -1,4 +1,4 @@
-library ForceHelper
+library ForceHelper requires GetPlayerNames
     
     globals
         private string ForceString

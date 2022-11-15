@@ -13,11 +13,10 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 */
 
     globals
-        DuelGame CurrentDuel
-
         private boolean initialised = false
         IntegerList PlayerList
         IntegerList DuelGameList
+        IntegerList DuelGameListRemaining
         integer OddPlayer = -1
 
         //has to be either 1 2 or 4 TODO: support 3
@@ -25,13 +24,16 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
     endglobals
 
     function DisplayNemesisNames takes nothing returns nothing
-        local integer duelGameIndex = 0
+        local IntegerListItem node = DuelGameList.first
         local DuelGame currentDuelGame
         local string team1ForceString
         local string team2ForceString
 
         loop
-            set currentDuelGame = DuelGameList[duelGameIndex]
+            exitwhen node == 0
+            
+            set currentDuelGame = node.data
+
             set team1ForceString = ConvertForceToString(currentDuelGame.team1)
             set team2ForceString = ConvertForceToString(currentDuelGame.team2)
 
@@ -49,16 +51,13 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
                 call DisplayTimedTextToForce(currentDuelGame.team2, 25, "Your opponent is " + team1ForceString)
             endif
 
-            set duelGameIndex = duelGameIndex + 1
-
-            exitwhen duelGameIndex == DuelGameList.size()
+            set node = node.next
         endloop
     endfunction
 
     function GetNextDuel takes nothing returns DuelGame
-        local DuelGame duelGame = DuelGameList.back()
-        set CurrentDuel = duelGame
-        call DuelGameList.pop()
+        local DuelGame duelGame = DuelGameListRemaining.back()
+        call DuelGameListRemaining.pop()
         return duelGame
     endfunction
 
@@ -93,36 +92,41 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         endmethod
 
         static method areAllDuelsOver takes nothing returns boolean
+            local IntegerListItem node = DuelGameList.first
+            local DuelGame currentDuelGame
+
             loop
-                set currentDuelGame = DuelGameList[duelGameIndex]
-    
+                exitwhen node == 0
+                
+                set currentDuelGame = node.data
+
                 if (not currentDuelGame.isDuelOver) then
                     return false
                 endif
-    
-                set duelGameIndex = duelGameIndex + 1
-    
-                exitwhen duelGameIndex == DuelGameList.size()
+
+                set node = node.next
             endloop
 
             return true
         endmethod
 
         static method getPlayerDuelGame takes player p returns thistype
-            local integer duelGameIndex = 0
+            local IntegerListItem node = DuelGameList.first
             local DuelGame currentDuelGame
-    
+
             loop
-                set currentDuelGame = DuelGameList[duelGameIndex]
-    
+                exitwhen node == 0
+                
+                set currentDuelGame = node.data
+
                 if (IsPlayerInForce(p, currentDuelGame.team1) or IsPlayerInForce(p, currentDuelGame.team2)) then
                     return currentDuelGame
                 endif
-    
-                set duelGameIndex = duelGameIndex + 1
-    
-                exitwhen duelGameIndex == DuelGameList.size()
+
+                set node = node.next
             endloop
+
+            return 0
         endmethod
 
         static method create takes force team1, force team2, rect arena returns thistype
@@ -164,8 +168,10 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         local force team1
         local force team2
         local integer playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
+        local DuelGame currentDuelGame
 
         call DuelGameList.clear()
+        call DuelGameListRemaining.clear()
 
         loop
             set team1 = CreateForce()
@@ -174,7 +180,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
             set j = TeamPlayerLimit
             loop
                 call ForceAddPlayer(team1, Player(tempPlayerList.front()))
-                call ForceAddPlayer(team1, Player(tempPlayerList.back()))
+                call ForceAddPlayer(team2, Player(tempPlayerList.back()))
 
                 call tempPlayerList.pop()
                 call tempPlayerList.shift()
@@ -182,7 +188,9 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
                 exitwhen j <= 0
             endloop
 
-            call DuelGameList.push(DuelGame.create(team1, team2, PlayerArenaRects[playerArenaRectIndex]))
+            set currentDuelGame = DuelGame.create(team1, team2, PlayerArenaRects[playerArenaRectIndex])
+            call DuelGameList.push(currentDuelGame)
+            call DuelGameListRemaining.push(currentDuelGame)
 
             set playerArenaRectIndex = ModuloInteger(playerArenaRectIndex, 8)
             set playerArenaRectIndex = playerArenaRectIndex + 1
@@ -204,11 +212,11 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
     endfunction
 
 
-    function UpdatePlayers takes integer test returns nothing
+    function UpdatePlayers takes nothing returns nothing
         local integer i = 0
 
         loop
-            if /*not UnitAlive(PlayerHeroes[i + 1]) */ i == test then
+            if not UnitAlive(PlayerHeroes[i + 1]) then
                 call PlayerList.erase(PlayerList.find(i))
             endif
             set i = i + 1
@@ -227,7 +235,8 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         local integer i = 0
         set PlayerList = PlayerList.create()
         set DuelGameList = DuelGameList.create()
-
+        set DuelGameListRemaining = DuelGameListRemaining.create()
+        
         loop
             if /*UnitAlive(PlayerHeroes[i + 1])*/ true then
                 call PlayerList.push(i)
@@ -238,13 +247,13 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         set i = 0
     endfunction
 
-    function UpdatePlayerCount takes integer test returns nothing
+    function UpdatePlayerCount takes nothing returns nothing
         if not initialised then
             set initialised = true
             call init()
         endif
 
-        call UpdatePlayers(test)
+        call UpdatePlayers()
     endfunction
 
 endlibrary

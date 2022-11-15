@@ -39,23 +39,23 @@ library ApplyPvpSuddenDeathDamage initializer init requires RandomShit, HpRegen
     endfunction
 
     private function ApplyPvpSuddenDeathDamageActions takes nothing returns nothing
-        local integer duelGameIndex = 0
+        local IntegerListItem node = DuelGameList.first
         local DuelGame currentDuelGame
 
         set SuddenDeathTick = SuddenDeathTick + 1
 
         if (SuddenDeathTick >= 120) then
             loop
-                set currentDuelGame = DuelGameList[duelGameIndex]
+                exitwhen node == 0
+                
+                set currentDuelGame = node.data
     
                 if (currentDuelGame != 0 and (not currentDuelGame.isDuelOver)) then
                     call ApplyPvpSuddenDeathDamageToForce(currentDuelGame.team1, currentDuelGame.team2)
                     call ApplyPvpSuddenDeathDamageToForce(currentDuelGame.team2, currentDuelGame.team1)
                 endif
-    
-                set duelGameIndex = duelGameIndex + 1
-    
-                exitwhen duelGameIndex == DuelGameList.size()
+
+                set node = node.next
             endloop
         endif
     endfunction

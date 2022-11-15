@@ -1,9 +1,6 @@
-library InitializeSinglePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults
+library InitializePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults, PvpHelper
 
-    function Trig_PvP_Func002A takes nothing returns nothing
-        call GroupAddUnitSimple(GetEnumUnit(),PotentialDuelHeroes)
-    endfunction
-
+    /*
     function AwardDuelWinners takes nothing returns nothing
         local player awardingPlayer = GetOwningPlayer(GetEnumUnit())
         
@@ -39,17 +36,29 @@ library InitializeSinglePvp initializer init requires RandomShit, PvpRoundRobin,
 
         set awardingPlayer = null
     endfunction
+    */
+    
+    private function ResetPlayerArenaRects takes nothing returns nothing
+        local integer playerArenaRectIndex = 0
 
-    function Trig_PvP_Func002001002 takes nothing returns boolean
-        return IsAlivePlayerHero(GetFilterUnit())
+        loop
+            set PlayerArenaRects[playerArenaRectIndex] = null
+            set playerArenaRectIndex = playerArenaRectIndex + 1
+            exitwhen playerArenaRectIndex == 8
+        endloop
     endfunction
 
-
-    function Trig_PvP_Actions takes nothing returns nothing
+    private function InitializePvpActions takes nothing returns nothing
         call TriggerSleepAction(5.00)
-        call ForGroupBJ(GetUnitsInRectMatching(GetPlayableMapRect(),Condition(function Trig_PvP_Func002001002)),function Trig_PvP_Func002A)
-        call ForGroupBJ(DuelWinners,function AwardDuelWinners)
-        call GroupClear(DuelWinners)
+        // call ForGroupBJ(DuelWinners,function AwardDuelWinners)
+        // call GroupClear(DuelWinners)
+        
+        call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
+        call ResetPlayerArenaRects() // PlayerArenaRects keeps track of the arena a player belongs in
+
+        // Setup the fights
+        call UpdatePlayerCount()
+        call DisplayNemesisNames()
         
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
@@ -57,14 +66,25 @@ library InitializeSinglePvp initializer init requires RandomShit, PvpRoundRobin,
         call DisplayTimedTextToForce(GetPlayersAll(), 25, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
         call TriggerSleepAction(25.00)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        call ConditionalTriggerExecute(StartSinglePvpDuelTrigger)
-    endfunction
 
+        // Run the fights
+        if (SimultaneousDuelMode == 2) then
+            call BJDebugMsg("Starting simultaneous duels setup. Size: " + I2S(DuelGameListRemaining.size()))
+
+            loop
+                exitwhen DuelGameListRemaining.size() == 0
+
+                call StartDuelGame(GetNextDuel())
+            endloop
+        else
+            call BJDebugMsg("Starting single duels setup. Size: " + I2S(DuelGameListRemaining.size()))
+            call StartDuelGame(GetNextDuel())
+        endif
+    endfunction
 
     private function init takes nothing returns nothing
-        set InitializeSingleDuelsTrigger = CreateTrigger()
-        call TriggerAddAction(InitializeSingleDuelsTrigger,function Trig_PvP_Actions)
+        set InitializePvpTrigger = CreateTrigger()
+        call TriggerAddAction(InitializePvpTrigger,function InitializePvpActions)
     endfunction
-
 
 endlibrary

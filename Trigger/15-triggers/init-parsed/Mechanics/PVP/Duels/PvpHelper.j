@@ -1,6 +1,9 @@
-library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults
+library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults, OldInitialization
 
     globals
+        integer array PreDuelItemIds
+        integer array PreDuelItemCharges
+
         private boolean SpawnLeft
         private rect TempArena
     endglobals
@@ -79,16 +82,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call RemoveDebuff(playerHero, 0)
     endfunction
 
-    private function ResetPlayerArenaRects takes nothing returns nothing
-        local integer playerArenaRectIndex = 0
-
-        loop
-            set PlayerArenaRects[playerArenaRectIndex] = null
-            set playerArenaRectIndex = playerArenaRectIndex + 1
-            exitwhen playerArenaRectIndex == 8
-        endloop
-    endfunction
-
     private function SetupPlayerInArena takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
@@ -135,8 +128,8 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
             if (currentItem != null) then
                 // Save all item information in a single array with the playerId as the offset
-                set DuelHeroItemIds1[playerId + itemSlotIndex] = GetItemTypeId(currentItem)
-                set ItemStacksP1[playerId + itemSlotIndex] = GetItemCharges(currentItem)
+                set PreDuelItemIds[playerId + itemSlotIndex] = GetItemTypeId(currentItem)
+                set PreDuelItemCharges[playerId + itemSlotIndex] = GetItemCharges(currentItem)
                 call SetItemPawnable(currentItem, false)
             endif
 
@@ -166,7 +159,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         set arenaCenter = null
     endfunction
 
-    private function RemoveItem takes nothing returns nothing
+    private function RemoveItemFromArena takes nothing returns nothing
         call RemoveItem(GetEnumItem())
     endfunction
 
@@ -186,12 +179,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         set currentPlayer = null
     endfunction
 
-    function StartFightBetweenForces takes force team1, force team2, rect arena returns nothing
+    private function StartFightBetweenForces takes force team1, force team2, rect arena returns nothing
         local string team1ForceString = ConvertForceToString(team1)
         local string team2ForceString = ConvertForceToString(team2)
-
-        call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
-        call ResetPlayerArenaRects() // PlayerArenaRects keeps track of the arena a player belongs in
 
         // Validate. Hopefully should never happen.
         if (CountPlayersInForceBJ(team1) == 0 or CountPlayersInForceBJ(team2) == 0) then
@@ -203,14 +193,18 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         set TempArena = arena
 
         // Cleanup the arena
-        call EnumItemsInRect(arena, null, function RemoveItem)
+        call BJDebugMsg("Removing items")
+        call EnumItemsInRect(arena, null, function RemoveItemFromArena)
 
+        call BJDebugMsg("Spawning left units")
         // Teleport team1 to the left side of the arena, team2 to the right side of the arena
         set SpawnLeft = true
         call ForForce(team1, function SetupPlayerInArena)
+        call BJDebugMsg("Spawning right units")
         set SpawnLeft = false
         call ForForce(team2, function SetupPlayerInArena)
 
+        call BJDebugMsg("Moving cameras")
         // Move the camera for each force to the arena
         call ForForce(team1, function MoveCameraToArena)
         call ForForce(team2, function MoveCameraToArena)
@@ -275,6 +269,10 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
         // Start the fight
         call ForGroup(DuelingHeroes, function StartFightForUnit)
+    endfunction
+    
+    function StartDuelGame takes DuelGame duelGame returns nothing
+        call StartFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.arena)
     endfunction
 
 endlibrary
