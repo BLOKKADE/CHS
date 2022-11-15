@@ -89,7 +89,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
             set j = TeamPlayerLimit
             loop
                 call ForceAddPlayer(team1, Player(tempPlayerList.front()))
-                call ForceAddPlayer(team1, Player(tempPlayerList.back()))
+                call ForceAddPlayer(team2, Player(tempPlayerList.back()))
 
                 call tempPlayerList.pop()
                 call tempPlayerList.shift()
