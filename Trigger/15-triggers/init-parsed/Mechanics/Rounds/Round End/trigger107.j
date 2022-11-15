@@ -44,10 +44,6 @@ library trigger107 initializer init requires RandomShit
         local real playerCountSub = RMaxBJ(8 - (0.5 * duration), 0)
         local integer roundClearXpBonus = R2I(playerCountSub * (5 * Pow(RoundNumber, 2)))
 
-        if p == GetLocalPlayer() then
-            call ToggleXpBonusFrame(false)
-        endif
-
         if GetUnitTypeId(GetKillingUnit()) == TINKER_UNIT_ID then
             set roundClearXpBonus = roundClearXpBonus * 2
         endif

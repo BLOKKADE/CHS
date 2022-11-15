@@ -62,7 +62,7 @@ library trigger106 initializer init requires RandomShit, Functions
                 endif
             endif
         endif
-        call ToggleXpBonusframeUpdate(false)
+
         call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, ("|cffffcc00Level Completed!"))
         call Func_completeLevel(  PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] )
 
