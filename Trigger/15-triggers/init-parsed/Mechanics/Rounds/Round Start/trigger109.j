@@ -119,7 +119,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call ConditionalTriggerExecute(udg_trigger98)
         set SuddenDeathTick = 0
         set RoundStartTick = T32_Tick
-        call BJDebugMsg("round start tick")
         call EnableTrigger(udg_trigger110)
         call StartSuddenDeathTimer()
         call EnableTrigger(udg_trigger116)

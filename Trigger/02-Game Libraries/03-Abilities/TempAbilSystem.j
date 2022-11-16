@@ -26,7 +26,6 @@ library TempAbilSystem initializer init requires BuffLevel
 
             if tempAbil == 0 then
                 set this = thistype.setup()
-                call BJDebugMsg("created new tempabil")
 
                 set this.abilId = abilId
                 set this.stop = false
@@ -42,7 +41,6 @@ library TempAbilSystem initializer init requires BuffLevel
                 return this
             else
                 set tempAbil.endTick = T32_Tick + R2I(duration * 32)
-                call BJDebugMsg("extended existing tempabil")
                 return tempAbil
             endif
         endmethod
