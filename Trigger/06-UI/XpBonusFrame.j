@@ -1,4 +1,4 @@
-library XpBonusFrame initializer init
+/*library XpBonusFrame initializer init
 
     globals
         framehandle XpBonusFrame = null 
@@ -53,3 +53,4 @@ library XpBonusFrame initializer init
         call BlzFrameSetVisible(XpBonusFrameText, false)
     endfunction
 endlibrary
+*/

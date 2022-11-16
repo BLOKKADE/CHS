@@ -122,8 +122,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call BJDebugMsg("round start tick")
         call EnableTrigger(udg_trigger110)
         call StartSuddenDeathTimer()
-        call ToggleXpBonusFrame(true)
-        call ToggleXpBonusframeUpdate(true)
         call EnableTrigger(udg_trigger116)
         call EnableTrigger(udg_trigger103)
     endfunction

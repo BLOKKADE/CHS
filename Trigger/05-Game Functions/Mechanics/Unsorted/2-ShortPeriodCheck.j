@@ -142,15 +142,10 @@ scope ShortPeriodCheck initializer init
                 if GloryRegenLevel[hid] > 0 then
                     set r2 = GetUnitCustomState(u, BONUS_GLORYREGEN)
                     set r1 = GetUnitPositiveHpRegen(u) - r2
-                    
-                    if uid == TROLL_HEADHUNTER_UNIT_ID then
-                        set r1 = r1 + LoadInteger(DataUnitHT, hid, 542)
-                    endif
-                    
+
                     set r1 = r1 * (GloryRegenLevel[hid] * 0.15)
                     if r1 != r2 then
                         call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - r2 + r1)
-                        //call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
                         call SetUnitCustomState(u, BONUS_GLORYREGEN, r1)
                     endif
                 endif
@@ -168,7 +163,7 @@ scope ShortPeriodCheck initializer init
                 //Blood Elf Mage
                 if uid == BLOOD_MAGE_UNIT_ID then
                     set i1 = GetHeroInt(u, true)
-                    set i1 = R2I((i1 - ModuloInteger(i1, 30)) / 30)
+                    set i1 = R2I((i1 - ModuloInteger(i1, 60)) / 60)
                     set i2 = LoadInteger(DataUnitHT, hid, 542)
                     if i1 != i2 then
                         call AddUnitCustomState(u, BONUS_MAGICPOW, 0 - i2)

@@ -33,7 +33,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(MAULER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Lightbringer: +1 point towards [|cffd2d2d2Light|r].")
     
         call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroBloodElfPrince.blp" )
-        call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 30 intelligence")
+        call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 60 intelligence")
         call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +7 intelligence." )
         
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )
@@ -128,7 +128,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 25 levels|r) Gets a bonus Absolute slot. (max 10)" ) 
         
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )
-        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus |cffff8080physical damage|r. [|cff80ff80Luck|r][|cff00ffffCrit|r]")
+        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus damage. [|cff80ff80Luck|r][|cff00ffffCrit|r]")
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2% base damage to all critical hits.")
         
         call InitHeroDesc(DARK_HUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNUnbroken.blp" )

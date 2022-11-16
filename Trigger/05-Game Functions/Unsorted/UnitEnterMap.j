@@ -274,6 +274,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call AddUnitCustomState(u, BONUS_PHYSPOW, 2)  
         endif
 
+        //Set base luck
+        call AddUnitCustomState(u, BONUS_LUCK, 1)
+
         //Summons
         if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
             call SummonUnit(u)
