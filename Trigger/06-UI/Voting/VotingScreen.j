@@ -100,7 +100,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         elseif (handleId == DisableSimultaneousDuelHandleId) then
             return 8 // Disable Simultaneous Duels
         elseif (handleId == DisableTeamDuelHandleId) then
-            return 9 // Team Duels
+            return 9 // Disable Team Duels
         endif
 
         return 0
@@ -347,7 +347,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         local framehandle checkboxFrameHandle = BlzCreateFrame("QuestCheckBox", MainVotingFrameHandle, 0, 0) 
         local framehandle checkboxTextFrameHandle = BlzCreateFrameByType("TEXT", "CheckboxText", MainVotingFrameHandle, "", 0) 
         local integer checkboxFrameHandleId = GetHandleId(checkboxFrameHandle)
-        
+
         // Keep a count of every button we make
         set TotalButtonCount = TotalButtonCount + 1
 
@@ -490,7 +490,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.", false)
         call GoToNextRow()
         set DisableSimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nThis will also disable PVP betting.", true)
-        set DisableTeamDuelHandleId = CreateVotingCheckbox("Disable Team Duels", "There is a chance that a PVP duel will be a 2v2 PVP duel. |n|nWill only happen if there 4 or 8 players in the game.", true)
+        set DisableTeamDuelHandleId = CreateVotingCheckbox("Disable Team Duels", "There is a chance that a PVP duel will be a 2v2 PVP duel. |n|nWill only happen if there are 4 or 8 players in the game.", true)
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameMargin) + (IMinBJ(MaxColumnCount, TotalButtonCount) * ButtonWidth) + ((IMinBJ(MaxColumnCount, TotalButtonCount) - 1) * ButtonSpacing)

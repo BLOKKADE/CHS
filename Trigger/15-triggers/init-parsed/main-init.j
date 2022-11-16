@@ -92,11 +92,11 @@ library OldInitialization initializer main3
         integer UnknownInteger02= 0
         dialog array Dialogs
         button array DialogButtons
-        force udg_force04= null
-        force udg_force05= null
-        boolean array udg_booleans04
-        boolean array udg_booleans05
-        integer array udg_integers11
+        force Team1BettingForce= null
+        force Team2BettingForce= null
+        boolean array PlayerPlacedGoldBet
+        boolean array PlayerPlacedLumberBet
+        integer array PlayerResourceBetPercentage
         string udg_string01
         integer udg_integer38= 0
         force udg_force06= null
@@ -152,9 +152,9 @@ library OldInitialization initializer main3
         player udg_player03= null
         dialog HeroModeDialog= null
         boolean RandomHeroMode= false
-        integer array udg_integers15
-        integer array udg_integers16
-        integer udg_integer62= 0
+        integer array ResourceBetPercentageGoldReward
+        integer array ResourceBetPercentageLumberReward
+        integer ResourceBetPercentageCalculation= 0
         real udg_real04= 0
         boolean udg_boolean17= false
         string array ModeDescriptionBuilder
@@ -244,14 +244,14 @@ library OldInitialization initializer main3
         trigger udg_trigger41= null
         trigger udg_trigger42= null
         trigger udg_trigger43= null
-        trigger udg_trigger44= null
-        trigger udg_trigger45= null
-        trigger udg_trigger46= null
-        trigger udg_trigger47= null
-        trigger udg_trigger48= null
-        trigger udg_trigger49= null
-        trigger udg_trigger50= null
-        trigger udg_trigger51= null
+        trigger ResourceBettingMenusTrigger= null
+        trigger Team1BettingTrigger= null
+        trigger Team2BettingTrigger= null
+        trigger CancelBettingTrigger= null
+        trigger PlaceGoldBetTrigger= null
+        trigger PlaceLumberBetTrigger= null
+        trigger PlaceGoldAndLumberBetTrigger= null
+        trigger PlacePercentageBetTrigger= null
         trigger udg_trigger52= null
         trigger udg_trigger53= null
         trigger DistributeBetsTrigger= null
@@ -556,24 +556,24 @@ library OldInitialization initializer main3
             set Dialogs[i]= DialogCreate()
             set i = i + 1
         endloop
-        set udg_force04 = CreateForce()
-        set udg_force05 = CreateForce()
+        set Team1BettingForce = CreateForce()
+        set Team2BettingForce = CreateForce()
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans04[i]= false
+            set PlayerPlacedGoldBet[i]= false
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans05[i]= false
+            set PlayerPlacedLumberBet[i]= false
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers11[i]= 0
+            set PlayerResourceBetPercentage[i]= 0
             set i = i + 1
         endloop
         set udg_string01 = ""
@@ -647,16 +647,16 @@ library OldInitialization initializer main3
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers15[i]= 0
+            set ResourceBetPercentageGoldReward[i]= 0
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers16[i]= 0
+            set ResourceBetPercentageLumberReward[i]= 0
             set i = i + 1
         endloop
-        set udg_integer62 = 0
+        set ResourceBetPercentageCalculation = 0
         set udg_real04 = 0
         set udg_boolean17 = false
         set i = 0
@@ -755,24 +755,24 @@ library OldInitialization initializer main3
             set Dialogs[i]= DialogCreate()
             set i = i + 1
         endloop
-        set udg_force04 = CreateForce()
-        set udg_force05 = CreateForce()
+        set Team1BettingForce = CreateForce()
+        set Team2BettingForce = CreateForce()
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans04[i]= false
+            set PlayerPlacedGoldBet[i]= false
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans05[i]= false
+            set PlayerPlacedLumberBet[i]= false
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers11[i]= 0
+            set PlayerResourceBetPercentage[i]= 0
             set i = i + 1
         endloop
         set udg_string01 = ""
@@ -840,16 +840,16 @@ library OldInitialization initializer main3
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers15[i]= 0
+            set ResourceBetPercentageGoldReward[i]= 0
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers16[i]= 0
+            set ResourceBetPercentageLumberReward[i]= 0
             set i = i + 1
         endloop
-        set udg_integer62 = 0
+        set ResourceBetPercentageCalculation = 0
         set udg_real04 = 10.00
         set udg_boolean17 = false
         set i = 0

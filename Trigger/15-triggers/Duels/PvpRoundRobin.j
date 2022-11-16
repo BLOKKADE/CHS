@@ -17,6 +17,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         private IntegerList PlayerList
         private IntegerList UsedArenas
 
+        DuelGame CurrentDuelGame // Used to reference the current duel for betting pruposes. Doesn't work properly for simultaneous duels.
         IntegerList DuelGameList
         IntegerList DuelGameListRemaining
         integer OddPlayer = -1
@@ -56,6 +57,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
     function GetNextDuel takes nothing returns DuelGame
         local DuelGame duelGame = DuelGameListRemaining.back()
+        set CurrentDuelGame = duelGame
         call DuelGameListRemaining.pop()
         return duelGame
     endfunction
@@ -65,7 +67,8 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         force team2
         boolean isDuelOver
         rect arena
-
+        boolean team1Won
+        
         private static thistype recycle = 0
         private static integer instanceCount = 0
         private thistype next
@@ -152,6 +155,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
             call DestroyForce(team2)
             set this.team1 = null
             set this.team2 = null
+            set this.arena = null
             set next = recycle
             set recycle = this
         endmethod

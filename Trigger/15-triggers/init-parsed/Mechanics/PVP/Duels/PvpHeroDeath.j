@@ -172,7 +172,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Check if everyone is dead in the dead units team
         if (not AreAnyForceUnitsAlive(deadPlayerForce)) then
             set duelGame.isDuelOver = true
-            
+            set duelGame.team1Won = IsPlayerInForce(deadUnitPlayer, duelGame.team2)
+
             // Add player unit to DuelWinnerDisabled, set invulnerable
             call ForForce(winningPlayerForce, function EndDuelActionsForWinningPlayer)
             call ForForce(deadPlayerForce, function EndDuelActionsForLosingPlayer) 
