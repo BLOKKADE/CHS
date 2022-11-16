@@ -130,7 +130,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call PauseUnit(playerHero, true)
         call SelectUnitForPlayerSingle(playerHero, currentPlayer)
         call RefreshHero(playerHero)
-        call GroupAddUnitSimple(playerHero, DuelingHeroGroup)
+        call GroupAddUnit(DuelingHeroGroup, playerHero)
 
         // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
         loop
@@ -141,10 +141,13 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
                 set PreDuelItemIds[playerId + itemSlotIndex] = GetItemTypeId(currentItem)
                 set PreDuelItemCharges[playerId + itemSlotIndex] = GetItemCharges(currentItem)
                 call SetItemPawnable(currentItem, false)
-            endif
 
-            // Cleanup
-            set currentItem = null
+                // Cleanup
+                set currentItem = null
+            else
+                set PreDuelItemIds[playerId + itemSlotIndex] = -1
+                set PreDuelItemCharges[playerId + itemSlotIndex] = -1
+            endif
 
             set itemSlotIndex = itemSlotIndex + 1
             exitwhen itemSlotIndex == 6
