@@ -164,7 +164,6 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         elseif (handleId == SimultaneousDuelHandleId) then // Simultaneous Duels
             call pv.setSimultaneousDuelVote(value)
         elseif (handleId == TeamDuelHandleId) then // Team Duels
-            call BJDebugMsg("duel vote value: " + I2S(value))
             call pv.setTeamDuelVote(value)
         endif
     endfunction

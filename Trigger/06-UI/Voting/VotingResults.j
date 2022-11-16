@@ -37,8 +37,8 @@ library VotingResults initializer init
         private integer ImmortalVote = 1 // Normal lives
         private integer PvpBettingVote = 1 // No betting
         private integer HeroBanningVote = 1 // No banning
-        private integer SimultaneousDuelVote = 2 // Simultaneous duels on
-        private integer TeamDuelVote = 2 // Team duels on
+        private integer DisableSimultaneousDuelVote = 1 // Disable Simultaneous duels off
+        private integer DisableTeamDuelVote = 1 // Disable Team duels off
 
         public method setRoundVote takes integer value returns nothing 
             set this.RoundVote = value
@@ -68,12 +68,12 @@ library VotingResults initializer init
             set this.HeroBanningVote = value
         endmethod
 
-        public method setSimultaneousDuelVote takes integer value returns nothing 
-            set this.SimultaneousDuelVote = value
+        public method setDisableSimultaneousDuelVote takes integer value returns nothing 
+            set this.DisableSimultaneousDuelVote = value
         endmethod
 
-        public method setTeamDuelVote takes integer value returns nothing 
-            set this.TeamDuelVote = value
+        public method setDisableTeamDuelVote takes integer value returns nothing 
+            set this.DisableTeamDuelVote = value
         endmethod
 
         public method getRoundVote takes nothing returns integer 
@@ -104,12 +104,12 @@ library VotingResults initializer init
             return this.HeroBanningVote
         endmethod
 
-        public method getSimultaneousDuelVote takes nothing returns integer 
-            return this.SimultaneousDuelVote
+        public method getDisableSimultaneousDuelVote takes nothing returns integer 
+            return this.DisableSimultaneousDuelVote
         endmethod
 
-        public method getTeamDuelVote takes nothing returns integer 
-            return this.TeamDuelVote
+        public method getDisableTeamDuelVote takes nothing returns integer 
+            return this.DisableTeamDuelVote
         endmethod
     endstruct
 
@@ -249,6 +249,22 @@ library VotingResults initializer init
         endif
     endfunction
 
+    private function GetCheckboxVoteFromAnyDuplicates takes nothing returns integer
+        return GetVoteFromAnyDuplicates(2)
+    endfunction
+
+    private function GetNegatedCheckboxVoteFromAnyDuplicates takes nothing returns integer
+        local integer result = GetVoteFromAnyDuplicates(2)
+
+        // Flip the response. Used when we have noting for `Disable x` e.g. `Disable simultaneous duels`
+        // We want to maintain the idea of 1 == off, 2 == on
+        if (result == 1) then
+            return 2
+        endif
+            
+        return 1
+    endfunction
+
     public function CountVotes takes nothing returns nothing
         local integer array roundModeCounts
         local integer array abilityModeCounts
@@ -275,8 +291,8 @@ library VotingResults initializer init
                 set immortalModeCounts[currentPlayerVotes.getImmortalVote()] = immortalModeCounts[currentPlayerVotes.getImmortalVote()] + 1
                 set pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] = pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] + 1
                 set heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] = heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] + 1
-                set simultaneousDuelModeCounts[currentPlayerVotes.getSimultaneousDuelVote()] = simultaneousDuelModeCounts[currentPlayerVotes.getSimultaneousDuelVote()] + 1
-                set teamDuelModeCounts[currentPlayerVotes.getTeamDuelVote()] = teamDuelModeCounts[currentPlayerVotes.getTeamDuelVote()] + 1
+                set simultaneousDuelModeCounts[currentPlayerVotes.getDisableSimultaneousDuelVote()] = simultaneousDuelModeCounts[currentPlayerVotes.getDisableSimultaneousDuelVote()] + 1
+                set teamDuelModeCounts[currentPlayerVotes.getDisableTeamDuelVote()] = teamDuelModeCounts[currentPlayerVotes.getDisableTeamDuelVote()] + 1
             endif
 
             set i = i + 1
@@ -327,7 +343,7 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set ImmortalMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+        set ImmortalMode = GetCheckboxVoteFromAnyDuplicates()
 
         // Pvp betting vote counting
         set i = 1
@@ -336,7 +352,7 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set PvpBettingMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+        set PvpBettingMode = GetCheckboxVoteFromAnyDuplicates()
 
         // Hero banning vote counting
         set i = 1
@@ -345,7 +361,7 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set HeroBanningMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+        set HeroBanningMode = GetCheckboxVoteFromAnyDuplicates()
 
         // Simultaneous duel vote counting
         set i = 1
@@ -354,7 +370,7 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set SimultaneousDuelMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+        set SimultaneousDuelMode = GetNegatedCheckboxVoteFromAnyDuplicates()
 
         // Team duel vote counting
         set i = 1
@@ -363,7 +379,7 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set TeamDuelMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+        set TeamDuelMode = GetNegatedCheckboxVoteFromAnyDuplicates()
 
         // Set the weird global variables based off of the results
         set GameModeShort = RoundMode == 2 // Boolean that flags if the game is short
