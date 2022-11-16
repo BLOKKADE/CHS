@@ -146,6 +146,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             
             // Add player unit to DuelWinnerDisabled, set invulnerable
             call ForForce(winningPlayerForce, function EndDuelActionsForWinningPlayer)
+            
+            // Setup the unallied alliance again? Not sure if this even needs to be done again
+            call SetForceAllianceStateBJ(duelGame.team1, duelGame.team2, bj_ALLIANCE_UNALLIED)
+            call SetForceAllianceStateBJ(duelGame.team2, duelGame.team1, bj_ALLIANCE_UNALLIED)
 
             // TODO Display message about the duel being over
         else
@@ -170,10 +174,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Reward glory and stuff
             call ForGroup(DuelWinners, function AwardFunToWinningUnit)
 
-            // Setup the unallied alliance again? Not sure if this even needs to be done again
-            call SetForceAllianceStateBJ(duelGame.team1, duelGame.team2, bj_ALLIANCE_UNALLIED)
-            call SetForceAllianceStateBJ(duelGame.team2, duelGame.team1, bj_ALLIANCE_UNALLIED)
-
             // Move camera to center arena, revive units, pets, items
             call ForForce(GetPlayersAll(), function ResetToCenterArenaForPlayer)
 
@@ -189,7 +189,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
             call TriggerSleepAction(2)
 
-            set udg_integer41 = udg_integer41 + 1
+            set udg_integer41 = udg_integer41 + 1 // Some variable used for calculating rewards
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
             call TriggerSleepAction(1.00)
@@ -204,6 +204,13 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + I2S(PvpGoldWinAmount) + " gold|r")
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
 
+            // Cleanup
+            set deadUnit = null
+            set killingUnit = null
+            set deadUnitPlayer = null
+            set deadPlayerForce = null
+            set winningPlayerForce = null
+
             // Go to the next basic level
             call ConditionalTriggerExecute(udg_trigger103) // Setup creeps for next wave
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
@@ -211,29 +218,29 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call TriggerSleepAction(30.00)
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
             call TriggerExecute(udg_trigger109)
+        else
+            // Cleanup
+            set deadUnit = null
+            set killingUnit = null
+            set deadUnitPlayer = null
+            set deadPlayerForce = null
+            set winningPlayerForce = null
+
+            // Check if all single pvp rounds are over
+            if (DuelGameListRemaining.size() > 0) then
+                // Go to the next pvp battle
+                call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+                call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
+                call StartTimerBJ(GetLastCreatedTimerBJ(), false, 3.00)
+                call TriggerSleepAction(3.00)
+                call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+
+                // Start the next fight
+                call InitializeDuelGame(GetNextDuel())
+
+                call StartDuels()
+            endif
         endif
-
-        // Check if all single pvp rounds are over
-        if (DuelGameListRemaining.size() > 0) then
-            // Go to the next pvp battle
-            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
-            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
-            call StartTimerBJ(GetLastCreatedTimerBJ(), false, 3.00)
-            call TriggerSleepAction(3.00)
-            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
-
-            // Start the next fight
-            call InitializeDuelGame(GetNextDuel())
-
-            call StartDuels()
-        endif
-
-        // Cleanup
-        set deadUnit = null
-        set killingUnit = null
-        set deadUnitPlayer = null
-        set deadPlayerForce = null
-        set winningPlayerForce = null
     endfunction
 
     private function init takes nothing returns nothing
