@@ -60,7 +60,7 @@ library ComputerPvpEnforceDuel initializer init requires RandomShit, PvpRoundRob
  
     private function init takes nothing returns nothing
         set ComputerPvpEnforceDuelTrigger = CreateTrigger()
-        call TriggerRegisterTimerEventPeriodic(ComputerPvpEnforceDuelTrigger, 6.00)
+        call TriggerRegisterTimerEventPeriodic(ComputerPvpEnforceDuelTrigger, 3.00)
         call TriggerAddAction(ComputerPvpEnforceDuelTrigger, function ComputerPvpEnforceDuelActions)
     endfunction
  

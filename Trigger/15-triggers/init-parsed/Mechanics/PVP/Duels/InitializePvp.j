@@ -1,7 +1,7 @@
 library InitializePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults, PvpHelper
 
     private function InitializePvpActions takes nothing returns nothing
-        call TriggerSleepAction(5.00)
+        call TriggerSleepAction(2.00)
         
         call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
         call ForceClear(DuelLosers) // Players that lost the current duels
@@ -12,15 +12,16 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
         
         // Message about the fights
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
-        call StartTimerBJ(GetLastCreatedTimerBJ(),false,25.00)
+        call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "PvP Battle")
+        call StartTimerBJ(GetLastCreatedTimerBJ(), false, 25.00)
         call DisplayTimedTextToForce(GetPlayersAll(), 25, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
         call DisplayNemesisNames()
         call TriggerSleepAction(25.00)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
 
+        // Remove any crap in the map before the duels
         call RemoveUnitsInRect(bj_mapInitialPlayableArea)
-        
+
         // Run the fights
         if (SimultaneousDuelMode == 2) then
             loop

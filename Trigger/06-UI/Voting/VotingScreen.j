@@ -10,8 +10,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         private integer ImmortalHandleId
         private integer PvpBettingHandleId
         private integer HeroBanningHandleId
-        private integer SimultaneousDuelHandleId
-        private integer TeamDuelHandleId
+        private integer DisableSimultaneousDuelHandleId
+        private integer DisableTeamDuelHandleId
         private integer SubmitHandleId
 
         // Stores the selected and non-selected versions of every button
@@ -75,7 +75,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
         elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9) then
-            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Simultaneous duels, Team duels
+            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Disable Team duels
         endif
 
         return 0
@@ -97,9 +97,9 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return 6 // PVP betting 
         elseif (handleId == HeroBanningHandleId) then
             return 7 // Hero banning
-        elseif (handleId == SimultaneousDuelHandleId) then
-            return 8 // Simultaneous Duels
-        elseif (handleId == TeamDuelHandleId) then
+        elseif (handleId == DisableSimultaneousDuelHandleId) then
+            return 8 // Disable Simultaneous Duels
+        elseif (handleId == DisableTeamDuelHandleId) then
             return 9 // Team Duels
         endif
 
@@ -161,10 +161,10 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             call pv.setPvpBettingVote(value)
         elseif (handleId == HeroBanningHandleId) then // Hero Banning
             call pv.setHeroBanningVote(value)
-        elseif (handleId == SimultaneousDuelHandleId) then // Simultaneous Duels
-            call pv.setSimultaneousDuelVote(value)
-        elseif (handleId == TeamDuelHandleId) then // Team Duels
-            call pv.setTeamDuelVote(value)
+        elseif (handleId == DisableSimultaneousDuelHandleId) then // Disable Simultaneous Duels
+            call pv.setDisableSimultaneousDuelVote(value)
+        elseif (handleId == DisableTeamDuelHandleId) then // Disable Team Duels
+            call pv.setDisableTeamDuelVote(value)
         endif
     endfunction
 
@@ -489,8 +489,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches.", false)
         set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.", false)
         call GoToNextRow()
-        set SimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nThis will also disable PVP betting.", true)
-        set TeamDuelHandleId = CreateVotingCheckbox("Disable Team Duels", "There is a chance that a PVP duel will be a 2v2 PVP duel. |n|nWill only happen if there is an even amount of players in the game.", true)
+        set DisableSimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nThis will also disable PVP betting.", true)
+        set DisableTeamDuelHandleId = CreateVotingCheckbox("Disable Team Duels", "There is a chance that a PVP duel will be a 2v2 PVP duel. |n|nWill only happen if there 4 or 8 players in the game.", true)
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameMargin) + (IMinBJ(MaxColumnCount, TotalButtonCount) * ButtonWidth) + ((IMinBJ(MaxColumnCount, TotalButtonCount) - 1) * ButtonSpacing)

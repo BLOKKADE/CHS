@@ -1,4 +1,4 @@
-library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNames, Command
+library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNames, Command, VotingResults, PvpRoundRobin
     //===========================================================================
     globals
         boolean ShowDmgText = false
@@ -10,6 +10,7 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
         local string output = ""
         local string dmgType = "|r dealt "
         local string end = "."
+        local DuelGame duelGame
 
         //set colour when dealing magic dmg
         if IsMagicDamage() then
@@ -46,11 +47,19 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
         //add . or debug text to output
         set output = output + end
 
-        //if death then show to everyone else show to player with dt enabled
-        if death then
-            call DisplayTimedTextToForce(GetPlayersAll(), 20, output)
+        // Display damage messages like normal if it is a non simultaneous duel
+        if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
+            //if death then show to everyone else show to player with dt enabled
+            if death then
+                call DisplayTimedTextToForce(GetPlayersAll(), 20, output)
+            else
+                call BJDebugMsg(output)
+            endif
+        // Only show messages to the simultaneous duel teams
         else
-            call BJDebugMsg(output)
+            set duelGame = DuelGame.getPlayerDuelGame(GetOwningPlayer(DamageSource))
+            call DisplayTimedTextToForce(duelGame.team1, 20, output)
+            call DisplayTimedTextToForce(duelGame.team2, 20, output)
         endif
     endfunction
 

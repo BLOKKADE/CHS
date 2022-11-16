@@ -51,9 +51,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             set itemSlotIndex = itemSlotIndex + 1
         endloop
 
-        // Mark that they player is not fighting
-        call SetCurrentlyFighting(currentPlayer, false)
-
         // Cleanup
         call RemoveLocation(arenaLocation)
         set arenaLocation = null
@@ -71,14 +68,19 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     endfunction
 
     private function EndDuelActionsForWinningPlayer takes nothing returns nothing
-        local unit playerHero = PlayerHeroes[GetPlayerId(GetEnumPlayer()) + 1]
+        local player currentPlayer = GetEnumPlayer()
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
         call GroupAddUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities
         call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
         call GroupRemoveUnit(DuelingHeroes, playerHero)
         call SetUnitInvulnerable(playerHero, true)
+        
+        // Mark that they player is not fighting
+        call SetCurrentlyFighting(currentPlayer, false)
 
         // Cleanup
+        set currentPlayer = null
         set playerHero = null
     endfunction
 
@@ -89,6 +91,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
         call GroupRemoveUnit(DuelingHeroes, playerHero)
 
+        // Mark that they player is not fighting
+        call SetCurrentlyFighting(currentPlayer, false)
+        
         // Cleanup
         set currentPlayer = null
         set playerHero = null
@@ -173,10 +178,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForForce(deadPlayerForce, function EndDuelActionsForLosingPlayer) 
 
             // Alliance reset
-            call SetForceAllianceStateBJ(duelGame.team1, GetPlayersAll(), bj_ALLIANCE_ALLIED)
-            call SetForceAllianceStateBJ(duelGame.team2, GetPlayersAll(), bj_ALLIANCE_ALLIED)
-            call SetForceAllianceStateBJ(GetPlayersAll(), duelGame.team1, bj_ALLIANCE_ALLIED)
-            call SetForceAllianceStateBJ(GetPlayersAll(), duelGame.team2, bj_ALLIANCE_ALLIED)
+            call SetForceAllianceStateBJ(duelGame.team1, GetPlayersAll(), bj_ALLIANCE_UNALLIED)
+            call SetForceAllianceStateBJ(duelGame.team2, GetPlayersAll(), bj_ALLIANCE_UNALLIED)
+            call SetForceAllianceStateBJ(GetPlayersAll(), duelGame.team1, bj_ALLIANCE_UNALLIED)
+            call SetForceAllianceStateBJ(GetPlayersAll(), duelGame.team2, bj_ALLIANCE_UNALLIED)
 
             // Save code, end arena leave detection
             call ForForce(duelGame.team1, function DuelEndedPlayerActions)
@@ -249,9 +254,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call StartDuels()
         // All duels are over, no odd player
         elseif (DuelGame.areAllDuelsOver() and OddPlayer == -1) then
-            call TriggerSleepAction(3.00)
+            call TriggerSleepAction(2.00)
 
             // Disable sudden death
+            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
             call DisableTrigger(UpdatePvpSuddenDeathDamageTrigger)
             call DisableTrigger(ApplyPvpSuddenDeathDamageTrigger)
             call DisableTrigger(SinglePvpHeroDeathTrigger)
@@ -321,7 +327,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
                 call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
                 call RemoveUnitsInRect(bj_mapInitialPlayableArea)
-                
+
                 // Start the next fight
                 call InitializeDuelGame(GetNextDuel())
 
