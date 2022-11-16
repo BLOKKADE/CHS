@@ -37,7 +37,7 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
         set awardingPlayer = null
     endfunction
     */
-    
+    /*
     private function ResetPlayerArenaRects takes nothing returns nothing
         local integer playerArenaRectIndex = 0
 
@@ -47,23 +47,24 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
             exitwhen playerArenaRectIndex == 8
         endloop
     endfunction
-
+*/
     private function InitializePvpActions takes nothing returns nothing
         call TriggerSleepAction(5.00)
         // call ForGroupBJ(DuelWinners,function AwardDuelWinners)
         // call GroupClear(DuelWinners)
         
         call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
-        call ResetPlayerArenaRects() // PlayerArenaRects keeps track of the arena a player belongs in
+        // call ResetPlayerArenaRects() // PlayerArenaRects keeps track of the arena a player belongs in
 
         // Setup the fights
         call UpdatePlayerCount()
-        call DisplayNemesisNames()
+        call MoveRoundRobin()
         
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"PvP Battle")
         call StartTimerBJ(GetLastCreatedTimerBJ(),false,25.00)
         call DisplayTimedTextToForce(GetPlayersAll(), 25, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
+        call DisplayNemesisNames()
         call TriggerSleepAction(25.00)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
 
@@ -74,12 +75,16 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
             loop
                 exitwhen DuelGameListRemaining.size() == 0
 
-                call StartDuelGame(GetNextDuel())
+                call InitializeDuelGame(GetNextDuel())
             endloop
         else
             call BJDebugMsg("Starting single duels setup. Size: " + I2S(DuelGameListRemaining.size()))
-            call StartDuelGame(GetNextDuel())
+            call InitializeDuelGame(GetNextDuel())
         endif
+
+        call TriggerSleepAction(0.20) // Copied from initial trigger. Probably to take a small breath before showing betting screens
+
+        call StartDuels()
     endfunction
 
     private function init takes nothing returns nothing

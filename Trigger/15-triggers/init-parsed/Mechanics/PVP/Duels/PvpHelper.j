@@ -95,9 +95,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         // Mark the player hero as fighting
         call GroupAddUnit(DuelingHeroes, playerHero)
 
-        // Save the arena to the player for easy lookup later
-        set PlayerArenaRects[playerId] = TempArena
-
         // Determine the spawn offset
         if (SpawnLeft) then
             set spawnOffset = OffsetLocation(arenaCenter, -500.00,0)
@@ -108,10 +105,16 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         // Actually move the unit
         call SetUnitPositionLocFacingLocBJ(playerHero, spawnOffset, arenaCenter)
 
+        // When this struct is created, it saves the current location of the unit as valid with the arena. PRevents players from somehow leaving during a duel
+        call RectLeaveDetection.create(playerHero, TempArena)
+
         // Teleport the players unit
         if (ps.getPet() != null) then
             call SetUnitPositionLocFacingLocBJ(ps.getPet(), spawnOffset, arenaCenter)
         endif
+
+        // Move the camera
+        call PanCameraToTimedLocForPlayer(currentPlayer, arenaCenter, 0.20)
 
         // Save debug logs for the player before the fight
         call DebugCode_SavePlayerDebug(currentPlayer)
@@ -149,16 +152,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         set currentPlayer = null
     endfunction
 
-    private function MoveCameraToArena takes nothing returns nothing
-        local location arenaCenter = GetRectCenter(TempArena)
-
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaCenter, 0.20)
-
-        // Cleanup
-        call RemoveLocation(arenaCenter)
-        set arenaCenter = null
-    endfunction
-
     private function RemoveItemFromArena takes nothing returns nothing
         call RemoveItem(GetEnumItem())
     endfunction
@@ -171,7 +164,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call SetUnitInvulnerable(currentUnit, false)
         call StartFunctionSpell(currentUnit, 4) // 4 = duels
         call PauseUnit(currentUnit, false)
-        call RectLeaveDetection.create(currentUnit, PlayerArenaRects[playerId])
         call SetCurrentlyFighting(currentPlayer, true)
 
         // Cleanup
@@ -179,7 +171,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         set currentPlayer = null
     endfunction
 
-    private function StartFightBetweenForces takes force team1, force team2, rect arena returns nothing
+    private function InitializeFightBetweenForces takes force team1, force team2, rect arena returns nothing
         local string team1ForceString = ConvertForceToString(team1)
         local string team2ForceString = ConvertForceToString(team2)
 
@@ -193,21 +185,13 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         set TempArena = arena
 
         // Cleanup the arena
-        call BJDebugMsg("Removing items")
         call EnumItemsInRect(arena, null, function RemoveItemFromArena)
 
-        call BJDebugMsg("Spawning left units")
         // Teleport team1 to the left side of the arena, team2 to the right side of the arena
         set SpawnLeft = true
         call ForForce(team1, function SetupPlayerInArena)
-        call BJDebugMsg("Spawning right units")
         set SpawnLeft = false
         call ForForce(team2, function SetupPlayerInArena)
-
-        call BJDebugMsg("Moving cameras")
-        // Move the camera for each force to the arena
-        call ForForce(team1, function MoveCameraToArena)
-        call ForForce(team2, function MoveCameraToArena)
 
         // Set the alliances
         call SetForceAllianceStateBJ(team1, team2, bj_ALLIANCE_UNALLIED)
@@ -223,12 +207,10 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         // Cleanup the temp global variables
         set TempArena = null
 
-        // No idea why this trigger sleep is here, but it may be needed for some unknown reason. TODO See if this can be removed
-        call TriggerSleepAction(0.20)
-        set AllowBetSelection = true
-
         // Betting should only be enabled for non-simultaneous duels
         // team1 and team2 should only have one player in each. We don't support betting on duels with multiple people on each team
+        set AllowBetSelection = true
+
         if (BettingEnabled == true) then
             call DialogClear(Dialogs[1])
             call DialogSetMessage(Dialogs[1], "Betting Menu")
@@ -241,7 +223,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
             // Show the betting dialog to all non dueling players
             call ForForce(GetPlayersMatching(Condition(function FilterNonDuelingPlayers)), function ShowBettingDialogForPlayer)
         endif
+    endfunction
 
+    function StartDuels takes nothing returns nothing
         // Start the countdown timer for the actual fight
         call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Prepare ...")
@@ -271,8 +255,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call ForGroup(DuelingHeroes, function StartFightForUnit)
     endfunction
     
-    function StartDuelGame takes DuelGame duelGame returns nothing
-        call StartFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.arena)
+    function InitializeDuelGame takes DuelGame duelGame returns nothing
+        set duelGame.isInitialized = true
+        call InitializeFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.arena)
     endfunction
 
 endlibrary

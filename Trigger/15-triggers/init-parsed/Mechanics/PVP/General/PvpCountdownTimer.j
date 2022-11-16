@@ -1,4 +1,4 @@
-library PvpCountdownTimer initializer init requires RandomShit
+library PvpCountdownTimer initializer init requires RandomShit, PvpRoundRobin
 
     private function Trig_Countdown_Func001Func001C takes nothing returns boolean
         return CountdownCount > 0 and RoundNumber==1 and SpawnedHeroCount < PlayerCount
@@ -13,30 +13,28 @@ library PvpCountdownTimer initializer init requires RandomShit
     endfunction
 
     private function PvpCountdownTimerActions takes nothing returns nothing
-        local integer playerArenaIndex = 0
         local location currentArenaLocation
+        local IntegerListItem node = DuelGameList.first
+        local DuelGame currentDuelGame
 
         loop
-            // Only display a number in the arena if there is a duel in it
-            if (PlayerArenaRects[playerArenaIndex] != null) then
-                // Tag needs to be in the center of the arena
-                set currentArenaLocation = GetRectCenter(PlayerArenaRects[playerArenaIndex])
+            exitwhen node == 0
+            
+            set currentDuelGame = node.data
+            set currentArenaLocation = GetRectCenter(currentDuelGame.arena)
 
-                // Display the number
-                call CreateTextTagLocBJ(I2S(CountdownCount) + " ...", currentArenaLocation, 0.00, 40.00, 100, I2R(CountdownCount * 20), I2R(CountdownCount * 20), 0)
-                call SetTextTagPermanentBJ(GetLastCreatedTextTag(), false)
-                call SetTextTagFadepointBJ(GetLastCreatedTextTag(), 0.80)
-                call SetTextTagLifespanBJ(GetLastCreatedTextTag(), 1.00)
-                call PlaySoundBJ(udg_sound09) // Ticking noise
+            // Display the number
+            call CreateTextTagLocBJ(I2S(CountdownCount) + " ...", currentArenaLocation, 0.00, 40.00, 100, I2R(CountdownCount * 20), I2R(CountdownCount * 20), 0)
+            call SetTextTagPermanentBJ(GetLastCreatedTextTag(), false)
+            call SetTextTagFadepointBJ(GetLastCreatedTextTag(), 0.80)
+            call SetTextTagLifespanBJ(GetLastCreatedTextTag(), 1.00)
+            call PlaySoundBJ(udg_sound09) // Ticking noise
 
-                // Cleanup
-                call RemoveLocation(currentArenaLocation)
-                set currentArenaLocation = null
-            endif
+            // Cleanup
+            call RemoveLocation(currentArenaLocation)
+            set currentArenaLocation = null
 
-            set playerArenaIndex = playerArenaIndex + 1
-
-            exitwhen playerArenaIndex == 8
+            set node = node.next
         endloop
 
         set CountdownCount = CountdownCount - 1

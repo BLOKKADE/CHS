@@ -1,4 +1,4 @@
-library SinglePvpBetReward initializer init requires RandomShit
+library DuelWinnerRewards initializer init requires RandomShit
 
     private function SinglePvpBetRewardConditions takes nothing returns boolean
         return CountUnitsInGroup(DuelWinners) > 0
@@ -25,9 +25,9 @@ library SinglePvpBetReward initializer init requires RandomShit
     endfunction
 
     private function init takes nothing returns nothing
-        set SinglePvpBetRewardTrigger = CreateTrigger()
-        call TriggerAddCondition(SinglePvpBetRewardTrigger, Condition(function SinglePvpBetRewardConditions))
-        call TriggerAddAction(SinglePvpBetRewardTrigger, function SinglePvpBetRewardActions)
+        set DuelWinnerRewardsTrigger = CreateTrigger()
+        call TriggerAddCondition(DuelWinnerRewardsTrigger, Condition(function SinglePvpBetRewardConditions))
+        call TriggerAddAction(DuelWinnerRewardsTrigger, function SinglePvpBetRewardActions)
     endfunction
 
 endlibrary

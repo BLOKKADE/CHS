@@ -338,7 +338,7 @@ library OldInitialization initializer main3
         trigger SimultaneousPvpHeroDeathTrigger= null
         trigger StartSinglePvpDuelTrigger= null
         trigger StartSimultaneousPvpDuelTrigger= null
-        trigger SinglePvpBetRewardTrigger= null
+        trigger DuelWinnerRewardsTrigger= null
         trigger udg_trigger139= null
         trigger UpdatePvpSuddenDeathDamageTrigger= null
         trigger ApplyPvpSuddenDeathDamageTrigger= null

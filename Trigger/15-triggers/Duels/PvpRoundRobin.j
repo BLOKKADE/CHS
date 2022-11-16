@@ -20,7 +20,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         integer OddPlayer = -1
 
         //has to be either 1 2 or 4 TODO: support 3
-        private constant integer TeamPlayerLimit = 2
+        private constant integer TeamPlayerLimit = 1
     endglobals
 
     function DisplayNemesisNames takes nothing returns nothing
@@ -39,16 +39,16 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
             // Display team2 opponents to team1
             if (CountPlayersInForceBJ(currentDuelGame.team2) > 1) then
-                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "Your opponents are " + team2ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "|cffff0000Your PVP opponents are|r " + team2ForceString)
             else
-                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "Your opponent is " + team2ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "|cffff0000Your PVP opponent is|r " + team2ForceString)
             endif
 
             // Display team1 opponents to team2
             if (CountPlayersInForceBJ(currentDuelGame.team1) > 1) then
-                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "Your opponents are " + team1ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "|cffff0000Your PVP opponents are|r " + team1ForceString)
             else
-                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "Your opponent is " + team1ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "|cffff0000Your PVP opponent is|r " + team1ForceString)
             endif
 
             set node = node.next

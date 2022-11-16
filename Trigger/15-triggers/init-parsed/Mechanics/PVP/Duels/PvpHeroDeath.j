@@ -186,10 +186,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
             // Clear the group of disabled units
             call GroupClear(DuelWinnerDisabled)
-        endif
 
-        // Check if all single pvp rounds are over
-        if (DuelGameListRemaining.size() == 0) then
             call TriggerSleepAction(2)
 
             set udg_integer41 = udg_integer41 + 1
@@ -198,16 +195,12 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call TriggerSleepAction(1.00)
     
             // This condition is absolutely pointless
-            if (GameModeShort == true) then
-                set PvpGoldWinAmount = DuelGoldReward[RoundNumber]
-            else
-                set PvpGoldWinAmount = DuelGoldReward[RoundNumber]		
-            endif
+            set PvpGoldWinAmount = DuelGoldReward[RoundNumber]
             
             // Show a fancy effect on the winners and give them their reward
             call ForGroup(DuelWinners, function ShowWinningSpecialEffect)
             call PlaySoundBJ(udg_sound07)
-            call ConditionalTriggerExecute(SinglePvpBetRewardTrigger)
+            call ConditionalTriggerExecute(DuelWinnerRewardsTrigger)
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + I2S(PvpGoldWinAmount) + " gold|r")
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
 
@@ -218,7 +211,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call TriggerSleepAction(30.00)
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
             call TriggerExecute(udg_trigger109)
-        else
+        endif
+
+        // Check if all single pvp rounds are over
+        if (DuelGameListRemaining.size() > 0) then
             // Go to the next pvp battle
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
@@ -227,7 +223,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
             // Start the next fight
-            call StartDuelGame(GetNextDuel())
+            call InitializeDuelGame(GetNextDuel())
+
+            call StartDuels()
         endif
 
         // Cleanup
