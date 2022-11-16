@@ -1,4 +1,4 @@
-library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, OldInitialization, PvpHelper
+library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, OldInitialization, PvpHelper, VotingResults
 
     private function PvpHeroDeathConditions takes nothing returns boolean
         return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
@@ -75,9 +75,22 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
         call GroupAddUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities
         call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
+        call GroupRemoveUnit(DuelingHeroes, playerHero)
         call SetUnitInvulnerable(playerHero, true)
 
         // Cleanup
+        set playerHero = null
+    endfunction
+
+    private function EndDuelActionsForLosingPlayer takes nothing returns nothing
+        local player currentPlayer = GetEnumPlayer()
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+
+        call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
+        call GroupRemoveUnit(DuelingHeroes, playerHero)
+
+        // Cleanup
+        set currentPlayer = null
         set playerHero = null
     endfunction
 
@@ -102,9 +115,14 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call SetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) + R2I(deadUnitMidasTouch.bonus * bonus))
             set deadUnitMidasTouch.stop = true
         endif
+
+        // Cleanup
+        set currentPlayer = null
+        set playerHero = null
+        set deadUnit = null
     endfunction
 
-    private function AllDuelsEndedPlayerActions takes nothing returns nothing
+    private function DuelEndedPlayerActions takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
@@ -113,6 +131,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
         // Stop the triggers for unit leaving an arena
         call StopRectLeaveDetection(GetHandleId(playerHero))
+
+        // Cleanup
+        set currentPlayer = null
+        set playerHero = null
     endfunction
 
     private function AwardFunToWinningUnit takes nothing returns nothing
@@ -133,9 +155,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local unit deadUnit = GetDyingUnit()
         local unit killingUnit = GetKillingUnit()
         local player deadUnitPlayer = GetOwningPlayer(deadUnit)
+        local player killingUnitPlayer = GetOwningPlayer(killingUnit)
         local DuelGame duelGame = DuelGame.getPlayerDuelGame(deadUnitPlayer)
         local force deadPlayerForce = duelGame.getPlayerTeam(deadUnitPlayer)
         local force winningPlayerForce = duelGame.getEnemyPlayerTeam(deadUnitPlayer)
+        local PlayerStats ps
 
         // All players in the winning team should get the pvp kill
         call ForForce(winningPlayerForce, function AddPvpWinToPlayer)
@@ -146,36 +170,95 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             
             // Add player unit to DuelWinnerDisabled, set invulnerable
             call ForForce(winningPlayerForce, function EndDuelActionsForWinningPlayer)
-            
-            // Setup the unallied alliance again? Not sure if this even needs to be done again
-            call SetForceAllianceStateBJ(duelGame.team1, duelGame.team2, bj_ALLIANCE_UNALLIED)
-            call SetForceAllianceStateBJ(duelGame.team2, duelGame.team1, bj_ALLIANCE_UNALLIED)
+            call ForForce(deadPlayerForce, function EndDuelActionsForLosingPlayer) 
 
-            // TODO Display message about the duel being over
+            // Alliance reset
+            call SetForceAllianceStateBJ(duelGame.team1, GetPlayersAll(), bj_ALLIANCE_ALLIED)
+            call SetForceAllianceStateBJ(duelGame.team2, GetPlayersAll(), bj_ALLIANCE_ALLIED)
+            call SetForceAllianceStateBJ(GetPlayersAll(), duelGame.team1, bj_ALLIANCE_ALLIED)
+            call SetForceAllianceStateBJ(GetPlayersAll(), duelGame.team2, bj_ALLIANCE_ALLIED)
+
+            // Save code, end arena leave detection
+            call ForForce(duelGame.team1, function DuelEndedPlayerActions)
+            call ForForce(duelGame.team2, function DuelEndedPlayerActions)
+            
+            // Only display a message to everyone when this duel is completely over
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToString(deadPlayerForce) + "|cffffcc00!!|r")
+
+            // Show the PVP kill count if this is not simultaneous duels. Otherwise it will be a lot of spam
+            if (SimultaneousDuelMode == 1) then
+                set ps = PlayerStats.forPlayer(killingUnitPlayer)
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(killingUnitPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode")
+            endif
+
+            call TriggerSleepAction(3.00)
+
+            // Move camera to center arena, revive units, pets, items
+            call ForForce(duelGame.team1, function ResetToCenterArenaForPlayer)
+            call ForForce(duelGame.team2, function ResetToCenterArenaForPlayer)
         else
-            // Only show message to the two teams
-            call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(GetOwningPlayer(killingUnit)) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
-            // TODO call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnit) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode")
+            // Only show message to the two teams if there are still units alive in the dead player force
+            call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
+            call DisplayTimedTextToForce(duelGame.team2, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
+
+            // Cleanup
+            set deadUnit = null
+            set killingUnit = null
+            set killingUnitPlayer = null
+            set deadUnitPlayer = null
+            set deadPlayerForce = null
+            set winningPlayerForce = null
+
+            return
         endif
 
-        // Stop the pvp properties once all fights are over
-        if (DuelGame.areAllDuelsOver()) then
+        // Check if we need a duel with an odd player
+        if (DuelGame.areAllDuelsOver() and OddPlayer != -1) then
+            call TriggerSleepAction(2.00)
+
+            // Disable sudden death
+            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+            call DisableTrigger(UpdatePvpSuddenDeathDamageTrigger)
+            call DisableTrigger(ApplyPvpSuddenDeathDamageTrigger)
+            call DisableTrigger(SinglePvpHeroDeathTrigger)
+            call PvpStopSuddenDeathTimer()
+
+            // Cleanup all arenas
+            call RemoveItemsForAllArenas()
+
+            call AddOddPlayerDuel(ForcePickRandomPlayer(DuelLosers))
+
+            // Set this back to -1 for the next time this trigger runs
+            set OddPlayer = -1
+
+            // Go to the next pvp battle for the odd player
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffff0000Odd player amount detected. Starting duel for odd player out!|r")
+
+            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
+            call DisplayNemesisNames()
+            call StartTimerBJ(GetLastCreatedTimerBJ(), false, 5.00)
+            call TriggerSleepAction(5.00)
+            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+
+            call RemoveUnitsInRect(bj_mapInitialPlayableArea)
+
+            // Start the next fight
+            call InitializeDuelGame(GetNextDuel())
+
+            call StartDuels()
+        // All duels are over, no odd player
+        elseif (DuelGame.areAllDuelsOver() and OddPlayer == -1) then
+            call TriggerSleepAction(3.00)
+
             // Disable sudden death
             call DisableTrigger(UpdatePvpSuddenDeathDamageTrigger)
             call DisableTrigger(ApplyPvpSuddenDeathDamageTrigger)
             call DisableTrigger(SinglePvpHeroDeathTrigger)
             call PvpStopSuddenDeathTimer()
 
-            call ForForce(GetPlayersAll(), function AllDuelsEndedPlayerActions)
-
-            // After some time, cleanup
-            call TriggerSleepAction(4.00)
-
             // Reward glory and stuff
             call ForGroup(DuelWinners, function AwardFunToWinningUnit)
-
-            // Move camera to center arena, revive units, pets, items
-            call ForForce(GetPlayersAll(), function ResetToCenterArenaForPlayer)
 
             // Hand out bet rewards, try to end the game?
             call ConditionalTriggerExecute(DistributeBetsTrigger)
@@ -208,6 +291,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             set deadUnit = null
             set killingUnit = null
             set deadUnitPlayer = null
+            set killingUnitPlayer = null
             set deadPlayerForce = null
             set winningPlayerForce = null
 
@@ -223,11 +307,12 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             set deadUnit = null
             set killingUnit = null
             set deadUnitPlayer = null
+            set killingUnitPlayer = null
             set deadPlayerForce = null
             set winningPlayerForce = null
 
             // Check if all single pvp rounds are over
-            if (DuelGameListRemaining.size() > 0) then
+            if (SimultaneousDuelMode == 1 and DuelGameListRemaining.size() > 0) then
                 // Go to the next pvp battle
                 call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
                 call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
@@ -235,6 +320,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
                 call TriggerSleepAction(3.00)
                 call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
+                call RemoveUnitsInRect(bj_mapInitialPlayableArea)
+                
                 // Start the next fight
                 call InitializeDuelGame(GetNextDuel())
 

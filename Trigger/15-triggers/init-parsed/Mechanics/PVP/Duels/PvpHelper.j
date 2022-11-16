@@ -82,6 +82,16 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call RemoveDebuff(playerHero, 0)
     endfunction
 
+    private function MoveCameraToArenaForPlayer takes nothing returns nothing
+        local location arenaCenter = GetRectCenter(TempArena)
+
+        call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaCenter, 0.20)
+
+        // Cleanup
+        call RemoveLocation(arenaCenter)
+        set arenaCenter = null
+    endfunction
+
     private function SetupPlayerInArena takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
@@ -112,9 +122,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         if (ps.getPet() != null) then
             call SetUnitPositionLocFacingLocBJ(ps.getPet(), spawnOffset, arenaCenter)
         endif
-
-        // Move the camera
-        call PanCameraToTimedLocForPlayer(currentPlayer, arenaCenter, 0.20)
 
         // Save debug logs for the player before the fight
         call DebugCode_SavePlayerDebug(currentPlayer)
@@ -177,7 +184,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
         // Validate. Hopefully should never happen.
         if (CountPlayersInForceBJ(team1) == 0 or CountPlayersInForceBJ(team2) == 0) then
-            call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: " + "One of the forces are empty trying to start a duel")
+            call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: One of the forces are empty trying to start a duel")
             return
         endif
 
@@ -196,13 +203,28 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         // Set the alliances
         call SetForceAllianceStateBJ(team1, team2, bj_ALLIANCE_UNALLIED)
         call SetForceAllianceStateBJ(team2, team1, bj_ALLIANCE_UNALLIED)
+        call SetForceAllianceStateBJ(team1, team1, bj_ALLIANCE_ALLIED)
+        call SetForceAllianceStateBJ(team2, team2, bj_ALLIANCE_ALLIED)
 
         // Play a sound. Dunno what it is.
         call PlaySoundBJ(udg_sound08)
 
-        // Display message to each force about who they are fighting
-        call DisplayTextToForce(team1, "|cffa0966dPvP Battle:|r " + team1ForceString + " vs " + team2ForceString)
-        call DisplayTextToForce(team2, "|cffa0966dPvP Battle:|r " + team2ForceString + " vs " + team1ForceString)
+        // Either do actions for just the two teams, or everyone depending on the simlutaneous vote status
+        if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
+            // Move the camera to the arena for everyone
+            call ForForce(GetPlayersAll(), function MoveCameraToArenaForPlayer)
+
+            // Display message to everyone about the duel
+            call DisplayTextToForce(GetPlayersAll(), "|cffa0966dPvP Battle:|r " + team1ForceString + " vs " + team2ForceString)
+        else
+            // Only move the camera to the arena for the two forces
+            call ForForce(team1, function MoveCameraToArenaForPlayer)
+            call ForForce(team2, function MoveCameraToArenaForPlayer)
+
+            // Display message to each force about who they are fighting
+            call DisplayTextToForce(team1, "|cffa0966dPvP Battle:|r " + team1ForceString + " vs " + team2ForceString)
+            call DisplayTextToForce(team2, "|cffa0966dPvP Battle:|r " + team2ForceString + " vs " + team1ForceString)
+        endif
 
         // Cleanup the temp global variables
         set TempArena = null
@@ -253,6 +275,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
         // Start the fight
         call ForGroup(DuelingHeroes, function StartFightForUnit)
+
+        // Force any computer players to attack right away
+        call TriggerExecute(ComputerPvpEnforceDuelTrigger)
     endfunction
     
     function InitializeDuelGame takes DuelGame duelGame returns nothing

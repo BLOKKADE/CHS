@@ -79,13 +79,11 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus, Voti
             call PlaySoundBJ(udg_sound02)
             if(GameModeShort==true and ElimModeEnabled==false)then
                 if(Trig_Level_Completed_Func001Func018Func002C())then
-                    call GroupClear(DuelWinners)
                     call ConditionalTriggerExecute(InitializePvpTrigger)
                     return
                 endif
             else
                 if(Trig_Level_Completed_Func001Func018Func001C())then
-                    call GroupClear(DuelWinners)
                     call ConditionalTriggerExecute(InitializePvpTrigger)
                     return
                 endif

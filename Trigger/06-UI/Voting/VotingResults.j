@@ -15,6 +15,7 @@ library VotingResults initializer init
         integer PvpBettingMode
         integer HeroBanningMode
         integer SimultaneousDuelMode
+        integer TeamDuelMode
 
         string GameDescription
 
@@ -30,13 +31,14 @@ library VotingResults initializer init
 
     struct PlayerVotes
         private integer RoundVote = 1 // 25 rounds
-        private integer AbilityVote = 1 // Pick
-        private integer HeroVote = 1 // Pick
+        private integer AbilityVote = 3 // Draft
+        private integer HeroVote = 3 // Draft
         private integer IncomeVote = 1 // Individual
         private integer ImmortalVote = 1 // Normal lives
         private integer PvpBettingVote = 1 // No betting
         private integer HeroBanningVote = 1 // No banning
-        private integer SimultaneousDuelVote = 1 // Simultaneous duels
+        private integer SimultaneousDuelVote = 2 // Simultaneous duels on
+        private integer TeamDuelVote = 2 // Team duels on
 
         public method setRoundVote takes integer value returns nothing 
             set this.RoundVote = value
@@ -70,6 +72,10 @@ library VotingResults initializer init
             set this.SimultaneousDuelVote = value
         endmethod
 
+        public method setTeamDuelVote takes integer value returns nothing 
+            set this.TeamDuelVote = value
+        endmethod
+
         public method getRoundVote takes nothing returns integer 
             return this.RoundVote
         endmethod
@@ -100,6 +106,10 @@ library VotingResults initializer init
 
         public method getSimultaneousDuelVote takes nothing returns integer 
             return this.SimultaneousDuelVote
+        endmethod
+
+        public method getTeamDuelVote takes nothing returns integer 
+            return this.TeamDuelVote
         endmethod
     endstruct
 
@@ -161,9 +171,15 @@ library VotingResults initializer init
         endif
 
         if (SimultaneousDuelMode == 1) then
-            set GameDescription = GameDescription + "Simultaneous Duels Off"
+            set GameDescription = GameDescription + "Simultaneous Duels Off, "
         elseif (SimultaneousDuelMode == 2) then
-            set GameDescription = GameDescription + "Simultaneous Duels On"
+            set GameDescription = GameDescription + "Simultaneous Duels On, "
+        endif
+
+        if (TeamDuelMode == 1) then
+            set GameDescription = GameDescription + "Team Duels Off"
+        elseif (TeamDuelMode == 2) then
+            set GameDescription = GameDescription + "Team Duels On"
         endif
 
         set GameDescription = GameDescription + "|r"
@@ -242,6 +258,7 @@ library VotingResults initializer init
         local integer array pvpBettingModeCounts
         local integer array heroBanningModeCounts
         local integer array simultaneousDuelModeCounts
+        local integer array teamDuelModeCounts
         local PlayerVotes currentPlayerVotes
         local integer i = 0
 
@@ -259,6 +276,7 @@ library VotingResults initializer init
                 set pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] = pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] + 1
                 set heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] = heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] + 1
                 set simultaneousDuelModeCounts[currentPlayerVotes.getSimultaneousDuelVote()] = simultaneousDuelModeCounts[currentPlayerVotes.getSimultaneousDuelVote()] + 1
+                set teamDuelModeCounts[currentPlayerVotes.getTeamDuelVote()] = teamDuelModeCounts[currentPlayerVotes.getTeamDuelVote()] + 1
             endif
 
             set i = i + 1
@@ -337,6 +355,15 @@ library VotingResults initializer init
             exitwhen i > 2
         endloop
         set SimultaneousDuelMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+
+        // Team duel vote counting
+        set i = 1
+        loop
+            set CategoryVotes[i] = teamDuelModeCounts[i]
+            set i = i + 1
+            exitwhen i > 2
+        endloop
+        set TeamDuelMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
 
         // Set the weird global variables based off of the results
         set GameModeShort = RoundMode == 2 // Boolean that flags if the game is short

@@ -1,4 +1,4 @@
-library PvpRoundRobin requires ListT, ForceHelper
+library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 /*
 Round robin style tournament for more info see: https://en.wikipedia.org/wiki/Round-robin_tournament#Circle_method
 PlayerList = list of player ids that is moved around round robin style
@@ -14,13 +14,12 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
     globals
         private boolean initialised = false
-        IntegerList PlayerList
+        private IntegerList PlayerList
+        private IntegerList UsedArenas
+
         IntegerList DuelGameList
         IntegerList DuelGameListRemaining
         integer OddPlayer = -1
-
-        //has to be either 1 2 or 4 TODO: support 3
-        private constant integer TeamPlayerLimit = 1
     endglobals
 
     function DisplayNemesisNames takes nothing returns nothing
@@ -158,26 +157,61 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         endmethod
     endstruct
 
+    function AddOddPlayerDuel takes player duelPlayer returns nothing
+        local force team1 = CreateForce()
+        local force team2 = CreateForce()
+        local integer playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
+        local DuelGame currentDuelGame
+
+        // Reset everything. All of these duels should be over by now
+        call DuelGameList.clear()
+        call DuelGameListRemaining.clear()
+        call UsedArenas.clear()
+
+        // Create the odd 1v1 duel
+        call ForceAddPlayer(team1, duelPlayer)
+        call ForceAddPlayer(team2, Player(OddPlayer))
+
+        set currentDuelGame = DuelGame.create(team1, team2, PlayerArenaRects[playerArenaRectIndex])
+
+        call DuelGameList.push(currentDuelGame)
+        call DuelGameListRemaining.push(currentDuelGame)
+
+        set team1 = null
+        set team2 = null
+    endfunction
+
     function MoveRoundRobin takes nothing returns nothing
         local integer i = 0
         local integer j = 0
-        local integer limit = PlayerList.size() / (2 * TeamPlayerLimit)
+        local integer limit
         local integer tempBack
         local integer tempFront
         local IntegerList tempPlayerList = IntegerList[PlayerList]
         local force team1
         local force team2
-        local integer playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
+        local integer playerArenaRectIndex
         local DuelGame currentDuelGame
+        local integer teamPlayerLimit
+
+        // If team duel is enabled, and the 12.5% chance passes, and there are either 4 or 8 people, do a 2v2 fight
+        if (TeamDuelMode == 2 and (GetRandomInt(1, 8) == 1) and ModuloInteger(PlayerList.size(), 4) == 0) then
+            set teamPlayerLimit = 2
+            set limit = PlayerList.size() / (2 * teamPlayerLimit)
+        else
+            set teamPlayerLimit = 1
+            set limit = PlayerList.size() / (2 * teamPlayerLimit)
+        endif
 
         call DuelGameList.clear()
         call DuelGameListRemaining.clear()
+        call UsedArenas.clear()
 
         loop
             set team1 = CreateForce()
             set team2 = CreateForce()
 
-            set j = TeamPlayerLimit
+            set j = teamPlayerLimit
             loop
                 call ForceAddPlayer(team1, Player(tempPlayerList.front()))
                 call ForceAddPlayer(team2, Player(tempPlayerList.back()))
@@ -188,12 +222,20 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
                 exitwhen j <= 0
             endloop
 
+            // Find an open arena
+            loop
+                set playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
+
+                if (UsedArenas.find(playerArenaRectIndex) == 0) then
+                    call UsedArenas.push(playerArenaRectIndex)
+                    exitwhen true
+                endif
+            endloop
+
             set currentDuelGame = DuelGame.create(team1, team2, PlayerArenaRects[playerArenaRectIndex])
             call DuelGameList.push(currentDuelGame)
             call DuelGameListRemaining.push(currentDuelGame)
 
-            set playerArenaRectIndex = ModuloInteger(playerArenaRectIndex, 8)
-            set playerArenaRectIndex = playerArenaRectIndex + 1
             set i = i + 1
             exitwhen i >= limit
         endloop
@@ -236,6 +278,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         set PlayerList = PlayerList.create()
         set DuelGameList = DuelGameList.create()
         set DuelGameListRemaining = DuelGameListRemaining.create()
+        set UsedArenas = UsedArenas.create()
         
         loop
             if /*UnitAlive(PlayerHeroes[i + 1])*/ true then
