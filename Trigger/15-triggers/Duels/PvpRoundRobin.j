@@ -256,6 +256,12 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
         set team1 = null
         set team2 = null
+
+        // Move the odd player to the beginning of the player list. UpdatePlayers we get a new OddPlayer
+        if OddPlayer != -1 then
+            call PlayerList.unshift(OddPlayer)
+            set OddPlayer = -1
+        endif
     endfunction
 
 

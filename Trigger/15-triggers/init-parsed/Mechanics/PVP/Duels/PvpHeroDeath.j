@@ -265,8 +265,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         set deadPlayerForce = null
         set winningPlayerForce = null
 
-        call BJDebugMsg("Odd player id 3: " + I2S(OddPlayer))
-
         // Check if we need a duel with an odd player
         if (DuelGame.areAllDuelsOver() and OddPlayer != -1 and OddPlayerDuelStarted == false) then
             call AfterAllDuelCleanupActions(duelGame)
