@@ -241,6 +241,16 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Only show message to the two teams if there are still units alive in the dead player force
             call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
             call DisplayTimedTextToForce(duelGame.team2, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
+
+            // Cleanup
+            set deadUnit = null
+            set killingUnit = null
+            set killingUnitPlayer = null
+            set deadUnitPlayer = null
+            set deadPlayerForce = null
+            set winningPlayerForce = null
+
+            return
         endif
 
         // Cleanup
