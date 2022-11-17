@@ -138,15 +138,15 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
             if (currentItem != null) then
                 // Save all item information in a single array with the playerId as the offset
-                set PreDuelItemIds[playerId + itemSlotIndex] = GetItemTypeId(currentItem)
-                set PreDuelItemCharges[playerId + itemSlotIndex] = GetItemCharges(currentItem)
+                set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = GetItemTypeId(currentItem)
+                set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = GetItemCharges(currentItem)
                 call SetItemPawnable(currentItem, false)
 
                 // Cleanup
                 set currentItem = null
             else
-                set PreDuelItemIds[playerId + itemSlotIndex] = -1
-                set PreDuelItemCharges[playerId + itemSlotIndex] = -1
+                set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = -1
+                set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = -1
             endif
 
             set itemSlotIndex = itemSlotIndex + 1

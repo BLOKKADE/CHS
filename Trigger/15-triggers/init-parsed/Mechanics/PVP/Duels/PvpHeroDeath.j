@@ -42,11 +42,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
             if GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
                 // Make sure there is an actual item
-                if (PreDuelItemIds[playerId + itemSlotIndex] != -1) then
-                    set tempItem = UnitAddItemByIdSwapped(PreDuelItemIds[playerId + itemSlotIndex], playerHero)
+                if (PreDuelItemIds[(6 * playerId) + itemSlotIndex] != -1) then
+                    set tempItem = UnitAddItemByIdSwapped(PreDuelItemIds[(6 * playerId) + itemSlotIndex], playerHero)
 
-                    if PreDuelItemCharges[playerId + itemSlotIndex] > 1 then
-                        call SetItemCharges(tempItem, PreDuelItemCharges[playerId + itemSlotIndex])
+                    if PreDuelItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
+                        call SetItemCharges(tempItem, PreDuelItemCharges[(6 * playerId) + itemSlotIndex])
                     endif
 
                     call SetItemPawnable(tempItem, true)
