@@ -212,10 +212,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call SetForceAllianceStateBJ(team1, team2, bj_ALLIANCE_UNALLIED)
         call SetForceAllianceStateBJ(team2, team1, bj_ALLIANCE_UNALLIED)
         call SetForceAllianceStateBJ(team1, team1, bj_ALLIANCE_ALLIED)
-        call SetForceAllianceStateBJ(team2, team2, bj_ALLIANCE_ALLIED)
-
-        // Play a sound. Dunno what it is.
-        call PlaySoundBJ(udg_sound08)
+        call SetForceAllianceStateBJ(team2, team2, bj_ALLIANCE_ALLIED)      
 
         // Either do actions for just the two teams, or everyone depending on the simlutaneous vote status
         if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)

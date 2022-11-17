@@ -33,6 +33,8 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
 
         call TriggerSleepAction(0.20) // Copied from initial trigger. Probably to take a small breath before showing betting screens
 
+        call PlaySoundBJ(udg_sound08) // Horn noise!
+
         call StartDuels()
     endfunction
 

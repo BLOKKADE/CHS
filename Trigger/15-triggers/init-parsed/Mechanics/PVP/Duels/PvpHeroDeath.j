@@ -171,6 +171,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call EnumItemsInRectBJ(PlayerArenaRects[playerArenaIndex], function RemoveItemFromArena)
             set playerArenaIndex = playerArenaIndex + 1
         endloop
+
+        call EnumItemsInRectBJ(RectMidArena, function RemoveItemFromArena)
     endfunction
 
     // This function should only be called when all initial duels are over
@@ -283,6 +285,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
             // Start the next fight
             call InitializeDuelGame(GetNextDuel())
+            call PlaySoundBJ(udg_sound08) // Horn noise!
             call StartDuels()
         // All duels are over, no odd player
         elseif (DuelGame.areAllDuelsOver() and OddPlayer == -1) then
@@ -333,6 +336,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
             // Start the next fight
             call InitializeDuelGame(GetNextDuel())
+            call PlaySoundBJ(udg_sound08) // Horn noise!
             call StartDuels()
         // Duels are not over but this duel is over, send them to the center
         // We need this trigger sleep later because it will ause race conditions when checking if all duels are complete
