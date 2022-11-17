@@ -1,9 +1,11 @@
 library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults, OldInitialization
 
     globals
+        // Arrays containing items and item charges before duels start
         integer array PreDuelItemIds
         integer array PreDuelItemCharges
 
+        // Temp variables
         private boolean SpawnLeft
         private rect TempArena
     endglobals
@@ -290,4 +292,10 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call InitializeFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.arena)
     endfunction
 
+    function ResetPvpState takes nothing returns nothing
+        call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
+        call GroupClear(DuelWinners) // DuelWinners keeps track of all heroes that won
+        call GroupClear(DuelWinnerDisabled) // DuelWinnerDisabled keeps track of all heroes that won and is used to prevent them from casting spells in other libraries
+        call ForceClear(DuelLosers) // Players that lost the current duels
+    endfunction
 endlibrary

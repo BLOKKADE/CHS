@@ -3,12 +3,8 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
     private function InitializePvpActions takes nothing returns nothing
         call TriggerSleepAction(2.00)
         
-        call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
-        call GroupClear(DuelWinners) // DuelWinners keeps track of all heroes that won
-        call GroupClear(DuelWinnerDisabled) // DuelWinnerDisabled keeps track of all heroes that won and is used to prevent them from casting spells in other libraries
-        call ForceClear(DuelLosers) // Players that lost the current duels
-        
         // Setup the fights
+        call ResetPvpState()
         call UpdatePlayerCount()
         call MoveRoundRobin()
         
