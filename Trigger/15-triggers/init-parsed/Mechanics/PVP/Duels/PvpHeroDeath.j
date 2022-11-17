@@ -48,6 +48,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
                     if PreDuelItemCharges[playerId + itemSlotIndex] > 1 then
                         call SetItemCharges(tempItem, PreDuelItemCharges[playerId + itemSlotIndex])
                     endif
+
+                    call SetItemPawnable(tempItem, true)
                 endif
             endif
 
