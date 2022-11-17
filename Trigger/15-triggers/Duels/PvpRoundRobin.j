@@ -254,6 +254,11 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         call PlayerList.unshift(tempBack)
         call PlayerList.unshift(tempFront)
 
+        if OddPlayer != -1 then
+            call PlayerList.unshift(OddPlayer)
+            set OddPlayer = -1
+        endif
+
         set team1 = null
         set team2 = null
     endfunction
