@@ -10,8 +10,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local unit playerHero = PlayerHeroes[playerId + 1]
         local location arenaLocation = GetRectCenter(RectMidArena)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-        local integer itemSlotIndex = 0
-        local item tempItem
 
         // Move camera to center arena
         call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation, 0.20)
@@ -33,6 +31,20 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
         // Random crap
         call FixAbominationPassive(playerHero)
+
+        // Cleanup
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
+        set currentPlayer = null
+        set playerHero = null
+    endfunction
+
+    private function ResetItemsForPlayer takes nothing returns nothing
+        local player currentPlayer = GetEnumPlayer()
+        local integer playerId = GetPlayerId(currentPlayer)
+        local unit playerHero = PlayerHeroes[playerId + 1]
+        local integer itemSlotIndex = 0
+        local item tempItem
 
         // Reset items
         loop
@@ -57,8 +69,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         endloop
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
         set currentPlayer = null
         set playerHero = null
         set tempItem = null
@@ -237,6 +247,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Cleanup all arenas
             call RemoveItemsForAllArenas()
 
+            // Create a new duel using a random loser
             call AddOddPlayerDuel(ForcePickRandomPlayer(DuelLosers))
 
             // Set this back to -1 for the next time this trigger runs
@@ -262,12 +273,18 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         elseif (DuelGame.areAllDuelsOver() and OddPlayer == -1) then
             call TriggerSleepAction(2.00)
 
+            // Reset to the items before the duels
+            call ForForce(GetPlayersAll(), function ResetItemsForPlayer)
+
             // Disable sudden death
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
             call DisableTrigger(UpdatePvpSuddenDeathDamageTrigger)
             call DisableTrigger(ApplyPvpSuddenDeathDamageTrigger)
             call DisableTrigger(SinglePvpHeroDeathTrigger)
             call PvpStopSuddenDeathTimer()
+
+            // Cleanup all arenas
+            call RemoveItemsForAllArenas()
 
             // Reward glory and stuff
             call ForGroup(DuelWinners, function AwardFunToWinningUnit)
