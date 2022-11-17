@@ -1,8 +1,13 @@
 library GetPlayerNames initializer init
     globals
         string array PlayerName
+        string array PlayerColor
     endglobals
     
+    function GetUnitNamePlayerColour takes unit u returns string
+        return PlayerColor[GetPlayerId(GetOwningPlayer(u))] + GetUnitName(u) + "|r"
+    endfunction
+
     function GetPlayerNameColour takes player p returns string
         return PlayerName[GetPlayerId(p)]
     endfunction
@@ -23,6 +28,7 @@ library GetPlayerNames initializer init
     
     private function InitializePlayer takes integer pid, string color returns nothing
         set PlayerName[pid] = color + GetPlayerNameNoTag(GetPlayerName(Player(pid))) + "|r"
+        set PlayerColor[pid] = color
     endfunction
     
     private function init takes nothing returns nothing

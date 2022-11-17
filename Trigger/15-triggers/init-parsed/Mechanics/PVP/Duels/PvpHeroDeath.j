@@ -124,7 +124,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local MidasTouch deadUnitMidasTouch = GetMidasTouch(GetHandleId(deadUnit))
         local real bonus = 1
 
-        call ps.addPVPWin() // TODO Switch to addGroupPVPWin
+        call ps.addPVPWin() // TODO Switch to addGroupPVPWin?
 
         // Midas Touch
         if deadUnitMidasTouch != 0 then
@@ -190,6 +190,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Move camera to center arena, revive units, pets, items
         call ForForce(duelGame.team1, function ResetToCenterArenaForPlayer)
         call ForForce(duelGame.team2, function ResetToCenterArenaForPlayer)
+        
+        // Reset to the items to before the duels
+        call ForForce(duelGame.team1, function ResetItemsForPlayer)
+        call ForForce(duelGame.team2, function ResetItemsForPlayer)
 
         call TriggerSleepAction(2.00)
 
@@ -230,7 +234,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForForce(duelGame.team2, function DuelEndedPlayerActions)
             
             // Only display a message to everyone when this duel is completely over
-            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToString(deadPlayerForce) + "|cffffcc00!!|r")
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
 
             // Show the PVP kill count if this is not simultaneous duels. Otherwise it will be a lot of spam
             if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
@@ -261,24 +265,25 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         set deadPlayerForce = null
         set winningPlayerForce = null
 
+        call BJDebugMsg("Odd player id 3: " + I2S(OddPlayer))
+
         // Check if we need a duel with an odd player
-        if (DuelGame.areAllDuelsOver() and OddPlayer != -1) then
+        if (DuelGame.areAllDuelsOver() and OddPlayer != -1 and OddPlayerDuelStarted == false) then
             call AfterAllDuelCleanupActions(duelGame)
 
             // Create a new duel using a random loser. TODO Validate there is a loser?
             call AddOddPlayerDuel(ForcePickRandomPlayer(DuelLosers))
 
-            // Set this back to -1 for the next time this trigger runs
-            set OddPlayer = -1
+            set OddPlayerDuelStarted = true
 
             // Go to the next pvp battle for the odd player
-            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffff0000Odd player amount detected. Starting duel for odd player out!|r")
+            call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "|cffff0000Odd player amount detected. Starting duel for odd player out!|r")
 
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
             call DisplayNemesisNames()
-            call StartTimerBJ(GetLastCreatedTimerBJ(), false, 5.00)
-            call TriggerSleepAction(5.00)
+            call StartTimerBJ(GetLastCreatedTimerBJ(), false, 15.00)
+            call TriggerSleepAction(15.00)
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
             // Start the next fight
@@ -286,12 +291,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call PlaySoundBJ(udg_sound08) // Horn noise!
             call StartDuels()
         // All duels are over, no odd player
-        elseif (DuelGame.areAllDuelsOver() and OddPlayer == -1) then
+        elseif (DuelGame.areAllDuelsOver() and (OddPlayer == -1 or OddPlayerDuelStarted == true)) then
             call AfterAllDuelCleanupActions(duelGame)
             call EnumItemsInRectBJ(RectMidArena, function RemoveItemFromArena) // Remove items from center arena when all duels are done
-
-            // Reset to the items to before the duels
-            call ForForce(GetPlayersAll(), function ResetItemsForPlayer)
 
             // Reward glory and stuff
             call ForGroup(DuelWinners, function AwardFunToWinningUnit)
@@ -301,7 +303,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ConditionalTriggerExecute(EndGameTrigger)
 
             // udg_integer41 has some random math done on it and assigned to UnknownInteger01 which alters gold/lumber of players?
-            call TriggerSleepAction(2)
+            call TriggerSleepAction(2.00)
             set udg_integer41 = udg_integer41 + 1 // Some variable used for calculating rewards
             call TriggerSleepAction(1.00)
     
@@ -338,13 +340,17 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call PlaySoundBJ(udg_sound08) // Horn noise!
             call StartDuels()
         // Duels are not over but this duel is over, send them to the center
-        // We need this trigger sleep later because it will ause race conditions when checking if all duels are complete
+        // We need this trigger sleep later because it will cause race conditions when checking if all duels are complete
         else
             call TriggerSleepAction(3.00)
 
             // Move camera to center arena, revive units, pets, items
             call ForForce(duelGame.team1, function ResetToCenterArenaForPlayer)
             call ForForce(duelGame.team2, function ResetToCenterArenaForPlayer)
+
+            // Reset to the items to before the duels
+            call ForForce(duelGame.team1, function ResetItemsForPlayer)
+            call ForForce(duelGame.team2, function ResetItemsForPlayer)
         endif
     endfunction
 

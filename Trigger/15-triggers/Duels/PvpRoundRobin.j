@@ -14,13 +14,14 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
     globals
         private boolean initialised = false
-        private IntegerList PlayerList
-        private IntegerList UsedArenas
+        private IntegerList PlayerList // Contains all active players
+        private IntegerList UsedArenas // Contains the arenas that are used for current duels
+        private DuelGame TempDuelGame // Temporary global variable for DisplayNemesisNames
 
         DuelGame CurrentDuelGame // Used to reference the current duel for betting pruposes. Doesn't work properly for simultaneous duels.
-        IntegerList DuelGameList
-        IntegerList DuelGameListRemaining
-        integer OddPlayer = -1
+        IntegerList DuelGameList // The list of duels that doesn't get emptied as we get duels
+        IntegerList DuelGameListRemaining // The list of duels that gets emptied as we get duels
+        integer OddPlayer = -1 // The player id of the odd player
     endglobals
 
     function DisplayNemesisNames takes nothing returns nothing
@@ -34,19 +35,19 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
             
             set currentDuelGame = node.data
 
-            set team1ForceString = ConvertForceToString(currentDuelGame.team1)
-            set team2ForceString = ConvertForceToString(currentDuelGame.team2)
+            set team1ForceString = ConvertForceToUnitString(currentDuelGame.team1)
+            set team2ForceString = ConvertForceToUnitString(currentDuelGame.team2)
 
             // Display team2 opponents to team1
-            if (CountPlayersInForceBJ(currentDuelGame.team2) > 1) then
-                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "|cffff0000Your PVP opponents are|r " + team2ForceString)
+            if (CountPlayersInForceBJ(currentDuelGame.team2) > 1) then // This is assuming equal team sizes
+                call DisplayTimedTextToForce(currentDuelGame.team1, 25, team1ForceString + "|cffff0000 PVP opponents are|r " + team2ForceString)
             else
                 call DisplayTimedTextToForce(currentDuelGame.team1, 25, "|cffff0000Your PVP opponent is|r " + team2ForceString)
             endif
 
             // Display team1 opponents to team2
-            if (CountPlayersInForceBJ(currentDuelGame.team1) > 1) then
-                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "|cffff0000Your PVP opponents are|r " + team1ForceString)
+            if (CountPlayersInForceBJ(currentDuelGame.team1) > 1) then // This is assuming equal team sizes
+                call DisplayTimedTextToForce(currentDuelGame.team2, 25, team2ForceString + "|cffff0000 PVP opponents are|r " + team1ForceString)
             else
                 call DisplayTimedTextToForce(currentDuelGame.team2, 25, "|cffff0000Your PVP opponent is|r " + team1ForceString)
             endif
@@ -199,7 +200,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         local integer teamPlayerLimit
 
         // If team duel is enabled, and the 12.5% chance passes, and there are either 4 or 8 people, do a 2v2 fight
-        if (TeamDuelMode == 2 and (GetRandomInt(1, 8) == 1) and ModuloInteger(PlayerList.size(), 4) == 0) then
+        if (TeamDuelMode == 2 and /*(GetRandomInt(1, 8) == 1) and*/ ModuloInteger(PlayerList.size(), 4) == 0) then
             set teamPlayerLimit = 2
             set limit = PlayerList.size() / (2 * teamPlayerLimit)
         else

@@ -1,6 +1,9 @@
 library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults, OldInitialization
 
     globals
+        // Keep track if the odd player duel has been started
+        boolean OddPlayerDuelStarted
+
         // Arrays containing items and item charges before duels start
         integer array PreDuelItemIds
         integer array PreDuelItemCharges
@@ -45,8 +48,8 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
     private function RefreshHero takes unit playerHero returns nothing
         // Hp/mana restore
-        call SetUnitLifePercentBJ(playerHero,100)
-        call SetUnitManaPercentBJ(playerHero,100)
+        call SetUnitLifePercentBJ(playerHero, 100)
+        call SetUnitManaPercentBJ(playerHero, 100)
     
         // Reset cooldowns
         call UnitResetCooldown(playerHero)
@@ -134,29 +137,26 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call RefreshHero(playerHero)
         call GroupAddUnit(DuelingHeroGroup, playerHero)
 
-        // Don't try to save the items again for a player if a player is chosen again to duel the odd player out
-        if ((IsUnitInGroup(playerHero, DuelWinners) == false) and (IsPlayerInForce(currentPlayer, DuelLosers) == false)) then
-            // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
-            loop
-                set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
+        // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
+        loop
+            set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
 
-                if (currentItem != null) then
-                    // Save all item information in a single array with the playerId as the offset
-                    set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = GetItemTypeId(currentItem)
-                    set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = GetItemCharges(currentItem)
-                    call SetItemPawnable(currentItem, false)
+            if (currentItem != null) then
+                // Save all item information in a single array with the playerId as the offset
+                set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = GetItemTypeId(currentItem)
+                set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = GetItemCharges(currentItem)
+                call SetItemPawnable(currentItem, false)
 
-                    // Cleanup
-                    set currentItem = null
-                else
-                    set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = -1
-                    set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = -1
-                endif
+                // Cleanup
+                set currentItem = null
+            else
+                set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = -1
+                set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = -1
+            endif
 
-                set itemSlotIndex = itemSlotIndex + 1
-                exitwhen itemSlotIndex == 6
-            endloop
-        endif
+            set itemSlotIndex = itemSlotIndex + 1
+            exitwhen itemSlotIndex == 6
+        endloop
 
         // Cleanup
         call RemoveLocation(arenaCenter)
@@ -187,8 +187,8 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     endfunction
 
     private function InitializeFightBetweenForces takes force team1, force team2, rect arena returns nothing
-        local string team1ForceString = ConvertForceToString(team1)
-        local string team2ForceString = ConvertForceToString(team2)
+        local string team1ForceString = ConvertForceToUnitString(team1)
+        local string team2ForceString = ConvertForceToUnitString(team2)
 
         // Validate. Hopefully should never happen.
         if (CountPlayersInForceBJ(team1) == 0 or CountPlayersInForceBJ(team2) == 0) then
@@ -243,8 +243,8 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
             call DialogSetMessage(Dialogs[1], "Betting Menu")
 
             // Add the dueling hero player names to the betting menu
-            set DialogButtons[1] = DialogAddButtonBJ(Dialogs[1], "<< " + ConvertForceToString(team1) + "|r   ")
-            set DialogButtons[2] = DialogAddButtonBJ(Dialogs[1], "   " + ConvertForceToString(team2) + "|r >>")
+            set DialogButtons[1] = DialogAddButtonBJ(Dialogs[1], "<< " + ConvertForceToUnitString(team1) + "|r   ")
+            set DialogButtons[2] = DialogAddButtonBJ(Dialogs[1], "   " + ConvertForceToUnitString(team2) + "|r >>")
             set DialogButtons[3] = DialogAddButtonBJ(Dialogs[1], "Skip")
 
             // Show the betting dialog to all non dueling players
@@ -290,6 +290,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     endfunction
 
     function ResetPvpState takes nothing returns nothing
+        set OddPlayerDuelStarted = false
         call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
         call GroupClear(DuelWinners) // DuelWinners keeps track of all heroes that won
         call GroupClear(DuelWinnerDisabled) // DuelWinnerDisabled keeps track of all heroes that won and is used to prevent them from casting spells in other libraries
