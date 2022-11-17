@@ -28,7 +28,6 @@ library PvpCountdownTimer initializer init requires RandomShit, PvpRoundRobin
             call SetTextTagPermanentBJ(GetLastCreatedTextTag(), false)
             call SetTextTagFadepointBJ(GetLastCreatedTextTag(), 0.80)
             call SetTextTagLifespanBJ(GetLastCreatedTextTag(), 1.00)
-            call PlaySoundBJ(udg_sound09) // Ticking noise
 
             // Cleanup
             call RemoveLocation(currentArenaLocation)
@@ -36,6 +35,8 @@ library PvpCountdownTimer initializer init requires RandomShit, PvpRoundRobin
 
             set node = node.next
         endloop
+
+        call PlaySoundBJ(udg_sound09) // Ticking noise
 
         set CountdownCount = CountdownCount - 1
 

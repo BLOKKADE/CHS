@@ -174,7 +174,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     endfunction
 
     // This function should only be called when all initial duels are over
-    private function AfterDuelCleanupActions takes DuelGame duelGame returns nothing
+    private function AfterAllDuelCleanupActions takes DuelGame duelGame returns nothing
         // Disable sudden death
         call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
         call DisableTrigger(UpdatePvpSuddenDeathDamageTrigger)
@@ -263,7 +263,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
         // Check if we need a duel with an odd player
         if (DuelGame.areAllDuelsOver() and OddPlayer != -1) then
-            call AfterDuelCleanupActions(duelGame)
+            call AfterAllDuelCleanupActions(duelGame)
 
             // Create a new duel using a random loser. TODO Validate there is a loser?
             call AddOddPlayerDuel(ForcePickRandomPlayer(DuelLosers))
@@ -286,7 +286,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call StartDuels()
         // All duels are over, no odd player
         elseif (DuelGame.areAllDuelsOver() and OddPlayer == -1) then
-            call AfterDuelCleanupActions(duelGame)
+            call AfterAllDuelCleanupActions(duelGame)
 
             // Reset to the items to before the duels
             call ForForce(GetPlayersAll(), function ResetItemsForPlayer)
@@ -297,9 +297,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Hand out bet rewards, try to end the game?
             call ConditionalTriggerExecute(DistributeBetsTrigger)
             call ConditionalTriggerExecute(EndGameTrigger)
-
-            // Reset 
-            call ResetPvpState()
 
             // udg_integer41 has some random math done on it and assigned to UnknownInteger01 which alters gold/lumber of players?
             call TriggerSleepAction(2)
@@ -325,7 +322,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call TriggerExecute(udg_trigger109) // Start the next normal level
         // Check if all single pvp rounds are over
         elseif (SimultaneousDuelMode == 1 and DuelGameListRemaining.size() > 0) then
-            call AfterDuelCleanupActions(duelGame)
+            call AfterAllDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle
             call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
@@ -337,6 +334,14 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Start the next fight
             call InitializeDuelGame(GetNextDuel())
             call StartDuels()
+        // Duels are not over but this duel is over, send them to the center
+        // We need this trigger sleep later because it will ause race conditions when checking if all duels are complete
+        else
+            call TriggerSleepAction(3.00)
+
+            // Move camera to center arena, revive units, pets, items
+            call ForForce(duelGame.team1, function ResetToCenterArenaForPlayer)
+            call ForForce(duelGame.team2, function ResetToCenterArenaForPlayer)
         endif
     endfunction
 
