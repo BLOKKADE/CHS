@@ -46,28 +46,30 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local integer itemSlotIndex = 0
         local item tempItem
 
-        // Reset items
-        loop
-            exitwhen itemSlotIndex == 6
+        if (playerHero != null) then
+            // Reset items
+            loop
+                exitwhen itemSlotIndex == 6
 
-            call RemoveItem(UnitItemInSlot(playerHero, itemSlotIndex))
+                call RemoveItem(UnitItemInSlot(playerHero, itemSlotIndex))
 
-            if GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
-                // Make sure there is an actual item
-                if (PreDuelItemIds[(6 * playerId) + itemSlotIndex] != -1) then
-                    set tempItem = UnitAddItemByIdSwapped(PreDuelItemIds[(6 * playerId) + itemSlotIndex], playerHero)
+                if GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
+                    // Make sure there is an actual item
+                    if (PreDuelItemIds[(6 * playerId) + itemSlotIndex] != -1) then
+                        set tempItem = UnitAddItemByIdSwapped(PreDuelItemIds[(6 * playerId) + itemSlotIndex], playerHero)
 
-                    if PreDuelItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
-                        call SetItemCharges(tempItem, PreDuelItemCharges[(6 * playerId) + itemSlotIndex])
+                        if PreDuelItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
+                            call SetItemCharges(tempItem, PreDuelItemCharges[(6 * playerId) + itemSlotIndex])
+                        endif
+
+                        call SetItemPawnable(tempItem, true)
                     endif
-
-                    call SetItemPawnable(tempItem, true)
                 endif
-            endif
 
-            set itemSlotIndex = itemSlotIndex + 1
-        endloop
-
+                set itemSlotIndex = itemSlotIndex + 1
+            endloop
+        endif
+        
         // Cleanup
         set currentPlayer = null
         set playerHero = null

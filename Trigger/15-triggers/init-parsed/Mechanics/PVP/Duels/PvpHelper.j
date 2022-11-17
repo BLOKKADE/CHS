@@ -132,26 +132,29 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call RefreshHero(playerHero)
         call GroupAddUnit(DuelingHeroGroup, playerHero)
 
-        // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
-        loop
-            set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
+        // Don't try to save the items again for a player if a player is chosen again to duel the odd player out
+        if ((IsUnitInGroup(playerHero, DuelWinners) == false) and (IsPlayerInForce(currentPlayer, DuelLosers) == false)) then
+            // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
+            loop
+                set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
 
-            if (currentItem != null) then
-                // Save all item information in a single array with the playerId as the offset
-                set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = GetItemTypeId(currentItem)
-                set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = GetItemCharges(currentItem)
-                call SetItemPawnable(currentItem, false)
+                if (currentItem != null) then
+                    // Save all item information in a single array with the playerId as the offset
+                    set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = GetItemTypeId(currentItem)
+                    set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = GetItemCharges(currentItem)
+                    call SetItemPawnable(currentItem, false)
 
-                // Cleanup
-                set currentItem = null
-            else
-                set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = -1
-                set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = -1
-            endif
+                    // Cleanup
+                    set currentItem = null
+                else
+                    set PreDuelItemIds[(6 * playerId) + itemSlotIndex] = -1
+                    set PreDuelItemCharges[(6 * playerId) + itemSlotIndex] = -1
+                endif
 
-            set itemSlotIndex = itemSlotIndex + 1
-            exitwhen itemSlotIndex == 6
-        endloop
+                set itemSlotIndex = itemSlotIndex + 1
+                exitwhen itemSlotIndex == 6
+            endloop
+        endif
 
         // Cleanup
         call RemoveLocation(arenaCenter)

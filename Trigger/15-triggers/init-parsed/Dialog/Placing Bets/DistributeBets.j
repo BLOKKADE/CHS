@@ -62,8 +62,8 @@ library DistributeBets initializer init requires RandomShit, PvpRoundRobin
 
     private function init takes nothing returns nothing
         set DistributeBetsTrigger = CreateTrigger()
-        call TriggerAddCondition(DistributeBetsTrigger,Condition(function DistributeBetsConditions))
-        call TriggerAddAction(DistributeBetsTrigger,function DistributeBetsActions)
+        call TriggerAddCondition(DistributeBetsTrigger, Condition(function DistributeBetsConditions))
+        call TriggerAddAction(DistributeBetsTrigger, function DistributeBetsActions)
     endfunction
 
 endlibrary
