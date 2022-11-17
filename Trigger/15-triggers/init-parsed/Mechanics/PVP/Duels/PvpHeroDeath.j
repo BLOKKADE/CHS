@@ -171,8 +171,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call EnumItemsInRectBJ(PlayerArenaRects[playerArenaIndex], function RemoveItemFromArena)
             set playerArenaIndex = playerArenaIndex + 1
         endloop
-
-        call EnumItemsInRectBJ(RectMidArena, function RemoveItemFromArena)
     endfunction
 
     // This function should only be called when all initial duels are over
@@ -290,6 +288,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // All duels are over, no odd player
         elseif (DuelGame.areAllDuelsOver() and OddPlayer == -1) then
             call AfterAllDuelCleanupActions(duelGame)
+            call EnumItemsInRectBJ(RectMidArena, function RemoveItemFromArena) // Remove items from center arena when all duels are done
 
             // Reset to the items to before the duels
             call ForForce(GetPlayersAll(), function ResetItemsForPlayer)
