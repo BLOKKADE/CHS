@@ -49,8 +49,8 @@ library TasItemShop initializer init_function requires TasItemFusion, Power2, Ta
     globals
         // Config Start
         public real xPos = 0.0
-        public real yPos = -0.02
-        public framepointtype posPoint = FRAMEPOINT_TOPRIGHT
+        public real yPos = -0.05
+        public framepointtype posPoint = FRAMEPOINT_TOP
         public boolean posScreenRelative = true //(true) repos to the screenSize, when the resolution mode changes the box will move further in/out when using a right or Left point.
         // It is advised to posScreenRelative = false when posPoint does not include Left or Right
         // with posScreenRelative = false xPos and yPos are abs coords, to which posPoint of the Shop UI is placed to.
@@ -61,8 +61,8 @@ library TasItemShop initializer init_function requires TasItemFusion, Power2, Ta
         // The position is a bit wierd, the position is not the box but the Extended Tooltip Text, the Header has a height of ~0.052.
         public real toolTipPosX = 0.0
         public real toolTipPosY = -0.052
-        public framepointtype toolTipPosPoint = FRAMEPOINT_TOPRIGHT
-        public framepointtype toolTipPosPointParent = FRAMEPOINT_BOTTOMRIGHT
+        public framepointtype toolTipPosPoint = FRAMEPOINT_TOP
+        public framepointtype toolTipPosPointParent = FRAMEPOINT_BOTTOM
         //public framepointtype toolTipPosPointParent = null
         public real toolTipSizeX = 0.2 // only content
         public real toolTipSizeXBig = 0.3 // only content
@@ -90,12 +90,12 @@ library TasItemShop initializer init_function requires TasItemFusion, Power2, Ta
         public boolean sharedItems = false // (false) can only fuse material owned by neutral passive (default) or oneself. The code handling that is in TasItemFusion.
         public boolean canProviderGetItem = true // (true) when the mainShopper's inventory is full, try to give the other matieral provider the item
         public boolean canUndo = true // (true) There is an Undo Button which allows to Revert BuyActions done in this shopping. A shopping ends when the UI is closed, changing current shop counts as closed.
-        public boolean canDefuse = true // (true) There is a Defuse Button which allows to defuse FusionItems hold.
+        public boolean canDefuse = false // (true) There is a Defuse Button which allows to defuse FusionItems hold.
         public string DefuseButtonIcon = "ReplaceableTextures\\CommandButtons\\BTNdemolish"
         public string DefuseButtonIconDisabled = "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNdemolish"
         public boolean canSellItems = true // (true)
-        public real SellFactor = 0.75
-        public boolean SellUsesCostModifier = true
+        public real SellFactor = 1.// 0.75
+        public boolean SellUsesCostModifier = false
         public string SellButtonIcon = "ReplaceableTextures\\CommandButtons\\BTNReturnGoods"
         public string SellButtonIconDisabled = "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNReturnGoods"
         
@@ -128,10 +128,10 @@ library TasItemShop initializer init_function requires TasItemFusion, Power2, Ta
         // how many refButtons, refButtons have pages, if needed.
         // A feature is disabled with a counter smaller than 1.
         public integer refButtonCountMats = 4 // materialRefs.
-        public integer refButtonCountUp = 4 // possible upgrades of the current Selected
+        public integer refButtonCountUp = 0//4 // possible upgrades of the current Selected
         public integer refButtonCountInv = 6 // inventory items, this system allows an unitgroup to provide items, if you don't use that feature only upto 6 makes sense.
-        public integer refButtonCountUser = 6 // References to the shopping Units/material provider.
-        public integer refButtonCountQuickLink = 4 // User SelectAble Shortcuts
+        public integer refButtonCountUser = 0//6 // References to the shopping Units/material provider.
+        public integer refButtonCountQuickLink = 0//4 // User SelectAble Shortcuts
         public real refButtonSize = 0.02
         public real refButtonGap = 0.003
         public real refButtonPageSize = 0.012
@@ -593,6 +593,16 @@ library TasItemShop initializer init_function requires TasItemFusion, Power2, Ta
         call TasItemShopAddShop(unitCode, e)
     endfunction
     
+    function TasItemShopAddShop3 takes integer unitCode, integer a, integer b, integer c returns nothing
+        call TasItemShopAddShop(unitCode, a)
+        call TasItemShopAddShop(unitCode, b)
+        call TasItemShopAddShop(unitCode, c)
+    endfunction
+
+    function TasItemShopAddShop2 takes integer unitCode, integer a, integer b returns nothing
+        call TasItemShopAddShop(unitCode, a)
+        call TasItemShopAddShop(unitCode, b)
+    endfunction
 
     function TasItemShopGoldFactor takes integer unitCode, real factor, integer itemCode returns nothing
         call TasItemShopCreateShop(unitCode, false, 1.0, 1.0, null)

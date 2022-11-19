@@ -1,10 +1,7 @@
 library TasItemShopUserInit initializer TasItemShopUserInit requires TasItemShop
     // This script  is meant to be used by vjass user to write init data for TasItemShop
     
-    private function ShopCostFunction_ngme takes nothing returns nothing
-    endfunction
-
-        // This runs right before the actually UI is created.
+    // This runs right before the actually UI is created.
     // this is a good place to add items, categories, fusions shops etc.
     function TasItemShopUserInit takes nothing returns nothing
         local integer shopObject
@@ -37,159 +34,36 @@ library TasItemShopUserInit initializer TasItemShopUserInit requires TasItemShop
         local integer catLifeSteal = TasItemShopAddCategory("ReplaceableTextures\\CommandButtons\\BTNVampiricAura", "Lifesteal")
         local integer catEvade = TasItemShopAddCategory("ReplaceableTextures\\CommandButtons\\BTNEvasion", "Evasion")
         
-        call TasItemShopAdd5('rst1', 'bgst', 'rin1', 'ciri', 'belv')
-        call TasItemShopAdd('rag1', catAgi)
-        call TasItemShopAdd5('rlif', 'ajen', 'clfm', 'ward', 'kpin')
-        call TasItemShopAdd5('lgdh', 'rde4', 'pmna', 'rhth', 'ssil')
-        call TasItemShopAdd5('spsh', 'lhst', 'afac', 'sbch', 'brac')
-        call TasItemShopAdd5('rwiz', 'evtl', 'penr', 'prvt', 'rde3')
-        call TasItemShopAdd5('hval', 'hcun', 'mcou', 'cnob', 'ckng')
-        call TasItemShopAdd5('rat6', 'rat9', 'ratf', 'bspd', 'gcel')
-        call TasItemShopAdd5('rde2', 'clsd', 'dsum', 'stel', 'desc')
+        // Item Shop
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'pghe', 'pgma', 'vamp', 'I0BH', 'I020')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I021', 'I04G', 'I023', 'I04D', 'I01Q')
+        call TasItemShopAddShop2(ITEM_SHOP_I_UNIT_ID, 'I01P', 'I04C')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I03O', 'I03T', 'I04A', 'I015', 'I03P')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I03R', 'I04B', 'I016', 'I01D', 'I043')
+        call TasItemShopAddShop2(ITEM_SHOP_I_UNIT_ID, 'I01C', 'I01E')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I04P', 'I04O', 'I04N', 'I04J', 'I04Q')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I04S', 'I076', 'I04T', 'I04U', 'I04V')
+        call TasItemShopAddShop2(ITEM_SHOP_I_UNIT_ID, 'I04W', 'I052')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I059', 'I07O', 'I05B', 'I05C', 'I05D')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I05E', 'I05F', 'I05G', 'I05L', 'I05U')
+        call TasItemShopAddShop2(ITEM_SHOP_I_UNIT_ID, 'I060', 'I061')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I064', 'I065', 'I066', 'I06B', 'I06E')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I06H', 'I06I', 'I06K', 'I07I', 'I07K')
+        call TasItemShopAddShop2(ITEM_SHOP_I_UNIT_ID, 'I07M', 'I07P')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I080', 'I07U', 'I07V', 'I07W', 'I07T')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I07Y', 'I082', 'I083', 'I084', 'I086')
+        call TasItemShopAddShop2(ITEM_SHOP_I_UNIT_ID, 'I091', 'I092')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I0BX', 'I0C2', 'I0BZ', 'I0BY', 'I0BW')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I0BV', 'I0BF', 'I0BE', 'I0BD', 'I0BQ')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I071', 'I072', 'I073', 'I075', 'I077')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I04R', 'I078', 'I079', 'I07B', 'I0AF')
+        call TasItemShopAddShop2(ITEM_SHOP_I_UNIT_ID, 'I07E', 'I07F')
+        call TasItemShopAddShop5(ITEM_SHOP_I_UNIT_ID, 'I0C1', 'I0BN', 'I07A', 'I0A0', 'I07G')
+        call TasItemShopAddShop3(ITEM_SHOP_I_UNIT_ID, 'I07H', 'I05A', 'I06J')
 
-        call TasItemShopAdd5('modt', 'ofro', 'thdm', 'hlst', 'mnst')
-        call TasItemShopAdd5('pghe', 'pgma', 'pnvu', 'pres', 'ankh')
-        call TasItemShopAdd5('shas', 'stwp', 'ofir', 'oli2', 'odef')
-        call TasItemShopAdd5('oven', 'oslo', 'ocor', 'shtm', 'I001')
-        call TasItemShopAdd5('klmm', 'crdt', 0, 0, 0)
+        call TasItemShopSetMode(ITEM_SHOP_I_UNIT_ID, true)
 
-
-        // setup custom shops
-        // custom Shops are optional.
-        // They can have a White or Blacklist of items they can(n't) sell and have a fixed cost modifier for Gold, Lumber aswell as a function for more dynamic things for Gold and Lumber.
-        set shopObject = 'n000'
-        // 'n000' can only sell this items (this items don't have to be in the pool of items)
-        call TasItemShopAddShop5(shopObject, 'hlst', 'mnst', 'pghe', 'pgma', 'pnvu')
-        call TasItemShopAddShop5(shopObject, 'pres', 'ankh', 'stwp', 'shas', 0)
-        // enable WhiteListMode
-        call TasItemShopSetMode(shopObject, true)
-        
-        // 'n001' can't sell this items (from the default pool of items)
-        set shopObject = 'n001'
-        call TasItemShopAddShop5(shopObject, 'hlst', 'mnst', 'pghe', 'pgma', 'pnvu')
-        call TasItemShopAddShop5(shopObject, 'pres', 'ankh', 'stwp', 'shas', 0)
-        // enable BlackListMode
-        call TasItemShopSetMode(shopObject, false)
-        
-        // create an shopObject for 'ngme', has to pay 20% more than normal, beaware that this can be overwritten by GUI Example
-        call TasItemShopCreateShop('ngme', false, 1.2, 1.2, function ShopCostFunction_ngme)
-        //'I002' crown +100 was never added to the database but this shop can craft/sell it.
-        set shopObject = 'n002'
-        call TasItemShopAddShop5(shopObject, 'ckng', 'I001', 'I002', 'arsh', 0)
-        call TasItemShopSetMode(shopObject, true)
-        
-
-        // Define skills/Buffs that change the costs in the shop
-        // cursed Units have to pay +25%
-        call TasItemShopAddHaggleSkill('Bcrs', 1.25, 1.25, 0, 0)
-
-        // define Fusions
-        // result created by 'xxx', 'xx' , 'x'+.
-        // item can only be crafted by one way
-        // can add any amount of material in the Lua version
-        call TasItemFusionAdd2('bgst', 'rst1', 'rst1')
-        call TasItemFusionAdd2('ciri', 'rin1', 'rin1')
-        call TasItemFusionAdd2('belv', 'rag1', 'rag1')
-        call TasItemFusionAdd2('hval', 'rag1', 'rst1')
-        call TasItemFusionAdd2('hcun', 'rag1', 'rin1')
-        call TasItemFusionAdd2('mcou', 'rst1', 'rin1')
-        call TasItemFusionAdd2('ckng', 'cnob', 'cnob')
-        call TasItemFusionAdd2('rat9', 'rat6', 'rat6')
-        call TasItemFusionAdd2('ratf', 'rat9', 'rat9')
-        call TasItemFusionAdd('rde4', 'rde3')
-        call TasItemFusionAdd('rde3', 'rde2')
-        call TasItemFusionAdd('rhth', 'prvt')
-        call TasItemFusionAdd('pmna', 'penr')
-        call TasItemFusionAdd2('arsh', 'rde3', 'rde2')
-
-        call TasItemFusionAdd('lhst', 'sfog')
-
-        // crown of Kings + 50
-        call TasItemFusionAdd4('I001', 'ckng', 'ckng', 'ckng', 'ckng')
-        call TasItemFusionAdd4('I001', 'ckng', 'ckng', 'bgst', 'bgst')
-        call TasItemFusionAdd6('I001', 'ciri', 'ciri', 'belv', 'belv', 'cnob', 'cnob')
-        // crown of Kings + 100, this is a joke you can not craft it because it was not added to buyAble Items
-        call TasItemFusionAdd2('I002', 'I001', 'I001')
-
-
-        call TasItemFusionAdd('modt', 'rst1')
-        call TasItemFusionAdd('ofro', 'rst1')
-        call TasItemFusionAdd('thdm', 'rst1')
-        call TasItemFusionAdd('hlst', 'rst1')
-        call TasItemFusionAdd('mnst', 'rst1')
-        call TasItemFusionAdd('ocor', 'rst1')
-
-        // define item Categories
-        // uses the locals from earlier.
-        // An item can have multiple categories just add them together like this: catStr + catAgi + catInt
-        
-        call TasItemSetCategory('rst1', catStr)
-        call TasItemSetCategory('bgst', catStr)
-        call TasItemSetCategory('rin1', catInt)
-        call TasItemSetCategory('ciri', catInt)
-        call TasItemSetCategory('rag1', catAgi)
-        call TasItemSetCategory('belv', catAgi)
-
-        call TasItemSetCategory('I001', catStr + catAgi + catInt)
-
-        call TasItemSetCategory('ckng', catStr + catAgi + catInt)
-        call TasItemSetCategory('mcou', catStr + catInt)
-        call TasItemSetCategory('hval', catStr + catAgi)
-        call TasItemSetCategory('hcun', catAgi + catInt)
-        call TasItemSetCategory('cnob', catStr + catAgi + catInt)
-
-        call TasItemSetCategory('rat9', catDmg)
-        call TasItemSetCategory('rat6', catDmg)
-        call TasItemSetCategory('ratf', catDmg)
-        
-        call TasItemSetCategory('rlif', catLifeReg)
-
-        call TasItemSetCategory('ajen', catAura + catAtkSpeed + catMoveSpeed)
-        call TasItemSetCategory('clfm', catAura + catDmg)
-        call TasItemSetCategory('ward', catAura + catDmg)
-        call TasItemSetCategory('kpin', catAura + catManaReg)
-        call TasItemSetCategory('lgdh', catAura + catMoveSpeed + catLifeReg)
-        call TasItemSetCategory('rde4', catArmor)
-        call TasItemSetCategory('pmna', catMana)
-        call TasItemSetCategory('rhth', catLife)
-        call TasItemSetCategory('ssil', catActive)
-        call TasItemSetCategory('lhst', catAura + catArmor)
-        call TasItemSetCategory('afac', catAura + catDmg)
-        call TasItemSetCategory('sbch', catAura + catDmg)
-        call TasItemSetCategory('sbch', catAura + catLifeSteal)
-        call TasItemSetCategory('brac', catMress)
-        call TasItemSetCategory('spsh', catMress + catActive)
-        call TasItemSetCategory('rwiz', catManaReg)
-        call TasItemSetCategory('crys', catActive)
-        call TasItemSetCategory('evtl', catEvade)
-        call TasItemSetCategory('penr', catMana)
-        call TasItemSetCategory('prvt', catLife)
-        call TasItemSetCategory('rde3', catArmor)
-        call TasItemSetCategory('bspd', catMoveSpeed)
-        call TasItemSetCategory('gcel', catAtkSpeed)
-        call TasItemSetCategory('rde2', catArmor)
-        call TasItemSetCategory('clsd', catActive)
-        call TasItemSetCategory('dsum', catActive + catMoveSpeed)
-        call TasItemSetCategory('stel', catActive + catMoveSpeed)
-        call TasItemSetCategory('desc', catActive + catMoveSpeed)
-        call TasItemSetCategory('ofro', catDmg + catOrb)
-        call TasItemSetCategory('modt', catLifeSteal + catOrb)
-        call TasItemSetCategory('thdm', catActive)
-        call TasItemSetCategory('hlst', catActive + catConsum + catLifeReg)
-        call TasItemSetCategory('mnst', catActive + catConsum + catManaReg)
-        call TasItemSetCategory('pghe', catActive + catConsum)
-        call TasItemSetCategory('pgma', catActive + catConsum)
-        call TasItemSetCategory('pnvu', catActive + catConsum)
-        call TasItemSetCategory('pres', catActive + catConsum)
-        call TasItemSetCategory('ankh', catConsum)
-        call TasItemSetCategory('stwp', catActive + catConsum + catMoveSpeed)
-        call TasItemSetCategory('shas', catActive + catConsum + catMoveSpeed)
-        call TasItemSetCategory('ofir', catOrb + catDmg)
-        call TasItemSetCategory('oli2', catOrb + catDmg)
-        call TasItemSetCategory('odef', catOrb + catDmg)
-        call TasItemSetCategory('oven', catOrb + catDmg)
-        call TasItemSetCategory('oslo', catOrb + catDmg)
-        call TasItemSetCategory('ocor', catOrb + catDmg)
-        call TasItemSetCategory('shtm', catActive)
+        // Ability Shop
+        // call TasItemSetCategory('I001', catStr + catAgi + catInt)
     endfunction
 endlibrary
