@@ -38,7 +38,7 @@ scope LethalDamage initializer init
         endif
 
         if DamageTargetPid != 11 and DamageTarget == DamageTargetHero and negated == false then
-            call DamageText(true)
+            call ShowDamageText(true)
         endif
 
         //call BJDebugMsg("lethal source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))

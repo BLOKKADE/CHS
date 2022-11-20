@@ -15,11 +15,7 @@ scope AfterDamage initializer init
             endif
         endif
 
-        if ShowDmgText then
-            if GetOwningPlayer(DamageTarget) == GetLocalPlayer() or GetOwningPlayer(DamageSource) == GetLocalPlayer() then
-                call DamageText(false)
-            endif
-        endif
+        call ShowDamageText(false)
     endfunction
 
     private function init takes nothing returns nothing
