@@ -26,7 +26,7 @@ library ForceHelper requires GetPlayerNames
 
     private function CheckIfPlayerUnitIsAlive takes nothing returns nothing
         if (not AreAnyAlive) then
-            set AreAnyAlive = IsUnitAliveBJ(PlayerHeroes[GetPlayerId(GetEnumPlayer()) + 1]) == true  // Stored as converted player id. Rip.
+            set AreAnyAlive = UnitAlive(PlayerHeroes[GetPlayerId(GetEnumPlayer()) + 1]) == true  // Stored as converted player id. Rip.
         endif
     endfunction
 
