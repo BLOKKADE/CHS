@@ -69,10 +69,19 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         boolean isDuelOver
         rect arena
         boolean team1Won
-        
-        private static thistype recycle = 0
-        private static integer instanceCount = 0
-        private thistype next
+        SuddenDeath suddenDeath
+
+        static method startSuddenDeathTimers takes nothing returns nothing
+            local IntegerListItem node = DuelGameList.first
+            local DuelGame currentDuelGame
+
+            loop
+                exitwhen node == 0
+                set currentDuelGame = node.data
+                call currentDuelGame.suddenDeath.start()
+                set node = node.next
+            endloop
+        endmethod
 
         method getEnemyPlayerTeam takes player p returns force
             if (IsPlayerInForce(p, this.team1)) then
@@ -133,19 +142,12 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         endmethod
 
         static method create takes force team1, force team2, rect arena returns thistype
-            local thistype this
-
-            if (recycle == 0) then
-                set instanceCount = instanceCount + 1
-                set this = instanceCount
-            else
-                set this = recycle
-                set recycle = recycle.next
-            endif
+            local thistype this = thistype.setup()
 
             set this.team1 = team1
             set this.team2 = team2
             set this.arena = arena
+            set this.suddenDeath = SuddenDeath.create(this)
 
             return this
         endmethod
@@ -157,9 +159,11 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
             set this.team1 = null
             set this.team2 = null
             set this.arena = null
-            set next = recycle
-            set recycle = this
+
+            call this.recycle()
         endmethod
+
+        implement Recycle
     endstruct
 
     function AddOddPlayerDuel takes player duelPlayer returns nothing
@@ -254,12 +258,6 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         call PlayerList.unshift(tempBack)
         call PlayerList.unshift(tempFront)
 
-        // Move the odd player to the beginning of the player list. UpdatePlayers we get a new OddPlayer
-        if OddPlayer != -1 then
-            call PlayerList.unshift(OddPlayer)
-            set OddPlayer = -1
-        endif
-
         set team1 = null
         set team2 = null
     endfunction
@@ -267,6 +265,12 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
     function UpdatePlayers takes nothing returns nothing
         local integer i = 0
+
+         // Move the odd player to the beginning of the player list. UpdatePlayers we get a new OddPlayer
+         if OddPlayer != -1 then
+            call PlayerList.unshift(OddPlayer)
+            set OddPlayer = -1
+        endif
 
         loop
             if not UnitAlive(PlayerHeroes[i + 1]) then

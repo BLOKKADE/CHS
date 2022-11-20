@@ -175,13 +175,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
     // This function should only be called when all initial duels are over
     private function AfterAllDuelCleanupActions takes DuelGame duelGame returns nothing
-        // Disable sudden death
-        call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
-        call DisableTrigger(UpdatePvpSuddenDeathDamageTrigger)
-        call DisableTrigger(ApplyPvpSuddenDeathDamageTrigger)
-        call DisableTrigger(SinglePvpHeroDeathTrigger)
-        call PvpStopSuddenDeathTimer()
-
         // Cleanup all arenas
         call RemoveItemsForAllArenas()
 

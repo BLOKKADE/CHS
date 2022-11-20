@@ -269,17 +269,13 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call ForForce(GetPlayersAll(), function HideDialogsForPlayer)
         call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
-        // Reset sudden death properties
-        set SuddenDeathTick = 0
-        set SuddenDeathDamageMultiplier = 0.02
-        call EnableTrigger(UpdatePvpSuddenDeathDamageTrigger)
-        call EnableTrigger(ApplyPvpSuddenDeathDamageTrigger)
-        call EnableTrigger(SinglePvpHeroDeathTrigger)
-        call PvpStartSuddenDeathTimer()
         call PlaySoundBJ(udg_sound15)
 
         // Start the fight
         call ForGroup(DuelingHeroes, function StartFightForUnit)
+
+        //start suddendeath timers
+        call DuelGame.startSuddenDeathTimers()
 
         // Force any computer players to attack right away
         call TriggerExecute(ComputerPvpEnforceDuelTrigger)

@@ -23,6 +23,7 @@ library IdLibrary initializer init
         constant integer PRIEST_1_UNIT_ID                               = 'h015'
         constant integer PET_BASE_UNIT_ID                               = 'e002'
         constant integer SUDDEN_DEATH_UNIT_ID                           = 'n00V'
+        constant integer SUDDEN_DEATH_ABILITY_ID                        = 'A0CU'
 
         // --- Shops ---
         constant integer DRAFT_BUY_UNIT_ID                              = 'h00C'
