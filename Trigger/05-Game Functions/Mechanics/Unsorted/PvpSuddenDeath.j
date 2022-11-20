@@ -53,21 +53,27 @@ library PvpSuddenDeathTimerWindow /*initializer init*/ requires TimerUtils
             local integer pid = GetPlayerId(GetEnumPlayer()) + 1
             local real damage = 0
             local unit source
+            local integer damageSourcePid
+
+            if this.damageTeam1 then
+                set damageSourcePid = GetPlayerId(ForcePickRandomPlayer(this.duelGame.team2))
+            else
+                set damageSourcePid = GetPlayerId(ForcePickRandomPlayer(this.duelGame.team1))
+            endif
 
             if GetUnitTypeId(PlayerHeroes[pid]) == BANSHEE_UNIT_ID then
                 set damage = GetUnitState(PlayerHeroes[pid], UNIT_STATE_MAX_MANA) * multiplier
             else
                 set damage = GetUnitState(PlayerHeroes[pid], UNIT_STATE_MAX_LIFE) * multiplier
             endif
-
-            if this.damageTeam1 then
-                set source = PlayerHeroes[GetPlayerId(ForcePickRandomPlayer(this.duelGame.team2)) + 1]
-            else
-                set source = PlayerHeroes[GetPlayerId(ForcePickRandomPlayer(this.duelGame.team1)) + 1]
-            endif
+            
+            set source = CreateUnit(Player(damageSourcePid), SUDDEN_DEATH_UNIT_ID, GetUnitX(PlayerHeroes[damageSourcePid + 1]), GetUnitY(PlayerHeroes[damageSourcePid + 1]), 0)
+            call UnitApplyTimedLife(source, 'BTLF', 0.25)
 
             set udg_NextDamageAbilitySource = SUDDEN_DEATH_ABILITY_ID
             call Damage.apply(source, PlayerHeroes[pid], damage, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+            
+            set source = null
         endmethod
 
         //setup temp and damageteam1
