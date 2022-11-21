@@ -189,6 +189,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     private function InitializeFightBetweenForces takes force team1, force team2, rect arena returns nothing
         local string team1ForceString = ConvertForceToUnitString(team1)
         local string team2ForceString = ConvertForceToUnitString(team2)
+        local force nonDuelingPlayers
 
         // Validate. Hopefully should never happen.
         if (CountPlayersInForceBJ(team1) == 0 or CountPlayersInForceBJ(team2) == 0) then
@@ -248,15 +249,18 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
             set DialogButtons[3] = DialogAddButtonBJ(Dialogs[1], "Skip")
 
             // Show the betting dialog to all non dueling players
-            call ForForce(GetPlayersMatching(Condition(function FilterNonDuelingPlayers)), function ShowBettingDialogForPlayer)
+            set nonDuelingPlayers = GetPlayersMatching(Condition(function FilterNonDuelingPlayers))
+            call ForForce(nonDuelingPlayers, function ShowBettingDialogForPlayer)
+
+            // Cleanup
+            call DestroyForce(nonDuelingPlayers)
+            set nonDuelingPlayers = null
         endif
     endfunction
 
     function StartDuels takes nothing returns nothing
-        // Start the countdown timer for the actual fight
-        call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
-        call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Prepare ...")
-        call StartTimerBJ(GetLastCreatedTimerBJ(), false, 10.00)
+        // Show the prepare timer dialogs
+        call DuelGame.showPrepareTimerDialogs()
 
         // Run the countdown timer
         call TriggerSleepAction(4.50)
@@ -267,22 +271,21 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
         // Hide all dialogs
         call ForForce(GetPlayersAll(), function HideDialogsForPlayer)
-        call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
         call PlaySoundBJ(udg_sound15)
 
         // Start the fight
         call ForGroup(DuelingHeroes, function StartFightForUnit)
 
-        //start suddendeath timers
-        call DuelGame.startSuddenDeathTimers()
+        // Starting action for duel
+        call DuelGame.startDuels()
 
         // Force any computer players to attack right away
         call TriggerExecute(ComputerPvpEnforceDuelTrigger)
     endfunction
     
     function InitializeDuelGame takes DuelGame duelGame returns nothing
-        call InitializeFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.arena)
+        call InitializeFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.getDuelArena())
     endfunction
 
     function ResetPvpState takes nothing returns nothing

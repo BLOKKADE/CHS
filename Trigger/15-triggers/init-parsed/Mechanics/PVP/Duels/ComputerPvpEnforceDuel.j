@@ -42,7 +42,7 @@ library ComputerPvpEnforceDuel initializer init requires RandomShit, PvpRoundRob
             set currentDuelGame = node.data
 
             if (currentDuelGame != 0 and (not currentDuelGame.isDuelOver)) then
-                set TempArena = currentDuelGame.arena
+                set TempArena = currentDuelGame.getDuelArena()
 
                 // Find all computer player dueling heroes, make them randomly attack
                 set arenaUnits = GetUnitsInRectMatching(TempArena, Condition(function IsDuelingComputerPlayer))

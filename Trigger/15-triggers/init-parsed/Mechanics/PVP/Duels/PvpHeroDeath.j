@@ -188,6 +188,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call ForForce(duelGame.team1, function ResetItemsForPlayer)
         call ForForce(duelGame.team2, function ResetItemsForPlayer)
 
+        // Remove the arena from used arenas so it can be used again
+        call duelGame.removeUsedArena()
+
         call TriggerSleepAction(2.00)
 
         // Removes all non heroes/hops/dummy units
@@ -203,6 +206,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local force deadPlayerForce = duelGame.getPlayerTeam(deadUnitPlayer)
         local force winningPlayerForce = duelGame.getEnemyPlayerTeam(deadUnitPlayer)
         local PlayerStats ps
+        local boolean startSimultaneousOddDuel
+        local boolean startNonSimultaneousOddDuel
+        local player randomOddDuelPlayer
+        local DuelGame oddDuelGame
 
         // All players in the winning team should get the pvp kill
         call ForForce(winningPlayerForce, function AddPvpWinToPlayer)
@@ -258,31 +265,36 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         set deadPlayerForce = null
         set winningPlayerForce = null
 
-        // Check if we need a duel with an odd player
-        if (DuelGame.areAllDuelsOver() and OddPlayer != -1 and OddPlayerDuelStarted == false) then
+        // Check if we should do an odd duel
+        set startSimultaneousOddDuel = SimultaneousDuelMode == 2 and OddPlayer != -1 and OddPlayerDuelStarted == false
+        set startNonSimultaneousOddDuel = SimultaneousDuelMode == 1 and DuelGame.areAllDuelsOver() and OddPlayer != -1 and OddPlayerDuelStarted == false
+
+        if (startSimultaneousOddDuel or startNonSimultaneousOddDuel) then
+            set OddPlayerDuelStarted = true
+
             call AfterAllDuelCleanupActions(duelGame)
 
-            // Create a new duel using a random loser. TODO Validate there is a loser?
-            call AddOddPlayerDuel(ForcePickRandomPlayer(DuelLosers))
+            set randomOddDuelPlayer = ForcePickRandomPlayer(DuelLosers)
 
-            set OddPlayerDuelStarted = true
+            // Create a new duel using a random loser
+            set oddDuelGame = AddOddPlayerDuel(randomOddDuelPlayer)
 
             // Go to the next pvp battle for the odd player
             call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "|cffff0000Odd player amount detected. Starting duel for odd player out!|r")
 
-            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
-            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
+            call oddDuelGame.setupNextPvpBattleTimer()
             call DisplayNemesisNames()
-            call StartTimerBJ(GetLastCreatedTimerBJ(), false, 15.00)
             call TriggerSleepAction(15.00)
-            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
             // Start the next fight
             call InitializeDuelGame(GetNextDuel())
             call PlaySoundBJ(udg_sound08) // Horn noise!
             call StartDuels()
+
+            // Cleanup
+            set randomOddDuelPlayer = null
         // All duels are over, no odd player
-        elseif (DuelGame.areAllDuelsOver() and (OddPlayer == -1 or OddPlayerDuelStarted == true)) then
+        elseif (DuelGame.areAllDuelsOver()) then
             call AfterAllDuelCleanupActions(duelGame)
             call EnumItemsInRectBJ(RectMidArena, function RemoveItemFromArena) // Remove items from center arena when all duels are done
 
@@ -307,24 +319,24 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + I2S(PvpGoldWinAmount) + " gold|r")
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
 
+            // Removes all duel game structs
+            call DuelGame.cleanupDuels()
+
             // Go to the next basic level
             call ConditionalTriggerExecute(udg_trigger103) // Setup creeps for next wave
-            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
             call StartTimerBJ(GetLastCreatedTimerBJ(), false, 30)
             call TriggerSleepAction(30.00)
-            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+            call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
             call TriggerExecute(udg_trigger109) // Start the next normal level
         // Check if all single pvp rounds are over
         elseif (SimultaneousDuelMode == 1 and DuelGameListRemaining.size() > 0) then
             call AfterAllDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle
-            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
             call StartTimerBJ(GetLastCreatedTimerBJ(), false, 3.00)
             call TriggerSleepAction(3.00)
-            call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
 
             // Start the next fight
             call InitializeDuelGame(GetNextDuel())
@@ -342,6 +354,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Reset to the items to before the duels
             call ForForce(duelGame.team1, function ResetItemsForPlayer)
             call ForForce(duelGame.team2, function ResetItemsForPlayer)
+
+            // Remove the arena from used arenas so it can be used again
+            call duelGame.removeUsedArena()
         endif
     endfunction
 

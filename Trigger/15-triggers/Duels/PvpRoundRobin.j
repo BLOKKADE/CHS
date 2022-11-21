@@ -18,6 +18,9 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         private IntegerList UsedArenas // Contains the arenas that are used for current duels
         private DuelGame TempDuelGame // Temporary global variable for DisplayNemesisNames
 
+        private integer DuelPrepareDuration = 10
+        private integer NextPvpBattleDuration = 15
+
         DuelGame CurrentDuelGame // Used to reference the current duel for betting pruposes. Doesn't work properly for simultaneous duels.
         IntegerList DuelGameList // The list of duels that doesn't get emptied as we get duels
         IntegerList DuelGameListRemaining // The list of duels that gets emptied as we get duels
@@ -25,7 +28,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
     endglobals
 
     function DisplayNemesisNames takes nothing returns nothing
-        local IntegerListItem node = DuelGameList.first
+        local IntegerListItem node = DuelGameListRemaining.first
         local DuelGame currentDuelGame
         local string team1ForceString
         local string team2ForceString
@@ -67,40 +70,65 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         force team1
         force team2
         boolean isDuelOver
-        rect arena
         boolean team1Won
+        boolean fightStarted
         SuddenDeath suddenDeath
 
-        static method startSuddenDeathTimers takes nothing returns nothing
+        // Duel prepare timer dialog properties
+        private timer DuelPrepareTimer
+        private timerdialog DuelPrepareDialog
+
+        // Next PVP battle timer dialog properties
+        private timer NextPvpBattleTimer
+        private timerdialog NextPvpBattleDialog
+
+        private integer arenaIndex
+
+        static method showPrepareTimerDialogs takes nothing returns nothing
             local IntegerListItem node = DuelGameList.first
             local DuelGame currentDuelGame
 
             loop
                 exitwhen node == 0
                 set currentDuelGame = node.data
-                call currentDuelGame.suddenDeath.start()
+
+                if (not currentDuelGame.fightStarted) then
+                    call currentDuelGame.setupPrepareTimer()
+                endif
+
                 set node = node.next
             endloop
         endmethod
 
-        method getEnemyPlayerTeam takes player p returns force
-            if (IsPlayerInForce(p, this.team1)) then
-                return this.team2
-            elseif (IsPlayerInForce(p, this.team2)) then
-                return this.team1
-            else
-                return null
-            endif
+        static method startDuels takes nothing returns nothing
+            local IntegerListItem node = DuelGameList.first
+            local DuelGame currentDuelGame
+
+            loop
+                exitwhen node == 0
+                set currentDuelGame = node.data
+
+                set currentDuelGame.fightStarted = true
+
+                call currentDuelGame.suddenDeath.start()
+                call currentDuelGame.cleanupPrepareDialog()
+
+                set node = node.next
+            endloop
         endmethod
 
-        method getPlayerTeam takes player p returns force
-            if (IsPlayerInForce(p, this.team1)) then
-                return this.team1
-            elseif (IsPlayerInForce(p, this.team2)) then
-                return this.team2
-            else
-                return null
-            endif
+        static method cleanupDuels takes nothing returns nothing
+            local IntegerListItem node = DuelGameList.first
+            local DuelGame currentDuelGame
+
+            loop
+                exitwhen node == 0
+                set currentDuelGame = node.data
+
+                call currentDuelGame.destroy()
+
+                set node = node.next
+            endloop
         endmethod
 
         static method areAllDuelsOver takes nothing returns boolean
@@ -140,25 +168,101 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
 
             return 0
         endmethod
+        
+        method getEnemyPlayerTeam takes player p returns force
+            if (IsPlayerInForce(p, this.team1)) then
+                return this.team2
+            elseif (IsPlayerInForce(p, this.team2)) then
+                return this.team1
+            else
+                return null
+            endif
+        endmethod
 
-        static method create takes force team1, force team2, rect arena returns thistype
+        method getPlayerTeam takes player p returns force
+            if (IsPlayerInForce(p, this.team1)) then
+                return this.team1
+            elseif (IsPlayerInForce(p, this.team2)) then
+                return this.team2
+            else
+                return null
+            endif
+        endmethod
+
+        method getDuelArena takes nothing returns rect
+            return PlayerArenaRects[this.arenaIndex]
+        endmethod
+        
+        method removeUsedArena takes nothing returns nothing
+            // Remove the arena that was used for this duel so it can be used in another duel
+            call UsedArenas.erase(UsedArenas.find(this.arenaIndex))
+        endmethod
+
+        method cleanupPrepareDialog takes nothing returns nothing
+            call ReleaseTimer(this.DuelPrepareTimer)
+            call TimerDialogDisplay(this.DuelPrepareDialog, false)
+            call DestroyTimerDialog(this.DuelPrepareDialog)
+
+            set this.DuelPrepareTimer = null
+            set this.DuelPrepareDialog = null
+        endmethod
+        
+        method cleanupNextPvpBattleDialog takes nothing returns nothing
+            if (this.NextPvpBattleDialog != null) then
+                call ReleaseTimer(this.NextPvpBattleTimer)
+                call TimerDialogDisplay(this.NextPvpBattleDialog, false)
+                call DestroyTimerDialog(this.NextPvpBattleDialog)
+    
+                set this.NextPvpBattleTimer = null
+                set this.NextPvpBattleDialog = null
+            endif
+        endmethod
+
+        method setupNextPvpBattleTimer takes nothing returns nothing
+            set NextPvpBattleTimer = NewTimer()
+            call TimerStart(this.NextPvpBattleTimer, NextPvpBattleDuration, false, null)
+            set this.NextPvpBattleDialog = CreateTimerDialog(this.NextPvpBattleTimer)
+            call TimerDialogDisplay(this.NextPvpBattleDialog, false)
+            call TimerDialogSetTitle(this.NextPvpBattleDialog, "Next PvP Battle ...")
+            
+            if BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+                call TimerDialogDisplay(this.NextPvpBattleDialog, true)
+            endif
+        endmethod
+
+        method setupPrepareTimer takes nothing returns nothing
+            call this.cleanupNextPvpBattleDialog()
+
+            set DuelPrepareTimer = NewTimer()
+            call TimerStart(this.DuelPrepareTimer, DuelPrepareDuration, false, null)
+            set this.DuelPrepareDialog = CreateTimerDialog(this.DuelPrepareTimer)
+            call TimerDialogDisplay(this.DuelPrepareDialog, false)
+            call TimerDialogSetTitle(this.DuelPrepareDialog, "Prepare ...")
+            
+            if BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+                call TimerDialogDisplay(this.DuelPrepareDialog, true)
+            endif
+        endmethod
+
+        static method create takes force team1, force team2, integer arenaIndex returns thistype
             local thistype this = thistype.setup()
 
             set this.team1 = team1
             set this.team2 = team2
-            set this.arena = arena
+            set this.arenaIndex = arenaIndex
             set this.suddenDeath = SuddenDeath.create(this)
 
             return this
         endmethod
 
         method destroy takes nothing returns nothing
-            //call BJDebugMsg("destroy duelgame")
             call DestroyForce(team1)
             call DestroyForce(team2)
             set this.team1 = null
             set this.team2 = null
-            set this.arena = null
+
+            call this.cleanupPrepareDialog()
+            call this.cleanupNextPvpBattleDialog()
 
             call this.recycle()
         endmethod
@@ -166,28 +270,40 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         implement Recycle
     endstruct
 
-    function AddOddPlayerDuel takes player duelPlayer returns nothing
+    private function GetOpenArenaIndex takes nothing returns integer
+        local integer playerArenaRectIndex
+
+        // Find an open arena
+        loop
+            set playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
+
+            if (UsedArenas.find(playerArenaRectIndex) == 0) then
+                call UsedArenas.push(playerArenaRectIndex)
+                exitwhen true
+            endif
+        endloop
+
+        return playerArenaRectIndex
+    endfunction
+
+    function AddOddPlayerDuel takes player duelPlayer returns DuelGame
         local force team1 = CreateForce()
         local force team2 = CreateForce()
-        local integer playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
         local DuelGame currentDuelGame
-
-        // Reset everything. All of these duels should be over by now
-        call DuelGameList.clear()
-        call DuelGameListRemaining.clear()
-        call UsedArenas.clear()
 
         // Create the odd 1v1 duel
         call ForceAddPlayer(team1, duelPlayer)
         call ForceAddPlayer(team2, Player(OddPlayer))
 
-        set currentDuelGame = DuelGame.create(team1, team2, PlayerArenaRects[playerArenaRectIndex])
+        set currentDuelGame = DuelGame.create(team1, team2, GetOpenArenaIndex())
 
-        call DuelGameList.push(currentDuelGame)
-        call DuelGameListRemaining.push(currentDuelGame)
+        call DuelGameList.unshift(currentDuelGame)
+        call DuelGameListRemaining.unshift(currentDuelGame)
 
         set team1 = null
         set team2 = null
+
+        return currentDuelGame
     endfunction
 
     function MoveRoundRobin takes nothing returns nothing
@@ -199,7 +315,6 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         local IntegerList tempPlayerList = IntegerList[PlayerList]
         local force team1
         local force team2
-        local integer playerArenaRectIndex
         local DuelGame currentDuelGame
         local integer teamPlayerLimit
 
@@ -231,17 +346,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
                 exitwhen j <= 0
             endloop
 
-            // Find an open arena
-            loop
-                set playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
-
-                if (UsedArenas.find(playerArenaRectIndex) == 0) then
-                    call UsedArenas.push(playerArenaRectIndex)
-                    exitwhen true
-                endif
-            endloop
-
-            set currentDuelGame = DuelGame.create(team1, team2, PlayerArenaRects[playerArenaRectIndex])
+            set currentDuelGame = DuelGame.create(team1, team2, GetOpenArenaIndex())
             call DuelGameList.push(currentDuelGame)
             call DuelGameListRemaining.push(currentDuelGame)
 

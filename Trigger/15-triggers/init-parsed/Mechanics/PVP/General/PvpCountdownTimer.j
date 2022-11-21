@@ -21,7 +21,7 @@ library PvpCountdownTimer initializer init requires RandomShit, PvpRoundRobin
             exitwhen node == 0
             
             set currentDuelGame = node.data
-            set currentArenaLocation = GetRectCenter(currentDuelGame.arena)
+            set currentArenaLocation = GetRectCenter(currentDuelGame.getDuelArena())
 
             // Display the number
             call CreateTextTagLocBJ(I2S(CountdownCount) + " ...", currentArenaLocation, 0.00, 40.00, 100, I2R(CountdownCount * 20), I2R(CountdownCount * 20), 0)
