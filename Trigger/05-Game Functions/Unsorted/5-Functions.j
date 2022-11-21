@@ -140,7 +140,7 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
             call UpdateAbilityDescription(GetAbilityDescription(MARTIAL_RETRIBUTION_ABILITY_ID, level - 1), GetOwningPlayer(u), MARTIAL_RETRIBUTION_ABILITY_ID, ",s01,", R2I((1 - (500 / (500 + GetHeroInt(u, true)))) * 100), level)
         endif
 
-        call PandaSkin_CheckAbilitiesAndItems(u)
+        call SecretCheck_CheckAbilitiesAndItems(u)
     endfunction
 
     function FunResetAbility takes integer abilId, unit u returns nothing

@@ -181,6 +181,8 @@
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\WolfRider.j"
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\Xesil.j"
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Secrets\PandaSkin.j"
+//! import "C:\CHS\CHS\Trigger\07-Heroes\Secrets\RobotGoblin.j"
+//! import "C:\CHS\CHS\Trigger\07-Heroes\Secrets\SecretCheck.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Absolutes\05-Absolute Cold.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Absolutes\AbsoluteArcane.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Absolutes\AbsolutePoison.j"
