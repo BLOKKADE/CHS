@@ -187,6 +187,7 @@ endmodule
 //! runtextmacro NEW_ARRAY("FogState", "fogstate")
 //! runtextmacro NEW_ARRAY("FogModifier", "fogmodifier")
 //! runtextmacro NEW_ARRAY("Hashtable", "hashtable")
+//! runtextmacro NEW_ARRAY("Frame", "framehandle")
    
 struct Table extends array
    
@@ -233,6 +234,7 @@ struct Table extends array
     implement fogstatem
     implement fogmodifierm
     implement hashtablem
+    implement framehandlem
    
     method operator handle takes nothing returns handles
         return this

@@ -1,4 +1,4 @@
-library IconFrames initializer init requires RandomShit, CustomState, GetObjectElement, ElementColorCode, HeroLvlTable, UnitInfoPanel, RuneInit, HeroPassiveDesc, PlayerTracking, SellItems
+library IconFrames initializer init requires TooltipFrame, AchievementsFrame, CustomState, GetObjectElement, ElementColorCode, HeroLvlTable, UnitInfoPanel, RuneInit, HeroPassiveDesc, PlayerTracking, SellItems
 	globals
 		// Hat/Pet main frame
 		framehandle MainAchievementFrameHandle 
@@ -16,39 +16,7 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 		framehandle array ButtonParentId 
 
 		hashtable ButtonParentHandles = InitHashtable()
-
-		framehandle TooltipFrame = null
-		framehandle TooltipTitleFrame
-		framehandle TooltipTextFrame
-
-		constant real TooltipX = 0
-		constant real TooltipY = 0.165
-
-		real DEFAULT_SIZE = 0.020
-		real LINE_SIZE = 0.012
-
-		Table TooltipYSize
 	endglobals
-
-	function GoldConversionTooltip takes nothing returns string
-		return "Convert |cff96fc77Lumber|r to |cfffcd277Gold|r (|cff77f3fcCtrl+Q|r)"
-	endfunction
-
-	function LumberConversionTooltip takes nothing returns string
-		return "Convert |cfffcd277Gold|r to |cff96fc77Lumber|r (|cff77f3fcCtrl+W|r)"
-	endfunction
-
-	function SellAllItemsTooltip takes nothing returns string
-		return "Sell all your items for 100% gold/glory cost (|cff77f3fcCtrl+E|r)"
-	endfunction
-
-	function GetTooltipSize takes string s returns real
-		return (CountNewLines(s) * LINE_SIZE) + DEFAULT_SIZE
-	endfunction
-
-	function GetObjectTooltipSize takes integer objectId returns real
-		return GetTooltipSize(BlzGetAbilityExtendedTooltip(objectId, 0))
-	endfunction
 
 	function SkillSysStart takes nothing returns nothing
 		local integer NumButton = LoadInteger(ButtonParentHandles ,GetHandleId(BlzGetTriggerFrame()),1)
@@ -101,6 +69,8 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 			elseif NumButton == 39 then
 				set ps = PlayerStats.forPlayer(GetTriggerPlayer())
 				set TypT = ps.toggleHasAchievementsOpen()
+
+				call AchievementsFrame_UpdateAchievementFrameIcons(GetTriggerPlayer())
 
 				if GetLocalPlayer() == GetTriggerPlayer() then
 					call BlzFrameSetVisible(MainAchievementFrameHandle, TypT)
@@ -343,14 +313,6 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 			call CreateIconWorld(118 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 8 * sizeAbil , - 2 * sizeAbil , sizeAbil)
 			call CreateIconWorld(119 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 9 * sizeAbil , - 2 * sizeAbil , sizeAbil)
 			call CreateIconWorld(120 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 10 * sizeAbil , - 2 * sizeAbil , sizeAbil)
-
-			set TooltipFrame = BlzCreateFrame("TooltipText", GameUI  , 0, 0)
-			set TooltipTitleFrame = BlzGetFrameByName("TooltipTextTitle", 0)
-			set TooltipTextFrame = BlzGetFrameByName("TooltipTextValue", 0)
-        
-			call BlzFrameSetSize(TooltipFrame, 0.29, 0.03)
-			call BlzFrameSetPoint(TooltipFrame, FRAMEPOINT_BOTTOMRIGHT, GameUI, FRAMEPOINT_BOTTOMRIGHT, TooltipX, TooltipY)
-			call BlzFrameSetVisible(TooltipFrame, false )   
 		endfunction
 
 		//===========================================================================
@@ -358,8 +320,6 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 			local trigger trg = CreateTrigger()
 			call TriggerRegisterTimerEventSingle( trg, 1.00 )
 			call TriggerAddAction( trg, function Trig_ABIL_TAKE_Actions )
-
-			set TooltipYSize = Table.create()
 			set trg = null
 		endfunction
 	endlibrary
