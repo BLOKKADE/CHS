@@ -503,15 +503,14 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
 
         // The order this is created in, is the order the buttons appear in the row(s)
 
-        call CreateAchievementText("|cffae9a00Free Hats|r")
-
-         // Chef Hat
-         call CreateHatAchievementButton("SantaHat", "Rewards\\SantaHat.mdx")
-         set currentRequirements = Requirements.create("|cfffc2424Santa Hat|r")
-
         // Create the requirement directly under each CreateHatAchievementButton call that you want added to it
         // NOTE: An achievement can have mutliple requirements!
         call CreateAchievementText("|cff9205a1Hats|r")
+
+        //Free Hat
+        // Santa Hat
+        call CreateHatAchievementButton("SantaHat", "Rewards\\SantaHat.mdx")
+        set currentRequirements = Requirements.create("|cfffc2424Santa Hat|r")
 
         // --- All BR wins        
         // Blue Wizard Hat
@@ -602,7 +601,7 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         call CreatePetAchievementButton("Wolf", currentPet)
         set currentRequirements = Requirements.create("|cff887c7cWolf Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 650)
-  
+
         // Stag Pet
         set currentPet = PetSpecification.create('nder', 1.5, -1.0)
         call CreatePetAchievementButton("Stag", currentPet)
@@ -631,15 +630,41 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         set currentPet = PetSpecification.create('ncrb', 1.5, -1.0)
         call CreatePetAchievementButton("SpinyCrab", currentPet)
         set currentRequirements = Requirements.create("|cffb93a3aCrab Pet|r")
-        call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 1400)
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 200)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 200)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 200)
 
         // Racoon Pet
         set currentPet = PetSpecification.create('nrac', 1.5, -1.0)
         call CreatePetAchievementButton("Racoon", currentPet)
         set currentRequirements = Requirements.create("|cff796354Racoon Pet|r")
-        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 500)
-        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 500)
-        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 500)
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 400)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 400)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 400)
+
+        // Hermit Crab
+        set currentPet = PetSpecification.create('nhmc', 1.5, -1.0)
+        call CreatePetAchievementButton("HermitCrab", currentPet)
+        set currentRequirements = Requirements.create("|cff969696Hermit Crab Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 600)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 600)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 600)
+
+        // Kodo Beast
+        set currentPet = PetSpecification.create('oosc', 0.6, -1.0)
+        call CreatePetAchievementButton("RiderlessKodo", currentPet)
+        set currentRequirements = Requirements.create("|cfff8be97Kodo Beast Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 800)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 800)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 800)
+
+        // Spirit Wyvern
+        set currentPet = PetSpecification.create('oswy', 0.7, 140)
+        call CreatePetAchievementButton("SpiritWyvern", currentPet)
+        set currentRequirements = Requirements.create("|cfff8afffSpirit Wyvern Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 1000)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 1000)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 1000)
         // --- All PVP kills pets
 
         call GoToNextRow()
@@ -668,6 +693,12 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         call CreatePetAchievementButton("FrostWyrm", currentPet)
         set currentRequirements = Requirements.create("|cff2b1cffFrost Wyrm Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 700)
+
+        // Goblin Zeppelin Pet
+        set currentPet = PetSpecification.create('nzep', 0.4, 140.0)
+        call CreatePetAchievementButton("GoblinZeppelin", currentPet)
+        set currentRequirements = Requirements.create("|cff2b1cffZeppelin Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 1500)
         // --- AP PVP kills pets
 
         call GoToNextRow()
@@ -696,6 +727,12 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         call CreatePetAchievementButton("SnowOwl", currentPet)
         set currentRequirements = Requirements.create("|cffffffffSnow Owl Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 700)
+
+        // Man Pet
+        set currentPet = PetSpecification.create('nvil', 1, -1.0)
+        call CreatePetAchievementButton("VillagerMan", currentPet)
+        set currentRequirements = Requirements.create("|cffffffffMan Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 1500)
         // --- AR PVP kills pets
 
         call GoToNextRow()
@@ -720,10 +757,16 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 525)
 
         // Obsidian Pet
-        set currentPet = PetSpecification.create('uobs', 0.4, 140.0)
+        set currentPet = PetSpecification.create('uobs', 0.4, -1.0)
         call CreatePetAchievementButton("ObsidianStatue", currentPet)
         set currentRequirements = Requirements.create("|cff9c0000Obsidian Pet|r")
-        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 700)        
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 700)
+
+        // Child Pet
+        set currentPet = PetSpecification.create('nvlk', 1., -1.0)
+        call CreatePetAchievementButton("VillagerKid", currentPet)
+        set currentRequirements = Requirements.create("|cff9c0000Child Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 1500)
         // --- Draft PVP kills pets
 
         call GoToNextRow()
@@ -772,6 +815,17 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 500)
         call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 500)
         call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 500)
+
+        // Woman Pet
+        set currentPet = PetSpecification.create('nvlw', 1, -1.0)
+        call CreatePetAchievementButton("VillagerWoman", currentPet)
+        set currentRequirements = Requirements.create("|cff847304Your Mom|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APBRAllWinsCheck, 300)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARBRAllWinsCheck, 300)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftBRAllWinsCheck, 300)
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 1500)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 1500)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 1500)
         // --- Combination Pets
 
         // Compute the main achievement box based on how many achievements there are and the column restrictions
