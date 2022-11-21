@@ -255,6 +255,9 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
             set this.team2 = team2
             set this.arenaIndex = arenaIndex
             set this.suddenDeath = SuddenDeath.create(this)
+            set this.isDuelOver = false
+            set this.team1Won = false
+            set this.fightStarted = false
 
             return this
         endmethod
