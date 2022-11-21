@@ -174,16 +174,18 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     private function StartFightForUnit takes nothing returns nothing
         local unit currentUnit = GetEnumUnit()
         local player currentPlayer = GetOwningPlayer(currentUnit)
-        local integer playerId = GetPlayerId(currentPlayer)
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
         call SetUnitInvulnerable(currentUnit, false)
         call StartFunctionSpell(currentUnit, 4) // 4 = duels
         call PauseUnit(currentUnit, false)
         call SetCurrentlyFighting(currentPlayer, true)
+        call GroupRemoveUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities
 
         // Cleanup
         set currentUnit = null
         set currentPlayer = null
+        set playerHero = null
     endfunction
 
     private function InitializeFightBetweenForces takes force team1, force team2, rect arena returns nothing

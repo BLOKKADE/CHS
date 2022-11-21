@@ -89,7 +89,12 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
         call GroupAddUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities
-        call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
+
+        // Don't add the winner twice for the odd duel
+        if (not IsUnitInGroup(playerHero, DuelWinners)) then
+            call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
+        endif
+
         call GroupRemoveUnit(DuelingHeroes, playerHero)
         call SetUnitInvulnerable(playerHero, true)
         
@@ -105,7 +110,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
-        call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
+        // Don't add the loser twice
+        if (not IsPlayerInForce(currentPlayer, DuelLosers)) then
+            call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
+        endif
+
         call GroupRemoveUnit(DuelingHeroes, playerHero)
 
         // Mark that they player is not fighting
@@ -234,7 +243,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForForce(duelGame.team2, function DuelEndedPlayerActions)
             
             call duelGame.cleanupSuddenDeath()
-            
+
             // Only display a message to everyone when this duel is completely over
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
 
@@ -276,9 +285,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
             call AfterAllDuelCleanupActions(duelGame)
 
-            set randomOddDuelPlayer = ForcePickRandomPlayer(DuelLosers)
-
             // Create a new duel using a random loser
+            set randomOddDuelPlayer = ForcePickRandomPlayer(DuelLosers)
             set oddDuelGame = AddOddPlayerDuel(randomOddDuelPlayer)
 
             // Go to the next pvp battle for the odd player
