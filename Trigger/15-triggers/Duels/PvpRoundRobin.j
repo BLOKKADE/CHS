@@ -21,7 +21,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         private integer DuelPrepareDuration = 10
         private integer NextPvpBattleDuration = 15
 
-        DuelGame CurrentDuelGame // Used to reference the current duel for betting pruposes. Doesn't work properly for simultaneous duels.
+        DuelGame CurrentDuelGame // Used to reference the current duel for betting purposes. Doesn't work properly for simultaneous duels.
         IntegerList DuelGameList // The list of duels that doesn't get emptied as we get duels
         IntegerList DuelGameListRemaining // The list of duels that gets emptied as we get duels
         integer OddPlayer = -1 // The player id of the odd player
@@ -108,10 +108,12 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
                 exitwhen node == 0
                 set currentDuelGame = node.data
 
-                set currentDuelGame.fightStarted = true
+                if (not currentDuelGame.fightStarted) then
+                    set currentDuelGame.fightStarted = true
 
-                call currentDuelGame.suddenDeath.start()
-                call currentDuelGame.cleanupPrepareDialog()
+                    call currentDuelGame.suddenDeath.start()
+                    call currentDuelGame.cleanupPrepareDialog()
+                endif
 
                 set node = node.next
             endloop
@@ -199,12 +201,14 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
         endmethod
 
         method cleanupPrepareDialog takes nothing returns nothing
-            call ReleaseTimer(this.DuelPrepareTimer)
-            call TimerDialogDisplay(this.DuelPrepareDialog, false)
-            call DestroyTimerDialog(this.DuelPrepareDialog)
+            if (this.DuelPrepareDialog != null) then
+                call ReleaseTimer(this.DuelPrepareTimer)
+                call TimerDialogDisplay(this.DuelPrepareDialog, false)
+                call DestroyTimerDialog(this.DuelPrepareDialog)
 
-            set this.DuelPrepareTimer = null
-            set this.DuelPrepareDialog = null
+                set this.DuelPrepareTimer = null
+                set this.DuelPrepareDialog = null
+            endif
         endmethod
         
         method cleanupNextPvpBattleDialog takes nothing returns nothing
@@ -253,6 +257,10 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
             set this.suddenDeath = SuddenDeath.create(this)
 
             return this
+        endmethod
+
+        method cleanupSuddenDeath takes nothing returns nothing
+            call this.suddenDeath.destroy()
         endmethod
 
         method destroy takes nothing returns nothing

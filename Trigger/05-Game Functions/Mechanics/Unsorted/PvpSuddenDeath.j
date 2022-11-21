@@ -1,7 +1,5 @@
 library PvpSuddenDeathTimerWindow /*initializer init*/ requires TimerUtils
     globals
-        private timer SuddenDeathTimer = null
-        private timerdialog SuddenDeathDialog = null
         private integer Duration = 30
 
         //how often damage is changed, damage is dealt, and when to start sudden death

@@ -233,6 +233,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForForce(duelGame.team1, function DuelEndedPlayerActions)
             call ForForce(duelGame.team2, function DuelEndedPlayerActions)
             
+            call duelGame.cleanupSuddenDeath()
+            
             // Only display a message to everyone when this duel is completely over
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
 
