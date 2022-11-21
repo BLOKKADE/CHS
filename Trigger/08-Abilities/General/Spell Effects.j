@@ -218,6 +218,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
                     endif
 
+                    if UnitHasItemType(caster, ORB_OF_ELEMENTS) then
+                        call SetElementalOrbAbil(caster, abilId)
+                    endif
+
                     if abilId == ACTIVATE_AVATAR_ABILITY_ID then
                         call CastAvatar(caster, abilLvl)
                     endif
