@@ -101,7 +101,6 @@ library PvpSuddenDeathTimerWindow /*initializer init*/ requires TimerUtils
                 if not this.suddenDeath then
                     if T32_Tick > this.damageStart then
                         call this.startSuddenDeath()
-                        call this.destroy()
                     endif
                 else
                     if T32_Tick > this.nextDamage then
@@ -114,7 +113,6 @@ library PvpSuddenDeathTimerWindow /*initializer init*/ requires TimerUtils
                     endif
                 endif
             else
-                call this.stopPeriodic()
                 call this.destroy()
             endif
         endmethod 
@@ -150,6 +148,7 @@ library PvpSuddenDeathTimerWindow /*initializer init*/ requires TimerUtils
         endmethod
         
         method destroy takes nothing returns nothing
+            call this.stopPeriodic()
             call ReleaseTimer(this.suddenDeathTimer)
             set this.suddenDeathTimer = null
             call TimerDialogDisplay(this.timerDialog, false)
