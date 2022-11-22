@@ -287,6 +287,8 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
                     set arenaCenter = null
 
                     set this.currentCountdown = this.currentCountdown - 1
+
+                    call PlaySoundBJ(udg_sound09) // Ticking noise
                 endif
             else
                 call this.stopPeriodic()
