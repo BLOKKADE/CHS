@@ -1,7 +1,10 @@
-library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, IconFrames, MathRound, Table, PetFollow
+library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking, IdLibrary, MathRound, Table, PetFollow, IconUtility
 
     globals 
         // hastables for each type of achievement. It's how we determine what type of achievement it is when a button is selected
+        private Table AchievementButtonHandleIds
+        private Table AchievementButtonBackdropFrames
+        private Table AchievementIconPaths
         private hashtable HatButtonEventHandles
         private hashtable PetButtonEventHandles
 
@@ -157,6 +160,31 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
         endif
     endfunction
 
+    public function UpdateAchievementFrameIcons takes player p returns nothing
+        local integer i = 0
+        local Requirements hr
+        local PlayerStats ps = PlayerStats.forPlayer(p)
+
+        loop
+            exitwhen i > TotalAchievementCount
+            set hr = Requirements.forIndex(GetIndex(AchievementButtonHandleIds.integer[i]))
+
+            if hr != 0 then
+                if hr.checkRequirements(ps) then
+                    if GetLocalPlayer() == p then
+                        call BlzFrameSetTexture(AchievementButtonBackdropFrames.framehandle[i], GetIconPath(AchievementIconPaths.string[i]), 0, true)
+                    endif
+                else
+                    if GetLocalPlayer() == p then
+                        call BlzFrameSetTexture(AchievementButtonBackdropFrames.framehandle[i], GetDisabledIconPath(AchievementIconPaths.string[i]), 0, true)
+                    endif
+                endif
+            endif
+
+            set i = i + 1
+        endloop
+    endfunction
+
     private function HatMouseEventActions takes nothing returns nothing
 		local integer index = GetIndex(GetHandleId(BlzGetTriggerFrame()))
         local integer achievementType = GetAchievementType(GetHandleId(BlzGetTriggerFrame()))
@@ -236,7 +264,9 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
 
     private function CreateAchievementButton takes string iconPath, hashtable buttonEventHandles returns nothing
         local framehandle buttonFrameHandle = BlzCreateFrame("ScriptDialogButton", MainAchievementFrameHandle, 0, 0) 
-        local framehandle buttonBackdropFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", buttonFrameHandle, "", 1) 
+        local framehandle buttonBackdropFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", buttonFrameHandle, "", 1)
+        local integer buttonHandleId = GetHandleId(buttonFrameHandle)
+        local integer backdropHandleId = GetHandleId(buttonBackdropFrameHandle)
 
         // Keep a count of every icon we make
         set TotalAchievementCount = TotalAchievementCount + 1
@@ -247,10 +277,14 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
 
         // Apply the icon
         call BlzFrameSetAllPoints(buttonBackdropFrameHandle, buttonFrameHandle) 
-        call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
+        call BlzFrameSetTexture(buttonBackdropFrameHandle, GetIconPath(iconPath), 0, true) 
+        set AchievementIconPaths.string[TotalAchievementCount] = iconPath
 
         // Save the handle of this button to look it up later for mouse events
-        call SaveInteger(buttonEventHandles, GetHandleId(buttonFrameHandle), 1, TotalAchievementCount)
+        call SaveInteger(buttonEventHandles, buttonHandleId, 1, TotalAchievementCount)
+        set AchievementButtonHandleIds.integer[TotalAchievementCount] = buttonHandleId
+        set AchievementButtonBackdropFrames.framehandle[TotalAchievementCount] = buttonBackdropFrameHandle
+        
         call BlzTriggerRegisterFrameEvent(AchievementButtonEventTrigger, buttonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         call BlzTriggerRegisterFrameEvent(AchievementButtonEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
         call BlzTriggerRegisterFrameEvent(AchievementButtonEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
@@ -398,6 +432,10 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
             local integer i = 0
             local string description = this.Name + "|n|n|cffd0ff00Achievement Requirements|r"
 
+            if RequirementCheckCount == 0 then
+                return this.Name + "|n|n|cff00ff4cFree!|r"
+            endif
+
             loop
                 exitwhen i >= RequirementCheckCount 
 
@@ -464,53 +502,59 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
         call TriggerAddAction(AchievementButtonEventTrigger, function HatMouseEventActions)
 
         // The order this is created in, is the order the buttons appear in the row(s)
+
         // Create the requirement directly under each CreateHatAchievementButton call that you want added to it
         // NOTE: An achievement can have mutliple requirements!
         call CreateAchievementText("|cff9205a1Hats|r")
 
+        //Free Hat
+        // Santa Hat
+        call CreateHatAchievementButton("SantaHat", "Rewards\\SantaHat.mdx")
+        set currentRequirements = Requirements.create("|cfffc2424Santa Hat|r")
+
         // --- All BR wins        
         // Blue Wizard Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtons\\BTNBlueWizardHat.blp", "Rewards\\BlueWizardHat.mdx")
+        call CreateHatAchievementButton("BlueWizardHat", "Rewards\\BlueWizardHat.mdx")
         set currentRequirements = Requirements.create("|cff174795Blue Wizard Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 2)
 
         // Cowboy Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtons\\BTNCowboyHat.blp", "Rewards\\CowboyHat.mdx")
+        call CreateHatAchievementButton("CowboyHat", "Rewards\\CowboyHat.mdx")
         set currentRequirements = Requirements.create("|cff955217Cowboy Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 4)
 
         // Military Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtons\\BTNOfficerHat.blp", "Rewards\\MilitaryHat.mdx")
+        call CreateHatAchievementButton("OfficerHat", "Rewards\\MilitaryHat.mdx")
         set currentRequirements = Requirements.create("|cff0d6933Military Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 8)
 
         // Spanish Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSpanishHelmet.blp", "Rewards\\SpanishHelmet2.mdx")
+        call CreateHatAchievementButton("SpanishHelmet", "Rewards\\SpanishHelmet2.mdx")
         set currentRequirements = Requirements.create("|cff95172eSpanish Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 16)
 
         // Nerubian Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtonsDisabled\\BTNNerubianHeadwear.blp", "Rewards\\NerubianHeadwear.mdx")
+        call CreateHatAchievementButton("NerubianHeadwear", "Rewards\\NerubianHeadwear.mdx")
         set currentRequirements = Requirements.create("|cff751795Nerubian Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 32)
 
         // Pirate Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtons\\BTNPirateHat.blp", "Rewards\\PirateHat.MDX")
+        call CreateHatAchievementButton("PirateHat", "Rewards\\PirateHat.MDX")
         set currentRequirements = Requirements.create("|cff951717Pirate Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 64)
 
         // Brown Wizard Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtons\\BTNBrownWizardhat.blp", "Rewards\\BrownWizardHat.mdx")
+        call CreateHatAchievementButton("BrownWizardhat", "Rewards\\BrownWizardHat.mdx")
         set currentRequirements = Requirements.create("|cffba6f25Brown Wizard Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 128)
 
         // Top Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtons\\BTNTophat.blp", "Rewards\\Tophat.mdx")
+        call CreateHatAchievementButton("Tophat", "Rewards\\Tophat.mdx")
         set currentRequirements = Requirements.create("|cff6e3500Top Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.BRAllWinsCheck, 256)
 
         // Chef Hat
-        call CreateHatAchievementButton("ReplaceableTextures\\CommandButtons\\BTNChefHat.blp", "Rewards\\ChefsHat.mdx")
+        call CreateHatAchievementButton("ChefHat", "Rewards\\ChefsHat.mdx")
         set currentRequirements = Requirements.create("|cffb7bbc2Chef Hat|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APBRAllWinsCheck, 100)
         call currentRequirements.addRequirementCheck(RequirementCheck.ARBRAllWinsCheck, 100)
@@ -524,77 +568,103 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
         // --- All PVP kills pets
         // Penguin Pet
         set currentPet = PetSpecification.create('npng', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNPenguin.blp", currentPet)
+        call CreatePetAchievementButton("Penguin", currentPet)
         set currentRequirements = Requirements.create("|cff6a95e1Penguin Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 35)
 
         // Frog Pet
         set currentPet = PetSpecification.create('nfro', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNHex.blp", currentPet)
+        call CreatePetAchievementButton("Hex", currentPet)
         set currentRequirements = Requirements.create("|cff2be747Frog Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 75)
 
         // Chicken Pet
         set currentPet = PetSpecification.create('nech', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNCritterChicken.blp", currentPet)
+        call CreatePetAchievementButton("CritterChicken", currentPet)
         set currentRequirements = Requirements.create("|cffb468c5Chicken Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 175)
 
         // Seal Pet
         set currentPet = PetSpecification.create('nsea', 1.3, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSeal.blp", currentPet)
+        call CreatePetAchievementButton("Seal", currentPet)
         set currentRequirements = Requirements.create("|cff2ae0c8Seal Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 350)
 
         // Rabbit Pet
         set currentPet = PetSpecification.create('necr', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNCritterRabbit.blp", currentPet)
+        call CreatePetAchievementButton("CritterRabbit", currentPet)
         set currentRequirements = Requirements.create("|cffffffffRabbit Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 500)
 
         // Wolf Pet
         set currentPet = PetSpecification.create('ndog', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNWolf.blp", currentPet)
+        call CreatePetAchievementButton("Wolf", currentPet)
         set currentRequirements = Requirements.create("|cff887c7cWolf Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 650)
-  
+
         // Stag Pet
         set currentPet = PetSpecification.create('nder', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNStag.blp", currentPet)
+        call CreatePetAchievementButton("Stag", currentPet)
         set currentRequirements = Requirements.create("|cffbe61b7Stag Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 800)
         
         // Skink Pet
         set currentPet = PetSpecification.create('nskk', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSkink.blp", currentPet)
+        call CreatePetAchievementButton("Skink", currentPet)
         set currentRequirements = Requirements.create("|cffe0d537Skink Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 950)
 
         // Dune Worm Pet
         set currentPet = PetSpecification.create('ndwm', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNDuneWorm.blp", currentPet)
+        call CreatePetAchievementButton("DuneWorm", currentPet)
         set currentRequirements = Requirements.create("|cffad7a58Dune Worm Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 1100)
 
         // Albatross Pet
         set currentPet = PetSpecification.create('nalb', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNAlbatross.blp", currentPet)
+        call CreatePetAchievementButton("Albatross", currentPet)
         set currentRequirements = Requirements.create("|cff45d3ddAlbatross Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 1250)
 
         // Crab Pet
         set currentPet = PetSpecification.create('ncrb', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSpinyCrab.blp", currentPet)
+        call CreatePetAchievementButton("SpinyCrab", currentPet)
         set currentRequirements = Requirements.create("|cffb93a3aCrab Pet|r")
-        call currentRequirements.addRequirementCheck(RequirementCheck.PVPAllWinsCheck, 1400)
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 200)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 200)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 200)
 
         // Racoon Pet
         set currentPet = PetSpecification.create('nrac', 1.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNRacoon.blp", currentPet)
+        call CreatePetAchievementButton("Racoon", currentPet)
         set currentRequirements = Requirements.create("|cff796354Racoon Pet|r")
-        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 500)
-        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 500)
-        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 500)
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 400)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 400)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 400)
+
+        // Hermit Crab
+        set currentPet = PetSpecification.create('nhmc', 1.5, -1.0)
+        call CreatePetAchievementButton("HermitCrab", currentPet)
+        set currentRequirements = Requirements.create("|cff969696Hermit Crab Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 600)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 600)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 600)
+
+        // Kodo Beast
+        set currentPet = PetSpecification.create('oosc', 0.6, -1.0)
+        call CreatePetAchievementButton("RiderlessKodo", currentPet)
+        set currentRequirements = Requirements.create("|cfff8be97Kodo Beast Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 800)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 800)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 800)
+
+        // Spirit Wyvern
+        set currentPet = PetSpecification.create('oswy', 0.7, 140)
+        call CreatePetAchievementButton("SpiritWyvern", currentPet)
+        set currentRequirements = Requirements.create("|cfff8afffSpirit Wyvern Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 1000)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 1000)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 1000)
         // --- All PVP kills pets
 
         call GoToNextRow()
@@ -602,27 +672,33 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
         // --- AP PVP kills pets
         // Black Dragon Pet
         set currentPet = PetSpecification.create('nbdr', 0.6, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNBlackDragon.blp", currentPet)
+        call CreatePetAchievementButton("BlackDragon", currentPet)
         set currentRequirements = Requirements.create("|cff6e2121Black Dragon Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 175)
 
         // Red Dragon Pet
         set currentPet = PetSpecification.create('nrdk', 0.60, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNRedDragon.blp", currentPet)
+        call CreatePetAchievementButton("RedDragon", currentPet)
         set currentRequirements = Requirements.create("|cffd72919Red Dragon Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 350)
 
         // Azure Dragon Pet
         set currentPet = PetSpecification.create('nadw', 0.6, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNAzureDragon.blp", currentPet)
+        call CreatePetAchievementButton("AzureDragon", currentPet)
         set currentRequirements = Requirements.create("|cff2ae0c8Azure Dragon Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 525)
 
         // Frost Wyrm Pet
         set currentPet = PetSpecification.create('ufro', 0.4, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNFrostWyrm.blp", currentPet)
+        call CreatePetAchievementButton("FrostWyrm", currentPet)
         set currentRequirements = Requirements.create("|cff2b1cffFrost Wyrm Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 700)
+
+        // Goblin Zeppelin Pet
+        set currentPet = PetSpecification.create('nzep', 0.4, 140.0)
+        call CreatePetAchievementButton("GoblinZeppelin", currentPet)
+        set currentRequirements = Requirements.create("|cff2b1cffZeppelin Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 1500)
         // --- AP PVP kills pets
 
         call GoToNextRow()
@@ -630,27 +706,33 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
         // --- AR PVP kills pets
         // Wind Serpent Pet
         set currentPet = PetSpecification.create('nwgs', 0.4, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNWindSerpent.blp", currentPet)
+        call CreatePetAchievementButton("WindSerpent", currentPet)
         set currentRequirements = Requirements.create("|cff68a5c5Wind Serpent Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 175)
 
         // Spirit Wyvern Pet
         set currentPet = PetSpecification.create('oswy', 0.6, 140)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSpiritWyvern.blp", currentPet)
+        call CreatePetAchievementButton("SpiritWyvern", currentPet)
         set currentRequirements = Requirements.create("|cff10f0fbSpirit Wyvern Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 350)
 
         // Gargoyle Pet
         set currentPet = PetSpecification.create('ugar', 0.6, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNGargoyle.blp", currentPet)
+        call CreatePetAchievementButton("Gargoyle", currentPet)
         set currentRequirements = Requirements.create("|cff4a648bGargoyle Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 525)
 
         // Snowy Owl Pet
         set currentPet = PetSpecification.create('nsno', 1.2, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSnowOwl.blp", currentPet)
+        call CreatePetAchievementButton("SnowOwl", currentPet)
         set currentRequirements = Requirements.create("|cffffffffSnow Owl Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 700)
+
+        // Man Pet
+        set currentPet = PetSpecification.create('nvil', 1, -1.0)
+        call CreatePetAchievementButton("VillagerMan", currentPet)
+        set currentRequirements = Requirements.create("|cffffffffMan Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 1500)
         // --- AR PVP kills pets
 
         call GoToNextRow()
@@ -658,27 +740,33 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
         // --- Draft PVP kills pets
         // Sea Turtle Pet
         set currentPet = PetSpecification.create('nhyc', 0.4, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSeaTurtleRed.blp", currentPet)
+        call CreatePetAchievementButton("SeaTurtleRed", currentPet)
         set currentRequirements = Requirements.create("|cff94241bSea Turtle Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 175)
 
         // Nerubian Spider Pet
         set currentPet = PetSpecification.create('nspd', 0.5, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNNerubian.blp", currentPet)
+        call CreatePetAchievementButton("Nerubian", currentPet)
         set currentRequirements = Requirements.create("|cff256e2aNerubian Spider Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 350)
 
         // Flying Sheep Pet
         set currentPet = PetSpecification.create('nshf', 1.2, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNSheep.blp", currentPet)
+        call CreatePetAchievementButton("Sheep", currentPet)
         set currentRequirements = Requirements.create("|cfffffca5Flying Sheep Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 525)
 
         // Obsidian Pet
-        set currentPet = PetSpecification.create('uobs', 0.4, 140.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNObsidianStatue.blp", currentPet)
+        set currentPet = PetSpecification.create('uobs', 0.4, -1.0)
+        call CreatePetAchievementButton("ObsidianStatue", currentPet)
         set currentRequirements = Requirements.create("|cff9c0000Obsidian Pet|r")
-        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 700)        
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 700)
+
+        // Child Pet
+        set currentPet = PetSpecification.create('nvlk', 1., -1.0)
+        call CreatePetAchievementButton("VillagerKid", currentPet)
+        set currentRequirements = Requirements.create("|cff9c0000Child Pet|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 1500)
         // --- Draft PVP kills pets
 
         call GoToNextRow()
@@ -686,7 +774,7 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
         // --- Combination Pets
         // Razorback Pet
         set currentPet = PetSpecification.create('nspp', 0.9, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNRazorback.blp", currentPet)
+        call CreatePetAchievementButton("Razorback", currentPet)
         set currentRequirements = Requirements.create("|cff847304Razorback Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APBRAllWinsCheck, 3)
         call currentRequirements.addRequirementCheck(RequirementCheck.ARBRAllWinsCheck, 3)
@@ -697,7 +785,7 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
 
         // Riderless Horse Pet
         set currentPet = PetSpecification.create('hrdh', 0.7, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNRiderlessHorse.blp", currentPet)
+        call CreatePetAchievementButton("RiderlessHorse", currentPet)
         set currentRequirements = Requirements.create("|cffa96545Riderless Horse Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APBRAllWinsCheck, 15)
         call currentRequirements.addRequirementCheck(RequirementCheck.ARBRAllWinsCheck, 15)
@@ -708,7 +796,7 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
 
         // Hydra Pet
         set currentPet = PetSpecification.create('nhyh', 0.4, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNGreenHydra.blp", currentPet)
+        call CreatePetAchievementButton("GreenHydra", currentPet)
         set currentRequirements = Requirements.create("|cff2aa8bfHydra Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APBRAllWinsCheck, 50)
         call currentRequirements.addRequirementCheck(RequirementCheck.ARBRAllWinsCheck, 50)
@@ -719,7 +807,7 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
 
         // Night Elf Battle Cruiser Pet
         set currentPet = PetSpecification.create('ebsh', 0.35, -1.0)
-        call CreatePetAchievementButton("ReplaceableTextures\\CommandButtons\\BTNNightElfBattleCruiser.blp", currentPet)
+        call CreatePetAchievementButton("NightElfBattleCruiser", currentPet)
         set currentRequirements = Requirements.create("|cff847304Night Elf Battle Cruiser Pet|r")
         call currentRequirements.addRequirementCheck(RequirementCheck.APBRAllWinsCheck, 115)
         call currentRequirements.addRequirementCheck(RequirementCheck.ARBRAllWinsCheck, 115)
@@ -727,6 +815,17 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
         call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 500)
         call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 500)
         call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 500)
+
+        // Woman Pet
+        set currentPet = PetSpecification.create('nvlw', 1, -1.0)
+        call CreatePetAchievementButton("VillagerWoman", currentPet)
+        set currentRequirements = Requirements.create("|cff847304Your Mom|r")
+        call currentRequirements.addRequirementCheck(RequirementCheck.APBRAllWinsCheck, 300)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARBRAllWinsCheck, 300)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftBRAllWinsCheck, 300)
+        call currentRequirements.addRequirementCheck(RequirementCheck.APPVPAllWinsCheck, 1500)
+        call currentRequirements.addRequirementCheck(RequirementCheck.ARPVPAllWinsCheck, 1500)
+        call currentRequirements.addRequirementCheck(RequirementCheck.DraftPVPAllWinsCheck, 1500)
         // --- Combination Pets
 
         // Compute the main achievement box based on how many achievements there are and the column restrictions
@@ -743,6 +842,9 @@ library AchievementsFrame initializer init requires PlayerTracking, IdLibrary, I
     endfunction 
 
     private function init takes nothing returns nothing
+        set AchievementButtonHandleIds = Table.create()
+        set AchievementButtonBackdropFrames = Table.create()
+        set AchievementIconPaths = Table.create()
         call TimerStart(CreateTimer(), 1, false, function SetupAchievements)
     endfunction
 

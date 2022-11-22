@@ -460,7 +460,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			endif
 		endif 
 
-		call PandaSkin_CheckAbilitiesAndItems(u)
+		call SecretCheck_CheckAbilitiesAndItems(u)
 	endfunction
 
 	private function ItemDrop takes nothing returns nothing

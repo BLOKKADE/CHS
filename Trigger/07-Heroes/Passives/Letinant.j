@@ -9,7 +9,7 @@ library Letinant initializer init requires HeroLvlTable
         local integer i = 0
         local integer bonus = 0
 
-        set LetinantStatBonus[GetHandleId(u)] = 5 + ((GetHeroLevel(u) - ModuloInteger(GetHeroLevel(u), 10) / 10))
+        set LetinantStatBonus[GetHandleId(u)] = 5 + (((GetHeroLevel(u) - ModuloInteger(GetHeroLevel(u), 10)) / 10))
         set bonus = LetinantStatBonus[GetHandleId(u)]
         call SetBonus(u, 3, bonus)
 

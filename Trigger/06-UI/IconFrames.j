@@ -1,4 +1,4 @@
-library IconFrames initializer init requires RandomShit, CustomState, GetObjectElement, ElementColorCode, HeroLvlTable, UnitInfoPanel, RuneInit, HeroPassiveDesc, PlayerTracking, SellItems
+library IconFrames initializer init requires TooltipFrame, AchievementsFrame, CustomState, GetObjectElement, ElementColorCode, HeroLvlTable, UnitInfoPanel, RuneInit, HeroPassiveDesc, PlayerTracking, SellItems
 	globals
 		// Hat/Pet main frame
 		framehandle MainAchievementFrameHandle 
@@ -16,44 +16,13 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 		framehandle array ButtonParentId 
 
 		hashtable ButtonParentHandles = InitHashtable()
-
-		framehandle TooltipFrame = null
-		framehandle TooltipTitleFrame
-		framehandle TooltipTextFrame
-
-		constant real TooltipX = 0
-		constant real TooltipY = 0.165
-
-		real DEFAULT_SIZE = 0.020
-		real LINE_SIZE = 0.012
-
-		Table TooltipYSize
 	endglobals
-
-	function GoldConversionTooltip takes nothing returns string
-		return "Convert |cff96fc77Lumber|r to |cfffcd277Gold|r (|cff77f3fcCtrl+Q|r)"
-	endfunction
-
-	function LumberConversionTooltip takes nothing returns string
-		return "Convert |cfffcd277Gold|r to |cff96fc77Lumber|r (|cff77f3fcCtrl+W|r)"
-	endfunction
-
-	function SellAllItemsTooltip takes nothing returns string
-		return "Sell all your items for 100% gold/glory cost (|cff77f3fcCtrl+E|r)"
-	endfunction
-
-	function GetTooltipSize takes string s returns real
-		return (CountNewLines(s) * LINE_SIZE) + DEFAULT_SIZE
-	endfunction
-
-	function GetObjectTooltipSize takes integer objectId returns real
-		return GetTooltipSize(BlzGetAbilityExtendedTooltip(objectId, 0))
-	endfunction
 
 	function SkillSysStart takes nothing returns nothing
 		local integer NumButton = LoadInteger(ButtonParentHandles ,GetHandleId(BlzGetTriggerFrame()),1)
 		local integer i_ck = 1
-		local integer PlID = GetPlayerId(GetTriggerPlayer())
+		local player p = GetTriggerPlayer()
+		local integer PlID = GetPlayerId(p)
 		local integer SpellId_1 = 0
 		local integer AbilLevel = 0
 		local integer ULT_ID = 0
@@ -69,7 +38,7 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 
 		if BlzGetTriggerFrameEvent() ==  FRAMEEVENT_CONTROL_CLICK then
 			
-			if GetTriggerPlayer() == GetLocalPlayer() then
+			if p == GetLocalPlayer() then
 				call BlzFrameSetEnable(BlzGetTriggerFrame() , false)
 				call BlzFrameSetEnable(BlzGetTriggerFrame() , true)
 			endif
@@ -79,30 +48,32 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 				set SpellU = PlayerHeroes[PlID + 1]
 
 				call SellItemsFromHero(SpellU)
-				call ResourseRefresh(GetTriggerPlayer()) 
+				call ResourseRefresh(p) 
 			
 			//Convert to gold
 			elseif NumButton == 36 then
-				set i1 = GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER)
+				set i1 = GetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER)
 
-				call SetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER,0)
-				call SetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)  + i1 * 30)
-				call ResourseRefresh(GetTriggerPlayer()) 
+				call SetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER,0)
+				call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)  + i1 * 30)
+				call ResourseRefresh(p) 
 			
 			//Convert to lumber
 			elseif NumButton == 37 then
-				set i1 = GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)/ 30
+				set i1 = GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)/ 30
 
-				call SetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)- i1 * 30  )
-				call SetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER) + i1)
-				call ResourseRefresh(GetTriggerPlayer()) 
+				call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)- i1 * 30  )
+				call SetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER) + i1)
+				call ResourseRefresh(p) 
 
 			//Show hats menu
 			elseif NumButton == 39 then
-				set ps = PlayerStats.forPlayer(GetTriggerPlayer())
+				set ps = PlayerStats.forPlayer(p)
 				set TypT = ps.toggleHasAchievementsOpen()
 
-				if GetLocalPlayer() == GetTriggerPlayer() then
+				call AchievementsFrame_UpdateAchievementFrameIcons(p)
+
+				if GetLocalPlayer() == p then
 					call BlzFrameSetVisible(MainAchievementFrameHandle, TypT)
 				endif
 			endif
@@ -111,7 +82,7 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 
 		elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
 				if NumButton == 2 then
-					if GetLocalPlayer() == GetTriggerPlayer() then
+					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, "|cfffce177Next level|r: " + RoundCreepTitle)
 						set temp = RoundCreepInfo[PlID] + "|n|n|cfffce177Abilities|r: " + RoundAbilities
 						call BlzFrameSetText(TooltipTextFrame, temp)
@@ -119,20 +90,20 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 				elseif NumButton == 3 then
-					if GetLocalPlayer() == GetTriggerPlayer() then
+					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, SellAllItemsTooltip())
 						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 					//Hero passive
 				elseif NumButton == 36 then
-					if GetLocalPlayer() == GetTriggerPlayer() then
+					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, GoldConversionTooltip())
 						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 				elseif NumButton == 37 then
-					if GetLocalPlayer() == GetTriggerPlayer() then
+					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, LumberConversionTooltip())
 						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
 						call BlzFrameSetVisible(TooltipFrame, true)
@@ -154,7 +125,7 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 						exitwhen i1 > 13 // Based off the amount of elements in ClassAbil array. 2-InitDescription.j
 					endloop
 
-					if GetLocalPlayer() == GetTriggerPlayer() then
+					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
 						call BlzFrameSetSize(TooltipFrame, 0.125, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(TooltipFrame, true)
@@ -184,7 +155,7 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 
 					set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
 
-					if GetLocalPlayer() == GetTriggerPlayer() then
+					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
 						call BlzFrameSetSize(TooltipFrame, 0.23, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(TooltipFrame, true)
@@ -211,13 +182,13 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 						set ToolTipS = ToolTipS + "|n|n|cffd4954dIncome|r: " + I2S(Income[SelectedUnitPid[PlID]])
 					endif
 
-					if GetTriggerPlayer() != GetOwningPlayer(SpellU) then
+					if p != GetOwningPlayer(SpellU) then
 						set ToolTipS = ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(Player(SelectedUnitPid[PlID]), PLAYER_STATE_RESOURCE_GOLD))
 						set ToolTipS = ToolTipS + "|n|cff41e400Lumber|r: " + I2S(GetPlayerState(Player(SelectedUnitPid[PlID]), PLAYER_STATE_RESOURCE_LUMBER))
 						set ToolTipS = ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[SelectedUnitPid[PlID]]))
 					endif
 
-					if GetLocalPlayer() == GetTriggerPlayer() then
+					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame,GetPlayerNameColour(GetOwningPlayer(SpellU)) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(SpellU)))
 						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 						call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
@@ -245,7 +216,7 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 							//set ToolTipS = ToolTipS + "|n|cffd0ff00Additional bonus|r: " + R2SW((100 * GetUnitAbsoluteEffective(SpellU, i1)), 1, 1) + "|cffd0ff00%|r"
 						endif
 
-						if GetLocalPlayer() == GetTriggerPlayer() then	
+						if GetLocalPlayer() == p then	
 							call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 ))
 							call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 							call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
@@ -256,7 +227,7 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 						set i3 = roundAbilities[NumButton - 100]
 						set ToolTipS = BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 )
 
-						if GetLocalPlayer() == GetTriggerPlayer() then	
+						if GetLocalPlayer() == p then	
 							call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 ))
 							call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 							call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
@@ -266,13 +237,14 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 				endif
 			elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_LEAVE then
 
-				if GetLocalPlayer() == GetTriggerPlayer() then	
+				if GetLocalPlayer() == p then	
 					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 					call BlzFrameSetVisible(TooltipFrame, false)
 				endif
 			endif
 
 			set SpellU = null
+			set p = null
 		endfunction
 
 		function CreateIconWorld takes integer NumAb, string Icon, real x,real y,real size returns nothing
@@ -343,14 +315,6 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 			call CreateIconWorld(118 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 8 * sizeAbil , - 2 * sizeAbil , sizeAbil)
 			call CreateIconWorld(119 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 9 * sizeAbil , - 2 * sizeAbil , sizeAbil)
 			call CreateIconWorld(120 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 + 10 * sizeAbil , - 2 * sizeAbil , sizeAbil)
-
-			set TooltipFrame = BlzCreateFrame("TooltipText", GameUI  , 0, 0)
-			set TooltipTitleFrame = BlzGetFrameByName("TooltipTextTitle", 0)
-			set TooltipTextFrame = BlzGetFrameByName("TooltipTextValue", 0)
-        
-			call BlzFrameSetSize(TooltipFrame, 0.29, 0.03)
-			call BlzFrameSetPoint(TooltipFrame, FRAMEPOINT_BOTTOMRIGHT, GameUI, FRAMEPOINT_BOTTOMRIGHT, TooltipX, TooltipY)
-			call BlzFrameSetVisible(TooltipFrame, false )   
 		endfunction
 
 		//===========================================================================
@@ -358,8 +322,6 @@ library IconFrames initializer init requires RandomShit, CustomState, GetObjectE
 			local trigger trg = CreateTrigger()
 			call TriggerRegisterTimerEventSingle( trg, 1.00 )
 			call TriggerAddAction( trg, function Trig_ABIL_TAKE_Actions )
-
-			set TooltipYSize = Table.create()
 			set trg = null
 		endfunction
 	endlibrary
