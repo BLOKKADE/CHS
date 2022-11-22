@@ -286,6 +286,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     endfunction
     
     function InitializeDuelGame takes DuelGame duelGame returns nothing
+        set duelGame.isInitialized = true
         call InitializeFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.getDuelArena())
     endfunction
 

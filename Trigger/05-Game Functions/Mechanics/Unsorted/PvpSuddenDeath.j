@@ -124,7 +124,7 @@ library PvpSuddenDeathTimerWindow /*initializer init*/ requires TimerUtils
             call TimerDialogDisplay(this.timerDialog, false)
             call TimerDialogSetTitle(this.timerDialog, "Sudden Death")
             
-            if BlzForceHasPlayer(this.duelGame.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.duelGame.team2, GetLocalPlayer()) then
+            if SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.duelGame.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.duelGame.team2, GetLocalPlayer()) then
                 call TimerDialogDisplay(this.timerDialog, true)
             endif
         endmethod

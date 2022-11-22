@@ -4,15 +4,23 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
     endfunction
 
+    private function ResetCameraToCenterArenaForPlayer takes nothing returns nothing
+        local location arenaLocation = GetRectCenter(RectMidArena)
+
+        // Move camera to center arena
+        call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaLocation, 0.20)
+
+         // Cleanup
+        call RemoveLocation(arenaLocation)
+        set arenaLocation = null
+    endfunction
+
     private function ResetToCenterArenaForPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId + 1]
         local location arenaLocation = GetRectCenter(RectMidArena)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-
-        // Move camera to center arena
-        call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation, 0.20)
 
         // Revive the unit if it died
         if (IsUnitAliveBJ(playerHero)) then
@@ -176,10 +184,18 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     private function AfterDuelCleanupActions takes DuelGame duelGame returns nothing
         call TriggerSleepAction(3.00)
 
-        // Move camera to center arena, revive units, pets, items
+        // Move hero to center arena, pets, items
         call ForForce(duelGame.team1, function ResetToCenterArenaForPlayer)
         call ForForce(duelGame.team2, function ResetToCenterArenaForPlayer)
         
+        // Move camera depending on game mode
+        if (SimultaneousDuelMode == 2) then
+            call ForForce(duelGame.team1, function ResetCameraToCenterArenaForPlayer)
+            call ForForce(duelGame.team2, function ResetCameraToCenterArenaForPlayer)
+        else
+            call ForForce(GetPlayersAll(), function ResetCameraToCenterArenaForPlayer)
+        endif
+
         // Reset to the items to before the duels
         call ForForce(duelGame.team1, function ResetItemsForPlayer)
         call ForForce(duelGame.team2, function ResetItemsForPlayer)
@@ -282,6 +298,13 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call DisplayNemesisNames()
             call TriggerSleepAction(15.00)
 
+            // Play the horn noise for everyone if it is a non-simultaneous duel
+            if (startNonSimultaneousOddDuel) then
+                call PlaySoundBJ(udg_sound08) // Horn noise for everyone!
+            elseif (GetLocalPlayer() == randomOddDuelPlayer or GetLocalPlayer() == Player(OddPlayer)) then
+                call PlaySoundBJ(udg_sound08) // Horn noise for just the odd duel!
+            endif
+
             // Start the next fight
             call InitializeDuelGame(GetNextDuel())
             call StartDuels()
@@ -333,8 +356,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
             call StartTimerBJ(GetLastCreatedTimerBJ(), false, 3.00)
             call TriggerSleepAction(3.00)
+            call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
 
             // Start the next fight
+            call PlaySoundBJ(udg_sound08) // Horn noise for everyone!
             call InitializeDuelGame(GetNextDuel())
             call StartDuels()
         // Duels are not over but this duel is over, send them to the center

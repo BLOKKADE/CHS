@@ -70,6 +70,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         force team1
         force team2
         boolean isDuelOver
+        boolean isInitialized
         boolean team1Won
         boolean fightStarted
         SuddenDeath suddenDeath
@@ -95,7 +96,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
                 exitwhen node == 0
                 set currentDuelGame = node.data
 
-                if (not currentDuelGame.fightStarted) then
+                if (currentDuelGame.isInitialized and (not currentDuelGame.fightStarted)) then
                     call currentDuelGame.startCountdown()
                 endif
 
@@ -111,7 +112,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
                 exitwhen node == 0
                 set currentDuelGame = node.data
 
-                if (not currentDuelGame.fightStarted) then
+                if (currentDuelGame.isInitialized and (not currentDuelGame.fightStarted)) then
                     call currentDuelGame.setupPrepareTimer()
                 endif
 
@@ -127,7 +128,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
                 exitwhen node == 0
                 set currentDuelGame = node.data
 
-                if (not currentDuelGame.fightStarted) then
+                if (currentDuelGame.isInitialized and (not currentDuelGame.fightStarted)) then
                     set currentDuelGame.fightStarted = true
 
                     call currentDuelGame.suddenDeath.start()
@@ -248,7 +249,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call TimerDialogDisplay(this.NextPvpBattleDialog, false)
             call TimerDialogSetTitle(this.NextPvpBattleDialog, "Next PvP Battle ...")
             
-            if BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+            if SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
                 call TimerDialogDisplay(this.NextPvpBattleDialog, true)
             endif
         endmethod
@@ -262,9 +263,12 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call TimerDialogDisplay(this.DuelPrepareDialog, false)
             call TimerDialogSetTitle(this.DuelPrepareDialog, "Prepare ...")
 
-            if SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+            // Show the dialog for everyone if this is not simulataneous duels
+            if SimultaneousDuelMode == 1 then
                 call TimerDialogDisplay(this.DuelPrepareDialog, true)
-                call PlaySoundBJ(udg_sound08) // Horn noise!
+            // Only show the dialog and play the noise for the team2 if simultaneous duels
+            elseif BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+                call TimerDialogDisplay(this.DuelPrepareDialog, true)
             endif
         endmethod
 
@@ -314,6 +318,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             set this.isDuelOver = false
             set this.team1Won = false
             set this.fightStarted = false
+            set this.isInitialized = false
             set this.currentCountdown = 5
 
             return this
