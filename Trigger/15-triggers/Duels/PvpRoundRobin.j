@@ -288,7 +288,9 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 
                     set this.currentCountdown = this.currentCountdown - 1
 
-                    call PlaySoundBJ(udg_sound09) // Ticking noise
+                    if BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+                        call PlaySoundBJ(udg_sound09) // Ticking noise
+                    endif
                 endif
             else
                 call this.stopPeriodic()
