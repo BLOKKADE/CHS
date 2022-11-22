@@ -285,11 +285,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         if (startSimultaneousOddDuel or startNonSimultaneousOddDuel) then
             set OddPlayerDuelStarted = true
 
-            call AfterDuelCleanupActions(duelGame)
-
             // Create a new duel using a random loser
             set randomOddDuelPlayer = ForcePickRandomPlayer(DuelLosers)
             set oddDuelGame = AddOddPlayerDuel(randomOddDuelPlayer)
+
+            call AfterDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle for the odd player
             call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "|cffff0000Odd player amount detected. Starting duel for odd player out!|r")

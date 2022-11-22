@@ -112,9 +112,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
         // Determine the spawn offset
         if (SpawnLeft) then
-            set spawnOffset = OffsetLocation(arenaCenter, -500.00,0)
+            set spawnOffset = OffsetLocation(arenaCenter, -500.00, 0)
         else
-            set spawnOffset = OffsetLocation(arenaCenter, 500.00,0)
+            set spawnOffset = OffsetLocation(arenaCenter, 500.00, 0)
         endif
 
         // Actually move the unit
