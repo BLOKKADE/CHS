@@ -83,6 +83,25 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         private timerdialog NextPvpBattleDialog
 
         private integer arenaIndex
+        private integer currentCountdown
+        private integer startTick
+        private integer nextTick
+
+        static method startCountdowns takes nothing returns nothing
+            local IntegerListItem node = DuelGameList.first
+            local DuelGame currentDuelGame
+
+            loop
+                exitwhen node == 0
+                set currentDuelGame = node.data
+
+                if (not currentDuelGame.fightStarted) then
+                    call currentDuelGame.startCountdown()
+                endif
+
+                set node = node.next
+            endloop
+        endmethod
 
         static method showPrepareTimerDialogs takes nothing returns nothing
             local IntegerListItem node = DuelGameList.first
@@ -248,6 +267,38 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             endif
         endmethod
 
+        private method periodic takes nothing returns nothing
+            local location arenaCenter
+
+            if this.currentCountdown > 0 then
+                if T32_Tick > this.nextTick then
+                    set this.nextTick = T32_Tick + 32
+
+                    set arenaCenter = GetRectCenter(this.getDuelArena())
+
+                    // Display the number
+                    call CreateTextTagLocBJ(I2S(this.currentCountdown) + " ...", arenaCenter, 0.00, 40.00, 100, I2R(this.currentCountdown * 20), I2R(this.currentCountdown * 20), 0)
+                    call SetTextTagPermanentBJ(GetLastCreatedTextTag(), false)
+                    call SetTextTagFadepointBJ(GetLastCreatedTextTag(), 0.80)
+                    call SetTextTagLifespanBJ(GetLastCreatedTextTag(), 1.00)
+
+                    // Cleanup
+                    call RemoveLocation(arenaCenter)
+                    set arenaCenter = null
+
+                    set this.currentCountdown = this.currentCountdown - 1
+                endif
+            else
+                call this.stopPeriodic()
+            endif
+        endmethod 
+
+        method startCountdown takes nothing returns nothing
+            set this.startTick = T32_Tick
+            set this.nextTick = T32_Tick + 32
+            call this.startPeriodic()
+        endmethod
+
         static method create takes force team1, force team2, integer arenaIndex returns thistype
             local thistype this = thistype.setup()
 
@@ -258,12 +309,9 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             set this.isDuelOver = false
             set this.team1Won = false
             set this.fightStarted = false
+            set this.currentCountdown = 5
 
             return this
-        endmethod
-
-        method cleanupSuddenDeath takes nothing returns nothing
-            call this.suddenDeath.destroy()
         endmethod
 
         method destroy takes nothing returns nothing
@@ -278,6 +326,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call this.recycle()
         endmethod
 
+        implement T32x
         implement Recycle
     endstruct
 

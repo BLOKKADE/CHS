@@ -265,10 +265,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call DuelGame.showPrepareTimerDialogs()
 
         // Run the countdown timer
-        call TriggerSleepAction(4.50)
-        set CountdownCount = 5
-        call ConditionalTriggerExecute(PvpCountdownTimerTrigger)
-        call TriggerSleepAction(5.50)
+        call TriggerSleepAction(3.50)
+        call DuelGame.startCountdowns()
+        call TriggerSleepAction(6.50)
         set AllowBetSelection = false
 
         // Hide all dialogs

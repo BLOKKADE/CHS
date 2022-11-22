@@ -172,21 +172,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call FunWinner(GetEnumUnit())
     endfunction
 
-    private function RemoveItemsForAllArenas takes nothing returns nothing
-        local integer playerArenaIndex = 1
-
-        loop
-            exitwhen playerArenaIndex > 8
-            call EnumItemsInRectBJ(PlayerArenaRects[playerArenaIndex], function RemoveItemFromArena)
-            set playerArenaIndex = playerArenaIndex + 1
-        endloop
-    endfunction
-
     // This function should only be called when all initial duels are over
-    private function AfterAllDuelCleanupActions takes DuelGame duelGame returns nothing
-        // Cleanup all arenas
-        call RemoveItemsForAllArenas()
-
+    private function AfterDuelCleanupActions takes DuelGame duelGame returns nothing
         call TriggerSleepAction(3.00)
 
         // Move camera to center arena, revive units, pets, items
@@ -203,7 +190,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call TriggerSleepAction(2.00)
 
         // Removes all non heroes/hops/dummy units
-        call RemoveUnitsInRect(bj_mapInitialPlayableArea)
+        call EnumItemsInRectBJ(duelGame.getDuelArena(), function RemoveItemFromArena)
+        call RemoveUnitsInRect(duelGame.getDuelArena())
     endfunction
 
     function PvpHeroDeathActions takes nothing returns nothing
@@ -242,8 +230,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForForce(duelGame.team1, function DuelEndedPlayerActions)
             call ForForce(duelGame.team2, function DuelEndedPlayerActions)
             
-            call duelGame.cleanupSuddenDeath()
-
             // Only display a message to everyone when this duel is completely over
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
 
@@ -283,7 +269,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         if (startSimultaneousOddDuel or startNonSimultaneousOddDuel) then
             set OddPlayerDuelStarted = true
 
-            call AfterAllDuelCleanupActions(duelGame)
+            call AfterDuelCleanupActions(duelGame)
 
             // Create a new duel using a random loser
             set randomOddDuelPlayer = ForcePickRandomPlayer(DuelLosers)
@@ -305,7 +291,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             set randomOddDuelPlayer = null
         // All duels are over, no odd player
         elseif (DuelGame.areAllDuelsOver()) then
-            call AfterAllDuelCleanupActions(duelGame)
+            call AfterDuelCleanupActions(duelGame)
             call EnumItemsInRectBJ(RectMidArena, function RemoveItemFromArena) // Remove items from center arena when all duels are done
 
             // Reward glory and stuff
@@ -342,7 +328,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call TriggerExecute(udg_trigger109) // Start the next normal level
         // Check if all single pvp rounds are over
         elseif (SimultaneousDuelMode == 1 and DuelGameListRemaining.size() > 0) then
-            call AfterAllDuelCleanupActions(duelGame)
+            call AfterDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
@@ -356,18 +342,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Duels are not over but this duel is over, send them to the center
         // We need this trigger sleep later because it will cause race conditions when checking if all duels are complete
         else
-            call TriggerSleepAction(3.00)
-
-            // Move camera to center arena, revive units, pets, items
-            call ForForce(duelGame.team1, function ResetToCenterArenaForPlayer)
-            call ForForce(duelGame.team2, function ResetToCenterArenaForPlayer)
-
-            // Reset to the items to before the duels
-            call ForForce(duelGame.team1, function ResetItemsForPlayer)
-            call ForForce(duelGame.team2, function ResetItemsForPlayer)
-
-            // Remove the arena from used arenas so it can be used again
-            call duelGame.removeUsedArena()
+            call AfterDuelCleanupActions(duelGame)
         endif
     endfunction
 
