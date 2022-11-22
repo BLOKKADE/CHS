@@ -284,7 +284,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
             // Start the next fight
             call InitializeDuelGame(GetNextDuel())
-            call PlaySoundBJ(udg_sound08) // Horn noise!
             call StartDuels()
 
             // Cleanup
@@ -337,7 +336,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
             // Start the next fight
             call InitializeDuelGame(GetNextDuel())
-            call PlaySoundBJ(udg_sound08) // Horn noise!
             call StartDuels()
         // Duels are not over but this duel is over, send them to the center
         // We need this trigger sleep later because it will cause race conditions when checking if all duels are complete

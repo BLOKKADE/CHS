@@ -262,8 +262,9 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call TimerDialogDisplay(this.DuelPrepareDialog, false)
             call TimerDialogSetTitle(this.DuelPrepareDialog, "Prepare ...")
 
-            if BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+            if SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
                 call TimerDialogDisplay(this.DuelPrepareDialog, true)
+                call PlaySoundBJ(udg_sound08) // Horn noise!
             endif
         endmethod
 
@@ -288,7 +289,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 
                     set this.currentCountdown = this.currentCountdown - 1
 
-                    if BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+                    if SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
                         call PlaySoundBJ(udg_sound09) // Ticking noise
                     endif
                 endif
