@@ -1,16 +1,16 @@
 library PvpRoundRobin requires ListT, ForceHelper, VotingResults
-/*
-Round robin style tournament for more info see: https://en.wikipedia.org/wiki/Round-robin_tournament#Circle_method
-PlayerList = list of player ids that is moved around round robin style
-DuelGameList = each duel that will be held for the next round
-TemPlayerLimit = the amount of players per team for duels
-OddPlayer = set to a player number if there's an odd amount of player
+    /*
+        Round robin style tournament for more info see: https://en.wikipedia.org/wiki/Round-robin_tournament#Circle_method
+        PlayerList = list of player ids that is moved around round robin style
+        DuelGameList = each duel that will be held for the next round
+        TemPlayerLimit = the amount of players per team for duels
+        OddPlayer = set to a player number if there's an odd amount of player
 
 
-Run UpdatePlayerCount() before duels to update the PlayerList and make sure only surviving player ids are in it
-Run MoveRoundRobin() before duels after ^ (except first duels round) to move the ids in PlayerList around
-refer to GetNextDuel to get the DuelGame struct for the next duel
-*/
+        Run UpdatePlayerCount() before duels to update the PlayerList and make sure only surviving player ids are in it
+        Run MoveRoundRobin() before duels after ^ (except first duels round) to move the ids in PlayerList around
+        refer to GetNextDuel to get the DuelGame struct for the next duel
+    */
 
     globals
         private boolean initialised = false
@@ -242,7 +242,7 @@ refer to GetNextDuel to get the DuelGame struct for the next duel
             set this.DuelPrepareDialog = CreateTimerDialog(this.DuelPrepareTimer)
             call TimerDialogDisplay(this.DuelPrepareDialog, false)
             call TimerDialogSetTitle(this.DuelPrepareDialog, "Prepare ...")
-            
+
             if BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
                 call TimerDialogDisplay(this.DuelPrepareDialog, true)
             endif
