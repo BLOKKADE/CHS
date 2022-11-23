@@ -302,9 +302,9 @@ library OldInitialization initializer main3
         trigger ModifyCreepAbilitiesTrigger= null
         trigger CreepPowerAndHpTrigger= null
         trigger CreepAutoCastTrigger= null
-        trigger udg_trigger102= null
+        trigger CreepDiesTrigger= null
         trigger udg_trigger103= null
-        trigger udg_trigger104= null
+        trigger CreepTypesTrigger= null
         trigger udg_trigger105= null
         trigger udg_trigger106= null
         trigger udg_trigger107= null

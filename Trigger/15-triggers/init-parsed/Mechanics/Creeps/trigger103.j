@@ -286,7 +286,7 @@ library trigger103 initializer init requires RandomShit, Functions
         set RoundCreepInfo[6] = ""
         set RoundCreepInfo[7] = ""
         call DisableTrigger(GetTriggeringTrigger())
-        call ConditionalTriggerExecute(udg_trigger104)
+        call ConditionalTriggerExecute(CreepTypesTrigger)
         call ResetRoundAbilities()
         if RoundNumber < 15 then
             set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1,MaxCreepUnitTypes - 2)]
