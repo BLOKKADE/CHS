@@ -401,7 +401,7 @@ library trigger103 initializer init requires RandomShit, Functions
                 if (GetPlayerSlotState(Player(playerId)) != PLAYER_SLOT_STATE_EMPTY and IsPlayerInForce(Player(playerId), DefeatedPlayers) != true) then
                     set arenaCenter = GetRectCenter(PlayerArenaRects[playerId + 1])
                     set unitSpawnOffset = OffsetLocation(arenaCenter, GetRandomReal(-600.00, 600.00), GetRandomReal(-600.00, 600.00))
-                    set creep = CreateUnitAtLoc(Player(11), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
+                    set creep = CreateUnitAtLocSaveLast(Player(11), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
 
                     call GroupAddUnitSimple(creep, RoundCreeps)
     
