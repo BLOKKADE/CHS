@@ -28,6 +28,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		set uniqueDiff = IMinBJ(itemCount, 1) - UniqueItemCount[hid].integer[itemId]
 		set UniqueItemCount[hid].integer[itemId] = IMinBJ(itemCount, 1)
 
+		if pid == 0 and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
+			call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u))
+			call BJDebugMsg("ic: " + I2S(itemCount) + "- prevc: " + I2S(prevCount) + " = " + I2S(diff) + ". icMin: " + I2S(IMinBJ(itemCount, 1)) + "- prevUicMin: " + I2S(UniqueItemCount[hid].integer[itemId]) + " = " + I2S(uniqueDiff))
+
+		endif
+
 		if IsItemReplaceable(itemId) and ev == EVENT_ITEM_PICKUP then
 			call SetItemReplaced(GetHandleId(it))
 			call RemoveItem(it)
