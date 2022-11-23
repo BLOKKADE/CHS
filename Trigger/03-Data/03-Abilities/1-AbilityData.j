@@ -984,9 +984,9 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityNotReplaceable()
 
         //164 - Blink Strike 
-        call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
+        /*call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
         call SetLastObjectElement(Element_Wind, 1)
-        call SetLastObjectElement(Element_Arcane, 1)
+        call SetLastObjectElement(Element_Arcane, 1)*/
 
         //165 - Extradimensional Co-operation
         call SaveAbilData(EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, EXTRADIMENSIONAL_CO_OPERATIO_ITEM_ID, false, 0, 0, true, Order_Instant, "absorb")
