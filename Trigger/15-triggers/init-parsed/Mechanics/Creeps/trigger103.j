@@ -498,8 +498,8 @@ library trigger103 initializer init requires RandomShit, Functions
     
                     call SetUnitScalePercent(GetLastCreatedUnit(),(85.00 +((I2R(RoundNumber)- 1.00)* 0.50)),100,100)
                     call UnitAddNewAbilities(GetLastCreatedUnit())
-                    call ConditionalTriggerExecute(udg_trigger99)
-                    call ConditionalTriggerExecute(udg_trigger100)
+                    call ConditionalTriggerExecute(ModifyCreepAbilitiesTrigger)
+                    call ConditionalTriggerExecute(CreepPowerAndHpTrigger)
                     call SetUnitMoveSpeed(GetLastCreatedUnit(),I2R(RoundCreepMoveSpeed))
                     call SetUnitAbilityLevelSwapped('A000',GetLastCreatedUnit(),(R2I(RoundCreepPower)/ 2))
                     call SetUnitAbilityLevelSwapped('A002',GetLastCreatedUnit(),RoundCreepMaxAttackSpeed)

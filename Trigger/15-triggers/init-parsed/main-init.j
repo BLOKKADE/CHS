@@ -298,10 +298,10 @@ library OldInitialization initializer main3
         trigger udg_trigger95= null
         trigger udg_trigger96= null
         trigger udg_trigger97= null
-        trigger udg_trigger98= null
-        trigger udg_trigger99= null
-        trigger udg_trigger100= null
-        trigger udg_trigger101= null
+        trigger CreepPeriodicAttackTrigger= null
+        trigger ModifyCreepAbilitiesTrigger= null
+        trigger CreepPowerAndHpTrigger= null
+        trigger CreepAutoCastTrigger= null
         trigger udg_trigger102= null
         trigger udg_trigger103= null
         trigger udg_trigger104= null

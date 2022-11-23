@@ -116,7 +116,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call PlaySoundBJ(udg_sound01)
         call ForGroupBJ(udg_group05,function Trig_Start_Level_Func018A)
         call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartFunctionSpells)
-        call ConditionalTriggerExecute(udg_trigger98)
+        call ConditionalTriggerExecute(CreepPeriodicAttackTrigger)
         set SuddenDeathTick = 0
         set RoundStartTick = T32_Tick
         call EnableTrigger(udg_trigger110)
