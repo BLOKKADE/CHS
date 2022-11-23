@@ -293,16 +293,6 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageTarget, ANCIENT_BLOOD_ABILITY_ID)
         if i1 > 0 then
             call ActivateAncientBlood(DamageTarget, i1)
-        endif
-
-        //Centuar Archer passive
-        if DamageSourceTypeId == CENTAUR_ARCHER_UNIT_ID and Damage.index.isAttack then
-            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08T') <= 0 then
-                call AbilStartCD(DamageSource, 'A08T', 2)
-                call ElemFuncStart(DamageSource,CENTAUR_ARCHER_UNIT_ID)
-                set Damage.index.damage = Damage.index.damage + (BlzGetUnitMaxHP(DamageTarget) * 0.06) + (Damage.index.damage * (1 + (0.05 * GetHeroLevel(DamageSource))))
-                call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", DamageTarget, "chest"))
-            endif
         endif  
 
         //Frost Circlet
@@ -356,14 +346,6 @@ scope ModifyDamageBeforeArmor initializer init
             endloop
             //call BJDebugMsg("st bonus: " + R2S(1 + r1))
             set Damage.index.damage = Damage.index.damage * (1 + r1)
-        endif
-
-        //Cruelty
-        set i1 = GetUnitAbilityLevel(DamageSource,CRUELTY_ABILITY_ID)
-        if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL and BlzGetUnitAbilityCooldownRemaining(DamageSource,CRUELTY_ABILITY_ID) == 0 then
-            set Damage.index.damage = Damage.index.damage + Damage.index.damage*(0.5 + (0.1 * i1))
-            call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", DamageTarget, "chest"))
-            call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 3)
         endif
 
         //Absolute Poison
