@@ -310,8 +310,9 @@ library PlayerTracking initializer init requires OldInitialization
 
         private method tryIncrementValue takes integer currentValue, string valueName returns integer 
             if (currentValue >= MAX_SAVE_VALUE) then
-                call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"You have maxed out " + valueName + " at " + I2S(MAX_SAVE_VALUE))
-                call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"Please consider stepping outside for a bit")
+                // TODO maybe reenable one day
+                // call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"You have maxed out " + valueName + " at " + I2S(MAX_SAVE_VALUE))
+                // call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"Please consider stepping outside for a bit")
 
                 return currentValue
             endif
