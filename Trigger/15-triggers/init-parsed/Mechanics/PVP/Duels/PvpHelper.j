@@ -292,6 +292,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
     function ResetPvpState takes nothing returns nothing
         set OddPlayerDuelStarted = false
+        call GroupClear(DuelingHeroGroup) // Don't know the exact purpose of this one
         call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
         call GroupClear(DuelWinners) // DuelWinners keeps track of all heroes that won
         call GroupClear(DuelWinnerDisabled) // DuelWinnerDisabled keeps track of all heroes that won and is used to prevent them from casting spells in other libraries

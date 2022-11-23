@@ -103,6 +103,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
         endif
 
+        call GroupRemoveUnit(DuelingHeroGroup, playerHero)
         call GroupRemoveUnit(DuelingHeroes, playerHero)
         call SetUnitInvulnerable(playerHero, true)
         
@@ -123,6 +124,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
         endif
 
+        call GroupRemoveUnit(DuelingHeroGroup, playerHero)
         call GroupRemoveUnit(DuelingHeroes, playerHero)
 
         // Mark that they player is not fighting
