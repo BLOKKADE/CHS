@@ -112,7 +112,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus, Voti
                     return
                 endif
             endif
-            call ConditionalTriggerExecute(udg_trigger103)
+            call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")
             set NextRound[round] = true
             if(RoundNumber <= 3)then

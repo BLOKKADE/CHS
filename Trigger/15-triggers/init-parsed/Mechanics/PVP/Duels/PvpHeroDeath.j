@@ -342,7 +342,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ResetPvpState()
             
             // Go to the next basic level
-            call ConditionalTriggerExecute(udg_trigger103) // Setup creeps for next wave
+            call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger) // Setup creeps for next wave
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
             call StartTimerBJ(GetLastCreatedTimerBJ(), false, 30)
             call TriggerSleepAction(30.00)

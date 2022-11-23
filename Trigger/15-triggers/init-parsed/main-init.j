@@ -106,7 +106,7 @@ library OldInitialization initializer main3
         integer SuddenDeathTick= 0
         dialog udg_dialog04= null
         button array udg_buttons03
-        group udg_group05= null
+        group RoundCreeps= null
         integer udg_integer40= 0
         boolean udg_boolean09= false
         integer udg_integer41= 0
@@ -303,7 +303,7 @@ library OldInitialization initializer main3
         trigger CreepPowerAndHpTrigger= null
         trigger CreepAutoCastTrigger= null
         trigger CreepDiesTrigger= null
-        trigger udg_trigger103= null
+        trigger GenerateNextCreepLevelTrigger= null
         trigger CreepTypesTrigger= null
         trigger udg_trigger105= null
         trigger udg_trigger106= null
@@ -594,7 +594,7 @@ library OldInitialization initializer main3
         set GameModeShort = false
         set SuddenDeathTick = 0
         set udg_dialog04 = DialogCreate()
-        set udg_group05 = CreateGroup()
+        set RoundCreeps = CreateGroup()
         set udg_integer40 = 0
         set udg_boolean09 = false
         set udg_integer41 = 0
@@ -793,7 +793,7 @@ library OldInitialization initializer main3
         set GameModeShort = false
         set SuddenDeathTick = 0
         set udg_dialog04 = DialogCreate()
-        set udg_group05 = CreateGroup()
+        set RoundCreeps = CreateGroup()
         set udg_integer40 = 0
         set udg_boolean09 = false
         set udg_integer41 = 0
@@ -1061,6 +1061,6 @@ library OldCodeInit
         call ConditionalTriggerExecute(udg_trigger89)
         call ConditionalTriggerExecute(udg_trigger91)
         call ConditionalTriggerExecute(udg_trigger92)
-        call ConditionalTriggerExecute(udg_trigger103)
+        call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
     endfunction                                                 
 endlibrary

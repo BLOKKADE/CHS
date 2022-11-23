@@ -114,7 +114,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call DebugCode_SavePlayerDebugEveryone()
 
         call PlaySoundBJ(udg_sound01)
-        call ForGroupBJ(udg_group05,function Trig_Start_Level_Func018A)
+        call ForGroupBJ(RoundCreeps,function Trig_Start_Level_Func018A)
         call ForForce(GetPlayersMatching(Condition(function Trig_Start_Level_Func015Func002001001)),function StartFunctionSpells)
         call ConditionalTriggerExecute(CreepPeriodicAttackTrigger)
         set SuddenDeathTick = 0
@@ -122,7 +122,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
         call EnableTrigger(udg_trigger110)
         call StartSuddenDeathTimer()
         call EnableTrigger(udg_trigger116)
-        call EnableTrigger(udg_trigger103)
+        call EnableTrigger(GenerateNextCreepLevelTrigger)
     endfunction
 
 
