@@ -15,23 +15,8 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         set floatingtext = null
     endfunction
 
-    function Trig_Creep_Dies_Func003Func005001001002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
-    endfunction
-    
-    function Trig_Creep_Dies_Func003Func005001001002002 takes nothing returns boolean
-        return(GetOwningPlayer(GetFilterUnit())==Player(11))
-    endfunction
-    
-    function Trig_Creep_Dies_Func003Func005001001002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Creep_Dies_Func003Func005001001002001(),Trig_Creep_Dies_Func003Func005001001002002())
-    endfunction
-    
-    function Trig_Creep_Dies_Func003C takes nothing returns boolean
-        if(not(CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Creep_Dies_Func003Func005001001002)))==0))then
-            return false
-        endif
-        return true
+    private function IsAliveCreepUnitFilter takes nothing returns boolean
+        return (IsUnitAliveBJ(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
     endfunction
 
     public function Death takes unit dyingUnit, unit killingHero returns nothing
@@ -45,7 +30,8 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         local integer pid = GetPlayerId(owner)
         local real luck = GetUnitCustomState(killingHero, BONUS_LUCK)
         local integer itemCount = 0
-        
+        local group playerArenaCreeps
+
         //Creep upgrade xp bonus
         set expBounty = expBounty + BonusNeutral + BonusNeutralPlayer[pid] 
         
@@ -70,17 +56,17 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
             endif
         else
             //Pillage
-            if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
+            if (IsUnitIllusionBJ(dyingUnit) != true) and (GetUnitTypeId(dyingUnit) != 'n00T') and (GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID, killingHero)> 0) and  (IsUnitEnemy(dyingUnit, GetOwningPlayer(killingHero))) then
                 if GetRandomReal(0,100) <= 65 * luck then
-                    set pillageBonus = (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID,killingHero) * 18) * 70)/( 70 + remBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero))  )
+                    set pillageBonus = (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID, killingHero) * 18) * 70) / (70 + remBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID, killingHero)))
                     call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitY(dyingUnit)))
                     set goldBounty = goldBounty + pillageBonus
                 endif
             endif
             
             //Learnability
-            if (IsUnitIllusionBJ(dyingUnit)!=true) and (GetUnitTypeId(dyingUnit)!='n00T') and (GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID,killingHero)> 0) and  (IsUnitEnemy(dyingUnit,GetOwningPlayer(killingHero))) then
-                set expBounty = expBounty + ( 35 * GetUnitAbilityLevel(killingHero,LEARNABILITY_ABILITY_ID) * 70 )/(70 + remBon + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID))	
+            if (IsUnitIllusionBJ(dyingUnit) != true) and (GetUnitTypeId(dyingUnit) != 'n00T') and (GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID, killingHero)> 0) and  (IsUnitEnemy(dyingUnit, GetOwningPlayer(killingHero))) then
+                set expBounty = expBounty + (35 * GetUnitAbilityLevel(killingHero,LEARNABILITY_ABILITY_ID) * 70) / (70 + remBon + GetUnitAbilityLevel(killingHero,PILLAGE_ABILITY_ID))	
             endif	
         endif
         
@@ -100,7 +86,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
             if pillageBonus == 0 then
                 set expBounty = expBounty + ((2 * GetHeroLevel(killingHero)) * itemCount)
             else
-                set expBounty = expBounty + ((GetHeroLevel(killingHero)) * itemCount )
+                set expBounty = expBounty + ((GetHeroLevel(killingHero)) * itemCount)
             endif
         endif
 
@@ -112,7 +98,9 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif*/
 
         //Creep bounty
-        if (Trig_Creep_Dies_Func003C()) then
+        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(owner)], Condition(function IsAliveCreepUnitFilter))
+
+        if (CountUnitsInGroup(playerArenaCreeps) == 0) then
             set goldBounty = goldBounty + udg_integer59 + udg_integer61
         else
             set goldBounty = goldBounty + udg_integer59
@@ -128,20 +116,27 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         
         call BountyText(killingHero, dyingUnit, goldBounty)
         call SetPlayerState(owner, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(owner, PLAYER_STATE_RESOURCE_GOLD) + goldBounty)
-        call AddHeroXP (killingHero, expBounty, true)
+        call AddHeroXP(killingHero, expBounty, true)
         call ResourseRefresh(owner)
         //call BJDebugMsg("creep death")
+
+        // Cleanup
+        call DestroyGroup(playerArenaCreeps)
+        set playerArenaCreeps = null
         set owner = null
     endfunction
 
     //To make Midas Touch work on all summons
     public function NonCreepDeath takes unit dyingUnit, unit killingHero returns nothing
         local real bonus = 1
+
         set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
         call CreepDeath_BountyText(killingHero, dyingUnit, GetMidasTouch(GetHandleId(dyingUnit)).bonus)
+        
         if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemType(killingHero, 'I05A') then
             set bonus = CgBonus
         endif
+
         call SetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(GetOwningPlayer(killingHero), PLAYER_STATE_RESOURCE_GOLD) + R2I(GetMidasTouch(GetHandleId(dyingUnit)).bonus * bonus))
         set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
         //call BJDebugMsg("non creep death")
@@ -151,13 +146,15 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         if GetOwningPlayer(GetDyingUnit()) != Player(11) and IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == false and GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
             call NonCreepDeath(GetDyingUnit(), PlayerHeroes[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1])
         endif
+
         return false
     endfunction
 
     private function init takes nothing returns nothing
         local trigger trg = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(trg,EVENT_PLAYER_UNIT_DEATH)
+        call TriggerRegisterAnyUnitEventBJ(trg, EVENT_PLAYER_UNIT_DEATH)
         call TriggerAddCondition(trg, Condition(function SummonDeath))
         set trg = null
     endfunction
+
 endlibrary

@@ -151,7 +151,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
     endfunction
 
     //removes random abiltiy shop from ar mode
-    function Trig_Dialog_Complete_Func010Func004A takes nothing returns nothing
+    function RemoveRandomAbilityShop takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction
 
@@ -225,6 +225,8 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
 
 
     function Trig_Dialog_Complete_Actions takes nothing returns nothing
+        local group randomAbilityShops
+
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call DisableTrigger(GetTriggeringTrigger())
         set ModeDescriptionBuilder[0]= ""
@@ -319,13 +321,25 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
             set ModeDescriptionBuilder[1]= "Type: Pick Abilities"
             set AbilityMode = 1
-            call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
+
+            set randomAbilityShops = GetUnitsOfTypeIdAll('n016')
+            call ForGroup(randomAbilityShops, function RemoveRandomAbilityShop)
+
+            // Cleanup
+            call DestroyGroup(randomAbilityShops)
+            set randomAbilityShops = null
         elseif AbilityMode == 3 then // Draft abilities
             set ArNotLearningAbil = false
             set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
             set ModeDescriptionBuilder[1]= "Type: Draft Abilities"
             set AbilityMode = 2
-            call ForGroupBJ(GetUnitsOfTypeIdAll('n016'),function Trig_Dialog_Complete_Func010Func004A)
+
+            set randomAbilityShops = GetUnitsOfTypeIdAll('n016')
+            call ForGroup(randomAbilityShops, function RemoveRandomAbilityShop)
+            
+            // Cleanup
+            call DestroyGroup(randomAbilityShops)
+            set randomAbilityShops = null
         endif
 
         // Hero mode settings
