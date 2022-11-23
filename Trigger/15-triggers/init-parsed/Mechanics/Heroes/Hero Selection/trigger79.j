@@ -146,7 +146,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         call FunctionStartUnit(hero) 
     
         call BlzSetHeroProperName( hero, GetPlayerNameNoTag( GetPlayerName(GetOwningPlayer(hero)   )))
-        call ConditionalTriggerExecute(udg_trigger130)
+        call ConditionalTriggerExecute(SpacebarCameraTrigger)
             
         // Try to load the code for the player
         call LoadCommand_AutoLoadPlayerSaveCode(udg_player02)

@@ -235,7 +235,7 @@ library OldInitialization initializer main3
         trigger udg_trigger32= null
         trigger udg_trigger33= null
         trigger udg_trigger34= null
-        trigger udg_trigger35= null
+        trigger WispActionsTrigger= null
         trigger udg_trigger36= null
         trigger udg_trigger37= null
         trigger udg_trigger38= null
@@ -329,7 +329,7 @@ library OldInitialization initializer main3
         trigger udg_trigger127= null
         trigger udg_trigger128= null
         trigger udg_trigger129= null
-        trigger udg_trigger130= null
+        trigger SpacebarCameraTrigger= null
         trigger udg_trigger131= null
         trigger udg_trigger132= null
         trigger udg_trigger133= null
