@@ -26,13 +26,17 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		call SaveInteger(HTi, hid, itemId,itemCount)
 		set diff = itemCount - prevCount
 		set uniqueDiff = IMinBJ(itemCount, 1) - UniqueItemCount[hid].integer[itemId]
-		set UniqueItemCount[hid].integer[itemId] = IMinBJ(itemCount, 1)
+		
 
 		if pid == 0 and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
-			call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u))
-			call BJDebugMsg("ic: " + I2S(itemCount) + "- prevc: " + I2S(prevCount) + " = " + I2S(diff) + ". icMin: " + I2S(IMinBJ(itemCount, 1)) + "- prevUicMin: " + I2S(UniqueItemCount[hid].integer[itemId]) + " = " + I2S(uniqueDiff))
-
+			if ev == EVENT_ITEM_DROP then
+				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item drop")
+			else
+				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item pickup")
+			endif
+			call BJDebugMsg("ic: " + I2S(itemCount) + "- pic: " + I2S(prevCount) + " = " + I2S(diff) + ". UicMin: " + I2S(IMinBJ(itemCount, 1)) + "- prUicMin: " + I2S(UniqueItemCount[hid].integer[itemId]) + " = " + I2S(uniqueDiff))
 		endif
+		set UniqueItemCount[hid].integer[itemId] = IMinBJ(itemCount, 1)
 
 		if IsItemReplaceable(itemId) and ev == EVENT_ITEM_PICKUP then
 			call SetItemReplaced(GetHandleId(it))
