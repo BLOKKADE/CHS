@@ -24,7 +24,7 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
         endif
 
         //Incinerate
-        if LoadInteger(HT,GetHandleId(target),- 300004)+ 160 > T32_Tick then
+        if GetUnitAbilityLevel(target, 'A06L') > 0 then
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", target, "head"))
             call AreaDamage(LoadUnitHandle(HT,targetId,- 300003),GetUnitX(target),GetUnitY(target),LoadInteger(HT,targetId,- 300002),300, true, INCINERATE_ABILITY_ID, true)
         endif

@@ -530,7 +530,7 @@ scope ModifyDamageBeforeArmor initializer init
             call PoisonSpellCast(DamageSource, DamageTarget)
         endif
 
-        if IsPhysDamage() and (not IsOnHitDamage()) then
+        if IsPhysDamage() and (not IsOnHitDamage()) and DamageSourceAbility != INCINERATE_ABILITY_ID then
             //Incinerate
             set i1 = GetUnitAbilityLevel(DamageSource,INCINERATE_ABILITY_ID) + GetUnitAbilityLevel(DamageSource, 'A0C8')
             if i1 > 0 then

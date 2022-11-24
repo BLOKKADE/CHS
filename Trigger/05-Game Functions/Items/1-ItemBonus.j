@@ -32,17 +32,16 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		call SaveInteger(HTi, hid, itemId,itemCount)
 		set diff = itemCount - prevCount
 		set uniqueDiff = IMinBJ(itemCount, 1) - UniqueItemCount[hid].integer[itemId]
-		
+		set UniqueItemCount[hid].integer[itemId] = IMinTest(u, itemCount, 1)
 
-		if pid == 0 and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
+		/*if pid == 0 and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
 			if ev == EVENT_ITEM_DROP then
 				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item drop" + ", hid: " + I2S(hid))
 			else
 				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item pickup"+ ", hid: " + I2S(hid))
 			endif
 			call BJDebugMsg("ic: " + I2S(itemCount) + "- pic: " + I2S(prevCount) + " = " + I2S(diff) + ". UicMin: " + I2S(IMinBJ(itemCount, 1)) + "- prUicMin: " + I2S(UniqueItemCount[hid].integer[itemId]) + " = " + I2S(uniqueDiff))
-		endif
-		set UniqueItemCount[hid].integer[itemId] = IMinTest(u, itemCount, 1)
+		endif*/
 
 		if IsItemReplaceable(itemId) and ev == EVENT_ITEM_PICKUP then
 			call SetItemReplaced(GetHandleId(it))
