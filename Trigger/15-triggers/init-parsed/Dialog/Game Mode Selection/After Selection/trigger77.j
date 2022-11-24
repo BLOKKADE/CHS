@@ -322,7 +322,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             set ModeDescriptionBuilder[1]= "Type: Pick Abilities"
             set AbilityMode = 1
 
-            set randomAbilityShops = GetUnitsOfTypeIdAll('n016')
+            set randomAbilityShops = GetUnitsOfTypeIdAll('h00G')
             call ForGroup(randomAbilityShops, function RemoveRandomAbilityShop)
 
             // Cleanup
@@ -334,7 +334,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             set ModeDescriptionBuilder[1]= "Type: Draft Abilities"
             set AbilityMode = 2
 
-            set randomAbilityShops = GetUnitsOfTypeIdAll('n016')
+            set randomAbilityShops = GetUnitsOfTypeIdAll('h00G')
             call ForGroup(randomAbilityShops, function RemoveRandomAbilityShop)
             
             // Cleanup

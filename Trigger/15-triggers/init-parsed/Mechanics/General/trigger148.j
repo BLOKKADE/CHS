@@ -4,7 +4,7 @@ library trigger148 initializer init requires RandomShit
         if(not(ArNotLearningAbil!=true))then
             return false
         endif
-        if(not(ShopIds[HideShopsIndex]!='n016'))then
+        if(not(ShopIds[HideShopsIndex]!='h00G'))then
             return false
         endif
         return true

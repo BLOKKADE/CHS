@@ -18,7 +18,7 @@ library TempAbilSystem initializer init requires BuffLevel
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
 
         static method create takes unit source, integer abilId, real duration returns thistype
             local thistype this 
