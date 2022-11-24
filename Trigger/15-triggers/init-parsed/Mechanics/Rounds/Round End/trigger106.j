@@ -63,7 +63,7 @@ library trigger106 initializer init requires RandomShit, Functions
             endif
         endif
 
-        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, ("|cffffcc00Level Completed!"))
+        call DisplayTimedTextToPlayer(Player(pid), 0, 0, 10, ("|cffffcc00Level Completed!|r"))
         call Func_completeLevel(  PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] )
 
         //remove end round dummy

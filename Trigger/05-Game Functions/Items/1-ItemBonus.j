@@ -6,6 +6,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		private integer EVENT_ITEM_DROP = 1
 	endglobals
 
+	function IMinTest takes unit u, integer a, integer b returns integer
+		local integer new = IMinBJ(a, b)
+		call BJDebugMsg("hid: " + I2S(GetHandleId(u)) + ", a: " + I2S(a) + ", b: " + I2S(b) + ", new: " + I2S(new))
+		return new
+	endfunction
+
 	function SetupItem takes unit u, item it, integer ev returns nothing
 		local integer hid = GetHandleId(u)
 		local integer itemId = GetItemTypeId(it)
@@ -15,7 +21,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		local integer diff = 0
 		local integer uniqueDiff = 0
 		
-		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) and not IsHeroUnitId(GetUnitTypeId(u))) then
+		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) or (not IsHeroUnitId(GetUnitTypeId(u)))) then
 			return
 		endif
 
@@ -30,13 +36,13 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 		if pid == 0 and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
 			if ev == EVENT_ITEM_DROP then
-				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item drop")
+				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item drop" + ", hid: " + I2S(hid))
 			else
-				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item pickup")
+				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item pickup"+ ", hid: " + I2S(hid))
 			endif
 			call BJDebugMsg("ic: " + I2S(itemCount) + "- pic: " + I2S(prevCount) + " = " + I2S(diff) + ". UicMin: " + I2S(IMinBJ(itemCount, 1)) + "- prUicMin: " + I2S(UniqueItemCount[hid].integer[itemId]) + " = " + I2S(uniqueDiff))
 		endif
-		set UniqueItemCount[hid].integer[itemId] = IMinBJ(itemCount, 1)
+		set UniqueItemCount[hid].integer[itemId] = IMinTest(u, itemCount, 1)
 
 		if IsItemReplaceable(itemId) and ev == EVENT_ITEM_PICKUP then
 			call SetItemReplaced(GetHandleId(it))
