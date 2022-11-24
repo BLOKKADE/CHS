@@ -16,7 +16,7 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
         call DestroyGroup(playerHeroes)
         set playerHeroes = null
 
-        return playerHasNoHero == null
+        return playerHasNoHero
     endfunction
 
     private function ForcePickRandomHeroForPlayer takes nothing returns nothing
