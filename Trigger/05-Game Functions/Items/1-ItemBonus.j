@@ -1,16 +1,10 @@
 library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin
 	globals
 		hashtable HTi = InitHashtable()
-		Table UniqueItemCount
+		HashTable UniqueItemCount
 		private integer EVENT_ITEM_PICKUP = 0
 		private integer EVENT_ITEM_DROP = 1
 	endglobals
-
-	function IMinTest takes unit u, integer a, integer b returns integer
-		local integer new = IMinBJ(a, b)
-		call BJDebugMsg("hid: " + I2S(GetHandleId(u)) + ", a: " + I2S(a) + ", b: " + I2S(b) + ", new: " + I2S(new))
-		return new
-	endfunction
 
 	function SetupItem takes unit u, item it, integer ev returns nothing
 		local integer hid = GetHandleId(u)
@@ -32,7 +26,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		call SaveInteger(HTi, hid, itemId,itemCount)
 		set diff = itemCount - prevCount
 		set uniqueDiff = IMinBJ(itemCount, 1) - UniqueItemCount[hid].integer[itemId]
-		set UniqueItemCount[hid].integer[itemId] = IMinTest(u, itemCount, 1)
+		set UniqueItemCount[hid].integer[itemId] = IMinBJ(itemCount, 1)
 
 		/*if pid == 0 and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
 			if ev == EVENT_ITEM_DROP then
@@ -478,11 +472,45 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		call SecretCheck_CheckAbilitiesAndItems(u)
 	endfunction
 
+	private struct timerData
+		unit u
+		item it
+		integer ev
+	endstruct
+
+	private function OnItemChangeTimerExpire takes nothing returns nothing
+		local timer t = GetExpiredTimer()
+		local timerData data = GetTimerData(t)
+		
+		call SetupItem(data.u, data.it, data.ev)
+
+		set data.u = null
+		set data.it = null
+		call data.destroy()
+
+		call ReleaseTimer(t)
+		set t = null
+	endfunction
+
+	private function ItemChange takes integer ev returns nothing
+		local timer t = NewTimer()
+		local timerData data = timerData.create()
+		set data.u = GetTriggerUnit()
+		set data.it = GetManipulatedItem()
+		set data.ev = ev
+		call SetTimerData(t, data)
+		call TimerStart(t, 0, false, function OnItemChangeTimerExpire)
+
+		set t = null
+	endfunction
+
 	private function ItemDrop takes nothing returns nothing
+		//call ItemChange(EVENT_ITEM_DROP)
 		call SetupItem(GetTriggerUnit(), GetManipulatedItem(), EVENT_ITEM_DROP)
 	endfunction
 
 	private function ItemPickup takes nothing returns nothing
+		//call ItemChange(EVENT_ITEM_PICKUP)
 		call SetupItem(GetTriggerUnit(), GetManipulatedItem(), EVENT_ITEM_PICKUP)
 	endfunction
 
@@ -498,6 +526,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 		set trg = null
 
-		set UniqueItemCount = Table.create()
+		set UniqueItemCount = HashTable.create()
 	endfunction
 endlibrary
