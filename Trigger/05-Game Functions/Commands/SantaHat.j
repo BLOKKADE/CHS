@@ -15,11 +15,12 @@ scope SantaHat initializer init
         call EnableWeatherEffect(snow, SantaHatOn)
 
         call DisplayTextToForce(GetPlayersAll(), "|cffff6161Merry Christmas!|r")
-        
     endfunction
     
     //===========================================================================
     private function init takes nothing returns nothing
+        set snow = AddWeatherEffect(GetPlayableMapRect(), 'SNhs')
+        call EnableWeatherEffect(snow, false)
         call Command.create(CommandHandler.SantaHat).name("SantaMode").handles("santa").handles("christmas").handles("holidays").help("santa", "Toggles christmas mode.")
     endfunction
 endscope
