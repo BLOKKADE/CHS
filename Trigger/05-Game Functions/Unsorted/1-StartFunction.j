@@ -202,11 +202,11 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         if i1 > 0 then
             call ElemFuncStart(Herou,'I06J')
             set SummonDamage[pid] = SummonDamage[pid] + i1
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon Attack Bonus - [|cffffcc00Level " + I2S(SummonDamage[pid]) + "|r] - (|cff89ff52+" + I2S(SummonDamage[pid] * 3) + ")|r")
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon Attack Bonus - [|cffffcc00Level " + I2S(SummonDamage[pid]) + "|r] - (|cff89ff52+" + I2S(SummonDamage[pid] * 20) + ")|r")
             set SummonArmor[pid] = SummonArmor[pid] + i1
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon Armor Bonus - [|cffffcc00Level " + I2S(SummonArmor[pid]) + "|r] - (|cff89ff52+" + I2S(SummonArmor[pid]) + ")|r")
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon Armor Bonus - [|cffffcc00Level " + I2S(SummonArmor[pid]) + "|r] - (|cff89ff52+" + I2S(SummonArmor[pid] * 2) + ")|r")
             set SummonHitPoints[pid] = SummonHitPoints[pid] + i1  
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon HP Bonus - [|cffffcc00Level " + I2S(SummonHitPoints[pid]) + "|r] - (|cff89ff52+" + I2S(SummonHitPoints[pid] * 50) + ")|r")
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon HP Bonus - [|cffffcc00Level " + I2S(SummonHitPoints[pid]) + "|r] - (|cff89ff52+" + I2S(SummonHitPoints[pid] * 200) + ")|r")
             
         endif 
 

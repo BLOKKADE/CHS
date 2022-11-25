@@ -144,16 +144,16 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         */
 
         if SummonHitPoints[pid] > 0 then
-            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 50)
+            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
             call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
         endif
 
         if SummonArmor[pid] > 0 then
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 1))
+            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 2))
         endif
 
         if SummonDamage[pid] > 0 then
-            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (3 * SummonDamage[pid]), 0)
+            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
 
         //wild Defense
