@@ -492,7 +492,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Stone Protection
-        set i1 = GetUnitAbilityLevel(DamageSource, STONE_PROTECTION_ABILITY_ID)
+        set i1 = GetUnitAbilityLevel(DamageTarget, STONE_PROTECTION_ABILITY_ID)
         if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,STONE_PROTECTION_ABILITY_ID) == 0 then
             call CastStoneProtect(DamageTarget, DamageSource)
         endif
