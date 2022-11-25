@@ -133,6 +133,10 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         //Counts
         set elementCount = elementCount + GetUnitAbsoluteBonusCount(u, elementId)
         
-        return elementCount 
+        if elementCount > 0 then
+            return elementCount
+        else
+            return 0
+        endif
     endfunction
 endlibrary
