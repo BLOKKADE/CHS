@@ -17,7 +17,7 @@ scope ShortPeriodCheck initializer init
             set u = PlayerHeroes[II]
             set hid = GetHandleId(u)
             set uid = GetUnitTypeId(u)
-            if GetWidgetLife(u) > 0.405 then
+            if UnitAlive(u) then
 
                 if not HasPlayerFinishedLevel(u, Player(II - 1)) then
                     
