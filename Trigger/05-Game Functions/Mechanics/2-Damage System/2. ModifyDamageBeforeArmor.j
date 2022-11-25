@@ -20,6 +20,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Last Breath no damage
         if GetUnitAbilityLevel(DamageTarget, 'A08B') > 0 then
             set Damage.index.damage = 0
+            call SetUnitState(DamageTarget, UNIT_STATE_LIFE, 100)
             return
         endif
 
