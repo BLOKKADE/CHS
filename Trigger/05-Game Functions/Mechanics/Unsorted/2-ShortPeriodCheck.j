@@ -42,6 +42,11 @@ scope ShortPeriodCheck initializer init
                         call AbsoluteArcaneDrain(u)
                     endif
 
+                    set i1 = GetUnitAbilityLevel(u, ABSOLUTE_DARK_ABILITY_ID)
+                    if i1 > 0 then
+                        call CastAbsoluteDark(u)
+                    endif
+
                     //Vigour token
                     if GetUnitAbilityLevel(u, 'A09A') > 0 then
                         call VigourTokenHpLoss(u)

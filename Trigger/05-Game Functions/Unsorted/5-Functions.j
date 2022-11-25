@@ -114,6 +114,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
             call ToggleUpdateDescription(GetOwningPlayer(u), abilId, level)
         endif
 
+        if abilId == ABSOLUTE_DARK_ABILITY_ID then
+            call UnitAddAbility(u, 'A0DH')
+        endif
+
         call SetSkillParameters(u, abilId)
 
         if abilId == MYSTERIOUS_TALENT_ABILITY_ID or abilId == ANCIENT_TEACHING_ABILITY_ID or abilId == TIME_MANIPULATION_ABILITY_ID and level == 1 then
@@ -157,6 +161,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
 
         if GetUnitTypeId(u) == SORCERER_UNIT_ID then
             call RemoveSorcererPassiveSpell(u, abilId)
+        endif
+
+        if abilId == ABSOLUTE_DARK_ABILITY_ID then
+            call UnitRemoveAbility(u, 'A0DH')
         endif
 
         /*if abilId == MEGA_SPEED_ABILITY_ID then
@@ -239,10 +247,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         endif
 
          //Mana gem
-         set i1 = GetValidEndOfRoundItems(u, 'I0CX') 
-         if i1 > 0 then
+        set i1 = GetValidEndOfRoundItems(u, 'I0CX') 
+        if i1 > 0 then
              call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +   275 * i1)
-         endif
+        endif
 
          //Rapira
         set i1 = GetValidEndOfRoundItems(u, 'I0CZ') 
@@ -251,10 +259,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         endif
 
          //Golden Armor
-         set i1 = GetValidEndOfRoundItems(u,'I0CV') 
-         if i1 > 0 then
+        set i1 = GetValidEndOfRoundItems(u,'I0CV') 
+        if i1 > 0 then
              call AddUnitCustomState(u, BONUS_MAGICRES,1 * i1)
-         endif
+        endif
 
         //Extra-dimensional Cooperation
         if GetUnitAbilityLevel(u, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID) > 0 then
