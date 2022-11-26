@@ -5,7 +5,7 @@ library PlayerTracking initializer init requires OldInitialization
     // RandomHeroMode -> true == Random Hero, false == Pick Hero
 
     globals
-        constant integer CURRENT_GAME_VERSION = 1 // This value needs to have an index value in the game version string lookup
+        constant integer CURRENT_GAME_VERSION = 2 // This value needs to have an index value in the game version string lookup
         constant integer MAX_SAVE_VALUE = 9999
         private string array MapVersionLookup
         private boolean SaveEnabled
@@ -383,6 +383,7 @@ library PlayerTracking initializer init requires OldInitialization
     private function SetupMapVersionLookups takes nothing returns nothing
         set MapVersionLookup[0] = "Invalid Map Version" // Placeholder for default map version
         set MapVersionLookup[1] = "CHS_v1.9.30-beta1" // The first game version that supports save codes
+        set MapVersionLookup[2] = "CHS_v2.0.0
     endfunction
 
     private function init takes nothing returns nothing
