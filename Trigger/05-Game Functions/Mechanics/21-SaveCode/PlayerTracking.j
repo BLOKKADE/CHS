@@ -383,7 +383,7 @@ library PlayerTracking initializer init requires OldInitialization
     private function SetupMapVersionLookups takes nothing returns nothing
         set MapVersionLookup[0] = "Invalid Map Version" // Placeholder for default map version
         set MapVersionLookup[1] = "CHS_v1.9.30-beta1" // The first game version that supports save codes
-        set MapVersionLookup[2] = "CHS_v2.0.0
+        set MapVersionLookup[2] = "CHS_v2.0.0"
     endfunction
 
     private function init takes nothing returns nothing
