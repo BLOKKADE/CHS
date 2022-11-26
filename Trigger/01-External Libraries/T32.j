@@ -100,7 +100,7 @@ library T32 initializer OnInit
             set this.prev.next = this.next
             set this.next.prev = this.prev
             // This will even work for the starting element.
-            debug set this.prev = 0
+            set this.prev = 0
         endmethod
         
         private static method onInit takes nothing returns nothing

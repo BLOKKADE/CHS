@@ -40,8 +40,8 @@ library AbsoluteDark initializer init requires RandomShit, UnitHelpers
         local TempBonus tempBonus = absDarkBonuses.getTempBonus(state)
 
         if tempBonus != 0 then
-            if tempBonus.bonus != value then
-                //call BJDebugMsg("!= new: " + I2S(state) + ", value: " + R2S(value))
+            if tempBonus.bonus != 0 - value then
+                //call BJDebugMsg("!= new: " + R2S(tempBonus.bonus) + ", value: " + R2S(value))
                 call tempBonus.destroy()
                 call absDarkBonuses.setTempBonus(TempBonus.create(target, state,0 - value, 2, ABSOLUTE_DARK_ABILITY_ID).activate())
             else
@@ -73,11 +73,9 @@ library AbsoluteDark initializer init requires RandomShit, UnitHelpers
 
     function CastAbsoluteDark takes unit u returns nothing
         local unit target = null
-        local TempBonus tempBonus = 0
-        local integer targetHid = 0
-        local real value = 0
         local real bonus = I2R(GetUnitAbilityLevel(u, ABSOLUTE_DARK_ABILITY_ID) * GetUnitElementCount(u, Element_Dark))/* * (1 + GetUnitAbsoluteEffective(u, Element_Dark))*/
         
+        call GroupClear(ENUM_GROUP)
         call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 600, GetOwningPlayer(u), false, Target_Enemy)
         
         loop
