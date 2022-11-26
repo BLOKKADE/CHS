@@ -45,13 +45,6 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
         return GetBooleanAnd(Trig_Dialog_Complete_Func006Func009001001001(),Trig_Dialog_Complete_Func006Func009001001002())
     endfunction
 
-
-    function Trig_Dialog_Complete_Func006Func009A takes nothing returns nothing
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
-        call ResourseRefresh(GetEnumPlayer()) 
-    endfunction
-
     function Trig_Dialog_Complete_Func006Func004Func006001001001001 takes nothing returns boolean
         return(GetFilterPlayer()!=Player(8))
     endfunction
@@ -71,14 +64,6 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
     function Trig_Dialog_Complete_Func006Func004Func006001001 takes nothing returns boolean
         return GetBooleanAnd(Trig_Dialog_Complete_Func006Func004Func006001001001(),Trig_Dialog_Complete_Func006Func004Func006001001002())
     endfunction
-
-
-    function Trig_Dialog_Complete_Func006Func004Func006A takes nothing returns nothing
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
-        call ResourseRefresh(GetEnumPlayer()) 
-    endfunction
-
 
     function Trig_Dialog_Complete_Func008Func001C takes nothing returns boolean
         if(not(ElimModeEnabled==false))then

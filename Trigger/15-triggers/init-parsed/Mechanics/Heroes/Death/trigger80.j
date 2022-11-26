@@ -142,9 +142,9 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
 
 
     function Trig_Hero_Dies_Func013Func002A takes nothing returns nothing
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
-        call ResourseRefresh(GetEnumPlayer()) 
+        //call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
+       // call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
+        //call ResourseRefresh(GetEnumPlayer()) 
     endfunction
 
 
@@ -214,9 +214,9 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
 
 
     function Trig_Hero_Dies_Func014Func002A takes nothing returns nothing
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
-        call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
-        call ResourseRefresh(GetEnumPlayer()) 
+        //call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,UnknownInteger01)
+        //call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_FOOD_CAP_CEILING,UnknownInteger01)
+        //call ResourseRefresh(GetEnumPlayer()) 
     endfunction
 
 
