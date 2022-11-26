@@ -83,9 +83,9 @@ library T32 initializer OnInit
         endmethod
 
         method startPeriodic takes nothing returns nothing
-            if this.prev!=0 or thistype(0).next==this then
+            /*if this.prev!=0 or thistype(0).next==this then
                 call BJDebugMsg("T32 ERROR: Struct #" + I2S(this)+ " had startPeriodic called while already running!")
-            endif
+            endif*/
             set thistype(0).next.prev = this
             set this.next = thistype(0).next
             set thistype(0).next = this
@@ -93,14 +93,14 @@ library T32 initializer OnInit
         endmethod
         
         method stopPeriodic takes nothing returns nothing
-            if this.prev==0 and thistype(0).next!=this then
+            /*if this.prev==0 and thistype(0).next!=this then
                 call BJDebugMsg("T32 ERROR: Struct #" + I2S(this)+ " had stopPeriodic called while not running!")
-            endif
+            endif*/
             // This is some real magic.
             set this.prev.next = this.next
             set this.next.prev = this.prev
             // This will even work for the starting element.
-            set this.prev = 0
+            //set this.prev = 0
         endmethod
         
         private static method onInit takes nothing returns nothing
