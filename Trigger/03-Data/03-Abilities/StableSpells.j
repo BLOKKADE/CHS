@@ -16,12 +16,10 @@ library StableSpells initializer init
         set StableSpells.boolean[ARCANE_STRIKE_ABILITY_ID] = true
         set StableSpells.boolean['A0AM'] = true
         set StableSpells.boolean['A08P'] = true
-        set StableSpells.boolean['A08P'] = true
         set StableSpells.boolean[RESET_TIME_ABILITY_ID] = true
         set StableSpells.boolean[ANCIENT_TEACHING_ABILITY_ID] = true
         set StableSpells.boolean['A044'] = true
         set StableSpells.boolean['A0AH'] = true
-        set StableSpells.boolean['A08P'] = true
         set StableSpells.boolean[SAND_OF_TIME_ABILITY_ID] = true
         set StableSpells.boolean[TIME_MANIPULATION_ABILITY_ID] = true
         set StableSpells.boolean[LIQUID_FIRE_ABILITY_ID] = true
