@@ -42,15 +42,19 @@ library AbsoluteDark initializer init requires RandomShit, UnitHelpers
         if tempBonus != 0 then
             if tempBonus.bonus != 0 - value then
                 //call BJDebugMsg("!= new: " + R2S(tempBonus.bonus) + ", value: " + R2S(value))
-                call tempBonus.destroy()
-                call absDarkBonuses.setTempBonus(TempBonus.create(target, state,0 - value, 2, ABSOLUTE_DARK_ABILITY_ID).activate())
+
+                if tempBonus.enabled then
+                    call tempBonus.destroy()
+                endif
+
+                call absDarkBonuses.setTempBonus(TempBonus.create(target, state, 0 - value, 2, ABSOLUTE_DARK_ABILITY_ID).activate())
             else
                 //call BJDebugMsg("== extend")
                 set tempBonus.endTick = T32_Tick + R2I(2 * 32)
             endif
         else
             //call BJDebugMsg("new: " + I2S(state) + ", value: " + R2S(value))
-            call absDarkBonuses.setTempBonus(TempBonus.create(target, state,0 - value, 2, ABSOLUTE_DARK_ABILITY_ID).activate())
+            call absDarkBonuses.setTempBonus(TempBonus.create(target, state, 0 - value, 2, ABSOLUTE_DARK_ABILITY_ID).activate())
         endif
     endfunction
 
