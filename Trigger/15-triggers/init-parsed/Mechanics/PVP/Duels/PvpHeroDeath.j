@@ -344,8 +344,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Go to the next basic level
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger) // Setup creeps for next wave
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
-            call StartTimerBJ(GetLastCreatedTimerBJ(), false, 30)
-            call TriggerSleepAction(30.00)
+            call StartTimerBJ(GetLastCreatedTimerBJ(), false, pvpWaitDuration)
+            call TriggerSleepAction(pvpWaitDuration)
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
             call TriggerExecute(udg_trigger109) // Start the next normal level
         // Check if all single pvp rounds are over

@@ -185,6 +185,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local integer pn = S2I(args[1])
         if pn > 1 then
             set RoundTime = pn
+            set pvpWaitDuration = pn
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Time between rounds set to: " + I2S(pn))
         endif
     endfunction
@@ -198,8 +199,6 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     endfunction
 
     function RandomDebugCommand takes Args args returns nothing
-        local integer pid = GetPlayerId(GetTriggerPlayer())
-        set TestFx = AddLocalizedSpecialEffectTarget("war3mapImported\\EnergyShield_Full.mdx", PlayerHeroes[pid + 1], "origin")
         if GetLocalPlayer() == GetTriggerPlayer() then
             set DebugMsgMode = true
         endif
@@ -220,6 +219,14 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creep Enrage enabled.")
         else
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creep Enrage disabled.")
+        endif
+    endfunction
+
+    function SetRoundNumber takes Args args returns nothing
+        local integer pn = S2I(args[1])
+        if pn > 1 then
+            set RoundNumber = pn
+            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Round number set to: " + I2S(pn))
         endif
     endfunction
 
@@ -315,6 +322,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.SetWizardbaneDebug).name("wbd").handles("wbd").help("wbd", "Wizardbane debug.")
             call Command.create(CommandHandler.SetCreepEnrage).name("tce").handles("tce").help("tce", "toggle creep enrage.")
             call Command.create(CommandHandler.CpuPower).name("cpupw").handles("cpupw").help("cpupw", "Gives CPU players stats, levels and some abilities")
+            call Command.create(CommandHandler.SetRoundNumber).name("srn").handles("srn").help("srn <value>", "Set round number to <value>.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
 
