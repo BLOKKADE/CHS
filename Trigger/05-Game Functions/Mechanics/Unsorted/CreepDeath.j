@@ -16,7 +16,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
     endfunction
 
     private function IsAliveCreepUnitFilter takes nothing returns boolean
-        return (IsUnitAliveBJ(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
+        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
     endfunction
 
     public function Death takes unit dyingUnit, unit killingHero returns nothing

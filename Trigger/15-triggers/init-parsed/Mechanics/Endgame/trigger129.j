@@ -34,7 +34,7 @@ library trigger129 initializer init requires RandomShit
     endfunction
     
     function Trig_Player_Leaves_Func007Func001Func002001001002002 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
+        return(UnitAlive(GetFilterUnit())==true)
     endfunction
     
     function Trig_Player_Leaves_Func007Func001Func002001001002 takes nothing returns boolean
@@ -70,6 +70,7 @@ library trigger129 initializer init requires RandomShit
         local integer pid = GetPlayerId(GetTriggerPlayer()) + 1
         local location arenaLocation
 
+        call BJDebugMsg("player leave")
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayerSimple(GetTriggerPlayer(),udg_force07)
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer()))+ " |cffffcc00has left the game!|r"))

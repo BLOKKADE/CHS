@@ -5,7 +5,7 @@ library CreepPeriodicAttack initializer init requires RandomShit
     endglobals
     
     private function FilterForArenaCreep takes nothing returns boolean
-        return (IsUnitAliveBJ(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
+        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
     endfunction
 
     private function CreepAttackAction takes nothing returns nothing

@@ -23,11 +23,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         // Revive the unit if it died
-        if (IsUnitAliveBJ(playerHero)) then
-            call SetUnitPositionLoc(playerHero, arenaLocation)
-        else
-            call ReviveHeroLoc(playerHero, arenaLocation, true)
-        endif
+        
+        call SetUnitPositionLoc(playerHero, arenaLocation)
+        call ReviveHeroLoc(playerHero, arenaLocation, true)
 
         // Move the pet
         if (ps.getPet() != null) then

@@ -1,7 +1,7 @@
 library trigger107 initializer init requires RandomShit
 
     function Trig_Complete_Level_Player_Func006Func002001001002 takes nothing returns boolean
-        return (IsUnitAliveBJ(GetFilterUnit())==true) and (GetOwningPlayer(GetFilterUnit())==Player(11))
+        return (UnitAlive(GetFilterUnit())==true) and (GetOwningPlayer(GetFilterUnit())==Player(11))
     endfunction
 
     function Trig_Complete_Level_Player_Conditions takes nothing returns boolean

@@ -880,7 +880,7 @@ library OldInitialization initializer main3
         if(not(GetUnitAbilityLevelSwapped('Awar',GetEventDamageSource())> 0))then
             return false
         endif
-        if(not(IsUnitAliveBJ(GetEventDamageSource())==true))then
+        if(not(UnitAlive(GetEventDamageSource())==true))then
             return false
         endif
         if(not(IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(GetEventDamageSource()))==true))then
@@ -895,7 +895,7 @@ library OldInitialization initializer main3
         return true
     endfunction
     function Trig_Pulverize_Func003Func004001003001001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
+        return(UnitAlive(GetFilterUnit())==true)
     endfunction
     function Trig_Pulverize_Func003Func004001003001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_GROUND)==true)
@@ -919,7 +919,7 @@ library OldInitialization initializer main3
         call UnitDamageTargetBJ(GetEventDamageSource(),GetEnumUnit(),(30.00 * I2R(GetUnitAbilityLevelSwapped('Awar',GetEventDamageSource()))),ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
     endfunction
     function Trig_Pulverize_Func003Func005001003001001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
+        return(UnitAlive(GetFilterUnit())==true)
     endfunction
     function Trig_Pulverize_Func003Func005001003001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_GROUND)==true)

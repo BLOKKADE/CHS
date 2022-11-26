@@ -8,7 +8,7 @@ library DuelWinnerRewards initializer init requires RandomShit
         local unit currentUnit = GetEnumUnit()
         local player currentPlayer = GetOwningPlayer(currentUnit)
 
-        if (BettingPlayerCount > 0 and IsUnitAliveBJ(currentUnit) == true) then
+        if (BettingPlayerCount > 0 and UnitAlive(currentUnit) == true) then
             call SetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) + PvpGoldWinAmount)
             call GroupRemoveUnit(DuelWinners, currentUnit)
         endif

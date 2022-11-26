@@ -49,7 +49,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
     endfunction
     
     function Trig_Melee_Initialization_Func010Func003Func001Func003Func002001001002002 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
+        return(UnitAlive(GetFilterUnit())==true)
     endfunction
     
     function Trig_Melee_Initialization_Func010Func003Func001Func003Func002001001002 takes nothing returns boolean

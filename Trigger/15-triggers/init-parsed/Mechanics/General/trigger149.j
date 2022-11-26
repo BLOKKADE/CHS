@@ -1,7 +1,7 @@
 /*library trigger149 initializer init requires RandomShit
 
     function Trig_Passive_Spells_II_Conditions takes nothing returns boolean
-        if(not(IsUnitAliveBJ(GetTriggerUnit())==true))then
+        if(not(UnitAlive(GetTriggerUnit())==true))then
             return false
         endif
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then

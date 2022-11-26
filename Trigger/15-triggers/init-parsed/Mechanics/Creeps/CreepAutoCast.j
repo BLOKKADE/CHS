@@ -2,7 +2,7 @@ library CreepAutoCast initializer init requires RandomShit
 
     private function ManaBurnUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
-        local boolean isValidUnit = (IsUnitAliveBJ(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitEnemy(filterUnit, GetOwningPlayer(GetEnumUnit())) == true) and (GetUnitState(filterUnit, UNIT_STATE_MANA) >= 10.00)
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitEnemy(filterUnit, GetOwningPlayer(GetEnumUnit())) == true) and (GetUnitState(filterUnit, UNIT_STATE_MANA) >= 10.00)
         
         // Cleanup
         set filterUnit = null
@@ -13,7 +13,7 @@ library CreepAutoCast initializer init requires RandomShit
     private function BlinkUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
         local player creepOwningPlayer = GetOwningPlayer(GetEnumUnit())
-        local boolean isValidUnit = (IsUnitAliveBJ(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_GROUND) == true) and (IsUnitEnemy(filterUnit, creepOwningPlayer) == true) and (IsUnitType(filterUnit, UNIT_TYPE_HERO) == true) and (IsUnitVisible(filterUnit, creepOwningPlayer) == true)
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_GROUND) == true) and (IsUnitEnemy(filterUnit, creepOwningPlayer) == true) and (IsUnitType(filterUnit, UNIT_TYPE_HERO) == true) and (IsUnitVisible(filterUnit, creepOwningPlayer) == true)
         
         // Cleanup
         set filterUnit = null
@@ -25,7 +25,7 @@ library CreepAutoCast initializer init requires RandomShit
     private function ShockwaveUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
         local player creepOwningPlayer = GetOwningPlayer(GetEnumUnit())
-        local boolean isValidUnit = (IsUnitAliveBJ(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitType(filterUnit, UNIT_TYPE_GROUND) == true) and (IsUnitEnemy(filterUnit, creepOwningPlayer) == true) and (IsUnitVisible(filterUnit, creepOwningPlayer) == true)
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitType(filterUnit, UNIT_TYPE_GROUND) == true) and (IsUnitEnemy(filterUnit, creepOwningPlayer) == true) and (IsUnitVisible(filterUnit, creepOwningPlayer) == true)
     
         // Cleanup
         set filterUnit = null
@@ -36,7 +36,7 @@ library CreepAutoCast initializer init requires RandomShit
     
     private function HurlBoulderUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
-        local boolean isValidUnit = (IsUnitAliveBJ(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitEnemy(filterUnit, GetOwningPlayer(GetEnumUnit())) == true)
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitEnemy(filterUnit, GetOwningPlayer(GetEnumUnit())) == true)
 
         // Cleanup
         set filterUnit = null
@@ -46,7 +46,7 @@ library CreepAutoCast initializer init requires RandomShit
     
     private function RejuvinationUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
-        local boolean isValidUnit = (IsUnitAliveBJ(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitAlly(filterUnit, GetOwningPlayer(GetEnumUnit())) == true) and (GetUnitLifePercent(filterUnit) <= 75.00)
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitAlly(filterUnit, GetOwningPlayer(GetEnumUnit())) == true) and (GetUnitLifePercent(filterUnit) <= 75.00)
         
         // Cleanup
         set filterUnit = null
@@ -56,7 +56,7 @@ library CreepAutoCast initializer init requires RandomShit
     
     private function SlowUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
-        local boolean isValidUnit = (IsUnitAliveBJ(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitEnemy(filterUnit, GetOwningPlayer(GetEnumUnit())) == true)
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitEnemy(filterUnit, GetOwningPlayer(GetEnumUnit())) == true)
 
         // Cleanup
         set filterUnit = null
@@ -65,12 +65,12 @@ library CreepAutoCast initializer init requires RandomShit
     endfunction
     
     private function VoodooUnitFilter takes nothing returns boolean
-        return (IsUnitAliveBJ(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == GetOwningPlayer(GetEnumUnit()))
+        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == GetOwningPlayer(GetEnumUnit()))
     endfunction
     
     private function FaerieFireUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
-        local boolean isValidUnit = (IsUnitAliveBJ(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitEnemy(filterUnit, GetOwningPlayer(GetEnumUnit())) == true)
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitEnemy(filterUnit, GetOwningPlayer(GetEnumUnit())) == true)
 
         // Cleanup
         set filterUnit = null
@@ -81,7 +81,7 @@ library CreepAutoCast initializer init requires RandomShit
     private function ThunderClapUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
         local player creepOwningPlayer = GetOwningPlayer(GetEnumUnit())
-        local boolean isValidUnit = (IsUnitAliveBJ(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitType(filterUnit, UNIT_TYPE_GROUND) == true) and (IsUnitEnemy(filterUnit, creepOwningPlayer) == true) and (IsUnitVisible(filterUnit, creepOwningPlayer) == true)
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitType(filterUnit, UNIT_TYPE_GROUND) == true) and (IsUnitEnemy(filterUnit, creepOwningPlayer) == true) and (IsUnitVisible(filterUnit, creepOwningPlayer) == true)
 
         // Cleanup
         set filterUnit = null
@@ -97,7 +97,7 @@ library CreepAutoCast initializer init requires RandomShit
         local location offsetLocation
         local group tempGroup
 
-        if (IsUnitAliveBJ(creep) == true) then
+        if (UnitAlive(creep) == true) then
             set creepLocation = GetUnitLoc(creep)
     
             // Mana burn

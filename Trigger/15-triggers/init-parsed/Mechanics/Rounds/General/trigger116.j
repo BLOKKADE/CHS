@@ -8,7 +8,7 @@ library trigger116 initializer init requires RandomShit
     endfunction
 
     function Trig_AntiStuck_Func002Func001Func005Func001001001002001 takes nothing returns boolean
-        return (IsUnitAliveBJ(GetFilterUnit())==true) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0
+        return (UnitAlive(GetFilterUnit())==true) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0
     endfunction
     
     function Trig_AntiStuck_Func002Func001Func005Func001001001002002 takes nothing returns boolean

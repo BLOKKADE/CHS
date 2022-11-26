@@ -48,7 +48,7 @@
 
 
     function Trig_Ward_Location_Func001Func002Func003Func001001001002001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
+        return(UnitAlive(GetFilterUnit())==true)
     endfunction
     
     function Trig_Ward_Location_Func001Func002Func003Func001001001002002 takes nothing returns boolean
