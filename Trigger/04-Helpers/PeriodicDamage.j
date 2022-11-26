@@ -59,9 +59,9 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
         endmethod
 
         method addLimit takes integer abilId, integer max, real cd returns thistype
-            local integer count = PeriodicCounter[GetHandleId(this.caster)].integer[abilId]
+            local integer count = PeriodicCounter[GetUnitTypeId(this.caster)].integer[abilId]
             set this.limitAbilId = abilId
-            set PeriodicCounter[GetHandleId(this.caster)].integer[abilId] = count + 1
+            set PeriodicCounter[GetUnitTypeId(this.caster)].integer[abilId] = count + 1
             if count >= max then  
                 if GetUnitAbilityLevel(this.caster, abilId) > 0 then
                     call BlzStartUnitAbilityCooldown(this.caster, abilId, cd)
@@ -98,7 +98,7 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
         
         method destroy takes nothing returns nothing
             if this.limitAbilId != 0 then
-                set PeriodicCounter[GetHandleId(this.caster)].integer[this.limitAbilId] = PeriodicCounter[GetHandleId(this.caster)].integer[this.limitAbilId] - 1
+                set PeriodicCounter[GetUnitTypeId(this.caster)].integer[this.limitAbilId] = PeriodicCounter[GetUnitTypeId(this.caster)].integer[this.limitAbilId] - 1
             endif
             set this.caster = null
             set this.target = null
