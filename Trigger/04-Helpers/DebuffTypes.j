@@ -110,6 +110,8 @@ library DebuffTypes
         call UnitRemoveAbility(u, CONTRACT_LIVING_BUFF_ID)
         call UnitRemoveAbility(u, FAN_OF_KNIVES_BUFF_ID)
         call UnitRemoveAbility(u, DARK_SEAL_BUFF_ID)
+        call UnitRemoveAbility(u, 'Bcrs')
+        call UnitRemoveAbility(u, 'Bfae')
     endfunction
 
     //Remove all buffs of buffType from unit u
