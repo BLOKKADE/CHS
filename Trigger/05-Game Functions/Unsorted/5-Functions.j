@@ -137,7 +137,7 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         endif
 
         if abilId == ICE_FORCE_ABILITY_ID then
-            call UpdateAbilityDescription(GetAbilityDescription(ICE_FORCE_ABILITY_ID, level - 1), GetOwningPlayer(u), ICE_FORCE_ABILITY_ID, ",s01,", R2I((1 - (500 / (500 + GetHeroInt(u, true)))) * 100), level)
+            call UpdateAbilityDescription(GetAbilityDescription(ICE_FORCE_ABILITY_ID, level - 1), GetOwningPlayer(u), ICE_FORCE_ABILITY_ID, ",s01,", R2I(500 / (500 + GetHeroInt(u, true)) * 100), level)
         endif
 
         if abilId == MARTIAL_RETRIBUTION_ABILITY_ID then
