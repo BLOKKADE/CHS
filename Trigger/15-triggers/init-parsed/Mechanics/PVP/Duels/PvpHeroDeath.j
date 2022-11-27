@@ -63,6 +63,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
                     // Make sure there is an actual item
                     if (PreDuelItemIds[(6 * playerId) + itemSlotIndex] != -1) then
                         set tempItem = UnitAddItemByIdSwapped(PreDuelItemIds[(6 * playerId) + itemSlotIndex], playerHero)
+                        call SetItemUserData(tempItem, playerId)
 
                         if PreDuelItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
                             call SetItemCharges(tempItem, PreDuelItemCharges[(6 * playerId) + itemSlotIndex])
