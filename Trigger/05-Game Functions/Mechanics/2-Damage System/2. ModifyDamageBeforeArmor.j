@@ -11,6 +11,11 @@ scope ModifyDamageBeforeArmor initializer init
         local integer i2 = 0
         local integer i = 0
 
+         //Extradimensional Cooperation
+         if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not IsOnHitDamage()) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
+            call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, IsMagicDamage())
+        endif
+
         //Contract of the Living no damage
         if GetUnitAbilityLevel(DamageSource, CONTRACT_LIVING_BUFF_ID) > 0 or GetUnitAbilityLevel(DamageTarget, CONTRACT_LIVING_BUFF_ID) > 0 then
             set Damage.index.damage = 0
@@ -35,11 +40,6 @@ scope ModifyDamageBeforeArmor initializer init
             //call BJDebugMsg("conq bamboo stick immune")
             set Damage.index.damage = 0
             return
-        endif
-
-        //Extradimensional Cooperation
-        if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not IsOnHitDamage()) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
-            call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, IsMagicDamage())
         endif
 
         //Storm Horn
@@ -84,6 +84,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
                 return
             endif
+
         //Dark Shield
         elseif UnitHasItemType( DamageTarget,'I060' )  then
             if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
@@ -108,6 +109,48 @@ scope ModifyDamageBeforeArmor initializer init
                 return
             endif 
         endif 
+
+        //Divine Bubble
+        set i1 = GetUnitAbilityLevel(DamageTarget,DIVINE_BUBBLE_ABILITY_ID)
+        if i1 > 0 or UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
+            if IsUnitDivineBubbled(DamageTarget) then
+                call RemoveDebuff(DamageTarget, 1)
+
+                if IsOnHitDamage() then
+                    set Damage.index.damage = 0
+                endif
+
+                set DamageIsOnHit = 2
+            endif
+
+            if (i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,DIVINE_BUBBLE_ABILITY_ID) <= 0.001) or (i1 == 0 and UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A0AP') == 0) then
+                set DamageIsOnHit = 2
+                call RemoveDebuff(DamageTarget, 1) 
+                if UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
+                    set i1 = 1
+                else
+                    set i1 = 0
+                endif
+                if UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) and GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) == 0 then
+                    if IsUnitDivineBubbled(DamageTarget) then
+                        set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + (32 * i1)
+                    else
+                        call DivineBubbleStruct.create(DamageTarget, i1, 'A0AP')
+                    endif
+                else
+                    if IsUnitDivineBubbled(DamageTarget) then
+                        set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + (32 * (3 + i1))
+                    else
+                        //call BJDebugMsg("db: " + I2S(3 + i1))
+                        call DivineBubbleStruct.create(DamageTarget, 3 + i1, DIVINE_BUBBLE_ABILITY_ID)
+                    endif
+                endif
+            endif
+        endif
+
+        if Damage.index.damage == 0 then
+            return
+        endif
 
         //Shadow dance - start shadow form
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
@@ -159,39 +202,6 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageTargetHero, ENERGY_SHIELD_ABILITY_ID)
         if i1 > 0 and GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 1 and CalculateDistance(GetUnitX(DamageTargetHero), GetWidgetX(DamageSource), GetUnitY(DamageTargetHero), GetWidgetY(DamageSource)) >= 300 then
             set Damage.index.damage = Damage.index.damage - (Damage.index.damage * (0.05 + (i1 * 0.01)))
-        endif
-
-        //Divine Bubble
-        set i1 = GetUnitAbilityLevel(DamageTarget,DIVINE_BUBBLE_ABILITY_ID)
-        if i1 > 0 or UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
-            if IsUnitDivineBubbled(DamageTarget) then
-                call RemoveDebuff(DamageTarget, 1) 
-                set DamageIsOnHit = 2
-            endif
-
-            if (i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,DIVINE_BUBBLE_ABILITY_ID) <= 0.001) or (i1 == 0 and UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A0AP') == 0) then
-                set DamageIsOnHit = 2
-                call RemoveDebuff(DamageTarget, 1) 
-                if UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
-                    set i1 = 1
-                else
-                    set i1 = 0
-                endif
-                if UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) and GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) == 0 then
-                    if IsUnitDivineBubbled(DamageTarget) then
-                        set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + (32 * i1)
-                    else
-                        call DivineBubbleStruct.create(DamageTarget, i1, 'A0AP')
-                    endif
-                else
-                    if IsUnitDivineBubbled(DamageTarget) then
-                        set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + (32 * (3 + i1))
-                    else
-                        //call BJDebugMsg("db: " + I2S(3 + i1))
-                        call DivineBubbleStruct.create(DamageTarget, 3 + i1, DIVINE_BUBBLE_ABILITY_ID)
-                    endif
-                endif
-            endif
         endif
 /*
         //Damage Spread
@@ -441,7 +451,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Fan of Knives
         if DamageSourceAbility == FAN_OF_KNIVES_ABILITY_ID then
-            set Damage.index.amount = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.amount, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
+            set Damage.index.damage = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.damage, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
         endif
 
         //Lich
