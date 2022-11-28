@@ -70,7 +70,6 @@ library trigger129 initializer init requires RandomShit
         local integer pid = GetPlayerId(GetTriggerPlayer()) + 1
         local location arenaLocation
 
-        call BJDebugMsg("player leave")
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayerSimple(GetTriggerPlayer(),udg_force07)
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer()))+ " |cffffcc00has left the game!|r"))
