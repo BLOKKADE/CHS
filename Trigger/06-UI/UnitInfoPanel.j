@@ -73,12 +73,12 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 
 	function StrInfo takes unit u returns string
 		local string s = PrimaryAttributeDmg(u, 0)
-		local real gloryRegen = LoadReal(DataUnitHT, GetHandleId(u), 1000)
+		local real gloryRegen = GetUnitCustomState(u, BONUS_GLORYREGEN)
 		set s = s + "Each point increases hit points by 26. (" + statColour[0] + "+" + I2S(GetHeroStr(u, true) * 26) + " total|r)\n" 
 		set s = s + "Each point increases hit point regeneration by 0.075. (" + statColour[0] + "+" + R2SW(GetUnitTotalHpRegen(u), 1, 1) + " total|r)\n"
 		
 		if gloryRegen > 0 then
-			set s = s + statColour[0] + I2S(R2I(gloryRegen + (50 * GloryRegenLevel[GetHandleId(u)]))) + "|r of that is from glory HP regen.\n"
+			set s = s + statColour[0] + I2S(R2I(gloryRegen)) + "|r of that is from glory HP regen.\n"
 		endif
 		
 		return s + "Strength per level: " + statColour[0] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(u)) + "|r"
