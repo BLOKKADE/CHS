@@ -212,7 +212,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Shadow Dance
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
-        if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 then
+        if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 and Damage.index.isAttack then
             set Damage.index.damage = Damage.index.damage + 50 * i1
             call SetUnitX(DamageSource, GetWidgetX(DamageTarget) - 65 * CosBJ(GetUnitFacing(DamageTarget)))
             call SetUnitY(DamageSource, GetWidgetY(DamageTarget) - 65 * SinBJ(GetUnitFacing(DamageTarget))) 
