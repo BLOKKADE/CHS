@@ -116,6 +116,8 @@ library trigger122 initializer init requires RandomShit, SaveCommand
     function GetWinner takes nothing returns nothing
         local integer i = 0
 
+        set WinningPlayer = -1
+
         loop
             if UnitAlive(PlayerHeroes[i+1]) then
                 call BJDebugMsg(GetPlayerName(Player(i)) + ", hero alive: " + GetUnitName(PlayerHeroes[i+1]))
@@ -142,19 +144,23 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(Trig_Victory_Func012C())then
             call DisplayTimedTextToForce(GetPlayersAll(),30,("|cffffcc00" +("You survived all levels! Congratulations!!")))
         else
-            //test
             call GetWinner()
 
-            call DisplayTimedTextToForce(GetPlayersAll(),30,GameDescription)
-            call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
+            if WinningPlayer != -1 then
+                call DisplayTimedTextToForce(GetPlayersAll(),30,GameDescription)
+                call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
 
-            if (CountPlayersInForceBJ(FORCE_PLAYING) > 1) then
-                // Update the player's stats that they won a BR
-                set ps = PlayerStats.forPlayer(WinningPlayer)
-                call ps.addBRWin()
+                if (CountPlayersInForceBJ(FORCE_PLAYING) > 1) then
+                    // Update the player's stats that they won a BR
+                    set ps = PlayerStats.forPlayer(WinningPlayer)
+                    call ps.addBRWin()
 
-                call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+(" has |cffc2154f" + I2S(ps.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(ps.getAllBRWins()) + "|r all time for this game mode"))))
-                call DisplayTimedTextToForce(GetPlayersAll(),30,"|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
+                    call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+(" has |cffc2154f" + I2S(ps.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(ps.getAllBRWins()) + "|r all time for this game mode"))))
+                    call DisplayTimedTextToForce(GetPlayersAll(),30,"|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
+                endif
+            else
+                call DisplayTimedTextToForce(GetPlayersAll(),30,GameDescription)
+                call DisplayTimedTextToForce(GetPlayersAll(),30, "|cffff7b00No winner detected.|r |cffffcc00That sucks bro, the game ends here.")
             endif
 
         endif
