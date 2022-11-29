@@ -105,6 +105,10 @@ scope LongPeriodCheck initializer init
         endif
     endfunction
 
+    function DummyRegen takes nothing returns nothing
+        call SetUnitState(GetEnumUnit(), UNIT_STATE_LIFE, GetUnitState(GetEnumUnit(), UNIT_STATE_LIFE) + (GetUnitTotalHpRegen(GetEnumUnit()) * 0.1))
+    endfunction
+
     function FunUpdateSkill takes integer i returns nothing
         local integer i1 = 1
         local player Pl = Player(i)
@@ -561,6 +565,10 @@ scope LongPeriodCheck initializer init
             endif
             set II = II + 1
         endloop
+
+        if DebugModeEnabled then
+            call ForGroup(DummyGroup, function DummyRegen)
+        endif
 
         set u = null
     endfunction

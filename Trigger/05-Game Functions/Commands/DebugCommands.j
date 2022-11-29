@@ -10,6 +10,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         boolean CreepEnrageEnabled = true
         effect TestFx = null
         boolean DebugMsgMode = false
+        group DummyGroup
     endglobals
     //===========================================================================
     function DummyHelp takes player p returns nothing
@@ -149,6 +150,10 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid + 1]), GetUnitY(PlayerHeroes[pid + 1]), 0)
         set CreatedDummies[pid] = CreatedDummies[pid] + 1
         call BlzSetHeroProperName(PlayerDummy[pid], "Subject #" + I2S(CreatedDummies[pid]))
+
+        call GroupRefresh(DummyGroup)
+        call GroupAddUnit(DummyGroup, PlayerDummy[pid])
+
         if dummyEnabled[pid] == false then
             set dummyEnabled[pid] = true
             call DummyCommands(GetTriggerPlayer())
@@ -302,6 +307,8 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local trigger trg = CreateTrigger()
         local integer i = 0
         local integer pc = 0
+
+        set DummyGroup = NewGroup()
 
         loop
             if GetPlayerController(Player(i)) == MAP_CONTROL_USER and GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING then
