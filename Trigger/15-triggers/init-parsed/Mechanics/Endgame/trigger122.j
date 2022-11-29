@@ -116,7 +116,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
     function GetWinner takes nothing returns nothing
         local integer i = 0
 
-        set WinningPlayer = -1
+        set WinningPlayer = Player(PLAYER_NEUTRAL_PASSIVE)
 
         loop
             if UnitAlive(PlayerHeroes[i+1]) then
@@ -146,7 +146,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         else
             call GetWinner()
 
-            if WinningPlayer != -1 then
+            if WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE) then
                 call DisplayTimedTextToForce(GetPlayersAll(),30,GameDescription)
                 call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
 
