@@ -4,8 +4,6 @@ library OldInitialization initializer main3
         boolean ModeNoDeath = false
         integer MorePvp = 1 
         boolean duel
-        integer IncomeMode = 0
-        integer AbilityMode = 0
         integer array LumberGained
         dialog IncomeModeDialog
         Table roundAbilities
@@ -41,13 +39,13 @@ library OldInitialization initializer main3
         unit array ChooseHeroSelection
         force DefeatedPlayers= null
         group PotentialDuelHeroes= null
-        unit array DuelingHeroes
+        group DuelingHeroes= null
         integer RoundCreepAbilCastChance= 0
         integer array DuelHeroItemIds1
         integer array DuelHeroItemIds2
         group DuelingHeroGroup= null
         group DuelWinners= null
-        integer udg_integer15= 0
+        integer PvpGoldWinAmount= 0
         integer BrPlayerCount= 0
         boolean array udg_booleans01
         boolean BrStarted= false
@@ -94,22 +92,21 @@ library OldInitialization initializer main3
         integer UnknownInteger02= 0
         dialog array Dialogs
         button array DialogButtons
-        force udg_force04= null
-        force udg_force05= null
-        boolean array udg_booleans04
-        boolean array udg_booleans05
-        integer array udg_integers11
+        force Team1BettingForce= null
+        force Team2BettingForce= null
+        boolean array PlayerPlacedGoldBet
+        boolean array PlayerPlacedLumberBet
+        integer array PlayerResourceBetPercentage
         string udg_string01
         integer udg_integer38= 0
-        boolean udg_boolean07= false
         force udg_force06= null
         string array udg_strings01
         integer array udg_integers12
-        boolean udg_boolean08= false
-        integer udg_integer39= 0
+        boolean GameModeShort= false
+        integer SuddenDeathTick= 0
         dialog udg_dialog04= null
         button array udg_buttons03
-        group udg_group05= null
+        group RoundCreeps= null
         integer udg_integer40= 0
         boolean udg_boolean09= false
         integer udg_integer41= 0
@@ -123,7 +120,6 @@ library OldInitialization initializer main3
         integer udg_integer47= 0
         force udg_force07= null
         boolean udg_boolean12= false
-        integer udg_integer48= 0
         integer RoundCreepChanceSlow= 0
         integer RoundCreepChanceBigBadV= 0
         integer RoundCreepChanceFaerieFire= 0
@@ -135,11 +131,11 @@ library OldInitialization initializer main3
         group udg_group06= null
         integer RoundCreepChanceBlink= 0
         integer RoundCreepChanceThunderClap= 0
-        integer udg_integer56= 0
+        integer BettingPlayerCount= 0
         group udg_group07= null
         sound array udg_sounds01
-        group udg_group08= null
-        real udg_real03= 0
+        group GroupEmptyArenaCheck= null
+        real SuddenDeathDamageMultiplier= 0
         unit udg_unit02= null
         integer array udg_integers14
         integer udg_integer57= 0
@@ -148,36 +144,37 @@ library OldInitialization initializer main3
         integer udg_integer60= 0
         integer udg_integer61= 0
         dialog BettingModeDialog= null
-        boolean udg_boolean13= false
+        boolean BettingEnabled= false
         boolean udg_boolean14= false
         dialog udg_dialog06= null
         button array udg_buttons04
         boolean udg_boolean15= false
         player udg_player03= null
         dialog HeroModeDialog= null
-        boolean udg_boolean16= false
-        integer array udg_integers15
-        integer array udg_integers16
-        integer udg_integer62= 0
+        boolean RandomHeroMode= false
+        integer array ResourceBetPercentageGoldReward
+        integer array ResourceBetPercentageLumberReward
+        integer ResourceBetPercentageCalculation= 0
         real udg_real04= 0
         boolean udg_boolean17= false
-        string array udg_strings02
+        string array ModeDescriptionBuilder
         unit udg_unit03= null
         group udg_group09= null
         location udg_location02= null
         unit udg_unit04= null
-        boolean udg_boolean18= false
+        boolean AllowBetSelection= false
         unit udg_unit05= null
+        group DuelWinnerDisabled= null
         integer udg_integer63= 0
-        rect udg_rect01= null
-        rect udg_rect02= null
-        rect udg_rect03= null
-        rect udg_rect04= null
-        rect udg_rect05= null
-        rect udg_rect06= null
-        rect udg_rect07= null
-        rect udg_rect08= null
-        rect udg_rect09= null
+        rect RectP1Arena= null
+        rect RectP2Arena= null
+        rect RectP3Arena= null
+        rect RectP4Arena= null
+        rect RectP5Arena= null
+        rect RectP6Arena= null
+        rect RectP7Arena= null
+        rect RectP8Arena= null
+        rect RectMidArena= null
         camerasetup udg_camerasetup01= null
         sound udg_sound01= null
         sound udg_sound02= null
@@ -238,7 +235,7 @@ library OldInitialization initializer main3
         trigger udg_trigger32= null
         trigger udg_trigger33= null
         trigger udg_trigger34= null
-        trigger udg_trigger35= null
+        trigger WispActionsTrigger= null
         trigger udg_trigger36= null
         trigger udg_trigger37= null
         trigger udg_trigger38= null
@@ -247,17 +244,17 @@ library OldInitialization initializer main3
         trigger udg_trigger41= null
         trigger udg_trigger42= null
         trigger udg_trigger43= null
-        trigger udg_trigger44= null
-        trigger udg_trigger45= null
-        trigger udg_trigger46= null
-        trigger udg_trigger47= null
-        trigger udg_trigger48= null
-        trigger udg_trigger49= null
-        trigger udg_trigger50= null
-        trigger udg_trigger51= null
+        trigger ResourceBettingMenusTrigger= null
+        trigger Team1BettingTrigger= null
+        trigger Team2BettingTrigger= null
+        trigger CancelBettingTrigger= null
+        trigger PlaceGoldBetTrigger= null
+        trigger PlaceLumberBetTrigger= null
+        trigger PlaceGoldAndLumberBetTrigger= null
+        trigger PlacePercentageBetTrigger= null
         trigger udg_trigger52= null
         trigger udg_trigger53= null
-        trigger udg_trigger54= null
+        trigger DistributeBetsTrigger= null
         trigger udg_trigger55= null
         trigger udg_trigger56= null
         trigger udg_trigger57= null
@@ -301,13 +298,13 @@ library OldInitialization initializer main3
         trigger udg_trigger95= null
         trigger udg_trigger96= null
         trigger udg_trigger97= null
-        trigger udg_trigger98= null
-        trigger udg_trigger99= null
-        trigger udg_trigger100= null
-        trigger udg_trigger101= null
-        trigger udg_trigger102= null
-        trigger udg_trigger103= null
-        trigger udg_trigger104= null
+        trigger CreepPeriodicAttackTrigger= null
+        trigger ModifyCreepAbilitiesTrigger= null
+        trigger CreepPowerAndHpTrigger= null
+        trigger CreepAutoCastTrigger= null
+        trigger CreepDiesTrigger= null
+        trigger GenerateNextCreepLevelTrigger= null
+        trigger CreepTypesTrigger= null
         trigger udg_trigger105= null
         trigger udg_trigger106= null
         trigger udg_trigger107= null
@@ -319,12 +316,12 @@ library OldInitialization initializer main3
         trigger udg_trigger114= null
         trigger udg_trigger115= null
         trigger udg_trigger116= null
-        trigger udg_trigger117= null
+        trigger PvpCountdownTimerTrigger= null
         trigger udg_trigger118= null
         trigger udg_trigger119= null
         trigger udg_trigger120= null
         trigger udg_trigger121= null
-        trigger udg_trigger122= null
+        trigger EndGameTrigger= null
         trigger udg_trigger123= null
         trigger udg_trigger124= null
         trigger udg_trigger125= null
@@ -332,18 +329,20 @@ library OldInitialization initializer main3
         trigger udg_trigger127= null
         trigger udg_trigger128= null
         trigger udg_trigger129= null
-        trigger udg_trigger130= null
+        trigger SpacebarCameraTrigger= null
         trigger udg_trigger131= null
         trigger udg_trigger132= null
         trigger udg_trigger133= null
-        trigger udg_trigger134= null
-        trigger udg_trigger135= null
-        trigger udg_trigger136= null
-        trigger udg_trigger137= null
-        trigger udg_trigger138= null
+        trigger ComputerPvpEnforceDuelTrigger= null
+        trigger InitializePvpTrigger= null
+        trigger SinglePvpHeroDeathTrigger= null
+        trigger SimultaneousPvpHeroDeathTrigger= null
+        trigger StartSinglePvpDuelTrigger= null
+        trigger StartSimultaneousPvpDuelTrigger= null
+        trigger DuelWinnerRewardsTrigger= null
         trigger udg_trigger139= null
-        trigger udg_trigger140= null
-        trigger udg_trigger141= null
+        trigger UpdatePvpSuddenDeathDamageTrigger= null
+        trigger ApplyPvpSuddenDeathDamageTrigger= null
         trigger udg_trigger142= null
         trigger udg_trigger143= null
         trigger udg_trigger144= null
@@ -356,6 +355,7 @@ library OldInitialization initializer main3
         trigger udg_trigger151= null
         trigger udg_trigger152= null
         trigger udg_trigger153= null
+        trigger InitializeSimultaneousDuelsTrigger= null
         unit udg_unit06= null
         unit udg_unit07= null
         unit udg_unit08= null
@@ -457,6 +457,7 @@ library OldInitialization initializer main3
         
         set DefeatedPlayers = CreateForce()
         set PotentialDuelHeroes = CreateGroup()
+        set DuelingHeroes = CreateGroup()
         set RoundCreepAbilCastChance = 0
         set i = 0
         loop
@@ -472,7 +473,8 @@ library OldInitialization initializer main3
         endloop
         set DuelingHeroGroup = CreateGroup()
         set DuelWinners = CreateGroup()
-        set udg_integer15 = 0
+        set DuelWinnerDisabled = CreateGroup()
+        set PvpGoldWinAmount = 0
         set BrPlayerCount = 0
         set i = 0
         loop
@@ -554,29 +556,28 @@ library OldInitialization initializer main3
             set Dialogs[i]= DialogCreate()
             set i = i + 1
         endloop
-        set udg_force04 = CreateForce()
-        set udg_force05 = CreateForce()
+        set Team1BettingForce = CreateForce()
+        set Team2BettingForce = CreateForce()
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans04[i]= false
+            set PlayerPlacedGoldBet[i]= false
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans05[i]= false
+            set PlayerPlacedLumberBet[i]= false
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers11[i]= 0
+            set PlayerResourceBetPercentage[i]= 0
             set i = i + 1
         endloop
         set udg_string01 = ""
         set udg_integer38 = 0
-        set udg_boolean07 = false
         set udg_force06 = CreateForce()
         set i = 0
         loop
@@ -590,10 +591,10 @@ library OldInitialization initializer main3
             set udg_integers12[i]= 0
             set i = i + 1
         endloop
-        set udg_boolean08 = false
-        set udg_integer39 = 0
+        set GameModeShort = false
+        set SuddenDeathTick = 0
         set udg_dialog04 = DialogCreate()
-        set udg_group05 = CreateGroup()
+        set RoundCreeps = CreateGroup()
         set udg_integer40 = 0
         set udg_boolean09 = false
         set udg_integer41 = 0
@@ -607,7 +608,6 @@ library OldInitialization initializer main3
         set udg_integer47 = 0
         set udg_force07 = CreateForce()
         set udg_boolean12 = false
-        set udg_integer48 = 0
         set RoundCreepChanceSlow = 0
         set RoundCreepChanceBigBadV = 0
         set RoundCreepChanceFaerieFire = 0
@@ -622,10 +622,10 @@ library OldInitialization initializer main3
         set udg_group06 = CreateGroup()
         set RoundCreepChanceBlink = 0
         set RoundCreepChanceThunderClap = 0
-        set udg_integer56 = 0
+        set BettingPlayerCount = 0
         set udg_group07 = CreateGroup()
-        set udg_group08 = CreateGroup()
-        set udg_real03 = 0
+        set GroupEmptyArenaCheck = CreateGroup()
+        set SuddenDeathDamageMultiplier = 0
         set i = 0
         loop
             exitwhen(i > 1)
@@ -638,35 +638,35 @@ library OldInitialization initializer main3
         set udg_integer60 = 0
         set udg_integer61 = 0
         set BettingModeDialog = DialogCreate()
-        set udg_boolean13 = false
+        set BettingEnabled = false
         set udg_boolean14 = false
         set udg_dialog06 = DialogCreate()
         set udg_boolean15 = false
         set HeroModeDialog = DialogCreate()
-        set udg_boolean16 = false
+        set RandomHeroMode = false
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers15[i]= 0
+            set ResourceBetPercentageGoldReward[i]= 0
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers16[i]= 0
+            set ResourceBetPercentageLumberReward[i]= 0
             set i = i + 1
         endloop
-        set udg_integer62 = 0
+        set ResourceBetPercentageCalculation = 0
         set udg_real04 = 0
         set udg_boolean17 = false
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_strings02[i]= ""
+            set ModeDescriptionBuilder[i]= ""
             set i = i + 1
         endloop
         set udg_group09 = CreateGroup()
-        set udg_boolean18 = false
+        set AllowBetSelection = false
         set udg_integer63 = 0
     endfunction
     function InitGlobals2 takes nothing returns nothing
@@ -693,9 +693,11 @@ library OldInitialization initializer main3
         
         set DefeatedPlayers = CreateForce()
         set PotentialDuelHeroes = CreateGroup()
+        set DuelingHeroes = CreateGroup()
         set RoundCreepAbilCastChance = 0
         set DuelingHeroGroup = CreateGroup()
         set DuelWinners = CreateGroup()
+        set DuelWinnerDisabled = CreateGroup()
         set BrPlayerCount = 0
 
         set BrStarted = false
@@ -753,29 +755,28 @@ library OldInitialization initializer main3
             set Dialogs[i]= DialogCreate()
             set i = i + 1
         endloop
-        set udg_force04 = CreateForce()
-        set udg_force05 = CreateForce()
+        set Team1BettingForce = CreateForce()
+        set Team2BettingForce = CreateForce()
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans04[i]= false
+            set PlayerPlacedGoldBet[i]= false
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_booleans05[i]= false
+            set PlayerPlacedLumberBet[i]= false
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers11[i]= 0
+            set PlayerResourceBetPercentage[i]= 0
             set i = i + 1
         endloop
         set udg_string01 = ""
         set udg_integer38 = 0
-        set udg_boolean07 = false
         set udg_force06 = CreateForce()
         set i = 0
         loop
@@ -789,10 +790,10 @@ library OldInitialization initializer main3
             set udg_integers12[i]= 0
             set i = i + 1
         endloop
-        set udg_boolean08 = false
-        set udg_integer39 = 0
+        set GameModeShort = false
+        set SuddenDeathTick = 0
         set udg_dialog04 = DialogCreate()
-        set udg_group05 = CreateGroup()
+        set RoundCreeps = CreateGroup()
         set udg_integer40 = 0
         set udg_boolean09 = false
         set udg_integer41 = 0
@@ -806,7 +807,6 @@ library OldInitialization initializer main3
         set udg_integer47 = 0
         set udg_force07 = CreateForce()
         set udg_boolean12 = false
-        set udg_integer48 = 0
         set RoundCreepChanceSlow = 0
         set RoundCreepChanceBigBadV = 0
         set RoundCreepChanceFaerieFire = 0
@@ -821,66 +821,66 @@ library OldInitialization initializer main3
         set udg_group06 = CreateGroup()
         set RoundCreepChanceBlink = 0
         set RoundCreepChanceThunderClap = 0
-        set udg_integer56 = 0
+        set BettingPlayerCount = 0
         set udg_group07 = CreateGroup()
-        set udg_group08 = CreateGroup()
-        set udg_real03 = 0
+        set GroupEmptyArenaCheck = CreateGroup()
+        set SuddenDeathDamageMultiplier = 0
         set udg_integer57 = 0
         set udg_integer58 = 0
         set udg_integer59 = 0
         set udg_integer60 = 0
         set udg_integer61 = 0
         set BettingModeDialog = DialogCreate()
-        set udg_boolean13 = false
+        set BettingEnabled = false
         set udg_boolean14 = false
         set udg_dialog06 = DialogCreate()
         set udg_boolean15 = false
         set HeroModeDialog = DialogCreate()
-        set udg_boolean16 = false
+        set RandomHeroMode = false
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers15[i]= 0
+            set ResourceBetPercentageGoldReward[i]= 0
             set i = i + 1
         endloop
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_integers16[i]= 0
+            set ResourceBetPercentageLumberReward[i]= 0
             set i = i + 1
         endloop
-        set udg_integer62 = 0
+        set ResourceBetPercentageCalculation = 0
         set udg_real04 = 10.00
         set udg_boolean17 = false
         set i = 0
         loop
             exitwhen(i > 1)
-            set udg_strings02[i]= ""
+            set ModeDescriptionBuilder[i]= ""
             set i = i + 1
         endloop
         set udg_group09 = CreateGroup()
-        set udg_boolean18 = false
+        set AllowBetSelection = false
         set udg_integer63 = 0
     endfunction
 
     function CreateRegions2 takes nothing returns nothing
         local weathereffect we
-        set udg_rect01 = Rect(- 4384.0,2400.0,- 2784.0,4000.0)
-        set udg_rect02 = Rect(- 800.0,2400.0,800.0,4000.0)
-        set udg_rect03 = Rect(2784.0,2400.0,4384.0,4000.0)
-        set udg_rect04 = Rect(2784.0,- 1056.0,4384.0,544.0)
-        set udg_rect05 = Rect(2784.0,- 4512.0,4384.0,- 2912.0)
-        set udg_rect06 = Rect(- 800.0,- 4512.0,800.0,- 2912.0)
-        set udg_rect07 = Rect(- 4384.0,- 4512.0,- 2784.0,- 2912.0)
-        set udg_rect08 = Rect(- 4384.0,- 1056.0,- 2784.0,544.0)
-        set udg_rect09 = Rect(- 1696.0,- 1952.0,1696.0,1440.0)
+        set RectP1Arena = Rect(- 4384.0,2400.0,- 2784.0,4000.0)
+        set RectP2Arena = Rect(- 800.0,2400.0,800.0,4000.0)
+        set RectP3Arena = Rect(2784.0,2400.0,4384.0,4000.0)
+        set RectP4Arena = Rect(2784.0,- 1056.0,4384.0,544.0)
+        set RectP5Arena = Rect(2784.0,- 4512.0,4384.0,- 2912.0)
+        set RectP6Arena = Rect(- 800.0,- 4512.0,800.0,- 2912.0)
+        set RectP7Arena = Rect(- 4384.0,- 4512.0,- 2784.0,- 2912.0)
+        set RectP8Arena = Rect(- 4384.0,- 1056.0,- 2784.0,544.0)
+        set RectMidArena = Rect(- 1696.0,- 1952.0,1696.0,1440.0)
     endfunction
 
     function Trig_Pulverize_Func001C takes nothing returns boolean
         if(not(GetUnitAbilityLevelSwapped('Awar',GetEventDamageSource())> 0))then
             return false
         endif
-        if(not(IsUnitAliveBJ(GetEventDamageSource())==true))then
+        if(not(UnitAlive(GetEventDamageSource())==true))then
             return false
         endif
         if(not(IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(GetEventDamageSource()))==true))then
@@ -895,7 +895,7 @@ library OldInitialization initializer main3
         return true
     endfunction
     function Trig_Pulverize_Func003Func004001003001001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
+        return(UnitAlive(GetFilterUnit())==true)
     endfunction
     function Trig_Pulverize_Func003Func004001003001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_GROUND)==true)
@@ -919,7 +919,7 @@ library OldInitialization initializer main3
         call UnitDamageTargetBJ(GetEventDamageSource(),GetEnumUnit(),(30.00 * I2R(GetUnitAbilityLevelSwapped('Awar',GetEventDamageSource()))),ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
     endfunction
     function Trig_Pulverize_Func003Func005001003001001 takes nothing returns boolean
-        return(IsUnitAliveBJ(GetFilterUnit())==true)
+        return(UnitAlive(GetFilterUnit())==true)
     endfunction
     function Trig_Pulverize_Func003Func005001003001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_GROUND)==true)
@@ -1061,6 +1061,6 @@ library OldCodeInit
         call ConditionalTriggerExecute(udg_trigger89)
         call ConditionalTriggerExecute(udg_trigger91)
         call ConditionalTriggerExecute(udg_trigger92)
-        call ConditionalTriggerExecute(udg_trigger103)
+        call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
     endfunction                                                 
 endlibrary

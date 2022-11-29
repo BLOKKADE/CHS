@@ -4,7 +4,7 @@ library trigger146 initializer init requires RandomShit
         if((ElimModeEnabled==true))then
             return true
         endif
-        if((udg_boolean08==true))then
+        if((GameModeShort==true))then
             return true
         endif
         return false

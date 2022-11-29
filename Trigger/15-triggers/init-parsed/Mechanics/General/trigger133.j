@@ -11,7 +11,7 @@ library trigger133 initializer init requires RandomShit
 
 
     function Trig_Player_Selection_Camera_Func002A takes nothing returns nothing
-        call CameraSetupApplyForPlayer(true,udg_camerasetup01,GetEnumPlayer(),0.00)
+        // call CameraSetupApplyForPlayer(true,udg_camerasetup01,GetEnumPlayer(),0.00)
     endfunction
 
 

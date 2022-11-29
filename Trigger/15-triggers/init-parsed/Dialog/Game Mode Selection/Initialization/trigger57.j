@@ -15,12 +15,6 @@ library trigger57 initializer init requires RandomShit
         return true
     endfunction
 
-
-    function Trig_Game_Master_Selects_Func005001 takes nothing returns boolean
-        return(InitialPlayerCount==1)
-    endfunction
-
-
     function Trig_Game_Master_Selects_Func007001001 takes nothing returns boolean
         return(GetFilterPlayer()!=udg_player03)
     endfunction
@@ -34,17 +28,20 @@ library trigger57 initializer init requires RandomShit
             if(Trig_Game_Master_Selects_Func001Func001C())then
                 set udg_player03 = ConvertedPlayer(GetForLoopIndexA())
                 exitwhen true
-            else
             endif
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
+
+        // Only the admin player votes
         set udg_boolean15 = false
         call ConditionalTriggerExecute(udg_trigger55)
-        if(Trig_Game_Master_Selects_Func005001())then
+
+        // Don't show the message if there is only 1 person in the game
+        if(InitialPlayerCount==1)then
             return
-        else
-            call DoNothing()
         endif
+
+        // Show the message to everyone except the admin player
         call DisplayTimedTextToForce(GetPlayersMatching(Condition(function Trig_Game_Master_Selects_Func007001001)),8.00,"|cffffcc00Please wait! The host is choosing a game mode.")
         call PlaySoundBJ(udg_sound25)
     endfunction

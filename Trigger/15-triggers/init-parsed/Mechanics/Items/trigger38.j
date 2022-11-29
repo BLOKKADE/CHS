@@ -1,4 +1,4 @@
-library trigger38 initializer init requires RandomShit
+/*library trigger38 initializer init requires RandomShit
 
     function Trig_Acquire_Item_Conditions takes nothing returns boolean
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
@@ -22,3 +22,4 @@ library trigger38 initializer init requires RandomShit
 
 
 endlibrary
+*/

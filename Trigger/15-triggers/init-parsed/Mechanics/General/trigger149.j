@@ -1,7 +1,7 @@
-library trigger149 initializer init requires RandomShit
+/*library trigger149 initializer init requires RandomShit
 
     function Trig_Passive_Spells_II_Conditions takes nothing returns boolean
-        if(not(IsUnitAliveBJ(GetTriggerUnit())==true))then
+        if(not(UnitAlive(GetTriggerUnit())==true))then
             return false
         endif
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)==true))then
@@ -31,6 +31,7 @@ library trigger149 initializer init requires RandomShit
 
 
     function Trig_Passive_Spells_II_Actions takes nothing returns nothing
+        call BJDebugMsg("hell0o?")
         call ForGroupBJ(GetUnitsInRangeOfLocMatching(512,GetUnitLoc(udg_unit04),Condition(function Trig_Passive_Spells_II_Func001001003)),function Trig_Passive_Spells_II_Func001A)
         call DisableTrigger(GetTriggeringTrigger())
         call CreateNUnitsAtLoc(1,'n00E',GetOwningPlayer(GetTriggerUnit()),GetUnitLoc(udg_unit04),bj_UNIT_FACING)
@@ -51,3 +52,4 @@ library trigger149 initializer init requires RandomShit
 
 
 endlibrary
+*/

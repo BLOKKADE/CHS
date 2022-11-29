@@ -12,9 +12,6 @@ library trigger119 initializer init requires RandomShit
 
 
     function Trig_End_Game_Func003Func007Func001C takes nothing returns boolean
-        if((udg_boolean07==true))then
-            return true
-        endif
         if((ElimModeEnabled==true))then
             return true
         endif
@@ -23,7 +20,7 @@ library trigger119 initializer init requires RandomShit
 
 
     function Trig_End_Game_Func003Func007Func002C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
+        if(not(GameModeShort==true))then
             return false
         endif
         if(not(RoundNumber==25))then
@@ -37,7 +34,7 @@ library trigger119 initializer init requires RandomShit
 
 
     function Trig_End_Game_Func003Func007Func003C takes nothing returns boolean
-        if(not(udg_boolean08==false))then
+        if(not(GameModeShort==false))then
             return false
         endif
         if(not(RoundNumber==50))then

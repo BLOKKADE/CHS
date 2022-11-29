@@ -1,16 +1,16 @@
-library trigger39 initializer init requires RandomShit
+/*library trigger39 initializer init requires RandomShit
 
     function Trig_Drop_Item_Func001C takes nothing returns boolean
         if(not(IsUnitType(GetTriggerUnit(),UNIT_TYPE_HERO)!=true))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())!='n00V'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())!=SUDDEN_DEATH_UNIT_ID))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())!='h015'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())!=PRIEST_1_UNIT_ID))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())!='h014'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())!=SELL_ITEM_DUMMY))then
             return false
         endif
         if(not(GetItemType(GetManipulatedItem())!=ITEM_TYPE_POWERUP))then
@@ -38,10 +38,12 @@ library trigger39 initializer init requires RandomShit
 
     function Trig_Drop_Item_Actions takes nothing returns nothing
         if(Trig_Drop_Item_Func002C())then
+            call BJDebugMsg("di a" + GetUnitName(GetTriggerUnit()))
             set udg_location02 = GetItemLoc(GetManipulatedItem())
             call UnitRemoveItemSwapped(GetManipulatedItem(),GetTriggerUnit())
             call SetItemPositionLoc(GetManipulatedItem(),udg_location02)
         else
+            call BJDebugMsg("di b" + GetUnitName(GetTriggerUnit()))
             call UnitRemoveItemSwapped(GetManipulatedItem(),GetTriggerUnit())
         endif
     endfunction
@@ -56,3 +58,4 @@ library trigger39 initializer init requires RandomShit
 
 
 endlibrary
+*/

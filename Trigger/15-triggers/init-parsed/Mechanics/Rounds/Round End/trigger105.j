@@ -10,15 +10,6 @@ library trigger105 initializer init requires RandomShit
         return true
     endfunction
 
-
-    function Trig_Bonus_Exp_Func001C takes nothing returns boolean
-        if(not(udg_boolean08==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
     function Trig_Bonus_Exp_Func001Func002001002 takes nothing returns boolean
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
     endfunction
@@ -50,7 +41,7 @@ library trigger105 initializer init requires RandomShit
 
 
     function Trig_Bonus_Exp_Actions takes nothing returns nothing
-        if(Trig_Bonus_Exp_Func001C())then
+        if(GameModeShort==true)then
             call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(GetKillingUnitBJ()),Condition(function Trig_Bonus_Exp_Func001Func002001002)),function Trig_Bonus_Exp_Func001Func002A)
         else
             call ForGroupBJ(GetUnitsOfPlayerMatching(GetOwningPlayer(GetKillingUnitBJ()),Condition(function Trig_Bonus_Exp_Func001Func001001002)),function Trig_Bonus_Exp_Func001Func001A)

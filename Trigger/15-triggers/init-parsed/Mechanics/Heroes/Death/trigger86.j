@@ -1,4 +1,4 @@
-library trigger86 initializer init requires RandomShit
+library trigger86 initializer init requires RandomShit, PetDeath
 
     function Trig_Pandaren_Dies_Func001Func001C takes nothing returns boolean
         if(not(IsUnitDeadBJ(GetTriggerUnit())==true))then
@@ -7,7 +7,7 @@ library trigger86 initializer init requires RandomShit
         if(not(IsUnitIllusionBJ(GetTriggerUnit())!=true))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())=='N00R'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())==HUNTRESS_UNIT_ID))then
             return false
         endif
         return true
@@ -21,7 +21,7 @@ library trigger86 initializer init requires RandomShit
         if(not(IsUnitIllusionBJ(GetTriggerUnit())!=true))then
             return false
         endif
-        if(not(GetUnitTypeId(GetTriggerUnit())=='N00R'))then
+        if(not(GetUnitTypeId(GetTriggerUnit())==HUNTRESS_UNIT_ID))then
             return false
         endif
         if(not(GetItemTypeId(GetManipulatedItem())=='ankh'))then

@@ -8,7 +8,7 @@ library trigger116 initializer init requires RandomShit
     endfunction
 
     function Trig_AntiStuck_Func002Func001Func005Func001001001002001 takes nothing returns boolean
-        return (IsUnitAliveBJ(GetFilterUnit())==true) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0
+        return (UnitAlive(GetFilterUnit())==true) and GetUnitAbilityLevel(GetFilterUnit(), 'Aloc') == 0
     endfunction
     
     function Trig_AntiStuck_Func002Func001Func005Func001001001002002 takes nothing returns boolean
@@ -45,18 +45,25 @@ library trigger116 initializer init requires RandomShit
 
 
     function Trig_AntiStuck_Actions takes nothing returns nothing
+        local location arenaLocation
+
         set AntiStuckPlayerId = 1
         loop
             exitwhen AntiStuckPlayerId > 8
-            if RectContainsUnit(udg_rect09, PlayerHeroes[AntiStuckPlayerId]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
-                call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition( function Trig_Hero_Dies_Func024Func001Func0010010025551) ),function Trig_Hero_Dies_Func024Func001Func001A111a)
+            if RectContainsUnit(RectMidArena, PlayerHeroes[AntiStuckPlayerId]) and CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[AntiStuckPlayerId],Condition(function Trig_AntiStuck_Func002Func001Func005Func001001001002))) != 0 then
+                call RemoveUnitsInRectCreeps(PlayerArenaRects[AntiStuckPlayerId])
             endif
     
             if(Trig_AntiStuck_Func002Func001C())then
-                call CreateNUnitsAtLoc(1,'n00T',Player(11),GetRectCenter(PlayerArenaRects[AntiStuckPlayerId]),bj_UNIT_FACING)
+                set arenaLocation = GetRectCenter(PlayerArenaRects[AntiStuckPlayerId])
+
+                call CreateNUnitsAtLoc(1,'n00T',Player(11),arenaLocation,bj_UNIT_FACING)
                 call SuspendHeroXPBJ(false,PlayerHeroes[AntiStuckPlayerId])
                 call UnitDamageTargetBJ(PlayerHeroes[AntiStuckPlayerId],GetLastCreatedUnit(),500,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_NORMAL)
                 call SuspendHeroXPBJ(true,PlayerHeroes[AntiStuckPlayerId])
+
+                call RemoveLocation(arenaLocation)
+                set arenaLocation = null
             endif
     
             set AntiStuckPlayerId = AntiStuckPlayerId + 1

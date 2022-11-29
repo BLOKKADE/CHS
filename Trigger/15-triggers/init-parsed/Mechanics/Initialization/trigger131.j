@@ -1,3 +1,4 @@
+// This finds the first player that is used to determine game modes
 library trigger131 initializer init requires RandomShit
 
     function Trig_Select_Game_Master_Func001Func001C takes nothing returns boolean

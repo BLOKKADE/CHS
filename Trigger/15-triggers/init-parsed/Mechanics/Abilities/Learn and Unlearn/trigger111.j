@@ -1,14 +1,11 @@
-library trigger111 initializer init requires RandomShit, Functions
+library trigger111 initializer init requires RandomShit, Functions, CustomEvent, AbilityCommand
 
     globals
         unit BuyingUnit = null
     endglobals
 
     function Trig_Learn_Ability_Conditions takes nothing returns boolean
-        if(not('I00P'!=GetItemTypeId(GetManipulatedItem())))then
-            return false
-        endif
-        return true
+        return GetAbilityFromItem(GetItemTypeId(GetManipulatedItem())) != 0
     endfunction
 
 
@@ -106,7 +103,7 @@ library trigger111 initializer init requires RandomShit, Functions
 
 
     function Trig_Learn_Ability_Func008Func002Func001Func001Func005Func001C takes nothing returns boolean
-        if((GetUnitTypeId(BuyingUnit)=='H004'))then
+        if((GetUnitTypeId(BuyingUnit)==MORTAR_TEAM_UNIT_ID))then
             return true
         endif
         if((GetUnitTypeId(BuyingUnit)=='O005'))then
@@ -324,6 +321,9 @@ library trigger111 initializer init requires RandomShit, Functions
         local integer i = GetUnitAbilityLevel(u, abil) + 1
         local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') )
         local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
+        local location unitLocation = GetUnitLoc(u)
+        local customEvent e = 0
+
         //call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
         if maxBuy and i < 30 then
             loop
@@ -349,10 +349,25 @@ library trigger111 initializer init requires RandomShit, Functions
         endif
 
         call SetupDummySpell(u, abil, i, new)
+
+        if new then
+            call InitializeAbilityCommand(u, abil)
+        endif
+
+        call UnitAddAbility(u, abil)
+        set e = customEvent.create()
+        set e.EventUnit = u
+        set e.LearnedAbilityIsNew = new
+        set e.EventSpellId = abil
+        call DispachEvent(CUSTOM_EVENT_LEARN_ABILITY, e)
+
         call FuncEditParam(abil,u)
-        call AddSpecialEffectLocBJ(GetUnitLoc(u),"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
+        call AddSpecialEffectLocBJ(unitLocation,"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
         call DestroyEffectBJ(GetLastCreatedEffectBJ())
         call DisplayTimedTextToPlayer(p, 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(abil, GetUnitAbilityLevel(u, abil) - 1))
+
+        call RemoveLocation(unitLocation)
+        set unitLocation = null
     endfunction
 
 
@@ -422,7 +437,7 @@ library trigger111 initializer init requires RandomShit, Functions
             return
         endif
         set abilLevel = GetUnitAbilityLevel(BuyingUnit, BoughtAbility)
-        if HoldCtrl[GetPlayerId(GetOwningPlayer(BuyingUnit))] then
+        if HoldShift[GetPlayerId(GetOwningPlayer(BuyingUnit))] /*and not ARLearningAbil*/ then
             set maxAbil = true
         endif
 
