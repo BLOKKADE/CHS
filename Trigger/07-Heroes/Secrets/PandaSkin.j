@@ -29,7 +29,7 @@ library PandaSkin initializer init
                 set pandaCounter = pandaCounter + 1
             endif
 
-            if pandaCounter >= 3 then
+            if pandaCounter >= 4 then
                 set PandaSkinEnabled.boolean[GetHandleId(u)] = true
                 call BlzSetUnitSkin(u, 'Npbm')
                 call PlaySoundOnUnitBJ(udg_sounds01[GetConvertedPlayerId(GetOwningPlayer(u))], 100, u) 
