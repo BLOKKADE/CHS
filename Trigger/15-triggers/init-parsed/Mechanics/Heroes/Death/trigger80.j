@@ -1,6 +1,6 @@
 library trigger80 initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath
 
-    function HeroCheck takes unit u returns boolean
+    function IsUnitNotHeroOrCreep takes unit u returns boolean
         return IsUnitType(u, UNIT_TYPE_HERO) == false or GetOwningPlayer(u) == Player(8) or GetOwningPlayer(u) == Player(11) or IsUnitInGroup(u, DuelingHeroGroup)
     endfunction
 
@@ -40,7 +40,7 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(u))
 
         //call BJDebugMsg(GetUnitName(u))
-        if not HeroCheck(u) then
+        if IsUnitNotHeroOrCreep(u) then
             set u = null
             return false
         endif
