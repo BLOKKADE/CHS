@@ -100,9 +100,9 @@ library trigger89 initializer init requires RandomShit
         
         call ForForce(GetPlayersMatching(Condition(function Trig_Map_Initialization_Func010001001)),function Trig_Map_Initialization_Func010A)
         if(Trig_Map_Initialization_Func011C())then
-            call DisableTrigger(udg_trigger118)
-            call DisableTrigger(udg_trigger80)
-            call EnableTrigger(udg_trigger81)
+            call DisableTrigger(AllPlayersDeadTrigger)
+            call DisableTrigger(PlayerHeroDeathTrigger)
+            call EnableTrigger(HeroDiesInRoundTrigger)
         else
         endif
         call ConditionalTriggerExecute(udg_trigger147)

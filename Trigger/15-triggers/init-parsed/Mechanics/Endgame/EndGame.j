@@ -133,10 +133,10 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         local PlayerStats ps
 
         set udg_boolean11 = true
-        call DisableTrigger(udg_trigger118)
-        call DisableTrigger(udg_trigger80)
+        call DisableTrigger(AllPlayersDeadTrigger)
+        call DisableTrigger(PlayerHeroDeathTrigger)
         if(Trig_Victory_Func006C())then
-            call EnableTrigger(udg_trigger81)
+            call EnableTrigger(HeroDiesInRoundTrigger)
         else
         endif
         call ConditionalTriggerExecute(udg_trigger119)
@@ -150,7 +150,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
                 call DisplayTimedTextToForce(GetPlayersAll(),30,GameDescription)
                 call DisplayTimedTextToForce(GetPlayersAll(),30,((GetPlayerNameColour(WinningPlayer)+ " |cffffcc00survived longer than all other players! Congratulations!!")))
 
-                if (CountPlayersInForceBJ(FORCE_PLAYING) > 1) then
+                if BrStarted and (CountPlayersInForceBJ(FORCE_PLAYING) > 1) then
                     // Update the player's stats that they won a BR
                     set ps = PlayerStats.forPlayer(WinningPlayer)
                     call ps.addBRWin()

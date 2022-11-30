@@ -5,7 +5,7 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus, Voti
     endglobals
 
     function Trig_Level_Completed_Func001Func001001 takes nothing returns boolean
-        return (IsTriggerEnabled(udg_trigger119)!=true) or (udg_boolean11!=true and IsTriggerEnabled(udg_trigger118)!=true and InitialPlayerCount!=1)
+        return (IsTriggerEnabled(udg_trigger119)!=true) or (udg_boolean11!=true and IsTriggerEnabled(AllPlayersDeadTrigger)!=true and InitialPlayerCount!=1)
     endfunction
 
     function Trig_Level_Completed_Func001Func018Func002C takes nothing returns boolean
@@ -136,8 +136,8 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus, Voti
 
 
     private function init takes nothing returns nothing
-        set udg_trigger108 = CreateTrigger()
-        call TriggerAddAction(udg_trigger108,function Trig_Level_Completed_Actions)
+        set AllPlayersCompletedRoundTrigger = CreateTrigger()
+        call TriggerAddAction(AllPlayersCompletedRoundTrigger,function Trig_Level_Completed_Actions)
     endfunction
 
 

@@ -82,10 +82,10 @@ library trigger107 initializer init requires RandomShit
 
 
     private function init takes nothing returns nothing
-        set udg_trigger107 = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(udg_trigger107,EVENT_PLAYER_UNIT_DEATH)
-        call TriggerAddCondition(udg_trigger107,Condition(function Trig_Complete_Level_Player_Conditions))
-        call TriggerAddAction(udg_trigger107,function Trig_Complete_Level_Player_Actions)
+        set PlayerCompleteRoundTrigger = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(PlayerCompleteRoundTrigger,EVENT_PLAYER_UNIT_DEATH)
+        call TriggerAddCondition(PlayerCompleteRoundTrigger,Condition(function Trig_Complete_Level_Player_Conditions))
+        call TriggerAddAction(PlayerCompleteRoundTrigger,function Trig_Complete_Level_Player_Actions)
     endfunction
 
 

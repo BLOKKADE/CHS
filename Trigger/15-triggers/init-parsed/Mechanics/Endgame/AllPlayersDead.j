@@ -19,7 +19,7 @@ library trigger118 initializer init requires RandomShit
     function Trig_Defeat_Actions takes nothing returns nothing
         call DisableTrigger(GetTriggeringTrigger())
         call DisableTrigger(udg_trigger106)
-        call DisableTrigger(udg_trigger107)
+        call DisableTrigger(PlayerCompleteRoundTrigger)
         call CinematicFilterGenericBJ(2,BLEND_MODE_BLEND,"ReplaceableTextures\\CameraMasks\\DreamFilter_Mask.blp",50.00,0.00,0.00,100,0,0,0,0)
         call DisplayTimedTextToForce(GetPlayersAll(),30,"|cffffcc00All heroes were slain and everyone was forced to admit defeat!|r")
         call EndThematicMusicBJ()
@@ -33,9 +33,9 @@ library trigger118 initializer init requires RandomShit
 
 
     private function init takes nothing returns nothing
-        set udg_trigger118 = CreateTrigger()
-        call TriggerAddCondition(udg_trigger118,Condition(function Trig_Defeat_Conditions))
-        call TriggerAddAction(udg_trigger118,function Trig_Defeat_Actions)
+        set AllPlayersDeadTrigger = CreateTrigger()
+        call TriggerAddCondition(AllPlayersDeadTrigger,Condition(function Trig_Defeat_Conditions))
+        call TriggerAddAction(AllPlayersDeadTrigger,function Trig_Defeat_Actions)
     endfunction
 
 

@@ -216,7 +216,7 @@ library OldInitialization initializer main3
         trigger udg_trigger13= null
         trigger udg_trigger14= null
         trigger udg_trigger15= null
-        trigger udg_trigger16= null
+        trigger HeroPassivePetDeathTrigger= null
         trigger udg_trigger17= null
         trigger udg_trigger18= null
         trigger udg_trigger19= null
@@ -280,8 +280,8 @@ library OldInitialization initializer main3
         trigger udg_trigger77= null
         trigger udg_trigger78= null
         trigger udg_trigger79= null
-        trigger udg_trigger80= null
-        trigger udg_trigger81= null
+        trigger PlayerHeroDeathTrigger= null
+        trigger HeroDiesInRoundTrigger= null
         trigger udg_trigger82= null
         trigger udg_trigger83= null
         trigger udg_trigger84= null
@@ -307,8 +307,8 @@ library OldInitialization initializer main3
         trigger CreepTypesTrigger= null
         trigger udg_trigger105= null
         trigger udg_trigger106= null
-        trigger udg_trigger107= null
-        trigger udg_trigger108= null
+        trigger PlayerCompleteRoundTrigger= null
+        trigger AllPlayersCompletedRoundTrigger= null
         trigger udg_trigger109= null
         trigger udg_trigger110= null
         trigger udg_trigger111= null
@@ -317,7 +317,7 @@ library OldInitialization initializer main3
         trigger udg_trigger115= null
         trigger udg_trigger116= null
         trigger PvpCountdownTimerTrigger= null
-        trigger udg_trigger118= null
+        trigger AllPlayersDeadTrigger= null
         trigger udg_trigger119= null
         trigger udg_trigger120= null
         trigger udg_trigger121= null

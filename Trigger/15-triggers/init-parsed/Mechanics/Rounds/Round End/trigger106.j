@@ -68,7 +68,7 @@ library trigger106 initializer init requires RandomShit, Functions
 
         //remove end round dummy
         call DeleteUnit(GetTriggerUnit())
-        call ConditionalTriggerExecute(udg_trigger108)
+        call ConditionalTriggerExecute(AllPlayersCompletedRoundTrigger)
     endfunction
 
 
