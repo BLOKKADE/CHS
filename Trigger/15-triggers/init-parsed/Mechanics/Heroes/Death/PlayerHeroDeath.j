@@ -104,6 +104,8 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         call AllowSinglePlayerCommands()
         
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
+        call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1])
+        
         call DisableTrigger(HeroPassivePetDeathTrigger)
         call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function DeleteUnits)
         call EnableTrigger(HeroPassivePetDeathTrigger)

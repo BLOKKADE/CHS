@@ -18,6 +18,7 @@ library OldInitialization initializer main3
         //default variables
         //Todo set default values from initglobals2 and 3 here so those functions can be removed
         unit array PlayerHeroes
+        group OnPeriodGroup
         integer BoughtAbility= 0
         integer array HeroAbilityCount
         integer array CreepUnitTypeIds
@@ -426,6 +427,7 @@ library OldInitialization initializer main3
     function InitGlobals3 takes nothing returns nothing
         local integer i = 0
         set BoughtAbility = 0	
+        set OnPeriodGroup = NewGroup()
         set roundAbilities = Table.create()
         //call BJDebugMsg("ra create")
         set i = 0

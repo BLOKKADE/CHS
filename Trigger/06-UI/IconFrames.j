@@ -224,7 +224,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						endif       
 					else
 						set SpellU = SelectedUnit[PlID]
-						set i3 = roundAbilities[NumButton - 100]
+						set i3 = roundAbilities.integer[NumButton - 100]
 						set ToolTipS = BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 )
 
 						if GetLocalPlayer() == p then	
