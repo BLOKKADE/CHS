@@ -474,6 +474,8 @@ scope LongPeriodCheck initializer init
                 call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + r1)
             endif
         endif
+
+        set u = null
     endfunction
 
     function Trig_LongPeriodCheck_Actions takes nothing returns nothing
