@@ -1014,6 +1014,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
             set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
             set PlayerHeroes[GetPlayerId(p) + 1] = u
+            call GroupAddUnit(OnPeriodGroup, u)
     
             call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
     
@@ -1051,6 +1052,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
             set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
             set PlayerHeroes[GetPlayerId(p) + 1] = u
+            call GroupAddUnit(OnPeriodGroup, u)
             
             call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
 
