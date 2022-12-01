@@ -239,7 +239,7 @@ scope LongPeriodCheck initializer init
             call FunUpdateSkill(II)
             set u = PlayerHeroes[II]
             set hid = GetHandleId(u)
-            if GetWidgetLife(u) > 0.405 then
+            if UnitAlive(u) then
                 call FunctionAttackSpeedA(u)
 
                 //Guide To Rune Mastery
