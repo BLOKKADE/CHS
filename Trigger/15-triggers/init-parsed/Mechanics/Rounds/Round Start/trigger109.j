@@ -10,7 +10,6 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
     function Trig_Start_Level_Func011A takes nothing returns nothing
         call SetPlayerStateBJ(GetEnumPlayer(),PLAYER_STATE_RESOURCE_FOOD_USED,RoundNumber)
-        set ShowCreepAbilButton[GetPlayerId(GetEnumPlayer())] = false
         call ResourseRefresh(GetEnumPlayer()) 
     endfunction
 
@@ -53,6 +52,7 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
     function StartFunctionSpells takes nothing returns nothing
         call StartFunctionSpell(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],3)
+        set ShowCreepAbilButton[GetPlayerId(GetEnumPlayer())] = false
         call SetCurrentlyFighting(GetEnumPlayer(), true) 
     endfunction
 
