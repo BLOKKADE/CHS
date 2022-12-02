@@ -82,41 +82,18 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
     endfunction
 
     //removes all of a players units
-    function Trig_Hero_Dies_Func008A takes nothing returns nothing
+    private function DeleteUnits takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction
 
-
-    function Trig_Hero_Dies_Func011C takes nothing returns boolean
-        if(not(GetPlayerController(GetOwningPlayer(GetTriggerUnit()))==MAP_CONTROL_USER))then
-            return false
-        endif
-        return true
-    endfunction
-
-    function Trig_Hero_Dies_Func016C takes nothing returns boolean
-        if(not(BrStarted==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-
-    function Trig_Hero_Dies_Func024Func001C takes nothing returns boolean
-        if(not(RectContainsUnit(PlayerArenaRects[udg_integer42],GetTriggerUnit())==true))then
-            return false
-        endif
-        return true
-    endfunction
-
-    function Trig_Hero_Dies_Func024Func001Func001001002 takes nothing returns boolean
+    private function FilterCreeps takes nothing returns boolean
         return(GetOwningPlayer(GetFilterUnit())==Player(11))
     endfunction
 
-    function Trig_Hero_Dies_Func024Func001Func001A takes nothing returns nothing
-        call DisableTrigger(udg_trigger107)
+    private function DeleteUnitsFromRect takes nothing returns nothing
+        call DisableTrigger(PlayerCompleteRoundTrigger)
         call DeleteUnit(GetEnumUnit())
-        call EnableTrigger(udg_trigger107)
+        call EnableTrigger(PlayerCompleteRoundTrigger)
     endfunction
 
     function Trig_Hero_Dies_Actions takes nothing returns nothing
@@ -127,22 +104,24 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         call AllowSinglePlayerCommands()
         
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
-        call DisableTrigger(udg_trigger16)
-        call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function Trig_Hero_Dies_Func008A)
-        call EnableTrigger(udg_trigger16)
+        call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1])
+        
+        call DisableTrigger(HeroPassivePetDeathTrigger)
+        call ForGroupBJ(GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit())),function DeleteUnits)
+        call EnableTrigger(HeroPassivePetDeathTrigger)
     
-        if(Trig_Hero_Dies_Func011C())then
+        if GetPlayerController(GetOwningPlayer(GetTriggerUnit()))==MAP_CONTROL_USER then
             call DialogSetMessageBJ(udg_dialog04,"Defeat!")
             call DialogDisplayBJ(true,udg_dialog04,GetOwningPlayer(GetTriggerUnit()))
         else
             call CustomDefeatBJ(GetOwningPlayer(GetTriggerUnit()),"Defeat!")
         endif
     
-        if(Trig_Hero_Dies_Func016C())then
+        if BrStarted then
             call ConditionalTriggerExecute(EndGameTrigger)
         endif
     
-        call ConditionalTriggerExecute(udg_trigger118)
+        call ConditionalTriggerExecute(AllPlayersDeadTrigger)
         call TriggerSleepAction(2)
         call StopSoundBJ(udg_sound13,true)
         call StopSoundBJ(udg_sound12,false)
@@ -151,21 +130,21 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         set udg_integer42 = 1
         loop
             exitwhen udg_integer42 > 8
-            if(Trig_Hero_Dies_Func024Func001C())then
-                call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer42],Condition(function Trig_Hero_Dies_Func024Func001Func001001002)),function Trig_Hero_Dies_Func024Func001Func001A)
+            if RectContainsUnit(PlayerArenaRects[udg_integer42],GetTriggerUnit()) then
+                call ForGroupBJ(GetUnitsInRectMatching(PlayerArenaRects[udg_integer42],Condition(function FilterCreeps)),function DeleteUnitsFromRect)
             endif
             set udg_integer42 = udg_integer42 + 1
         endloop
     
-        call ConditionalTriggerExecute(udg_trigger108)
+        call ConditionalTriggerExecute(AllPlayersCompletedRoundTrigger)
     endfunction
 
 
     private function init takes nothing returns nothing
-        set udg_trigger80 = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(udg_trigger80,EVENT_PLAYER_UNIT_DEATH)
-        call TriggerAddCondition(udg_trigger80,Condition(function Trig_Hero_Dies_Conditions))
-        call TriggerAddAction(udg_trigger80,function Trig_Hero_Dies_Actions)
+        set PlayerHeroDeathTrigger = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(PlayerHeroDeathTrigger,EVENT_PLAYER_UNIT_DEATH)
+        call TriggerAddCondition(PlayerHeroDeathTrigger,Condition(function Trig_Hero_Dies_Conditions))
+        call TriggerAddAction(PlayerHeroDeathTrigger,function Trig_Hero_Dies_Actions)
     endfunction
 
 

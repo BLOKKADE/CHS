@@ -14,7 +14,7 @@ library TempAbilSystem initializer init requires BuffLevel
         integer abilId
 
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop or GetBuffLevel(this.source, this.abilId) == 0 then
+            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop or GetBuffLevel(this.source, this.abilId) == 0 or GetUnitAbilityLevel(this.source, this.abilId) == 0 then
                 call this.stopPeriodic()
                 call this.destroy()
             endif

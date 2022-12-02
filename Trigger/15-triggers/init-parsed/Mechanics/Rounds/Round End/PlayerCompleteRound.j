@@ -41,10 +41,10 @@ library trigger107 initializer init requires RandomShit
         local integer pid = GetPlayerId(p)
         local location arenaLocation = GetRectCenter(GetPlayableMapRect())
         local real duration = (T32_Tick - RoundStartTick) / 32
-        local real playerCountSub = RMaxBJ(8 - (0.5 * duration), 0)
-        local integer roundClearXpBonus = R2I(playerCountSub * (5 * Pow(RoundNumber, 2)))
+        local real playerCountSub = RMaxBJ(7 - (0.5 * duration), 0)
+        local integer roundClearXpBonus = R2I(playerCountSub * (4 * Pow(RoundNumber, 2)))
 
-        if GetUnitTypeId(GetKillingUnit()) == TINKER_UNIT_ID then
+        if GetUnitTypeId(PlayerHeroes[pid + 1]) == TINKER_UNIT_ID then
             set roundClearXpBonus = roundClearXpBonus * 2
         endif
 
@@ -82,10 +82,10 @@ library trigger107 initializer init requires RandomShit
 
 
     private function init takes nothing returns nothing
-        set udg_trigger107 = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(udg_trigger107,EVENT_PLAYER_UNIT_DEATH)
-        call TriggerAddCondition(udg_trigger107,Condition(function Trig_Complete_Level_Player_Conditions))
-        call TriggerAddAction(udg_trigger107,function Trig_Complete_Level_Player_Actions)
+        set PlayerCompleteRoundTrigger = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(PlayerCompleteRoundTrigger,EVENT_PLAYER_UNIT_DEATH)
+        call TriggerAddCondition(PlayerCompleteRoundTrigger,Condition(function Trig_Complete_Level_Player_Conditions))
+        call TriggerAddAction(PlayerCompleteRoundTrigger,function Trig_Complete_Level_Player_Actions)
     endfunction
 
 

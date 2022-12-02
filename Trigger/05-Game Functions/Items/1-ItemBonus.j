@@ -292,6 +292,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Archmage Staff
 		elseif itemId == 'I086' then
 			call AddUnitAbsoluteBonusCount(u,Element_Water, diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Arcane, diff)
 
 			//Wizards Gemstone
 		elseif itemId == 'I0BQ' then
@@ -310,7 +311,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitAbsoluteBonusCount(u,Element_Dark, diff)
 
 			//Panda Relic
-		elseif itemId == 'I086' then
+		elseif itemId == 'I05L' then
 			call AddUnitAbsoluteBonusCount(u,Element_Blood, diff)
 			call AddUnitAbsoluteBonusCount(u,Element_Water, diff)
 			call AddUnitAbsoluteBonusCount(u,Element_Wind, diff)

@@ -70,7 +70,7 @@ library AbsoluteDark initializer init requires RandomShit, UnitHelpers
 
         call ApplyAbsDarkBonus(absDarkBonuses, target, BONUS_BLOCK, 5 * bonus)
         call ApplyAbsDarkBonus(absDarkBonuses, target, BONUS_MAGICRES, 0.2 * bonus)
-        call ApplyAbsDarkBonus(absDarkBonuses, target, BONUS_ARMOR, 2 * bonus)
+        call ApplyAbsDarkBonus(absDarkBonuses, target, BONUS_ARMOR, bonus)
 
         set AbsDarkBonusTable[GetHandleId(source)].integer[GetHandleId(target)] = absDarkBonuses
     endfunction

@@ -28,10 +28,10 @@ library trigger16 initializer init requires RandomShit
 
 
     private function init takes nothing returns nothing
-        set udg_trigger16 = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(udg_trigger16,EVENT_PLAYER_UNIT_DEATH)
-        call TriggerAddCondition(udg_trigger16,Condition(function Trig_Faerie_Dragon_or_Wisp_Dies_Conditions))
-        call TriggerAddAction(udg_trigger16,function Trig_Faerie_Dragon_or_Wisp_Dies_Actions)
+        set HeroPassivePetDeathTrigger = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(HeroPassivePetDeathTrigger,EVENT_PLAYER_UNIT_DEATH)
+        call TriggerAddCondition(HeroPassivePetDeathTrigger,Condition(function Trig_Faerie_Dragon_or_Wisp_Dies_Conditions))
+        call TriggerAddAction(HeroPassivePetDeathTrigger,function Trig_Faerie_Dragon_or_Wisp_Dies_Actions)
     endfunction
 
 

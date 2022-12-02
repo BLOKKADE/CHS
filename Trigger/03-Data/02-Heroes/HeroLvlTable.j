@@ -51,7 +51,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(LIEUTENANT_UNIT_ID, 0, "|cffe7544aStrength bonus|r: ,0,")
         call SetBonusStr(LIEUTENANT_UNIT_ID, 1, "|cffd6e049Agility bonus|r: ,0,")
         call SetBonusStr(LIEUTENANT_UNIT_ID, 2, "|cff4daed4Intelligence bonus|r: ,0,")
-        call SetBonusStr(LIEUTENANT_UNIT_ID, 3, "|cff51d44dtats on level up|r: ,0,")
+        call SetBonusStr(LIEUTENANT_UNIT_ID, 3, "|cff51d44dStats on level up|r: ,0,")
 
         call SetBonusStr(ABOMINATION_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
 

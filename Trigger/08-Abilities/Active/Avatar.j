@@ -47,7 +47,7 @@ library Avatar initializer init requires NewBonus, RandomShit, RemoveBuffDelay
     
         static method create takes unit source, integer level returns thistype
             local thistype this = thistype.setup()
-            call RemoveBuffsDelayed(source, 0, 0.2)
+            call RemoveBuffsDelayed(source, 1, 0.2)
             set this.source = source
             set this.level = level
             set this.damageBonus = 0 - 50 + (80 * level)

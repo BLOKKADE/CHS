@@ -88,6 +88,7 @@ library trigger129 initializer init requires RandomShit
             call AdjustPlayerStateBJ(5,GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)
             call ResourseRefresh(GetTriggerPlayer() )
             set PlayerHeroes[GetConvertedPlayerId(GetTriggerPlayer())]= GetLastCreatedUnit()
+            call GroupAddUnit(OnPeriodGroup, GetLastCreatedUnit())
             call UnitAddItemByIdSwapped('ankh',GetLastCreatedUnit())
             call UnitAddItemByIdSwapped('pghe',GetLastCreatedUnit())
             call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
