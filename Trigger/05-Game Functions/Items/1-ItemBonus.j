@@ -251,7 +251,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Snowww's wand
 		elseif itemId == 'I07V' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 60 * uniqueDiff)
-		
+			call AddUnitAbsoluteBonusCount(u, Element_Arcane, uniqueDiff)
 			//Holy Shield
 		elseif itemId == 'I07W' then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
