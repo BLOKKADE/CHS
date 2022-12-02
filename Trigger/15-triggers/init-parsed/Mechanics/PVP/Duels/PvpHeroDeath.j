@@ -117,6 +117,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     private function EndDuelActionsForLosingPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
+
+        call ps.addPVPLoss()
+        call UpdateMultiboardPVPCounts(currentPlayer) // Update leaderboard values
 
         // Don't add the loser twice
         if (not IsPlayerInForce(currentPlayer, DuelLosers)) then

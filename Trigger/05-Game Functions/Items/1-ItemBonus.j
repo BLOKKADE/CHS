@@ -507,11 +507,19 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 	private function ItemDrop takes nothing returns nothing
 		//call ItemChange(EVENT_ITEM_DROP)
 		call SetupItem(GetTriggerUnit(), GetManipulatedItem(), EVENT_ITEM_DROP)
+
+		// Update multiboard
+		call UpdatePlayerAbilities(GetOwningPlayer(GetTriggerUnit()))
+		call UpdatePlayerItems(GetOwningPlayer(GetTriggerUnit()))
 	endfunction
 
 	private function ItemPickup takes nothing returns nothing
 		//call ItemChange(EVENT_ITEM_PICKUP)
 		call SetupItem(GetTriggerUnit(), GetManipulatedItem(), EVENT_ITEM_PICKUP)
+		
+		// Update multiboard
+		call UpdatePlayerAbilities(GetOwningPlayer(GetTriggerUnit()))
+		call UpdatePlayerItems(GetOwningPlayer(GetTriggerUnit()))
 	endfunction
 
 	//===========================================================================

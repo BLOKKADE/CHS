@@ -1,4 +1,4 @@
-library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTome, LearnAbsolute
+library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTome, LearnAbsolute, MultiboardSystem
 
     globals
         Table GloryRegenLevel
@@ -619,6 +619,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         if GetItemType(It) == ITEM_TYPE_POWERUP then
             call RemoveItem(It)
         endif
+
+        // Update multiboard
+        call UpdatePlayerAbilities(GetOwningPlayer(u))
+        call UpdatePlayerItems(GetOwningPlayer(u))
 
         call ResourseRefresh(GetOwningPlayer(u)) 
         set It = null

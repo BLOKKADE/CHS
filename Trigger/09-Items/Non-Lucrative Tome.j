@@ -98,6 +98,7 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
                 call GenerateDraftSpells(pid+1, udg_Draft_NODraftSpells) 
             endif
 
+            call UpdatePlayerAbilities(GetOwningPlayer(u))
             //call SpellsLearnedDebug("post nl", u, 0)
 
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", u, "origin"))

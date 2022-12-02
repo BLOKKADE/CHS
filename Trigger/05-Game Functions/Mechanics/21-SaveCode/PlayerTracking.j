@@ -48,6 +48,8 @@ library PlayerTracking initializer init requires OldInitialization
         private boolean HasLoaded = false
         private unit Pet = null
         private integer PetLastSwappedAt = 0
+        private integer PVPWins = 0 // PVP wins for the current game
+        private integer PVPLosses = 0 // PVP losses for the current game
 
         // --- Temporary values that are not saved to the load code
 
@@ -79,6 +81,14 @@ library PlayerTracking initializer init requires OldInitialization
         
         public method getPetLastSwappedAt takes nothing returns integer
             return this.PetLastSwappedAt
+        endmethod
+
+        public method getPVPWins takes nothing returns integer
+            return this.PVPWins
+        endmethod
+
+        public method getPVPLosses takes nothing returns integer
+            return this.PVPLosses
         endmethod
 
         public method setCurrentHatEffect takes effect value returns nothing
@@ -337,6 +347,8 @@ library PlayerTracking initializer init requires OldInitialization
         endmethod
 
         public method addPVPWin takes nothing returns nothing
+            set this.PVPWins = this.PVPWins + 1
+
             // Random
             if (AbilityMode == 0) then
                 set this.ARPVPAllWins = this.tryIncrementValue(this.ARPVPAllWins, "All Random PVP All Wins")
@@ -350,6 +362,10 @@ library PlayerTracking initializer init requires OldInitialization
                 set this.DraftPVPAllWins = this.tryIncrementValue(this.DraftPVPAllWins, "Draft PVP All Wins")
                 set this.DraftPVPSeasonWins = this.tryIncrementValue(this.DraftPVPSeasonWins, "Draft PVP Season Wins")
             endif
+        endmethod
+
+        public method addPVPLoss takes nothing returns nothing
+            set this.PVPLosses = this.PVPLosses + 1
         endmethod
 
         public method resetSeasonStats takes nothing returns nothing
