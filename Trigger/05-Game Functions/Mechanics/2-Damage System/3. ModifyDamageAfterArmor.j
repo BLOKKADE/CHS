@@ -22,24 +22,9 @@ scope ModifyDamageAfterArmor initializer init
 
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
-        //Strong Chest Mail
-        if UnitHasItemType(DamageTarget,'I07P') and IsPhysDamage() and IsHeroUnitId(DamageSourceTypeId) == false then   
-            set Damage.index.amount = Damage.index.amount / 2
-        endif
-
         //Fishing Rod
-        if (not IsOnHitDamage()) and UnitHasItemType(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
-            //call BJDebugMsg("dist 1: " + R2S(DistanceBetweenUnits(DamageSource, DamageTarget)))
-            if DistanceBetweenUnits(DamageSource, DamageTarget) < 1200 and DistanceBetweenUnits(DamageSource, DamageTarget) > 80 then
-                set r1 = (bj_RADTODEG * GetAngleToTarget(DamageSource, DamageTarget)) + 180
-                set r2 = CalcX(GetUnitX(DamageTarget), r1, 120)
-                set r3 = CalcY(GetUnitY(DamageTarget), r1, 120)
-                //call BJDebugMsg("dist 2: " + R2S(CalculateDistance(GetUnitX(DamageSource), r2, GetUnitY(DamageSource), r3)))
-                if CalculateDistance(GetUnitX(DamageSource), r2, GetUnitY(DamageSource), r3) > 60 then
-                    call SetUnitX(DamageSource, r2)
-                    call SetUnitY(DamageSource, r3)
-                endif
-            endif
+        if UnitHasItemType(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
+            call FishingRod(DamageSource, DamageTarget)
         endif
 
         /*//Aura of Vulnerability
