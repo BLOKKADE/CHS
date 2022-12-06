@@ -110,6 +110,11 @@ scope ModifyDamageBeforeArmor initializer init
             endif 
         endif 
 
+        //Strong Chestmail
+        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO)) then
+            set Damage.index.damage = StrongChestMailDamage(DamageTargetId, Damage.index.damage)
+        endif
+
         //Divine Bubble
         set i1 = GetUnitAbilityLevel(DamageTarget,DIVINE_BUBBLE_ABILITY_ID)
         if i1 > 0 or UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
@@ -148,7 +153,8 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        if Damage.index.damage == 0 then
+        if Damage.index.damage <= 0 then
+            set Damage.index.damage = 0
             return
         endif
 
@@ -394,6 +400,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif 
 
         if Damage.index.damage <= 0 then
+            set Damage.index.damage = 0
             return
         endif
 
