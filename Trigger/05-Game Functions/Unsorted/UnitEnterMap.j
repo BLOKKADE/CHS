@@ -199,6 +199,11 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         local boolean realUnit = IsUnitIllusion(u) == false
         local integer hid = GetHandleId(u)
 
+        //Summons
+        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
+            call SummonUnit(u)
+        endif
+
         //Illusion
         if (not realUnit) and IsUnitType(u, UNIT_TYPE_HERO) then
             call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid + 1], false), false)
@@ -276,11 +281,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         //Set base luck
         call AddUnitCustomState(u, BONUS_LUCK, 1)
-
-        //Summons
-        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
-            call SummonUnit(u)
-        endif
 
         set u = null
     endfunction
