@@ -456,7 +456,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         set VoteEventTrigger = CreateTrigger()
 
         // Create the main frame, hide it by default. All vote elements use this frame as the parent
-        set MainVotingFrameHandle = BlzCreateFrame("CheckListBox", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
+        set MainVotingFrameHandle = BlzCreateFrame("CheckListBox", BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0) 
         call BlzFrameSetVisible(MainVotingFrameHandle, false)
 
         // All buttons use the same trigger. However everything has a unique id to handle later on
