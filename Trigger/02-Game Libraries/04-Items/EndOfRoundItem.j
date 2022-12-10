@@ -32,7 +32,7 @@ library EndOfRoundItem initializer init
     endfunction
 
     function RegisterEndOfRoundItem takes integer pid, item it returns nothing
-        if it != null then
+        if it != null and (not CheckEndOfRoundItem(it)) then
             if CurrentlyFighting[pid] or RectContainsUnit(RectMidArena, PlayerHeroes[pid + 1]) == false then
                 call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Your |cff68eef3" + GetItemName(it) + "|r will start working |cff6cff40next round|r.")
                 set RoundEndItemData[GetHandleId(it)] = RoundNumber
