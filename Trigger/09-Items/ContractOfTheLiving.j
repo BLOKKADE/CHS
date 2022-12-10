@@ -1,4 +1,4 @@
-library ContractLiving initializer init requires TempAbilSystem, RandomShit, HeroAbilityCooldown
+library ContractLiving initializer init requires TempAbilSystem, RandomShit, AbilityCooldown
 
     globals
         Table ContractLivingTick

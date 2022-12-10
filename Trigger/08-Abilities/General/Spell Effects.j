@@ -15,10 +15,6 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == 'A049' then
             call CastScrollOfTransformation(caster)
             return true
-        //Staff of Lightning
-        elseif abilId == 'A09T' then
-            call CastStaffOfLightning(caster, target)
-            return true
         //Random Spell
         elseif abilId == RANDOM_SPELL_ABILITY_ID then
             //call BJDebugMsg("random spell: " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))

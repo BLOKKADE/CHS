@@ -461,6 +461,10 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.damage, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
         endif
 
+        if GetUnitAbilityLevel(DamageSource, 'A09T') != 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A09T') == 0 then
+            call CastStaffOfLightning(DamageSource, DamageTarget)
+        endif
+
         //Lich
         /*if GetUnitTypeId(DamageSource) == LICH_UNIT_ID and IsMagicDamage() then
             if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08W') <= 0 then

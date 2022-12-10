@@ -159,6 +159,7 @@
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Heroes\PetFollow.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Items\1-ItemBonus.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Items\1-Toms.j"
+//! import "C:\CHS\CHS\Trigger\05-Game Functions\Items\ItemAbilityCooldown.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Unsorted\1-StartFunction.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Unsorted\5-Functions.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Unsorted\UnitEnterMap.j"

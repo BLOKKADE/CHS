@@ -1,4 +1,4 @@
-library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin
+library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin, ItemAbilityCooldown
 	globals
 		hashtable HTi = InitHashtable()
 		HashTable UniqueItemCount
@@ -19,7 +19,15 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			return
 		endif
 
+		if ev == EVENT_ITEM_PICKUP then
+			if IsItemAbilOnCooldown(it) then
+				call StartItemAbilCooldown(u, it)
+			endif
+		endif
+
 		if ev == EVENT_ITEM_DROP then
+			call SetItemAbilCooldown(u, it)
+
 			set itemCount = itemCount - 1
 		endif
 
@@ -65,7 +73,9 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 			//Staff of Lightning
 		elseif itemId == 'I05C' then
-			call AddUnitCustomState(u, BONUS_MAGICPOW, 15 * uniqueDiff)
+			call SetHeroStr(u, GetHeroStr(u, false) + (200 * uniqueDiff), false)
+			call SetHeroAgi(u, GetHeroAgi(u, false) + (200 * uniqueDiff), false)
+			call SetHeroInt(u, GetHeroInt(u, false) + (200 * uniqueDiff), false)
 		
 			//Robe of the ARchmage
 		elseif itemId == 'I05B' then
