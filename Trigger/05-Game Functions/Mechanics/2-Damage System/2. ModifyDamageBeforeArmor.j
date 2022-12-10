@@ -724,6 +724,10 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif 
 
+        if GetUnitAbilityLevel(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) != 0 and FilterListNotEmpty(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) and BlzGetUnitAbilityCooldownRemaining(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) == 0 then
+            call CastTerrestrialGlaive(DamageSource, DamageTarget)
+        endif
+
         //Mystical armor
         set i1 = GetUnitItemTypeCount( DamageTarget,'I06E' )
         if i1 > 0  then

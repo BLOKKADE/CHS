@@ -183,6 +183,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call RegisterEndOfRoundItem(pid, it)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 30 *diff)
 
+		elseif itemId == 'I0D1' then
+			if ev == EVENT_ITEM_PICKUP then
+				call CreateSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, SpellListFilter.TerrestrialGlaiveFilter)
+			endif
+			call AddUnitCustomState(u, BONUS_PHYSPOW, 30 * uniqueDiff)
+
 			//Gladiator Helmet
 		elseif itemId == 'I07A' then
 			if itemCount > 0 then

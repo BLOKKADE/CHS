@@ -1,4 +1,4 @@
-library ItemAbilityCooldown initializer init requires Table
+library ItemAbilityCooldown initializer init requires Table, T32
     globals
         Table ItemAbilCds
         Table ItemAbilId

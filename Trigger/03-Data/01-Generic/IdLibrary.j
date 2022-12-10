@@ -491,6 +491,7 @@ library IdLibrary initializer init
         constant integer SPEED_BLADE_BUFF_ID                            = 'B02I'
         constant integer CONQ_BAMBOO_STICK_ABILITY_ID                   = 'A0CM'
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
+        constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
 
         // --- Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'

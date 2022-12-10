@@ -271,6 +271,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         endif
 
         if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
+            call CreateSpellList(u, SORCERER_UNIT_ID, SpellListFilter.SorcerSpellListFilter)
             set SorcererAmount[hid] = 1
         endif
 

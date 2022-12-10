@@ -11,7 +11,11 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         endif
 
         if GetUnitTypeId(u) == SORCERER_UNIT_ID then
-            call SetSpellList(u, SORCERER_UNIT_ID, abilId, SpellListFilter.SorcerSpellListFilter)
+            call AddToSpellList(u, SORCERER_UNIT_ID, abilId)
+        endif
+
+        if GetUnitAbilityLevel(u, TERRESTRIAL_GLAIVE_ABILITY_ID) != 0 then
+            call AddToSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, abilId)
         endif
     endfunction
 
