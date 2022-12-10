@@ -22,6 +22,7 @@
 //! import "C:\CHS\CHS\Trigger\04-Helpers\1-RandomShit.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\2-Multicast.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\7-PhoenixProccCheck.j"
+//! import "C:\CHS\CHS\Trigger\04-Helpers\AbilityModifiers.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\AllowCasting.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\AreaDamage.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\CastSpellOnTarget.j"

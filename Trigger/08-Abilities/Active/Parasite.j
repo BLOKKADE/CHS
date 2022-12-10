@@ -5,6 +5,6 @@ library Parasite requires PeriodicDamage, CastSpellOnTarget
         call dummy.target(target)
         call dummy.activate()
         //call BJDebugMsg("parasite: " + GetUnitName(target) + " : " + I2S(GetHandleId(target)) + " lvl: " + I2S(lvl))
-        call PeriodicDamage.create(caster, target, 30 * lvl, true, 1., 30, 0, true, PARASITE_BUFF_ID, PARASITE_ABILITY_ID)
+        call PeriodicDamage.create(caster, target, 30 * lvl, true, 1., 30, 0, true, PARASITE_BUFF_ID, PARASITE_ABILITY_ID).start()
     endfunction
 endlibrary

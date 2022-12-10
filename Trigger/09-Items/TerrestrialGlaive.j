@@ -17,6 +17,7 @@ library TerrestrialGlaive initializer init requires Table, AbilityData, StableSp
         local integer abilId = 0
         local DummyOrder dummy
         local integer level = 0
+        local AbilityModifiers abilMods = 0
 
         loop
             set abilId = node.data
@@ -27,7 +28,8 @@ library TerrestrialGlaive initializer init requires Table, AbilityData, StableSp
 
         set level = GetUnitAbilityLevel(caster, abilId)
         set dummy = CastSpell(caster, target, abilId, level, GetAbilityOrderType(abilId), GetUnitX(target), GetUnitY(target))
-        set TerrestrialGlaiveSpellCast.boolean[GetDummyId(dummy.dummy)] = true
+        set AbilityModifiers.createOrGet(dummy.dummy).TerrestrialGlaiveDamage = true
+
         call dummy.activate()
         call AbilStartCD(caster, TERRESTRIAL_GLAIVE_ABILITY_ID, BlzGetAbilityCooldown(abilId, level - 1))
     endfunction

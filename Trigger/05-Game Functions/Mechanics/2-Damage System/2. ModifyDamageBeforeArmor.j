@@ -391,7 +391,7 @@ scope ModifyDamageBeforeArmor initializer init
         if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)
             call TempAbil.create(DamageTarget, 'A08O', 3)
-            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, 0).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1)
+            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, 0).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1).start()
         endif
 
         //Pvp Bonus
@@ -689,7 +689,7 @@ scope ModifyDamageBeforeArmor initializer init
 
                 call TempAbil.create(DamageTarget, 'A06R', 3)
                 //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitCustomState(DamageSource, BONUS_MAGICPOW)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)* 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1)
+                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)* 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1).start()
             endif
 
             //Envenomed Weapons heroes
@@ -698,7 +698,7 @@ scope ModifyDamageBeforeArmor initializer init
 
                 call TempAbil.create(DamageTarget, 'A06P', 8)
                 //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
+                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1).start()
             endif
 
             //Qiulbeasts
@@ -706,7 +706,7 @@ scope ModifyDamageBeforeArmor initializer init
                 set i1 = GetUnitAbilityLevel(DamageSource, 'A0BF') + PoisonRuneBonus[DamageSourcePid]
                 if (IsPhysDamage() or PoisonRuneBonus[DamageSourcePid] > 0) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
                     call TempAbil.create(DamageTarget, 'A06P', 8)
-                    call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
+                    call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1).start()
                 endif
             endif
         endif
