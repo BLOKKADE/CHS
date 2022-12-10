@@ -15,17 +15,9 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
     endfunction
 
     function OnRoundStart takes unit hero, integer hid returns nothing
-        local item it 
+        //local item it 
 
-        //Ankh limit
-        set it = GetUnitItem(hero, 'ankh')
-        if it != null then
-            if GetItemCharges(it) == 2 then
-                set AnkhLimitReached.boolean[hid] = true
-            endif
-        endif
-
-        set it = null
+        //set it = null
     endfunction
 
     function FunctionTimerSpell takes nothing returns nothing

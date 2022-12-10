@@ -599,14 +599,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif	
             //Ankh of Reincarnation
         elseif II == 'I0BH' then
-            if (not AnkhLimitReached.boolean[GetHandleId(u)]) and UnitHasInventorySpace(u) then
-                set It = GetUnitItem(u, 'ankh')
-                if It != null then
-                    call SetItemCharges(It, GetItemCharges(It) + 1)
-                    set AnkhLimitReached.boolean[GetHandleId(u)] = true
-                else
-                    call UnitAddItemById(u, 'ankh')
-                endif
+            set It = GetUnitItem(u, 'ankh')
+            if UnitHasInventorySpace(u) and It == null then
+                call UnitAddItemById(u, 'ankh')
             else
                 call DisplayTimedTextToPlayer(p, 0, 0, 2, "Cannot buy more |cffdf9432" + GetObjectName(II) + "|r")
                 call PlayerAddGold(GetOwningPlayer(u), 400)

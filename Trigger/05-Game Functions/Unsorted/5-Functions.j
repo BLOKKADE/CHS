@@ -233,13 +233,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
             call SaveInteger(HT,GetHandleId(u),54021,0)
         endif
 
-        //Ankh
-        if AnkhLimitReached.boolean[hid] then
-            if GetItemCharges(GetUnitItem(u, 'ankh')) != 2 then
-                set AnkhLimitReached.boolean[hid] = false
-            endif
-        endif
-
         //Obsidian Armor
         set i1 = GetValidEndOfRoundItems(u,'I0CW') 
         if i1 > 0 then
