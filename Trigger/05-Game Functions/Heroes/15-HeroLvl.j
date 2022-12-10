@@ -195,7 +195,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == WITCH_DOCTOR_UNIT_ID then      
             call WitchDoctorLevelup(u, prevLevel + 1, heroLevel + 1)  
         elseif uid == RANGER_UNIT_ID then       
-            call SetBonus(u, 0, heroLevel * 5)
+            call SetBonus(u, 0, heroLevel * 2)
         elseif uid == DARK_HUNTER_UNIT_ID then         
             call SetBonus(u, 0, heroLevel * 50)
             set prevLevel = heroLevel     

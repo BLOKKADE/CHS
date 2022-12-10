@@ -1329,7 +1329,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local real borderSize = GetBorderSize()
         local integer colCount = ButtonColCount
         local integer rowCount = ButtonRowCount
-        local framehandle box = BlzCreateFrame(BoxFrameName, BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
+        local framehandle box = BlzCreateFrame(BoxFrameName, BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0)
         local framehandle boxBottom = BlzCreateFrame("HeroSelectorRaceTopBox", box, 0, 0)
         local integer rowRemaining = colCount
         local real y = -borderSize - titleSize - 0.0125 - CategorySize
