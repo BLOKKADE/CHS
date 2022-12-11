@@ -207,6 +207,7 @@
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\DarkSeal.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Death Pact.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Dousing Hex.j"
+//! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Drunken Haze.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Energy Lure.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Eruption.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Extradimensional Cooperation.j"

@@ -898,6 +898,7 @@ library IdLibrary initializer init
         constant integer DECAYING_SCYTHE_BUFF2_ID                       = 'B02E'
         constant integer DRUIDIC_FOCUS_BUFF_ID                          = 'B02F'
         constant integer ERUPTION_IMMUNE_BUFF_ID                        = 'B02O'
+        constant integer DRUNKEN_HAZE_IGNITE_BUFF_ID                    = 'A0DL'
 
         // --- Buff IDs ---
 

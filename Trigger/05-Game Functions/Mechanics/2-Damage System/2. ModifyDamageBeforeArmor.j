@@ -711,6 +711,10 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        if GetUnitAbilityLevel(DamageTarget, DRUNKEN_HAZE_BUFF_ID) != 0 and GetUnitAbilityLevel(DamageTarget, DRUNKEN_HAZE_IGNITE_BUFF_ID) == 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
+            call StartDrunkenHazeIgnition(DamageSource, DamageTarget, DamageSourceAbility, Damage.index.damage)
+        endif
+
         //Frostbite of the Soul
         set i1 = GetUnitAbilityLevel(DamageTarget,FROSTBITE_OF_THE_SOUL_ABILITY_ID)
         if i1 > 0 and IsHeroUnitId(DamageSourceTypeId) then
