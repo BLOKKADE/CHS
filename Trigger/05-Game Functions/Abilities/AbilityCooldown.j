@@ -52,11 +52,7 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         //Absolute Arcane
         if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
             set i = GetUnitElementCount(u, Element_Arcane)
-            loop
-                set ResCD = ResCD * (1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID)/** (1 + GetUnitAbsoluteEffective(u, Element_Arcane))*/)))
-                set i = i - 1
-                exitwhen i <= 0
-            endloop
+            set ResCD = ResCD * Pow(1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))), i)
             if ResCD < 0.1 then
                 set ResCD = 0.1
             endif
