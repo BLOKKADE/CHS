@@ -21,7 +21,7 @@ library DrainAura requires Vampirism, DivineBubble
             if IsHeroUnitId(GetUnitTypeId(target)) then
                 call Vamp(source, target, amount)
             else
-                call Vamp(source, target, amount * 0.2)
+                call Vamp(source, target, amount * 0.5)
             endif
         endif
     endfunction
