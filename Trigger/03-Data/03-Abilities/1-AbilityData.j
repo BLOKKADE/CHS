@@ -1301,6 +1301,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         set ElementData = HashTable.create()
         set ItemData = Table.create()
         set AbilityIndex = Table.create()
+        
         call InitAbilities()
         call InitCreepAbilities()
         call InitDummyAbilElements()

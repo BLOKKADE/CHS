@@ -32,7 +32,7 @@ library DrainAura requires Vampirism, DivineBubble
         local unit p = null
 
         call GroupClear(ENUM_GROUP)
-        call EnumTargettableUnitsInRange(ENUM_GROUP, x, y, area, GetOwningPlayer(source), false, Target_Enemy)
+        call EnumTargettableUnitsInRange(ENUM_GROUP, x, y, area, GetOwningPlayer(source), true, Target_Enemy)
         set size = BlzGroupGetSize(ENUM_GROUP)
 
         loop

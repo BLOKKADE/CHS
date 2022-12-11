@@ -1,4 +1,4 @@
-library Parasite requires PeriodicDamage, CastSpellOnTarget
+library Parasite requires PeriodicDamage, DummyOrder
     function CastParasite takes unit caster, unit target, integer lvl returns nothing
         local DummyOrder dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 6)
         call dummy.addActiveAbility(PARASITE_2_ABILITY_ID, 1, 852601)

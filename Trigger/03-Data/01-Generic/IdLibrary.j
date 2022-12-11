@@ -900,6 +900,22 @@ library IdLibrary initializer init
         constant integer ERUPTION_IMMUNE_BUFF_ID                        = 'B02O'
         constant integer DRUNKEN_HAZE_IGNITE_BUFF_ID                    = 'A0DL'
 
+        StaticIdGroup RUNESTONE_ITEM_ABILITIES
+
+        // --- Runestone Ability Ids
+        constant integer FIRE_RUNESTONE_ABIL_ID                         = 'A076'
+        constant integer WATER_RUNESTONE_ABIL_ID                        = 'A077'
+        constant integer EARTH_RUNESTONE_ABIL_ID                        = 'A078'
+        constant integer WIND_RUNESTONE_ABIL_ID                         = 'A079'
+        constant integer LIGHT_RUNESTONE_ABIL_ID                        = 'A0AK'
+        constant integer DARK_RUNESTONE_ABIL_ID                         = 'A0AL'
+        constant integer ARCANE_RUNESTONE_ABIL_ID                       = 'A0AM'
+        constant integer WILD_RUNESTONE_ABIL_ID                         = 'A0AN'
+        constant integer POISON_RUNESTONE_ABIL_ID                       = 'A0AO'
+        constant integer CREATION_RUNESTONE_ABIL_ID                     = 'A073'
+        constant integer MYSTERIOUS_RUNESTONE_ABIL_ID                   = 'A072'
+        constant integer SHINING_RUNESTONE_ABIL_ID                      = 'A0DM'
+
         // --- Buff IDs ---
 
         // --- Groups --- A place for groups that contains IDs from random places
@@ -1250,6 +1266,20 @@ library IdLibrary initializer init
         call WATER_ELEMENTALS.add(WATER_ELEMENTAL_1_UNIT_ID)
         call WATER_ELEMENTALS.add(WATER_ELEMENTAL_2_UNIT_ID)
         call WATER_ELEMENTALS.add(WATER_ELEMENTAL_3_UNIT_ID)
+
+        set RUNESTONE_ITEM_ABILITIES = StaticIdGroup.create()
+        call RUNESTONE_ITEM_ABILITIES.add(FIRE_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(WATER_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(EARTH_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(WIND_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(LIGHT_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(DARK_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(ARCANE_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(WILD_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(POISON_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(CREATION_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(MYSTERIOUS_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(SHINING_RUNESTONE_ABIL_ID)
     endfunction
 
     private function SetupGroupings takes nothing returns nothing

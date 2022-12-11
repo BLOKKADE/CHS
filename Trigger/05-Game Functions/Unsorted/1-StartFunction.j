@@ -1,4 +1,4 @@
-library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, BoneArmor, CustomEvent
+library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, BoneArmor, CustomEvent, TimeManipulation, HeroBuff, TempPower
     globals
         hashtable HT_timerSpell = InitHashtable()
         integer array RoundTimer

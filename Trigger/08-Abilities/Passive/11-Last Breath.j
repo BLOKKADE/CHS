@@ -1,4 +1,4 @@
-library LastBreath requires RandomShit, AbilityCooldownBonusPerUse
+library LastBreath requires AbilityCooldownBonusPerUse, AbilityCooldown
     function ActivateLastBreath takes unit u, integer level returns nothing
         local ability abil = BlzGetUnitAbility(u, LAST_BREATHS_ABILITY_ID)
         set udg_LethalDamageHP = 100

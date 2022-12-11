@@ -1,4 +1,4 @@
-library TimeManipulation initializer init requires RandomShit
+library TimeManipulation initializer init requires AbilityCooldown
     globals
         HashTable TimeManipulationTable
     endglobals

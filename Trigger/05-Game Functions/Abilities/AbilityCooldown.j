@@ -1,4 +1,4 @@
-library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex
+library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex, RuneMaster
 
     function GetHeroTotalAbilitiesCooldown takes unit u returns real
         local real total = 0
@@ -123,6 +123,14 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         //Staff of Water
         if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0,100) <= RMinBJ(40 * luck, 90 ) then
             set ResCD = 0.001
+        endif
+
+        //Guide To Rune Mastery cd reset toggle
+        if UnitHasItemType(u, 'I0BZ') and RUNESTONE_ITEM_ABILITIES.contains(id) then
+            if IsRunestoneRuneMasteryCdResettable(u, id) then
+                set ResCD = 0.001
+            endif
+            call ToggleRunestoneRuneMasteryCd(u, id)
         endif
 
         return (time * ResCD) + timeBonus

@@ -1,4 +1,4 @@
-library SkeletonBrute requires RandomShit
+library SkeletonBrute requires AbilityCooldown
 
     struct SkeletonBruteStruct extends array
         unit source

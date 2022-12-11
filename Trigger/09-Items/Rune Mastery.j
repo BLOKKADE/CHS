@@ -1,9 +1,18 @@
-library RuneMaster initializer init requires RuneInit
+library RuneMaster initializer init requires CustomState, RuneInit
     globals
         rect rectRune = null
         unit RuneMasterCaster
+        HashTable RuneMasteryCdReduction
     endglobals
 
+    function ToggleRunestoneRuneMasteryCd takes unit u, integer abilId returns nothing
+        set RuneMasteryCdReduction[GetHandleId(u)].boolean[abilId] = not RuneMasteryCdReduction[GetHandleId(u)].boolean[abilId]
+    endfunction
+
+    function IsRunestoneRuneMasteryCdResettable takes unit u, integer abilId returns boolean
+        return RuneMasteryCdReduction[GetHandleId(u)].boolean[abilId]
+    endfunction
+    
     private function UseRunes takes nothing returns nothing
         local item it = GetFilterItem()
         local real dx
@@ -42,5 +51,6 @@ library RuneMaster initializer init requires RuneInit
 
     private function init takes nothing returns nothing
         set rectRune = Rect(-500, -500, 500, 500)
+        set RuneMasteryCdReduction = HashTable.create()
     endfunction
 endlibrary
