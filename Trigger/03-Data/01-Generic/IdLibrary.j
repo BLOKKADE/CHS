@@ -1152,6 +1152,10 @@ library IdLibrary initializer init
         call SUMMONS.add(MOUNTAIN_GIANT_1_UNIT_ID)
         call SUMMONS.add(SKELETON_WARRIOR_1_UNIT_ID)
         call SUMMONS.add(SKELETON_MAGE_1_UNIT_ID)
+        call SUMMONS.add(NECRO_BOOK_WARRIOR_1_UNIT_ID)
+        call SUMMONS.add(NECRO_BOOK_ARCHER_1_UNIT_ID)
+        call SUMMONS.add(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID)
+        call SUMMONS.add(BONE_ARMOR_SKELETON_UNIT_ID)
 
         // Bears
         set BEARS = StaticIdGroup.create()
@@ -1231,7 +1235,6 @@ library IdLibrary initializer init
         set SKELLIESCAPTAINS = StaticIdGroup.create()
         call SKELLIESCAPTAINS.add(NECRO_BOOK_WARRIOR_1_UNIT_ID)
         call SKELLIESCAPTAINS.add(NECRO_BOOK_ARCHER_1_UNIT_ID)
-        call SKELLIESCAPTAINS.add(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID)
         call SKELLIESCAPTAINS.add(BONE_ARMOR_SKELETON_UNIT_ID)
 
         // Serpant Wards

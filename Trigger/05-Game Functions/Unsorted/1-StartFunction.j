@@ -138,16 +138,12 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         if abilLevel > 0 then
             call ElemFuncStart(Herou,FEARLESS_DEFENDERS_ABILITY_ID)
             set U = CreateUnit( GetOwningPlayer(Herou),'h01A',GetUnitX(Herou)+ 40 * CosBJ(- 30 + GetUnitFacing(Herou)),GetUnitY(Herou)+ 40 * SinBJ(- 30 + GetUnitFacing(Herou)),GetUnitFacing(Herou) )
-            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 500 + R2I((abilLevel * 10000)*(1 +(heroLevel * 0.038) )) )
-            call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) - 10 + R2I((abilLevel * 100)*(1 +(heroLevel * 0.038)) ),0)
-            call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
+            call BlzSetUnitName(U, "Jeremy The Fearless")
             call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,(8 + (heroLevel * 0.09)) * ChronusLevel)
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))
 
             set U = CreateUnit( GetOwningPlayer(Herou),'h01A',GetUnitX(Herou)+ 40 * CosBJ(30 + GetUnitFacing(Herou)),GetUnitY(Herou)+ 40 * SinBJ(30 + GetUnitFacing(Herou)),GetUnitFacing(Herou) )
-            call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 500 + R2I((abilLevel * 10000)*(1 +(heroLevel * 0.038) )) )
-            call BlzSetUnitBaseDamage(U, BlzGetUnitBaseDamage(U,0) - 10 + R2I((abilLevel * 100)*(1 +(heroLevel * 0.038)) ),0)
-            call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
+            call BlzSetUnitName(U, "Julian The Gallant")
             call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,(8 + (heroLevel * 0.09)) * ChronusLevel)
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))  
             set chronusActivated = true     

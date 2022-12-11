@@ -106,6 +106,8 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             elseif SKELLIESCAPTAINS.contains(i) then
                 //call BJDebugMsg("rest")
                 call SkeletonStats(u, totalLevel)
+            elseif i == FEARLESS_DEFENDER_CAPTAIN_UNIT_ID then
+                call FearlessDefendersStats(u, GetHeroLevel(hero), totalLevel)
             endif
 
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(totalLevel) )
@@ -156,7 +158,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
 
-        //wild Defense
+        //wild
         if wild != 1 then      
             call BlzSetUnitBaseDamage(u,R2I(I2R(BlzGetUnitBaseDamage(u,0))* wild),0)  
             call BlzSetUnitMaxHP(u,R2I(I2R(BlzGetUnitMaxHP(u))* wild))
