@@ -253,10 +253,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 			//Contract of the Living
 		elseif itemId == CONTRACT_LIVING_ITEM_ID then
-			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
-			//Avoid item CD resetting, dunno how to make it the actual remaining cd but probably not necessary, just don't drop the item 4Head
-			call AbilStartCD(u, CONTRACT_LIVING_ABIL_ID, 90)
-			
+			call AddUnitCustomState(u, BONUS_MAGICRES, 30 * uniqueDiff)
+
 			//Fishing Rod
 		elseif itemId == 'I07T' then
 			call AddUnitCustomState(u, BONUS_EVASION, 10 * uniqueDiff)
