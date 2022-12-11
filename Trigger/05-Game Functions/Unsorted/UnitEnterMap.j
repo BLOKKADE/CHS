@@ -270,6 +270,11 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             set ThunderBoltTargets[hid] = 1
         endif
 
+        //Troll Berserker
+        if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID and realUnit then
+            set TrollBerserkerBonus.real[hid] = 0.99
+        endif
+
         if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
             call CreateSpellList(u, SORCERER_UNIT_ID, SpellListFilter.SorcerSpellListFilter)
             set SorcererAmount[hid] = 1

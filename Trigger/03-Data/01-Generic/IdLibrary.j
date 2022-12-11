@@ -638,6 +638,7 @@ library IdLibrary initializer init
         constant integer GLORY_MAGIC_PROTECTION_TOME_ITEM_ID            = 'I06Q'
         constant integer GLORY_MANA_REGENERATION_TOME_ITEM_ID           = 'I06T'
         constant integer GLORY_MANA_TOME_ITEM_ID                        = 'I06U'
+        constant integer GLORY_ATTACKCD_TOME_ITEM_ID                    = 'I0D2'
         constant integer GLORY_MOVESPEED_TOME_ITEM_ID                   = 'I09T'
         constant integer GLORY_PVP_BONUS_TOME_ITEM_ID                   = 'I06S'
         constant integer GLORY_STRENGTH_TOME_ITEM_ID                    = 'I09W'

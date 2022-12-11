@@ -1,52 +1,5 @@
 scope LongPeriodCheck initializer init
-    function ModifyAttackCooldown takes unit u returns nothing
-        // base attack cooldown
-        local real r1 = LoadReal(HT, GetHandleId(u),- 1001 )
-        local real r2 = 0
-        local integer i1 = GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID)
-
-        if i1 > 0 then
-            set r2 = r1 - MegaSpeedBonus(u, i1, r1)
-        else
-            set r2 = r1 
-        endif
-
-        //Speed Blade active: is ovewrriden if already lower than 0.6 from mega speed/default
-        if GetUnitAbilityLevel(u, SPEED_BLADE_BUFF_ID) > 0 then
-            if r2 >= 0.6 then
-                set r2 = 0.6
-            else
-                call UnitRemoveAbility(u, SPEED_BLADE_BUFF_ID)
-            endif
-        endif
-
-        //Hammer of the Gods
-        set r2 = r2 + GetUnitItemTypeCount(u,'I066') * 1.4
-
-        //Flimsy Token
-        if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
-            set r2 = r2 + 0.6
-        endif
-
-        //Speed Blade passive
-        if UnitHasItemType(u,'I06B') then
-            set r2 = r2 * 0.8
-        endif
-
-        //Troll passive
-        if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID then
-            set r2 = r2 * 100 /(I2R(100 + GetHeroLevel(u)))
-        endif
-
-        //Berserk Attack CD
-        if GetUnitAbilityLevel(u, BERSERK_BUFF_ID) > 0 then
-                set r2 = r2 * 0.5
-        endif
-
-        //  call DisplayTextToPlayer(GetLocalPlayer(),0,0,R2S(r2))
-        call BlzSetUnitAttackCooldown(u,r2,0)
-    endfunction
-
+    
     function OnCooldownEnd takes unit u returns nothing
         local integer i
         local integer hid = GetHandleId(u)
@@ -183,7 +136,7 @@ scope LongPeriodCheck initializer init
         if UnitAlive(u) then
 
             //modify attack speed
-            call ModifyAttackCooldown(u)
+            call ModifyAttackCooldown(u, hid)
 
             //Guide To Rune Mastery
             if GetUnitAbilityLevel(u ,'A09O') >= 1 then
