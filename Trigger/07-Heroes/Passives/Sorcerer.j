@@ -48,7 +48,6 @@ library Sorcerer initializer init requires AbilityData, CastSpellOnTarget, Stabl
         local integer random = GetRandomInt(0, sorcererList.size() - 1)
         local IntegerListItem node = sorcererList.first
         local integer abilId = 0
-        call ElemFuncStart(caster, SORCERER_UNIT_ID)
 
         loop
             set random = GetRandomInt(0, sorcererList.size() - 1)
