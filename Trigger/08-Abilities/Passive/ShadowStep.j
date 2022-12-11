@@ -1,4 +1,4 @@
-library ShadowStep initializer init requires RandomShit, CustomEvent
+library ShadowStep initializer init requires AbilityCooldown, CustomEvent
 
     private function teleport takes unit u1, unit u2 returns nothing
         local effect e1 = null
