@@ -374,10 +374,10 @@ scope ModifyDamageBeforeArmor initializer init
         //Scorched Scimitar
         set i = GetUnitAbilityLevel(DamageSource, SCORCHED_SCIMITAR_ABILITY_ID)
         if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
-            set DamageTargetMagicRes = DamageTargetMagicRes * 0.7
+            set DamageTargetMagicRes = DamageTargetMagicRes * 0.5
 
             if IsPhysDamage() then
-                set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.3)
+                set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.5)
                 //call BJDebugMsg("ss armor pierce: " + R2S(Damage.index.armorPierced))
             endif
         endif
