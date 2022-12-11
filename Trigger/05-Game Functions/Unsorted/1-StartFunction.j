@@ -203,16 +203,6 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
             set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 6
             call SetBlokShieldCharges(Herou, hid)
         endif
-
-        //Gnome
-        if GetUnitTypeId(Herou) == GNOME_MASTER_UNIT_ID then
-            call ElemFuncStart(Herou,GNOME_MASTER_UNIT_ID)
-            if BrStarted then
-                call DummyInstantCast4(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55 * heroLevel,ABILITY_RLF_DAMAGE_INCREASE, 99999,ABILITY_RLF_AREA_OF_EFFECT ,1 +(heroLevel * 0.04),ABILITY_RLF_DURATION_HERO,2 +(heroLevel * 0.08),ABILITY_RLF_DURATION_NORMAL)
-            else
-                call DummyInstantCast4(Herou,GetUnitX(Herou),GetUnitY(Herou),'A03Z',"stomp",55 * heroLevel,ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_AREA_OF_EFFECT ,1 +(heroLevel * 0.04),ABILITY_RLF_DURATION_HERO,2 +(heroLevel * 0.08),ABILITY_RLF_DURATION_NORMAL)
-            endif
-        endif
                 
         //Rapid Recovery
         set abilLevel = GetUnitAbilityLevel(Herou,RAPID_RECOVERY_ABILITY_ID)    

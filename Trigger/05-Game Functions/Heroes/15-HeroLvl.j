@@ -221,8 +221,9 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, 100 + heroLevel)
         elseif uid == GNOME_MASTER_UNIT_ID then
             call SetBonus(u, 0, heroLevel * 55)
-            call SetBonus(u, 1, heroLevel * 0.04)
-            call SetBonus(u, 2, heroLevel * 0.08)
+            call SetBonus(u, 1, 11 + heroLevel * 0.04)
+            call SetBonus(u, 2, heroLevel * 0.04)
+            call SetBonus(u, 3, heroLevel * 0.08)
         elseif uid == GREEDY_GOBLIN_UNIT_ID then
             call SetBonus(u, 0, 20 + (heroLevel * 4))
             call SetBonus(u, 1, 21 + (heroLevel * 3))
