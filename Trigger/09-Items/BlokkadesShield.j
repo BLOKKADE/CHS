@@ -13,7 +13,7 @@ library BlokkadesShield initializer init requires RandomShit
 
     function ActivateBlokkadeShield takes unit u returns nothing
         local integer hid = GetHandleId(u)
-        if T32_Tick - BlokShieldDmgReductionTick[hid] > 32 and BlokShieldCharges[hid] > 0 then
+        if T32_Tick - BlokShieldDmgReductionTick[hid] > 64 and BlokShieldCharges[hid] > 0 then
             //call BJDebugMsg("bs activate")
             set BlokShieldCharges[hid] = BlokShieldCharges[hid] - 1
             set BlokShieldDmgReductionTick[hid] = T32_Tick

@@ -88,7 +88,7 @@ scope ModifyDamageAfterArmor initializer init
             endif
             
             //damage reduction
-            if T32_Tick - BlokShieldDmgReductionTick[DamageTargetId] < 32 then
+            if T32_Tick - BlokShieldDmgReductionTick[DamageTargetId] < 64 then
                 //call BJDebugMsg("bs dmg red")
                 set Damage.index.amount = Damage.index.amount * 0.2
             endif
