@@ -37,6 +37,7 @@
 //! import "C:\CHS\CHS\Trigger\04-Helpers\HpRegen.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\KnockbackHelper.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\LastSpellLearned.j"
+//! import "C:\CHS\CHS\Trigger\04-Helpers\NewAbilityCooldown.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\PeriodicDamage.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\SellItem.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\TextTag.j"

@@ -45,6 +45,10 @@
 			{
 				"filePath": "Trigger\\03-Data\\02-Heroes\\HeroPassiveDesc.j",
 				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\08-Abilities\\General\\1-ElementStartAbility.j",
+				"group": "Default"
 			}
 		]
 	}

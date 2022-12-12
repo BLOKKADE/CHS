@@ -62,7 +62,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             loop
                 if ModuloInteger(i, 10) == 0 then
                     call UpdateBonus(u, 0, 1)
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,(ClassAbil[8] + " |cffffcc00bonus acquired"))
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,(GetFullElementText(8) + " |cffffcc00bonus acquired"))
                 endif
 
                 set i = i + 1

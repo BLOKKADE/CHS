@@ -1,9 +1,4 @@
 library WindRune requires RandomShit
-    globals
-        boolexpr RuneOfWinds_b
-    endglobals
-
-
     function CastRuneOfWinds takes nothing returns boolean
 
         if IsUnitEnemy(GLOB_RUNE_U,GetOwningPlayer(GetFilterUnit())) and IsUnitSpellTargetCheck(GetFilterUnit(), GetOwningPlayer(GLOB_RUNE_U)) then
@@ -18,7 +13,7 @@ library WindRune requires RandomShit
         local real power = GLOB_RUNE_POWER 
 
         call GroupClear(ENUM_GROUP)
-        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),400 + 100 * power,RuneOfWinds_b )
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),400 + 100 * power, Condition(function CastRuneOfWinds) )
 
         set u = null
         return false

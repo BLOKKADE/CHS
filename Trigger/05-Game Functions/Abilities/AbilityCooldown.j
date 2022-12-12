@@ -1,5 +1,4 @@
-library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex, RuneMaster
-
+library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex, RuneMaster, NewAbilityCooldown
     function GetHeroTotalAbilitiesCooldown takes unit u returns real
         local real total = 0
         local integer abilId
@@ -39,8 +38,14 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         local real xesilChance = - 1
         local real time = cd
         local real ResCD = 1
-        local integer i = 0
         local real timeBonus = 0
+        local integer hid = GetHandleId(u)
+
+    //Get the cooldown of an ability if it was set by code somewhere else (mostly used for active abilities)
+        if GetUnitAbilityNewCooldown(u, id) != 0 then
+            set cd = GetUnitAbilityNewCooldown(u, id)
+            set time = cd
+        endif
 
         //Dousing Hex
         if GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 then
@@ -51,8 +56,7 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
 
         //Absolute Arcane
         if GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
-            set i = GetUnitElementCount(u, Element_Arcane)
-            set ResCD = ResCD * Pow(1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))), i)
+            set ResCD = ResCD * Pow(1 - ((0.0014 * GetUnitAbilityLevel(u, ABSOLUTE_ARCANE_ABILITY_ID))), GetUnitElementCount(u, Element_Arcane))
             if ResCD < 0.1 then
                 set ResCD = 0.1
             endif

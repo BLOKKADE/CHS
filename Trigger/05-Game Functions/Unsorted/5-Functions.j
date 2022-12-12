@@ -17,6 +17,14 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         if GetUnitAbilityLevel(u, TERRESTRIAL_GLAIVE_ABILITY_ID) != 0 then
             call AddToSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, abilId)
         endif
+
+        if GetUnitAbilityLevel(u, CONTEMPORARY_RUNES_ABILITY_ID) != 0 then
+            call AddToSpellList(u, CONTEMPORARY_RUNES_ABILITY_ID, abilId)
+        endif
+
+        if abilId == CONTEMPORARY_RUNES_ABILITY_ID then
+            call CreateSpellList(u, CONTEMPORARY_RUNES_ABILITY_ID, SpellListFilter.ContempRunesSpellListFilter)
+        endif
     endfunction
 
     function SetSkillParameters takes unit u, integer abilId returns nothing

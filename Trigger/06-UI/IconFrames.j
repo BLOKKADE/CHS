@@ -118,7 +118,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 						// Don't include empty elements in the list
 						if i2 > 0 then
-							set ToolTipS = ToolTipS + "|n" + ClassAbil[i1] + " : " + I2S(i2)
+							set ToolTipS = ToolTipS + "|n" + GetFullElementText(i1) + " : " + I2S(i2)
 						endif
 
 						set i1 = i1 + 1
@@ -162,7 +162,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					endif
 				elseif NumButton == 100 then
 					set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
-					set temp = GetObjectelementsAsString(SpellU, GetUnitTypeId(SpellU), false)
+					set temp = GetObjectElementsAsString(SpellU, GetUnitTypeId(SpellU), false)
 					if temp != "" and temp != null then
 						set ToolTipS = ToolTipS + temp + "|n"
 					endif
@@ -200,7 +200,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					if SelectedUnitPid[PlID] != 11 then
 						set SpellU = PlayerHeroes[SelectedUnitPid[PlID]+ 1]
 						set i3 = GetHeroSpellAtPosition(SpellU ,NumButton - 100) 
-						set temp = GetObjectelementsAsString(SpellU, i3, true)
+						set temp = GetObjectElementsAsString(SpellU, i3, true)
 						if temp != "" and temp != null then
 							set ToolTipS = ToolTipS + temp + "|n"
 						endif
@@ -210,7 +210,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						if NumButton > 110 and NumButton <= 120 then
 							set i1 = GetAbsoluteElement(i3)
 							set i2 = GetUnitElementCount(SpellU, i1)
-							set ToolTipS = ToolTipS + "|n|n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
+							set ToolTipS = ToolTipS + "|n|n|cffd0ff00Current|r " + GetFullElementText(i1) + " |cffd0ff00count|r: " + I2S(i2)
 
 
 							//set ToolTipS = ToolTipS + "|n|cffd0ff00Additional bonus|r: " + R2SW((100 * GetUnitAbsoluteEffective(SpellU, i1)), 1, 1) + "|cffd0ff00%|r"

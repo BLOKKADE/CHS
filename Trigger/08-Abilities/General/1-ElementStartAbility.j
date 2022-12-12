@@ -23,7 +23,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u,'A076') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,Element_Fire)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
-                call AbilStartCD(u,'A076',3 ) 
+                call AbilStartCD(u,'A076', GetRuneCooldown(Element_Fire)) 
             endif
         endif
         
@@ -32,7 +32,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u,'A077') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,Element_Water)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
-                call AbilStartCD(u,'A077',3 ) 
+                call AbilStartCD(u,'A077', GetRuneCooldown(Element_Water) ) 
             endif
         endif
         
@@ -41,7 +41,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u,'A078') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,Element_Earth)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
-                call AbilStartCD(u,'A078',8 ) 
+                call AbilStartCD(u,'A078',GetRuneCooldown(Element_Earth) ) 
             endif
         endif
         
@@ -50,7 +50,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u,'A079') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 500 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,Element_Wind)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 500)
-                call AbilStartCD(u,'A079',12 ) 
+                call AbilStartCD(u,'A079',GetRuneCooldown(Element_Wind) ) 
             endif
         endif
 
@@ -59,7 +59,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AN') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 500 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, Element_Wild)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 500)
-                call AbilStartCD(u, 'A0AN', 10) 
+                call AbilStartCD(u, 'A0AN', GetRuneCooldown(Element_Wild)) 
             endif
         endif
 
@@ -68,7 +68,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AK') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, Element_Light)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
-                call AbilStartCD(u, 'A0AK', 15) 
+                call AbilStartCD(u, 'A0AK', GetRuneCooldown(Element_Light)) 
             endif
         endif
 
@@ -77,7 +77,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AL') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, Element_Dark)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
-                call AbilStartCD(u, 'A0AL', 12) 
+                call AbilStartCD(u, 'A0AL', GetRuneCooldown(Element_Dark)) 
             endif
         endif
 
@@ -86,7 +86,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AO') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, Element_Poison)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
-                call AbilStartCD(u, 'A0AO', 15) 
+                call AbilStartCD(u, 'A0AO', GetRuneCooldown(Element_Poison)) 
             endif
         endif
 
@@ -95,7 +95,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u, 'A0AM') == 0 and GetUnitState(u, UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u, CreateRune(null, 0, 0, 0, u, Element_Arcane)  )
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1000)
-                call AbilStartCD(u, 'A0AM', 30) 
+                call AbilStartCD(u, 'A0AM', GetRuneCooldown(Element_Arcane)) 
             endif
         endif
         

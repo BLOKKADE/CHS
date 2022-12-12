@@ -1,9 +1,28 @@
 library ContemporaryRunes requires RuneInit, AbsoluteElements, HeroAbilityTable
-    private function PickElement takes unit caster returns integer
-        local integer absoluteCount = LoadInteger(HT, GetHandleId(caster), 941561)
 
-        if absoluteCount > 0 then
-            return GetAbsoluteElement(GetHeroSpellAtPosition(caster, (10) + GetRandomInt(1, absoluteCount)))
+    function ContempRunesSpellListFilter takes unit u, integer abilId returns boolean
+        return ObjectHasAnyElement(abilId)
+    endfunction
+
+    private function GetElementFromRandomAbility takes unit caster, IntegerList filteredSpellList returns integer
+        local integer i = 0
+        local integer random = GetRandomInt(0, filteredSpellList.size() - 1)
+        local IntegerListItem node = filteredSpellList.first
+        local integer abilId = 0
+
+        loop
+            set abilId = node.data
+            exitwhen i == random
+            set node = node.next
+            set i = i + 1
+        endloop
+
+        return GetObjectElementAtIndex(abilId, GetRandomInt(1, GetObjectElementIndex(abilId)))
+    endfunction
+
+    private function GetElementFromSpellList takes unit caster returns integer
+        if FilterListNotEmpty(caster, CONTEMPORARY_RUNES_ABILITY_ID) then
+            return GetElementFromRandomAbility(caster, GetFilterList(GetHandleId(caster), CONTEMPORARY_RUNES_ABILITY_ID))
         else
             return GetRandomInt(1, Element_Maximum)
         endif
@@ -13,13 +32,18 @@ library ContemporaryRunes requires RuneInit, AbsoluteElements, HeroAbilityTable
         local real max = 1 + R2I(level / 10)
         local integer i = 0
         local integer element = 0
+        local real cooldown = 0
 
         loop
-            set element = PickElement(caster)
-            call BJDebugMsg("element: " + I2S(element))
-            call UnitAddItem(caster, CreateRune(null, 0, 0, 0, caster, element))
+            set element = GetElementFromSpellList(caster)
+            if GetRuneCooldown(element) > cooldown then
+                set cooldown = GetRuneCooldown(element)
+            endif
+            call UnitAddItem(caster, CreateRune(null, 5 * level, 0, 0, caster, element))
             set i = i + 1
             exitwhen i >= max
         endloop
+
+        set AbilNewCooldown[GetHandleId(caster)].real[CONTEMPORARY_RUNES_ABILITY_ID] = cooldown
     endfunction
 endlibrary

@@ -354,7 +354,7 @@ scope ModifyDamageBeforeArmor initializer init
             set i1 = GetHeroLevel(DamageSource)
             loop
                 if IsSpellElement(DamageSource, DamageSourceAbility, i) then
-                    //call BJDebugMsg("element: " + ClassAbil[i])
+                    //call BJDebugMsg("element: " + GetFullElementText(i))
                     //call BJDebugMsg("bonus: " + R2S((0.05 + (0.0005 * i1))) + " count: " + I2S(GetSpellElementCount(DamageSource, DamageSourceAbility, i))) 
                     set r1 = r1 + ((0.05 + (0.0005 * i1)) * GetUnitElementCount(DamageSource, i))
                 endif
