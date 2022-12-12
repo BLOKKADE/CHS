@@ -1209,7 +1209,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(LICH_UNIT_ID, Element_Cold, 1)
         call SetObjectElement(YETI_UNIT_ID, Element_Cold, 1)
         call SetObjectElement(COLD_KNIGHT_UNIT_ID, Element_Cold, 1)
-        call SetObjectElement(RANGER_UNIT_ID, Element_Blood, 1)
+        call SetObjectElement(RANGER_UNIT_ID, Element_Wind, 1)
         call SetObjectElement(WAR_GOLEM_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(DEADLORD_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(ORC_CHAMPION_UNIT_ID, Element_Blood, 1)
