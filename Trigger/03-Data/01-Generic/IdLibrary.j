@@ -436,6 +436,7 @@ library IdLibrary initializer init
         constant integer WILD_DEFENSE_SUMMON_ABILITY_ID                 = 'A06X'
         constant integer ICE_ARMOR_SUMMON_ABILITY_ID                    = 'A0CY'
         constant integer GNOME_MASTER_PASSIVE_ABILITY_ID                = 'A0DK'
+        constant integer CONTEMPORARY_RUNES_ABILITY_ID                  = 'A0DN'
         
         // Dummy Abilities
         constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'
@@ -799,6 +800,7 @@ library IdLibrary initializer init
         constant integer EARTH_RUNESTONE_ITEM_ID                        = 'I08R'
         constant integer WIND_RUNESTONE_ITEM_ID                         = 'I08S'
         constant integer ERUPTION_ITEM_ID                               = 'I039'
+        constant integer CONTEMPORARY_RUNES_ITEM_ID                     = 'I0D3'
 
         // --- Buff IDs ---
         constant integer DARK_SEAL_BUFF_ID                              = 'A0DE'

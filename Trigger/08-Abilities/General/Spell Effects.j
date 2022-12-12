@@ -1,4 +1,4 @@
-library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, HeroForm, Parasite
+library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, HeroForm, Parasite, ContemporaryRunes
 
     function AbilityChannel takes unit caster, unit hero, unit target, real x, real y, integer abilId, integer lvl returns boolean
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
@@ -27,6 +27,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             endif
+            return true
+        //Contemporary Runes
+        elseif abilId == CONTEMPORARY_RUNES_ABILITY_ID then
+            call CastContemporaryRunes(hero, lvl)
             return true
         //Mana Starvation
         elseif abilId == MANA_STARVATIO_ABILITY_ID then
@@ -179,7 +183,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
                 
                 //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
-                set abilityChanneled = AbilityChannel(caster, PlayerHeroes[GetPlayerId(GetOwningPlayer(caster))], target,targetX,targetY,abilId, abilLvl)
+                set abilityChanneled = AbilityChannel(caster, PlayerHeroes[GetPlayerId(GetOwningPlayer(caster)) + 1], target,targetX,targetY,abilId, abilLvl)
             
                 if GetUnitTypeId(caster) != PRIEST_1_UNIT_ID and (not CheckIfCastAllowed(caster)) then
                     //call BJDebugMsg("caster: " + GetUnitName(caster))

@@ -1,30 +1,30 @@
-library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, LifeRune, EarthRune, AttackRune, PowerRune
+library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthRune, AttackRune, PowerRune
     globals
         Table RuneIndex
         integer array Runes
         trigger array RunesTriggers
         string array RunesName
-        integer RuneCount = 16
 
         unit GLOB_RUNE_U = null
         real GLOB_RUNE_POWER = 0
 
-        integer Defense_Rune_Id = 1
-        integer Chaos_Rune_Id = 2
-        integer Fire_Rune_Id = 3
-        integer Life_Rune_Id = 4
-        integer Time_Rune_Id = 5
-        integer Healing_Rune_Id = 6
-        integer Power_Rune_Id = 7
-        integer Earth_Rune_Id = 8
-        integer Water_Rune_Id = 9
-        integer Wind_Rune_Id = 10
+        integer Fire_Rune_Id = 1
+        integer Water_Rune_Id = 2
+        integer Wind_Rune_Id = 3
+        integer Earth_Rune_Id = 4
+        integer Wild_Rune_Id = 5
+        integer Power_Rune_Id = 6 //not an element
+        integer Dark_Rune_Id = 7
+        integer Light_Rune_Id = 8
+        integer Might_Rune_Id = 9 // not an element
+        integer Poison_Rune_Id = 10
         integer Blood_Rune_Id = 11
-        integer Dark_Rune_Id = 12
-        integer Light_Rune_Id = 13
-        integer Poison_Rune_Id = 14
-        integer Wild_Rune_Id = 15
-        integer Might_Rune_Id = 16
+        integer Defense_Rune_Id = 12 // not an element
+        integer Time_Rune_Id = 13
+        integer Chaos_Rune_Id = 14
+        integer Life_Rune_Id = 15
+        integer Healing_Rune_Id = 16
+        integer RuneCount = 16
     endglobals
     
     function GetRunePower takes item i returns real 
@@ -45,7 +45,8 @@ library RuneInit initializer init requires RandomShit, ChaosRune, WindRune, Life
         local integer pid = GetPlayerId(p)
         set rune = CreateItem( Runes[id], x, y)
         set RuneIndex[GetHandleId(rune)] = pid
-        //call BJDebugMsg("rune: " + R2S(power) + "source: " + R2S(GetUnitCustomState(u, BONUS_RUNEPOW)(owner)) + " lvl: " + I2S(GetHeroLevel(owner)) + " id: " + I2S(RuneIndex[GetHandleId(rune)]))
+        //call BJDebugMsg("owner: " + GetUnitName(owner) + ", id: " + I2S(id))
+        //call BJDebugMsg("rune: " + R2S(power) + "source: " + R2S(GetUnitCustomState(owner, BONUS_RUNEPOW)) + " lvl: " + I2S(GetHeroLevel(owner)) + " id: " + I2S(RuneIndex[GetHandleId(rune)]))
         call SetRunePower(rune, power + GetUnitCustomState(owner, BONUS_RUNEPOW) + GetHeroLevel(owner))
         if GetLocalPlayer() != p then
             call BlzSetItemSkin(rune,'I06F')

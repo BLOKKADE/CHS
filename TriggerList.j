@@ -203,6 +203,7 @@
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\BattleRoar.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Blink Strike.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\BlockDestruction.j"
+//! import "C:\CHS\CHS\Trigger\08-Abilities\Active\ContemporaryRunes.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Cyclone.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\DarkSeal.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Active\Death Pact.j"
