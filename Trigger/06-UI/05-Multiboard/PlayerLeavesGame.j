@@ -1,4 +1,4 @@
-library PlayerLeavesGame initializer init requires MultiboardSystem
+library PlayerLeavesGame initializer init requires Scoreboard
 
     private function PlayerLeavesGameActions takes nothing returns nothing
         call UpdateMultiboardPlayerLeaves(GetTriggerPlayer())

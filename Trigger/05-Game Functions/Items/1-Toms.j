@@ -1,4 +1,4 @@
-library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTome, LearnAbsolute, MultiboardSystem
+library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTome, LearnAbsolute, Scoreboard
 
     globals
         Table GloryRegenLevel
