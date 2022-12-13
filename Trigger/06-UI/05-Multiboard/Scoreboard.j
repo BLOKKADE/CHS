@@ -1,4 +1,4 @@
-library Scoreboard requires PlayerTracking, HeroAbilityTable
+library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
     globals
         private string INITIAL_BOARD_NAME
@@ -62,6 +62,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         private hashtable AbilityButtonEventHandles
 
         private Table IconDescriptions
+        private Table IconNames
     endglobals
 
     function UpdateMultiboardPVPCounts takes player playingPlayer returns nothing
@@ -151,7 +152,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         return value
     endfunction
 
-    private function CreateIcon takes string iconPath, hashtable buttonEventHandles returns nothing
+    private function CreateIcon takes string iconPath, hashtable buttonEventHandles, string tooltip, string tooltipName returns nothing
         local framehandle buttonFrameHandle = BlzCreateFrame("ScriptDialogButton", ScoreboardFrameHandle, 0, 0) 
         local framehandle buttonBackdropFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", buttonFrameHandle, "", 1)
         local integer buttonHandleId = GetHandleId(buttonFrameHandle)
@@ -166,8 +167,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
 
         // Save the handle of this button to look it up later for mouse events
-        call SaveInteger(buttonEventHandles, buttonHandleId, 1, GameMultiboardCurrentPlayerCount * CurrentColumnIndex)
-        set IconDescriptions.string[buttonHandleId] = 
+        call SaveInteger(buttonEventHandles, buttonHandleId, 1, GameMultiboardCurrentPlayerCount)// Want to save the relative player id for this icon (GameMultiboardCurrentPlayerCount * 50) + CurrentColumnIndex) // 50 is just an arbitrary number as long as it is more than the number of scoreboard columns
+        set IconDescriptions.string[buttonHandleId] = tooltip
+        set IconNames.string[buttonHandleId] = tooltipName
 
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
@@ -181,7 +183,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
     endfunction
 
     private function CreateText takes string value returns nothing
-        local framehandle playerNameTextFrameHandle = BlzCreateFrameByType("TEXT", "PlayerName", ScoreboardFrameHandle, "", 0) 
+        local framehandle playerNameTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardText", ScoreboardFrameHandle, "", 0) 
 
         call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY() - 0.004)
         call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + TextWidth, GetTopLeftY() - TextHeight - 0.004) 
@@ -208,11 +210,11 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
 
             if (currentItem != null) then
                 // Display the icon
-                call CreateIcon(BlzGetItemIconPath(currentItem), ItemButtonEventHandles)
+                call CreateIcon(BlzGetItemIconPath(currentItem), ItemButtonEventHandles, BlzGetItemExtendedTooltip(currentItem), GetItemName(currentItem))
             else
                 // Display the icon
 
-                call CreateIcon(BlzGetItemIconPath(CreateItem('I099', 0, 0)), ItemButtonEventHandles)
+                call CreateIcon(BlzGetItemIconPath(CreateItem('I099', 0, 0)), ItemButtonEventHandles, "Does not have item", "Non existing item")
             endif
 
             set itemSlotIndex = itemSlotIndex + 1
@@ -236,9 +238,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
 
             if (currentAbility != 0) then
                 // Display the icon
-                call CreateIcon(BlzGetAbilityIcon(currentAbility), AbilityButtonEventHandles)
+                call CreateIcon(BlzGetAbilityIcon(currentAbility), AbilityButtonEventHandles, GetAbilityElementCountTooltip(playerHero, abilityIndex), BlzGetAbilityTooltip(abilityIndex, GetUnitAbilityLevel(playerHero, abilityIndex) - 1))
             else
-                call CreateIcon(BlzGetAbilityIcon('ANab'), AbilityButtonEventHandles)
+                call CreateIcon(BlzGetAbilityIcon('ANab'), AbilityButtonEventHandles, "Hero does not have text", "Non existing ability")
             endif
 
             set abilityIndex = abilityIndex + 1
@@ -271,10 +273,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         set PlayerMultiboardLookup[playerId] = GameMultiboardCurrentPlayerCount
 
         // Set the player hero icon
-        call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), HeroButtonEventHandles)
+        call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), HeroButtonEventHandles, GetHeroTooltip(playerHero), GetPlayerNameColour(playingPlayer) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)))
 
         // Player stats icon
-        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", HeroButtonEventHandles)
+        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", HeroButtonEventHandles, PlayerStats.getTooltip(playingPlayer), "Player Stats")
 
         // Set the player name
         call CreateText(GetPlayerNameColour(playingPlayer))
@@ -282,8 +284,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         // Set the PVP stats
         call CreateText(PVP_WINS_COLOR + "0" + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + "0" + COLOR_END_TAG)
 
-        // Element iconss
-        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", HeroButtonEventHandles)
+        // Element icons
+        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", HeroButtonEventHandles, GetElementCountTooltip(playerHero), "Element Counts")
 
         // Set the player items
         call UpdatePlayerItems(playingPlayer)
@@ -300,7 +302,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
 
     private function ScoreboardMouseEventActions takes nothing returns nothing
         local framehandle currentFrameHandle = BlzGetTriggerFrame()
-        local string requirementDescription = "Some really intense thing"
+        local string tooltipDescription = IconDescriptions.string[GetHandleId(currentFrameHandle)]
+        local string tooltipName = IconNames.string[GetHandleId(currentFrameHandle)]
 
         if BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK then
             if GetLocalPlayer() == GetTriggerPlayer() then
@@ -309,8 +312,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
 			endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
             if GetLocalPlayer() == GetTriggerPlayer() then	
-                call BlzFrameSetText(ScoreboardTooltipTitleFrame, requirementDescription)
-                call BlzFrameSetSize(ScoreboardTooltipFrame, 0.29, GetTooltipSize(requirementDescription))
+                call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
+                call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
+                call BlzFrameSetSize(ScoreboardTooltipFrame, 0.29, GetTooltipSize(tooltipDescription))
 
                 // TODO Change framepoint depending on column index somehow
                 call BlzFrameSetPoint(ScoreboardTooltipFrame, FRAMEPOINT_BOTTOMRIGHT, currentFrameHandle, FRAMEPOINT_BOTTOMRIGHT, 0, -0.052)
@@ -365,6 +369,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
     
     function InitializeMultiboard takes nothing returns nothing
         set INITIAL_BOARD_NAME = "|cff2ff1ffCustom Hero Survival - |r |cffadff2f" + GetMapVersionName(CURRENT_GAME_VERSION) + "|r"
+
+        // Tables containing tooltip information
+        set IconDescriptions = Table.create()
+        set IconNames = Table.create()
 
         // All buttons use the same trigger. However everything has a unique id to handle later on
         set IconEventTrigger = CreateTrigger()

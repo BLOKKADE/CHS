@@ -58,7 +58,7 @@ library PlayerTracking initializer init requires OldInitialization
             return thistype(GetPlayerId(p) + 1) // First struct created is 1, not 0
         endmethod
 
-        public static method getTooltip takes player p returns nothing
+        public static method getTooltip takes player p returns string
             local thistype ps = thistype.forPlayer(p)
             local string tooltip = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(p) + "|n|n"
 
@@ -81,6 +81,8 @@ library PlayerTracking initializer init requires OldInitialization
             set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins())
 
             set tooltip = tooltip + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
+
+            return tooltip
         endmethod
 
         // --- Functions for data that is not actually saved

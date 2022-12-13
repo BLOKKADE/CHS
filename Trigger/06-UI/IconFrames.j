@@ -24,7 +24,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 	function GetHeroTooltip takes unit SpellU returns string
 		local player owningPlayer = GetOwningPlayer(SpellU)
 		local string temp = GetObjectelementsAsString(SpellU, GetUnitTypeId(SpellU), false)
-		local string ToolTipS
+		local string ToolTipS = ""
 
 		if temp != "" and temp != null then
 			set ToolTipS = ToolTipS + temp + "|n"
@@ -54,10 +54,13 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// Cleanup
 		set owningPlayer = null
+
+		return ToolTipS
 	endfunction
 	
 	function GetElementCountTooltip takes unit SpellU returns string
 		local integer i1 = 1
+		local integer i2 = 1
 		local string ToolTipS = "|cffd0ff00Element Counts|r"
 
 		loop
@@ -76,8 +79,10 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 	endfunction
 
 	function GetAbilityElementCountTooltip takes unit SpellU, integer spellLocation returns string
+		local integer i1 = 1
+		local integer i2 = 1
 		local integer i3 = GetHeroSpellAtPosition(SpellU, spellLocation) 
-		local string ToolTipS
+		local string ToolTipS = ""
 		local string temp
 
 		set temp = GetObjectelementsAsString(SpellU, i3, true)

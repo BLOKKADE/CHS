@@ -1,4 +1,4 @@
-library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnBuy
+library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnBuy, Scoreboard
 
     globals
         boolean array NonLucrativeTomeUsed

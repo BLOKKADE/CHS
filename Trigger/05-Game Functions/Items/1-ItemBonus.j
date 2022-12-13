@@ -1,4 +1,4 @@
-library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin
+library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin, Scoreboard
 	globals
 		hashtable HTi = InitHashtable()
 		HashTable UniqueItemCount

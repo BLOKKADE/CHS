@@ -1,4 +1,4 @@
-library trigger79 initializer init requires RandomShit, Functions, LoadCommand, ShopIndex
+library trigger79 initializer init requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard
 
     globals
         boolean ShopsCreated = false

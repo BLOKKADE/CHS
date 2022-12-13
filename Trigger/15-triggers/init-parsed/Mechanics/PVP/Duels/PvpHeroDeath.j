@@ -1,4 +1,4 @@
-library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, OldInitialization, PvpHelper, VotingResults
+library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, OldInitialization, PvpHelper, VotingResults, Scoreboard
 
     private function PvpHeroDeathConditions takes nothing returns boolean
         return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
