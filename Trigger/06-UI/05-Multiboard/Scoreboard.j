@@ -38,6 +38,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 		private framehandle ScoreboardTooltipTitleFrame
 		private framehandle ScoreboardTooltipTextFrame
 
+        private framehandle ScoreboardSecondaryTooltipFrame
+		private framehandle ScoreboardSecondaryTooltipTitleFrame
+		private framehandle ScoreboardSecondaryTooltipTextFrame
+
         // Colors
         private constant string COLOR_END_TAG                = "|r"
         private constant string HEADER_COLOR                 = "|cff00ffff"
@@ -300,8 +304,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
         local integer handleId = GetHandleId(currentFrameHandle)
         local integer playerId = LoadInteger(IconEventHandles, handleId, 1)
         local integer columnIndex = LoadInteger(IconEventHandles, handleId, 2)
-        local framepointtype tooltipFramepoint = FRAMEPOINT_BOTTOMRIGHT
-        local framepointtype tooltipRelativeFramepoint = FRAMEPOINT_BOTTOMRIGHT
+        local boolean usePrimaryTooltipFrame = true
         local string tooltipDescription
         local string tooltipName
         local unit playerHero
@@ -322,16 +325,14 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
                 set tooltipName = "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)) + COLOR_END_TAG
                 set tooltipDescription = GetHeroTooltip(playerHero)
 
-                //set tooltipFramepoint = FRAMEPOINT_TOPLEFT
-                //set tooltipRelativeFramepoint = FRAMEPOINT_BOTTOMLEFT
+                set usePrimaryTooltipFrame = false
 
             // Player stats
             elseif (columnIndex == PLAYER_STATS_INDEX) then
                 set tooltipName = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(Player(playerId))
                 set tooltipDescription = PlayerStats.getTooltip(Player(playerId))
                             
-                // set tooltipFramepoint = FRAMEPOINT_TOPLEFT
-                // set tooltipRelativeFramepoint = FRAMEPOINT_BOTTOMLEFT
+                set usePrimaryTooltipFrame = false
 
             // Element count
             elseif (columnIndex == ELEMENT_COUNT_INDEX) then
@@ -371,27 +372,34 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
             endif
 
             if GetLocalPlayer() == GetTriggerPlayer() then	
-                call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
-                call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
-                call BlzFrameSetPoint(ScoreboardTooltipFrame, tooltipFramepoint, currentFrameHandle, tooltipRelativeFramepoint, 0, -0.052)
-                call BlzFrameSetSize(ScoreboardTooltipFrame, 0.29, GetTooltipSize(tooltipDescription))
-
-                // TODO Change framepoint depending on column index somehow
-                call BlzFrameSetVisible(ScoreboardTooltipFrame, true)
+                if (usePrimaryTooltipFrame) then
+                    call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
+                    call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
+                    call BlzFrameSetPoint(ScoreboardTooltipFrame, FRAMEPOINT_BOTTOMRIGHT, currentFrameHandle, FRAMEPOINT_BOTTOMRIGHT, 0, -0.052)
+                    call BlzFrameSetSize(ScoreboardTooltipFrame, 0.29, GetTooltipSize(tooltipDescription))
+                    call BlzFrameSetVisible(ScoreboardTooltipFrame, true)
+                else
+                    call BlzFrameSetText(ScoreboardSecondaryTooltipTitleFrame, tooltipName)
+                    call BlzFrameSetText(ScoreboardSecondaryTooltipTextFrame, tooltipDescription)
+                    call BlzFrameSetPoint(ScoreboardSecondaryTooltipFrame, FRAMEPOINT_TOPLEFT, currentFrameHandle, FRAMEPOINT_BOTTOMLEFT, 0, -0.052)
+                    call BlzFrameSetSize(ScoreboardSecondaryTooltipFrame, 0.29, GetTooltipSize(tooltipDescription))
+                    call BlzFrameSetVisible(ScoreboardSecondaryTooltipFrame, true)
+                endif
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then
             // Empty the text box
             if GetLocalPlayer() == GetTriggerPlayer() then	
                 call BlzFrameSetText(ScoreboardTooltipTitleFrame, "")
                 call BlzFrameSetText(ScoreboardTooltipTextFrame, "")
+                call BlzFrameSetText(ScoreboardSecondaryTooltipTitleFrame, "")
+                call BlzFrameSetText(ScoreboardSecondaryTooltipTextFrame, "")
                 call BlzFrameSetVisible(ScoreboardTooltipFrame, false)
+                call BlzFrameSetVisible(ScoreboardSecondaryTooltipFrame, false)
             endif
         endif
 
         // Cleanup
         set currentFrameHandle = null
-        set tooltipFramepoint = null
-        set tooltipRelativeFramepoint = null
         set playerHero = null
         set currentItem = null
     endfunction
@@ -445,12 +453,19 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
         set ScoreboardFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
         call BlzFrameSetLevel(ScoreboardFrameHandle, 1)
 
-        // Create the tooltip window
+        // Create the primary tooltip window
         set ScoreboardTooltipFrame = BlzCreateFrame("TooltipText", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
         set ScoreboardTooltipTitleFrame = BlzGetFrameByName("TooltipTextTitle", 0)
         set ScoreboardTooltipTextFrame = BlzGetFrameByName("TooltipTextValue", 0)
         call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
         call BlzFrameSetVisible(ScoreboardTooltipFrame, false) 
+
+        // Create the secondary tooltip window
+        set ScoreboardSecondaryTooltipFrame = BlzCreateFrame("TooltipText", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
+        set ScoreboardSecondaryTooltipTitleFrame = BlzGetFrameByName("TooltipTextTitle", 0)
+        set ScoreboardSecondaryTooltipTextFrame = BlzGetFrameByName("TooltipTextValue", 0)
+        call BlzFrameSetLevel(ScoreboardSecondaryTooltipFrame, 2) // To have it appear above the scoreboard
+        call BlzFrameSetVisible(ScoreboardSecondaryTooltipFrame, false) 
 
         set IconEventHandles = InitHashtable()
 
