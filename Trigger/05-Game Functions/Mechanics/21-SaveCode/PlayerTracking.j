@@ -60,7 +60,7 @@ library PlayerTracking initializer init requires OldInitialization
 
         public static method getTooltip takes player p returns string
             local thistype ps = thistype.forPlayer(p)
-            local string tooltip = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(p) + "|n|n"
+            local string tooltip = ""
 
             set tooltip = tooltip + "|cffd0ff00All Pick Stats|r"
             set tooltip = tooltip + "|n -All Battle Royale Wins: " + I2S(ps.getAPBRAllWins())

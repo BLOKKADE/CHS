@@ -61,7 +61,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 	function GetElementCountTooltip takes unit SpellU returns string
 		local integer i1 = 1
 		local integer i2 = 1
-		local string ToolTipS = "|cffd0ff00Element Counts|r"
+		local string ToolTipS = ""
 
 		loop
 			set i2 = GetUnitElementCount(SpellU, i1)
@@ -196,7 +196,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					set ToolTipS = GetElementCountTooltip(SpellU)
 
 					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+						call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Element Counts|r")
+						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 						call BlzFrameSetSize(TooltipFrame, 0.125, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
@@ -205,7 +206,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					set ToolTipS = PlayerStats.getTooltip(GetOwningPlayer(SpellU))
 
 					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+						call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Stats for: |r" + GetPlayerNameColour(GetOwningPlayer(SpellU)))
+						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 						call BlzFrameSetSize(TooltipFrame, 0.23, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
@@ -214,7 +216,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					set ToolTipS = GetHeroTooltip(SpellU)
 
 					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame,GetPlayerNameColour(GetOwningPlayer(SpellU)) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(SpellU)))
+						call BlzFrameSetText(TooltipTitleFrame, GetPlayerNameColour(GetOwningPlayer(SpellU)) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(SpellU)))
 						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 						call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(TooltipFrame, true)

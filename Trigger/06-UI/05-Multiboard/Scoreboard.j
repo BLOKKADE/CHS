@@ -56,13 +56,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
         // The only trigger that handles hovering over scoreboard icons
         private trigger IconEventTrigger
-
-        private hashtable HeroButtonEventHandles
-        private hashtable ItemButtonEventHandles
-        private hashtable AbilityButtonEventHandles
-
-        private Table IconDescriptions
-        private Table IconNames
+        private hashtable IconEventHandles
     endglobals
 
     function UpdateMultiboardPVPCounts takes player playingPlayer returns nothing
@@ -152,7 +146,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
         return value
     endfunction
 
-    private function CreateIcon takes string iconPath, hashtable buttonEventHandles, string tooltip, string tooltipName returns nothing
+    private function CreateIcon takes string iconPath, hashtable buttonEventHandles, integer playerId returns nothing
         local framehandle buttonFrameHandle = BlzCreateFrame("ScriptDialogButton", ScoreboardFrameHandle, 0, 0) 
         local framehandle buttonBackdropFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", buttonFrameHandle, "", 1)
         local integer buttonHandleId = GetHandleId(buttonFrameHandle)
@@ -167,9 +161,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
         call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
 
         // Save the handle of this button to look it up later for mouse events
-        call SaveInteger(buttonEventHandles, buttonHandleId, 1, GameMultiboardCurrentPlayerCount)// Want to save the relative player id for this icon (GameMultiboardCurrentPlayerCount * 50) + CurrentColumnIndex) // 50 is just an arbitrary number as long as it is more than the number of scoreboard columns
-        set IconDescriptions.string[buttonHandleId] = tooltip
-        set IconNames.string[buttonHandleId] = tooltipName
+        call SaveInteger(buttonEventHandles, buttonHandleId, 1, playerId)
+        call SaveInteger(buttonEventHandles, buttonHandleId, 2, CurrentColumnIndex)
 
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
@@ -200,7 +193,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
     function UpdatePlayerItems takes player playingPlayer returns nothing
         local integer itemSlotIndex = 0
-        local unit playerHero = PlayerHeroes[GetPlayerId(playingPlayer) + 1]
+        local integer playerId = GetPlayerId(playingPlayer)
+        local unit playerHero = PlayerHeroes[playerId + 1]
         local item currentItem
 
         loop
@@ -210,11 +204,11 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
             if (currentItem != null) then
                 // Display the icon
-                call CreateIcon(BlzGetItemIconPath(currentItem), ItemButtonEventHandles, BlzGetItemExtendedTooltip(currentItem), GetItemName(currentItem))
+                call CreateIcon(BlzGetItemIconPath(currentItem), IconEventHandles, playerId)
             else
                 // Display the icon
 
-                call CreateIcon(BlzGetItemIconPath(CreateItem('I099', 0, 0)), ItemButtonEventHandles, "Does not have item", "Non existing item")
+                call CreateIcon(BlzGetItemIconPath(CreateItem('I099', 0, 0)), IconEventHandles, playerId)
             endif
 
             set itemSlotIndex = itemSlotIndex + 1
@@ -227,7 +221,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
     function UpdatePlayerAbilities takes player playingPlayer returns nothing
         local integer abilityIndex = 1
-        local unit playerHero = PlayerHeroes[GetPlayerId(playingPlayer) + 1]
+        local integer playerId = GetPlayerId(playingPlayer)
+        local unit playerHero = PlayerHeroes[playerId + 1]
         local integer currentAbility
 
         loop
@@ -238,9 +233,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
             if (currentAbility != 0) then
                 // Display the icon
-                call CreateIcon(BlzGetAbilityIcon(currentAbility), AbilityButtonEventHandles, GetAbilityElementCountTooltip(playerHero, abilityIndex), BlzGetAbilityTooltip(abilityIndex, GetUnitAbilityLevel(playerHero, abilityIndex) - 1))
+                call CreateIcon(BlzGetAbilityIcon(currentAbility), IconEventHandles, playerId)
             else
-                call CreateIcon(BlzGetAbilityIcon('ANab'), AbilityButtonEventHandles, "Hero does not have text", "Non existing ability")
+                call CreateIcon(BlzGetAbilityIcon('ANab'), IconEventHandles, playerId)
             endif
 
             set abilityIndex = abilityIndex + 1
@@ -270,13 +265,13 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
         set GameMultiboardCurrentPlayerCount = GameMultiboardCurrentPlayerCount + 1
 
         // Save where this player is in the multiboard for lookup in the future
-        set PlayerMultiboardLookup[playerId] = GameMultiboardCurrentPlayerCount
-
+        set PlayerMultiboardLookup[GameMultiboardCurrentPlayerCount] = playerId
+        
         // Set the player hero icon
-        call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), HeroButtonEventHandles, GetHeroTooltip(playerHero), GetPlayerNameColour(playingPlayer) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)))
+        call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), IconEventHandles, playerId)
 
         // Player stats icon
-        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", HeroButtonEventHandles, PlayerStats.getTooltip(playingPlayer), "Player Stats")
+        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", IconEventHandles, playerId)
 
         // Set the player name
         call CreateText(GetPlayerNameColour(playingPlayer))
@@ -285,7 +280,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
         call CreateText(PVP_WINS_COLOR + "0" + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + "0" + COLOR_END_TAG)
 
         // Element icons
-        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", HeroButtonEventHandles, GetElementCountTooltip(playerHero), "Element Counts")
+        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", IconEventHandles, playerId)
 
         // Set the player items
         call UpdatePlayerItems(playingPlayer)
@@ -302,8 +297,17 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
     private function ScoreboardMouseEventActions takes nothing returns nothing
         local framehandle currentFrameHandle = BlzGetTriggerFrame()
-        local string tooltipDescription = IconDescriptions.string[GetHandleId(currentFrameHandle)]
-        local string tooltipName = IconNames.string[GetHandleId(currentFrameHandle)]
+        local integer handleId = GetHandleId(currentFrameHandle)
+        local integer playerId = LoadInteger(IconEventHandles, handleId, 1)
+        local integer columnIndex = LoadInteger(IconEventHandles, handleId, 2)
+        local framepointtype tooltipFramepoint = FRAMEPOINT_BOTTOMRIGHT
+        local framepointtype tooltipRelativeFramepoint = FRAMEPOINT_BOTTOMRIGHT
+        local string tooltipDescription
+        local string tooltipName
+        local unit playerHero
+        local item currentItem
+        local integer currentAbility
+        local integer currentAbilityIndex
 
         if BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK then
             if GetLocalPlayer() == GetTriggerPlayer() then
@@ -311,22 +315,85 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 				call BlzFrameSetEnable(currentFrameHandle, true)
 			endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
+            // Player hero
+            if (columnIndex == HERO_INDEX) then
+                set playerHero = PlayerHeroes[playerId + 1]
+
+                set tooltipName = "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)) + COLOR_END_TAG
+                set tooltipDescription = GetHeroTooltip(playerHero)
+
+                //set tooltipFramepoint = FRAMEPOINT_TOPLEFT
+                //set tooltipRelativeFramepoint = FRAMEPOINT_BOTTOMLEFT
+
+            // Player stats
+            elseif (columnIndex == PLAYER_STATS_INDEX) then
+                set tooltipName = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(Player(playerId))
+                set tooltipDescription = PlayerStats.getTooltip(Player(playerId))
+                            
+                // set tooltipFramepoint = FRAMEPOINT_TOPLEFT
+                // set tooltipRelativeFramepoint = FRAMEPOINT_BOTTOMLEFT
+
+            // Element count
+            elseif (columnIndex == ELEMENT_COUNT_INDEX) then
+                set playerHero = PlayerHeroes[playerId + 1]
+                
+                set tooltipName = "|cffd0ff00Element Counts|r"
+                set tooltipDescription = GetElementCountTooltip(playerHero)
+
+            // Item descriptions
+            elseif (columnIndex >= PLAYER_ITEMS_START_INDEX and columnIndex <= (PLAYER_ITEMS_START_INDEX + 5)) then
+                set playerHero = PlayerHeroes[playerId + 1]
+                set currentItem = UnitItemInSlot(playerHero, columnIndex - PLAYER_ITEMS_START_INDEX)
+
+                if (currentItem != null) then
+                    set tooltipName = GetItemName(currentItem)
+                    set tooltipDescription = BlzGetItemExtendedTooltip(currentItem)
+                else
+                    // Should hopefully never happen?
+                    set tooltipName = "Invalid item"
+                    set tooltipDescription = ""
+                endif
+
+            // Ability/absolute descriptions
+            elseif (columnIndex >= PLAYER_ABILITIES_START_INDEX and columnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
+                set playerHero = PlayerHeroes[playerId + 1]
+                set currentAbilityIndex = columnIndex - PLAYER_ABILITIES_START_INDEX + 1 // Abilities are base 1 indexed
+                set currentAbility = GetHeroSpellAtPosition(playerHero, currentAbilityIndex)
+
+                if (currentAbility != 0) then
+                    set tooltipName = BlzGetAbilityTooltip(currentAbility, GetUnitAbilityLevel(playerHero, currentAbilityIndex) - 1)
+                    set tooltipDescription = GetAbilityElementCountTooltip(playerHero, currentAbilityIndex)
+                else
+                    // Should hopefully never happen?
+                    set tooltipName = "Invalid ability"
+                    set tooltipDescription = ""
+                endif
+            endif
+
             if GetLocalPlayer() == GetTriggerPlayer() then	
                 call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
                 call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
+                call BlzFrameSetPoint(ScoreboardTooltipFrame, tooltipFramepoint, currentFrameHandle, tooltipRelativeFramepoint, 0, -0.052)
                 call BlzFrameSetSize(ScoreboardTooltipFrame, 0.29, GetTooltipSize(tooltipDescription))
 
                 // TODO Change framepoint depending on column index somehow
-                call BlzFrameSetPoint(ScoreboardTooltipFrame, FRAMEPOINT_BOTTOMRIGHT, currentFrameHandle, FRAMEPOINT_BOTTOMRIGHT, 0, -0.052)
                 call BlzFrameSetVisible(ScoreboardTooltipFrame, true)
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then
             // Empty the text box
             if GetLocalPlayer() == GetTriggerPlayer() then	
+                call BlzFrameSetText(ScoreboardTooltipTitleFrame, "")
                 call BlzFrameSetText(ScoreboardTooltipTextFrame, "")
                 call BlzFrameSetVisible(ScoreboardTooltipFrame, false)
             endif
         endif
+
+        // Cleanup
+        set currentFrameHandle = null
+        set tooltipFramepoint = null
+        set tooltipRelativeFramepoint = null
+        set playerHero = null
+        set currentItem = null
     endfunction
 
     private function CreateHeaderRow takes nothing returns nothing
@@ -370,10 +437,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
     function InitializeMultiboard takes nothing returns nothing
         set INITIAL_BOARD_NAME = "|cff2ff1ffCustom Hero Survival - |r |cffadff2f" + GetMapVersionName(CURRENT_GAME_VERSION) + "|r"
 
-        // Tables containing tooltip information
-        set IconDescriptions = Table.create()
-        set IconNames = Table.create()
-
         // All buttons use the same trigger. However everything has a unique id to handle later on
         set IconEventTrigger = CreateTrigger()
         call TriggerAddAction(IconEventTrigger, function ScoreboardMouseEventActions)
@@ -389,9 +452,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
         call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
         call BlzFrameSetVisible(ScoreboardTooltipFrame, false) 
 
-        set AbilityButtonEventHandles = InitHashtable()
-        set ItemButtonEventHandles = InitHashtable()
-        set HeroButtonEventHandles = InitHashtable()
+        set IconEventHandles = InitHashtable()
 
         call InitializeDefaultValues()
     endfunction
