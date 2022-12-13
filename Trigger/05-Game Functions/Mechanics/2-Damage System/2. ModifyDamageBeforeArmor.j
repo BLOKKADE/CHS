@@ -22,13 +22,6 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
-        //Last Breath no damage
-        if GetUnitAbilityLevel(DamageTarget, 'A08B') > 0 then
-            set Damage.index.damage = 0
-            call SetUnitState(DamageTarget, UNIT_STATE_LIFE, 100)
-            return
-        endif
-
         //Faerie Dragon
         if GetUnitTypeId(Damage.target) == 'e001' then
             set Damage.index.damage = 0
