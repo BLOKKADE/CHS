@@ -21,6 +21,81 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		hashtable ButtonParentHandles = InitHashtable()
 	endglobals
 
+	function GetHeroTooltip takes unit SpellU returns string
+		local player owningPlayer = GetOwningPlayer(SpellU)
+		local string temp = GetObjectelementsAsString(SpellU, GetUnitTypeId(SpellU), false)
+		local string ToolTipS
+
+		if temp != "" and temp != null then
+			set ToolTipS = ToolTipS + temp + "|n"
+		endif
+
+		set temp = GetHeroPassiveDescription(GetUnitTypeId(SpellU), HeroPassive_Desc)
+		if temp != "" and temp != null then
+			set ToolTipS = ToolTipS + temp + "|n"
+		endif
+
+		set temp = GetHeroPassiveDescription(GetUnitTypeId(SpellU), HeroPassive_Lvlup)
+		if temp != "" and temp != null then
+			set ToolTipS = ToolTipS + temp
+		endif
+
+		set ToolTipS = ToolTipS + GetPassiveStr(SpellU)
+
+		if EconomyMode or IncomeMode != 2 then
+			set ToolTipS = ToolTipS + "|n|n|cffd4954dIncome|r: " + I2S(Income[GetPlayerId(owningPlayer)])
+		endif
+
+		//if p != GetOwningPlayer(SpellU) then
+			set ToolTipS = ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_GOLD))
+			set ToolTipS = ToolTipS + "|n|cff41e400Lumber|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_LUMBER))
+			set ToolTipS = ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[GetPlayerId(owningPlayer)]))
+		//endif
+
+		// Cleanup
+		set owningPlayer = null
+	endfunction
+	
+	function GetElementCountTooltip takes unit SpellU returns string
+		local integer i1 = 1
+		local string ToolTipS = "|cffd0ff00Element Counts|r"
+
+		loop
+			set i2 = GetUnitElementCount(SpellU, i1)
+
+			// Don't include empty elements in the list
+			if i2 > 0 then
+				set ToolTipS = ToolTipS + "|n" + ClassAbil[i1] + " : " + I2S(i2)
+			endif
+
+			set i1 = i1 + 1
+			exitwhen i1 > 13 // Based off the amount of elements in ClassAbil array. 2-InitDescription.j
+		endloop
+
+		return ToolTipS
+	endfunction
+
+	function GetAbilityElementCountTooltip takes unit SpellU, integer spellLocation returns string
+		local integer i3 = GetHeroSpellAtPosition(SpellU, spellLocation) 
+		local string ToolTipS
+		local string temp
+
+		set temp = GetObjectelementsAsString(SpellU, i3, true)
+		if temp != "" and temp != null then
+			set ToolTipS = ToolTipS + temp + "|n"
+		endif
+		set ToolTipS = ToolTipS + BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU, i3) - 1)
+
+		// Hero absolutes
+		if spellLocation > 11 and spellLocation <= 20 then
+			set i1 = GetAbsoluteElement(i3)
+			set i2 = GetUnitElementCount(SpellU, i1)
+			set ToolTipS = ToolTipS + "|n|n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
+		endif
+
+		return ToolTipS  
+	endfunction
+
 	function SkillSysStart takes nothing returns nothing
 		local integer NumButton = LoadInteger(ButtonParentHandles ,GetHandleId(BlzGetTriggerFrame()),1)
 		local integer i_ck = 1
@@ -113,20 +188,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					endif
 				elseif NumButton == 38 then
 					set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
-					set i1 = 1
-					set ToolTipS = "|cffd0ff00Element Counts|r"
-
-					loop
-						set i2 = GetUnitElementCount(SpellU, i1)
-
-						// Don't include empty elements in the list
-						if i2 > 0 then
-							set ToolTipS = ToolTipS + "|n" + ClassAbil[i1] + " : " + I2S(i2)
-						endif
-
-						set i1 = i1 + 1
-						exitwhen i1 > 13 // Based off the amount of elements in ClassAbil array. 2-InitDescription.j
-					endloop
+					set ToolTipS = GetElementCountTooltip(SpellU)
 
 					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
@@ -135,28 +197,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					endif
 				elseif NumButton == 39 then
 					set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
-					set ps = PlayerStats.forPlayer(GetOwningPlayer(SpellU))
-					set ToolTipS = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(GetOwningPlayer(SpellU)) + "|n|n"
-
-					set ToolTipS = ToolTipS + "|cffd0ff00All Pick Stats|r"
-					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getAPBRAllWins())
-					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getAPBRSeasonWins())
-					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getAPPVPAllWins())
-					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getAPPVPSeasonWins())
-
-					set ToolTipS = ToolTipS + "|n|cffd0ff00All Random Stats|r"
-					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getARBRAllWins())
-					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getARBRSeasonWins())
-					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getARPVPAllWins())
-					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getARPVPSeasonWins())
-
-					set ToolTipS = ToolTipS + "|n|cffd0ff00Draft Stats|r"
-					set ToolTipS = ToolTipS + "|n -All Battle Royale Wins: " + I2S(ps.getDraftBRAllWins())
-					set ToolTipS = ToolTipS + "|n -Season Battle Royale Wins: " + I2S(ps.getDraftBRSeasonWins())
-					set ToolTipS = ToolTipS + "|n -All PVP Wins: " + I2S(ps.getDraftPVPAllWins())
-					set ToolTipS = ToolTipS + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins())
-
-					set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
+					set ToolTipS = PlayerStats.getTooltip(GetOwningPlayer(SpellU))
 
 					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
@@ -165,31 +206,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					endif
 				elseif NumButton == 100 then
 					set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
-					set temp = GetObjectelementsAsString(SpellU, GetUnitTypeId(SpellU), false)
-					if temp != "" and temp != null then
-						set ToolTipS = ToolTipS + temp + "|n"
-					endif
-					set temp = GetHeroPassiveDescription(GetUnitTypeId(SpellU), HeroPassive_Desc)
-					if temp != "" and temp != null then
-						set ToolTipS = ToolTipS + temp + "|n"
-					endif
-
-					set temp = GetHeroPassiveDescription(GetUnitTypeId(SpellU), HeroPassive_Lvlup)
-					if temp != "" and temp != null then
-						set ToolTipS = ToolTipS + temp
-					endif
-
-					set ToolTipS = ToolTipS + GetPassiveStr(SpellU)
-
-					if EconomyMode or IncomeMode != 2 then
-						set ToolTipS = ToolTipS + "|n|n|cffd4954dIncome|r: " + I2S(Income[SelectedUnitPid[PlID]])
-					endif
-
-					if p != GetOwningPlayer(SpellU) then
-						set ToolTipS = ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(Player(SelectedUnitPid[PlID]), PLAYER_STATE_RESOURCE_GOLD))
-						set ToolTipS = ToolTipS + "|n|cff41e400Lumber|r: " + I2S(GetPlayerState(Player(SelectedUnitPid[PlID]), PLAYER_STATE_RESOURCE_LUMBER))
-						set ToolTipS = ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[SelectedUnitPid[PlID]]))
-					endif
+					set ToolTipS = GetHeroTooltip(SpellU)
 
 					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame,GetPlayerNameColour(GetOwningPlayer(SpellU)) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(SpellU)))
@@ -201,26 +218,12 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					//Hero abilities and absolutes
 				elseif NumButton > 100 and NumButton <= 120 then
 					if SelectedUnitPid[PlID] != 11 then
-						set SpellU = PlayerHeroes[SelectedUnitPid[PlID]+ 1]
-						set i3 = GetHeroSpellAtPosition(SpellU ,NumButton - 100) 
-						set temp = GetObjectelementsAsString(SpellU, i3, true)
-						if temp != "" and temp != null then
-							set ToolTipS = ToolTipS + temp + "|n"
-						endif
-						set ToolTipS = ToolTipS + BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 )
-
-						//Hero absolutes
-						if NumButton > 110 and NumButton <= 120 then
-							set i1 = GetAbsoluteElement(i3)
-							set i2 = GetUnitElementCount(SpellU, i1)
-							set ToolTipS = ToolTipS + "|n|n|cffd0ff00Current|r " + ClassAbil[i1] + " |cffd0ff00count|r: " + I2S(i2)
-
-
-							//set ToolTipS = ToolTipS + "|n|cffd0ff00Additional bonus|r: " + R2SW((100 * GetUnitAbsoluteEffective(SpellU, i1)), 1, 1) + "|cffd0ff00%|r"
-						endif
+						set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
+						set i3 = GetHeroSpellAtPosition(SpellU, NumButton - 100) 
+						set ToolTipS = GetAbilityElementCountTooltip(SpellU, NumButton - 100)
 
 						if GetLocalPlayer() == p then	
-							call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 ))
+							call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3) - 1))
 							call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 							call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
 							call BlzFrameSetVisible(TooltipFrame, true)
@@ -231,7 +234,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						set ToolTipS = BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 )
 
 						if GetLocalPlayer() == p then	
-							call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1 ))
+							call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3) - 1))
 							call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 							call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
 							call BlzFrameSetVisible(TooltipFrame, true)

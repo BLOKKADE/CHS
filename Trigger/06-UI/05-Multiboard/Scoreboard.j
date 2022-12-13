@@ -15,6 +15,15 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         private constant real HeroIconSpacing                = 0.003
         private constant real RowSpacing                     = 0.01
 
+        // Column indexes
+        private constant integer HERO_INDEX                  = 0
+        private constant integer PLAYER_STATS_INDEX          = 1
+        private constant integer PLAYER_NAME_INDEX           = 2
+        private constant integer DUELS_INDEX                 = 3
+        private constant integer ELEMENT_COUNT_INDEX         = 4
+        private constant integer PLAYER_ITEMS_START_INDEX    = 5
+        private constant integer PLAYER_ABILITIES_START_INDEX= 11
+
         // Specifications for a player name text
         private real TextHeight                              = 0.016
         private real TextWidth                               = 0.2
@@ -23,6 +32,11 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         private constant real HeroIconWidth                  = 0.023
         private constant real PlayerNameWidth                = 0.2
         private constant real DuelsWidth                     = 0.07
+
+        // Tooltip information
+        private framehandle ScoreboardTooltipFrame
+		private framehandle ScoreboardTooltipTitleFrame
+		private framehandle ScoreboardTooltipTextFrame
 
         // Colors
         private constant string COLOR_END_TAG                = "|r"
@@ -36,18 +50,18 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         private integer CurrentRowIndex                      = 0
         private integer CurrentColumnIndex                   = 0
 
-        private integer TotalAchievementCount                = 0
-        private integer GameMultiboardCurrentPlayerCount     = 0
-
         // Array to keep track of what player id belongs where on the multiboard. A fast lookup
         private integer array PlayerMultiboardLookup
+        private integer GameMultiboardCurrentPlayerCount     = 0
 
-        // The only trigger that handles hovering over items/abilities/heroes
+        // The only trigger that handles hovering over scoreboard icons
         private trigger IconEventTrigger
 
         private hashtable HeroButtonEventHandles
         private hashtable ItemButtonEventHandles
         private hashtable AbilityButtonEventHandles
+
+        private Table IconDescriptions
     endglobals
 
     function UpdateMultiboardPVPCounts takes player playingPlayer returns nothing
@@ -69,40 +83,47 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
 
     private function GetTopLeftX takes nothing returns real
         local real value = MainFrameTopLeftX + MainFrameXMargin
+        local real offset
+
+        // Don't move the x-coordinate any more for HERO_INDEX or PLAYER_STATS_INDEX
 
         // Player name
-        if (CurrentColumnIndex >= 1) then
+        if (CurrentColumnIndex >= PLAYER_NAME_INDEX) then
             set value = value + HeroIconWidth + HeroIconSpacing
         endif
 
         // Duels
-        if (CurrentColumnIndex >= 2) then
+        if (CurrentColumnIndex >= DUELS_INDEX) then
             set value = value + PlayerNameWidth
         endif
 
         // Element Counts
-        if (CurrentColumnIndex >= 3) then
+        if (CurrentColumnIndex >= ELEMENT_COUNT_INDEX) then
             set value = value + DuelsWidth
         endif
 
-        // Top row items
-        if (CurrentColumnIndex >= 4 and CurrentColumnIndex <= 6) then
-            set value = value + ButtonWidth + ButtonSpacing + ((CurrentColumnIndex - 4) * ButtonWidth) + ((CurrentColumnIndex - 4) * ButtonSpacing)
+        // Top 3 row items
+        if (CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2)) then
+            set offset = ButtonWidth + ButtonSpacing // Element count offset
+            set value = value + offset + ((CurrentColumnIndex - PLAYER_ITEMS_START_INDEX) * ButtonWidth) + ((CurrentColumnIndex - PLAYER_ITEMS_START_INDEX) * ButtonSpacing)
         endif
 
-        // Bottom row items
-        if (CurrentColumnIndex >= 7 and CurrentColumnIndex <= 9) then
-            set value = value + ButtonWidth + ButtonSpacing + ((CurrentColumnIndex - 7) * ButtonWidth) + ((CurrentColumnIndex - 7) * ButtonSpacing)
+        // Bottom 3 row items
+        if (CurrentColumnIndex >= (PLAYER_ITEMS_START_INDEX + 3) and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 5)) then
+            set offset = ButtonWidth + ButtonSpacing // Element count offset
+            set value = value + offset + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ButtonWidth) + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ButtonSpacing)
         endif
 
-        // Top row abilities
-        if (CurrentColumnIndex >= 10 and CurrentColumnIndex <= 19) then
-            set value = value + ButtonWidth + ButtonSpacing + (ButtonWidth * 4) + (ButtonSpacing * 2) + ((CurrentColumnIndex - 10) * ButtonWidth) + ((CurrentColumnIndex - 10) * ButtonSpacing)
+        // Top 10 row abilities
+        if (CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
+            set offset = ButtonWidth + ButtonSpacing + (ButtonWidth * 4) + (ButtonSpacing * 2) // Item and buffer offset
+            set value = value + offset + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ButtonWidth) + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ButtonSpacing)
         endif
 
-        // Bottom row absolutes
-        if (CurrentColumnIndex >= 20 and CurrentColumnIndex <= 29) then
-            set value = value + ButtonWidth + ButtonSpacing + (ButtonWidth * 4) + (ButtonSpacing * 2) + ((CurrentColumnIndex - 20) * ButtonWidth) + ((CurrentColumnIndex - 20) * ButtonSpacing)
+        // Bottom 10 row absolutes
+        if (CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
+            set offset = ButtonWidth + ButtonSpacing + (ButtonWidth * 4) + (ButtonSpacing * 2) // Item and buffer offset
+            set value = value + offset + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ButtonWidth) + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ButtonSpacing)
         endif
 
         return value
@@ -112,17 +133,18 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         local real value = MainFrameTopLeftY - MainFrameYMargin - (2 * ButtonWidth * CurrentRowIndex) - (RowSpacing * CurrentRowIndex) + TextHeight
         local real offset = ((ButtonWidth / 2) + (ButtonSpacing / 2))
 
+        // Header row
         if (CurrentRowIndex == 0) then
             return MainFrameTopLeftY - MainFrameYMargin
         endif
 
         // Top row items or Top row abilities
-        if (CurrentColumnIndex >= 4 and CurrentColumnIndex <= 6 or CurrentColumnIndex >= 10 and CurrentColumnIndex <= 19) then
+        if (CurrentColumnIndex == HERO_INDEX or CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2) or CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
             set value = value + offset
         endif
 
         // Bottom row items or Bottom row absolutes
-        if (CurrentColumnIndex >= 7 and CurrentColumnIndex <= 9 or CurrentColumnIndex >= 20 and CurrentColumnIndex <= 29) then
+        if (CurrentColumnIndex == PLAYER_STATS_INDEX or CurrentColumnIndex >= (PLAYER_ITEMS_START_INDEX + 3) and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 5) or CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
             set value = value - offset
         endif
 
@@ -144,8 +166,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
 
         // Save the handle of this button to look it up later for mouse events
-        // call SaveInteger(buttonEventHandles, buttonHandleId, 1, TotalAchievementCount)
-        
+        call SaveInteger(buttonEventHandles, buttonHandleId, 1, GameMultiboardCurrentPlayerCount * CurrentColumnIndex)
+        set IconDescriptions.string[buttonHandleId] = 
+
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
@@ -250,13 +273,16 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         // Set the player hero icon
         call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), HeroButtonEventHandles)
 
+        // Player stats icon
+        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", HeroButtonEventHandles)
+
         // Set the player name
         call CreateText(GetPlayerNameColour(playingPlayer))
 
         // Set the PVP stats
         call CreateText(PVP_WINS_COLOR + "0" + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + "0" + COLOR_END_TAG)
 
-        // Element icon
+        // Element iconss
         call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", HeroButtonEventHandles)
 
         // Set the player items
@@ -272,54 +298,43 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         set playerHero = null
     endfunction
 
-    private function VotingMouseEventActions takes nothing returns nothing
-		/*local integer index = GetIndex(GetHandleId(BlzGetTriggerFrame()))
-        local integer achievementType = GetAchievementType(GetHandleId(BlzGetTriggerFrame()))
-        local PlayerStats ps = PlayerStats.forPlayer(GetTriggerPlayer())
-        local Requirements hr = Requirements.forIndex(index)
-        local string requirementDescription
+    private function ScoreboardMouseEventActions takes nothing returns nothing
+        local framehandle currentFrameHandle = BlzGetTriggerFrame()
+        local string requirementDescription = "Some really intense thing"
 
         if BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK then
             if GetLocalPlayer() == GetTriggerPlayer() then
-				call BlzFrameSetEnable(BlzGetTriggerFrame(), false)
-				call BlzFrameSetEnable(BlzGetTriggerFrame(), true)
+				call BlzFrameSetEnable(currentFrameHandle, false)
+				call BlzFrameSetEnable(currentFrameHandle, true)
 			endif
-
-            // Is hat
-            if (achievementType == 1) then
-                call TryToWearHat(index, GetTriggerPlayer(), true)
-            // Is pet
-            else // achievementType == 2
-                call TryToSummonPet(index, GetTriggerPlayer(), true)
-            endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
-            set requirementDescription = hr.getRequirementDescription(ps)
-
-            // We are hijacking the tooltip window that we use for almost everything else in the game from IconFrames
             if GetLocalPlayer() == GetTriggerPlayer() then	
-                call BlzFrameSetText(TooltipTitleFrame, requirementDescription)
-                call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(requirementDescription))
-                call BlzFrameSetVisible(TooltipFrame, true)
+                call BlzFrameSetText(ScoreboardTooltipTitleFrame, requirementDescription)
+                call BlzFrameSetSize(ScoreboardTooltipFrame, 0.29, GetTooltipSize(requirementDescription))
+
+                // TODO Change framepoint depending on column index somehow
+                call BlzFrameSetPoint(ScoreboardTooltipFrame, FRAMEPOINT_BOTTOMRIGHT, currentFrameHandle, FRAMEPOINT_BOTTOMRIGHT, 0, -0.052)
+                call BlzFrameSetVisible(ScoreboardTooltipFrame, true)
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then
             // Empty the text box
             if GetLocalPlayer() == GetTriggerPlayer() then	
-                call BlzFrameSetText(TooltipTextFrame, "")
-                call BlzFrameSetVisible(TooltipFrame, false)
+                call BlzFrameSetText(ScoreboardTooltipTextFrame, "")
+                call BlzFrameSetVisible(ScoreboardTooltipFrame, false)
             endif
-        endif*/
+        endif
     endfunction
 
     private function CreateHeaderRow takes nothing returns nothing
         set CurrentRowIndex = 0
 
-        set CurrentColumnIndex = 1
+        set CurrentColumnIndex = PLAYER_NAME_INDEX
         call CreateText(HEADER_COLOR + "Player" + COLOR_END_TAG)
-        set CurrentColumnIndex = 2
+        set CurrentColumnIndex = DUELS_INDEX
         call CreateText(HEADER_COLOR + "Duels" + COLOR_END_TAG)
-        set CurrentColumnIndex = 4
+        set CurrentColumnIndex = PLAYER_ITEMS_START_INDEX
         call CreateText(HEADER_COLOR + "Items" + COLOR_END_TAG)
-        set CurrentColumnIndex = 10
+        set CurrentColumnIndex = PLAYER_ABILITIES_START_INDEX
         call CreateText(HEADER_COLOR + "Abilities" + COLOR_END_TAG)
 
         set CurrentRowIndex = 1
@@ -330,13 +345,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         local real mainFrameBottomRightX
         local real mainFrameBottomRightY
 
-        // All buttons use the same trigger. However everything has a unique id to handle later on
-        set IconEventTrigger = CreateTrigger()
-        call TriggerAddAction(IconEventTrigger, function VotingMouseEventActions)
-
-        // Create the main frame. All elements use this frame as the parent
-        set ScoreboardFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
-
         call CreateHeaderRow()
 
         // Populate the rows with actual player data
@@ -344,7 +352,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameXMargin) + HeroIconWidth + HeroIconSpacing + PlayerNameWidth + DuelsWidth + (15 * ButtonWidth) + (12 * ButtonSpacing)
-        set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameYMargin) - (CurrentRowIndex * ButtonWidth * 2) - (CurrentRowIndex * ButtonSpacing * 2)
+        set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameYMargin) - (CurrentRowIndex * ButtonWidth * 2) - ((CurrentRowIndex - 1) * ButtonSpacing)
 
         // Set the frame for the backdrop of the entire scoreboard
         call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX, MainFrameTopLeftY) 
@@ -357,6 +365,21 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
     
     function InitializeMultiboard takes nothing returns nothing
         set INITIAL_BOARD_NAME = "|cff2ff1ffCustom Hero Survival - |r |cffadff2f" + GetMapVersionName(CURRENT_GAME_VERSION) + "|r"
+
+        // All buttons use the same trigger. However everything has a unique id to handle later on
+        set IconEventTrigger = CreateTrigger()
+        call TriggerAddAction(IconEventTrigger, function ScoreboardMouseEventActions)
+
+        // Create the main frame. All elements use this frame as the parent
+        set ScoreboardFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
+        call BlzFrameSetLevel(ScoreboardFrameHandle, 1)
+
+        // Create the tooltip window
+        set ScoreboardTooltipFrame = BlzCreateFrame("TooltipText", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
+        set ScoreboardTooltipTitleFrame = BlzGetFrameByName("TooltipTextTitle", 0)
+        set ScoreboardTooltipTextFrame = BlzGetFrameByName("TooltipTextValue", 0)
+        call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
+        call BlzFrameSetVisible(ScoreboardTooltipFrame, false) 
 
         set AbilityButtonEventHandles = InitHashtable()
         set ItemButtonEventHandles = InitHashtable()
