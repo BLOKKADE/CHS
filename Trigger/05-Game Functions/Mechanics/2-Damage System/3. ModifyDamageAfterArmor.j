@@ -398,6 +398,13 @@ scope ModifyDamageAfterArmor initializer init
                 call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", 50 * GetHeroLevel(DamageSource), ABILITY_RLF_DAMAGE_HTB1 )
             endif
         endif
+
+        if vampCount > 0 and Damage.index.amount > 0 then
+            if not IsFxOnCooldownSet(DamageSourceId, 0, 1) then
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
+            endif
+            call Vamp(DamageSource, DamageTarget, vampAmount)
+        endif
         
         //Banshee passive
         if DamageTargetTypeId == BANSHEE_UNIT_ID then
@@ -503,13 +510,6 @@ scope ModifyDamageAfterArmor initializer init
         if IsContractLivingAvailable(DamageTarget, Damage.index.amount) then
             call ActivateContractLiving(DamageTarget)
             set Damage.index.amount = 0
-        endif
-        
-        if vampCount > 0 and Damage.index.amount > 0 then
-            if not IsFxOnCooldownSet(DamageSourceId, 0, 1) then
-                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
-            endif
-            call Vamp(DamageSource, DamageTarget, vampAmount)
         endif
 
         //call BJDebugMsg("MOD4.0 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
