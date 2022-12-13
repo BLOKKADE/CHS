@@ -4,26 +4,25 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         private string INITIAL_BOARD_NAME
 
         // The X,Y coordinate for the top left of the main frame
-        private constant real MainFrameTopLeftX              = 0.26
-        private constant real MainFrameTopLeftY              = 0.5
-        private constant real MainFrameMargin                = 0.014
+        private constant real MainFrameTopLeftX              = 0.01
+        private constant real MainFrameTopLeftY              = 0.55
+        private constant real MainFrameXMargin               = 0.03
+        private constant real MainFrameYMargin               = 0.025
 
         // Specifications for a button
-        private constant real ButtonWidth                    = 0.013
+        private constant real ButtonWidth                    = 0.026
         private constant real ButtonSpacing                  = 0.003
         private constant real HeroIconSpacing                = 0.003
+        private constant real RowSpacing                     = 0.01
 
         // Specifications for a player name text
         private real TextHeight                              = 0.016
-        private real TextWidth                               = 0.12
+        private real TextWidth                               = 0.2
 
         // Column widths
-        private constant real HeroIconWidth                  = 0.012
-        private constant real PlayerNameWidth                = 0.12
-        private constant real DuelsWidth                     = 0.038
-        private constant real ITEM_START_COLUMN_INDEX        = 0.015
-        private constant real SPACER_COLUMN_INDEX            = 0.015
-        private constant real ABILITY_START_COLUMN_INDEX     = 0.015
+        private constant real HeroIconWidth                  = 0.026
+        private constant real PlayerNameWidth                = 0.2
+        private constant real DuelsWidth                     = 0.07
 
         // Colors
         private constant string COLOR_END_TAG                = "|r"
@@ -69,29 +68,60 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
     endfunction
 
     private function GetTopLeftX takes nothing returns real
-        local real value = MainFrameTopLeftX + MainFrameMargin
+        local real value = MainFrameTopLeftX + MainFrameXMargin
 
+        // Player name
         if (CurrentColumnIndex >= 1) then
             set value = value + HeroIconWidth + HeroIconSpacing
         endif
 
+        // Duels
         if (CurrentColumnIndex >= 2) then
             set value = value + PlayerNameWidth
         endif
 
-        if (CurrentColumnIndex >= 3) then
-            set value = value + DuelsWidth + ((CurrentColumnIndex - 3) * (ButtonWidth * 0.5))
+        // Top row items
+        if (CurrentColumnIndex >= 3 and CurrentColumnIndex <= 5) then
+            set value = value + DuelsWidth + ((CurrentColumnIndex - 3) * ButtonWidth) + ((CurrentColumnIndex - 3) * ButtonSpacing)
         endif
 
-        if (CurrentColumnIndex >= 14) then
-            set value = value + ButtonWidth
+        // Bottom row items
+        if (CurrentColumnIndex >= 6 and CurrentColumnIndex <= 8) then
+            set value = value + DuelsWidth + ((CurrentColumnIndex - 6) * ButtonWidth) + ((CurrentColumnIndex - 6) * ButtonSpacing)
+        endif
+
+        // Top row abilities
+        if (CurrentColumnIndex >= 9 and CurrentColumnIndex <= 18) then
+            set value = value + DuelsWidth + (ButtonWidth * 4) + (ButtonSpacing * 2) + ((CurrentColumnIndex - 9) * ButtonWidth) + ((CurrentColumnIndex - 9) * ButtonSpacing)
+        endif
+
+        // Bottom row absolutes
+        if (CurrentColumnIndex >= 19 and CurrentColumnIndex <= 28) then
+            set value = value + DuelsWidth + (ButtonWidth * 4) + (ButtonSpacing * 2) + ((CurrentColumnIndex - 19) * ButtonWidth) + ((CurrentColumnIndex - 19) * ButtonSpacing)
         endif
 
         return value
     endfunction
 
     private function GetTopLeftY takes nothing returns real
-        return MainFrameTopLeftY - MainFrameMargin - (ButtonWidth * CurrentRowIndex) - (ButtonSpacing * CurrentRowIndex)
+        local real value = MainFrameTopLeftY - MainFrameYMargin - (2 * ButtonWidth * CurrentRowIndex) - (RowSpacing * CurrentRowIndex) + TextHeight
+        local real offset = ((ButtonWidth / 2) + (ButtonSpacing / 2))
+
+        if (CurrentRowIndex == 0) then
+            return MainFrameTopLeftY - MainFrameYMargin
+        endif
+
+        // Top row items or Top row abilities
+        if (CurrentColumnIndex >= 3 and CurrentColumnIndex <= 5 or CurrentColumnIndex >= 9 and CurrentColumnIndex <= 18) then
+            set value = value + offset
+        endif
+
+        // Bottom row items or Bottom row absolutes
+        if (CurrentColumnIndex >= 6 and CurrentColumnIndex <= 8 or CurrentColumnIndex >= 19 and CurrentColumnIndex <= 28) then
+            set value = value - offset
+        endif
+
+        return value
     endfunction
 
     private function CreateIcon takes string iconPath, hashtable buttonEventHandles returns nothing
@@ -100,22 +130,16 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         local integer buttonHandleId = GetHandleId(buttonFrameHandle)
         local integer backdropHandleId = GetHandleId(buttonBackdropFrameHandle)
 
-        // Keep a count of every icon we make
-        // set TotalAchievementCount = TotalAchievementCount + 1
-
         // Dimensions for the button
         call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY()) 
         call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ButtonWidth, GetTopLeftY() - ButtonWidth) 
 
         // Apply the icon
         call BlzFrameSetAllPoints(buttonBackdropFrameHandle, buttonFrameHandle) 
-        // call BlzFrameSetTexture(buttonBackdropFrameHandle, GetIconPath(iconPath), 0, true) 
         call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
-        // set AchievementIconPaths.string[TotalAchievementCount] = iconPath
 
         // Save the handle of this button to look it up later for mouse events
         call SaveInteger(buttonEventHandles, buttonHandleId, 1, TotalAchievementCount)
-        // set AchievementButtonHandleIds.integer[TotalAchievementCount] = buttonHandleId
         
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
@@ -131,11 +155,11 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
     private function CreateText takes string value returns nothing
         local framehandle playerNameTextFrameHandle = BlzCreateFrameByType("TEXT", "PlayerName", ScoreboardFrameHandle, "", 0) 
 
-        call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY() - 0.002) // The 0.002 moves the text down a tiny bit
-        call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + TextWidth, GetTopLeftY() - TextHeight) 
+        call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY() - 0.004)
+        call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + TextWidth, GetTopLeftY() - TextHeight - 0.004) 
         call BlzFrameSetText(playerNameTextFrameHandle, value) 
         call BlzFrameSetEnable(playerNameTextFrameHandle, false) 
-        call BlzFrameSetScale(playerNameTextFrameHandle, 1.00) 
+        call BlzFrameSetScale(playerNameTextFrameHandle, 2.00) 
         call BlzFrameSetTextAlignment(playerNameTextFrameHandle, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT) 
 
         set CurrentColumnIndex = CurrentColumnIndex + 1
@@ -164,7 +188,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
             endif
 
             set itemSlotIndex = itemSlotIndex + 1
-            set CurrentColumnIndex = CurrentColumnIndex + 1
         endloop
 
         // Cleanup
@@ -178,7 +201,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         local integer currentAbility
 
         loop
-            exitwhen abilityIndex > 10
+            exitwhen abilityIndex > 20
 
             // Check if there is a valid ability in the next slot
             set currentAbility = GetHeroSpellAtPosition(playerHero, abilityIndex)
@@ -191,7 +214,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
             endif
 
             set abilityIndex = abilityIndex + 1
-            set CurrentColumnIndex = CurrentColumnIndex + 1
         endloop
 
         // Cleanup
@@ -289,7 +311,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call CreateText(HEADER_COLOR + "Duels" + COLOR_END_TAG)
         set CurrentColumnIndex = 3
         call CreateText(HEADER_COLOR + "Items" + COLOR_END_TAG)
-        set CurrentColumnIndex = 15
+        set CurrentColumnIndex = 9
         call CreateText(HEADER_COLOR + "Abilities" + COLOR_END_TAG)
 
         set CurrentRowIndex = 1
@@ -305,7 +327,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call TriggerAddAction(IconEventTrigger, function VotingMouseEventActions)
 
         // Create the main frame. All elements use this frame as the parent
-        set ScoreboardFrameHandle = BlzCreateFrame("CheckListBox", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
+        set ScoreboardFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
 
         call CreateHeaderRow()
 
@@ -313,8 +335,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call ForForce(playersOrComputersForce, function AddPlayerToMultiboard)
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
-        set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameMargin) + HeroIconWidth + PlayerNameWidth + DuelsWidth + (16 * ButtonWidth) + ButtonWidth + HeroIconSpacing
-        set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameMargin) - (CurrentRowIndex * ButtonWidth) - (CurrentRowIndex * ButtonSpacing)
+        set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameXMargin) + HeroIconWidth + HeroIconSpacing + PlayerNameWidth + DuelsWidth + (14 * ButtonWidth) + (11 * ButtonSpacing)
+        set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameYMargin) - (CurrentRowIndex * ButtonWidth * 2) - (CurrentRowIndex * ButtonSpacing * 2)
 
         // Set the frame for the backdrop of the entire scoreboard
         call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX, MainFrameTopLeftY) 
