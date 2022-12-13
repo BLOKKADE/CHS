@@ -10,7 +10,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         private constant real MainFrameYMargin               = 0.025
 
         // Specifications for a button
-        private constant real ButtonWidth                    = 0.026
+        private constant real ButtonWidth                    = 0.023
         private constant real ButtonSpacing                  = 0.003
         private constant real HeroIconSpacing                = 0.003
         private constant real RowSpacing                     = 0.01
@@ -20,7 +20,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         private real TextWidth                               = 0.2
 
         // Column widths
-        private constant real HeroIconWidth                  = 0.026
+        private constant real HeroIconWidth                  = 0.023
         private constant real PlayerNameWidth                = 0.2
         private constant real DuelsWidth                     = 0.07
 
@@ -80,24 +80,29 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
             set value = value + PlayerNameWidth
         endif
 
+        // Element Counts
+        if (CurrentColumnIndex >= 3) then
+            set value = value + DuelsWidth
+        endif
+
         // Top row items
-        if (CurrentColumnIndex >= 3 and CurrentColumnIndex <= 5) then
-            set value = value + DuelsWidth + ((CurrentColumnIndex - 3) * ButtonWidth) + ((CurrentColumnIndex - 3) * ButtonSpacing)
+        if (CurrentColumnIndex >= 4 and CurrentColumnIndex <= 6) then
+            set value = value + ButtonWidth + ButtonSpacing + ((CurrentColumnIndex - 4) * ButtonWidth) + ((CurrentColumnIndex - 4) * ButtonSpacing)
         endif
 
         // Bottom row items
-        if (CurrentColumnIndex >= 6 and CurrentColumnIndex <= 8) then
-            set value = value + DuelsWidth + ((CurrentColumnIndex - 6) * ButtonWidth) + ((CurrentColumnIndex - 6) * ButtonSpacing)
+        if (CurrentColumnIndex >= 7 and CurrentColumnIndex <= 9) then
+            set value = value + ButtonWidth + ButtonSpacing + ((CurrentColumnIndex - 7) * ButtonWidth) + ((CurrentColumnIndex - 7) * ButtonSpacing)
         endif
 
         // Top row abilities
-        if (CurrentColumnIndex >= 9 and CurrentColumnIndex <= 18) then
-            set value = value + DuelsWidth + (ButtonWidth * 4) + (ButtonSpacing * 2) + ((CurrentColumnIndex - 9) * ButtonWidth) + ((CurrentColumnIndex - 9) * ButtonSpacing)
+        if (CurrentColumnIndex >= 10 and CurrentColumnIndex <= 19) then
+            set value = value + ButtonWidth + ButtonSpacing + (ButtonWidth * 4) + (ButtonSpacing * 2) + ((CurrentColumnIndex - 10) * ButtonWidth) + ((CurrentColumnIndex - 10) * ButtonSpacing)
         endif
 
         // Bottom row absolutes
-        if (CurrentColumnIndex >= 19 and CurrentColumnIndex <= 28) then
-            set value = value + DuelsWidth + (ButtonWidth * 4) + (ButtonSpacing * 2) + ((CurrentColumnIndex - 19) * ButtonWidth) + ((CurrentColumnIndex - 19) * ButtonSpacing)
+        if (CurrentColumnIndex >= 20 and CurrentColumnIndex <= 29) then
+            set value = value + ButtonWidth + ButtonSpacing + (ButtonWidth * 4) + (ButtonSpacing * 2) + ((CurrentColumnIndex - 20) * ButtonWidth) + ((CurrentColumnIndex - 20) * ButtonSpacing)
         endif
 
         return value
@@ -112,12 +117,12 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         endif
 
         // Top row items or Top row abilities
-        if (CurrentColumnIndex >= 3 and CurrentColumnIndex <= 5 or CurrentColumnIndex >= 9 and CurrentColumnIndex <= 18) then
+        if (CurrentColumnIndex >= 4 and CurrentColumnIndex <= 6 or CurrentColumnIndex >= 10 and CurrentColumnIndex <= 19) then
             set value = value + offset
         endif
 
         // Bottom row items or Bottom row absolutes
-        if (CurrentColumnIndex >= 6 and CurrentColumnIndex <= 8 or CurrentColumnIndex >= 19 and CurrentColumnIndex <= 28) then
+        if (CurrentColumnIndex >= 7 and CurrentColumnIndex <= 9 or CurrentColumnIndex >= 20 and CurrentColumnIndex <= 29) then
             set value = value - offset
         endif
 
@@ -139,7 +144,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
 
         // Save the handle of this button to look it up later for mouse events
-        call SaveInteger(buttonEventHandles, buttonHandleId, 1, TotalAchievementCount)
+        // call SaveInteger(buttonEventHandles, buttonHandleId, 1, TotalAchievementCount)
         
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
@@ -159,7 +164,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + TextWidth, GetTopLeftY() - TextHeight - 0.004) 
         call BlzFrameSetText(playerNameTextFrameHandle, value) 
         call BlzFrameSetEnable(playerNameTextFrameHandle, false) 
-        call BlzFrameSetScale(playerNameTextFrameHandle, 2.00) 
+        call BlzFrameSetScale(playerNameTextFrameHandle, 1.8) 
         call BlzFrameSetTextAlignment(playerNameTextFrameHandle, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT) 
 
         set CurrentColumnIndex = CurrentColumnIndex + 1
@@ -251,6 +256,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         // Set the PVP stats
         call CreateText(PVP_WINS_COLOR + "0" + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + "0" + COLOR_END_TAG)
 
+        // Element icon
+        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", HeroButtonEventHandles)
+
         // Set the player items
         call UpdatePlayerItems(playingPlayer)
 
@@ -309,9 +317,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call CreateText(HEADER_COLOR + "Player" + COLOR_END_TAG)
         set CurrentColumnIndex = 2
         call CreateText(HEADER_COLOR + "Duels" + COLOR_END_TAG)
-        set CurrentColumnIndex = 3
+        set CurrentColumnIndex = 4
         call CreateText(HEADER_COLOR + "Items" + COLOR_END_TAG)
-        set CurrentColumnIndex = 9
+        set CurrentColumnIndex = 10
         call CreateText(HEADER_COLOR + "Abilities" + COLOR_END_TAG)
 
         set CurrentRowIndex = 1
@@ -335,7 +343,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable
         call ForForce(playersOrComputersForce, function AddPlayerToMultiboard)
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
-        set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameXMargin) + HeroIconWidth + HeroIconSpacing + PlayerNameWidth + DuelsWidth + (14 * ButtonWidth) + (11 * ButtonSpacing)
+        set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameXMargin) + HeroIconWidth + HeroIconSpacing + PlayerNameWidth + DuelsWidth + (15 * ButtonWidth) + (12 * ButtonSpacing)
         set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameYMargin) - (CurrentRowIndex * ButtonWidth * 2) - (CurrentRowIndex * ButtonSpacing * 2)
 
         // Set the frame for the backdrop of the entire scoreboard
