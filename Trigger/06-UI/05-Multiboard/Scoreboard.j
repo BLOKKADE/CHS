@@ -466,13 +466,13 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
                     if (usePrimaryTooltipFrame) then
                         call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
                         call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
-                        call BlzFrameSetPoint(ScoreboardTooltipFrame, FRAMEPOINT_TOP, currentFrameHandle, FRAMEPOINT_TOP, 0, -0.052)
+                        call BlzFrameSetPoint(ScoreboardTooltipFrame, FRAMEPOINT_TOP, currentFrameHandle, FRAMEPOINT_BOTTOM, 0, 0)
                         call BlzFrameSetSize(ScoreboardTooltipFrame, tooltipWidth, GetTooltipSize(tooltipDescription))
                         call BlzFrameSetVisible(ScoreboardTooltipFrame, true)
                     else
                         call BlzFrameSetText(ScoreboardSecondaryTooltipTitleFrame, tooltipName)
                         call BlzFrameSetText(ScoreboardSecondaryTooltipTextFrame, tooltipDescription)
-                        call BlzFrameSetPoint(ScoreboardSecondaryTooltipFrame, FRAMEPOINT_TOP, currentFrameHandle, FRAMEPOINT_TOP, 0, -0.052)
+                        call BlzFrameSetPoint(ScoreboardSecondaryTooltipFrame, FRAMEPOINT_TOP, currentFrameHandle, FRAMEPOINT_BOTTOM, 0, 0)
                         call BlzFrameSetSize(ScoreboardSecondaryTooltipFrame, tooltipWidth, GetTooltipSize(tooltipDescription))
                         call BlzFrameSetVisible(ScoreboardSecondaryTooltipFrame, true)
                     endif
