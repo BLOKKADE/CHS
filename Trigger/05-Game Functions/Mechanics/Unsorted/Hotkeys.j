@@ -1,9 +1,10 @@
-library ConversionHotkeys initializer init requires Table, SellItems, trigger79
+library ConversionHotkeys initializer init requires Table, SellItems, trigger79, Scoreboard
     //detects hotkey presses
     
     globals
         //integer array PlayerHotkeys
         boolean array HoldShift
+        boolean array HoldTab
         Table HoldShiftStructTable
         //boolean array HotKeyMode
     endglobals
@@ -99,12 +100,29 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
         endif
     endfunction
 
+    private function ToggleViewScoreboard takes nothing returns nothing
+        if ((not HoldTab[GetPlayerId(GetTriggerPlayer())]) and ScoreboardFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
+            set HoldTab[GetPlayerId(GetTriggerPlayer())] = true
+            call BlzFrameSetVisible(ScoreboardFrameHandle, true) 
+        endif
+    endfunction
+
+    private function ToggleHideScoreboard takes nothing returns nothing
+        if (ScoreboardFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
+            set HoldTab[GetPlayerId(GetTriggerPlayer())] = false
+            call BlzFrameSetVisible(ScoreboardFrameHandle, false) 
+        endif
+    endfunction
+
     private function HotKeyInit takes nothing returns nothing
         local trigger trg1 = CreateTrigger()
         local trigger trg2 = CreateTrigger()
         local trigger trg3 = CreateTrigger()
         local trigger trg4 = CreateTrigger()
         local trigger trg5 = CreateTrigger()
+        local trigger scoreboardToggleViewTrigger = CreateTrigger()
+        local trigger scoreboardToggleHideTrigger = CreateTrigger()
+
         local integer i = 0
         set HoldShiftStructTable = Table.create()
         loop
@@ -115,6 +133,8 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
             call BlzTriggerRegisterPlayerKeyEvent(trg2, Player(i), OSKEY_LSHIFT, 0, false)
             call BlzTriggerRegisterPlayerKeyEvent(trg1, Player(i), OSKEY_RSHIFT, 1, true)
             call BlzTriggerRegisterPlayerKeyEvent(trg2, Player(i), OSKEY_RSHIFT, 0, false)
+            call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleViewTrigger, Player(i), OSKEY_TAB, 0, true)
+            call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleHideTrigger, Player(i), OSKEY_TAB, 0, false)
             set i = i + 1
             exitwhen i > 8
         endloop
@@ -128,6 +148,10 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79
         call TriggerAddAction(trg2, function ShiftRelease)
         set trg1 = null
         set trg2 = null
+        call TriggerAddAction(scoreboardToggleViewTrigger, function ToggleViewScoreboard)
+        call TriggerAddAction(scoreboardToggleHideTrigger, function ToggleHideScoreboard)
+        set scoreboardToggleViewTrigger = null
+        set scoreboardToggleHideTrigger = null
     endfunction
 
     private function init takes nothing returns nothing

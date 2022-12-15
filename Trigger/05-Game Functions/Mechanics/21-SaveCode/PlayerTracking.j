@@ -80,8 +80,6 @@ library PlayerTracking initializer init requires OldInitialization
             set tooltip = tooltip + "|n -All PVP Wins: " + I2S(ps.getDraftPVPAllWins())
             set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins())
 
-            set tooltip = tooltip + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
-
             return tooltip
         endmethod
 

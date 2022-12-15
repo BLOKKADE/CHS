@@ -68,7 +68,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 			// Don't include empty elements in the list
 			if i2 > 0 then
-				set ToolTipS = ToolTipS + "|n" + ClassAbil[i1] + " : " + I2S(i2)
+				set ToolTipS = ToolTipS + ClassAbil[i1] + " : " + I2S(i2) + "|n"
 			endif
 
 			set i1 = i1 + 1
@@ -204,6 +204,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 				elseif NumButton == 39 then
 					set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
 					set ToolTipS = PlayerStats.getTooltip(GetOwningPlayer(SpellU))
+					set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
 
 					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Stats for: |r" + GetPlayerNameColour(GetOwningPlayer(SpellU)))

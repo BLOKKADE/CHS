@@ -1,4 +1,4 @@
-library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, OldInitialization, PvpHelper, VotingResults, Scoreboard
+library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, OldInitialization, PvpHelper, VotingResults
 
     private function PvpHeroDeathConditions takes nothing returns boolean
         return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
@@ -120,7 +120,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         call ps.addPVPLoss()
-        call UpdateMultiboardPVPCounts(currentPlayer) // Update leaderboard values
 
         // Don't add the loser twice
         if (not IsPlayerInForce(currentPlayer, DuelLosers)) then
