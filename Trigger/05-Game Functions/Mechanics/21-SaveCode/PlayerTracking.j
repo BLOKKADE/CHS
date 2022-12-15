@@ -352,16 +352,16 @@ library PlayerTracking initializer init requires OldInitialization
         public method addBRWin takes nothing returns nothing
             // Random
             if (AbilityMode == 0) then
-                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random Battle Royale All Wins")
-                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random Battle Royale Season Wins")
+                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random BR All Wins")
+                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random BR Season Wins")
             // Pick
             elseif (AbilityMode == 1) then
-                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick Battle Royale All Wins")
-                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick Battle Royale Season Wins")
+                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick BR All Wins")
+                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick BR Season Wins")
             // Draft
             elseif (AbilityMode == 2) then
-                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft Battle Royale All Wins")
-                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft Battle Royale Season Wins")
+                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft BR All Wins")
+                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft BR Season Wins")
             endif
         endmethod
 
