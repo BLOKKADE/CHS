@@ -1,4 +1,4 @@
-library DousingHex initializer init requires DummyOrder, RandomShit
+library DousingHex initializer init requires DummyOrder
 
     globals
         Table DousingHexReduction

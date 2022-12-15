@@ -1,51 +1,4 @@
 scope LongPeriodCheck initializer init
-    function ModifyAttackCooldown takes unit u returns nothing
-        // base attack cooldown
-        local real r1 = LoadReal(HT, GetHandleId(u),- 1001 )
-        local real r2 = 0
-        local integer i1 = GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID)
-
-        if i1 > 0 then
-            set r2 = r1 - MegaSpeedBonus(u, i1, r1)
-        else
-            set r2 = r1 
-        endif
-
-        //Speed Blade active: is ovewrriden if already lower than 0.6 from mega speed/default
-        if GetUnitAbilityLevel(u, SPEED_BLADE_BUFF_ID) > 0 then
-            if r2 >= 0.6 then
-                set r2 = 0.6
-            else
-                call UnitRemoveAbility(u, SPEED_BLADE_BUFF_ID)
-            endif
-        endif
-
-        //Hammer of the Gods
-        set r2 = r2 + GetUnitItemTypeCount(u,'I066') * 1.4
-
-        //Flimsy Token
-        if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
-            set r2 = r2 + 0.6
-        endif
-
-        //Speed Blade passive
-        if UnitHasItemType(u,'I06B') then
-            set r2 = r2 * 0.8
-        endif
-
-        //Troll passive
-        if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID then
-            set r2 = r2 * 100 /(I2R(100 + GetHeroLevel(u)))
-        endif
-
-        //Berserk Attack CD
-        if GetUnitAbilityLevel(u, BERSERK_BUFF_ID) > 0 then
-                set r2 = r2 * 0.5
-        endif
-
-        //  call DisplayTextToPlayer(GetLocalPlayer(),0,0,R2S(r2))
-        call BlzSetUnitAttackCooldown(u,r2,0)
-    endfunction
 
     function OnCooldownEnd takes unit u returns nothing
         local integer i
@@ -58,8 +11,9 @@ scope LongPeriodCheck initializer init
                 call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - i) 
             endif
             //Sorcerer Passive (uses same spell as thunderwitch for now (A08P), not sure if it matters, easy to change)
-            if GetUnitTypeId(u) == SORCERER_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and SorcererHasActiveSpells(u) and CheckProc(u, 600) then
+            if GetUnitTypeId(u) == SORCERER_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and FilterListNotEmpty(u, SORCERER_UNIT_ID) and CheckProc(u, 600) then
                 call SorcererPassive(u,hid)
+                call ElemFuncStart(u, SORCERER_UNIT_ID)
                 call AbilStartCD(u, 'A08P', RMaxBJ(15, 50 - I2R(GetHeroLevel(u) / 5)))
             endif
             //Holy Shield
@@ -99,6 +53,17 @@ scope LongPeriodCheck initializer init
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,EARTHQUAKE_ABILITY_ID) <= 0.001 and CheckProc(u, 600) then
                 call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap", GetSpellValue(75, 10, i), ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5 + (0.05 * i),ABILITY_RLF_DURATION_HERO,0.5 + (0.05 * i),ABILITY_RLF_DURATION_NORMAL)
                 call AbilStartCD(u,EARTHQUAKE_ABILITY_ID,5) 
+            endif
+
+            //Gnome
+            if GetUnitTypeId(u) == GNOME_MASTER_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(u, GNOME_MASTER_PASSIVE_ABILITY_ID) == 0 then
+                call ElemFuncStart(u,GNOME_MASTER_UNIT_ID)
+                call AbilStartCD(u, GNOME_MASTER_PASSIVE_ABILITY_ID, 11 + (GetHeroLevel(u) * 0.04))
+                if BrStarted then
+                    call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'A03Z',"stomp",55 * GetHeroLevel(u),ABILITY_RLF_DAMAGE_INCREASE, 99999,ABILITY_RLF_AREA_OF_EFFECT ,1 +(GetHeroLevel(u) * 0.04),ABILITY_RLF_DURATION_HERO,2 +(GetHeroLevel(u) * 0.08),ABILITY_RLF_DURATION_NORMAL)
+                else
+                    call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'A03Z',"stomp",55 * GetHeroLevel(u),ABILITY_RLF_DAMAGE_INCREASE,1800,ABILITY_RLF_AREA_OF_EFFECT ,1 +(GetHeroLevel(u) * 0.04),ABILITY_RLF_DURATION_HERO,2 +(GetHeroLevel(u) * 0.08),ABILITY_RLF_DURATION_NORMAL)
+                endif
             endif
         endif
     endfunction
@@ -183,7 +148,7 @@ scope LongPeriodCheck initializer init
         if UnitAlive(u) then
 
             //modify attack speed
-            call ModifyAttackCooldown(u)
+            call ModifyAttackCooldown(u, hid)
 
             //Guide To Rune Mastery
             if GetUnitAbilityLevel(u ,'A09O') >= 1 then

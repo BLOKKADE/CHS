@@ -1,4 +1,4 @@
-library DivineBubble initializer init requires T32, HeroAbilityCooldown, UnitItems, DebuffTypes
+library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, DebuffTypes
     globals
         Table DivineBubbles
     endglobals

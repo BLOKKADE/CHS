@@ -11,7 +11,19 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
         endif
 
         if GetUnitTypeId(u) == SORCERER_UNIT_ID then
-            call SetSorcererPassiveSpells(u, abilId)
+            call AddToSpellList(u, SORCERER_UNIT_ID, abilId)
+        endif
+
+        if GetUnitAbilityLevel(u, TERRESTRIAL_GLAIVE_ABILITY_ID) != 0 then
+            call AddToSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, abilId)
+        endif
+
+        if GetUnitAbilityLevel(u, CONTEMPORARY_RUNES_ABILITY_ID) != 0 then
+            call AddToSpellList(u, CONTEMPORARY_RUNES_ABILITY_ID, abilId)
+        endif
+
+        if abilId == CONTEMPORARY_RUNES_ABILITY_ID then
+            call CreateSpellList(u, CONTEMPORARY_RUNES_ABILITY_ID, SpellListFilter.ContempRunesSpellListFilter)
         endif
     endfunction
 
@@ -165,8 +177,8 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
             call UpdateSpiritTaurenRuneBonus(u)
         endif
 
-        if GetUnitTypeId(u) == SORCERER_UNIT_ID then
-            call RemoveSorcererPassiveSpell(u, abilId)
+        if UnitHasFilterSpellList(GetHandleId(u)) then
+            call RemoveSpellFromAllUnitLists(u, abilId)
         endif
 
         if abilId == ABSOLUTE_DARK_ABILITY_ID then
@@ -231,13 +243,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
             call SetHeroAgi(u,GetHeroAgi(u,false)- i1,false)
             call SetHeroInt(u,GetHeroInt(u,false)- i1,false)
             call SaveInteger(HT,GetHandleId(u),54021,0)
-        endif
-
-        //Ankh
-        if AnkhLimitReached.boolean[hid] then
-            if GetItemCharges(GetUnitItem(u, 'ankh')) != 2 then
-                set AnkhLimitReached.boolean[hid] = false
-            endif
         endif
 
         //Obsidian Armor

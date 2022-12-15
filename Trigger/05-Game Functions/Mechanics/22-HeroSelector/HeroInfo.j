@@ -184,7 +184,7 @@ library HeroInfo initializer init_function requires GetObjectElement
         if GetLocalPlayer() == p then
             call BlzFrameSetText(TextDisplay, DescHeroNamePrefix + GetObjectName(unitCode) + DescHeroNameSufix)
 
-            set descriptionTemp = GetObjectelementsAsString(null, unitCode, false)
+            set descriptionTemp = GetObjectElementsAsString(null, unitCode, false)
             if descriptionTemp != "" then
                 set description = description + descriptionTemp + "|n"
             endif

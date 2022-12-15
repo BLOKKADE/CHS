@@ -62,7 +62,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             loop
                 if ModuloInteger(i, 10) == 0 then
                     call UpdateBonus(u, 0, 1)
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,(ClassAbil[8] + " |cffffcc00bonus acquired"))
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,(GetFullElementText(8) + " |cffffcc00bonus acquired"))
                 endif
 
                 set i = i + 1
@@ -195,7 +195,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == WITCH_DOCTOR_UNIT_ID then      
             call WitchDoctorLevelup(u, prevLevel + 1, heroLevel + 1)  
         elseif uid == RANGER_UNIT_ID then       
-            call SetBonus(u, 0, heroLevel * 5)
+            call SetBonus(u, 0, heroLevel * 2)
         elseif uid == DARK_HUNTER_UNIT_ID then         
             call SetBonus(u, 0, heroLevel * 50)
             set prevLevel = heroLevel     
@@ -221,8 +221,9 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, 100 + heroLevel)
         elseif uid == GNOME_MASTER_UNIT_ID then
             call SetBonus(u, 0, heroLevel * 55)
-            call SetBonus(u, 1, heroLevel * 0.04)
-            call SetBonus(u, 2, heroLevel * 0.08)
+            call SetBonus(u, 1, 11 + heroLevel * 0.04)
+            call SetBonus(u, 2, heroLevel * 0.04)
+            call SetBonus(u, 3, heroLevel * 0.08)
         elseif uid == GREEDY_GOBLIN_UNIT_ID then
             call SetBonus(u, 0, 20 + (heroLevel * 4))
             call SetBonus(u, 1, 21 + (heroLevel * 3))
@@ -233,6 +234,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == OGRE_MAGE_UNIT_ID then
             call SetBonus(u, 0, 15 + (heroLevel * 2))
         elseif uid == TROLL_BERSERKER_UNIT_ID then
+            set TrollBerserkerBonus.real[hid] = Pow(0.99, heroLevel)
             call SetBonus(u, 0, heroLevel * 1)
         elseif uid == YETI_UNIT_ID then
             call SetBonus(u, 0, heroLevel * 20)

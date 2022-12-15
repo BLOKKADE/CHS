@@ -530,7 +530,10 @@ library trigger103 initializer init requires RandomShit, Functions
                         endif
                         //call BJDebugMsg("e")
                         set s = s + RoundAbilities
-                        call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 20, "Next: " + s)
+
+                        if (RoundNumber > 1) then
+                            call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 20, "Next: " + s)
+                        endif
                         //call BJDebugMsg("f")
                     endif
                     //call BJDebugMsg("rci finish: " + I2S(playerId))

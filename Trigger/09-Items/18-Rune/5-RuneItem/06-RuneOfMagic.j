@@ -1,8 +1,7 @@
 library MagicRune requires RandomShit
     globals
-        constant real RuneOfMagic_base = 10
+        constant real RuneOfMagic_base = 5
     endglobals
-
 
     function RuneOfMagic takes nothing returns boolean
         local unit u = GLOB_RUNE_U

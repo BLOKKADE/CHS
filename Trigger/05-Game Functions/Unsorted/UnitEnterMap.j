@@ -106,6 +106,8 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             elseif SKELLIESCAPTAINS.contains(i) then
                 //call BJDebugMsg("rest")
                 call SkeletonStats(u, totalLevel)
+            elseif i == FEARLESS_DEFENDER_CAPTAIN_UNIT_ID then
+                call FearlessDefendersStats(u, GetHeroLevel(hero), totalLevel)
             endif
 
             call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(totalLevel) )
@@ -156,7 +158,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
 
-        //wild Defense
+        //wild
         if wild != 1 then      
             call BlzSetUnitBaseDamage(u,R2I(I2R(BlzGetUnitBaseDamage(u,0))* wild),0)  
             call BlzSetUnitMaxHP(u,R2I(I2R(BlzGetUnitMaxHP(u))* wild))
@@ -198,6 +200,11 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         local boolean realUnit = IsUnitIllusion(u) == false
         local integer hid = GetHandleId(u)
+
+        //Summons
+        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
+            call SummonUnit(u)
+        endif
 
         //Illusion
         if (not realUnit) and IsUnitType(u, UNIT_TYPE_HERO) then
@@ -265,7 +272,13 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             set ThunderBoltTargets[hid] = 1
         endif
 
+        //Troll Berserker
+        if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID and realUnit then
+            set TrollBerserkerBonus.real[hid] = 0.99
+        endif
+
         if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
+            call CreateSpellList(u, SORCERER_UNIT_ID, SpellListFilter.SorcerSpellListFilter)
             set SorcererAmount[hid] = 1
         endif
 
@@ -276,11 +289,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         //Set base luck
         call AddUnitCustomState(u, BONUS_LUCK, 1)
-
-        //Summons
-        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
-            call SummonUnit(u)
-        endif
 
         set u = null
     endfunction

@@ -3,8 +3,6 @@ library TempInvis requires BuffLevel, RandomShit, TimeManipulation
         unit source
         integer endTick
     
-        
-    
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
                 call this.stopPeriodic()

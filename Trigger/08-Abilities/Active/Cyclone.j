@@ -35,7 +35,7 @@ library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
             set this.x = x
             set this.y = y
-            set this.damage = level * 10 + (GetHeroLevel(source) * (2 + (level / 2)))
+            set this.damage = level * 10 + (GetHeroLevel(PlayerHeroes[this.pid + 1]) * (2 + (level / 2)))
             set this.fx = AddLocalizedSpecialEffect("Abilities\\Spells\\NightElf\\Cyclone\\CycloneTarget.mdl", this.x, this.y)
 
             call this.startPeriodic()

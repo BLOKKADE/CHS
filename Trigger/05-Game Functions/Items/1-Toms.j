@@ -2,6 +2,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
     globals
         Table GloryRegenLevel
+        Table GloryAttackCdBonus
+        Table GloryAttackCdLevel
         integer array MaxAbsolute
     endglobals
 
@@ -101,6 +103,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         local integer creepLevelPlayerBonus = 0
         local integer i = 0
         local integer summonUpgradeBonus = 0
+        local real temp = 0
         local real gloryBonus = 0
         local boolean maxLevel = GetHeroLevel(u) == 600
         local boolean expTome = false
@@ -263,6 +266,18 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if BuyGloryItem(pid, II) then
                     call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) + 200)
                     set gloryBonus = gloryBonus + 200
+                else
+                    set ctrl = false
+                endif  
+
+                //glory attack cooldown
+            elseif II  == GLORY_ATTACKCD_TOME_ITEM_ID then
+                if BuyGloryItem(pid, II) then
+                    set GloryAttackCdLevel.integer[GetHandleId(u)] = GloryAttackCdLevel.integer[GetHandleId(u)] + 1
+                    set GloryAttackCdBonus.real[GetHandleId(u)] = 1 - Pow(0.94, GloryAttackCdLevel.integer[GetHandleId(u)])
+                    set temp = BlzGetUnitAttackCooldown(u, 0)
+                    call ModifyAttackCooldown(u, GetHandleId(u))
+                    set gloryBonus = temp - BlzGetUnitAttackCooldown(u, 0)
                 else
                     set ctrl = false
                 endif  
@@ -483,7 +498,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         elseif summonUpgradeBonus > 0 then
             call DisplayTimedTextToPlayer(p, 0, 0, 2, GetObjectName(II) + " - [|cffffcc00Level " + I2S(summonUpgradeBonus) + "|r]")
         elseif gloryBonus > 0 then
-            call DisplayTimedTextToPlayer(p, 0, 0, 2, GetObjectName(II) + " +|cffffcc00" + R2SW(gloryBonus, 1, 1) + "|r")
+            call DisplayTimedTextToPlayer(p, 0, 0, 2, GetObjectName(II) + " +|cffffcc00" + R2SW(gloryBonus, 1, 2) + "|r")
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",u,"origin"))
         elseif i > 1 then
             call DisplayTimedTextToPlayer(p, 0, 0, 2, "Bought |cff55df32" + I2S(i) + "|r |cffdf9432" + GetObjectName(II) + "|r")
@@ -599,14 +614,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif	
             //Ankh of Reincarnation
         elseif II == 'I0BH' then
-            if (not AnkhLimitReached.boolean[GetHandleId(u)]) and UnitHasInventorySpace(u) then
-                set It = GetUnitItem(u, 'ankh')
-                if It != null then
-                    call SetItemCharges(It, GetItemCharges(It) + 1)
-                    set AnkhLimitReached.boolean[GetHandleId(u)] = true
-                else
-                    call UnitAddItemById(u, 'ankh')
-                endif
+            set It = GetUnitItem(u, 'ankh')
+            if UnitHasInventorySpace(u) and It == null then
+                call UnitAddItemById(u, 'ankh')
             else
                 call DisplayTimedTextToPlayer(p, 0, 0, 2, "Cannot buy more |cffdf9432" + GetObjectName(II) + "|r")
                 call PlayerAddGold(GetOwningPlayer(u), 400)
@@ -634,5 +644,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         call TriggerAddAction( trg, function Trig_Toms_Actions )
         set trg = null
         set GloryRegenLevel = Table.create()
+        set GloryAttackCdLevel = Table.create()
+        set GloryAttackCdBonus = Table.create()
     endfunction
 endlibrary

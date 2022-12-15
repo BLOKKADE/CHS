@@ -7,6 +7,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
     struct Multicast extends array
         unit target
         unit caster
+        unit hero
         group caston
         integer abilId
         integer abilLevel
@@ -71,7 +72,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 endif
             endif
 
-            if not AbilityChannel(this.caster, this.target, this.x, this.y, this.abilId, this.abilLevel) then
+            if not AbilityChannel(this.caster, this.hero, this.target, this.x, this.y, this.abilId, this.abilLevel) then
                 if GetUnitState(this.caster, UNIT_STATE_MANA) > this.manaCost then
                     call this.castSpell()
                 endif
@@ -104,6 +105,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
             set this.caster = caster
             set this.target = target
+            set this.hero = PlayerHeroes[GetPlayerId(GetOwningPlayer(this.caster)) + 1]
             set this.caston = null
             set this.abilId = abilId
             set this.abilLevel = abilLvl
@@ -131,6 +133,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
         method destroy takes nothing returns nothing
             set this.caster = null
             set this.target = null
+            set this.hero = null
 
             if this.caston != null then
                 call ReleaseGroup(this.caston)

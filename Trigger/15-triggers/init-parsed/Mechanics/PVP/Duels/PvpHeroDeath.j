@@ -30,10 +30,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Move the pet
         if (ps.getPet() != null) then
             call SetUnitPositionLoc(ps.getPet(), arenaLocation)
+        else
+            // Revive the pet if it died
+            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
         endif
-        
-        // Revive the pet if it died
-        call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
         // Random crap
         call FixAbominationPassive(playerHero)
@@ -63,7 +63,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
                     // Make sure there is an actual item
                     if (PreDuelItemIds[(6 * playerId) + itemSlotIndex] != -1) then
                         set tempItem = UnitAddItemByIdSwapped(PreDuelItemIds[(6 * playerId) + itemSlotIndex], playerHero)
-                        call SetItemUserData(tempItem, playerId)
+                        call SetItemUserData(tempItem, playerId + 1)
 
                         if PreDuelItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
                             call SetItemCharges(tempItem, PreDuelItemCharges[(6 * playerId) + itemSlotIndex])

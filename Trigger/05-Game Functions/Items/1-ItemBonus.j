@@ -1,4 +1,4 @@
-library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin
+library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin, ItemAbilityCooldown
 	globals
 		hashtable HTi = InitHashtable()
 		HashTable UniqueItemCount
@@ -19,7 +19,15 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			return
 		endif
 
+		if ev == EVENT_ITEM_PICKUP then
+			if IsItemAbilOnCooldown(it) then
+				call StartItemAbilCooldown(u, it)
+			endif
+		endif
+
 		if ev == EVENT_ITEM_DROP then
+			call SetItemAbilCooldown(u, it)
+
 			set itemCount = itemCount - 1
 		endif
 
@@ -65,7 +73,9 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 			//Staff of Lightning
 		elseif itemId == 'I05C' then
-			call AddUnitCustomState(u, BONUS_MAGICPOW, 15 * uniqueDiff)
+			call SetHeroStr(u, GetHeroStr(u, false) + (200 * uniqueDiff), false)
+			call SetHeroAgi(u, GetHeroAgi(u, false) + (200 * uniqueDiff), false)
+			call SetHeroInt(u, GetHeroInt(u, false) + (200 * uniqueDiff), false)
 		
 			//Robe of the ARchmage
 		elseif itemId == 'I05B' then
@@ -173,6 +183,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call RegisterEndOfRoundItem(pid, it)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 30 *diff)
 
+		elseif itemId == 'I0D1' then
+			if ev == EVENT_ITEM_PICKUP then
+				call CreateSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, SpellListFilter.TerrestrialGlaiveFilter)
+			endif
+			call AddUnitCustomState(u, BONUS_PHYSPOW, 30 * uniqueDiff)
+
 			//Gladiator Helmet
 		elseif itemId == 'I07A' then
 			if itemCount > 0 then
@@ -237,10 +253,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 			//Contract of the Living
 		elseif itemId == CONTRACT_LIVING_ITEM_ID then
-			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
-			//Avoid item CD resetting, dunno how to make it the actual remaining cd but probably not necessary, just don't drop the item 4Head
-			call AbilStartCD(u, CONTRACT_LIVING_ABIL_ID, 90)
-			
+			call AddUnitCustomState(u, BONUS_MAGICRES, 30 * uniqueDiff)
+
 			//Fishing Rod
 		elseif itemId == 'I07T' then
 			call AddUnitCustomState(u, BONUS_EVASION, 10 * uniqueDiff)
@@ -251,7 +265,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Snowww's wand
 		elseif itemId == 'I07V' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 60 * uniqueDiff)
-		
+			call AddUnitAbsoluteBonusCount(u, Element_Arcane, uniqueDiff)
 			//Holy Shield
 		elseif itemId == 'I07W' then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)

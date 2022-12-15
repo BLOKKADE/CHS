@@ -178,6 +178,10 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             call BlzSetUnitFacingEx(this.dummy, facing)
             set DummyInfo[GetDummyId(this.dummy)] = this
             call SetUnitOwner(this.dummy, p, true)
+
+            if GetUnitAbilMods(source) != 0 then
+                call AbilityModifiers.copy(source, this.dummy)
+            endif
             set this.pid = GetPlayerId(p)
             set this.source = source
             set this.destroyDummy = false
@@ -202,7 +206,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             ///set DummyInfo[GetUnitId(this.dummy)].boolean[2] = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[3] = false
-
+            call GetUnitAbilMods(this.dummy).destroy()
             call BlzSetUnitFacingEx(this.dummy, 0)
             call RecycleDummy(this.dummy) 
             //call RemoveUnit(this.dummy)

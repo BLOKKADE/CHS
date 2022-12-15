@@ -19,13 +19,15 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
         integer interval
         real lifeDamage
         boolean allowRecursion
+        integer pid
 
-        private method damage takes nothing returns nothing
-            if GetWidgetLife(this.target) > 0.405 and ((this.buffId != 0 and GetUnitAbilityLevel(this.target, this.buffId) > 0) or this.buffId == 0) then
+        private method damage takes boolean first returns nothing
+            if GetWidgetLife(this.target) > 0.405 and (first or (this.buffId != 0 and GetUnitAbilityLevel(this.target, this.buffId) > 0) or this.buffId == 0) then
                 if this.allowRecursion == false then
                     set udg_NextDamageType = DamageType_Onhit
                 endif
                 set udg_NextDamageAbilitySource = this.abilId
+
                 if magic then
                     call Damage.applyMagic(this.caster, this.target, this.dmg + ((GetWidgetLife(this.target)* 0.01)* this.lifeDamage), DAMAGE_TYPE_MAGIC)
                 else
@@ -40,7 +42,7 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
 
         private method periodic takes nothing returns nothing
             if T32_Tick >= this.endTick and this.limit > 0 then
-                call this.damage()
+                call this.damage(false)
                 set this.limit = this.limit - 1
                 set this.endTick = T32_Tick + interval
             endif
@@ -59,9 +61,9 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
         endmethod
 
         method addLimit takes integer abilId, integer max, real cd returns thistype
-            local integer count = PeriodicCounter[GetUnitTypeId(this.caster)].integer[abilId]
+            local integer count = PeriodicCounter[this.pid].integer[abilId]
             set this.limitAbilId = abilId
-            set PeriodicCounter[GetUnitTypeId(this.caster)].integer[abilId] = count + 1
+            set PeriodicCounter[this.pid].integer[abilId] = count + 1
             if count >= max then  
                 if GetUnitAbilityLevel(this.caster, abilId) > 0 then
                     call BlzStartUnitAbilityCooldown(this.caster, abilId, cd)
@@ -69,6 +71,13 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
                     set this.limit = 0
                 endif
             endif
+            return this
+        endmethod
+
+        method start takes nothing returns thistype
+            call this.damage(true)
+            call this.startPeriodic()
+
             return this
         endmethod
 
@@ -88,17 +97,17 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
             set this.endTick = T32_Tick + this.interval
             set this.lifeDamage = lifeDamage
             set this.allowRecursion = allowRecursion
-            call this.damage()
+            set this.pid = GetPlayerId(GetOwningPlayer(caster))
             if buffId != 0 then
                 set this.buffId = buffId
             endif
-            call this.startPeriodic()
+
             return this
         endmethod
         
         method destroy takes nothing returns nothing
             if this.limitAbilId != 0 then
-                set PeriodicCounter[GetUnitTypeId(this.caster)].integer[this.limitAbilId] = PeriodicCounter[GetUnitTypeId(this.caster)].integer[this.limitAbilId] - 1
+                set PeriodicCounter[this.pid].integer[this.limitAbilId] = PeriodicCounter[this.pid].integer[this.limitAbilId] - 1
             endif
             set this.caster = null
             set this.target = null

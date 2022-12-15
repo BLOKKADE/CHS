@@ -22,13 +22,6 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
-        //Last Breath no damage
-        if GetUnitAbilityLevel(DamageTarget, 'A08B') > 0 then
-            set Damage.index.damage = 0
-            call SetUnitState(DamageTarget, UNIT_STATE_LIFE, 100)
-            return
-        endif
-
         //Faerie Dragon
         if GetUnitTypeId(Damage.target) == 'e001' then
             set Damage.index.damage = 0
@@ -110,6 +103,11 @@ scope ModifyDamageBeforeArmor initializer init
             endif 
         endif 
 
+        //Strong Chestmail
+        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO)) then
+            set Damage.index.damage = StrongChestMailDamage(DamageTargetId, Damage.index.damage)
+        endif
+
         //Divine Bubble
         set i1 = GetUnitAbilityLevel(DamageTarget,DIVINE_BUBBLE_ABILITY_ID)
         if i1 > 0 or UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
@@ -148,7 +146,8 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        if Damage.index.damage == 0 then
+        if Damage.index.damage <= 0 then
+            set Damage.index.damage = 0
             return
         endif
 
@@ -348,7 +347,7 @@ scope ModifyDamageBeforeArmor initializer init
             set i1 = GetHeroLevel(DamageSource)
             loop
                 if IsSpellElement(DamageSource, DamageSourceAbility, i) then
-                    //call BJDebugMsg("element: " + ClassAbil[i])
+                    //call BJDebugMsg("element: " + GetFullElementText(i))
                     //call BJDebugMsg("bonus: " + R2S((0.05 + (0.0005 * i1))) + " count: " + I2S(GetSpellElementCount(DamageSource, DamageSourceAbility, i))) 
                     set r1 = r1 + ((0.05 + (0.0005 * i1)) * GetUnitElementCount(DamageSource, i))
                 endif
@@ -368,10 +367,10 @@ scope ModifyDamageBeforeArmor initializer init
         //Scorched Scimitar
         set i = GetUnitAbilityLevel(DamageSource, SCORCHED_SCIMITAR_ABILITY_ID)
         if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
-            set DamageTargetMagicRes = DamageTargetMagicRes * 0.7
+            set DamageTargetMagicRes = DamageTargetMagicRes * 0.5
 
             if IsPhysDamage() then
-                set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.3)
+                set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.5)
                 //call BJDebugMsg("ss armor pierce: " + R2S(Damage.index.armorPierced))
             endif
         endif
@@ -385,7 +384,7 @@ scope ModifyDamageBeforeArmor initializer init
         if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)
             call TempAbil.create(DamageTarget, 'A08O', 3)
-            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, 0).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1)
+            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, 0).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1).start()
         endif
 
         //Pvp Bonus
@@ -394,6 +393,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif 
 
         if Damage.index.damage <= 0 then
+            set Damage.index.damage = 0
             return
         endif
 
@@ -452,6 +452,10 @@ scope ModifyDamageBeforeArmor initializer init
         //Fan of Knives
         if DamageSourceAbility == FAN_OF_KNIVES_ABILITY_ID then
             set Damage.index.damage = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.damage, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
+        endif
+
+        if GetUnitAbilityLevel(DamageSource, 'A09T') != 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A09T') == 0 then
+            call CastStaffOfLightning(DamageSource, DamageTarget)
         endif
 
         //Lich
@@ -678,7 +682,7 @@ scope ModifyDamageBeforeArmor initializer init
 
                 call TempAbil.create(DamageTarget, 'A06R', 3)
                 //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitCustomState(DamageSource, BONUS_MAGICPOW)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)* 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1)
+                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)* 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1).start()
             endif
 
             //Envenomed Weapons heroes
@@ -687,7 +691,7 @@ scope ModifyDamageBeforeArmor initializer init
 
                 call TempAbil.create(DamageTarget, 'A06P', 8)
                 //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
+                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1).start()
             endif
 
             //Qiulbeasts
@@ -695,9 +699,13 @@ scope ModifyDamageBeforeArmor initializer init
                 set i1 = GetUnitAbilityLevel(DamageSource, 'A0BF') + PoisonRuneBonus[DamageSourcePid]
                 if (IsPhysDamage() or PoisonRuneBonus[DamageSourcePid] > 0) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
                     call TempAbil.create(DamageTarget, 'A06P', 8)
-                    call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
+                    call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1).start()
                 endif
             endif
+        endif
+
+        if GetUnitAbilityLevel(DamageTarget, DRUNKEN_HAZE_BUFF_ID) != 0 and GetUnitAbilityLevel(DamageTarget, DRUNKEN_HAZE_IGNITE_BUFF_ID) == 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
+            call StartDrunkenHazeIgnition(DamageSource, DamageTarget, DamageSourceAbility, Damage.index.damage)
         endif
 
         //Frostbite of the Soul
@@ -712,6 +720,10 @@ scope ModifyDamageBeforeArmor initializer init
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl", DamageSource, "chest"))
             endif
         endif 
+
+        if GetUnitAbilityLevel(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) != 0 and FilterListNotEmpty(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) and BlzGetUnitAbilityCooldownRemaining(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) == 0 then
+            call CastTerrestrialGlaive(DamageSource, DamageTarget)
+        endif
 
         //Mystical armor
         set i1 = GetUnitItemTypeCount( DamageTarget,'I06E' )

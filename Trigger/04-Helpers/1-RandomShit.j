@@ -7,7 +7,7 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
     endglobals
 
     function ElemFuncStart takes unit u, integer id returns nothing
-        if ObjectHasElement(id) then
+        if ObjectHasAnyElement(id) then
             set GLOB_ELEM_U = u
             set GLOB_ELEM_I = id
             call ExecuteFunc("ElementStartAbilityS")

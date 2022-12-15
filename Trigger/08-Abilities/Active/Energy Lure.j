@@ -1,6 +1,7 @@
 library EnergyTrap requires UnitHelpers, RandomShit, SpellFormula, KnockbackHelper
     struct EnergyTrapStruct extends array
         unit source
+        unit hero
         real x
         real y
         integer level
@@ -19,15 +20,14 @@ library EnergyTrap requires UnitHelpers, RandomShit, SpellFormula, KnockbackHelp
                 set p = FirstOfGroup(ENUM_GROUP)
                 exitwhen p == null
                 set udg_NextDamageAbilitySource = ENERGY_TRAP_ABILITY_ID
-                call MoveToPoint(this.source, p, GetUnitX(this.source), GetUnitY(this.source))
+                call MoveToPoint(this.source, p, GetUnitX(this.hero), GetUnitY(this.hero))
                 if not IsKnockedBack(p) then
-                    call Lightning.unitToUnit(this.source, p, 0., 0., true, 0.8, "LEAS", 0)
+                    call Lightning.unitToUnit(this.hero, p, 0., 0., true, 0.8, "LEAS", 0)
                 endif
                 call Damage.apply(this.source, p, GetSpellValue(50, 25, this.level), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
         endmethod
-    
 
         private method periodic takes nothing returns nothing
             if T32_Tick < this.sizeEndTick then
@@ -61,6 +61,7 @@ library EnergyTrap requires UnitHelpers, RandomShit, SpellFormula, KnockbackHelp
             set this.endTick = T32_Tick + (6 * 32)
             set this.sizeEndTick = T32_Tick + 32
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
+            set this.hero = PlayerHeroes[this.pid + 1]
             set this.fx = AddLocalizedSpecialEffect("war3mapImported\\RunicAura.mdx", this.x, this.y)
             call BlzSetSpecialEffectScale(this.fx, this.scale)
             call BlzSetSpecialEffectHeight(this.fx, 25)
@@ -71,6 +72,7 @@ library EnergyTrap requires UnitHelpers, RandomShit, SpellFormula, KnockbackHelp
         
         method destroy takes nothing returns nothing
             set this.source = null
+            set this.hero = null
             set this.target = null
             call DestroyEffect(this.fx)
             set this.fx = null

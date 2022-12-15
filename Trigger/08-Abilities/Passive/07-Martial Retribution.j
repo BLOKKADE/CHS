@@ -1,4 +1,4 @@
-library MartialRetribution initializer init requires AreaDamage, HideEffects, AbilityDescription, HeroAbilityCooldown
+library MartialRetribution initializer init requires AreaDamage, HideEffects, AbilityDescription, AbilityCooldown
     globals
         Table MartialRetributionStorage
     endglobals

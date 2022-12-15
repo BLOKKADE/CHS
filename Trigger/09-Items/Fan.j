@@ -1,4 +1,4 @@
-library Fan requires HeroAbilityCooldown, DummyOrder
+library Fan requires AbilityCooldown, DummyOrder
     function ActivateFan takes unit caster returns nothing
         local integer abilId = FAN_OF_KNIVES_ABILITY_ID
         local integer level = R2I(1 + (GetHeroLevel(caster) * 0.33))
