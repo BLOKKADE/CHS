@@ -108,6 +108,10 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions
                         call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
                         call ResourseRefresh(GetOwningPlayer(u) )
 
+                    else
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "You have reached the maximum amount of 10 absolute abilities"  ) 
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr') ),GetOwningPlayer(u),PLAYER_STATE_RESOURCE_LUMBER)
+                        call ResourseRefresh(GetOwningPlayer(u) )
                     endif
                 endif
             endif
