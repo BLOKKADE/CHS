@@ -462,7 +462,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
             endif
 
             if GetLocalPlayer() == GetTriggerPlayer() then
-                if (tooltipName != "" and tooltipDescription != "") then
+                if (tooltipDescription != "") then
                     if (usePrimaryTooltipFrame) then
                         call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
                         call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
