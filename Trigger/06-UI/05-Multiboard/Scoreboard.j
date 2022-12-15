@@ -452,7 +452,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
                 set currentAbility = GetHeroSpellAtPosition(playerHero, currentAbilityIndex)
 
                 if (currentAbility != 0) then
-                    set tooltipName = BlzGetAbilityTooltip(currentAbility, GetUnitAbilityLevel(playerHero, currentAbilityIndex) - 1)
+                    set tooltipName = BlzGetAbilityTooltip(currentAbility, GetUnitAbilityLevel(playerHero, currentAbility) - 1)
                     set tooltipDescription = GetAbilityElementCountTooltip(playerHero, currentAbilityIndex)
                 else
                     // Should hopefully never happen?
