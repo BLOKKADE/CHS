@@ -63,15 +63,15 @@ library PlayerTracking initializer init requires OldInitialization
             local string tooltip = ""
 
             set tooltip = tooltip + "|cffd0ff00All Pick Stats|r"
-            set tooltip = tooltip + "|n -Season Battle Royale Wins: " + I2S(ps.getAPBRSeasonWins()) + " (" + I2S(ps.getAPBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getAPBRSeasonWins()) + " (" + I2S(ps.getAPBRAllWins()) + " total)"
             set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getAPPVPSeasonWins()) + " (" + I2S(ps.getAPPVPAllWins()) + " total)"
 
             set tooltip = tooltip + "|n|cffd0ff00All Random Stats|r"
-            set tooltip = tooltip + "|n -Season Battle Royale Wins: " + I2S(ps.getARBRSeasonWins()) + " (" + I2S(ps.getARBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getARBRSeasonWins()) + " (" + I2S(ps.getARBRAllWins()) + " total)"
             set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getARPVPSeasonWins()) + " (" + I2S(ps.getARPVPAllWins()) + " total)"
 
             set tooltip = tooltip + "|n|cffd0ff00Draft Stats|r"
-            set tooltip = tooltip + "|n -Season Battle Royale Wins: " + I2S(ps.getDraftBRSeasonWins()) + " (" + I2S(ps.getDraftBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getDraftBRSeasonWins()) + " (" + I2S(ps.getDraftBRAllWins()) + " total)"
             set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins()) + " (" + I2S(ps.getDraftPVPAllWins()) + " total)"
 
             return tooltip
