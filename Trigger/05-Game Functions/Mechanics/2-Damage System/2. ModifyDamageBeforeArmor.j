@@ -303,7 +303,17 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageTarget, ANCIENT_BLOOD_ABILITY_ID)
         if i1 > 0 then
             call ActivateAncientBlood(DamageTarget, i1)
-        endif  
+        endif
+
+        if DamageSourceAbility == SHOCKWAVE_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * GetShockwaveDamageBonus(DamageSourceId, DamageTargetId)
+            call UpdateShockwaveDamageBonus(DamageSourceId, DamageTargetId)
+        endif
+
+        // Carrion Swarm
+        /*if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
+            call ActivateCarrionSwarmDarkBonus(DamageSource)
+        endif*/
 
         //Frost Circlet
         if GetUnitAbilityLevel(DamageSource, FROST_CIRCLET_ABILITY_ID) > 0 then

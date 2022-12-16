@@ -16,7 +16,10 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
 
     function OnRoundStart takes unit hero, integer hid returns nothing
         //local item it 
-
+        
+        if GetUnitAbilityLevel(hero, SHOCKWAVE_ABILITY_ID) != 0 then
+            call ResetShockwaveDamageBonus(GetHandleId(hero))
+        endif
         //set it = null
     endfunction
 

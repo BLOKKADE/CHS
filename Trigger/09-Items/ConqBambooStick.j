@@ -35,10 +35,10 @@ library ConqBambooStick initializer init requires CustomState, Utility
                 if enemyHero != null and enemyHero != this.source then
                     set enemyHid = GetHandleId(enemyHero)
                     set ConqBambStick[this.hid].boolean[enemyHid] = false
-                    if GetLightning(this.hid, enemyHid) != 0 then
+                    /*if GetLightning(this.hid, enemyHid) != 0 then
                         call GetLightning(this.hid, enemyHid).remove()
                     endif
-                    set ConqBambStickLightning[this.hid].integer[enemyHid] = 0
+                    set ConqBambStickLightning[this.hid].integer[enemyHid] = 0**/
                 endif
                 set i = i + 1
                 exitwhen i > 8
@@ -50,17 +50,17 @@ library ConqBambooStick initializer init requires CustomState, Utility
         private method setVulnerable takes unit enemyHero, integer enemyHid returns nothing
             //call BJDebugMsg(GetUnitName(this.source) + " set vul: " + GetUnitName(enemyHero))
             set ConqBambStick[this.hid].boolean[enemyHid] = false
-            if GetLightning(this.hid, enemyHid) == 0 then
+            /*if GetLightning(this.hid, enemyHid) == 0 then
                 set ConqBambStickLightning[this.hid].integer[enemyHid] = Lightning.unitToUnit(this.source, enemyHero, 0., 0., false, 0., "SPLK", 0)
-            endif
+            endif*/
         endmethod
 
         private method setImmune takes unit enemyHero, integer enemyHid returns nothing
             //call BJDebugMsg(GetUnitName(this.source) + " set immune: " + GetUnitName(enemyHero))
             set ConqBambStick[this.hid].boolean[enemyHid] = true
-            if GetLightning(this.hid, enemyHid) != 0 then
+            /*if GetLightning(this.hid, enemyHid) != 0 then
                 call GetLightning(this.hid, enemyHid).remove()
-            endif
+            endif*/
         endmethod
 
         private method search takes nothing returns nothing
