@@ -8,21 +8,25 @@
             "args": [
                 "${workspaceFolder}/Trigger",
                 "TriggerList.j"
-            ],
-            "group":{
-                "kind": "build", 
-                "isDefault": true
-            },
+            ]
         },
         {
             "label": "Compile vjass",
             "type": "shell",
             "command": "powershell -ExecutionPolicy ByPass -File ./compile.ps1",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build",
+            "dependsOn": [
+                "Create import file",
+                "Compile vjass"
+            ],
+            "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": []
+            }
         }
     ]
 }
