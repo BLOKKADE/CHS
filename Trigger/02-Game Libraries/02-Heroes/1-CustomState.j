@@ -45,7 +45,6 @@ library CustomState initializer init requires TimerUtils
 
     //Absolute count bonus 100-149
     function SetUnitAbsoluteBonusCount takes unit u,integer id, integer i returns nothing
-        
         call SaveInteger(HT_unitstate,GetHandleId(u),100+id,i)
     endfunction
     
