@@ -1,4 +1,4 @@
-library trigger79 initializer init requires RandomShit, Functions, LoadCommand, ShopIndex
+library trigger79 initializer init requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard
 
     globals
         boolean ShopsCreated = false
@@ -185,6 +185,8 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         endif
 
         if(Trig_Spawn_Hero_Func017C())then
+            call InitializeMultiboard() // Now that everyone has a hero, show the leaderboard
+            
             set udg_boolean10 = true
             set udg_boolean09 = true
             call PlaySoundBJ(udg_sound11)

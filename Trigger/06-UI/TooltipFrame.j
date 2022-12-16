@@ -25,10 +25,6 @@ library TooltipFrame initializer init requires StringFunctions
 		return "Sell all your items for 100% gold/glory cost (|cff77f3fcCtrl+E|r)"
 	endfunction
 
-	function GetTooltipSize takes string s returns real
-		return (CountNewLines(s) * LINE_SIZE) + DEFAULT_SIZE
-	endfunction
-
 	function GetObjectTooltipSize takes integer objectId returns real
 		return GetTooltipSize(BlzGetAbilityExtendedTooltip(objectId, 0))
 	endfunction

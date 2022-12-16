@@ -30,10 +30,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Move the pet
         if (ps.getPet() != null) then
             call SetUnitPositionLoc(ps.getPet(), arenaLocation)
+        else
+            // Revive the pet if it died
+            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
         endif
-        
-        // Revive the pet if it died
-        call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
         // Random crap
         call FixAbominationPassive(playerHero)
@@ -117,6 +117,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     private function EndDuelActionsForLosingPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
+
+        call ps.addPVPLoss()
 
         // Don't add the loser twice
         if (not IsPlayerInForce(currentPlayer, DuelLosers)) then

@@ -45,15 +45,37 @@ library PlayerTracking initializer init requires OldInitialization
         private effect CurrentHatEffect = null
         private boolean DebugEnabled = false
         private boolean HasAchievementsOpen = false
+        private boolean HasScoreboardOpen = false
         private boolean HasLoaded = false
         private unit Pet = null
         private integer PetLastSwappedAt = 0
+        private integer PVPWins = 0 // PVP wins for the current game
+        private integer PVPLosses = 0 // PVP losses for the current game
 
         // --- Temporary values that are not saved to the load code
 
         // Easy helper function to get the PlayerTracking struct of a player
         public static method forPlayer takes player p returns thistype
             return thistype(GetPlayerId(p) + 1) // First struct created is 1, not 0
+        endmethod
+
+        public static method getTooltip takes player p returns string
+            local thistype ps = thistype.forPlayer(p)
+            local string tooltip = ""
+
+            set tooltip = tooltip + "|cffd0ff00All Pick Stats|r"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getAPBRSeasonWins()) + " (" + I2S(ps.getAPBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getAPPVPSeasonWins()) + " (" + I2S(ps.getAPPVPAllWins()) + " total)"
+
+            set tooltip = tooltip + "|n|cffd0ff00All Random Stats|r"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getARBRSeasonWins()) + " (" + I2S(ps.getARBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getARPVPSeasonWins()) + " (" + I2S(ps.getARPVPAllWins()) + " total)"
+
+            set tooltip = tooltip + "|n|cffd0ff00Draft Stats|r"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getDraftBRSeasonWins()) + " (" + I2S(ps.getDraftBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins()) + " (" + I2S(ps.getDraftPVPAllWins()) + " total)"
+
+            return tooltip
         endmethod
 
         // --- Functions for data that is not actually saved
@@ -79,6 +101,14 @@ library PlayerTracking initializer init requires OldInitialization
         
         public method getPetLastSwappedAt takes nothing returns integer
             return this.PetLastSwappedAt
+        endmethod
+
+        public method getPVPWins takes nothing returns integer
+            return this.PVPWins
+        endmethod
+
+        public method getPVPLosses takes nothing returns integer
+            return this.PVPLosses
         endmethod
 
         public method setCurrentHatEffect takes effect value returns nothing
@@ -109,6 +139,16 @@ library PlayerTracking initializer init requires OldInitialization
             set this.HasAchievementsOpen = not this.HasAchievementsOpen
             return this.HasAchievementsOpen
         endmethod
+
+        public method toggleHasScoreboardOpen takes nothing returns boolean
+            set this.HasScoreboardOpen = not this.HasScoreboardOpen
+            return this.HasScoreboardOpen
+        endmethod
+        
+        public method setHasScoreboardOpen takes boolean value returns nothing
+            set this.HasScoreboardOpen = value
+        endmethod
+
         // --- Functions for data that is not actually saved
 
         // --- Functions for data that is actually saved
@@ -323,20 +363,22 @@ library PlayerTracking initializer init requires OldInitialization
         public method addBRWin takes nothing returns nothing
             // Random
             if (AbilityMode == 0) then
-                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random Battle Royale All Wins")
-                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random Battle Royale Season Wins")
+                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random BR All Wins")
+                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random BR Season Wins")
             // Pick
             elseif (AbilityMode == 1) then
-                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick Battle Royale All Wins")
-                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick Battle Royale Season Wins")
+                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick BR All Wins")
+                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick BR Season Wins")
             // Draft
             elseif (AbilityMode == 2) then
-                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft Battle Royale All Wins")
-                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft Battle Royale Season Wins")
+                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft BR All Wins")
+                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft BR Season Wins")
             endif
         endmethod
 
         public method addPVPWin takes nothing returns nothing
+            set this.PVPWins = this.PVPWins + 1
+
             // Random
             if (AbilityMode == 0) then
                 set this.ARPVPAllWins = this.tryIncrementValue(this.ARPVPAllWins, "All Random PVP All Wins")
@@ -350,6 +392,10 @@ library PlayerTracking initializer init requires OldInitialization
                 set this.DraftPVPAllWins = this.tryIncrementValue(this.DraftPVPAllWins, "Draft PVP All Wins")
                 set this.DraftPVPSeasonWins = this.tryIncrementValue(this.DraftPVPSeasonWins, "Draft PVP Season Wins")
             endif
+        endmethod
+
+        public method addPVPLoss takes nothing returns nothing
+            set this.PVPLosses = this.PVPLosses + 1
         endmethod
 
         public method resetSeasonStats takes nothing returns nothing

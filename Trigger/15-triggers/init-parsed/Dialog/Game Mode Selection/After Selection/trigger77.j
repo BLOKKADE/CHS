@@ -231,8 +231,8 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
 
         if(GameModeShort == true) then // Is short game
             set ModeDescriptionBuilder[1] = ModeDescriptionBuilder[1] + " (25 Levels)|r"
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
             set Lives[0] = 1
             set Lives[1] = 1
             set Lives[2] = 1
@@ -249,13 +249,13 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
                 set ModeDescriptionBuilder[1]= "PvP: None|r"
             endif
 
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
             call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func014001001)),function Trig_Dialog_Complete_Func008Func003Func014A)
         else // Is long game
             set BattleRoyalRound = 50
             set ModeDescriptionBuilder[1] = ModeDescriptionBuilder[1] + " (50 Levels)|r"
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,"You have an extra life")
             set Lives[0] = 1
             set Lives[1] = 1
             set Lives[2] = 1
@@ -270,7 +270,7 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             if(InitialPlayerCount==1)then
                 set ModeDescriptionBuilder[1]= "PvP: None|r"
             endif
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
             call ForForce(GetPlayersMatching(Condition(function Trig_Dialog_Complete_Func008Func003Func008001001)),function Trig_Dialog_Complete_Func008Func003Func008A)
         endif
 
@@ -333,25 +333,25 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
 
             set RandomHeroMode = true
             set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Random Hero|r")
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 1 then // Pick hero
             call BanningPhase_TryEnablingBanningPhase()
 
             set RandomHeroMode = false
             set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Pick Hero|r")
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 3 then // Draft hero
             call BanningPhase_TryEnablingBanningPhase()
 
             set RandomHeroMode = false
             set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Draft Hero|r")
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         elseif HeroMode == 4 then // Same-Draft hero
             call BanningPhase_TryEnablingBanningPhase()
 
             set RandomHeroMode = false
             set ModeDescriptionBuilder[1]=(ModeDescriptionBuilder[1]+ ", Same-Draft Hero|r")
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         endif
 
         // PVP betting mode settings
@@ -360,18 +360,19 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
             set udg_boolean14 = false
             set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
             set ModeDescriptionBuilder[1]= "Betting: Disabled|r"
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         else
             set BettingEnabled = true
             set udg_boolean14 = false
             set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+(ModeDescriptionBuilder[1]+ "|n"))
             set ModeDescriptionBuilder[1]= "Betting: Enabled (Hidden)|r"
-            call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
+            // call DisplayTimedTextToForce(GetPlayersAll(),udg_real04,("|c00F08000" + ModeDescriptionBuilder[1]))
         endif
 
         call PlaySoundBJ(udg_sound03)
         set ModeDescriptionBuilder[0]=(ModeDescriptionBuilder[0]+ ModeDescriptionBuilder[1])
-        call QuestSetDescriptionBJ(GetLastCreatedQuestBJ(),ModeDescriptionBuilder[0])
+        //call QuestSetDescriptionBJ(GetLastCreatedQuestBJ(),ModeDescriptionBuilder[0])
+        call QuestSetDescriptionBJ(GetLastCreatedQuestBJ(), GameDescription)
         call QuestSetDiscoveredBJ(GetLastCreatedQuestBJ(),true)
         
         if(Trig_Dialog_Complete_Func023001())then
