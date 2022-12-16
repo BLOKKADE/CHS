@@ -1,4 +1,4 @@
-scope NoIncomeCommand initializer init
+library NoIncomeCommand initializer init requires Command
     //===========================================================================
     globals
         boolean array IncomeSpamDisabled
@@ -17,4 +17,4 @@ scope NoIncomeCommand initializer init
     private function init takes nothing returns nothing
         call Command.create(CommandHandler.NoIncomeSpam).name("NoIncomeSpam").handles("NoIncomeSpam").handles("nis").handles("noincomespam").help("NoIncomeSpam", "Toggles income spam on or off.")
     endfunction
-endscope
+endlibrary

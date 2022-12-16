@@ -1,4 +1,4 @@
-scope NoBets initializer init
+library NoBets initializer init requires Command
     //===========================================================================
     function NoBets takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
@@ -13,4 +13,4 @@ scope NoBets initializer init
     private function init takes nothing returns nothing
         call Command.create(CommandHandler.NoBets).name("nobets").handles("nobets").handles("nb").help("nobets", "Disables betting if used before the first duel. (Player 1 only)")
     endfunction
-endscope
+endlibrary

@@ -1,4 +1,4 @@
-scope Quests initializer init
+library Quests initializer init
     globals
         string VERSION = "CHS 2.0.3"
     endglobals
@@ -54,4 +54,4 @@ scope Quests initializer init
     private function init takes nothing returns nothing
         call QuestSetUp()
     endfunction
-endscope
+endlibrary

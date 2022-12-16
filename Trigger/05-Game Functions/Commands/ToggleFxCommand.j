@@ -1,4 +1,4 @@
-scope ToggleFx initializer init
+library ToggleFx initializer init requires Command
     //===========================================================================
     function ToggleFx takes Args args returns nothing
         if GetTriggerPlayer() == GetLocalPlayer() then
@@ -16,4 +16,4 @@ scope ToggleFx initializer init
     private function init takes nothing returns nothing
         call Command.create(CommandHandler.ToggleFx).name("DisableEffects").handles("DisableEffects").handles("de").help("de", "Toggles laggy fx on or off.")
     endfunction
-endscope
+endlibrary

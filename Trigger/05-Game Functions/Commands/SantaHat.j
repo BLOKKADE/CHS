@@ -1,4 +1,4 @@
-scope SantaHat initializer init
+library SantaHat initializer init requires Command
     //===========================================================================
     globals
         boolean SantaHatOn = false
@@ -23,4 +23,4 @@ scope SantaHat initializer init
         call EnableWeatherEffect(snow, false)
         call Command.create(CommandHandler.SantaHat).name("SantaMode").handles("santa").handles("christmas").handles("holidays").help("santa", "Toggles christmas mode.")
     endfunction
-endscope
+endlibrary
