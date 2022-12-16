@@ -82,7 +82,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
                 call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Save Code is for a newer version of CHS. Resetting Season wins.")
             endif
 
-            call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Current Map Version: " + GetMapVersionName(CURRENT_GAME_VERSION))
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Current Map Version: " + CURRENT_GAME_VERSION_STRING)
             call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Map Version: " + GetMapVersionName(ps.getMapVersion()))
             call ps.setMapVersion(CURRENT_GAME_VERSION)
             set resetSeasonStats = true

@@ -1,7 +1,7 @@
 library PlayerLeavesGame initializer init requires Scoreboard
 
     private function PlayerLeavesGameActions takes nothing returns nothing
-        call UpdateMultiboardPlayerLeaves(GetTriggerPlayer())
+        call UpdateScoreboardPlayerLeaves(GetTriggerPlayer())
     endfunction
 
     private function init takes nothing returns nothing

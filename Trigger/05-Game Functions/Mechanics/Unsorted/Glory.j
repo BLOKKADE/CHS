@@ -7,7 +7,7 @@ library Glory initializer initLState
     endglobals
 
     function SetVersion takes nothing returns nothing
-        call BlzFrameSetText(ResPlayer, VERSION)
+        call BlzFrameSetText(ResPlayer, CURRENT_GAME_VERSION_STRING)
     endfunction
 
     function ResourseRefresh takes player Pl returns nothing 

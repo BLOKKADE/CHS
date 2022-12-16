@@ -1,7 +1,4 @@
-scope Quests initializer init
-    globals
-        string VERSION = "CHS 2.0.3"
-    endglobals
+library Quests initializer init requires PlayerTracking
 
     function AddQuest takes string title, string description, string icon, boolean required, boolean discovered, boolean completed returns nothing
         set bj_lastCreatedQuest = CreateQuest()
@@ -20,10 +17,10 @@ scope Quests initializer init
     endfunction
     
     function QuestSetUp takes nothing returns nothing
-    call AddQuest("General Information", "Current developers: BLOKKADE, A Black Death.\nThanks to Komoset for all the help with testing and everything else.\nThanks to everyone on the Discord for feedback and suggestions.\n", "ReplaceableTextures\\PassiveButtons\\PASTimeEclipse3.blp", true, true, false)
+        call AddQuest("General Information", "Current developers: BLOKKADE, A Black Death.\nThanks to Komoset for all the help with testing and everything else.\nThanks to everyone on the Discord for feedback and suggestions.\n", "ReplaceableTextures\\PassiveButtons\\PASTimeEclipse3.blp", true, true, false)
         call AddQuestItem(bj_lastCreatedQuest, "Visit the discord to join our community!", false)
         call AddQuestItem(bj_lastCreatedQuest, "customherosurvival.com or discord.gg/dtTcyMGTyu", false)
-        call AddQuestItem(bj_lastCreatedQuest, "Current version: " + VERSION, false)
+        call AddQuestItem(bj_lastCreatedQuest, "Current version: " + CURRENT_GAME_VERSION_STRING, false)
 
         call AddQuest("Tags", "-[|cffffff00Plain|r]: This spell cannot be cast by Multicast, Mysterious Talent, Chaos Magic, Random Spells or Manifold Staff\n-[|cffff6464Summon|r]: This spell cannot be cast by Chaos Magic, but can be cast by Random Summons.\n-[|cff80ff80Luck|r]: This spell can be affected by the luck stat, some items/abilities will increase the chance of it occuring.\n-[|cff00ffffCrit|r]: This spell is counted as a crit, some items/abilities will affect it in different ways.\n-[|cffd45e29onhit|r]: This spell counts as an onhit effect, it can not trigger other [|cffd45e29onhit|r] effects and might be affected by some spells/abilities.\n-[|cff96ffffStable|r]: This ability cannot have its cooldown reset by Ancient Teaching, Sand of Time, Xesil's Legacy, Arcane Runestone or Cheater Magic.\n-[|cffc880ffUnpurgeable|r]: This ability can not be disabled through Purge.\n-[|cffff9696Lifesteal|r]: This ability might be affected in certain ways by some spells/items.\n-[Element]: This is an element which might have an Absolute Spell associated with it, those can be found in the Absolute Shop.", "ReplaceableTextures\\CommandButtons\\BTNbookAzyr.blp", true, true, false)
         call AddQuestItem(bj_lastCreatedQuest, "There are multiple tags for different spells and items in CHS.", false)
@@ -54,4 +51,5 @@ scope Quests initializer init
     private function init takes nothing returns nothing
         call QuestSetUp()
     endfunction
-endscope
+
+endlibrary

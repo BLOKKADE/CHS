@@ -169,7 +169,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         call PlaySoundBJ(udg_sound05)
         call DisableTrigger(udg_trigger87)
         call TriggerSleepAction(2.00)
-        call DisplayTimedTextToForce(GetPlayersAll(),30.00,"|cffffcc00Thank you for playing|r " + "|cff7bff00" + VERSION + "|r")
+        call DisplayTimedTextToForce(GetPlayersAll(),30.00,"|cffffcc00Thank you for playing|r " + "|cff7bff00" + CURRENT_GAME_VERSION_STRING + "|r")
 
         // Save everyones codes
         call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
