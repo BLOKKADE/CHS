@@ -1,4 +1,4 @@
-library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
+library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, SelectedUnits
 
     globals
         private string INITIAL_BOARD_NAME // Not using currently, but could show somewhere in the scoreboard
@@ -6,9 +6,11 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
         // The X,Y coordinate for the top left of the main frame
         private constant real MainFrameTopLeftX                         = 0.1
-        private constant real MainFrameTopLeftY                         = 0.56
+        private constant real MainFrameTopLeftY                         = 0.54
         private constant real MainFrameXMargin                          = 0.03
         private constant real MainFrameYMargin                          = 0.025
+        private constant real TitleHeight                               = 0.03
+        private constant real CreditsHeight                             = 0.01
 
         // Specifications for a button
         private constant real ButtonWidth                               = 0.016
@@ -193,6 +195,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
             // Register with the single trigger about hovering over the icon
             call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
             call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
+            call BlzTriggerRegisterFrameEvent(IconEventTrigger, buttonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         else
             // Retrieve the cached framehandle
             set buttonFrameHandle = CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
@@ -413,9 +416,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
             // Toggle selected player
             if (columnIndex == PLAYER_HERO_INDEX) then
-                // TODO Check if the player is in the game or if the unit is alive?
-                set SelectedUnitPid[triggerPlayerId] = playerId
-                set SelectedUnit[triggerPlayerId] = PlayerHeroes[playerId + 1]
+                call SelectUnitForPlayerSingle(PlayerHeroes[playerId + 1], triggerPlayer)
             endif
 
         elseif (BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER) then
@@ -472,6 +473,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
     private function InitializeDefaultValues takes nothing returns nothing
         local real mainFrameBottomRightX
         local real mainFrameBottomRightY
+        local framehandle titleFrameHandle
+        local framehandle creditsTextFrameHandle
 
         set ScoreboardForce = GetPlayersMatching(Condition(function ValidPlayerFilter))
 
@@ -482,11 +485,34 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameXMargin) + HeroIconWidth + HeroIconSpacing + PlayerNameWidth + DuelsWidth + (15 * ButtonWidth) + (12 * ButtonSpacing)
-        set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameYMargin) - ((CurrentRowIndex - 1) * ButtonWidth * 2) - ((CurrentRowIndex - 1) * ButtonSpacing) - ((CurrentRowIndex - 1) * RowSpacing) - TextHeight
+        set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameYMargin) - ((CurrentRowIndex - 1) * ButtonWidth * 2) - ((CurrentRowIndex - 1) * ButtonSpacing) - ((CurrentRowIndex - 1) * RowSpacing) - TextHeight - CreditsHeight
 
         // Set the frame for the backdrop of the entire scoreboard
         call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX, MainFrameTopLeftY) 
         call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX, mainFrameBottomRightY) 
+
+        // Create the scoreboard credits
+        set titleFrameHandle = BlzCreateFrameByType("GLUETEXTBUTTON", "INITIAL_BOARD_NAME", ScoreboardFrameHandle, "ScriptDialogButton", 0) 
+        call BlzFrameSetLevel(titleFrameHandle, 2) // To have it appear above the scoreboard
+        call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX + (mainFrameBottomRightX - MainFrameTopLeftX) * 0.2, MainFrameTopLeftY + (TitleHeight / 2)) 
+        call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX * 0.8, MainFrameTopLeftY - TitleHeight) 
+        call BlzFrameSetEnable(titleFrameHandle, false) 
+        call BlzFrameSetScale(titleFrameHandle, 1.5) 
+        call BlzFrameSetText(titleFrameHandle, INITIAL_BOARD_NAME) 
+
+        // Create the scoreboard credits
+        set creditsTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardText", ScoreboardFrameHandle, "", 0) 
+        call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
+        call BlzFrameSetAbsPoint(creditsTextFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX + MainFrameXMargin, mainFrameBottomRightY + MainFrameYMargin + CreditsHeight) 
+        call BlzFrameSetAbsPoint(creditsTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX - MainFrameXMargin, mainFrameBottomRightY + MainFrameYMargin) 
+        call BlzFrameSetEnable(creditsTextFrameHandle, false) 
+        call BlzFrameSetScale(creditsTextFrameHandle, 1.0) 
+        call BlzFrameSetTextAlignment(creditsTextFrameHandle, TEXT_JUSTIFY_RIGHT, TEXT_JUSTIFY_RIGHT) 
+        call BlzFrameSetText(creditsTextFrameHandle, "Developed by |cffff0000Blokkade|r, |cffffc8c8A Black Death|r, and |cff57f4ffKomoset|r") 
+
+        // Cleanup
+        set titleFrameHandle = null
+        set creditsTextFrameHandle = null
     endfunction
     
     private function UpdateDynamicPlayerValues takes nothing returns nothing
