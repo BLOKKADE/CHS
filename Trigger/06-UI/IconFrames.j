@@ -178,6 +178,15 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
+
+					// View scoreboard
+				elseif NumButton == 4 then
+					if GetLocalPlayer() == p then
+						call BlzFrameSetText(TooltipTitleFrame, "|cff40c8e0Click to view the Scoreboard|r")
+						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
+						call BlzFrameSetVisible(TooltipFrame, true)
+					endif
+
 					//Hero passive
 				elseif NumButton == 36 then
 					if GetLocalPlayer() == p then
@@ -300,6 +309,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			call BlzFrameSetTexture(ButtonId[2] , "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp" , 0, true)
 			call CreateIconWorld(3 , "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp" , 0.08 , - 0.4 , 0.025)
 			call BlzFrameSetVisible(ButtonParentId[3], false)
+			call CreateIconWorld(4 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.00 , - 0.39 , 0.036)
+			call BlzFrameSetTexture(ButtonId[4] , "ReplaceableTextures\\CommandButtons\\BTNBookOfTheDead" , 0, true)
 			call CreateIconWorld(36 , "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp" , 0.43 + 0.025 , - 0.024 , 0.025)
 			call BlzFrameSetVisible(ButtonParentId[36], true)
 			call CreateIconWorld(37 , "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp" , 0.43 + 0.05 , - 0.024 , 0.025)

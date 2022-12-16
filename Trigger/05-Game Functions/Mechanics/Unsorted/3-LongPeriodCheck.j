@@ -1,4 +1,4 @@
-scope LongPeriodCheck initializer init
+scope LongPeriodCheck initializer init requires IconFrames
 
     function OnCooldownEnd takes unit u returns nothing
         local integer i
@@ -101,6 +101,7 @@ scope LongPeriodCheck initializer init
             set i = i + 1
         endloop
 
+        if ()
         set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid + 1])
         //updates the icons in top left if selected unit is a creep
         //Show element count, win counts or hero passive
