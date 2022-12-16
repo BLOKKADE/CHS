@@ -4,7 +4,7 @@
         {
             "label": "Create import file",
             "type": "shell",
-            "command": "./CreateImportFile.exe",
+            "command": "./Build/CompileTriggerList/CreateImportFile.exe",
             "args": [
                 "${workspaceFolder}/Trigger",
                 "TriggerList.j"
@@ -14,7 +14,10 @@
             "label": "Compile vjass",
             "type": "shell",
             "command": "powershell -ExecutionPolicy ByPass -File ./compile.ps1",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceFolder}/Build/CompileJass/"
+            }
         },
         {
             "label": "Build",

@@ -1,15 +1,15 @@
 
-$JassFolder = "Trigger"
-$CommonJ = "C:\CHS\JassHelper\common.j"
-$BlizzardJ = "C:\CHS\JassHelper\Blizzard.j"
+$JassFolder = "..\..\Trigger"
+$CommonJ = ".\JassHelper\common.j"
+$BlizzardJ = ".\JassHelper\blizzard.j"
 $OutputJ = "war3map.j"
 $logs1 = ".\logs\currentmapscript.j"
 $logs2 = ".\logs\inputwar3map.j"
 $logs3 = ".\logs\outputwar3map.j"
 $backups = ".\backups\"
 $GeneratedJ = "collection.j"
-$Jasshelper = "C:\CHS\JassHelper\JassHelper\jasshelper.exe"
-$MainFunctionFile = ".\JassHelper Req\main.j"
+$Jasshelper = ".\JassHelper\JassHelper\jasshelper.exe"
+$MainFunctionFile = ".\Code\main.j"
 
 # Create GeneratedJ file from content of all .j and .zn files
 $InputFiles = Get-ChildItem -Path $JassFolder -Include *.j, *.reqj, *.zn -Recurse
