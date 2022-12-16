@@ -13,6 +13,16 @@
                 "kind": "build", 
                 "isDefault": true
             },
+        },
+        {
+            "label": "Compile vjass",
+            "type": "shell",
+            "command": "powershell -ExecutionPolicy ByPass -File ./compile.ps1",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
         }
     ]
 }
