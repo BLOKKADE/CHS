@@ -45,6 +45,7 @@ library PlayerTracking initializer init requires OldInitialization
         private effect CurrentHatEffect = null
         private boolean DebugEnabled = false
         private boolean HasAchievementsOpen = false
+        private boolean HasScoreboardOpen = false
         private boolean HasLoaded = false
         private unit Pet = null
         private integer PetLastSwappedAt = 0
@@ -138,6 +139,12 @@ library PlayerTracking initializer init requires OldInitialization
             set this.HasAchievementsOpen = not this.HasAchievementsOpen
             return this.HasAchievementsOpen
         endmethod
+
+        public method toggleHasScoreboardOpen takes nothing returns boolean
+            set this.HasScoreboardOpen = not this.HasScoreboardOpen
+            return this.HasScoreboardOpen
+        endmethod
+        
         // --- Functions for data that is not actually saved
 
         // --- Functions for data that is actually saved
