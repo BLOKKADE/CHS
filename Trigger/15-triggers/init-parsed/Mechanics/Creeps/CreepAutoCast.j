@@ -134,8 +134,6 @@ library CreepAutoCast initializer init requires RandomShit
                     call DestroyGroup(tempGroup)
                     call RemoveLocation(randomUnitLocation)
                     call RemoveLocation(offsetLocation)
-                    set randomUnitLocation = null
-                    set offsetLocation = null
                 endif
             endif
 
@@ -158,7 +156,6 @@ library CreepAutoCast initializer init requires RandomShit
                     // Cleanup
                     call DestroyGroup(tempGroup)
                     call RemoveLocation(randomUnitLocation)
-                    set randomUnitLocation = null
                 endif
             endif
 
