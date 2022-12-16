@@ -145,6 +145,10 @@ library PlayerTracking initializer init requires OldInitialization
             return this.HasScoreboardOpen
         endmethod
         
+        public method setHasScoreboardOpen takes boolean value returns nothing
+            set this.HasScoreboardOpen = value
+        endmethod
+
         // --- Functions for data that is not actually saved
 
         // --- Functions for data that is actually saved

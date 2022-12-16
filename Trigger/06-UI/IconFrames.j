@@ -191,7 +191,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					// View scoreboard
 				elseif NumButton == 4 then
 					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, "|cff40c8e0Click to toggle the Scoreboard|r")
+						call BlzFrameSetText(TooltipTitleFrame, "Toggle the Scoreboard (|cff77f3fcTab|r)")
 						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif

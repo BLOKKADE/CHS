@@ -103,6 +103,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79,
     private function ToggleViewScoreboard takes nothing returns nothing
         if ((not HoldTab[GetPlayerId(GetTriggerPlayer())]) and ScoreboardFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
             set HoldTab[GetPlayerId(GetTriggerPlayer())] = true
+            call PlayerStats.forPlayer(GetTriggerPlayer()).setHasScoreboardOpen(true)
             call BlzFrameSetVisible(ScoreboardFrameHandle, true) 
         endif
     endfunction
@@ -110,6 +111,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, trigger79,
     private function ToggleHideScoreboard takes nothing returns nothing
         if (ScoreboardFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
             set HoldTab[GetPlayerId(GetTriggerPlayer())] = false
+            call PlayerStats.forPlayer(GetTriggerPlayer()).setHasScoreboardOpen(false)
             call BlzFrameSetVisible(ScoreboardFrameHandle, false) 
         endif
     endfunction
