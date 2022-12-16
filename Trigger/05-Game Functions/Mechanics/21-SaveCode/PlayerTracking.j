@@ -6,6 +6,7 @@ library PlayerTracking initializer init requires OldInitialization
 
     globals
         constant integer CURRENT_GAME_VERSION = 2 // This value needs to have an index value in the game version string lookup
+        string CURRENT_GAME_VERSION_STRING
         constant integer MAX_SAVE_VALUE = 9999
         private string array MapVersionLookup
         private boolean SaveEnabled
@@ -447,8 +448,11 @@ library PlayerTracking initializer init requires OldInitialization
         // Map version stuff
         call SetupMapVersionLookups()
 
+        set CURRENT_GAME_VERSION_STRING = MapVersionLookup[CURRENT_GAME_VERSION]
+
         // Cleanup
         call DestroyForce(computerPlayers)
         set computerPlayers = null
     endfunction
+
 endlibrary

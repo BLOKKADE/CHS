@@ -185,7 +185,7 @@ library trigger79 initializer init requires RandomShit, Functions, LoadCommand, 
         endif
 
         if(Trig_Spawn_Hero_Func017C())then
-            call InitializeMultiboard() // Now that everyone has a hero, show the leaderboard
+            call InitializeScoreboard() // Now that everyone has a hero, show the leaderboard
             
             set udg_boolean10 = true
             set udg_boolean09 = true

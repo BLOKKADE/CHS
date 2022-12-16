@@ -46,11 +46,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			set ToolTipS = ToolTipS + "|n|n|cffd4954dIncome|r: " + I2S(Income[GetPlayerId(owningPlayer)])
 		endif
 
-		//if p != GetOwningPlayer(SpellU) then
-			set ToolTipS = ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_GOLD))
-			set ToolTipS = ToolTipS + "|n|cff41e400Lumber|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_LUMBER))
-			set ToolTipS = ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[GetPlayerId(owningPlayer)]))
-		//endif
+		set ToolTipS = ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_GOLD))
+		set ToolTipS = ToolTipS + "|n|cff41e400Lumber|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_LUMBER))
+		set ToolTipS = ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[GetPlayerId(owningPlayer)]))
 
 		// Cleanup
 		set owningPlayer = null
