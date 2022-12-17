@@ -1,22 +1,25 @@
 library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, SelectedUnits
 
     globals
-        private string INITIAL_BOARD_NAME // Not using currently, but could show somewhere in the scoreboard
+        // Scoreboard static titles
+        private constant string CREDITS                                 = "Developed by |cffff0000Blokkade|r, |cffffc8c8A Black Death|r, and |cff57f4ffKomoset|r"
+        private string ScoreboardTitle
+
+        // How often the scoreboard is updated
         private real SCOREBOARD_UPDATE_INTERVAL                         = 2.
 
         // The X,Y coordinate for the top left of the main frame
-        private constant real MainFrameTopLeftX                         = 0.1
-        private constant real MainFrameTopLeftY                         = 0.54
-        private constant real MainFrameXMargin                          = 0.03
-        private constant real MainFrameYMargin                          = 0.025
-        private constant real TitleHeight                               = 0.03
-        private constant real CreditsHeight                             = 0.01
+        private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.1
+        private constant real MAIN_FRAME_TOP_LEFT_Y                     = 0.54
+        private constant real MAIN_FRAME_X_MARGIN                       = 0.03
+        private constant real MAIN_FRAME_Y_MARGIN                       = 0.025
+        private constant real TITLE_HEIGHT                              = 0.03
+        private constant real CREDITS_HEIGHT                            = 0.01
 
         // Specifications for a button
-        private constant real ButtonWidth                               = 0.016
-        private constant real ButtonSpacing                             = 0.003
-        private constant real HeroIconSpacing                           = 0.003
-        private constant real RowSpacing                                = 0.01
+        private constant real ICON_WIDTH                                = 0.016
+        private constant real ICON_SPACING                              = 0.003
+        private constant real ROW_SPACING                               = 0.01
 
         // Column indexes
         private constant integer PLAYER_HERO_INDEX                      = 0
@@ -28,18 +31,12 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant integer PLAYER_ABILITIES_START_INDEX           = 11
 
         // Specifications for a player name text
-        private real TextHeight                                         = 0.012
-        private real TextWidth                                          = 0.2
+        private constant real TEXT_HEIGHT                               = 0.012
+        private constant real TEXT_WIDTH                                = 0.2
 
         // Column widths
-        private constant real HeroIconWidth                             = 0.016
-        private constant real PlayerNameWidth                           = 0.2
-        private constant real DuelsWidth                                = 0.07
-
-        // Tooltip information
-        private framehandle ScoreboardTooltipFrame
-		private framehandle ScoreboardTooltipTitleFrame
-		private framehandle ScoreboardTooltipTextFrame
+        private constant real PLAYER_NAME_WIDTH                         = 0.2
+        private constant real PLAYER_DUELS_WIDTH                        = 0.07
 
         // Colors
         private constant string COLOR_END_TAG                           = "|r"
@@ -58,7 +55,14 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
         // The only trigger that handles hovering over scoreboard icons
         private trigger IconEventTrigger
+
+        // Save relavant information for each framehandle. Currently, we save the playerId and the CurrentColumnIndex. Used for interacting with the framehandle
         private hashtable IconEventHandles
+        
+        // Tooltip information
+        private framehandle ScoreboardTooltipFrame
+		private framehandle ScoreboardTooltipTitleFrame
+		private framehandle ScoreboardTooltipTextFrame
 
         // Keep track of what is currently in the scoreboard to be smarter about what needs to be updated/removed to improve performance. Is also a separation of concerns from the PlayerHeroes array and if the hero gets removed for whatever reason.
         // NOTE: CachedPlayerItems and CachedPlayerAbilities could be merged into a single array, but I thought it would be simpler if they are separate
@@ -87,68 +91,71 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
     endfunction
 
     private function GetTopLeftX takes nothing returns real
-        local real value = MainFrameTopLeftX + MainFrameXMargin
+        local real value = MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN
         local real offset
 
         // Don't move the x-coordinate any more for PLAYER_HERO_INDEX or PLAYER_STATS_INDEX
 
         // Player name
         if (CurrentColumnIndex >= PLAYER_NAME_INDEX) then
-            set value = value + HeroIconWidth + HeroIconSpacing
+            set value = value + ICON_WIDTH + ICON_SPACING
         endif
 
         // Duels
         if (CurrentColumnIndex >= PLAYER_DUELS_INDEX) then
-            set value = value + PlayerNameWidth
+            set value = value + PLAYER_NAME_WIDTH
         endif
 
         // Element Counts
         if (CurrentColumnIndex >= PLAYER_ELEMENT_COUNT_INDEX) then
-            set value = value + DuelsWidth
+            set value = value + PLAYER_DUELS_WIDTH
         endif
 
         // Top 3 row items
         if (CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2)) then
-            set offset = ButtonWidth + ButtonSpacing // Element count offset
-            set value = value + offset + ((CurrentColumnIndex - PLAYER_ITEMS_START_INDEX) * ButtonWidth) + ((CurrentColumnIndex - PLAYER_ITEMS_START_INDEX) * ButtonSpacing)
+            set offset = ICON_WIDTH + ICON_SPACING // Element count offset
+            set value = value + offset + ((CurrentColumnIndex - PLAYER_ITEMS_START_INDEX) * ICON_WIDTH) + ((CurrentColumnIndex - PLAYER_ITEMS_START_INDEX) * ICON_SPACING)
         endif
 
         // Bottom 3 row items
         if (CurrentColumnIndex >= (PLAYER_ITEMS_START_INDEX + 3) and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 5)) then
-            set offset = ButtonWidth + ButtonSpacing // Element count offset
-            set value = value + offset + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ButtonWidth) + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ButtonSpacing)
+            set offset = ICON_WIDTH + ICON_SPACING // Element count offset
+            set value = value + offset + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ICON_SPACING)
         endif
 
         // Top 10 row abilities
         if (CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
-            set offset = ButtonWidth + ButtonSpacing + (ButtonWidth * 4) + (ButtonSpacing * 2) // Item and buffer offset
-            set value = value + offset + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ButtonWidth) + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ButtonSpacing)
+            set offset = ICON_WIDTH + ICON_SPACING + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
+            set value = value + offset + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ICON_WIDTH) + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ICON_SPACING)
         endif
 
         // Bottom 10 row absolutes
         if (CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
-            set offset = ButtonWidth + ButtonSpacing + (ButtonWidth * 4) + (ButtonSpacing * 2) // Item and buffer offset
-            set value = value + offset + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ButtonWidth) + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ButtonSpacing)
+            set offset = ICON_WIDTH + ICON_SPACING + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
+            set value = value + offset + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ICON_SPACING)
         endif
 
         return value
     endfunction
 
     private function GetTopLeftY takes nothing returns real
-        local real value = MainFrameTopLeftY - MainFrameYMargin - (2 * ButtonWidth * CurrentRowIndex) - (RowSpacing * CurrentRowIndex) + TextHeight
-        local real offset = ((ButtonWidth / 2) + (ButtonSpacing / 2))
+        local real value = MAIN_FRAME_TOP_LEFT_Y - MAIN_FRAME_Y_MARGIN
+        local real offset = (ICON_WIDTH / 2) + (ICON_SPACING / 2) // Offset to have 2 icons in the same column
 
         // Header row
         if (CurrentRowIndex == 0) then
-            return MainFrameTopLeftY - MainFrameYMargin
+            return value
         endif
 
-        // Top row items or Top row abilities
+        // (+ ICON_WIDTH) is used to offset back up one row since we go down (2 * ICON_WIDTH) for each row
+        set value = value - TEXT_HEIGHT - (2 * ICON_WIDTH * CurrentRowIndex) - (ROW_SPACING * CurrentRowIndex) + ICON_WIDTH
+
+        // Top row player hero icon, item icons, or ability icons
         if (CurrentColumnIndex == PLAYER_HERO_INDEX or CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2) or CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
             set value = value + offset
         endif
 
-        // Bottom row items or Bottom row absolutes
+        // Bottom row player stats icon, item icons, or ability icons
         if (CurrentColumnIndex == PLAYER_STATS_INDEX or CurrentColumnIndex >= (PLAYER_ITEMS_START_INDEX + 3) and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 5) or CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
             set value = value - offset
         endif
@@ -185,7 +192,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
             // Dimensions for the button
             call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY()) 
-            call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ButtonWidth, GetTopLeftY() - ButtonWidth) 
+            call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ICON_WIDTH, GetTopLeftY() - ICON_WIDTH) 
 
             // Save the handle of this button to look it up later for mouse events
             call SaveInteger(IconEventHandles, buttonHandleId, 1, playerId)
@@ -222,7 +229,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = playerNameTextFrameHandle
 
             call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY() - 0.003)
-            call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + TextWidth, GetTopLeftY() - TextHeight - 0.004) 
+            call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + TEXT_WIDTH, GetTopLeftY() - TEXT_HEIGHT - 0.004) 
             call BlzFrameSetEnable(playerNameTextFrameHandle, false) 
             call BlzFrameSetScale(playerNameTextFrameHandle, 1.6) 
             call BlzFrameSetTextAlignment(playerNameTextFrameHandle, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT) 
@@ -404,8 +411,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 				call BlzFrameSetEnable(currentFrameHandle, true)
 			endif
 
-            // Toggle selected player
-            if (columnIndex == PLAYER_HERO_INDEX) then
+            // Toggle selected player's hero if it exists and is alive
+            if (columnIndex == PLAYER_HERO_INDEX and (not PlayerLeftGame[playerId]) and PlayerHeroes[playerId + 1] != null and UnitAlive(PlayerHeroes[playerId + 1])) then
                 call SelectUnitForPlayerSingle(PlayerHeroes[playerId + 1], triggerPlayer)
             endif
 
@@ -414,13 +421,17 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set tooltipName = CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + columnIndex]
             set tooltipDescription = CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + columnIndex]
 
-            // Element count
-            if (columnIndex == PLAYER_ELEMENT_COUNT_INDEX) then
+            // Player hero icon - Add error message if player isn't in game or hero is invalid
+            if (columnIndex == PLAYER_HERO_INDEX) and (not PlayerLeftGame[playerId] or PlayerHeroes[playerId + 1] == null or (not UnitAlive(PlayerHeroes[playerId + 1])))) then
+                set tooltipName = tooltipName + " - |cffff0000Cannot select hero!|r"
+
+            // Element count - Change the width of the tooltip
+            elseif (columnIndex == PLAYER_ELEMENT_COUNT_INDEX) then
                 set tooltipWidth = 0.125
             endif
 
-            // Show the tooltip information
-            if (tooltipDescription != "") then
+            // Show the tooltip information if valid
+            if (tooltipName != "" and tooltipDescription != "") then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
                     call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
@@ -474,31 +485,33 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         call ForForce(ScoreboardForce, function AddPlayerToScoreboard)
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
-        set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameXMargin) + HeroIconWidth + HeroIconSpacing + PlayerNameWidth + DuelsWidth + (15 * ButtonWidth) + (12 * ButtonSpacing)
-        set mainFrameBottomRightY = MainFrameTopLeftY - (2 * MainFrameYMargin) - ((CurrentRowIndex - 1) * ButtonWidth * 2) - ((CurrentRowIndex - 1) * ButtonSpacing) - ((CurrentRowIndex - 1) * RowSpacing) - TextHeight - CreditsHeight
+        // (16 * ICON_WIDTH) = Hero icon, element icon, 3 item icons, 1 icon spacer between items and abilities, 10 ability icons
+        // (14 * ICON_SPACING) = Hero icon spacing, element icon spacer, 3 item icon spacers, 10 ability icon spacers
+        set mainFrameBottomRightX = MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (16 * ICON_WIDTH) + (14 * ICON_SPACING)
+        set mainFrameBottomRightY = MAIN_FRAME_TOP_LEFT_Y - TEXT_HEIGHT - (2 * MAIN_FRAME_Y_MARGIN) - (2 * ICON_WIDTH * (CurrentRowIndex - 1)) - ((CurrentRowIndex - 1) * ICON_SPACING) - ((CurrentRowIndex - 1) * ROW_SPACING) - CREDITS_HEIGHT
 
         // Set the frame for the backdrop of the entire scoreboard
-        call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX, MainFrameTopLeftY) 
+        call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X, MAIN_FRAME_TOP_LEFT_Y) 
         call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX, mainFrameBottomRightY) 
 
         // Create the scoreboard credits
-        set titleFrameHandle = BlzCreateFrameByType("GLUETEXTBUTTON", "INITIAL_BOARD_NAME", ScoreboardFrameHandle, "ScriptDialogButton", 0) 
+        set titleFrameHandle = BlzCreateFrameByType("GLUETEXTBUTTON", "ScoreboardTitle", ScoreboardFrameHandle, "ScriptDialogButton", 0) 
         call BlzFrameSetLevel(titleFrameHandle, 2) // To have it appear above the scoreboard
-        call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX + (mainFrameBottomRightX - MainFrameTopLeftX) * 0.2, MainFrameTopLeftY + (TitleHeight / 2)) 
-        call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX * 0.8, MainFrameTopLeftY - TitleHeight) 
+        call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + (mainFrameBottomRightX - MAIN_FRAME_TOP_LEFT_X) * 0.2, MAIN_FRAME_TOP_LEFT_Y + (TITLE_HEIGHT / 2)) 
+        call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX * 0.8, MAIN_FRAME_TOP_LEFT_Y - TITLE_HEIGHT) 
         call BlzFrameSetEnable(titleFrameHandle, false) 
         call BlzFrameSetScale(titleFrameHandle, 1.5) 
-        call BlzFrameSetText(titleFrameHandle, INITIAL_BOARD_NAME) 
+        call BlzFrameSetText(titleFrameHandle, ScoreboardTitle) 
 
         // Create the scoreboard credits
         set creditsTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardText", ScoreboardFrameHandle, "", 0) 
         call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
-        call BlzFrameSetAbsPoint(creditsTextFrameHandle, FRAMEPOINT_TOPLEFT, MainFrameTopLeftX + MainFrameXMargin, mainFrameBottomRightY + MainFrameYMargin + CreditsHeight) 
-        call BlzFrameSetAbsPoint(creditsTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX - MainFrameXMargin, mainFrameBottomRightY + MainFrameYMargin) 
+        call BlzFrameSetAbsPoint(creditsTextFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_MARGIN + CREDITS_HEIGHT) 
+        call BlzFrameSetAbsPoint(creditsTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX - MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_MARGIN) 
         call BlzFrameSetEnable(creditsTextFrameHandle, false) 
         call BlzFrameSetScale(creditsTextFrameHandle, 1.0) 
         call BlzFrameSetTextAlignment(creditsTextFrameHandle, TEXT_JUSTIFY_RIGHT, TEXT_JUSTIFY_RIGHT) 
-        call BlzFrameSetText(creditsTextFrameHandle, "Developed by |cffff0000Blokkade|r, |cffffc8c8A Black Death|r, and |cff57f4ffKomoset|r") 
+        call BlzFrameSetText(creditsTextFrameHandle, CREDITS) 
 
         // Cleanup
         set titleFrameHandle = null
@@ -553,7 +566,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
     endfunction
 
     function InitializeScoreboard takes nothing returns nothing
-        set INITIAL_BOARD_NAME = "|cff2ff1ffCustom Hero Survival - |r |cffadff2f" + CURRENT_GAME_VERSION_STRING + "|r"
+        set IconEventHandles = InitHashtable()
+
+        set ScoreboardTitle = "|cff2ff1ffCustom Hero Survival - |r |cffadff2f" + CURRENT_GAME_VERSION_STRING + "|r"
 
         // All buttons use the same trigger. However everything has a unique id to handle later on
         set IconEventTrigger = CreateTrigger()
@@ -570,8 +585,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         set ScoreboardTooltipTextFrame = BlzGetFrameByName("TooltipTextValue", 0)
         call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
         call BlzFrameSetVisible(ScoreboardTooltipFrame, false) 
-
-        set IconEventHandles = InitHashtable()
 
         call InitializeDefaultValues()
 
