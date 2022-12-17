@@ -10,7 +10,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
         // The X,Y coordinate for the top left of the main frame
         private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.1
-        private constant real MAIN_FRAME_TOP_LEFT_Y                     = 0.54
+        private constant real MAIN_FRAME_TOP_LEFT_Y                     = 0.56
         private constant real MAIN_FRAME_X_MARGIN                       = 0.03
         private constant real MAIN_FRAME_Y_MARGIN                       = 0.025
         private constant real TITLE_HEIGHT                              = 0.03
@@ -422,8 +422,12 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set tooltipDescription = CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + columnIndex]
 
             // Player hero icon - Add error message if player isn't in game or hero is invalid
-            if (columnIndex == PLAYER_HERO_INDEX) and (not PlayerLeftGame[playerId] or PlayerHeroes[playerId + 1] == null or (not UnitAlive(PlayerHeroes[playerId + 1])))) then
-                set tooltipName = tooltipName + " - |cffff0000Cannot select hero!|r"
+            if (columnIndex == PLAYER_HERO_INDEX) then
+                if (PlayerLeftGame[playerId] or PlayerHeroes[playerId + 1] == null or (not UnitAlive(PlayerHeroes[playerId + 1]))) then
+                    set tooltipName = tooltipName + " - |cffff0000Cannot select hero!|r"
+                else
+                    set tooltipName = tooltipName + " - |cffff0000Click for more details!|r"
+                endif
 
             // Element count - Change the width of the tooltip
             elseif (columnIndex == PLAYER_ELEMENT_COUNT_INDEX) then
