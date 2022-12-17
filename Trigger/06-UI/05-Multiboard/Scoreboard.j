@@ -6,7 +6,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private string ScoreboardTitle
 
         // How often the scoreboard is updated
-        private real SCOREBOARD_UPDATE_INTERVAL                         = 2.
+        private constant real SCOREBOARD_UPDATE_INTERVAL                = 2.0
 
         // The X,Y coordinate for the top left of the main frame
         private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.1
