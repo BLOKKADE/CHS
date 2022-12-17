@@ -65,7 +65,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant integer CACHING_BUFFER = 50 // Used as a separator in the caching arrays so we can use a single array for all players. This value just needs to be bigger than the amount of columns in the scoreboard
         private integer array CachedPlayerItems // Item ids for each player hero
         private integer array CachedPlayerAbilities // Ability ids for each player hero
-        private integer array CachedPlayerAbilityLevels // Ability levels for each player hero. Used to save on performance since abilityId doesn't change when leveling up
         private string array CachedPlayerStrings // Strings for each player column. NOTE: Not the most useful caching, but it could help with performance to not have to update a framehandle
         private string array CachedPlayerTooltipNames // Tooltip names
         private string array CachedPlayerTooltipDescriptions // Tooltip descriptions
@@ -292,7 +291,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId + 1]
         local integer currentAbility
-        local integer currentAbilityLevel
 
         loop
             exitwhen abilityIndex > 20
@@ -309,16 +307,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
                     call CreateIcon(BlzGetAbilityIcon(currentAbility), playerId)
                 endif
 
-                set currentAbilityLevel = GetUnitAbilityLevel(playerHero, currentAbility)
-
-                // Cache the ability tooltip information
-                if (CachedPlayerAbilityLevels[(playerId * CACHING_BUFFER) + abilityIndex] != currentAbilityLevel) then
-                    set CachedPlayerAbilityLevels[(playerId * CACHING_BUFFER) + abilityIndex] = currentAbilityLevel
-
-                    // Cache the tooltip information about the ability
-                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityTooltip(currentAbility, currentAbilityLevel - 1) // What is the -1 for?
-                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetAbilityElementCountTooltip(playerHero, abilityIndex)
-                endif
+                // Cache the tooltip information about the ability. Need to always recalculate since abilities show element counts
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityTooltip(currentAbility, GetUnitAbilityLevel(playerHero, currentAbility) - 1) // What is the -1 for?
+                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetAbilityElementCountTooltip(playerHero, abilityIndex)
             else
                 // Hide the icon if something was there
                 if (CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] != -1) then
@@ -329,7 +320,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
                 set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
                 set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
                 set CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] = -1
-                set CachedPlayerAbilityLevels[(playerId * CACHING_BUFFER) + abilityIndex] = -1
             endif
 
             set CurrentColumnIndex = CurrentColumnIndex + 1
