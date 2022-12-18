@@ -5,12 +5,44 @@ library PlayerTracking initializer init requires OldInitialization
     // RandomHeroMode -> true == Random Hero, false == Pick Hero
 
     globals
-        constant integer CURRENT_GAME_VERSION = 2 // This value needs to have an index value in the game version string lookup
-        string CURRENT_GAME_VERSION_STRING
         constant integer MAX_SAVE_VALUE = 9999
-        private string array MapVersionLookup
+
+        private GameVersion array MapVersionLookup
         private boolean SaveEnabled
+        
+        GameVersion CurrentGameVersion
     endglobals
+
+    struct GameVersion
+        private boolean ResetStats
+        private integer Version
+        private string VersionString
+
+        method shouldResetStats takes nothing returns boolean
+            return this.ResetStats
+        endmethod
+
+        method getVersion takes nothing returns integer
+            return this.Version
+        endmethod
+
+        method getVersionString takes nothing returns string
+            return this.VersionString
+        endmethod
+
+        static method create takes string versionString, integer versionId, boolean resetStats returns thistype
+            local thistype this = thistype.allocate()
+            set this.VersionString = versionString
+            set this.Version = versionId
+            set this.ResetStats = resetStats
+
+            // Save the latest
+            set CurrentGameVersion = this
+
+            return this
+        endmethod
+
+    endstruct
 
     struct PlayerStats
         // --- Values that are actually saved in the save code
@@ -348,6 +380,7 @@ library PlayerTracking initializer init requires OldInitialization
         public method setPetIndex takes integer value returns nothing
             set this.PetIndex = value
         endmethod
+        // --- Functions for data that is actually saved
 
         private method tryIncrementValue takes integer currentValue, string valueName returns integer 
             if (currentValue >= MAX_SAVE_VALUE) then
@@ -413,11 +446,10 @@ library PlayerTracking initializer init requires OldInitialization
             set this.DraftPVPSeasonWins = 0
         endmethod
     endstruct
-    // --- Functions for data that is actually saved
 
     function GetMapVersionName takes integer gameVersion returns string
-        if (gameVersion > 0 and MapVersionLookup[gameVersion] != null) then
-            return MapVersionLookup[gameVersion]
+        if (gameVersion > 0 and MapVersionLookup[gameVersion] != 0) then
+            return MapVersionLookup[gameVersion].getVersionString()
         endif
 
         return "Unknown Map Version: " + I2S(gameVersion)
@@ -428,9 +460,11 @@ library PlayerTracking initializer init requires OldInitialization
     endfunction
 
     private function SetupMapVersionLookups takes nothing returns nothing
-        set MapVersionLookup[0] = "Invalid Map Version" // Placeholder for default map version
-        set MapVersionLookup[1] = "CHS_v1.9.30-beta1" // The first game version that supports save codes
-        set MapVersionLookup[2] = "CHS v2.0.2"
+        // The array index should match the version input to GameVersion.Create(). index == version for GetMapVersionName()
+        set MapVersionLookup[0] = GameVersion.create("Invalid Map Version", 0, false) // Placeholder for default map version
+        set MapVersionLookup[1] = GameVersion.create("CHS_v1.9.30-beta1", 1, false) // The first game version that supports save codes
+        set MapVersionLookup[2] = GameVersion.create("CHS v2.0.2", 2, true)
+        set MapVersionLookup[3] = GameVersion.create("CHS v2.0.4", 3, false) // First version with new GameVersion struct. Make sure this stays false since it's the first version that will be different than the previous
     endfunction
 
     private function init takes nothing returns nothing
@@ -447,8 +481,6 @@ library PlayerTracking initializer init requires OldInitialization
 
         // Map version stuff
         call SetupMapVersionLookups()
-
-        set CURRENT_GAME_VERSION_STRING = MapVersionLookup[CURRENT_GAME_VERSION]
 
         // Cleanup
         call DestroyForce(computerPlayers)

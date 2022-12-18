@@ -23,7 +23,7 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         set SaveCount = -1 // This must get set to -1 every time we generate a new code
 
         if (not IsSavingEnabled()) then
-            call DisplayTimedTextToPlayer(p,0,0,30,"Saving is disabled since there are computer players")
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "Saving is disabled since there are computer players")
             return
         endif
 
@@ -71,7 +71,7 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
         // Misc Save Values
         call SaveNextBasicValue(ps.getCameraZoom())
-        call SaveNextBasicValue(CURRENT_GAME_VERSION)
+        call SaveNextBasicValue(CurrentGameVersion.getVersion())
 
         set SaveTempInt = Savecode.create()
         loop
@@ -87,9 +87,9 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         if (showMessage) then
             set SaveCodeColored = Savecode_colorize(SaveTempString)
 
-            call DisplayTimedTextToPlayer(p,0,0,30,SaveCodeColored)
-            call DisplayTimedTextToPlayer(p,0,0,30,"Your Save Code has been saved to:")
-            call DisplayTimedTextToPlayer(p,0,0,30,"Documents//Warcraft III//CustomMapData//CHS")
+            call DisplayTimedTextToPlayer(p, 0, 0, 30, SaveCodeColored)
+            call DisplayTimedTextToPlayer(p, 0, 0, 30, "Your Save Code has been saved to:")
+            call DisplayTimedTextToPlayer(p, 0, 0, 30, "Documents//Warcraft III//CustomMapData//CHS")
         endif
 	endfunction
 	
