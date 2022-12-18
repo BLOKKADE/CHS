@@ -493,6 +493,11 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // (14 * ICON_SPACING) = Hero icon spacing, element icon spacer, 3 item icon spacers, 10 ability icon spacers
         set mainFrameBottomRightX = MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (16 * ICON_WIDTH) + (14 * ICON_SPACING)
         set mainFrameBottomRightY = MAIN_FRAME_TOP_LEFT_Y - TEXT_HEIGHT - (2 * MAIN_FRAME_Y_MARGIN) - (2 * ICON_WIDTH * (CurrentRowIndex - 1)) - ((CurrentRowIndex - 1) * ICON_SPACING) - ((CurrentRowIndex - 1) * ROW_SPACING) - CREDITS_HEIGHT
+        
+        // For whatever reason, having all 8 players makes the scoreboard too big. Add another ROW_SPACING to fix issues with spacing. idk where I messed up, but this fixes everything
+        if (CurrentRowIndex <= 7) then
+            set mainFrameBottomRightY = mainFrameBottomRightY - ROW_SPACING
+        endif
 
         // Set the frame for the backdrop of the entire scoreboard
         call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X, MAIN_FRAME_TOP_LEFT_Y) 
