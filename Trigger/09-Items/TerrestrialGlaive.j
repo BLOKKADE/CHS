@@ -5,7 +5,7 @@ library TerrestrialGlaive initializer init requires Table, AbilityData, StableSp
     endglobals
 
     function TerrestrialGlaiveFilter takes unit u, integer abilId returns boolean
-        return IsAbilityCasteable(abilId, false) and IsSpellResettable(abilId) and GetAbilityTargetType(abilId) == Target_Enemy
+        return IsAbilityCasteable(abilId, false) and IsSpellResettable(abilId) and GetAbilityTargetType(abilId) == Target_Enemy and GetAbilityOrderType(abilId) != Order_Instant
     endfunction
 
     function CastTerrestrialGlaive takes unit caster, unit target returns nothing

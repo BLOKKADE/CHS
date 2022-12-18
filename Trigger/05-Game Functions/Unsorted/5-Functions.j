@@ -1,4 +1,4 @@
-library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
+library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
     globals 
         integer RectPid
         integer array Lives
@@ -24,6 +24,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, SpiritTauren, 
 
         if abilId == CONTEMPORARY_RUNES_ABILITY_ID then
             call CreateSpellList(u, CONTEMPORARY_RUNES_ABILITY_ID, SpellListFilter.ContempRunesSpellListFilter)
+        endif
+
+        if abilId == ENERGY_BOMBARDMENT_ABILITY_ID then
+            call LearnEnergyBombardment(u)
         endif
     endfunction
 

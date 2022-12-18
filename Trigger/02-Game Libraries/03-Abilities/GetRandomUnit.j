@@ -4,6 +4,48 @@ library GetRandomUnit initializer init requires UnitHelpers
         group ENUM_GROUP1 = CreateGroup()
     endglobals
 
+    function interface RandomUnitFilter takes RandomUnitHelper ruh, unit u returns boolean
+
+    struct RandomUnitHelperFilterInfo extends array
+        unit source
+        real x
+        real y
+        player p
+        real range
+
+        static method create takes unit source, real x, real y, player p, real range returns thistype
+            local thistype this = thistype.setup()
+            
+            set this.source = source
+            set this.x = x
+            set this.y = y
+            set this.p = p
+            set this.range = range
+
+            return this
+        endmethod
+
+        static method create2 takes nothing returns thistype
+            local thistype this = thistype.setup()
+            
+            set this.source = source
+            set this.x = x
+            set this.y = y
+            set this.p = p
+            set this.range = range
+
+            return this
+        endmethod
+        
+        method destroy takes nothing returns nothing
+            set this.source = null
+            set this.p = null
+            call this.recycle()
+        endmethod
+        
+        implement Recycle
+    endstruct
+
     struct RandomUnitHelper extends array
         group RandomUnitHelperGroup
         group exclusionGroup
@@ -12,8 +54,11 @@ library GetRandomUnit initializer init requires UnitHelpers
         boolean createdExclusionGroup
         boolean heroPriority
         boolean allowMagicImmune
+        RandomUnitFilter filter
+        RandomUnitHelperFilterInfo filterInfo
         unit pickedUnit
         integer endTick
+        
 
         method GetRandomUnit takes boolean exclude returns unit
         //pick a random unit from the hero group if hero priority is enabled, else get random unit
@@ -49,17 +94,26 @@ library GetRandomUnit initializer init requires UnitHelpers
                 set temp = FirstOfGroup(ENUM_GROUP1)
                 exitwhen temp == null
                 //make sure unit is not excluded or in the exclusion group, and not already in the picked units group and doesnt have locus
+                //check filter to see if unit is allowed
                 if temp != this.exclusionTarget and IsUnitInGroup(temp, this.RandomUnitHelperGroup) == false and GetUnitAbilityLevel(temp, 'Aloc') == 0 then
-                    if (this.exclusionGroup != null and IsUnitInGroup(temp, this.exclusionGroup) == false) or this.exclusionGroup == null then
-                        call GroupAddUnit(this.RandomUnitHelperGroup, temp)
-                        //also add to hero group if hero priority is enabled
-                        if this.heroPriority and IsUnitType(temp, UNIT_TYPE_HERO) and IsUnitInGroup(temp, this.heroGroup) == false then  
-                            call GroupAddUnit(this.heroGroup, temp)
+                    if (this.filter != 0 and this.filter.evaluate(this, temp)) or this.filter == 0 then
+                        if (this.exclusionGroup != null and IsUnitInGroup(temp, this.exclusionGroup) == false) or this.exclusionGroup == null then
+                            call GroupAddUnit(this.RandomUnitHelperGroup, temp)
+                            //also add to hero group if hero priority is enabled
+                            if this.heroPriority and IsUnitType(temp, UNIT_TYPE_HERO) and IsUnitInGroup(temp, this.heroGroup) == false then  
+                                call GroupAddUnit(this.heroGroup, temp)
+                            endif
                         endif
                     endif
                 endif
                 call GroupRemoveUnit(ENUM_GROUP1, temp)
             endloop
+            return this
+        endmethod
+
+        method addFilter takes RandomUnitFilter filter, RandomUnitHelperFilterInfo filterInfo returns thistype
+            set this.filter = filter
+            set this.filterInfo = filterInfo
             return this
         endmethod
 
@@ -123,6 +177,9 @@ library GetRandomUnit initializer init requires UnitHelpers
             set this.allowMagicImmune = false
             set this.heroPriority = false
             set this.RandomUnitHelperGroup = NewGroup()
+            set this.filter = 0
+            call this.filterInfo.destroy()
+            set this.filterInfo = 0
             return this
         endmethod
         

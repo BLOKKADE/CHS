@@ -12,6 +12,11 @@ library UnitHelpers initializer init requires Utility, GroupUtils
         return GetUnitDamage(u, 0)
     endfunction
 
+    //index 0 = first weapon
+    function GetUnitTrueRange takes unit u, integer weaponIndex returns real
+        return BlzGetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, weaponIndex) + BlzGetUnitCollisionSize(u)
+    endfunction
+
     function IsUnitMagicImmune takes unit u returns boolean
         return IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE)
     endfunction
