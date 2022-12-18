@@ -463,8 +463,9 @@ library PlayerTracking initializer init requires OldInitialization
         // The array index should match the version input to GameVersion.Create(). index == version for GetMapVersionName()
         set MapVersionLookup[0] = GameVersion.create("Invalid Map Version", 0, false) // Placeholder for default map version
         set MapVersionLookup[1] = GameVersion.create("CHS_v1.9.30-beta1", 1, false) // The first game version that supports save codes
-        set MapVersionLookup[2] = GameVersion.create("CHS v2.0.2", 2, true)
-        set MapVersionLookup[3] = GameVersion.create("CHS v2.0.4", 3, false) // First version with new GameVersion struct. Make sure this stays false since it's the first version that will be different than the previous
+        set MapVersionLookup[2] = GameVersion.create("CHS v2.0.2", 2, true) // First version to reset seasonal stats. Had major balancing changes
+        // CHS v2.0.3 is missing because we didn't have the GameVersion framework yet. Would have caused a seasonal stat reset otherwise
+        set MapVersionLookup[3] = GameVersion.create("CHS v2.0.4", 3, false) // First version with new GameVersion struct
     endfunction
 
     private function init takes nothing returns nothing
