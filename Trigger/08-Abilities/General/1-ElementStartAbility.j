@@ -131,9 +131,9 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), 8, 500, false)
         endif           
         
-        //Absolute Cold
-        if GetUnitAbilityLevel(u,ABSOLUTE_COLD_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Cold) then
-            call AbsoluteColdCooldown(u)
+        //Cold Knight
+        if GetUnitTypeId(u) == COLD_KNIGHT_UNIT_ID and IsSpellElement(u,id,Element_Cold) then
+            call ColdKnightCooldown(u)
         endif           
         
         //Absolute Light

@@ -135,8 +135,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(ROCK_GOLEM_UNIT_ID, 0, "|cffe7544aStone Edge block damage|r: ,0,%%")
         call SetBonusStr(ROCK_GOLEM_UNIT_ID, 1, "|cffe7544aBlock bonus|r: ,0,%%")
 
-        call SetBonusStr(COLD_KNIGHT_UNIT_ID, 0, "|cffe7544aAttack speed reduction|r: ,0,%%")
-        call SetBonusStr(COLD_KNIGHT_UNIT_ID, 1, "|cffd6e049Movespeed reduction|r: ,0,%%")
+        call SetBonusStr(COLD_KNIGHT_UNIT_ID, 0, "|cffe7544aDamage per element|r: ,0,")
+        call SetBonusStr(COLD_KNIGHT_UNIT_ID, 1, "|cffd6e049Duration|r: ,0,")
 
         call SetBonusStr(LICH_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,%")
 

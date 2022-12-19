@@ -438,6 +438,7 @@ library IdLibrary initializer init
         constant integer GNOME_MASTER_PASSIVE_ABILITY_ID                = 'A0DK'
         constant integer CONTEMPORARY_RUNES_ABILITY_ID                  = 'A0DN'
         constant integer ENERGY_BOMBARDMENT_ABILITY_ID                  = 'A0DQ'
+        constant integer COLD_KNIGHT_PASSIVE_ABILITY_ID                 = 'A0DR'
         
         // Dummy Abilities
         constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'

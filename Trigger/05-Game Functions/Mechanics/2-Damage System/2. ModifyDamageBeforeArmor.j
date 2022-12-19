@@ -39,7 +39,7 @@ scope ModifyDamageBeforeArmor initializer init
         if GetUnitAbilityLevel(DamageTarget ,'B00B') >= 1 then
             if GetRandomReal(1,100) <= 14 * DamageTargetLuck then
                 set Damage.index.damage = 0
-                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                if not IsFxOnCooldownSet(DamageTargetId, 'B00B', 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
                 endif
                 return
@@ -50,7 +50,7 @@ scope ModifyDamageBeforeArmor initializer init
         if GetUnitAbilityLevel(DamageTarget ,'B00D') >= 1 then
             if GetRandomInt(1,100) <= GetUnitAbilityLevel(DamageTargetHero  ,AURA_OF_IMMORTALITY_ABILITY_ID) then
                 set Damage.index.damage = 0
-                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                if not IsFxOnCooldownSet(DamageTargetId, 'B00D', 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
                 endif
                 return			
@@ -61,7 +61,7 @@ scope ModifyDamageBeforeArmor initializer init
         if UnitHasItemType(DamageTarget, 'I0AL') then
             if GetRandomInt(1,100) <= 10 * DamageTargetLuck then
                 set Damage.index.damage = 0
-                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                if not IsFxOnCooldownSet(DamageTargetId, 'I0AL', 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
                 endif
                 return			
@@ -231,6 +231,17 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageSource, CRUSHING_WAVE_ABILITY_ID)
         if i1 > 0 and DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * i1))))
+        endif
+
+         //Demon Hunter
+         if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID then
+            set r1 = RMinBJ(GetHeroLevel(DamageSource) * 20, GetUnitState(DamageTarget, UNIT_STATE_MANA))
+            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - r1)
+            call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) + r1)
+
+            if not IsFxOnCooldownSet(DamageTargetId, DEMON_HUNTER_UNIT_ID, 1) then
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "head"))
+            endif		
         endif
 
         //Blizzard
@@ -611,7 +622,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
             if r1 > 0 then
                 set Damage.index.damage = Damage.index.damage + r1
-                if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+                if not IsFxOnCooldownSet(DamageTargetId, ARCANE_STRIKE_ABILITY_ID, 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "chest"))
                 endif		
             endif

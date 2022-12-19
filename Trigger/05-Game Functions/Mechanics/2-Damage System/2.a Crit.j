@@ -40,7 +40,7 @@ library CritDamage requires RandomShit, Vampirism
         set i = GetUnitAbilityLevel(DamageSource, POWER_OF_WATER_ABILITY_ID) //Power of water
         if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
             set critDmg = critDmg + 50*i + ((BlzGetUnitMaxMana(DamageSource)*i * 0.4)/100 )
-            if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+            if not IsFxOnCooldownSet(DamageTargetId, POWER_OF_WATER_ABILITY_ID, 1) then
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile.mdl", DamageTarget, "chest"))
             endif
         endif

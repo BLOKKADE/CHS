@@ -202,12 +202,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == DOOM_GUARD_UNIT_ID then     
             call SetBonus(u, 0, heroLevel * 25)
         elseif uid == COLD_KNIGHT_UNIT_ID then              
-            call SetUnitAbilityLevel(u,'A03H',2)
-            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(u,'A03H'),ABILITY_RLF_ATTACK_SPEED_INCREASE_PERCENT_OAE2,0, 0 - heroLevel * 0.06)
-            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(u,'A03H'),ABILITY_RLF_MOVEMENT_SPEED_INCREASE_PERCENT_OAE1,0, RMaxBJ(0 - heroLevel * 0.005, 0 - 0.95))
-            call SetBonus(u, 0, (heroLevel * 0.06) * 100 )
-            call SetBonus(u, 1, RMinBJ(heroLevel * 0.005, 0.95) * 100 )
-            call SetUnitAbilityLevel(u,'A03H',1)
+            call SetBonus(u, 0, (heroLevel * 30))
+            call SetBonus(u, 1, 0.15 + (heroLevel * 0.01))
         elseif uid == TIME_WARRIOR_UNIT_ID then         
             call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (100 * levelsGained))
             call UpdateBonus(u, 1, (100 * levelsGained))

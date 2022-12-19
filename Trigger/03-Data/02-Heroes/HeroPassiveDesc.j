@@ -145,8 +145,8 @@ library HeroPassiveDesc initializer init
         
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )
         //   call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )
-        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Frost Aura: Reduces the attack speed and movement speed of enemies.")
-        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Frost Aura: +6% attack speed reduction . +0.5% movespeed reduction (max 95%)" )
+        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Deep Freeze: Every 10 seconds, the Hero freezes nearby enemies. For every [|cff8080ffCold|r] spell the Hero has, the freeze deals 30 |cffff00ffmagic damage|r and freezes enemies for 0.15 seconds. |n|nAfter activating a [|cff8080ffCold|r] spell, enemy heroes' spells are put on cooldown for 0.20 seconds.")
+        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Deep Freeze: +30 damage per [|cff8080ffCold|r], +0.01 duration" )
 
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroLich.blp" )
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals [|cff00f7ffWater|r], [|cff8080ffCold|r], or [|cff000000Dark|r] damage it has a 25% chance to use Flash Freeze on the enemy, dealing |cffff00ffmagical damage|r in an area around the target based on 100% of its intelligence. [|cff80ff80Luck|r]")

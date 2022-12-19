@@ -72,22 +72,6 @@ scope AttackController initializer init
                 call PoisonSpellCast(u, u2)
             endif
         endif
-        
-        //Demon Hunter
-        if GetUnitTypeId(u2) == DEMON_HUNTER_UNIT_ID then
-            set r1 = GetHeroLevel(   attackerHero   )* 20
-            set r2 = GetUnitState(u, UNIT_STATE_MANA)
-            set r3 = r2 - r1
-            call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA)- r1  )
-            call SetUnitState(u2, UNIT_STATE_MANA, GetUnitState(u2, UNIT_STATE_MANA)+ r1  )
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", u, "head"))
-            if r3 <= 0 then
-                if GetWidgetLife(u) <= - r3 then
-                    call SetWidgetLife(u,1)
-                else
-                endif 
-            endif
-        endif
 
         //Murloc
         if GetUnitTypeId(u2) == MURLOC_WARRIOR_UNIT_ID then
