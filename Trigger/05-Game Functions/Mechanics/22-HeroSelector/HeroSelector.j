@@ -136,7 +136,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         
         private boolean ChainedButtons         = true //(true) connect to the previous button/ or row, (false) have a offset to the box topLeft in this moving a button has no effect on other buttons.
         //Button
-        private real ButtonSize                = 0.036 //size of each button
+        private real ButtonSize                = 0.032 //size of each button
         private boolean ButtonBlendAll         = false //(true) when a hero icon uses transparenzy
         private string EmptyButtonPath         = "UI\\Widgets\\EscMenu\\Human\\blank-background.blp"
         private boolean HideEmptyButtons       = true
