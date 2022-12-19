@@ -56,6 +56,7 @@ library GloryItemCosts initializer init requires Glory
         set GloryItemCosts[GLORY_STRENGTH_TOME_ITEM_ID] = 1500
         set GloryItemCosts[GLORY_AGILITY_TOME_ITEM_ID] = 1400
         set GloryItemCosts[GLORY_INTELLIGENCE_TOME_ITEM_ID] = 1300
+        set GloryItemCosts[GLORY_ATTACKCD_TOME_ITEM_ID] = 1500
         set GloryItemCosts[GLORY_LUCK_TOME_ITEM_ID] = 2000
         set GloryItemCosts[GLORY_EVASION_TOME_ITEM_ID] = 1500
         set GloryItemCosts[GLORY_BLOCK_TOME_ITEM_ID] = 2000
