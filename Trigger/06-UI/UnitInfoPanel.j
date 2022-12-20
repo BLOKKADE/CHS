@@ -102,9 +102,9 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		set CustomStateValue[1] = R2S(100 * (1 - (50 /(50 + GetUnitCustomState(u, BONUS_EVASION)))))
 
 		if BlzGetUnitArmor(u) >= 0 and not BlzIsUnitInvulnerable(u) then
-			set CustomStateValue[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
+			set CustomStateValue[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
 		else
-			set CustomStateValue[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
+			set CustomStateValue[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
 		endif
 
 		set CustomStateValue[3] = R2S(GetUnitCustomState(u, BONUS_MAGICPOW))
