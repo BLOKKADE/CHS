@@ -317,8 +317,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         if DamageSourceAbility == SHOCKWAVE_ABILITY_ID then
-            set Damage.index.damage = Damage.index.damage * GetShockwaveDamageBonus(DamageSourceId, DamageTargetId)
             call UpdateShockwaveDamageBonus(DamageSourceId, DamageTargetId)
+            set Damage.index.damage = Damage.index.damage * GetShockwaveDamageBonus(DamageSourceId, DamageTargetId)
         endif
 
         // Carrion Swarm
