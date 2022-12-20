@@ -427,6 +427,35 @@ scope LongPeriodCheck initializer init
                 call SaveInteger(HT,hid,12,0 )	
             endif
 
+            //Thunder Witch
+            if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID then
+                if BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and CheckProc(u, 610) then
+                    call ThunderWitchBolt(u, GetHeroLevel(u), hid)
+                endif
+            endif
+
+            //Pit Lord
+            if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
+                set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
+                set i1 = R2I(GetUnitCustomState(u, BONUS_MAGICPOW) * r1)
+                set i2 = LoadInteger(HT,hid,PIT_LORD_UNIT_ID)
+                if i1 != i2 then
+                    call AddUnitCustomState(u, BONUS_PHYSPOW, 0 - i2)
+                    call AddUnitCustomState(u, BONUS_PHYSPOW, i1)
+                    call SaveInteger(HT,hid,PIT_LORD_UNIT_ID,i1)	
+                endif
+            endif
+
+            //Naga Siren
+            if GetUnitTypeId(u) == NAGA_SIREN_UNIT_ID then
+                set i1 = NagaSirenBonus[hid] * GetHeroInt(u, true)
+                set i2 = LoadInteger(HT,hid,NAGA_SIREN_UNIT_ID)
+                if i1 != i2 then
+                    call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2 + i1)
+                    call SaveInteger(HT, hid, NAGA_SIREN_UNIT_ID, i1)
+                endif
+            endif
+
             //Time Manipulation
             if GetUnitAbilityLevel(u, TIME_MANIPULATION_ABILITY_ID) > 0 and CurrentlyFighting[GetPlayerId(GetOwningPlayer(u))] and TimeManipulationTable[hid].boolean[1] then
                 if BlzGetUnitAbilityCooldownRemaining(u, TIME_MANIPULATION_ABILITY_ID) == 0 then
