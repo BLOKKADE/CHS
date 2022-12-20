@@ -10,7 +10,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         if(not(PlayerCount==1))then
             return false
         endif
-        if(not(udg_boolean11==false))then
+        if(not(GameComplete==false))then
             return false
         endif
         return true
@@ -132,15 +132,17 @@ library trigger122 initializer init requires RandomShit, SaveCommand
     function Trig_Victory_Actions takes nothing returns nothing
         local PlayerStats ps
 
-        set udg_boolean11 = true
+        set GameComplete = true
         call DisableTrigger(AllPlayersDeadTrigger)
         call DisableTrigger(PlayerHeroDeathTrigger)
+
         if(Trig_Victory_Func006C())then
             call EnableTrigger(HeroDiesInRoundTrigger)
-        else
         endif
+
         call ConditionalTriggerExecute(udg_trigger119)
         call TriggerSleepAction(2)
+
         if(Trig_Victory_Func012C())then
             call DisplayTimedTextToForce(GetPlayersAll(),30,("|cffffcc00" +("You survived all levels! Congratulations!!")))
         else
@@ -164,6 +166,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
             endif
 
         endif
+
         call EndThematicMusicBJ()
         call SetMusicVolumeBJ(0.00)
         call PlaySoundBJ(udg_sound05)
@@ -180,6 +183,5 @@ library trigger122 initializer init requires RandomShit, SaveCommand
         call TriggerAddCondition(EndGameTrigger,Condition(function Trig_Victory_Conditions))
         call TriggerAddAction(EndGameTrigger,function Trig_Victory_Actions)
     endfunction
-
 
 endlibrary

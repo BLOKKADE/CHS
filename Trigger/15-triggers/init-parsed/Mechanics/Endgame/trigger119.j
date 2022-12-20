@@ -1,7 +1,7 @@
 library trigger119 initializer init requires RandomShit
 
     function Trig_End_Game_Conditions takes nothing returns boolean
-        if(not(udg_boolean11==true))then
+        if(not(GameComplete==true))then
             return false
         endif
         if(not(IsTriggerEnabled(GetTriggeringTrigger())==true))then

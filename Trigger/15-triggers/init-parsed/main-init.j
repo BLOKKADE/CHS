@@ -112,7 +112,7 @@ library OldInitialization initializer main3
         boolean udg_boolean09= false
         integer udg_integer41= 0
         boolean udg_boolean10= false
-        boolean udg_boolean11= false
+        boolean GameComplete= false
         integer udg_integer42= 0
         integer udg_integer43= 0
         integer udg_integer44= 0
@@ -601,7 +601,7 @@ library OldInitialization initializer main3
         set udg_boolean09 = false
         set udg_integer41 = 0
         set udg_boolean10 = false
-        set udg_boolean11 = false
+        set GameComplete = false
         set udg_integer42 = 0
         set udg_integer43 = 0
         set udg_integer44 = 0
@@ -800,7 +800,7 @@ library OldInitialization initializer main3
         set udg_boolean09 = false
         set udg_integer41 = 0
         set udg_boolean10 = false
-        set udg_boolean11 = false
+        set GameComplete = false
         set udg_integer42 = 0
         set udg_integer43 = 0
         set udg_integer44 = 0
