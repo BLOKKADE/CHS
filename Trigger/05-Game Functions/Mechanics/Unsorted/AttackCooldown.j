@@ -1,6 +1,6 @@
 library ATtackCooldown initializer init requires MegaSpeed, UnitItems
 
-    function ModifyAttackCooldown takes unit u, integer hid returns nothing
+    function ModifyAttackCooldown takes unit u, integer hid returns real
         // base attack cooldown
         local real r1 = LoadReal(HT, hid, - 1001)
         local real r2 = r1
@@ -11,7 +11,7 @@ library ATtackCooldown initializer init requires MegaSpeed, UnitItems
 
         //Mega Speed and Glory Attack Cd
         if gloryAttackCdBonus != 0 then
-            set r2 = RMaxBJ(0.32, r1 - gloryAttackCdBonus)
+            set r2 = RMaxBJ(0.40, r1 - gloryAttackCdBonus)
         endif
 
         //Mega Speed
@@ -55,6 +55,8 @@ library ATtackCooldown initializer init requires MegaSpeed, UnitItems
         if r2 != BlzGetUnitAttackCooldown(u, 0) then
             call BlzSetUnitAttackCooldown(u,r2,0)
         endif
+
+        return r2
     endfunction
 
     private function init takes nothing returns nothing

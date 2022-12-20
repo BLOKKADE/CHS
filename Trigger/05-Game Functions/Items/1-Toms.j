@@ -276,8 +276,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set GloryAttackCdLevel.integer[GetHandleId(u)] = GloryAttackCdLevel.integer[GetHandleId(u)] + 1
                     set GloryAttackCdBonus.real[GetHandleId(u)] = 1 - Pow(0.94, GloryAttackCdLevel.integer[GetHandleId(u)])
                     set temp = BlzGetUnitAttackCooldown(u, 0)
-                    call ModifyAttackCooldown(u, GetHandleId(u))
                     set gloryBonus = temp - BlzGetUnitAttackCooldown(u, 0)
+
+                    if ModifyAttackCooldown(u, GetHandleId(u)) <= 0.40 then
+                        set ctrl = false
+                    endif
                 else
                     set ctrl = false
                 endif  
