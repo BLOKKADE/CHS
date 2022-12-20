@@ -12,12 +12,14 @@ library EnergyBombardment requires Utility, AbilityCooldown
         player p
         integer tick
         integer endTick
+        real currentAcd
 
         private method setFields takes nothing returns nothing
             //call BJDebugMsg("eb update field")
             set this.level = GetUnitAbilityLevel(this.source, ENERGY_BOMBARDMENT_ABILITY_ID)
             set dmgMult = 0.25 + (0.025 * this.level)
-            set this.cd = BlzGetUnitAttackCooldown(this.source, 0) * (4.4 - (0.08 * this.level))
+            set this.currentAcd = BlzGetUnitAttackCooldown(this.source, 0)
+            set this.cd = this.currentAcd * (4.4 - (0.08 * this.level))
         endmethod
         
         private method damage takes nothing returns nothing
@@ -40,7 +42,7 @@ library EnergyBombardment requires Utility, AbilityCooldown
 
         private method periodic takes nothing returns nothing
             if (BlzGetUnitAbilityCooldownRemaining(this.source, ENERGY_BOMBARDMENT_ABILITY_ID) == 0 and T32_Tick > this.tick) and (not HasPlayerFinishedLevel(this.source, this.p)) then
-                if this.level != GetUnitAbilityLevel(this.source, ENERGY_BOMBARDMENT_ABILITY_ID) then
+                if this.level != GetUnitAbilityLevel(this.source, ENERGY_BOMBARDMENT_ABILITY_ID) or this.currentAcd != BlzGetUnitAttackCooldown(this.source, 0) then
                     call this.setFields()
                 endif
                 call this.damage()
@@ -57,6 +59,7 @@ library EnergyBombardment requires Utility, AbilityCooldown
             set this.source = source
             set this.tick = 0
             set this.level = 0
+            set this.currentAcd = BlzGetUnitAttackCooldown(this.source, 0)
             set this.p = GetOwningPlayer(this.source)
 
             call this.startPeriodic()

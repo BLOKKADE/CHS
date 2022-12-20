@@ -7,7 +7,7 @@ scope OnDamage initializer init
     private function SetTypeDamage takes unit u returns nothing
         if Damage.index.damageType != DAMAGE_TYPE_SPIRIT_LINK then
 
-            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
+            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID or DamageSourceAbility == 'A0DP' then
                 set Damage.index.damageType = DAMAGE_TYPE_NORMAL
             endif
 
