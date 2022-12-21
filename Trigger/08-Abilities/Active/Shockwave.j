@@ -10,7 +10,7 @@ library Shockwave initializer init requires Table
     endfunction
 
     function UpdateShockwaveDamageBonus takes integer sourceHid, integer targetHid returns nothing
-        if Multiplier >= MultiplierLimit or ShockwaveDamageBonus[sourceHid].real[targetHid] == 0 then
+        if ShockwaveDamageBonus[sourceHid].real[targetHid] >= MultiplierLimit or ShockwaveDamageBonus[sourceHid].real[targetHid] == 0 then
             set ShockwaveDamageBonus[sourceHid].real[targetHid] = 1
         else
             set ShockwaveDamageBonus[sourceHid].real[targetHid] = ShockwaveDamageBonus[sourceHid].real[targetHid] * Multiplier
