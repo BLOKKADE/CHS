@@ -44,11 +44,6 @@ library SandOfTime requires RandomShit
             call ResetSpell(hero, 'A08T', time, true)
         endif
 
-        //Thunder Witch
-        if GetUnitAbilityLevel(hero, 'A08P') > 0 then
-            call ResetSpell(hero, 'A08P', time, true)
-        endif
-
         //Lich
         if GetUnitAbilityLevel(hero, 'A08W') > 0 then
             call ResetSpell(hero, 'A08W', time, true)
