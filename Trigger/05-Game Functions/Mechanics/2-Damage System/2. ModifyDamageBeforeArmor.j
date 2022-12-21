@@ -566,6 +566,16 @@ scope ModifyDamageBeforeArmor initializer init
             call PoisonSpellCast(DamageSource, DamageTarget)
         endif
 
+        //Absolute Cold
+        set i1 = GetUnitAbilityLevel(DamageSource, ABSOLUTE_COLD_ABILITY_ID)
+        if i1 > 0 and GetUnitMoveSpeed(DamageTarget) == 150 then
+            set AbsColdCdBonus.boolean[DamageTargetId] = true
+            set Damage.index.damage = Damage.index.damage * 1 + ((0.05 + (0.005 * i1)) * GetUnitElementCount(DamageSource, Element_Cold))
+            if not IsFxOnCooldownSet(DamageTargetId, ABSOLUTE_COLD_ABILITY_ID, 1) then
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIob\\AIobSpecialArt.mdl", DamageTarget, "chest"))
+            endif	
+        endif
+
         if IsPhysDamage() and (not IsOnHitDamage()) and DamageSourceAbility != INCINERATE_ABILITY_ID then
             //Incinerate
             set i1 = GetUnitAbilityLevel(DamageSource,INCINERATE_ABILITY_ID) + GetUnitAbilityLevel(DamageSource, 'A0C8')

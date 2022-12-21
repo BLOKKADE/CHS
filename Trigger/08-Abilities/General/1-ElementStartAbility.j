@@ -1,4 +1,4 @@
-library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit, DrainAura
+library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit, DrainAura, AbsoluteCold
     globals
         unit GLOB_ELEM_U = null
         integer GLOB_ELEM_I = 0
@@ -129,7 +129,11 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         //Absolute Dark
         if GetUnitAbilityLevel(u,ABSOLUTE_DARK_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Dark) then
             call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), 8, 500, false)
-        endif           
+        endif
+
+        if GetUnitAbilityLevel(u, ABSOLUTE_COLD_ABILITY_ID) > 0 and IsSpellElement(u, id, Element_Cold) then
+            call AbsoluteColdSlow(u)
+        endif
         
         //Cold Knight
         if GetUnitTypeId(u) == COLD_KNIGHT_UNIT_ID and IsSpellElement(u,id,Element_Cold) then

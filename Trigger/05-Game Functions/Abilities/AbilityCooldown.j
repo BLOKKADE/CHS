@@ -47,11 +47,16 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
             set time = cd
         endif
 
+        if AbsColdCdBonus.boolean[hid] then
+            set AbsColdCdBonus.boolean[hid] = false
+            set cd = cd * 1.3
+        endif
+
         //Dousing Hex
         if GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 then
             call DousingHexActivated(u)
             //call BJDebugMsg("cd bonus: " + R2S(DousingHexCooldown.real[GetHandleId(u)]))
-            return cd
+            return time
         endif
 
         //Absolute Arcane
