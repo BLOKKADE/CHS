@@ -20,6 +20,11 @@ scope ModifyDamageAfterArmor initializer init
             return
         endif
 
+        //enhanced damage ignores everything
+        if Damage.index.damageType == DAMAGE_TYPE_ENHANCED then
+            return
+        endif
+
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
         //Fishing Rod

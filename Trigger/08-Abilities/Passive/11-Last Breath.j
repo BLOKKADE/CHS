@@ -14,7 +14,7 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
         player p
 
         private method kill takes nothing returns nothing
-            set udg_NextDamageType = DamageType_Onhit
+            set udg_NextDamageAbilitySource = LAST_BREATHS_ABILITY_ID
             call Damage.apply(this.killer, this.source, 999999999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_ENHANCED, WEAPON_TYPE_WHOKNOWS)
         endmethod
     
