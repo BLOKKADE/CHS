@@ -628,11 +628,8 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageSource, ARCANE_STRIKE_ABILITY_ID)
         if i1 > 0 and not IsOnHitDamage() then
             set r1 = GetHeroTotalAbilitiesCooldown(DamageSource)
-            
-            if r1 > 200 then
-                set r1 = 200 + (r1 - 200)/2
-            endif
-            set r1 = R2I(I2R(i1) * 1 ) * r1
+
+            set r1 = r1 * (i1 * 2)
             if r1 > Damage.index.damage * 3 then
                 set r1 = Damage.index.damage * 3
             endif
