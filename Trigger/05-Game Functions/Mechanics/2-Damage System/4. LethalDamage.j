@@ -37,7 +37,7 @@ scope LethalDamage initializer init
 
         //Last Breath
         set i = GetUnitAbilityLevel(DamageTarget, LAST_BREATHS_ABILITY_ID)
-        if Damage.index.damageType != DAMAGE_TYPE_ENHANCED i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,LAST_BREATHS_ABILITY_ID) == 0 then
+        if Damage.index.damageType != DAMAGE_TYPE_ENHANCED and i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,LAST_BREATHS_ABILITY_ID) == 0 then
             set negated = true
             call ActivateLastBreath(DamageTarget, DamageSource, i)
         endif
