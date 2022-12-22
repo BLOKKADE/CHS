@@ -679,6 +679,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //92 - Slow Aura 
         call SaveAbilData(SLOW_AURA_ABILITY_ID, SLOW_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Cold, 1)
 
         //93 - Blink 
         call SaveAbilData(BLINK_ABILITY_ID, BLINK_ITEM_ID, false, 0, 0, false, Order_Point, "blink")
