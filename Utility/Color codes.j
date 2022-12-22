@@ -8,6 +8,7 @@ Stuff
 |cffff5e44Duration|r
 |cffd49696Cooldown|r
 |cffffff00Ability level bonus|r
+|cffc0c0c0 Gray text|r
 
 Tags
 [|cffffff00Plain|r]
