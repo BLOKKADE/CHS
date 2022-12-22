@@ -153,7 +153,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: Once Every 11 seconds |cffff00ffmagical damage|r and stuns all heroes for 1 second and creeps for 2 seconds. ")
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: Once Every 11 seconds |cffff00ffmagical damage|r and stuns all heroes in a 2200 AOE for 1 second and creeps for 2 seconds. ")
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun. +0.04 seconds cooldown" )
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )
