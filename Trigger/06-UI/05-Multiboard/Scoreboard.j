@@ -9,13 +9,13 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant real SCOREBOARD_UPDATE_INTERVAL                = 2.0
 
         // The X,Y coordinate for the top left of the main frame
-        private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.15
+        private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.14
         private constant real MAIN_FRAME_TOP_LEFT_Y                     = 0.56
         private constant real MAIN_FRAME_X_MARGIN                       = 0.03
         private constant real MAIN_FRAME_Y_TOP_MARGIN                   = 0.027
         private constant real MAIN_FRAME_Y_BOTTOM_MARGIN                = 0.025
         private constant real TITLE_HEIGHT                              = 0.03
-        private constant real CREDITS_HEIGHT                            = 0.01
+        private constant real CREDITS_HEIGHT                            = 0.008
 
         // Specifications for a button
         private constant real ICON_WIDTH                                = 0.016
@@ -501,7 +501,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         set titleFrameHandle = BlzCreateFrameByType("GLUETEXTBUTTON", "ScoreboardTitle", ScoreboardFrameHandle, "ScriptDialogButton", 0) 
         call BlzFrameSetLevel(titleFrameHandle, 2) // To have it appear above the scoreboard
         call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + (mainFrameBottomRightX - MAIN_FRAME_TOP_LEFT_X) * 0.2, MAIN_FRAME_TOP_LEFT_Y + (TITLE_HEIGHT / 2)) 
-        call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX * 0.8, MAIN_FRAME_TOP_LEFT_Y - TITLE_HEIGHT) 
+        call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_BOTTOMRIGHT, MAIN_FRAME_TOP_LEFT_X + (mainFrameBottomRightX - MAIN_FRAME_TOP_LEFT_X) * 0.8, MAIN_FRAME_TOP_LEFT_Y - TITLE_HEIGHT) 
         call BlzFrameSetEnable(titleFrameHandle, false) 
         call BlzFrameSetScale(titleFrameHandle, 1.2) 
         call BlzFrameSetText(titleFrameHandle, ScoreboardTitle) 
@@ -512,8 +512,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         call BlzFrameSetAbsPoint(creditsTextFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_TOP_MARGIN + CREDITS_HEIGHT) 
         call BlzFrameSetAbsPoint(creditsTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX - MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_BOTTOM_MARGIN) 
         call BlzFrameSetEnable(creditsTextFrameHandle, false) 
-        call BlzFrameSetScale(creditsTextFrameHandle, 1.0) 
-        call BlzFrameSetTextAlignment(creditsTextFrameHandle, TEXT_JUSTIFY_RIGHT, TEXT_JUSTIFY_RIGHT) 
+        call BlzFrameSetScale(creditsTextFrameHandle, 0.8) 
+        call BlzFrameSetTextAlignment(creditsTextFrameHandle, TEXT_JUSTIFY_BOTTOM, TEXT_JUSTIFY_RIGHT) 
         call BlzFrameSetText(creditsTextFrameHandle, CREDITS) 
 
         // Cleanup
