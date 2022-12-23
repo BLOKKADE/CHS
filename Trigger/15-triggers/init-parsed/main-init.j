@@ -111,7 +111,7 @@ library OldInitialization initializer main3
         integer udg_integer40= 0
         boolean udg_boolean09= false
         integer udg_integer41= 0
-        boolean udg_boolean10= false
+        boolean AllPlayerHeroesSpawned= false
         boolean GameComplete= false
         integer udg_integer42= 0
         integer udg_integer43= 0
@@ -280,7 +280,6 @@ library OldInitialization initializer main3
         trigger udg_trigger76= null
         trigger udg_trigger77= null
         trigger udg_trigger78= null
-        trigger udg_trigger79= null
         trigger PlayerHeroDeathTrigger= null
         trigger HeroDiesInRoundTrigger= null
         trigger udg_trigger82= null
@@ -600,7 +599,7 @@ library OldInitialization initializer main3
         set udg_integer40 = 0
         set udg_boolean09 = false
         set udg_integer41 = 0
-        set udg_boolean10 = false
+        set AllPlayerHeroesSpawned = false
         set GameComplete = false
         set udg_integer42 = 0
         set udg_integer43 = 0
@@ -799,7 +798,7 @@ library OldInitialization initializer main3
         set udg_integer40 = 0
         set udg_boolean09 = false
         set udg_integer41 = 0
-        set udg_boolean10 = false
+        set AllPlayerHeroesSpawned = false
         set GameComplete = false
         set udg_integer42 = 0
         set udg_integer43 = 0

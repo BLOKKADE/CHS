@@ -30,6 +30,10 @@ library ForceHelper requires GetPlayerNames
         endif
     endfunction
 
+    private function ValidPlayerFilter takes nothing returns boolean
+        return GetPlayerId(GetFilterPlayer()) < 8
+    endfunction
+
     // Converts a force into a comma separated list of colored player names
     function ConvertForceToString takes force playerForce returns string
         set ForceString = ""
@@ -56,6 +60,23 @@ library ForceHelper requires GetPlayerNames
         call ForForce(playerForce, function CheckIfPlayerUnitIsAlive)
 
         return AreAnyAlive
+    endfunction
+
+    // Gets all valid players, including computer players
+    function GetValidPlayerForce takes nothing returns force
+        return GetPlayersMatching(Condition(function ValidPlayerFilter))
+    endfunction
+
+    // Gets valid player count, including computer players
+    function GetValidPlayerForceCount takes nothing returns integer
+        local force validForce = GetValidPlayerForce()
+        local integer validForceCount = CountPlayersInForceBJ(validForce)
+
+        // Cleanup
+        call DestroyForce(validForce)
+        set validForce = null
+
+        return validForceCount
     endfunction
 
 endlibrary

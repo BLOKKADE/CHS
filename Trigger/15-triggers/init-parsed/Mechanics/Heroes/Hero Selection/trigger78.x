@@ -66,7 +66,7 @@ library trigger78 initializer init requires RandomShit
             call AddSpecialEffectLocBJ(GetUnitLoc(GetTriggerUnit()),"Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl")
             call DestroyEffectBJ(GetLastCreatedEffectBJ())
             set udg_player02 = GetTriggerPlayer()
-            call ConditionalTriggerExecute(udg_trigger79)
+            call ConditionalTriggerExecute(udg_PlayerHeroSelected)
         else
     
             call SetUnitAnimation(GetTriggerUnit(),"attack")

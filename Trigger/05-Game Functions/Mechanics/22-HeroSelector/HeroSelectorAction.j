@@ -1,4 +1,4 @@
-library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, trigger79
+library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerHeroSelected
     //HeroSelectorAction V1.4.0
     
     globals
@@ -37,7 +37,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, trigger
         call HeroSelectorEnablePickPlayer(false, p) //only one pick for this player
         call HeroSelectorShowPlayer(false, p)
 
-        call trigger79_SpawnedHeroActions(p, u)
+        call PlayerHeroSelected_SpawnedHeroActions(p, u)
 
         set p = null
         set u = null

@@ -79,7 +79,7 @@ library trigger90 initializer init requires RandomShit, MouseHoverInfo
     function Trig_Melee_Initialization_Func010Func003A takes nothing returns nothing
         if(Trig_Melee_Initialization_Func010Func003Func001C())then
             set udg_player02 = GetEnumPlayer()
-            call ConditionalTriggerExecute(udg_trigger79)
+            call ConditionalTriggerExecute(udg_PlayerHeroSelected)
         endif
     endfunction
 

@@ -1,4 +1,4 @@
-library ConversionHotkeys initializer init requires Table, SellItems, trigger79, Scoreboard
+library ConversionHotkeys initializer init requires Table, SellItems, PlayerHeroSelected, Scoreboard
     //detects hotkey presses
     
     globals

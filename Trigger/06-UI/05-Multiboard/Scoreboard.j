@@ -87,10 +87,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         set PlayerLeftGame[GetPlayerId(currentPlayer)] = true
     endfunction
 
-    private function ValidPlayerFilter takes nothing returns boolean
-        return GetPlayerId(GetFilterPlayer()) < 8
-    endfunction
-
     private function GetTopLeftX takes nothing returns real
         local real value = MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN
         local real offset
@@ -483,7 +479,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local framehandle titleFrameHandle
         local framehandle creditsTextFrameHandle
 
-        set ScoreboardForce = GetPlayersMatching(Condition(function ValidPlayerFilter))
+        // This will only have players that have selected a hero. Anyone that quits before hero selection won't be here.
+        set ScoreboardForce = GetValidPlayerForce()
 
         call CreateHeaderRow()
 

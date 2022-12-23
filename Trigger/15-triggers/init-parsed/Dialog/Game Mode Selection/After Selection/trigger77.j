@@ -205,7 +205,6 @@ library trigger77 initializer init requires RandomShit, HeroSelector, HeroInfo, 
 
     function Trig_Dialog_Complete_Func025A takes nothing returns nothing
         set udg_player02 = GetEnumPlayer()
-        // call ConditionalTriggerExecute(udg_trigger79)
     endfunction
 
 
