@@ -95,7 +95,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand
 
         loop
             if UnitAlive(PlayerHeroes[i + 1]) then
-                call BJDebugMsg(GetPlayerName(Player(i)) + ", hero alive: " + GetUnitName(PlayerHeroes[i+1]))
+                // call BJDebugMsg(GetPlayerName(Player(i)) + ", hero alive: " + GetUnitName(PlayerHeroes[i+1]))
                 set WinningPlayer = Player(i)
             endif
 
