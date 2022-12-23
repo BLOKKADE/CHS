@@ -18,12 +18,12 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
             call AddToSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, abilId)
         endif
 
-        if GetUnitAbilityLevel(u, CONTEMPORARY_RUNES_ABILITY_ID) != 0 then
-            call AddToSpellList(u, CONTEMPORARY_RUNES_ABILITY_ID, abilId)
-        endif
-
         if abilId == CONTEMPORARY_RUNES_ABILITY_ID then
             call CreateSpellList(u, CONTEMPORARY_RUNES_ABILITY_ID, SpellListFilter.ContempRunesSpellListFilter)
+        endif
+
+        if GetUnitAbilityLevel(u, CONTEMPORARY_RUNES_ABILITY_ID) != 0 then
+            call AddToSpellList(u, CONTEMPORARY_RUNES_ABILITY_ID, abilId)
         endif
 
         if abilId == ENERGY_BOMBARDMENT_ABILITY_ID then
