@@ -34,6 +34,11 @@ library AbilityMOdifiers initializer init requires TimerUtils
             return targetAbilMod
         endmethod
 
+        method reset takes nothing returns nothing
+            set this.TerrestrialGlaiveDamage = false
+            set this.RetaliationAuraBonus = 0
+        endmethod
+
         method destroyTimer takes real duration returns nothing
             call TimerStart(NewTimerEx(this), duration, false, function DestroyAbilMod)
         endmethod
@@ -56,6 +61,7 @@ library AbilityMOdifiers initializer init requires TimerUtils
         endmethod
         
         method destroy takes nothing returns nothing
+            call this.reset()
             set this.source = null
             set UnitAbilityMod[GetHandleId(source)] = 0
             call this.recycle()

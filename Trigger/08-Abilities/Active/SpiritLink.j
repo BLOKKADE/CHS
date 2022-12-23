@@ -36,16 +36,9 @@ library SpiritLink initializer init requires DummyOrder, AbilityDescription, Mat
 
             set this.groupSize = BlzGroupGetSize(this.spiritLinkedUnits)
             set this.level = IMaxBJ(GetUnitAbilityLevel(this.source, SPIRIT_LINK_ABILITY_ID), this.level)
-            set this.damageReduction = 1 - Pow(1 - (0.03 + (0.001 * this.level)), this.groupSize)
+            set this.damageReduction = Pow(1 - (0.03 + (0.001 * this.level)), this.groupSize)
 
             //call BJDebugMsg("size: " + I2S(this.groupSize))
-
-            loop
-                //call BJDebugMsg("dr: " + R2S(this.damageReduction) + " * " + R2S(1 - (0.03 + (0.001 * this.level))) + " = " + R2S(this.damageReduction * (1 - (0.03 + (0.001 * this.level)))))
-                set this.damageReduction = this.damageReduction * (1 - (0.03 + (0.001 * this.level)))
-                set i = i + 1
-                exitwhen i >= this.groupSize
-            endloop
 
             //set this.damageReduction = this.damageReduction * 0.001
 
