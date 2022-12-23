@@ -31,6 +31,10 @@ library ForceHelper requires GetPlayerNames
     endfunction
 
     private function ValidPlayerFilter takes nothing returns boolean
+        if (GetPlayerController(GetFilterPlayer()) == MAP_CONTROL_USER and GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_LEFT) then
+            return false
+        endif
+
         return GetPlayerId(GetFilterPlayer()) < 8
     endfunction
 
