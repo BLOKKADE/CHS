@@ -94,6 +94,22 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     private function EndDuelActionsForWinningPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
+        local DuelGame duelGame = DuelGame.getPlayerDuelGame(currentPlayer)
+        local string message
+
+        call ps.addPVPWin()
+        
+        set message = GetPlayerNameColour(currentPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"
+
+        // Show the PVP kill count if this is not simultaneous duels. Otherwise it will be a lot of spam
+        if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, message)
+        else
+            // Otherwise show the pvp stats to everyone in the duel
+            call DisplayTimedTextToForce(duelGame.team1, 5.00, message)
+            call DisplayTimedTextToForce(duelGame.team2, 5.00, message)
+        endif
 
         call GroupAddUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities
 
@@ -141,11 +157,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
         local unit deadUnit = GetDyingUnit()
-        local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
         local MidasTouch deadUnitMidasTouch = GetMidasTouch(GetHandleId(deadUnit))
         local real bonus = 1
-
-        call ps.addPVPWin() // TODO Switch to addGroupPVPWin?
 
         // Midas Touch
         if deadUnitMidasTouch != 0 then
@@ -252,12 +265,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             
             // Only display a message to everyone when this duel is completely over
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
-
-            // Show the PVP kill count if this is not simultaneous duels. Otherwise it will be a lot of spam
-            if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
-                set ps = PlayerStats.forPlayer(killingUnitPlayer)
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(killingUnitPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode")
-            endif
         else
             // Only show message to the two teams if there are still units alive in the dead player force
             call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")

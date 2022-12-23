@@ -25,9 +25,9 @@ library AbsoluteCold initializer init requires UnitHelpers, TempAbilSystem, Dumm
                     else
                         call SetUnitAbilityLevel(p, 'A0DS', lvl + 1)
                     endif
-                    call BJDebugMsg("ac slow: " + I2S(GetUnitAbilityLevel(p, 'A0DS')))
+                    // call BJDebugMsg("ac slow: " + I2S(GetUnitAbilityLevel(p, 'A0DS')))
                 else
-                    call BJDebugMsg("ac stun")
+                    // call BJDebugMsg("ac stun")
                     set GetUnitTempAbilityStruct(p, 'A0DS').stop = true
                     call DummyOrder.create(source, GetUnitX(p), GetUnitY(p), GetUnitFacing(p), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 2).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 2).target(p).activate()
                     set AbsColdSlowImmunityTick.integer[hid] = T32_Tick + (6 * 32)

@@ -531,8 +531,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set CurrentColumnIndex = PLAYER_NAME_INDEX
             call CreateText(LEAVER_COLOR + GetPlayerNameNoTag(GetPlayerName(currentPlayer)) + COLOR_END_TAG, playerId)
 
-        // Don't try to update anything else if the player left the game
-        else
+        // Don't try to update anything else if the player left the game or if the player died in rounds
+        elseif (not IsPlayerInForce(DefeatedPlayers))
             // Update the tooltip description information about the player's hero since it changes over time. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(PlayerHeroes[playerId + 1])
 
