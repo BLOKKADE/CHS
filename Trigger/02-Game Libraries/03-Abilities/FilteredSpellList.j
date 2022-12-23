@@ -17,7 +17,7 @@ library FilteredSpellList initializer init requires ListT, Utility
 
     //returns the filter associated with a spellist
     function GetSpellListFilter takes integer hid, integer abilId returns SpellListFilter
-        call BJDebugMsg(I2S(SpellListFilters[hid].integer[abilId]))
+        //call BJDebugMsg(I2S(SpellListFilters[hid].integer[abilId]))
         return SpellListFilters[hid].integer[abilId]
     endfunction
 
@@ -62,7 +62,7 @@ library FilteredSpellList initializer init requires ListT, Utility
     function AddToSpellList takes unit u, integer abilId, integer abilToAddId returns nothing
         local integer hid = GetHandleId(u)
         if GetSpellListFilter(hid, abilId).evaluate(u, abilToAddId) then
-            call BJDebugMsg("add spell: " + GetObjectName(abilToAddId))
+            //call BJDebugMsg("add spell: " + GetObjectName(abilToAddId))
             call GetFilterList(hid, abilId).push(abilToAddId)
         endif
     endfunction
@@ -75,7 +75,7 @@ library FilteredSpellList initializer init requires ListT, Utility
         loop
             set abilId = GetHeroSpellAtPosition(u, i)
             if abilId != 0 and filter.evaluate(u, abilId) then
-                call BJDebugMsg("add spell: " + GetObjectName(abilId))
+                //call BJDebugMsg("add spell: " + GetObjectName(abilId))
                 call spellList.push(abilId)
             endif 
             set i = i + 1
@@ -89,7 +89,7 @@ library FilteredSpellList initializer init requires ListT, Utility
         local IntegerList spellList = 0
 
         if GetFilterList(hid, abilId) == 0 then
-            call BJDebugMsg("create")
+            //call BJDebugMsg("create")
             set spellList = spellList.create()
             set FilteredSpellLists[hid].integer[abilId] = spellList
             set UnitFilteredSpellListIndex[hid].integer[0] = UnitFilteredSpellListIndex[hid].integer[0] + 1
