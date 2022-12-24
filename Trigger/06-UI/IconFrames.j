@@ -88,11 +88,13 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			set ToolTipS = ToolTipS + temp + "|n"
 		endif
 		set ToolTipS = ToolTipS + BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU, i3) - 1)
+		call BJDebugMsg("u: " + I2S(GetHandleId(SpellU)) + ", sl: " + I2S(spellLocation))
 
 		// Hero absolutes
-		if spellLocation > 11 and spellLocation <= 20 then
+		if spellLocation > 10 and spellLocation <= 20 then
 			set i1 = GetAbsoluteElement(i3)
 			set i2 = GetUnitElementCount(SpellU, i1)
+			call BJDebugMsg("i1: " + I2S(i1) + ", i2: " + I2S(i2))
 			set ToolTipS = ToolTipS + "|n|n|cffd0ff00Current|r " + GetFullElementText(i1) + " |cffd0ff00count|r: " + I2S(i2)
 		endif
 
