@@ -28,7 +28,7 @@ library ColdKnight requires DummyOrder, AbilityCooldown, UnitHelpers, DivineBubb
         set GLOB_ABSOLUTE_COLD_DMG = elementCount * (30 * heroLevel)
         set GLOB_ABSOLUTE_COLD_DUR = 0.15 + (0.01 * heroLevel)
 
-        call BJDebugMsg(R2S(AbilStartCD(u, COLD_KNIGHT_PASSIVE_ABILITY_ID, 10)))
+        //call BJDebugMsg(R2S(AbilStartCD(u, COLD_KNIGHT_PASSIVE_ABILITY_ID, 10)))
         call GroupClear(ENUM_GROUP)
         call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 600, Condition(function ColdKnightEffect))
         return false
