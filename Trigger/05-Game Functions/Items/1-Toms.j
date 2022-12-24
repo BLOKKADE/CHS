@@ -272,7 +272,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory attack cooldown
             elseif II  == GLORY_ATTACKCD_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
+                if BlzGetUnitAttackCooldown(u, 0) > 0.40 and BuyGloryItem(pid, II) then
                     set GloryAttackCdLevel.integer[GetHandleId(u)] = GloryAttackCdLevel.integer[GetHandleId(u)] + 1
                     set GloryAttackCdBonus.real[GetHandleId(u)] = 1 - Pow(0.94, GloryAttackCdLevel.integer[GetHandleId(u)])
                     set temp = BlzGetUnitAttackCooldown(u, 0)
