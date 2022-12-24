@@ -115,6 +115,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		local integer i2
 		local integer i3
 		local unit SpellU
+		local integer selectedUnitPid = SelectedUnitPid[PlID]
 		local PlayerStats ps
 
 		if BlzGetTriggerFrameEvent() ==  FRAMEEVENT_CONTROL_CLICK then
@@ -171,6 +172,10 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		elseif BlzGetTriggerFrameEvent()  ==FRAMEEVENT_MOUSE_UP then
 
 		elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
+				if selectedUnitPid == 27 then
+					set selectedUnitPid = PlID
+				endif
+
 				if NumButton == 2 then
 					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, "|cfffce177Next level|r: " + RoundCreepTitle)
@@ -208,7 +213,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 				elseif NumButton == 38 then
-					set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
+					set SpellU = PlayerHeroes[selectedUnitPid + 1]
 					set ToolTipS = GetElementCountTooltip(SpellU)
 
 					if GetLocalPlayer() == p then
@@ -218,7 +223,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 				elseif NumButton == 39 then
-					set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
+					set SpellU = PlayerHeroes[selectedUnitPid + 1]
 					set ToolTipS = PlayerStats.getTooltip(GetOwningPlayer(SpellU))
 					set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
 
@@ -229,7 +234,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 				elseif NumButton == 100 then
-					set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
+					set SpellU = PlayerHeroes[selectedUnitPid + 1]
 					set ToolTipS = GetHeroTooltip(SpellU)
 
 					if GetLocalPlayer() == p then
@@ -242,7 +247,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					//Hero abilities and absolutes
 				elseif NumButton > 100 and NumButton <= 120 then
 					if SelectedUnitPid[PlID] != 11 then
-						set SpellU = PlayerHeroes[SelectedUnitPid[PlID] + 1]
+						set SpellU = PlayerHeroes[selectedUnitPid + 1]
 						set i3 = GetHeroSpellAtPosition(SpellU, NumButton - 100) 
 						set ToolTipS = GetAbilityElementCountTooltip(SpellU, NumButton - 100)
 
