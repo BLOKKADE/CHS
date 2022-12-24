@@ -178,7 +178,7 @@ library HeroPassiveDesc initializer init
 
         call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp" )
         call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Steadfast Pacing: Starts with maximum movement speed. Its movement speed can't be lowered by enemy abilities or items." )
-        call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +1% attack cooldown reduction." )
+        call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.5% attack cooldown reduction." )
 
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength and immunity to |cffff8080physical|r [|cff00ffffCrit|r] damage if it hass less than 50 armor. Gains +10% strength and +10% armor limit from its passive for every [|cff8080ffCold|r] spell it has.")
