@@ -146,7 +146,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         endif
 
         // Check if we are actually ready to start the game
-        if (RoundNumber == 1 and SpawnedHeroCount >= GetValidPlayerForceCount()) then
+        if AllPlayerHeroesSpawned == false and RoundNumber == 1 and SpawnedHeroCount >= GetValidPlayerForceCount() then
             call AllPlayersHaveHeroesActions()
         endif
     endfunction
