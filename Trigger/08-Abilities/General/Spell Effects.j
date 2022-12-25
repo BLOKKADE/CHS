@@ -134,7 +134,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Purge dummy
         elseif abilId == 'A08A' then
             //remove last breath
-            if GetUnitAbilityLevel(target, 'A08B') > 0 and IsUnitEnemy(target, GetOwningPlayer(hero)) then
+            if GetUnitAbilityLevel(target, 'A08B') > 0 then
                 call UnitRemoveAbility(target, 'A08B')
                 call UnitRemoveAbility(target, 'B01D')
             endif

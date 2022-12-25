@@ -17,13 +17,22 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
             set udg_NextDamageAbilitySource = LAST_BREATHS_ABILITY_ID
             call Damage.apply(this.killer, this.source, 999999999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_ENHANCED, WEAPON_TYPE_WHOKNOWS)
         endmethod
+
+        private method endLastBreath takes nothing returns nothing
+            call UnitRemoveAbility(this.source, 'A08B')
+            call UnitRemoveAbility(this.source, 'B01D')
+            set LastBreaths[GetHandleId(this.source)] = 0
+        endmethod
     
         private method periodic takes nothing returns nothing
             if GetUnitAbilityLevel(this.source, 'A08B') == 0 then
                 call SetUnitState(source, UNIT_STATE_LIFE, 1)
+                call this.endLastBreath()
                 call this.stopPeriodic()
                 call this.destroy()
-            elseif T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, this.p) then
+            elseif T32_Tick > this.endTick or (this.p != Player(11) and HasPlayerFinishedLevel(this.source, this.p)) then
+                call this.endLastBreath()
+                call this.kill()
                 call this.stopPeriodic()
                 call this.destroy()
             else
@@ -49,11 +58,6 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
         endmethod
         
         method destroy takes nothing returns nothing
-            call UnitRemoveAbility(this.source, 'A08B')
-            call UnitRemoveAbility(this.source, 'B01D')
-
-            set LastBreaths[GetHandleId(this.source)] = 0
-            call this.kill()
             set this.source = null
             set this.killer = null
             set this.p = null
