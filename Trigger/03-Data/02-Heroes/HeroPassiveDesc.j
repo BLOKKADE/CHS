@@ -49,7 +49,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.3 magic protection, +0.3 magic power." )
             
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp" )
-        call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Feedback: Every time the Hero attacks it drains enemy mana, giving it to himself. ")
+        call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Feedback: Every time the Hero damages an enemy it drains their mana, increasing its own mana. ")
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Feedback: +20 mana drained." )
         
         call InitHeroDesc(DEADLORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNTichondrius.blp" )
