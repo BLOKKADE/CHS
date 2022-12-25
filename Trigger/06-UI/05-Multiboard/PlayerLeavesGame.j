@@ -11,7 +11,7 @@ library PlayerLeavesGame initializer init requires Scoreboard
         local integer playerId = 0
         loop    
             exitwhen playerId == 8
-            call TriggerRegisterPlayerEvent(playerLeavesGameTrigger, Player(playerId), EVENT_PLAYER_LEAVE)
+            //call TriggerRegisterPlayerEvent(playerLeavesGameTrigger, Player(playerId), EVENT_PLAYER_LEAVE)
             set playerId = playerId + 1
         endloop
     
