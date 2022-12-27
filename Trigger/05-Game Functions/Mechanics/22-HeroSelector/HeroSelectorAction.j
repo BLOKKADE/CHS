@@ -19,8 +19,16 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set bj_lastCreatedUnit = u
 
         if isRandom then
-            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00has randomed " +(GetUnitName(u)+ "! (+300 bonus gold)")))))
-            call AdjustPlayerStateBJ(900,p,PLAYER_STATE_RESOURCE_GOLD)
+            if HeroMode > 2 then
+                call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00has randomed " +(GetUnitName(u)+ "! (+300 bonus gold and 1 gold ring)")))))
+                call AdjustPlayerStateBJ(900,p,PLAYER_STATE_RESOURCE_GOLD)
+                call UnitAddItemByIdSwapped('I04R', u)
+            else
+                call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00has randomed " +(GetUnitName(u)+ "! (+300 bonus gold and 2 gold rings)")))))
+                call AdjustPlayerStateBJ(900,p,PLAYER_STATE_RESOURCE_GOLD)
+                call UnitAddItemByIdSwapped('I04R', u)
+                call UnitAddItemByIdSwapped('I04R', u)
+            endif
         else
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00has selected " +(GetUnitName(u)+ "!")))))
             call AdjustPlayerStateBJ(600,p,PLAYER_STATE_RESOURCE_GOLD)
