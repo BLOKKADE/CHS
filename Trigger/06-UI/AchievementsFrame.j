@@ -845,7 +845,7 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         set AchievementButtonHandleIds = Table.create()
         set AchievementButtonBackdropFrames = Table.create()
         set AchievementIconPaths = Table.create()
-        call TimerStart(CreateTimer(), 1, false, function SetupAchievements)
+        call TimerStart(CreateTimer(), 0, false, function SetupAchievements)
     endfunction
 
 endlibrary
