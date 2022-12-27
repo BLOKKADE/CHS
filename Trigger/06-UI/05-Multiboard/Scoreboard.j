@@ -167,16 +167,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer buttonHandleId
         local integer backdropHandleId
 
-        // Hide the icon if the path is null
-        if (iconPath == null) then
-            // Make sure it exists before trying to do anything with it
-            if (CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] != null) then
-                call BlzFrameSetVisible(CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], false)
-            endif
-
-            return
-        endif
-
         // Only create the new frame if it doesn't exist. Otherwise reuse the existing frame for performance reasons
         if (CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] == null) then
             call BJDebugMsg("Creating icon frame")
@@ -209,11 +199,16 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set buttonFrameHandle = CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
             set buttonBackdropFrameHandle = CachedPlayerFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
         endif
-
-        // Apply the icon
-        call BlzFrameSetVisible(buttonFrameHandle, true)
-        call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
-        call BlzFrameSetAllPoints(buttonBackdropFrameHandle, buttonFrameHandle) 
+        
+        // Hide the icon if the path is null
+        if (iconPath == null) then
+            call BlzFrameSetVisible(buttonFrameHandle, false)
+        else
+            // Apply the icon
+            call BlzFrameSetVisible(buttonFrameHandle, true)
+            call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
+            call BlzFrameSetAllPoints(buttonBackdropFrameHandle, buttonFrameHandle) 
+        endif
 
         // Cleanup
         set buttonFrameHandle = null
