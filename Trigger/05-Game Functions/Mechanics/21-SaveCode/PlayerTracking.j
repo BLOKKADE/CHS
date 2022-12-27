@@ -466,6 +466,7 @@ library PlayerTracking initializer init requires OldInitialization
         set MapVersionLookup[2] = GameVersion.create("CHS v2.0.2", 2, true) // First version to reset seasonal stats. Had major balancing changes
         // CHS v2.0.3 is missing because we didn't have the GameVersion framework yet. Would have caused a seasonal stat reset otherwise
         set MapVersionLookup[3] = GameVersion.create("CHS v2.1.1", 3, false) // First version with new GameVersion struct
+        set MapVersionLookup[4] = GameVersion.create("CHS v2.1.2", 4, false) // Scoreboard desync fix version
     endfunction
 
     private function init takes nothing returns nothing
