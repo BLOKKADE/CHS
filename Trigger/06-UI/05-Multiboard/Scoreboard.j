@@ -167,16 +167,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer buttonHandleId
         local integer backdropHandleId
 
-        // Hide the icon if the path is null
-        if (iconPath == null) then
-            // Make sure it exists before trying to do anything with it
-            if (CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] != null) then
-                call BlzFrameSetVisible(CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], false)
-            endif
-
-            return
-        endif
-
         // Only create the new frame if it doesn't exist. Otherwise reuse the existing frame for performance reasons
         if (CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] == null) then
             // Create the icons frames and save them for later
@@ -205,11 +195,16 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set buttonFrameHandle = CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
             set buttonBackdropFrameHandle = CachedPlayerFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
         endif
-
-        // Apply the icon
-        call BlzFrameSetVisible(buttonFrameHandle, true)
-        call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
-        call BlzFrameSetAllPoints(buttonBackdropFrameHandle, buttonFrameHandle) 
+        
+        // Hide the icon if the path is null
+        if (iconPath == null) then
+            call BlzFrameSetVisible(buttonFrameHandle, false)
+        else
+            // Apply the icon
+            call BlzFrameSetVisible(buttonFrameHandle, true)
+            call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
+            call BlzFrameSetAllPoints(buttonBackdropFrameHandle, buttonFrameHandle) 
+        endif
 
         // Cleanup
         set buttonFrameHandle = null
@@ -252,6 +247,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId + 1]
         local item currentItem
+        local integer currentItemTypeId
 
         loop
             exitwhen itemSlotIndex > 5
@@ -259,16 +255,18 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
 
             if (currentItem != null) then
+                set currentItemTypeId = GetItemTypeId(currentItem)
+
                 // Only update the data if it changed
-                if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != GetItemTypeId(currentItem)) then
-                    set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = GetItemTypeId(currentItem)
+                if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != currentItemTypeId) then
+                    set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = currentItemTypeId
 
                     // Display the icon
                     call CreateIcon(BlzGetItemIconPath(currentItem), playerId)
 
                     // Cache the tooltip information about the item
                     set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
-                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetItemExtendedTooltip(currentItem)
+                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0)
                 endif
             else
                 // Hide the icon if something was there

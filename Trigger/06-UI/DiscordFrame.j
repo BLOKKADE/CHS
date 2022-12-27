@@ -24,7 +24,7 @@ library DiscordFrame initializer init requires FrameLoader
         endif
     endfunction
 
-    private function init takes nothing returns nothing
+    private function SetupDiscord takes nothing returns nothing
         // Load TOC-file
         call BlzLoadTOCFile("war3mapImported\\Templates.toc")
     
@@ -50,6 +50,10 @@ library DiscordFrame initializer init requires FrameLoader
         call BlzFrameSetAbsPoint(frameDiscordTip, FRAMEPOINT_CENTER, 0.4, 0.185)
         call BlzFrameSetSize(frameDiscordTip, 0.22, 0.03)
         call BlzFrameSetVisible(frameDiscordTip, false)
+    endfunction
+
+    private function init takes nothing returns nothing
+        call TimerStart(CreateTimer(), 0, false, function SetupDiscord)
     endfunction
 
 endlibrary

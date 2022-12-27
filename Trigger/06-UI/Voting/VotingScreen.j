@@ -443,7 +443,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         set buttonFrameHandle = null
     endfunction
 
-    private function init takes nothing returns nothing
+    private function SetupVotingScreen takes nothing returns nothing
         local real mainFrameBottomRightX
         local real mainFrameBottomRightY
 
@@ -515,6 +515,10 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         call BlzFrameSetEnable(VoteDescriptionTextDisplay, false) 
         call BlzFrameSetScale(VoteDescriptionTextDisplay, 1.5) 
         call BlzFrameSetTextAlignment(VoteDescriptionTextDisplay, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT)
+    endfunction
+
+    private function init takes nothing returns nothing
+        call TimerStart(CreateTimer(), 0, false, function SetupVotingScreen)
     endfunction
 
 endlibrary
