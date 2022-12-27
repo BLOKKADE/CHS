@@ -179,6 +179,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
         // Only create the new frame if it doesn't exist. Otherwise reuse the existing frame for performance reasons
         if (CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] == null) then
+            call BJDebugMsg("Creating icon frame")
+
             // Create the icons frames and save them for later
             set buttonFrameHandle = BlzCreateFrame("ScriptDialogButton", ScoreboardFrameHandle, 0, 0) 
             set buttonBackdropFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", buttonFrameHandle, "", 1)
@@ -191,6 +193,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             // Dimensions for the button
             call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY()) 
             call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ICON_WIDTH, GetTopLeftY() - ICON_WIDTH) 
+
+            call BJDebugMsg("Created icon frame")
 
             // Save the handle of this button to look it up later for mouse events
             call SaveInteger(IconEventHandles, buttonHandleId, 1, playerId)
@@ -223,6 +227,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
         // Only create the new frame if it doesn't exist. Otherwise reuse the existing frame for performance reasons
         if (CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] == null) then
+            call BJDebugMsg("Creating text frame")
+
             set playerNameTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardText", ScoreboardFrameHandle, "", 0) 
             set CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = playerNameTextFrameHandle
 
@@ -231,6 +237,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             call BlzFrameSetEnable(playerNameTextFrameHandle, false) 
             call BlzFrameSetScale(playerNameTextFrameHandle, 1.2) 
             call BlzFrameSetTextAlignment(playerNameTextFrameHandle, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT) 
+
+            call BJDebugMsg("Created text frame")
         else
             // Retrieve the cached framehandle
             set playerNameTextFrameHandle = CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
