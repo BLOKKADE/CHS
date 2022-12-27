@@ -473,10 +473,10 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         call CreateAbilityButton("Draft", "You get to choose between 5 spells each time.|nDraft spells refresh each time you buy one.|nEach spell only shows up once per game per player.", true)
 
         call CreateVotingButtonCategory("|cffD26EFAHeroes|r")
-        call CreateHeroButton("Pick", "Every player can choose any hero.", false)
-        call CreateHeroButton("Random", "Every player gets a random hero and 300 bonus starting gold.", false)
-        call CreateHeroButton("Draft", "Every player gets 5 random heroes to choose from.", true)
-        call CreateHeroButton("Same-Draft", "Every player gets the same 5 random heroes to choose from.", false)
+        call CreateHeroButton("Pick", "Every player can choose any hero.|nSelecting random in this mode gives you 2 extra gold rings and 300 bonus starting gold.", false)
+        call CreateHeroButton("Random", "Every player gets a random hero, 2 extra gold rings and 300 bonus starting gold.", false)
+        call CreateHeroButton("Draft", "Every player gets 5 random heroes to choose from.|nSelecting random in this mode gives you 1 extra gold ring and 300 bonus starting gold.", true)
+        call CreateHeroButton("Same-Draft", "Every player gets the same 5 random heroes to choose from.|nSelecting random in this mode gives you 1 extra gold ring and 300 bonus starting gold.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAIncome|r")
         call CreateIncomeButton("Auto-Eco", "Pillage, Learnability, Holy Enlightenment and Midas Touch disabled. |nCreeps give more gold and experience after round 5. |nCreeps cannot be upgraded manually, instead it happens automatically starting from round 15.", true)
