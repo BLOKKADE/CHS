@@ -49,7 +49,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         set udg_boolean09 = true
 
         // Reset this variable now that all players have heroes selected
-        set PlayerCount = GetValidPlayerForceCount()
+        // set PlayerCount = GetValidPlayerForceCount()
 
         call InitializeScoreboard() // Now that everyone has a hero, show the leaderboard
 
