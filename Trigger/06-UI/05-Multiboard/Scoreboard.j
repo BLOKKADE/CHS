@@ -252,6 +252,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId + 1]
         local item currentItem
+        local integer currentItemTypeId
 
         loop
             exitwhen itemSlotIndex > 5
@@ -259,18 +260,18 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
 
             if (currentItem != null) then
+                set currentItemTypeId = GetItemTypeId(currentItem)
+
                 // Only update the data if it changed
-                if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != GetItemTypeId(currentItem)) then
-                    set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = GetItemTypeId(currentItem)
+                if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != currentItemTypeId) then
+                    set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = currentItemTypeId
 
                     // Display the icon
                     call CreateIcon(BlzGetItemIconPath(currentItem), playerId)
 
                     // Cache the tooltip information about the item
-                    // set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
-                    // set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetItemExtendedTooltip(currentItem)
-                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
-                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
+                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
+                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0)
                 endif
             else
                 // Hide the icon if something was there

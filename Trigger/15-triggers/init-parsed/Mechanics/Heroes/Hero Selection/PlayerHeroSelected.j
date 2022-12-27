@@ -51,7 +51,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         // Reset this variable now that all players have heroes selected
         set PlayerCount = GetValidPlayerForceCount()
 
-        //call InitializeScoreboard() // Now that everyone has a hero, show the leaderboard
+        call InitializeScoreboard() // Now that everyone has a hero, show the leaderboard
 
         call PlaySoundBJ(udg_sound11)
         call DisplayTextToForce(GetPlayersAll(), "|c000070C0Get Ready!|r")

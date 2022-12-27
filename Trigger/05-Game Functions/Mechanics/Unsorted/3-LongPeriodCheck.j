@@ -97,7 +97,7 @@ scope LongPeriodCheck initializer init
             set i = i + 1
         endloop
 
-        //call BlzFrameSetVisible(ButtonParentId[4], ScoreboardFrameHandle != null)
+        call BlzFrameSetVisible(ButtonParentId[4], ScoreboardFrameHandle != null)
         
         set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid + 1])
         //updates the icons in top left if selected unit is a creep
