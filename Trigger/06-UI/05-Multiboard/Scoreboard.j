@@ -267,8 +267,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
                     call CreateIcon(BlzGetItemIconPath(currentItem), playerId)
 
                     // Cache the tooltip information about the item
-                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
-                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetItemExtendedTooltip(currentItem)
+                    // set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
+                    // set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetItemExtendedTooltip(currentItem)
+                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
+                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
                 endif
             else
                 // Hide the icon if something was there
