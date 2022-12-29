@@ -37,7 +37,7 @@ scope LongPeriodCheck initializer init
             //Arcane Strike
             set i = GetUnitAbilityLevel(u, ARCANE_STRIKE_ABILITY_ID)
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, ARCANE_STRIKE_ABILITY_ID) <= 0 then
-                call UseArcaneStrike(u, i)
+                call UseArcaneStrike(u)
             endif
 
 
