@@ -27,9 +27,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant integer PLAYER_HERO_INDEX                      = 1
         private constant integer PLAYER_ELEMENT_COUNT_INDEX             = 2
         private constant integer PLAYER_NAME_INDEX                      = 3
-        private constant integer PLAYER_DUELS_INDEX                     = 4
-        private constant integer PLAYER_ITEMS_START_INDEX               = 5
-        private constant integer PLAYER_ABILITIES_START_INDEX           = 11
+        private constant integer PLAYER_STATUS_INDEX                    = 4
+        private constant integer PLAYER_DUELS_INDEX                     = 5
+        private constant integer PLAYER_ITEMS_START_INDEX               = 6
+        private constant integer PLAYER_ABILITIES_START_INDEX           = 12
 
         // Specifications for a player name text
         private constant real TEXT_HEIGHT                               = 0.012
@@ -45,7 +46,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant string PVP_LOSSES_COLOR                        = "|cffdd2c00"
         private constant string PVP_WINS_COLOR                          = "|cffbfff81"
         private constant string LEAVER_COLOR                            = "|cff404040"	
-        private constant string SLASH 			 	                    = "|cff4a4a4a/|r"
+        private constant string STATUS_COLOR                            = "|cffdf50e4"	
+        private constant string BR_WINNER_COLOR                         = "|cfffcff4a"	
+        private constant string FELL_IN_BR_COLOR                        = "|cffff9925"	
+        private constant string SLASH                                   = "|cff4a4a4a/|r"
 
         // Specifications about the rows/columns
         private integer CurrentRowIndex                                 = 0
@@ -78,13 +82,31 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private framehandle array CachedPlayerFramehandles
         private framehandle array CachedPlayerParentFramehandles
 
-        // Keep track if a player has left the game
-        private boolean array PlayerLeftGame
+        private boolean array PlayerLeftGame // If the player left the game
+        private integer array PlayerDeathRound // The round the player died for good
+        private integer PlayerBrWinner = -1
     endglobals
+    
+    function UpdateScoreboardBrWinner takes player currentPlayer returns nothing
+        if (currentPlayer != null) then
+            set PlayerBrWinner = GetPlayerId(currentPlayer)
+        endif
+    endfunction
+
+    function UpdateScoreboardPlayerDies takes player currentPlayer, integer deathRound returns nothing
+        // Don't overwrite a value if it already exists
+        if (PlayerDeathRound[GetPlayerId(currentPlayer)] == 0) then
+            // Mark the player has died. Will be reflected in the update interval
+            set PlayerDeathRound[GetPlayerId(currentPlayer)] = deathRound
+        endif
+    endfunction
 
     function UpdateScoreboardPlayerLeaves takes player currentPlayer returns nothing
         // Mark the player left the game. Will be reflected in the update interval
         set PlayerLeftGame[GetPlayerId(currentPlayer)] = true
+
+        // Set the wave the player left
+        call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
     endfunction
 
     private function GetTopLeftX takes nothing returns real
@@ -98,12 +120,12 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set value = value + ICON_WIDTH + ICON_SPACING
         endif
 
-        // Player name
+        // Player name and player status
         if (CurrentColumnIndex >= PLAYER_NAME_INDEX) then
             set value = value + ICON_WIDTH + ICON_SPACING
         endif
 
-        // PLayer duels
+        // Player duels
         if (CurrentColumnIndex >= PLAYER_DUELS_INDEX) then
             set value = value + PLAYER_NAME_WIDTH
         endif
@@ -147,6 +169,11 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // (+ ICON_WIDTH) is used to offset back up one row since we go down (2 * ICON_WIDTH) for each row
         // (+ ROW_SPACING) is used to shift everything closer to the header row
         set value = value - TEXT_HEIGHT - (2 * ICON_WIDTH * CurrentRowIndex) - (ROW_SPACING * CurrentRowIndex) + ICON_WIDTH + ROW_SPACING
+
+        // Player status
+        if (CurrentColumnIndex == PLAYER_STATUS_INDEX) then
+            return value - offset - ICON_SPACING
+        endif
 
         // Top row player stats icon, player hero icon, item icons, or ability icons
         if (CurrentColumnIndex == PLAYER_STATS_INDEX or CurrentColumnIndex == PLAYER_HERO_INDEX or CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2) or CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
@@ -214,8 +241,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
     private function CreateText takes string value, integer playerId returns nothing
         local framehandle playerNameTextFrameHandle
 
-        // NOTE: I didn't add functionality to remove text since we currently don't need it. If we do, look at CreateIcon above
-
         // Only create the new frame if it doesn't exist. Otherwise reuse the existing frame for performance reasons
         if (CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] == null) then
             set playerNameTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardText", ScoreboardFrameHandle, "", 0) 
@@ -224,7 +249,14 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY() - 0.003)
             call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + TEXT_WIDTH, GetTopLeftY() - TEXT_HEIGHT - 0.005) 
             call BlzFrameSetEnable(playerNameTextFrameHandle, false) 
-            call BlzFrameSetScale(playerNameTextFrameHandle, 1.2) 
+
+            // Show smaller text for the player status
+            if (CurrentColumnIndex == PLAYER_STATUS_INDEX) then
+                call BlzFrameSetScale(playerNameTextFrameHandle, 0.8) 
+            else
+                call BlzFrameSetScale(playerNameTextFrameHandle, 1.2) 
+            endif
+
             call BlzFrameSetTextAlignment(playerNameTextFrameHandle, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT) 
         else
             // Retrieve the cached framehandle
@@ -371,6 +403,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         set CurrentColumnIndex = PLAYER_NAME_INDEX
         call CreateText(GetPlayerNameColour(currentPlayer), playerId)
 
+        // Initialize the player status
+        set CurrentColumnIndex = PLAYER_STATUS_INDEX
+        call CreateText("", playerId)
+
         // Set the player stats
         set CurrentColumnIndex = PLAYER_DUELS_INDEX
         call CreateText(PVP_WINS_COLOR + "0" + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + "0" + COLOR_END_TAG, playerId)
@@ -476,6 +512,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local real mainFrameBottomRightY
         local framehandle titleFrameHandle
         local framehandle creditsTextFrameHandle
+        local framehandle scoreboardGameDescriptionFrameHandle
+        local framehandle scoreboardGameDescriptionTextFrameHandle
 
         // This will only have players that have selected a hero. Anyone that quits before hero selection won't be here.
         set ScoreboardForce = GetValidPlayerForce()
@@ -514,6 +552,19 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         call BlzFrameSetTextAlignment(creditsTextFrameHandle, TEXT_JUSTIFY_BOTTOM, TEXT_JUSTIFY_RIGHT) 
         call BlzFrameSetText(creditsTextFrameHandle, CREDITS) 
 
+        // Create the box for the scoreboard description 
+        set scoreboardGameDescriptionFrameHandle = BlzCreateFrame("CheckListBox", ScoreboardFrameHandle, 0, 0)
+        call BlzFrameSetPoint(scoreboardGameDescriptionFrameHandle, FRAMEPOINT_LEFT, ScoreboardFrameHandle, FRAMEPOINT_RIGHT, 0, -0.04)
+        call BlzFrameSetSize(scoreboardGameDescriptionFrameHandle, 0.17, GetTooltipSize(ScoreboardGameDescription))
+
+        // Create the actual text element that shows the scoreboard description
+        set scoreboardGameDescriptionTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardDescriptionTextArea", ScoreboardFrameHandle, "", 0)    
+        call BlzFrameSetAllPoints(scoreboardGameDescriptionTextFrameHandle, scoreboardGameDescriptionFrameHandle)
+        call BlzFrameSetEnable(scoreboardGameDescriptionTextFrameHandle, false) 
+        call BlzFrameSetScale(scoreboardGameDescriptionTextFrameHandle, 1.05) 
+        call BlzFrameSetTextAlignment(scoreboardGameDescriptionTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER)
+        call BlzFrameSetText(scoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescription) 
+
         // Cleanup
         set titleFrameHandle = null
         set creditsTextFrameHandle = null
@@ -524,13 +575,30 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer playerId = GetPlayerId(currentPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
+        // If this is the BR winner, set the status and do nothing else
+        if (PlayerBrWinner == playerId) then
+            set CurrentColumnIndex = PLAYER_STATUS_INDEX
+            call CreateText(BR_WINNER_COLOR + "Battle Royale Winner!" + COLOR_END_TAG, playerId)
+
+        // Player status for dying
+        elseif (PlayerDeathRound[playerId] != 0) then
+            set CurrentColumnIndex = PLAYER_STATUS_INDEX
+
+            if (PlayerDeathRound[playerId] == 50 or PlayerDeathRound[playerId] == 25) then
+                call CreateText(FELL_IN_BR_COLOR + "Fell in the Battle Royale" + COLOR_END_TAG, playerId)
+            else
+                call CreateText(STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
+            endif
+        endif
+
         // Change the color of the player's name if they left the game
         if (PlayerLeftGame[playerId]) then
             set CurrentColumnIndex = PLAYER_NAME_INDEX
             call CreateText(LEAVER_COLOR + GetPlayerNameNoTag(GetPlayerName(currentPlayer)) + COLOR_END_TAG, playerId)
+        endif
 
         // Don't try to update anything else if the player left the game or if the player died in rounds
-        elseif (not IsPlayerInForce(currentPlayer, DefeatedPlayers)) then
+        if (not PlayerLeftGame[playerId] and PlayerDeathRound[playerId] == 0) then
             // Update the tooltip description information about the player's hero since it changes over time. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(PlayerHeroes[playerId + 1])
 

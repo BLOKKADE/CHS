@@ -1,4 +1,4 @@
-library trigger80 initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath
+library trigger80 initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath, Scoreboard
 
     function IsUnitNotHeroOrCreep takes unit u returns boolean
         return IsUnitType(u, UNIT_TYPE_HERO) == false or GetOwningPlayer(u) == Player(8) or GetOwningPlayer(u) == Player(11) or IsUnitInGroup(u, DuelingHeroGroup)
@@ -103,6 +103,9 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         set PlayerCount =(PlayerCount - 1)
         call AllowSinglePlayerCommands()
         
+        // Mark the round the player died on
+        call UpdateScoreboardPlayerDies(GetOwningPlayer(GetTriggerUnit()), RoundNumber)
+
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetOwningPlayer(GetTriggerUnit()))+ "|cffC60000 was defeated!|r")))
         call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1])
         

@@ -18,6 +18,7 @@ library VotingResults initializer init
         integer TeamDuelMode
 
         string GameDescription
+        string ScoreboardGameDescription
 
         // Counts for each type of vote. Used so that we don't need to hardcode indexes or something
         integer RoundButtonCount = 0
@@ -115,74 +116,99 @@ library VotingResults initializer init
 
     public function SetGameModeDescription takes nothing returns nothing
         set GameDescription = "|cffe9820dGame Mode: "
+        set ScoreboardGameDescription = "|cff00ffffGame Modes|r|cffe9820d|n"
 
         if (RoundMode == 1) then
             set GameDescription = GameDescription + "50 Rounds, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "50 Rounds|n"
         elseif (RoundMode == 2) then
             set GameDescription = GameDescription + "25 Rounds, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "25 Rounds|n"
         endif
 
         if (AbilityMode == 1) then
             set GameDescription = GameDescription + "Pick Abilities, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Pick Abilities|n"
         elseif (AbilityMode == 2) then
             set GameDescription = GameDescription + "Random Abilities, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Random Abilities|n"
         elseif (AbilityMode == 3) then
             set GameDescription = GameDescription + "Draft Abilities, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Draft Abilities|n"
         endif
 
         if (HeroMode == 1) then
             set GameDescription = GameDescription + "Pick Hero, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Pick Hero|n"
         elseif (HeroMode == 2) then
             set GameDescription = GameDescription + "Random Hero, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Random Hero|n"
         elseif (HeroMode == 3) then
             set GameDescription = GameDescription + "Draft Hero, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Draft Hero|n"
         elseif (HeroMode == 4) then
             set GameDescription = GameDescription + "Same-Draft Hero, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Same-Draft Hero|n"
         endif
 
         if (IncomeMode == 1) then
             set GameDescription = GameDescription + "Auto-Eco Income, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Auto-Eco Income|n"
         elseif (IncomeMode == 2) then
             set GameDescription = GameDescription + "Individual Income, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Individual Income|n"
         elseif (IncomeMode == 3) then
             set GameDescription = GameDescription + "Global Income, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Global Income|n"
         elseif (IncomeMode == 4) then
             set GameDescription = GameDescription + "Disabled Income, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Disabled Income|n"
         endif
 
         if (ImmortalMode == 1) then
             set GameDescription = GameDescription + "Mortal Mode, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Mortal Mode|n"
         elseif (ImmortalMode == 2) then
             set GameDescription = GameDescription + "Immortal Mode, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Immortal Mode|n"
         endif
 
         // Don't allow pvp betting with simultaneous duels
         if (PvpBettingMode == 1 or SimultaneousDuelMode == 2) then
             set PvpBettingMode = 1
             set GameDescription = GameDescription + "PVP Betting Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "PVP Betting Off|n"
         elseif (PvpBettingMode == 2) then
             set GameDescription = GameDescription + "PVP Betting On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "PVP Betting On|n"
         endif
 
         if (HeroBanningMode == 1) then
             set GameDescription = GameDescription + "Hero Banning Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Hero Banning Off|n"
         elseif (HeroBanningMode == 2) then
             set GameDescription = GameDescription + "Hero Banning On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Hero Banning On|n"
         endif
 
         if (SimultaneousDuelMode == 1) then
             set GameDescription = GameDescription + "Simultaneous Duels Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Simultaneous Duels Off|n"
         elseif (SimultaneousDuelMode == 2) then
             set GameDescription = GameDescription + "Simultaneous Duels On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Simultaneous Duels On|n"
         endif
 
         if (TeamDuelMode == 1) then
             set GameDescription = GameDescription + "Team Duels Off"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Team Duels Off"
         elseif (TeamDuelMode == 2) then
             set GameDescription = GameDescription + "Team Duels On"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Team Duels On"
         endif
 
         set GameDescription = GameDescription + "|r"
+        set ScoreboardGameDescription = ScoreboardGameDescription + "|r"
     endfunction
 
     private function GetMaxValueInVoteCounts takes integer modeOptionCount returns integer
