@@ -187,7 +187,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 				elseif NumButton == 3 then
 					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, SellAllItemsTooltip())
-						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
+						call BlzFrameSetSize(TooltipFrame, 0.31, 0.02)
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 
