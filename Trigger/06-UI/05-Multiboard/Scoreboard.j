@@ -45,7 +45,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant string HEADER_COLOR                            = "|cff00ffff"
         private constant string PVP_LOSSES_COLOR                        = "|cffdd2c00"
         private constant string PVP_WINS_COLOR                          = "|cffbfff81"
-        private constant string LEAVER_COLOR                            = "|cff404040"	
+        private constant string LEAVER_COLOR                            = "|cff858585"	
         private constant string STATUS_COLOR                            = "|cffdf50e4"	
         private constant string BR_WINNER_COLOR                         = "|cfffcff4a"	
         private constant string FELL_IN_BR_COLOR                        = "|cffff9925"	
