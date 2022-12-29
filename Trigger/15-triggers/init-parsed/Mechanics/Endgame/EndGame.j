@@ -1,4 +1,4 @@
-library trigger122 initializer init requires RandomShit, SaveCommand
+library trigger122 initializer init requires RandomShit, SaveCommand, Scoreboard
 
     private function Trig_Victory_Func001Func001C takes nothing returns boolean
         if (not(IsTriggerEnabled(GetTriggeringTrigger())==true)) then
@@ -127,6 +127,8 @@ library trigger122 initializer init requires RandomShit, SaveCommand
             if WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE) then
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(WinningPlayer) + " |cffffcc00survived longer than all other players! Congratulations!!")
+
+                call UpdateScoreboardBrWinner(WinningPlayer)
 
                 if BrStarted and (CountPlayersInForceBJ(FORCE_PLAYING) > 1) then
                     // Update the player's stats that they won a BR
