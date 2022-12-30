@@ -88,7 +88,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
     endglobals
     
     function UpdateScoreboardBrWinner takes player currentPlayer returns nothing
-        if (currentPlayer != null) then
+        if (currentPlayer != null and PlayerBrWinner == -1) then
             set PlayerBrWinner = GetPlayerId(currentPlayer)
         endif
     endfunction
@@ -554,7 +554,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
         // Create the box for the scoreboard description 
         set scoreboardGameDescriptionFrameHandle = BlzCreateFrame("CheckListBox", ScoreboardFrameHandle, 0, 0)
-        call BlzFrameSetPoint(scoreboardGameDescriptionFrameHandle, FRAMEPOINT_LEFT, ScoreboardFrameHandle, FRAMEPOINT_RIGHT, 0, -0.04)
+        call BlzFrameSetAbsPoint(scoreboardGameDescriptionFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX, MAIN_FRAME_TOP_LEFT_Y - 0.04) // Move it down a little so it doesn't block the timer
         call BlzFrameSetSize(scoreboardGameDescriptionFrameHandle, 0.17, GetTooltipSize(ScoreboardGameDescription))
 
         // Create the actual text element that shows the scoreboard description
