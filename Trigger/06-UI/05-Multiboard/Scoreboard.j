@@ -49,7 +49,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant string STATUS_COLOR                            = "|cffdf50e4"	
         private constant string BR_WINNER_COLOR                         = "|cfffcff4a"	
         private constant string FELL_IN_BR_COLOR                        = "|cffff9925"	
-        private constant string SLASH                                   = "|cff4a4a4a/|r"
+        private constant string SLASH                                   = "|cff858585/|r"
 
         // Specifications about the rows/columns
         private integer CurrentRowIndex                                 = 0
