@@ -568,6 +568,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // Cleanup
         set titleFrameHandle = null
         set creditsTextFrameHandle = null
+        set scoreboardGameDescriptionFrameHandle = null
+        set scoreboardGameDescriptionTextFrameHandle = null
     endfunction
     
     private function UpdateDynamicPlayerValues takes nothing returns nothing
@@ -575,7 +577,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer playerId = GetPlayerId(currentPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
-        // If this is the BR winner, set the status and do nothing else
+        // If this is the BR winner, set the status
         if (PlayerBrWinner == playerId) then
             set CurrentColumnIndex = PLAYER_STATUS_INDEX
             call CreateText(BR_WINNER_COLOR + "Battle Royale Winner!" + COLOR_END_TAG, playerId)
@@ -594,7 +596,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // Change the color of the player's name if they left the game
         if (PlayerLeftGame[playerId]) then
             set CurrentColumnIndex = PLAYER_NAME_INDEX
-            call CreateText(LEAVER_COLOR + GetPlayerNameNoTag(GetPlayerName(currentPlayer)) + COLOR_END_TAG, playerId)
+            call CreateText(LEAVER_COLOR + GetPlayerNameColour(currentPlayer) + COLOR_END_TAG, playerId)
         endif
 
         // Don't try to update anything else if the player left the game or if the player died in rounds
@@ -602,14 +604,14 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             // Update the tooltip description information about the player's hero since it changes over time. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(PlayerHeroes[playerId + 1])
 
-            // Update the tooltip description for the player stats
+            // Update the tooltip description for the player stats. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PlayerStats.getTooltip(currentPlayer)
 
-            // Set the PVP stats
+            // Set the PVP stats. We don't need to update the icon since that should never change
             set CurrentColumnIndex = PLAYER_DUELS_INDEX
             call CreateText(PVP_WINS_COLOR + I2S(ps.getPVPWins()) + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + I2S(ps.getPVPLosses()) + COLOR_END_TAG, playerId)
 
-            // Update the tooltip description for the player element count
+            // Update the tooltip description for the player element count. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(PlayerHeroes[playerId + 1])
 
             // Set the player items
