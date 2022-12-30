@@ -25,24 +25,24 @@ library PlayerDiesInBattleRoyale initializer init requires RandomShit, UnitFilte
     endfunction
 
     private function PlayerDiesInBattleRoyaleActions takes nothing returns nothing
-        local player currentPlayer = GetOwningPlayer(GetTriggerUnit())
-        local group playerUnits = GetUnitsOfPlayerAll(currentPlayer)
+        local player deadPlayer = GetOwningPlayer(GetTriggerUnit())
+        local group deadPlayerUnits = GetUnitsOfPlayerAll(deadPlayer)
 
         // Set the wave the player left
-        call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
+        call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
 
         // Cleanup everything regarding to the dead player
-        call ForceAddPlayerSimple(currentPlayer, DefeatedPlayers)
-        call ForGroupBJ(playerUnits, function KillPlayerUnit)
-        call ShowDiscordFrames(currentPlayer, true)
+        call ForceAddPlayerSimple(deadPlayer, DefeatedPlayers)
+        call ForGroupBJ(deadPlayerUnits, function KillPlayerUnit)
+        call ShowDiscordFrames(deadPlayer, true)
         set PlayerCount = PlayerCount - 1
 
-        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(currentPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())))
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())))
 
         // Cleanup
-        call DestroyGroup(playerUnits)
-        set playerUnits = null
-        set currentPlayer = null
+        call DestroyGroup(deadPlayerUnits)
+        set deadPlayerUnits = null
+        set deadPlayer = null
 
         // Try to end the game
         call ConditionalTriggerExecute(EndGameTrigger)
