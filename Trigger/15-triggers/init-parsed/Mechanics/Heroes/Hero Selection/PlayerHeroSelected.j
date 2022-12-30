@@ -98,7 +98,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call BlzUnitHideAbility(hero, 'A03H', true)    
     
         call FunctionStartUnit(hero) 
-        call BlzSetHeroProperName(hero, GetPlayerNameColour(p))
+        call BlzSetHeroProperName(hero, GetPlayerNameNoTag(GetPlayerName(p)))
         call ConditionalTriggerExecute(SpacebarCameraTrigger)
         call ResetToGameCameraForPlayer(p, 0)
             
