@@ -117,7 +117,7 @@ library trigger42 initializer init requires RandomShit, StartFunction, DebugCode
         call DisableTrigger(udg_trigger145)
         call DisableTrigger(PlayerHeroDeathTrigger)
         call DisableTrigger(HeroDiesInRoundTrigger)
-        call EnableTrigger(udg_trigger43)
+        call EnableTrigger(PlayerDiesInBattleRoyaleTrigger)
         call TriggerSleepAction(2)
         set udg_location01 = OffsetLocation(GetRectCenter(GetPlayableMapRect()),- 40.00,- 50.00)
         set CountdownCount = 5

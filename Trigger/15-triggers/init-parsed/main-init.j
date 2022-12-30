@@ -244,7 +244,7 @@ library OldInitialization initializer main3
         trigger udg_trigger40= null
         trigger udg_trigger41= null
         trigger udg_trigger42= null
-        trigger udg_trigger43= null
+        trigger PlayerDiesInBattleRoyaleTrigger= null
         trigger ResourceBettingMenusTrigger= null
         trigger Team1BettingTrigger= null
         trigger Team2BettingTrigger= null
