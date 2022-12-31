@@ -4,54 +4,54 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus, Voti
         integer BattleRoyalRound = 50
     endglobals
 
-    function Trig_Level_Completed_Func001Func001001 takes nothing returns boolean
-        return (IsTriggerEnabled(udg_trigger119)!=true) or (GameComplete!=true and IsTriggerEnabled(AllPlayersDeadTrigger)!=true and InitialPlayerCount!=1)
+    private function IsGameOver takes nothing returns boolean
+        return (IsTriggerEnabled(IsGameFinishedTrigger) != true) or (GameComplete != true and IsTriggerEnabled(AllPlayersDeadTrigger) != true and InitialPlayerCount != 1)
     endfunction
 
-    function Trig_Level_Completed_Func001Func018Func002C takes nothing returns boolean
-        return (PlayerCount > 1) and (ElimModeEnabled==false) and (RoundNumber==5 or RoundNumber==10 or RoundNumber==15 or RoundNumber==20)
+    private function IsShortPvpRound takes nothing returns boolean
+        return (PlayerCount > 1) and (ElimModeEnabled == false) and (RoundNumber == 5 or RoundNumber == 10 or RoundNumber == 15 or RoundNumber == 20)
     endfunction
 
-    function Trig_Level_Completed_Func001Func018Func001Func004Func001C takes nothing returns boolean
-        if MorePvp == 0 then
-            if((RoundNumber==10))then
+    private function IsPvpRound takes nothing returns boolean
+        if (MorePvp == 0) then
+            if (RoundNumber == 10) then
                 return true
             endif
-            if((RoundNumber==20))then
+            if (RoundNumber == 20) then
                 return true
             endif
-            if((RoundNumber==30))then
+            if (RoundNumber == 30) then
                 return true
             endif
-            if((RoundNumber==40))then
+            if (RoundNumber == 40) then
                 return true
             endif
         else
-            if((RoundNumber==5))then
+            if (RoundNumber == 5) then
                 return true
             endif
-            if((RoundNumber==10))then
+            if (RoundNumber == 10) then
                 return true
             endif
-            if((RoundNumber==15))then
+            if (RoundNumber == 15) then
                 return true
             endif
-            if((RoundNumber==20))then
+            if (RoundNumber == 20) then
                 return true
             endif
-            if((RoundNumber==25))then
+            if (RoundNumber == 25) then
                 return true
             endif
-            if((RoundNumber==30))then
+            if (RoundNumber == 30) then
                 return true
             endif	
-            if((RoundNumber==35))then
+            if (RoundNumber == 35) then
                 return true
             endif	
-            if((RoundNumber==40))then
+            if (RoundNumber == 40) then
                 return true
             endif	
-            if((RoundNumber==45))then
+            if (RoundNumber == 45) then
                 return true
             endif	
         endif
@@ -59,86 +59,86 @@ library trigger108 initializer init requires RandomShit, EconomyCreepBonus, Voti
         return false
     endfunction
 
-    function Trig_Level_Completed_Func001Func018Func001C takes nothing returns boolean
-        return Trig_Level_Completed_Func001Func018Func001Func004Func001C() and (PlayerCount > 1) and (ElimModeEnabled==false)
-    endfunction
-
-    function Trig_Level_Completed_Actions takes nothing returns nothing
+    private function AllPlayersCompletedRoundActions takes nothing returns nothing
         local integer round = RoundNumber + 1
-        if(RoundFinishedCount >= PlayerCount)then
-            if(Trig_Level_Completed_Func001Func001001())then
+
+        if (RoundFinishedCount >= PlayerCount) then
+            if (IsGameOver()) then
                 return
             endif
-            call DisableTrigger(udg_trigger110)
+
+            call DisableTrigger(SuddenDeathCreepTimerTrigger)
             call StopSuddenDeathTimer()
-            call DisableTrigger(udg_trigger116)
+            call DisableTrigger(PlayerAntiStuckTrigger)
             call ConditionalTriggerExecute(EndGameTrigger)
-            call ConditionalTriggerExecute(udg_trigger119)
+            call ConditionalTriggerExecute(IsGameFinishedTrigger)
             
             set RoundFinishedCount = 0
             call PlaySoundBJ(udg_sound02)
-            if(GameModeShort==true and ElimModeEnabled==false)then
-                if(Trig_Level_Completed_Func001Func018Func002C())then
+
+            // Check if a PVP round should start
+            if (GameModeShort == true and ElimModeEnabled == false) then
+                if (IsShortPvpRound()) then
                     call ConditionalTriggerExecute(InitializePvpTrigger)
                     return
                 endif
             else
-                if(Trig_Level_Completed_Func001Func018Func001C())then
+                if (IsPvpRound() and (PlayerCount > 1) and (ElimModeEnabled == false)) then
                     call ConditionalTriggerExecute(InitializePvpTrigger)
                     return
                 endif
             endif
 
-            if(GameModeShort==true and ElimModeEnabled==false)then
-                if(RoundNumber==BattleRoyalRound and ElimModeEnabled==false)then
-                    if(PlayerCount==1)then
+            if (GameModeShort == true and ElimModeEnabled == false) then
+                if (RoundNumber == BattleRoyalRound and ElimModeEnabled == false) then
+                    if (PlayerCount == 1) then
                         //end game
-                        call ConditionalTriggerExecute(udg_trigger119)
+                        call ConditionalTriggerExecute(IsGameFinishedTrigger)
                     else
                         //battle royal
-                        call ConditionalTriggerExecute(udg_trigger42)
+                        call ConditionalTriggerExecute(InitializeBattleRoyaleTrigger)
                     endif
                     return
                 endif
             else
-                if(RoundNumber==BattleRoyalRound and ElimModeEnabled==false)then
-                    if(PlayerCount==1)then
+                if (RoundNumber == BattleRoyalRound and ElimModeEnabled == false) then
+                    if (PlayerCount == 1) then
                         //end game
-                        call ConditionalTriggerExecute(udg_trigger119)
+                        call ConditionalTriggerExecute(IsGameFinishedTrigger)
                     else
                         //battle royal
-                        call ConditionalTriggerExecute(udg_trigger42)
+                        call ConditionalTriggerExecute(InitializeBattleRoyaleTrigger)
                     endif
                     return
                 endif
             endif
+
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
-            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(),"Next Level ...")
+            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
             set NextRound[round] = true
-            if(RoundNumber <= 3)then
-                call StartTimerBJ(GetLastCreatedTimerBJ(),false, RoundTime)
+            
+            if (RoundNumber <= 3) then
+                call StartTimerBJ(GetLastCreatedTimerBJ(), false, RoundTime)
                 call TriggerSleepAction(RoundTime)
             else
-                call StartTimerBJ(GetLastCreatedTimerBJ(),false,RoundTime * 0.75)
+                call StartTimerBJ(GetLastCreatedTimerBJ(), false, RoundTime * 0.75)
                 call TriggerSleepAction(RoundTime * 0.75)
             endif
 
-            if IncomeMode == 3 then
+            if (IncomeMode == 3) then
                 call SetEconomyCreepBonus()
             endif
     
-            if NextRound[round] then
+            if (NextRound[round]) then
                 call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-                call TriggerExecute(udg_trigger109)
+                call TriggerExecute(StartLevelTrigger)
             endif
         endif
     endfunction
 
-
     private function init takes nothing returns nothing
         set AllPlayersCompletedRoundTrigger = CreateTrigger()
-        call TriggerAddAction(AllPlayersCompletedRoundTrigger,function Trig_Level_Completed_Actions)
+        call TriggerAddAction(AllPlayersCompletedRoundTrigger, function AllPlayersCompletedRoundActions)
     endfunction
-
 
 endlibrary

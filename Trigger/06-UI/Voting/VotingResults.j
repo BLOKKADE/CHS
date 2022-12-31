@@ -306,7 +306,7 @@ library VotingResults initializer init
 
         loop
             // Only count votes from players actually in the game
-            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING and (udg_boolean15 == true or Player(i) == udg_player03) then
+            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING and (udg_boolean15 == true or Player(i) == HostPlayer) then
                 set currentPlayerVotes = PlayerVotes(i + 1) // Start at 1
 
                 // Count the votes for each category

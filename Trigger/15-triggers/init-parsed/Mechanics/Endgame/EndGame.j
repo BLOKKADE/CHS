@@ -115,7 +115,7 @@ library trigger122 initializer init requires RandomShit, SaveCommand, Scoreboard
             call EnableTrigger(HeroDiesInRoundTrigger)
         endif
 
-        call ConditionalTriggerExecute(udg_trigger119)
+        call ConditionalTriggerExecute(IsGameFinishedTrigger)
 
         // Get the winner before the trigger sleep
         call GetWinner()

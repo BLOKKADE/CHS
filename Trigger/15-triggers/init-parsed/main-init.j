@@ -86,7 +86,7 @@ library OldInitialization initializer main3
         integer PvpStartIndex= 0
         integer udg_integer34= 0
         boolean ARLearningAbil= false
-        location array udg_locations01
+        location array HideShopsLocations
         integer HideShopsCount= 0
         integer array ShopIds
         integer HideShopsIndex= 0
@@ -150,7 +150,7 @@ library OldInitialization initializer main3
         dialog udg_dialog06= null
         button array udg_buttons04
         boolean udg_boolean15= false
-        player udg_player03= null
+        player HostPlayer= null
         dialog HeroModeDialog= null
         boolean RandomHeroMode= false
         integer array ResourceBetPercentageGoldReward
@@ -237,13 +237,13 @@ library OldInitialization initializer main3
         trigger udg_trigger33= null
         trigger udg_trigger34= null
         trigger WispActionsTrigger= null
-        trigger udg_trigger36= null
+        trigger DisableAbilitiesTrigger= null
         trigger udg_trigger37= null
         trigger udg_trigger38= null
         trigger udg_trigger39= null
         trigger udg_trigger40= null
-        trigger udg_trigger41= null
-        trigger udg_trigger42= null
+        trigger RemoveDummiesTrigger= null
+        trigger InitializeBattleRoyaleTrigger= null
         trigger PlayerDiesInBattleRoyaleTrigger= null
         trigger ResourceBettingMenusTrigger= null
         trigger Team1BettingTrigger= null
@@ -256,10 +256,10 @@ library OldInitialization initializer main3
         trigger udg_trigger52= null
         trigger udg_trigger53= null
         trigger DistributeBetsTrigger= null
-        trigger udg_trigger55= null
-        trigger udg_trigger56= null
-        trigger udg_trigger57= null
-        trigger udg_trigger58= null
+        trigger DialogInitializationTrigger= null
+        trigger VotingRightsDialogTrigger= null
+        trigger HostSelectsModeTrigger= null
+        trigger EveryoneVotesTrigger= null
         trigger udg_trigger59= null
         trigger udg_trigger60= null
         trigger udg_trigger61= null
@@ -278,20 +278,20 @@ library OldInitialization initializer main3
         trigger udg_trigger74= null
         trigger udg_trigger75= null
         trigger udg_trigger76= null
-        trigger udg_trigger77= null
+        trigger GameModeQuestSetupTrigger= null
         trigger udg_trigger78= null
         trigger PlayerHeroDeathTrigger= null
         trigger HeroDiesInRoundTrigger= null
-        trigger udg_trigger82= null
+        trigger HeroRefreshTrigger= null
         trigger udg_trigger83= null
         trigger udg_trigger84= null
-        trigger udg_trigger85= null
-        trigger udg_trigger86= null
+        trigger PandarenDeathSoundsTrigger= null
+        trigger PandarenDiesTrigger= null
         trigger udg_trigger87= null
         trigger udg_trigger88= null
-        trigger udg_trigger89= null
+        trigger PlayerInitializationTrigger= null
         trigger udg_trigger90= null
-        trigger udg_trigger91= null
+        trigger SetupPlayerArenasTrigger= null
         trigger udg_trigger92= null
         trigger udg_trigger93= null
         trigger udg_trigger94= null
@@ -305,20 +305,20 @@ library OldInitialization initializer main3
         trigger CreepDiesTrigger= null
         trigger GenerateNextCreepLevelTrigger= null
         trigger CreepTypesTrigger= null
-        trigger udg_trigger105= null
-        trigger udg_trigger106= null
+        trigger BonusExpTrigger= null
+        trigger PlayerCompleteRoundMoveTrigger= null
         trigger PlayerCompleteRoundTrigger= null
         trigger AllPlayersCompletedRoundTrigger= null
-        trigger udg_trigger109= null
-        trigger udg_trigger110= null
-        trigger udg_trigger111= null
-        trigger udg_trigger113= null
-        trigger udg_trigger114= null
-        trigger udg_trigger115= null
-        trigger udg_trigger116= null
+        trigger StartLevelTrigger= null
+        trigger SuddenDeathCreepTimerTrigger= null
+        trigger LearnAbilityTrigger= null
+        trigger TryLearnRandomAbilityTrigger= null
+        trigger LearnRandomAbilityTrigger= null
+        trigger UnlearnAbilityTrigger= null
+        trigger PlayerAntiStuckTrigger= null
         trigger PvpCountdownTimerTrigger= null
         trigger AllPlayersDeadTrigger= null
-        trigger udg_trigger119= null
+        trigger IsGameFinishedTrigger= null
         trigger udg_trigger120= null
         trigger udg_trigger121= null
         trigger EndGameTrigger= null
@@ -328,11 +328,11 @@ library OldInitialization initializer main3
         trigger udg_trigger126= null
         trigger udg_trigger127= null
         trigger udg_trigger128= null
-        trigger udg_trigger129= null
+        trigger PlayerLeavesGameTrigger= null
         trigger SpacebarCameraTrigger= null
-        trigger udg_trigger131= null
+        trigger SetHostPlayerTrigger= null
         trigger udg_trigger132= null
-        trigger udg_trigger133= null
+        trigger PlayerSelectionCameraTrigger= null
         trigger ComputerPvpEnforceDuelTrigger= null
         trigger InitializePvpTrigger= null
         trigger SinglePvpHeroDeathTrigger= null
@@ -343,13 +343,13 @@ library OldInitialization initializer main3
         trigger udg_trigger139= null
         trigger UpdatePvpSuddenDeathDamageTrigger= null
         trigger ApplyPvpSuddenDeathDamageTrigger= null
-        trigger udg_trigger142= null
-        trigger udg_trigger143= null
+        trigger CenterArenaInvulnerabilityTrigger= null
+        trigger EnterShopModeTrigger= null
         trigger udg_trigger144= null
-        trigger udg_trigger145= null
-        trigger udg_trigger146= null
-        trigger udg_trigger147= null
-        trigger udg_trigger148= null
+        trigger CenterArenaRemoveUnitTrigger= null
+        trigger UpdateItemsTrigger= null
+        trigger HideShopsTrigger= null
+        trigger UnhideShopsTrigger= null
         trigger udg_trigger149= null
         trigger udg_trigger150= null
         trigger udg_trigger151= null
@@ -877,70 +877,6 @@ library OldInitialization initializer main3
         set RectMidArena = Rect(- 1696.0,- 1952.0,1696.0,1440.0)
     endfunction
 
-    function Trig_Pulverize_Func001C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped('Awar',GetEventDamageSource())> 0))then
-            return false
-        endif
-        if(not(UnitAlive(GetEventDamageSource())==true))then
-            return false
-        endif
-        if(not(IsUnitEnemy(GetTriggerUnit(),GetOwningPlayer(GetEventDamageSource()))==true))then
-            return false
-        endif
-        return true
-    endfunction
-    function Trig_Pulverize_Conditions takes nothing returns boolean
-        if(not Trig_Pulverize_Func001C())then
-            return false
-        endif
-        return true
-    endfunction
-    function Trig_Pulverize_Func003Func004001003001001 takes nothing returns boolean
-        return(UnitAlive(GetFilterUnit())==true)
-    endfunction
-    function Trig_Pulverize_Func003Func004001003001002 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_GROUND)==true)
-    endfunction
-    function Trig_Pulverize_Func003Func004001003001 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Pulverize_Func003Func004001003001001(),Trig_Pulverize_Func003Func004001003001002())
-    endfunction
-    function Trig_Pulverize_Func003Func004001003002001 takes nothing returns boolean
-        return(IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(GetEventDamageSource()))==true)
-    endfunction
-    function Trig_Pulverize_Func003Func004001003002002 takes nothing returns boolean
-        return(UnitHasBuffBJ(GetFilterUnit(),'BOvd')!=true)
-    endfunction
-    function Trig_Pulverize_Func003Func004001003002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Pulverize_Func003Func004001003002001(),Trig_Pulverize_Func003Func004001003002002())
-    endfunction
-    function Trig_Pulverize_Func003Func004001003 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Pulverize_Func003Func004001003001(),Trig_Pulverize_Func003Func004001003002())
-    endfunction
-    function Trig_Pulverize_Func003Func004A takes nothing returns nothing
-        call UnitDamageTargetBJ(GetEventDamageSource(),GetEnumUnit(),(30.00 * I2R(GetUnitAbilityLevelSwapped('Awar',GetEventDamageSource()))),ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-    endfunction
-    function Trig_Pulverize_Func003Func005001003001001 takes nothing returns boolean
-        return(UnitAlive(GetFilterUnit())==true)
-    endfunction
-    function Trig_Pulverize_Func003Func005001003001002 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_GROUND)==true)
-    endfunction
-    function Trig_Pulverize_Func003Func005001003001 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Pulverize_Func003Func005001003001001(),Trig_Pulverize_Func003Func005001003001002())
-    endfunction
-    function Trig_Pulverize_Func003Func005001003002001 takes nothing returns boolean
-        return(IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(GetEventDamageSource()))==true)
-    endfunction
-    function Trig_Pulverize_Func003Func005001003002002 takes nothing returns boolean
-        return(UnitHasBuffBJ(GetFilterUnit(),'BOvd')!=true)
-    endfunction
-    function Trig_Pulverize_Func003Func005001003002 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Pulverize_Func003Func005001003002001(),Trig_Pulverize_Func003Func005001003002002())
-    endfunction
-    function Trig_Pulverize_Func003Func005001003 takes nothing returns boolean
-        return GetBooleanAnd(Trig_Pulverize_Func003Func005001003001(),Trig_Pulverize_Func003Func005001003002())
-    endfunction
-
     function main2 takes nothing returns nothing
         local trigger trg
         call SetCameraBounds(- 5376.0 + GetCameraMargin(CAMERA_MARGIN_LEFT),- 5632.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM),5376.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT),5120.0 - GetCameraMargin(CAMERA_MARGIN_TOP),- 5376.0 + GetCameraMargin(CAMERA_MARGIN_LEFT),5120.0 - GetCameraMargin(CAMERA_MARGIN_TOP),5376.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT),- 5632.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
@@ -1059,8 +995,8 @@ endlibrary
 
 library OldCodeInit 
     public function start takes nothing returns nothing
-        call ConditionalTriggerExecute(udg_trigger89)
-        call ConditionalTriggerExecute(udg_trigger91)
+        call ConditionalTriggerExecute(PlayerInitializationTrigger)
+        call ConditionalTriggerExecute(SetupPlayerArenasTrigger)
         call ConditionalTriggerExecute(udg_trigger92)
         call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
     endfunction                                                 

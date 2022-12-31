@@ -951,10 +951,10 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
 
         local Table draftHeroes = Table.create()
 
-        // udg_player03 == Host player. It needs some player to prevent errors. Player doesn't actually matter here
-        local integer strUnitId = HeroSelectorRollOption(udg_player03, false, 0, 4, true)
-        local integer agiUnitId = HeroSelectorRollOption(udg_player03, false, 0, 8, true)
-        local integer intUnitId = HeroSelectorRollOption(udg_player03, false, 0, 16, true)
+        // HostPlayer == Host player. It needs some player to prevent errors. Player doesn't actually matter here
+        local integer strUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 4, true)
+        local integer agiUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 8, true)
+        local integer intUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 16, true)
         set draftHeroes[strUnitId] = 1
         set draftHeroes[agiUnitId] = 1
         set draftHeroes[intUnitId] = 1
@@ -963,7 +963,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         
         // Get 2 random heroes
         loop
-            set tempUnitId = HeroSelectorRollOption(udg_player03, false, 0, 0, true)
+            set tempUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 0, true)
 
             if (not draftHeroes.has(tempUnitId)) then
                 set currentCount = currentCount + 1

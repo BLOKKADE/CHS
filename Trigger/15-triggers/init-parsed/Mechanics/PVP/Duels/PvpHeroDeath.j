@@ -358,7 +358,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call StartTimerBJ(GetLastCreatedTimerBJ(), false, pvpWaitDuration)
             call TriggerSleepAction(pvpWaitDuration)
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-            call TriggerExecute(udg_trigger109) // Start the next normal level
+            call TriggerExecute(StartLevelTrigger) // Start the next normal level
         // Check if all single pvp rounds are over
         elseif (SimultaneousDuelMode == 1 and DuelGameListRemaining.size() > 0) then
             call AfterDuelCleanupActions(duelGame)

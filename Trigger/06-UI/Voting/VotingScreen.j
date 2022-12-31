@@ -182,7 +182,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
 
                 // A legacy global variable that tracks how many people are done voting
                 set udg_integer63 = udg_integer63 + 1
-                call ConditionalTriggerExecute(udg_trigger77)
+                call ConditionalTriggerExecute(GameModeQuestSetupTrigger)
 
                 // Show a message if the player needs to wait for other players
                 if (udg_integer63 < PlayerCount) then

@@ -56,8 +56,8 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call PlaySoundBJ(udg_sound11)
         call DisplayTextToForce(GetPlayersAll(), "|c000070C0Get Ready!|r")
         call TriggerSleepAction(0.00)
-        call ConditionalTriggerExecute(udg_trigger148)
-        call ConditionalTriggerExecute(udg_trigger143)
+        call ConditionalTriggerExecute(UnhideShopsTrigger)
+        call ConditionalTriggerExecute(EnterShopModeTrigger)
 
         if (AbilityMode == 2 and DraftInitialised == false) then
             call ConditionalTriggerExecute(gg_trg_DraftInit)
@@ -69,7 +69,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
         call TriggerSleepAction(2)
 
-        call TriggerExecute(udg_trigger109)
+        call TriggerExecute(StartLevelTrigger)
     endfunction
 
     public function SpawnedHeroActions takes player p, unit hero returns nothing

@@ -1,42 +1,35 @@
-library trigger107 initializer init requires RandomShit
+library PlayerCompleteRound initializer init requires RandomShit
 
-    function Trig_Complete_Level_Player_Func006Func002001001002 takes nothing returns boolean
-        return (UnitAlive(GetFilterUnit())==true) and (GetOwningPlayer(GetFilterUnit())==Player(11))
+    private function CreepFilter takes nothing returns boolean
+        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
     endfunction
 
-    function Trig_Complete_Level_Player_Conditions takes nothing returns boolean
-        if(not(GetOwningPlayer(GetTriggerUnit())==Player(11)))then
+    private function PlayerCompleteRoundConditions takes nothing returns boolean
+        local unit killingUnit = GetKillingUnit()
+        local group playerArenaCreeps
+        local boolean isValid
+        local player currentPlayer
+
+        if ((killingUnit == null) or (GetOwningPlayer(GetTriggerUnit()) != Player(11)) or (GetOwningPlayer(killingUnit) == Player(11))) then
+            // Cleanup
+            set killingUnit = null
+
             return false
         endif
-        if(not(CountUnitsInGroup(GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],Condition(function Trig_Complete_Level_Player_Func006Func002001001002)))==0))then
-            return false
-        endif
-        if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),DefeatedPlayers)!=true))then
-            return false
-        endif
-        if(not(IsPlayerInForce(GetOwningPlayer(GetKillingUnitBJ()),RoundPlayersCompleted)!=true))then
-            return false
-        endif
-        if(not(GetOwningPlayer(GetKillingUnitBJ())!=Player(11)))then
-            return false
-        endif
-        if(not(GetKillingUnitBJ()!=null))then
-            return false
-        endif
-        return true
+
+        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1], Condition(function CreepFilter))
+        set currentPlayer = GetOwningPlayer(killingUnit)
+        set isValid = (CountUnitsInGroup(playerArenaCreeps) == 0) and (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true) and (IsPlayerInForce(currentPlayer, RoundPlayersCompleted) != true)
+        
+        // Cleanup
+        call DestroyGroup(playerArenaCreeps)
+        set killingUnit = null
+        set currentPlayer = null
+
+        return isValid
     endfunction
 
-    function Trig_Complete_Level_Player_Func005C takes nothing returns boolean
-        if(not(CountPlayersInForceBJ(RoundPlayersCompleted)< BettingPlayerCount))then
-            return false
-        endif
-        //	if(not(GetUnitTypeId(PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])!='N00K'))then
-        //		return false
-        //	endif
-        return true
-    endfunction
-
-    function Trig_Complete_Level_Player_Actions takes nothing returns nothing
+    private function PlayerCompleteRoundActions takes nothing returns nothing
         local player p = GetOwningPlayer(GetKillingUnit())
         local integer pid = GetPlayerId(p)
         local location arenaLocation = GetRectCenter(GetPlayableMapRect())
@@ -44,49 +37,52 @@ library trigger107 initializer init requires RandomShit
         local real playerCountSub = RMaxBJ(7 - (0.5 * duration), 0)
         local integer roundClearXpBonus = R2I(playerCountSub * (4 * Pow(RoundNumber, 2)))
 
-        if GetUnitTypeId(PlayerHeroes[pid + 1]) == TINKER_UNIT_ID then
+        if (GetUnitTypeId(PlayerHeroes[pid + 1]) == TINKER_UNIT_ID) then
             set roundClearXpBonus = roundClearXpBonus * 2
         endif
 
-        if(RoundNumber==5)then
+        if (RoundNumber == 5) then
             set udg_boolean09 = false
         endif
-        set BettingPlayerCount =(PlayerCount / 2)
-        if(BettingPlayerCount > 3)then
+
+        set BettingPlayerCount = PlayerCount / 2
+
+        if (BettingPlayerCount > 3) then
             set BettingPlayerCount = 3
         endif
 
-        call ForceAddPlayerSimple(p,RoundPlayersCompleted)
+        call ForceAddPlayer(RoundPlayersCompleted, p)
         call SetCurrentlyFighting(p, false)
-        set RoundFinishedCount =(RoundFinishedCount + 1)
-        call SetUnitInvulnerable(PlayerHeroes[pid + 1],true)
-        if RoundLiveLost[pid] then
+        set RoundFinishedCount = RoundFinishedCount + 1
+        call SetUnitInvulnerable(PlayerHeroes[pid + 1], true)
+        
+        if (RoundLiveLost[pid]) then
             set RoundLiveLost[pid] = false
-            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ " |cffff7300died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")))
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")
         else
-            if roundClearXpBonus == 0 then
-                call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ " |cffffcc00survived the level!|r")))
+            if (roundClearXpBonus == 0) then
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r")
             else
-                call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00survived the level!|r |cff7bff00(+" +(I2S(roundClearXpBonus)+ " exp)|r")))))
-                call AddHeroXPSwapped(roundClearXpBonus,PlayerHeroes[pid + 1],true)
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r |cff7bff00(+" + I2S(roundClearXpBonus) + " exp)|r")
+                call AddHeroXPSwapped(roundClearXpBonus, PlayerHeroes[pid + 1], true)
             endif
         endif
-        call CreateNUnitsAtLoc(1,PRIEST_1_UNIT_ID,p,arenaLocation,bj_UNIT_FACING)
-        call UnitApplyTimedLifeBJ(2.00,'BTLF',GetLastCreatedUnit())
-        call GroupAddUnitSimple(GetLastCreatedUnit(),GroupEmptyArenaCheck)
 
+        call CreateNUnitsAtLoc(1, PRIEST_1_UNIT_ID, p, arenaLocation, bj_UNIT_FACING)
+        call UnitApplyTimedLifeBJ(2.00, 'BTLF', GetLastCreatedUnit())
+        call GroupAddUnit(GroupEmptyArenaCheck, GetLastCreatedUnit())
+
+        // Cleanup
         call RemoveLocation(arenaLocation)
         set arenaLocation = null
         set p = null
     endfunction
 
-
     private function init takes nothing returns nothing
         set PlayerCompleteRoundTrigger = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(PlayerCompleteRoundTrigger,EVENT_PLAYER_UNIT_DEATH)
-        call TriggerAddCondition(PlayerCompleteRoundTrigger,Condition(function Trig_Complete_Level_Player_Conditions))
-        call TriggerAddAction(PlayerCompleteRoundTrigger,function Trig_Complete_Level_Player_Actions)
+        call TriggerRegisterAnyUnitEventBJ(PlayerCompleteRoundTrigger, EVENT_PLAYER_UNIT_DEATH)
+        call TriggerAddCondition(PlayerCompleteRoundTrigger, Condition(function PlayerCompleteRoundConditions))
+        call TriggerAddAction(PlayerCompleteRoundTrigger, function PlayerCompleteRoundActions)
     endfunction
-
 
 endlibrary

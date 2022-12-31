@@ -182,7 +182,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         if NextRound[RoundNumber] then
             set NextRound[RoundNumber] = false
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "|cffffcc00Next round started!|r")
-            call TriggerExecute(udg_trigger109)
+            call TriggerExecute(StartLevelTrigger)
         endif
     endfunction
 
