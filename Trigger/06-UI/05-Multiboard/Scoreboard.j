@@ -612,7 +612,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // Change the color of the player's name if they left the game
         if (PlayerLeftGame[playerId]) then
             set CurrentColumnIndex = PLAYER_NAME_INDEX
-            call CreateText(LEAVER_COLOR + GetPlayerNameColour(currentPlayer) + COLOR_END_TAG, playerId)
+            call CreateText(LEAVER_COLOR + GetPlayerNameNoTag(GetPlayerName(currentPlayer)) + COLOR_END_TAG, playerId)
         endif
 
         // Don't try to update anything else if the player left the game or if the player died in rounds
