@@ -6,7 +6,7 @@ library PlayerAntiStuck initializer init requires RandomShit
 
     private function CreepUnitFilter takes nothing returns boolean
         local unit currentUnit = GetFilterUnit()
-        local boolean isValid = (GetOwningPlayer(currentUnit) == Player(11)) and (UnitAlive(currentUnit)==true) and (GetUnitAbilityLevel(currentUnit, 'Aloc') == 0)
+        local boolean isValid = (GetOwningPlayer(currentUnit) == Player(11)) and (UnitAlive(currentUnit) == true) and (GetUnitAbilityLevel(currentUnit, 'Aloc') == 0)
 
         // Cleanup
         set currentUnit = null
@@ -32,7 +32,7 @@ library PlayerAntiStuck initializer init requires RandomShit
             endif
     
             // Player hero exists, arena has creeps, player isn't defeated, and has not completed the round yet
-            if ((PlayerHeroes[currentPlayerId + 1] != null) and (CountUnitsInGroup(playerArenaUnits) != 0) and (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true) and (IsPlayerInForce(currentPlayer, RoundPlayersCompleted) != true)) then
+            if ((PlayerHeroes[currentPlayerId + 1] != null) and (CountUnitsInGroup(playerArenaUnits) == 0) and (not IsPlayerInForce(currentPlayer, DefeatedPlayers)) and (not IsPlayerInForce(currentPlayer, RoundPlayersCompleted))) then
                 set arenaLocation = GetRectCenter(PlayerArenaRects[currentPlayerId + 1])
 
                 call CreateNUnitsAtLoc(1, 'n00T', Player(11), arenaLocation, bj_UNIT_FACING)
