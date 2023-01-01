@@ -994,10 +994,15 @@ library OldInitialization initializer main3
 endlibrary
 
 library OldCodeInit 
-    public function start takes nothing returns nothing
+    
+    private function StartGame takes nothing returns nothing
         call ConditionalTriggerExecute(PlayerInitializationTrigger)
         call ConditionalTriggerExecute(SetupPlayerArenasTrigger)
-        call ConditionalTriggerExecute(udg_trigger92)
         call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
-    endfunction                                                 
+    endfunction  
+    
+    public function start takes nothing returns nothing
+        call TimerStart(CreateTimer(), 0, false, function StartGame)
+    endfunction  
+
 endlibrary

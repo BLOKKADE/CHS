@@ -303,7 +303,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
-    private function init takes nothing returns nothing
+    private function SetupDebugCommands takes nothing returns nothing
         local trigger trg = CreateTrigger()
         local integer i = 0
         local integer pc = 0
@@ -336,5 +336,9 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         call Command.create(CommandHandler.RandomDebugCommand).name("debug").handles("debug").help("debug", "enables debug msgs.")
 
         set trg = null
+    endfunction
+
+    private function init takes nothing returns nothing
+        call TimerStart(CreateTimer(), 0, false, function SetupDebugCommands)
     endfunction
 endlibrary
