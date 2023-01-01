@@ -1,4 +1,4 @@
-library trigger103 initializer init requires RandomShit, Functions
+library GenerateNextCreepLevel initializer init requires RandomShit, Functions
 
     globals
         integer RoundCreepChanceReflectAura = 0

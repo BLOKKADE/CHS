@@ -5,7 +5,7 @@ library ResourceBettingMenus initializer init requires RandomShit
     endfunction
 
     private function ResourceBettingMenusActions takes nothing returns nothing
-        call DialogSetMessageBJ(Dialogs[2],"Betting Menu")
+        call DialogSetMessage(Dialogs[2],"Betting Menu")
         call DialogAddButtonBJ(Dialogs[2],"Gold")
         set DialogButtons[4] = GetLastCreatedButtonBJ()
         call DialogAddButtonBJ(Dialogs[2],"Lumber")
@@ -15,7 +15,7 @@ library ResourceBettingMenus initializer init requires RandomShit
         call DialogAddButtonBJ(Dialogs[2],"Cancel")
         set DialogButtons[7] = GetLastCreatedButtonBJ()
 
-        call DialogSetMessageBJ(Dialogs[3],"Betting Menu")
+        call DialogSetMessage(Dialogs[3],"Betting Menu")
         call DialogAddButtonBJ(Dialogs[3],"25%")
         set DialogButtons[8] = GetLastCreatedButtonBJ()
         call DialogAddButtonBJ(Dialogs[3],"50%")

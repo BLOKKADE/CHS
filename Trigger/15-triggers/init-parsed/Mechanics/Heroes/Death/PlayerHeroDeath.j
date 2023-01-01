@@ -126,14 +126,14 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(currentPlayer) + "|cffC60000 was defeated!|r")
         call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(currentPlayer) + 1])
         
-        call DisableTrigger(HeroPassivePetDeathTrigger)
+        call DisableTrigger(FaerieDragonDiesTrigger)
         call ForGroup(playerUnits, function RemovePlayerUnit)
 
         // Cleanup
         call DestroyGroup(playerUnits)
         set playerUnits = null
 
-        call EnableTrigger(HeroPassivePetDeathTrigger)
+        call EnableTrigger(FaerieDragonDiesTrigger)
     
         if (GetPlayerController(currentPlayer) == MAP_CONTROL_USER) then
             call DialogSetMessage(udg_dialog04, "Defeat!")

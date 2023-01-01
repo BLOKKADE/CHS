@@ -18,9 +18,9 @@ library HeroDiesInRound initializer init requires RandomShit, PetDeath
 
         set PlayerCount = PlayerCount - 1
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(currentPlayer) + " |cffffcc00has fallen at level " + I2S(RoundNumber) + "!|r")
-        call DisableTrigger(HeroPassivePetDeathTrigger)
+        call DisableTrigger(FaerieDragonDiesTrigger)
         call ForGroup(playerUnits, function RemovePlayerUnit)
-        call EnableTrigger(HeroPassivePetDeathTrigger)
+        call EnableTrigger(FaerieDragonDiesTrigger)
 
         // Cleanup
         call DestroyGroup(playerUnits)

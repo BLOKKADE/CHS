@@ -217,7 +217,7 @@ library OldInitialization initializer main3
         trigger udg_trigger13= null
         trigger udg_trigger14= null
         trigger udg_trigger15= null
-        trigger HeroPassivePetDeathTrigger= null
+        trigger FaerieDragonDiesTrigger= null
         trigger udg_trigger17= null
         trigger udg_trigger18= null
         trigger udg_trigger19= null
@@ -283,8 +283,8 @@ library OldInitialization initializer main3
         trigger PlayerHeroDeathTrigger= null
         trigger HeroDiesInRoundTrigger= null
         trigger HeroRefreshTrigger= null
-        trigger udg_trigger83= null
-        trigger udg_trigger84= null
+        trigger DeathDialogInitializationTrigger= null
+        trigger DeathDialogLeaveTrigger= null
         trigger PandarenDeathSoundsTrigger= null
         trigger PandarenDiesTrigger= null
         trigger udg_trigger87= null
@@ -295,7 +295,7 @@ library OldInitialization initializer main3
         trigger udg_trigger92= null
         trigger udg_trigger93= null
         trigger udg_trigger94= null
-        trigger udg_trigger95= null
+        trigger DivineSourceTrigger= null
         trigger udg_trigger96= null
         trigger udg_trigger97= null
         trigger CreepPeriodicAttackTrigger= null

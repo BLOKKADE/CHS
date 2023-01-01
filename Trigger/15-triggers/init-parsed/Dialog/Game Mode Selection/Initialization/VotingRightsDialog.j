@@ -9,7 +9,7 @@ library VotingRightsDialog initializer init requires RandomShit
             return
         endif
 
-        call DialogSetMessageBJ(udg_dialog06, "Voting Rights")
+        call DialogSetMessage(udg_dialog06, "Voting Rights")
         call DialogAddButtonBJ(udg_dialog06, GetPlayerNameColour(HostPlayer))
 
         // Everyone can vote option

@@ -1,4 +1,4 @@
-library trigger108 initializer init requires RandomShit, EconomyCreepBonus, VotingResults
+library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCreepBonus, VotingResults
 
     globals
         integer BattleRoyalRound = 50

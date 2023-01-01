@@ -5,7 +5,7 @@ library Team2Betting initializer init requires RandomShit
     endfunction
 
     private function Team2BettingActions takes nothing returns nothing
-        call DialogSetMessageBJ(Dialogs[2], "Betting Menu")
+        call DialogSetMessage(Dialogs[2], "Betting Menu")
         call DialogDisplayBJ(true, Dialogs[2], GetTriggerPlayer())
         call ForceAddPlayerSimple(GetTriggerPlayer(), Team2BettingForce)
     endfunction

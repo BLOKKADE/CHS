@@ -1,4 +1,4 @@
-library trigger122 initializer init requires RandomShit, SaveCommand, Scoreboard
+library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
 
     private function Trig_Victory_Func001Func001C takes nothing returns boolean
         if (not(IsTriggerEnabled(GetTriggeringTrigger())==true)) then
