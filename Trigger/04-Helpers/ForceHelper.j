@@ -38,6 +38,10 @@ library ForceHelper requires GetPlayerNames
         return GetPlayerId(GetFilterPlayer()) < 8
     endfunction
 
+    private function PlayerFilter takes nothing returns boolean
+        return GetPlayerId(GetFilterPlayer()) < 8
+    endfunction
+
     // Converts a force into a comma separated list of colored player names
     function ConvertForceToString takes force playerForce returns string
         set ForceString = ""
@@ -69,6 +73,11 @@ library ForceHelper requires GetPlayerNames
     // Gets all valid players, including computer players
     function GetValidPlayerForce takes nothing returns force
         return GetPlayersMatching(Condition(function ValidPlayerFilter))
+    endfunction
+
+    // Gets all players, including computer players
+    function GetPlayerForce takes nothing returns force
+        return GetPlayersMatching(Condition(function PlayerFilter))
     endfunction
 
     // Gets valid player count, including computer players

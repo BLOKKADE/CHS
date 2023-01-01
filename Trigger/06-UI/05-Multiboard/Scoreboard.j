@@ -46,9 +46,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant string PVP_LOSSES_COLOR                        = "|cffdd2c00"
         private constant string PVP_WINS_COLOR                          = "|cffbfff81"
         private constant string LEAVER_COLOR                            = "|cff858585"	
-        private constant string STATUS_COLOR                            = "|cffdf50e4"	
-        private constant string BR_WINNER_COLOR                         = "|cfffcff4a"	
-        private constant string FELL_IN_BR_COLOR                        = "|cffff9925"	
+        private constant string SURVIVED_UNTIL_STATUS_COLOR             = "|cffdf50e4"	
+        private constant string BR_WINNER_STATUS_COLOR                  = "|cfffcff4a"	
+        private constant string FELL_IN_BR_STATUS_COLOR                 = "|cffff9925"	
+        private constant string NO_HERO_STATUS_COLOR                    = "|cffff2525"	
         private constant string SLASH                                   = "|cff858585/|r"
 
         // Specifications about the rows/columns
@@ -106,7 +107,11 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         set PlayerLeftGame[GetPlayerId(currentPlayer)] = true
 
         // Set the wave the player left
-        call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
+        if (PlayerHeroes[GetPlayerId(currentPlayer) + 1] == null) then
+            call UpdateScoreboardPlayerDies(currentPlayer, -1)
+        else
+            call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
+        endif
     endfunction
 
     private function GetTopLeftX takes nothing returns real
@@ -281,40 +286,42 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local item currentItem
         local integer currentItemTypeId
 
-        loop
-            exitwhen itemSlotIndex > 5
+        if (playerHero != null) then
+            loop
+                exitwhen itemSlotIndex > 5
 
-            set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
+                set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
 
-            if (currentItem != null) then
-                set currentItemTypeId = GetItemTypeId(currentItem)
+                if (currentItem != null) then
+                    set currentItemTypeId = GetItemTypeId(currentItem)
 
-                // Only update the data if it changed
-                if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != currentItemTypeId) then
-                    set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = currentItemTypeId
+                    // Only update the data if it changed
+                    if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != currentItemTypeId) then
+                        set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = currentItemTypeId
 
-                    // Display the icon
-                    call CreateIcon(BlzGetItemIconPath(currentItem), playerId)
+                        // Display the icon
+                        call CreateIcon(BlzGetItemIconPath(currentItem), playerId)
 
-                    // Cache the tooltip information about the item
-                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
-                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0)
+                        // Cache the tooltip information about the item
+                        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
+                        set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0)
+                    endif
+                else
+                    // Hide the icon if something was there
+                    if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != -1) then
+                        call CreateIcon(null, playerId)
+                    endif
+
+                    // Wipe the tooltip information and itemId
+                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
+                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
+                    set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = -1
                 endif
-            else
-                // Hide the icon if something was there
-                if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != -1) then
-                    call CreateIcon(null, playerId)
-                endif
 
-                // Wipe the tooltip information and itemId
-                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
-                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
-                set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = -1
-            endif
-
-            set CurrentColumnIndex = CurrentColumnIndex + 1
-            set itemSlotIndex = itemSlotIndex + 1
-        endloop
+                set CurrentColumnIndex = CurrentColumnIndex + 1
+                set itemSlotIndex = itemSlotIndex + 1
+            endloop
+        endif
 
         // Cleanup
         set playerHero = null
@@ -327,39 +334,41 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local unit playerHero = PlayerHeroes[playerId + 1]
         local integer currentAbility
 
-        loop
-            exitwhen abilityIndex > 20
+        if (playerHero != null) then
+            loop
+                exitwhen abilityIndex > 20
 
-            // Check if there is a valid ability in the next slot
-            set currentAbility = GetHeroSpellAtPosition(playerHero, abilityIndex)
+                // Check if there is a valid ability in the next slot
+                set currentAbility = GetHeroSpellAtPosition(playerHero, abilityIndex)
 
-            if (currentAbility != 0) then
-                // Only update the data if it changed
-                if (CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] != currentAbility) then
-                    set CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] = currentAbility
+                if (currentAbility != 0) then
+                    // Only update the data if it changed
+                    if (CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] != currentAbility) then
+                        set CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] = currentAbility
 
-                    // Display the icon
-                    call CreateIcon(BlzGetAbilityIcon(currentAbility), playerId)
+                        // Display the icon
+                        call CreateIcon(BlzGetAbilityIcon(currentAbility), playerId)
+                    endif
+
+                    // Cache the tooltip information about the ability. Need to always recalculate since abilities show element counts
+                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityTooltip(currentAbility, GetUnitAbilityLevel(playerHero, currentAbility) - 1) // What is the -1 for?
+                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetAbilityElementCountTooltip(playerHero, abilityIndex)
+                else
+                    // Hide the icon if something was there
+                    if (CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] != -1) then
+                        call CreateIcon(null, playerId)
+                    endif
+
+                    // Wipe the tooltip information, abilityId, and ability level
+                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
+                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
+                    set CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] = -1
                 endif
 
-                // Cache the tooltip information about the ability. Need to always recalculate since abilities show element counts
-                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityTooltip(currentAbility, GetUnitAbilityLevel(playerHero, currentAbility) - 1) // What is the -1 for?
-                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetAbilityElementCountTooltip(playerHero, abilityIndex)
-            else
-                // Hide the icon if something was there
-                if (CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] != -1) then
-                    call CreateIcon(null, playerId)
-                endif
-
-                // Wipe the tooltip information, abilityId, and ability level
-                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
-                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
-                set CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] = -1
-            endif
-
-            set CurrentColumnIndex = CurrentColumnIndex + 1
-            set abilityIndex = abilityIndex + 1
-        endloop
+                set CurrentColumnIndex = CurrentColumnIndex + 1
+                set abilityIndex = abilityIndex + 1
+            endloop
+        endif
 
         // Cleanup
         set playerHero = null
@@ -370,15 +379,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
-        // This function was called when it was not supposed to. Should only be called when all heroes are selected
-        if (playerHero == null) then
-            // Cleanup
-            set currentPlayer = null
-            set playerHero = null
-
-            return
-        endif
-
         set CurrentColumnIndex = 0
         
         // Player stats icon
@@ -387,17 +387,31 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(currentPlayer)
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PlayerStats.getTooltip(currentPlayer)
 
-        // Set the player hero icon
-        set CurrentColumnIndex = PLAYER_HERO_INDEX
-        call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), playerId)
-        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)) + COLOR_END_TAG
-        set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(playerHero)
+        if (playerHero != null) then
+            // Set the player hero icon
+            set CurrentColumnIndex = PLAYER_HERO_INDEX
+            call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), playerId)
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)) + COLOR_END_TAG
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(playerHero)
 
-        // Element icons
-        set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
-        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
-        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffd0ff00Element Counts|r"
-        set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(playerHero)
+            // Element icon
+            set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
+            call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffd0ff00Element Counts|r"
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(playerHero)
+        else
+            // Set the player hero icon to a missing icon
+            set CurrentColumnIndex = PLAYER_HERO_INDEX
+            call CreateIcon("ReplaceableTextures\\CommandButtons\\BTNSelectHeroOff.blp", playerId)
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffff0000Player has no hero" + COLOR_END_TAG
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = ""
+
+            // Element icon
+            set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
+            call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffff0000Player has no hero"
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = ""
+        endif
 
         // Set the player name
         set CurrentColumnIndex = PLAYER_NAME_INDEX
@@ -467,7 +481,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             endif
 
             // Show the tooltip information if valid
-            if (tooltipName != "" and tooltipDescription != "") then
+            if (tooltipName != "") then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
                     call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
@@ -515,8 +529,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local framehandle scoreboardGameDescriptionFrameHandle
         local framehandle scoreboardGameDescriptionTextFrameHandle
 
-        // This will only have players that have selected a hero. Anyone that quits before hero selection won't be here.
-        set ScoreboardForce = GetValidPlayerForce()
+        // This will get all players, even if they left the game already
+        set ScoreboardForce = GetPlayerForce()
 
         call CreateHeaderRow()
 
@@ -580,16 +594,18 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // If this is the BR winner, set the status
         if (PlayerBrWinner == playerId) then
             set CurrentColumnIndex = PLAYER_STATUS_INDEX
-            call CreateText(BR_WINNER_COLOR + "Battle Royale Winner!" + COLOR_END_TAG, playerId)
+            call CreateText(BR_WINNER_STATUS_COLOR + "Battle Royale Winner!" + COLOR_END_TAG, playerId)
 
         // Player status for dying
         elseif (PlayerDeathRound[playerId] != 0) then
             set CurrentColumnIndex = PLAYER_STATUS_INDEX
 
-            if (PlayerDeathRound[playerId] == 50 or PlayerDeathRound[playerId] == 25) then
-                call CreateText(FELL_IN_BR_COLOR + "Fell in the Battle Royale" + COLOR_END_TAG, playerId)
+            if (PlayerDeathRound[playerId] == -1) then
+                call CreateText(NO_HERO_STATUS_COLOR + "Left before hero selection" + COLOR_END_TAG, playerId)
+            elseif (PlayerDeathRound[playerId] == 50 or PlayerDeathRound[playerId] == 25) then
+                call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Battle Royale" + COLOR_END_TAG, playerId)
             else
-                call CreateText(STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
+                call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survivded until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
             endif
         endif
 
