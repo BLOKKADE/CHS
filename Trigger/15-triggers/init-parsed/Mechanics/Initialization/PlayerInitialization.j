@@ -32,8 +32,9 @@ library PlayerInitialization initializer init requires RandomShit
         set currentPlayer = null
     endfunction
 
-    private function SetPlayerAllianceVisionWithCreeps takes nothing returns nothing
+    private function SetPlayerAlliances takes nothing returns nothing
         call SetPlayerAllianceStateBJ(GetEnumPlayer(), Player(8), bj_ALLIANCE_ALLIED_VISION)
+        call SetPlayerAllianceStateBJ(Player(PLAYER_NEUTRAL_PASSIVE), GetEnumPlayer(), bj_ALLIANCE_ALLIED_ADVUNITS)
     endfunction
 
     private function PlayerInitializationActions takes nothing returns nothing
@@ -94,7 +95,7 @@ library PlayerInitialization initializer init requires RandomShit
         // No idea why we have this. Maybe alliances aren't setup yet on map init for the next call?
         call TriggerSleepAction(0.00)
 
-        call ForForce(validPlayerForce, function SetPlayerAllianceVisionWithCreeps)
+        call ForForce(validPlayerForce, function SetPlayerAlliances)
 
         // Cleanup
         call DestroyForce(validPlayerForce)

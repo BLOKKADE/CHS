@@ -56,7 +56,7 @@ library OldInitialization initializer main3
         integer RoundCreepChanceLifesteal= 0
         item array udg_items01
         boolean array PlayerHeroPicked
-        //force udg_PlayersWithHero = null
+        force udg_PlayersWithHero = null
         force RoundPlayersCompleted= null
         location udg_location01= null
         integer CountdownCount= 0
@@ -878,7 +878,6 @@ library OldInitialization initializer main3
     endfunction
 
     function main2 takes nothing returns nothing
-        local trigger trg
         call SetCameraBounds(- 5376.0 + GetCameraMargin(CAMERA_MARGIN_LEFT),- 5632.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM),5376.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT),5120.0 - GetCameraMargin(CAMERA_MARGIN_TOP),- 5376.0 + GetCameraMargin(CAMERA_MARGIN_LEFT),5120.0 - GetCameraMargin(CAMERA_MARGIN_TOP),5376.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT),- 5632.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
         call SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl","Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
         call NewSoundEnvironment("Default")
@@ -979,7 +978,6 @@ library OldInitialization initializer main3
         call CameraSetupSetField(udg_camerasetup01,CAMERA_FIELD_FARZ,10000.0,0.0)
         call CameraSetupSetDestPosition(udg_camerasetup01,0.0,- 320.0,0.0)
         call InitGlobals2()
-        set trg = null
     endfunction
     function main3 takes nothing returns nothing
         call SetCameraBounds(- 5376.0 + GetCameraMargin(CAMERA_MARGIN_LEFT),- 5632.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM),5376.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT),5120.0 - GetCameraMargin(CAMERA_MARGIN_TOP),- 5376.0 + GetCameraMargin(CAMERA_MARGIN_LEFT),5120.0 - GetCameraMargin(CAMERA_MARGIN_TOP),5376.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT),- 5632.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
@@ -999,6 +997,8 @@ library OldCodeInit
         call ConditionalTriggerExecute(PlayerInitializationTrigger)
         call ConditionalTriggerExecute(SetupPlayerArenasTrigger)
         call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
+
+        call AddWeatherEffectSaveLast(GetPlayableMapRect(), 'SNhs')
     endfunction  
     
     public function start takes nothing returns nothing

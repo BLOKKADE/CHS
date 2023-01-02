@@ -1,4 +1,4 @@
-library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard
+library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard, InitializeDraftMode
 
     globals
         boolean ShopsCreated = false
@@ -60,7 +60,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call ConditionalTriggerExecute(EnterShopModeTrigger)
 
         if (AbilityMode == 2 and DraftInitialised == false) then
-            call ConditionalTriggerExecute(gg_trg_DraftInit)
+            call InitDraftMode()
         elseif (AbilityMode == 1) then
             call InitUpgradeShop()
         endif

@@ -55,13 +55,14 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
         local DuelGame duelGame
 
         if death then
+            set duelGame = DuelGame.getPlayerDuelGame(GetOwningPlayer(DamageSource))
+
             // Display damage messages like normal if it is a non simultaneous duel
-            if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) or BrStarted then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
+            if (duelGame.isOddDuel or SimultaneousDuelMode == 1 or DuelGameList.size() == 1) or BrStarted then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
                 //if death then show to everyone else show to player with dt enabled
                 call DisplayTimedTextToForce(GetPlayersAll(), 20, output)
             else
                 // Only show messages to the simultaneous duel teams
-                set duelGame = DuelGame.getPlayerDuelGame(GetOwningPlayer(DamageSource))
                 call DisplayTimedTextToForce(duelGame.team1, 20, output)
                 call DisplayTimedTextToForce(duelGame.team2, 20, output)
             endif

@@ -469,7 +469,7 @@ library PlayerTracking initializer init requires OldInitialization
         set MapVersionLookup[4] = GameVersion.create("CHS v2.1.2", 4, false) // Scoreboard desync fix version
     endfunction
 
-    private function init takes nothing returns nothing
+    private function SetupPlayerTracking takes nothing returns nothing
         local PlayerStats ps = 0
         local force computerPlayers = GetPlayersByMapControl(MAP_CONTROL_COMPUTER)
 
@@ -487,6 +487,10 @@ library PlayerTracking initializer init requires OldInitialization
         // Cleanup
         call DestroyForce(computerPlayers)
         set computerPlayers = null
+    endfunction
+
+    private function init takes nothing returns nothing
+        call TimerStart(CreateTimer(), 0, false, function SetupPlayerTracking)
     endfunction
 
 endlibrary

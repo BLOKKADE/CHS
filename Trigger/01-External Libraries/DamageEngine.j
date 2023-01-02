@@ -91,7 +91,7 @@ JASS API (work in progress - I have a lot of documentation to go through):
     function RegisterDamageEngine takes code c, string eventName, real value returns nothing
 //! endnovjass
 //===========================================================================
-library DamageEngine
+library DamageEngine requires DamageEngineConfig
 globals
     private constant boolean USE_GUI        = false      //If you don't use any of the GUI events, set to false to slightly improve performance
                                                        
@@ -1160,87 +1160,6 @@ endif// \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ /
     //! runtextmacro optional DAMAGE_EVENT_STRUCT_PLUGIN_04()
     //! runtextmacro optional DAMAGE_EVENT_STRUCT_PLUGIN_05()
 endstruct
-    public function DebugStr takes nothing returns nothing
-        local integer i                      = 0
-        loop
-            set udg_CONVERTED_ATTACK_TYPE[i] = ConvertAttackType(i)
-            exitwhen i == 6
-            set i                            = i + 1
-        endloop
-        set i                                = 0
-        loop
-            set udg_CONVERTED_DAMAGE_TYPE[i] = ConvertDamageType(i)
-            exitwhen i == 26
-            set i                            = i + 1
-        endloop
-        set udg_AttackTypeDebugStr[0]        = "SPELLS"   //ATTACK_TYPE_NORMAL in JASS
-        set udg_AttackTypeDebugStr[1]        = "NORMAL"   //ATTACK_TYPE_MELEE in JASS
-        set udg_AttackTypeDebugStr[2]        = "PIERCE"
-        set udg_AttackTypeDebugStr[3]        = "SIEGE"
-        set udg_AttackTypeDebugStr[4]        = "MAGIC"
-        set udg_AttackTypeDebugStr[5]        = "CHAOS"
-        set udg_AttackTypeDebugStr[6]        = "HERO"
-        set udg_DamageTypeDebugStr[0]        = "UNKNOWN"
-        set udg_DamageTypeDebugStr[4]        = "NORMAL"
-        set udg_DamageTypeDebugStr[5]        = "ENHANCED"
-        set udg_DamageTypeDebugStr[8]        = "FIRE"
-        set udg_DamageTypeDebugStr[9]        = "COLD"
-        set udg_DamageTypeDebugStr[10]       = "LIGHTNING"
-        set udg_DamageTypeDebugStr[11]       = "POISON"
-        set udg_DamageTypeDebugStr[12]       = "DISEASE"
-        set udg_DamageTypeDebugStr[13]       = "DIVINE"
-        set udg_DamageTypeDebugStr[14]       = "MAGIC"
-        set udg_DamageTypeDebugStr[15]       = "SONIC"
-        set udg_DamageTypeDebugStr[16]       = "ACID"
-        set udg_DamageTypeDebugStr[17]       = "FORCE"
-        set udg_DamageTypeDebugStr[18]       = "DEATH"
-        set udg_DamageTypeDebugStr[19]       = "MIND"
-        set udg_DamageTypeDebugStr[20]       = "PLANT"
-        set udg_DamageTypeDebugStr[21]       = "DEFENSIVE"
-        set udg_DamageTypeDebugStr[22]       = "DEMOLITION"
-        set udg_DamageTypeDebugStr[23]       = "SLOW_POISON"
-        set udg_DamageTypeDebugStr[24]       = "SPIRIT_LINK"
-        set udg_DamageTypeDebugStr[25]       = "SHADOW_STRIKE"
-        set udg_DamageTypeDebugStr[26]       = "UNIVERSAL"
-        set udg_WeaponTypeDebugStr[0]        = "NONE"    //WEAPON_TYPE_WHOKNOWS in JASS
-        set udg_WeaponTypeDebugStr[1]        = "METAL_LIGHT_CHOP"
-        set udg_WeaponTypeDebugStr[2]        = "METAL_MEDIUM_CHOP"
-        set udg_WeaponTypeDebugStr[3]        = "METAL_HEAVY_CHOP"
-        set udg_WeaponTypeDebugStr[4]        = "METAL_LIGHT_SLICE"
-        set udg_WeaponTypeDebugStr[5]        = "METAL_MEDIUM_SLICE"
-        set udg_WeaponTypeDebugStr[6]        = "METAL_HEAVY_SLICE"
-        set udg_WeaponTypeDebugStr[7]        = "METAL_MEDIUM_BASH"
-        set udg_WeaponTypeDebugStr[8]        = "METAL_HEAVY_BASH"
-        set udg_WeaponTypeDebugStr[9]        = "METAL_MEDIUM_STAB"
-        set udg_WeaponTypeDebugStr[10]       = "METAL_HEAVY_STAB"
-        set udg_WeaponTypeDebugStr[11]       = "WOOD_LIGHT_SLICE"
-        set udg_WeaponTypeDebugStr[12]       = "WOOD_MEDIUM_SLICE"
-        set udg_WeaponTypeDebugStr[13]       = "WOOD_HEAVY_SLICE"
-        set udg_WeaponTypeDebugStr[14]       = "WOOD_LIGHT_BASH"
-        set udg_WeaponTypeDebugStr[15]       = "WOOD_MEDIUM_BASH"
-        set udg_WeaponTypeDebugStr[16]       = "WOOD_HEAVY_BASH"
-        set udg_WeaponTypeDebugStr[17]       = "WOOD_LIGHT_STAB"
-        set udg_WeaponTypeDebugStr[18]       = "WOOD_MEDIUM_STAB"
-        set udg_WeaponTypeDebugStr[19]       = "CLAW_LIGHT_SLICE"
-        set udg_WeaponTypeDebugStr[20]       = "CLAW_MEDIUM_SLICE"
-        set udg_WeaponTypeDebugStr[21]       = "CLAW_HEAVY_SLICE"
-        set udg_WeaponTypeDebugStr[22]       = "AXE_MEDIUM_CHOP"
-        set udg_WeaponTypeDebugStr[23]       = "ROCK_HEAVY_BASH"
-        set udg_DefenseTypeDebugStr[0]       = "LIGHT"
-        set udg_DefenseTypeDebugStr[1]       = "MEDIUM"
-        set udg_DefenseTypeDebugStr[2]       = "HEAVY"
-        set udg_DefenseTypeDebugStr[3]       = "FORTIFIED"
-        set udg_DefenseTypeDebugStr[4]       = "NORMAL"   //Typically deals flat damage to all armor types
-        set udg_DefenseTypeDebugStr[5]       = "HERO"
-        set udg_DefenseTypeDebugStr[6]       = "DIVINE"
-        set udg_DefenseTypeDebugStr[7]       = "UNARMORED"
-        set udg_ArmorTypeDebugStr[0]         = "NONE"      //ARMOR_TYPE_WHOKNOWS in JASS, added in 1.31
-        set udg_ArmorTypeDebugStr[1]         = "FLESH"
-        set udg_ArmorTypeDebugStr[2]         = "METAL"
-        set udg_ArmorTypeDebugStr[3]         = "WOOD"
-        set udg_ArmorTypeDebugStr[4]         = "ETHEREAL"
-        set udg_ArmorTypeDebugStr[5]         = "STONE"
-    endfunction
     //===========================================================================
     //
     // Setup of automatic events from GUI and custom ones from JASS alike
