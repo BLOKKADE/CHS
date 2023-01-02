@@ -89,7 +89,7 @@ library GameInit initializer init requires GroupUtils
         integer udg_integer61 = 0
         integer udg_integer63 = 0
         integer UnknownInteger01 = 0
-        integer UnknownInteger02 = 0
+        integer TryLearnRandomAbilityAttempts = 0
         location array HideShopsLocations
         player HostPlayer = null
         player SingleplayerPlayer = null

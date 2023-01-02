@@ -21,7 +21,7 @@ library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLe
                 call SetHeroSpellPosition(currentUnit, spellCount, 0)
                 call SetHeroSpellListCount(currentUnit, spellCount - 1, 0) 
     
-                call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[currentPlayerId + 1], GetUnitAbilityLevel(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1]) - 1))
+                call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[currentPlayerId + 1], GetUnitAbilityLevel(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1]) - 1))
                 call AddSpecialEffectTargetUnitBJ("origin",currentUnit,"Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl")
                 call DestroyEffectBJ(GetLastCreatedEffectBJ())
                 call UnitRemoveAbility(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1])
@@ -46,9 +46,9 @@ library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLe
             call ForceAddPlayerSimple(currentPlayer, bj_FORCE_PLAYER[11])
     
             if (ArNotLearningAbil == false or AbilityMode == 2) then
-                call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to unlearn!")
+                call DisplayTimedTextToForce(bj_FORCE_PLAYER[11], 2.00, "|cffffcc00Failed to unlearn!")
             else
-                call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to unlearn! (Random Mode)")
+                call DisplayTimedTextToForce(bj_FORCE_PLAYER[11], 2.00, "|cffffcc00Failed to unlearn! (Random Mode)")
             endif
     
             call ForceRemovePlayerSimple(currentPlayer, bj_FORCE_PLAYER[11])

@@ -1,15 +1,12 @@
 library TryLearnRandomAbility initializer init requires RandomShit
 
-    function Trig_Random_Ability_Conditions takes nothing returns boolean
-        if(not('I02J'==GetItemTypeId(GetManipulatedItem())))then
-            return false
-        endif
-        return true
+    private function TryLearnRandomAbilityConditions takes nothing returns boolean
+        return GetItemTypeId(GetManipulatedItem()) == 'I02J'
     endfunction
 
-    function Trig_Random_Ability_Actions takes nothing returns nothing
-        if AbilityMode != 2 then
-            set UnknownInteger02 = 0
+    private function TryLearnRandomAbilityActions takes nothing returns nothing
+        if (AbilityMode != 2) then
+            set TryLearnRandomAbilityAttempts = 0
             set TempUnit = GetTriggerUnit()
             call ConditionalTriggerExecute(LearnRandomAbilityTrigger)
         else
@@ -21,8 +18,8 @@ library TryLearnRandomAbility initializer init requires RandomShit
     private function init takes nothing returns nothing
         set TryLearnRandomAbilityTrigger = CreateTrigger()
         call TriggerRegisterAnyUnitEventBJ(TryLearnRandomAbilityTrigger,EVENT_PLAYER_UNIT_PICKUP_ITEM)
-        call TriggerAddCondition(TryLearnRandomAbilityTrigger,Condition(function Trig_Random_Ability_Conditions))
-        call TriggerAddAction(TryLearnRandomAbilityTrigger,function Trig_Random_Ability_Actions)
+        call TriggerAddCondition(TryLearnRandomAbilityTrigger,Condition(function TryLearnRandomAbilityConditions))
+        call TriggerAddAction(TryLearnRandomAbilityTrigger,function TryLearnRandomAbilityActions)
     endfunction
 
 endlibrary
