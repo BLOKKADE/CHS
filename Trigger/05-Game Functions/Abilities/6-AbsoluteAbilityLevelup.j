@@ -35,12 +35,13 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
             call SpellLearnedFunc(u, abil)
             
         endif
+
         if i > 1 then
             call SetUnitAbilityLevel(u, abil, i)
         endif
+
         call FuncEditParam(abil,u)
-        call AddSpecialEffectLocBJ(unitLocation,"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl")
-        call DestroyEffectBJ(GetLastCreatedEffectBJ())
+        call DestroyEffect(AddSpecialEffectLocBJ(unitLocation,"Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl"))
         call DisplayTimedTextToPlayer(p, 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(abil, GetUnitAbilityLevel(u, abil) - 1))
 
         call RemoveLocation(unitLocation)
@@ -62,6 +63,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
                     call UnlearnAbsolute(u, GetLastLearnedSpell(u, SpellList_Absolute, true))
                 endif
             endif
+            
             if IsAbsolute(abilityId) then
                 //call BJDebugMsg("aalu is absolute")
                 set counter = LoadInteger(HT,GetHandleId(u),941561) 

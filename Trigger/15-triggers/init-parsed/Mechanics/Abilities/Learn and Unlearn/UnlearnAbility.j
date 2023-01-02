@@ -22,8 +22,7 @@ library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLe
                 call SetHeroSpellListCount(currentUnit, spellCount - 1, 0) 
     
                 call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[currentPlayerId + 1], GetUnitAbilityLevel(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1]) - 1))
-                call AddSpecialEffectTargetUnitBJ("origin",currentUnit,"Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl")
-                call DestroyEffectBJ(GetLastCreatedEffectBJ())
+                call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", currentUnit, "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl"))
                 call UnitRemoveAbility(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1])
                 call FunResetAbility(PlayerLastLearnedSpell[currentPlayerId + 1], currentUnit)
                 call RemoveDummyspell(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1])
