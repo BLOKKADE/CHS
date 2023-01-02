@@ -605,7 +605,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             elseif (PlayerDeathRound[playerId] == 50 or PlayerDeathRound[playerId] == 25) then
                 call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Battle Royale" + COLOR_END_TAG, playerId)
             else
-                call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survivded until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
+                call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
             endif
         endif
 

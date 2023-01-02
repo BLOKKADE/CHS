@@ -209,6 +209,9 @@ library GameInit initializer init requires GroupUtils
         set LeaverPlayers = CreateForce()
         set GroupEmptyArenaCheck = CreateGroup()
         set VotingRightsDialog = DialogCreate()
+
+        // Needs to be specified right away since a lot of triggers depend on it
+        set RectMidArena = Rect(-1696.0, -1952.0, 1696.0, 1440.0)
     endfunction
 
     private function InitializeEnvironment takes nothing returns nothing
