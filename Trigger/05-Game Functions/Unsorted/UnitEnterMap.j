@@ -1,4 +1,5 @@
 library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpells, LearnAbsolute
+
     globals
         integer array SkeletonDefender
         boolean array bnos_a
@@ -14,12 +15,12 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         integer array SummonArmor
     endglobals
 
-    function AddSummonAbility takes unit u, integer abilId, integer level returns nothing
+    private function AddSummonAbility takes unit u, integer abilId, integer level returns nothing
         call UnitAddAbility(u, abilId)
         call SetUnitAbilityLevel(u, abilId, level)
     endfunction
 
-    function SummonUnit takes unit u returns nothing
+    private function SummonUnit takes unit u returns nothing
         local integer i = GetUnitTypeId(u)
         local integer i2 = 0
         local integer totalLevel = 0
@@ -110,7 +111,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
                 call FearlessDefendersStats(u, GetHeroLevel(hero), totalLevel)
             endif
 
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(totalLevel) )
+            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(totalLevel))
             call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
@@ -119,7 +120,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
          if i2 > 0 then
             call AddUnitCustomState(u, BONUS_MAGICRES,3 * i2)
             call AddUnitCustomState(u, BONUS_EVASION,0.5 * i2)
-            call AddUnitCustomState(u, BONUS_BLOCK,10 * i2)
+            call AddUnitCustomState(u, BONUS_BLOCK, 10 * i2)
             call AddSummonAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID, i2)
         endif
 
@@ -195,7 +196,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         set hero = null
     endfunction
 
-    function Trig_UnitStateSys_Actions takes nothing returns nothing
+    private function UnitEnterMapActions takes nothing returns nothing
         local unit u = GetTriggerUnit()
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         local boolean realUnit = IsUnitIllusion(u) == false
@@ -215,13 +216,13 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         //Rock Golem
         if GetUnitTypeId(u) == ROCK_GOLEM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_BLOCK,50)
-            call AddUnitCustomState(u, BONUS_MAGICRES,15)
+            call AddUnitCustomState(u, BONUS_BLOCK, 50)
+            call AddUnitCustomState(u, BONUS_MAGICRES, 15)
         endif
 
         //Medivh
         if GetUnitTypeId(u) == MEDIVH_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_MAGICPOW,15)
+            call AddUnitCustomState(u, BONUS_MAGICPOW, 15)
         endif
 
         //Pit Lord
@@ -230,9 +231,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call BlzUnitDisableAbility(u,ABSOLUTE_FIRE_ABILITY_ID,false,true)
 
             if realUnit then
-                call SaveInteger(HT,hid,941561, 1)
-                call UpdateHeroSpellList(ABSOLUTE_FIRE_ABILITY_ID,u,1)
-                call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID,u)
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_FIRE_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID, u)
                 call AddHeroMaxAbsoluteAbility(u)
             endif
         endif
@@ -243,9 +244,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call BlzUnitDisableAbility(u,ABSOLUTE_WATER_ABILITY_ID,false,true)
 
             if realUnit then
-                call SaveInteger(HT,hid,941561, 1)
-                call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID,u,1)
-                call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID,u)
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID, u)
                 call AddHeroMaxAbsoluteAbility(u)
                 set NagaSirenBonus[hid] = 1
             endif
@@ -253,7 +254,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         //Satyr Trickster
         if GetUnitTypeId(u) == SATYR_TRICKSTER_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_EVASION,10)
+            call AddUnitCustomState(u, BONUS_EVASION, 10)
         endif
 
         //Witch Doctor
@@ -293,11 +294,11 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         set u = null
     endfunction
 
-    //===========================================================================
     private function init takes nothing returns nothing
-        local trigger trg = CreateTrigger()
-        call TriggerRegisterEnterRectSimple( trg, GetPlayableMapRect() )
-        call TriggerAddAction( trg, function Trig_UnitStateSys_Actions )
-        set trg = null
+        local trigger unitEnterMapTrigger = CreateTrigger()
+        call TriggerRegisterEnterRectSimple(unitEnterMapTrigger, GetPlayableMapRect())
+        call TriggerAddAction(unitEnterMapTrigger, function UnitEnterMapActions)
+        set unitEnterMapTrigger = null
     endfunction
+
 endlibrary

@@ -7,16 +7,14 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         integer array MaxAbsolute
     endglobals
 
-    function PlayerAddGold takes player p, integer i returns nothing
-
-        call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,  GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD) + i )
-
+    private function PlayerAddGold takes player p, integer i returns nothing
+        call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,  GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD) + i)
     endfunction
 
-    function GetItemCost takes item it, boolean gold returns integer
-        local integer goldCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_RED )
-        local integer lumberCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_GREEN )
-        local integer multiplier = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_BLUE )
+    private function GetItemCost takes item it, boolean gold returns integer
+        local integer goldCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_RED)
+        local integer lumberCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_GREEN)
+        local integer multiplier = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_BLUE)
         if multiplier == 255 then
             set multiplier = 1
         endif
@@ -39,12 +37,12 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         endif
     endfunction
 
-    function PlayerReturnLumber takes item it, integer II, player p returns nothing 
+    private function PlayerReturnLumber takes item it, integer II, player p returns nothing 
         call AdjustPlayerStateBJ(GetItemCost(it, false),p,PLAYER_STATE_RESOURCE_LUMBER)
         call ResourseRefresh(p)
     endfunction
 
-    function IncomeText takes integer pid, boolean all returns nothing
+    private function IncomeText takes integer pid, boolean all returns nothing
         local integer i = 0
         loop
             if all then
@@ -57,7 +55,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if pid == i then
                     call DisplayTimedTextToPlayer(Player(i), 0, 0, 1, "|cffdfb632You upgraded your creeps to|r |cffd64646level " + I2S(BonusNeutral + BonusNeutralPlayer[pid]) + "|r")
                 elseif IncomeSpamDisabled[i] == false then
-                    call DisplayTimedTextToPlayer(Player(i), 0, 0, 1, GetPlayerNameColour(Player(pid))+ " |cffdfb632upgrades the creeps for themselves to|r |cffd64646level " + I2S(BonusNeutralPlayer[pid] ))
+                    call DisplayTimedTextToPlayer(Player(i), 0, 0, 1, GetPlayerNameColour(Player(pid))+ " |cffdfb632upgrades the creeps for themselves to|r |cffd64646level " + I2S(BonusNeutralPlayer[pid]))
                 endif
             endif
             set i = i + 1
@@ -66,9 +64,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
     endfunction
 
     private function CanAfford takes player p, item it returns boolean
-        local integer goldCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_RED )
-        local integer lumberCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_GREEN )
-        local integer multiplier = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_BLUE )
+        local integer goldCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_RED)
+        local integer lumberCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_GREEN)
+        local integer multiplier = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_BLUE)
         if multiplier == 255 then
             set multiplier = 1
         endif
@@ -92,7 +90,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         endif
     endfunction
 
-    function Trig_Toms_Actions takes nothing returns nothing
+    private function TomesActions takes nothing returns nothing
         local item It = GetManipulatedItem()
         local integer II = GetItemTypeId(It)
         local unit u = GetTriggerUnit()
@@ -377,7 +375,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if GetHeroXP(u) >= 100000 and AddHeroMaxAbsoluteAbility(u)then
                     call UnitAddItemById(u,EXPERIENCE_50000_TOME_ITEM_ID)
                 else
-                    call PlayerAddGold( GetOwningPlayer(u),8000)  
+                    call PlayerAddGold(GetOwningPlayer(u),8000)  
                     set ctrl = false
                 endif
             /*
@@ -516,7 +514,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(ANCIENT_STAFF_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),15000)
+                call PlayerAddGold(GetOwningPlayer(u),15000)
             endif
 
             //Ancient Dagger
@@ -525,7 +523,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(ANCIENT_DAGGER_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),15000)
+                call PlayerAddGold(GetOwningPlayer(u),15000)
             endif
 
             //Ancient Axe
@@ -534,7 +532,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(ANCIENT_AXE_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),15000)
+                call PlayerAddGold(GetOwningPlayer(u),15000)
             endif	
 
             //Vigour Token
@@ -543,7 +541,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(VIGOUR_TOKEN_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),15000)
+                call PlayerAddGold(GetOwningPlayer(u),15000)
             endif
 
             //Flimsy Token
@@ -552,7 +550,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(FLIMSY_TOKEN_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),15000)
+                call PlayerAddGold(GetOwningPlayer(u),15000)
             endif
 
             //Spellbane Token
@@ -561,7 +559,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(SPELL_BANE_TOKEN_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),15000)
+                call PlayerAddGold(GetOwningPlayer(u),15000)
             endif	
 
             //Mask of Elusion
@@ -570,7 +568,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(MASK_OF_ELUSION_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),20000)
+                call PlayerAddGold(GetOwningPlayer(u),20000)
             endif
 
             //Mask of Vitality
@@ -579,7 +577,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(MASK_OF_VITALITY_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),20000)
+                call PlayerAddGold(GetOwningPlayer(u),20000)
             endif
             //Mask of Protection
         elseif II  == MASK_OF_PROTECTION_TOME_ITEM_ID then   
@@ -587,7 +585,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(MASK_OF_PROTECTION_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),20000)
+                call PlayerAddGold(GetOwningPlayer(u),20000)
             endif	
             //Sword of Blodthirst
         elseif II  == SWORD_OF_BLOODTHRIST_TOME_ITEM_ID then   
@@ -595,7 +593,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(SWORD_OF_BLOODTHRIST_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),10000)
+                call PlayerAddGold(GetOwningPlayer(u),10000)
             endif
             //Wisdom Chestplate
         elseif II  == WISDOM_CHESTPLATE_TOME_ITEM_ID then   
@@ -603,7 +601,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(WISDOM_CHESTPLATE_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),15000)
+                call PlayerAddGold(GetOwningPlayer(u),15000)
             endif
             //Lucky Pants
         elseif II  == LUCKY_PANTS_TOME_ITEM_ID then   
@@ -611,7 +609,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(LUCKY_PANTS_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold( GetOwningPlayer(u),20000)
+                call PlayerAddGold(GetOwningPlayer(u),20000)
                     
             endif	
             //Ankh of Reincarnation
@@ -633,20 +631,22 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         endif
 
         call ResourseRefresh(GetOwningPlayer(u)) 
+
+        // Cleanup
         set It = null
         set u = null
         set p = null
     endfunction
 
-
-    //===========================================================================
     private function init takes nothing returns nothing
-        local trigger trg = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ( trg, EVENT_PLAYER_UNIT_PICKUP_ITEM )
-        call TriggerAddAction( trg, function Trig_Toms_Actions )
-        set trg = null
+        local trigger tomesTrigger = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(tomesTrigger, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+        call TriggerAddAction(tomesTrigger, function TomesActions)
+        set tomesTrigger = null
+
         set GloryRegenLevel = Table.create()
         set GloryAttackCdLevel = Table.create()
         set GloryAttackCdBonus = Table.create()
     endfunction
+
 endlibrary

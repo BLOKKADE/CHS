@@ -1,9 +1,10 @@
 library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor, SpiritTauren, Letinant, MartialRetribution
+    
     globals
         integer array LastLvlHero
     endglobals
 
-    function UpdateAbilityDescriptionLevelup takes unit h, player p, integer heroLvl returns nothing
+    private function UpdateAbilityDescriptionLevelup takes unit h, player p, integer heroLvl returns nothing
         local integer abilLvl
         
         set abilLvl = GetUnitAbilityLevel(h, MARTIAL_RETRIBUTION_ABILITY_ID)
@@ -17,7 +18,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         endif
     endfunction
 
-    function Trig_HeroLvl_Actions takes nothing returns nothing
+    private function HeroLevelupActions takes nothing returns nothing
         local unit u = GetTriggerUnit()
         local integer uid = GetUnitTypeId(u)
         local integer heroLevel = GetHeroLevel(u)
@@ -35,13 +36,13 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         endif
 
         if heroLevel < 250 then
-            call AdjustPlayerStateBJ( (heroLevel + 20)*(levelsGained), p, PLAYER_STATE_RESOURCE_GOLD )
-            call AdjustPlayerStateBJ( 8 *(levelsGained), p, PLAYER_STATE_RESOURCE_LUMBER)
-            call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S( (heroLevel + 20) * levelsGained) + " gold|r and |cff1eff00+" + I2S(8 * levelsGained) + " lumber|r")
+            call AdjustPlayerStateBJ((heroLevel + 20) * (levelsGained), p, PLAYER_STATE_RESOURCE_GOLD)
+            call AdjustPlayerStateBJ(8 * (levelsGained), p, PLAYER_STATE_RESOURCE_LUMBER)
+            call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S((heroLevel + 20) * levelsGained) + " gold|r and |cff1eff00+" + I2S(8 * levelsGained) + " lumber|r")
         endif
 
         if ModuloInteger(heroLevel, 25) == 0 then
-            call AdjustPlayerStateBJ( heroLevel, p, PLAYER_STATE_RESOURCE_LUMBER) 
+            call AdjustPlayerStateBJ(heroLevel, p, PLAYER_STATE_RESOURCE_LUMBER) 
             call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(heroLevel) + " bonus lumber|r for reaching |cffbda546level " + I2S(heroLevel) + "!|r")
         endif
 
@@ -71,11 +72,11 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
 
         elseif uid == BLOOD_MAGE_UNIT_ID then  
             call UpdateBonus(u, 0, (levelsGained * 7))
-            call SetHeroInt(u,GetHeroInt(u,false)+ (7 * levelsGained),false) 
+            call SetHeroInt(u, GetHeroInt(u, false)+ (7 * levelsGained), false) 
             //call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (levelsGained * 250))
             
         elseif uid == MORTAR_TEAM_UNIT_ID then  
-            call AddUnitCustomState(u, BONUS_PHYSPOW,levelsGained * 2)
+            call AddUnitCustomState(u, BONUS_PHYSPOW, levelsGained * 2)
             call SetBonus(u, 0, 2 * heroLevel)
         elseif uid == NAGA_SIREN_UNIT_ID then  
             set i = prevLevel + 1
@@ -94,7 +95,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == DEADLORD_UNIT_ID then   
             call SetBonus(u, 0, heroLevel * 0.5)
         elseif uid == PYROMANCER_UNIT_ID then   
-            call BlzSetUnitDiceSides(u, BlzGetUnitDiceSides(u,0) + (35 * levelsGained),0)  
+            call BlzSetUnitDiceSides(u, BlzGetUnitDiceSides(u, 0) + (35 * levelsGained), 0)  
             call UpdateBonus(u, 0, 35 * levelsGained)
 
             call SetBonus(u, 1, heroLevel * 0.5)
@@ -177,9 +178,9 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == BEAST_MASTER_UNIT_ID then                  
             call SetBonus(u, 0, R2I(heroLevel / 3))   
         elseif uid == FALLEN_RANGER_UNIT_ID then                          
-            call SetUnitAbilityLevel(u,'A031',2)
-            call BlzSetAbilityRealLevelField( BlzGetUnitAbility(u,'A031'),ABILITY_RLF_ARMOR_BONUS_HAD1,0, 0 - (heroLevel * 3))         
-            call SetUnitAbilityLevel(u,'A031',1)
+            call SetUnitAbilityLevel(u, 'A031', 2)
+            call BlzSetAbilityRealLevelField(BlzGetUnitAbility(u, 'A031'),ABILITY_RLF_ARMOR_BONUS_HAD1, 0, 0 - (heroLevel * 3))         
+            call SetUnitAbilityLevel(u, 'A031', 1)
             call SetBonus(u, 0, heroLevel * 3)   
         elseif uid == HUNTRESS_UNIT_ID then         
             call SetBonus(u, 0, 24.5 + (heroLevel * 0.25))   
@@ -188,7 +189,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 1, 2 + (heroLevel * 0.05))   
             call SetBonus(u, 2, 50 + heroLevel)   
         elseif uid == URSA_WARRIOR_UNIT_ID then     
-            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + (10 * levelsGained) ,0)  
+            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (10 * levelsGained) , 0)  
             call UpdateBonus(u, 0, 10 * levelsGained)  
         elseif uid == WAR_GOLEM_UNIT_ID then             
             call SetBonus(u, 0, 49 + (heroLevel * 1))
@@ -207,7 +208,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == TIME_WARRIOR_UNIT_ID then         
             call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (100 * levelsGained))
             call UpdateBonus(u, 1, (100 * levelsGained))
-            call BlzSetUnitRealField(u,ConvertUnitRealField('umpr'),BlzGetUnitRealField(u,ConvertUnitRealField('umpr')) + (1 * levelsGained))
+            call BlzSetUnitRealField(u, ConvertUnitRealField('umpr'), BlzGetUnitRealField(u, ConvertUnitRealField('umpr')) + (1 * levelsGained))
             call UpdateBonus(u, 2, 1  * levelsGained)   
             call SetBonus(u, 0, 20 + (0.1 * heroLevel))
         elseif uid == ROCK_GOLEM_UNIT_ID then
@@ -236,7 +237,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, heroLevel * 20)
             call SetBonus(u, 1, 50 + (heroLevel * 2))
         elseif uid == MURLOC_WARRIOR_UNIT_ID then
-            call SetBonus(u, 0, (heroLevel / 10) + 1 )
+            call SetBonus(u, 0, (heroLevel / 10) + 1)
         elseif uid == GHOUL_UNIT_ID then
             call SetBonus(u, 0, (2.5 + (0.025 * heroLevel)))
         elseif uid == BANSHEE_UNIT_ID then
@@ -252,22 +253,23 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call UpdateBonus(u, 0, 0.5 * levelsGained)
             call SetBonus(u, 1, 98 + (heroLevel * 2))
         elseif uid == MEDIVH_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_MAGICPOW,2 * levelsGained)
+            call AddUnitCustomState(u, BONUS_MAGICPOW, 2 * levelsGained)
             call UpdateBonus(u, 0, 2 * levelsGained)   
         endif
         
         call UpdateAbilityDescriptionLevelup(u, p, GetHeroLevel(u))
         set LastLvlHero[pid] = heroLevel  
 
+        // Cleanup
         set u = null
         set p = null
     endfunction
 
-    //===========================================================================
     private function init takes nothing returns nothing
-        local trigger trg = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ( trg, EVENT_PLAYER_HERO_LEVEL )
-        call TriggerAddAction( trg, function Trig_HeroLvl_Actions )
-        set trg = null
+        local trigger heroLevelupTrigger = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(heroLevelupTrigger, EVENT_PLAYER_HERO_LEVEL)
+        call TriggerAddAction(heroLevelupTrigger, function HeroLevelupActions)
+        set heroLevelupTrigger = null
     endfunction
+
 endlibrary

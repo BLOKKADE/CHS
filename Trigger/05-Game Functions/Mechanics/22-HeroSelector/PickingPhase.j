@@ -8,7 +8,7 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
         return (IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true)
     endfunction
 
-    private function Trig_Picking_Phase_Copy_Func005Func002Func003C takes nothing returns boolean
+    private function DoesPlayerNotHaveHero takes nothing returns boolean
         local group playerHeroes = GetUnitsOfPlayerMatching(GetEnumPlayer(), Condition(function PlayerHeroFilter))
         local boolean playerHasNoHero = GroupPickRandomUnit(playerHeroes) == null
 
@@ -22,7 +22,7 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
     private function ForcePickRandomHeroForPlayer takes nothing returns nothing
         set bj_wantDestroyGroup = true
         // This one has a hero?
-        if (GetEnumPlayer() != Player(8) and GetEnumPlayer() != Player(11) and Trig_Picking_Phase_Copy_Func005Func002Func003C()) then
+        if (GetEnumPlayer() != Player(8) and GetEnumPlayer() != Player(11) and DoesPlayerNotHaveHero()) then
             // No, force a Pick for him
             call HeroSelectorForcePickPlayer(GetEnumPlayer())
         endif
@@ -36,7 +36,7 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
         set t = null
     endfunction
 
-    private function Trig_Picking_Phase_Copy_Actions takes nothing returns nothing
+    private function PickingPhaseActions takes nothing returns nothing
         set Count = (25 - GetTriggerExecCount(GetTriggeringTrigger()))
         call HeroSelectorSetTitleText(GetLocalizedString("DEFAULTTIMERDIALOGTEXT")+": " +I2S(Count))
 
@@ -58,7 +58,7 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
         set PickingPhaseTrigger = CreateTrigger()
         call DisableTrigger(PickingPhaseTrigger)
         call TriggerRegisterTimerEventPeriodic(PickingPhaseTrigger, 1.00)
-        call TriggerAddAction(PickingPhaseTrigger, function Trig_Picking_Phase_Copy_Actions)
+        call TriggerAddAction(PickingPhaseTrigger, function PickingPhaseActions)
     endfunction
 
 endlibrary

@@ -14,7 +14,7 @@ library SpacebarCamera initializer init requires RandomShit
         set unitLocation = null
     endfunction
 
-    private function Trig_Spacebar_Point_Actions takes nothing returns nothing
+    private function SpacebarCameraActions takes nothing returns nothing
         local group playerHeroes = GetUnitsInRectMatching(GetPlayableMapRect(), Condition(function HeroFilter))
         
         call ForGroup(playerHeroes, function MoveCameraToHero)
@@ -27,7 +27,7 @@ library SpacebarCamera initializer init requires RandomShit
     private function init takes nothing returns nothing
         set SpacebarCameraTrigger = CreateTrigger()
         call TriggerRegisterTimerEventPeriodic(SpacebarCameraTrigger, 4)
-        call TriggerAddAction(SpacebarCameraTrigger, function Trig_Spacebar_Point_Actions)
+        call TriggerAddAction(SpacebarCameraTrigger, function SpacebarCameraActions)
     endfunction
 
 endlibrary

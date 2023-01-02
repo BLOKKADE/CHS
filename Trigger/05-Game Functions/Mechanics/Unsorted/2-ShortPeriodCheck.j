@@ -47,35 +47,34 @@ scope ShortPeriodCheck initializer init
                 endif
 
                 //Power of Ice
-                if GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID) >= 1 then
+                if GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID) >= 1 then
                     if CheckProc(u, 610) then
-                        call DummyInstantCast1(u,GetUnitX(u),GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u ,POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1') )
+                        call DummyInstantCast1(u, GetUnitX(u), GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1'))
                     endif
-                    
                 endif
                 
                 //Absolute Blood
                 set i1 = GetUnitAbilityLevel(u,ABSOLUTE_BLOOD_ABILITY_ID)
                 if i1 > 0 and GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) == 0 then
                     set s = GetAbilityDescription(ABSOLUTE_BLOOD_ABILITY_ID,i1 - 1)
-                    if LoadReal(HT,hid,- 93001) == 0 then
+                    if LoadReal(HT, hid, -93001) == 0 then
                         set s2 = "50"
                     else
-                        set s2 = I2S(R2I(LoadReal(HT,hid,- 93001)))
+                        set s2 = I2S(R2I(LoadReal(HT, hid, -93001)))
                     endif
                         
                     set s3 = ReplaceText("2000",s2,s)
-                    set s3 = ReplaceText(",0000,", R2S(   LoadReal(HT,hid,- 93000) ) ,s3)
+                    set s3 = ReplaceText(",0000,", R2S(  LoadReal(HT, hid, -93000)), s3)
+
                     if GetLocalPlayer() == GetOwningPlayer(u) then
-                        call BlzSetAbilityExtendedTooltip(ABSOLUTE_BLOOD_ABILITY_ID,s3  , i1 - 1  ) 
+                        call BlzSetAbilityExtendedTooltip(ABSOLUTE_BLOOD_ABILITY_ID, s3, i1 - 1 ) 
                     endif
-                
                 endif
                         
                 //Cold Knight
                 if GetUnitTypeId(u) == COLD_KNIGHT_UNIT_ID then
                     if BlzGetUnitAbilityCooldownRemaining(u, COLD_KNIGHT_PASSIVE_ABILITY_ID) == 0 and CheckProc(u, 600) then
-                        call ColdKnight(u,GetUnitElementCount(u,Element_Cold), GetHeroLevel(u))
+                        call ColdKnight(u, GetUnitElementCount(u,Element_Cold), GetHeroLevel(u))
                     endif
                 endif
                 
@@ -84,16 +83,16 @@ scope ShortPeriodCheck initializer init
                 if i1 > 0 then
                     if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
                         call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
-                        call SetWidgetLife(u,GetWidgetLife(u)+ 2500 * i1)
-                        call TempFx.target( "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
-                        call RemoveDebuff( u, 1)
+                        call SetWidgetLife(u, GetWidgetLife(u) + 2500 * i1)
+                        call TempFx.target("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
+                        call RemoveDebuff(u, 1)
                     endif
                 endif
             endif
 
             //Trueshot Aura
-            set i1 = GetUnitAbilityLevel(u ,TRUESHOT_AURA_ABILITY_ID)
-            set r1 = LoadReal(HT,hid,TRUESHOT_AURA_ABILITY_ID)
+            set i1 = GetUnitAbilityLevel(u,TRUESHOT_AURA_ABILITY_ID)
+            set r1 = LoadReal(HT, hid,TRUESHOT_AURA_ABILITY_ID)
             if i1 > 0 or r1 != 0 then
                 set r2 = (BlzGetUnitBaseDamage(u, 0) * (0.05 * (i1)))
                 if r2 != r1 then
@@ -103,8 +102,8 @@ scope ShortPeriodCheck initializer init
             endif
 
             //Command Aura
-            set i1 = GetUnitAbilityLevel(u ,COMMAND_AURA_ABILITY_ID)
-            set r1 = LoadReal(HT,hid,COMMAND_AURA_ABILITY_ID)
+            set i1 = GetUnitAbilityLevel(u,COMMAND_AURA_ABILITY_ID)
+            set r1 = LoadReal(HT, hid,COMMAND_AURA_ABILITY_ID)
             if i1 > 0 or r1 != 0 then
                 set r2 = (BlzGetUnitBaseDamage(u, 0) * (0.1 * (i1)))
                 if r2 != r1 then
@@ -114,8 +113,8 @@ scope ShortPeriodCheck initializer init
             endif
 
             //Frostmourne
-            set i1 = GetUnitAbilityLevel(u , 'A02C')
-            set r1 = LoadReal(HT,hid,'A02C')
+            set i1 = GetUnitAbilityLevel(u, 'A02C')
+            set r1 = LoadReal(HT, hid,'A02C')
             if i1 > 0 or r1 != 0 then
                 set r2 = (BlzGetUnitBaseDamage(u, 0) * (3.5 * i1))
                 if r1 != r2 then
@@ -125,8 +124,8 @@ scope ShortPeriodCheck initializer init
             endif
 
             //Titanium Armor
-            set i1 = GetUnitAbilityLevel(u , 'A05T')
-            set i2 = LoadInteger(HT,hid,'A05T')
+            set i1 = GetUnitAbilityLevel(u, 'A05T')
+            set i2 = LoadInteger(HT, hid,'A05T')
             if i1 > 0 or i2 != 0 then
                 set i1 = R2I(GetHeroStr(u, true) * 0.25) * i1
                 if i1 != i2 then
@@ -216,14 +215,14 @@ scope ShortPeriodCheck initializer init
                     if GetUnitAbilityLevel(u, 'A092') == 0 then
                         call UnitAddAbility(u, 'A092')
                     endif
-                    set i1 = LoadInteger(DataUnitHT,hid,542)
+                    set i1 = LoadInteger(DataUnitHT, hid,542)
                     set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) - i1)
-                    call SetHeroStr(u,GetHeroStr(u,false)+ i2, false)
-                    call SaveInteger(DataUnitHT,hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold)))))
+                    call SetHeroStr(u, GetHeroStr(u,false) + i2, false)
+                    call SaveInteger(DataUnitHT, hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold)))))
                 else
-                    set i1 = LoadInteger(DataUnitHT,hid,542)
-                    call SetHeroStr(u,GetHeroStr(u,false)- i1, false)
-                    call SaveInteger(DataUnitHT,hid,542,0)
+                    set i1 = LoadInteger(DataUnitHT, hid,542)
+                    call SetHeroStr(u, GetHeroStr(u,false)- i1, false)
+                    call SaveInteger(DataUnitHT, hid,542,0)
                     call UnitRemoveAbility(u, 'A092')
                 endif
 
@@ -232,7 +231,7 @@ scope ShortPeriodCheck initializer init
             
                 //Rock Golem
             elseif unitTypeId == ROCK_GOLEM_UNIT_ID then
-                set i1 = LoadInteger(DataUnitHT,hid,542)
+                set i1 = LoadInteger(DataUnitHT, hid,542)
                 set i2 = R2I((GetUnitCustomState(u, BONUS_BLOCK) - i1) * (0.01 * GetHeroLevel(u)))
                 if i1 != i2 then
                     call AddUnitCustomState(u, BONUS_BLOCK, 0 - i1)
@@ -249,15 +248,15 @@ scope ShortPeriodCheck initializer init
         set u = null
     endfunction
     
-    function Trig_ShortPeriodCheck_Actions takes nothing returns nothing
+    private function ShortPeriodCheckActions takes nothing returns nothing
         call ForGroup(OnPeriodGroup, function OnPeriod)
     endfunction
 
-    //===========================================================================
     private function init takes nothing returns nothing
-        local trigger trg = CreateTrigger()
-        call TriggerRegisterTimerEventPeriodic( trg, 1 )
-        call TriggerAddAction( trg, function Trig_ShortPeriodCheck_Actions )
-        set trg = null
+        local trigger shortPeriodCheckTrigger = CreateTrigger()
+        call TriggerRegisterTimerEventPeriodic(shortPeriodCheckTrigger, 1)
+        call TriggerAddAction(shortPeriodCheckTrigger, function ShortPeriodCheckActions)
+        set shortPeriodCheckTrigger = null
     endfunction
+
 endscope

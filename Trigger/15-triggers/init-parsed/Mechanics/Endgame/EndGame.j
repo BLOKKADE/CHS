@@ -1,85 +1,27 @@
 library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
 
-    private function Trig_Victory_Func001Func001C takes nothing returns boolean
-        if (not(IsTriggerEnabled(GetTriggeringTrigger())==true)) then
-            return false
-        endif
-        if (not(InitialPlayerCount > 1)) then
-            return false
-        endif
-        if (not(PlayerCount==1)) then
-            return false
-        endif
-        if (not(GameComplete==false)) then
-            return false
-        endif
-        return true
+    private function IsOnlyOnePlayerRemaining takes nothing returns boolean
+        return (IsTriggerEnabled(GetTriggeringTrigger()) == true) and (InitialPlayerCount > 1) and (PlayerCount == 1) and (GameComplete == false)
     endfunction
 
-    private function Trig_Victory_Func001Func002Func003Func001C takes nothing returns boolean
-        if (not(GameModeShort==true)) then
-            return false
-        endif
-        if (not(RoundNumber==25)) then
-            return false
-        endif
-        if (not(ElimModeEnabled==false)) then
-            return false
-        endif
-        return true
+    private function IsShortGameComplete takes nothing returns boolean
+        return (GameModeShort == true) and (RoundNumber == 25) and (ElimModeEnabled == false)
     endfunction
 
-    private function Trig_Victory_Func001Func002Func003Func002C takes nothing returns boolean
-        if (not(GameModeShort==false)) then
-            return false
-        endif
-        if (not(RoundNumber==50)) then
-            return false
-        endif
-        if (not(ElimModeEnabled==false)) then
-            return false
-        endif
-        return true
+    private function IsLongGameComplete takes nothing returns boolean
+        return (GameModeShort == false) and (RoundNumber == 50) and (ElimModeEnabled == false)
     endfunction
 
-    private function Trig_Victory_Func001Func002Func003C takes nothing returns boolean
-        if (Trig_Victory_Func001Func002Func003Func001C()) then
-            return true
-        endif
-        if (Trig_Victory_Func001Func002Func003Func002C()) then
-            return true
-        endif
-        return false
+    private function IsShortOrLongGameComplete takes nothing returns boolean
+        return IsShortGameComplete() or IsLongGameComplete()
     endfunction
 
-    private function Trig_Victory_Func001Func002C takes nothing returns boolean
-        if (not(InitialPlayerCount==1)) then
-            return false
-        endif
-        if (not(PlayerCount==1)) then
-            return false
-        endif
-        if (not Trig_Victory_Func001Func002Func003C()) then
-            return false
-        endif
-        return true
-    endfunction
-
-    private function Trig_Victory_Func001C takes nothing returns boolean
-        if (Trig_Victory_Func001Func001C()) then
-            return true
-        endif
-        if (Trig_Victory_Func001Func002C()) then
-            return true
-        endif
-        return false
+    private function IsInitialSoloPlayerGame takes nothing returns boolean
+        return (InitialPlayerCount == 1) and (PlayerCount == 1) and IsShortOrLongGameComplete()
     endfunction
 
     private function EndGameConditions takes nothing returns boolean
-        if (not Trig_Victory_Func001C()) then
-            return false
-        endif
-        return true
+        return IsOnlyOnePlayerRemaining() or IsInitialSoloPlayerGame()
     endfunction
 
     private function AutoSaveForPlayer takes nothing returns nothing
@@ -124,7 +66,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
         if (InitialPlayerCount == 1 and PlayerCount == 1) then
             call DisplayTimedTextToForce(GetPlayersAll(), 30, "|cffffcc00You survived all levels! Congratulations!!")
         else
-            if WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE) then
+            if (WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE)) then
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(WinningPlayer) + " |cffffcc00survived longer than all other players! Congratulations!!")
 

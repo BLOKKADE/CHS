@@ -4,7 +4,7 @@ library UpdateItems initializer init requires RandomShit
         call ReplaceUnitBJ(GetEnumUnit(), 'n017', bj_UNIT_STATE_METHOD_RELATIVE)
     endfunction
 
-    private function Trig_Update_Items_Actions takes nothing returns nothing
+    private function UpdateItemsActions takes nothing returns nothing
         local group shopUnits
 
         if (((RoundNumber == 10) and ((ElimModeEnabled == true) or (GameModeShort == true))) or (RoundNumber == 20)) then
@@ -20,7 +20,7 @@ library UpdateItems initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set UpdateItemsTrigger = CreateTrigger()
-        call TriggerAddAction(UpdateItemsTrigger,function Trig_Update_Items_Actions)
+        call TriggerAddAction(UpdateItemsTrigger,function UpdateItemsActions)
     endfunction
 
 endlibrary
