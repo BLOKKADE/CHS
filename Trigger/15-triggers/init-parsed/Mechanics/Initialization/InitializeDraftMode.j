@@ -60,7 +60,7 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit, DraftModeFu
         set udg_Draft_PlayerSpells = InitHashtable()
 
         // For each player: initalizes NOSpellsLearned, the individual arrays the spells are generated from and the max index of that array.
-        call ForForce(udg_PlayersWithHero, function SetupDraftForPlayer)
+        call ForForce(PlayersWithHero, function SetupDraftForPlayer)
 
         // Creates buildings and generates draft spells
         call CreateDraftBuildings()

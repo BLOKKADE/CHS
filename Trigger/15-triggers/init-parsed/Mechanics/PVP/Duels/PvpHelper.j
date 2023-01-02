@@ -1,4 +1,4 @@
-library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults, OldInitialization
+library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults, GameInit, InitializeBettingDialogs
 
     globals
         // Keep track if the odd player duel has been started
@@ -29,7 +29,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         local player currentPlayer = GetEnumPlayer()
 
         if (GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) > 0 or GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_LUMBER) > 0) then
-            call DialogDisplayBJ(true, Dialogs[1], currentPlayer)
+            call DialogDisplayBJ(true, BettingDialogs[1], currentPlayer)
         endif
 
         // Cleanup
@@ -41,7 +41,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
         loop
             exitwhen dialogIndex > 3
-            call DialogDisplay(GetEnumPlayer(), Dialogs[dialogIndex], false)
+            call DialogDisplay(GetEnumPlayer(), BettingDialogs[dialogIndex], false)
             set dialogIndex = dialogIndex + 1
         endloop
     endfunction
@@ -242,13 +242,13 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         set AllowBetSelection = true
 
         if (BettingEnabled == true) then
-            call DialogClear(Dialogs[1])
-            call DialogSetMessage(Dialogs[1], "Betting Menu")
+            call DialogClear(BettingDialogs[1])
+            call DialogSetMessage(BettingDialogs[1], "Betting Menu")
 
             // Add the dueling hero player names to the betting menu
-            set DialogButtons[1] = DialogAddButtonBJ(Dialogs[1], "<< " + ConvertForceToUnitString(team1) + "|r   ")
-            set DialogButtons[2] = DialogAddButtonBJ(Dialogs[1], "   " + ConvertForceToUnitString(team2) + "|r >>")
-            set DialogButtons[3] = DialogAddButtonBJ(Dialogs[1], "Skip")
+            set BettingDialogButtons[1] = DialogAddButtonBJ(BettingDialogs[1], "<< " + ConvertForceToUnitString(team1) + "|r   ")
+            set BettingDialogButtons[2] = DialogAddButtonBJ(BettingDialogs[1], "   " + ConvertForceToUnitString(team2) + "|r >>")
+            set BettingDialogButtons[3] = DialogAddButtonBJ(BettingDialogs[1], "Skip")
 
             // Show the betting dialog to all non dueling players
             set nonDuelingPlayers = GetPlayersMatching(Condition(function FilterNonDuelingPlayers))

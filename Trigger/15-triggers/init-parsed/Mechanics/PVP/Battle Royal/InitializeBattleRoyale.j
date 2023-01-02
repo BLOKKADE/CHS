@@ -30,8 +30,8 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         local location playableAreaLocation = GetRectCenter(GetPlayableMapRect())
         local location projectionLocation = PolarProjectionBJ(playableAreaLocation, 1200, (((I2R(GetPlayerId(currentPlayer))) * -45.00) - 225.00))
 
-        set udg_unit01 = currentUnit // Used in HeroRefreshTrigger
-        call PauseUnit(udg_unit01, true)
+        set TempUnit = currentUnit // Used in HeroRefreshTrigger
+        call PauseUnit(TempUnit, true)
         call ConditionalTriggerExecute(HeroRefreshTrigger)
 
         // Place hero and pet in a circle using their player id as angle

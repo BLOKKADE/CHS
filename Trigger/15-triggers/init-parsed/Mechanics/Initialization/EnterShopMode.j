@@ -39,10 +39,6 @@ library EnterShopMode initializer init requires RandomShit
         set shops = null
 
         call TriggerSleepAction(0.00)
-
-        call EnableTrigger(udg_trigger123)
-        call EnableTrigger(udg_trigger127)
-        call EnableTrigger(udg_trigger132)
     endfunction
 
     private function init takes nothing returns nothing

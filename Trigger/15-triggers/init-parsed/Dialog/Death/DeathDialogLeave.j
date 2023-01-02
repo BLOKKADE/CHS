@@ -1,7 +1,7 @@
 library DeathDialogLeave initializer init requires RandomShit
 
     private function DeathDialogLeaveConditions takes nothing returns boolean
-        return GetClickedButton() == udg_buttons03[2]
+        return GetClickedButton() == DeathDialogButtons[2]
     endfunction
 
     private function DeathDialogLeaveActions takes nothing returns nothing
@@ -10,7 +10,7 @@ library DeathDialogLeave initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set DeathDialogLeaveTrigger = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(DeathDialogLeaveTrigger, udg_dialog04)
+        call TriggerRegisterDialogEventBJ(DeathDialogLeaveTrigger, DeathDialog)
         call TriggerAddCondition(DeathDialogLeaveTrigger, Condition(function DeathDialogLeaveConditions))
         call TriggerAddAction(DeathDialogLeaveTrigger, function DeathDialogLeaveActions)
     endfunction

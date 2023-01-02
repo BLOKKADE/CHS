@@ -10,8 +10,6 @@ library DisableAbilities initializer init requires RandomShit, DummyActiveSpell
         if CheckIfCastAllowed(GetTriggerUnit()) then
             call IssueImmediateOrder(GetTriggerUnit(), "stop")
             //call BJDebugMsg(GetUnitName(GetTriggerUnit()) +  "disable abilities stop")
-        else
-            //call ConditionalTriggerExecute(udg_trigger37)
         endif
     endfunction
 

@@ -29,7 +29,7 @@ library PlayerLeavesGame initializer init requires RandomShit
         local location arenaLocation
 
         call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayer(udg_force07, leaverPlayer)
+        call ForceAddPlayer(LeaverPlayers, leaverPlayer)
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
         call ResetHero(PlayerHeroes[playerId + 1])
 

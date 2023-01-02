@@ -1,7 +1,7 @@
-library PlaceGoldAndLumberBet initializer init requires RandomShit
+library PlaceGoldAndLumberBet initializer init requires RandomShit, InitializeBettingDialogs
 
     private function PlaceGoldAndLumberBetConditions takes nothing returns boolean
-        return GetClickedButton() == DialogButtons[6]
+        return GetClickedButton() == BettingDialogButtons[6]
     endfunction
 
     private function PlaceGoldAndLumberBetActions takes nothing returns nothing
@@ -10,15 +10,15 @@ library PlaceGoldAndLumberBet initializer init requires RandomShit
 
         // Check the player actually has any gold and lumber
         if (GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) > 0 and GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_LUMBER) > 0) then
-            call DialogSetMessage(Dialogs[3], "Betting Menu")
-            call DialogDisplay(currentPlayer, Dialogs[3], true)
+            call DialogSetMessage(BettingDialogs[3], "Betting Menu")
+            call DialogDisplay(currentPlayer, BettingDialogs[3], true)
             set PlayerPlacedGoldBet[playerId] = true
             set PlayerPlacedLumberBet[playerId] = true
         else
             // Check if they took too long trying to bet
             if (AllowBetSelection == true) then
                 // Go to the next dialog
-                call DialogDisplay(currentPlayer, Dialogs[2], true)
+                call DialogDisplay(currentPlayer, BettingDialogs[2], true)
             endif
         endif
 
@@ -28,7 +28,7 @@ library PlaceGoldAndLumberBet initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set PlaceGoldAndLumberBetTrigger = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(PlaceGoldAndLumberBetTrigger, Dialogs[2])
+        call TriggerRegisterDialogEventBJ(PlaceGoldAndLumberBetTrigger, BettingDialogs[2])
         call TriggerAddCondition(PlaceGoldAndLumberBetTrigger, Condition(function PlaceGoldAndLumberBetConditions))
         call TriggerAddAction(PlaceGoldAndLumberBetTrigger, function PlaceGoldAndLumberBetActions)
     endfunction

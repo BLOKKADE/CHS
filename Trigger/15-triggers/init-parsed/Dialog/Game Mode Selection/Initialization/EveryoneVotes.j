@@ -1,7 +1,7 @@
 library EveryoneVotes initializer init requires RandomShit
 
     private function EveryoneVotesConditions takes nothing returns boolean
-        return GetClickedButton() == udg_buttons04[0]
+        return GetClickedButton() == VotingRightButtons[0]
     endfunction
 
     private function EveryoneVotesActions takes nothing returns nothing
@@ -11,7 +11,7 @@ library EveryoneVotes initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set EveryoneVotesTrigger = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(EveryoneVotesTrigger, udg_dialog06)
+        call TriggerRegisterDialogEventBJ(EveryoneVotesTrigger, VotingRightsDialog)
         call TriggerAddCondition(EveryoneVotesTrigger, Condition(function EveryoneVotesConditions))
         call TriggerAddAction(EveryoneVotesTrigger, function EveryoneVotesActions)
     endfunction

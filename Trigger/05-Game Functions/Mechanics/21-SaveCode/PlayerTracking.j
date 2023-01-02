@@ -1,6 +1,6 @@
-library PlayerTracking initializer init requires OldInitialization
+library PlayerTracking initializer init requires GameInit
     
-    // OldInitialization contains values about what mode is selected
+    // GameInit contains values about what mode is selected
     // AbilityMode -> Pick == 1, AR == 0, Draft == 2
     // RandomHeroMode -> true == Random Hero, false == Pick Hero
 

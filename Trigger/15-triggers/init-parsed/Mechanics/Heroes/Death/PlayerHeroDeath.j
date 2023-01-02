@@ -136,8 +136,8 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call EnableTrigger(FaerieDragonDiesTrigger)
     
         if (GetPlayerController(currentPlayer) == MAP_CONTROL_USER) then
-            call DialogSetMessage(udg_dialog04, "Defeat!")
-            call DialogDisplay(currentPlayer, udg_dialog04, true)
+            call DialogSetMessage(DeathDialog, "Defeat!")
+            call DialogDisplay(currentPlayer, DeathDialog, true)
         else
             call CustomDefeatBJ(currentPlayer, "Defeat!")
         endif

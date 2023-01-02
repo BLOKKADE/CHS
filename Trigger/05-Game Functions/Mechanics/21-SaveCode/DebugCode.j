@@ -1,4 +1,4 @@
-library DebugCode requires RandomShit, OldInitialization
+library DebugCode requires RandomShit, GameInit
 
     public function SavePlayerDebug takes player p returns nothing
         local string debugCode = ""

@@ -29,7 +29,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
     function KickPlayer takes player p returns nothing
         set udg_boolean17 = true
         call PlaySoundBJ(udg_sound04)
-        call ForceAddPlayerSimple(p,udg_force07)
+        call ForceAddPlayerSimple(p,LeaverPlayers)
         call CustomDefeatBJ(p,"Kicked!")
         call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+ "|cffffcc00 was kicked out of the game!|r")))
     endfunction

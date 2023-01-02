@@ -13,48 +13,33 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
     endfunction
 
     private function IsPvpRound takes nothing returns boolean
-        if (MorePvp == 0) then
-            if (RoundNumber == 10) then
-                return true
-            endif
-            if (RoundNumber == 20) then
-                return true
-            endif
-            if (RoundNumber == 30) then
-                return true
-            endif
-            if (RoundNumber == 40) then
-                return true
-            endif
-        else
-            if (RoundNumber == 5) then
-                return true
-            endif
-            if (RoundNumber == 10) then
-                return true
-            endif
-            if (RoundNumber == 15) then
-                return true
-            endif
-            if (RoundNumber == 20) then
-                return true
-            endif
-            if (RoundNumber == 25) then
-                return true
-            endif
-            if (RoundNumber == 30) then
-                return true
-            endif	
-            if (RoundNumber == 35) then
-                return true
-            endif	
-            if (RoundNumber == 40) then
-                return true
-            endif	
-            if (RoundNumber == 45) then
-                return true
-            endif	
+        if (RoundNumber == 5) then
+            return true
         endif
+        if (RoundNumber == 10) then
+            return true
+        endif
+        if (RoundNumber == 15) then
+            return true
+        endif
+        if (RoundNumber == 20) then
+            return true
+        endif
+        if (RoundNumber == 25) then
+            return true
+        endif
+        if (RoundNumber == 30) then
+            return true
+        endif	
+        if (RoundNumber == 35) then
+            return true
+        endif	
+        if (RoundNumber == 40) then
+            return true
+        endif	
+        if (RoundNumber == 45) then
+            return true
+        endif	
     
         return false
     endfunction

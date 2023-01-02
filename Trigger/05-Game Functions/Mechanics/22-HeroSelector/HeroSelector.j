@@ -1,4 +1,4 @@
-library HeroSelector initializer init_function requires optional FrameLoader, OldInitialization
+library HeroSelector initializer init_function requires optional FrameLoader, GameInit
     //HeroSelector V1.6b
     //API
     //=====

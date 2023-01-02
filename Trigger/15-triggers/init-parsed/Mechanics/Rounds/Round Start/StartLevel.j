@@ -37,7 +37,7 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
             call SetUnitPositionLoc(ps.getPet(), arenaLocation)
         endif
 
-        set udg_unit01 = playerHero // Used in HeroRefreshTrigger
+        set TempUnit = playerHero // Used in HeroRefreshTrigger
         call ConditionalTriggerExecute(HeroRefreshTrigger)
         call SelectUnitForPlayerSingle(playerHero, GetOwningPlayer(playerHero))
         call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation, 0)

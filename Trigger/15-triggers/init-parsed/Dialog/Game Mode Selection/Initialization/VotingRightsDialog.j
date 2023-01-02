@@ -9,20 +9,20 @@ library VotingRightsDialog initializer init requires RandomShit
             return
         endif
 
-        call DialogSetMessage(udg_dialog06, "Voting Rights")
-        call DialogAddButtonBJ(udg_dialog06, GetPlayerNameColour(HostPlayer))
+        call DialogSetMessage(VotingRightsDialog, "Voting Rights")
+        call DialogAddButtonBJ(VotingRightsDialog, GetPlayerNameColour(HostPlayer))
 
         // Everyone can vote option
-        call DialogAddButtonBJ(udg_dialog06, "Everyone")
-        set udg_buttons04[0] = GetLastCreatedButtonBJ()
-        call DialogDisplayBJ(true, udg_dialog06, HostPlayer)
+        call DialogAddButtonBJ(VotingRightsDialog, "Everyone")
+        set VotingRightButtons[0] = GetLastCreatedButtonBJ()
+        call DialogDisplayBJ(true, VotingRightsDialog, HostPlayer)
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Please wait!")
         call StartTimerBJ(GetLastCreatedTimerBJ(), false, 15.00)
         call TriggerSleepAction(15.00)
 
         // If the player doesn't select anything, default to everyone voting
         if (IsTriggerEnabled(DialogInitializationTrigger) != true) then
-            call DialogDisplayBJ(false, udg_dialog06, HostPlayer)
+            call DialogDisplayBJ(false, VotingRightsDialog, HostPlayer)
             call TriggerExecute(EveryoneVotesTrigger)
         endif
     endfunction

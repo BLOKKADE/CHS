@@ -10,7 +10,7 @@ library TryLearnRandomAbility initializer init requires RandomShit
     function Trig_Random_Ability_Actions takes nothing returns nothing
         if AbilityMode != 2 then
             set UnknownInteger02 = 0
-            set udg_unit01 = GetTriggerUnit()
+            set TempUnit = GetTriggerUnit()
             call ConditionalTriggerExecute(LearnRandomAbilityTrigger)
         else
             call AdjustPlayerStateBJ(5, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_LUMBER)

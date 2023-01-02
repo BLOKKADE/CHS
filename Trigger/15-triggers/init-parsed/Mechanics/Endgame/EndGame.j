@@ -147,7 +147,6 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
         call EndThematicMusicBJ()
         call SetMusicVolumeBJ(0.00)
         call PlaySoundBJ(udg_sound05)
-        call DisableTrigger(udg_trigger87)
         call TriggerSleepAction(2.00)
         call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cffffcc00Thank you for playing|r " + "|cff7bff00" + CurrentGameVersion.getVersionString() + "|r")
 

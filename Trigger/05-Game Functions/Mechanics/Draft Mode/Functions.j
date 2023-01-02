@@ -113,7 +113,7 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
             set FloatingTextBuy = ShopText(0 - OffsetX, OffsetY, "Buy abilities", 255, 100, 0)
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', OffsetX, OffsetY, 0)
             set FloatingTextUpgrade = ShopText(OffsetX, OffsetY, "Upgrade abilities", 0, 255, 100)
-            call ForForce( udg_PlayersWithHero, function CreateDraftBuildingsLoop )
+            call ForForce( PlayersWithHero, function CreateDraftBuildingsLoop )
         endif
     endfunction
 

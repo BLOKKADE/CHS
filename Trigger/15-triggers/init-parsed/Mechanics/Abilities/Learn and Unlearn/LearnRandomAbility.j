@@ -1,10 +1,10 @@
 library LearnRandomAbility initializer init requires RandomShit
 
     function Trig_Learn_Random_Ability_Func004Func003Func003Func001C takes nothing returns boolean
-        if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]< 10))then
+        if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(TempUnit))]< 10))then
             return false
         endif
-        if(not(GetUnitTypeId(udg_unit01)=='O000'))then
+        if(not(GetUnitTypeId(TempUnit)=='O000'))then
             return false
         endif
         return true
@@ -12,10 +12,10 @@ library LearnRandomAbility initializer init requires RandomShit
 
 
     function Trig_Learn_Random_Ability_Func004Func003Func003Func002C takes nothing returns boolean
-        if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]< 10))then
+        if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(TempUnit))]< 10))then
             return false
         endif
-        if(not(GetUnitTypeId(udg_unit01)!='O000'))then
+        if(not(GetUnitTypeId(TempUnit)!='O000'))then
             return false
         endif
         return true
@@ -34,7 +34,7 @@ library LearnRandomAbility initializer init requires RandomShit
 
 
     function Trig_Learn_Random_Ability_Func004Func003C takes nothing returns boolean
-        if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),udg_unit01)==0))then
+        if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),TempUnit)==0))then
             return false
         endif
         if(not(RoundCreepAbilCastChance!=GetItemTypeId(null)))then
@@ -64,10 +64,10 @@ library LearnRandomAbility initializer init requires RandomShit
 
 
     function Trig_Learn_Random_Ability_Func004Func001Func005Func001Func001C takes nothing returns boolean
-        if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]>= 10))then
+        if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(TempUnit))]>= 10))then
             return false
         endif
-        if(not(GetUnitTypeId(udg_unit01)=='O000'))then
+        if(not(GetUnitTypeId(TempUnit)=='O000'))then
             return false
         endif
         return true
@@ -75,10 +75,10 @@ library LearnRandomAbility initializer init requires RandomShit
 
 
     function Trig_Learn_Random_Ability_Func004Func001Func005Func001Func002C takes nothing returns boolean
-        if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(udg_unit01))]>= 10))then
+        if(not(HeroAbilityCount[GetConvertedPlayerId(GetOwningPlayer(TempUnit))]>= 10))then
             return false
         endif
-        if(not(GetUnitTypeId(udg_unit01)!='O000'))then
+        if(not(GetUnitTypeId(TempUnit)!='O000'))then
             return false
         endif
         return true
@@ -100,10 +100,10 @@ library LearnRandomAbility initializer init requires RandomShit
         if(not Trig_Learn_Random_Ability_Func004Func001Func005Func001C())then
             return false
         endif
-        if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),udg_unit01)> 0))then
+        if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),TempUnit)> 0))then
             return false
         endif
-        if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),udg_unit01)< 30))then
+        if(not(GetUnitAbilityLevelSwapped(GetAbilityFromItem(RoundCreepAbilCastChance),TempUnit)< 30))then
             return false
         endif
         if(not(UnknownInteger02 <= 500))then
@@ -138,43 +138,44 @@ library LearnRandomAbility initializer init requires RandomShit
 
 
     function Trig_Learn_Random_Ability_Actions takes nothing returns nothing
-        set udg_player02 = GetOwningPlayer(udg_unit01)
+        local player currentPlayer = GetOwningPlayer(TempUnit)
         set RoundCreepAbilCastChance = GetItemFromAbility(GetRandomAbility())
+
         if(Trig_Learn_Random_Ability_Func004C())then
             if(Trig_Learn_Random_Ability_Func004Func002C())then
                 set ArNotLearningAbil = false
                 set ARLearningAbil = true
-                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(currentPlayer)])
                 set ARLearningAbil = false
                 set ArNotLearningAbil = true
             else
-                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(currentPlayer)])
             endif
         else
             if(Trig_Learn_Random_Ability_Func004Func001C())then
                 if(Trig_Learn_Random_Ability_Func004Func001Func002C())then
                     set ArNotLearningAbil = false
                     set ARLearningAbil = true
-                    call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(udg_player02)])
+                    call UnitAddItemByIdSwapped(RoundCreepAbilCastChance,PlayerHeroes[GetConvertedPlayerId(currentPlayer)])
                     set ARLearningAbil = false
                     set ArNotLearningAbil = true
                 else
-                    call AdjustPlayerStateBJ(5,GetOwningPlayer(udg_unit01),PLAYER_STATE_RESOURCE_LUMBER)
+                    call AdjustPlayerStateBJ(5,GetOwningPlayer(TempUnit),PLAYER_STATE_RESOURCE_LUMBER)
     
-                    call ResourseRefresh(GetOwningPlayer(udg_unit01) )
-                    call ForceAddPlayerSimple(GetOwningPlayer(udg_unit01),bj_FORCE_PLAYER[11])
+                    call ResourseRefresh(GetOwningPlayer(TempUnit) )
+                    call ForceAddPlayerSimple(GetOwningPlayer(TempUnit),bj_FORCE_PLAYER[11])
                     call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to learn!")
-                    call ForceRemovePlayerSimple(GetOwningPlayer(udg_unit01),bj_FORCE_PLAYER[11])
+                    call ForceRemovePlayerSimple(GetOwningPlayer(TempUnit),bj_FORCE_PLAYER[11])
                     return
                 endif
             else
                 if(Trig_Learn_Random_Ability_Func004Func001Func001C())then
-                    call AdjustPlayerStateBJ(5,GetOwningPlayer(udg_unit01),PLAYER_STATE_RESOURCE_LUMBER)
-                    call ResourseRefresh(GetOwningPlayer(udg_unit01) )
+                    call AdjustPlayerStateBJ(5,GetOwningPlayer(TempUnit),PLAYER_STATE_RESOURCE_LUMBER)
+                    call ResourseRefresh(GetOwningPlayer(TempUnit) )
     
-                    call ForceAddPlayerSimple(GetOwningPlayer(udg_unit01),bj_FORCE_PLAYER[11])
+                    call ForceAddPlayerSimple(GetOwningPlayer(TempUnit),bj_FORCE_PLAYER[11])
                     call DisplayTimedTextToForce(bj_FORCE_PLAYER[11],2.00,"|cffffcc00Failed to learn!")
-                    call ForceRemovePlayerSimple(GetOwningPlayer(udg_unit01),bj_FORCE_PLAYER[11])
+                    call ForceRemovePlayerSimple(GetOwningPlayer(TempUnit),bj_FORCE_PLAYER[11])
                     return
                 else
                 endif
@@ -182,6 +183,9 @@ library LearnRandomAbility initializer init requires RandomShit
                 call ConditionalTriggerExecute(GetTriggeringTrigger())
             endif
         endif
+
+        // Cleanup
+        set currentPlayer = null
     endfunction
 
 

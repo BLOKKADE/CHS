@@ -1,7 +1,7 @@
-library PlacePercentageBet initializer init requires RandomShit, PvpRoundRobin
+library PlacePercentageBet initializer init requires RandomShit, PvpRoundRobin, InitializeBettingDialogs
 
     private function PlacePercentageBetConditions takes nothing returns boolean
-        return GetClickedButton() == DialogButtons[8] or GetClickedButton() == DialogButtons[9] or GetClickedButton() == DialogButtons[10]
+        return GetClickedButton() == BettingDialogButtons[8] or GetClickedButton() == BettingDialogButtons[9] or GetClickedButton() == BettingDialogButtons[10]
     endfunction
 
     private function PlacePercentageBetActions takes nothing returns nothing
@@ -9,13 +9,13 @@ library PlacePercentageBet initializer init requires RandomShit, PvpRoundRobin
         local integer playerId = GetConvertedPlayerId(currentPlayer)
 
         // 25% resource bet
-        if (GetClickedButton() == DialogButtons[8]) then
+        if (GetClickedButton() == BettingDialogButtons[8]) then
             set PlayerResourceBetPercentage[playerId] = 25
          // 50% resource bet
-        elseif (GetClickedButton() == DialogButtons[9]) then
+        elseif (GetClickedButton() == BettingDialogButtons[9]) then
             set PlayerResourceBetPercentage[playerId] = 50
          // 100% resource bet
-        elseif (GetClickedButton() == DialogButtons[10]) then
+        elseif (GetClickedButton() == BettingDialogButtons[10]) then
             set PlayerResourceBetPercentage[playerId] = 100
         endif
 
@@ -47,7 +47,7 @@ library PlacePercentageBet initializer init requires RandomShit, PvpRoundRobin
 
     private function init takes nothing returns nothing
         set PlacePercentageBetTrigger = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(PlacePercentageBetTrigger, Dialogs[3])
+        call TriggerRegisterDialogEventBJ(PlacePercentageBetTrigger, BettingDialogs[3])
         call TriggerAddCondition(PlacePercentageBetTrigger, Condition(function PlacePercentageBetConditions))
         call TriggerAddAction(PlacePercentageBetTrigger, function PlacePercentageBetActions)
     endfunction

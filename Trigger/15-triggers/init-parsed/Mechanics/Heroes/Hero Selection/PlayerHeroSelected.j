@@ -77,9 +77,6 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         local location projectionLocation
         local integer playerId = GetPlayerId(p)
 
-        // Not exactly sure if we still need this, it is used in trigger114?
-        set udg_player02 = p
-
         set PlayerHeroPicked[playerId + 1] = true
         set SpawnedHeroCount = SpawnedHeroCount + 1
     

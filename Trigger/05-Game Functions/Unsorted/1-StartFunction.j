@@ -41,7 +41,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         local integer hid = GetHandleId(Herou)
         local boolean chronusActivated = false
             
-        if Herou != null and (IsPlayerInForce(GetOwningPlayer(Herou), udg_force07) or GetPlayerSlotState(GetOwningPlayer(Herou)) != PLAYER_SLOT_STATE_PLAYING) then
+        if Herou != null and (IsPlayerInForce(GetOwningPlayer(Herou), LeaverPlayers) or GetPlayerSlotState(GetOwningPlayer(Herou)) != PLAYER_SLOT_STATE_PLAYING) then
             call SetUnitInvulnerable(Herou, false)
             call KillUnit(Herou)
             set Herou = null

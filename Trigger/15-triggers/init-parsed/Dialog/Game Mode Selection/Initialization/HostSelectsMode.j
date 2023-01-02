@@ -1,7 +1,7 @@
 library HostSelectsMode initializer init requires RandomShit
 
     private function HostSelectsModeConditions takes nothing returns boolean
-        return GetClickedButton() != udg_buttons04[0]
+        return GetClickedButton() != VotingRightButtons[0]
     endfunction
 
     private function NotHostPlayerFilter takes nothing returns boolean
@@ -32,7 +32,7 @@ library HostSelectsMode initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set HostSelectsModeTrigger = CreateTrigger()
-        call TriggerRegisterDialogEventBJ(HostSelectsModeTrigger, udg_dialog06)
+        call TriggerRegisterDialogEventBJ(HostSelectsModeTrigger, VotingRightsDialog)
         call TriggerAddCondition(HostSelectsModeTrigger, Condition(function HostSelectsModeConditions))
         call TriggerAddAction(HostSelectsModeTrigger, function HostSelectsModeActions)
     endfunction

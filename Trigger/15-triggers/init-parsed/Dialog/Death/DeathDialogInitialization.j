@@ -1,12 +1,12 @@
 library DeathDialogInitialization initializer init requires RandomShit
 
     private function DeathDialogInitializationActions takes nothing returns nothing
-        call DialogClear(udg_dialog04)
-        call DialogSetMessage(udg_dialog04, "Defeat!")
-        call DialogAddButtonBJ(udg_dialog04, "Spectate")
-        set udg_buttons03[1] = GetLastCreatedButtonBJ()
-        call DialogAddButtonBJ(udg_dialog04, "Leave")
-        set udg_buttons03[2] = GetLastCreatedButtonBJ()
+        call DialogClear(DeathDialog)
+        call DialogSetMessage(DeathDialog, "Defeat!")
+        call DialogAddButtonBJ(DeathDialog, "Spectate")
+        set DeathDialogButtons[1] = GetLastCreatedButtonBJ()
+        call DialogAddButtonBJ(DeathDialog, "Leave")
+        set DeathDialogButtons[2] = GetLastCreatedButtonBJ()
     endfunction
 
     private function init takes nothing returns nothing

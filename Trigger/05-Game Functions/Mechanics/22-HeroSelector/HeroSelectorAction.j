@@ -38,7 +38,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
             call ShowUnit(PreviewUnit, false)
         endif
 
-        call ForceAddPlayerSimple(p, udg_PlayersWithHero)
+        call ForceAddPlayerSimple(p, PlayersWithHero)
 
         call PanCameraToTimedForPlayer(p, GetUnitX(u), GetUnitY(u),0)
         call SelectUnitForPlayerSingle(u, p)
