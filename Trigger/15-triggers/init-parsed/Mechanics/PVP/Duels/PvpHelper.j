@@ -188,7 +188,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         set playerHero = null
     endfunction
 
-    private function InitializeFightBetweenForces takes force team1, force team2, rect arena, boolean isOddDuel returns nothing
+    private function InitializeFightBetweenForces takes force team1, force team2, rect arena returns nothing
         local string team1ForceString = ConvertForceToUnitString(team1)
         local string team2ForceString = ConvertForceToUnitString(team2)
         local force nonDuelingPlayers
@@ -218,7 +218,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call SetForceAllianceStateBJ(team2, team2, bj_ALLIANCE_ALLIED)
 
         // Either do actions for just the two teams, or everyone depending on the simlutaneous vote status
-        if (SimultaneousDuelMode == 1 or isOddDuel or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
+        if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
             // Move the camera to the arena for everyone
             call ForForce(GetPlayersAll(), function MoveCameraToArenaForPlayer)
 
@@ -287,7 +287,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     
     function InitializeDuelGame takes DuelGame duelGame returns nothing
         set duelGame.isInitialized = true
-        call InitializeFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.getDuelArena(), duelGame.isOddDuel)
+        call InitializeFightBetweenForces(duelGame.team1, duelGame.team2, duelGame.getDuelArena())
     endfunction
 
     function ResetPvpState takes nothing returns nothing

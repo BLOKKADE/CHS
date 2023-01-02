@@ -56,6 +56,7 @@ library PlayerInitialization initializer init requires RandomShit
         endif
 
         // No idea why we have this. Maybe alliances aren't setup yet on map init for the next call?
+        call ConditionalTriggerExecute(HideShopsTrigger)
         call TriggerSleepAction(0.00)
 
         call ForForce(validPlayerForce, function SetPlayerAlliances)

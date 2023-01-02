@@ -20,7 +20,7 @@ library HideShops initializer init requires RandomShit
         set currentShop = null
     endfunction
 
-    private function Trig_Hide_Shops_Actions takes nothing returns nothing
+    private function HideShopsActions takes nothing returns nothing
         local group shops = GetUnitsInRectMatching(GetPlayableMapRect(), Condition(function ShopFilter))
 
         set HideShopsCount = 0
@@ -28,12 +28,12 @@ library HideShops initializer init requires RandomShit
 
         // Cleanup
         call DestroyGroup(shops)
-        set shops= null
+        set shops = null
     endfunction
 
     private function init takes nothing returns nothing
         set HideShopsTrigger = CreateTrigger()
-        call TriggerAddAction(HideShopsTrigger, function Trig_Hide_Shops_Actions)
+        call TriggerAddAction(HideShopsTrigger, function HideShopsActions)
     endfunction
 
 endlibrary

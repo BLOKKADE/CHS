@@ -103,7 +103,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         set message = GetPlayerNameColour(currentPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"
 
         // Show the PVP kill count if this is not simultaneous duels. Otherwise it will be a lot of spam
-        if (duelGame.isOddDuel or SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
+        if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, message)
         else
             // Otherwise show the pvp stats to everyone in the duel

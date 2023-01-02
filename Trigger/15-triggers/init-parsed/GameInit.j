@@ -95,6 +95,7 @@ library GameInit initializer init requires GroupUtils
         player SingleplayerPlayer = null
         player WinningPlayer
         real RoundCreepPower = 0
+        rect RectMidArena
         rect array PlayerArenaRects
         sound array udg_sounds01
         sound udg_sound01 = null

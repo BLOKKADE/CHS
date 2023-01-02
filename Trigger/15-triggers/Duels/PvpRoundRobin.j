@@ -71,7 +71,6 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         force team2
         boolean isDuelOver
         boolean isInitialized
-        boolean isOddDuel
         boolean team1Won
         boolean fightStarted
         SuddenDeath suddenDeath
@@ -250,7 +249,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call TimerDialogDisplay(this.NextPvpBattleDialog, false)
             call TimerDialogSetTitle(this.NextPvpBattleDialog, "Next PvP Battle ...")
             
-            if this.isOddDuel or SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+            if SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
                 call TimerDialogDisplay(this.NextPvpBattleDialog, true)
             endif
         endmethod
@@ -265,7 +264,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call TimerDialogSetTitle(this.DuelPrepareDialog, "Prepare ...")
 
             // Show the dialog for everyone if this is not simulataneous duels
-            if this.isOddDuel or SimultaneousDuelMode == 1 then
+            if SimultaneousDuelMode == 1 then
                 call TimerDialogDisplay(this.DuelPrepareDialog, true)
             // Only show the dialog and play the noise for the team2 if simultaneous duels
             elseif BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
@@ -294,7 +293,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 
                     set this.currentCountdown = this.currentCountdown - 1
 
-                    if this.isOddDuel or SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
+                    if SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
                         call PlaySoundBJ(udg_sound09) // Ticking noise
                     endif
                 endif
@@ -367,7 +366,6 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         call ForceAddPlayer(team2, Player(OddPlayer))
 
         set currentDuelGame = DuelGame.create(team1, team2, GetOpenArenaIndex())
-        set currentDuelGame.isOddDuel = true
 
         call DuelGameList.unshift(currentDuelGame)
         call DuelGameListRemaining.unshift(currentDuelGame)
