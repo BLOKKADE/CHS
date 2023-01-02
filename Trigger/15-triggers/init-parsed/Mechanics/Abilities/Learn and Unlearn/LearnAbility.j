@@ -8,70 +8,6 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomEven
         return GetAbilityFromItem(GetItemTypeId(GetManipulatedItem())) != 0
     endfunction
 
-    private function IsRangedAbility takes nothing returns boolean
-        // Black arrow, Cold array, Searing arrow, Liquid fire, Multishot
-        return (BoughtAbility == 'ANba') or (BoughtAbility == 'AHca') or (BoughtAbility == 'AHfa') or (BoughtAbility == 'Aliq') or (BoughtAbility == 'Aroc')
-    endfunction
-
-    private function IsMeleeAbility takes nothing returns boolean
-        // Cleaving attack
-        return (BoughtAbility == 'ANca')
-    endfunction
-
-    private function IsHeroThatCantLearnEnvenomedWeapons takes nothing returns boolean
-        if (GetUnitTypeId(BuyingUnit) == MORTAR_TEAM_UNIT_ID) then
-            return true
-        endif
-
-        if (GetUnitTypeId(BuyingUnit) == PYROMANCER_UNIT_ID) then
-            return true
-        endif
-
-        if (GetUnitTypeId(BuyingUnit) == THUNDER_WITCH_UNIT_ID) then
-            return true
-        endif
-
-        return false
-    endfunction
-
-    private function IsEnvenomedWeaponsAbility takes nothing returns boolean
-        // Envenomed weapons
-        return (BoughtAbility == 'ACvs')
-    endfunction
-
-    private function IsHeroTypeUnableToLearnAbility takes nothing returns boolean
-        // Is a melee hero trying to learn a ranged ability
-        if ((IsUnitType(BuyingUnit, UNIT_TYPE_MELEE_ATTACKER) == true) and IsRangedAbility()) then
-            return true
-        endif
-
-        // Is a ranged hero trying to learn a melee ability
-        if ((IsUnitType(BuyingUnit, UNIT_TYPE_RANGED_ATTACKER) == true) and IsMeleeAbility()) then
-            return true
-        endif
-
-        return false
-    endfunction
-
-    private function IsUnableToLearnAbility takes nothing returns boolean
-        // Hero already has 10 abilities
-        if ((HeroAbilityCount[GetPlayerId(GetOwningPlayer(BuyingUnit)) + 1] >= 10)) then
-            return true
-        endif
-
-        // Hero type can't learn ability
-        if (IsHeroTypeUnableToLearnAbility()) then
-            return true
-        endif
-
-        // Is a hero that can't learn envenomed weapons
-        if (IsHeroThatCantLearnEnvenomedWeapons() and IsEnvenomedWeaponsAbility()) then
-            return true
-        endif
-
-        return false
-    endfunction
-
     private function EconomicModeAbility takes integer abilId returns boolean
         return ECONOMIC_ABILITIES.contains(abilId) and IncomeMode == 3
     endfunction
@@ -165,40 +101,9 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomEven
 
         if (ArNotLearningAbil == false) then
             if (GetUnitAbilityLevel(BuyingUnit, BoughtAbility) == 0) then
-                if (IsUnableToLearnAbility()) then
-                    if (IsHeroTypeUnableToLearnAbility()) then
-                        if (ARLearningAbil == true) then
-                            call ConditionalTriggerExecute(LearnRandomAbilityTrigger)
-                            return
-                        else
-                            if (ARLearningAbil == false) then
-                                call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
-                                call ResourseRefresh(GetOwningPlayer(BuyingUnit))
-                            else
-                                call AdjustPlayerStateBJ(5, GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
-                                call ResourseRefresh(GetOwningPlayer(BuyingUnit))
-                            endif
-
-                            call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
-                            return
-                        endif
-                    endif
-
-                    if (ARLearningAbil == false) then
-                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
-                        call ResourseRefresh(GetOwningPlayer(BuyingUnit))
-                    else
-                        call AdjustPlayerStateBJ(5, GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
-                        call ResourseRefresh(GetOwningPlayer(BuyingUnit))
-                    endif
-
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r")
-                    return
-                else
-                    set HeroAbilityCount[playerId + 1] = HeroAbilityCount[playerId + 1] + 1
-                    set PlayerLastLearnedSpell[playerId + 1] = BoughtAbility
-                    call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, BoughtAbility, maxAbil, true)
-                endif
+                set HeroAbilityCount[playerId + 1] = HeroAbilityCount[playerId + 1] + 1
+                set PlayerLastLearnedSpell[playerId + 1] = BoughtAbility
+                call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, BoughtAbility, maxAbil, true)
             else
                 //increase level ap
                 if (GetUnitAbilityLevel(BuyingUnit, BoughtAbility) < 30) then
@@ -218,9 +123,26 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomEven
                 endif
             endif
         else
-            if (ArNotLearningAbil == true) then
-                if (GetUnitAbilityLevel(BuyingUnit, BoughtAbility) >= 0) then
-                    //failed ar
+            if (GetUnitAbilityLevel(BuyingUnit, BoughtAbility) >= 0) then
+                //failed ar
+                if (ARLearningAbil == false) then
+                    call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
+                    call ResourseRefresh(GetOwningPlayer(BuyingUnit))
+                else
+                    call AdjustPlayerStateBJ(5, GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
+                    call ResourseRefresh(GetOwningPlayer(BuyingUnit))
+                endif
+
+                call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r: (Random mode) 3")
+                return
+            else
+                //increase level ap
+                if (GetUnitAbilityLevel(BuyingUnit, BoughtAbility) < 30) then
+                    call IncUnitAbilityLevelSwapped(BoughtAbility, BuyingUnit)
+                    call FuncEditParam(BoughtAbility, BuyingUnit)
+                    call DestroyEffect(AddSpecialEffectLocBJ(GetUnitLoc(BuyingUnit), "Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl"))
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(BoughtAbility, GetUnitAbilityLevel(BuyingUnit, BoughtAbility)))
+                else
                     if (ARLearningAbil == false) then
                         call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
                         call ResourseRefresh(GetOwningPlayer(BuyingUnit))
@@ -229,27 +151,8 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomEven
                         call ResourseRefresh(GetOwningPlayer(BuyingUnit))
                     endif
 
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r: (Random mode) 3")
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r: 4")
                     return
-                else
-                    //increase level ap
-                    if (GetUnitAbilityLevel(BuyingUnit, BoughtAbility) < 30) then
-                        call IncUnitAbilityLevelSwapped(BoughtAbility,BuyingUnit)
-                        call FuncEditParam(BoughtAbility,BuyingUnit)
-                        call DestroyEffect(AddSpecialEffectLocBJ(GetUnitLoc(BuyingUnit), "Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl"))
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(BoughtAbility, GetUnitAbilityLevel(BuyingUnit, BoughtAbility)))
-                    else
-                        if (ARLearningAbil == false) then
-                            call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
-                            call ResourseRefresh(GetOwningPlayer(BuyingUnit))
-                        else
-                            call AdjustPlayerStateBJ(5, GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
-                            call ResourseRefresh(GetOwningPlayer(BuyingUnit))
-                        endif
-
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r: 4")
-                        return
-                    endif
                 endif
             endif
         endif
