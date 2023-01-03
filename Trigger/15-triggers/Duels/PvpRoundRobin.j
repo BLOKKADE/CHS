@@ -478,7 +478,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         // Add players that are in the game
         loop
             if (UnitAlive(PlayerHeroes[i + 1])) then
-                set tempPlayerIds[i] = i
+                set tempPlayerIds[playerCount] = i
                 set playerCount = playerCount + 1
             endif
             set i = i + 1
