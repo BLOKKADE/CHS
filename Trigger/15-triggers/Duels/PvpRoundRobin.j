@@ -465,19 +465,48 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 
     private function init takes nothing returns nothing
         local integer i = 0
+        local integer j = 0
+        local integer tempPlayerId = 0
+        local integer array tempPlayerIds
+        local integer playerCount = 0
+
         set PlayerList = PlayerList.create()
         set DuelGameList = DuelGameList.create()
         set DuelGameListRemaining = DuelGameListRemaining.create()
         set UsedArenas = UsedArenas.create()
         
+        // Add players that are in the game
         loop
-            if /*UnitAlive(PlayerHeroes[i + 1])*/ true then
-                call PlayerList.push(i)
+            if (UnitAlive(PlayerHeroes[i + 1])) then
+                set tempPlayerIds[i] = i
+                set playerCount = playerCount + 1
             endif
             set i = i + 1
             exitwhen i > 7
         endloop
+
+        set i = playerCount - 1
+
+        // Shuffle the array https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+        loop
+            exitwhen i == 0
+
+            set j = MathRound_floor(GetRandomReal(0, 1) * (i + 1))
+            set tempPlayerId = tempPlayerIds[i]
+            set tempPlayerIds[i] = tempPlayerIds[j]
+            set tempPlayerIds[j] = tempPlayerId
+
+            set i = i - 1
+        endloop
+
         set i = 0
+
+        // Add shuffled players into the player list used by the round robin algorithm
+        loop
+            exitwhen i == playerCount
+            call PlayerList.push(tempPlayerIds[i])
+            set i = i + 1
+        endloop
     endfunction
 
     function UpdatePlayerCount takes nothing returns nothing
