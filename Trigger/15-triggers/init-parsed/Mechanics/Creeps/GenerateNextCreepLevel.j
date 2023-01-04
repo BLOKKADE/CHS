@@ -39,7 +39,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
         if currentAbilities == "" then
             set currentAbilities = nextAbility
         else
-            set currentAbilities = ", " + nextAbility
+            set currentAbilities = currentAbilities + ", " + nextAbility
         endif
 
         return currentAbilities
