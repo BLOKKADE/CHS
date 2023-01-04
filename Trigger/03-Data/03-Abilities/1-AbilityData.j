@@ -1159,7 +1159,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
          call SetLastObjectElement(Element_Wild, 2)
 
          //198 - Contemporary Runes
-         call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "blizzard")
+         call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "burrow")
          call SetLastObjectElement(Element_Arcane, 1)
 
          //198 - Energy Bombardment
