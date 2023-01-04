@@ -1,15 +1,11 @@
 library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpells, LearnAbsolute
 
     globals
+        Table SummonLevel
         integer array SkeletonDefender
         boolean array bnos_a
 
-        integer array SummonCrit
-        integer array SummonCutting
-        integer array SummonLastBreath
-        integer array SummonIceArmor
         integer array SummonWildDefense
-        integer array SummonDomeProtection
         integer array SummonHitPoints
         integer array SummonDamage
         integer array SummonArmor
@@ -21,7 +17,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
     endfunction
 
     private function SummonUnit takes unit u returns nothing
-        local integer i = GetUnitTypeId(u)
+        local integer summonTypeId = GetUnitTypeId(u)
         local integer i2 = 0
         local integer totalLevel = 0
         local integer pid = GetPlayerId(GetOwningPlayer(u))
@@ -54,64 +50,14 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         call AddUnitCustomState(u, BONUS_PVP, GetUnitCustomState(hero, BONUS_PVP))
 
-        if SUMMONS.contains(i) then
-            set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(i)) + UpgradeU
-            if i == WATER_ELEMENTAL_1_UNIT_ID then
-                //call BJDebugMsg("we")
-                call WaterElementalStats(u, totalLevel)
-            elseif i == FERAL_SPIRIT_WOLF_1_UNIT_ID then
-                //call BJDebugMsg("fw")
-                call SpiritWolfStats(u, totalLevel)
-            elseif i == SERPENT_WARD_1_UNIT_ID then
-                //call BJDebugMsg("sw")
-                call SerpentWardStats(u, totalLevel)
-            elseif i == MOUNTAIN_GIANT_1_UNIT_ID then
-                //call BJDebugMsg("mg")
-                call MountainGiantStats(u, totalLevel)
-            elseif i == BEAR_1_UNIT_ID then
-                //call BJDebugMsg("be")
-                call BearStats(u, totalLevel)
-            elseif i == HAWK_1_UNIT_ID then
-                //call BJDebugMsg("ha")
-                call HawkStats(u, totalLevel)
-            elseif i == QUILBEAST_1_UNIT_ID then
-                //call BJDebugMsg("qu")
-                call QuilbeastStats(u, totalLevel)
-            elseif i == PHOENIX_1_UNIT_ID then
-                //call BJDebugMsg("ph")
-                call PhoenixStats(u, totalLevel)
-            elseif i == INFERNAL_1_UNIT_ID then
-                //call BJDebugMsg("in")
-                call InfernoStats(u, totalLevel)
-            elseif i == LAVA_SPAWN_1_UNIT_ID then
-                //call BJDebugMsg("ls")
-                call LavaSpawnStats(u, totalLevel)
-            elseif i == POCKET_FACTORY_1_UNIT_ID then
-                //call BJDebugMsg("pf")
-                call PocketFactoryStats(u, totalLevel)
-            elseif i == CLOCKWORK_GOBLIN_1_UNIT_ID then
-                //call BJDebugMsg("cg")
-                call ClockwerkGoblinStats(u, totalLevel)
-            elseif i == PARASITE_1_UNIT_ID then
-                //call BJDebugMsg("pa")
-                call ParasiteStats(u, totalLevel)
-            elseif i == CARRION_BEETLE_1_UNIT_ID then
-                //call BJDebugMsg("cb")
-                call CarrionBeetleStats(u, totalLevel)
-            elseif i == SKELETON_BATTLEMASTER_1_UNIT_ID then
-                //call BJDebugMsg("basb")
-                call BlackArrowMeleeSkeletonStats(u, totalLevel)
-            elseif i == SKELETON_WARMAGE_1_UNIT_ID then
-                //call BJDebugMsg("basw")
-                call BlackArrowRangedSkeletonStats(u, totalLevel)
-            elseif SKELLIESCAPTAINS.contains(i) then
-                //call BJDebugMsg("rest")
-                call SkeletonStats(u, totalLevel)
-            elseif i == FEARLESS_DEFENDER_CAPTAIN_UNIT_ID then
-                call FearlessDefendersStats(u, GetHeroLevel(hero), totalLevel)
-            endif
+        if SUMMONS.contains(summonTypeId) then
+            call RegisterPlayerSummon(hero, u)
+            set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(summonTypeId)) + UpgradeU
 
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(totalLevel))
+            call GetSummonStatFunction(summonTypeId).evaluate(u, totalLevel)
+
+            set SummonLevel[GetHandleId(u)] = totalLevel
+            call BlzSetUnitName(u,GetUnitName(u)+ ": level " + I2S(totalLevel))
             call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
@@ -123,28 +69,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call AddUnitCustomState(u, BONUS_BLOCK, 10 * i2)
             call AddSummonAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID, i2)
         endif
-
-        /*
-        if SummonCrit[pid] > 0 and i != PHOENIX_1_UNIT_ID then
-            call AddSummonAbility(u, CRITICAL_STRIKE_ABILITY_ID, SummonCrit[pid])
-        endif
-
-        if SummonCutting[pid] > 0 then
-            call AddSummonAbility(u, CUTTING_ABILITY_ID, SummonCutting[pid])
-        endif
-
-        if SummonLastBreath[pid] > 0 then
-            call AddSummonAbility(u, LAST_BREATHS_ABILITY_ID, SummonLastBreath[pid])
-        endif
-
-        if SummonIceArmor[pid] > 0 then
-            call AddSummonAbility(u, ICE_FORCE_ABILITY_ID, SummonIceArmor[pid])
-        endif
-
-        if SummonDomeProtection[pid] > 0 then
-            call AddSummonAbility(u, DOME_OF_PROTECTION_ABILITY_ID, SummonDomeProtection[pid])
-        endif
-        */
 
         if SummonHitPoints[pid] > 0 then
             call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
@@ -296,6 +220,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
     private function init takes nothing returns nothing
         local trigger unitEnterMapTrigger = CreateTrigger()
+        set SummonLevel = Table.create()
         call TriggerRegisterEnterRectSimple(unitEnterMapTrigger, GetPlayableMapRect())
         call TriggerAddAction(unitEnterMapTrigger, function UnitEnterMapActions)
         set unitEnterMapTrigger = null
