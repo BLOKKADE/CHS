@@ -270,6 +270,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //2 - Mana Shield 
         call SaveAbilData(MANA_SHIELD_ABILITY_ID, MANA_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, "manashieldon")
         call SetLastObjectElement(Element_Water, 1)
+        call SetLastAbilityPlain()
         call SetLastAbilityNotReplaceable()
 
         //3 - Carrion Swarm 
