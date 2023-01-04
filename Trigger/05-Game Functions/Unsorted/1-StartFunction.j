@@ -140,12 +140,12 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         set abilLevel = GetUnitAbilityLevel(Herou,FEARLESS_DEFENDERS_ABILITY_ID)   
         if abilLevel > 0 then
             call ElemFuncStart(Herou,FEARLESS_DEFENDERS_ABILITY_ID)
-            set U = CreateUnit( GetOwningPlayer(Herou),'h01A',GetUnitX(Herou)+ 40 * CosBJ(- 30 + GetUnitFacing(Herou)),GetUnitY(Herou)+ 40 * SinBJ(- 30 + GetUnitFacing(Herou)),GetUnitFacing(Herou) )
+            set U = CreateUnit( GetOwningPlayer(Herou), FEARLESS_DEFENDER_CAPTAIN_UNIT_ID,GetUnitX(Herou)+ 40 * CosBJ(- 30 + GetUnitFacing(Herou)),GetUnitY(Herou)+ 40 * SinBJ(- 30 + GetUnitFacing(Herou)),GetUnitFacing(Herou) )
             call BlzSetUnitName(U, "Jeremy The Fearless")
             call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,(8 + (heroLevel * 0.09)) * ChronusLevel)
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))
 
-            set U = CreateUnit( GetOwningPlayer(Herou),'h01A',GetUnitX(Herou)+ 40 * CosBJ(30 + GetUnitFacing(Herou)),GetUnitY(Herou)+ 40 * SinBJ(30 + GetUnitFacing(Herou)),GetUnitFacing(Herou) )
+            set U = CreateUnit( GetOwningPlayer(Herou), FEARLESS_DEFENDER_CAPTAIN_UNIT_ID,GetUnitX(Herou)+ 40 * CosBJ(30 + GetUnitFacing(Herou)),GetUnitY(Herou)+ 40 * SinBJ(30 + GetUnitFacing(Herou)),GetUnitFacing(Herou) )
             call BlzSetUnitName(U, "Julian The Gallant")
             call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,(8 + (heroLevel * 0.09)) * ChronusLevel)
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",U,"head"))  
