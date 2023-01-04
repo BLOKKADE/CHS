@@ -24,8 +24,12 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
         //if damage source was an ability
         if DamageSourceAbility != 0 then
             set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
+        //if damage source is an attack or unknown ability
         else
-            //if damage source is an attack or unknown ability
+            //if damage source is a summon
+            if SUMMONS.contains(DamageSourceTypeId) then
+                set aType = aType + GetObjectName(DamageSource) + " "
+            endif
 
             if Damage.index.isSpell then
                 set aType = aType + "spell"
