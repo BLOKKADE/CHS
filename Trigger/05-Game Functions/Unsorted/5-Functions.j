@@ -221,9 +221,7 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         local real r1 = 0
         local real gloryBonus = 0
         local integer hid = GetHandleId(u)
-        local customEvent e = customEvent.create()
-        set e.EventUnit = u
-        call DispachEvent(CUSTOM_EVENT_COMPLETE_LEVEL, e)
+        call CustomGameEvent_FireEvent(EVENT_COMPLETE_LEVEL, EventInfo.create(p, 0, RoundNumber))
 
         //cleanup items
         set RectPid = pid

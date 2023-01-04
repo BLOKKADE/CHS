@@ -26,12 +26,7 @@ library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLe
                 call UnitRemoveAbility(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1])
                 call FunResetAbility(PlayerLastLearnedSpell[currentPlayerId + 1], currentUnit)
                 call RemoveDummyspell(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1])
-
-                set ce = customEvent.create()
-                set ce.EventUnit = currentUnit
-                set ce.EventSpellId = PlayerLastLearnedSpell[currentPlayerId + 1]
-
-                call DispachEvent(CUSTOM_EVENT_UNLEARN_ABILITY, ce)
+                call CustomGameEvent_FireEvent(EVENT_UNLEARN_ABILITY, EventInfo.create(currentPlayer, PlayerLastLearnedSpell[currentPlayerId + 1], RoundNumber))
 
                 if (AbilityMode == 1) then
                     call RemoveItemFromUpgradeShop(currentPlayerId - 1, GetItemFromAbility(PlayerLastLearnedSpell[currentPlayerId + 1]))

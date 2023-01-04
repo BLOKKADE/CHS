@@ -50,11 +50,12 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomEven
         endif
 
         call UnitAddAbility(u, abil)
-        set e = customEvent.create()
-        set e.EventUnit = u
-        set e.LearnedAbilityIsNew = new
-        set e.EventSpellId = abil
-        call DispachEvent(CUSTOM_EVENT_LEARN_ABILITY, e)
+
+        if new then
+            call CustomGameEvent_FireEvent(EVENT_LEARN_ABILITY, EventInfo.create(p, abil, RoundNumber))
+        else
+            call CustomGameEvent_FireEvent(EVENT_LEVEL_ABILITY, EventInfo.create(p, abil, RoundNumber))
+        endif
 
         call FuncEditParam(abil, u)
         call DestroyEffect(AddSpecialEffectLocBJ(unitLocation, "Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl"))

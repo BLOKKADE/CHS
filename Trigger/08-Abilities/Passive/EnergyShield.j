@@ -22,47 +22,43 @@ library EnergyShield initializer init requires RandomShit, CustomEvent
     endfunction 
 
 
-    private function LearnAbility takes nothing returns boolean
-        local customEvent e = GetTriggerCustomEvent(GetTriggeringTrigger())
-        local effect eff = null
+    function LearnAbility takes EventInfo eventInfo returns nothing
+        local effect fx = null
         local timer t = null
-
-        if e.EventSpellId == ENERGY_SHIELD_ABILITY_ID and e.LearnedAbilityIsNew then
-            set eff = AddLocalizedSpecialEffect("war3mapImported\\Ubershield Azure.mdx", GetUnitX(e.EventUnit), GetUnitY(e.EventUnit))
-            call SaveEffectHandle(HT, GetHandleId(e.EventUnit), ENERGY_SHIELD_ABILITY_ID, eff)
-            set t = CreateTimer()
-            call SaveUnitHandle(HT,GetHandleId(t), 1, e.EventUnit)
-            call SaveEffectHandle(HT, GetHandleId(t), 2, eff)
-            call SaveTimerHandle(HT,GetHandleId(e.EventUnit), ENERGY_SHIELD_ABILITY_ID, t)
+        call BJDebugMsg("learn event")
+        if eventInfo.abilId == ENERGY_SHIELD_ABILITY_ID then
+            set fx = AddLocalizedSpecialEffect("war3mapImported\\Ubershield Azure.mdx", GetUnitX(eventInfo.hero), GetUnitY(eventInfo.hero))
+            call SaveEffectHandle(HT, GetHandleId(eventInfo.hero), ENERGY_SHIELD_ABILITY_ID, fx)
+            set t = NewTimer()
+            call SaveUnitHandle(HT,GetHandleId(t), 1, eventInfo.hero)
+            call SaveEffectHandle(HT, GetHandleId(t), 2, fx)
+            call SaveTimerHandle(HT,GetHandleId(eventInfo.hero), ENERGY_SHIELD_ABILITY_ID, t)
             call TimerStart(t, 0.03, true, function checkShield)
 
-            call BlzSetSpecialEffectAlpha(eff, 60)
-            call BlzSetSpecialEffectZ(eff, 300)
-            call BlzSetSpecialEffectMatrixScale(eff, 4.25, 4.25, 2)
+            call BlzSetSpecialEffectAlpha(fx, 60)
+            call BlzSetSpecialEffectZ(fx, 300)
+            call BlzSetSpecialEffectMatrixScale(fx, 4.25, 4.25, 2)
         endif
 
-        set eff = null
+        set fx = null
         set t = null
-        return false
     endfunction
 
-    private function UnlearnAbility takes nothing returns boolean
-        local customEvent e = GetTriggerCustomEvent(GetTriggeringTrigger())
+    function UnlearnAbility takes EventInfo eventInfo returns nothing
         local timer t = null
 
-        if e.EventSpellId == ENERGY_SHIELD_ABILITY_ID then
-            set t = LoadTimerHandle(HT, GetHandleId(e.EventUnit), ENERGY_SHIELD_ABILITY_ID)
+        if eventInfo.abilId == ENERGY_SHIELD_ABILITY_ID then
+            set t = LoadTimerHandle(HT, GetHandleId(eventInfo.hero), ENERGY_SHIELD_ABILITY_ID)
             call DestroyEffect(LoadEffectHandle(HT, GetHandleId(t), 2))
             call FlushChildHashtable(HT,GetHandleId(t))
             call DestroyTimer(t)
         endif
 
         set t = null
-        return false
     endfunction
 
     private function init takes nothing returns nothing
-        call EventSubscriber(CUSTOM_EVENT_LEARN_ABILITY, function LearnAbility)
-        call EventSubscriber(CUSTOM_EVENT_UNLEARN_ABILITY, function UnlearnAbility)
+        call CustomGameEvent_RegisterEventCode(EVENT_LEARN_ABILITY, CustomEvent.LearnAbility)
+        call CustomGameEvent_RegisterEventCode(EVENT_UNLEARN_ABILITY, CustomEvent.UnlearnAbility)
     endfunction
 endlibrary

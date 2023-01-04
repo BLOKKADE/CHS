@@ -239,12 +239,9 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
     function FixAbilityU takes unit u returns nothing
         local integer i1 = 0
         local real r1 = 0
-        local customEvent e = customEvent.create()
-        set e.EventUnit = u
-        call DispachEvent(CUSTOM_EVENT_FIX_START_ROUND, e)
+        call CustomGameEvent_FireEvent(EVENT_FIX_START_ROUND, EventInfo.create(GetOwningPlayer(u), 0, RoundNumber))
 
         set i1 = LoadInteger(HT, GetHandleId(u), 54021)
-            
         if i1 != 0 then 
             call SetHeroStr(u, GetHeroStr(u, false) - i1, false)
             call SetHeroAgi(u, GetHeroAgi(u, false) - i1, false)

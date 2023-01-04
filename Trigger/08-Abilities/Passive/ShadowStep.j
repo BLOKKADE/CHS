@@ -70,18 +70,17 @@ library ShadowStep initializer init requires AbilityCooldown, CustomEvent
         set u2 = null
     endfunction
 
-    private function LearnAbility takes nothing returns boolean
+    private function LearnAbility takes EventInfo eventInfo returns nothing
         local timer t = null
-        local customEvent e = GetTriggerCustomEvent(GetTriggeringTrigger())
-        if e.EventSpellId == SHADOW_STEP_ABILITY_ID and e.LearnedAbilityIsNew then
-            set t = CreateTimer()
-            call SaveUnitHandle(HT, GetHandleId(t), 1, e.EventUnit)
-            call SaveTimerHandle(HT, GetHandleId(e.EventUnit), SHADOW_STEP_ABILITY_ID, t)
+
+        if eventInfo.abilId == SHADOW_STEP_ABILITY_ID then
+            set t = NewTimer()
+            call SaveUnitHandle(HT, GetHandleId(t), 1, eventInfo.hero)
+            call SaveTimerHandle(HT, GetHandleId(eventInfo.hero), SHADOW_STEP_ABILITY_ID, t)
             call TimerStart(t, 0.10, true, function CheckUnitOrder)
         endif
 
         set t = null 
-        return false
     endfunction
 
 
@@ -89,7 +88,7 @@ library ShadowStep initializer init requires AbilityCooldown, CustomEvent
     private function init takes nothing returns nothing
         local trigger t = CreateTrigger()
 
-        call EventSubscriber(CUSTOM_EVENT_LEARN_ABILITY, function LearnAbility)
+        call CustomGameEvent_RegisterEventCode(CUSTOM_EVENT_LEARN_ABILITY, CustomEvent.LearnAbility)
 
         call TriggerRegisterAnyUnitEventBJ( t, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER  )
         call TriggerRegisterAnyUnitEventBJ( t, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER  )
