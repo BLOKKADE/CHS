@@ -92,8 +92,10 @@ library trigger129 initializer init requires RandomShit
             call UnitAddItemByIdSwapped('ankh',GetLastCreatedUnit())
             call UnitAddItemByIdSwapped('pghe',GetLastCreatedUnit())
             call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
-            call PanCameraToTimedLocForPlayer(GetTriggerPlayer(),arenaLocation,0.10)
-            call SelectUnitForPlayerSingle(GetLastCreatedUnit(),GetTriggerPlayer())
+            if not CamMoveDisabled[pid - 1] then
+                call PanCameraToTimedLocForPlayer(GetTriggerPlayer(),arenaLocation,0.10)
+                call SelectUnitForPlayerSingle(GetLastCreatedUnit(),GetTriggerPlayer())
+            endif
             call TriggerSleepAction(2)
             call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
 

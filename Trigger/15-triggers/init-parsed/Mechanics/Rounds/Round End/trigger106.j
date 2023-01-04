@@ -19,8 +19,10 @@ library trigger106 initializer init requires RandomShit, Functions
                 call SetUnitPositionLoc(ps.getPet(),arenaLocation)
             endif
 
-            call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),arenaLocation,0.20)
-
+            if not CamMoveDisabled[pid] then
+                call PanCameraToTimedLocForPlayer(ConvertedPlayer(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))),arenaLocation,0.20)
+            endif
+            
             call RemoveLocation(arenaLocation)
             set arenaLocation = null
         endif

@@ -35,8 +35,11 @@ library trigger109 initializer init requires RandomShit, StartFunction, SellItem
 
         set udg_unit01 = PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]
         call ConditionalTriggerExecute(udg_trigger82)
-        call SelectUnitForPlayerSingle(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]))
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(),arenaLocation,0)
+
+        if not CamMoveDisabled[GetPlayerId(GetEnumPlayer())] then
+            call SelectUnitForPlayerSingle(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())],GetOwningPlayer(PlayerHeroes[GetConvertedPlayerId(GetEnumPlayer())]))
+            call PanCameraToTimedLocForPlayer(GetEnumPlayer(),arenaLocation,0)
+        endif
         call SetCurrentlyFighting(GetEnumPlayer(), true)
 
         call RemoveLocation(arenaLocation)

@@ -24,7 +24,9 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
         call FixAbominationPassive(u)
-        call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
+        if not CamMoveDisabled[pid] then
+            call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
+        endif
         call ReleaseTimer(GetExpiredTimer())
 
         call RemoveLocation(arenaLocation)
@@ -54,7 +56,9 @@ library trigger80 initializer init requires RandomShit, DebugCommands, Achieveme
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), GetOwningPlayer(u), false)
 
             call FixAbominationPassive(u)
-            call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
+            if not CamMoveDisabled[pid] then
+                call PanCameraToForPlayer(GetOwningPlayer(u),GetUnitX(u),GetUnitY(u))
+            endif
 
             call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[pid + 1], Condition( function RemoveUnitsInArena))
             
