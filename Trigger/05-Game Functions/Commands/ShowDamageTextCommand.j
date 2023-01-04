@@ -28,7 +28,7 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
         else
             //if damage source is a summon
             if SUMMONS.contains(DamageSourceTypeId) then
-                set aType = aType + GetObjectName(DamageSource) + " "
+                set aType = aType + GetObjectName(DamageSourceTypeId) + " "
             endif
 
             if Damage.index.isSpell then
