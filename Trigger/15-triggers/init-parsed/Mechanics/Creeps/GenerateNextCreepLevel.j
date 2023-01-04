@@ -35,130 +35,140 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
         set roundAbilities.integer[0] = index
     endfunction
 
+    private function ConcatAbility takes string currentAbilities, string nextAbility returns string
+        if currentAbilities == "" then
+            set currentAbilities = nextAbility
+        else
+            set currentAbilities = ", " + nextAbility
+        endif
+
+        return currentAbilities
+    endfunction
+
     private function CheckUnitAbilities takes nothing returns nothing
         local string s = ""
     
         if RoundCreepChanceBash == 1 then
-            set s = s + "Bash "
+            set s = ConcatAbility(s, "Bash")
             call AddRoundAbility('ACbh')
         endif
     
         if RoundCreepChanceHurlBoulder == 1 then
-            set s = s + "Hurl Boulder "
+            set s = ConcatAbility(s, "Hurl Boulder")
             call AddRoundAbility('A00W')
         endif
     
         if RoundCreepChanceRejuv == 1 then
-            set s = s + "Rejuvenation "
+            set s = ConcatAbility(s, "Rejuvenation")
             call AddRoundAbility('A00X')
         endif
     
         if RoundCreepChanceBigBadV == 1 then
-            set s = s + "Big Bad Voodoo "
+            set s = ConcatAbility(s, "Big Bad Voodoo")
             call AddRoundAbility('A018')
         endif
     
         if RoundCreepChanceBlink == 1 then
-            set s = s + "Blink "
+            set s = ConcatAbility(s, "Blink")
             call AddRoundAbility('A01A')
         endif
     
         if RoundCreepChanceCritStrike == 1 then
-            set s = s + "Critical Strike "
+            set s = ConcatAbility(s, "Critical Strike")
             call AddRoundAbility('AOcr')
         endif
     
         if RoundCreepChanceEvasion == 1 then
-            set s = s + "Evasion "
+            set s = ConcatAbility(s, "Evasion")
         endif
     
         if RoundCreepChanceFaerieFire == 1 then
-            set s = s + "Faerie Fire "
+            set s = ConcatAbility(s, "Faerie Fire")
             call AddRoundAbility('A016')
         endif
     
         if RoundCreepChanceLifesteal == 1 then
-            set s = s + "Lifesteal "
+            set s = ConcatAbility(s, "Lifesteal")
             call AddRoundAbility('SCva')
         endif
     
         if RoundCreepChanceManaBurn == 1 then
-            set s = s + "Mana Burn "
+            set s = ConcatAbility(s, "Mana Burn")
             call AddRoundAbility('A00V')
         endif
     
         if RoundCreepChanceShockwave == 1 then
-            set s = s + "Shockwave "
+            set s = ConcatAbility(s, "Shockwave")
             call AddRoundAbility('A00U')
         endif
     
         if RoundCreepChanceSlow == 1 then
-            set s = s + "Slow "
+            set s = ConcatAbility(s, "Slow")
             call AddRoundAbility('A013')
         endif
     
         if RoundCreepChanceCleave == 1 then
-            set s = s + "Cleave "
+            set s = ConcatAbility(s, "Cleave")
             call AddRoundAbility('ACce')
         endif
     
         if RoundCreepChanceThorns == 1 then
-            set s = s + "Thorns Aura "
+            set s = ConcatAbility(s, "Thorns Aura")
             call AddRoundAbility('A08F')
         endif
     
         if RoundCreepChanceThunderClap == 1 then
-            set s = s + "Thunder Clap "
+            set s = ConcatAbility(s, "Thunder Clap")
             call AddRoundAbility('A01B')
         endif
     
         if RoundCreepChanceReflectAura == 1 then
-            set s = s + "Reflection Aura "
+            set s = ConcatAbility(s, "Reflection Aura")
             call AddRoundAbility('A093')
         endif
     
         if RoundCreepChanceWizardbane == 1 then
-            set s = s + "Wizardbane Aura  "
+            set s = ConcatAbility(s, "Wizardbane Aura ")
             call AddRoundAbility('A088')
         endif
     
         if RoundCreepChanceDrunkMaster == 1 then
-            set s = s + "Drunken Master "
+            set s = ConcatAbility(s, "Drunken Master")
             call AddRoundAbility('Acdb')
         endif
     
         if RoundCreepChanceSlowAura == 1 then
-            set s = s + "Slow Aura "
+            set s = ConcatAbility(s, "Slow Aura")
             call AddRoundAbility('AOr2')
         endif
     
         if RoundCreepChancePulverize == 1 then
-            set s = s + "Pulverize "
+            set s = ConcatAbility(s, "Pulverize")
             call AddRoundAbility('Awar')
         endif
     
         if RoundCreepChanceLastBreath == 1 then
-            set s = s + "Last Breath "
+            set s = ConcatAbility(s, "Last Breath")
             call AddRoundAbility('A05R')
         endif
     
         if RoundCreepChanceCorrosiveSkin == 1 then
-            set s = s + "Corrosive Skin "
+            set s = ConcatAbility(s, "Corrosive Skin")
             call AddRoundAbility('A00Q')
         endif
     
         if RoundCreepChanceMulticast == 1 then
-            set s = s + "Multicast "
+            set s = ConcatAbility(s, "Multicast")
             call AddRoundAbility('A04F')
         endif
     
         if RoundCreepChanceFastMagic == 1 then
-            set s = s + "Fast Magic "
+            set s = ConcatAbility(s, "Fast Magic")
             call AddRoundAbility('A03P')
         endif
 
         if RoundCreepChanceImmortalAura == 1 then
-            set s = s + "Aura of Immortality"
+            set s = ConcatAbility(s, "Aura of Immortalit")
             call AddRoundAbility('A02L')
         endif
     
@@ -503,12 +513,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cffebde71Range|r: Melee |n"
                         else
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff82f373Range|r: " + I2S(R2I(BlzGetUnitWeaponRealField(creep, UNIT_WEAPON_RF_ATTACK_RANGE, 0))) + "|n"
-                            set s = s + "|cff82f373Ranged|r: "
+                            set s = ConcatAbility(s, "|cff82f373Ranged|r:")
                         endif
                         //call BJDebugMsg("c")
                         if RoundCreepTypeId == 'n01H' or RoundCreepTypeId == 'n00W' then
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bddf1Damage Type|r: magic |n"
-                            set s = s + "|cff9bddf1Magic Damage|r: "
+                            set s = ConcatAbility(s, "|cff9bddf1Magic Damage|r:")
                         else
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff167daDamage Type|r: physical |n"
                         endif
