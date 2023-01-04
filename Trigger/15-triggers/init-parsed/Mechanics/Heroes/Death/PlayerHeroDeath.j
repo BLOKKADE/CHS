@@ -27,9 +27,9 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call ReviveHeroLoc(currentUnit, arenaLocation, true)
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
-        call FixAbominationPassive(u)
+        call FixAbominationPassive(currentUnit)
 
-        if (not CamMoveDisabled[pid]) then
+        if (not CamMoveDisabled[currentPlayerId]) then
             call PanCameraToForPlayer(currentPlayer, GetUnitX(currentUnit), GetUnitY(currentUnit))
         endif
 
@@ -64,8 +64,8 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
             call ReviveHeroLoc(currentUnit, arenaLocation,true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
-            call FixAbominationPassive(u)
-            if not CamMoveDisabled[pid] then
+            call FixAbominationPassive(currentUnit)
+            if not CamMoveDisabled[currentPlayerId] then
                 call PanCameraToForPlayer(currentPlayer, GetUnitX(currentUnit), GetUnitY(currentUnit))
             endif
 

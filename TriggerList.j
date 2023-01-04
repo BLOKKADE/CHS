@@ -156,6 +156,7 @@
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Commands\Hints.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Commands\LoadCommand.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Commands\ModeCommand.j"
+//! import "C:\CHS\CHS\Trigger\05-Game Functions\Commands\NoCamMovement.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Commands\NoIncomeText.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Commands\PlaytimeCommand.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Commands\SantaHat.j"
