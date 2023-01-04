@@ -2,3 +2,6 @@
 ./Build/CompileJass/JassHelper/common.j
 Build/CompileJass/JassHelper/blizzard.j
 Build/CompileJass/JassHelper/common.j
+./CHS.w3xTemp/war3map.j
+CHS.w3xTemp/war3map.j
+*/war3map.j
