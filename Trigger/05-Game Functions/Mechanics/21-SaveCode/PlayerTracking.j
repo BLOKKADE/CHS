@@ -80,6 +80,7 @@ library PlayerTracking initializer init requires GameInit
         private boolean HasAchievementsOpen = false
         private boolean HasScoreboardOpen = false
         private boolean HasLoaded = false
+        private boolean IsReady = false
         private unit Pet = null
         private integer PetLastSwappedAt = 0
         private integer PVPWins = 0 // PVP wins for the current game
@@ -180,6 +181,19 @@ library PlayerTracking initializer init requires GameInit
         
         public method setHasScoreboardOpen takes boolean value returns nothing
             set this.HasScoreboardOpen = value
+        endmethod
+
+        public method toggleIsReady takes nothing returns boolean
+            set this.IsReady = not this.IsReady
+            return this.IsReady
+        endmethod
+        
+        public method setIsReady takes boolean value returns nothing
+            set this.IsReady = value
+        endmethod
+
+        public method isReady takes nothing returns boolean
+            return this.IsReady
         endmethod
 
         // --- Functions for data that is not actually saved

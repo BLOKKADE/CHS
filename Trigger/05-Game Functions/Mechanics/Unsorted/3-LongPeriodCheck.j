@@ -124,10 +124,12 @@ scope LongPeriodCheck initializer init
         //show sell all items/convert gold/lumber button
         if (ShopsCreated == false or BrStarted) then
             call BlzFrameSetVisible(ButtonParentId[3], false)
+            call BlzFrameSetVisible(ButtonParentId[5], false)
             call BlzFrameSetVisible(ButtonParentId[36], false)
             call BlzFrameSetVisible(ButtonParentId[37], false)
         else//if not BlzFrameIsVisible(ButtonParentId[3]) then
             call BlzFrameSetVisible(ButtonParentId[3], true)
+            call BlzFrameSetVisible(ButtonParentId[5], true)
             call BlzFrameSetVisible(ButtonParentId[36], true)
             call BlzFrameSetVisible(ButtonParentId[37], true)
         endif

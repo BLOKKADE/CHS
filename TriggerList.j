@@ -50,6 +50,7 @@
 //! import "C:\CHS\CHS\Trigger\06-UI\AchievementsFrame.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\DiscordFrame.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\IconFrames.j"
+//! import "C:\CHS\CHS\Trigger\06-UI\ReadyButton.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\TooltipFrame.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\UnitInfoPanel.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\XpBonusFrame.j"
