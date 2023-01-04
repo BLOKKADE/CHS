@@ -140,6 +140,19 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 				if GetLocalPlayer() == p then
 					call BlzFrameSetVisible(ScoreboardFrameHandle, TypT)
 				endif
+			
+			// Ready button
+			elseif NumButton == 5 then
+				set ps = PlayerStats.forPlayer(p)
+				set TypT = ps.toggleIsReady()
+
+				call PlayerReadies(p)
+
+				if ps.isReady() then
+					call BlzFrameSetTexture(ButtonId[5] , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , 0, true)
+				else
+					call BlzFrameSetTexture(ButtonId[5] , "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp" , 0, true)
+				endif
 
 			//Convert to gold
 			elseif NumButton == 36 then
@@ -196,6 +209,22 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, "Toggle the Scoreboard (|cff77f3fcTab|r)")
 						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
+						call BlzFrameSetVisible(TooltipFrame, true)
+					endif
+
+					// Ready button
+				elseif NumButton == 5 then
+					set ps = PlayerStats.forPlayer(p)
+
+					if ps.isReady() then
+						set ToolTipS = "Unready yourself " + ReadyTooltip()
+					else
+						set ToolTipS = "Ready" + ReadyTooltip()
+					endif
+
+					if GetLocalPlayer() == p then
+						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+						call BlzFrameSetSize(TooltipFrame, 0.31, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 
@@ -317,12 +346,14 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			set GameUI = BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)
 			set ButtonTrigger = CreateTrigger()
 			call TriggerAddAction(ButtonTrigger, function SkillSysStart)
-			call CreateIconWorld(2 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.04 , - 0.39 , 0.036)
+			call CreateIconWorld(2 , "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp" , 0.08 , - 0.39 , 0.036)
 			call BlzFrameSetTexture(ButtonId[2] , "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp" , 0, true)
-			call CreateIconWorld(3 , "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp" , 0.08 , - 0.4 , 0.025)
+			call CreateIconWorld(3 , "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp" , 0.43 + 0.075 , - 0.024 , 0.025)
 			call BlzFrameSetVisible(ButtonParentId[3], false)
 			call CreateIconWorld(4 , "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp" , 0.00 , - 0.39 , 0.036)
 			call BlzFrameSetTexture(ButtonId[4] , "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp" , 0, true)
+			call CreateIconWorld(5 , "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp" , 0.04 , -0.39 , 0.036)
+			call BlzFrameSetTexture(ButtonId[5] , "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp" , 0, true)
 			call CreateIconWorld(36 , "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp" , 0.43 + 0.025 , - 0.024 , 0.025)
 			call BlzFrameSetVisible(ButtonParentId[36], true)
 			call CreateIconWorld(37 , "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp" , 0.43 + 0.05 , - 0.024 , 0.025)
