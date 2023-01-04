@@ -3,7 +3,6 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     globals
         boolean DebugModeEnabled = false
         boolean array NextRound
-        real RoundTime = 20
         integer dummyId = 'H00E'
         unit array PlayerDummy
         boolean array dummyEnabled
@@ -180,11 +179,8 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     private function StartNextRound takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer()) 
-        if NextRound[RoundNumber] then
-            set NextRound[RoundNumber] = false
-            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "|cffffcc00Next round started!|r")
-            call TriggerExecute(StartLevelTrigger)
-        endif
+        call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "|cffffcc00Attempting to start next round...|r")
+        call AllPlayersCompletedRound_StartNextRound()
     endfunction
 
     private function SetRoundTime takes Args args returns nothing

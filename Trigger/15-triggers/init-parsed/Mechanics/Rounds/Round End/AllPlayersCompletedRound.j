@@ -2,7 +2,16 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
 
     globals
         integer BattleRoyalRound = 50
+        real RoundTime = 40
     endglobals
+
+    public function StartNextRound takes nothing returns nothing
+        if (NextRound[RoundNumber + 1]) then
+            set NextRound[RoundNumber + 1] = false
+            call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+            call TriggerExecute(StartLevelTrigger)
+        endif
+    endfunction
 
     private function IsGameOver takes nothing returns boolean
         return (IsTriggerEnabled(IsGameFinishedTrigger) != true) or (GameComplete != true and IsTriggerEnabled(AllPlayersDeadTrigger) != true and InitialPlayerCount != 1)
@@ -13,40 +22,14 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
     endfunction
 
     private function IsPvpRound takes nothing returns boolean
-        if (RoundNumber == 5) then
+        if RoundNumber != 0 and RoundNumber != 50 and ModuloInteger(RoundNumber, 5) == 0 then
             return true
+        else
+            return false
         endif
-        if (RoundNumber == 10) then
-            return true
-        endif
-        if (RoundNumber == 15) then
-            return true
-        endif
-        if (RoundNumber == 20) then
-            return true
-        endif
-        if (RoundNumber == 25) then
-            return true
-        endif
-        if (RoundNumber == 30) then
-            return true
-        endif	
-        if (RoundNumber == 35) then
-            return true
-        endif	
-        if (RoundNumber == 40) then
-            return true
-        endif	
-        if (RoundNumber == 45) then
-            return true
-        endif	
-    
-        return false
     endfunction
 
     private function AllPlayersCompletedRoundActions takes nothing returns nothing
-        local integer round = RoundNumber + 1
-
         if (RoundFinishedCount >= PlayerCount) then
             if (IsGameOver()) then
                 return
@@ -100,7 +83,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
 
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
             call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
-            set NextRound[round] = true
+            set NextRound[RoundNumber + 1] = true
             
             if (RoundNumber <= 3) then
                 call StartTimerBJ(GetLastCreatedTimerBJ(), false, RoundTime)
@@ -114,10 +97,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
                 call SetEconomyCreepBonus()
             endif
     
-            if (NextRound[round]) then
-                call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-                call TriggerExecute(StartLevelTrigger)
-            endif
+            call StartNextRound()
         endif
     endfunction
 

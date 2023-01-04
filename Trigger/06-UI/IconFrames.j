@@ -144,17 +144,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			
 			// Ready button
 			elseif NumButton == 5 then
-				set ps = PlayerStats.forPlayer(p)
-				set TypT = ps.toggleIsReady()
-
 				call PlayerReadies(p)
-
-				if ps.isReady() then
-					call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNDefend.blp", 0, true)
-				else
-					call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
-				endif
-
 			//Convert to gold
 			elseif NumButton == 36 then
 				set i1 = GetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER)
