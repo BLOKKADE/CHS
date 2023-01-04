@@ -90,7 +90,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     private function MoveCameraToArenaForPlayer takes nothing returns nothing
         local location arenaCenter = GetRectCenter(TempArena)
 
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaCenter, 0.20)
+        if not CamMoveDisabled[GetPlayerId(GetEnumPlayer())] then
+            call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaCenter, 0.20)
+        endif
 
         // Cleanup
         call RemoveLocation(arenaCenter)
@@ -133,7 +135,10 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
         // Pause the unit, select it for the player, refresh the unit, add to group of dueling heroes
         call PauseUnit(playerHero, true)
-        call SelectUnitForPlayerSingle(playerHero, currentPlayer)
+        
+        if not CamMoveDisabled[playerId] then
+            call SelectUnitForPlayerSingle(playerHero, currentPlayer)
+        endif
         call RefreshHero(playerHero)
         call GroupAddUnit(DuelingHeroGroup, playerHero)
 

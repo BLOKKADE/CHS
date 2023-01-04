@@ -71,13 +71,6 @@ scope ShortPeriodCheck initializer init
                     endif
                 endif
                         
-                //Cold Knight
-                if GetUnitTypeId(u) == COLD_KNIGHT_UNIT_ID then
-                    if BlzGetUnitAbilityCooldownRemaining(u, COLD_KNIGHT_PASSIVE_ABILITY_ID) == 0 and CheckProc(u, 600) then
-                        call ColdKnight(u, GetUnitElementCount(u,Element_Cold), GetHeroLevel(u))
-                    endif
-                endif
-                
                 //Divine Gift
                 set i1 = GetUnitAbilityLevel(u,DIVINE_GIFT_ABILITY_ID)
                 if i1 > 0 then

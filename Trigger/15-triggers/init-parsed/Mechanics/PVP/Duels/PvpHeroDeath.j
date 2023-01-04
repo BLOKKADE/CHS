@@ -8,7 +8,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local location arenaLocation = GetRectCenter(RectMidArena)
 
         // Move camera to center arena
-        call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaLocation, 0.20)
+        if not CamMoveDisabled[GetPlayerId(GetEnumPlayer())] then
+            call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaLocation, 0.20)
+        endif
 
          // Cleanup
         call RemoveLocation(arenaLocation)

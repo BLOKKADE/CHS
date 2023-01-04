@@ -23,7 +23,7 @@ library PlayerLeavesGame initializer init requires RandomShit
         return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
     endfunction
 */
-    function PlayerLeavesGameActions takes nothing returns nothing
+    private function PlayerLeavesGameActions takes nothing returns nothing
         local player leaverPlayer = GetTriggerPlayer()
         local integer playerId = GetPlayerId(leaverPlayer)
         local location arenaLocation

@@ -26,5 +26,6 @@ library SummonSpells initializer init
         set SummonSpells[CARRION_BEETLE_1_UNIT_ID] = CARRION_BEETLES_ABILITY_ID
         set SummonSpells[SKELETON_BATTLEMASTER_1_UNIT_ID] = BLACK_ARROW_PASSIVE_ABILITY_ID
         set SummonSpells[SKELETON_WARMAGE_1_UNIT_ID] = BLACK_ARROW_PASSIVE_ABILITY_ID
+        set SummonSpells[FEARLESS_DEFENDER_CAPTAIN_UNIT_ID] = FEARLESS_DEFENDERS_ABILITY_ID
     endfunction
 endlibrary

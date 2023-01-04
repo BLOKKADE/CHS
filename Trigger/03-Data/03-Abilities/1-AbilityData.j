@@ -270,6 +270,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //2 - Mana Shield 
         call SaveAbilData(MANA_SHIELD_ABILITY_ID, MANA_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, "manashieldon")
         call SetLastObjectElement(Element_Water, 1)
+        call SetLastAbilityPlain()
         call SetLastAbilityNotReplaceable()
 
         //3 - Carrion Swarm 
@@ -1159,7 +1160,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
          call SetLastObjectElement(Element_Wild, 2)
 
          //198 - Contemporary Runes
-         call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "blizzard")
+         call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "burrow")
          call SetLastObjectElement(Element_Arcane, 1)
 
          //198 - Energy Bombardment

@@ -185,6 +185,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
             call RemoveSpellFromAllUnitLists(u, abilId)
         endif
 
+        if GetFilterList(GetHandleId(u), abilId) != 0 then
+            call RemoveSpellList(u, abilId)
+        endif
+
         if abilId == ABSOLUTE_DARK_ABILITY_ID then
             call UnitRemoveAbility(u, 'A0DH')
         endif

@@ -20,7 +20,9 @@ library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
                 call SetUnitPositionLoc(ps.getPet(), arenaLocation)
             endif
 
-            call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation,0.20)
+            if not CamMoveDisabled[pid] then
+                call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation, 0.20)
+            endif
 
             // Cleanup
             call RemoveLocation(arenaLocation)

@@ -83,14 +83,6 @@ library Utility requires NewBonus, FixDeleteUnit
         return (i == 1 and stat == 0) or (i == 2 and stat == 2) or (i == 3 and stat == 1)
     endfunction
 
-    function B2S takes boolean b returns string
-        if b then
-            return "true"
-        else
-            return "false"
-        endif
-    endfunction
-
     function GetUnitDamage takes unit u, integer weaponIndex returns real
         //call BJDebugMsg(GetUnitName(u) + " attack dmg: " + R2S(BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex)) + GetUnitBonus(u, BONUS_DAMAGE)))
         return I2R((BlzGetUnitBaseDamage(u, weaponIndex) + (BlzGetUnitDiceNumber(u, weaponIndex) * BlzGetUnitDiceSides(u, weaponIndex))) + GetUnitBonus(u, BONUS_DAMAGE))

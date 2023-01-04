@@ -13,7 +13,7 @@ library MagicRune requires RandomShit
             exitwhen i1 > 10
             set SpellId = GetHeroSpellAtPosition(u ,i1)
             if IsSpellResettable(SpellId) then
-                set SpellId = GetAssociatedSpell(u, SpellId)
+                set SpellId = CheckAssociatedSpell(u, SpellId)
 
                 if BlzGetUnitAbilityCooldownRemaining(u,SpellId) < RuneOfMagic_base * power then
                     call BlzEndUnitAbilityCooldown(u,SpellId)

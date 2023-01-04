@@ -39,8 +39,12 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
 
         set TempUnit = playerHero // Used in HeroRefreshTrigger
         call ConditionalTriggerExecute(HeroRefreshTrigger)
-        call SelectUnitForPlayerSingle(playerHero, GetOwningPlayer(playerHero))
-        call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation, 0)
+
+        if (not CamMoveDisabled[GetPlayerId(GetEnumPlayer())]) then
+            call SelectUnitForPlayerSingle(playerHero, GetOwningPlayer(playerHero))
+            call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation, 0)
+        endif
+
         call SetCurrentlyFighting(currentPlayer, true)
 
         // Cleanup

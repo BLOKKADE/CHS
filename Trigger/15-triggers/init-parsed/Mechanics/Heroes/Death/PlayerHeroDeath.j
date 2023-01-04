@@ -27,8 +27,12 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call ReviveHeroLoc(currentUnit, arenaLocation, true)
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
-        call FixAbominationPassive(currentUnit)
-        call PanCameraToForPlayer(currentPlayer, GetUnitX(currentUnit), GetUnitY(currentUnit))
+        call FixAbominationPassive(u)
+
+        if (not CamMoveDisabled[pid]) then
+            call PanCameraToForPlayer(currentPlayer, GetUnitX(currentUnit), GetUnitY(currentUnit))
+        endif
+
         call ReleaseTimer(GetExpiredTimer())
 
         // Cleanup
@@ -60,8 +64,10 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
             call ReviveHeroLoc(currentUnit, arenaLocation,true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
-            call FixAbominationPassive(currentUnit)
-            call PanCameraToForPlayer(currentPlayer, GetUnitX(currentUnit), GetUnitY(currentUnit))
+            call FixAbominationPassive(u)
+            if not CamMoveDisabled[pid] then
+                call PanCameraToForPlayer(currentPlayer, GetUnitX(currentUnit), GetUnitY(currentUnit))
+            endif
 
             call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId + 1], Condition(function RemoveUnitsInArena))
             

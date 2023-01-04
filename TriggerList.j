@@ -33,6 +33,7 @@
 //! import "C:\CHS\CHS\Trigger\04-Helpers\EditAbilityInfo.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\FixUnits.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\ForceHelper.j"
+//! import "C:\CHS\CHS\Trigger\04-Helpers\Generic.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\HeroAbilityTable.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\HeroForms.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\HpRegen.j"
