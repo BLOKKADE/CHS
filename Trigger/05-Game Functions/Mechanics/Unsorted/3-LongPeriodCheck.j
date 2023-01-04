@@ -430,6 +430,13 @@ scope LongPeriodCheck initializer init
                 endif
             endif
 
+            //Cold Knight
+            if GetUnitTypeId(u) == COLD_KNIGHT_UNIT_ID then
+                if BlzGetUnitAbilityCooldownRemaining(u, COLD_KNIGHT_PASSIVE_ABILITY_ID) == 0 and CheckProc(u, 600) then
+                    call ColdKnight(u, GetUnitElementCount(u,Element_Cold), GetHeroLevel(u))
+                endif
+            endif
+
             //Pit Lord
             if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                 set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
