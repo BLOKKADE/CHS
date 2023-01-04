@@ -105,7 +105,7 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomEven
                 if (HeroAbilityCount[playerId + 1] >= 10) then
                     call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
                     call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r: Maximum ability count")
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r")
                     return
                 endif
 

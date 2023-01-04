@@ -37,12 +37,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
 
     private function ConcatAbility takes string currentAbilities, string nextAbility returns string
         if currentAbilities == "" then
-            set currentAbilities = nextAbility
-        else
-            set currentAbilities = currentAbilities + ", " + nextAbility
+            return ", |cff77fc94" + nextAbility + "|r"
         endif
 
-        return currentAbilities
+        return currentAbilities + ", |cff77fc94" + nextAbility + "|r"
     endfunction
 
     private function CheckUnitAbilities takes nothing returns nothing
@@ -174,8 +172,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
     
         if s == "" then
             set RoundAbilities = "|cff77fc94No abilities|r "
-        else
-            set RoundAbilities = "|cff77fc94" + s + "|r"
         endif
     endfunction
 
@@ -513,12 +509,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cffebde71Range|r: Melee |n"
                         else
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff82f373Range|r: " + I2S(R2I(BlzGetUnitWeaponRealField(creep, UNIT_WEAPON_RF_ATTACK_RANGE, 0))) + "|n"
-                            set s = ConcatAbility(s, "|cff82f373Ranged|r:")
+                            set s = s + "|cff82f373Ranged|r: "
                         endif
                         //call BJDebugMsg("c")
                         if RoundCreepTypeId == 'n01H' or RoundCreepTypeId == 'n00W' then
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bddf1Damage Type|r: magic |n"
-                            set s = ConcatAbility(s, "|cff9bddf1Magic Damage|r:")
+                            set s = s + "|cff9bddf1Magic Damage|r: "
                         else
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff167daDamage Type|r: physical |n"
                         endif
