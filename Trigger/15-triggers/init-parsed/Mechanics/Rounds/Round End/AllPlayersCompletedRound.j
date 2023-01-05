@@ -2,7 +2,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
 
     globals
         integer BattleRoyalRound = 50
-        real RoundTime = 40
+        real RoundTime = 20
     endglobals
 
     public function StartNextRound takes nothing returns nothing
