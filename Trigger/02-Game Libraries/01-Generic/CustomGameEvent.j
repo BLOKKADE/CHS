@@ -40,13 +40,25 @@ library CustomGameEvent initializer init requires ListT
         integer roundNumber
         boolean isPvp
 
+        static method createAll takes player p, integer abilId, integer roundNumber, boolean pvp returns thistype
+			local thistype this = thistype.allocate()
+			
+			set this.hero = PlayerHeroes[GetPlayerId(p) + 1]
+            set this.abilId = abilId
+            set this.roundNumber = roundNumber
+            set this.isPvp = pvp
+            set this.p = p
+
+			return this
+		endmethod
+
         static method create takes player p, integer abilId, integer roundNumber returns thistype
 			local thistype this = thistype.allocate()
 			
 			set this.hero = PlayerHeroes[GetPlayerId(p) + 1]
             set this.abilId = abilId
             set this.roundNumber = roundNumber
-            set this.isPvp = ModuloInteger(this.roundNumber, 5) == 0
+            set this.isPvp = IsUnitInGroup(this.hero, DuelingHeroes)
             set this.p = p
 
 			return this
