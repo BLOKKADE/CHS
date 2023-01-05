@@ -1,15 +1,29 @@
-library ReadyButton requires PlayerTracking, AllPlayersCompletedRound
+library ReadyButton initializer init requires PlayerTracking, AllPlayersCompletedRound
     //button is setup in IconFrames.j
     globals
         boolean array PlayerHasReadied
+        boolean array ReadyButtonDisabled
         integer PlayersNeeded
+
+        string ReadyIcon = "Ability_parry"
+        string UnreadyIcon = "Defend"
     endglobals
 
-    function ReadyButtonVisibility takes boolean show returns nothing
-        if show then
-            call BlzFrameSetVisible(ButtonParentId[5], true)
+    function ReadyButtonVisibility takes boolean disable, integer pid, boolean isReady returns nothing
+        local string tex = ""
+
+        if isReady then
+            set tex = ReadyIcon
         else
-            call BlzFrameSetVisible(ButtonParentId[5], false)
+            set tex = UnreadyIcon
+        endif
+
+        if disable then
+            set ReadyButtonDisabled[pid] = true
+            call BlzFrameSetTexture(ButtonId[5], GetDisabledIconPath(tex), 0, true)
+        else
+            set ReadyButtonDisabled[pid] = false
+            call BlzFrameSetTexture(ButtonId[5], GetIconPath(tex), 0, true)
         endif
     endfunction
 
@@ -21,19 +35,15 @@ library ReadyButton requires PlayerTracking, AllPlayersCompletedRound
         endif
     endfunction
 
-    function ResetReadyPlayers takes nothing returns nothing
-        local integer i = 0
-        local PlayerStats ps
+    private function OnRoundEnd takes EventInfo eventInfo returns nothing
+        local integer pid = GetPlayerId(eventInfo.p)
+        call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
+        call ReadyButtonVisibility(false, pid, false)
+        set PlayerHasReadied[pid] = false
+    endfunction
 
-        loop
-            set ps = PlayerStats.forPlayer(Player(i))
-            call ps.setIsReady(false)
-            call ReadyButtonTexture(false)
-            set PlayerHasReadied[i] = false
-
-            set i = i + 1
-            exitwhen i > 8
-        endloop
+    private function OnRoundStart takes EventInfo eventInfo returns nothing
+        call ReadyButtonVisibility(true, GetPlayerId(eventInfo.p), false)
     endfunction
 
     function ReadyPlayerCount takes nothing returns integer
@@ -76,7 +86,7 @@ library ReadyButton requires PlayerTracking, AllPlayersCompletedRound
         local integer pid = GetPlayerId(p)
         local PlayerStats ps = PlayerStats.forPlayer(p)
         call ps.toggleIsReady()
-        call ReadyButtonTexture(ps.isReady())
+        call ReadyButtonVisibility(false, pid, ps.isReady())
 
         call UpdatePlayersNeeded()
 
@@ -87,5 +97,10 @@ library ReadyButton requires PlayerTracking, AllPlayersCompletedRound
         call CheckReadyPlayers()
 
         set PlayerHasReadied[pid] = true
+    endfunction
+
+    private function init takes nothing returns nothing
+        call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_START, CustomEvent.OnRoundStart)
+        call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.OnRoundEnd)
     endfunction
 endlibrary

@@ -144,7 +144,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			
 			// Ready button
 			elseif NumButton == 5 then
-				call PlayerReadies(p)
+				if not ReadyButtonDisabled[PlID] then
+					call PlayerReadies(p)
+				endif
 			//Convert to gold
 			elseif NumButton == 36 then
 				set i1 = GetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER)
@@ -205,12 +207,16 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 					// Ready button
 				elseif NumButton == 5 then
-					set ps = PlayerStats.forPlayer(p)
+					if not ReadyButtonDisabled[PlID] then
+						set ps = PlayerStats.forPlayer(p)
 
-					if ps.isReady() then
-						set ToolTipS = "Unready yourself " + ReadyTooltip()
+						if ps.isReady() then
+							set ToolTipS = "Unready yourself " + ReadyTooltip()
+						else
+							set ToolTipS = "Ready" + ReadyTooltip()
+						endif
 					else
-						set ToolTipS = "Ready" + ReadyTooltip()
+						set ToolTipS = "Cannot be used during a round."
 					endif
 
 					if GetLocalPlayer() == p then

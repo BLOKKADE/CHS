@@ -152,7 +152,6 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         call PlaySoundBJ(udg_sound01)
         call ForForce(validPlayerForce, function StartFunctionSpells)
         call ConditionalTriggerExecute(CreepPeriodicAttackTrigger)
-        call ResetReadyPlayers()
         set SuddenDeathTick = 0
         set RoundStartTick = T32_Tick
         call EnableTrigger(SuddenDeathCreepTimerTrigger)
