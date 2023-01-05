@@ -10,6 +10,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		// Scoreboard main frame
 		framehandle ScoreboardFrameHandle 
 
+		// Rewards main frame
+		framehandle RewardsFrameHandle
+
 		framehandle GameUI
 
 		trigger ButtonTrigger = null
