@@ -1,4 +1,4 @@
-library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpells, LearnAbsolute
+library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo, LearnAbsolute, PackingTape
 
     globals
         Table SummonLevel
@@ -29,6 +29,17 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         //Prevent super summons?
         call ResetUnitCustomState(u)
 
+        //check packing tape
+        if UnitHasItemType(hero, PACKING_TAPE_ITEM_ID) and GetSummonSpell(summonTypeId) != 0 then
+            if not PackingTape_CheckSummonCount(hero, u) then
+                set hero = null
+                return
+            endif
+        endif
+
+        //register summons
+        call RegisterPlayerSummon(hero, u)
+
         //Beastmaster
         if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
             set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.3)
@@ -51,7 +62,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         call AddUnitCustomState(u, BONUS_PVP, GetUnitCustomState(hero, BONUS_PVP))
 
         if SUMMONS.contains(summonTypeId) then
-            call RegisterPlayerSummon(hero, u)
             set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(summonTypeId)) + UpgradeU
 
             call GetSummonStatFunction(summonTypeId).evaluate(u, totalLevel)

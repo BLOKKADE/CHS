@@ -590,6 +590,16 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             else
                 call PlayerAddGold(GetOwningPlayer(u),20000)
             endif
+
+            //Packing Tape
+        elseif II == PACKING_TAPE_TOME_ITEM_ID then   
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(PACKING_TAPE_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold(GetOwningPlayer(u),15000)
+            endif
+
             //Mask of Protection
         elseif II  == MASK_OF_PROTECTION_TOME_ITEM_ID then   
             if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then

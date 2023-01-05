@@ -36,6 +36,9 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == MANA_STARVATIO_ABILITY_ID then
             call CastManaStarvation(hero, target, lvl)
             return true
+        elseif abilId == PACKING_TAPE_ABILITY_ID then
+            call CastPackingTape(hero, target)
+            return true
             //Midas Touch
         elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false and (not IsUnitType(target, UNIT_TYPE_HERO)) then
             call CastMidasTouch(hero, target, lvl)

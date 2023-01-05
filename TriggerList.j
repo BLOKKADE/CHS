@@ -141,7 +141,7 @@
 //! import "C:\CHS\CHS\Trigger\03-Data\03-Abilities\Absolutes.j"
 //! import "C:\CHS\CHS\Trigger\03-Data\03-Abilities\DamageOverTimeSpells.j"
 //! import "C:\CHS\CHS\Trigger\03-Data\03-Abilities\StableSpells.j"
-//! import "C:\CHS\CHS\Trigger\03-Data\03-Abilities\SummonSpells.j"
+//! import "C:\CHS\CHS\Trigger\03-Data\03-Abilities\SummonInfo.j"
 //! import "C:\CHS\CHS\Trigger\03-Data\03-Abilities\ToggleSpellList.j"
 //! import "C:\CHS\CHS\Trigger\03-Data\04-Items\GloryItemCosts.j.j"
 //! import "C:\CHS\CHS\Trigger\03-Data\04-Items\ItemAbilityCooldown.j"

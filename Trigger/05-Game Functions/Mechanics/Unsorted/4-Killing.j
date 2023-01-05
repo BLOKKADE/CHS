@@ -53,6 +53,11 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
                 set fx = null
             endif
 
+            //Packing Tape
+            if UnitHasItemType(targetHero, PACKING_TAPE_ITEM_ID) and GetSummonSpell(GetUnitTypeId(target)) != 0 then
+                call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + GetUnitState(target, UNIT_STATE_MAX_LIFE) * 0.1) 
+            endif
+            
             //Necromancer's Army
             set i = GetUnitAbilityLevel(targetHero, NECROMANCERS_ARMY_ABILITY_ID)
             if i > 0 and IsUnitType(target, UNIT_TYPE_UNDEAD) == false then
@@ -71,6 +76,8 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
             if i > 0 and GetOwningPlayer(target) == Player(11) then
                 call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 7, 10, 'I07E').activate()
             endif
+
+            call RemoveSummonFromPlayerSummonGroup(targetHero, target)
         endif
 
         // Cleanup
