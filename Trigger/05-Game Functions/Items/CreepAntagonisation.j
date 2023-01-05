@@ -16,6 +16,10 @@ library CreepAntagonisation initializer init requires CustomState, CustomGameEve
         call SetWidgetLife(u, BlzGetUnitMaxHP(u))
     endfunction
 
+    private function ExpBonus takes unit hero returns nothing
+        call AddHeroXP(hero, R2I((50 *(GetHeroLevel(hero) + 3) * (GetHeroLevel(hero) + 4) - 110 - GetHeroXP(hero)) * 45) / 100, true) 
+    endfunction
+
     private function OnRoundStart takes EventInfo eventInfo returns nothing
         local integer pid = GetPlayerId(eventInfo.p)
         local integer i = 0
@@ -29,6 +33,7 @@ library CreepAntagonisation initializer init requires CustomState, CustomGameEve
                 
                 set i = i + 1
             endloop
+            call ExpBonus(eventInfo.hero)
         endif
     endfunction
 
