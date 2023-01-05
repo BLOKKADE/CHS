@@ -1,13 +1,29 @@
 library CustomGameEvent initializer init requires ListT
     globals
         //all events used by the library
+
+        //when a round starts for all players
         integer EVENT_GAME_ROUND_START          =   0
+
+        // when all players have finished a round
         integer EVENT_GAME_ROUND_END            =   1
+
+        //when a player learns a new ability
         integer EVENT_LEARN_ABILITY             =   2
+
+        //when a player levels an ability
         integer EVENT_LEVEL_ABILITY             =   3
+
+        //when a player unlearns an ability
         integer EVENT_UNLEARN_ABILITY           =   4
+
+        //??? resets murloc stats (can be removed once thats refactored)
         integer EVENT_FIX_START_ROUND           =   5
+
+        //When a player starts a round (urn)
         integer EVENT_PLAYER_ROUND_START        =   6
+
+        //when a player finished a round
         integer EVENT_PLAYER_ROUND_COMPLETE     =   7
 
         string array EventName
