@@ -101,10 +101,14 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 	function UpdateTooltipText takes unit u returns nothing
 		set CustomStateValue[1] = R2S(100 * (1 - (50 /(50 + GetUnitCustomState(u, BONUS_EVASION)))))
 
-		if BlzGetUnitArmor(u) >= 0 and not BlzIsUnitInvulnerable(u) then
-			set CustomStateValue[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
+		set CustomStateValue[2] = ""
+		if BlzIsUnitInvulnerable(u) then
+			set CustomStateValue[2] = "|cffff0000Invulnerable|r\n"
+		endif
+		if BlzGetUnitArmor(u) >= 0 then
+			set CustomStateValue[2] = CustomStateValue[2] + "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
 		else
-			set CustomStateValue[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
+			set CustomStateValue[2] = CustomStateValue[2] + "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
 		endif
 
 		set CustomStateValue[3] = R2S(GetUnitCustomState(u, BONUS_MAGICPOW))
@@ -119,7 +123,11 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 	function UpdateTextRelaese takes unit u returns nothing
 		call BlzFrameSetText(TextUI[1], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 0)))
 		call BlzFrameSetText(TextUI[2], R2SW(BlzGetUnitAttackCooldown(u, 0), 1, 2) + "/" + R2SW(BlzGetUnitRealField(u, UNIT_RF_CAST_POINT), 1, 2))
-		call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
+		if BlzIsUnitInvulnerable(u) then
+			call BlzFrameSetText(TextUI[3], "|cffff0000" + R2SW(BlzGetUnitArmor(u), 1, 1) + "|r")
+		else
+			call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
+		endif
 		call BlzFrameSetText(TextUI[4], R2SW(GetUnitCustomState(u, BONUS_BLOCK), 1, 0))
 		call BlzFrameSetText(TextUI[5], R2SW(GetUnitCustomState(u, BONUS_PVP), 1, 1))
 		call BlzFrameSetText(TextUI[9], R2SW(GetUnitCustomState(u, BONUS_MAGICPOW), 1, 1))
