@@ -1,4 +1,4 @@
-library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath
+library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent
 
     private function PvpHeroDeathConditions takes nothing returns boolean
         return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
@@ -184,6 +184,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
+        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.create(currentPlayer, 0, RoundNumber))
         // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
         call SaveCommand_SaveCodeForPlayer(currentPlayer, false)
 

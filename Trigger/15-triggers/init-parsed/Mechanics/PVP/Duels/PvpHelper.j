@@ -1,4 +1,4 @@
-library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults, GameInit, InitializeBettingDialogs
+library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults, GameInit, InitializeBettingDialogs, CustomGameEvent
 
     globals
         // Keep track if the odd player duel has been started
@@ -181,6 +181,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
+        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
         call SetUnitInvulnerable(currentUnit, false)
         call StartFunctionSpell(currentUnit, 4) // 4 = duels
         call PauseUnit(currentUnit, false)

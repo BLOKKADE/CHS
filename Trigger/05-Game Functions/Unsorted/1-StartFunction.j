@@ -1,4 +1,4 @@
-library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, BoneArmor, CustomEvent, TimeManipulation, HeroBuff, TempPower
+library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, BoneArmor, TimeManipulation, HeroBuff, TempPower, CustomGameEvent
     
     globals
         hashtable HT_timerSpell = InitHashtable()
@@ -40,6 +40,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         local unit U = null
         local integer hid = GetHandleId(Herou)
         local boolean chronusActivated = false
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_START, EventInfo.create(Player(pid), 0, RoundNumber))
             
         if Herou != null and (IsPlayerInForce(GetOwningPlayer(Herou), LeaverPlayers) or GetPlayerSlotState(GetOwningPlayer(Herou)) != PLAYER_SLOT_STATE_PLAYING) then
             call SetUnitInvulnerable(Herou, false)

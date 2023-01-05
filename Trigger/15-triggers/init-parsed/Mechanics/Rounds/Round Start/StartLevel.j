@@ -69,6 +69,7 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
     private function StartFunctionSpells takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
 
+        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
         call StartFunctionSpell(PlayerHeroes[GetPlayerId(currentPlayer) + 1],3)
         set ShowCreepAbilButton[GetPlayerId(currentPlayer)] = false
         call SetCurrentlyFighting(currentPlayer, true) 

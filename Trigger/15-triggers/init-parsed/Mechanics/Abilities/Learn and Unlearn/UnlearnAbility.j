@@ -1,4 +1,4 @@
-library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLearned, CustomEvent
+library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLearned, CustomGameEvent
 
     private function UnlearnAbilityConditions takes nothing returns boolean
         return GetItemTypeId(GetManipulatedItem()) == 'I00P'
@@ -10,7 +10,6 @@ library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLe
         local unit currentUnit = GetTriggerUnit()
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local integer currentPlayerId = GetPlayerId(currentPlayer)
-        local customEvent ce = 0
     
         if (ArNotLearningAbil == false and AbilityMode != 2 and PlayerLastLearnedSpell[currentPlayerId + 1] != 'Amnz') then
             set spellCount = GetHeroSpellListCount(currentUnit, 0)

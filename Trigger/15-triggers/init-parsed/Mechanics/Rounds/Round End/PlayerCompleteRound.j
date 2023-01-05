@@ -53,6 +53,7 @@ library PlayerCompleteRound initializer init requires RandomShit
 
         call ForceAddPlayer(RoundPlayersCompleted, p)
         call SetCurrentlyFighting(p, false)
+        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.create(p, 0, RoundNumber))
         set RoundFinishedCount = RoundFinishedCount + 1
         call SetUnitInvulnerable(PlayerHeroes[pid + 1], true)
         

@@ -1,4 +1,4 @@
-library LearnAbility initializer init requires RandomShit, Functions, CustomEvent, AbilityCommand
+library LearnAbility initializer init requires RandomShit, Functions, CustomGameEvent, AbilityCommand
 
     globals
         unit BuyingUnit = null
@@ -17,7 +17,6 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomEven
         local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr'))
         local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
         local location unitLocation = GetUnitLoc(u)
-        local customEvent e = 0
 
         //call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
         if maxBuy and i < 30 then

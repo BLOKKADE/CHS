@@ -1,4 +1,4 @@
-library EnergyShield initializer init requires RandomShit, CustomEvent
+library EnergyShield initializer init requires RandomShit, CustomGameEvent
 
     private function checkShield takes nothing returns nothing endfunction
         local timer t = GetExpiredTimer()

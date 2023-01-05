@@ -1,4 +1,4 @@
-library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomEvent, HeroAbilityTable
+library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomGameEvent, HeroAbilityTable
     globals 
         integer RectPid
         integer array Lives
@@ -221,7 +221,7 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         local real r1 = 0
         local real gloryBonus = 0
         local integer hid = GetHandleId(u)
-        call CustomGameEvent_FireEvent(EVENT_COMPLETE_LEVEL, EventInfo.create(p, 0, RoundNumber))
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.create(p, 0, RoundNumber))
 
         //cleanup items
         set RectPid = pid

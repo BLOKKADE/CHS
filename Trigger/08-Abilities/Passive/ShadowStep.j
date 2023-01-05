@@ -1,4 +1,4 @@
-library ShadowStep initializer init requires AbilityCooldown, CustomEvent
+library ShadowStep initializer init requires AbilityCooldown, CustomGameEvent
 
     private function teleport takes unit u1, unit u2 returns nothing
         local effect e1 = null
@@ -88,7 +88,7 @@ library ShadowStep initializer init requires AbilityCooldown, CustomEvent
     private function init takes nothing returns nothing
         local trigger t = CreateTrigger()
 
-        call CustomGameEvent_RegisterEventCode(CUSTOM_EVENT_LEARN_ABILITY, CustomEvent.LearnAbility)
+        call CustomGameEvent_RegisterEventCode(EVENT_LEARN_ABILITY, CustomEvent.LearnAbility)
 
         call TriggerRegisterAnyUnitEventBJ( t, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER  )
         call TriggerRegisterAnyUnitEventBJ( t, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER  )

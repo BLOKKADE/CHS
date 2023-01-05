@@ -1,14 +1,16 @@
 library CustomGameEvent initializer init requires ListT
     globals
         //all events used by the library
-        integer EVENT_GAME_ROUND_START  =    0
-        integer EVENT_GAME_ROUND_END    =    1
-        integer EVENT_LEARN_ABILITY     =    2
-        integer EVENT_LEVEL_ABILITY     =    3
-        integer EVENT_UNLEARN_ABILITY   =    4
-        integer EVENT_FIX_START_ROUND   =    5
-        integer EVENT_START_ROUND       =    6
-        integer EVENT_COMPLETE_LEVEL    =    7
+        integer EVENT_GAME_ROUND_START          =   0
+        integer EVENT_GAME_ROUND_END            =   1
+        integer EVENT_LEARN_ABILITY             =   2
+        integer EVENT_LEVEL_ABILITY             =   3
+        integer EVENT_UNLEARN_ABILITY           =   4
+        integer EVENT_FIX_START_ROUND           =   5
+        integer EVENT_PLAYER_ROUND_START        =   6
+        integer EVENT_PLAYER_ROUND_COMPLETE     =   7
+
+        string array EventName
 
         //stores all functions registered to events
         Table Events
@@ -55,6 +57,8 @@ library CustomGameEvent initializer init requires ListT
         local IntegerList registeredCode = GetRegisteredCodeList(ev)
         local IntegerListItem node = registeredCode.first
 
+        call BJDebugMsg("ev: " + EventName[ev] + ", p: " + GetPlayerNameColour(eventInfo.p))
+
         if registeredCode != 0 then
             loop
                 call GetCustomEvent(node.data).evaluate(eventInfo)
@@ -81,5 +85,14 @@ library CustomGameEvent initializer init requires ListT
 
     private function init takes nothing returns nothing
         set Events = Table.create()
+
+        set EventName[0] = "EVENT_GAME_ROUND_START"
+        set EventName[1] = "EVENT_GAME_ROUND_END"
+        set EventName[2] = "EVENT_LEARN_ABILITY"
+        set EventName[3] = "EVENT_LEVEL_ABILITY"
+        set EventName[4] = "EVENT_UNLEARN_ABILITY"
+        set EventName[5] = "EVENT_FIX_START_ROUND"
+        set EventName[6] = "EVENT_PLAYER_ROUND_START"
+        set EventName[7] = "EVENT_PLAYER_ROUND_COMPLETE"
     endfunction
 endlibrary
