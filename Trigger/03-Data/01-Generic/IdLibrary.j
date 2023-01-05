@@ -661,6 +661,7 @@ library IdLibrary initializer init
         constant integer INCINERATE_ITEM_ID                             = 'I045'
         constant integer INCOME_DEFAULT_TOME_ITEM_ID                    = 'I074'
         constant integer INCOME_INDIVIDUAL_TOME_ITEM_ID                 = 'I09O'
+        constant integer ANTAGONIZE_CREEPS_ITEM_ID                      = 'I0D5'
         constant integer INFERNO_ITEM_ID                                = 'I02A'
         constant integer INNER_FIRE_ITEM_ID                             = 'I02W'
         constant integer INTELLIGENCE_LEVEL_BONUS_TOME_ITEM_ID          = 'I05I'

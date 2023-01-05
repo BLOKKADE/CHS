@@ -1,4 +1,4 @@
-library GenerateNextCreepLevel initializer init requires RandomShit, Functions
+library GenerateNextCreepLevel initializer init requires RandomShit, Functions, CustomGameEvent
 
     globals
         integer RoundCreepChanceReflectAura = 0
@@ -13,6 +13,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
         integer RoundCreepChanceFastMagic = 0
         integer RoundCreepChanceImmortalAura = 0
         boolean wizardbaneDebug = false
+        HashTable PlayerRoundCreeps
     endglobals
 
     private function GenerateNextCreepLevelConditions takes nothing returns boolean
@@ -403,13 +404,16 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
                 if RoundNumber < 40 then
                     set damageBonus = damageBonus / 2
                 endif
+
+                set PlayerRoundCreeps[RoundNumber].group[playerId] = NewGroup()
     
                 if (GetPlayerSlotState(Player(playerId)) != PLAYER_SLOT_STATE_EMPTY and IsPlayerInForce(Player(playerId), DefeatedPlayers) != true) then
                     set arenaCenter = GetRectCenter(PlayerArenaRects[playerId + 1])
                     set unitSpawnOffset = OffsetLocation(arenaCenter, GetRandomReal(-600.00, 600.00), GetRandomReal(-600.00, 600.00))
                     set creep = CreateUnitAtLocSaveLast(Player(11), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
 
-                    call GroupAddUnitSimple(creep, RoundCreeps)
+                    call GroupAddUnit(PlayerRoundCreeps[RoundNumber].group[playerId], creep)
+                    
     
                     call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + damageBonus, 0)
     
@@ -560,6 +564,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions
     endfunction
 
     private function init takes nothing returns nothing
+        set PlayerRoundCreeps = HashTable.create()
         set GenerateNextCreepLevelTrigger = CreateTrigger()
         call TriggerAddCondition(GenerateNextCreepLevelTrigger, Condition(function GenerateNextCreepLevelConditions))
         call TriggerAddAction(GenerateNextCreepLevelTrigger, function GenerateNextCreepLevelActions)

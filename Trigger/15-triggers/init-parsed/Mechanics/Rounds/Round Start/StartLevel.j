@@ -1,4 +1,4 @@
-library StartLevel initializer init requires RandomShit, StartFunction, SellItems, DebugCode, HeroSelectorAction
+library StartLevel initializer init requires RandomShit, StartFunction, SellItems, DebugCode, HeroSelectorAction, CustomGameEvent
 
     globals
         integer RoundStartTick
@@ -55,15 +55,23 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         set playerArena = null
     endfunction
 
-    private function StartLevelForCreep takes nothing returns nothing
-        local unit currentUnit = GetEnumUnit()
+    function StartRoundForCreeps takes EventInfo eventInfo returns nothing
+        local integer i = 0
+        local unit u = null
+        local integer pid = GetPlayerId(eventInfo.p)
 
-        call ShowUnitShow(currentUnit)
-        call SetUnitInvulnerable(currentUnit, false)
-        call PauseUnit(currentUnit, false)
+        if not eventInfo.isPvp then
+            loop
+                set u = BlzGroupUnitAt(PlayerRoundCreeps[eventInfo.roundNumber].group[pid], i)
+                exitwhen u == null
+                
+                call ShowUnitShow(u)
+                call SetUnitInvulnerable(u, false)
+                call PauseUnit(u, false)
 
-        // Cleanup
-        set currentUnit = null
+                set i = i + 1
+            endloop
+        endif
     endfunction
 
     private function StartFunctionSpells takes nothing returns nothing
@@ -142,7 +150,6 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         call DebugCode_SavePlayerDebugEveryone()
 
         call PlaySoundBJ(udg_sound01)
-        call ForGroup(RoundCreeps, function StartLevelForCreep)
         call ForForce(validPlayerForce, function StartFunctionSpells)
         call ConditionalTriggerExecute(CreepPeriodicAttackTrigger)
         call ResetReadyPlayers()
@@ -159,6 +166,7 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
     endfunction
 
     private function init takes nothing returns nothing
+        call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_START, CustomEvent.StartRoundForCreeps)
         set StartLevelTrigger = CreateTrigger()
         call TriggerAddCondition(StartLevelTrigger, Condition(function StartLevelConditions))
         call TriggerAddAction(StartLevelTrigger, function StartLevelActions)

@@ -359,6 +359,17 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 set BonusNeutralPlayer[pid] = BonusNeutralPlayer[pid] + 4
                 set creepLevelPlayerBonus = creepLevelPlayerBonus + 4
 
+                //Antagonize Creeps
+            elseif II  == ANTAGONIZE_CREEPS_ITEM_ID then   
+                if not CreepAntagonisationBought[pid] then
+                    set CreepAntagonisationBought[pid] = true
+                    set CreepAntagonisationBonus.real[pid] = CreepAntagonisationBonus.real[pid] + 1
+                    call DisplayTimedTextToPlayer(p, 0, 0, 5, "|cffffcc00Next round your creeps are: |r|cffff5e00" + R2SW(CreepAntagonisationBonus.real[pid] * 100, 1, 1) + "%|R |cffffcc00stronger.|r")
+                else
+                    call DisplayTimedTextToPlayer(p, 0, 0, 5, "|cffffcc00You have already antagonised your creeps.|r")
+                endif
+                set ctrl = false
+
                 //Life
             elseif II == LIFE_TOME_ITEM_ID and (not maxLevel) then
                 if GetHeroXP(u) >= 100000  then

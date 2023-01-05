@@ -1,4 +1,12 @@
-library PlayerCompleteRound initializer init requires RandomShit
+library PlayerCompleteRound initializer init requires RandomShit, CustomGameEvent
+
+    function EndroundForCreeps takes EventInfo eventInfo returns nothing
+        if not eventInfo.isPvp then
+            //destroy round creep groups to prevent leaks
+            call ReleaseGroup(PlayerRoundCreeps[eventInfo.roundNumber].group[GetPlayerId(eventInfo.p)])
+            set PlayerRoundCreeps[eventInfo.roundNumber].group[GetPlayerId(eventInfo.p)] = null
+        endif
+    endfunction
 
     private function CreepFilter takes nothing returns boolean
         return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
@@ -81,6 +89,7 @@ library PlayerCompleteRound initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set PlayerCompleteRoundTrigger = CreateTrigger()
+        call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.EndroundForCreeps)
         call TriggerRegisterAnyUnitEventBJ(PlayerCompleteRoundTrigger, EVENT_PLAYER_UNIT_DEATH)
         call TriggerAddCondition(PlayerCompleteRoundTrigger, Condition(function PlayerCompleteRoundConditions))
         call TriggerAddAction(PlayerCompleteRoundTrigger, function PlayerCompleteRoundActions)
