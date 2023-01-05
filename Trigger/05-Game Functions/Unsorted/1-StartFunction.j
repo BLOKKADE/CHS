@@ -270,13 +270,8 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
         
         call SaveInteger(HT_timerSpell, GetHandleId(startbattle), 4, i1)
         call SaveUnitHandle(HT_timerSpell, GetHandleId(startbattle), 1, Hero)     
-        if i1 == 2 then
-            call TimerStart(startbattle, 4.25, false, function FunctionTimerSpell)
-            
-        else
-            set RoundTimer[GetPlayerId(GetOwningPlayer(Hero))] = T32_Tick + R2I(0.05 * 32)
-            call TimerStart(startbattle, 0.05, false, function FunctionTimerSpell)   
-        endif
+        set RoundTimer[GetPlayerId(GetOwningPlayer(Hero))] = T32_Tick + R2I(0.05 * 32)
+        call TimerStart(startbattle, 0.05, false, function FunctionTimerSpell)   
         set startbattle = null
         //	call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "yea"+I2S(i1))
     endfunction
