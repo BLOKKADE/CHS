@@ -1,7 +1,7 @@
 library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCreepBonus, VotingResults
 
     globals
-        integer BattleRoyalRound = 110
+        integer BattleRoyalRound = 50
         real RoundTime = 20
     endglobals
 
