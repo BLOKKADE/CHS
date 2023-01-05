@@ -184,7 +184,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
 
-        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.create(currentPlayer, 0, RoundNumber))
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.create(currentPlayer, 0, RoundNumber))
         // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
         call SaveCommand_SaveCodeForPlayer(currentPlayer, false)
 
@@ -228,6 +228,15 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Removes all non heroes/hops/dummy units
         call EnumItemsInRectBJ(duelGame.getDuelArena(), function RemoveItemFromArena)
         call RemoveUnitsInRect(duelGame.getDuelArena())
+    endfunction
+
+    private function EndroundEventForAllPlayers takes nothing returns nothing
+        local integer i  = 0
+        loop
+            call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.create(Player(i), 0, RoundNumber))
+            set i = i + 1
+            exitwhen i > 8
+        endloop
     endfunction
 
     function PvpHeroDeathActions takes nothing returns nothing
@@ -354,6 +363,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Removes all duel game structs
             call DuelGame.cleanupDuels()
             call ResetPvpState()
+
+            //End round event for all players
+            call EndroundEventForAllPlayers()
             
             // Go to the next basic level
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger) // Setup creeps for next wave

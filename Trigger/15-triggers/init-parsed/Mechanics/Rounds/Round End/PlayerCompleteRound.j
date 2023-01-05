@@ -61,7 +61,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
 
         call ForceAddPlayer(RoundPlayersCompleted, p)
         call SetCurrentlyFighting(p, false)
-        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.create(p, 0, RoundNumber))
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.create(p, 0, RoundNumber))
         set RoundFinishedCount = RoundFinishedCount + 1
         call SetUnitInvulnerable(PlayerHeroes[pid + 1], true)
         
@@ -89,7 +89,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
 
     private function init takes nothing returns nothing
         set PlayerCompleteRoundTrigger = CreateTrigger()
-        call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.EndroundForCreeps)
+        call CustomGameEvent_RegisterEventCode(EVENT_PLAYER_ROUND_COMPLETE, CustomEvent.EndroundForCreeps)
         call TriggerRegisterAnyUnitEventBJ(PlayerCompleteRoundTrigger, EVENT_PLAYER_UNIT_DEATH)
         call TriggerAddCondition(PlayerCompleteRoundTrigger, Condition(function PlayerCompleteRoundConditions))
         call TriggerAddAction(PlayerCompleteRoundTrigger, function PlayerCompleteRoundActions)

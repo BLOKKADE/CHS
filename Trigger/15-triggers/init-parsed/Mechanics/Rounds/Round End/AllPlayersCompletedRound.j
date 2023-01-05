@@ -29,6 +29,15 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
         endif
     endfunction
 
+    private function EndroundEventForAllPlayers takes nothing returns nothing
+        local integer i  = 0
+        loop
+            call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.create(Player(i), 0, RoundNumber))
+            set i = i + 1
+            exitwhen i > 8
+        endloop
+    endfunction
+
     private function AllPlayersCompletedRoundActions takes nothing returns nothing
         if (RoundFinishedCount >= PlayerCount) then
             if (IsGameOver()) then
@@ -40,6 +49,8 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
             call DisableTrigger(PlayerAntiStuckTrigger)
             call ConditionalTriggerExecute(EndGameTrigger)
             call ConditionalTriggerExecute(IsGameFinishedTrigger)
+
+            call EndroundEventForAllPlayers()
             
             set RoundFinishedCount = 0
             call PlaySoundBJ(udg_sound02)
