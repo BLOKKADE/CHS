@@ -12,7 +12,7 @@ library PandarenDies initializer init requires RandomShit, PetDeath
 
     private function PandarenDiesActions takes nothing returns nothing
         call ConditionalTriggerExecute(PandarenDeathSoundsTrigger)
-        call PlaySoundOnUnitBJ(udg_sounds01[GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1], 100, GetTriggerUnit())
+        call PlaySoundOnUnitBJ(udg_sounds01[GetPlayerId(GetOwningPlayer(GetTriggerUnit()))], 100, GetTriggerUnit())
     endfunction
 
     private function init takes nothing returns nothing

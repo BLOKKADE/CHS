@@ -32,7 +32,7 @@ library RoboGoblinSkin initializer init
             if roboGoblinCounter >= 4 then
                 set RoboGoblinSkinEnabled.boolean[GetHandleId(u)] = true
                 call BlzSetUnitSkin(u, 'ngir')
-                call PlaySoundOnUnitBJ(udg_sounds01[GetConvertedPlayerId(GetOwningPlayer(u))], 100, u) 
+                call PlaySoundOnUnitBJ(udg_sounds01[GetPlayerId(GetOwningPlayer(u))], 100, u) 
             endif
         endif
     endfunction

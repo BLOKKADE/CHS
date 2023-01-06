@@ -36,7 +36,7 @@ library Glory initializer initLState
         local real gloryBonus = 0
 
         //Arena Ring
-        set gloryBonus = gloryBonus + (GetRingGloryBonus(PlayerHeroes[pid + 1]) * GetValidEndOfRoundItems(PlayerHeroes[pid + 1], 'I0AF'))
+        set gloryBonus = gloryBonus + (GetRingGloryBonus(PlayerHeroes[pid]) * GetValidEndOfRoundItems(PlayerHeroes[pid], 'I0AF'))
 
         //Default bonus
         set gloryBonus = gloryBonus + 200

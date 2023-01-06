@@ -36,6 +36,9 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == MANA_STARVATIO_ABILITY_ID then
             call CastManaStarvation(hero, target, lvl)
             return true
+        elseif abilId == PACKING_TAPE_ABILITY_ID then
+            call CastPackingTape(hero, target)
+            return true
             //Midas Touch
         elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false and (not IsUnitType(target, UNIT_TYPE_HERO)) then
             call CastMidasTouch(hero, target, lvl)
@@ -183,7 +186,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
                 
                 //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
-                set abilityChanneled = AbilityChannel(caster, PlayerHeroes[GetPlayerId(GetOwningPlayer(caster)) + 1], target,targetX,targetY,abilId, abilLvl)
+                set abilityChanneled = AbilityChannel(caster, PlayerHeroes[GetPlayerId(GetOwningPlayer(caster))], target,targetX,targetY,abilId, abilLvl)
             
                 if GetUnitTypeId(caster) != PRIEST_1_UNIT_ID and (not CheckIfCastAllowed(caster)) then
                     //call BJDebugMsg("caster: " + GetUnitName(caster))

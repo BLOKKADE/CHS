@@ -8,25 +8,18 @@ library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
         local player currentPlayer = GetOwningPlayer(GetTriggerUnit())
         local integer currentPlayerId = GetPlayerId(currentPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-        local location arenaLocation
 
         if (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true) then
-            set arenaLocation = GetRectCenter(RectMidArena)
-
-            call RemoveDebuff(PlayerHeroes[currentPlayerId + 1], 0)
-            call SetUnitPositionLoc(PlayerHeroes[currentPlayerId + 1], arenaLocation)
+            call RemoveDebuff(PlayerHeroes[currentPlayerId], 0)
+            call SetUnitPositionLoc(PlayerHeroes[currentPlayerId], RectMidArenaCenter)
 
             if (ps.getPet() != null) then
-                call SetUnitPositionLoc(ps.getPet(), arenaLocation)
+                call SetUnitPositionLoc(ps.getPet(), RectMidArenaCenter)
             endif
 
             if (not CamMoveDisabled[currentPlayerId]) then
-                call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation, 0.20)
+                call PanCameraToTimedLocForPlayer(currentPlayer, RectMidArenaCenter, 0.20)
             endif
-
-            // Cleanup
-            call RemoveLocation(arenaLocation)
-            set arenaLocation = null
         endif
 
         if (ElimModeEnabled == true or GameModeShort == true) then
@@ -68,7 +61,7 @@ library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
         endif
 
         call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffffcc00Level Completed!|r")
-        call Func_completeLevel(PlayerHeroes[currentPlayerId + 1])
+        call Func_completeLevel(PlayerHeroes[currentPlayerId])
 
         // Remove end round dummy
         call DeleteUnit(GetTriggerUnit())

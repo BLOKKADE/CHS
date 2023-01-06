@@ -21,9 +21,9 @@ library CreepPeriodicAttack initializer init requires RandomShit
     private function CreepPeriodicAttackActions takes nothing returns nothing
         local group arenaCreeps
 
-        set CurrentArenaIndex = 1
+        set CurrentArenaIndex = 0
         loop
-            exitwhen CurrentArenaIndex > 8
+            exitwhen CurrentArenaIndex == 8
 
             // Get all creeps in arena
             set arenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[CurrentArenaIndex], Condition(function FilterForArenaCreep))

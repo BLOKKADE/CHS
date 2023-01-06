@@ -73,11 +73,9 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
     endfunction
 
     public function SpawnedHeroActions takes player p, unit hero returns nothing
-        local location heroArenaLocation
         local location projectionLocation
         local integer playerId = GetPlayerId(p)
 
-        set PlayerHeroPicked[playerId + 1] = true
         set SpawnedHeroCount = SpawnedHeroCount + 1
     
         call ResourseRefresh(p)
@@ -108,8 +106,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call UnitAddItemByIdSwapped('I04R', hero)
 
         // Move hero and camera to arena
-        set heroArenaLocation = GetRectCenter(PlayerArenaRects[playerId + 1])
-        call PanCameraToTimedLocForPlayer(p, heroArenaLocation, 0)
+        call PanCameraToTimedLocForPlayer(p, PlayerArenaRectCenters[playerId], 0)
         call SelectUnitForPlayerSingle(hero, p)
 
         // Create 3 of something at the hero location
@@ -120,7 +117,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
             if (GetUnitTypeId(hero) == 'H008') then
                 // Create the unit around the hero
-                set projectionLocation = PolarProjectionBJ(heroArenaLocation, 50.00, 45.00 * I2R(bj_forLoopAIndex))
+                set projectionLocation = PolarProjectionBJ(PlayerArenaRectCenters[playerId], 50.00, 45.00 * I2R(bj_forLoopAIndex))
                 call CreateUnitAtLoc(p, 'e003', projectionLocation, 270.00)
 
                 // This makes no sense that we do it multiple times
@@ -133,10 +130,6 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
             set bj_forLoopAIndex = bj_forLoopAIndex + 1
         endloop
-
-        // Cleanup
-        call RemoveLocation(heroArenaLocation)
-        set heroArenaLocation = null
 
         if (PlayerCount == 1) then
             set SingleplayerPlayer = p

@@ -9,22 +9,22 @@ library LearnRandomAbility initializer init requires RandomShit
         set unitAbilityLevel = GetUnitAbilityLevel(TempUnit, GetAbilityFromItem(RoundCreepAbilCastChance))
 
         // Hero doesn't have ability, ability is valid, hero has less than 10 abilities
-        if ((unitAbilityLevel == 0) and (RoundCreepAbilCastChance != GetItemTypeId(null)) and (HeroAbilityCount[playerId + 1] < 10)) then
+        if ((unitAbilityLevel == 0) and (RoundCreepAbilCastChance != GetItemTypeId(null)) and (HeroAbilityCount[playerId] < 10)) then
             if (ArNotLearningAbil == true) then
                 set ArNotLearningAbil = false
                 set ARLearningAbil = true
-                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId + 1])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId])
                 set ARLearningAbil = false
                 set ArNotLearningAbil = true
             else
-                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId + 1])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId])
             endif
         // Hero has 10 or more abilities, hero has ability, upgrade it?
-        elseif ((HeroAbilityCount[playerId + 1] >= 10) and (unitAbilityLevel > 0) and (unitAbilityLevel < 30) and (TryLearnRandomAbilityAttempts <= 500)) then
+        elseif ((HeroAbilityCount[playerId] >= 10) and (unitAbilityLevel > 0) and (unitAbilityLevel < 30) and (TryLearnRandomAbilityAttempts <= 500)) then
             if (ArNotLearningAbil == true) then
                 set ArNotLearningAbil = false
                 set ARLearningAbil = true
-                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId + 1])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId])
                 set ARLearningAbil = false
                 set ArNotLearningAbil = true
             else

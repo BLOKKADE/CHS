@@ -25,7 +25,6 @@ library EnergyShield initializer init requires RandomShit, CustomGameEvent
     function LearnAbility takes EventInfo eventInfo returns nothing
         local effect fx = null
         local timer t = null
-        call BJDebugMsg("learn event")
         if eventInfo.abilId == ENERGY_SHIELD_ABILITY_ID then
             set fx = AddLocalizedSpecialEffect("war3mapImported\\Ubershield Azure.mdx", GetUnitX(eventInfo.hero), GetUnitY(eventInfo.hero))
             call SaveEffectHandle(HT, GetHandleId(eventInfo.hero), ENERGY_SHIELD_ABILITY_ID, fx)

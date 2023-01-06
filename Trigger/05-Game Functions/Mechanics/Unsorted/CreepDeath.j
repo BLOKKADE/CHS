@@ -98,7 +98,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif*/
 
         //Creep bounty
-        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[GetConvertedPlayerId(owner)], Condition(function IsAliveCreepUnitFilter))
+        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[pid], Condition(function IsAliveCreepUnitFilter))
 
         if (CountUnitsInGroup(playerArenaCreeps) == 0) then
             set goldBounty = goldBounty + udg_integer59 + udg_integer61
@@ -144,7 +144,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
 
     private function SummonDeath takes nothing returns boolean
         if GetOwningPlayer(GetDyingUnit()) != Player(11) and IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == false and GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
-            call NonCreepDeath(GetDyingUnit(), PlayerHeroes[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1])
+            call NonCreepDeath(GetDyingUnit(), PlayerHeroes[GetPlayerId(GetOwningPlayer(GetKillingUnit()))])
         endif
 
         return false

@@ -3,6 +3,10 @@ library PlayerSummonGroups initializer init requires Table
         HashTable PlayerSummonGroups
     endglobals
 
+    function RemoveSummonFromPlayerSummonGroup takes unit hero, unit u returns nothing
+        call GroupRemoveUnit(PlayerSummonGroups[GetHandleId(hero)].group[GetUnitTypeId(u)], u)
+    endfunction
+
     // returnGroup needs to be created before calling this
     // returnGroup is used to prevent leaks
     function GetPlayerSummonGroup takes unit summoner, integer unitTypeId, group returnGroup returns group

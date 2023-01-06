@@ -17,16 +17,16 @@ library ForceHelper requires GetPlayerNames
 
     private function GetPlayerHeroColorName takes nothing returns nothing
         if (IsFirst) then
-            set ForceString = GetUnitNamePlayerColour(PlayerHeroes[GetPlayerId(GetEnumPlayer()) + 1]) // Stored as converted player id. Rip.
+            set ForceString = GetUnitNamePlayerColour(PlayerHeroes[GetPlayerId(GetEnumPlayer())])
             set IsFirst = false
         else 
-            set ForceString = ForceString + ", " + GetUnitNamePlayerColour(PlayerHeroes[GetPlayerId(GetEnumPlayer()) + 1]) // Stored as converted player id. Rip.
+            set ForceString = ForceString + ", " + GetUnitNamePlayerColour(PlayerHeroes[GetPlayerId(GetEnumPlayer())])
         endif
     endfunction
 
     private function CheckIfPlayerUnitIsAlive takes nothing returns nothing
         if (not AreAnyAlive) then
-            set AreAnyAlive = UnitAlive(PlayerHeroes[GetPlayerId(GetEnumPlayer()) + 1]) == true  // Stored as converted player id. Rip.
+            set AreAnyAlive = UnitAlive(PlayerHeroes[GetPlayerId(GetEnumPlayer())]) == true 
         endif
     endfunction
 

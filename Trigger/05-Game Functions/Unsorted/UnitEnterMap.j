@@ -1,4 +1,4 @@
-library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpells, LearnAbsolute
+library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo, LearnAbsolute, PackingTape
 
     globals
         Table SummonLevel
@@ -21,13 +21,24 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         local integer i2 = 0
         local integer totalLevel = 0
         local integer pid = GetPlayerId(GetOwningPlayer(u))
-        local unit hero = PlayerHeroes[pid + 1]
+        local unit hero = PlayerHeroes[pid]
         local integer UpgradeU = 15 * GetUnitItemTypeCount(hero,'I07K')
         local real wild = 1 + GetUnitCustomState(hero, BONUS_SUMMONPOW)/ 100
         local real r1
 
         //Prevent super summons?
         call ResetUnitCustomState(u)
+
+        //check packing tape
+        if UnitHasItemType(hero, PACKING_TAPE_ITEM_ID) and GetSummonSpell(summonTypeId) != 0 then
+            if not PackingTape_CheckSummonCount(hero, u) then
+                set hero = null
+                return
+            endif
+        endif
+
+        //register summons
+        call RegisterPlayerSummon(hero, u)
 
         //Beastmaster
         if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
@@ -51,7 +62,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         call AddUnitCustomState(u, BONUS_PVP, GetUnitCustomState(hero, BONUS_PVP))
 
         if SUMMONS.contains(summonTypeId) then
-            call RegisterPlayerSummon(hero, u)
             set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(summonTypeId)) + UpgradeU
 
             call GetSummonStatFunction(summonTypeId).evaluate(u, totalLevel)
@@ -133,9 +143,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         //Illusion
         if (not realUnit) and IsUnitType(u, UNIT_TYPE_HERO) then
-            call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid + 1], false), false)
-            call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid + 1], false), false)
-            call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid + 1], false), false)
+            call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid], false), false)
+            call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid], false), false)
+            call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid], false), false)
         endif
 
         //Rock Golem

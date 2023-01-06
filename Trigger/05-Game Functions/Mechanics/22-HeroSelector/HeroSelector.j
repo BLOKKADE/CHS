@@ -999,7 +999,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local integer category = 0
         local integer unitCode
         local unit u
-        local location arenaLocation
 
         if CategoryAffectRandom then
             set category = PlayerSelectedCategory[GetPlayerId(p)]
@@ -1010,10 +1009,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endif
 
         // Make sure they don't already have a hero
-        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
-            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
-            set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
-            set PlayerHeroes[GetPlayerId(p) + 1] = u
+        if (PlayerHeroes[GetPlayerId(p) ] == null) then
+            set u = CreateUnitAtLoc(p, unitCode, PlayerArenaRectCenters[GetPlayerId(p)], bj_UNIT_FACING)
+            set PlayerHeroes[GetPlayerId(p)] = u
             call GroupAddUnit(OnPeriodGroup, u)
     
             call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
@@ -1026,8 +1024,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set HeroSelectorEvent = 1.0
             set HeroSelectorEvent = 0.0
 
-            call RemoveLocation(arenaLocation)
-            set arenaLocation = null
             set u = null
         endif
     endfunction
@@ -1037,7 +1033,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local unit u
         //pick what currently is selected, returns true on success returns false when something went wrong,
         local integer buttonIndex = PlayerSelectedButtonIndex[GetPlayerId(p)]
-        local location arenaLocation
 
         if buttonIndex <= 0 then
             return false
@@ -1048,10 +1043,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endif //reject requirment not fullfilled
 
         // Make sure they don't already have a hero
-        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
-            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
-            set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
-            set PlayerHeroes[GetPlayerId(p) + 1] = u
+        if (PlayerHeroes[GetPlayerId(p)] == null) then
+            set u = CreateUnitAtLoc(p, unitCode, PlayerArenaRectCenters[GetPlayerId(p)], bj_UNIT_FACING)
+            set PlayerHeroes[GetPlayerId(p)] = u
             call GroupAddUnit(OnPeriodGroup, u)
             
             call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
@@ -1064,8 +1058,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set HeroSelectorEvent = 1.0
             set HeroSelectorEvent = 0.0
 
-            call RemoveLocation(arenaLocation)
-            set arenaLocation = null
             set u = null
 
             return true

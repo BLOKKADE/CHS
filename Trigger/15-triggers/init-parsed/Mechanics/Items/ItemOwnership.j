@@ -5,15 +5,13 @@ library ItemOwnership initializer init requires Table, GetPlayerNames
         local unit triggeredUnit = GetTriggerUnit()
         local integer itemUserData = GetItemUserData(pickedItem)
 
-        //call BJDebugMsg("Item user data: " + I2S(itemUserData))
-
         // Check if the item is owned by another player
-        if (itemUserData != 0 and itemUserData != GetConvertedPlayerId(GetOwningPlayer(triggeredUnit))) then
-            call DisplayTimedTextToPlayer(GetOwningPlayer(triggeredUnit),0,0,10,"You don't own this item. It belongs to " + GetPlayerNameColour(ConvertedPlayer(itemUserData)))
+        if (itemUserData != 0 and itemUserData != GetPlayerId(GetOwningPlayer(triggeredUnit))) then
+            call DisplayTimedTextToPlayer(GetOwningPlayer(triggeredUnit),0,0,10,"You don't own this item. It belongs to " + GetPlayerNameColour(Player(itemUserData)))
             call UnitRemoveItem(triggeredUnit, pickedItem)
         else
             // Not owned by anyone, save it to the player
-            call SetItemUserData(pickedItem, GetConvertedPlayerId(GetOwningPlayer(triggeredUnit)))
+            call SetItemUserData(pickedItem, GetPlayerId(GetOwningPlayer(triggeredUnit)))
         endif
 
         // Cleanup

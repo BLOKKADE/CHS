@@ -74,6 +74,7 @@ library GloryItemCosts initializer init requires Glory
         set GloryItemCosts[SWORD_OF_BLOODTHRIST_TOME_ITEM_ID] = 10000
         set GloryItemCosts[WISDOM_CHESTPLATE_TOME_ITEM_ID] = 10000
         set GloryItemCosts[LUCKY_PANTS_TOME_ITEM_ID] = 10000
+        set GloryItemCosts[PACKING_TAPE_TOME_ITEM_ID] = 10000
 
         set GloryItemCosts[ANCIENT_STAFF_ITEM_ID] = 10000
         set GloryItemCosts[ANCIENT_DAGGER_ITEM_ID] = 10000
@@ -87,6 +88,7 @@ library GloryItemCosts initializer init requires Glory
         set GloryItemCosts[SWORD_OF_BLOODTHRIST_ITEM_ID] = 10000
         set GloryItemCosts[WISDOM_CHESTPLATE_ITEM_ID] = 10000
         set GloryItemCosts[LUCKY_PANTS_ITEM_ID] = 10000
+        set GloryItemCosts[PACKING_TAPE_ITEM_ID] = 10000
     endfunction
 
     private function init takes nothing returns nothing

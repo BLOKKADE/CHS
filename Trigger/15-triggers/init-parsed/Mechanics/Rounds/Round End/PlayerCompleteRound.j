@@ -25,7 +25,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
             return false
         endif
 
-        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1], Condition(function CreepFilter))
+        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[GetPlayerId(GetOwningPlayer(GetKillingUnit()))], Condition(function CreepFilter))
         set currentPlayer = GetOwningPlayer(killingUnit)
         set isValid = (CountUnitsInGroup(playerArenaCreeps) == 0) and (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true) and (IsPlayerInForce(currentPlayer, RoundPlayersCompleted) != true)
         
@@ -40,12 +40,11 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
     private function PlayerCompleteRoundActions takes nothing returns nothing
         local player p = GetOwningPlayer(GetKillingUnit())
         local integer pid = GetPlayerId(p)
-        local location arenaLocation = GetRectCenter(GetPlayableMapRect())
         local real duration = (T32_Tick - RoundStartTick) / 32
         local real playerCountSub = RMaxBJ(7 - (0.5 * duration), 0)
         local integer roundClearXpBonus = R2I(playerCountSub * (4 * Pow(RoundNumber, 2)))
 
-        if (GetUnitTypeId(PlayerHeroes[pid + 1]) == TINKER_UNIT_ID) then
+        if (GetUnitTypeId(PlayerHeroes[pid]) == TINKER_UNIT_ID) then
             set roundClearXpBonus = roundClearXpBonus * 2
         endif
 
@@ -63,7 +62,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         call SetCurrentlyFighting(p, false)
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.create(p, 0, RoundNumber))
         set RoundFinishedCount = RoundFinishedCount + 1
-        call SetUnitInvulnerable(PlayerHeroes[pid + 1], true)
+        call SetUnitInvulnerable(PlayerHeroes[pid], true)
         
         if (RoundLiveLost[pid]) then
             set RoundLiveLost[pid] = false
@@ -73,17 +72,15 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r")
             else
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r |cff7bff00(+" + I2S(roundClearXpBonus) + " exp)|r")
-                call AddHeroXPSwapped(roundClearXpBonus, PlayerHeroes[pid + 1], true)
+                call AddHeroXPSwapped(roundClearXpBonus, PlayerHeroes[pid], true)
             endif
         endif
 
-        call CreateNUnitsAtLoc(1, PRIEST_1_UNIT_ID, p, arenaLocation, bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1, PRIEST_1_UNIT_ID, p, RectMidArenaCenter, bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(2.00, 'BTLF', GetLastCreatedUnit())
         call GroupAddUnit(GroupEmptyArenaCheck, GetLastCreatedUnit())
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
         set p = null
     endfunction
 

@@ -13,7 +13,7 @@ library DraftOnBuy initializer init requires DraftModeFunctions/*
     endfunction
 
     private function DraftOnBuyActions takes nothing returns nothing
-        local integer currentPlayerId = GetConvertedPlayerId(GetOwningPlayer(GetSellingUnit()))
+        local integer currentPlayerId = GetPlayerId(GetOwningPlayer(GetSellingUnit()))
         call AddItemToStock(udg_Draft_UpgradeBuildings[currentPlayerId], GetItemTypeId(GetSoldItem()), 1, 1)
     
         if (udg_Draft_NOSpellsLearned[currentPlayerId] < 9) then // (udg_Draft_NOSpellsLearned[currentPlayerId] < 9) results in drafting 10 spells in total.

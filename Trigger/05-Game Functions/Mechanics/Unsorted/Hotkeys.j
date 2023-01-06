@@ -95,7 +95,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
         if (ShopsCreated) then
-            call SellItemsFromHero(PlayerHeroes[pid + 1])
+            call SellItemsFromHero(PlayerHeroes[pid])
             call ResourseRefresh(Player(pid)) 
         endif
     endfunction
@@ -138,7 +138,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
             call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleViewTrigger, Player(i), OSKEY_TAB, 0, true)
             call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleHideTrigger, Player(i), OSKEY_TAB, 0, false)
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
         call TriggerAddAction(trg3, function ConvertLumber)
         call TriggerAddAction(trg4, function ConvertGold)

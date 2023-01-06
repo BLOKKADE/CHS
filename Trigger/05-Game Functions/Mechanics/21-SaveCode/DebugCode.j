@@ -5,7 +5,7 @@ library DebugCode requires RandomShit, GameInit
         local integer index = 0
         local string name
         local unit playerHero
-        local integer i = 1
+        local integer i = 0
         local PlayerStats ps
 
         if (not (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING)) then
@@ -64,7 +64,7 @@ library DebugCode requires RandomShit, GameInit
                 set debugCode = debugCode + "_"
             endif
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
 
         call SaveFile.create(p, "", 1, debugCode)

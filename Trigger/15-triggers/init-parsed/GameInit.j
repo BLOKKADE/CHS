@@ -5,7 +5,6 @@ library GameInit initializer init requires GroupUtils
         boolean AllPlayerHeroesSpawned = false
         boolean ARLearningAbil = false
         boolean ArNotLearningAbil = false
-        boolean array PlayerHeroPicked
         boolean array PlayerPlacedGoldBet
         boolean array PlayerPlacedLumberBet
         boolean array RoundLiveLost
@@ -91,6 +90,8 @@ library GameInit initializer init requires GroupUtils
         integer UnknownInteger01 = 0
         integer TryLearnRandomAbilityAttempts = 0
         location array HideShopsLocations
+        location array PlayerArenaRectCenters
+        location RectMidArenaCenter
         player HostPlayer = null
         player SingleplayerPlayer = null
         player WinningPlayer
@@ -213,6 +214,7 @@ library GameInit initializer init requires GroupUtils
 
         // Needs to be specified right away since a lot of triggers depend on it
         set RectMidArena = Rect(-1696.0, -1952.0, 1696.0, 1440.0)
+        set RectMidArenaCenter = GetRectCenter(RectMidArena)
     endfunction
 
     private function InitializeEnvironment takes nothing returns nothing
