@@ -48,9 +48,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
 
         call ResourseRefresh(p) 
 
-        call SetHeroStr(u, GetHeroStr(u, false) + R2I(levelsGained * GetStrengthLevelBonus(u)), true)
-        call SetHeroAgi(u, GetHeroAgi(u, false) + R2I(levelsGained * GetAgilityLevelBonus(u)), true)
-        call SetHeroInt(u, GetHeroInt(u, false) + R2I(levelsGained * GetIntelligenceLevelBonus(u)), true)
+        call UpdateStatsOnLevelup(u, levelsGained)
         
         if uid == LIEUTENANT_UNIT_ID then //Letinant    
             call LetinantBonus(u, levelsGained)

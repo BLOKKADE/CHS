@@ -122,7 +122,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             //Agility level bonus
             if II == AGILITY_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
                 if GetHeroXP(u) >= 20000  then
-                    call AddAgilityLevelBonus(u, 1)
+                    call AddStatLevelBonus(u, BONUS_AGILITY, 1)
 
                     call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
@@ -132,7 +132,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Intelligence level bonus
             elseif II == INTELLIGENCE_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
                 if GetHeroXP(u) >= 20000  then
-                    call AddIntelligenceLevelBonus(u, 1)
+                    call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 1)
                     call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
                 else
@@ -141,7 +141,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Strength level bonus
             elseif II  == STRENGTH_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
                 if GetHeroXP(u) >= 20000  then
-                    call AddStrengthLevelBonus(u, 1)
+                    call AddStatLevelBonus(u, BONUS_STRENGTH, 1)
                     call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
 
                     call RemoveItem(It)
