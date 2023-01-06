@@ -5,7 +5,6 @@ library GameInit initializer init requires GroupUtils
         boolean AllPlayerHeroesSpawned = false
         boolean ARLearningAbil = false
         boolean ArNotLearningAbil = false
-        boolean array PlayerHeroPicked
         boolean array PlayerPlacedGoldBet
         boolean array PlayerPlacedLumberBet
         boolean array RoundLiveLost

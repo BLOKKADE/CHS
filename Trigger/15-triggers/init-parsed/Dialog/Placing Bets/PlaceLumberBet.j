@@ -6,7 +6,7 @@ library PlaceLumberBet initializer init requires RandomShit, InitializeBettingDi
 
     private function PlaceLumberBetActions takes nothing returns nothing
         local player currentPlayer = GetTriggerPlayer()
-        local integer playerId = GetConvertedPlayerId(currentPlayer)
+        local integer playerId = GetPlayerId(currentPlayer)
 
         // Check the player actually has any lumber
         if (GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_LUMBER) > 0) then

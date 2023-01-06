@@ -89,13 +89,12 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
                 call RefreshUpgradeShop(pid, u)
                 
                 if AbilityMode == 2 then
-                    set udg_Draft_NOSpellsLearned[pid + 1] = udg_Draft_NOSpellsLearned[pid + 1] - count
+                    set udg_Draft_NOSpellsLearned[pid] = udg_Draft_NOSpellsLearned[pid] - count
                 endif
             endif
 
             if AbilityMode == 2 then
-                
-                call GenerateDraftSpells(pid + 1, udg_Draft_NODraftSpells) 
+                call GenerateDraftSpells(pid, udg_Draft_NODraftSpells) 
             endif
 
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", u, "origin"))

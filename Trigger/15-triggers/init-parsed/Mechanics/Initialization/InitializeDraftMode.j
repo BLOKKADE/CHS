@@ -41,12 +41,12 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit, DraftModeFu
         local integer playerId = GetPlayerId(GetEnumPlayer())
         local integer abilityIndex = 1
 
-        set udg_Draft_NOSpellsLearned[playerId + 1] = 0
+        set udg_Draft_NOSpellsLearned[playerId] = 0
 
         loop
             exitwhen abilityIndex > udg_Draft_DefaultSpellsMaxIndex
             call SaveIntegerBJ(udg_Draft_DefaultSpells[abilityIndex], playerId + 1, abilityIndex, udg_Draft_PlayerSpells)
-            set udg_Draft_PlayerSpellsMaxIndex[playerId + 1] = udg_Draft_DefaultSpellsMaxIndex
+            set udg_Draft_PlayerSpellsMaxIndex[playerId] = udg_Draft_DefaultSpellsMaxIndex
             set abilityIndex = abilityIndex + 1
         endloop
     endfunction

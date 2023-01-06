@@ -6,7 +6,7 @@ library PlaceGoldBet initializer init requires RandomShit, InitializeBettingDial
 
     private function PlaceGoldBetActions takes nothing returns nothing
         local player currentPlayer = GetTriggerPlayer()
-        local integer playerId = GetConvertedPlayerId(currentPlayer)
+        local integer playerId = GetPlayerId(currentPlayer)
 
         // Check the player actually has any gold
         if (GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) > 0) then

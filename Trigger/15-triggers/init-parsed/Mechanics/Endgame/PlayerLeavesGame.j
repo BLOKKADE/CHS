@@ -40,7 +40,7 @@ library PlayerLeavesGame initializer init requires RandomShit
 
         /* Don't try to create a random hero if the player leaves. I think this is using the old hero selector behavior
         if (RoundNumber == 0 and PlayerHeroes[playerId] == null) then
-            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetTriggerPlayer())])
+            set arenaLocation = GetRectCenter(PlayerArenaRects[GetPlayerId(GetTriggerPlayer())])
 
             set SpawnedHeroCount = SpawnedHeroCount + 1 
             call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8), Condition(function Trig_Player_Leaves_Func007Func003002001001002)))),GetTriggerPlayer(),arenaLocation,bj_UNIT_FACING)

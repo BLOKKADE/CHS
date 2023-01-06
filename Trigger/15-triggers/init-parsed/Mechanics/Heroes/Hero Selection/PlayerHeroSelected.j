@@ -76,7 +76,6 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         local location projectionLocation
         local integer playerId = GetPlayerId(p)
 
-        set PlayerHeroPicked[playerId + 1] = true
         set SpawnedHeroCount = SpawnedHeroCount + 1
     
         call ResourseRefresh(p)
