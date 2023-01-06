@@ -12,8 +12,6 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit, DraftModeFu
         integer array udg_Draft_NOSpellsLearned
         integer array udg_Draft_DefaultSpells
         integer udg_Draft_DefaultSpellsMaxIndex = 0
-        integer DRAFT_BUY_UNIT_ID = 0
-        integer DRAFT_UPGRADE_UNIT_ID = 0
         trigger udg_Draft_TrgOnBuy = null
     endglobals
 
