@@ -1009,9 +1009,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endif
 
         // Make sure they don't already have a hero
-        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
+        if (PlayerHeroes[GetPlayerId(p) ] == null) then
             set u = CreateUnitAtLoc(p, unitCode, PlayerArenaRectCenters[GetPlayerId(p)], bj_UNIT_FACING)
-            set PlayerHeroes[GetPlayerId(p) + 1] = u
+            set PlayerHeroes[GetPlayerId(p)] = u
             call GroupAddUnit(OnPeriodGroup, u)
     
             call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
@@ -1043,9 +1043,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endif //reject requirment not fullfilled
 
         // Make sure they don't already have a hero
-        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
+        if (PlayerHeroes[GetPlayerId(p)] == null) then
             set u = CreateUnitAtLoc(p, unitCode, PlayerArenaRectCenters[GetPlayerId(p)], bj_UNIT_FACING)
-            set PlayerHeroes[GetPlayerId(p) + 1] = u
+            set PlayerHeroes[GetPlayerId(p)] = u
             call GroupAddUnit(OnPeriodGroup, u)
             
             call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)

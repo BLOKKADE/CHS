@@ -16,7 +16,7 @@ library PetFollow initializer init requires RandomShit
             set ps = PlayerStats.forPlayer(Player(i))
 
             if (ps != 0 and ps.getPet() != null) then
-                call IssueTargetOrder(ps.getPet(), "move", PlayerHeroes[i + 1])
+                call IssueTargetOrder(ps.getPet(), "move", PlayerHeroes[i])
             endif
 
             set i = i + 1

@@ -128,7 +128,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 			//Sell all items
 			if NumButton == 3 then
-				set SpellU = PlayerHeroes[PlID + 1]
+				set SpellU = PlayerHeroes[PlID]
 
 				call SellItemsFromHero(SpellU)
 				call ResourseRefresh(p) 
@@ -239,7 +239,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 				elseif NumButton == 38 then
-					set SpellU = PlayerHeroes[selectedUnitPid + 1]
+					set SpellU = PlayerHeroes[selectedUnitPid]
 					set ToolTipS = GetElementCountTooltip(SpellU)
 
 					if GetLocalPlayer() == p then
@@ -249,7 +249,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 				elseif NumButton == 39 then
-					set SpellU = PlayerHeroes[selectedUnitPid + 1]
+					set SpellU = PlayerHeroes[selectedUnitPid]
 					set ToolTipS = PlayerStats.getTooltip(GetOwningPlayer(SpellU))
 					set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
 
@@ -260,7 +260,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 				elseif NumButton == 100 then
-					set SpellU = PlayerHeroes[selectedUnitPid + 1]
+					set SpellU = PlayerHeroes[selectedUnitPid]
 					set ToolTipS = GetHeroTooltip(SpellU)
 
 					if GetLocalPlayer() == p then
@@ -273,7 +273,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					//Hero abilities and absolutes
 				elseif NumButton > 100 and NumButton <= 120 then
 					if SelectedUnitPid[PlID] != 11 then
-						set SpellU = PlayerHeroes[selectedUnitPid + 1]
+						set SpellU = PlayerHeroes[selectedUnitPid]
 						set i3 = GetHeroSpellAtPosition(SpellU, NumButton - 100) 
 						set ToolTipS = GetAbilityElementCountTooltip(SpellU, NumButton - 100)
 

@@ -19,7 +19,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
 
     private function EnableDeathTrigger takes nothing returns nothing
         local integer currentPlayerId = GetTimerData(GetExpiredTimer())
-        local unit currentUnit = PlayerHeroes[currentPlayerId + 1]
+        local unit currentUnit = PlayerHeroes[currentPlayerId]
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
@@ -125,7 +125,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
 
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(currentPlayer) + "|cffC60000 was defeated!|r")
-        call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(currentPlayer) + 1])
+        call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(currentPlayer)])
         
         call DisableTrigger(FaerieDragonDiesTrigger)
         call ForGroup(playerUnits, function RemovePlayerUnit)

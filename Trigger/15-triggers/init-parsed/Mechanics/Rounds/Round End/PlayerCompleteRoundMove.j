@@ -10,8 +10,8 @@ library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         if (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true) then
-            call RemoveDebuff(PlayerHeroes[currentPlayerId + 1], 0)
-            call SetUnitPositionLoc(PlayerHeroes[currentPlayerId + 1], RectMidArenaCenter)
+            call RemoveDebuff(PlayerHeroes[currentPlayerId], 0)
+            call SetUnitPositionLoc(PlayerHeroes[currentPlayerId], RectMidArenaCenter)
 
             if (ps.getPet() != null) then
                 call SetUnitPositionLoc(ps.getPet(), RectMidArenaCenter)
@@ -61,7 +61,7 @@ library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
         endif
 
         call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffffcc00Level Completed!|r")
-        call Func_completeLevel(PlayerHeroes[currentPlayerId + 1])
+        call Func_completeLevel(PlayerHeroes[currentPlayerId])
 
         // Remove end round dummy
         call DeleteUnit(GetTriggerUnit())

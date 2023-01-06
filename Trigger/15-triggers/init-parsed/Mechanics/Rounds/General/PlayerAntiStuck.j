@@ -26,16 +26,16 @@ library PlayerAntiStuck initializer init requires RandomShit
             set playerArenaUnits = GetUnitsInRectMatching(PlayerArenaRects[currentPlayerId], Condition(function CreepUnitFilter))
 
             // There are creeps in the player's arena, but the player's hero isn't there
-            if (RectContainsUnit(RectMidArena, PlayerHeroes[currentPlayerId + 1]) and CountUnitsInGroup(playerArenaUnits) != 0) then
+            if (RectContainsUnit(RectMidArena, PlayerHeroes[currentPlayerId]) and CountUnitsInGroup(playerArenaUnits) != 0) then
                 call RemoveUnitsInRectCreeps(PlayerArenaRects[currentPlayerId])
             endif
     
             // Player hero exists, arena has creeps, player isn't defeated, and has not completed the round yet
-            if ((PlayerHeroes[currentPlayerId + 1] != null) and (CountUnitsInGroup(playerArenaUnits) == 0) and (not IsPlayerInForce(currentPlayer, DefeatedPlayers)) and (not IsPlayerInForce(currentPlayer, RoundPlayersCompleted))) then
+            if ((PlayerHeroes[currentPlayerId] != null) and (CountUnitsInGroup(playerArenaUnits) == 0) and (not IsPlayerInForce(currentPlayer, DefeatedPlayers)) and (not IsPlayerInForce(currentPlayer, RoundPlayersCompleted))) then
                 call CreateNUnitsAtLoc(1, 'n00T', Player(11), PlayerArenaRectCenters[currentPlayerId], bj_UNIT_FACING)
-                call SuspendHeroXPBJ(false, PlayerHeroes[currentPlayerId + 1])
-                call UnitDamageTargetBJ(PlayerHeroes[currentPlayerId + 1], GetLastCreatedUnit(), 500, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL)
-                call SuspendHeroXPBJ(true, PlayerHeroes[currentPlayerId + 1])
+                call SuspendHeroXPBJ(false, PlayerHeroes[currentPlayerId])
+                call UnitDamageTargetBJ(PlayerHeroes[currentPlayerId], GetLastCreatedUnit(), 500, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL)
+                call SuspendHeroXPBJ(true, PlayerHeroes[currentPlayerId])
             endif
     
             // Cleanup

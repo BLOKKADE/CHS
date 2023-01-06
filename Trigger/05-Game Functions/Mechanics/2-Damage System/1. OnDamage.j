@@ -58,8 +58,8 @@ scope OnDamage initializer init
         set DamageSourcePid = GetPlayerId(GetOwningPlayer(DamageSource))
         set DamageTargetPid = GetPlayerId(GetOwningPlayer(DamageTarget))
 
-        set DamageSourceHero = PlayerHeroes[DamageSourcePid + 1]
-        set DamageTargetHero = PlayerHeroes[DamageTargetPid + 1]
+        set DamageSourceHero = PlayerHeroes[DamageSourcePid]
+        set DamageTargetHero = PlayerHeroes[DamageTargetPid]
 
         set DamageSourceMagicPower = 1
         set DamageTargetMagicRes = 1

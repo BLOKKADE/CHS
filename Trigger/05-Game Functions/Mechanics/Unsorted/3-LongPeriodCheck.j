@@ -83,7 +83,7 @@ scope LongPeriodCheck initializer init
             if selectedUnitPid == 11 then
                 set abilId = roundAbilities.integer[i]
             else
-                set abilId = GetHeroSpellAtPosition(PlayerHeroes[selectedUnitPid + 1] , i)
+                set abilId = GetHeroSpellAtPosition(PlayerHeroes[selectedUnitPid] , i)
             endif
 
             if abilId != 0 then
@@ -99,7 +99,7 @@ scope LongPeriodCheck initializer init
 
         call BlzFrameSetVisible(ButtonParentId[4], ScoreboardFrameHandle != null)
         
-        set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid + 1])
+        set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid])
         //updates the icons in top left if selected unit is a creep
         //Show element count, win counts or hero passive
         if unitTypeId != 0 then

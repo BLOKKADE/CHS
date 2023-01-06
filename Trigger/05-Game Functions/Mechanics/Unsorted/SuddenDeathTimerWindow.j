@@ -18,11 +18,11 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
         local integer i = 0
 
         loop
-            if HasPlayerFinishedLevel(PlayerHeroes[i+1], Player(i)) == false then
+            if HasPlayerFinishedLevel(PlayerHeroes[i], Player(i)) == false then
                 call DisplayTimedTextToPlayer(Player(i), 0, 0, 10, s)
             endif
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i > 7
         endloop
     endfunction
 

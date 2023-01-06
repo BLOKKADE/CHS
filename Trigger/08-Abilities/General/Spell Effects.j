@@ -186,7 +186,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
                 
                 //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
-                set abilityChanneled = AbilityChannel(caster, PlayerHeroes[GetPlayerId(GetOwningPlayer(caster)) + 1], target,targetX,targetY,abilId, abilLvl)
+                set abilityChanneled = AbilityChannel(caster, PlayerHeroes[GetPlayerId(GetOwningPlayer(caster))], target,targetX,targetY,abilId, abilLvl)
             
                 if GetUnitTypeId(caster) != PRIEST_1_UNIT_ID and (not CheckIfCastAllowed(caster)) then
                     //call BJDebugMsg("caster: " + GetUnitName(caster))

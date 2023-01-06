@@ -464,7 +464,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         endif
 
         loop
-            if not UnitAlive(PlayerHeroes[i + 1]) then
+            if not UnitAlive(PlayerHeroes[i]) then
                 call PlayerList.erase(PlayerList.find(i))
             endif
             set i = i + 1
@@ -493,7 +493,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         
         // Add players that are in the game
         loop
-            if (UnitAlive(PlayerHeroes[i + 1])) then
+            if (UnitAlive(PlayerHeroes[i])) then
                 set tempPlayerIds[playerCount] = i
                 set playerCount = playerCount + 1
             endif

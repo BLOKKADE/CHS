@@ -6,7 +6,7 @@ library PlacePercentageBet initializer init requires RandomShit, PvpRoundRobin, 
 
     private function PlacePercentageBetActions takes nothing returns nothing
         local player currentPlayer = GetTriggerPlayer()
-        local integer playerId = GetConvertedPlayerId(currentPlayer)
+        local integer playerId = GetPlayerId(currentPlayer)
 
         // 25% resource bet
         if (GetClickedButton() == BettingDialogButtons[8]) then

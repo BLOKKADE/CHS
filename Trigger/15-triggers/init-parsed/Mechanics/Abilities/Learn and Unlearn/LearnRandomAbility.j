@@ -13,18 +13,18 @@ library LearnRandomAbility initializer init requires RandomShit
             if (ArNotLearningAbil == true) then
                 set ArNotLearningAbil = false
                 set ARLearningAbil = true
-                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId + 1])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId])
                 set ARLearningAbil = false
                 set ArNotLearningAbil = true
             else
-                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId + 1])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId])
             endif
         // Hero has 10 or more abilities, hero has ability, upgrade it?
         elseif ((HeroAbilityCount[playerId + 1] >= 10) and (unitAbilityLevel > 0) and (unitAbilityLevel < 30) and (TryLearnRandomAbilityAttempts <= 500)) then
             if (ArNotLearningAbil == true) then
                 set ArNotLearningAbil = false
                 set ARLearningAbil = true
-                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId + 1])
+                call UnitAddItemByIdSwapped(RoundCreepAbilCastChance, PlayerHeroes[playerId])
                 set ARLearningAbil = false
                 set ArNotLearningAbil = true
             else

@@ -69,7 +69,7 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomGame
         local boolean maxAbil = false
         local integer playerId = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
 
-        set BuyingUnit = PlayerHeroes[playerId + 1]
+        set BuyingUnit = PlayerHeroes[playerId]
         set BoughtAbility = GetAbilityFromItem(GetItemTypeId(GetManipulatedItem()))
 
         // Bought ability item is invalid or is an absolute

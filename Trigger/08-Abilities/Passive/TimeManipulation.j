@@ -20,9 +20,9 @@ library TimeManipulation initializer init requires AbilityCooldown
     /*function TimerEnd takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local integer pid = GetTimerData(t)
-        local integer hid = GetHandleId(PlayerHeroes[pid+1])
+        local integer hid = GetHandleId(PlayerHeroes[pid])
         if TimeManipulationTable[hid].timer[3] == t then
-            if not HasPlayerFinishedLevel(PlayerHeroes[pid+1], Player(pid)) then
+            if not HasPlayerFinishedLevel(PlayerHeroes[pid], Player(pid)) then
                 call BJDebugMsg("set true")
                 set TimeManipulationTable[hid].boolean[4] = true
             endif

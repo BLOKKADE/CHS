@@ -44,7 +44,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         local real playerCountSub = RMaxBJ(7 - (0.5 * duration), 0)
         local integer roundClearXpBonus = R2I(playerCountSub * (4 * Pow(RoundNumber, 2)))
 
-        if (GetUnitTypeId(PlayerHeroes[pid + 1]) == TINKER_UNIT_ID) then
+        if (GetUnitTypeId(PlayerHeroes[pid]) == TINKER_UNIT_ID) then
             set roundClearXpBonus = roundClearXpBonus * 2
         endif
 
@@ -62,7 +62,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         call SetCurrentlyFighting(p, false)
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.create(p, 0, RoundNumber))
         set RoundFinishedCount = RoundFinishedCount + 1
-        call SetUnitInvulnerable(PlayerHeroes[pid + 1], true)
+        call SetUnitInvulnerable(PlayerHeroes[pid], true)
         
         if (RoundLiveLost[pid]) then
             set RoundLiveLost[pid] = false
@@ -72,7 +72,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r")
             else
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r |cff7bff00(+" + I2S(roundClearXpBonus) + " exp)|r")
-                call AddHeroXPSwapped(roundClearXpBonus, PlayerHeroes[pid + 1], true)
+                call AddHeroXPSwapped(roundClearXpBonus, PlayerHeroes[pid], true)
             endif
         endif
 

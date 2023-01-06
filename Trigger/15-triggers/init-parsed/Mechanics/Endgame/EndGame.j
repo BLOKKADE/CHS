@@ -36,8 +36,8 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
         set WinningPlayer = Player(PLAYER_NEUTRAL_PASSIVE)
 
         loop
-            if UnitAlive(PlayerHeroes[i + 1]) then
-                // call BJDebugMsg(GetPlayerName(Player(i)) + ", hero alive: " + GetUnitName(PlayerHeroes[i+1]))
+            if UnitAlive(PlayerHeroes[i]) then
+                // call BJDebugMsg(GetPlayerName(Player(i)) + ", hero alive: " + GetUnitName(PlayerHeroes[i]))
                 set WinningPlayer = Player(i)
             endif
 

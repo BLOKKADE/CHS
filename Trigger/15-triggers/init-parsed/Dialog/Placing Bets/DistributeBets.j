@@ -6,29 +6,29 @@ library DistributeBets initializer init requires RandomShit, PvpRoundRobin
 
     private function DistributeBetsForPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
-        local integer convertedPlayerId = GetConvertedPlayerId(currentPlayer)
+        local integer currentPlayerId = GetPlayerId(currentPlayer)
         local string winMessage
 
-        if (ResourceBetPercentageGoldReward[convertedPlayerId] > 0 or ResourceBetPercentageLumberReward[convertedPlayerId] > 0) then
+        if (ResourceBetPercentageGoldReward[currentPlayerId] > 0 or ResourceBetPercentageLumberReward[currentPlayerId] > 0) then
             set winMessage = GetPlayerNameColour(currentPlayer)
             set winMessage = winMessage + " won: "
 
-            call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", PlayerHeroes[convertedPlayerId], "Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl"))
+            call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", PlayerHeroes[currentPlayerId], "Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl"))
             
-            if (PlayerPlacedGoldBet[convertedPlayerId] == true)then
-                call AdjustPlayerStateBJ((ResourceBetPercentageGoldReward[convertedPlayerId] * 2), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
+            if (PlayerPlacedGoldBet[currentPlayerId] == true)then
+                call AdjustPlayerStateBJ((ResourceBetPercentageGoldReward[currentPlayerId] * 2), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                 call ResourseRefresh(currentPlayer)
-                set winMessage = winMessage + I2S((ResourceBetPercentageGoldReward[convertedPlayerId] * 2))
+                set winMessage = winMessage + I2S((ResourceBetPercentageGoldReward[currentPlayerId] * 2))
                 
-                if (PlayerPlacedLumberBet[convertedPlayerId] == true) then
+                if (PlayerPlacedLumberBet[currentPlayerId] == true) then
                     set winMessage = winMessage + " gold and "
                 endif
             endif
 
-            if (PlayerPlacedLumberBet[convertedPlayerId] == true) then
-                call AdjustPlayerStateBJ((ResourceBetPercentageLumberReward[convertedPlayerId]* 2), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+            if (PlayerPlacedLumberBet[currentPlayerId] == true) then
+                call AdjustPlayerStateBJ((ResourceBetPercentageLumberReward[currentPlayerId] * 2), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
                 call ResourseRefresh(currentPlayer)
-                set winMessage = winMessage + I2S((ResourceBetPercentageLumberReward[convertedPlayerId] * 2))
+                set winMessage = winMessage + I2S((ResourceBetPercentageLumberReward[currentPlayerId] * 2))
                 set winMessage = winMessage + " lumber!"
             else
                 set winMessage = winMessage + " gold!"
@@ -38,11 +38,11 @@ library DistributeBets initializer init requires RandomShit, PvpRoundRobin
         endif
 
         // Wipe all betting values
-        set PlayerResourceBetPercentage[convertedPlayerId] = 0
-        set ResourceBetPercentageGoldReward[convertedPlayerId] = 0
-        set ResourceBetPercentageLumberReward[convertedPlayerId] = 0
-        set PlayerPlacedGoldBet[convertedPlayerId] = false
-        set PlayerPlacedLumberBet[convertedPlayerId] = false
+        set PlayerResourceBetPercentage[currentPlayerId] = 0
+        set ResourceBetPercentageGoldReward[currentPlayerId] = 0
+        set ResourceBetPercentageLumberReward[currentPlayerId] = 0
+        set PlayerPlacedGoldBet[currentPlayerId] = false
+        set PlayerPlacedLumberBet[currentPlayerId] = false
 
         // Cleanup
         set currentPlayer = null

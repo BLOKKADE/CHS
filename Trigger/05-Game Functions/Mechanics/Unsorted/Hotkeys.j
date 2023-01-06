@@ -95,7 +95,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
         if (ShopsCreated) then
-            call SellItemsFromHero(PlayerHeroes[pid + 1])
+            call SellItemsFromHero(PlayerHeroes[pid])
             call ResourseRefresh(Player(pid)) 
         endif
     endfunction

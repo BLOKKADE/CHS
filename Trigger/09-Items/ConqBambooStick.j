@@ -25,7 +25,7 @@ library ConqBambooStick initializer init requires CustomState, Utility
         integer endTick
 
         private method reset takes nothing returns nothing
-            local integer i = 1
+            local integer i = 0
             local unit enemyHero
             local integer enemyHid
 
@@ -41,7 +41,7 @@ library ConqBambooStick initializer init requires CustomState, Utility
                     set ConqBambStickLightning[this.hid].integer[enemyHid] = 0**/
                 endif
                 set i = i + 1
-                exitwhen i > 8
+                exitwhen i > 7
             endloop
 
             set enemyHero = null
@@ -64,7 +64,7 @@ library ConqBambooStick initializer init requires CustomState, Utility
         endmethod
 
         private method search takes nothing returns nothing
-            local integer i = 1
+            local integer i = 0
             local unit enemyHero
             local integer enemyHid
             
@@ -83,7 +83,7 @@ library ConqBambooStick initializer init requires CustomState, Utility
                     endif
                 endif
                 set i = i + 1
-                exitwhen i > 8
+                exitwhen i > 7
             endloop
 
             set enemyHero = null
