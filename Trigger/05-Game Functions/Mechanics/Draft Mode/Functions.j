@@ -85,8 +85,8 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
 
     function CreateDraftBuildingsLoop takes nothing returns nothing
         local integer pid = GetPlayerId(GetEnumPlayer())
-        set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), udg_Draft_DraftBuilding, 0 - OffsetX, OffsetY, 0)
-        set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), udg_Draft_UpgradeBuilding, OffsetX, OffsetY, 0)
+        set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_BUY_UNIT_ID, 0 - OffsetX, OffsetY, 0)
+        set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_UPGRADE_UNIT_ID, OffsetX, OffsetY, 0)
 
         if IncomeMode == 3 then
             call GenerateDraftSpells(pid, udg_Draft_NODraftSpells)
