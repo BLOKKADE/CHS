@@ -307,6 +307,11 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         call AdjustPlayerStateBJ(Income[pid], p, PLAYER_STATE_RESOURCE_GOLD)
         call DisplayTextToPlayer(p, 0, 0, "|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " - |cff00aa0eLumber|r: +" + I2S(LumberGained[pid]) + " - |cff7af0f8Glory|r: +" + I2S(R2I((GetPlayerGloryBonus(pid)))))
 
+        if (RoundNumber == 16 or RoundNumber == 32) then
+            set Lives[pid] = Lives[pid] + 1
+            call DisplayTextToPlayer(p, 0, 0, "|cff85ff3eRound|r: " + I2S(RoundNumber) + "|r: |cffecff3e+1 life|r for you being you.")
+        endif
+
         if IncomeMode < 2 and Income[pid] == 0 then 
             call DisplayTextToPlayer(p, 0, 0, "You can increase your income in Power Ups Shop II")       
         endif
@@ -321,11 +326,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         
         if ModuloInteger(RoundNumber, 3) == 0 then
             call Hints_DisplayHint(pid)
-        endif
-
-        if (RoundNumber == 16 or RoundNumber == 32) then
-            set Lives[pid] = Lives[pid] + 1
-            call DisplayTextToPlayer(p, 0, 0, "|cff85ff3eRound|r: " + I2S(RoundNumber) + "|r: |cffecff3e+1 life|r for you being you.")
         endif
 
         set p = null
