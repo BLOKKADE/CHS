@@ -11,24 +11,24 @@ library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLe
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local integer currentPlayerId = GetPlayerId(currentPlayer)
     
-        if (ArNotLearningAbil == false and AbilityMode != 2 and PlayerLastLearnedSpell[currentPlayerId + 1] != 'Amnz') then
+        if (ArNotLearningAbil == false and AbilityMode != 2 and PlayerLastLearnedSpell[currentPlayerId] != 'Amnz') then
             set spellCount = GetHeroSpellListCount(currentUnit, 0)
 
             if (spellCount > 0) then
-                set HeroAbilityCount[currentPlayerId + 1] = HeroAbilityCount[currentPlayerId + 1] - 1
-                set PlayerLastLearnedSpell[currentPlayerId + 1] = GetLastLearnedSpell(currentUnit, SpellList_Normal, true)
+                set HeroAbilityCount[currentPlayerId] = HeroAbilityCount[currentPlayerId] - 1
+                set PlayerLastLearnedSpell[currentPlayerId] = GetLastLearnedSpell(currentUnit, SpellList_Normal, true)
                 call SetHeroSpellPosition(currentUnit, spellCount, 0)
                 call SetHeroSpellListCount(currentUnit, spellCount - 1, 0) 
     
-                call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[currentPlayerId + 1], GetUnitAbilityLevel(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1]) - 1))
+                call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[currentPlayerId], GetUnitAbilityLevel(currentUnit, PlayerLastLearnedSpell[currentPlayerId]) - 1))
                 call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", currentUnit, "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl"))
-                call UnitRemoveAbility(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1])
-                call FunResetAbility(PlayerLastLearnedSpell[currentPlayerId + 1], currentUnit)
-                call RemoveDummyspell(currentUnit, PlayerLastLearnedSpell[currentPlayerId + 1])
-                call CustomGameEvent_FireEvent(EVENT_UNLEARN_ABILITY, EventInfo.create(currentPlayer, PlayerLastLearnedSpell[currentPlayerId + 1], RoundNumber))
+                call UnitRemoveAbility(currentUnit, PlayerLastLearnedSpell[currentPlayerId])
+                call FunResetAbility(PlayerLastLearnedSpell[currentPlayerId], currentUnit)
+                call RemoveDummyspell(currentUnit, PlayerLastLearnedSpell[currentPlayerId])
+                call CustomGameEvent_FireEvent(EVENT_UNLEARN_ABILITY, EventInfo.create(currentPlayer, PlayerLastLearnedSpell[currentPlayerId], RoundNumber))
 
                 if (AbilityMode == 1) then
-                    call RemoveItemFromUpgradeShop(currentPlayerId - 1, GetItemFromAbility(PlayerLastLearnedSpell[currentPlayerId + 1]))
+                    call RemoveItemFromUpgradeShop(currentPlayerId - 1, GetItemFromAbility(PlayerLastLearnedSpell[currentPlayerId]))
                     call RefreshUpgradeShop(currentPlayerId - 1, currentUnit)
                 endif
             endif

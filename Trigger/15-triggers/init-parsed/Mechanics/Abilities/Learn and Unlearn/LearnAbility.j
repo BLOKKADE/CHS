@@ -102,15 +102,15 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomGame
         if (ArNotLearningAbil == false) then
             if (GetUnitAbilityLevel(BuyingUnit, BoughtAbility) == 0) then
                 // Reached max abilities
-                if (HeroAbilityCount[playerId + 1] >= 10) then
+                if (HeroAbilityCount[playerId] >= 10) then
                     call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_LUMBER)
                     call ResourseRefresh(GetOwningPlayer(BuyingUnit) )
                     call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffffe600Failed to learn|r")
                     return
                 endif
 
-                set HeroAbilityCount[playerId + 1] = HeroAbilityCount[playerId + 1] + 1
-                set PlayerLastLearnedSpell[playerId + 1] = BoughtAbility
+                set HeroAbilityCount[playerId] = HeroAbilityCount[playerId] + 1
+                set PlayerLastLearnedSpell[playerId] = BoughtAbility
                 call BuyLevels(GetOwningPlayer(BuyingUnit), BuyingUnit, BoughtAbility, maxAbil, true)
             else
                 //increase level ap
