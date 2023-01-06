@@ -16,7 +16,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         // Specifications for a icon
         private constant real ICON_WIDTH                                = 0.016
         private constant real ICON_SPACING                              = 0.003
-        private constant real CATEGORY_SPACING                          = 0.01
+        private constant real CATEGORY_SPACING                          = 0.005
 
         // Specifications for a button
         private real ButtonWidth                                        = 0.116
@@ -165,6 +165,9 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
     private function CreateCategoryText takes string value returns nothing
         local framehandle playerNameTextFrameHandle = BlzCreateFrameByType("TEXT", "RewardsText", RewardsFrameHandle, "", 0) 
 
+        call BJDebugMsg("Top left x: " + R2S(GetTopLeftX()))
+        call BJDebugMsg("Top left y: " + R2S(GetTopLeftY()))
+
         call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY())
         call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + TEXT_WIDTH, GetTopLeftY() - TEXT_HEIGHT) 
         call BlzFrameSetEnable(playerNameTextFrameHandle, false) 
@@ -235,6 +238,12 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         // Height - Main frame margins, category text and category icons and their spacings
         set mainFrameBottomRightY = MAIN_FRAME_TOP_LEFT_Y - MAIN_FRAME_Y_TOP_MARGIN - TEXT_HEIGHT - (2 * ICON_WIDTH) - (ICON_SPACING) - ButtonHeight - MAIN_FRAME_Y_BOTTOM_MARGIN
 
+        call BJDebugMsg("Category index: " + I2S(CurrentCategoryIndex))
+        call BJDebugMsg("Main frame top left x: " + R2S(MAIN_FRAME_TOP_LEFT_X))
+        call BJDebugMsg("Main frame top left y: " + R2S(MAIN_FRAME_TOP_LEFT_Y))
+        call BJDebugMsg("Main frame bottom left x: " + R2S(mainFrameBottomRightX))
+        call BJDebugMsg("Main frame bottom left y: " + R2S(mainFrameBottomRightY))
+
         // Set the frame for the backdrop of the entire rewards
         call BlzFrameSetAbsPoint(RewardsFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X, MAIN_FRAME_TOP_LEFT_Y) 
         call BlzFrameSetAbsPoint(RewardsFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX, mainFrameBottomRightY) 
@@ -287,8 +296,16 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
     private function CreateCategories takes nothing returns nothing
         // Offensive rewards
+        call BJDebugMsg("Trying to create text")
+
         call CreateCategoryTitle("Offensive")
+
+        call BJDebugMsg("Created text")
+        call BJDebugMsg("Trying to create icon")
+
         call CreateCategoryReward(OFFENSIVE_STAT_1_ICON, OFFENSIVE_STAT_1_INDEX)
+        call BJDebugMsg("Created icon")
+
         call CreateCategoryReward(OFFENSIVE_STAT_2_ICON, OFFENSIVE_STAT_2_INDEX)
         call CreateCategoryReward(OFFENSIVE_STAT_3_ICON, OFFENSIVE_STAT_3_INDEX)
         call CreateCategoryReward(OFFENSIVE_STAT_4_ICON, OFFENSIVE_STAT_4_INDEX)
@@ -351,7 +368,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         // Create the main frame. All elements use this frame as the parent
         set RewardsFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
         call BlzFrameSetLevel(RewardsFrameHandle, 1)
-        call BlzFrameSetVisible(RewardsFrameHandle, true) 
+        call BlzFrameSetVisible(RewardsFrameHandle, false) 
 
         // Create the primary tooltip window
         set RewardsTooltipFrame = BlzCreateFrame("TooltipText", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
@@ -360,15 +377,21 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call BlzFrameSetLevel(RewardsTooltipFrame, 2) // To have it appear above the rewards
         call BlzFrameSetVisible(RewardsTooltipFrame, false) 
 
+        call BJDebugMsg("Trying to create categories")
+        
         // Setup the rewards section
         call CreateCategories()
 
+        call BJDebugMsg("Created categories")
+
         // Finalize the main window
         call FinalizeMainFrame()
+
+        call BlzFrameSetVisible(RewardsFrameHandle, true) 
     endfunction
 
     private function init takes nothing returns nothing
-        call TimerStart(CreateTimer(), 0, false, function InitializeRewards)
+        call TimerStart(CreateTimer(), 5, false, function InitializeRewards)
     endfunction
 
 endlibrary
