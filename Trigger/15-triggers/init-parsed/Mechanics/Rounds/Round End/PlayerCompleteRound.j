@@ -25,7 +25,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
             return false
         endif
 
-        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[GetPlayerId(GetOwningPlayer(GetKillingUnit())) + 1], Condition(function CreepFilter))
+        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[GetPlayerId(GetOwningPlayer(GetKillingUnit()))], Condition(function CreepFilter))
         set currentPlayer = GetOwningPlayer(killingUnit)
         set isValid = (CountUnitsInGroup(playerArenaCreeps) == 0) and (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true) and (IsPlayerInForce(currentPlayer, RoundPlayersCompleted) != true)
         

@@ -407,7 +407,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 set PlayerRoundCreeps[RoundNumber].group[playerId] = NewGroup()
     
                 if (GetPlayerSlotState(Player(playerId)) != PLAYER_SLOT_STATE_EMPTY and IsPlayerInForce(Player(playerId), DefeatedPlayers) != true) then
-                    set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId + 1], GetRandomReal(-600.00, 600.00), GetRandomReal(-600.00, 600.00))
+                    set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-600.00, 600.00), GetRandomReal(-600.00, 600.00))
                     set creep = CreateUnitAtLocSaveLast(Player(11), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
 
                     call GroupAddUnit(PlayerRoundCreeps[RoundNumber].group[playerId], creep)

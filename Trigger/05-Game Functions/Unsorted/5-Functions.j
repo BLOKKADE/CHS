@@ -224,7 +224,7 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
 
         //cleanup items
         set RectPid = pid
-        call EnumItemsInRectBJ(PlayerArenaRects[pid + 1], function SellItemsOnGround)
+        call EnumItemsInRectBJ(PlayerArenaRects[pid], function SellItemsOnGround)
 
         //Armor of the Ancestors
         set i1 = LoadInteger(HT, GetHandleId(u), 54001)

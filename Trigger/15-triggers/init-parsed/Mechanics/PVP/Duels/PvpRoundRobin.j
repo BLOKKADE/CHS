@@ -15,7 +15,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
     globals
         private boolean initialised = false
         private IntegerList PlayerList // Contains all active players
-        private IntegerList UsedArenas // Contains the arenas that are used for current duels
+        private boolean array UsedArenas // Contains the arenas that are used for current duels
         private DuelGame TempDuelGame // Temporary global variable for DisplayNemesisNames
 
         private integer DuelPrepareDuration = 10
@@ -221,7 +221,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         
         method removeUsedArena takes nothing returns nothing
             // Remove the arena that was used for this duel so it can be used in another duel
-            call UsedArenas.erase(UsedArenas.find(this.arenaIndex))
+            set UsedArenas[this.arenaIndex] = false
         endmethod
 
         method cleanupPrepareDialog takes nothing returns nothing
@@ -344,15 +344,27 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         implement Recycle
     endstruct
 
+    private function ResetUsedArenas takes nothing returns nothing
+        local integer playerArenaRectIndex = 0
+
+        loop
+            exitwhen playerArenaRectIndex > 7
+
+            set UsedArenas[playerArenaRectIndex] = false
+
+            set playerArenaRectIndex = playerArenaRectIndex + 1
+        endloop
+    endfunction
+
     private function GetOpenArenaIndex takes nothing returns integer
         local integer playerArenaRectIndex
 
         // Find an open arena
         loop
-            set playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
+            set playerArenaRectIndex = GetRandomInt(0, 7) // Represents all arenas
 
-            if (UsedArenas.find(playerArenaRectIndex) == 0) then
-                call UsedArenas.push(playerArenaRectIndex)
+            if (not UsedArenas[playerArenaRectIndex]) then
+                set UsedArenas[playerArenaRectIndex] = true
                 exitwhen true
             endif
         endloop
@@ -403,7 +415,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 
         call DuelGameList.clear()
         call DuelGameListRemaining.clear()
-        call UsedArenas.clear()
+        call ResetUsedArenas()
 
         loop
             set team1 = CreateForce()
@@ -477,7 +489,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         set PlayerList = PlayerList.create()
         set DuelGameList = DuelGameList.create()
         set DuelGameListRemaining = DuelGameListRemaining.create()
-        set UsedArenas = UsedArenas.create()
+        call ResetUsedArenas()
         
         // Add players that are in the game
         loop

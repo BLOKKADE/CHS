@@ -98,7 +98,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif*/
 
         //Creep bounty
-        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[pid + 1], Condition(function IsAliveCreepUnitFilter))
+        set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[pid], Condition(function IsAliveCreepUnitFilter))
 
         if (CountUnitsInGroup(playerArenaCreeps) == 0) then
             set goldBounty = goldBounty + udg_integer59 + udg_integer61

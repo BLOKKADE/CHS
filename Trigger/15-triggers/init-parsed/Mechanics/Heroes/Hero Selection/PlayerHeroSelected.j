@@ -107,7 +107,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call UnitAddItemByIdSwapped('I04R', hero)
 
         // Move hero and camera to arena
-        call PanCameraToTimedLocForPlayer(p, PlayerArenaRectCenters[playerId + 1], 0)
+        call PanCameraToTimedLocForPlayer(p, PlayerArenaRectCenters[playerId], 0)
         call SelectUnitForPlayerSingle(hero, p)
 
         // Create 3 of something at the hero location
@@ -118,7 +118,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
             if (GetUnitTypeId(hero) == 'H008') then
                 // Create the unit around the hero
-                set projectionLocation = PolarProjectionBJ(PlayerArenaRectCenters[playerId + 1], 50.00, 45.00 * I2R(bj_forLoopAIndex))
+                set projectionLocation = PolarProjectionBJ(PlayerArenaRectCenters[playerId], 50.00, 45.00 * I2R(bj_forLoopAIndex))
                 call CreateUnitAtLoc(p, 'e003', projectionLocation, 270.00)
 
                 // This makes no sense that we do it multiple times
