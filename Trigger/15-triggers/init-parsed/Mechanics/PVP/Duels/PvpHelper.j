@@ -15,7 +15,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
     private function FilterNonDuelingPlayers takes nothing returns boolean
         local player currentPlayer = GetFilterPlayer()
-        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1] // Stored as converted player id. Rip.
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
         local boolean isNonDuelingPlayer = (IsUnitInGroup(playerHero, DuelingHeroes) == false) and (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true)
 
         // Cleanup
@@ -102,7 +102,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     private function SetupPlayerInArena takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
-        local unit playerHero = PlayerHeroes[playerId + 1] // Stored as converted player id. Rip.
+        local unit playerHero = PlayerHeroes[playerId]
         local location arenaCenter = GetRectCenter(TempArena)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
         local integer itemSlotIndex = 0
@@ -179,7 +179,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     private function StartFightForUnit takes nothing returns nothing
         local unit currentUnit = GetEnumUnit()
         local player currentPlayer = GetOwningPlayer(currentUnit)
-        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
 
         call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
         call SetUnitInvulnerable(currentUnit, false)

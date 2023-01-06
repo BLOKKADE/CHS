@@ -26,11 +26,11 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
     endfunction
 
     private function EndroundEventForAllPlayers takes nothing returns nothing
-        local integer i  = 0
+        local integer i = 0
         loop
             call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.create(Player(i), 0, RoundNumber))
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
     endfunction
 

@@ -107,7 +107,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         set PlayerLeftGame[GetPlayerId(currentPlayer)] = true
 
         // Set the wave the player left
-        if (PlayerHeroes[GetPlayerId(currentPlayer) + 1] == null) then
+        if (PlayerHeroes[GetPlayerId(currentPlayer)] == null) then
             call UpdateScoreboardPlayerDies(currentPlayer, -1)
         else
             call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
@@ -282,7 +282,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
     private function UpdatePlayerItems takes player currentPlayer returns nothing
         local integer itemSlotIndex = 0
         local integer playerId = GetPlayerId(currentPlayer)
-        local unit playerHero = PlayerHeroes[playerId + 1]
+        local unit playerHero = PlayerHeroes[playerId]
         local item currentItem
         local integer currentItemTypeId
 
@@ -331,7 +331,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
     private function UpdatePlayerAbilities takes player currentPlayer returns nothing
         local integer abilityIndex = 1
         local integer playerId = GetPlayerId(currentPlayer)
-        local unit playerHero = PlayerHeroes[playerId + 1]
+        local unit playerHero = PlayerHeroes[playerId]
         local integer currentAbility
 
         if (playerHero != null) then
@@ -377,7 +377,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
     private function AddPlayerToScoreboard takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
-        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
 
         set CurrentColumnIndex = 0
         
@@ -458,8 +458,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 			endif
 
             // Toggle selected player's hero if it exists and is alive
-            if (columnIndex == PLAYER_HERO_INDEX and (not PlayerLeftGame[playerId]) and PlayerHeroes[playerId + 1] != null and UnitAlive(PlayerHeroes[playerId + 1])) then
-                call SelectUnitForPlayerSingle(PlayerHeroes[playerId + 1], triggerPlayer)
+            if (columnIndex == PLAYER_HERO_INDEX and (not PlayerLeftGame[playerId]) and PlayerHeroes[playerId] != null and UnitAlive(PlayerHeroes[playerId])) then
+                call SelectUnitForPlayerSingle(PlayerHeroes[playerId], triggerPlayer)
             endif
 
         elseif (BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER) then
@@ -469,7 +469,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
             // Player hero icon - Add error message if player isn't in game or hero is invalid
             if (columnIndex == PLAYER_HERO_INDEX) then
-                if (PlayerLeftGame[playerId] or PlayerHeroes[playerId + 1] == null or (not UnitAlive(PlayerHeroes[playerId + 1]))) then
+                if (PlayerLeftGame[playerId] or PlayerHeroes[playerId] == null or (not UnitAlive(PlayerHeroes[playerId]))) then
                     set tooltipName = tooltipName + " - |cffff0000Cannot select hero!|r"
                 else
                     set tooltipName = tooltipName + " - |cffff0000Click for more details!|r"
@@ -618,7 +618,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // Don't try to update anything else if the player left the game or if the player died in rounds
         if (not PlayerLeftGame[playerId] and PlayerDeathRound[playerId] == 0) then
             // Update the tooltip description information about the player's hero since it changes over time. We don't need to update the icon since that should never change
-            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(PlayerHeroes[playerId + 1])
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(PlayerHeroes[playerId])
 
             // Update the tooltip description for the player stats. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PlayerStats.getTooltip(currentPlayer)
@@ -628,7 +628,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             call CreateText(PVP_WINS_COLOR + I2S(ps.getPVPWins()) + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + I2S(ps.getPVPLosses()) + COLOR_END_TAG, playerId)
 
             // Update the tooltip description for the player element count. We don't need to update the icon since that should never change
-            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(PlayerHeroes[playerId + 1])
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(PlayerHeroes[playerId])
 
             // Set the player items
             set CurrentColumnIndex = PLAYER_ITEMS_START_INDEX

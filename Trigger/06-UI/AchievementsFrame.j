@@ -43,7 +43,7 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
     endglobals 
 
     public function TryToWearHat takes integer hatIndex, player p, boolean showMessage returns nothing
-        local integer heroPlayerId = GetPlayerId(p) + 1
+        local integer heroPlayerId = GetPlayerId(p)
         local PlayerStats ps = PlayerStats.forPlayer(p)
         local Requirements hr = Requirements.forIndex(hatIndex)
 
@@ -86,7 +86,7 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
     endfunction
 
     public function TryToSummonPet takes integer petIndex, player p, boolean showMessage returns nothing
-        local integer heroPlayerId = GetPlayerId(p) + 1
+        local integer heroPlayerId = GetPlayerId(p)
         local PlayerStats ps = PlayerStats.forPlayer(p)
         local Requirements hr = Requirements.forIndex(petIndex)
         local PetSpecification psn = PetIndexes[petIndex]

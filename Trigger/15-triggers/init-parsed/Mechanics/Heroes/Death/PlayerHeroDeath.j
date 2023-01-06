@@ -19,12 +19,11 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
 
     private function EnableDeathTrigger takes nothing returns nothing
         local integer currentPlayerId = GetTimerData(GetExpiredTimer())
-        local unit currentUnit = PlayerHeroes[currentPlayerId + 1]
+        local unit currentUnit = PlayerHeroes[currentPlayerId]
         local player currentPlayer = GetOwningPlayer(currentUnit)
-        local location arenaLocation = GetRectCenter(RectMidArena)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
-        call ReviveHeroLoc(currentUnit, arenaLocation, true)
+        call ReviveHeroLoc(currentUnit, RectMidArenaCenter, true)
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
         call FixAbominationPassive(currentUnit)
@@ -36,8 +35,6 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call ReleaseTimer(GetExpiredTimer())
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
         set currentUnit = null
         set currentPlayer = null
     endfunction
@@ -47,7 +44,6 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local integer currentPlayerId = GetPlayerId(currentPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-        local location arenaLocation
 
         //call BJDebugMsg(GetUnitName(currentUnit))
         if IsUnitNotHeroOrCreep(currentUnit) then
@@ -60,8 +56,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         
         //immortal mode
         if ModeNoDeath == true and BrStarted == false and GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
-            set arenaLocation = GetRectCenter(RectMidArena)
-            call ReviveHeroLoc(currentUnit, arenaLocation,true)
+            call ReviveHeroLoc(currentUnit, RectMidArenaCenter, true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
             call FixAbominationPassive(currentUnit)
@@ -69,10 +64,9 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
                 call PanCameraToForPlayer(currentPlayer, GetUnitX(currentUnit), GetUnitY(currentUnit))
             endif
 
-            call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId + 1], Condition(function RemoveUnitsInArena))
+            call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId], Condition(function RemoveUnitsInArena))
             
-            call RemoveLocation(arenaLocation)
-            set arenaLocation = null
+            // Cleanup
             set currentUnit = null
             set currentPlayer = null
             return false
@@ -82,11 +76,12 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
             call TimerStart(NewTimerEx(currentPlayerId), 1, false, function EnableDeathTrigger)
             set RoundLiveLost[currentPlayerId] = true
             
-            call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId + 1], Condition(function RemoveUnitsInArena))
+            call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId], Condition(function RemoveUnitsInArena))
     
             set Lives[currentPlayerId] = Lives[currentPlayerId] - 1
             call DisplayTextToPlayer(currentPlayer, 0, 0, "You have " + I2S(Lives[currentPlayerId]) + " lives left")
             
+            // Cleanup
             set currentUnit = null
             set currentPlayer = null
             return false
@@ -130,7 +125,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
 
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(currentPlayer) + "|cffC60000 was defeated!|r")
-        call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(currentPlayer) + 1])
+        call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(currentPlayer)])
         
         call DisableTrigger(FaerieDragonDiesTrigger)
         call ForGroup(playerUnits, function RemovePlayerUnit)
@@ -165,8 +160,8 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         loop
             exitwhen playerArenaIndex == 8
 
-            if (RectContainsUnit(PlayerArenaRects[playerArenaIndex + 1], GetTriggerUnit())) then
-                set playerArenaUnits = GetUnitsInRectMatching(PlayerArenaRects[playerArenaIndex + 1], Condition(function FilterCreeps))
+            if (RectContainsUnit(PlayerArenaRects[playerArenaIndex], GetTriggerUnit())) then
+                set playerArenaUnits = GetUnitsInRectMatching(PlayerArenaRects[playerArenaIndex], Condition(function FilterCreeps))
 
                 call ForGroup(playerArenaUnits, function DeleteUnitsFromRect)
 

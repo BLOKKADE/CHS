@@ -5,33 +5,25 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     endfunction
 
     private function ResetCameraToCenterArenaForPlayer takes nothing returns nothing
-        local location arenaLocation = GetRectCenter(RectMidArena)
-
         // Move camera to center arena
         if not CamMoveDisabled[GetPlayerId(GetEnumPlayer())] then
-            call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaLocation, 0.20)
+            call PanCameraToTimedLocForPlayer(GetEnumPlayer(), RectMidArenaCenter, 0.20)
         endif
-
-         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
     endfunction
 
     private function ResetToCenterArenaForPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
-        local unit playerHero = PlayerHeroes[playerId + 1]
-        local location arenaLocation = GetRectCenter(RectMidArena)
+        local unit playerHero = PlayerHeroes[playerId]
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         // Revive the unit if it died
-        
-        call SetUnitPositionLoc(playerHero, arenaLocation)
-        call ReviveHeroLoc(playerHero, arenaLocation, true)
+        call SetUnitPositionLoc(playerHero, RectMidArenaCenter)
+        call ReviveHeroLoc(playerHero, RectMidArenaCenter, true)
 
         // Move the pet
         if (ps.getPet() != null) then
-            call SetUnitPositionLoc(ps.getPet(), arenaLocation)
+            call SetUnitPositionLoc(ps.getPet(), RectMidArenaCenter)
         else
             // Revive the pet if it died
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
@@ -41,8 +33,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call FixAbominationPassive(playerHero)
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
         set currentPlayer = null
         set playerHero = null
     endfunction
@@ -50,7 +40,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     private function ResetItemsForPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
-        local unit playerHero = PlayerHeroes[playerId + 1]
+        local unit playerHero = PlayerHeroes[playerId]
         local integer itemSlotIndex = 0
         local item tempItem
 
@@ -95,7 +85,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
     private function EndDuelActionsForWinningPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
-        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
         local DuelGame duelGame = DuelGame.getPlayerDuelGame(currentPlayer)
         local string message
@@ -134,7 +124,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
     private function EndDuelActionsForLosingPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
-        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         call ps.addPVPLoss()
@@ -157,7 +147,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
     private function AddPvpWinToPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
-        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
         local unit deadUnit = GetDyingUnit()
         local MidasTouch deadUnitMidasTouch = GetMidasTouch(GetHandleId(deadUnit))
         local real bonus = 1
@@ -182,7 +172,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
     private function DuelEndedPlayerActions takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
-        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer) + 1]
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
 
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
         // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
@@ -231,11 +221,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     endfunction
 
     private function EndroundEventForAllPlayers takes nothing returns nothing
-        local integer i  = 0
+        local integer i = 0
         loop
             call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.createAll(Player(i), 0, RoundNumber, true))
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
     endfunction
 

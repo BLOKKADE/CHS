@@ -105,7 +105,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
             set this.caster = caster
             set this.target = target
-            set this.hero = PlayerHeroes[GetPlayerId(GetOwningPlayer(this.caster)) + 1]
+            set this.hero = PlayerHeroes[GetPlayerId(GetOwningPlayer(this.caster))]
             set this.caston = null
             set this.abilId = abilId
             set this.abilLevel = abilLvl

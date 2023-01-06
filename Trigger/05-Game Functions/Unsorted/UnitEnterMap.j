@@ -21,7 +21,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         local integer i2 = 0
         local integer totalLevel = 0
         local integer pid = GetPlayerId(GetOwningPlayer(u))
-        local unit hero = PlayerHeroes[pid + 1]
+        local unit hero = PlayerHeroes[pid]
         local integer UpgradeU = 15 * GetUnitItemTypeCount(hero,'I07K')
         local real wild = 1 + GetUnitCustomState(hero, BONUS_SUMMONPOW)/ 100
         local real r1
@@ -143,9 +143,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Illusion
         if (not realUnit) and IsUnitType(u, UNIT_TYPE_HERO) then
-            call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid + 1], false), false)
-            call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid + 1], false), false)
-            call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid + 1], false), false)
+            call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid], false), false)
+            call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid], false), false)
+            call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid], false), false)
         endif
 
         //Rock Golem

@@ -249,7 +249,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         local integer damageBonus = 0
         local string s = ""
         local integer temp = 0
-        local location arenaCenter
         local location unitSpawnOffset
         local unit creep
         local integer playerId
@@ -408,8 +407,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 set PlayerRoundCreeps[RoundNumber].group[playerId] = NewGroup()
     
                 if (GetPlayerSlotState(Player(playerId)) != PLAYER_SLOT_STATE_EMPTY and IsPlayerInForce(Player(playerId), DefeatedPlayers) != true) then
-                    set arenaCenter = GetRectCenter(PlayerArenaRects[playerId + 1])
-                    set unitSpawnOffset = OffsetLocation(arenaCenter, GetRandomReal(-600.00, 600.00), GetRandomReal(-600.00, 600.00))
+                    set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-600.00, 600.00), GetRandomReal(-600.00, 600.00))
                     set creep = CreateUnitAtLocSaveLast(Player(11), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
 
                     call GroupAddUnit(PlayerRoundCreeps[RoundNumber].group[playerId], creep)
@@ -549,9 +547,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     //call BJDebugMsg("rci finish: " + I2S(playerId))
 
                     // Cleanup
-                    call RemoveLocation(arenaCenter)
                     call RemoveLocation(unitSpawnOffset)
-                    set arenaCenter = null
                     set unitSpawnOffset = null
                     set creep = null
                 endif

@@ -36,7 +36,7 @@ scope AttackController initializer init
         local timer t = null
         local unit u = GetTriggerUnit()
         local unit u2 = GetAttacker()
-        local unit attackerHero = PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(u2))]
+        local unit attackerHero = PlayerHeroes[GetPlayerId(GetOwningPlayer(u2))]
         local real luck = GetUnitCustomState(u, BONUS_LUCK)
         
         if IsUnitEnemy(u,GetOwningPlayer(u2)) == false then

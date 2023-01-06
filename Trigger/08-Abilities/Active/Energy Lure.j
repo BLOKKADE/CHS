@@ -61,7 +61,7 @@ library EnergyTrap requires UnitHelpers, RandomShit, SpellFormula, KnockbackHelp
             set this.endTick = T32_Tick + (6 * 32)
             set this.sizeEndTick = T32_Tick + 32
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
-            set this.hero = PlayerHeroes[this.pid + 1]
+            set this.hero = PlayerHeroes[this.pid]
             set this.fx = AddLocalizedSpecialEffect("war3mapImported\\RunicAura.mdx", this.x, this.y)
             call BlzSetSpecialEffectScale(this.fx, this.scale)
             call BlzSetSpecialEffectHeight(this.fx, 25)

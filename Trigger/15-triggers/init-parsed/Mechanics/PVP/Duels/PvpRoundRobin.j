@@ -15,7 +15,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
     globals
         private boolean initialised = false
         private IntegerList PlayerList // Contains all active players
-        private IntegerList UsedArenas // Contains the arenas that are used for current duels
+        private boolean array UsedArenas // Contains the arenas that are used for current duels
         private DuelGame TempDuelGame // Temporary global variable for DisplayNemesisNames
 
         private integer DuelPrepareDuration = 10
@@ -43,20 +43,24 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 
             // Display team2 opponents to team1
             if (CountPlayersInForceBJ(currentDuelGame.team2) > 1) then // This is assuming equal team sizes
-                call DisplayTimedTextToForce(currentDuelGame.team1, 25, team1ForceString + "|cffff0000 PVP opponents are|r " + team2ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team1, pvpWaitDuration, team1ForceString + "|cffff0000 PVP opponents are|r " + team2ForceString)
             else
-                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "|cffff0000Your PVP opponent is|r " + team2ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team1, pvpWaitDuration, "|cffff0000Your PVP opponent is|r " + team2ForceString)
             endif
 
             // Display team1 opponents to team2
             if (CountPlayersInForceBJ(currentDuelGame.team1) > 1) then // This is assuming equal team sizes
-                call DisplayTimedTextToForce(currentDuelGame.team2, 25, team2ForceString + "|cffff0000 PVP opponents are|r " + team1ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team2, pvpWaitDuration, team2ForceString + "|cffff0000 PVP opponents are|r " + team1ForceString)
             else
-                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "|cffff0000Your PVP opponent is|r " + team1ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team2, pvpWaitDuration, "|cffff0000Your PVP opponent is|r " + team1ForceString)
             endif
 
             set node = node.next
         endloop
+
+        if (OddPlayer != -1) then
+            call DisplayTimedTextToPlayer(Player(OddPlayer), 0, 0, pvpWaitDuration, "|cffff0000You are the odd player odd. You will duel the loser of the first finished duel.|r")
+        endif
     endfunction
 
     function GetNextDuel takes nothing returns DuelGame
@@ -217,7 +221,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         
         method removeUsedArena takes nothing returns nothing
             // Remove the arena that was used for this duel so it can be used in another duel
-            call UsedArenas.erase(UsedArenas.find(this.arenaIndex))
+            set UsedArenas[this.arenaIndex] = false
         endmethod
 
         method cleanupPrepareDialog takes nothing returns nothing
@@ -340,15 +344,27 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         implement Recycle
     endstruct
 
+    private function ResetUsedArenas takes nothing returns nothing
+        local integer playerArenaRectIndex = 0
+
+        loop
+            exitwhen playerArenaRectIndex == 8
+
+            set UsedArenas[playerArenaRectIndex] = false
+
+            set playerArenaRectIndex = playerArenaRectIndex + 1
+        endloop
+    endfunction
+
     private function GetOpenArenaIndex takes nothing returns integer
         local integer playerArenaRectIndex
 
         // Find an open arena
         loop
-            set playerArenaRectIndex = GetRandomInt(1, 8) // Represents all arenas
+            set playerArenaRectIndex = GetRandomInt(0, 7) // Represents all arenas
 
-            if (UsedArenas.find(playerArenaRectIndex) == 0) then
-                call UsedArenas.push(playerArenaRectIndex)
+            if (not UsedArenas[playerArenaRectIndex]) then
+                set UsedArenas[playerArenaRectIndex] = true
                 exitwhen true
             endif
         endloop
@@ -399,7 +415,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 
         call DuelGameList.clear()
         call DuelGameListRemaining.clear()
-        call UsedArenas.clear()
+        call ResetUsedArenas()
 
         loop
             set team1 = CreateForce()
@@ -448,11 +464,11 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         endif
 
         loop
-            if not UnitAlive(PlayerHeroes[i + 1]) then
+            if not UnitAlive(PlayerHeroes[i]) then
                 call PlayerList.erase(PlayerList.find(i))
             endif
             set i = i + 1
-            exitwhen i > 7
+            exitwhen i == 8
         endloop
 
         if ModuloInteger(PlayerList.size(), 2) != 0 then
@@ -473,16 +489,16 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         set PlayerList = PlayerList.create()
         set DuelGameList = DuelGameList.create()
         set DuelGameListRemaining = DuelGameListRemaining.create()
-        set UsedArenas = UsedArenas.create()
+        call ResetUsedArenas()
         
         // Add players that are in the game
         loop
-            if (UnitAlive(PlayerHeroes[i + 1])) then
+            if (UnitAlive(PlayerHeroes[i])) then
                 set tempPlayerIds[playerCount] = i
                 set playerCount = playerCount + 1
             endif
             set i = i + 1
-            exitwhen i > 7
+            exitwhen i == 8
         endloop
 
         set i = playerCount - 1

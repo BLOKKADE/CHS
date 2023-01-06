@@ -43,7 +43,7 @@ library SuddenDeathCreepTimer initializer init requires RandomShit
     endfunction
 
     private function DamagePlayerHero takes nothing returns nothing
-        local unit u = PlayerHeroes[GetPlayerId(GetEnumPlayer()) + 1]
+        local unit u = PlayerHeroes[GetPlayerId(GetEnumPlayer())]
 
         if (GetUnitState(u, UNIT_STATE_LIFE) > 1) then
             call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) - GetUnitState(u, UNIT_STATE_LIFE) * 0.8)

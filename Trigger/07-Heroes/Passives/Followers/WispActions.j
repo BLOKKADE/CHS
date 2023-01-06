@@ -3,7 +3,7 @@ library WispActions initializer init requires RandomShit
     private function WispFollowAction takes nothing returns nothing
         local unit wisp = GetEnumUnit()
         local player wispPlayer = GetOwningPlayer(wisp)
-        local unit playerHero = PlayerHeroes[GetPlayerId(GetOwningPlayer(wisp)) + 1]
+        local unit playerHero = PlayerHeroes[GetPlayerId(GetOwningPlayer(wisp))]
         local location unitLocation = GetUnitLoc(wisp)
         local location heroLocation = GetUnitLoc(playerHero)
         local real distance = DistanceBetweenPoints(unitLocation, heroLocation)

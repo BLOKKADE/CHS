@@ -59,7 +59,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
             endif
 
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
 
         return count

@@ -31,7 +31,7 @@ library PlayerLeavesGame initializer init requires RandomShit
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayer(LeaverPlayers, leaverPlayer)
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
-        call ResetHero(PlayerHeroes[playerId + 1])
+        call ResetHero(PlayerHeroes[playerId])
 
         // Find a new host
         if (HostPlayer == leaverPlayer) then
@@ -39,15 +39,15 @@ library PlayerLeavesGame initializer init requires RandomShit
         endif
 
         /* Don't try to create a random hero if the player leaves. I think this is using the old hero selector behavior
-        if (RoundNumber == 0 and PlayerHeroes[playerId + 1] == null) then
-            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(GetTriggerPlayer())])
+        if (RoundNumber == 0 and PlayerHeroes[playerId] == null) then
+            set arenaLocation = GetRectCenter(PlayerArenaRects[GetPlayerId(GetTriggerPlayer())])
 
             set SpawnedHeroCount = SpawnedHeroCount + 1 
             call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8), Condition(function Trig_Player_Leaves_Func007Func003002001001002)))),GetTriggerPlayer(),arenaLocation,bj_UNIT_FACING)
             call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer())+(" |cffffcc00has randomed " +(GetUnitName(GetLastCreatedUnit())+ "! (+5 bonus gold)")))))
             call AdjustPlayerStateBJ(5,GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)
             call ResourseRefresh(GetTriggerPlayer() )
-            set PlayerHeroes[GetConvertedPlayerId(GetTriggerPlayer())]= GetLastCreatedUnit()
+            set PlayerHeroes[GetPlayerId(GetTriggerPlayer())]= GetLastCreatedUnit()
             call GroupAddUnit(OnPeriodGroup, GetLastCreatedUnit())
             call UnitAddItemByIdSwapped('ankh',GetLastCreatedUnit())
             call UnitAddItemByIdSwapped('pghe',GetLastCreatedUnit())

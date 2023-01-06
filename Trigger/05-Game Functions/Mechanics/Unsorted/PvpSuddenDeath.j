@@ -48,7 +48,7 @@ library PvpSuddenDeathTimerWindow /*initializer init*/ requires TimerUtils
         //deal damage to players based on static temp and damage.team1 boolean
         private static method damagePlayer takes nothing returns nothing
             local SuddenDeath this = SuddenDeath.temp
-            local integer pid = GetPlayerId(GetEnumPlayer()) + 1
+            local integer pid = GetPlayerId(GetEnumPlayer())
             local real damage = 0
             local unit source
             local integer damageSourcePid
@@ -65,7 +65,7 @@ library PvpSuddenDeathTimerWindow /*initializer init*/ requires TimerUtils
                 set damage = GetUnitState(PlayerHeroes[pid], UNIT_STATE_MAX_LIFE) * multiplier
             endif
             
-            set source = CreateUnit(Player(damageSourcePid), SUDDEN_DEATH_UNIT_ID, GetUnitX(PlayerHeroes[damageSourcePid + 1]), GetUnitY(PlayerHeroes[damageSourcePid + 1]), 0)
+            set source = CreateUnit(Player(damageSourcePid), SUDDEN_DEATH_UNIT_ID, GetUnitX(PlayerHeroes[damageSourcePid]), GetUnitY(PlayerHeroes[damageSourcePid]), 0)
             call UnitApplyTimedLife(source, 'BTLF', 0.25)
 
             set udg_NextDamageAbilitySource = SUDDEN_DEATH_ABILITY_ID

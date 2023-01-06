@@ -46,7 +46,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local real value = S2R(SubString(GetEventPlayerChatString(), 6, 20))
         local player p = GetTriggerPlayer()
         local unit u = PlayerDummy[GetPlayerId(p)]
-        local unit hero = PlayerHeroes[GetPlayerId(p) + 1]
+        local unit hero = PlayerHeroes[GetPlayerId(p)]
         local string s = ""
         if command == "-ddmg" then
             call BlzSetUnitBaseDamage(u, R2I(value), 0)
@@ -147,7 +147,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     private function SpawnDummy takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid + 1]), GetUnitY(PlayerHeroes[pid + 1]), 0)
+        set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid]), GetUnitY(PlayerHeroes[pid]), 0)
         set CreatedDummies[pid] = CreatedDummies[pid] + 1
         call BlzSetHeroProperName(PlayerDummy[pid], "Subject #" + I2S(CreatedDummies[pid]))
 
@@ -164,7 +164,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local integer pid = GetPlayerId(GetTriggerPlayer())
         local integer pn = S2I(args[1])
         if pn > 1 then 
-            call SetHeroLevel(PlayerHeroes[pid + 1], GetHeroLevel(PlayerHeroes[pid+1]) + pn, true)
+            call SetHeroLevel(PlayerHeroes[pid], GetHeroLevel(PlayerHeroes[pid]) + pn, true)
         endif
     endfunction
 
@@ -236,7 +236,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local integer pid = 0
         local unit u
         loop
-            set u = PlayerHeroes[pid + 1]
+            set u = PlayerHeroes[pid]
             if GetPlayerController(Player(pid)) == MAP_CONTROL_COMPUTER and u != null then
                 call SetHeroLevel(u, GetHeroLevel(u) + 200, true)
                 call UnitAddAbility(u, ARCANE_ASSAUL_ABILITY_ID)
@@ -274,7 +274,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
                 call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 50)
             endif
             set pid = pid + 1
-            exitwhen pid > 7
+            exitwhen pid == 8
         endloop
         
         set u = null
@@ -287,14 +287,14 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
         if PlayerCount == 1 and (not DebugModeEnabled) then
             loop
-                if UnitAlive(PlayerHeroes[i + 1]) then
+                if UnitAlive(PlayerHeroes[i]) then
                     call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Single player commands have been enabled")
                     call Command.create(CommandHandler.StartNextRound).name("nx").handles("nx").help("nx", "Starts the next round if used inbetween rounds.")
                     call Command.create(CommandHandler.SetRoundTime).name("rt").handles("rt").help("rt <value>", "Starting next round, sets the time between rounds to <value>.")
                     exitwhen true
                 endif
                 set i = i + 1
-                exitwhen i > 7
+                exitwhen i == 8
             endloop
         endif
     endfunction
@@ -311,7 +311,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
                 set pc = pc + 1
             endif
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
         
         if pc == 1 then

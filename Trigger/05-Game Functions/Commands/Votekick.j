@@ -219,7 +219,7 @@ library VoteKick initializer Votekick_Init requires TimerUtils, MathRound
         set playerColours[7] = "pink"
 
         loop
-            exitwhen i > 8
+            exitwhen i == 8
             call TriggerRegisterPlayerChatEvent(trgVotekick,Player(i),"-votekick",false)
             call TriggerRegisterPlayerChatEvent(trgVotekick,Player(i),"-vk",false)
             call TriggerRegisterPlayerChatEvent(trgYes,Player(i),"-yes",true)

@@ -57,7 +57,7 @@ library AllowCasting
             set CurrentlyFighting[i] = b
             //call BJDebugMsg(GetPlayerName(Player(i)) + ", currently fighting: " + B2S(b))
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
     endfunction
 

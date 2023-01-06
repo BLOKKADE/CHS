@@ -111,7 +111,7 @@ scope ModifyDamageAfterArmor initializer init
          
          if GetUnitAbilityLevel(DamageSource, 'Bblo') != 0 then
             //does not work in team duels if you cast bloodlust on an other players units
-             set r2 = Damage.index.amount * (0.0069 + (0.0031 * GetUnitAbilityLevel(PlayerHeroes[DamageSourcePid + 1], BLOODLUST_ABILITY_ID)))
+             set r2 = Damage.index.amount * (0.0069 + (0.0031 * GetUnitAbilityLevel(PlayerHeroes[DamageSourcePid], BLOODLUST_ABILITY_ID)))
              set vampAmount = vampAmount + r2
              set vampCount = vampCount + 1
          endif

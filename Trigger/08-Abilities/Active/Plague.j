@@ -10,7 +10,7 @@ library Plague requires AreaDamage
         local real dummyX
         local real dummyY
         local player p = GetOwningPlayer(caster)
-        local unit hero = PlayerHeroes[GetPlayerId(p) + 1]
+        local unit hero = PlayerHeroes[GetPlayerId(p)]
         
         loop
             set dummyX = x + (GetRandomReal(-300, 300))

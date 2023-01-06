@@ -7,7 +7,7 @@ library CreepDies initializer init requires RandomShit, CreepDeath
     private function CreepDiesActions takes nothing returns nothing
         local unit deadCreep = GetTriggerUnit()
 
-        call CreepDeath_Death(deadCreep, PlayerHeroes[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()))])
+        call CreepDeath_Death(deadCreep, PlayerHeroes[GetPlayerId(GetOwningPlayer(GetKillingUnit()))])
 
         // What is the point of this?
         call TriggerSleepAction(0.00)
