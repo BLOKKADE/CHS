@@ -16,7 +16,6 @@ library PlayerAntiStuck initializer init requires RandomShit
 
     private function PlayerAntiStuckActions takes nothing returns nothing
         local integer currentPlayerId = 0
-        local location arenaLocation
         local group playerArenaUnits
         local player currentPlayer
 
@@ -33,16 +32,10 @@ library PlayerAntiStuck initializer init requires RandomShit
     
             // Player hero exists, arena has creeps, player isn't defeated, and has not completed the round yet
             if ((PlayerHeroes[currentPlayerId + 1] != null) and (CountUnitsInGroup(playerArenaUnits) == 0) and (not IsPlayerInForce(currentPlayer, DefeatedPlayers)) and (not IsPlayerInForce(currentPlayer, RoundPlayersCompleted))) then
-                set arenaLocation = GetRectCenter(PlayerArenaRects[currentPlayerId + 1])
-
-                call CreateNUnitsAtLoc(1, 'n00T', Player(11), arenaLocation, bj_UNIT_FACING)
+                call CreateNUnitsAtLoc(1, 'n00T', Player(11), PlayerArenaRectCenters[currentPlayerId + 1], bj_UNIT_FACING)
                 call SuspendHeroXPBJ(false, PlayerHeroes[currentPlayerId + 1])
                 call UnitDamageTargetBJ(PlayerHeroes[currentPlayerId + 1], GetLastCreatedUnit(), 500, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL)
                 call SuspendHeroXPBJ(true, PlayerHeroes[currentPlayerId + 1])
-
-                // Cleanup
-                call RemoveLocation(arenaLocation)
-                set arenaLocation = null
             endif
     
             // Cleanup

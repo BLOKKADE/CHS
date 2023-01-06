@@ -5,33 +5,25 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     endfunction
 
     private function ResetCameraToCenterArenaForPlayer takes nothing returns nothing
-        local location arenaLocation = GetRectCenter(RectMidArena)
-
         // Move camera to center arena
         if not CamMoveDisabled[GetPlayerId(GetEnumPlayer())] then
-            call PanCameraToTimedLocForPlayer(GetEnumPlayer(), arenaLocation, 0.20)
+            call PanCameraToTimedLocForPlayer(GetEnumPlayer(), RectMidArenaCenter, 0.20)
         endif
-
-         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
     endfunction
 
     private function ResetToCenterArenaForPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId + 1]
-        local location arenaLocation = GetRectCenter(RectMidArena)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         // Revive the unit if it died
-        
-        call SetUnitPositionLoc(playerHero, arenaLocation)
-        call ReviveHeroLoc(playerHero, arenaLocation, true)
+        call SetUnitPositionLoc(playerHero, RectMidArenaCenter)
+        call ReviveHeroLoc(playerHero, RectMidArenaCenter, true)
 
         // Move the pet
         if (ps.getPet() != null) then
-            call SetUnitPositionLoc(ps.getPet(), arenaLocation)
+            call SetUnitPositionLoc(ps.getPet(), RectMidArenaCenter)
         else
             // Revive the pet if it died
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
@@ -41,8 +33,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call FixAbominationPassive(playerHero)
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
         set currentPlayer = null
         set playerHero = null
     endfunction

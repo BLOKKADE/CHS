@@ -25,33 +25,24 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         local unit currentUnit = GetEnumUnit()
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-        local location arenaLocation = GetRectCenter(RectMidArena)
-        local location unitLocation = GetUnitLoc(currentUnit)
-        local location playableAreaLocation = GetRectCenter(GetPlayableMapRect())
-        local location projectionLocation = PolarProjectionBJ(playableAreaLocation, 1200, (((I2R(GetPlayerId(currentPlayer))) * -45.00) - 225.00))
+        local location projectionLocation = PolarProjectionBJ(RectMidArenaCenter, 1200, (((I2R(GetPlayerId(currentPlayer))) * -45.00) - 225.00))
 
         set TempUnit = currentUnit // Used in HeroRefreshTrigger
         call PauseUnit(TempUnit, true)
         call ConditionalTriggerExecute(HeroRefreshTrigger)
 
         // Place hero and pet in a circle using their player id as angle
-        call SetUnitPositionLocFacingLocBJ(currentUnit, projectionLocation, arenaLocation)
+        call SetUnitPositionLocFacingLocBJ(currentUnit, projectionLocation, RectMidArenaCenter)
 
         if (ps.getPet() != null) then
-            call SetUnitPositionLocFacingLocBJ(ps.getPet(), projectionLocation, arenaLocation)
+            call SetUnitPositionLocFacingLocBJ(ps.getPet(), projectionLocation, RectMidArenaCenter)
         endif
 
         call SelectUnitForPlayerSingle(currentUnit, currentPlayer)
-        call PanCameraToTimedLocForPlayer(currentPlayer, unitLocation, 0.50)
+        call PanCameraToTimedLocForPlayer(currentPlayer, projectionLocation, 0.50)
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        call RemoveLocation(unitLocation)
-        call RemoveLocation(playableAreaLocation)
         call RemoveLocation(projectionLocation)
-        set arenaLocation = null
-        set unitLocation = null
-        set playableAreaLocation = null
         set projectionLocation = null
         set currentUnit = null
         set currentPlayer = null

@@ -21,10 +21,9 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local integer currentPlayerId = GetTimerData(GetExpiredTimer())
         local unit currentUnit = PlayerHeroes[currentPlayerId + 1]
         local player currentPlayer = GetOwningPlayer(currentUnit)
-        local location arenaLocation = GetRectCenter(RectMidArena)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
-        call ReviveHeroLoc(currentUnit, arenaLocation, true)
+        call ReviveHeroLoc(currentUnit, RectMidArenaCenter, true)
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
         call FixAbominationPassive(currentUnit)
@@ -36,8 +35,6 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call ReleaseTimer(GetExpiredTimer())
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
         set currentUnit = null
         set currentPlayer = null
     endfunction
@@ -47,7 +44,6 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local integer currentPlayerId = GetPlayerId(currentPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-        local location arenaLocation
 
         //call BJDebugMsg(GetUnitName(currentUnit))
         if IsUnitNotHeroOrCreep(currentUnit) then
@@ -60,8 +56,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         
         //immortal mode
         if ModeNoDeath == true and BrStarted == false and GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
-            set arenaLocation = GetRectCenter(RectMidArena)
-            call ReviveHeroLoc(currentUnit, arenaLocation,true)
+            call ReviveHeroLoc(currentUnit, RectMidArenaCenter, true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
             call FixAbominationPassive(currentUnit)
@@ -71,8 +66,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
 
             call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId + 1], Condition(function RemoveUnitsInArena))
             
-            call RemoveLocation(arenaLocation)
-            set arenaLocation = null
+            // Cleanup
             set currentUnit = null
             set currentPlayer = null
             return false
@@ -87,6 +81,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
             set Lives[currentPlayerId] = Lives[currentPlayerId] - 1
             call DisplayTextToPlayer(currentPlayer, 0, 0, "You have " + I2S(Lives[currentPlayerId]) + " lives left")
             
+            // Cleanup
             set currentUnit = null
             set currentPlayer = null
             return false

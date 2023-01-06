@@ -40,7 +40,6 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
     private function PlayerCompleteRoundActions takes nothing returns nothing
         local player p = GetOwningPlayer(GetKillingUnit())
         local integer pid = GetPlayerId(p)
-        local location arenaLocation = GetRectCenter(GetPlayableMapRect())
         local real duration = (T32_Tick - RoundStartTick) / 32
         local real playerCountSub = RMaxBJ(7 - (0.5 * duration), 0)
         local integer roundClearXpBonus = R2I(playerCountSub * (4 * Pow(RoundNumber, 2)))
@@ -77,13 +76,11 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
             endif
         endif
 
-        call CreateNUnitsAtLoc(1, PRIEST_1_UNIT_ID, p, arenaLocation, bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(1, PRIEST_1_UNIT_ID, p, RectMidArenaCenter, bj_UNIT_FACING)
         call UnitApplyTimedLifeBJ(2.00, 'BTLF', GetLastCreatedUnit())
         call GroupAddUnit(GroupEmptyArenaCheck, GetLastCreatedUnit())
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
         set p = null
     endfunction
 

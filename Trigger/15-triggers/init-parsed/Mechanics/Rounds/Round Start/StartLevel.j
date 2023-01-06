@@ -26,15 +26,14 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         local integer currentPlayerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[currentPlayerId + 1]
         local rect playerArena = PlayerArenaRects[currentPlayerId + 1]
-        local location arenaLocation = GetRectCenter(playerArena)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         call EnumItemsInRectBJ(playerArena, function RemoveItemFromArena)
         call SetUnitInvulnerable(playerHero, false)
-        call SetUnitPositionLoc(playerHero, arenaLocation)
+        call SetUnitPositionLoc(playerHero, PlayerArenaRectCenters[currentPlayerId + 1])
 
         if (ps.getPet() != null) then
-            call SetUnitPositionLoc(ps.getPet(), arenaLocation)
+            call SetUnitPositionLoc(ps.getPet(), PlayerArenaRectCenters[currentPlayerId + 1])
         endif
 
         set TempUnit = playerHero // Used in HeroRefreshTrigger
@@ -42,14 +41,12 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
 
         if (not CamMoveDisabled[GetPlayerId(GetEnumPlayer())]) then
             call SelectUnitForPlayerSingle(playerHero, GetOwningPlayer(playerHero))
-            call PanCameraToTimedLocForPlayer(currentPlayer, arenaLocation, 0)
+            call PanCameraToTimedLocForPlayer(currentPlayer, PlayerArenaRectCenters[currentPlayerId + 1], 0)
         endif
 
         call SetCurrentlyFighting(currentPlayer, true)
 
         // Cleanup
-        call RemoveLocation(arenaLocation)
-        set arenaLocation = null
         set currentPlayer = null
         set playerHero = null
         set playerArena = null
