@@ -348,7 +348,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         local integer playerArenaRectIndex = 0
 
         loop
-            exitwhen playerArenaRectIndex > 7
+            exitwhen playerArenaRectIndex == 8
 
             set UsedArenas[playerArenaRectIndex] = false
 
@@ -468,7 +468,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
                 call PlayerList.erase(PlayerList.find(i))
             endif
             set i = i + 1
-            exitwhen i > 7
+            exitwhen i == 8
         endloop
 
         if ModuloInteger(PlayerList.size(), 2) != 0 then
@@ -498,7 +498,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
                 set playerCount = playerCount + 1
             endif
             set i = i + 1
-            exitwhen i > 7
+            exitwhen i == 8
         endloop
 
         set i = playerCount - 1

@@ -41,7 +41,7 @@ library ConqBambooStick initializer init requires CustomState, Utility
                     set ConqBambStickLightning[this.hid].integer[enemyHid] = 0**/
                 endif
                 set i = i + 1
-                exitwhen i > 7
+                exitwhen i == 8
             endloop
 
             set enemyHero = null
@@ -83,7 +83,7 @@ library ConqBambooStick initializer init requires CustomState, Utility
                     endif
                 endif
                 set i = i + 1
-                exitwhen i > 7
+                exitwhen i == 8
             endloop
 
             set enemyHero = null

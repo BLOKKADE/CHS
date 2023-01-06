@@ -23,7 +23,7 @@ library CreepPeriodicAttack initializer init requires RandomShit
 
         set CurrentArenaIndex = 0
         loop
-            exitwhen CurrentArenaIndex > 7
+            exitwhen CurrentArenaIndex == 8
 
             // Get all creeps in arena
             set arenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[CurrentArenaIndex], Condition(function FilterForArenaCreep))
