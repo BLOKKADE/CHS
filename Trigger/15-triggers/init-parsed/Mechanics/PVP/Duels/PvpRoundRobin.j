@@ -43,20 +43,24 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
 
             // Display team2 opponents to team1
             if (CountPlayersInForceBJ(currentDuelGame.team2) > 1) then // This is assuming equal team sizes
-                call DisplayTimedTextToForce(currentDuelGame.team1, 25, team1ForceString + "|cffff0000 PVP opponents are|r " + team2ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team1, pvpWaitDuration, team1ForceString + "|cffff0000 PVP opponents are|r " + team2ForceString)
             else
-                call DisplayTimedTextToForce(currentDuelGame.team1, 25, "|cffff0000Your PVP opponent is|r " + team2ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team1, pvpWaitDuration, "|cffff0000Your PVP opponent is|r " + team2ForceString)
             endif
 
             // Display team1 opponents to team2
             if (CountPlayersInForceBJ(currentDuelGame.team1) > 1) then // This is assuming equal team sizes
-                call DisplayTimedTextToForce(currentDuelGame.team2, 25, team2ForceString + "|cffff0000 PVP opponents are|r " + team1ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team2, pvpWaitDuration, team2ForceString + "|cffff0000 PVP opponents are|r " + team1ForceString)
             else
-                call DisplayTimedTextToForce(currentDuelGame.team2, 25, "|cffff0000Your PVP opponent is|r " + team1ForceString)
+                call DisplayTimedTextToForce(currentDuelGame.team2, pvpWaitDuration, "|cffff0000Your PVP opponent is|r " + team1ForceString)
             endif
 
             set node = node.next
         endloop
+
+        if (OddPlayer != -1) then
+            call DisplayTimedTextToPlayer(Player(OddPlayer), 0, 0, pvpWaitDuration, "|cffff0000You are the odd player odd. You will duel the loser of the first finished duel.|r")
+        endif
     endfunction
 
     function GetNextDuel takes nothing returns DuelGame

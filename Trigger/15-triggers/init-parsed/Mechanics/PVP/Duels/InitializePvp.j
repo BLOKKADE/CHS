@@ -15,7 +15,12 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "PvP Battle")
         call StartTimerBJ(GetLastCreatedTimerBJ(), false, pvpWaitDuration)
-        call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.\n|r|cffffcc00If there is an odd amount of players, losing a duel might mean you could duel again vs the last player.|r")
+        call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.")
+
+        if (OddPlayer != -1) then
+            call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cffffcc00There is an odd amount of players. The odd player|r " + GetUnitNamePlayerColour(PlayerHeroes[GetPlayerId(Player(OddPlayer)) + 1]) + " |cffffcc00will duel the loser of the first finished duel.|r")
+        endif
+
         call DisplayNemesisNames()
         call TriggerSleepAction(pvpWaitDuration)
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
