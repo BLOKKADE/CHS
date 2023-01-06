@@ -22,11 +22,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
     endfunction
 
     private function IsPvpRound takes nothing returns boolean
-        if RoundNumber != 0 and RoundNumber != 50 and ModuloInteger(RoundNumber, 5) == 0 then
-            return true
-        else
-            return false
-        endif
+        return RoundNumber != 0 and RoundNumber != 50 and ModuloInteger(RoundNumber, 5) == 0
     endfunction
 
     private function EndroundEventForAllPlayers takes nothing returns nothing
