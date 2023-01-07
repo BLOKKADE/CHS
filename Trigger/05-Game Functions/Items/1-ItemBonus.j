@@ -150,6 +150,14 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddStatLevelBonus(u, BONUS_STRENGTH, 15 *diff)
 			call SetHeroStr(u, GetHeroStr(u, false) + (15 *diff)* GetHeroLevel(u), false)
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('ustp'), BlzGetUnitRealField(u,ConvertUnitRealField('ustp')) + 15*diff )
+
+			//Dried Mushroom
+		elseif itemId == DRIED_MUSHROOM_ITEM_ID then
+			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
+			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
+			call AddUnitCustomState(u, BONUS_RUNEPOW, 0.75 * diff)
+			call AddStatLevelBonus(u, BONUS_RUNEPOW, 0.01 * uniqueDiff)
+			//call BlzSetUnitRealField(u,ConvertUnitRealField('ustp'), BlzGetUnitRealField(u,ConvertUnitRealField('ustp')) + 15*diff )
 			
 			//Ring of Musculature
 		elseif itemId == 'I071' then

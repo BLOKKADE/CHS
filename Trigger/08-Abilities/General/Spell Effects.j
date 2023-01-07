@@ -126,6 +126,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
             call ExtradimensionalCooperation(hero, abilId, lvl)
             return true
+        // Dried Mushroom
+        elseif abilId == DRIED_MUSHROOM_ABILITY_ID then
+            call CastDriedMushroom(hero)
+            return true
         //Frost Bolt
         elseif abilId == FROST_BOLT_ABILITY_ID then
             call UsFrostBolt(hero,target,120 * lvl * (1 + 0.25 * R2I(GetUnitElementCount(hero,Element_Dark))), GetUnitElementCount(hero,Element_Cold))
@@ -211,6 +215,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if GetUnitAbilityLevel(caster, 'B024') > 0 then
                         call GetRetaliationSource(caster, target, abilId, abilLvl)
+                    endif
+
+                    if GetUnitAbilityLevel(caster, DRIED_MUSHROOM_DUMMY_BUFF_ID) > 0 then
+                        call DriedMushroomEffects(caster, abilId)
                     endif
 
                     if UnitHasItemType(caster, ARCANE_RUNESTONE_ITEM_ID) then
