@@ -31,7 +31,7 @@ library HeroRefresh initializer init requires RandomShit
         call UnitRemoveAbility(TempUnit, 'BPSE')
         call UnitRemoveAbility(TempUnit, 'BHtc')
         call UnitRemoveAbility(TempUnit, 'Buhf')
-        call RemoveDebuff(TempUnit, 0)
+        call RemoveUnitBuffs(TempUnit, 0)
     endfunction
 
     private function init takes nothing returns nothing

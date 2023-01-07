@@ -1,4 +1,4 @@
-library RemoveBuffDelay requires TimerUtils, DebuffTypes
+library RemoveBuffDelay requires TimerUtils, RemoveBuffs
 
     struct buffDelayData
         unit u
@@ -8,7 +8,7 @@ library RemoveBuffDelay requires TimerUtils, DebuffTypes
     function RemoveBuffEnd takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local buffDelayData data = GetTimerData(t)
-        call RemoveDebuff(data.u, data.buffType)
+        call RemoveUnitBuffs(data.u, data.buffType)
         call ReleaseTimer(t)
         set data.u = null
         call data.destroy()

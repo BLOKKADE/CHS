@@ -84,7 +84,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call UnitRemoveAbility(playerHero, 'Buhf')
     
         // Remove any debuffs
-        call RemoveDebuff(playerHero, 0)
+        call RemoveUnitBuffs(playerHero, 0)
     endfunction
 
     private function MoveCameraToArenaForPlayer takes nothing returns nothing

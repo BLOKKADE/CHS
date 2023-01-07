@@ -78,7 +78,7 @@ scope ShortPeriodCheck initializer init
                         call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
                         call SetWidgetLife(u, GetWidgetLife(u) + 2500 * i1)
                         call TempFx.target("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
-                        call RemoveDebuff(u, 1)
+                        call RemoveUnitBuffs(u, 1)
                     endif
                 endif
             endif

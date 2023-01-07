@@ -2,9 +2,9 @@ library BuffRepository initializer init requires Table
     globals
         HashTable BuffRepo
 
-        integer BUFFTYPE_POSITIVE = 0
+        integer BUFFTYPE_BOTH = 0
         integer BUFFTYPE_NEGATIVE = 1
-        integer BUFFTYPE_BOTH = 2
+        integer BUFFTYPE_POSITIVE = 2
 
         private integer BUFF_INDEX = 0
         private integer ABILITY_INDEX = 1
@@ -31,7 +31,7 @@ library BuffRepository initializer init requires Table
     endfunction
 
     function GetBuffAssociatedAbility takes integer buffId returns integer
-        return BuffRepo[buffId].integer[ABILITY_INDEX]
+        return BuffRepo[buffId].integer[BUFFABILITY_INDEX]
     endfunction
 
     function SetupBuffInfo2 takes integer buffId, integer buffAbil, integer abilId, integer buffType, boolean unpurgeable, boolean removeAbil returns nothing
@@ -52,6 +52,6 @@ library BuffRepository initializer init requires Table
     endfunction
 
     private function init takes nothing returns nothing
-        
+        set BuffRepo = HashTable.create()
     endfunction
 endlibrary

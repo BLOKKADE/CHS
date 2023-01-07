@@ -1,4 +1,4 @@
-library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, DebuffTypes
+library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, RemoveBuffs
     globals
         Table DivineBubbles
     endglobals
@@ -18,7 +18,7 @@ library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, 
         boolean enabled
     
         private method periodic takes nothing returns nothing
-            call RemoveDebuff(this.source, 1)
+            call RemoveUnitBuffs(this.source, 1)
             if T32_Tick > this.endTick then
                 call this.stopPeriodic()
                 call this.destroy()

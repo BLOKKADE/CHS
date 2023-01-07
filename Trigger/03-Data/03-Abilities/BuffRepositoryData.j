@@ -1,5 +1,5 @@
-library DebuffTypes initializer init requires BuffRepository
-    function SetupPositiveBuffs takes nothing returns nothing
+library BuffRepositoryData initializer init requires BuffRepository
+    private function SetupPositiveBuffs takes nothing returns nothing
         call SetupBuffInfo1(INVULNERABLE_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(ANTI_MAGIC_SHELL_BUFF_ID, ANTI_MAGIC_SHEL_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
@@ -16,7 +16,7 @@ library DebuffTypes initializer init requires BuffRepository
         call SetupBuffInfo1(SCROLL_OF_PROTECTION_BUFF_ID, 0, BUFFTYPE_POSITIVE, false) // unused?
         call SetupBuffInfo1(SENSATUS_SHIELD_OF_HONOR_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, 'A0CJ', BUFFTYPE_POSITIVE, false)
-
+        //anti magic flag
         call SetupBuffInfo1('B01A', 'A085', BUFFTYPE_POSITIVE, true)
 
         call SetupBuffInfo2(LUCKY_PANTS_BUFF_ID, 'A09H', 0, BUFFTYPE_POSITIVE, false, true)
@@ -43,7 +43,7 @@ library DebuffTypes initializer init requires BuffRepository
     endfunction
 
     //Remove all negative buffs from unit u
-    function SetupNegativeBuffs takes nothing returns nothing
+    private function SetupNegativeBuffs takes nothing returns nothing
         call SetupBuffInfo1(POLYMORPH_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) //unused?
         call SetupBuffInfo1(SLOW_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) //unused?
         call SetupBuffInfo1(BURNING_OIL_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) //unused?
@@ -125,18 +125,6 @@ library DebuffTypes initializer init requires BuffRepository
         call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         //fishing rod
         call SetupBuffInfo2('B02U', 'A0DI', 0, BUFFTYPE_NEGATIVE, false, true)
-    endfunction
-
-    //Remove all buffs of buffType from unit u
-    //0 = all, 1 = negative, 2 = positive
-    function RemoveDebuff takes unit u, integer buffType returns nothing
-        /*if buffType == 0 or buffType == 1 then
-            call NegativeBuffs(u)
-        endif
-
-        if buffType == 0 or buffType == 2 then
-            call PositiveBuffs(u)
-        endif*/
     endfunction
 
     private function init takes nothing returns nothing
