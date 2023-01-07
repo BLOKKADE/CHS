@@ -10,6 +10,15 @@ Stuff
 |cffffff00Ability level bonus|r
 |cffc0c0c0 Gray text|r
 
+Stuff at level 30
+|cffff8080Damage at level 30|r: physical
+|cffff85ffDamage at level 30|r: magic
+|cffd45e3aRange at level 30|r:
+|cffd45e3aArea of effect at level 30|r:
+|cffff5e44Duration at level 30|r:
+|cffd49696Cooldown at level 30|r:
+|cff80ff80Chance at level 30|r:
+
 Tags
 [|cffffff00Plain|r]
 [|cff96ffffStable|r]

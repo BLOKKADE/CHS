@@ -21,7 +21,7 @@ library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
             set this.bonus = 20 * GetHeroLevel(this.source)
             set duration = ((9.9 + (0.1 * GetHeroLevel(this.source))) * chronus)
 
-            call RegisterBuff(this.source, 'A091')
+            call RegisterLeveledBuff(this.source, 'A091')
             if GetBuffLevel(this.source, 'A091') == 1 then
                 call UnitAddAbility(this.source, 'A091')
             endif
@@ -36,7 +36,7 @@ library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
         method destroy takes nothing returns nothing
             call SetHeroStr(this.source,GetHeroStr(this.source,false)- bonus,false)
             call BlzSetUnitBaseDamage(this.source,BlzGetUnitBaseDamage(this.source,0)- bonus,0)
-            call RemoveBuff(this.source, 'A091')
+            call RemoveLeveledBuffs(this.source, 'A091')
             if GetBuffLevel(this.source, 'A091') == 0 then
                 call UnitRemoveAbility(this.source, 'B01K')
             endif

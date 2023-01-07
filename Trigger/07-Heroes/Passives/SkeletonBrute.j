@@ -24,8 +24,7 @@ library SkeletonBrute requires AbilityCooldown
         endmethod
         
         method destroy takes nothing returns nothing
-            call UnitRemoveAbility(this.source, 'A0BB')
-            call UnitRemoveAbility(this.source, 'B029')
+            call RemoveUnitBuff(this.source, 'A0BB')
             //call BlzSetSpecialEffectAlpha(this.fx, 0)
             call DestroyEffect(this.fx)
             set this.fx = null

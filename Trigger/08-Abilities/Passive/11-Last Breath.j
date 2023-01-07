@@ -19,8 +19,7 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
         endmethod
 
         private method endLastBreath takes nothing returns nothing
-            call UnitRemoveAbility(this.source, 'A08B')
-            call UnitRemoveAbility(this.source, 'B01D')
+            call RemoveUnitBuff(this.source, 'A08B')
             set LastBreaths[GetHandleId(this.source)] = 0
         endmethod
     

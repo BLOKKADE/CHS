@@ -9,7 +9,7 @@ library DraftOnBuy initializer init requires DraftModeFunctions/*
     endglobals
 
     private function DraftOnBuyConditions takes nothing returns boolean
-        return GetUnitTypeId(GetSellingUnit()) == udg_Draft_DraftBuilding
+        return GetUnitTypeId(GetSellingUnit()) == DRAFT_BUY_UNIT_ID
     endfunction
 
     private function DraftOnBuyActions takes nothing returns nothing

@@ -1,9 +1,7 @@
 library Hints initializer init
     globals
         string array Hints
-        integer limit1
-        integer limit2
-        integer limit3
+        integer limit
         boolean array DisableHint
         integer hintCount = 0
     endglobals
@@ -11,7 +9,7 @@ library Hints initializer init
     public function DisplayHint takes integer i returns nothing
             call DisplayTimedTextToPlayer(Player(i), 0, 0, 20, "Visit the Discord at: |cff45ec53customherosurvival.com|r")
             if DisableHint[i] != true then
-                call DisplayTimedTextToPlayer(Player(i), 0, 0, 5, "|cff4599ecHint|r: " + Hints[GetRandomInt(1,limit3)]+ "|r")
+                call DisplayTimedTextToPlayer(Player(i), 0, 0, 5, "|cff4599ecHint|r: " + Hints[GetRandomInt(1,limit)]+ "|r")
             endif
     endfunction
 
@@ -46,11 +44,11 @@ library Hints initializer init
         set Hints[15]= "We have a |cffecb745wiki|r containing lists and descriptions of all |cff45ec53heroes|r, |cffec6645abilities|r and |cff45c5ecitems|r. Go to |cffca45ecchs-wiki.com|r."
         set Hints[16]= "Items |cffca45ecdropped on the ground|r during |cffecb745creep rounds|r will |cff45c5ecautomatically be sold|r for you at the |cff45ec53start of the next round|r."
         set Hints[17]= "Holding |cff45ec53SHIFT|r when using a self-targetable spell such as Rejuvenation and Inner Fire or an AOE spell such as blizzard it will cast on yourself!"
-        set limit1 = 17
-        set Hints[18]= "You receive gold when you win in Pvp!"
-        set limit2 = 18
-        set Hints[19]= "Players surviving all levels will settle the score in a battle royal."
-        set limit3 = 19
+        set Hints[18]= "When you use |cffe9ec45Grid mode|r hotkeys (found in settings in main menu) you can use the |cff45ec53T Y G H B N|r keys to use items."
+        set Hints[19]= ""
+        set Hints[20]= "You receive gold when you win in Pvp!"
+        set Hints[21]= "Players surviving all levels will settle the score in a battle royal."
+        set limit = 21
         call HintDisableInit()
     endfunction
 endlibrary

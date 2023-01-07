@@ -33,7 +33,7 @@ library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
     endfunction
 
     function CreateUpgradeShop takes nothing returns nothing
-        local unit u = CreateUnit(GetEnumPlayer(), udg_Draft_UpgradeBuilding, upgradeShopX, upgradeShopY, 0)
+        local unit u = CreateUnit(GetEnumPlayer(), DRAFT_UPGRADE_UNIT_ID, upgradeShopX, upgradeShopY, 0)
 
         set udg_Draft_UpgradeBuildings[GetPlayerId(GetEnumPlayer())] = u
         set u = null

@@ -81,21 +81,21 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 			set s = s + statColour[0] + I2S(R2I(gloryRegen)) + "|r of that is from glory HP regen.\n"
 		endif
 		
-		return s + "Strength per level: " + statColour[0] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(u)) + "|r"
+		return s + "Strength per level: " + statColour[0] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('ustp')) + GetStatLevelBonus(u, BONUS_STRENGTH)) + "|r"
 	endfunction
 
 	function AgiInfo takes unit u returns string
 		local string s = PrimaryAttributeDmg(u, 1)
 		set s = s + "Each point increases armor by 0.150. (" + statColour[1] + "+" + R2SW(GetHeroAgi(u, true) * 0.15, 1, 1) + " total|r)\n" 
 		set s = s + "Each point increases attack speed by 1%%. (" + statColour[1] + "+" + R2SW(RMinBJ(GetHeroAgi(u, true), 400), 1, 1) + "%% total|r) (Max 400%%)\n"
-		return s + "Agility per level: " + statColour[1] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(u)) + "|r"
+		return s + "Agility per level: " + statColour[1] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uagp')) + GetStatLevelBonus(u, BONUS_AGILITY)) + "|r"
 	endfunction
 
 	function IntInfo takes unit u returns string
 		local string s = PrimaryAttributeDmg(u, 2)
 		set s = s + "Each point increases mana by 20.1. (" + statColour[2] + "+" + R2SW(GetHeroInt(u, true) * 20.1, 1, 1) + " total|r)\n" 
 		set s = s + "Each point increases mana regeneration by 0.065. (" + statColour[2] + "+" + R2SW(BlzGetUnitRealField(u, ConvertUnitRealField('umpr'))  + (GetUnitBonusReal(u, BONUS_MANA_REGEN)) + (GetHeroInt(u, true) * 0.065), 1, 1) + " total|r)\n"
-		return s + "Intelligence per level: " + statColour[2] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(u)) + "|r"
+		return s + "Intelligence per level: " + statColour[2] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uinp')) + GetStatLevelBonus(u, BONUS_INTELLIGENCE)) + "|r"
 	endfunction
 
 	function UpdateTooltipText takes unit u returns nothing

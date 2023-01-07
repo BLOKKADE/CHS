@@ -7,8 +7,7 @@ scope AttackController initializer init
         local integer bonus = LoadInteger(HT,i, 2)
         
         call AddUnitCustomState(u, BONUS_EVASION,- bonus)
-        call UnitRemoveAbility(u, 'A08D')
-        call UnitRemoveAbility(u, 'B01F')
+        call RemoveUnitBuff(u, 'A08D')
         call ReleaseTimer(t)
         call FlushChildHashtable(HT,i)
         set t = null

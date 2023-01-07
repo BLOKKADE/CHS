@@ -78,7 +78,7 @@ scope ShortPeriodCheck initializer init
                         call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
                         call SetWidgetLife(u, GetWidgetLife(u) + 2500 * i1)
                         call TempFx.target("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
-                        call RemoveDebuff(u, 1)
+                        call RemoveUnitBuffs(u, BUFFTYPE_NEGATIVE, false)
                     endif
                 endif
             endif
@@ -216,7 +216,7 @@ scope ShortPeriodCheck initializer init
                     set i1 = LoadInteger(DataUnitHT, hid,542)
                     call SetHeroStr(u, GetHeroStr(u,false)- i1, false)
                     call SaveInteger(DataUnitHT, hid,542,0)
-                    call UnitRemoveAbility(u, 'A092')
+                    call RemoveUnitBuff(u, 'A092')
                 endif
 
             elseif unitTypeId == WOLF_RIDER_UNIT_ID then

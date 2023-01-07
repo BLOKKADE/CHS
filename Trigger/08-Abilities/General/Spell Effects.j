@@ -126,6 +126,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
             call ExtradimensionalCooperation(hero, abilId, lvl)
             return true
+        // Dried Mushroom
+        elseif abilId == DRIED_MUSHROOM_ABILITY_ID then
+            call CastDriedMushroom(hero)
+            return true
         //Frost Bolt
         elseif abilId == FROST_BOLT_ABILITY_ID then
             call UsFrostBolt(hero,target,120 * lvl * (1 + 0.25 * R2I(GetUnitElementCount(hero,Element_Dark))), GetUnitElementCount(hero,Element_Cold))
@@ -134,21 +138,6 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == SAND_OF_TIME_ABILITY_ID then
             call SandRefreshAbility(hero,1.75 + 0.25 * lvl)
             return true
-        //Purge dummy
-        elseif abilId == 'A08A' then
-            //remove last breath
-            if GetUnitAbilityLevel(target, 'A08B') > 0 then
-                call UnitRemoveAbility(target, 'A08B')
-                call UnitRemoveAbility(target, 'B01D')
-            endif
-            
-            //remove Cheater Magic
-            if GetUnitAbilityLevel(target, 'A08G') > 0 and IsUnitEnemy(target, GetOwningPlayer(hero)) then
-                call UnitRemoveAbility(target, 'A08G')
-                call UnitRemoveAbility(target, CHEATER_MAGIC_BUFF_ID)
-            endif
-
-            return true
         //Purge wait
         elseif abilId == PURGE_ABILITY_ID then
             call Purge(hero, target, lvl)
@@ -156,6 +145,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Eruption
         elseif abilId == ERUPTION_ABILITY_ID then
             call CastEruption(caster, x, y, lvl)
+            return true
+        //Divine Source
+        elseif abilId == 'A01D' then
+                call UseDivineSource(hero)
             return true
         endif
 
@@ -211,6 +204,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if GetUnitAbilityLevel(caster, 'B024') > 0 then
                         call GetRetaliationSource(caster, target, abilId, abilLvl)
+                    endif
+
+                    if GetUnitAbilityLevel(caster, DRIED_MUSHROOM_DUMMY_BUFF_ID) > 0 then
+                        call DriedMushroomEffects(caster, abilId)
                     endif
 
                     if UnitHasItemType(caster, ARCANE_RUNESTONE_ITEM_ID) then

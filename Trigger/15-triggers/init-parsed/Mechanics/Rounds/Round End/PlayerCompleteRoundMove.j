@@ -10,7 +10,7 @@ library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         if (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true) then
-            call RemoveDebuff(PlayerHeroes[currentPlayerId], 0)
+            call RemoveUnitBuffs(PlayerHeroes[currentPlayerId], BUFFTYPE_BOTH, true)
             call SetUnitPositionLoc(PlayerHeroes[currentPlayerId], RectMidArenaCenter)
 
             if (ps.getPet() != null) then

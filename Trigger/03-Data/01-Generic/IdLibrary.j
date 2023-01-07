@@ -497,6 +497,8 @@ library IdLibrary initializer init
         constant integer CONQ_BAMBOO_STICK_ABILITY_ID                   = 'A0CM'
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
         constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
+        constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'AXXX'
+        constant integer DRIED_MUSHROOM_DUMMY_ABILITY_ID                = 'AXXX'
 
         // --- Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'
@@ -521,8 +523,9 @@ library IdLibrary initializer init
         constant integer ACID_SPRAY_ITEM_ID                             = 'I028'
         constant integer ACTIVATE_AVATAR_ITEM_ID                        = 'I027'
         constant integer AGILITY_LEVEL_BONUS_TOME_ITEM_ID               = 'I05H'
-        constant integer HERO_FORCE_ITEM_ID                              = 'I054'
+        constant integer HERO_FORCE_ITEM_ID                             = 'I054'
         constant integer ANCIENT_AXE_ITEM_ID                            = 'I06Y'
+        constant integer DRIED_MUSHROOM_ITEM_ID                         = 'I0BT'
         constant integer ANCIENT_AXE_TOME_ITEM_ID                       = 'I06Z'
         constant integer ENERGY_TRAP_ITEM_ID                            = 'I0BJ'
         constant integer ENERGY_SHIELD_ITEM_ID                          = 'I0CJ'
@@ -908,6 +911,7 @@ library IdLibrary initializer init
         constant integer DRUIDIC_FOCUS_BUFF_ID                          = 'B02F'
         constant integer ERUPTION_IMMUNE_BUFF_ID                        = 'B02O'
         constant integer DRUNKEN_HAZE_IGNITE_BUFF_ID                    = 'A0DL'
+        constant integer DRIED_MUSHROOM_DUMMY_BUFF_ID                   = 'AXXX'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 

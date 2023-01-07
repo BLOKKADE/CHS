@@ -16,7 +16,7 @@ library PlayerLeavesGame initializer init requires RandomShit
             call RemoveHeroAbilities(u)
         endif
 
-        call UnitRemoveAbility(u, 'ANr2')
+        call UnitRemoveAbility(u, REINCARNATION_ABILITY_ID)
     endfunction
 /*
     function Trig_Player_Leaves_Func007Func003002001001002 takes nothing returns boolean

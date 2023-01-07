@@ -138,7 +138,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
-			call AddAgilityLevelBonus(u, 15 *diff)
+			call AddStatLevelBonus(u, BONUS_AGILITY, 15 *diff)
 			call SetHeroAgi(u, GetHeroAgi(u, false) + (15 *diff)* GetHeroLevel(u), false)
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('uagp'), BlzGetUnitRealField(u,ConvertUnitRealField('uagp')) + 15*diff )
 			
@@ -147,34 +147,42 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, 900 * diff)
-			call AddStrengthLevelBonus(u, 15 *diff)
+			call AddStatLevelBonus(u, BONUS_STRENGTH, 15 *diff)
 			call SetHeroStr(u, GetHeroStr(u, false) + (15 *diff)* GetHeroLevel(u), false)
+			//call BlzSetUnitRealField(u,ConvertUnitRealField('ustp'), BlzGetUnitRealField(u,ConvertUnitRealField('ustp')) + 15*diff )
+
+			//Dried Mushroom
+		elseif itemId == DRIED_MUSHROOM_ITEM_ID then
+			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
+			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
+			call AddUnitCustomState(u, BONUS_RUNEPOW, 0.75 * diff)
+			call AddStatLevelBonus(u, BONUS_RUNEPOW, 0.01 * uniqueDiff)
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('ustp'), BlzGetUnitRealField(u,ConvertUnitRealField('ustp')) + 15*diff )
 			
 			//Ring of Musculature
 		elseif itemId == 'I071' then
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddStrengthLevelBonus(u, 4 *diff)
+				call AddStatLevelBonus(u, BONUS_STRENGTH, 4 *diff)
 			else
-				call AddStrengthLevelBonus(u, 2 *diff)
+				call AddStatLevelBonus(u, BONUS_STRENGTH, 2 *diff)
 			endif
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Ring of the Bookworm
 		elseif itemId == 'I072' then
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddIntelligenceLevelBonus(u, 4 *diff)
+				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 4 *diff)
 			else
-				call AddIntelligenceLevelBonus(u, 2 *diff)
+				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 2 *diff)
 			endif
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Trainers Ring
 		elseif itemId == 'I073' then
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddAgilityLevelBonus(u, 4 *diff)
+				call AddStatLevelBonus(u, BONUS_AGILITY, 4 *diff)
 			else
-				call AddAgilityLevelBonus(u, 2 *diff)
+				call AddStatLevelBonus(u, BONUS_AGILITY, 2 *diff)
 			endif
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
@@ -299,7 +307,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 20 * diff)
-			call AddIntelligenceLevelBonus(u, 15 *diff)
+			call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 15 *diff)
 			call SetHeroInt(u, GetHeroInt(u, false) + (15 *diff)* GetHeroLevel(u), false)
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('uinp'), BlzGetUnitRealField(u,ConvertUnitRealField('uinp')) + 15*diff )
 		

@@ -12,8 +12,6 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit, DraftModeFu
         integer array udg_Draft_NOSpellsLearned
         integer array udg_Draft_DefaultSpells
         integer udg_Draft_DefaultSpellsMaxIndex = 0
-        integer udg_Draft_DraftBuilding = 0
-        integer udg_Draft_UpgradeBuilding = 0
         trigger udg_Draft_TrgOnBuy = null
     endglobals
 
@@ -21,8 +19,6 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit, DraftModeFu
         local integer abilityIndex = 1
 
         // This script is for preconfigurable variables, DraftInit initalizes variables that are not supposed to be changed.
-        set udg_Draft_DraftBuilding = 'h00C'
-        set udg_Draft_UpgradeBuilding = 'h00D'
         set udg_Draft_DefaultSpellsMaxIndex = GetAbilityCount()
 
         // NOSpells should be >= 4, otherwise the code in the function GenerateInitialDraftSpells might need to be changed so that all 4 added spells get removed properly.
