@@ -103,12 +103,11 @@ scope LongPeriodCheck initializer init
         // Show rewards button
         call BlzFrameSetVisible(ButtonParentId[6], RewardsFrameHandle != null)
 
+        // Indicator if the player is auto-ready
+        call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])
+
         // Indicator if the player has points
-        if (PlayerRewardPoints[pid] > 0) then
-            call BlzFrameSetVisible(ButtonIndicatorParentId[6], true)
-        elseif (PlayerRewardPoints[pid] == 0) then
-            call BlzFrameSetVisible(ButtonIndicatorParentId[6], false)
-        endif
+        call BlzFrameSetVisible(ButtonIndicatorParentId[6], PlayerRewardPoints[pid] > 0)
 
         // Hero info
         set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid])

@@ -1,4 +1,4 @@
-library TooltipFrame initializer init requires StringFunctions, ReadyButton
+library TooltipFrame initializer init requires StringFunctions
     globals
         framehandle TooltipFrame = null
 		framehandle TooltipTitleFrame
@@ -23,10 +23,6 @@ library TooltipFrame initializer init requires StringFunctions, ReadyButton
 
 	function SellAllItemsTooltip takes nothing returns string
 		return "Sell all your items for 100% gold/glory cost (|cff77f3fcCtrl+E|r)"
-	endfunction
-
-    function ReadyTooltip takes nothing returns string
-		return " (|cff77f3fcCtrl+R|r)|nCurrently " + I2S(ReadyPlayerCount()) + " out of " + I2S(PlayerCount) + " players are ready.|nNext round starts once enough players are ready."
 	endfunction
 
 	function GetObjectTooltipSize takes integer objectId returns real

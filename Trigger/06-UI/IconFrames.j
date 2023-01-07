@@ -233,18 +233,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 			// Ready button
 			elseif NumButton == 5 then
-				if not ReadyButtonDisabled[PlID] then
-					set ps = PlayerStats.forPlayer(p)
-
-					if ps.isReady() then
-						set ToolTipS = "Unready yourself " + ReadyTooltip()
-					else
-						set ToolTipS = "Ready" + ReadyTooltip()
-					endif
-				else
-					set ToolTipS = "Cannot be used during a round."
-				endif
-
+				set ToolTipS = ReadyButtonTooltip(p, PlID)
 				if GetLocalPlayer() == p then
 					call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
 					call BlzFrameSetSize(TooltipFrame, 0.31, GetTooltipSize(ToolTipS))
@@ -412,6 +401,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// Ready
 		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0.04, -0.39, BIG_BUTTON_WIDTH)
+		call CreateIndicatorForButton(5)
 
 		// Rewards
 		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", 0.08, -0.39, BIG_BUTTON_WIDTH)
