@@ -45,7 +45,7 @@ library Hints initializer init
         set Hints[16]= "Items |cffca45ecdropped on the ground|r during |cffecb745creep rounds|r will |cff45c5ecautomatically be sold|r for you at the |cff45ec53start of the next round|r."
         set Hints[17]= "Holding |cff45ec53SHIFT|r when using a self-targetable spell such as Rejuvenation and Inner Fire or an AOE spell such as blizzard it will cast on yourself!"
         set Hints[18]= "When you use |cffe9ec45Grid mode|r hotkeys (found in settings in main menu) you can use the |cff45ec53T Y G H B N|r keys to use items."
-        set Hints[19]= ""
+        set Hints[19]= "Use the command |cff45ec53\"-nocameramovement\"|r or |cffecb745\"-ncm\"|r, to stop the game from |cff45c5ecautomatically moving your camera|r and |cff4550ecselecting your hero|r when a round or duel starts."
         set Hints[20]= "You receive gold when you win in Pvp!"
         set Hints[21]= "Players surviving all levels will settle the score in a battle royal."
         set limit = 21
