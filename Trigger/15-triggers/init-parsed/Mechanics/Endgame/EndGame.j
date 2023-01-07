@@ -24,6 +24,10 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
         return IsOnlyOnePlayerRemaining() or IsInitialSoloPlayerGame()
     endfunction
 
+    private function ShowScoreboardForPlayer takes nothing returns nothing
+        call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(true)
+    endfunction
+
     private function AutoSaveForPlayer takes nothing returns nothing
         if (GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING) then
             call SaveCommand_SaveCodeForPlayer(GetEnumPlayer(), false)
@@ -94,6 +98,11 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
 
         // Save everyones codes
         call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
+
+        // Show the scoreboard to everyone
+        call TriggerSleepAction(3.00)
+        call ForForce(GetPlayersAll(), function ShowScoreboardForPlayer) 
+        call BlzFrameSetVisible(ScoreboardFrameHandle, true)
     endfunction
 
     private function init takes nothing returns nothing
