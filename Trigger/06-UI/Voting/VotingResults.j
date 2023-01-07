@@ -16,6 +16,7 @@ library VotingResults initializer init
         integer HeroBanningMode
         integer SimultaneousDuelMode
         integer TeamDuelMode
+        integer LongerTimersMode
 
         string GameDescription
         string ScoreboardGameDescription
@@ -40,6 +41,7 @@ library VotingResults initializer init
         private integer HeroBanningVote = 1 // No banning
         private integer DisableSimultaneousDuelVote = 1 // Disable Simultaneous duels off
         private integer DisableTeamDuelVote = 1 // Disable Team duels off
+        private integer LongerTimersVote = 1 // Longer timers off
 
         public method setRoundVote takes integer value returns nothing 
             set this.RoundVote = value
@@ -77,6 +79,10 @@ library VotingResults initializer init
             set this.DisableTeamDuelVote = value
         endmethod
 
+        public method setLongerTimersVote takes integer value returns nothing 
+            set this.LongerTimersVote = value
+        endmethod
+
         public method getRoundVote takes nothing returns integer 
             return this.RoundVote
         endmethod
@@ -111,6 +117,10 @@ library VotingResults initializer init
 
         public method getDisableTeamDuelVote takes nothing returns integer 
             return this.DisableTeamDuelVote
+        endmethod
+
+        public method getLongerTimersVote takes nothing returns integer 
+            return this.LongerTimersVote
         endmethod
     endstruct
 
@@ -200,11 +210,21 @@ library VotingResults initializer init
         endif
 
         if (TeamDuelMode == 1) then
-            set GameDescription = GameDescription + "Team Duels Off"
-            set ScoreboardGameDescription = ScoreboardGameDescription + "Team Duels Off"
+            set GameDescription = GameDescription + "Team Duels Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Team Duels Off|n"
         elseif (TeamDuelMode == 2) then
-            set GameDescription = GameDescription + "Team Duels On"
-            set ScoreboardGameDescription = ScoreboardGameDescription + "Team Duels On"
+            set GameDescription = GameDescription + "Team Duels On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Team Duels On|n"
+        endif
+
+        if (LongerTimersMode == 1) then
+            set GameDescription = GameDescription + "Longer Timers Off"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Longer Timers Off"
+        elseif (LongerTimersMode == 2) then
+            set GameDescription = GameDescription + "Longer Timers On"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Longer Timers On"
+
+            set RoundTime = 40
         endif
 
         set GameDescription = GameDescription + "|r"
@@ -301,6 +321,7 @@ library VotingResults initializer init
         local integer array heroBanningModeCounts
         local integer array simultaneousDuelModeCounts
         local integer array teamDuelModeCounts
+        local integer array longerTimersModeCounts
         local PlayerVotes currentPlayerVotes
         local integer i = 0
 
@@ -319,6 +340,7 @@ library VotingResults initializer init
                 set heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] = heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] + 1
                 set simultaneousDuelModeCounts[currentPlayerVotes.getDisableSimultaneousDuelVote()] = simultaneousDuelModeCounts[currentPlayerVotes.getDisableSimultaneousDuelVote()] + 1
                 set teamDuelModeCounts[currentPlayerVotes.getDisableTeamDuelVote()] = teamDuelModeCounts[currentPlayerVotes.getDisableTeamDuelVote()] + 1
+                set longerTimersModeCounts[currentPlayerVotes.getLongerTimersVote()] = longerTimersModeCounts[currentPlayerVotes.getLongerTimersVote()] + 1
             endif
 
             set i = i + 1
@@ -406,6 +428,15 @@ library VotingResults initializer init
             exitwhen i > 2
         endloop
         set TeamDuelMode = GetNegatedCheckboxVoteFromAnyDuplicates()
+
+        // Longer timers vote counting
+        set i = 1
+        loop
+            set CategoryVotes[i] = longerTimersModeCounts[i]
+            set i = i + 1
+            exitwhen i > 2
+        endloop
+        set LongerTimersMode = GetCheckboxVoteFromAnyDuplicates()
 
         // Set the weird global variables based off of the results
         set GameModeShort = RoundMode == 2 // Boolean that flags if the game is short
