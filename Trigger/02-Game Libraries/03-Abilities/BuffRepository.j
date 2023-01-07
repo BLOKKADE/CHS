@@ -34,7 +34,7 @@ library BuffRepository initializer init requires Table
         return BuffRepo[buffId].integer[ABILITY_INDEX]
     endfunction
 
-    function SetupBuffAndBuffAbilAndAbil takes integer buffId, integer buffAbil, integer abilId, integer buffType, boolean unpurgeable, boolean removeAbil returns nothing
+    function SetupBuffInfo2 takes integer buffId, integer buffAbil, integer abilId, integer buffType, boolean unpurgeable, boolean removeAbil returns nothing
         set BuffRepo[buffId].boolean[BUFF_INDEX] = true
         set BuffRepo[buffId].integer[ABILITY_INDEX] = abilId
         set BuffRepo[buffId].integer[BUFFABILITY_INDEX] = buffAbil
@@ -44,7 +44,7 @@ library BuffRepository initializer init requires Table
     endfunction
 
     //for storing the buff and the ability associated with the buff
-    function SetupBuffAndAbil takes integer buffId, integer abilId, integer buffType, boolean unpurgeable returns nothing
+    function SetupBuffInfo1 takes integer buffId, integer abilId, integer buffType, boolean unpurgeable returns nothing
         set BuffRepo[buffId].boolean[BUFF_INDEX] = true
         set BuffRepo[buffId].integer[ABILITY_INDEX] = abilId
         set BuffRepo[buffId].integer[BUFFTYPE_INDEX] = buffType
