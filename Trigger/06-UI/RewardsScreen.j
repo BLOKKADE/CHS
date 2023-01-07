@@ -511,7 +511,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         local real rewardValue
 
         // Give points if this was a pvp round
-        if (eventInfo.isPvp) then
+        if (eventInfo.isPvp or (PlayerCount == 1 and ModuloInteger(RoundNumber, 5) == 0)) then
             // First pvp round, give initial reward points
             if (RoundNumber == 5) then
                 // Greedy golbin gets an additional initial reward point
