@@ -12,7 +12,7 @@ Stuff
 
 Stuff at level 30
 |cffff8080Damage at level 30|r: physical
-|cffff00ffDamage at level 30|r: magic
+|cffff85ffDamage at level 30|r: magic
 |cffd45e3aRange at level 30|r:
 |cffd45e3aArea of effect at level 30|r:
 |cffff5e44Duration at level 30|r:
