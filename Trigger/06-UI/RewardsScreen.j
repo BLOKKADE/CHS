@@ -15,7 +15,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
         // Specifications for a icon
         private constant real ICON_WIDTH                                = 0.032
-        private constant real ICON_SPACING                              = 0.012
+        private constant real ICON_SPACING                              = 0.014
         private constant real CATEGORY_SPACING                          = 0.03
 
         // Specifications for a button
@@ -51,7 +51,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private constant string OFFENSIVE_MAGIC_POWER_3_ICON            = "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp"
         private constant string OFFENSIVE_STAT_4_ICON                   = "ReplaceableTextures\\CommandButtons\\BTNSelectHeroOff.blp"
         private constant string DEFENSIVE_ARMOR_1_ICON                  = "ReplaceableTextures\\CommandButtons\\BTNAdvancedMoonArmor.blp"
-        private constant string DEFENSIVE_MAGIC_PROTECTION_2_ICON       = "ReplaceableTextures\\PassiveButtons\\PASBTNMagicImmunity.blp"
+        private constant string DEFENSIVE_MAGIC_PROTECTION_2_ICON       = "ReplaceableTextures\\CommandButtons\\BTNMagicImmunity.blp"
         private constant string DEFENSIVE_BLOCK_3_ICON                  = "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_DevotionAura.blp"
         private constant string DEFENSIVE_STAT_4_ICON                   = "ReplaceableTextures\\CommandButtons\\BTNSelectHeroOff.blp"
         private constant string UTILITY_HIT_POINTS_1_ICON               = "ReplaceableTextures\\CommandButtons\\BTNAnkh.blp"
@@ -93,14 +93,17 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private framehandle RewardsTooltipFrame
 		private framehandle RewardsTooltipTitleFrame
 		private framehandle RewardsTooltipTextFrame
+        private string array RewardTitles
+        private string array RewardDescriptions
+
+        // Framehandles that need to be referenced later
         private integer SubmitHandleId
         private integer ResetHandleId
         private framehandle AvailablePointsFrame
-
-        private string array RewardTitles
-        private string array RewardDescriptions
         private framehandle array RewardSelectionFramehandles
+        private framehandle array RewardSelectionParentFramehandles
 
+        // Save what the player has selected, how many points they have, and the accumulation of rewards
         private integer array PlayerRewardSelection
         private integer array PlayerRewardPoints
         private real array PlayerTotalRewardValues
@@ -173,6 +176,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call BlzFrameSetSize(buttonCountBackdropFrameHandle, 0.02, 0.02)
 
         set RewardSelectionFramehandles[rewardIndex] = buttonCountFrameHandle
+        set RewardSelectionParentFramehandles[rewardIndex] = buttonCountBackdropFrameHandle
 
         // Save the handle of this button to look it up later for mouse events
         call SaveInteger(IconEventHandles, buttonHandleId, 1, rewardIndex)
@@ -190,6 +194,8 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         // Cleanup
         set submitButtonFrameHandle = null
         set buttonBackdropFrameHandle = null
+        set buttonCountFrameHandle = null
+        set buttonCountBackdropFrameHandle = null
     endfunction
 
     private function CreateCategoryText takes string value returns nothing
@@ -228,6 +234,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
             if (handleId == SubmitHandleId) then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetVisible(RewardsFrameHandle, false) 
+                    call PlayerStats.forPlayer(triggerPlayer).setHasRewardsOpen(false)
                 endif
 
             // Reset
@@ -238,13 +245,14 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
                     if (RewardSelectionFramehandles[playerRewardIndex] != null and GetLocalPlayer() == triggerPlayer) then	
                         call BlzFrameSetText(RewardSelectionFramehandles[playerRewardIndex], "0") 
+                        call BlzFrameSetSize(RewardSelectionParentFramehandles[playerRewardIndex], 0.02, 0.02)
                     endif
 
                     set playerRewardIndex = playerRewardIndex + 1
                     exitwhen playerRewardIndex == REWARD_BUFFER
                 endloop
             
-                set PlayerRewardPoints[triggerPlayerId] = rewardCount
+                set PlayerRewardPoints[triggerPlayerId] = PlayerRewardPoints[triggerPlayerId] + rewardCount
 
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetText(AvailablePointsFrame, AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[triggerPlayerId])) 
@@ -257,6 +265,10 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetText(RewardSelectionFramehandles[rewardIndex], I2S(PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])) 
                     call BlzFrameSetText(AvailablePointsFrame, AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[triggerPlayerId])) 
+
+                    if (PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex] >= 10) then
+                        call BlzFrameSetSize(RewardSelectionParentFramehandles[rewardIndex], 0.03, 0.02)
+                    endif
                 endif
             endif
             
@@ -315,7 +327,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call BlzFrameSetLevel(titleFrameHandle, 2) // To have it appear above the rewards
         call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + (mainFrameBottomRightX - MAIN_FRAME_TOP_LEFT_X) * 0.2, MAIN_FRAME_TOP_LEFT_Y + (TITLE_HEIGHT / 2)) 
         call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_BOTTOMRIGHT, MAIN_FRAME_TOP_LEFT_X + (mainFrameBottomRightX - MAIN_FRAME_TOP_LEFT_X) * 0.8, MAIN_FRAME_TOP_LEFT_Y - TITLE_HEIGHT) 
-        call BlzFrameSetEnable(titleFrameHandle, true) 
+        call BlzFrameSetEnable(titleFrameHandle, false) 
         call BlzFrameSetScale(titleFrameHandle, 1.2) 
         call BlzFrameSetText(titleFrameHandle, REWARDS_TITLE) 
 
@@ -324,7 +336,6 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call BlzFrameSetAbsPoint(submitButtonFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_TOP_MARGIN + BUTTON_HEIGHT) 
         call BlzFrameSetAbsPoint(submitButtonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN + BUTTON_WIDTH, mainFrameBottomRightY + MAIN_FRAME_Y_BOTTOM_MARGIN) 
         call BlzFrameSetScale(submitButtonFrameHandle, 1.00) 
-        call BlzFrameSetVisible(submitButtonFrameHandle, true)
         call BlzFrameSetText(submitButtonFrameHandle, "|cff0dfc19Submit|r") 
         set SubmitHandleId = GetHandleId(submitButtonFrameHandle)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, submitButtonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
@@ -334,7 +345,6 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call BlzFrameSetAbsPoint(resetButtonFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX - MAIN_FRAME_X_MARGIN - BUTTON_WIDTH, mainFrameBottomRightY + MAIN_FRAME_Y_TOP_MARGIN + BUTTON_HEIGHT) 
         call BlzFrameSetAbsPoint(resetButtonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX - MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_BOTTOM_MARGIN) 
         call BlzFrameSetScale(resetButtonFrameHandle, 1.00) 
-        call BlzFrameSetVisible(resetButtonFrameHandle, true)
         call BlzFrameSetText(resetButtonFrameHandle, "|cfffc0d21Reset|r") 
         set ResetHandleId = GetHandleId(resetButtonFrameHandle)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, resetButtonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
@@ -455,8 +465,6 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
         // Finalize the main window
         call FinalizeMainFrame()
-
-        call BlzFrameSetVisible(RewardsFrameHandle, true) 
     endfunction
 
     private function GiveRewardPoints takes EventInfo eventInfo returns nothing
@@ -482,6 +490,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
             if (GetLocalPlayer() == Player(pid)) then	
                 call BlzFrameSetText(AvailablePointsFrame, AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[pid])) 
                 call BlzFrameSetVisible(RewardsFrameHandle, true) 
+                call PlayerStats.forPlayer(Player(pid)).setHasRewardsOpen(true)
             endif
 
         // Normal round end
@@ -562,7 +571,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
     endfunction
 
     private function init takes nothing returns nothing
-        call TimerStart(CreateTimer(), 5, false, function InitializeRewards)
+        call TimerStart(CreateTimer(), 2, false, function InitializeRewards)
 
         call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.GiveRewardPoints)
     endfunction

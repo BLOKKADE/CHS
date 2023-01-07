@@ -79,6 +79,7 @@ library PlayerTracking initializer init requires GameInit
         private boolean DebugEnabled = false
         private boolean HasAchievementsOpen = false
         private boolean HasScoreboardOpen = false
+        private boolean HasRewardsOpen = false
         private boolean HasLoaded = false
         private boolean IsReady = false
         private unit Pet = null
@@ -178,9 +179,18 @@ library PlayerTracking initializer init requires GameInit
             set this.HasScoreboardOpen = not this.HasScoreboardOpen
             return this.HasScoreboardOpen
         endmethod
-        
+
         public method setHasScoreboardOpen takes boolean value returns nothing
             set this.HasScoreboardOpen = value
+        endmethod
+
+        public method toggleHasRewardsOpen takes nothing returns boolean
+            set this.HasRewardsOpen = not this.HasRewardsOpen
+            return this.HasRewardsOpen
+        endmethod
+
+        public method setHasRewardsOpen takes boolean value returns nothing
+            set this.HasRewardsOpen = value
         endmethod
 
         public method toggleIsReady takes nothing returns boolean

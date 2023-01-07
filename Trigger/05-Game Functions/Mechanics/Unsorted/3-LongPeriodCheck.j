@@ -97,8 +97,12 @@ scope LongPeriodCheck initializer init
             set i = i + 1
         endloop
 
+        // Show scoreboard button
         call BlzFrameSetVisible(ButtonParentId[4], ScoreboardFrameHandle != null)
-        
+
+        // Show rewards button
+        call BlzFrameSetVisible(ButtonParentId[6], RewardsFrameHandle != null)
+
         set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid])
         //updates the icons in top left if selected unit is a creep
         //Show element count, win counts or hero passive

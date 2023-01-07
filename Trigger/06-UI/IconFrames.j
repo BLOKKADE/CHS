@@ -145,11 +145,21 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					call BlzFrameSetVisible(ScoreboardFrameHandle, TypT)
 				endif
 			
+			// Rewards button
+			elseif NumButton == 6 then
+				set ps = PlayerStats.forPlayer(p)
+				set TypT = ps.toggleHasRewardsOpen()
+
+				if GetLocalPlayer() == p then
+					call BlzFrameSetVisible(RewardsFrameHandle, TypT)
+				endif
+
 			// Ready button
 			elseif NumButton == 5 then
 				if not ReadyButtonDisabled[PlID] then
 					call PlayerReadies(p)
 				endif
+
 			//Convert to gold
 			elseif NumButton == 36 then
 				set i1 = GetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER)
@@ -205,6 +215,14 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					if GetLocalPlayer() == p then
 						call BlzFrameSetText(TooltipTitleFrame, "Toggle the Scoreboard (|cff77f3fcTab|r)")
 						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
+						call BlzFrameSetVisible(TooltipFrame, true)
+					endif
+
+					// View scoreboard
+				elseif NumButton == 6 then
+					if GetLocalPlayer() == p then
+						call BlzFrameSetText(TooltipTitleFrame, "View rewards")
+						call BlzFrameSetSize(TooltipFrame, 0.20, 0.02)
 						call BlzFrameSetVisible(TooltipFrame, true)
 					endif
 
@@ -346,22 +364,44 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			set GameUI = BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)
 			set ButtonTrigger = CreateTrigger()
 			call TriggerAddAction(ButtonTrigger, function SkillSysStart)
-			call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.08, -0.39, 0.036)
+
+			// Creep info
+			call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.12, -0.39, 0.036)
 			call BlzFrameSetTexture(ButtonId[2], "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", 0, true)
+
+			// Sell all items
 			call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", 0.43 + 0.075, -0.024, 0.025)
 			call BlzFrameSetVisible(ButtonParentId[3], false)
+
+			// Scoreboard
 			call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp", 0.00, -0.39, 0.036)
 			call BlzFrameSetTexture(ButtonId[4], "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp", 0, true)
+
+			// Ready
 			call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0.04, -0.39, 0.036)
 			call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
+
+			// Rewards
+			call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNBloodElfSupplyWagon.blp", 0.08, -0.39, 0.036)
+			call BlzFrameSetTexture(ButtonId[6], "ReplaceableTextures\\CommandButtons\\BTNBloodElfSupplyWagon.blp", 0, true)
+
+			// Convert lumber to gold
 			call CreateIconWorld(36, "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp", 0.43 + 0.025, -0.024, 0.025)
 			call BlzFrameSetVisible(ButtonParentId[36], true)
+
+			// Convert gold to lumber
 			call CreateIconWorld(37, "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp", 0.43 + 0.05, -0.024, 0.025)
 			call BlzFrameSetVisible(ButtonParentId[37], true)
+
+			// Player element count
 			call CreateIconWorld(38, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -2 * sizeAbil, sizeAbil)
 			call BlzFrameSetTexture(ButtonId[38], "ReplaceableTextures\\PassiveButtons\\PASElements.blp", 0, true)
+
+			// Player stats
 			call CreateIconWorld(39, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.018, -sizeAbil, sizeAbil)
 			call BlzFrameSetTexture(ButtonId[39], "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", 0, true)
+
+			// Abilities/absolutes
 			call CreateIconWorld(100, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -sizeAbil, sizeAbil)
 			call CreateIconWorld(101, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + sizeAbil, -sizeAbil, sizeAbil)
 			call CreateIconWorld(102, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 2 * sizeAbil, -sizeAbil, sizeAbil)
