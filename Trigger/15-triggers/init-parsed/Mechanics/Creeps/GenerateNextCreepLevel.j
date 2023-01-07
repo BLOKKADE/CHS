@@ -251,7 +251,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         local integer temp = 0
         local location unitSpawnOffset
         local unit creep
-        local integer playerId
+        local integer playerId = 0
+        local group g = null
         
         set RoundCreepInfo[0] = ""
         set RoundCreepInfo[1] = ""
@@ -376,14 +377,16 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         set RoundGenCreepIndex = 1
 
         loop
-            exitwhen RoundGenCreepIndex > RoundCreepNumber
-            set playerId = 0
+            exitwhen playerId == 8
+
             if RoundGenCreepIndex > 4 then
                 set RoundCreepChanceBigBadV = 2
             endif
 
+            set g = NewGroup()
+
             loop
-                exitwhen playerId == 8
+                exitwhen RoundGenCreepIndex > RoundCreepNumber
                 if RoundNumber > 1 then
                     set ShowCreepAbilButton[playerId] = true
                 endif
@@ -403,16 +406,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 if RoundNumber < 40 then
                     set damageBonus = damageBonus / 2
                 endif
-
-                set PlayerRoundCreeps[RoundNumber].group[playerId] = NewGroup()
     
                 if (GetPlayerSlotState(Player(playerId)) != PLAYER_SLOT_STATE_EMPTY and IsPlayerInForce(Player(playerId), DefeatedPlayers) != true) then
                     set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-600.00, 600.00), GetRandomReal(-600.00, 600.00))
                     set creep = CreateUnitAtLocSaveLast(Player(11), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
 
-                    call GroupAddUnit(PlayerRoundCreeps[RoundNumber].group[playerId], creep)
-                    
-    
+                    call GroupAddUnit(g, creep)
                     call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + damageBonus, 0)
     
                     call SetUnitCustomState(creep, BONUS_MAGICPOW, magicPowerBonus)
@@ -552,11 +551,15 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     set creep = null
                 endif
 
-                set playerId = playerId + 1
-            endloop
+                set PlayerRoundCreeps[RoundNumber].group[playerId] = g
 
-            set RoundGenCreepIndex = RoundGenCreepIndex + 1
+                set RoundGenCreepIndex = RoundGenCreepIndex + 1
+            endloop
+            
+            set playerId = playerId + 1
         endloop
+
+        set g = null
     endfunction
 
     private function init takes nothing returns nothing
