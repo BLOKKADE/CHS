@@ -544,7 +544,16 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 
             else
                 call PlayerAddGold(GetOwningPlayer(u),15000)
-            endif	
+            endif
+
+            //Dried Mushroom
+        elseif II  == DRIED_MUSHROOM_TOME_ITEM_ID then   
+            if UnitHasInventorySpace(u) and BuyGloryItem(pid, II) then
+                call UnitAddItem(u,CreateItem(DRIED_MUSHROOM_ITEM_ID,0,0))
+                
+            else
+                call PlayerAddGold(GetOwningPlayer(u),25000)
+            endif
 
             //Vigour Token
         elseif II  == VIGOUR_TOKEN_TOME_ITEM_ID then   

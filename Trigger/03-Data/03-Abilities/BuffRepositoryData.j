@@ -37,9 +37,8 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B02C', 'A086', MARTIAL_THEFT_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B029', 'A0BB', SKELETON_BRUTE_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01M', 'A092', YETI_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
-        
-        //TODO
-        call SetupBuffInfo1(DRIED_MUSHROOM_DUMMY_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
+
+        call SetupBuffInfo1(DRIED_MUSHROOM_DUMMY_BUFF_ID, DRIED_MUSHROOM_ABILITY_ID, BUFFTYPE_POSITIVE, false)
     endfunction
 
     //Remove all negative buffs from unit u
