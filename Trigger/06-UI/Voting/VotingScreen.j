@@ -12,6 +12,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         private integer HeroBanningHandleId
         private integer DisableSimultaneousDuelHandleId
         private integer DisableTeamDuelHandleId
+        private integer LongerTimersHandleId
         private integer SubmitHandleId
 
         // Stores the selected and non-selected versions of every button
@@ -43,7 +44,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
 
         // The X,Y coordinate for the top left of the main frame
         private real MainFrameTopLeftX = 0.02
-        private real MainFrameTopLeftY = 0.51
+        private real MainFrameTopLeftY = 0.55
         private real MainFrameMargin = 0.014
 
         // Specifications for a button
@@ -74,8 +75,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return LoadInteger(HeroButtonEventHandles, handleId, 1) // Hero
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
-        elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9) then
-            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Disable Team duels
+        elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9 or buttonType == 10) then
+            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Disable Team duels, Longer timers
         endif
 
         return 0
@@ -101,8 +102,10 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return 8 // Disable Simultaneous Duels
         elseif (handleId == DisableTeamDuelHandleId) then
             return 9 // Disable Team Duels
+        elseif (handleId == LongerTimersHandleId) then
+            return 10 // Longer timers
         endif
-
+        
         return 0
     endfunction
 
@@ -165,6 +168,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             call pv.setDisableSimultaneousDuelVote(value)
         elseif (handleId == DisableTeamDuelHandleId) then // Disable Team Duels
             call pv.setDisableTeamDuelVote(value)
+        elseif (handleId == LongerTimersHandleId) then // Longer timers
+            call pv.setLongerTimersVote(value)
         endif
     endfunction
 
@@ -491,6 +496,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         call GoToNextRow()
         set DisableSimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nThis will also disable PVP betting.", true)
         set DisableTeamDuelHandleId = CreateVotingCheckbox("Disable Team Duels", "There is a chance that a PVP duel will be a 2v2 PVP duel. |n|nWill only happen if there are 4 or 8 players in the game.", true)
+        set LongerTimersHandleId = CreateVotingCheckbox("Longer Timers", "Increase the duration of the timers between rounds. |n|nUseful if you want to spend more time reading ability/item descriptions.", false)
+        call GoToNextRow()
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameMargin) + (IMinBJ(MaxColumnCount, TotalButtonCount) * ButtonWidth) + ((IMinBJ(MaxColumnCount, TotalButtonCount) - 1) * ButtonSpacing)
