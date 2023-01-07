@@ -13,14 +13,14 @@ library RemoveBuffs requires BuffRepository
 
     //Remove all buffs of buffType from unit u
     //BUFFTYPE_NEGATIVE, BUFFTYPE_POSITIVE, BUFFTYPE_BOTH
-    function RemoveUnitBuffs takes unit u, integer buffType returns nothing
+    function RemoveUnitBuffs takes unit u, integer buffType, boolean removeUnpurgeable returns nothing
         local integer abilId
         local integer i = 0
         loop
             set abilId = BlzGetAbilityId(BlzGetUnitAbilityByIndex(u, i))
             exitwhen abilId == 0
 
-            if IsBuff(abilId) and GetBuffType(abilId) == buffType and IsBuffPurgeable(abilId) then
+            if IsBuff(abilId) and GetBuffType(abilId) == buffType and (removeUnpurgeable == false and IsBuffPurgeable(abilId)) then
                 if RemoveBuffAssociatedAbility(abilId) then
                     call UnitRemoveAbility(u, GetBuffAssociatedAbility(abilId))
                 endif

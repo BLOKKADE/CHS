@@ -8,7 +8,7 @@ library RemoveBuffDelay requires TimerUtils, RemoveBuffs
     function RemoveBuffEnd takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local buffDelayData data = GetTimerData(t)
-        call RemoveUnitBuffs(data.u, data.buffType)
+        call RemoveUnitBuffs(data.u, data.buffType, false)
         call ReleaseTimer(t)
         set data.u = null
         call data.destroy()

@@ -53,38 +53,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     
         // Reset cooldowns
         call UnitResetCooldown(playerHero)
-    
-        // Remove all possible buffs. TODO Replace these static buffs with ids from the IdLibrary.j
-        call UnitRemoveAbility(playerHero, 'Bvul')
-        call UnitRemoveAbility(playerHero, 'Bam2')
-        call UnitRemoveAbility(playerHero, 'BHav')
-        call UnitRemoveAbility(playerHero, 'BHbn')
-        call UnitRemoveAbility(playerHero, 'BNbr')
-        call UnitRemoveAbility(playerHero, 'Bbsk')
-        call UnitRemoveAbility(playerHero, 'Bapl')
-        call UnitRemoveAbility(playerHero, 'Bplg')
-        call UnitRemoveAbility(playerHero, 'Bena')
-        call UnitRemoveAbility(playerHero, 'Beng')
-        call UnitRemoveAbility(playerHero, 'BEer')
-        call UnitRemoveAbility(playerHero, 'Bfae')
-        call UnitRemoveAbility(playerHero, 'BUfa')
-        call UnitRemoveAbility(playerHero, 'Binf')
-        call UnitRemoveAbility(playerHero, 'Blsh')
-        call UnitRemoveAbility(playerHero, 'Bliq')
-        call UnitRemoveAbility(playerHero, 'Bpoi')
-        call UnitRemoveAbility(playerHero, 'Bpsd')
-        call UnitRemoveAbility(playerHero, 'Brej')
-        call UnitRemoveAbility(playerHero, 'Bdef')
-        call UnitRemoveAbility(playerHero, 'B002')
-        call UnitRemoveAbility(playerHero, 'Bslo')
-        call UnitRemoveAbility(playerHero, 'Bspl')
-        call UnitRemoveAbility(playerHero, 'BSTN')
-        call UnitRemoveAbility(playerHero, 'BPSE')
-        call UnitRemoveAbility(playerHero, 'BHtc')
-        call UnitRemoveAbility(playerHero, 'Buhf')
-    
+
         // Remove any debuffs
-        call RemoveUnitBuffs(playerHero, 0)
+        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true)
     endfunction
 
     private function MoveCameraToArenaForPlayer takes nothing returns nothing

@@ -77,7 +77,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Runic Bracer
         if UnitHasItemType(DamageTarget, 'I04C') then
             if Damage.index.damageType == DAMAGE_TYPE_MAGIC and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0CP') == 0 then
-                call RemoveUnitBuffs(DamageTarget, 1)
+                call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)
                 call AbilStartCD(DamageTarget, 'A0CP', 10)
                 set Damage.index.damage = 0
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
@@ -103,7 +103,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif      
             if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08S') <= 0 then
                 call AbilStartCD(DamageTarget, 'A08S', 10)
-                call RemoveUnitBuffs(DamageTarget, 1)  
+                call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)  
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
                 return
             endif 
@@ -118,7 +118,7 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageTarget,DIVINE_BUBBLE_ABILITY_ID)
         if i1 > 0 or UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
             if IsUnitDivineBubbled(DamageTarget) then
-                call RemoveUnitBuffs(DamageTarget, 1)
+                call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)
 
                 if IsOnHitDamage() then
                     set Damage.index.damage = 0
@@ -129,7 +129,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             if (i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,DIVINE_BUBBLE_ABILITY_ID) <= 0.001) or (i1 == 0 and UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) and BlzGetUnitAbilityCooldownRemaining(DamageTarget,'A0AP') == 0) then
                 set DamageIsOnHit = 2
-                call RemoveUnitBuffs(DamageTarget, 1) 
+                call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false) 
                 if UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
                     set i1 = 1
                 else

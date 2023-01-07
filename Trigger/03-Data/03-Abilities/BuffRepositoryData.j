@@ -1,6 +1,6 @@
 library BuffRepositoryData initializer init requires BuffRepository
     private function SetupPositiveBuffs takes nothing returns nothing
-        call SetupBuffInfo1(INVULNERABLE_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1(INVULNERABLE_BUFF_ID, 0, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1(ANTI_MAGIC_SHELL_BUFF_ID, ANTI_MAGIC_SHEL_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
         call SetupBuffInfo1(BATTLE_ROAR_BUFF_ID, BATTLE_ROAR_ABILITY_ID, BUFFTYPE_POSITIVE, false)

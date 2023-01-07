@@ -146,6 +146,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == ERUPTION_ABILITY_ID then
             call CastEruption(caster, x, y, lvl)
             return true
+        //Divine Source
+        elseif abilId == 'A01D' then
+                call UseDivineSource(hero)
+            return true
         endif
 
         return false

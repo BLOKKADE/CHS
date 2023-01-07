@@ -18,7 +18,7 @@ library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, 
         boolean enabled
     
         private method periodic takes nothing returns nothing
-            call RemoveUnitBuffs(this.source, 1)
+            call RemoveUnitBuffs(this.source, BUFFTYPE_NEGATIVE, false)
             if T32_Tick > this.endTick then
                 call this.stopPeriodic()
                 call this.destroy()
