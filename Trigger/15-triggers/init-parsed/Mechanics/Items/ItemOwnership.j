@@ -4,19 +4,21 @@ library ItemOwnership initializer init requires Table, GetPlayerNames
         local item pickedItem = GetManipulatedItem()
         local unit triggeredUnit = GetTriggerUnit()
         local integer itemUserData = GetItemUserData(pickedItem)
+        local player owningPlayer = GetOwningPlayer(triggeredUnit)
 
         // Check if the item is owned by another player
-        if (itemUserData != 0 and itemUserData != GetPlayerId(GetOwningPlayer(triggeredUnit))) then
-            call DisplayTimedTextToPlayer(GetOwningPlayer(triggeredUnit),0,0,10,"You don't own this item. It belongs to " + GetPlayerNameColour(Player(itemUserData)))
+        if (itemUserData != GetPlayerId(owningPlayer)) then
+            call DisplayTimedTextToPlayer(owningPlayer, 0, 0, 10, "You don't own this item. It belongs to " + GetPlayerNameColour(Player(itemUserData)))
             call UnitRemoveItem(triggeredUnit, pickedItem)
         else
             // Not owned by anyone, save it to the player
-            call SetItemUserData(pickedItem, GetPlayerId(GetOwningPlayer(triggeredUnit)))
+            call SetItemUserData(pickedItem, GetPlayerId(owningPlayer))
         endif
 
         // Cleanup
         set pickedItem = null
         set triggeredUnit = null
+        set owningPlayer = null
     endfunction
 
     private function init takes nothing returns nothing
