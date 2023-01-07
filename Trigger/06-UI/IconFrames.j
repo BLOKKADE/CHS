@@ -382,9 +382,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
 
 			// Rewards
-			call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNBloodElfSupplyWagon.blp", 0.08, -0.39, 0.036)
-			call BlzFrameSetTexture(ButtonId[6], "ReplaceableTextures\\CommandButtons\\BTNBloodElfSupplyWagon.blp", 0, true)
-
+			call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", 0.08, -0.39, 0.036)
+			call BlzFrameSetTexture(ButtonId[6], "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", 0, true)
 			// Convert lumber to gold
 			call CreateIconWorld(36, "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp", 0.43 + 0.025, -0.024, 0.025)
 			call BlzFrameSetVisible(ButtonParentId[36], true)
