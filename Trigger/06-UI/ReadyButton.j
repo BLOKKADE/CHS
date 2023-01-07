@@ -2,12 +2,63 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     //button is setup in IconFrames.j
     globals
         boolean array PlayerHasReadied
+        boolean array PlayerIsAlwaysReady
         boolean array ReadyButtonDisabled
         integer PlayersNeeded
 
         string ReadyIcon = "Ability_parry"
         string UnreadyIcon = "Defend"
     endglobals
+
+    function ReadyPlayerCount takes nothing returns integer
+        local integer i = 0
+        local integer count = 0
+        local PlayerStats ps
+
+        loop
+            set ps = PlayerStats.forPlayer(Player(i))
+
+            if ps != 0 and ps.isReady() then
+                set count = count + 1
+            endif
+
+            set i = i + 1
+            exitwhen i == 8
+        endloop
+
+        return count
+    endfunction
+    
+    function UpdatePlayersNeeded takes nothing returns nothing
+        set PlayersNeeded = PlayerCount
+    endfunction
+
+    function ReadyTooltip takes nothing returns string
+		return " (|cff77f3fcCtrl+R|r)|nCurrently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nHold shift while activating this button to always be |cff7784fcready|r."
+	endfunction
+
+    function ReadyButtonTooltip takes player p, integer pid returns string
+        local PlayerStats ps = 0
+        local string s = ""
+
+        if not ReadyButtonDisabled[pid] then
+            set ps = PlayerStats.forPlayer(p)
+
+            if ps.isReady() then
+                set s = "|cfff3fc77Unready yourself|r " + ReadyTooltip()
+            else
+                set s = "|cff92fc77Ready|r" + ReadyTooltip()
+            endif
+        else
+            set s = "|cfffc9277Cannot be used during a round.|r"
+        endif
+
+        if PlayerIsAlwaysReady[pid] then
+            set s = s + "\nSet to |cff7784fcauto-ready|r."
+        endif
+
+        return s
+    endfunction
 
     function ReadyButtonVisibility takes boolean disable, integer pid, boolean isReady returns nothing
         local string tex = ""
@@ -34,42 +85,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
             call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
         endif
     endfunction
-
-    private function OnRoundEnd takes EventInfo eventInfo returns nothing
-        local integer pid = GetPlayerId(eventInfo.p)
-        call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
-        call ReadyButtonVisibility(false, pid, false)
-        set PlayerHasReadied[pid] = false
-    endfunction
-
-    private function OnRoundStart takes EventInfo eventInfo returns nothing
-        call ReadyButtonVisibility(true, GetPlayerId(eventInfo.p), false)
-    endfunction
-
-    function ReadyPlayerCount takes nothing returns integer
-        local integer i = 0
-        local integer count = 0
-        local PlayerStats ps
-
-        loop
-            set ps = PlayerStats.forPlayer(Player(i))
-
-            if ps != 0 and ps.isReady() then
-                set count = count + 1
-            endif
-
-            set i = i + 1
-            exitwhen i == 8
-        endloop
-
-        return count
-    endfunction
-
     
-    function UpdatePlayersNeeded takes nothing returns nothing
-        set PlayersNeeded = PlayerCount
-    endfunction
-
     private function StartRound takes nothing returns nothing
         call ReleaseTimer(GetExpiredTimer())
         call AllPlayersCompletedRound_StartNextRound()
@@ -88,6 +104,10 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         call ps.toggleIsReady()
         call ReadyButtonVisibility(false, pid, ps.isReady())
 
+        if HoldShift[pid] then
+            set PlayerIsAlwaysReady[pid] = not PlayerIsAlwaysReady[pid]
+        endif
+
         call UpdatePlayersNeeded()
 
         if not PlayerHasReadied[pid] then
@@ -97,6 +117,20 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         call CheckReadyPlayers()
 
         set PlayerHasReadied[pid] = true
+    endfunction
+
+    private function OnRoundStart takes EventInfo eventInfo returns nothing
+        call ReadyButtonVisibility(true, GetPlayerId(eventInfo.p), false)
+    endfunction
+
+    private function OnRoundEnd takes EventInfo eventInfo returns nothing
+        local integer pid = GetPlayerId(eventInfo.p)
+        call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
+        call ReadyButtonVisibility(false, pid, false)
+        set PlayerHasReadied[pid] = false
+        if PlayerIsAlwaysReady[pid] then
+            call PlayerReadies(eventInfo.p)
+        endif
     endfunction
 
     private function init takes nothing returns nothing
