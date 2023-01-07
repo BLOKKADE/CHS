@@ -19,7 +19,7 @@ library BuffRepository initializer init requires Table
     endfunction
 
     function IsBuffPurgeable takes integer buffId returns boolean
-        return BuffRepo[buffId].boolean[BUFFUNPURGEABLE_INDEX]
+        return not BuffRepo[buffId].boolean[BUFFUNPURGEABLE_INDEX]
     endfunction
 
     function GetBuffType takes integer buffId returns integer

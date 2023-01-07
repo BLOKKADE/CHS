@@ -2,7 +2,7 @@ library RemoveBuffs requires BuffRepository
 
     //remove single buff
     function RemoveUnitBuff takes unit u, integer buffId returns nothing
-        if IsBuff(buffId) and IsBuffPurgeable(buffId)then
+        if IsBuff(buffId) then
             if RemoveBuffAssociatedAbility(buffId) then
                 call UnitRemoveAbility(u, GetBuffAssociatedAbility(buffId))
             endif
