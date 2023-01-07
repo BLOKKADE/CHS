@@ -1,27 +1,34 @@
 library IconFrames initializer init requires TooltipFrame, AchievementsFrame, CustomState, GetObjectElement, ElementColorCode, HeroLvlTable, UnitInfoPanel, RuneInit, HeroPassiveDesc, PlayerTracking, SellItems
 	
 	globals
-		// Hat/Pet main frame
-		framehandle MainAchievementFrameHandle 
+		// Sparkly thing that goes around an icon
+		private string IndicatorPathPick = "UI\\Feedback\\Autocast\\UI-ModalButtonOn.mdl"
 
-		// Voting main frame
-		framehandle MainVotingFrameHandle 
+		private constant real SMALL_BUTTON_WIDTH = 0.025
+		private constant real BIG_BUTTON_WIDTH = 0.036
 
-		// Scoreboard main frame
-		framehandle ScoreboardFrameHandle 
-
-		// Rewards main frame
-		framehandle RewardsFrameHandle
-
+		// Main GameUI that all frames should use
 		framehandle GameUI
 
-		trigger ButtonTrigger = null
+		framehandle MainAchievementFrameHandle // Hat/Pet main frame
+		framehandle MainVotingFrameHandle // Voting main frame
+		framehandle ScoreboardFrameHandle // Scoreboard main frame
+		framehandle RewardsFrameHandle // Rewards main frame
 
-		boolean array ShowCreepAbilButton
+		// All icon events happen in a single trigger
+		private trigger ButtonTrigger = null
 
+		// Parent frame and frame for each icon
 		framehandle array ButtonId 
 		framehandle array ButtonParentId 
 
+		// Button indicator frames
+		framehandle array ButtonIndicatorId 
+		framehandle array ButtonIndicatorParentId 
+
+		boolean array ShowCreepAbilButton
+
+		// Save the icon number with the parent event
 		hashtable ButtonParentHandles = InitHashtable()
 	endglobals
 
@@ -103,18 +110,13 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		return ToolTipS  
 	endfunction
 
-	function SkillSysStart takes nothing returns nothing
+	private function SkillSysStart takes nothing returns nothing
 		local integer NumButton = LoadInteger(ButtonParentHandles, GetHandleId(BlzGetTriggerFrame()), 1)
-		local integer i_ck = 1
 		local player p = GetTriggerPlayer()
 		local integer PlID = GetPlayerId(p)
-		local integer SpellId_1 = 0
-		local integer AbilLevel = 0
-		local integer ULT_ID = 0
 		local string ToolTipS = ""
 		local string temp = ""
 		local boolean TypT = false
-		local boolean en_d = true
 		local integer i1
 		local integer i2
 		local integer i3
@@ -129,7 +131,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 				call BlzFrameSetEnable(BlzGetTriggerFrame(), true)
 			endif
 
-			//Sell all items
+			// Sell all items
 			if NumButton == 3 then
 				set SpellU = PlayerHeroes[PlID]
 
@@ -160,7 +162,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					call PlayerReadies(p)
 				endif
 
-			//Convert to gold
+			// Convert to gold
 			elseif NumButton == 36 then
 				set i1 = GetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER)
 
@@ -168,7 +170,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 				call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)  + i1 * 30)
 				call ResourseRefresh(p) 
 			
-			//Convert to lumber
+			// Convert to lumber
 			elseif NumButton == 37 then
 				set i1 = GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)/ 30
 
@@ -176,7 +178,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 				call SetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p,PLAYER_STATE_RESOURCE_LUMBER) + i1)
 				call ResourseRefresh(p) 
 
-			//Show hats menu
+			// Show hats menu
 			elseif NumButton == 39 then
 				set ps = PlayerStats.forPlayer(p)
 				set TypT = ps.toggleHasAchievementsOpen()
@@ -188,247 +190,287 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 				endif
 			endif
 
-		elseif BlzGetTriggerFrameEvent()  ==FRAMEEVENT_MOUSE_UP then
+		elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_UP then
 
-		elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_ENTER then
-				if selectedUnitPid == 27 then
-					set selectedUnitPid = PlID
+		elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
+			if selectedUnitPid == 27 then
+				set selectedUnitPid = PlID
+			endif
+
+			// Creep information
+			if NumButton == 2 then
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, "|cfffce177Next level|r: " + RoundCreepTitle)
+					set temp = RoundCreepInfo[PlID] + "|n|n|cfffce177Abilities|r: " + RoundAbilities
+					call BlzFrameSetText(TooltipTextFrame, temp)
+					call BlzFrameSetSize(TooltipFrame, 0.29, 0.12 + GetTooltipSize(RoundAbilities))
+					call BlzFrameSetVisible(TooltipFrame, true)
 				endif
 
-				if NumButton == 2 then
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, "|cfffce177Next level|r: " + RoundCreepTitle)
-						set temp = RoundCreepInfo[PlID] + "|n|n|cfffce177Abilities|r: " + RoundAbilities
-						call BlzFrameSetText(TooltipTextFrame, temp)
-						call BlzFrameSetSize(TooltipFrame, 0.29, 0.12 + GetTooltipSize(RoundAbilities))
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
-				elseif NumButton == 3 then
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, SellAllItemsTooltip())
-						call BlzFrameSetSize(TooltipFrame, 0.31, 0.02)
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
+			// Sell all items
+			elseif NumButton == 3 then
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, SellAllItemsTooltip())
+					call BlzFrameSetSize(TooltipFrame, 0.31, 0.02)
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
 
-					// View scoreboard
-				elseif NumButton == 4 then
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, "Toggle the Scoreboard (|cff77f3fcTab|r)")
-						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
+			// View scoreboard
+			elseif NumButton == 4 then
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, "Toggle the Scoreboard (|cff77f3fcTab|r)")
+					call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
 
-					// View scoreboard
-				elseif NumButton == 6 then
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, "View rewards")
-						call BlzFrameSetSize(TooltipFrame, 0.20, 0.02)
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
+			// View rewards
+			elseif NumButton == 6 then
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, "View rewards (|cff77f3fcCtrl+T|r)")
+					call BlzFrameSetSize(TooltipFrame, 0.20, 0.02)
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
 
-					// Ready button
-				elseif NumButton == 5 then
-					if not ReadyButtonDisabled[PlID] then
-						set ps = PlayerStats.forPlayer(p)
+			// Ready button
+			elseif NumButton == 5 then
+				if not ReadyButtonDisabled[PlID] then
+					set ps = PlayerStats.forPlayer(p)
 
-						if ps.isReady() then
-							set ToolTipS = "Unready yourself " + ReadyTooltip()
-						else
-							set ToolTipS = "Ready" + ReadyTooltip()
-						endif
+					if ps.isReady() then
+						set ToolTipS = "Unready yourself " + ReadyTooltip()
 					else
-						set ToolTipS = "Cannot be used during a round."
+						set ToolTipS = "Ready" + ReadyTooltip()
 					endif
+				else
+					set ToolTipS = "Cannot be used during a round."
+				endif
 
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
-						call BlzFrameSetSize(TooltipFrame, 0.31, GetTooltipSize(ToolTipS))
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+					call BlzFrameSetSize(TooltipFrame, 0.31, GetTooltipSize(ToolTipS))
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
 
-					//Hero passive
-				elseif NumButton == 36 then
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, GoldConversionTooltip())
-						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
-				elseif NumButton == 37 then
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, LumberConversionTooltip())
-						call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
-				elseif NumButton == 38 then
+			// Gold conversion
+			elseif NumButton == 36 then
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, GoldConversionTooltip())
+					call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
+
+			// Lumber conversion
+			elseif NumButton == 37 then
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, LumberConversionTooltip())
+					call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
+
+			// Element count
+			elseif NumButton == 38 then
+				set SpellU = PlayerHeroes[selectedUnitPid]
+				set ToolTipS = GetElementCountTooltip(SpellU)
+
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Element Counts|r")
+					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+					call BlzFrameSetSize(TooltipFrame, 0.125, GetTooltipSize(ToolTipS))
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
+
+			// Player stats
+			elseif NumButton == 39 then
+				set SpellU = PlayerHeroes[selectedUnitPid]
+				set ToolTipS = PlayerStats.getTooltip(GetOwningPlayer(SpellU))
+				set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
+
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Stats for: |r" + GetPlayerNameColour(GetOwningPlayer(SpellU)))
+					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+					call BlzFrameSetSize(TooltipFrame, 0.23, GetTooltipSize(ToolTipS))
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
+
+			// Hero information
+			elseif NumButton == 100 then
+				set SpellU = PlayerHeroes[selectedUnitPid]
+				set ToolTipS = GetHeroTooltip(SpellU)
+
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, GetPlayerNameColour(GetOwningPlayer(SpellU)) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(SpellU)))
+					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+					call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
+
+			// Hero abilities and absolutes
+			elseif NumButton > 100 and NumButton <= 120 then
+				// Ability
+				if SelectedUnitPid[PlID] != 11 then
 					set SpellU = PlayerHeroes[selectedUnitPid]
-					set ToolTipS = GetElementCountTooltip(SpellU)
+					set i3 = GetHeroSpellAtPosition(SpellU, NumButton - 100) 
+					set ToolTipS = GetAbilityElementCountTooltip(SpellU, NumButton - 100)
 
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Element Counts|r")
-						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
-						call BlzFrameSetSize(TooltipFrame, 0.125, GetTooltipSize(ToolTipS))
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
-				elseif NumButton == 39 then
-					set SpellU = PlayerHeroes[selectedUnitPid]
-					set ToolTipS = PlayerStats.getTooltip(GetOwningPlayer(SpellU))
-					set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
-
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Stats for: |r" + GetPlayerNameColour(GetOwningPlayer(SpellU)))
-						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
-						call BlzFrameSetSize(TooltipFrame, 0.23, GetTooltipSize(ToolTipS))
-						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
-				elseif NumButton == 100 then
-					set SpellU = PlayerHeroes[selectedUnitPid]
-					set ToolTipS = GetHeroTooltip(SpellU)
-
-					if GetLocalPlayer() == p then
-						call BlzFrameSetText(TooltipTitleFrame, GetPlayerNameColour(GetOwningPlayer(SpellU)) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(SpellU)))
+					if GetLocalPlayer() == p then	
+						call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3) - 1))
 						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 						call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
 						call BlzFrameSetVisible(TooltipFrame, true)
-					endif
+					endif 
+					
+				// Absolute
+				else
+					set SpellU = SelectedUnit[PlID]
+					set i3 = roundAbilities.integer[NumButton - 100]
+					set ToolTipS = BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1)
 
-					//Hero abilities and absolutes
-				elseif NumButton > 100 and NumButton <= 120 then
-					if SelectedUnitPid[PlID] != 11 then
-						set SpellU = PlayerHeroes[selectedUnitPid]
-						set i3 = GetHeroSpellAtPosition(SpellU, NumButton - 100) 
-						set ToolTipS = GetAbilityElementCountTooltip(SpellU, NumButton - 100)
-
-						if GetLocalPlayer() == p then	
-							call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3) - 1))
-							call BlzFrameSetText(TooltipTextFrame, ToolTipS)
-							call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
-							call BlzFrameSetVisible(TooltipFrame, true)
-						endif       
-					else
-						set SpellU = SelectedUnit[PlID]
-						set i3 = roundAbilities.integer[NumButton - 100]
-						set ToolTipS = BlzGetAbilityExtendedTooltip(i3, GetUnitAbilityLevel(SpellU,i3)- 1)
-
-						if GetLocalPlayer() == p then	
-							call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3) - 1))
-							call BlzFrameSetText(TooltipTextFrame, ToolTipS)
-							call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
-							call BlzFrameSetVisible(TooltipFrame, true)
-						endif       
-					endif
-				endif
-			elseif BlzGetTriggerFrameEvent() ==  FRAMEEVENT_MOUSE_LEAVE then
-
-				if GetLocalPlayer() == p then	
-					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
-					call BlzFrameSetVisible(TooltipFrame, false)
+					if GetLocalPlayer() == p then	
+						call BlzFrameSetText(TooltipTitleFrame, BlzGetAbilityTooltip(i3, GetUnitAbilityLevel(SpellU,i3) - 1))
+						call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+						call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(ToolTipS))
+						call BlzFrameSetVisible(TooltipFrame, true)
+					endif       
 				endif
 			endif
 
-			set SpellU = null
-			set p = null
-		endfunction
+		elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then
+			if GetLocalPlayer() == p then	
+				call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+				call BlzFrameSetVisible(TooltipFrame, false)
+			endif
+		endif
 
-		function CreateIconWorld takes integer NumAb, string Icon, real x,real y,real size returns nothing
-			local framehandle buttonFrame
-			local framehandle buttonParentFrame = BlzCreateFrame("ScoreScreenBottomButtonTemplate", GameUI, 0, 0)
+		// Cleanup
+		set SpellU = null
+		set p = null
+	endfunction
 
-			call BlzFrameSetSize(buttonParentFrame, size, size)
-			call BlzFrameSetPoint(buttonParentFrame, FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, x, y)
-			set buttonFrame = BlzCreateFrame("BNetPopupMenuBackdropTemplate", buttonParentFrame, 0, 0)
-			call BlzFrameSetSize(buttonFrame, size, size)
-			call BlzFrameSetTexture(buttonFrame, Icon, 1, true)
-			call BlzFrameSetPoint(buttonFrame, FRAMEPOINT_CENTER, buttonParentFrame, FRAMEPOINT_CENTER, 0, 0)
-			call BlzFrameSetVisible(buttonParentFrame,false)
+		private function CreateIconWorld takes integer buttonIndex, string iconPath, real x, real y, real size returns nothing
+		local framehandle buttonParentFrame = BlzCreateFrame("ScoreScreenBottomButtonTemplate", GameUI, 0, 0)
+		local framehandle buttonFrame = BlzCreateFrame("BNetPopupMenuBackdropTemplate", buttonParentFrame, 0, 0)
 
-			set ButtonId[NumAb] = buttonFrame
-			set ButtonParentId[NumAb] = buttonParentFrame
+		// Parent frame
+		call BlzFrameSetSize(buttonParentFrame, size, size)
+		call BlzFrameSetPoint(buttonParentFrame, FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, x, y)
+		call BlzFrameSetVisible(buttonParentFrame, false)
+		
+		// Child frame
+		call BlzFrameSetSize(buttonFrame, size, size)
+		call BlzFrameSetTexture(buttonFrame, iconPath, 0, true)
+		call BlzFrameSetPoint(buttonFrame, FRAMEPOINT_CENTER, buttonParentFrame, FRAMEPOINT_CENTER, 0, 0)
 
-			call SaveInteger(ButtonParentHandles, GetHandleId(buttonParentFrame), 1, NumAb)
-			call BlzTriggerRegisterFrameEvent(ButtonTrigger, buttonParentFrame, FRAMEEVENT_CONTROL_CLICK)
-			call BlzTriggerRegisterFrameEvent(ButtonTrigger, buttonParentFrame, FRAMEEVENT_MOUSE_UP)
-			call BlzTriggerRegisterFrameEvent(ButtonTrigger, buttonParentFrame, FRAMEEVENT_MOUSE_ENTER)
-			call BlzTriggerRegisterFrameEvent(ButtonTrigger, buttonParentFrame, FRAMEEVENT_MOUSE_LEAVE)
+		// Save frames for future reference
+		set ButtonId[buttonIndex] = buttonFrame
+		set ButtonParentId[buttonIndex] = buttonParentFrame
 
-			set buttonFrame = null
-			set buttonParentFrame = null
-		endfunction
+		call SaveInteger(ButtonParentHandles, GetHandleId(buttonParentFrame), 1, buttonIndex)
+		call BlzTriggerRegisterFrameEvent(ButtonTrigger, buttonParentFrame, FRAMEEVENT_CONTROL_CLICK)
+		call BlzTriggerRegisterFrameEvent(ButtonTrigger, buttonParentFrame, FRAMEEVENT_MOUSE_UP)
+		call BlzTriggerRegisterFrameEvent(ButtonTrigger, buttonParentFrame, FRAMEEVENT_MOUSE_ENTER)
+		call BlzTriggerRegisterFrameEvent(ButtonTrigger, buttonParentFrame, FRAMEEVENT_MOUSE_LEAVE)
 
-		function IconFramesActions takes nothing returns nothing
-			local integer I_i = 1
-			local integer X___1 = 0
-			local integer Y___1 = 0
-			local real sizeAbil = 0.022
-			call BlzChangeMinimapTerrainTex("minimap.blp")
-			call InitGameUI()
-			set GameUI = BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)
-			set ButtonTrigger = CreateTrigger()
-			call TriggerAddAction(ButtonTrigger, function SkillSysStart)
+		// Cleanup
+		set buttonFrame = null
+		set buttonParentFrame = null
+	endfunction
 
-			// Creep info
-			call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.12, -0.39, 0.036)
-			call BlzFrameSetTexture(ButtonId[2], "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", 0, true)
+	private function CreateIndicatorForButton takes integer buttonIndex returns nothing
+		local framehandle buttonIndicatorParentFrame = BlzCreateFrameByType("BUTTON", "AwardIndicatorParent", ButtonParentId[buttonIndex], "", 0)
+		local framehandle buttonIndicatorFrame = BlzCreateFrameByType("SPRITE", "AwardIndicator", buttonIndicatorParentFrame, "", 0)
 
-			// Sell all items
-			call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", 0.43 + 0.075, -0.024, 0.025)
-			call BlzFrameSetVisible(ButtonParentId[3], false)
+		// Make sure the indicator is on top of everything
+		call BlzFrameSetLevel(buttonIndicatorParentFrame, 2)
+		call BlzFrameSetVisible(buttonIndicatorParentFrame, false)
 
-			// Scoreboard
-			call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp", 0.00, -0.39, 0.036)
-			call BlzFrameSetTexture(ButtonId[4], "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp", 0, true)
+		// Create the indicator, offset it around the button
+		call BlzFrameSetModel(buttonIndicatorFrame, IndicatorPathPick, 0)
+		call BlzFrameSetPoint(buttonIndicatorFrame, FRAMEPOINT_TOPLEFT, ButtonParentId[buttonIndex], FRAMEPOINT_TOPLEFT, -0.001, 0.001)
+		call BlzFrameSetPoint(buttonIndicatorFrame, FRAMEPOINT_BOTTOMRIGHT, ButtonParentId[buttonIndex], FRAMEPOINT_BOTTOMRIGHT, -0.0012, -0.0016)
 
-			// Ready
-			call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0.04, -0.39, 0.036)
-			call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
+		// Save frames for future reference
+		set ButtonIndicatorId[buttonIndex] = buttonIndicatorFrame
+		set ButtonIndicatorParentId[buttonIndex] = buttonIndicatorParentFrame
 
-			// Rewards
-			call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", 0.08, -0.39, 0.036)
-			call BlzFrameSetTexture(ButtonId[6], "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", 0, true)
-			// Convert lumber to gold
-			call CreateIconWorld(36, "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp", 0.43 + 0.025, -0.024, 0.025)
-			call BlzFrameSetVisible(ButtonParentId[36], true)
+		// Cleanup
+		set buttonIndicatorFrame = null
+		set buttonIndicatorParentFrame = null
+	endfunction
 
-			// Convert gold to lumber
-			call CreateIconWorld(37, "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp", 0.43 + 0.05, -0.024, 0.025)
-			call BlzFrameSetVisible(ButtonParentId[37], true)
+	private function IconFramesActions takes nothing returns nothing
+		call BlzChangeMinimapTerrainTex("minimap.blp")
+		call InitGameUI()
 
-			// Player element count
-			call CreateIconWorld(38, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -2 * sizeAbil, sizeAbil)
-			call BlzFrameSetTexture(ButtonId[38], "ReplaceableTextures\\PassiveButtons\\PASElements.blp", 0, true)
+		set GameUI = BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)
 
-			// Player stats
-			call CreateIconWorld(39, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.018, -sizeAbil, sizeAbil)
-			call BlzFrameSetTexture(ButtonId[39], "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", 0, true)
+		set ButtonTrigger = CreateTrigger()
+		call TriggerAddAction(ButtonTrigger, function SkillSysStart)
 
-			// Abilities/absolutes
-			call CreateIconWorld(100, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -sizeAbil, sizeAbil)
-			call CreateIconWorld(101, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(102, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 2 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(103, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 3 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(104, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 4 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(105, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 5 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(106, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 6 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(107, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 7 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(108, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 8 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(109, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 9 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(110, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 10 * sizeAbil, -sizeAbil, sizeAbil)
-			call CreateIconWorld(111, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(112, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 2 * sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(113, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 3 * sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(114, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 4 * sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(115, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 5 * sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(116, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 6 * sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(117, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 7 * sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(118, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 8 * sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(119, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 9 * sizeAbil, -2 * sizeAbil, sizeAbil)
-			call CreateIconWorld(120, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 10 * sizeAbil, -2 * sizeAbil, sizeAbil)
-		endfunction
+		// -- Big buttons - Bottom left
+		// Scoreboard
+		call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp", 0.00, -0.39, BIG_BUTTON_WIDTH)
 
-		private function init takes nothing returns nothing
-			local trigger iconFramesTrigger = CreateTrigger()
-			call TriggerRegisterTimerEventSingle(iconFramesTrigger, 1.00)
-			call TriggerAddAction(iconFramesTrigger, function IconFramesActions)
-			set iconFramesTrigger = null
-		endfunction
+		// Ready
+		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0.04, -0.39, BIG_BUTTON_WIDTH)
 
-	endlibrary
+		// Rewards
+		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", 0.08, -0.39, BIG_BUTTON_WIDTH)
+		call CreateIndicatorForButton(6)
+
+		// Creep info
+		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", 0.12, -0.39, BIG_BUTTON_WIDTH)
+		// -- Big buttons
+
+		// -- Currency buttons - Top middle rightish
+		// Convert lumber to gold
+		call CreateIconWorld(36, "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp", 0.43 + SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+
+		// Convert gold to lumber
+		call CreateIconWorld(37, "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp", 0.43 + (2 * SMALL_BUTTON_WIDTH), -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+
+		// Sell all items
+		call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", 0.43 + (3 * SMALL_BUTTON_WIDTH), -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		// -- Currency buttons
+
+		// -- Top left buttons
+		// Player element count
+		call CreateIconWorld(38, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call BlzFrameSetTexture(ButtonId[38], "ReplaceableTextures\\PassiveButtons\\PASElements.blp", 0, true)
+
+		// Player stats
+		call CreateIconWorld(39, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.018, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call BlzFrameSetTexture(ButtonId[39], "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", 0, true)
+
+		// Abilities/absolutes
+		call CreateIconWorld(100, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(101, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(102, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 2 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(103, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 3 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(104, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 4 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(105, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 5 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(106, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 6 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(107, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 7 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(108, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 8 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(109, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 9 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(110, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 10 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(111, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(112, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 2 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(113, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 3 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(114, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 4 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(115, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 5 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(116, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 6 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(117, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 7 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(118, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 8 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(119, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 9 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(120, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 10 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		// -- Top left buttons
+	endfunction
+
+	private function init takes nothing returns nothing
+		local trigger iconFramesTrigger = CreateTrigger()
+		call TriggerRegisterTimerEventSingle(iconFramesTrigger, 1.00)
+		call TriggerAddAction(iconFramesTrigger, function IconFramesActions)
+		set iconFramesTrigger = null
+	endfunction
+
+endlibrary

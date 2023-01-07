@@ -107,7 +107,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
         // Save what the player has selected, how many points they have, and the accumulation of rewards
         private integer array PlayerRewardSelection
-        private integer array PlayerRewardPoints
+        integer array PlayerRewardPoints // Used in LongPeriodCheck to show indicator
         private real array PlayerTotalRewardValues
         private real array RewardIndexValues
     endglobals

@@ -103,9 +103,16 @@ scope LongPeriodCheck initializer init
         // Show rewards button
         call BlzFrameSetVisible(ButtonParentId[6], RewardsFrameHandle != null)
 
+        // Indicator if the player has points
+        if (PlayerRewardPoints[pid] > 0) then
+            call BlzFrameSetVisible(ButtonIndicatorParentId[6], true)
+        elseif (PlayerRewardPoints[pid] == 0) then
+            call BlzFrameSetVisible(ButtonIndicatorParentId[6], false)
+        endif
+
+        // Hero info
         set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid])
-        //updates the icons in top left if selected unit is a creep
-        //Show element count, win counts or hero passive
+
         if unitTypeId != 0 then
             set abilIcon = GetHeroPassiveDescription(unitTypeId, HeroPassive_Icon)
             call BlzFrameSetVisible(ButtonParentId[38], true) // Element count
@@ -118,20 +125,20 @@ scope LongPeriodCheck initializer init
             call BlzFrameSetVisible(ButtonParentId[100], false) // Hero passive/description
         endif
 
-        //show creep info button
+        // Creep info
         if ShowCreepAbilButton[pid] then
             call BlzFrameSetVisible(ButtonParentId[2], true)
         else
             call BlzFrameSetVisible(ButtonParentId[2], false)
         endif
 
-        //show sell all items/convert gold/lumber button
+        // Show sell all items/convert gold/lumber button
         if (ShopsCreated == false or BrStarted) then
             call BlzFrameSetVisible(ButtonParentId[3], false)
             call BlzFrameSetVisible(ButtonParentId[5], false)
             call BlzFrameSetVisible(ButtonParentId[36], false)
             call BlzFrameSetVisible(ButtonParentId[37], false)
-        else//if not BlzFrameIsVisible(ButtonParentId[3]) then
+        else
             call BlzFrameSetVisible(ButtonParentId[3], true)
             call BlzFrameSetVisible(ButtonParentId[5], true)
             call BlzFrameSetVisible(ButtonParentId[36], true)

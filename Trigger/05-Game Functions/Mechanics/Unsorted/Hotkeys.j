@@ -100,6 +100,14 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         endif
     endfunction
 
+    private function ToggleRewards takes nothing returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+
+        if (RewardsFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
+            call BlzFrameSetVisible(RewardsFrameHandle, PlayerStats.forPlayer(GetTriggerPlayer()).toggleHasRewardsOpen()) 
+        endif
+    endfunction
+
     private function ToggleViewScoreboard takes nothing returns nothing
         if ((not HoldTab[GetPlayerId(GetTriggerPlayer())]) and ScoreboardFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
             set HoldTab[GetPlayerId(GetTriggerPlayer())] = true
@@ -117,41 +125,49 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
     endfunction
 
     private function HotKeyInit takes nothing returns nothing
-        local trigger trg1 = CreateTrigger()
-        local trigger trg2 = CreateTrigger()
-        local trigger trg3 = CreateTrigger()
-        local trigger trg4 = CreateTrigger()
-        local trigger trg5 = CreateTrigger()
+        local trigger shiftDownTrigger = CreateTrigger()
+        local trigger shiftReleaseTrigger = CreateTrigger()
+        local trigger qTrigger = CreateTrigger()
+        local trigger wTrigger = CreateTrigger()
+        local trigger eTrigger = CreateTrigger()
+        local trigger tTrigger = CreateTrigger()
         local trigger scoreboardToggleViewTrigger = CreateTrigger()
         local trigger scoreboardToggleHideTrigger = CreateTrigger()
-
         local integer i = 0
+        
         set HoldShiftStructTable = Table.create()
+
         loop
-            call BlzTriggerRegisterPlayerKeyEvent(trg3, Player(i), OSKEY_Q, 2, true)
-            call BlzTriggerRegisterPlayerKeyEvent(trg4, Player(i), OSKEY_W, 2, true)
-            call BlzTriggerRegisterPlayerKeyEvent(trg5, Player(i), OSKEY_E, 2, true)
-            call BlzTriggerRegisterPlayerKeyEvent(trg1, Player(i), OSKEY_LSHIFT, 1, true)
-            call BlzTriggerRegisterPlayerKeyEvent(trg2, Player(i), OSKEY_LSHIFT, 0, false)
-            call BlzTriggerRegisterPlayerKeyEvent(trg1, Player(i), OSKEY_RSHIFT, 1, true)
-            call BlzTriggerRegisterPlayerKeyEvent(trg2, Player(i), OSKEY_RSHIFT, 0, false)
+            call BlzTriggerRegisterPlayerKeyEvent(qTrigger, Player(i), OSKEY_Q, 2, true)
+            call BlzTriggerRegisterPlayerKeyEvent(wTrigger, Player(i), OSKEY_W, 2, true)
+            call BlzTriggerRegisterPlayerKeyEvent(eTrigger, Player(i), OSKEY_E, 2, true)
+            call BlzTriggerRegisterPlayerKeyEvent(tTrigger, Player(i), OSKEY_T, 2, true)
+            call BlzTriggerRegisterPlayerKeyEvent(shiftDownTrigger, Player(i), OSKEY_LSHIFT, 1, true)
+            call BlzTriggerRegisterPlayerKeyEvent(shiftReleaseTrigger, Player(i), OSKEY_LSHIFT, 0, false)
+            call BlzTriggerRegisterPlayerKeyEvent(shiftDownTrigger, Player(i), OSKEY_RSHIFT, 1, true)
+            call BlzTriggerRegisterPlayerKeyEvent(shiftReleaseTrigger, Player(i), OSKEY_RSHIFT, 0, false)
             call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleViewTrigger, Player(i), OSKEY_TAB, 0, true)
             call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleHideTrigger, Player(i), OSKEY_TAB, 0, false)
             set i = i + 1
             exitwhen i == 8
         endloop
-        call TriggerAddAction(trg3, function ConvertLumber)
-        call TriggerAddAction(trg4, function ConvertGold)
-        call TriggerAddAction(trg5, function SellAllItems)
-        set trg3 = null
-        set trg4 = null
-        set trg5 = null
-        call TriggerAddAction(trg1, function ShiftDown)
-        call TriggerAddAction(trg2, function ShiftRelease)
-        set trg1 = null
-        set trg2 = null
+
+        call TriggerAddAction(qTrigger, function ConvertLumber)
+        call TriggerAddAction(wTrigger, function ConvertGold)
+        call TriggerAddAction(eTrigger, function SellAllItems)
+        call TriggerAddAction(tTrigger, function ToggleRewards)
+        call TriggerAddAction(shiftDownTrigger, function ShiftDown)
+        call TriggerAddAction(shiftReleaseTrigger, function ShiftRelease)
         call TriggerAddAction(scoreboardToggleViewTrigger, function ToggleViewScoreboard)
         call TriggerAddAction(scoreboardToggleHideTrigger, function ToggleHideScoreboard)
+
+        // Cleanup
+        set qTrigger = null
+        set wTrigger = null
+        set eTrigger = null
+        set tTrigger = null
+        set shiftDownTrigger = null
+        set shiftReleaseTrigger = null
         set scoreboardToggleViewTrigger = null
         set scoreboardToggleHideTrigger = null
     endfunction
