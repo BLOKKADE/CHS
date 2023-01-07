@@ -1,4 +1,4 @@
-library BuffLevel initializer Init requires Table
+library BuffLevel initializer Init requires Table, RemoveBuffs
     //allows buffs to have levels so they can stack
     globals
         HashTable buffTable
@@ -12,13 +12,13 @@ library BuffLevel initializer Init requires Table
         return 0
     endfunction
     
-    function RegisterBuff takes unit u, integer buffId returns nothing
+    function RegisterLeveledBuff takes unit u, integer buffId returns nothing
         local integer uid = GetHandleId(u)
         set buffTable[uid][buffId] = buffTable[uid][buffId] + 1
         //call BJDebugMsg("buff level: " + I2S(buffTable[uid][buffId]))
     endfunction
     
-    function RemoveBuff takes unit u, integer buffId returns boolean
+    function RemoveLeveledBuffs takes unit u, integer buffId returns boolean
         local integer uid = GetHandleId(u)
         if buffTable.has(uid) then
             //call BJDebugMsg("unit is in table")
@@ -27,7 +27,7 @@ library BuffLevel initializer Init requires Table
                 set buffTable[uid][buffId] = buffTable[uid][buffId] - 1
                 if buffTable[uid][buffId] == 0 then
                     //call BJDebugMsg("0 levels of buff, removing")
-                    call UnitRemoveAbility(u, buffId)
+                    call RemoveUnitBuff(u, buffId)
                     return true
                 endif
             endif

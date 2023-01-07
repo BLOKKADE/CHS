@@ -1,4 +1,4 @@
-library ATtackCooldown initializer init requires MegaSpeed, UnitItems
+library AttackCooldown initializer init requires MegaSpeed, UnitItems, RemoveBuffs
 
     function ModifyAttackCooldown takes unit u, integer hid returns real
         // base attack cooldown
@@ -24,7 +24,7 @@ library ATtackCooldown initializer init requires MegaSpeed, UnitItems
             if r2 >= 0.6 then
                 set r2 = 0.6
             else
-                call UnitRemoveAbility(u, SPEED_BLADE_BUFF_ID)
+                call RemoveUnitBuff(u, SPEED_BLADE_BUFF_ID)
             endif
         endif
 

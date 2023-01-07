@@ -41,6 +41,13 @@ library BuffRepository initializer init requires Table
         set BuffRepo[buffId].integer[BUFFTYPE_INDEX] = buffType
         set BuffRepo[buffId].boolean[BUFFUNPURGEABLE_INDEX] = unpurgeable
         set BuffRepo[buffId].boolean[REMOVEABIL_INDEX] = removeAbil
+
+        set BuffRepo[buffAbil].boolean[BUFF_INDEX] = true
+        set BuffRepo[buffAbil].integer[ABILITY_INDEX] = abilId
+        set BuffRepo[buffAbil].integer[BUFFABILITY_INDEX] = buffId
+        set BuffRepo[buffAbil].integer[BUFFTYPE_INDEX] = buffType
+        set BuffRepo[buffAbil].boolean[BUFFUNPURGEABLE_INDEX] = unpurgeable
+        set BuffRepo[buffAbil].boolean[REMOVEABIL_INDEX] = removeAbil
     endfunction
 
     //for storing the buff and the ability associated with the buff

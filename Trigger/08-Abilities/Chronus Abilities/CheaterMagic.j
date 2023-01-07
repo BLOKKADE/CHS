@@ -17,7 +17,7 @@ library CheaterMagic requires BuffLevel, RandomShit, TimeManipulation
             
             set this.source = source
 
-            call RegisterBuff(this.source, 'A08G')
+            call RegisterLeveledBuff(this.source, 'A08G')
             if GetBuffLevel(this.source, 'A08G') == 1 then
                 call UnitAddAbility(this.source, 'A08G')
             endif
@@ -28,7 +28,7 @@ library CheaterMagic requires BuffLevel, RandomShit, TimeManipulation
         endmethod
         
         method destroy takes nothing returns nothing
-            call RemoveBuff(this.source, 'A08G')
+            call RemoveLeveledBuffs(this.source, 'A08G')
             if GetBuffLevel(this.source, 'A08G') == 0 then
                 call UnitRemoveAbility(this.source, CHEATER_MAGIC_BUFF_ID)
             endif

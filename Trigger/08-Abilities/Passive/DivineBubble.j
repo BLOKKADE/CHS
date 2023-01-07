@@ -42,8 +42,7 @@ library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, 
         endmethod
         
         method destroy takes nothing returns nothing
-            call UnitRemoveAbility(this.source, 'A08C')
-            call UnitRemoveAbility(this.source, 'B01E')
+            call RemoveUnitBuff(this.source, 'A08C')
             call DestroyEffect(this.fx)
             set DivineBubbles[GetHandleId(this.source)] = 0
             set this.fx = null

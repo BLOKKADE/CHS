@@ -32,7 +32,7 @@ library TempAbilSystem initializer init requires BuffLevel
                 set this.source = source
 
                 call UnitAddAbility(this.source, this.abilId)
-                call RegisterBuff(this.source, this.abilId)
+                call RegisterLeveledBuff(this.source, this.abilId)
 
                 set UnitTempAbilities[GetHandleId(this.source)].integer[this.abilId] = this
                 
@@ -46,7 +46,7 @@ library TempAbilSystem initializer init requires BuffLevel
         endmethod
         
         method destroy takes nothing returns nothing
-            call RemoveBuff(this.source, this.abilId)
+            call RemoveLeveledBuffs(this.source, this.abilId)
             set UnitTempAbilities[GetHandleId(this.source)].integer[this.abilId] = 0
             set this.source = null
             set this.stop = true

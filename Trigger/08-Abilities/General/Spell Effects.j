@@ -138,21 +138,6 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == SAND_OF_TIME_ABILITY_ID then
             call SandRefreshAbility(hero,1.75 + 0.25 * lvl)
             return true
-        //Purge dummy
-        elseif abilId == 'A08A' then
-            //remove last breath
-            if GetUnitAbilityLevel(target, 'A08B') > 0 then
-                call UnitRemoveAbility(target, 'A08B')
-                call UnitRemoveAbility(target, 'B01D')
-            endif
-            
-            //remove Cheater Magic
-            if GetUnitAbilityLevel(target, 'A08G') > 0 and IsUnitEnemy(target, GetOwningPlayer(hero)) then
-                call UnitRemoveAbility(target, 'A08G')
-                call UnitRemoveAbility(target, CHEATER_MAGIC_BUFF_ID)
-            endif
-
-            return true
         //Purge wait
         elseif abilId == PURGE_ABILITY_ID then
             call Purge(hero, target, lvl)

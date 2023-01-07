@@ -1,6 +1,18 @@
 library RemoveBuffs requires BuffRepository
+
+    //remove single buff
+    function RemoveUnitBuff takes unit u, integer buffId returns nothing
+        if IsBuff(buffId) and IsBuffPurgeable(buffId)then
+            if RemoveBuffAssociatedAbility(buffId) then
+                call UnitRemoveAbility(u, GetBuffAssociatedAbility(buffId))
+            endif
+
+            call UnitRemoveAbility(u, buffId)
+        endif
+    endfunction
+
     //Remove all buffs of buffType from unit u
-    //0 = all, 1 = negative, 2 = positive
+    //BUFFTYPE_NEGATIVE, BUFFTYPE_POSITIVE, BUFFTYPE_BOTH
     function RemoveUnitBuffs takes unit u, integer buffType returns nothing
         local integer abilId
         local integer i = 0

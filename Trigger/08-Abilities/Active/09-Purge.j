@@ -22,7 +22,7 @@ library Purge requires RandomShit
         if IsUnitType(target, UNIT_TYPE_HERO) != true or IsUnitIllusion(target) then
             call Damage.apply(source, target, BlzGetUnitMaxHP(target) * 0.75, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
         endif
-        call DummyTargetCast1(source, target, GetUnitX(target), GetUnitY(target), 'A08A', "purge", 0, null)
+        call RemoveUnitBuffs(target, BUFFTYPE_POSITIVE)
         call FlushChildHashtable(HT,GetHandleId(t))
         
         set t = null

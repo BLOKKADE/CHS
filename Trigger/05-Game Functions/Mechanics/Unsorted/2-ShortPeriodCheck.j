@@ -216,7 +216,7 @@ scope ShortPeriodCheck initializer init
                     set i1 = LoadInteger(DataUnitHT, hid,542)
                     call SetHeroStr(u, GetHeroStr(u,false)- i1, false)
                     call SaveInteger(DataUnitHT, hid,542,0)
-                    call UnitRemoveAbility(u, 'A092')
+                    call RemoveUnitBuff(u, 'A092')
                 endif
 
             elseif unitTypeId == WOLF_RIDER_UNIT_ID then
