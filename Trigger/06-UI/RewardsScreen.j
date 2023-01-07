@@ -63,9 +63,11 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private constant real ATTACK_DAMAGE_BONUS                       = 5.0
         private constant real PHYSICAL_POWER_BONUS                      = 0.5
         private constant real MAGIC_POWER_BONUS                         = 0.5
+        private constant real OFFENSIVE_STAT_BONUS                      = 0.
         private constant real ARMOR_BONUS                               = 5.0
         private constant real MAGIC_PROTECTION_BONUS                    = 0.5
         private constant real BLOCK_BONUS                               = 10.0
+        private constant real DEFENSIVE_STAT_BONUS                      = 0.
         private constant real HIT_POINTS_BONUS                          = 750.0
         private constant real HIT_POINTS_REGEN_BONUS                    = 10.0
         private constant real MANA_BONUS                                = 150.0
@@ -107,6 +109,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private integer array PlayerRewardSelection
         private integer array PlayerRewardPoints
         private real array PlayerTotalRewardValues
+        private real array RewardIndexValues
     endglobals
 
     // Add additional reward points to a player
@@ -212,6 +215,16 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         set playerNameTextFrameHandle = null
     endfunction
 
+    private function GetOrUpdateCurrentRewardBonus takes integer playerId, integer rewardIndex, boolean updateTotal returns real
+        local real rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * playerId) + rewardIndex]) * RewardIndexValues[rewardIndex]
+
+        if (updateTotal) then
+            set PlayerTotalRewardValues[(REWARD_BUFFER * playerId) + rewardIndex] = PlayerTotalRewardValues[(REWARD_BUFFER * playerId) + rewardIndex] + rewardValue
+        endif
+
+        return rewardValue
+    endfunction
+
     private function RewardsMouseEventActions takes nothing returns nothing
         local framehandle currentFrameHandle = BlzGetTriggerFrame()
         local player triggerPlayer = GetTriggerPlayer()
@@ -280,7 +293,11 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
                 set tooltipName = tooltipName + CLICK_ICON_COLOR + " - Click to redeem!" + COLOR_END_TAG
             endif
 
-            set tooltipDescription = RewardDescriptions[rewardIndex] + "|n|nTotal " + RewardTitles[rewardIndex] + " accumulated: " + R2S(PlayerTotalRewardValues[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])
+            // Show how much value per round you get for this value
+            set tooltipDescription = RewardDescriptions[rewardIndex] + "|n|nCurrent round bonus accumulated: " + R2S(GetOrUpdateCurrentRewardBonus(triggerPlayerId, rewardIndex, false))
+
+            // Show the total accumulated for this reward
+            set tooltipDescription = tooltipDescription + "|n|nTotal bonus accumulated: " + R2S(PlayerTotalRewardValues[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])
 
             if (GetLocalPlayer() == triggerPlayer) then	
                 call BlzFrameSetText(RewardsTooltipTitleFrame, tooltipName)
@@ -393,6 +410,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call CreateCategoryReward(OFFENSIVE_MAGIC_POWER_3_ICON, OFFENSIVE_MAGIC_POWER_3_INDEX)
         // call CreateCategoryReward(OFFENSIVE_STAT_4_ICON, OFFENSIVE_STAT_4_INDEX)
 
+        // Offensive tooltip information
         set RewardTitles[OFFENSIVE_ATTACK_DAMAGE_1_INDEX] = OFFENSIVE_COLOR + "Attack Damage" + COLOR_END_TAG
         set RewardTitles[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = OFFENSIVE_COLOR + "Physical Power" + COLOR_END_TAG
         set RewardTitles[OFFENSIVE_MAGIC_POWER_3_INDEX] = OFFENSIVE_COLOR + "Magic Power" + COLOR_END_TAG
@@ -401,6 +419,12 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         set RewardDescriptions[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = "Increase the Hero's physical power by " + R2S(PHYSICAL_POWER_BONUS) + " per point"
         set RewardDescriptions[OFFENSIVE_MAGIC_POWER_3_INDEX] = "Increase the Hero's magic power by " + R2S(MAGIC_POWER_BONUS) + " per point"
         // set RewardDescriptions[OFFENSIVE_STAT_4_INDEX] = "Offensive Stat 4 Description"
+
+        // Offensive index value mapping
+        set RewardIndexValues[OFFENSIVE_ATTACK_DAMAGE_1_INDEX] = ATTACK_DAMAGE_BONUS
+        set RewardIndexValues[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = PHYSICAL_POWER_BONUS
+        set RewardIndexValues[OFFENSIVE_MAGIC_POWER_3_INDEX] = MAGIC_POWER_BONUS
+        // set RewardIndexValues[OFFENSIVE_STAT_4_INDEX] = OFFENSIVE_STAT_BONUS
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
@@ -411,6 +435,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call CreateCategoryReward(DEFENSIVE_BLOCK_3_ICON, DEFENSIVE_BLOCK_3_INDEX)
         // call CreateCategoryReward(DEFENSIVE_STAT_4_ICON, DEFENSIVE_STAT_4_INDEX)
 
+        // Defensive tooltip information
         set RewardTitles[DEFENSIVE_ARMOR_1_INDEX] = DEFENSIVE_COLOR + "Armor" + COLOR_END_TAG
         set RewardTitles[DEFENSIVE_MAGIC_PROTECTION_2_INDEX] = DEFENSIVE_COLOR + "Magic Protection" + COLOR_END_TAG
         set RewardTitles[DEFENSIVE_BLOCK_3_INDEX] = DEFENSIVE_COLOR + "Block" + COLOR_END_TAG
@@ -419,6 +444,12 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         set RewardDescriptions[DEFENSIVE_MAGIC_PROTECTION_2_INDEX] = "Increase the Hero's magic protection by " + R2S(MAGIC_PROTECTION_BONUS) + " per point"
         set RewardDescriptions[DEFENSIVE_BLOCK_3_INDEX] = "Increase the Hero's block by " + R2S(BLOCK_BONUS) + " per point"
         // set RewardDescriptions[DEFENSIVE_STAT_4_INDEX] = "Defensive Stat 4 Description"
+
+        // Defensive index value mapping
+        set RewardIndexValues[DEFENSIVE_ARMOR_1_INDEX] = ARMOR_BONUS
+        set RewardIndexValues[DEFENSIVE_MAGIC_PROTECTION_2_INDEX] = MAGIC_PROTECTION_BONUS
+        set RewardIndexValues[DEFENSIVE_BLOCK_3_INDEX] = BLOCK_BONUS
+        // set RewardIndexValues[DEFENSIVE_STAT_4_INDEX] = DEFENSIVE_STAT_BONUS
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
@@ -429,6 +460,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call CreateCategoryReward(UTILITY_MANA_3_ICON, UTILITY_MANA_3_INDEX)
         call CreateCategoryReward(UTILITY_MANA_REGEN_4_ICON, UTILITY_MANA_REGEN_4_INDEX)
 
+        // Utility tooltip information
         set RewardTitles[UTILITY_HIT_POINTS_1_INDEX] = UTILITY_COLOR + "Hit Points" + COLOR_END_TAG
         set RewardTitles[UTILITY_HIT_POINTS_REGEN_2_INDEX] = UTILITY_COLOR + "Hit Point Regeneration" + COLOR_END_TAG
         set RewardTitles[UTILITY_MANA_3_INDEX] = UTILITY_COLOR + "Mana" + COLOR_END_TAG
@@ -437,6 +469,12 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         set RewardDescriptions[UTILITY_HIT_POINTS_REGEN_2_INDEX] = "Increase the Hero's hit point regeneration by " + R2S(HIT_POINTS_REGEN_BONUS) + " per point"
         set RewardDescriptions[UTILITY_MANA_3_INDEX] = "Increase the Hero's mana by " + R2S(MANA_BONUS) + " per point"
         set RewardDescriptions[UTILITY_MANA_REGEN_4_INDEX] = "Increase the Hero's mana regeneration by " + R2S(MANA_REGION_BONUS) + " per point"
+
+        // Utility index value mapping
+        set RewardIndexValues[UTILITY_HIT_POINTS_1_INDEX] = HIT_POINTS_BONUS
+        set RewardIndexValues[UTILITY_HIT_POINTS_REGEN_2_INDEX] = HIT_POINTS_REGEN_BONUS
+        set RewardIndexValues[UTILITY_MANA_3_INDEX] = MANA_BONUS
+        set RewardIndexValues[UTILITY_MANA_REGEN_4_INDEX] = MANA_REGION_BONUS
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
     endfunction
@@ -497,71 +535,61 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         else
             // Attack damage
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + OFFENSIVE_ATTACK_DAMAGE_1_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + OFFENSIVE_ATTACK_DAMAGE_1_INDEX]) * ATTACK_DAMAGE_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + OFFENSIVE_ATTACK_DAMAGE_1_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + OFFENSIVE_ATTACK_DAMAGE_1_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, OFFENSIVE_ATTACK_DAMAGE_1_INDEX, true)
                 call BlzSetUnitBaseDamage(playerHero, BlzGetUnitBaseDamage(playerHero, 0) + R2I(rewardValue), 0)
             endif
 
             // Physical power
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + OFFENSIVE_PHYSICAL_POWER_2_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + OFFENSIVE_PHYSICAL_POWER_2_INDEX]) * PHYSICAL_POWER_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + OFFENSIVE_PHYSICAL_POWER_2_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + OFFENSIVE_PHYSICAL_POWER_2_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, OFFENSIVE_PHYSICAL_POWER_2_INDEX, true)
                 call AddUnitCustomState(playerHero, BONUS_PHYSPOW, rewardValue)
             endif
 
             // Magic power
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + OFFENSIVE_MAGIC_POWER_3_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + OFFENSIVE_MAGIC_POWER_3_INDEX]) * MAGIC_POWER_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + OFFENSIVE_MAGIC_POWER_3_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + OFFENSIVE_MAGIC_POWER_3_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, OFFENSIVE_MAGIC_POWER_3_INDEX, true)
                 call AddUnitCustomState(playerHero, BONUS_MAGICPOW, rewardValue)
             endif
 
             // Armor
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + DEFENSIVE_ARMOR_1_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + DEFENSIVE_ARMOR_1_INDEX]) * ARMOR_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + DEFENSIVE_ARMOR_1_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + DEFENSIVE_ARMOR_1_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, DEFENSIVE_ARMOR_1_INDEX, true)
                 call BlzSetUnitArmor(playerHero, BlzGetUnitArmor(playerHero) + DEFENSIVE_ARMOR_1_INDEX)
             endif
 
             // Magic protection
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + DEFENSIVE_MAGIC_PROTECTION_2_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + DEFENSIVE_MAGIC_PROTECTION_2_INDEX]) * MAGIC_PROTECTION_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + DEFENSIVE_MAGIC_PROTECTION_2_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + DEFENSIVE_MAGIC_PROTECTION_2_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, DEFENSIVE_MAGIC_PROTECTION_2_INDEX, true)
                 call AddUnitCustomState(playerHero, BONUS_MAGICRES, rewardValue)
             endif
 
             // Block
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + DEFENSIVE_BLOCK_3_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + DEFENSIVE_BLOCK_3_INDEX]) * BLOCK_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + DEFENSIVE_BLOCK_3_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + DEFENSIVE_BLOCK_3_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, DEFENSIVE_BLOCK_3_INDEX, true)
                 call AddUnitCustomState(playerHero, BONUS_BLOCK, rewardValue)
             endif
 
             // Hit points
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + UTILITY_HIT_POINTS_1_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + UTILITY_HIT_POINTS_1_INDEX]) * HIT_POINTS_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + UTILITY_HIT_POINTS_1_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + UTILITY_HIT_POINTS_1_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, UTILITY_HIT_POINTS_1_INDEX, true)
                 call SetUnitMaxHp(playerHero, BlzGetUnitMaxHP(playerHero) + R2I(rewardValue))
             endif
 
             // Hit points regen
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + UTILITY_HIT_POINTS_REGEN_2_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + UTILITY_HIT_POINTS_REGEN_2_INDEX]) * HIT_POINTS_REGEN_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + UTILITY_HIT_POINTS_REGEN_2_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + UTILITY_HIT_POINTS_REGEN_2_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, UTILITY_HIT_POINTS_REGEN_2_INDEX, true)
                 call AddUnitBonusReal(playerHero, BONUS_HEALTH_REGEN, rewardValue)
             endif
 
             // Mana
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + UTILITY_MANA_3_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + UTILITY_MANA_3_INDEX]) * MANA_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + UTILITY_MANA_3_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + UTILITY_MANA_3_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, UTILITY_MANA_3_INDEX, true)
                 call BlzSetUnitMaxMana(playerHero, BlzGetUnitMaxMana(playerHero) + R2I(rewardValue))
             endif
 
             // Mana regen
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + UTILITY_MANA_REGEN_4_INDEX] > 0) then
-                set rewardValue = (PlayerRewardSelection[(REWARD_BUFFER * pid) + UTILITY_MANA_REGEN_4_INDEX]) * MANA_REGION_BONUS
-                set PlayerTotalRewardValues[(REWARD_BUFFER * pid) + UTILITY_MANA_REGEN_4_INDEX] = PlayerTotalRewardValues[(REWARD_BUFFER * pid) + UTILITY_MANA_REGEN_4_INDEX] + rewardValue
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, UTILITY_MANA_REGEN_4_INDEX, true)
                 call BlzSetUnitRealField(playerHero, ConvertUnitRealField('umpr'), BlzGetUnitRealField(playerHero, ConvertUnitRealField('umpr')) + rewardValue)
             endif
         endif
