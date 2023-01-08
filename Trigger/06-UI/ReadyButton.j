@@ -1,4 +1,4 @@
-library ReadyButton initializer init requires PlayerTracking, AllPlayersCompletedRound, InitializeBattleRoyale
+library ReadyButton initializer init requires PlayerTracking, AllPlayersCompletedRound, InitializeBattleRoyale, InitializePvp
     //button is setup in IconFrames.j
     globals
         boolean array PlayerHasReadied
@@ -34,7 +34,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     endfunction
 
     function ReadyTooltip takes nothing returns string
-		return " (|cff77f3fcCtrl+R|r)|nCurrently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nHold shift while activating this button to always be |cff7784fcready|r."
+		return " (|cff77f3fcCtrl+R|r)|nCurrently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nHold shift while activating this button to always be |cff7784fcready|r.|n|nDoes not work for non-simultaneous pvp rounds."
 	endfunction
 
     function ReadyButtonTooltip takes player p, integer pid returns string
@@ -98,18 +98,27 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     
     private function StartRound takes nothing returns nothing
         call ReleaseTimer(GetExpiredTimer())
-        call AllPlayersCompletedRound_StartNextRound()
+        if WaitingForBattleRoyal then
+            call StartBattleRoyal()
+        elseif WaitingForPvp then
+            call StartPvp()
+        elseif PvpRoundEndWait then
+            call PvpStartNextRound.execute()
+        else
+            call AllPlayersCompletedRound_StartNextRound()
+        endif
     endfunction
 
     function CheckReadyPlayers takes nothing returns nothing
         if ReadyPlayerCount() >= PlayersNeeded then
             if WaitingForBattleRoyal then
-                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Battle Royal!|r")
-                call StartBattleRoyal()
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Pvp battles!|r")
+            elseif WaitingForPvp then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Battle Royal!|r")
             else
-                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|c00fbff08Starting next round...|r")
-                call TimerStart(NewTimer(), 2., false, function StartRound)
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Next round!|r")
             endif
+            call TimerStart(NewTimer(), 2., false, function StartRound)
         endif
     endfunction
 

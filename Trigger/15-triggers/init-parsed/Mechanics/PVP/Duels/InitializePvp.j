@@ -1,30 +1,12 @@
 library InitializePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults, PvpHelper
     globals
         real pvpWaitDuration = 25
+        timer PvpWaitTimer
+        timerdialog PvpWaitTimerDialog
+        boolean WaitingForPvp
     endglobals
 
-    private function InitializePvpActions takes nothing returns nothing
-        call TriggerSleepAction(2.00)
-        
-        // Setup the fights
-        call ResetPvpState()
-        call UpdatePlayerCount()
-        call MoveRoundRobin()
-        
-        // Message about the fights
-        call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "PvP Battle")
-        call StartTimerBJ(GetLastCreatedTimerBJ(), false, pvpWaitDuration)
-        call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.")
-
-        if (OddPlayer != -1) then
-            call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cffffcc00There is an odd amount of players. The odd player|r " + GetUnitNamePlayerColour(PlayerHeroes[GetPlayerId(Player(OddPlayer))]) + " |cffffcc00will duel the loser of the first finished duel.|r")
-        endif
-
-        call DisplayNemesisNames()
-        call TriggerSleepAction(pvpWaitDuration)
-        call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-
+    private function StartPvpBattles takes nothing returns nothing
         // Remove any crap in the map before the duels
         call RemoveUnitsInRect(bj_mapInitialPlayableArea)
 
@@ -44,6 +26,38 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
         call PlaySoundBJ(udg_sound08) // Horn noise!
 
         call StartDuels()
+    endfunction
+
+    function StartPvp takes nothing returns nothing
+        set WaitingForPvp = false
+        call DestroyTimer(PvpWaitTimer)
+        call DestroyTimerDialog(PvpWaitTimerDialog)
+        call StartPvpBattles.execute()
+    endfunction
+
+    private function InitializePvpActions takes nothing returns nothing
+        call TriggerSleepAction(2.00)
+        
+        // Setup the fights
+        call ResetPvpState()
+        call UpdatePlayerCount()
+        call MoveRoundRobin()
+        
+        // Message about the fights
+        set PvpWaitTimer = CreateTimer()
+        set PvpWaitTimerDialog = CreateTimerDialog(PvpWaitTimer)
+        call TimerDialogSetTitle(PvpWaitTimerDialog, "PvP Battle...")
+        call TimerDialogDisplay(PvpWaitTimerDialog, true)
+        call TimerStart(PvpWaitTimer, pvpWaitDuration, false, function StartPvp)
+        call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r \n|cffff5050You will lose any items bought during the duel.")
+
+        if (OddPlayer != -1) then
+            call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cffffcc00There is an odd amount of players. The odd player|r " + GetUnitNamePlayerColour(PlayerHeroes[GetPlayerId(Player(OddPlayer))]) + " |cffffcc00will duel the loser of the first finished duel.|r")
+        endif
+
+        set WaitingForPvp = true
+
+        call DisplayNemesisNames()
     endfunction
 
     private function init takes nothing returns nothing

@@ -41,7 +41,7 @@ library VotingResults initializer init
         private integer HeroBanningVote = 1 // No banning
         private integer DisableSimultaneousDuelVote = 1 // Disable Simultaneous duels off
         private integer DisableTeamDuelVote = 1 // Disable Team duels off
-        private integer LongerTimersVote = 1 // Longer timers off
+        private integer LongerTimersVote = 1 // Double timers off
 
         public method setRoundVote takes integer value returns nothing 
             set this.RoundVote = value
@@ -218,13 +218,15 @@ library VotingResults initializer init
         endif
 
         if (LongerTimersMode == 1) then
-            set GameDescription = GameDescription + "Longer Timers Off"
-            set ScoreboardGameDescription = ScoreboardGameDescription + "Longer Timers Off"
+            set GameDescription = GameDescription + "Double Timers Off"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Double Timers Off"
         elseif (LongerTimersMode == 2) then
-            set GameDescription = GameDescription + "Longer Timers On"
-            set ScoreboardGameDescription = ScoreboardGameDescription + "Longer Timers On"
+            set GameDescription = GameDescription + "Double Timers On"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Double Timers On"
 
-            set RoundTime = 40
+            set RoundTime = RoundTime * 2
+            set BattleRoyalWaitTime = BattleRoyalWaitTime * 2
+            set pvpWaitDuration = pvpWaitDuration * 2
         endif
 
         set GameDescription = GameDescription + "|r"
@@ -429,7 +431,7 @@ library VotingResults initializer init
         endloop
         set TeamDuelMode = GetNegatedCheckboxVoteFromAnyDuplicates()
 
-        // Longer timers vote counting
+        // Double timers vote counting
         set i = 1
         loop
             set CategoryVotes[i] = longerTimersModeCounts[i]

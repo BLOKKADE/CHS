@@ -1,5 +1,11 @@
 library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent
 
+    globals
+        boolean PvpRoundEndWait
+        timer PvpRoundEndTimer
+        timerdialog PvpRoundEndTimerDialog
+    endglobals
+
     private function PvpHeroDeathConditions takes nothing returns boolean
         return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
     endfunction
@@ -229,6 +235,13 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         endloop
     endfunction
 
+    function PvpStartNextRound takes nothing returns nothing
+        set PvpRoundEndWait = false
+        call DestroyTimer(PvpRoundEndTimer)
+        call DestroyTimerDialog(PvpRoundEndTimerDialog)
+        call TriggerExecute(StartLevelTrigger)
+    endfunction
+
     function PvpHeroDeathActions takes nothing returns nothing
         local unit deadUnit = GetDyingUnit()
         local unit killingUnit = GetKillingUnit()
@@ -359,11 +372,13 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             
             // Go to the next basic level
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger) // Setup creeps for next wave
-            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
-            call StartTimerBJ(GetLastCreatedTimerBJ(), false, pvpWaitDuration)
-            call TriggerSleepAction(pvpWaitDuration)
-            call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-            call TriggerExecute(StartLevelTrigger) // Start the next normal level
+            set PvpRoundEndWait = true
+            set PvpRoundEndTimer = CreateTimer()
+            set PvpRoundEndTimerDialog = CreateTimerDialog(PvpRoundEndTimer)
+            call TimerDialogSetTitle(PvpRoundEndTimerDialog, "Next Level ...")
+            call TimerDialogDisplay(PvpRoundEndTimerDialog, true)
+            call TimerStart(PvpRoundEndTimer, RoundTime, false, function PvpStartNextRound)
+             // Start the next normal level
         // Check if all single pvp rounds are over
         elseif (SimultaneousDuelMode == 1 and DuelGameListRemaining.size() > 0) then
             call AfterDuelCleanupActions(duelGame)

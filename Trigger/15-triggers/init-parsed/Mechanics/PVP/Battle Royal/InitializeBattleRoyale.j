@@ -2,7 +2,7 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
 
     globals
         private integer PlayerIdIndex = 0
-        integer BattleRoyalWaitTime = 60
+        integer BattleRoyalWaitTime = 120
         timer BattleRoyalTimer
         timerdialog BattleRoyalTimerDialog
         boolean WaitingForBattleRoyal
