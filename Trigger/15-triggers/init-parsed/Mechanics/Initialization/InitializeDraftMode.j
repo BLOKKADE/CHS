@@ -41,7 +41,7 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit, DraftModeFu
 
         loop
             exitwhen abilityIndex > udg_Draft_DefaultSpellsMaxIndex
-            call SaveIntegerBJ(udg_Draft_DefaultSpells[abilityIndex], playerId + 1, abilityIndex, udg_Draft_PlayerSpells)
+            call SaveIntegerBJ(udg_Draft_DefaultSpells[abilityIndex], playerId, abilityIndex, udg_Draft_PlayerSpells)
             set udg_Draft_PlayerSpellsMaxIndex[playerId] = udg_Draft_DefaultSpellsMaxIndex
             set abilityIndex = abilityIndex + 1
         endloop
@@ -65,7 +65,6 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit, DraftModeFu
     endfunction
 
     function InitDraftMode takes nothing returns nothing
-        call ConfigureDraftMode()
         call SetupDraftMode()
     endfunction
 
