@@ -3,12 +3,19 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
     globals
         integer BattleRoyalRound = 50
         real RoundTime = 20
+        timer RoundWaitTimer
+        timerdialog RoundWaitTimerDialog
     endglobals
 
     public function StartNextRound takes nothing returns nothing
         if (NextRound[RoundNumber + 1]) then
+            if (IncomeMode == 3) then
+                call SetEconomyCreepBonus()
+            endif
+
             set NextRound[RoundNumber + 1] = false
-            call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+            call DestroyTimer(RoundWaitTimer)
+            call DestroyTimerDialog(RoundWaitTimerDialog)
             call TriggerExecute(StartLevelTrigger)
         endif
     endfunction
@@ -89,22 +96,15 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
             endif
 
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
-            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next Level ...")
+
+            set RoundWaitTimer = NewTimer()
+            set RoundWaitTimerDialog = CreateTimerDialog(RoundWaitTimer)
+            call TimerDialogSetTitle(RoundWaitTimerDialog, "Next Level ...")
+            call TimerDialogDisplay(RoundWaitTimerDialog, true)
+
             set NextRound[RoundNumber + 1] = true
             
-            if (RoundNumber <= 3) then
-                call StartTimerBJ(GetLastCreatedTimerBJ(), false, RoundTime)
-                call TriggerSleepAction(RoundTime)
-            else
-                call StartTimerBJ(GetLastCreatedTimerBJ(), false, RoundTime * 0.75)
-                call TriggerSleepAction(RoundTime * 0.75)
-            endif
-
-            if (IncomeMode == 3) then
-                call SetEconomyCreepBonus()
-            endif
-    
-            call StartNextRound()
+            call TimerStart(RoundWaitTimer, RoundTime, false, function StartNextRound)
         endif
     endfunction
 
