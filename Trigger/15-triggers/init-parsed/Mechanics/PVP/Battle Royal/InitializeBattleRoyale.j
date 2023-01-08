@@ -2,6 +2,7 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
 
     globals
         private integer PlayerIdIndex = 0
+        integer BattleRoyalWaitTime = 120
     endglobals
 
     private function ShopFilter takes nothing returns boolean
@@ -93,10 +94,10 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         // SHow the BR is starting
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
         call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Battle Royal")
-        call StartTimerBJ(GetLastCreatedTimerBJ(), false, 60.00)
+        call StartTimerBJ(GetLastCreatedTimerBJ(), false, BattleRoyalWaitTime)
         call DisplayTextToForce(GetPlayersAll(), "Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
 
-        call TriggerSleepAction(60.00)
+        call TriggerSleepAction(BattleRoyalWaitTime)
 
         // Final message about BR, hide shops, cleanup before the actual fight
         set BrStarted = true
