@@ -509,8 +509,10 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
 
         //Free Hat
         // Santa Hat
-        call CreateHatAchievementButton("SantaHat", "Rewards\\SantaHat.mdx")
-        set currentRequirements = Requirements.create("|cfffc2424Santa Hat|r")
+        if EnableSantaMode then
+            call CreateHatAchievementButton("SantaHat", "Rewards\\SantaHat.mdx")
+            set currentRequirements = Requirements.create("|cfffc2424Santa Hat|r")
+        endif
 
         // --- All BR wins        
         // Blue Wizard Hat
