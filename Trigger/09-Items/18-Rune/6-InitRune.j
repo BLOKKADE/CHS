@@ -17,7 +17,7 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         integer Power_Rune_Id = 6 //not an element
         integer Dark_Rune_Id = 7
         integer Light_Rune_Id = 8
-        integer Might_Rune_Id = 9 // not an element
+        integer Cold_Rune_id = 9
         integer Poison_Rune_Id = 10
         integer Blood_Rune_Id = 11
         integer Defense_Rune_Id = 12 // not an element
@@ -25,7 +25,8 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         integer Chaos_Rune_Id = 14
         integer Life_Rune_Id = 15
         integer Healing_Rune_Id = 16
-        integer RuneCount = 16
+        integer Might_Rune_Id = 17 // not an element
+        integer RuneCount = 17
     endglobals
 
     function GetRuneCooldown takes integer runeId returns real
@@ -109,8 +110,9 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         call AddRune('I08J',function RuneOfChaos, "Chaos Rune", Chaos_Rune_Id, 15)
         call AddRune('I08G',function RuneOfFire, "Fire Rune", Fire_Rune_Id, 3)
         call AddRune('I088',function RuneOfLife, "Life Rune", Life_Rune_Id, 5)
-        call AddRune('I08B',function RuneOfMagic, "Time Rune", Time_Rune_Id, 12)    
+        call AddRune('I08B',function RuneOfMagic, "Arcane Rune", Time_Rune_Id, 12)    
         call AddRune('I08F',function RuneOfHealing, "Healing Rune", Healing_Rune_Id, 5)
+        call AddRune('I0D9',function UseColdRune, "Cold Rune", Cold_Rune_id, 8)
         call AddRune('I08C',function RuneOfPower, "Power Rune", Power_Rune_Id, 5)
         call AddRune('I08H',function RuneOfEarth, "Earth Rune", Earth_Rune_Id, 8)
         call AddRune('I08I',function RuneOfStorm, "Water Rune", Water_Rune_Id, 3) 

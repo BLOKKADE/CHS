@@ -391,6 +391,10 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = Damage.index.damage * (1 + ((i * 0.01) * GetUnitElementCount(DamageSource, Element_Poison)))
         endif
 
+        if UnitColdRuneDmgBonus.real[DamageTargetId] != 0. then
+            set Damage.index.damage = Damage.index.damage * (1 + UnitColdRuneDmgBonus.real[DamageTargetId])
+        endif
+
         //Scorched Scimitar
         set i = GetUnitAbilityLevel(DamageSource, SCORCHED_SCIMITAR_ABILITY_ID)
         if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
