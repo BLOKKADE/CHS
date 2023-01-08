@@ -19,7 +19,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private constant real CATEGORY_SPACING                          = 0.03
 
         // Specifications for a button
-        private real BUTTON_WIDTH                                       = 0.116
+        private real BUTTON_WIDTH                                       = 0.13
         private real BUTTON_HEIGHT                                      = 0.035
         private real BUTTON_SPACER                                      = 0.01
         private real DESCRIPTION_SPACER                                 = 0.01
@@ -288,18 +288,23 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
             endif
             
         elseif (BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER) then
-            // Retrieve the cached information
-            set tooltipName = RewardTitles[rewardIndex]
+            if (handleId == ResetHandleId) then
+                set tooltipName = "Reallocate Points"
+                set tooltipDescription = "Reset all currently selected rewards to reallocate the points.|n|nThis does not remove any bonuses already given to your hero."
+            else
+                // Retrieve the cached information
+                set tooltipName = RewardTitles[rewardIndex]
 
-            if (PlayerRewardPoints[triggerPlayerId] > 0) then
-                set tooltipName = tooltipName + CLICK_ICON_COLOR + " - Click to redeem!" + COLOR_END_TAG
+                if (PlayerRewardPoints[triggerPlayerId] > 0) then
+                    set tooltipName = tooltipName + CLICK_ICON_COLOR + " - Click to redeem!" + COLOR_END_TAG
+                endif
+
+                // Show how much value per round you get for this value
+                set tooltipDescription = RewardDescriptions[rewardIndex] + "|n|nCurrent round bonus accumulated: " + R2S(GetOrUpdateCurrentRewardBonus(triggerPlayerId, rewardIndex, false))
+
+                // Show the total accumulated for this reward
+                set tooltipDescription = tooltipDescription + "|n|nTotal bonus accumulated: " + R2S(PlayerTotalRewardValues[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])
             endif
-
-            // Show how much value per round you get for this value
-            set tooltipDescription = RewardDescriptions[rewardIndex] + "|n|nCurrent round bonus accumulated: " + R2S(GetOrUpdateCurrentRewardBonus(triggerPlayerId, rewardIndex, false))
-
-            // Show the total accumulated for this reward
-            set tooltipDescription = tooltipDescription + "|n|nTotal bonus accumulated: " + R2S(PlayerTotalRewardValues[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])
 
             if (GetLocalPlayer() == triggerPlayer) then	
                 call BlzFrameSetText(RewardsTooltipTitleFrame, tooltipName)
@@ -366,9 +371,11 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call BlzFrameSetSize(resetButtonFrameHandle, BUTTON_WIDTH, BUTTON_HEIGHT)
         call BlzFrameSetPoint(resetButtonFrameHandle, FRAMEPOINT_BOTTOM, RewardsFrameHandle, FRAMEPOINT_BOTTOM, 0, MAIN_FRAME_Y_BOTTOM_MARGIN)
         call BlzFrameSetScale(resetButtonFrameHandle, 1.00) 
-        call BlzFrameSetText(resetButtonFrameHandle, "|cfffc0d21Reset|r") 
+        call BlzFrameSetText(resetButtonFrameHandle, "|cfffc0d21Reallocate Points|r") 
         set ResetHandleId = GetHandleId(resetButtonFrameHandle)
         call BlzTriggerRegisterFrameEvent(IconEventTrigger, resetButtonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
+        call BlzTriggerRegisterFrameEvent(IconEventTrigger, resetButtonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
+        call BlzTriggerRegisterFrameEvent(IconEventTrigger, resetButtonFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
 
         // Available points
         set AvailablePointsFrame = BlzCreateFrameByType("TEXT", "AvailablePointsText", RewardsFrameHandle, "", 0) 
@@ -419,9 +426,9 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         set RewardTitles[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = OFFENSIVE_COLOR + "Physical Power" + COLOR_END_TAG
         set RewardTitles[OFFENSIVE_MAGIC_POWER_3_INDEX] = OFFENSIVE_COLOR + "Magic Power" + COLOR_END_TAG
         // set RewardTitles[OFFENSIVE_STAT_4_INDEX] = "Offensive Stat 4"
-        set RewardDescriptions[OFFENSIVE_ATTACK_DAMAGE_1_INDEX] = "Increase the Hero's base attack damage by " + R2S(ATTACK_DAMAGE_BONUS) + " per point"
-        set RewardDescriptions[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = "Increase the Hero's physical power by " + R2S(PHYSICAL_POWER_BONUS) + " per point"
-        set RewardDescriptions[OFFENSIVE_MAGIC_POWER_3_INDEX] = "Increase the Hero's magic power by " + R2S(MAGIC_POWER_BONUS) + " per point"
+        set RewardDescriptions[OFFENSIVE_ATTACK_DAMAGE_1_INDEX] = "Increase the Hero's base attack damage by " + R2S(ATTACK_DAMAGE_BONUS) + " per point."
+        set RewardDescriptions[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = "Increase the Hero's physical power by " + R2S(PHYSICAL_POWER_BONUS) + " per point."
+        set RewardDescriptions[OFFENSIVE_MAGIC_POWER_3_INDEX] = "Increase the Hero's magic power by " + R2S(MAGIC_POWER_BONUS) + " per point."
         // set RewardDescriptions[OFFENSIVE_STAT_4_INDEX] = "Offensive Stat 4 Description"
 
         // Offensive index value mapping
@@ -444,9 +451,9 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         set RewardTitles[DEFENSIVE_MAGIC_PROTECTION_2_INDEX] = DEFENSIVE_COLOR + "Magic Protection" + COLOR_END_TAG
         set RewardTitles[DEFENSIVE_BLOCK_3_INDEX] = DEFENSIVE_COLOR + "Block" + COLOR_END_TAG
         // set RewardTitles[DEFENSIVE_STAT_4_INDEX] = "Defensive Stat 4"
-        set RewardDescriptions[DEFENSIVE_ARMOR_1_INDEX] = "Increase the Hero's armor by " + R2S(ARMOR_BONUS) + " per point"
-        set RewardDescriptions[DEFENSIVE_MAGIC_PROTECTION_2_INDEX] = "Increase the Hero's magic protection by " + R2S(MAGIC_PROTECTION_BONUS) + " per point"
-        set RewardDescriptions[DEFENSIVE_BLOCK_3_INDEX] = "Increase the Hero's block by " + R2S(BLOCK_BONUS) + " per point"
+        set RewardDescriptions[DEFENSIVE_ARMOR_1_INDEX] = "Increase the Hero's armor by " + R2S(ARMOR_BONUS) + " per point."
+        set RewardDescriptions[DEFENSIVE_MAGIC_PROTECTION_2_INDEX] = "Increase the Hero's magic protection by " + R2S(MAGIC_PROTECTION_BONUS) + " per point."
+        set RewardDescriptions[DEFENSIVE_BLOCK_3_INDEX] = "Increase the Hero's block by " + R2S(BLOCK_BONUS) + " per point."
         // set RewardDescriptions[DEFENSIVE_STAT_4_INDEX] = "Defensive Stat 4 Description"
 
         // Defensive index value mapping
@@ -469,10 +476,10 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         set RewardTitles[UTILITY_HIT_POINTS_REGEN_2_INDEX] = UTILITY_COLOR + "Hit Point Regeneration" + COLOR_END_TAG
         set RewardTitles[UTILITY_MANA_3_INDEX] = UTILITY_COLOR + "Mana" + COLOR_END_TAG
         set RewardTitles[UTILITY_MANA_REGEN_4_INDEX] = UTILITY_COLOR + "Mana Regeneration" + COLOR_END_TAG
-        set RewardDescriptions[UTILITY_HIT_POINTS_1_INDEX] = "Increase the Hero's hit points by " + R2S(HIT_POINTS_BONUS) + " per point"
-        set RewardDescriptions[UTILITY_HIT_POINTS_REGEN_2_INDEX] = "Increase the Hero's hit point regeneration by " + R2S(HIT_POINTS_REGEN_BONUS) + " per point"
-        set RewardDescriptions[UTILITY_MANA_3_INDEX] = "Increase the Hero's mana by " + R2S(MANA_BONUS) + " per point"
-        set RewardDescriptions[UTILITY_MANA_REGEN_4_INDEX] = "Increase the Hero's mana regeneration by " + R2S(MANA_REGION_BONUS) + " per point"
+        set RewardDescriptions[UTILITY_HIT_POINTS_1_INDEX] = "Increase the Hero's hit points by " + R2S(HIT_POINTS_BONUS) + " per point."
+        set RewardDescriptions[UTILITY_HIT_POINTS_REGEN_2_INDEX] = "Increase the Hero's hit point regeneration by " + R2S(HIT_POINTS_REGEN_BONUS) + " per point."
+        set RewardDescriptions[UTILITY_MANA_3_INDEX] = "Increase the Hero's mana by " + R2S(MANA_BONUS) + " per point."
+        set RewardDescriptions[UTILITY_MANA_REGEN_4_INDEX] = "Increase the Hero's mana regeneration by " + R2S(MANA_REGION_BONUS) + " per point."
 
         // Utility index value mapping
         set RewardIndexValues[UTILITY_HIT_POINTS_1_INDEX] = HIT_POINTS_BONUS
@@ -513,6 +520,13 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         local integer pid = GetPlayerId(eventInfo.p)
         local unit playerHero = PlayerHeroes[pid]
         local real rewardValue
+
+        // Don't do anything if this was the BR
+        if (eventInfo.isPvp and (RoundNumber == 25 or RoundNumber == 50)) then
+            // Cleanup
+            set playerHero = null
+            return
+        endif
 
         // Give points if this was a pvp round
         if (eventInfo.isPvp or (PlayerCount == 1 and ModuloInteger(RoundNumber, 5) == 0)) then
