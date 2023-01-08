@@ -472,7 +472,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //45 - SpiritLink
         call SaveAbilData(SPIRIT_LINK_ABILITY_ID, SPIRIT_LINK_ITEM_ID, false, 1, 1, true, Order_Target, "spirtlink")
-        call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Light, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //46 - Frost Armor 
