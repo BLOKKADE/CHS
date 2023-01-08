@@ -46,6 +46,8 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private constant integer UTILITY_MANA_REGEN_4_INDEX             = 11
 
         // Reward icons
+        private constant string CLOSE_BUTTON_ICON                       = "ReplaceableTextures\\CommandButtons\\BTNuncheck.blp"
+
         private constant string OFFENSIVE_ATTACK_DAMAGE_1_ICON          = "ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.blp"
         private constant string OFFENSIVE_PHYSICAL_POWER_2_ICON         = "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp"
         private constant string OFFENSIVE_MAGIC_POWER_3_ICON            = "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp"
@@ -99,7 +101,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private string array RewardDescriptions
 
         // Framehandles that need to be referenced later
-        private integer SubmitHandleId
+        private integer CloseHandleId
         private integer ResetHandleId
         private framehandle AvailablePointsFrame
         private framehandle array RewardSelectionFramehandles
@@ -243,8 +245,8 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 				call BlzFrameSetEnable(currentFrameHandle, true)
 			endif
 
-            // Submit
-            if (handleId == SubmitHandleId) then
+            // Close
+            if (handleId == CloseHandleId) then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetVisible(RewardsFrameHandle, false) 
                     call PlayerStats.forPlayer(triggerPlayer).setHasRewardsOpen(false)
@@ -325,7 +327,8 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         local real mainFrameBottomRightX
         local real mainFrameBottomRightY
         local framehandle titleFrameHandle
-        local framehandle submitButtonFrameHandle
+        local framehandle closeButtonFrameHandle
+        local framehandle closeIconButtonFrameHandle
         local framehandle resetButtonFrameHandle
         local framehandle descriptionTextFrameHandle
 
@@ -348,19 +351,20 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call BlzFrameSetScale(titleFrameHandle, 1.2) 
         call BlzFrameSetText(titleFrameHandle, REWARDS_TITLE) 
 
-        // Create the submit button
-        set submitButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", RewardsFrameHandle, 0, 0) 
-        call BlzFrameSetAbsPoint(submitButtonFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_TOP_MARGIN + BUTTON_HEIGHT) 
-        call BlzFrameSetAbsPoint(submitButtonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN + BUTTON_WIDTH, mainFrameBottomRightY + MAIN_FRAME_Y_BOTTOM_MARGIN) 
-        call BlzFrameSetScale(submitButtonFrameHandle, 1.00) 
-        call BlzFrameSetText(submitButtonFrameHandle, "|cff0dfc19Submit|r") 
-        set SubmitHandleId = GetHandleId(submitButtonFrameHandle)
-        call BlzTriggerRegisterFrameEvent(IconEventTrigger, submitButtonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
+        // Create the close button
+        set closeButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", RewardsFrameHandle, 0, 0) 
+        set closeIconButtonFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", closeButtonFrameHandle, "", 1)
+        call BlzFrameSetPoint(closeButtonFrameHandle, FRAMEPOINT_TOPRIGHT, RewardsFrameHandle, FRAMEPOINT_TOPRIGHT, -(ICON_WIDTH / 4), -(ICON_WIDTH / 4))
+        call BlzFrameSetAllPoints(closeIconButtonFrameHandle, closeButtonFrameHandle) 
+        call BlzFrameSetTexture(closeIconButtonFrameHandle, CLOSE_BUTTON_ICON, 0, true) 
+        call BlzFrameSetSize(closeButtonFrameHandle, ICON_WIDTH, ICON_WIDTH)
+        set CloseHandleId = GetHandleId(closeButtonFrameHandle)
+        call BlzTriggerRegisterFrameEvent(IconEventTrigger, closeButtonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
 
         // Create the reset button
         set resetButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", RewardsFrameHandle, 0, 0) 
-        call BlzFrameSetAbsPoint(resetButtonFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX - MAIN_FRAME_X_MARGIN - BUTTON_WIDTH, mainFrameBottomRightY + MAIN_FRAME_Y_TOP_MARGIN + BUTTON_HEIGHT) 
-        call BlzFrameSetAbsPoint(resetButtonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX - MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_BOTTOM_MARGIN) 
+        call BlzFrameSetSize(resetButtonFrameHandle, BUTTON_WIDTH, BUTTON_HEIGHT)
+        call BlzFrameSetPoint(resetButtonFrameHandle, FRAMEPOINT_BOTTOM, RewardsFrameHandle, FRAMEPOINT_BOTTOM, 0, MAIN_FRAME_Y_BOTTOM_MARGIN)
         call BlzFrameSetScale(resetButtonFrameHandle, 1.00) 
         call BlzFrameSetText(resetButtonFrameHandle, "|cfffc0d21Reset|r") 
         set ResetHandleId = GetHandleId(resetButtonFrameHandle)
@@ -385,7 +389,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         call BlzFrameSetText(descriptionTextFrameHandle, REWARDS_DESCRIPTION) 
 
         // Cleanup
-        set submitButtonFrameHandle = null
+        set closeButtonFrameHandle = null
         set resetButtonFrameHandle = null
         set titleFrameHandle = null
     endfunction

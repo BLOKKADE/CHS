@@ -8,6 +8,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // How often the scoreboard is updated
         private constant real SCOREBOARD_UPDATE_INTERVAL                = 2.0
 
+        private constant string CLOSE_BUTTON_ICON                       = "ReplaceableTextures\\CommandButtons\\BTNuncheck.blp"
+
         // The X,Y coordinate for the top left of the main frame
         private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.14
         private constant real MAIN_FRAME_TOP_LEFT_Y                     = 0.56
@@ -21,6 +23,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant real ICON_WIDTH                                = 0.016
         private constant real ICON_SPACING                              = 0.003
         private constant real ROW_SPACING                               = 0.01
+        private constant real CLOSE_ICON_WIDTH                          = 0.032
 
         // Column indexes
         private constant integer PLAYER_STATS_INDEX                     = 0
@@ -69,6 +72,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private framehandle ScoreboardTooltipFrame
 		private framehandle ScoreboardTooltipTitleFrame
 		private framehandle ScoreboardTooltipTextFrame
+
+        private integer CloseHandleId
 
         // Keep track of what is currently in the scoreboard to be smarter about what needs to be updated/removed to improve performance. Is also a separation of concerns from the PlayerHeroes array and if the hero gets removed for whatever reason.
         // NOTE: CachedPlayerItems and CachedPlayerAbilities could be merged into a single array, but I thought it would be simpler if they are separate
@@ -457,8 +462,15 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 				call BlzFrameSetEnable(currentFrameHandle, true)
 			endif
 
+            // Close
+            if (handleId == CloseHandleId) then
+                if (GetLocalPlayer() == triggerPlayer) then	
+                    call BlzFrameSetVisible(ScoreboardFrameHandle, false) 
+                    call PlayerStats.forPlayer(triggerPlayer).setHasScoreboardOpen(false)
+                endif
+
             // Toggle selected player's hero if it exists and is alive
-            if (columnIndex == PLAYER_HERO_INDEX and (not PlayerLeftGame[playerId]) and PlayerHeroes[playerId] != null and UnitAlive(PlayerHeroes[playerId])) then
+            elseif (columnIndex == PLAYER_HERO_INDEX and (not PlayerLeftGame[playerId]) and PlayerHeroes[playerId] != null and UnitAlive(PlayerHeroes[playerId])) then
                 call SelectUnitForPlayerSingle(PlayerHeroes[playerId], triggerPlayer)
             endif
 
@@ -528,6 +540,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local framehandle creditsTextFrameHandle
         local framehandle scoreboardGameDescriptionFrameHandle
         local framehandle scoreboardGameDescriptionTextFrameHandle
+        local framehandle closeButtonFrameHandle
+        local framehandle closeIconButtonFrameHandle
 
         // This will get all players, even if they left the game already
         set ScoreboardForce = GetPlayerForce()
@@ -578,6 +592,16 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         call BlzFrameSetScale(scoreboardGameDescriptionTextFrameHandle, 1.05) 
         call BlzFrameSetTextAlignment(scoreboardGameDescriptionTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER)
         call BlzFrameSetText(scoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescription) 
+
+        // Create the close button
+        set closeButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", ScoreboardFrameHandle, 0, 0) 
+        set closeIconButtonFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", closeButtonFrameHandle, "", 1)
+        call BlzFrameSetPoint(closeButtonFrameHandle, FRAMEPOINT_TOPRIGHT, ScoreboardFrameHandle, FRAMEPOINT_TOPRIGHT, -(CLOSE_ICON_WIDTH / 4), -(CLOSE_ICON_WIDTH / 4))
+        call BlzFrameSetAllPoints(closeIconButtonFrameHandle, closeButtonFrameHandle) 
+        call BlzFrameSetTexture(closeIconButtonFrameHandle, CLOSE_BUTTON_ICON, 0, true) 
+        call BlzFrameSetSize(closeButtonFrameHandle, CLOSE_ICON_WIDTH, CLOSE_ICON_WIDTH)
+        set CloseHandleId = GetHandleId(closeButtonFrameHandle)
+        call BlzTriggerRegisterFrameEvent(IconEventTrigger, closeButtonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
 
         // Cleanup
         set titleFrameHandle = null
