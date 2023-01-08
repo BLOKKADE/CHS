@@ -2,7 +2,10 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
 
     globals
         private integer PlayerIdIndex = 0
-        integer BattleRoyalWaitTime = 120
+        integer BattleRoyalWaitTime = 60
+        timer BattleRoyalTimer
+        timerdialog BattleRoyalTimerDialog
+        boolean WaitingForBattleRoyal
     endglobals
 
     private function ShopFilter takes nothing returns boolean
@@ -85,19 +88,9 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         endif
     endfunction
 
-    private function InitializeBattleRoyaleActions takes nothing returns nothing
+    function BattleRoyalInitialization takes nothing returns nothing
         local group shops
         local group playerUnits
-
-        call TriggerSleepAction(5.00)
-
-        // SHow the BR is starting
-        call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Battle Royal")
-        call StartTimerBJ(GetLastCreatedTimerBJ(), false, BattleRoyalWaitTime)
-        call DisplayTextToForce(GetPlayersAll(), "Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
-
-        call TriggerSleepAction(BattleRoyalWaitTime)
 
         // Final message about BR, hide shops, cleanup before the actual fight
         set BrStarted = true
@@ -165,6 +158,28 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
 
         // Save debug codes
         call DebugCode_SavePlayerDebugEveryone()
+    endfunction
+
+    function StartBattleRoyal takes nothing returns nothing
+        set WaitingForBattleRoyal = false
+        call DestroyTimer(BattleRoyalTimer)
+        call DestroyTimerDialog(BattleRoyalTimerDialog)
+        call BattleRoyalInitialization.execute()
+    endfunction
+
+    private function InitializeBattleRoyaleActions takes nothing returns nothing
+        call TriggerSleepAction(5.00)
+
+        call DisplayTextToForce(GetPlayersAll(), "Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
+
+        set BattleRoyalTimer = CreateTimer()
+        set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
+        call TimerDialogSetTitle(BattleRoyalTimerDialog, "Battle Royal...")
+        call TimerDialogDisplay(BattleRoyalTimerDialog, true)
+
+        set WaitingForBattleRoyal = true
+        
+        call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function StartBattleRoyal)
     endfunction
 
     private function init takes nothing returns nothing

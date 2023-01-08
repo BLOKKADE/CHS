@@ -1,4 +1,4 @@
-library ReadyButton initializer init requires PlayerTracking, AllPlayersCompletedRound
+library ReadyButton initializer init requires PlayerTracking, AllPlayersCompletedRound, InitializeBattleRoyale
     //button is setup in IconFrames.j
     globals
         boolean array PlayerHasReadied
@@ -78,6 +78,16 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         endif
     endfunction
 
+    function DisableReadyButtonForAllPlayers takes nothing returns nothing
+        local integer i = 0
+
+        loop
+            call ReadyButtonVisibility(true, i, false)
+            set i = i + 1
+            exitwhen i > 8
+        endloop
+    endfunction
+
     function ReadyButtonTexture takes boolean isReady returns nothing
         if isReady then
             call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNDefend.blp", 0, true)
@@ -93,8 +103,13 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
     function CheckReadyPlayers takes nothing returns nothing
         if ReadyPlayerCount() >= PlayersNeeded then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "Starting next round...")
-            call TimerStart(NewTimer(), 2., false, function StartRound)
+            if WaitingForBattleRoyal then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Battle Royal!|r")
+                call StartBattleRoyal()
+            else
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|c00fbff08Starting next round...|r")
+                call TimerStart(NewTimer(), 2., false, function StartRound)
+            endif
         endif
     endfunction
 
@@ -111,7 +126,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         call UpdatePlayersNeeded()
 
         if not PlayerHasReadied[pid] then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, GetPlayerNameColour(p) + " is ready. |c00fbff08" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, GetPlayerNameColour(p) + " is ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
         endif
 
         call CheckReadyPlayers()
@@ -126,11 +141,17 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     private function OnRoundEnd takes EventInfo eventInfo returns nothing
         local integer pid = GetPlayerId(eventInfo.p)
         call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
-        call ReadyButtonVisibility(false, pid, false)
-        set PlayerHasReadied[pid] = false
-        if PlayerIsAlwaysReady[pid] then
-            call PlayerReadies(eventInfo.p)
-        endif
+            call ReadyButtonVisibility(false, pid, false)
+            set PlayerHasReadied[pid] = false
+        
+            if PlayerIsAlwaysReady[pid] then
+                //reset when battle royal wait time starts
+                if eventInfo.roundNumber + 1 == BattleRoyalRound then
+                    set PlayerIsAlwaysReady[pid] = false
+                else
+                    call PlayerReadies(eventInfo.p)
+                endif
+            endif
     endfunction
 
     private function init takes nothing returns nothing
