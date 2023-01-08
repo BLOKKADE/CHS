@@ -7,6 +7,7 @@ library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
         integer pid
         real damage
         effect fx
+        effect auraFx
         real x
         real y
 
@@ -37,6 +38,8 @@ library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
             set this.y = y
             set this.damage = level * 10 + (GetHeroLevel(PlayerHeroes[this.pid]) * (2 + (level / 2)))
             set this.fx = AddLocalizedSpecialEffect("Abilities\\Spells\\NightElf\\Cyclone\\CycloneTarget.mdl", this.x, this.y)
+            set this.auraFx = AddLocalizedSpecialEffect("war3mapImported\\TornadoAura_noTC.mdx", this.x, this.y)
+            call BlzSetSpecialEffectScale(this.auraFx, 2.5)
 
             call this.startPeriodic()
             return this
@@ -46,6 +49,8 @@ library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
             set this.source = null
             //call BJDebugMsg("sl end")
             call DestroyEffect(this.fx)
+            call DestroyEffect(this.auraFx)
+            set this.auraFx = null
             set this.fx = null
             call this.recycle()
         endmethod
