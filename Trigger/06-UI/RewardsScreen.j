@@ -2,7 +2,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
     globals
         // Rewards static titles
-        private constant string REWARDS_DESCRIPTION                     = "|cfffbff00After each normal round, your hero will permanently gain the selected stats above|r"
+        private constant string REWARDS_DESCRIPTION                     = "|cfffbff00After each normal round, your hero will permanently gain the selected stats above. You will receive points after each PVP round.|r"
         private constant string REWARDS_TITLE                           = "|cff2ff1ffChoose your rewards!|r"
 
         // The X,Y coordinate for the top left of the main frame
