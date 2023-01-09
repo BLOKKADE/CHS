@@ -49,7 +49,6 @@ library GameInit initializer init requires GroupUtils
         integer array ShopIds
         integer BettingPlayerCount = 0
         integer BoughtAbility = 0
-        integer BrPlayerCount = 0
         integer CountdownCount = 0
         integer HideShopsCount = 0
         integer HideShopsIndex = 0

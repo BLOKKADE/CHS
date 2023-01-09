@@ -2,6 +2,8 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
 
     globals
         private integer PlayerIdIndex = 0
+        private integer CurrentPlayerHeroPlacement = 0
+
         integer BattleRoyalWaitTime = 120
         timer BattleRoyalTimer
         timerdialog BattleRoyalTimerDialog
@@ -21,7 +23,6 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
     endfunction
 
     private function SetAllianceForPlayer takes nothing returns nothing
-        set BrPlayerCount = BrPlayerCount + 1
         call SetPlayerAllianceStateBJ(GetOwningPlayer(GetEnumUnit()), Player(PlayerIdIndex), bj_ALLIANCE_UNALLIED)
     endfunction
 
@@ -29,7 +30,7 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         local unit currentUnit = GetEnumUnit()
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-        local location projectionLocation = PolarProjectionBJ(RectMidArenaCenter, 1200, (((I2R(GetPlayerId(currentPlayer))) * -45.00) - 225.00))
+        local location projectionLocation = PolarProjectionBJ(RectMidArenaCenter, 1200, I2R(CurrentPlayerHeroPlacement) * (360.0 / I2R(PlayerCount)))
 
         set TempUnit = currentUnit // Used in HeroRefreshTrigger
         call PauseUnit(TempUnit, true)
@@ -44,6 +45,8 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
 
         call SelectUnitForPlayerSingle(currentUnit, currentPlayer)
         call PanCameraToTimedLocForPlayer(currentPlayer, projectionLocation, 0.50)
+
+        set CurrentPlayerHeroPlacement = CurrentPlayerHeroPlacement + 1
 
         // Cleanup
         call RemoveLocation(projectionLocation)
@@ -88,9 +91,11 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         endif
     endfunction
 
-    function BattleRoyalInitialization takes nothing returns nothing
-        local group shops
-        local group playerUnits
+    private function BattleRoyalInitialization takes nothing returns nothing
+        local group playerUnits = GetUnitsInRectMatching(GetPlayableMapRect(), Condition(function IsValidPlayerHeroUnit))
+        local group shops = GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE), Condition(function ShopFilter))
+        local group randomPlayerUnits = CreateGroup()
+        local unit randomUnit
 
         // Final message about BR, hide shops, cleanup before the actual fight
         set BrStarted = true
@@ -102,7 +107,6 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         call RemoveUnitsInRect(bj_mapInitialPlayableArea)
 
         // Delete shops
-        set shops = GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE), Condition(function ShopFilter))
         call ForGroup(shops, function DeleteShop)
 
         // Cleanup
@@ -113,19 +117,27 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         loop
             exitwhen PlayerIdIndex == 8
 
-            set playerUnits = GetUnitsInRectMatching(GetPlayableMapRect(), Condition(function IsValidPlayerHeroUnit))
             call ForGroup(playerUnits, function SetAllianceForPlayer)
-
-            // Cleanup
-            call DestroyGroup(playerUnits)
-            set playerUnits = null
 
             set PlayerIdIndex = PlayerIdIndex + 1
         endloop
 
+        // Randomize the player hero group to mix things up every time
+        loop
+            set randomUnit = GroupPickRandomUnit(playerUnits)
+
+            exitwhen randomUnit == null
+
+            call GroupRemoveUnit(playerUnits, randomUnit)
+            call GroupAddUnit(randomPlayerUnits, randomUnit)
+        endloop
+
+        // Cleanup
+        call DestroyGroup(playerUnits)
+        set playerUnits = null
+
         // Place units in a circle in center arena
-        set playerUnits = GetUnitsInRectMatching(GetPlayableMapRect(), Condition(function IsValidPlayerHeroUnit))
-        call ForGroup(playerUnits, function PlacePlayerHeroInCenterArena)
+        call ForGroup(randomPlayerUnits, function PlacePlayerHeroInCenterArena)
 
         // Remove all items on the ground
         call EnumItemsInRectBJ(GetPlayableMapRect(), function RemoveItemFromArena)
@@ -145,16 +157,22 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         call PlaySoundBJ(udg_sound08)
         call DisplayTimedTextToForce(GetPlayersAll(), 1.00, "|cffffcc00GO!!!|r")
         call SetAllCurrentlyFighting(true)
-        call ForGroup(playerUnits, function StartFightForPlayerHero)
+        call ForGroup(randomPlayerUnits, function StartFightForPlayerHero)
         
+        // Cleanup
+        call DestroyGroup(randomPlayerUnits)
+        set randomPlayerUnits = null
+
+        set playerUnits = GetUnitsInRectMatching(GetPlayableMapRect(), Condition(function IsValidPlayerHeroUnit))
+
+        // Check if people left before the BR started
+        if (CountUnitsInGroup(playerUnits) == 1) then
+            call ConditionalTriggerExecute(EndGameTrigger)
+        endif
+
         // Cleanup
         call DestroyGroup(playerUnits)
         set playerUnits = null
-
-        if (BrPlayerCount == 1) then
-            set PlayerCount = 1
-            call ConditionalTriggerExecute(EndGameTrigger)
-        endif
 
         // Save debug codes
         call DebugCode_SavePlayerDebugEveryone()
