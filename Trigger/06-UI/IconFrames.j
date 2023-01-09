@@ -407,8 +407,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", 0.08, -0.39, BIG_BUTTON_WIDTH)
 		call CreateIndicatorForButton(6)
 
-		// Creep info
-		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", 0.12, -0.39, BIG_BUTTON_WIDTH)
+		// Creep info - Create at same place as the Rewards button above. This button will move over after round 5
+		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", 0.08, -0.39, BIG_BUTTON_WIDTH)
 		// -- Big buttons
 
 		// -- Currency buttons - Top middle rightish
@@ -424,12 +424,10 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// -- Top left buttons
 		// Player element count
-		call CreateIconWorld(38, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call BlzFrameSetTexture(ButtonId[38], "ReplaceableTextures\\PassiveButtons\\PASElements.blp", 0, true)
+		call CreateIconWorld(38, "ReplaceableTextures\\PassiveButtons\\PASElements.blp", 0.04, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
 
 		// Player stats
-		call CreateIconWorld(39, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.018, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call BlzFrameSetTexture(ButtonId[39], "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", 0, true)
+		call CreateIconWorld(39, "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", 0.018, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
 
 		// Abilities/absolutes
 		call CreateIconWorld(100, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)

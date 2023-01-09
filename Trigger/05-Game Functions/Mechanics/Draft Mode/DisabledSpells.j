@@ -1,4 +1,5 @@
 library DisableSpells
+    
     function DisableSpell takes integer playerNumber, integer spellId returns nothing
         call SaveIntegerBJ(LoadIntegerBJ(playerNumber, udg_Draft_PlayerSpellsMaxIndex[playerNumber], udg_Draft_PlayerSpells), playerNumber, spellId, udg_Draft_PlayerSpells)
         set udg_Draft_PlayerSpellsMaxIndex[playerNumber] = udg_Draft_PlayerSpellsMaxIndex[playerNumber] - 1
@@ -14,4 +15,5 @@ library DisableSpells
             exitwhen i > max
         endloop
     endfunction
+
 endlibrary

@@ -103,7 +103,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
     private function ToggleRewards takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
-        if (RewardsFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
+        if (RoundNumber > 5 and RewardsFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
             call BlzFrameSetVisible(RewardsFrameHandle, PlayerStats.forPlayer(GetTriggerPlayer()).toggleHasRewardsOpen()) 
         endif
     endfunction

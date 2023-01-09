@@ -101,13 +101,18 @@ scope LongPeriodCheck initializer init
         call BlzFrameSetVisible(ButtonParentId[4], ScoreboardFrameHandle != null)
 
         // Show rewards button
-        call BlzFrameSetVisible(ButtonParentId[6], RewardsFrameHandle != null)
+        call BlzFrameSetVisible(ButtonParentId[6], RoundNumber > 5 and RewardsFrameHandle != null)
+
+        // Move the creep info button over after round 5 since we are now showing the rewards button
+        if (RoundNumber > 5) then
+            call BlzFrameSetPoint(ButtonParentId[2], FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, 0.12, -0.39)
+        endif
 
         // Indicator if the player is auto-ready
         call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])
 
         // Indicator if the player has points
-        call BlzFrameSetVisible(ButtonIndicatorParentId[6], PlayerRewardPoints[pid] > 0)
+        call BlzFrameSetVisible(ButtonIndicatorParentId[6], RoundNumber > 5 and PlayerRewardPoints[pid] > 0)
 
         // Hero info
         set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid])
@@ -125,11 +130,7 @@ scope LongPeriodCheck initializer init
         endif
 
         // Creep info
-        if ShowCreepAbilButton[pid] then
-            call BlzFrameSetVisible(ButtonParentId[2], true)
-        else
-            call BlzFrameSetVisible(ButtonParentId[2], false)
-        endif
+        call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid])
 
         // Show sell all items/convert gold/lumber button
         if (ShopsCreated == false or BrStarted) then

@@ -1,4 +1,5 @@
 library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex, RuneMaster, NewAbilityCooldown
+
     function GetHeroTotalAbilitiesCooldown takes unit u returns real
         local real total = 0
         local integer abilId
@@ -7,7 +8,7 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
 
         loop
             set abilId = GetHeroSpellAtPosition(u, i)
-            set abilIdCurrent = CheckAssociatedSpell(u,abilId)
+            set abilIdCurrent = CheckAssociatedSpell(u, abilId)
 
             set total = total + BlzGetUnitAbilityCooldownRemaining(u, abilIdCurrent)
  
@@ -18,16 +19,16 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         return total
     endfunction
 
-    function AddCooldowns takes unit u,real cd returns nothing
+    function AddCooldowns takes unit u, real cd returns nothing
         local integer i1 = 1
         local integer id = 0 
         local integer dummyAbilId = 0
         
         loop
             exitwhen i1 > 10
-            set id = CheckAssociatedSpell(u, GetHeroSpellAtPosition(u ,i1))
+            set id = CheckAssociatedSpell(u, GetHeroSpellAtPosition(u, i1))
 
-            call BlzStartUnitAbilityCooldown(u,id, cd + BlzGetUnitAbilityCooldownRemaining(u,id))
+            call BlzStartUnitAbilityCooldown(u, id, cd + BlzGetUnitAbilityCooldownRemaining(u, id))
 
             set i1 = i1 + 1
         endloop
@@ -41,7 +42,7 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         local real timeBonus = 0
         local integer hid = GetHandleId(u)
 
-    //Get the cooldown of an ability if it was set by code somewhere else (mostly used for active abilities)
+        //Get the cooldown of an ability if it was set by code somewhere else (mostly used for active abilities)
         if GetUnitAbilityNewCooldown(u, id) != 0 then
             set cd = GetUnitAbilityNewCooldown(u, id)
             set time = cd
@@ -104,12 +105,12 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         endif
             
         //Fast Magic
-        if GetUnitAbilityLevel(u,FAST_MAGIC_ABILITY_ID) >= 1 then
-            set ResCD = ResCD *(1 - 0.01 * I2R(GetUnitAbilityLevel(u,FAST_MAGIC_ABILITY_ID))) 
+        if GetUnitAbilityLevel(u, FAST_MAGIC_ABILITY_ID) >= 1 then
+            set ResCD = ResCD * (1 - 0.01 * I2R(GetUnitAbilityLevel(u, FAST_MAGIC_ABILITY_ID))) 
         endif
 
         //Druid of the Claw
-        if GetUnitTypeId(u ) == DRUID_OF_THE_CLAY_UNIT_ID and IsObjectElement(id, Element_Summon) then
+        if GetUnitTypeId(u) == DRUID_OF_THE_CLAY_UNIT_ID and IsObjectElement(id, Element_Summon) then
             set ResCD = ResCD * 0.5
         endif
 
@@ -119,18 +120,18 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         endif
         
         //Xesil
-        if (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID) then
-            set xesilChance = 20 + (0.1 * GetHeroLevel(u) )
+        if (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID) then
+            set xesilChance = 20 + (0.1 * GetHeroLevel(u))
         endif
 
         //Xesil's Legacy
-        if IsSpellResettable(id) and ((GetUnitTypeId(u ) != TIME_WARRIOR_UNIT_ID and UnitHasItemType(u,'I03P') and GetRandomReal(0,100) <= 25 * luck) or (GetUnitTypeId(u ) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0,100) <= RMinBJ(xesilChance * luck, 90))) then
+        if IsSpellResettable(id) and ((GetUnitTypeId(u) != TIME_WARRIOR_UNIT_ID and UnitHasItemType(u,'I03P') and GetRandomReal(0, 100) <= 25 * luck) or (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0, 100) <= RMinBJ(xesilChance * luck, 90))) then
             set ResCD = 0.001
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin" )  )     
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin"))     
         endif 
         
         //Staff of Water
-        if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0,100) <= RMinBJ(40 * luck, 90 ) then
+        if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0, 100) <= RMinBJ(40 * luck, 90) then
             set ResCD = 0.001
         endif
 
@@ -145,10 +146,10 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         return (time * ResCD) + timeBonus
     endfunction
 
-    function AbilStartCD takes unit u, integer id,real cd returns real
+    function AbilStartCD takes unit u, integer id, real cd returns real
         local real newCooldown = CalculateCooldown(u, id, cd, false)
-        call ElemFuncStart(u,id)
-        call BlzStartUnitAbilityCooldown(u,id, newCooldown)
+        call ElemFuncStart(u, id)
+        call BlzStartUnitAbilityCooldown(u, id, newCooldown)
 
         if id != ANCIENT_TEACHING_ABILITY_ID then
             set Global_i = id
@@ -158,4 +159,5 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         
         return newCooldown 
     endfunction
+
 endlibrary

@@ -33,7 +33,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         
         loop
             exitwhen i1 > 10
-            set id = GetHeroSpellAtPosition(hero ,i1)
+            set id = GetHeroSpellAtPosition(hero, i1)
             call UnitAddAbility(dummy, id)
             call SetUnitAbilityLevel(dummy, id, GetUnitAbilityLevel(hero, id))
             call FuncEditParam(id, dummy)
