@@ -253,7 +253,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         local unit creep
         local integer playerId = 0
         local group g = null
-        
+        local integer creepDamage
+
         set RoundCreepInfo[0] = ""
         set RoundCreepInfo[1] = ""
         set RoundCreepInfo[2] = ""
@@ -387,7 +388,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
             loop
                 exitwhen RoundGenCreepIndex > RoundCreepNumber
-                if RoundNumber > 1 then
+                if RoundNumber > 0 then
                     set ShowCreepAbilButton[playerId] = true
                 endif
                 
@@ -431,49 +432,49 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (0.5 * (RoundNumber)))
                     elseif RoundNumber < 11  then
-                        call BlzSetUnitArmor(creep , BlzGetUnitArmor(creep) + RoundNumber / 3) 
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber / 3) 
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + 2 * RoundNumber, 0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + 8 * RoundNumber)
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep)) 	
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (0.6 * (RoundNumber)))	
                     elseif RoundNumber < 19  then
-                        call BlzSetUnitArmor(creep , BlzGetUnitArmor(creep) + RoundNumber * 1) 
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 1) 
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + 6 * RoundNumber, 0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + 40 * RoundNumber)
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))  
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (0.7 * (RoundNumber)))              	
                     elseif RoundNumber < 24  then
-                        call BlzSetUnitArmor(creep , BlzGetUnitArmor(creep) + RoundNumber * 3) 
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 3) 
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + 14 * RoundNumber, 0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + 45 * RoundNumber)
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))		    
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (0.8 * (RoundNumber)))
                     elseif RoundNumber < 35  then
-                        call BlzSetUnitArmor(creep , BlzGetUnitArmor(creep) + RoundNumber * 5) 
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 5) 
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + 55 * RoundNumber, 0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + 75 * RoundNumber)
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))				    
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (1. * (RoundNumber)))
                     elseif RoundNumber < 41  then
-                        call BlzSetUnitArmor(creep , BlzGetUnitArmor(creep) + RoundNumber * 8) 
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 8) 
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + 200 * RoundNumber, 0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + 150 * RoundNumber)
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))			
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (1.25 * (RoundNumber)))	    
                     elseif RoundNumber < 45  then
-                        call BlzSetUnitArmor(creep , BlzGetUnitArmor(creep) + RoundNumber * 10) 
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 10) 
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + 400 * RoundNumber, 0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + 325 * RoundNumber)
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))	
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (1.5 * (RoundNumber)))
                     elseif RoundNumber < 49  then
-                        call BlzSetUnitArmor(creep , BlzGetUnitArmor(creep) + RoundNumber * 12) 
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 12) 
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + 500 * RoundNumber, 0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + 900 * RoundNumber)
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))	   
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (2 * (RoundNumber)))                              
                     else
-                        call BlzSetUnitArmor(creep , BlzGetUnitArmor(creep) + RoundNumber * 15) 
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 15) 
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + 900 * RoundNumber, 0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + 2500 * RoundNumber)
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))	   
@@ -520,15 +521,17 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff167daDamage Type|r: physical |n"
                         endif
                         //call BJDebugMsg("d")
+                        set creepDamage = BlzGetUnitBaseDamage(creep, 0) + BlzGetUnitDiceNumber(creep, 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(creep, 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower) / 2) - 1) + damageBonus
+
                         if BonusNeutral == 0 and BonusNeutralPlayer[playerId] == 0 then
-                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(creep, 0) + BlzGetUnitDiceNumber(creep, 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(creep, 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower) / 2) - 1)) + " - " + I2S(BlzGetUnitBaseDamage(creep, 0) + (BlzGetUnitDiceNumber(creep, 0) * BlzGetUnitDiceSides(creep, 0)) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(creep, 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower) / 2) - 1)) + "|n"
+                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff19bb8Damage|r: " + I2S(creepDamage) + "|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(creep))) + "|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_BLOCK))) + "|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_MAGICPOW))) + "|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_MAGICRES))) + "|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_EVASION)))
                         else
-                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff19bb8Damage|r: " + I2S(BlzGetUnitBaseDamage(creep, 0) + BlzGetUnitDiceNumber(creep, 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(creep, 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower) / 2) - 1) - damageBonus) + " - " + I2S(BlzGetUnitBaseDamage(creep, 0) + (BlzGetUnitDiceNumber(creep, 0) * BlzGetUnitDiceSides(creep, 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(creep, 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower) / 2) - 1) - damageBonus)) + " + |cfff19bb8" + I2S(R2I(damageBonus)) + "|r|n"
+                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff19bb8Damage|r: " + I2S(creepDamage) + "|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9babf1Armor|r: " + I2S(R2I(BlzGetUnitArmor(creep))) + "|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_BLOCK) - blockBonus)) + " + |cff78729e" + I2S(R2I(blockBonus)) + "|r|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_MAGICPOW) - magicPowerBonus)) + "+ |cff9bc7f1" + I2S(R2I(magicPowerBonus)) + "|r|n"

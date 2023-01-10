@@ -63,7 +63,8 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.create(p, 0, RoundNumber))
         set RoundFinishedCount = RoundFinishedCount + 1
         call SetUnitInvulnerable(PlayerHeroes[pid], true)
-        
+        set ShowCreepAbilButton[pid] = false
+
         if (RoundLiveLost[pid]) then
             set RoundLiveLost[pid] = false
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")
