@@ -375,19 +375,20 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         set RoundNumber = (RoundNumber + 1)
         call ForGroup(RoundCreeps, function RemovePreviousUnit)
         call GroupClear(RoundCreeps)
-        set RoundGenCreepIndex = 1
 
         loop
             exitwhen playerId == 8
 
-            if RoundGenCreepIndex > 4 then
-                set RoundCreepChanceBigBadV = 2
-            endif
-
             set g = NewGroup()
+            set RoundGenCreepIndex = 1
 
             loop
                 exitwhen RoundGenCreepIndex > RoundCreepNumber
+                
+                if RoundGenCreepIndex > 4 then
+                    set RoundCreepChanceBigBadV = 2
+                endif
+
                 if RoundNumber > 0 then
                     set ShowCreepAbilButton[playerId] = true
                 endif
