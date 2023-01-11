@@ -172,7 +172,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
     
         if s == "" then
-            set RoundAbilities = "|cff77fc94No abilities|r "
+            set RoundAbilities = "|cff77fc94No abilities|r"
+        else
+            set RoundAbilities = s
         endif
     endfunction
 
