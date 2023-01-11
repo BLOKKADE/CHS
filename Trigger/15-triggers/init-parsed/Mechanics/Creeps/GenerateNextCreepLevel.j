@@ -38,7 +38,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
     private function ConcatAbility takes string currentAbilities, string nextAbility returns string
         if currentAbilities == "" then
-            return ", |cff77fc94" + nextAbility + "|r"
+            return "|cff77fc94" + nextAbility + "|r"
         endif
 
         return currentAbilities + ", |cff77fc94" + nextAbility + "|r"
