@@ -31,11 +31,8 @@ library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, 
             set this.fx = AddLocalizedSpecialEffectTarget( "RighteousGuard.mdx" , this.source , "origin" )
             call UnitAddAbility(this.source, 'A08C')
             set this.enabled = true
-            call AbilStartCD(this.source, abilId, 30.69 - (0.69 * GetUnitAbilityLevel(this.source, abilId))) 
+            call AbilStartCD(this.source, abilId, 50.0 - (1. * GetUnitAbilityLevel(this.source, abilId))) 
             set DivineBubbles[GetHandleId(this.source)] = this
-            if UnitHasItemType(this.source, LIGHT_RUNESTONE_ITEM_ID) then
-                set duration = duration + 1
-            endif
             set this.endTick = T32_Tick + R2I(duration * 32)   
             call this.startPeriodic()
             return this
