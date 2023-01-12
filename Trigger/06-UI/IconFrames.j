@@ -418,8 +418,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		// Convert gold to lumber
 		call CreateIconWorld(37, "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp", 0.43 + (2 * SMALL_BUTTON_WIDTH), -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
 
-		// Sell all items
-		call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", 0.43 + (3 * SMALL_BUTTON_WIDTH), -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		// Sell all items - Have a gap between the gold to lumber button
+		call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", 0.43 + (4 * SMALL_BUTTON_WIDTH), -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
 		// -- Currency buttons
 
 		// -- Top left buttons
