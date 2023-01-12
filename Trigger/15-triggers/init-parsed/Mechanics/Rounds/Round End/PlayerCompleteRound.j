@@ -43,9 +43,15 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         local real duration = (T32_Tick - RoundStartTick) / 32
         local real playerCountSub = RMaxBJ(7 - (0.5 * duration), 0)
         local integer roundClearXpBonus = R2I(playerCountSub * (4 * Pow(RoundNumber, 2)))
+        local string color = "|cff7bff00"
 
         if (GetUnitTypeId(PlayerHeroes[pid]) == TINKER_UNIT_ID) then
             set roundClearXpBonus = roundClearXpBonus * 2
+        endif
+
+        if CreepAntagonisationBought[pid] then
+            set roundClearXpBonus = roundClearXpBonus * 2
+            set color = "|cff00b7ff"
         endif
 
         if (RoundNumber == 5) then
@@ -72,7 +78,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
             if (roundClearXpBonus == 0) then
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r")
             else
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r |cff7bff00(+" + I2S(roundClearXpBonus) + " exp)|r")
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r "+ color +"(+" + I2S(roundClearXpBonus) + " exp)|r")
                 call AddHeroXPSwapped(roundClearXpBonus, PlayerHeroes[pid], true)
             endif
         endif
