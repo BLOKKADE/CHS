@@ -211,7 +211,7 @@ scope ModifyDamageAfterArmor initializer init
         
         //Heavy Mace
         set i = GetUnitItemTypeCount( DamageSource,'I07I') 
-        if i > 0 and IsUnitType(DamageSource,UNIT_TYPE_MELEE_ATTACKER) then
+        if i > 0 then
             set r1 =  (GetWidgetLife(DamageTarget)/ 100)* 1.5 * I2R(i)  
             set vampAmount = vampAmount + r1
             set Damage.index.amount = Damage.index.amount + r1
