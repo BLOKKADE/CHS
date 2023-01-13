@@ -105,7 +105,7 @@ scope LongPeriodCheck initializer init
 
         // Move the creep info button over after round 5 since we are now showing the rewards button
         if (RoundNumber > 5) then
-            call BlzFrameSetPoint(ButtonParentId[2], FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, 0.12, -0.39)
+            call BlzFrameSetPoint(ButtonParentId[2], FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y)
         endif
 
         // Indicator if the player is auto-ready

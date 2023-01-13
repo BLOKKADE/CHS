@@ -4,8 +4,19 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		// Sparkly thing that goes around an icon
 		private string IndicatorPathPick = "UI\\Feedback\\Autocast\\UI-ModalButtonOn.mdl"
 
+		// Button sizes
 		private constant real SMALL_BUTTON_WIDTH = 0.025
 		private constant real BIG_BUTTON_WIDTH = 0.036
+		constant real BIG_BUTTON_TOTAL_WIDTH = 0.04
+
+		// Starting x positions
+		private constant real TOP_RIGHT_ICON_ROW_X = 0.455
+		private constant real TOP_LEFT_ICON_ROW_X = 0.04
+		constant real BOTTOM_LEFT_ICON_ROW_X = 0
+
+		// Starting y positions
+		constant real BOTTOM_ICON_ROW_Y = -0.39
+		private constant real TOP_ICON_ROW_Y = -0.025
 
 		// Main GameUI that all frames should use
 		framehandle GameUI
@@ -397,60 +408,60 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// -- Big buttons - Bottom left
 		// Scoreboard
-		call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp", 0.00, -0.39, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNNotepad.blp", BOTTOM_LEFT_ICON_ROW_X + 0 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 
 		// Ready
-		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0.04, -0.39, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", BOTTOM_LEFT_ICON_ROW_X + 1 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 		call CreateIndicatorForButton(5)
 
 		// Rewards
-		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", 0.08, -0.39, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 		call CreateIndicatorForButton(6)
 
 		// Creep info - Create at same place as the Rewards button above. This button will move over after round 5
-		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", 0.08, -0.39, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 		// -- Big buttons
 
 		// -- Currency buttons - Top middle rightish
 		// Convert lumber to gold
-		call CreateIconWorld(36, "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp", 0.43 + SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(36, "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp", TOP_RIGHT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
 
 		// Convert gold to lumber
-		call CreateIconWorld(37, "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp", 0.43 + (2 * SMALL_BUTTON_WIDTH), -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(37, "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp", TOP_RIGHT_ICON_ROW_X + 1 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
 
 		// Sell all items - Have a gap between the gold to lumber button
-		call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", 0.43 + (4 * SMALL_BUTTON_WIDTH), -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", TOP_RIGHT_ICON_ROW_X + 3 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
 		// -- Currency buttons
 
 		// -- Top left buttons
-		// Player element count
-		call CreateIconWorld(38, "ReplaceableTextures\\PassiveButtons\\PASElements.blp", 0.04, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-
 		// Player stats
-		call CreateIconWorld(39, "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", 0.018, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(39, "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", TOP_LEFT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+
+		// Player element count
+		call CreateIconWorld(38, "ReplaceableTextures\\PassiveButtons\\PASElements.blp", TOP_LEFT_ICON_ROW_X + 1 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
 
 		// Abilities/absolutes
-		call CreateIconWorld(100, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(101, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(102, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 2 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(103, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 3 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(104, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 4 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(105, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 5 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(106, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 6 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(107, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 7 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(108, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 8 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(109, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 9 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(110, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 10 * SMALL_BUTTON_WIDTH, -SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(111, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(112, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 2 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(113, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 3 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(114, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 4 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(115, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 5 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(116, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 6 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(117, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 7 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(118, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 8 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(119, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 9 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
-		call CreateIconWorld(120, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.04 + 10 * SMALL_BUTTON_WIDTH, -2 * SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(100, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 1 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(101, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 2 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(102, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 3 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(103, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 4 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(104, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 5 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(105, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 6 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(106, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 7 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(107, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 8 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(108, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 9 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(109, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 10 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(110, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 11 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(111, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 2 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(112, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 3 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(113, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 4 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(114, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 5 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(115, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 6 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(116, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 7 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(117, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 8 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(118, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 9 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(119, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 10 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(120, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 11 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
 		// -- Top left buttons
 	endfunction
 
