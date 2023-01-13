@@ -3,7 +3,7 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
         real pvpWaitDuration = 25
         timer PvpWaitTimer
         timerdialog PvpWaitTimerDialog
-        boolean WaitingForPvp
+        boolean WaitingForPvp = false
     endglobals
 
     private function StartPvpBattles takes nothing returns nothing

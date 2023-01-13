@@ -7,7 +7,7 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
         integer BattleRoyalWaitTime = 120
         timer BattleRoyalTimer
         timerdialog BattleRoyalTimerDialog
-        boolean WaitingForBattleRoyal
+        boolean WaitingForBattleRoyal = false
     endglobals
 
     private function ShopFilter takes nothing returns boolean

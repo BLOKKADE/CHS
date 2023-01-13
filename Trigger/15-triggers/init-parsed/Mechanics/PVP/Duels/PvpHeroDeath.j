@@ -1,7 +1,7 @@
 library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent
 
     globals
-        boolean PvpRoundEndWait
+        boolean PvpRoundEndWait = false
         timer PvpRoundEndTimer
         timerdialog PvpRoundEndTimerDialog
     endglobals
