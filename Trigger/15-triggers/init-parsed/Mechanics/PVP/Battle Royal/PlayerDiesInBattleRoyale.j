@@ -28,6 +28,8 @@ library PlayerDiesInBattleRoyale initializer init requires RandomShit, UnitFilte
         local player deadPlayer = GetOwningPlayer(GetTriggerUnit())
         local group deadPlayerUnits = GetUnitsOfPlayerAll(deadPlayer)
 
+        call PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit())).addBRPVPKill()
+
         // Set the wave the player left
         call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
 
@@ -51,7 +53,7 @@ library PlayerDiesInBattleRoyale initializer init requires RandomShit, UnitFilte
     private function init takes nothing returns nothing
         set PlayerDiesInBattleRoyaleTrigger = CreateTrigger()
         call DisableTrigger(PlayerDiesInBattleRoyaleTrigger)
-        call TriggerRegisterAnyUnitEventBJ(PlayerDiesInBattleRoyaleTrigger,EVENT_PLAYER_UNIT_DEATH)
+        call TriggerRegisterAnyUnitEventBJ(PlayerDiesInBattleRoyaleTrigger, EVENT_PLAYER_UNIT_DEATH)
         call TriggerAddCondition(PlayerDiesInBattleRoyaleTrigger, Condition(function PlayerDiesInBattleRoyaleConditions))
         call TriggerAddAction(PlayerDiesInBattleRoyaleTrigger, function PlayerDiesInBattleRoyaleActions)
     endfunction
