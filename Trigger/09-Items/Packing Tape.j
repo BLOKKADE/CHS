@@ -21,6 +21,11 @@ library PackingTape initializer init requires PlayerSummonGroups, SummonInfo
         local unit temp = null
         local integer totalLevel = SummonLevel.integer[GetHandleId(target)]
 
+        if GetUnitTypeId(target) == FAERIE_DRAGON_UNIT_ID or GetSummonSpell(GetUnitTypeId(target)) == 0 then
+            call DisplayTimedTextToPlayer(GetOwningPlayer(caster), 0, 0, 10, "Packing Tape cannot be cast on this unit.")
+            return
+        endif
+
         call GroupClear(ENUM_GROUP)
         set ENUM_GROUP = GetPlayerSummonGroup(caster, GetUnitTypeId(target), ENUM_GROUP)
         call GroupRemoveUnit(ENUM_GROUP, target)
