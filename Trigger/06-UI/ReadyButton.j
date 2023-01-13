@@ -34,7 +34,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     endfunction
 
     function ReadyTooltip takes nothing returns string
-		return " (|cff77f3fcCtrl+R|r)|nCurrently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nHold shift while activating this button to always be |cff7784fcready|r.|nDoes not work for non-simultaneous pvp rounds.|r|n"
+		return " (|cff77f3fcCtrl+R|r)|nCurrently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nDoes not work for non-simultaneous pvp rounds."
 	endfunction
 
     function ReadyButtonTooltip takes player p, integer pid returns string
@@ -50,14 +50,14 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
                 set s = "|cff92fc77Ready|r" + ReadyTooltip()
             endif
         else
-            set s = "|cfffc9277Cannot be used during a round.|r|nHold shift while activating this button to toggle |cff7784fcauto-ready|r."
+            set s = "|cfffc9277Cannot be used during a round.|r"
         endif
 
         if PlayerIsAlwaysReady[pid] then
-            set s = s + "\nSet to |cff7784fcauto-ready|r.|nHold shift while activating this button to toggle |cff7784fcauto-ready|r."
+            set s = s + "\nSet to |cff7784fcauto-ready|r."
         endif
 
-        return s
+        return s + "|n|nHold shift while activating this button to always be |cff7784fcready|r."
     endfunction
 
     function ReadyButtonVisibility takes boolean disable, integer pid, boolean isReady returns nothing
