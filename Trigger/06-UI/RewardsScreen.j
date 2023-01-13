@@ -8,7 +8,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         // The X,Y coordinate for the top left of the main frame
         private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.23
         private constant real MAIN_FRAME_TOP_LEFT_Y                     = 0.50
-        private constant real MAIN_FRAME_X_MARGIN                       = 0.03
+        private constant real MAIN_FRAME_X_MARGIN                       = 0.035
         private constant real MAIN_FRAME_Y_TOP_MARGIN                   = 0.03
         private constant real MAIN_FRAME_Y_BOTTOM_MARGIN                = 0.025
         private constant real TITLE_HEIGHT                              = 0.03
