@@ -4,6 +4,7 @@ library CustomGameEvent initializer init requires ListT
 
         //when a round starts for all players
         integer EVENT_GAME_ROUND_START          =   0
+        
 
         // when all players have finished a round
         integer EVENT_GAME_ROUND_END            =   1
@@ -20,11 +21,13 @@ library CustomGameEvent initializer init requires ListT
         //??? resets murloc stats (can be removed once thats refactored)
         integer EVENT_FIX_START_ROUND           =   5
 
+        integer EVENT_PLAYER_ROUND_TELEPORT     =   6
+
         //When a player starts a round (urn)
-        integer EVENT_PLAYER_ROUND_START        =   6
+        integer EVENT_PLAYER_ROUND_START        =   7
 
         //when a player finished a round
-        integer EVENT_PLAYER_ROUND_COMPLETE     =   7
+        integer EVENT_PLAYER_ROUND_COMPLETE     =   8
 
         string array EventName
 
@@ -85,7 +88,7 @@ library CustomGameEvent initializer init requires ListT
         local IntegerList registeredCode = GetRegisteredCodeList(ev)
         local IntegerListItem node = registeredCode.first
 
-        call BJDebugMsg("ev: " + EventName[ev] + ", p: " + GetPlayerNameColour(eventInfo.p))
+        //call BJDebugMsg("ev: " + EventName[ev] + ", p: " + GetPlayerNameColour(eventInfo.p))
 
         if registeredCode != 0 then
             loop
@@ -120,7 +123,8 @@ library CustomGameEvent initializer init requires ListT
         set EventName[3] = "EVENT_LEVEL_ABILITY"
         set EventName[4] = "EVENT_UNLEARN_ABILITY"
         set EventName[5] = "EVENT_FIX_START_ROUND"
-        set EventName[6] = "EVENT_PLAYER_ROUND_START"
-        set EventName[7] = "EVENT_PLAYER_ROUND_COMPLETE"
+        set EventName[6] = "EVENT_PLAYER_ROUND_TELEPORT"
+        set EventName[7] = "EVENT_PLAYER_ROUND_START"
+        set EventName[8] = "EVENT_PLAYER_ROUND_COMPLETE"
     endfunction
 endlibrary

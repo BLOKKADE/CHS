@@ -46,6 +46,8 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
 
         call SetCurrentlyFighting(currentPlayer, true)
 
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.create(currentPlayer, 0, RoundNumber))
+
         // Cleanup
         set currentPlayer = null
         set playerHero = null

@@ -158,9 +158,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 			// Ready button
 			elseif NumButton == 5 then
-				if not ReadyButtonDisabled[PlID] then
-					call PlayerReadies(p)
-				endif
+				call PlayerReadies(p)
 
 			// Convert to gold
 			elseif NumButton == 36 then

@@ -48,6 +48,8 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
 
         set CurrentPlayerHeroPlacement = CurrentPlayerHeroPlacement + 1
 
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
+
         // Cleanup
         call RemoveLocation(projectionLocation)
         set projectionLocation = null
