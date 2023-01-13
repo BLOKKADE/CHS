@@ -232,7 +232,7 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
     endfunction
     
     private function HasExtraRow takes nothing returns boolean
-        return (I2R(TotalAchievementCount) / MaxColumnCount) == CurrentRowIndex
+        return CurrentColumnIndex == 0
     endfunction
 
     private function GoToNextRow takes nothing returns nothing
