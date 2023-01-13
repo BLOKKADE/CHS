@@ -52,6 +52,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         if CreepAntagonisationBought[pid] then
             set roundClearXpBonus = roundClearXpBonus * 2
             set color = "|cff00b7ff"
+            set CreepAntagonisationBought[pid] = false
         endif
 
         if (RoundNumber == 5) then

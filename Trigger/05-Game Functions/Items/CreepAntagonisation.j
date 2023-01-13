@@ -21,7 +21,6 @@ library CreepAntagonisation initializer init requires CustomState, CustomGameEve
         local integer i = 0
         local unit u = null
         if CreepAntagonisationBought[pid] then
-            set CreepAntagonisationBought[pid] = false
             loop
                 set u = BlzGroupUnitAt(PlayerRoundCreeps[eventInfo.roundNumber].group[pid], i)
                 exitwhen u == null
