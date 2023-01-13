@@ -1,5 +1,9 @@
 library PackingTape initializer init requires PlayerSummonGroups, SummonInfo
 
+    globals
+        Table RegisteredSummon
+    endglobals
+
     public function CheckSummonCount takes unit hero, unit summon returns boolean
         call GroupClear(ENUM_GROUP)
         call GetPlayerSummonGroup(hero, GetUnitTypeId(summon), ENUM_GROUP)
@@ -7,6 +11,7 @@ library PackingTape initializer init requires PlayerSummonGroups, SummonInfo
             call KillUnit(summon)
             return false
         endif
+        set RegisteredSummon.boolean[GetHandleId(summon)] = true
 
         return true
     endfunction
@@ -45,6 +50,6 @@ library PackingTape initializer init requires PlayerSummonGroups, SummonInfo
     endfunction
 
     private function init takes nothing returns nothing
-        
+        set RegisteredSummon = Table.create()
     endfunction
 endlibrary

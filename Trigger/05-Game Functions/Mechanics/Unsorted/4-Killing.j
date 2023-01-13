@@ -54,7 +54,7 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
             endif
 
             //Packing Tape
-            if UnitHasItemType(targetHero, PACKING_TAPE_ITEM_ID) and GetSummonSpell(GetUnitTypeId(target)) != 0 then
+            if UnitHasItemType(targetHero, PACKING_TAPE_ITEM_ID) and GetSummonSpell(GetUnitTypeId(target)) != 0 and RegisteredSummon.boolean[targetId] then
                 call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + GetUnitState(target, UNIT_STATE_MAX_LIFE) * 0.1) 
             endif
             
