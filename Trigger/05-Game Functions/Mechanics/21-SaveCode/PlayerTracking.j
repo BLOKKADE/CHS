@@ -208,7 +208,13 @@ library PlayerTracking initializer init requires GameInit
         endmethod
 
         public method getBRPVPKillCount takes nothing returns integer
-            return this.BRPVPKillCount
+            if (this.BRPVPKillCount == 0) then
+                return "no kills!"
+            elseif (this.BRPVPKillCount == 1) then
+                return "1 kill!"
+            endif
+
+            return I2S(this.BRPVPKillCount) + " kills!"
         endmethod
 
         // --- Functions for data that is not actually saved

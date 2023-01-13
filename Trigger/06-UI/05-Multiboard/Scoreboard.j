@@ -618,7 +618,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // If this is the BR winner, set the status
         if (PlayerBrWinner == playerId) then
             set CurrentColumnIndex = PLAYER_STATUS_INDEX
-            call CreateText(BR_WINNER_STATUS_COLOR + "Battle Royale Winner with " + I2S(ps.getBRPVPKillCount()) + " kills!" + COLOR_END_TAG, playerId)
+            call CreateText(BR_WINNER_STATUS_COLOR + "Battle Royale Winner with " + I2S(ps.getBRPVPKillCount()) + COLOR_END_TAG, playerId)
 
         // Player status for dying
         elseif (PlayerDeathRound[playerId] != 0) then
@@ -627,7 +627,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             if (PlayerDeathRound[playerId] == -1) then
                 call CreateText(NO_HERO_STATUS_COLOR + "Left before hero selection" + COLOR_END_TAG, playerId)
             elseif (PlayerDeathRound[playerId] == 50 or (GameModeShort == true and PlayerDeathRound[playerId] == 25)) then
-                call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Battle Royale with " + I2S(ps.getBRPVPKillCount()) + " kills" + COLOR_END_TAG, playerId)
+                call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Battle Royale with " + I2S(ps.getBRPVPKillCount()) + COLOR_END_TAG, playerId)
             else
                 call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
             endif
