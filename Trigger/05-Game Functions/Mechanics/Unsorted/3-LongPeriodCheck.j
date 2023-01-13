@@ -129,20 +129,19 @@ scope LongPeriodCheck initializer init
             call BlzFrameSetVisible(ButtonParentId[100], false) // Hero passive/description
         endif
 
-        // Creep info
-        call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid])
-
         // Show sell all items/convert gold/lumber button
         if (ShopsCreated == false or BrStarted) then
-            call BlzFrameSetVisible(ButtonParentId[3], false)
-            call BlzFrameSetVisible(ButtonParentId[5], false)
-            call BlzFrameSetVisible(ButtonParentId[36], false)
-            call BlzFrameSetVisible(ButtonParentId[37], false)
+            call BlzFrameSetVisible(ButtonParentId[3], false) // Sell all items
+            call BlzFrameSetVisible(ButtonParentId[5], false) // Ready button
+            call BlzFrameSetVisible(ButtonParentId[36], false) // Convert to gold
+            call BlzFrameSetVisible(ButtonParentId[37], false) // Convert to lumber
+            call BlzFrameSetVisible(ButtonParentId[2], false) // Creep info
         else
-            call BlzFrameSetVisible(ButtonParentId[3], true)
-            call BlzFrameSetVisible(ButtonParentId[5], true)
-            call BlzFrameSetVisible(ButtonParentId[36], true)
-            call BlzFrameSetVisible(ButtonParentId[37], true)
+            call BlzFrameSetVisible(ButtonParentId[3], true) // Sell all items
+            call BlzFrameSetVisible(ButtonParentId[5], true) // Ready button
+            call BlzFrameSetVisible(ButtonParentId[36], true) // Convert to gold
+            call BlzFrameSetVisible(ButtonParentId[37], true) // Convert to lumber
+            call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid]) // Creep info
         endif
     endfunction
 
