@@ -86,6 +86,7 @@ library PlayerTracking initializer init requires GameInit
         private integer PetLastSwappedAt = 0
         private integer PVPWins = 0 // PVP wins for the current game
         private integer PVPLosses = 0 // PVP losses for the current game
+        private integer BRPVPKillCount = 0 // PVP kills during the BR
 
         // --- Temporary values that are not saved to the load code
 
@@ -206,9 +207,21 @@ library PlayerTracking initializer init requires GameInit
             return this.IsReady
         endmethod
 
+        public method getBRPVPKillCount takes nothing returns integer
+            return this.BRPVPKillCount
+        endmethod
+
         // --- Functions for data that is not actually saved
 
         // --- Functions for data that is actually saved
+
+        public method addBRPVPKill takes nothing returns nothing
+            // Add the pvp win like normal
+            call this.addPVPWin()
+
+            set this.BRPVPKillCount = this.BRPVPKillCount + 1
+        endmethod
+
         public method getAllBRWins takes nothing returns integer
             // Random
             if (AbilityMode == 0) then
