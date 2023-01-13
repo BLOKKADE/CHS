@@ -59,7 +59,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         endloop
 
         if (OddPlayer != -1) then
-            call DisplayTimedTextToPlayer(Player(OddPlayer), 0, 0, pvpWaitDuration, "|cffff0000You are the odd player odd. You will duel the loser of the first finished duel.|r")
+            call DisplayTimedTextToPlayer(Player(OddPlayer), 0, 0, pvpWaitDuration, "|cffff0000You are the odd player out. You will duel the loser of the first finished duel.|r")
         endif
     endfunction
 
