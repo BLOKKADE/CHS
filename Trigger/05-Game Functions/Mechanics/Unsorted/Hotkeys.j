@@ -100,6 +100,14 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         endif
     endfunction
 
+    private function ReadyPlayer takes nothing returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+
+        if not ReadyButtonDisabled[pid] then
+            call PlayerReadies(GetTriggerPlayer())
+        endif
+    endfunction
+
     private function ToggleRewards takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
@@ -130,6 +138,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         local trigger qTrigger = CreateTrigger()
         local trigger wTrigger = CreateTrigger()
         local trigger eTrigger = CreateTrigger()
+        local trigger rTrigger = CreateTrigger()
         local trigger tTrigger = CreateTrigger()
         local trigger scoreboardToggleViewTrigger = CreateTrigger()
         local trigger scoreboardToggleHideTrigger = CreateTrigger()
@@ -141,6 +150,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
             call BlzTriggerRegisterPlayerKeyEvent(qTrigger, Player(i), OSKEY_Q, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(wTrigger, Player(i), OSKEY_W, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(eTrigger, Player(i), OSKEY_E, 2, true)
+            call BlzTriggerRegisterPlayerKeyEvent(rTrigger, Player(i), OSKEY_R, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(tTrigger, Player(i), OSKEY_T, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(shiftDownTrigger, Player(i), OSKEY_LSHIFT, 1, true)
             call BlzTriggerRegisterPlayerKeyEvent(shiftReleaseTrigger, Player(i), OSKEY_LSHIFT, 0, false)
@@ -155,6 +165,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         call TriggerAddAction(qTrigger, function ConvertLumber)
         call TriggerAddAction(wTrigger, function ConvertGold)
         call TriggerAddAction(eTrigger, function SellAllItems)
+        call TriggerAddAction(rTrigger, function ReadyPlayer)
         call TriggerAddAction(tTrigger, function ToggleRewards)
         call TriggerAddAction(shiftDownTrigger, function ShiftDown)
         call TriggerAddAction(shiftReleaseTrigger, function ShiftRelease)
@@ -165,6 +176,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         set qTrigger = null
         set wTrigger = null
         set eTrigger = null
+        set rTrigger = null
         set tTrigger = null
         set shiftDownTrigger = null
         set shiftReleaseTrigger = null
