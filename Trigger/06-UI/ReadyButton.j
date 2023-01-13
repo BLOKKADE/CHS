@@ -34,7 +34,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     endfunction
 
     function ReadyTooltip takes nothing returns string
-		return " (|cff77f3fcCtrl+R|r)|nCurrently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nHold shift while activating this button to always be |cff7784fcready|r.|n|nDoes not work for non-simultaneous pvp rounds."
+		return " (|cff77f3fcCtrl+R|r)|nCurrently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nDoes not work for non-simultaneous pvp rounds."
 	endfunction
 
     function ReadyButtonTooltip takes player p, integer pid returns string
@@ -57,7 +57,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
             set s = s + "\nSet to |cff7784fcauto-ready|r."
         endif
 
-        return s
+        return s + "|n|nHold shift while activating this button to always be |cff7784fcready|r."
     endfunction
 
     function ReadyButtonVisibility takes boolean disable, integer pid, boolean isReady returns nothing
@@ -71,10 +71,14 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
         if disable then
             set ReadyButtonDisabled[pid] = true
-            call BlzFrameSetTexture(ButtonId[5], GetDisabledIconPath(tex), 0, true)
+            if GetLocalPlayer() == Player(pid) then
+                call BlzFrameSetTexture(ButtonId[5], GetDisabledIconPath(tex), 0, true)
+            endif
         else
             set ReadyButtonDisabled[pid] = false
-            call BlzFrameSetTexture(ButtonId[5], GetIconPath(tex), 0, true)
+            if GetLocalPlayer() == Player(pid) then
+                call BlzFrameSetTexture(ButtonId[5], GetIconPath(tex), 0, true)
+            endif
         endif
     endfunction
 
@@ -112,9 +116,10 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     function CheckReadyPlayers takes nothing returns nothing
         if ReadyPlayerCount() >= PlayersNeeded then
             if WaitingForBattleRoyal then
-                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Pvp battles!|r")
-            elseif WaitingForPvp then
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Battle Royal!|r")
+            elseif WaitingForPvp then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Pvp battles!|r")
+                
             else
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Next round!|r")
             endif
@@ -125,46 +130,52 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     function PlayerReadies takes player p returns nothing
         local integer pid = GetPlayerId(p)
         local PlayerStats ps = PlayerStats.forPlayer(p)
-        call ps.toggleIsReady()
-        call ReadyButtonVisibility(false, pid, ps.isReady())
 
         if HoldShift[pid] then
             set PlayerIsAlwaysReady[pid] = not PlayerIsAlwaysReady[pid]
         endif
 
-        call UpdatePlayersNeeded()
+        if not ReadyButtonDisabled[pid] then
+            call ps.toggleIsReady()
+            call ReadyButtonVisibility(false, pid, ps.isReady())
 
-        if not PlayerHasReadied[pid] then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, GetPlayerNameColour(p) + " is ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
+            call UpdatePlayersNeeded()
+
+            if not PlayerHasReadied[pid] then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, GetPlayerNameColour(p) + " is ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
+            else
+                call DisplayTimedTextToPlayer(p, 0, 0, 10, GetPlayerNameColour(p) + " is not ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
+            endif
+
+            call CheckReadyPlayers()
+
+            set PlayerHasReadied[pid] = true
         endif
-
-        call CheckReadyPlayers()
-
-        set PlayerHasReadied[pid] = true
     endfunction
 
     private function OnRoundStart takes EventInfo eventInfo returns nothing
         call ReadyButtonVisibility(true, GetPlayerId(eventInfo.p), false)
+        call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
+        set PlayerHasReadied[GetPlayerId(eventInfo.p)] = false
     endfunction
 
     private function OnRoundEnd takes EventInfo eventInfo returns nothing
         local integer pid = GetPlayerId(eventInfo.p)
-        call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
-            call ReadyButtonVisibility(false, pid, false)
-            set PlayerHasReadied[pid] = false
-        
-            if PlayerIsAlwaysReady[pid] then
-                //reset when battle royal wait time starts
-                if eventInfo.roundNumber + 1 == BattleRoyalRound then
-                    set PlayerIsAlwaysReady[pid] = false
-                else
-                    call PlayerReadies(eventInfo.p)
-                endif
+
+        call ReadyButtonVisibility(false, pid, false)
+    
+        if PlayerIsAlwaysReady[pid] then
+            //reset when battle royal wait time starts
+            if eventInfo.roundNumber + 1 == BattleRoyalRound or (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber + 1, 5) == 0) then
+                set PlayerIsAlwaysReady[pid] = false
+            else
+                call PlayerReadies(eventInfo.p)
             endif
+        endif
     endfunction
 
     private function init takes nothing returns nothing
-        call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_START, CustomEvent.OnRoundStart)
+        call CustomGameEvent_RegisterEventCode(EVENT_PLAYER_ROUND_TELEPORT, CustomEvent.OnRoundStart)
         call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.OnRoundEnd)
     endfunction
 endlibrary

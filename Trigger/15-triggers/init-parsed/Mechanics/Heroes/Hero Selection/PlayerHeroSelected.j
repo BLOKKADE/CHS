@@ -109,6 +109,8 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call PanCameraToTimedLocForPlayer(p, PlayerArenaRectCenters[playerId], 0)
         call SelectUnitForPlayerSingle(hero, p)
 
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.create(p, 0, RoundNumber))
+
         // Create 3 of something at the hero location
         set bj_forLoopAIndex = 1
         set bj_forLoopAIndexEnd = 3

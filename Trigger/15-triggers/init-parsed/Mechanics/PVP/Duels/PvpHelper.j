@@ -134,6 +134,8 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
             exitwhen itemSlotIndex == 6
         endloop
 
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
+
         // Cleanup
         call RemoveLocation(arenaCenter)
         call RemoveLocation(spawnOffset)
