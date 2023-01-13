@@ -158,11 +158,7 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
             set r4 = GetUnitX(Herou) + 40 * CosBJ(- 30 + GetUnitFacing(Herou))
             set r5 = GetUnitY(Herou) + 40 * SinBJ(- 30 + GetUnitFacing(Herou))
             call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, r4, r5))
-            set U = CreateUnit(GetOwningPlayer(Herou), 'e001', r4, r5, GetUnitFacing(Herou))
-
-            call BlzSetUnitAttackCooldown(U, BlzGetUnitAttackCooldown(U, 0) * (8 / (8.9 + (heroLevel / 3))), 0)
-            call SetUnitAbilityLevelSwapped('A000', U, R2I(GetHeroLevel(Herou) / 3))
-            call SetUnitBonusReal(U, BONUS_ATTACK_SPEED, GetHeroLevel(Herou) * 0.03)
+            set U = CreateUnit(GetOwningPlayer(Herou), FAERIE_DRAGON_UNIT_ID, r4, r5, GetUnitFacing(Herou))
         endif
 
         //Magic Blade

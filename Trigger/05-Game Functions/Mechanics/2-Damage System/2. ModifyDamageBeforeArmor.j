@@ -29,7 +29,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Faerie Dragon
-        if GetUnitTypeId(Damage.target) == 'e001' then
+        if GetUnitTypeId(Damage.target) == FAERIE_DRAGON_UNIT_ID then
             set Damage.index.damage = 0
             return
         endif

@@ -170,7 +170,7 @@ library IdLibrary initializer init
         constant integer WATER_ELEMENTAL_2_UNIT_ID                      = 'hwt2'
         constant integer WATER_ELEMENTAL_3_UNIT_ID                      = 'hwt3'
 
-        // --- Summons ---
+        constant integer FAERIE_DRAGON_UNIT_ID                          = 'e001'
 
         // Heroes
         StaticIdGroup HEROES
@@ -1187,6 +1187,7 @@ library IdLibrary initializer init
         call SUMMONS.add(NECRO_BOOK_ARCHER_1_UNIT_ID)
         call SUMMONS.add(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID)
         call SUMMONS.add(BONE_ARMOR_SKELETON_UNIT_ID)
+        call SUMMONS.add(FAERIE_DRAGON_UNIT_ID)
 
         // Bears
         set BEARS = StaticIdGroup.create()

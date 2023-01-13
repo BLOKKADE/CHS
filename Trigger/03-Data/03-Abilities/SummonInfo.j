@@ -41,6 +41,7 @@ library SummonInfo initializer init
         call SetSummonInfo(BONE_ARMOR_SKELETON_UNIT_ID, 0, SummonStatCode.SkeletonStats)
         call SetSummonInfo(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID, FEARLESS_DEFENDERS_ABILITY_ID, SummonStatCode.FearlessDefendersStats)
         call SetSummonInfo('h01N', ABSOLUTE_WILD_ABILITY_ID, 0)
+        call SetSummonInfo(FAERIE_DRAGON_UNIT_ID, MYSTIC_UNIT_ID, SummonStatCode.FaerieDragonStats)
     endfunction
 
     private function init takes nothing returns nothing
