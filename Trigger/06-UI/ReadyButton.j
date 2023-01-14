@@ -171,7 +171,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     
         if PlayerIsAlwaysReady[pid] then
             //reset when battle royal wait time starts
-            if (not eventInfo.roundNumber + 1 == BattleRoyalRound) and (not (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber, 5) == 0)) then
+            if (not ((eventInfo.roundNumber + 1) == BattleRoyalRound)) and (not (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber, 5) == 0)) then
                 call PlayerReadies(eventInfo.p)
             endif
         endif
