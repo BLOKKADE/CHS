@@ -117,15 +117,26 @@ scope LongPeriodCheck initializer init
         // Hero info
         set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid])
 
+        if (PlayerHasReadied[pid]) then
+            call BlzFrameSetTexture(ButtonId[40], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
+        else
+            call BlzFrameSetTexture(ButtonId[40], "ReplaceableTextures\\CommandButtons\\BTNDefend.blp", 0, true)
+        endif
+
+        // Update the flashy ready status for the player
+        call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[pid])
+
         if unitTypeId != 0 then
             set abilIcon = GetHeroPassiveDescription(unitTypeId, HeroPassive_Icon)
             call BlzFrameSetVisible(ButtonParentId[38], true) // Element count
             call BlzFrameSetVisible(ButtonParentId[39], true) // Win Counts
+            call BlzFrameSetVisible(ButtonParentId[40], true) // Player ready status
             call BlzFrameSetVisible(ButtonParentId[100], true) // Hero passive/description
             call BlzFrameSetTexture(ButtonId[100], abilIcon, 0, true) // Hero info
         else
             call BlzFrameSetVisible(ButtonParentId[38], false) // Element count
             call BlzFrameSetVisible(ButtonParentId[39], false) // Win Counts
+            call BlzFrameSetVisible(ButtonParentId[40], false) // Player ready status
             call BlzFrameSetVisible(ButtonParentId[100], false) // Hero passive/description
         endif
 

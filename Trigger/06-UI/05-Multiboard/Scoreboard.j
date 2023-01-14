@@ -218,8 +218,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 		call BlzFrameSetModel(buttonIndicatorFrame, IndicatorPathPick, 0)
 		call BlzFrameSetPoint(buttonIndicatorFrame, FRAMEPOINT_TOPLEFT, parentIconFrame, FRAMEPOINT_TOPLEFT, -0.001, 0.001)
 		call BlzFrameSetPoint(buttonIndicatorFrame, FRAMEPOINT_BOTTOMRIGHT, parentIconFrame, FRAMEPOINT_BOTTOMRIGHT, -0.0012, -0.0016)
-        // call BlzFrameSetAbsPoint(buttonIndicatorFrame, FRAMEPOINT_TOPLEFT, GetTopLeftX() - 0.001, GetTopLeftY() + 0.001) 
-        // call BlzFrameSetAbsPoint(buttonIndicatorFrame, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ICON_WIDTH - 0.0012, GetTopLeftY() - ICON_WIDTH - 0.0016) 
         call BlzFrameSetScale(buttonIndicatorFrame, ICON_WIDTH / 0.036) // Scale the model to the icon size
 
 		// Save frames for future reference

@@ -33,31 +33,35 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         set PlayersNeeded = PlayerCount
     endfunction
 
-    function ReadyTooltip takes nothing returns string
-		return " (|cff77f3fcCtrl+R|r)|nCurrently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nDoes not work for non-simultaneous pvp rounds."
+    private function ReadyTooltip takes nothing returns string
+		return "Currently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nDoes not work for non-simultaneous pvp rounds.|n"
 	endfunction
 
-    function ReadyButtonTooltip takes player p, integer pid returns string
+    function ReadyButtonTooltipTitle takes player p returns string
         local PlayerStats ps = 0
         local string s = ""
 
-        if not ReadyButtonDisabled[pid] then
-            set ps = PlayerStats.forPlayer(p)
+        set ps = PlayerStats.forPlayer(p)
 
-            if ps.isReady() then
-                set s = "|cfff3fc77Unready yourself|r " + ReadyTooltip()
-            else
-                set s = "|cff92fc77Ready|r" + ReadyTooltip()
-            endif
+        if ps.isReady() then
+            return "|cfff3fc77Unready yourself|r (|cff77f3fcCtrl+R|r)"
         else
-            set s = "|cfffc9277Cannot be used during a round.|r"
+            return "|cff92fc77Ready|r (|cff77f3fcCtrl+R|r)"
+        endif
+    endfunction
+
+    function ReadyButtonTooltip takes player p, integer pid returns string
+        local string s = ReadyTooltip()
+
+        if ReadyButtonDisabled[pid] then
+            set s = "|cfffc9277Cannot be used during a round.|r|n"
         endif
 
         if PlayerIsAlwaysReady[pid] then
-            set s = s + "\nSet to |cff7784fcauto-ready|r."
+            set s = s + "Set to |cff7784fcauto-ready|r.|n"
         endif
 
-        return s + "|n|nHold shift while activating this button to always be |cff7784fcready|r."
+        return s + "Hold shift while activating this button to always be |cff7784fcready|r."
     endfunction
 
     function ReadyButtonVisibility takes boolean disable, integer pid, boolean isReady returns nothing

@@ -125,6 +125,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		local integer NumButton = LoadInteger(ButtonParentHandles, GetHandleId(BlzGetTriggerFrame()), 1)
 		local player p = GetTriggerPlayer()
 		local integer PlID = GetPlayerId(p)
+		local string ToolTipTitle = ""
 		local string ToolTipS = ""
 		local string temp = ""
 		local boolean TypT = false
@@ -242,9 +243,12 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 			// Ready button
 			elseif NumButton == 5 then
+				set ToolTipTitle = ReadyButtonTooltipTitle(p)
 				set ToolTipS = ReadyButtonTooltip(p, PlID)
+
 				if GetLocalPlayer() == p then
-					call BlzFrameSetText(TooltipTitleFrame, ToolTipS)
+					call BlzFrameSetText(TooltipTitleFrame, ToolTipTitle)
+					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 					call BlzFrameSetSize(TooltipFrame, 0.31, GetTooltipSize(ToolTipS))
 					call BlzFrameSetVisible(TooltipFrame, true)
 				endif
@@ -287,6 +291,26 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Stats for: |r" + GetPlayerNameColour(GetOwningPlayer(SpellU)))
 					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 					call BlzFrameSetSize(TooltipFrame, 0.23, GetTooltipSize(ToolTipS))
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
+
+			// Player ready status
+			elseif NumButton == 40 then
+				set ToolTipTitle = ReadyButtonTooltipTitle(p)
+
+				if (PlayerHasReadied[selectedUnitPid]) then
+					set ToolTipTitle = "|cff00ff08Player is ready|r"
+				else
+					set ToolTipTitle = "|cffff0000Player is not ready|r"
+				endif
+	
+				if (PlayerIsAlwaysReady[selectedUnitPid]) then
+					set ToolTipTitle = "|cffffdd00Player is always ready|r"
+				endif
+
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, ToolTipTitle)
+					call BlzFrameSetSize(TooltipFrame, 0.19, 0.02)
 					call BlzFrameSetVisible(TooltipFrame, true)
 				endif
 
@@ -373,7 +397,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		set buttonParentFrame = null
 	endfunction
 
-	private function CreateIndicatorForButton takes integer buttonIndex returns nothing
+	private function CreateIndicatorForButton takes integer buttonIndex, real iconWidth returns nothing
 		local framehandle buttonIndicatorParentFrame = BlzCreateFrameByType("BUTTON", "AwardIndicatorParent", ButtonParentId[buttonIndex], "", 0)
 		local framehandle buttonIndicatorFrame = BlzCreateFrameByType("SPRITE", "AwardIndicator", buttonIndicatorParentFrame, "", 0)
 
@@ -385,6 +409,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		call BlzFrameSetModel(buttonIndicatorFrame, IndicatorPathPick, 0)
 		call BlzFrameSetPoint(buttonIndicatorFrame, FRAMEPOINT_TOPLEFT, ButtonParentId[buttonIndex], FRAMEPOINT_TOPLEFT, -0.001, 0.001)
 		call BlzFrameSetPoint(buttonIndicatorFrame, FRAMEPOINT_BOTTOMRIGHT, ButtonParentId[buttonIndex], FRAMEPOINT_BOTTOMRIGHT, -0.0012, -0.0016)
+		call BlzFrameSetScale(buttonIndicatorFrame, iconWidth / 0.036) // Scale the model to the icon size
 
 		// Save frames for future reference
 		set ButtonIndicatorId[buttonIndex] = buttonIndicatorFrame
@@ -410,11 +435,11 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// Ready
 		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", BOTTOM_LEFT_ICON_ROW_X + 1 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
-		call CreateIndicatorForButton(5)
+		call CreateIndicatorForButton(5, BIG_BUTTON_WIDTH)
 
 		// Rewards
 		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNQuestbook.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
-		call CreateIndicatorForButton(6)
+		call CreateIndicatorForButton(6, BIG_BUTTON_WIDTH)
 
 		// Creep info - Create at same place as the Rewards button above. This button will move over after round 5
 		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
@@ -434,6 +459,10 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		// -- Top left buttons
 		// Player stats
 		call CreateIconWorld(39, "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", TOP_LEFT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+
+		// Player ready status
+		call CreateIconWorld(40, "ReplaceableTextures\\CommandButtons\\BTNDefend.blp", TOP_LEFT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIndicatorForButton(40, SMALL_BUTTON_WIDTH)
 
 		// Player element count
 		call CreateIconWorld(38, "ReplaceableTextures\\PassiveButtons\\PASElements.blp", TOP_LEFT_ICON_ROW_X + 1 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
