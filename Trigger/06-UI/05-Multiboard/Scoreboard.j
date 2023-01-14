@@ -1,4 +1,4 @@
-library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, SelectedUnits
+library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, SelectedUnits, ReadyButton
 
     globals
         // Scoreboard static titles
@@ -9,6 +9,9 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant real SCOREBOARD_UPDATE_INTERVAL                = 2.0
 
         private constant string CLOSE_BUTTON_ICON                       = "ReplaceableTextures\\CommandButtons\\BTNuncheck.blp"
+
+        // Sparkly thing that goes around an icon
+		private constant string IndicatorPathPick                       = "UI\\Feedback\\Autocast\\UI-ModalButtonOn.mdl"
 
         // The X,Y coordinate for the top left of the main frame
         private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.14
@@ -28,12 +31,13 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // Column indexes
         private constant integer PLAYER_STATS_INDEX                     = 0
         private constant integer PLAYER_HERO_INDEX                      = 1
-        private constant integer PLAYER_ELEMENT_COUNT_INDEX             = 2
-        private constant integer PLAYER_NAME_INDEX                      = 3
-        private constant integer PLAYER_STATUS_INDEX                    = 4
-        private constant integer PLAYER_DUELS_INDEX                     = 5
-        private constant integer PLAYER_ITEMS_START_INDEX               = 6
-        private constant integer PLAYER_ABILITIES_START_INDEX           = 12
+        private constant integer PLAYER_READY_STATUS_INDEX              = 2
+        private constant integer PLAYER_ELEMENT_COUNT_INDEX             = 3
+        private constant integer PLAYER_NAME_INDEX                      = 4
+        private constant integer PLAYER_STATUS_INDEX                    = 5
+        private constant integer PLAYER_DUELS_INDEX                     = 6
+        private constant integer PLAYER_ITEMS_START_INDEX               = 7
+        private constant integer PLAYER_ABILITIES_START_INDEX           = 13
 
         // Specifications for a player name text
         private constant real TEXT_HEIGHT                               = 0.012
@@ -80,6 +84,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private constant integer CACHING_BUFFER = 50 // Used as a separator in the caching arrays so we can use a single array for all players. This value just needs to be bigger than the amount of columns in the scoreboard
         private integer array CachedPlayerItems // Item ids for each player hero
         private integer array CachedPlayerAbilities // Ability ids for each player hero
+        private boolean array CachedPlayerPlayerReadyStatus // Cached status if their ready status has changed
         private string array CachedPlayerStrings // Strings for each player column. NOTE: Not the most useful caching, but it could help with performance to not have to update a framehandle
         private string array CachedPlayerTooltipNames // Tooltip names
         private string array CachedPlayerTooltipDescriptions // Tooltip descriptions
@@ -87,6 +92,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // Framehandles for all columns for each player to easily be referenced to update them
         private framehandle array CachedPlayerFramehandles
         private framehandle array CachedPlayerParentFramehandles
+        private framehandle array CachedPlayerIndicatorParentFramehandles
+        private framehandle array CachedPlayerIndicatorFramehandles
 
         private boolean array PlayerLeftGame // If the player left the game
         private integer array PlayerDeathRound // The round the player died for good
@@ -123,10 +130,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local real value = MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN
         local real offset
 
-        // Don't move the x-coordinate any more for PLAYER_STATS_INDEX
+        // Don't move the x-coordinate any more for PLAYER_STATS_INDEX or PLAYER_READY_STATUS_INDEX
 
         // Player hero and element count
-        if (CurrentColumnIndex >= PLAYER_HERO_INDEX) then
+        if (CurrentColumnIndex >= PLAYER_HERO_INDEX and CurrentColumnIndex != PLAYER_READY_STATUS_INDEX) then
             set value = value + ICON_WIDTH + ICON_SPACING
         endif
 
@@ -190,13 +197,40 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             set value = value + offset
         endif
 
-        // Bottom row player element count icon, item icons, or ability icons
-        if (CurrentColumnIndex == PLAYER_ELEMENT_COUNT_INDEX or CurrentColumnIndex >= (PLAYER_ITEMS_START_INDEX + 3) and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 5) or CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
+        // Bottom row player ready status, player element count icon, item icons, or ability icons
+        if (CurrentColumnIndex == PLAYER_READY_STATUS_INDEX or CurrentColumnIndex == PLAYER_ELEMENT_COUNT_INDEX or CurrentColumnIndex >= (PLAYER_ITEMS_START_INDEX + 3) and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 5) or CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
             set value = value - offset
         endif
 
         return value
     endfunction
+
+    private function CreateIndicatorForIcon takes integer playerId returns nothing
+        local framehandle parentIconFrame = CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
+		local framehandle buttonIndicatorParentFrame = BlzCreateFrameByType("BUTTON", "PlayerStatusIndicatorParent", parentIconFrame, "", 0)
+		local framehandle buttonIndicatorFrame = BlzCreateFrameByType("SPRITE", "PlayerStatusIndicator", buttonIndicatorParentFrame, "", 0)
+
+		// Make sure the indicator is on top of everything
+		call BlzFrameSetLevel(buttonIndicatorParentFrame, 2)
+		call BlzFrameSetVisible(buttonIndicatorParentFrame, false)
+
+		// Create the indicator, offset it around the button
+		call BlzFrameSetModel(buttonIndicatorFrame, IndicatorPathPick, 0)
+		call BlzFrameSetPoint(buttonIndicatorFrame, FRAMEPOINT_TOPLEFT, parentIconFrame, FRAMEPOINT_TOPLEFT, -0.001, 0.001)
+		call BlzFrameSetPoint(buttonIndicatorFrame, FRAMEPOINT_BOTTOMRIGHT, parentIconFrame, FRAMEPOINT_BOTTOMRIGHT, -0.0012, -0.0016)
+        // call BlzFrameSetAbsPoint(buttonIndicatorFrame, FRAMEPOINT_TOPLEFT, GetTopLeftX() - 0.001, GetTopLeftY() + 0.001) 
+        // call BlzFrameSetAbsPoint(buttonIndicatorFrame, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ICON_WIDTH - 0.0012, GetTopLeftY() - ICON_WIDTH - 0.0016) 
+        call BlzFrameSetScale(buttonIndicatorFrame, ICON_WIDTH / 0.036) // Scale the model to the icon size
+
+		// Save frames for future reference
+        set CachedPlayerIndicatorParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = buttonIndicatorParentFrame
+        set CachedPlayerIndicatorFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = buttonIndicatorFrame
+
+		// Cleanup
+		set parentIconFrame = null
+        set buttonIndicatorFrame = null
+		set buttonIndicatorParentFrame = null
+	endfunction
 
     private function CreateIcon takes string iconPath, integer playerId returns nothing
         local framehandle buttonFrameHandle
@@ -392,6 +426,15 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(currentPlayer)
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PlayerStats.getTooltip(currentPlayer)
 
+        // Default to the non ready status
+        set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
+        call CreateIcon(GetIconPath("Defend"), playerId)
+        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Player is not ready|r"
+        set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
+
+        // Create indicator for player ready status
+        call CreateIndicatorForIcon(playerId)
+
         if (playerHero != null) then
             // Set the player hero icon
             set CurrentColumnIndex = PLAYER_HERO_INDEX
@@ -408,13 +451,13 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             // Set the player hero icon to a missing icon
             set CurrentColumnIndex = PLAYER_HERO_INDEX
             call CreateIcon("ReplaceableTextures\\CommandButtons\\BTNSelectHeroOff.blp", playerId)
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffff0000Player has no hero" + COLOR_END_TAG
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffff0000Player has no hero|r"
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = ""
 
             // Element icon
             set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
             call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffff0000Player has no hero"
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffff0000Player has no hero|r"
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = ""
         endif
 
@@ -490,6 +533,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             // Element count - Change the width of the tooltip
             elseif (columnIndex == PLAYER_ELEMENT_COUNT_INDEX) then
                 set tooltipWidth = 0.125
+
+            // Player ready status - Change the width of the tooltip
+            elseif (columnIndex == PLAYER_READY_STATUS_INDEX) then
+                set tooltipWidth = 0.15
             endif
 
             // Show the tooltip information if valid
@@ -618,7 +665,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // If this is the BR winner, set the status
         if (PlayerBrWinner == playerId) then
             set CurrentColumnIndex = PLAYER_STATUS_INDEX
-            call CreateText(BR_WINNER_STATUS_COLOR + "Battle Royale Winner with " + I2S(ps.getBRPVPKillCount()) + COLOR_END_TAG, playerId)
+            call CreateText(BR_WINNER_STATUS_COLOR + "Battle Royale Winner with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
 
         // Player status for dying
         elseif (PlayerDeathRound[playerId] != 0) then
@@ -627,7 +674,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             if (PlayerDeathRound[playerId] == -1) then
                 call CreateText(NO_HERO_STATUS_COLOR + "Left before hero selection" + COLOR_END_TAG, playerId)
             elseif (PlayerDeathRound[playerId] == 50 or (GameModeShort == true and PlayerDeathRound[playerId] == 25)) then
-                call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Battle Royale with " + I2S(ps.getBRPVPKillCount()) + COLOR_END_TAG, playerId)
+                call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
             else
                 call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
             endif
@@ -641,6 +688,34 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
         // Don't try to update anything else if the player left the game or if the player died in rounds
         if (not PlayerLeftGame[playerId] and PlayerDeathRound[playerId] == 0) then
+            // Update player ready status icon
+            set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
+            if (PlayerHasReadied[playerId]) then
+                if (CachedPlayerPlayerReadyStatus[playerId] != PlayerHasReadied[playerId]) then
+                    call CreateIcon(GetIconPath("Ability_parry"), playerId)
+                endif
+
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cff00ff08Player is ready|r"
+                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
+            else
+                if (CachedPlayerPlayerReadyStatus[playerId] != PlayerHasReadied[playerId]) then
+                    call CreateIcon(GetIconPath("Defend"), playerId)
+                endif
+
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Player is not ready|r"
+                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
+            endif
+
+            set CachedPlayerPlayerReadyStatus[playerId] = PlayerHasReadied[playerId]
+
+            // Update the flashy ready status for the player
+            call BlzFrameSetVisible(CachedPlayerIndicatorParentFramehandles[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX], PlayerIsAlwaysReady[playerId])
+
+            if (PlayerIsAlwaysReady[playerId]) then
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffffdd00Player is always ready|r"
+                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
+            endif
+
             // Update the tooltip description information about the player's hero since it changes over time. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(PlayerHeroes[playerId])
 
@@ -661,6 +736,21 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
             // Set the player abilities
             set CurrentColumnIndex = PLAYER_ABILITIES_START_INDEX
             call UpdatePlayerAbilities(currentPlayer)
+        else
+            // Disable player ready status icon
+            set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
+
+            if (CachedPlayerPlayerReadyStatus[playerId]) then
+                set CachedPlayerPlayerReadyStatus[playerId] = false
+
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Player is not ready|r"
+                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
+
+                call CreateIcon(GetIconPath("Defend"), playerId)
+            endif
+
+            // Disable the flashy ready status for the player
+            call BlzFrameSetVisible(CachedPlayerIndicatorParentFramehandles[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX], false)
         endif
 
         set CurrentRowIndex = CurrentRowIndex + 1

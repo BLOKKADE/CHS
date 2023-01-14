@@ -122,7 +122,7 @@ scope LongPeriodCheck initializer init
             call BlzFrameSetVisible(ButtonParentId[38], true) // Element count
             call BlzFrameSetVisible(ButtonParentId[39], true) // Win Counts
             call BlzFrameSetVisible(ButtonParentId[100], true) // Hero passive/description
-            call BlzFrameSetTexture(ButtonId[100], abilIcon, 0, true)
+            call BlzFrameSetTexture(ButtonId[100], abilIcon, 0, true) // Hero info
         else
             call BlzFrameSetVisible(ButtonParentId[38], false) // Element count
             call BlzFrameSetVisible(ButtonParentId[39], false) // Win Counts
