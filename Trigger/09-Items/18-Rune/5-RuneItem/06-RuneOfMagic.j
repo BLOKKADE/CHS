@@ -1,8 +1,7 @@
 library MagicRune requires RandomShit
     globals
-        constant real RuneOfMagic_base = 10
+        constant real RuneOfMagic_base = 5
     endglobals
-
 
     function RuneOfMagic takes nothing returns boolean
         local unit u = GLOB_RUNE_U
@@ -14,7 +13,7 @@ library MagicRune requires RandomShit
             exitwhen i1 > 10
             set SpellId = GetHeroSpellAtPosition(u ,i1)
             if IsSpellResettable(SpellId) then
-                set SpellId = GetAssociatedSpell(u, SpellId)
+                set SpellId = CheckAssociatedSpell(u, SpellId)
 
                 if BlzGetUnitAbilityCooldownRemaining(u,SpellId) < RuneOfMagic_base * power then
                     call BlzEndUnitAbilityCooldown(u,SpellId)

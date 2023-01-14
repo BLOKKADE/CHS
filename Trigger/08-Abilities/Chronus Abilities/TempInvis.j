@@ -3,8 +3,6 @@ library TempInvis requires BuffLevel, RandomShit, TimeManipulation
         unit source
         integer endTick
     
-        
-    
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
                 call this.stopPeriodic()
@@ -17,7 +15,7 @@ library TempInvis requires BuffLevel, RandomShit, TimeManipulation
             
             set this.source = source
 
-            call RegisterBuff(this.source, 'A03V')
+            call RegisterLeveledBuff(this.source, 'A03V')
             if GetBuffLevel(this.source, 'A03V') == 1 then
                 call UnitAddAbility(this.source, 'A03V')
             endif
@@ -28,7 +26,7 @@ library TempInvis requires BuffLevel, RandomShit, TimeManipulation
         endmethod
         
         method destroy takes nothing returns nothing
-            call RemoveBuff(this.source, 'A03V')
+            call RemoveLeveledBuffs(this.source, 'A03V')
             set this.source = null
             call this.recycle()
         endmethod

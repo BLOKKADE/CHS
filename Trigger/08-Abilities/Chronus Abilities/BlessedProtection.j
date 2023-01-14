@@ -18,7 +18,7 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
             
             set this.source = source
             set this.fx = AddLocalizedSpecialEffectTarget("Soul Armor Divine_opt.mdx", this.source, "head")
-            call RegisterBuff(this.source, 'A0AF')
+            call RegisterLeveledBuff(this.source, 'A0AF')
             if GetBuffLevel(this.source, 'A0AF') == 1 then
                 call UnitAddAbility(this.source, 'A0AF')
             endif
@@ -29,7 +29,7 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
         endmethod
         
         method destroy takes nothing returns nothing
-            call RemoveBuff(this.source, 'A0AF')
+            call RemoveLeveledBuffs(this.source, 'A0AF')
             if GetBuffLevel(this.source, 'A0AF') == 0 then
                 call UnitRemoveAbility(this.source, 'B025')
             endif

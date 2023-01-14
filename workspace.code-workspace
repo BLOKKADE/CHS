@@ -4,5 +4,56 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"favorites.resources": [
+			{
+				"filePath": "Trigger\\05-Game Functions\\Mechanics\\2-Damage System\\2. ModifyDamageBeforeArmor.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\05-Game Functions\\Mechanics\\2-Damage System\\3. ModifyDamageAfterArmor.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\05-Game Functions\\Mechanics\\Unsorted\\2-ShortPeriodCheck.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\05-Game Functions\\Mechanics\\Unsorted\\3-LongPeriodCheck.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\08-Abilities\\General\\Spell Effects.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Utility\\Color codes.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\05-Game Functions\\Abilities\\AbilityCooldown.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\03-Data\\01-Generic\\IdLibrary.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\03-Data\\03-Abilities\\1-AbilityData.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\03-Data\\02-Heroes\\HeroPassiveDesc.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\08-Abilities\\General\\1-ElementStartAbility.j",
+				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\05-Game Functions\\Unsorted\\5-Functions.j",
+				"group": "Default"
+			}
+		]
+	}
 }

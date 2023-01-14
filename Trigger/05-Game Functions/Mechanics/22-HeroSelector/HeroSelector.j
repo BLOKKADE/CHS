@@ -1,4 +1,4 @@
-library HeroSelector initializer init_function requires optional FrameLoader, OldInitialization
+library HeroSelector initializer init_function requires optional FrameLoader, GameInit
     //HeroSelector V1.6b
     //API
     //=====
@@ -136,7 +136,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         
         private boolean ChainedButtons         = true //(true) connect to the previous button/ or row, (false) have a offset to the box topLeft in this moving a button has no effect on other buttons.
         //Button
-        private real ButtonSize                = 0.036 //size of each button
+        private real ButtonSize                = 0.032 //size of each button
         private boolean ButtonBlendAll         = false //(true) when a hero icon uses transparenzy
         private string EmptyButtonPath         = "UI\\Widgets\\EscMenu\\Human\\blank-background.blp"
         private boolean HideEmptyButtons       = true
@@ -951,10 +951,10 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
 
         local Table draftHeroes = Table.create()
 
-        // udg_player03 == Host player. It needs some player to prevent errors. Player doesn't actually matter here
-        local integer strUnitId = HeroSelectorRollOption(udg_player03, false, 0, 4, true)
-        local integer agiUnitId = HeroSelectorRollOption(udg_player03, false, 0, 8, true)
-        local integer intUnitId = HeroSelectorRollOption(udg_player03, false, 0, 16, true)
+        // HostPlayer == Host player. It needs some player to prevent errors. Player doesn't actually matter here
+        local integer strUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 4, true)
+        local integer agiUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 8, true)
+        local integer intUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 16, true)
         set draftHeroes[strUnitId] = 1
         set draftHeroes[agiUnitId] = 1
         set draftHeroes[intUnitId] = 1
@@ -963,7 +963,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         
         // Get 2 random heroes
         loop
-            set tempUnitId = HeroSelectorRollOption(udg_player03, false, 0, 0, true)
+            set tempUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 0, true)
 
             if (not draftHeroes.has(tempUnitId)) then
                 set currentCount = currentCount + 1
@@ -999,7 +999,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local integer category = 0
         local integer unitCode
         local unit u
-        local location arenaLocation
 
         if CategoryAffectRandom then
             set category = PlayerSelectedCategory[GetPlayerId(p)]
@@ -1010,10 +1009,10 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         endif
 
         // Make sure they don't already have a hero
-        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
-            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
-            set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
-            set PlayerHeroes[GetPlayerId(p) + 1] = u
+        if (PlayerHeroes[GetPlayerId(p) ] == null) then
+            set u = CreateUnitAtLoc(p, unitCode, PlayerArenaRectCenters[GetPlayerId(p)], bj_UNIT_FACING)
+            set PlayerHeroes[GetPlayerId(p)] = u
+            call GroupAddUnit(OnPeriodGroup, u)
     
             call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
     
@@ -1025,8 +1024,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             set HeroSelectorEvent = 1.0
             set HeroSelectorEvent = 0.0
 
-            call RemoveLocation(arenaLocation)
-            set arenaLocation = null
             set u = null
         endif
     endfunction
@@ -1036,7 +1033,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local unit u
         //pick what currently is selected, returns true on success returns false when something went wrong,
         local integer buttonIndex = PlayerSelectedButtonIndex[GetPlayerId(p)]
-        local location arenaLocation
 
         if buttonIndex <= 0 then
             return false
@@ -1047,10 +1043,10 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         endif //reject requirment not fullfilled
 
         // Make sure they don't already have a hero
-        if (PlayerHeroes[GetPlayerId(p) + 1] == null) then
-            set arenaLocation = GetRectCenter(PlayerArenaRects[GetConvertedPlayerId(p)])
-            set u = CreateUnitAtLoc(p, unitCode, arenaLocation, bj_UNIT_FACING)
-            set PlayerHeroes[GetPlayerId(p) + 1] = u
+        if (PlayerHeroes[GetPlayerId(p)] == null) then
+            set u = CreateUnitAtLoc(p, unitCode, PlayerArenaRectCenters[GetPlayerId(p)], bj_UNIT_FACING)
+            set PlayerHeroes[GetPlayerId(p)] = u
+            call GroupAddUnit(OnPeriodGroup, u)
             
             call HeroSelectorCounterChangeUnitCode(unitCode, 1, p)
 
@@ -1062,8 +1058,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
             set HeroSelectorEvent = 1.0
             set HeroSelectorEvent = 0.0
 
-            call RemoveLocation(arenaLocation)
-            set arenaLocation = null
             set u = null
 
             return true
@@ -1327,7 +1321,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ol
         local real borderSize = GetBorderSize()
         local integer colCount = ButtonColCount
         local integer rowCount = ButtonRowCount
-        local framehandle box = BlzCreateFrame(BoxFrameName, BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
+        local framehandle box = BlzCreateFrame(BoxFrameName, BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0)
         local framehandle boxBottom = BlzCreateFrame("HeroSelectorRaceTopBox", box, 0, 0)
         local integer rowRemaining = colCount
         local real y = -borderSize - titleSize - 0.0125 - CategorySize

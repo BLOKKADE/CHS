@@ -10,6 +10,9 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         private integer ImmortalHandleId
         private integer PvpBettingHandleId
         private integer HeroBanningHandleId
+        private integer DisableSimultaneousDuelHandleId
+        private integer DisableTeamDuelHandleId
+        private integer LongerTimersHandleId
         private integer SubmitHandleId
 
         // Stores the selected and non-selected versions of every button
@@ -41,7 +44,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
 
         // The X,Y coordinate for the top left of the main frame
         private real MainFrameTopLeftX = 0.02
-        private real MainFrameTopLeftY = 0.51
+        private real MainFrameTopLeftY = 0.55
         private real MainFrameMargin = 0.014
 
         // Specifications for a button
@@ -51,7 +54,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
 
         // Specifications for a checkbox
         private real CheckboxWidth = 0.025
-        private real CheckboxTextWidth = 0.1
+        private real CheckboxTextWidth = 0.15
         private real CheckboxSpacing = 0.005
 
         // Specifications for a category text
@@ -72,8 +75,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return LoadInteger(HeroButtonEventHandles, handleId, 1) // Hero
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
-        elseif (buttonType == 5 or buttonType == 6  or buttonType == 7) then
-            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning
+        elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9 or buttonType == 10) then
+            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Disable Team duels, Double timers
         endif
 
         return 0
@@ -95,8 +98,14 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return 6 // PVP betting 
         elseif (handleId == HeroBanningHandleId) then
             return 7 // Hero banning
+        elseif (handleId == DisableSimultaneousDuelHandleId) then
+            return 8 // Disable Simultaneous Duels
+        elseif (handleId == DisableTeamDuelHandleId) then
+            return 9 // Disable Team Duels
+        elseif (handleId == LongerTimersHandleId) then
+            return 10 // Double timers
         endif
-
+        
         return 0
     endfunction
 
@@ -155,6 +164,12 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             call pv.setPvpBettingVote(value)
         elseif (handleId == HeroBanningHandleId) then // Hero Banning
             call pv.setHeroBanningVote(value)
+        elseif (handleId == DisableSimultaneousDuelHandleId) then // Disable Simultaneous Duels
+            call pv.setDisableSimultaneousDuelVote(value)
+        elseif (handleId == DisableTeamDuelHandleId) then // Disable Team Duels
+            call pv.setDisableTeamDuelVote(value)
+        elseif (handleId == LongerTimersHandleId) then // Double timers
+            call pv.setLongerTimersVote(value)
         endif
     endfunction
 
@@ -172,7 +187,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
 
                 // A legacy global variable that tracks how many people are done voting
                 set udg_integer63 = udg_integer63 + 1
-                call ConditionalTriggerExecute(udg_trigger77)
+                call ConditionalTriggerExecute(GameModeQuestSetupTrigger)
 
                 // Show a message if the player needs to wait for other players
                 if (udg_integer63 < PlayerCount) then
@@ -332,7 +347,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         return selectedButtonFrameHandle
     endfunction
     
-    private function CreateVotingCheckbox takes string checkboxText, string description returns integer
+    private function CreateVotingCheckbox takes string checkboxText, string description, boolean preSelected returns integer
         // First create the checkbox
         local framehandle checkboxFrameHandle = BlzCreateFrame("QuestCheckBox", MainVotingFrameHandle, 0, 0) 
         local framehandle checkboxTextFrameHandle = BlzCreateFrameByType("TEXT", "CheckboxText", MainVotingFrameHandle, "", 0) 
@@ -433,7 +448,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         set buttonFrameHandle = null
     endfunction
 
-    private function init takes nothing returns nothing
+    private function SetupVotingScreen takes nothing returns nothing
         local real mainFrameBottomRightX
         local real mainFrameBottomRightY
 
@@ -446,7 +461,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         set VoteEventTrigger = CreateTrigger()
 
         // Create the main frame, hide it by default. All vote elements use this frame as the parent
-        set MainVotingFrameHandle = BlzCreateFrame("CheckListBox", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
+        set MainVotingFrameHandle = BlzCreateFrame("CheckListBox", BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0) 
         call BlzFrameSetVisible(MainVotingFrameHandle, false)
 
         // All buttons use the same trigger. However everything has a unique id to handle later on
@@ -463,10 +478,10 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         call CreateAbilityButton("Draft", "You get to choose between 5 spells each time.|nDraft spells refresh each time you buy one.|nEach spell only shows up once per game per player.", true)
 
         call CreateVotingButtonCategory("|cffD26EFAHeroes|r")
-        call CreateHeroButton("Pick", "Every player can choose any hero.", false)
-        call CreateHeroButton("Random", "Every player gets a random hero and 300 bonus starting gold.", false)
-        call CreateHeroButton("Draft", "Every player gets 5 random heroes to choose from.", true)
-        call CreateHeroButton("Same-Draft", "Every player gets the same 5 random heroes to choose from.", false)
+        call CreateHeroButton("Pick", "Every player can choose any hero.|nSelecting random in this mode gives you 2 extra gold rings and 300 bonus starting gold.", false)
+        call CreateHeroButton("Random", "Every player gets a random hero, 2 extra gold rings and 300 bonus starting gold.", false)
+        call CreateHeroButton("Draft", "Every player gets 5 random heroes to choose from.|nSelecting random in this mode gives you 1 extra gold ring and 300 bonus starting gold.", true)
+        call CreateHeroButton("Same-Draft", "Every player gets the same 5 random heroes to choose from.|nSelecting random in this mode gives you 1 extra gold ring and 300 bonus starting gold.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAIncome|r")
         call CreateIncomeButton("Auto-Eco", "Pillage, Learnability, Holy Enlightenment and Midas Touch disabled. |nCreeps give more gold and experience after round 5. |nCreeps cannot be upgraded manually, instead it happens automatically starting from round 15.", true)
@@ -475,9 +490,14 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         call CreateIncomeButton("Disabled", "Players can not buy creep upgrades or upgrade their end of round income in any way. Creeps gain no bonus power.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAOther Options|r")
-        set ImmortalHandleId = CreateVotingCheckbox("Immortal Mode", "Unlimited lives with immortal mode. Otherwise, you are given a few lives. Once you lose them all, you lose the game.")
-        set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches.")
-        set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.")
+        set ImmortalHandleId = CreateVotingCheckbox("Immortal Mode", "Unlimited lives with immortal mode. Otherwise, you are given a few lives. Once you lose them all, you lose the game.", false)
+        set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches.", false)
+        set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.", false)
+        call GoToNextRow()
+        set DisableSimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nThis will also disable PVP betting.", true)
+        set DisableTeamDuelHandleId = CreateVotingCheckbox("Disable Team Duels", "There is a chance that a PVP duel will be a 2v2 PVP duel. |n|nWill only happen if there are 4 or 8 players in the game.", true)
+        set LongerTimersHandleId = CreateVotingCheckbox("Double Timers", "Doubles the duration of the timers between rounds. |n|nUseful if you want to spend more time reading ability/item descriptions.", false)
+        call GoToNextRow()
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameMargin) + (IMinBJ(MaxColumnCount, TotalButtonCount) * ButtonWidth) + ((IMinBJ(MaxColumnCount, TotalButtonCount) - 1) * ButtonSpacing)
@@ -502,6 +522,10 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         call BlzFrameSetEnable(VoteDescriptionTextDisplay, false) 
         call BlzFrameSetScale(VoteDescriptionTextDisplay, 1.5) 
         call BlzFrameSetTextAlignment(VoteDescriptionTextDisplay, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT)
+    endfunction
+
+    private function init takes nothing returns nothing
+        call TimerStart(CreateTimer(), 0, false, function SetupVotingScreen)
     endfunction
 
 endlibrary

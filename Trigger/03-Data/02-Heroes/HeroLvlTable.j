@@ -51,7 +51,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(LIEUTENANT_UNIT_ID, 0, "|cffe7544aStrength bonus|r: ,0,")
         call SetBonusStr(LIEUTENANT_UNIT_ID, 1, "|cffd6e049Agility bonus|r: ,0,")
         call SetBonusStr(LIEUTENANT_UNIT_ID, 2, "|cff4daed4Intelligence bonus|r: ,0,")
-        call SetBonusStr(LIEUTENANT_UNIT_ID, 3, "|cff51d44dtats on level up|r: ,0,")
+        call SetBonusStr(LIEUTENANT_UNIT_ID, 3, "|cff51d44dStats on level up|r: ,0,")
 
         call SetBonusStr(ABOMINATION_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
 
@@ -135,8 +135,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(ROCK_GOLEM_UNIT_ID, 0, "|cffe7544aStone Edge block damage|r: ,0,%%")
         call SetBonusStr(ROCK_GOLEM_UNIT_ID, 1, "|cffe7544aBlock bonus|r: ,0,%%")
 
-        call SetBonusStr(COLD_KNIGHT_UNIT_ID, 0, "|cffe7544aAttack speed reduction|r: ,0,%%")
-        call SetBonusStr(COLD_KNIGHT_UNIT_ID, 1, "|cffd6e049Movespeed reduction|r: ,0,%%")
+        call SetBonusStr(COLD_KNIGHT_UNIT_ID, 0, "|cffe7544aDamage per element|r: ,0,")
+        call SetBonusStr(COLD_KNIGHT_UNIT_ID, 1, "|cffd6e049Duration|r: ,0,")
 
         call SetBonusStr(LICH_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,%")
 
@@ -144,8 +144,9 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(GREEDY_GOBLIN_UNIT_ID, 1, "|cffd6e049Gold per kill|r: ,0,")
 
         call SetBonusStr(GNOME_MASTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
-        call SetBonusStr(GNOME_MASTER_UNIT_ID, 1, "|cffd6e049Hero Stun|r: ,0, seconds")
-        call SetBonusStr(GNOME_MASTER_UNIT_ID, 2, "|cff4daed4Creep Stun|r: ,0, seconds")
+        call SetBonusStr(GNOME_MASTER_UNIT_ID, 1, "|cffd6e049Cooldown|r: ,0, seconds")
+        call SetBonusStr(GNOME_MASTER_UNIT_ID, 2, "|cff4daed4Hero Stun|r: ,0, seconds")
+        call SetBonusStr(GNOME_MASTER_UNIT_ID, 3, "|cff51d44dCreep Stun|r: ,0, seconds")
 
         call SetBonusStr(CENTAUR_ARCHER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,%%")
 

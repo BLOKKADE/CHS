@@ -49,7 +49,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.3 magic protection, +0.3 magic power." )
             
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp" )
-        call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Feedback: Every time the Hero attacks it drains enemy mana, giving it to himself. ")
+        call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Feedback: Every time the Hero damages an enemy it drains their mana, increasing its own mana. ")
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Feedback: +20 mana drained." )
         
         call InitHeroDesc(DEADLORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNTichondrius.blp" )
@@ -145,23 +145,23 @@ library HeroPassiveDesc initializer init
         
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )
         //   call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )
-        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Frost Aura: Reduces the attack speed and movement speed of enemies.")
-        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Frost Aura: +6% attack speed reduction . +0.5% movespeed reduction (max 95%)" )
+        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Deep Freeze: Every 10 seconds, the Hero freezes nearby enemies. For every [|cff8080ffCold|r] spell the Hero has, the freeze deals 30 |cffff00ffmagic damage|r and freezes enemies for 0.15 seconds. |n|nAfter activating a [|cff8080ffCold|r] spell, enemy heroes' spells are put on cooldown for 0.20 seconds.")
+        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Deep Freeze: +30 damage per [|cff8080ffCold|r], +0.01 stun duration" )
 
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroLich.blp" )
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals [|cff00f7ffWater|r], [|cff8080ffCold|r], or [|cff000000Dark|r] damage it has a 25% chance to use Flash Freeze on the enemy, dealing |cffff00ffmagical damage|r in an area around the target based on 100% of its intelligence. [|cff80ff80Luck|r]")
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: At the start of every fight it deals |cffff00ffmagical damage|r and stuns all heroes for 1 second and creeps for 2 seconds. ")
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun." )
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: Once Every 11 seconds |cffff00ffmagical damage|r and stuns all heroes in a 2200 AOE for 1 second and creeps for 2 seconds. ")
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun. +0.04 seconds cooldown" )
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )
-        call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
+        call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. Starts with an extra point for the end of round reward shop. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
 
         call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCentaurArcher.blp" )
-        call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus |cffff8080physical damage|r + 6% of the targets total hit points once every 2 seconds. [|cff00ffffCrit|r]")
+        call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus damage + 6% of the targets total hit points once every 2 seconds. [|cff00ffffCrit|r]")
         call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Horsepower: +5% damage." )
 
         call InitHeroDesc(OGRE_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOgre.blp" )
@@ -178,7 +178,7 @@ library HeroPassiveDesc initializer init
 
         call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp" )
         call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Steadfast Pacing: Starts with maximum movement speed. Its movement speed can't be lowered by enemy abilities or items." )
-        call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +1% attack cooldown reduction." )
+        call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.5% attack cooldown reduction." )
 
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength and immunity to |cffff8080physical|r [|cff00ffffCrit|r] damage if it hass less than 50 armor. Gains +10% strength and +10% armor limit from its passive for every [|cff8080ffCold|r] spell it has.")
@@ -193,7 +193,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Fish Hook: +1 stat per attack." )
         
         call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )
-        call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Maximum Magic: Gives the hero +15 magic power but the hero can't deal [|cff00ffffCrit|r] damage" )
+        call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Maximum Magic: Gives the hero +15 magic power but the hero can't deal [|cff00ffffCrit|r] damage." )
         call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2 magic power." )
         
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )

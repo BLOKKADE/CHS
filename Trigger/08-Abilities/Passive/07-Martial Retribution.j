@@ -1,4 +1,4 @@
-library MartialRetribution initializer init requires AreaDamage, HideEffects, AbilityDescription, Cooldown
+library MartialRetribution initializer init requires AreaDamage, HideEffects, AbilityDescription, AbilityCooldown
     globals
         Table MartialRetributionStorage
     endglobals
@@ -33,7 +33,10 @@ library MartialRetribution initializer init requires AreaDamage, HideEffects, Ab
     function MartialRetributionStore takes unit source, real damage returns nothing
         local integer lvl = GetUnitAbilityLevel(source, MARTIAL_RETRIBUTION_ABILITY_ID)
         local integer handleId = GetHandleId(source)
-        set MartialRetributionStorage.real[handleId] = MartialRetributionStorage.real[handleId] + damage
+
+        if damage > 0 then
+            set MartialRetributionStorage.real[handleId] = MartialRetributionStorage.real[handleId] + damage
+        endif
         
         call MartialRetributionCheck(source, handleId, lvl)
         call UpdateMartialRetributionText(handleId, GetOwningPlayer(source), lvl, GetHeroLevel(source))

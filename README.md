@@ -37,3 +37,19 @@ Automatically (without VS Code)
   
 For example you can start it like this: ./CreateImportFile.exe "C:/Warcraft/CHS/Trigger" "TriggerList.j"
 3. Success
+
+To make the jass compile command work:
+1. Unzip the JassHelper.zip in the JassHelper Req folder into the directory above the CHS directory (this project). 
+  so it ends up looking like this:
+    C:\
+      CHS
+        CHS
+          Readme.md
+          CHS.w3x
+          -all other files in the project-
+        JassHelper
+          common.j
+          Blizzard.j
+          JassHelper
+            -lots of files-
+2. Run the build task

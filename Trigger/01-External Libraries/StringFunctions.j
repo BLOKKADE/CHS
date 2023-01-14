@@ -289,4 +289,9 @@ library String requires MathRound
 
         return count
     endfunction
+
+	function GetTooltipSize takes string s returns real
+		return (CountNewLines(s) * LINE_SIZE) + DEFAULT_SIZE
+	endfunction
+
 endlibrary

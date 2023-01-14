@@ -52,7 +52,6 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         private method periodic takes nothing returns nothing
             if ((not this.roundEnd) and T32_Tick > this.endTick) or (this.p != Player(11) and HasPlayerFinishedLevel(this.source, this.p)) or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
                 //call BJDebugMsg("disable tb")
-                call this.stopPeriodic()
                 call this.destroy()
             endif
         endmethod  
@@ -116,6 +115,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         
         method destroy takes nothing returns nothing
             set this.bonus = 0 - this.bonus
+            call this.stopPeriodic()
             call this.updateState()
             set TempBonusTable[this.sourceId][this.abilId][this.state] = 0
             set this.source = null

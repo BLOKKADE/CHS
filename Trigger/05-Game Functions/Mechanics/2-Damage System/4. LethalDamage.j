@@ -15,6 +15,11 @@ scope LethalDamage initializer init
             return
         endif
 
+        if GetUnitAbilityLevel(DamageTarget, 'A08B') > 0 then
+            set udg_LethalDamageHP = 1
+            return
+        endif
+
         //Magic Necklace
         if UnitHasItemType(DamageSourceHero, 'I05G') and IsMagicDamage() then
             set MagicNecklaceBonus.boolean[GetHandleId(DamageTarget)] = true
@@ -32,13 +37,13 @@ scope LethalDamage initializer init
 
         //Last Breath
         set i = GetUnitAbilityLevel(DamageTarget, LAST_BREATHS_ABILITY_ID)
-        if i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,LAST_BREATHS_ABILITY_ID) == 0 then
+        if Damage.index.damageType != DAMAGE_TYPE_ENHANCED and i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,LAST_BREATHS_ABILITY_ID) == 0 then
             set negated = true
-            call ActivateLastBreath(DamageTarget, i)
+            call ActivateLastBreath(DamageTarget, DamageSource, i)
         endif
 
         if DamageTargetPid != 11 and DamageTarget == DamageTargetHero and negated == false then
-            call DamageText(true)
+            call ShowDamageText(true)
         endif
 
         //call BJDebugMsg("lethal source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))

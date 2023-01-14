@@ -35,24 +35,27 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         return GetObjectElementCount(abilId, elementId)
     endfunction
 
-    function GetObjectelementsAsString takes unit u, integer elementId, boolean isSpell returns string
+    function GetObjectElementsAsString takes unit u, integer abilId, boolean isSpell returns string
         local string s = ""
         local integer i = 1
+        local integer elementId = 0
+        local integer max = GetObjectElementIndex(abilId)
         local integer count = 0
         loop
+            set elementId = GetObjectElementAtIndex(abilId, i)
             if isSpell then
-                set count = GetSpellElementCount(u, elementId, i)
+                set count = GetSpellElementCount(u, abilId, elementId)
             else
-                set count = GetObjectElementCount(elementId, i)
+                set count = GetObjectElementCount(abilId, elementId)
             endif
             
             if count > 1 then
-                set s = s + ClassAbil[i] + "x" + I2S(count)
+                set s = s + GetFullElementText(elementId) + "x" + I2S(count)
             elseif count == 1 then
-                set s = s + ClassAbil[i]
+                set s = s + GetFullElementText(elementId)
             endif
             set i = i + 1
-            exitwhen i > Element_Maximum
+            exitwhen i > max
         endloop
         return s
     endfunction
@@ -133,6 +136,10 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         //Counts
         set elementCount = elementCount + GetUnitAbsoluteBonusCount(u, elementId)
         
-        return elementCount 
+        if elementCount > 0 then
+            return elementCount
+        else
+            return 0
+        endif
     endfunction
 endlibrary

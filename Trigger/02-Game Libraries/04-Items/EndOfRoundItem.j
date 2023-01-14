@@ -5,7 +5,7 @@ library EndOfRoundItem initializer init
     endglobals
 
     function CheckEndOfRoundItem takes item it returns boolean
-        return RoundNumber != RoundEndItemData[GetHandleId(it)]
+        return RoundNumber > RoundEndItemData.integer[GetHandleId(it)]
     endfunction
 
     function GetValidEndOfRoundItems takes unit u, integer itemId returns integer
@@ -33,7 +33,7 @@ library EndOfRoundItem initializer init
 
     function RegisterEndOfRoundItem takes integer pid, item it returns nothing
         if it != null then
-            if CurrentlyFighting[pid] or RectContainsUnit(RectMidArena, PlayerHeroes[pid + 1]) == false then
+            if (CurrentlyFighting[pid] or (not RectContainsUnit(RectMidArena, PlayerHeroes[pid]))) and RoundEndItemData.integer[GetHandleId(it)] == 0 then
                 call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "Your |cff68eef3" + GetItemName(it) + "|r will start working |cff6cff40next round|r.")
                 set RoundEndItemData[GetHandleId(it)] = RoundNumber
             else

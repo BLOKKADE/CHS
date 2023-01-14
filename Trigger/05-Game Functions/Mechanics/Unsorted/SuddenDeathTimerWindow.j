@@ -1,4 +1,5 @@
 library SuddenDeathTimerWindow requires TimerUtils, Utility
+
     globals
         private timer SuddenDeathTimer = null
         private timerdialog SuddenDeathDialog = null
@@ -15,12 +16,13 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
 
     function PlayerText takes string s returns nothing
         local integer i = 0
+
         loop
-            if HasPlayerFinishedLevel(PlayerHeroes[i+1], Player(i)) == false then
+            if HasPlayerFinishedLevel(PlayerHeroes[i], Player(i)) == false then
                 call DisplayTimedTextToPlayer(Player(i), 0, 0, 10, s)
             endif
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
     endfunction
 
@@ -28,7 +30,9 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
         local real duration = 30
         set level = level + 1
         set SuddenDeathEnabled = true
+        
         call TimerDialogSetTitle(SuddenDeathDialog, "Creep enrage level " + I2S(level))
+        
         if level == 2 then
             call PlayerText("|cffffee00Sudden Death Level 1|r: Midas Touch disabled")
             set duration = 15
@@ -42,6 +46,7 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
             call PlayerText("|cffff0000Sudden Death Level 4|r: 20% current hit point drain every 0.25 seconds.")
             return
         endif
+
         call TimerStart(SuddenDeathTimer, duration, false, null)
     endfunction
 
@@ -56,4 +61,5 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
             call TimerDialogDisplay(SuddenDeathDialog, true)
         endif
     endfunction
+
 endlibrary

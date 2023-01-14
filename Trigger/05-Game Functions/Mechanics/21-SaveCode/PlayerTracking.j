@@ -1,15 +1,48 @@
-library PlayerTracking initializer init requires OldInitialization
+library PlayerTracking initializer init requires GameInit
     
-    // OldInitialization contains values about what mode is selected
+    // GameInit contains values about what mode is selected
     // AbilityMode -> Pick == 1, AR == 0, Draft == 2
     // RandomHeroMode -> true == Random Hero, false == Pick Hero
 
     globals
-        constant integer CURRENT_GAME_VERSION = 1 // This value needs to have an index value in the game version string lookup
         constant integer MAX_SAVE_VALUE = 9999
-        private string array MapVersionLookup
+
+        private GameVersion array MapVersionLookup
         private boolean SaveEnabled
+        
+        GameVersion CurrentGameVersion
     endglobals
+
+    struct GameVersion
+        private boolean ResetStats
+        private integer Version
+        private string VersionString
+
+        method shouldResetStats takes nothing returns boolean
+            return this.ResetStats
+        endmethod
+
+        method getVersion takes nothing returns integer
+            return this.Version
+        endmethod
+
+        method getVersionString takes nothing returns string
+            return this.VersionString
+        endmethod
+
+        static method create takes string versionString, integer versionId, boolean resetStats returns thistype
+            local thistype this = thistype.allocate()
+            set this.VersionString = versionString
+            set this.Version = versionId
+            set this.ResetStats = resetStats
+
+            // Save the latest
+            set CurrentGameVersion = this
+
+            return this
+        endmethod
+
+    endstruct
 
     struct PlayerStats
         // --- Values that are actually saved in the save code
@@ -45,15 +78,40 @@ library PlayerTracking initializer init requires OldInitialization
         private effect CurrentHatEffect = null
         private boolean DebugEnabled = false
         private boolean HasAchievementsOpen = false
+        private boolean HasScoreboardOpen = false
+        private boolean HasRewardsOpen = false
         private boolean HasLoaded = false
+        private boolean IsReady = false
         private unit Pet = null
         private integer PetLastSwappedAt = 0
+        private integer PVPWins = 0 // PVP wins for the current game
+        private integer PVPLosses = 0 // PVP losses for the current game
+        private integer BRPVPKillCount = 0 // PVP kills during the BR
 
         // --- Temporary values that are not saved to the load code
 
         // Easy helper function to get the PlayerTracking struct of a player
         public static method forPlayer takes player p returns thistype
             return thistype(GetPlayerId(p) + 1) // First struct created is 1, not 0
+        endmethod
+
+        public static method getTooltip takes player p returns string
+            local thistype ps = thistype.forPlayer(p)
+            local string tooltip = ""
+
+            set tooltip = tooltip + "|cffd0ff00All Pick Stats|r"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getAPBRSeasonWins()) + " (" + I2S(ps.getAPBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getAPPVPSeasonWins()) + " (" + I2S(ps.getAPPVPAllWins()) + " total)"
+
+            set tooltip = tooltip + "|n|cffd0ff00All Random Stats|r"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getARBRSeasonWins()) + " (" + I2S(ps.getARBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getARPVPSeasonWins()) + " (" + I2S(ps.getARPVPAllWins()) + " total)"
+
+            set tooltip = tooltip + "|n|cffd0ff00Draft Stats|r"
+            set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getDraftBRSeasonWins()) + " (" + I2S(ps.getDraftBRAllWins()) + " total)"
+            set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins()) + " (" + I2S(ps.getDraftPVPAllWins()) + " total)"
+
+            return tooltip
         endmethod
 
         // --- Functions for data that is not actually saved
@@ -79,6 +137,14 @@ library PlayerTracking initializer init requires OldInitialization
         
         public method getPetLastSwappedAt takes nothing returns integer
             return this.PetLastSwappedAt
+        endmethod
+
+        public method getPVPWins takes nothing returns integer
+            return this.PVPWins
+        endmethod
+
+        public method getPVPLosses takes nothing returns integer
+            return this.PVPLosses
         endmethod
 
         public method setCurrentHatEffect takes effect value returns nothing
@@ -109,9 +175,59 @@ library PlayerTracking initializer init requires OldInitialization
             set this.HasAchievementsOpen = not this.HasAchievementsOpen
             return this.HasAchievementsOpen
         endmethod
+
+        public method toggleHasScoreboardOpen takes nothing returns boolean
+            set this.HasScoreboardOpen = not this.HasScoreboardOpen
+            return this.HasScoreboardOpen
+        endmethod
+
+        public method setHasScoreboardOpen takes boolean value returns nothing
+            set this.HasScoreboardOpen = value
+        endmethod
+
+        public method toggleHasRewardsOpen takes nothing returns boolean
+            set this.HasRewardsOpen = not this.HasRewardsOpen
+            return this.HasRewardsOpen
+        endmethod
+
+        public method setHasRewardsOpen takes boolean value returns nothing
+            set this.HasRewardsOpen = value
+        endmethod
+
+        public method toggleIsReady takes nothing returns boolean
+            set this.IsReady = not this.IsReady
+            return this.IsReady
+        endmethod
+        
+        public method setIsReady takes boolean value returns nothing
+            set this.IsReady = value
+        endmethod
+
+        public method isReady takes nothing returns boolean
+            return this.IsReady
+        endmethod
+
+        public method getBRPVPKillCount takes nothing returns string
+            if (this.BRPVPKillCount == 0) then
+                return "no kills!"
+            elseif (this.BRPVPKillCount == 1) then
+                return "1 kill!"
+            endif
+
+            return I2S(this.BRPVPKillCount) + " kills!"
+        endmethod
+
         // --- Functions for data that is not actually saved
 
         // --- Functions for data that is actually saved
+
+        public method addBRPVPKill takes nothing returns nothing
+            // Add the pvp win like normal
+            call this.addPVPWin()
+
+            set this.BRPVPKillCount = this.BRPVPKillCount + 1
+        endmethod
+
         public method getAllBRWins takes nothing returns integer
             // Random
             if (AbilityMode == 0) then
@@ -307,11 +423,13 @@ library PlayerTracking initializer init requires OldInitialization
         public method setPetIndex takes integer value returns nothing
             set this.PetIndex = value
         endmethod
+        // --- Functions for data that is actually saved
 
         private method tryIncrementValue takes integer currentValue, string valueName returns integer 
             if (currentValue >= MAX_SAVE_VALUE) then
-                call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"You have maxed out " + valueName + " at " + I2S(MAX_SAVE_VALUE))
-                call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"Please consider stepping outside for a bit")
+                // TODO maybe reenable one day
+                // call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"You have maxed out " + valueName + " at " + I2S(MAX_SAVE_VALUE))
+                // call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"Please consider stepping outside for a bit")
 
                 return currentValue
             endif
@@ -322,20 +440,22 @@ library PlayerTracking initializer init requires OldInitialization
         public method addBRWin takes nothing returns nothing
             // Random
             if (AbilityMode == 0) then
-                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random Battle Royale All Wins")
-                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random Battle Royale Season Wins")
+                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random BR All Wins")
+                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random BR Season Wins")
             // Pick
             elseif (AbilityMode == 1) then
-                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick Battle Royale All Wins")
-                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick Battle Royale Season Wins")
+                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick BR All Wins")
+                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick BR Season Wins")
             // Draft
             elseif (AbilityMode == 2) then
-                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft Battle Royale All Wins")
-                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft Battle Royale Season Wins")
+                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft BR All Wins")
+                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft BR Season Wins")
             endif
         endmethod
 
         public method addPVPWin takes nothing returns nothing
+            set this.PVPWins = this.PVPWins + 1
+
             // Random
             if (AbilityMode == 0) then
                 set this.ARPVPAllWins = this.tryIncrementValue(this.ARPVPAllWins, "All Random PVP All Wins")
@@ -349,6 +469,10 @@ library PlayerTracking initializer init requires OldInitialization
                 set this.DraftPVPAllWins = this.tryIncrementValue(this.DraftPVPAllWins, "Draft PVP All Wins")
                 set this.DraftPVPSeasonWins = this.tryIncrementValue(this.DraftPVPSeasonWins, "Draft PVP Season Wins")
             endif
+        endmethod
+
+        public method addPVPLoss takes nothing returns nothing
+            set this.PVPLosses = this.PVPLosses + 1
         endmethod
 
         public method resetSeasonStats takes nothing returns nothing
@@ -365,11 +489,10 @@ library PlayerTracking initializer init requires OldInitialization
             set this.DraftPVPSeasonWins = 0
         endmethod
     endstruct
-    // --- Functions for data that is actually saved
 
     function GetMapVersionName takes integer gameVersion returns string
-        if (gameVersion > 0 and MapVersionLookup[gameVersion] != null) then
-            return MapVersionLookup[gameVersion]
+        if (gameVersion > 0 and MapVersionLookup[gameVersion] != 0) then
+            return MapVersionLookup[gameVersion].getVersionString()
         endif
 
         return "Unknown Map Version: " + I2S(gameVersion)
@@ -380,8 +503,14 @@ library PlayerTracking initializer init requires OldInitialization
     endfunction
 
     private function SetupMapVersionLookups takes nothing returns nothing
-        set MapVersionLookup[0] = "Invalid Map Version" // Placeholder for default map version
-        set MapVersionLookup[1] = "CHS_v1.9.30-beta1" // The first game version that supports save codes
+        // The array index should match the version input to GameVersion.Create(). index == version for GetMapVersionName()
+        set MapVersionLookup[0] = GameVersion.create("Invalid Map Version", 0, false) // Placeholder for default map version
+        set MapVersionLookup[1] = GameVersion.create("CHS_v1.9.30-beta1", 1, false) // The first game version that supports save codes
+        set MapVersionLookup[2] = GameVersion.create("CHS v2.0.2", 2, true) // First version to reset seasonal stats. Had major balancing changes
+        // CHS v2.0.3 is missing because we didn't have the GameVersion framework yet. Would have caused a seasonal stat reset otherwise
+        set MapVersionLookup[3] = GameVersion.create("CHS v2.1.1", 3, false) // First version with new GameVersion struct
+        set MapVersionLookup[4] = GameVersion.create("CHS v2.1.2", 4, false) // Scoreboard desync fix version
+        set MapVersionLookup[5] = GameVersion.create("CHS v2.2.0", 5, false) // Scoreboard desync fix version
     endfunction
 
     private function init takes nothing returns nothing
@@ -403,4 +532,5 @@ library PlayerTracking initializer init requires OldInitialization
         call DestroyForce(computerPlayers)
         set computerPlayers = null
     endfunction
+
 endlibrary

@@ -15,6 +15,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
         local real damage = 0
         local integer lvl = 0
         local DummyOrder dummy = 0
+        local AbilityModifiers abilMods = 0
         loop
             set caster = FirstOfGroup(ENUM_GROUP)
             exitwhen caster == null
@@ -37,7 +38,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
             call AddUnitCustomState(dummy.dummy, BONUS_MAGICPOW, GetUnitCustomState(source, BONUS_MAGICPOW))
 
             //Set bonus damage
-            set RetaliationDamage.real[GetDummyId(dummy.dummy)] = 0.25 + (0.025 * GetUnitAbilityLevel(caster, RETALIATION_AUR_ABILITY_ID)) + damage
+            set AbilityModifiers.createOrGet(dummy.dummy).RetaliationAuraBonus = 0.25 + (0.025 * GetUnitAbilityLevel(caster, RETALIATION_AUR_ABILITY_ID)) + damage
             //call BJDebugMsg("retdmg: " + R2S(RetaliationDamage.real[GetHandleId(dummy.dummy)]) + " hid: " + I2S(GetHandleId(dummy.dummy)))
             call DestroyEffect(AddLocalizedSpecialEffectTarget("war3mapImported\\Shiva'sWrath.mdx", caster, "origin"))
             call dummy.activate()

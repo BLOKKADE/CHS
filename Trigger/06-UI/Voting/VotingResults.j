@@ -14,7 +14,12 @@ library VotingResults initializer init
         integer ImmortalMode
         integer PvpBettingMode
         integer HeroBanningMode
+        integer SimultaneousDuelMode
+        integer TeamDuelMode
+        integer LongerTimersMode
+
         string GameDescription
+        string ScoreboardGameDescription
 
         // Counts for each type of vote. Used so that we don't need to hardcode indexes or something
         integer RoundButtonCount = 0
@@ -34,6 +39,9 @@ library VotingResults initializer init
         private integer ImmortalVote = 1 // Normal lives
         private integer PvpBettingVote = 1 // No betting
         private integer HeroBanningVote = 1 // No banning
+        private integer DisableSimultaneousDuelVote = 1 // Disable Simultaneous duels off
+        private integer DisableTeamDuelVote = 1 // Disable Team duels off
+        private integer LongerTimersVote = 1 // Double timers off
 
         public method setRoundVote takes integer value returns nothing 
             set this.RoundVote = value
@@ -63,6 +71,18 @@ library VotingResults initializer init
             set this.HeroBanningVote = value
         endmethod
 
+        public method setDisableSimultaneousDuelVote takes integer value returns nothing 
+            set this.DisableSimultaneousDuelVote = value
+        endmethod
+
+        public method setDisableTeamDuelVote takes integer value returns nothing 
+            set this.DisableTeamDuelVote = value
+        endmethod
+
+        public method setLongerTimersVote takes integer value returns nothing 
+            set this.LongerTimersVote = value
+        endmethod
+
         public method getRoundVote takes nothing returns integer 
             return this.RoundVote
         endmethod
@@ -90,64 +110,127 @@ library VotingResults initializer init
         public method getHeroBanningVote takes nothing returns integer 
             return this.HeroBanningVote
         endmethod
+
+        public method getDisableSimultaneousDuelVote takes nothing returns integer 
+            return this.DisableSimultaneousDuelVote
+        endmethod
+
+        public method getDisableTeamDuelVote takes nothing returns integer 
+            return this.DisableTeamDuelVote
+        endmethod
+
+        public method getLongerTimersVote takes nothing returns integer 
+            return this.LongerTimersVote
+        endmethod
     endstruct
 
     public function SetGameModeDescription takes nothing returns nothing
         set GameDescription = "|cffe9820dGame Mode: "
+        set ScoreboardGameDescription = "|cff00ffffGame Modes|r|cffe9820d|n"
 
         if (RoundMode == 1) then
             set GameDescription = GameDescription + "50 Rounds, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "50 Rounds|n"
         elseif (RoundMode == 2) then
             set GameDescription = GameDescription + "25 Rounds, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "25 Rounds|n"
         endif
 
         if (AbilityMode == 1) then
             set GameDescription = GameDescription + "Pick Abilities, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Pick Abilities|n"
         elseif (AbilityMode == 2) then
             set GameDescription = GameDescription + "Random Abilities, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Random Abilities|n"
         elseif (AbilityMode == 3) then
             set GameDescription = GameDescription + "Draft Abilities, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Draft Abilities|n"
         endif
 
         if (HeroMode == 1) then
             set GameDescription = GameDescription + "Pick Hero, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Pick Hero|n"
         elseif (HeroMode == 2) then
             set GameDescription = GameDescription + "Random Hero, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Random Hero|n"
         elseif (HeroMode == 3) then
             set GameDescription = GameDescription + "Draft Hero, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Draft Hero|n"
         elseif (HeroMode == 4) then
             set GameDescription = GameDescription + "Same-Draft Hero, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Same-Draft Hero|n"
         endif
 
         if (IncomeMode == 1) then
             set GameDescription = GameDescription + "Auto-Eco Income, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Auto-Eco Income|n"
         elseif (IncomeMode == 2) then
             set GameDescription = GameDescription + "Individual Income, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Individual Income|n"
         elseif (IncomeMode == 3) then
             set GameDescription = GameDescription + "Global Income, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Global Income|n"
         elseif (IncomeMode == 4) then
             set GameDescription = GameDescription + "Disabled Income, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Disabled Income|n"
         endif
 
         if (ImmortalMode == 1) then
             set GameDescription = GameDescription + "Mortal Mode, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Mortal Mode|n"
         elseif (ImmortalMode == 2) then
             set GameDescription = GameDescription + "Immortal Mode, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Immortal Mode|n"
         endif
 
-        if (PvpBettingMode == 1) then
+        // Don't allow pvp betting with simultaneous duels
+        if (PvpBettingMode == 1 or SimultaneousDuelMode == 2) then
+            set PvpBettingMode = 1
             set GameDescription = GameDescription + "PVP Betting Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "PVP Betting Off|n"
         elseif (PvpBettingMode == 2) then
             set GameDescription = GameDescription + "PVP Betting On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "PVP Betting On|n"
         endif
 
         if (HeroBanningMode == 1) then
-            set GameDescription = GameDescription + "Hero Banning Off"
+            set GameDescription = GameDescription + "Hero Banning Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Hero Banning Off|n"
         elseif (HeroBanningMode == 2) then
-            set GameDescription = GameDescription + "Hero Banning On"
+            set GameDescription = GameDescription + "Hero Banning On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Hero Banning On|n"
+        endif
+
+        if (SimultaneousDuelMode == 1) then
+            set GameDescription = GameDescription + "Simultaneous Duels Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Simultaneous Duels Off|n"
+        elseif (SimultaneousDuelMode == 2) then
+            set GameDescription = GameDescription + "Simultaneous Duels On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Simultaneous Duels On|n"
+        endif
+
+        if (TeamDuelMode == 1) then
+            set GameDescription = GameDescription + "Team Duels Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Team Duels Off|n"
+        elseif (TeamDuelMode == 2) then
+            set GameDescription = GameDescription + "Team Duels On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Team Duels On|n"
+        endif
+
+        if (LongerTimersMode == 1) then
+            set GameDescription = GameDescription + "Double Timers Off"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Double Timers Off"
+        elseif (LongerTimersMode == 2) then
+            set GameDescription = GameDescription + "Double Timers On"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Double Timers On"
+
+            set RoundTime = RoundTime * 2
+            set BattleRoyalWaitTime = BattleRoyalWaitTime * 2
+            set pvpWaitDuration = pvpWaitDuration * 2
         endif
 
         set GameDescription = GameDescription + "|r"
+        set ScoreboardGameDescription = ScoreboardGameDescription + "|r"
     endfunction
 
     private function GetMaxValueInVoteCounts takes integer modeOptionCount returns integer
@@ -214,6 +297,22 @@ library VotingResults initializer init
         endif
     endfunction
 
+    private function GetCheckboxVoteFromAnyDuplicates takes nothing returns integer
+        return GetVoteFromAnyDuplicates(2)
+    endfunction
+
+    private function GetNegatedCheckboxVoteFromAnyDuplicates takes nothing returns integer
+        local integer result = GetVoteFromAnyDuplicates(2)
+
+        // Flip the response. Used when we have noting for `Disable x` e.g. `Disable simultaneous duels`
+        // We want to maintain the idea of 1 == off, 2 == on
+        if (result == 1) then
+            return 2
+        endif
+            
+        return 1
+    endfunction
+
     public function CountVotes takes nothing returns nothing
         local integer array roundModeCounts
         local integer array abilityModeCounts
@@ -222,12 +321,15 @@ library VotingResults initializer init
         local integer array immortalModeCounts
         local integer array pvpBettingModeCounts
         local integer array heroBanningModeCounts
+        local integer array simultaneousDuelModeCounts
+        local integer array teamDuelModeCounts
+        local integer array longerTimersModeCounts
         local PlayerVotes currentPlayerVotes
         local integer i = 0
 
         loop
             // Only count votes from players actually in the game
-            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING and (udg_boolean15 == true or Player(i) == udg_player03) then
+            if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING and (udg_boolean15 == true or Player(i) == HostPlayer) then
                 set currentPlayerVotes = PlayerVotes(i + 1) // Start at 1
 
                 // Count the votes for each category
@@ -238,6 +340,9 @@ library VotingResults initializer init
                 set immortalModeCounts[currentPlayerVotes.getImmortalVote()] = immortalModeCounts[currentPlayerVotes.getImmortalVote()] + 1
                 set pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] = pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] + 1
                 set heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] = heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] + 1
+                set simultaneousDuelModeCounts[currentPlayerVotes.getDisableSimultaneousDuelVote()] = simultaneousDuelModeCounts[currentPlayerVotes.getDisableSimultaneousDuelVote()] + 1
+                set teamDuelModeCounts[currentPlayerVotes.getDisableTeamDuelVote()] = teamDuelModeCounts[currentPlayerVotes.getDisableTeamDuelVote()] + 1
+                set longerTimersModeCounts[currentPlayerVotes.getLongerTimersVote()] = longerTimersModeCounts[currentPlayerVotes.getLongerTimersVote()] + 1
             endif
 
             set i = i + 1
@@ -288,7 +393,7 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set ImmortalMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+        set ImmortalMode = GetCheckboxVoteFromAnyDuplicates()
 
         // Pvp betting vote counting
         set i = 1
@@ -297,7 +402,7 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set PvpBettingMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+        set PvpBettingMode = GetCheckboxVoteFromAnyDuplicates()
 
         // Hero banning vote counting
         set i = 1
@@ -306,7 +411,34 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set HeroBanningMode = GetVoteFromAnyDuplicates(2) // Only 2 options for a checkbox
+        set HeroBanningMode = GetCheckboxVoteFromAnyDuplicates()
+
+        // Simultaneous duel vote counting
+        set i = 1
+        loop
+            set CategoryVotes[i] = simultaneousDuelModeCounts[i]
+            set i = i + 1
+            exitwhen i > 2
+        endloop
+        set SimultaneousDuelMode = GetNegatedCheckboxVoteFromAnyDuplicates()
+
+        // Team duel vote counting
+        set i = 1
+        loop
+            set CategoryVotes[i] = teamDuelModeCounts[i]
+            set i = i + 1
+            exitwhen i > 2
+        endloop
+        set TeamDuelMode = GetNegatedCheckboxVoteFromAnyDuplicates()
+
+        // Double timers vote counting
+        set i = 1
+        loop
+            set CategoryVotes[i] = longerTimersModeCounts[i]
+            set i = i + 1
+            exitwhen i > 2
+        endloop
+        set LongerTimersMode = GetCheckboxVoteFromAnyDuplicates()
 
         // Set the weird global variables based off of the results
         set GameModeShort = RoundMode == 2 // Boolean that flags if the game is short

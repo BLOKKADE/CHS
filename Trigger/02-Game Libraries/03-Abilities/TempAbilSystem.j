@@ -14,11 +14,11 @@ library TempAbilSystem initializer init requires BuffLevel
         integer abilId
 
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop or GetBuffLevel(this.source, this.abilId) == 0 then
+            if T32_Tick > this.endTick or (not UnitAlive(this.source)) or this.stop or GetBuffLevel(this.source, this.abilId) == 0 or GetUnitAbilityLevel(this.source, this.abilId) == 0 then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
 
         static method create takes unit source, integer abilId, real duration returns thistype
             local thistype this 
@@ -26,14 +26,13 @@ library TempAbilSystem initializer init requires BuffLevel
 
             if tempAbil == 0 then
                 set this = thistype.setup()
-                call BJDebugMsg("created new tempabil")
 
                 set this.abilId = abilId
                 set this.stop = false
                 set this.source = source
 
                 call UnitAddAbility(this.source, this.abilId)
-                call RegisterBuff(this.source, this.abilId)
+                call RegisterLeveledBuff(this.source, this.abilId)
 
                 set UnitTempAbilities[GetHandleId(this.source)].integer[this.abilId] = this
                 
@@ -42,13 +41,12 @@ library TempAbilSystem initializer init requires BuffLevel
                 return this
             else
                 set tempAbil.endTick = T32_Tick + R2I(duration * 32)
-                call BJDebugMsg("extended existing tempabil")
                 return tempAbil
             endif
         endmethod
         
         method destroy takes nothing returns nothing
-            call RemoveBuff(this.source, this.abilId)
+            call RemoveLeveledBuffs(this.source, this.abilId)
             set UnitTempAbilities[GetHandleId(this.source)].integer[this.abilId] = 0
             set this.source = null
             set this.stop = true

@@ -1,4 +1,4 @@
-library SkeletonBrute requires RandomShit
+library SkeletonBrute requires AbilityCooldown
 
     struct SkeletonBruteStruct extends array
         unit source
@@ -24,8 +24,7 @@ library SkeletonBrute requires RandomShit
         endmethod
         
         method destroy takes nothing returns nothing
-            call UnitRemoveAbility(this.source, 'A0BB')
-            call UnitRemoveAbility(this.source, 'B029')
+            call RemoveUnitBuff(this.source, 'A0BB')
             //call BlzSetSpecialEffectAlpha(this.fx, 0)
             call DestroyEffect(this.fx)
             set this.fx = null

@@ -73,38 +73,42 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 
 	function StrInfo takes unit u returns string
 		local string s = PrimaryAttributeDmg(u, 0)
-		local real gloryRegen = LoadReal(DataUnitHT, GetHandleId(u), 1000)
+		local real gloryRegen = GetUnitCustomState(u, BONUS_GLORYREGEN)
 		set s = s + "Each point increases hit points by 26. (" + statColour[0] + "+" + I2S(GetHeroStr(u, true) * 26) + " total|r)\n" 
 		set s = s + "Each point increases hit point regeneration by 0.075. (" + statColour[0] + "+" + R2SW(GetUnitTotalHpRegen(u), 1, 1) + " total|r)\n"
 		
 		if gloryRegen > 0 then
-			set s = s + statColour[0] + I2S(R2I(gloryRegen + (50 * GloryRegenLevel[GetHandleId(u)]))) + "|r of that is from glory HP regen.\n"
+			set s = s + statColour[0] + I2S(R2I(gloryRegen)) + "|r of that is from glory HP regen.\n"
 		endif
 		
-		return s + "Strength per level: " + statColour[0] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('ustp')) + GetStrengthLevelBonus(u)) + "|r"
+		return s + "Strength per level: " + statColour[0] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('ustp')) + GetStatLevelBonus(u, BONUS_STRENGTH)) + "|r"
 	endfunction
 
 	function AgiInfo takes unit u returns string
 		local string s = PrimaryAttributeDmg(u, 1)
 		set s = s + "Each point increases armor by 0.150. (" + statColour[1] + "+" + R2SW(GetHeroAgi(u, true) * 0.15, 1, 1) + " total|r)\n" 
 		set s = s + "Each point increases attack speed by 1%%. (" + statColour[1] + "+" + R2SW(RMinBJ(GetHeroAgi(u, true), 400), 1, 1) + "%% total|r) (Max 400%%)\n"
-		return s + "Agility per level: " + statColour[1] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uagp')) + GetAgilityLevelBonus(u)) + "|r"
+		return s + "Agility per level: " + statColour[1] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uagp')) + GetStatLevelBonus(u, BONUS_AGILITY)) + "|r"
 	endfunction
 
 	function IntInfo takes unit u returns string
 		local string s = PrimaryAttributeDmg(u, 2)
 		set s = s + "Each point increases mana by 20.1. (" + statColour[2] + "+" + R2SW(GetHeroInt(u, true) * 20.1, 1, 1) + " total|r)\n" 
 		set s = s + "Each point increases mana regeneration by 0.065. (" + statColour[2] + "+" + R2SW(BlzGetUnitRealField(u, ConvertUnitRealField('umpr'))  + (GetUnitBonusReal(u, BONUS_MANA_REGEN)) + (GetHeroInt(u, true) * 0.065), 1, 1) + " total|r)\n"
-		return s + "Intelligence per level: " + statColour[2] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uinp')) + GetIntelligenceLevelBonus(u)) + "|r"
+		return s + "Intelligence per level: " + statColour[2] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uinp')) + GetStatLevelBonus(u, BONUS_INTELLIGENCE)) + "|r"
 	endfunction
 
 	function UpdateTooltipText takes unit u returns nothing
 		set CustomStateValue[1] = R2S(100 * (1 - (50 /(50 + GetUnitCustomState(u, BONUS_EVASION)))))
 
-		if BlzGetUnitArmor(u) >= 0 and not BlzIsUnitInvulnerable(u) then
-			set CustomStateValue[2] = "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
+		set CustomStateValue[2] = ""
+		if BlzIsUnitInvulnerable(u) then
+			set CustomStateValue[2] = "|cffff0000Invulnerable|r\n"
+		endif
+		if BlzGetUnitArmor(u) >= 0 then
+			set CustomStateValue[2] = CustomStateValue[2] + "Reduces physical damage taken by |cffb0e74a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
 		else
-			set CustomStateValue[2] = "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.06)/(1 + 0.06 *(BlzGetUnitArmor(u)))) * 100)
+			set CustomStateValue[2] = CustomStateValue[2] + "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
 		endif
 
 		set CustomStateValue[3] = R2S(GetUnitCustomState(u, BONUS_MAGICPOW))
@@ -119,7 +123,11 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 	function UpdateTextRelaese takes unit u returns nothing
 		call BlzFrameSetText(TextUI[1], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 0)))
 		call BlzFrameSetText(TextUI[2], R2SW(BlzGetUnitAttackCooldown(u, 0), 1, 2) + "/" + R2SW(BlzGetUnitRealField(u, UNIT_RF_CAST_POINT), 1, 2))
-		call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
+		if BlzIsUnitInvulnerable(u) then
+			call BlzFrameSetText(TextUI[3], "|cffff0000" + R2SW(BlzGetUnitArmor(u), 1, 1) + "|r")
+		else
+			call BlzFrameSetText(TextUI[3], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconValue", 2)))
+		endif
 		call BlzFrameSetText(TextUI[4], R2SW(GetUnitCustomState(u, BONUS_BLOCK), 1, 0))
 		call BlzFrameSetText(TextUI[5], R2SW(GetUnitCustomState(u, BONUS_PVP), 1, 1))
 		call BlzFrameSetText(TextUI[9], R2SW(GetUnitCustomState(u, BONUS_MAGICPOW), 1, 1))

@@ -25,7 +25,7 @@ library AncientBlood initializer init requires BuffLevel, CustomState, Utility
             set this.source = source
             set this.hid = GetHandleId(source)
 
-            call RegisterBuff(this.source, 'A0CI')
+            call RegisterLeveledBuff(this.source, 'A0CI')
             if GetUnitAbilityLevel(this.source, 'A0CI') == 0 then
                 call UnitAddAbility(this.source, 'A0CI')
             endif
@@ -50,7 +50,7 @@ library AncientBlood initializer init requires BuffLevel, CustomState, Utility
         
         method destroy takes nothing returns nothing
             set AncientBloodStacks[hid] = AncientBloodStacks[hid] - 1
-            call RemoveBuff(this.source, 'A0CI')
+            call RemoveLeveledBuffs(this.source, 'A0CI')
             if primary == Stat_Strength then
                 call CheckHpForReduction(this.source, this.bonus)
                 call AddUnitBonus(this.source, BONUS_STRENGTH, 0 - this.bonus)

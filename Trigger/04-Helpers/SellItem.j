@@ -31,7 +31,7 @@ library SellItems requires DummyRecycler, GloryItemCosts
 
                 // Create a dummy with timed life, give it a clone of the item, and make the dummy sell it
                 set u = CreateUnit(GetOwningPlayer(playerHero), SELL_ITEM_DUMMY, GetUnitX(playerHero), GetUnitY(playerHero), 0)
-                call UnitApplyTimedLife(u, 'BTLF' , 20)
+                call UnitApplyTimedLife(u, 'BTLF' , 1)
                 set tempItem = UnitAddItemById(u, GetItemTypeId(itemToSell))
                 call SetItemCharges(tempItem, GetItemCharges(itemToSell))
                 call RemoveItem(itemToSell)

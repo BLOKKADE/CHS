@@ -1,4 +1,4 @@
-library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTable, CustomState, LearnAbsolute
+library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTable, CustomState, AbsoluteLimit
     globals
         HashTable WitchDoctorAbsoluteLevel
     endglobals
@@ -9,7 +9,7 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
 
     function AddWitchDoctorAbsoluteLevel takes unit u, integer elementId returns nothing
         set WitchDoctorAbsoluteLevel[GetHandleId(u)].integer[elementId] = WitchDoctorAbsoluteLevel[GetHandleId(u)].integer[elementId] + 1
-        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,(ClassAbil[elementId] + " |cffffcc00bonus acquired"))
+        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,(GetFullElementText(elementId) + " |cffffcc00bonus acquired"))
     endfunction
     
     function WitchDoctorHasAbsolute takes unit u, integer elementId returns boolean

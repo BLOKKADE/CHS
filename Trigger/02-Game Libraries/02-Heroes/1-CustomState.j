@@ -29,6 +29,9 @@ library CustomState initializer init requires TimerUtils
         */
         constant integer BONUS_NEGATIVEHPREGEN          = 21
         constant integer BONUS_GLORYREGEN               = 22
+
+        //amount of custom stats
+        constant integer STAT_BONUS_COUNT               = 22
     endglobals
 
     function SetUnitCustomState takes unit u, integer stat, real value returns nothing
@@ -45,7 +48,6 @@ library CustomState initializer init requires TimerUtils
 
     //Absolute count bonus 100-149
     function SetUnitAbsoluteBonusCount takes unit u,integer id, integer i returns nothing
-        
         call SaveInteger(HT_unitstate,GetHandleId(u),100+id,i)
     endfunction
     

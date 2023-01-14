@@ -1,9 +1,10 @@
-library Sorcerer initializer init requires AbilityData, CastSpellOnTarget, StableSpells, ListT
+library Sorcerer initializer init requires AbilityData, CastSpellOnTarget, StableSpells, FilteredSpellList
     globals
         Table SorcererAmount
-        Table SorcererList
+        //Table SorcererList
     endglobals
 
+    /*
     private function GetSorcererList takes integer hid returns IntegerList
         return SorcererList[hid]
     endfunction
@@ -34,11 +35,16 @@ library Sorcerer initializer init requires AbilityData, CastSpellOnTarget, Stabl
             call GetSorcererList(hid).push(abilId)
         endif
     endfunction
-    
+    */
+
+    function SorcerSpellListFilter takes unit u, integer abilId returns boolean
+        return IsAbilityCasteable(abilId, false) and IsSpellResettable(abilId)
+    endfunction
+
     function SorcererPassive takes unit caster, integer hid returns nothing
         local integer i = 0
         local integer amount = SorcererAmount[hid]
-        local IntegerList sorcererList = GetSorcererList(hid)
+        local IntegerList sorcererList = GetFilterList(hid, SORCERER_UNIT_ID)
         local integer random = GetRandomInt(0, sorcererList.size() - 1)
         local IntegerListItem node = sorcererList.first
         local integer abilId = 0
@@ -64,7 +70,6 @@ library Sorcerer initializer init requires AbilityData, CastSpellOnTarget, Stabl
 
     private function init takes nothing returns nothing
         set SorcererAmount = Table.create()
-        set SorcererList = Table.create()
     endfunction
 
 endlibrary

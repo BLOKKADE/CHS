@@ -1,7 +1,7 @@
-library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin
+library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin, ItemAbilityCooldown
 	globals
 		hashtable HTi = InitHashtable()
-		Table UniqueItemCount
+		HashTable UniqueItemCount
 		private integer EVENT_ITEM_PICKUP = 0
 		private integer EVENT_ITEM_DROP = 1
 	endglobals
@@ -15,11 +15,19 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		local integer diff = 0
 		local integer uniqueDiff = 0
 		
-		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) and not IsHeroUnitId(GetUnitTypeId(u))) then
+		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) or (not IsHeroUnitId(GetUnitTypeId(u)))) then
 			return
 		endif
 
+		if ev == EVENT_ITEM_PICKUP then
+			if IsItemAbilOnCooldown(it) then
+				call StartItemAbilCooldown(u, it)
+			endif
+		endif
+
 		if ev == EVENT_ITEM_DROP then
+			call SetItemAbilCooldown(u, it)
+
 			set itemCount = itemCount - 1
 		endif
 
@@ -27,6 +35,15 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		set diff = itemCount - prevCount
 		set uniqueDiff = IMinBJ(itemCount, 1) - UniqueItemCount[hid].integer[itemId]
 		set UniqueItemCount[hid].integer[itemId] = IMinBJ(itemCount, 1)
+
+		/*if pid == 0 and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
+			if ev == EVENT_ITEM_DROP then
+				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item drop" + ", hid: " + I2S(hid))
+			else
+				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item pickup"+ ", hid: " + I2S(hid))
+			endif
+			call BJDebugMsg("ic: " + I2S(itemCount) + "- pic: " + I2S(prevCount) + " = " + I2S(diff) + ". UicMin: " + I2S(IMinBJ(itemCount, 1)) + "- prUicMin: " + I2S(UniqueItemCount[hid].integer[itemId]) + " = " + I2S(uniqueDiff))
+		endif*/
 
 		if IsItemReplaceable(itemId) and ev == EVENT_ITEM_PICKUP then
 			call SetItemReplaced(GetHandleId(it))
@@ -56,7 +73,9 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 			//Staff of Lightning
 		elseif itemId == 'I05C' then
-			call AddUnitCustomState(u, BONUS_MAGICPOW, 15 * uniqueDiff)
+			call SetHeroStr(u, GetHeroStr(u, false) + (200 * uniqueDiff), false)
+			call SetHeroAgi(u, GetHeroAgi(u, false) + (200 * uniqueDiff), false)
+			call SetHeroInt(u, GetHeroInt(u, false) + (200 * uniqueDiff), false)
 		
 			//Robe of the ARchmage
 		elseif itemId == 'I05B' then
@@ -119,7 +138,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
-			call AddAgilityLevelBonus(u, 15 *diff)
+			call AddStatLevelBonus(u, BONUS_AGILITY, 15 *diff)
 			call SetHeroAgi(u, GetHeroAgi(u, false) + (15 *diff)* GetHeroLevel(u), false)
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('uagp'), BlzGetUnitRealField(u,ConvertUnitRealField('uagp')) + 15*diff )
 			
@@ -128,34 +147,43 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, 900 * diff)
-			call AddStrengthLevelBonus(u, 15 *diff)
+			call AddStatLevelBonus(u, BONUS_STRENGTH, 15 *diff)
 			call SetHeroStr(u, GetHeroStr(u, false) + (15 *diff)* GetHeroLevel(u), false)
+			//call BlzSetUnitRealField(u,ConvertUnitRealField('ustp'), BlzGetUnitRealField(u,ConvertUnitRealField('ustp')) + 15*diff )
+
+			//Dried Mushroom
+		elseif itemId == DRIED_MUSHROOM_ITEM_ID then
+			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
+			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
+			call AddUnitCustomState(u, BONUS_RUNEPOW, 75 * diff)
+			call AddStatLevelBonus(u, BONUS_RUNEPOW, 1 * uniqueDiff)
+			call AddUnitCustomState(u, BONUS_RUNEPOW, (1 * uniqueDiff) * GetHeroLevel(u))
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('ustp'), BlzGetUnitRealField(u,ConvertUnitRealField('ustp')) + 15*diff )
 			
 			//Ring of Musculature
 		elseif itemId == 'I071' then
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddStrengthLevelBonus(u, 4 *diff)
+				call AddStatLevelBonus(u, BONUS_STRENGTH, 4 *diff)
 			else
-				call AddStrengthLevelBonus(u, 2 *diff)
+				call AddStatLevelBonus(u, BONUS_STRENGTH, 2 *diff)
 			endif
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Ring of the Bookworm
 		elseif itemId == 'I072' then
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddIntelligenceLevelBonus(u, 4 *diff)
+				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 4 *diff)
 			else
-				call AddIntelligenceLevelBonus(u, 2 *diff)
+				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 2 *diff)
 			endif
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Trainers Ring
 		elseif itemId == 'I073' then
 			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddAgilityLevelBonus(u, 4 *diff)
+				call AddStatLevelBonus(u, BONUS_AGILITY, 4 *diff)
 			else
-				call AddAgilityLevelBonus(u, 2 *diff)
+				call AddStatLevelBonus(u, BONUS_AGILITY, 2 *diff)
 			endif
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
@@ -163,6 +191,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I0AF' then
 			call RegisterEndOfRoundItem(pid, it)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 30 *diff)
+
+		elseif itemId == 'I0D1' then
+			if ev == EVENT_ITEM_PICKUP then
+				call CreateSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, SpellListFilter.TerrestrialGlaiveFilter)
+			endif
+			call AddUnitCustomState(u, BONUS_PHYSPOW, 30 * uniqueDiff)
 
 			//Gladiator Helmet
 		elseif itemId == 'I07A' then
@@ -228,10 +262,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 			//Contract of the Living
 		elseif itemId == CONTRACT_LIVING_ITEM_ID then
-			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
-			//Avoid item CD resetting, dunno how to make it the actual remaining cd but probably not necessary, just don't drop the item 4Head
-			call AbilStartCD(u, CONTRACT_LIVING_ABIL_ID, 90)
-			
+			call AddUnitCustomState(u, BONUS_MAGICRES, 30 * uniqueDiff)
+
 			//Fishing Rod
 		elseif itemId == 'I07T' then
 			call AddUnitCustomState(u, BONUS_EVASION, 10 * uniqueDiff)
@@ -242,7 +274,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Snowww's wand
 		elseif itemId == 'I07V' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 60 * uniqueDiff)
-		
+			call AddUnitAbsoluteBonusCount(u, Element_Arcane, uniqueDiff)
 			//Holy Shield
 		elseif itemId == 'I07W' then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
@@ -276,13 +308,14 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 20 * diff)
-			call AddIntelligenceLevelBonus(u, 15 *diff)
+			call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 15 *diff)
 			call SetHeroInt(u, GetHeroInt(u, false) + (15 *diff)* GetHeroLevel(u), false)
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('uinp'), BlzGetUnitRealField(u,ConvertUnitRealField('uinp')) + 15*diff )
 		
 			//Archmage Staff
 		elseif itemId == 'I086' then
 			call AddUnitAbsoluteBonusCount(u,Element_Water, diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Arcane, diff)
 
 			//Wizards Gemstone
 		elseif itemId == 'I0BQ' then
@@ -301,7 +334,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitAbsoluteBonusCount(u,Element_Dark, diff)
 
 			//Panda Relic
-		elseif itemId == 'I086' then
+		elseif itemId == 'I05L' then
 			call AddUnitAbsoluteBonusCount(u,Element_Blood, diff)
 			call AddUnitAbsoluteBonusCount(u,Element_Water, diff)
 			call AddUnitAbsoluteBonusCount(u,Element_Wind, diff)
@@ -450,6 +483,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == SCORCHED_SCIMITAR_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 20 * diff)
 			call AddUnitCustomState(u, BONUS_PHYSPOW, 20 * diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Fire, uniqueDiff)
 		
 			//Druidic Focus
 		elseif itemId == DRUIDIC_FOCUS_ITEM_ID then
@@ -460,14 +494,48 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			endif
 		endif 
 
-		call PandaSkin_CheckAbilitiesAndItems(u)
+		call SecretCheck_CheckAbilitiesAndItems(u)
+	endfunction
+
+	private struct timerData
+		unit u
+		item it
+		integer ev
+	endstruct
+
+	private function OnItemChangeTimerExpire takes nothing returns nothing
+		local timer t = GetExpiredTimer()
+		local timerData data = GetTimerData(t)
+		
+		call SetupItem(data.u, data.it, data.ev)
+
+		set data.u = null
+		set data.it = null
+		call data.destroy()
+
+		call ReleaseTimer(t)
+		set t = null
+	endfunction
+
+	private function ItemChange takes integer ev returns nothing
+		local timer t = NewTimer()
+		local timerData data = timerData.create()
+		set data.u = GetTriggerUnit()
+		set data.it = GetManipulatedItem()
+		set data.ev = ev
+		call SetTimerData(t, data)
+		call TimerStart(t, 0, false, function OnItemChangeTimerExpire)
+
+		set t = null
 	endfunction
 
 	private function ItemDrop takes nothing returns nothing
+		//call ItemChange(EVENT_ITEM_DROP)
 		call SetupItem(GetTriggerUnit(), GetManipulatedItem(), EVENT_ITEM_DROP)
 	endfunction
 
 	private function ItemPickup takes nothing returns nothing
+		//call ItemChange(EVENT_ITEM_PICKUP)
 		call SetupItem(GetTriggerUnit(), GetManipulatedItem(), EVENT_ITEM_PICKUP)
 	endfunction
 
@@ -483,6 +551,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 		set trg = null
 
-		set UniqueItemCount = Table.create()
+		set UniqueItemCount = HashTable.create()
 	endfunction
 endlibrary

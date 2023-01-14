@@ -28,9 +28,9 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
     endfunction
 
     function AddDraftSpellToStore takes integer PlayerNumber, integer ChosenSpell, integer i returns nothing
-        call AddItemToStock( udg_Draft_DraftBuildings[PlayerNumber], LoadIntegerBJ(PlayerNumber, ChosenSpell, udg_Draft_PlayerSpells), 1, 1)    
+        call AddItemToStock(udg_Draft_DraftBuildings[PlayerNumber], LoadIntegerBJ(PlayerNumber, ChosenSpell, udg_Draft_PlayerSpells), 1, 1)    
         set DisplayedSpells[PlayerNumber].integer[i] = LoadIntegerBJ(PlayerNumber, ChosenSpell, udg_Draft_PlayerSpells)
-        call SaveIntegerBJ( LoadIntegerBJ(PlayerNumber, udg_Draft_PlayerSpellsMaxIndex[PlayerNumber], udg_Draft_PlayerSpells), PlayerNumber, ChosenSpell, udg_Draft_PlayerSpells) // 
+        call SaveIntegerBJ(LoadIntegerBJ(PlayerNumber, udg_Draft_PlayerSpellsMaxIndex[PlayerNumber], udg_Draft_PlayerSpells), PlayerNumber, ChosenSpell, udg_Draft_PlayerSpells) // 
         set udg_Draft_PlayerSpellsMaxIndex[PlayerNumber] = udg_Draft_PlayerSpellsMaxIndex[PlayerNumber] - 1
     endfunction
 
@@ -45,13 +45,13 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         local integer ChosenSpell = 0 
         local integer i = 0
         
-        // call DisplayTextToForce( GetPlayersAll(), ( "Player Id: " + I2S(PlayerNumber) ) )
+        // call DisplayTextToForce(GetPlayersAll(), ("Player Id: " + I2S(PlayerNumber) ) )
         loop
             exitwhen i >= timerData.spellAmount
             set ChosenSpell = GetRandomInt(1, udg_Draft_PlayerSpellsMaxIndex[timerData.playerNumber] - udg_Draft_NOSpellsLearned[timerData.playerNumber])        
             call AddDraftSpellToStore(timerData.playerNumber, ChosenSpell, i)
             set i = i + 1
-            // call DisplayTextToForce( GetPlayersAll(), ( "loop: " + I2S(i) ) )
+            // call DisplayTextToForce(GetPlayersAll(), ("loop: " + I2S(i) ) )
         endloop
 
         call timerData.destroy()
@@ -74,7 +74,7 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
     Guarantees that Pillage, Transmute, Holy Enlightenment and Learnability are added to the first draft
     */
     function GenerateInitialDraftSpells takes integer PlayerNumber, integer NOSpells returns nothing
-        if ( NOSpells - 4 > 0 ) then
+        if (NOSpells - 4 > 0 ) then
             call GenerateDraftSpells(PlayerNumber, NOSpells - 4) // Generate Draft Spells uses indices i : 0 =< i < 2nd argument
         endif
         call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[1], NOSpells - 4) // Learnability
@@ -84,9 +84,9 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
     endfunction
 
     function CreateDraftBuildingsLoop takes nothing returns nothing
-        local integer pid = GetConvertedPlayerId(GetEnumPlayer())
-        set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), udg_Draft_DraftBuilding, 0 - OffsetX, OffsetY, 0)
-        set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), udg_Draft_UpgradeBuilding, OffsetX, OffsetY, 0)
+        local integer pid = GetPlayerId(GetEnumPlayer())
+        set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_BUY_UNIT_ID, 0 - OffsetX, OffsetY, 0)
+        set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_UPGRADE_UNIT_ID, OffsetX, OffsetY, 0)
 
         if IncomeMode == 3 then
             call GenerateDraftSpells(pid, udg_Draft_NODraftSpells)
@@ -99,10 +99,10 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
 
     function ShopText takes integer x, integer y, string text, integer r, integer g, integer b returns texttag
         local texttag floatingtext = CreateTextTag()
-        call SetTextTagText(floatingtext,text, 0.023)
-        call SetTextTagPos(floatingtext,x,y,100.0)
-        call SetTextTagColor(floatingtext,r,g,b,255)
-        call SetTextTagPermanent(floatingtext,true)
+        call SetTextTagText(floatingtext, text, 0.023)
+        call SetTextTagPos(floatingtext, x, y, 100.0)
+        call SetTextTagColor(floatingtext, r, g, b, 255)
+        call SetTextTagPermanent(floatingtext, true)
         return floatingtext
     endfunction
 
@@ -113,25 +113,25 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
             set FloatingTextBuy = ShopText(0 - OffsetX, OffsetY, "Buy abilities", 255, 100, 0)
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', OffsetX, OffsetY, 0)
             set FloatingTextUpgrade = ShopText(OffsetX, OffsetY, "Upgrade abilities", 0, 255, 100)
-            call ForForce( udg_PlayersWithHero, function CreateDraftBuildingsLoop )
+            call ForForce(PlayersWithHero, function CreateDraftBuildingsLoop)
         endif
     endfunction
 
     function DisableVision takes nothing returns nothing
-        local integer i = 1
+        local integer i = 0
         local integer j
         loop
-            set j = 1
+            set j = 0
             loop  
-                if ( i != j ) then
-                    call SetPlayerAlliance(ConvertedPlayer(i), ConvertedPlayer(j), ALLIANCE_SHARED_VISION, false) 
+                if (i != j) then
+                    call SetPlayerAlliance(Player(i), Player(j), ALLIANCE_SHARED_VISION, false) 
                 endif
                 set j = j + 1 
-                exitwhen j > 8
+                exitwhen j == 8
             endloop
         
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
     endfunction
 

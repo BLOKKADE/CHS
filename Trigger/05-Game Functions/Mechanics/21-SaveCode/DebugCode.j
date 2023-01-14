@@ -1,11 +1,11 @@
-library DebugCode requires RandomShit, OldInitialization
+library DebugCode requires RandomShit, GameInit
 
     public function SavePlayerDebug takes player p returns nothing
         local string debugCode = ""
         local integer index = 0
         local string name
         local unit playerHero
-        local integer i = 1
+        local integer i = 0
         local PlayerStats ps
 
         if (not (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING)) then
@@ -64,7 +64,7 @@ library DebugCode requires RandomShit, OldInitialization
                 set debugCode = debugCode + "_"
             endif
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
 
         call SaveFile.create(p, "", 1, debugCode)

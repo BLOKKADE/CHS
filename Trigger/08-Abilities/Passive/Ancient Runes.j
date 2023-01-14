@@ -1,4 +1,4 @@
-library AncientRunes requires RuneInit
+library AncientRunes requires RuneInit, AbilityCooldown, RandomShit
     function ActivateAncientRunes takes unit caster, integer level returns nothing
         call ElemFuncStart(caster,ANCIENT_RUNES_ABILITY_ID)
         call AbilStartCD(caster, ANCIENT_RUNES_ABILITY_ID, 11)

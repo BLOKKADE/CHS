@@ -1,8 +1,8 @@
 library DebugCommands initializer init requires CustomState, RandomShit, Functions
+
     globals
         boolean DebugModeEnabled = false
         boolean array NextRound
-        real RoundTime = 20
         integer dummyId = 'H00E'
         unit array PlayerDummy
         boolean array dummyEnabled
@@ -10,9 +10,10 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         boolean CreepEnrageEnabled = true
         effect TestFx = null
         boolean DebugMsgMode = false
+        group DummyGroup
     endglobals
-    //===========================================================================
-    function DummyHelp takes player p returns nothing
+
+    private function DummyHelp takes player p returns nothing
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "Dummy Commands: " + I2S(GetHandleId(PlayerDummy[GetPlayerId(p)])) + ": " + GetUnitName(PlayerDummy[GetPlayerId(p)]))
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "To edit the stats of the last dummy you've created:")
         call DisplayTimedTextToPlayer(p, 0, 0, 10, "-dhpo (hit points), -dman (mana), -dhpr (hp regen), -dmar (mana regen)")
@@ -32,7 +33,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         
         loop
             exitwhen i1 > 10
-            set id = GetHeroSpellAtPosition(hero ,i1)
+            set id = GetHeroSpellAtPosition(hero, i1)
             call UnitAddAbility(dummy, id)
             call SetUnitAbilityLevel(dummy, id, GetUnitAbilityLevel(hero, id))
             call FuncEditParam(id, dummy)
@@ -40,12 +41,12 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endloop
     endfunction
 
-    function DummyCommandAction takes nothing returns nothing
+    private function DummyCommandAction takes nothing returns nothing
         local string command = SubString(GetEventPlayerChatString(), 0, 5)
         local real value = S2R(SubString(GetEventPlayerChatString(), 6, 20))
         local player p = GetTriggerPlayer()
         local unit u = PlayerDummy[GetPlayerId(p)]
-        local unit hero = PlayerHeroes[GetPlayerId(p) + 1]
+        local unit hero = PlayerHeroes[GetPlayerId(p)]
         local string s = ""
         if command == "-ddmg" then
             call BlzSetUnitBaseDamage(u, R2I(value), 0)
@@ -136,7 +137,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         set hero = null
     endfunction
 
-    function DummyCommands takes player p returns nothing
+    private function DummyCommands takes player p returns nothing
         local trigger trg = CreateTrigger()
         call DummyHelp(p)
         call TriggerRegisterPlayerChatEvent(trg, p, "-", false)
@@ -144,26 +145,30 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         set trg = null
     endfunction
 
-    function SpawnDummy takes Args args returns nothing
+    private function SpawnDummy takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid + 1]), GetUnitY(PlayerHeroes[pid + 1]), 0)
+        set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid]), GetUnitY(PlayerHeroes[pid]), 0)
         set CreatedDummies[pid] = CreatedDummies[pid] + 1
         call BlzSetHeroProperName(PlayerDummy[pid], "Subject #" + I2S(CreatedDummies[pid]))
+
+        call GroupRefresh(DummyGroup)
+        call GroupAddUnit(DummyGroup, PlayerDummy[pid])
+
         if dummyEnabled[pid] == false then
             set dummyEnabled[pid] = true
             call DummyCommands(GetTriggerPlayer())
         endif
     endfunction
 
-    function LvlHero takes Args args returns nothing
+    private function LvlHero takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         local integer pn = S2I(args[1])
         if pn > 1 then 
-        call SetHeroLevel(PlayerHeroes[pid + 1], GetHeroLevel(PlayerHeroes[pid+1]) + pn, true)
+            call SetHeroLevel(PlayerHeroes[pid], GetHeroLevel(PlayerHeroes[pid]) + pn, true)
         endif
     endfunction
 
-    function AddGlory takes Args args returns nothing
+    private function AddGlory takes Args args returns nothing
         local integer pn = S2I(args[1])
         local integer pid = GetPlayerId(GetTriggerPlayer())
         if pn > 1 then 
@@ -172,24 +177,22 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
-    function StartNextRound takes Args args returns nothing
+    private function StartNextRound takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer()) 
-        if NextRound[RoundNumber] then
-            set NextRound[RoundNumber] = false
-            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "|cffffcc00Next round started!|r")
-            call TriggerExecute(udg_trigger109)
-        endif
+        call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "|cffffcc00Attempting to start next round...|r")
+        call AllPlayersCompletedRound_StartNextRound()
     endfunction
 
-    function SetRoundTime takes Args args returns nothing
+    private function SetRoundTime takes Args args returns nothing
         local integer pn = S2I(args[1])
         if pn > 1 then
             set RoundTime = pn
+            set pvpWaitDuration = pn
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Time between rounds set to: " + I2S(pn))
         endif
     endfunction
 
-    function SetBattleRoyale takes Args args returns nothing
+    private function SetBattleRoyale takes Args args returns nothing
         local integer pn = S2I(args[1])
         if pn >= RoundNumber then
             set BattleRoyalRound = pn
@@ -197,15 +200,13 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
-    function RandomDebugCommand takes Args args returns nothing
-        local integer pid = GetPlayerId(GetTriggerPlayer())
-        set TestFx = AddLocalizedSpecialEffectTarget("war3mapImported\\EnergyShield_Full.mdx", PlayerHeroes[pid + 1], "origin")
+    private function RandomDebugCommand takes Args args returns nothing
         if GetLocalPlayer() == GetTriggerPlayer() then
             set DebugMsgMode = true
         endif
     endfunction
 
-    function SetWizardbaneDebug takes Args args returns nothing
+    private function SetWizardbaneDebug takes Args args returns nothing
         set wizardbaneDebug = wizardbaneDebug != true
         if wizardbaneDebug then
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creeps will have 100% wizardbane chance in 1 or 2 rounds")
@@ -214,7 +215,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
-    function SetCreepEnrage takes Args args returns nothing
+    private function SetCreepEnrage takes Args args returns nothing
         set CreepEnrageEnabled = CreepEnrageEnabled != true
         if CreepEnrageEnabled then
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Creep Enrage enabled.")
@@ -223,85 +224,94 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
-    function CpuPower takes Args args returns nothing
+    private function SetRoundNumber takes Args args returns nothing
+        local integer pn = S2I(args[1])
+        if pn > 1 then
+            set RoundNumber = pn
+            call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Round number set to: " + I2S(pn))
+        endif
+    endfunction
+
+    private function CpuPower takes Args args returns nothing
         local integer pid = 0
         local unit u
         loop
-          set u = PlayerHeroes[pid + 1]
-          if GetPlayerController(Player(pid)) == MAP_CONTROL_COMPUTER and u != null then
-            call SetHeroLevel(u, GetHeroLevel(u) + 200, true)
-            call UnitAddAbility(u, ARCANE_ASSAUL_ABILITY_ID)
-            call UnitAddAbility(u, LAST_BREATHS_ABILITY_ID)
-            call UnitAddAbility(u, TRUESHOT_AURA_ABILITY_ID)
-            call UnitAddAbility(u, ICE_FORCE_ABILITY_ID)
-            call UnitAddAbility(u, DIVINE_GIFT_ABILITY_ID)
-            call UnitAddAbility(u, FAST_MAGIC_ABILITY_ID)
-            call UnitAddAbility(u, UNHOLY_AURA_ABILITY_ID)
-            call UnitAddAbility(u, DIVINE_BUBBLE_ABILITY_ID)
-            call UnitAddAbility(u, CORROSIVE_SKIN_ABILITY_ID)
+            set u = PlayerHeroes[pid]
+            if GetPlayerController(Player(pid)) == MAP_CONTROL_COMPUTER and u != null then
+                call SetHeroLevel(u, GetHeroLevel(u) + 200, true)
+                call UnitAddAbility(u, ARCANE_ASSAUL_ABILITY_ID)
+                call UnitAddAbility(u, LAST_BREATHS_ABILITY_ID)
+                call UnitAddAbility(u, TRUESHOT_AURA_ABILITY_ID)
+                call UnitAddAbility(u, ICE_FORCE_ABILITY_ID)
+                call UnitAddAbility(u, DIVINE_GIFT_ABILITY_ID)
+                call UnitAddAbility(u, FAST_MAGIC_ABILITY_ID)
+                call UnitAddAbility(u, UNHOLY_AURA_ABILITY_ID)
+                call UnitAddAbility(u, DIVINE_BUBBLE_ABILITY_ID)
+                call UnitAddAbility(u, CORROSIVE_SKIN_ABILITY_ID)
 
-            call SetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID, 30)
-            call SetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID, 30)
-            call SetUnitAbilityLevel(u, DIVINE_BUBBLE_ABILITY_ID, 30)
-            call SetUnitAbilityLevel(u, ARCANE_ASSAUL_ABILITY_ID, 30)
-            call SetUnitAbilityLevel(u, LAST_BREATHS_ABILITY_ID, 30)
-            call SetUnitAbilityLevel(u, TRUESHOT_AURA_ABILITY_ID, 30)
-            call SetUnitAbilityLevel(u, ICE_FORCE_ABILITY_ID, 30)
-            call SetUnitAbilityLevel(u, DIVINE_GIFT_ABILITY_ID, 30)
-            call SetUnitAbilityLevel(u, FAST_MAGIC_ABILITY_ID, 30)
-            //call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (100000 ))
-            //call UnitAddAbility(u, ABSOLUTE_POISON_ABILITY_ID)
-            //call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
-            //call UnitAddAbility(u, ANCIENT_ELEMENT_ABILITY_ID)
-            //call SetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID, 30)
-            //call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, 30)
-            //call SetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID, 30)
-            //call UnitAddItem(u,CreateItem(POISON_RUNESTONE_ITEM_ID,0,0))
-            //call UnitAddItem(u,CreateItem('i0bu',0,0))
-            call SetHeroInt(u, GetHeroInt(u, false) + 10000, true)
-            call SetHeroStr(u, GetHeroStr(u, false) + 10000, true)
-            call SetHeroAgi(u, GetHeroAgi(u, false) + 10000, true)
-            set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
-                    call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 50)
+                call SetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, DIVINE_BUBBLE_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, ARCANE_ASSAUL_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, LAST_BREATHS_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, TRUESHOT_AURA_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, ICE_FORCE_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, DIVINE_GIFT_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, FAST_MAGIC_ABILITY_ID, 30)
+                //call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (100000 ))
+                //call UnitAddAbility(u, ABSOLUTE_POISON_ABILITY_ID)
+                //call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
+                //call UnitAddAbility(u, ANCIENT_ELEMENT_ABILITY_ID)
+                //call SetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID, 30)
+                //call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, 30)
+                //call SetUnitAbilityLevel(u, ABSOLUTE_POISON_ABILITY_ID, 30)
+                //call UnitAddItem(u,CreateItem(POISON_RUNESTONE_ITEM_ID,0,0))
+                //call UnitAddItem(u,CreateItem('i0bu',0,0))
+                call SetHeroInt(u, GetHeroInt(u, false) + 10000, true)
+                call SetHeroStr(u, GetHeroStr(u, false) + 10000, true)
+                call SetHeroAgi(u, GetHeroAgi(u, false) + 10000, true)
+                set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
+                call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 50)
             endif
             set pid = pid + 1
-            exitwhen pid > 7
+            exitwhen pid == 8
         endloop
         
         set u = null
-
     endfunction
     
-    //===========================================================================
     function AllowSinglePlayerCommands takes nothing returns nothing
         local trigger trg = CreateTrigger()
         local integer i = 0
         local trigger trg2 = CreateTrigger()
+
         if PlayerCount == 1 and (not DebugModeEnabled) then
             loop
-                if UnitAlive(PlayerHeroes[i + 1]) then
+                if UnitAlive(PlayerHeroes[i]) then
                     call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Single player commands have been enabled")
                     call Command.create(CommandHandler.StartNextRound).name("nx").handles("nx").help("nx", "Starts the next round if used inbetween rounds.")
                     call Command.create(CommandHandler.SetRoundTime).name("rt").handles("rt").help("rt <value>", "Starting next round, sets the time between rounds to <value>.")
                     exitwhen true
                 endif
                 set i = i + 1
-                exitwhen i > 7
+                exitwhen i == 8
             endloop
         endif
     endfunction
 
-    private function init takes nothing returns nothing
+    private function SetupDebugCommands takes nothing returns nothing
         local trigger trg = CreateTrigger()
         local integer i = 0
         local integer pc = 0
+
+        set DummyGroup = NewGroup()
 
         loop
             if GetPlayerController(Player(i)) == MAP_CONTROL_USER and GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING then
                 set pc = pc + 1
             endif
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
         
         if pc == 1 then
@@ -315,6 +325,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.SetWizardbaneDebug).name("wbd").handles("wbd").help("wbd", "Wizardbane debug.")
             call Command.create(CommandHandler.SetCreepEnrage).name("tce").handles("tce").help("tce", "toggle creep enrage.")
             call Command.create(CommandHandler.CpuPower).name("cpupw").handles("cpupw").help("cpupw", "Gives CPU players stats, levels and some abilities")
+            call Command.create(CommandHandler.SetRoundNumber).name("srn").handles("srn").help("srn <value>", "Set round number to <value>.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
 
@@ -322,4 +333,9 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
         set trg = null
     endfunction
+
+    private function init takes nothing returns nothing
+        call TimerStart(CreateTimer(), 0, false, function SetupDebugCommands)
+    endfunction
+
 endlibrary

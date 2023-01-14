@@ -9,7 +9,7 @@ library SetupHeroCamera initializer init requires HeroSelector
     endfunction
 
     private function ApplyHeroCamera takes nothing returns nothing
-        if (not IsPlayerInForce(GetEnumPlayer(), udg_PlayersWithHero)) then
+        if (not IsPlayerInForce(GetEnumPlayer(), PlayersWithHero)) then
             call CameraSetupApplyForPlayer(true, gg_cam_HeroSelectCamera, GetEnumPlayer(), 0)
         endif
     endfunction

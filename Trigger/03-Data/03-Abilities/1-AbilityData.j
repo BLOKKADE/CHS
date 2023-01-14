@@ -9,6 +9,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         Table ItemData
         HashTable ElementData
         HashTable ElementCounts
+        HashTable AbilityElement
 
         integer LastObject
         /*
@@ -74,7 +75,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         return AbilityIndex[GetRandomInt(1, AbilityIndex[0])]
     endfunction
 
-    function ObjectHasElement takes integer objectId returns boolean
+    function ObjectHasAnyElement takes integer objectId returns boolean
         return ElementData[objectId].boolean[0]
     endfunction
 
@@ -86,6 +87,30 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
     //Checks if the object (ability, item, unit) has an element
     function GetObjectElementCount takes integer objectId, integer element returns integer
         return ElementData[element].integer[objectId]
+    endfunction
+
+    //Returns how many different elements an object has
+    function GetObjectElementIndex takes integer objectId returns integer
+        return AbilityElement[objectId].integer[0]
+    endfunction
+
+    //Returns which element an object has at index
+    function GetObjectElementAtIndex takes integer objectId, integer index returns integer
+        return AbilityElement[objectId].integer[index]
+    endfunction
+
+    //check if an object has a specific element
+    function ObjectHasElement takes integer objectId, integer element returns boolean
+        local integer i = 0
+        local integer max = GetObjectElementIndex(objectId)
+        loop
+            if GetObjectElementAtIndex(objectId, i) == element then
+                return true
+            endif
+            set i = i + 1
+            exitwhen i == 1
+        endloop
+        return false
     endfunction
 
     //Checks if the ability stacks with itself
@@ -212,6 +237,9 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
     private function SetLastObjectElement takes integer element, integer count returns nothing
         set ElementData[LastObject].boolean[0] = true
         set ElementData[element].integer[LastObject] = count
+
+        set AbilityElement[LastObject].integer[0] = AbilityElement[LastObject].integer[0] + 1
+        set AbilityElement[LastObject].integer[AbilityElement[LastObject].integer[0]] = element
     endfunction
 
     private function SetLastAbilityNotReplaceable takes nothing returns nothing
@@ -229,6 +257,9 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
     private function SetObjectElement takes integer objectId, integer element, integer count returns nothing
         set ElementData[objectId].boolean[0] = true
         set ElementData[element].integer[objectId] = count
+
+        set AbilityElement[objectId].integer[0] = AbilityElement[objectId].integer[0] + 1
+        set AbilityElement[objectId].integer[AbilityElement[objectId].integer[0]] = element
     endfunction
 
     function InitAbilities takes nothing returns nothing
@@ -239,6 +270,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //2 - Mana Shield 
         call SaveAbilData(MANA_SHIELD_ABILITY_ID, MANA_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, "manashieldon")
         call SetLastObjectElement(Element_Water, 1)
+        call SetLastAbilityPlain()
         call SetLastAbilityNotReplaceable()
 
         //3 - Carrion Swarm 
@@ -440,7 +472,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //45 - SpiritLink
         call SaveAbilData(SPIRIT_LINK_ABILITY_ID, SPIRIT_LINK_ITEM_ID, false, 1, 1, true, Order_Target, "spirtlink")
-        call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Light, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //46 - Frost Armor 
@@ -648,6 +680,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //92 - Slow Aura 
         call SaveAbilData(SLOW_AURA_ABILITY_ID, SLOW_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Cold, 1)
 
         //93 - Blink 
         call SaveAbilData(BLINK_ABILITY_ID, BLINK_ITEM_ID, false, 0, 0, false, Order_Point, "blink")
@@ -984,9 +1017,9 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityNotReplaceable()
 
         //164 - Blink Strike 
-        call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
+        /*call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
         call SetLastObjectElement(Element_Wind, 1)
-        call SetLastObjectElement(Element_Arcane, 1)
+        call SetLastObjectElement(Element_Arcane, 1)*/
 
         //165 - Extradimensional Co-operation
         call SaveAbilData(EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, EXTRADIMENSIONAL_CO_OPERATIO_ITEM_ID, false, 0, 0, true, Order_Instant, "absorb")
@@ -1122,9 +1155,16 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
          call SetLastObjectElement(Element_Fire, 1)
          call SetLastObjectElement(Element_Earth, 1)
 
-         //196 - Wild Defense
+         //197 - Wild Defense
          call SaveAbilData(WILD_DEFENSE_ABILITY_ID, WILD_DEFENSE_ITEM_ID, false, 0, 0, false, Order_None, null)
          call SetLastObjectElement(Element_Wild, 2)
+
+         //198 - Contemporary Runes
+         call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "burrow")
+         call SetLastObjectElement(Element_Arcane, 1)
+
+         //198 - Energy Bombardment
+         call SaveAbilData(ENERGY_BOMBARDMENT_ABILITY_ID, ENERGY_BOMBARDMENT_ITEM_ID, false, Target_Enemy, 0, false, Order_None, null)
     endfunction
 
     function InitHeroElements takes nothing returns nothing
@@ -1135,6 +1175,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(PIT_LORD_UNIT_ID, Element_Fire, 1)
         call SetObjectElement(WITCH_DOCTOR_UNIT_ID, Element_Water, 1)
         call SetObjectElement(LICH_UNIT_ID, Element_Water, 1)
+        call SetObjectElement(LICH_UNIT_ID, Element_Dark, 1)
+        call SetObjectElement(LICH_UNIT_ID, Element_Cold, 1)
         call SetObjectElement(NAGA_SIREN_UNIT_ID, Element_Water, 1)
         call SetObjectElement(BLOOD_MAGE_UNIT_ID, Element_Water, 1)
         call SetObjectElement(SORCERER_UNIT_ID, Element_Wind, 1)
@@ -1150,7 +1192,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(BEAST_MASTER_UNIT_ID, Element_Wild, 1)
         call SetObjectElement(MYSTIC_UNIT_ID, Element_Wild, 1)
         call SetObjectElement(DRUID_OF_THE_CLAY_UNIT_ID, Element_Wild, 1)
-        call SetObjectElement(SEER_UNIT_ID, Element_Arcane, 1)
+        call SetObjectElement(SEER_UNIT_ID, Element_Arcane, 2)
         call SetObjectElement(MURLOC_WARRIOR_UNIT_ID, Element_Blood, 1)
         /*
         call SetObjectElement(CENTAUR_ARCHER_UNIT_ID, Element_Energy, 1)
@@ -1163,31 +1205,29 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(SKELETON_BRUTE_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(FALLEN_RANGER_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(AVATAR_SPIRIT_UNIT_ID, Element_Dark, 1)
+        call SetObjectElement(AVATAR_SPIRIT_UNIT_ID, Element_Light, 1)
         call SetObjectElement(DARK_HUNTER_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(ABOMINATION_UNIT_ID, Element_Dark, 1)
+        call SetObjectElement(ABOMINATION_UNIT_ID, Element_Poison, 1)
         call SetObjectElement(DEADLORD_UNIT_ID, Element_Dark, 1)
-        call SetObjectElement(LICH_UNIT_ID, Element_Dark, 1)
+        call SetObjectElement(DEADLORD_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(TROLL_HEADHUNTER_UNIT_ID, Element_Dark, 1)
+        call SetObjectElement(TROLL_HEADHUNTER_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(MAULER_UNIT_ID, Element_Light, 1)
         call SetObjectElement(LIEUTENANT_UNIT_ID, Element_Light, 1)
-        call SetObjectElement(AVATAR_SPIRIT_UNIT_ID, Element_Light, 1)
-        call SetObjectElement(LICH_UNIT_ID, Element_Cold, 1)
         call SetObjectElement(YETI_UNIT_ID, Element_Cold, 1)
         call SetObjectElement(COLD_KNIGHT_UNIT_ID, Element_Cold, 1)
-        call SetObjectElement(RANGER_UNIT_ID, Element_Blood, 1)
+        call SetObjectElement(RANGER_UNIT_ID, Element_Wind, 1)
         call SetObjectElement(WAR_GOLEM_UNIT_ID, Element_Blood, 1)
-        call SetObjectElement(DEADLORD_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(ORC_CHAMPION_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(GHOUL_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(URSA_WARRIOR_UNIT_ID, Element_Blood, 1)
-        call SetObjectElement(TROLL_HEADHUNTER_UNIT_ID, Element_Blood, 1)
-        call SetObjectElement(SEER_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(OGRE_MAGE_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(DEMON_HUNTER_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(TIME_WARRIOR_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(BANSHEE_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(BANSHEE_UNIT_ID, Element_Water, 1)
-        call SetObjectElement(ABOMINATION_UNIT_ID, Element_Poison, 1)
+        
     endfunction 
 
     function InitDummyAbilElements takes nothing returns nothing
@@ -1301,6 +1341,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         set ElementData = HashTable.create()
         set ItemData = Table.create()
         set AbilityIndex = Table.create()
+        set AbilityElement = HashTable.create()
+        
         call InitAbilities()
         call InitCreepAbilities()
         call InitDummyAbilElements()

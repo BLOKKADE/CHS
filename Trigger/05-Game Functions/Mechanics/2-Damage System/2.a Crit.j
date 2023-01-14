@@ -40,14 +40,24 @@ library CritDamage requires RandomShit, Vampirism
         set i = GetUnitAbilityLevel(DamageSource, POWER_OF_WATER_ABILITY_ID) //Power of water
         if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
             set critDmg = critDmg + 50*i + ((BlzGetUnitMaxMana(DamageSource)*i * 0.4)/100 )
-            if not IsFxOnCooldownSet(DamageTargetId, 0, 1) then
+            if not IsFxOnCooldownSet(DamageTargetId, POWER_OF_WATER_ABILITY_ID, 1) then
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile.mdl", DamageTarget, "chest"))
             endif
         endif
 
         //PYromancer Scorched Earth
         if GetUnitAbilityLevel(DamageTarget, 'B027') > 0 then
-            set baseCritChance = baseCritChance + (0.1 * GetHeroLevel(PlayerHeroes[ScorchedEarthSource[DamageSourceId] + 1]))
+            set baseCritChance = baseCritChance + (0.1 * GetHeroLevel(PlayerHeroes[ScorchedEarthSource[DamageSourceId]]))
+        endif
+
+        //Centuar Archer passive
+        if DamageSourceTypeId == CENTAUR_ARCHER_UNIT_ID and Damage.index.isAttack then
+            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08T') <= 0 then
+                call AbilStartCD(DamageSource, 'A08T', 2)
+                call ElemFuncStart(DamageSource,CENTAUR_ARCHER_UNIT_ID)
+                set critDmg = critDmg + (BlzGetUnitMaxHP(DamageTarget) * 0.06) + (Dmg * (1 + (0.05 * GetHeroLevel(DamageSource))))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", DamageTarget, "chest"))
+            endif
         endif
 
         if IsPhysDamage() then
@@ -66,6 +76,14 @@ library CritDamage requires RandomShit, Vampirism
                         set critDmg = critDmg + Dmg
                     endif
                 endif
+            endif
+
+            //Cruelty
+            set i = GetUnitAbilityLevel(DamageSource,CRUELTY_ABILITY_ID)
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,CRUELTY_ABILITY_ID) == 0 then
+                set critDmg = critDmg + (Dmg * (0.5 + (0.1 * i)))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", DamageTarget, "chest"))
+                call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 3)
             endif
 
             //Creep Critical Strike

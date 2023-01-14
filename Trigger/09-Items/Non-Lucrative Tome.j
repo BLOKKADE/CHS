@@ -5,14 +5,14 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
     endglobals
 
     function RemoveSpell takes integer pid, unit u, integer abilId returns nothing
-        set HeroAbilityCount[pid + 1]= HeroAbilityCount[pid + 1] - 1
-        if PlayerLastLearnedSpell[pid + 1] == abilId then
-            set PlayerLastLearnedSpell[pid + 1] = GetLastLearnedSpell(u, SpellList_Normal, false)
+        set HeroAbilityCount[pid]= HeroAbilityCount[pid] - 1
+        if PlayerLastLearnedSpell[pid] == abilId then
+            set PlayerLastLearnedSpell[pid] = GetLastLearnedSpell(u, SpellList_Normal, false)
         endif
-        call SetHeroSpellListCount(u ,GetHeroSpellListCount(u,0) - 1 ,0 ) 
-        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"|cffbbff00Removed |r" + BlzGetAbilityTooltip(abilId, GetUnitAbilityLevel(u, abilId) - 1))    
-        call UnitRemoveAbilityBJ(abilId,u)
-        call FunResetAbility (abilId,u)
+        call SetHeroSpellListCount(u, GetHeroSpellListCount(u,0) - 1 , 0) 
+        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cffbbff00Removed |r" + BlzGetAbilityTooltip(abilId, GetUnitAbilityLevel(u, abilId) - 1))    
+        call UnitRemoveAbilityBJ(abilId, u)
+        call FunResetAbility(abilId, u)
     endfunction
 
     function GetNextSpell takes unit u, integer i returns integer
@@ -31,7 +31,7 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
         local integer id = 0
 
         loop
-            set id = GetHeroSpellAtPosition(u ,i)
+            set id = GetHeroSpellAtPosition(u, i)
             if id == 0 then
                 set id = GetNextSpell(u, i)
                 if id != 0 then
@@ -89,16 +89,13 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
                 call RefreshUpgradeShop(pid, u)
                 
                 if AbilityMode == 2 then
-                    set udg_Draft_NOSpellsLearned[pid+1] = udg_Draft_NOSpellsLearned[pid+1] - count
+                    set udg_Draft_NOSpellsLearned[pid] = udg_Draft_NOSpellsLearned[pid] - count
                 endif
             endif
 
             if AbilityMode == 2 then
-                
-                call GenerateDraftSpells(pid+1, udg_Draft_NODraftSpells) 
+                call GenerateDraftSpells(pid, udg_Draft_NODraftSpells) 
             endif
-
-            //call SpellsLearnedDebug("post nl", u, 0)
 
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", u, "origin"))
         else

@@ -21,7 +21,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         endif
 
         if (not File.ReadEnabled) then
-            call DisplayTimedTextToPlayer(GetTriggerPlayer(),0,0,60000, LocalFiles_WarningMessage)
+            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 60000, LocalFiles_WarningMessage)
         endif
 
         call LoadSaveSlot(GetTriggerPlayer(), SaveTempInt)
@@ -73,19 +73,27 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setMapVersion(LoadNextBasicValue())
 
         // Check if the game version is different. If so, reset current map version values
-        if (ps.getMapVersion() != CURRENT_GAME_VERSION) then
-            // Trying to load a code that is older than the curret version
-            if (ps.getMapVersion() < CURRENT_GAME_VERSION) then
-                call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Save Code is for an older version of CHS. Resetting Season wins.")
+        if (ps.getMapVersion() != CurrentGameVersion.getVersion()) then
+            // Not every version requires a season reset
+            if (CurrentGameVersion.shouldResetStats()) then
+                // Trying to load a code that is older than the curret version
+                if (ps.getMapVersion() < CurrentGameVersion.getVersion()) then
+                    call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Your Save Code is for an older version of CHS. Resetting Season stats.")
+                else
+                    // Trying to load a code that is newer than the curret version
+                    call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Your Save Code is for a newer version of CHS. Resetting Season stats.")
+                endif
+
+                set resetSeasonStats = true
             else
-                // Trying to load a code that is newer than the curret version
-                call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Save Code is for a newer version of CHS. Resetting Season wins.")
+                call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "New map version detected. Resetting Season stats not required.")
             endif
 
-            call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Current Map Version: " + GetMapVersionName(CURRENT_GAME_VERSION))
-            call DisplayTimedTextToPlayer(SaveLoadEvent_Player,0,0,30,"Your Map Version: " + GetMapVersionName(ps.getMapVersion()))
-            call ps.setMapVersion(CURRENT_GAME_VERSION)
-            set resetSeasonStats = true
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Current Map Version: " + CurrentGameVersion.getVersionString())
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Your Map Version: " + GetMapVersionName(ps.getMapVersion()))
+
+            // Always set the latest version if it is different
+            call ps.setMapVersion(CurrentGameVersion.getVersion())
         endif
 
         // Load camera settings
@@ -94,15 +102,15 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         // The camera setting should be saved correct already, but validate against bad values to prevent errors
         if (ps.getCameraZoom() > 0) then
             if (ps.getCameraZoom() > 3000) then
-                call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,3000.00,0.50)
+                call SetCameraFieldForPlayer(SaveLoadEvent_Player, CAMERA_FIELD_TARGET_DISTANCE, 3000.00, 0.50)
                 set CamDistance[GetPlayerId(SaveLoadEvent_Player)] = 3000
                 call ps.setCameraZoom(3000)
             elseif (ps.getCameraZoom() < 1700) then
                 set CamDistance[GetPlayerId(SaveLoadEvent_Player)] = 1700
-                call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,1700.00,0.50)
+                call SetCameraFieldForPlayer(SaveLoadEvent_Player, CAMERA_FIELD_TARGET_DISTANCE, 1700.00, 0.50)
                 call ps.setCameraZoom(1700)
             else 
-                call SetCameraFieldForPlayer(SaveLoadEvent_Player,CAMERA_FIELD_TARGET_DISTANCE,I2R(ps.getCameraZoom()),0.50)
+                call SetCameraFieldForPlayer(SaveLoadEvent_Player, CAMERA_FIELD_TARGET_DISTANCE, I2R(ps.getCameraZoom()), 0.50)
                 set CamDistance[GetPlayerId(SaveLoadEvent_Player)] = ps.getCameraZoom()
             endif
         else

@@ -15,7 +15,7 @@ library AllowCasting
     endfunction
     
     private function CheckUnit takes unit u returns boolean
-        if((u==udg_unit05))then
+        if (IsUnitInGroup(u, DuelWinnerDisabled)==true) then
             return true
         endif
         if((RectContainsUnit(RectMidArena,u)==true))then
@@ -57,7 +57,7 @@ library AllowCasting
             set CurrentlyFighting[i] = b
             //call BJDebugMsg(GetPlayerName(Player(i)) + ", currently fighting: " + B2S(b))
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i == 8
         endloop
     endfunction
 

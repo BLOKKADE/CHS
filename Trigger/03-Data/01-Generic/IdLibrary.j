@@ -23,6 +23,7 @@ library IdLibrary initializer init
         constant integer PRIEST_1_UNIT_ID                               = 'h015'
         constant integer PET_BASE_UNIT_ID                               = 'e002'
         constant integer SUDDEN_DEATH_UNIT_ID                           = 'n00V'
+        constant integer SUDDEN_DEATH_ABILITY_ID                        = 'A0CU'
 
         // --- Shops ---
         constant integer DRAFT_BUY_UNIT_ID                              = 'h00C'
@@ -169,7 +170,7 @@ library IdLibrary initializer init
         constant integer WATER_ELEMENTAL_2_UNIT_ID                      = 'hwt2'
         constant integer WATER_ELEMENTAL_3_UNIT_ID                      = 'hwt3'
 
-        // --- Summons ---
+        constant integer FAERIE_DRAGON_UNIT_ID                          = 'e001'
 
         // Heroes
         StaticIdGroup HEROES
@@ -355,6 +356,7 @@ library IdLibrary initializer init
         constant integer MANA_SHIELD_ABILITY_ID                         = 'ANms'
         constant integer MANA_STARVATIO_ABILITY_ID                      = 'A09J'
         constant integer MARTIAL_RETRIBUTION_ABILITY_ID                 = 'A089'
+        constant integer PACKING_TAPE_ABILITY_ID                        = 'A0DU'
         constant integer MEGA_LUCK_ABILITY_ID                           = 'A06V'
         constant integer MEGA_SPEED_ABILITY_ID                          = 'A02O'
         constant integer MIDAS_TOUCH_ABILITY_ID                         = 'A0A2'
@@ -434,6 +436,10 @@ library IdLibrary initializer init
         constant integer ERUPTION_ABILITY_ID                            = 'A0DA'
         constant integer WILD_DEFENSE_SUMMON_ABILITY_ID                 = 'A06X'
         constant integer ICE_ARMOR_SUMMON_ABILITY_ID                    = 'A0CY'
+        constant integer GNOME_MASTER_PASSIVE_ABILITY_ID                = 'A0DK'
+        constant integer CONTEMPORARY_RUNES_ABILITY_ID                  = 'A0DN'
+        constant integer ENERGY_BOMBARDMENT_ABILITY_ID                  = 'A0DQ'
+        constant integer COLD_KNIGHT_PASSIVE_ABILITY_ID                 = 'A0DR'
         
         // Dummy Abilities
         constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'
@@ -490,6 +496,8 @@ library IdLibrary initializer init
         constant integer SPEED_BLADE_BUFF_ID                            = 'B02I'
         constant integer CONQ_BAMBOO_STICK_ABILITY_ID                   = 'A0CM'
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
+        constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
+        constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
 
         // --- Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'
@@ -514,8 +522,10 @@ library IdLibrary initializer init
         constant integer ACID_SPRAY_ITEM_ID                             = 'I028'
         constant integer ACTIVATE_AVATAR_ITEM_ID                        = 'I027'
         constant integer AGILITY_LEVEL_BONUS_TOME_ITEM_ID               = 'I05H'
-        constant integer HERO_FORCE_ITEM_ID                              = 'I054'
+        constant integer HERO_FORCE_ITEM_ID                             = 'I054'
         constant integer ANCIENT_AXE_ITEM_ID                            = 'I06Y'
+        constant integer DRIED_MUSHROOM_ITEM_ID                         = 'I0BT'
+        constant integer DRIED_MUSHROOM_TOME_ITEM_ID                    = 'I0D8'
         constant integer ANCIENT_AXE_TOME_ITEM_ID                       = 'I06Z'
         constant integer ENERGY_TRAP_ITEM_ID                            = 'I0BJ'
         constant integer ENERGY_SHIELD_ITEM_ID                          = 'I0CJ'
@@ -636,6 +646,7 @@ library IdLibrary initializer init
         constant integer GLORY_MAGIC_PROTECTION_TOME_ITEM_ID            = 'I06Q'
         constant integer GLORY_MANA_REGENERATION_TOME_ITEM_ID           = 'I06T'
         constant integer GLORY_MANA_TOME_ITEM_ID                        = 'I06U'
+        constant integer GLORY_ATTACKCD_TOME_ITEM_ID                    = 'I0D2'
         constant integer GLORY_MOVESPEED_TOME_ITEM_ID                   = 'I09T'
         constant integer GLORY_PVP_BONUS_TOME_ITEM_ID                   = 'I06S'
         constant integer GLORY_STRENGTH_TOME_ITEM_ID                    = 'I09W'
@@ -654,6 +665,7 @@ library IdLibrary initializer init
         constant integer INCINERATE_ITEM_ID                             = 'I045'
         constant integer INCOME_DEFAULT_TOME_ITEM_ID                    = 'I074'
         constant integer INCOME_INDIVIDUAL_TOME_ITEM_ID                 = 'I09O'
+        constant integer ANTAGONIZE_CREEPS_ITEM_ID                      = 'I0D5'
         constant integer INFERNO_ITEM_ID                                = 'I02A'
         constant integer INNER_FIRE_ITEM_ID                             = 'I02W'
         constant integer INTELLIGENCE_LEVEL_BONUS_TOME_ITEM_ID          = 'I05I'
@@ -677,6 +689,8 @@ library IdLibrary initializer init
         constant integer MASK_OF_PROTECTION_TOME_ITEM_ID                = 'I0A9'
         constant integer MASK_OF_VITALITY_ITEM_ID                       = 'I0AC'
         constant integer MASK_OF_VITALITY_TOME_ITEM_ID                  = 'I0A7'
+        constant integer PACKING_TAPE_ITEM_ID                           = 'I0D7'
+        constant integer PACKING_TAPE_TOME_ITEM_ID                      = 'I0D6'
         constant integer MEGA_LUCK_ITEM_ID                              = 'I085'
         constant integer MEGA_SPEED_ITEM_ID                             = 'I051'
         constant integer MIDAS_TOUCH_ITEM_ID                            = 'I00G'
@@ -795,6 +809,8 @@ library IdLibrary initializer init
         constant integer EARTH_RUNESTONE_ITEM_ID                        = 'I08R'
         constant integer WIND_RUNESTONE_ITEM_ID                         = 'I08S'
         constant integer ERUPTION_ITEM_ID                               = 'I039'
+        constant integer CONTEMPORARY_RUNES_ITEM_ID                     = 'I0D3'
+        constant integer ENERGY_BOMBARDMENT_ITEM_ID                     = 'I0D4'
 
         // --- Buff IDs ---
         constant integer DARK_SEAL_BUFF_ID                              = 'A0DE'
@@ -894,6 +910,24 @@ library IdLibrary initializer init
         constant integer DECAYING_SCYTHE_BUFF2_ID                       = 'B02E'
         constant integer DRUIDIC_FOCUS_BUFF_ID                          = 'B02F'
         constant integer ERUPTION_IMMUNE_BUFF_ID                        = 'B02O'
+        constant integer DRUNKEN_HAZE_IGNITE_BUFF_ID                    = 'A0DL'
+        constant integer DRIED_MUSHROOM_DUMMY_BUFF_ID                   = 'B02Y'
+
+        StaticIdGroup RUNESTONE_ITEM_ABILITIES
+
+        // --- Runestone Ability Ids
+        constant integer FIRE_RUNESTONE_ABIL_ID                         = 'A076'
+        constant integer WATER_RUNESTONE_ABIL_ID                        = 'A077'
+        constant integer EARTH_RUNESTONE_ABIL_ID                        = 'A078'
+        constant integer WIND_RUNESTONE_ABIL_ID                         = 'A079'
+        constant integer LIGHT_RUNESTONE_ABIL_ID                        = 'A0AK'
+        constant integer DARK_RUNESTONE_ABIL_ID                         = 'A0AL'
+        constant integer ARCANE_RUNESTONE_ABIL_ID                       = 'A0AM'
+        constant integer WILD_RUNESTONE_ABIL_ID                         = 'A0AN'
+        constant integer POISON_RUNESTONE_ABIL_ID                       = 'A0AO'
+        constant integer CREATION_RUNESTONE_ABIL_ID                     = 'A073'
+        constant integer MYSTERIOUS_RUNESTONE_ABIL_ID                   = 'A072'
+        constant integer SHINING_RUNESTONE_ABIL_ID                      = 'A0DM'
 
         // --- Buff IDs ---
 
@@ -1149,6 +1183,11 @@ library IdLibrary initializer init
         call SUMMONS.add(MOUNTAIN_GIANT_1_UNIT_ID)
         call SUMMONS.add(SKELETON_WARRIOR_1_UNIT_ID)
         call SUMMONS.add(SKELETON_MAGE_1_UNIT_ID)
+        call SUMMONS.add(NECRO_BOOK_WARRIOR_1_UNIT_ID)
+        call SUMMONS.add(NECRO_BOOK_ARCHER_1_UNIT_ID)
+        call SUMMONS.add(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID)
+        call SUMMONS.add(BONE_ARMOR_SKELETON_UNIT_ID)
+        call SUMMONS.add(FAERIE_DRAGON_UNIT_ID)
 
         // Bears
         set BEARS = StaticIdGroup.create()
@@ -1228,7 +1267,6 @@ library IdLibrary initializer init
         set SKELLIESCAPTAINS = StaticIdGroup.create()
         call SKELLIESCAPTAINS.add(NECRO_BOOK_WARRIOR_1_UNIT_ID)
         call SKELLIESCAPTAINS.add(NECRO_BOOK_ARCHER_1_UNIT_ID)
-        call SKELLIESCAPTAINS.add(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID)
         call SKELLIESCAPTAINS.add(BONE_ARMOR_SKELETON_UNIT_ID)
 
         // Serpant Wards
@@ -1242,6 +1280,20 @@ library IdLibrary initializer init
         call WATER_ELEMENTALS.add(WATER_ELEMENTAL_1_UNIT_ID)
         call WATER_ELEMENTALS.add(WATER_ELEMENTAL_2_UNIT_ID)
         call WATER_ELEMENTALS.add(WATER_ELEMENTAL_3_UNIT_ID)
+
+        set RUNESTONE_ITEM_ABILITIES = StaticIdGroup.create()
+        call RUNESTONE_ITEM_ABILITIES.add(FIRE_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(WATER_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(EARTH_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(WIND_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(LIGHT_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(DARK_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(ARCANE_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(WILD_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(POISON_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(CREATION_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(MYSTERIOUS_RUNESTONE_ABIL_ID)
+        call RUNESTONE_ITEM_ABILITIES.add(SHINING_RUNESTONE_ABIL_ID)
     endfunction
 
     private function SetupGroupings takes nothing returns nothing

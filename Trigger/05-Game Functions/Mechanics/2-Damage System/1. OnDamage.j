@@ -7,7 +7,13 @@ scope OnDamage initializer init
     private function SetTypeDamage takes unit u returns nothing
         if Damage.index.damageType != DAMAGE_TYPE_SPIRIT_LINK then
 
-            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
+            //last breath kill set to enhanced damage
+            if DamageSourceAbility == LAST_BREATHS_ABILITY_ID then
+                set Damage.index.damageType = DAMAGE_TYPE_ENHANCED
+                return
+            endif
+
+            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID or DamageSourceAbility == 'A0DP' then
                 set Damage.index.damageType = DAMAGE_TYPE_NORMAL
             endif
 
@@ -52,8 +58,8 @@ scope OnDamage initializer init
         set DamageSourcePid = GetPlayerId(GetOwningPlayer(DamageSource))
         set DamageTargetPid = GetPlayerId(GetOwningPlayer(DamageTarget))
 
-        set DamageSourceHero = PlayerHeroes[DamageSourcePid + 1]
-        set DamageTargetHero = PlayerHeroes[DamageTargetPid + 1]
+        set DamageSourceHero = PlayerHeroes[DamageSourcePid]
+        set DamageTargetHero = PlayerHeroes[DamageTargetPid]
 
         set DamageSourceMagicPower = 1
         set DamageTargetMagicRes = 1
@@ -131,10 +137,14 @@ scope OnDamage initializer init
 
         //call BJDebugMsg("hid: " + I2S(DamageSourceId) + " retdmg: " + R2S(RetaliationDamage.real[DamageSourceId]))
         //Retaliation Aura damage calculation
-        if RetaliationDamage.real[DamageSourceId] > 0 then
+        if GetUnitAbilMods(DamageSource).RetaliationAuraBonus > 0 then
             //call BJDebugMsg("ra dmg: " + R2S(RetaliationDamage.real[DamageSourceId]) + " new: " + R2S(GetEventDamage() * RetaliationDamage.real[DamageSourceId]))
             set Damage.index.damage = (Damage.index.damage * RetaliationDamage.real[DamageSourceId])
-            set RetaliationDamage.real[DamageSourceId] = 0
+        endif
+
+        //Terrestrial Glaive
+        if GetUnitAbilMods(DamageSource).TerrestrialGlaiveDamage then
+            set Damage.index.damageType = DAMAGE_TYPE_NORMAL
         endif
 
         //Scorched Earth

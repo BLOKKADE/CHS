@@ -1,4 +1,4 @@
-library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, trigger79
+library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerHeroSelected
     //HeroSelectorAction V1.4.0
     
     globals
@@ -19,25 +19,33 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, trigger
         set bj_lastCreatedUnit = u
 
         if isRandom then
-            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00has randomed " +(GetUnitName(u)+ "! (+300 bonus gold)")))))
-            call AdjustPlayerStateBJ(900,p,PLAYER_STATE_RESOURCE_GOLD)
+            call AdjustPlayerStateBJ(900, p, PLAYER_STATE_RESOURCE_GOLD)
+
+            if HeroMode > 2 then
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00has randomed " + GetUnitName(u)+ "! (+300 bonus gold and 1 gold ring)")
+                call UnitAddItemByIdSwapped('I04R', u)
+            else
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00has randomed " + GetUnitName(u)+ "! (+300 bonus gold and 2 gold rings)")
+                call UnitAddItemByIdSwapped('I04R', u)
+                call UnitAddItemByIdSwapped('I04R', u)
+            endif
         else
-            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(p)+(" |cffffcc00has selected " +(GetUnitName(u)+ "!")))))
-            call AdjustPlayerStateBJ(600,p,PLAYER_STATE_RESOURCE_GOLD)
+            call AdjustPlayerStateBJ(600, p, PLAYER_STATE_RESOURCE_GOLD)
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00has selected " + GetUnitName(u)+ "!")
         endif
 
         if (GetLocalPlayer() == p) then
             call ShowUnit(PreviewUnit, false)
         endif
 
-        call ForceAddPlayerSimple(p, udg_PlayersWithHero)
+        call ForceAddPlayerSimple(p, PlayersWithHero)
 
         call PanCameraToTimedForPlayer(p, GetUnitX(u), GetUnitY(u),0)
         call SelectUnitForPlayerSingle(u, p)
         call HeroSelectorEnablePickPlayer(false, p) //only one pick for this player
         call HeroSelectorShowPlayer(false, p)
 
-        call trigger79_SpawnedHeroActions(p, u)
+        call PlayerHeroSelected_SpawnedHeroActions(p, u)
 
         set p = null
         set u = null

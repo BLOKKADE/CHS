@@ -5,7 +5,7 @@ library DoomGuard requires ElementalAbility, RandomShit
         //call BJDebugMsg("apply period buff")
         call dummy.addActiveAbility('A0CN', 1, 852662)
         call dummy.target(target).activate()
-        call PeriodicDamage.create(source, target, GetHeroLevel(source) * 25, true, 1., 8, 0, true, 'B02L', 'A0CO')
+        call PeriodicDamage.create(source, target, GetHeroLevel(source) * 25, true, 1., 8, 0, true, 'B02L', 'A0CO').start()
     endfunction
 
     function DoomGuardHellfire takes unit u returns nothing

@@ -1,0 +1,5 @@
+// These are all variables generated from GUI in the world editor
+// need to use those here to make the jasshelper build command work
+globals
+    camerasetup gg_cam_HeroSelectCamera= null
+endglobals

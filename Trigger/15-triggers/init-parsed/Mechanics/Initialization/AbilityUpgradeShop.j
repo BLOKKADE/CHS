@@ -15,8 +15,8 @@ library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
             set itemId = GetItemFromAbility(GetHeroSpellAtPosition(u, i))
 
             if itemId != 0 then
-                call RemoveItemFromStock(udg_Draft_UpgradeBuildings[pid + 1], itemId)
-                call AddItemToStock(udg_Draft_UpgradeBuildings[pid + 1], itemId, 1, 1)
+                call RemoveItemFromStock(udg_Draft_UpgradeBuildings[pid], itemId)
+                call AddItemToStock(udg_Draft_UpgradeBuildings[pid], itemId, 1, 1)
             endif
 
             set i = i + 1
@@ -25,17 +25,17 @@ library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
     endfunction
 
     function RemoveItemFromUpgradeShop takes integer pid, integer itemId returns nothing
-        call RemoveItemFromStock(udg_Draft_UpgradeBuildings[pid + 1], itemId)
+        call RemoveItemFromStock(udg_Draft_UpgradeBuildings[pid], itemId)
     endfunction
 
     function AddItemToUpgradeShop takes integer pid, integer itemId returns nothing
-        call AddItemToStock(udg_Draft_UpgradeBuildings[pid + 1], itemId, 1, 1)
+        call AddItemToStock(udg_Draft_UpgradeBuildings[pid], itemId, 1, 1)
     endfunction
 
     function CreateUpgradeShop takes nothing returns nothing
-        local unit u = CreateUnit(GetEnumPlayer(), udg_Draft_UpgradeBuilding, upgradeShopX, upgradeShopY, 0)
+        local unit u = CreateUnit(GetEnumPlayer(), DRAFT_UPGRADE_UNIT_ID, upgradeShopX, upgradeShopY, 0)
 
-        set udg_Draft_UpgradeBuildings[GetConvertedPlayerId(GetEnumPlayer())] = u
+        set udg_Draft_UpgradeBuildings[GetPlayerId(GetEnumPlayer())] = u
         set u = null
     endfunction
 
@@ -45,7 +45,7 @@ library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', upgradeShopX, upgradeShopY, 0)
             //set FloatingTextUpgrade = ShopText(upgradeShopX, upgradeShopY, "Upgrade abilities", 0, 255, 100)
             //call SetTextTagVisibility(FloatingTextUpgrade, true)
-            call ForForce( udg_PlayersWithHero, function CreateUpgradeShop) 
+            call ForForce( PlayersWithHero, function CreateUpgradeShop) 
         endif
     endfunction
 endlibrary

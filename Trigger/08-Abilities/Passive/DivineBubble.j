@@ -1,4 +1,4 @@
-library DivineBubble initializer init requires T32, HeroAbilityCooldown, UnitItems, DebuffTypes
+library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, RemoveBuffs
     globals
         Table DivineBubbles
     endglobals
@@ -18,7 +18,7 @@ library DivineBubble initializer init requires T32, HeroAbilityCooldown, UnitIte
         boolean enabled
     
         private method periodic takes nothing returns nothing
-            call RemoveDebuff(this.source, 1)
+            call RemoveUnitBuffs(this.source, BUFFTYPE_NEGATIVE, false)
             if T32_Tick > this.endTick then
                 call this.stopPeriodic()
                 call this.destroy()
@@ -31,19 +31,15 @@ library DivineBubble initializer init requires T32, HeroAbilityCooldown, UnitIte
             set this.fx = AddLocalizedSpecialEffectTarget( "RighteousGuard.mdx" , this.source , "origin" )
             call UnitAddAbility(this.source, 'A08C')
             set this.enabled = true
-            call AbilStartCD(this.source, abilId, 30.69 - (0.69 * GetUnitAbilityLevel(this.source, abilId))) 
+            call AbilStartCD(this.source, abilId, 50.0 - (1. * GetUnitAbilityLevel(this.source, abilId))) 
             set DivineBubbles[GetHandleId(this.source)] = this
-            if UnitHasItemType(this.source, LIGHT_RUNESTONE_ITEM_ID) then
-                set duration = duration + 1
-            endif
             set this.endTick = T32_Tick + R2I(duration * 32)   
             call this.startPeriodic()
             return this
         endmethod
         
         method destroy takes nothing returns nothing
-            call UnitRemoveAbility(this.source, 'A08C')
-            call UnitRemoveAbility(this.source, 'B01E')
+            call RemoveUnitBuff(this.source, 'A08C')
             call DestroyEffect(this.fx)
             set DivineBubbles[GetHandleId(this.source)] = 0
             set this.fx = null

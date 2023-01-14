@@ -1,4 +1,4 @@
-scope DiscordAdCommand initializer init
+library DiscordAdCommand initializer init requires Command, TimerUtils, DiscordFrame, PlayerTracking
     //===========================================================================
     globals
         integer array DiscordAdTimeout
@@ -47,10 +47,10 @@ scope DiscordAdCommand initializer init
             call TriggerRegisterPlayerChatEvent(trg, Player(i), "discord", false)
             call TriggerRegisterPlayerChatEvent(trg, Player(i), "Discord", false)
             set i = i + 1
-            exitwhen i > 7
+            exitwhen i == 8
         endloop
         call TriggerAddAction(trg, function ShowDiscordAd)
         call Command.create(CommandHandler.ToggleDiscordAd).name("ToggleAd").handles("togglead").handles("tad").help("Toggle Discord Ad", "Toggles whether the discord ad will display for you.")
         set trg = null
     endfunction
-endscope
+endlibrary

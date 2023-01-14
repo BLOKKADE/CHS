@@ -1,36 +1,44 @@
-library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpells, LearnAbsolute
+library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo, LearnAbsolute, PackingTape
+
     globals
+        Table SummonLevel
         integer array SkeletonDefender
         boolean array bnos_a
 
-        integer array SummonCrit
-        integer array SummonCutting
-        integer array SummonLastBreath
-        integer array SummonIceArmor
         integer array SummonWildDefense
-        integer array SummonDomeProtection
         integer array SummonHitPoints
         integer array SummonDamage
         integer array SummonArmor
     endglobals
 
-    function AddSummonAbility takes unit u, integer abilId, integer level returns nothing
+    private function AddSummonAbility takes unit u, integer abilId, integer level returns nothing
         call UnitAddAbility(u, abilId)
         call SetUnitAbilityLevel(u, abilId, level)
     endfunction
 
-    function SummonUnit takes unit u returns nothing
-        local integer i = GetUnitTypeId(u)
+    private function SummonUnit takes unit u returns nothing
+        local integer summonTypeId = GetUnitTypeId(u)
         local integer i2 = 0
         local integer totalLevel = 0
         local integer pid = GetPlayerId(GetOwningPlayer(u))
-        local unit hero = PlayerHeroes[pid + 1]
+        local unit hero = PlayerHeroes[pid]
         local integer UpgradeU = 15 * GetUnitItemTypeCount(hero,'I07K')
         local real wild = 1 + GetUnitCustomState(hero, BONUS_SUMMONPOW)/ 100
         local real r1
 
         //Prevent super summons?
         call ResetUnitCustomState(u)
+
+        //check packing tape
+        if UnitHasItemType(hero, PACKING_TAPE_ITEM_ID) and GetSummonSpell(summonTypeId) != 0 then
+            if not PackingTape_CheckSummonCount(hero, u) then
+                set hero = null
+                return
+            endif
+        endif
+
+        //register summons
+        call RegisterPlayerSummon(hero, u)
 
         //Beastmaster
         if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
@@ -53,62 +61,13 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         call AddUnitCustomState(u, BONUS_PVP, GetUnitCustomState(hero, BONUS_PVP))
 
-        if SUMMONS.contains(i) then
-            set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(i)) + UpgradeU
-            if i == WATER_ELEMENTAL_1_UNIT_ID then
-                //call BJDebugMsg("we")
-                call WaterElementalStats(u, totalLevel)
-            elseif i == FERAL_SPIRIT_WOLF_1_UNIT_ID then
-                //call BJDebugMsg("fw")
-                call SpiritWolfStats(u, totalLevel)
-            elseif i == SERPENT_WARD_1_UNIT_ID then
-                //call BJDebugMsg("sw")
-                call SerpentWardStats(u, totalLevel)
-            elseif i == MOUNTAIN_GIANT_1_UNIT_ID then
-                //call BJDebugMsg("mg")
-                call MountainGiantStats(u, totalLevel)
-            elseif i == BEAR_1_UNIT_ID then
-                //call BJDebugMsg("be")
-                call BearStats(u, totalLevel)
-            elseif i == HAWK_1_UNIT_ID then
-                //call BJDebugMsg("ha")
-                call HawkStats(u, totalLevel)
-            elseif i == QUILBEAST_1_UNIT_ID then
-                //call BJDebugMsg("qu")
-                call QuilbeastStats(u, totalLevel)
-            elseif i == PHOENIX_1_UNIT_ID then
-                //call BJDebugMsg("ph")
-                call PhoenixStats(u, totalLevel)
-            elseif i == INFERNAL_1_UNIT_ID then
-                //call BJDebugMsg("in")
-                call InfernoStats(u, totalLevel)
-            elseif i == LAVA_SPAWN_1_UNIT_ID then
-                //call BJDebugMsg("ls")
-                call LavaSpawnStats(u, totalLevel)
-            elseif i == POCKET_FACTORY_1_UNIT_ID then
-                //call BJDebugMsg("pf")
-                call PocketFactoryStats(u, totalLevel)
-            elseif i == CLOCKWORK_GOBLIN_1_UNIT_ID then
-                //call BJDebugMsg("cg")
-                call ClockwerkGoblinStats(u, totalLevel)
-            elseif i == PARASITE_1_UNIT_ID then
-                //call BJDebugMsg("pa")
-                call ParasiteStats(u, totalLevel)
-            elseif i == CARRION_BEETLE_1_UNIT_ID then
-                //call BJDebugMsg("cb")
-                call CarrionBeetleStats(u, totalLevel)
-            elseif i == SKELETON_BATTLEMASTER_1_UNIT_ID then
-                //call BJDebugMsg("basb")
-                call BlackArrowMeleeSkeletonStats(u, totalLevel)
-            elseif i == SKELETON_WARMAGE_1_UNIT_ID then
-                //call BJDebugMsg("basw")
-                call BlackArrowRangedSkeletonStats(u, totalLevel)
-            elseif SKELLIESCAPTAINS.contains(i) then
-                //call BJDebugMsg("rest")
-                call SkeletonStats(u, totalLevel)
-            endif
+        if SUMMONS.contains(summonTypeId) then
+            set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(summonTypeId)) + UpgradeU
 
-            call BlzSetUnitName(u,GetUnitName(u)+ " level " + I2S(totalLevel) )
+            call GetSummonStatFunction(summonTypeId).evaluate(u, totalLevel)
+
+            set SummonLevel[GetHandleId(u)] = totalLevel
+            call BlzSetUnitName(u,GetUnitName(u)+ ": level " + I2S(totalLevel))
             call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
@@ -117,46 +76,24 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
          if i2 > 0 then
             call AddUnitCustomState(u, BONUS_MAGICRES,3 * i2)
             call AddUnitCustomState(u, BONUS_EVASION,0.5 * i2)
-            call AddUnitCustomState(u, BONUS_BLOCK,10 * i2)
+            call AddUnitCustomState(u, BONUS_BLOCK, 10 * i2)
             call AddSummonAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID, i2)
         endif
 
-        /*
-        if SummonCrit[pid] > 0 and i != PHOENIX_1_UNIT_ID then
-            call AddSummonAbility(u, CRITICAL_STRIKE_ABILITY_ID, SummonCrit[pid])
-        endif
-
-        if SummonCutting[pid] > 0 then
-            call AddSummonAbility(u, CUTTING_ABILITY_ID, SummonCutting[pid])
-        endif
-
-        if SummonLastBreath[pid] > 0 then
-            call AddSummonAbility(u, LAST_BREATHS_ABILITY_ID, SummonLastBreath[pid])
-        endif
-
-        if SummonIceArmor[pid] > 0 then
-            call AddSummonAbility(u, ICE_FORCE_ABILITY_ID, SummonIceArmor[pid])
-        endif
-
-        if SummonDomeProtection[pid] > 0 then
-            call AddSummonAbility(u, DOME_OF_PROTECTION_ABILITY_ID, SummonDomeProtection[pid])
-        endif
-        */
-
         if SummonHitPoints[pid] > 0 then
-            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 50)
+            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
             call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
         endif
 
         if SummonArmor[pid] > 0 then
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 1))
+            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 2))
         endif
 
         if SummonDamage[pid] > 0 then
-            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (3 * SummonDamage[pid]), 0)
+            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
 
-        //wild Defense
+        //wild
         if wild != 1 then      
             call BlzSetUnitBaseDamage(u,R2I(I2R(BlzGetUnitBaseDamage(u,0))* wild),0)  
             call BlzSetUnitMaxHP(u,R2I(I2R(BlzGetUnitMaxHP(u))* wild))
@@ -193,28 +130,33 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         set hero = null
     endfunction
 
-    function Trig_UnitStateSys_Actions takes nothing returns nothing
+    private function UnitEnterMapActions takes nothing returns nothing
         local unit u = GetTriggerUnit()
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         local boolean realUnit = IsUnitIllusion(u) == false
         local integer hid = GetHandleId(u)
 
+        //Summons
+        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
+            call SummonUnit(u)
+        endif
+
         //Illusion
         if (not realUnit) and IsUnitType(u, UNIT_TYPE_HERO) then
-            call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid + 1], false), false)
-            call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid + 1], false), false)
-            call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid + 1], false), false)
+            call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid], false), false)
+            call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid], false), false)
+            call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid], false), false)
         endif
 
         //Rock Golem
         if GetUnitTypeId(u) == ROCK_GOLEM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_BLOCK,50)
-            call AddUnitCustomState(u, BONUS_MAGICRES,15)
+            call AddUnitCustomState(u, BONUS_BLOCK, 50)
+            call AddUnitCustomState(u, BONUS_MAGICRES, 15)
         endif
 
         //Medivh
         if GetUnitTypeId(u) == MEDIVH_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_MAGICPOW,15)
+            call AddUnitCustomState(u, BONUS_MAGICPOW, 15)
         endif
 
         //Pit Lord
@@ -223,9 +165,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call BlzUnitDisableAbility(u,ABSOLUTE_FIRE_ABILITY_ID,false,true)
 
             if realUnit then
-                call SaveInteger(HT,hid,941561, 1)
-                call UpdateHeroSpellList(ABSOLUTE_FIRE_ABILITY_ID,u,1)
-                call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID,u)
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_FIRE_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID, u)
                 call AddHeroMaxAbsoluteAbility(u)
             endif
         endif
@@ -236,9 +178,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             call BlzUnitDisableAbility(u,ABSOLUTE_WATER_ABILITY_ID,false,true)
 
             if realUnit then
-                call SaveInteger(HT,hid,941561, 1)
-                call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID,u,1)
-                call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID,u)
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID, u)
                 call AddHeroMaxAbsoluteAbility(u)
                 set NagaSirenBonus[hid] = 1
             endif
@@ -246,7 +188,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
 
         //Satyr Trickster
         if GetUnitTypeId(u) == SATYR_TRICKSTER_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_EVASION,10)
+            call AddUnitCustomState(u, BONUS_EVASION, 10)
         endif
 
         //Witch Doctor
@@ -265,7 +207,13 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
             set ThunderBoltTargets[hid] = 1
         endif
 
+        //Troll Berserker
+        if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID and realUnit then
+            set TrollBerserkerBonus.real[hid] = 0.99
+        endif
+
         if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
+            call CreateSpellList(u, SORCERER_UNIT_ID, SpellListFilter.SorcerSpellListFilter)
             set SorcererAmount[hid] = 1
         endif
 
@@ -277,19 +225,15 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonSpel
         //Set base luck
         call AddUnitCustomState(u, BONUS_LUCK, 1)
 
-        //Summons
-        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
-            call SummonUnit(u)
-        endif
-
         set u = null
     endfunction
 
-    //===========================================================================
     private function init takes nothing returns nothing
-        local trigger trg = CreateTrigger()
-        call TriggerRegisterEnterRectSimple( trg, GetPlayableMapRect() )
-        call TriggerAddAction( trg, function Trig_UnitStateSys_Actions )
-        set trg = null
+        local trigger unitEnterMapTrigger = CreateTrigger()
+        set SummonLevel = Table.create()
+        call TriggerRegisterEnterRectSimple(unitEnterMapTrigger, GetPlayableMapRect())
+        call TriggerAddAction(unitEnterMapTrigger, function UnitEnterMapActions)
+        set unitEnterMapTrigger = null
     endfunction
+
 endlibrary

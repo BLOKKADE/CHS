@@ -1,9 +1,4 @@
 library StormRune requires RandomShit
-    globals
-        boolexpr RuneOfStorm_b
-    endglobals
-
-
     function CastRuneOfStorm takes nothing returns boolean
 
         if IsUnitEnemy(GLOB_RUNE_U,GetOwningPlayer(GetFilterUnit())) then
@@ -22,7 +17,7 @@ library StormRune requires RandomShit
         local real power = GLOB_RUNE_POWER 
 
         call GroupClear(ENUM_GROUP)
-        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),300 + 100 * power,RuneOfStorm_b )
+        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),300 + 100 * power, Condition(function CastRuneOfStorm))
 
 
         set u = null

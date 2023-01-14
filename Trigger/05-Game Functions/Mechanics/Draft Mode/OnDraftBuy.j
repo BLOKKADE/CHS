@@ -8,31 +8,28 @@ library DraftOnBuy initializer init requires DraftModeFunctions/*
         trigger DraftOnBuyTrigger
     endglobals
 
-    function Trig_OnDraftBuy_Conditions takes nothing returns boolean
-        if ( not ( GetUnitTypeId(GetSellingUnit()) == udg_Draft_DraftBuilding ) ) then
-            return false
-        endif
-        return true
+    private function DraftOnBuyConditions takes nothing returns boolean
+        return GetUnitTypeId(GetSellingUnit()) == DRAFT_BUY_UNIT_ID
     endfunction
 
-    function Trig_OnDraftBuy_Actions takes nothing returns nothing
-        local integer PlayerId = GetConvertedPlayerId(GetOwningPlayer(GetSellingUnit()))
-        call AddItemToStock( udg_Draft_UpgradeBuildings[PlayerId], GetItemTypeId(GetSoldItem()), 1, 1 )
+    private function DraftOnBuyActions takes nothing returns nothing
+        local integer currentPlayerId = GetPlayerId(GetOwningPlayer(GetSellingUnit()))
+        call AddItemToStock(udg_Draft_UpgradeBuildings[currentPlayerId], GetItemTypeId(GetSoldItem()), 1, 1)
     
-        if (udg_Draft_NOSpellsLearned[PlayerId] < 9) then // (udg_Draft_NOSpellsLearned[PlayerId] < 9) results in drafting 10 spells in total.
-            call GenerateDraftSpells(PlayerId, udg_Draft_NODraftSpells) 
+        if (udg_Draft_NOSpellsLearned[currentPlayerId] < 9) then // (udg_Draft_NOSpellsLearned[currentPlayerId] < 9) results in drafting 10 spells in total.
+            call GenerateDraftSpells(currentPlayerId, udg_Draft_NODraftSpells) 
         else
-            call RemoveDraftSpells(PlayerId, udg_Draft_NODraftSpells)
+            call RemoveDraftSpells(currentPlayerId, udg_Draft_NODraftSpells)
         endif
     
-        set udg_Draft_NOSpellsLearned[PlayerId] = udg_Draft_NOSpellsLearned[PlayerId] + 1  
+        set udg_Draft_NOSpellsLearned[currentPlayerId] = udg_Draft_NOSpellsLearned[currentPlayerId] + 1  
     endfunction
 
-    //===========================================================================
     private function init takes nothing returns nothing
         set DraftOnBuyTrigger = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ( DraftOnBuyTrigger, EVENT_PLAYER_UNIT_SELL_ITEM )
-        call TriggerAddCondition( DraftOnBuyTrigger, Condition( function Trig_OnDraftBuy_Conditions ) )
-        call TriggerAddAction( DraftOnBuyTrigger, function Trig_OnDraftBuy_Actions )
+        call TriggerRegisterAnyUnitEventBJ(DraftOnBuyTrigger, EVENT_PLAYER_UNIT_SELL_ITEM)
+        call TriggerAddCondition(DraftOnBuyTrigger, Condition(function DraftOnBuyConditions))
+        call TriggerAddAction(DraftOnBuyTrigger, function DraftOnBuyActions)
     endfunction
+
 endlibrary

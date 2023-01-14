@@ -9,7 +9,6 @@ library DebugCommand initializer init uses Command, RandomShit, PlayerTracking, 
             call DebugCode_SavePlayerDebug(GetTriggerPlayer())
         endif
         
-
         call DisplayTextToForce(GetForceOfPlayer(GetTriggerPlayer()), "Successfully toggled debug mode for your hero. Your hero's abilities/items will be saved Documents//Warcraft III//CustomMapData//CHS")
     endfunction
 
