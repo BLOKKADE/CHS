@@ -28,8 +28,8 @@ library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLe
                 call CustomGameEvent_FireEvent(EVENT_UNLEARN_ABILITY, EventInfo.create(currentPlayer, PlayerLastLearnedSpell[currentPlayerId], RoundNumber))
 
                 if (AbilityMode == 1) then
-                    call RemoveItemFromUpgradeShop(currentPlayerId - 1, GetItemFromAbility(PlayerLastLearnedSpell[currentPlayerId]))
-                    call RefreshUpgradeShop(currentPlayerId - 1, currentUnit)
+                    call RemoveItemFromUpgradeShop(currentPlayerId, GetItemFromAbility(PlayerLastLearnedSpell[currentPlayerId]))
+                    call RefreshUpgradeShop(currentPlayerId, currentUnit)
                 endif
             endif
     
