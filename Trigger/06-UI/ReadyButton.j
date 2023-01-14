@@ -34,7 +34,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     endfunction
 
     private function ReadyTooltip takes nothing returns string
-		return "Currently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|n|nDoes not work for non-simultaneous pvp rounds.|n"
+		return "Currently |cfff3fc77" + I2S(ReadyPlayerCount()) + "|r out of |cfffc77db" + I2S(PlayerCount) + "|r players are ready.|n|cffd8fc77Next round|r starts once enough players are ready.|nDoes not work for non-simultaneous pvp rounds.|n"
 	endfunction
 
     function ReadyButtonTooltipTitle takes player p returns string
@@ -54,7 +54,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         local string s = ReadyTooltip()
 
         if ReadyButtonDisabled[pid] then
-            set s = "|cfffc9277Cannot be used during a round.|r|n"
+            set s = "|cfffc9277Cannot be used during a round|r.|n"
         endif
 
         if PlayerIsAlwaysReady[pid] then
