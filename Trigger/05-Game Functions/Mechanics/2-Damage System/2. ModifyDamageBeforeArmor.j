@@ -508,7 +508,10 @@ scope ModifyDamageBeforeArmor initializer init
             else
                 set Damage.index.damage = Damage.index.damage  + (i1 * i2)/ 20
             endif
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
+
+            if not IsFxOnCooldownSet(DamageTargetId, HERO_FORCE_ABILITY_ID, 1) then
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl", DamageTarget, "chest"))		
+            endif
         endif
 
         //Naga Siren passive
@@ -519,7 +522,9 @@ scope ModifyDamageBeforeArmor initializer init
         //Grom Hellscream
         if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID then
             set Damage.index.damage = Damage.index.damage + (GetHeroStr(DamageSourceHero, true) * (0.1 + (0.01 * GetHeroLevel(DamageSourceHero))))
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
+            if not IsFxOnCooldownSet(DamageTargetId, ORC_CHAMPION_UNIT_ID, 1) then
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
+            endif
         endif
 
         //Robes of the Archmage
