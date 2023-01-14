@@ -141,10 +141,15 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
             call UpdatePlayersNeeded()
 
+            //only show text to everyone once
             if not PlayerHasReadied[pid] then
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, GetPlayerNameColour(p) + " is ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
             else
-                call DisplayTimedTextToPlayer(p, 0, 0, 10, GetPlayerNameColour(p) + " is not ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
+                if ps.isReady() then
+                    call DisplayTimedTextToPlayer(p, 0, 0, 10, GetPlayerNameColour(p) + " is ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
+                else
+                    call DisplayTimedTextToPlayer(p, 0, 0, 10, GetPlayerNameColour(p) + " is not ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
+                endif
             endif
 
             call CheckReadyPlayers()
@@ -166,9 +171,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     
         if PlayerIsAlwaysReady[pid] then
             //reset when battle royal wait time starts
-            if eventInfo.roundNumber + 1 == BattleRoyalRound or (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber + 1, 5) == 0) then
-                set PlayerIsAlwaysReady[pid] = false
-            else
+            if not (eventInfo.roundNumber + 1 == BattleRoyalRound) and (not (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber, 5) == 0)) then
                 call PlayerReadies(eventInfo.p)
             endif
         endif
