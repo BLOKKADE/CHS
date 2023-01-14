@@ -26,17 +26,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
             call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VII_UNIT_ID, 372, 707 + 248, 270.00))
         endif
         
-        // call SetShopIndex(CreateUnit(p, SUMMON_BUFFS_SHOP_UNIT_ID, -868, -1152, 270.00))
-        call SetShopIndex(CreateUnit(p, ITEM_SHOP_I_UNIT_ID, -620, -1152, 270.00))
-        call SetShopIndex(CreateUnit(p, ITEM_SHOP_II_UNIT_ID, -372, -1152, 270.00))
-        call SetShopIndex(CreateUnit(p, PVE_SHOP_I_UNIT_ID, -124, -1152, 270.00))
-        call SetShopIndex(CreateUnit(p, PVE_SHOP_II_UNIT_ID, -124, -1152 - 256, 270.00))
-        call SetShopIndex(CreateUnit(p, ITEM_SHOP_III_UNIT_ID, 124, -1152, 270.00))
-        call SetShopIndex(CreateUnit(p, RUNESTONE_SHOP_UNIT_ID, 124, -1152 - 256, 270.00))
-        call SetShopIndex(CreateUnit(p, ITEM_SHOP_IV_UNIT_ID, 372, -1152, 270.00))
-        call SetShopIndex(CreateUnit(p, ELEMENTAL_ITEM_SHOP_UNIT_ID, 372, -1152 - 256, 270.00))
-        call SetShopIndex(CreateUnit(p, ITEM_SHOP_V_UNIT_ID, 620, -1152, 270.00))
-        call SetShopIndex(CreateUnit(p, ITEM_SHOP_VI_UNIT_ID, 868, -1152, 270.00))
+        call SetShopIndex(CreateUnit(p, ITEM_SHOP_I_UNIT_ID, 0, -1200, 270.00))
 
         set ShopsCreated = true
 

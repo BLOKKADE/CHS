@@ -1,7 +1,7 @@
 native GetUnitGoldCost takes integer rawCode returns integer
 native GetUnitWoodCost takes integer rawCode returns integer
     
-library TasButtonList initializer Init uses String, IsRightClick, optional FrameLoader, optional SimpleTooltip
+library TasButtonList initializer Init uses StringFunctions, IsRightClick, optional FrameLoader, optional SimpleTooltip
     // TasButtonList10c (CC) by Tasyen
     
     //function CreateTasButtonList10 takes string buttonName, integer cols, integer rows, framehandle parent, code buttonAction, code rightClickAction, code updateAction, code searchAction, code filterAction, code asyncAction, code asyncRigthAction, real colGap, real rowGap returns integer

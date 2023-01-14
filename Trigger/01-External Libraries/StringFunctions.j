@@ -1,4 +1,4 @@
-library String requires MathRound
+library StringFunctions requires MathRound
     //String functions v1.04
     //made by MaskedPoptart
     //--------------------IMPORTANT FUNCTIONS------------------------
