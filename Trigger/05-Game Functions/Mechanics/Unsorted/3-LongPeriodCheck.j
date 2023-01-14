@@ -64,98 +64,6 @@ scope LongPeriodCheck initializer init
         endif
     endfunction
 
-    private function UpdateFrameVisibility takes nothing returns nothing
-        local integer i = 1
-        local integer pid = GetPlayerId(GetLocalPlayer())
-        local integer abilId = 0
-        local string abilIcon = ""
-        local integer selectedUnitPid = SelectedUnitPid[pid]
-        local integer unitTypeId = 0
-
-        if selectedUnitPid == 27 then
-            set selectedUnitPid = pid
-        endif
-
-        //updates the ability icons displayed in top left
-        loop
-            exitwhen i > 21
-
-            if selectedUnitPid == 11 then
-                set abilId = roundAbilities.integer[i]
-            else
-                set abilId = GetHeroSpellAtPosition(PlayerHeroes[selectedUnitPid] , i)
-            endif
-
-            if abilId != 0 then
-                set abilIcon = BlzGetAbilityIcon(abilId)
-
-                call BlzFrameSetVisible(ButtonParentId[100 + i], true)
-                call BlzFrameSetTexture(ButtonId[100 + i], abilIcon, 0, true)
-            else
-                call BlzFrameSetVisible(ButtonParentId[100 + i], false)
-            endif
-            set i = i + 1
-        endloop
-
-        // Show scoreboard button
-        call BlzFrameSetVisible(ButtonParentId[4], ScoreboardFrameHandle != null)
-
-        // Show rewards button
-        call BlzFrameSetVisible(ButtonParentId[6], RoundNumber > 5 and RewardsFrameHandle != null)
-
-        // Move the creep info button over after round 5 since we are now showing the rewards button
-        if (RoundNumber > 5) then
-            call BlzFrameSetPoint(ButtonParentId[2], FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y)
-        endif
-
-        // Indicator if the player is auto-ready
-        call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])
-
-        // Indicator if the player has points
-        call BlzFrameSetVisible(ButtonIndicatorParentId[6], RoundNumber > 5 and PlayerRewardPoints[pid] > 0)
-
-        // Hero info
-        set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid])
-
-        if (PlayerHasReadied[pid]) then
-            call BlzFrameSetTexture(ButtonId[40], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
-        else
-            call BlzFrameSetTexture(ButtonId[40], "ReplaceableTextures\\CommandButtons\\BTNDefend.blp", 0, true)
-        endif
-
-        // Update the flashy ready status for the player
-        call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[pid])
-
-        if unitTypeId != 0 then
-            set abilIcon = GetHeroPassiveDescription(unitTypeId, HeroPassive_Icon)
-            call BlzFrameSetVisible(ButtonParentId[38], true) // Element count
-            call BlzFrameSetVisible(ButtonParentId[39], true) // Win Counts
-            call BlzFrameSetVisible(ButtonParentId[40], true) // Player ready status
-            call BlzFrameSetVisible(ButtonParentId[100], true) // Hero passive/description
-            call BlzFrameSetTexture(ButtonId[100], abilIcon, 0, true) // Hero info
-        else
-            call BlzFrameSetVisible(ButtonParentId[38], false) // Element count
-            call BlzFrameSetVisible(ButtonParentId[39], false) // Win Counts
-            call BlzFrameSetVisible(ButtonParentId[40], false) // Player ready status
-            call BlzFrameSetVisible(ButtonParentId[100], false) // Hero passive/description
-        endif
-
-        // Show sell all items/convert gold/lumber button
-        if (ShopsCreated == false or BrStarted) then
-            call BlzFrameSetVisible(ButtonParentId[3], false) // Sell all items
-            call BlzFrameSetVisible(ButtonParentId[5], false) // Ready button
-            call BlzFrameSetVisible(ButtonParentId[36], false) // Convert to gold
-            call BlzFrameSetVisible(ButtonParentId[37], false) // Convert to lumber
-            call BlzFrameSetVisible(ButtonParentId[2], false) // Creep info
-        else
-            call BlzFrameSetVisible(ButtonParentId[3], true) // Sell all items
-            call BlzFrameSetVisible(ButtonParentId[5], true) // Ready button
-            call BlzFrameSetVisible(ButtonParentId[36], true) // Convert to gold
-            call BlzFrameSetVisible(ButtonParentId[37], true) // Convert to lumber
-            call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid]) // Creep info
-        endif
-    endfunction
-
     private function OnPeriod takes nothing returns nothing
         local unit u = GetEnumUnit()
         local integer hid = GetHandleId(u)
@@ -501,7 +409,6 @@ scope LongPeriodCheck initializer init
     endfunction
 
     private function LongPeriodCheckActions takes nothing returns nothing
-        call UpdateFrameVisibility()
         call ForGroup(OnPeriodGroup, function OnPeriod)
     endfunction
 
