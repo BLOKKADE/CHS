@@ -8,7 +8,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
         return GetPlayerId(GetFilterPlayer()) < 8 and (not IsPlayerInForce(GetFilterPlayer(), LeaverPlayers)) and (not IsPlayerInForce(GetFilterPlayer(), DefeatedPlayers))
     endfunction
 
-    // If a player leaves the game during the game, player count isn't decremented until the hero is killed.
+    // If a player leaves the game during the BR, player count isn't decremented until the hero is killed.
     private function IsOnlyOnePlayerRemainingWithLeaver takes nothing returns boolean
         local force remainingActivePlayers = GetPlayersMatching(Condition(function ActivePlayerFilter))
         local boolean isValid = (IsTriggerEnabled(GetTriggeringTrigger()) == true) and (InitialPlayerCount > 1) and (PlayerCount == 2) and (GameComplete == false) and (CountPlayersInForceBJ(remainingActivePlayers) == 1)
@@ -64,6 +64,10 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
             set i = i + 1
             exitwhen i == 8
         endloop
+
+        if (WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE)) then
+            call SetUnitInvulnerable(PlayerHeroes[GetPlayerId(WinningPlayer)], true)
+        endif
     endfunction
 
     private function EndGameActions takes nothing returns nothing
