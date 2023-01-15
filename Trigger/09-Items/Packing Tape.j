@@ -37,6 +37,12 @@ library PackingTape initializer init requires PlayerSummonGroups, SummonInfo
                 set temp = BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP) - 1))
                 if temp != null then
                     set totalLevel = totalLevel + SummonLevel.integer[GetHandleId(temp)]
+
+                    // Packing tape doesn't make sense if the sacrificed unit revives itself
+                    if (GetUnitTypeId(temp) == PHOENIX_1_UNIT_ID) then
+                        call UnitRemoveAbility(temp, REINCARNATION_ABILITY_ID)
+                    endif
+
                     call KillUnit(temp)
                     call GroupRemoveUnit(ENUM_GROUP, temp)
                 endif
