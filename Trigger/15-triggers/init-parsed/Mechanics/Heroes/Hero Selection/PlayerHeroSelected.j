@@ -1,4 +1,4 @@
-library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard, InitializeDraftMode
+library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard, InitializeDraftMode, RewardsScreen
 
     globals
         boolean ShopsCreated = false
@@ -49,6 +49,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         set udg_boolean09 = true
 
         call InitializeScoreboard() // Now that everyone has a hero, show the leaderboard
+        call UpdateRewardsPrimaryStatIcon() // Update the primary stat icon for each player
 
         call PlaySoundBJ(udg_sound11)
         call DisplayTextToForce(GetPlayersAll(), "|c000070C0Get Ready!|r")

@@ -1,4 +1,4 @@
-library RewardsScreen initializer init requires PlayerTracking, IconFrames
+library RewardsScreen initializer init requires PlayerTracking, IconFrames, Utility
 
     globals
         // Rewards static titles
@@ -32,7 +32,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
         // Column indexes
         private constant integer REWARD_BUFFER                          = 20 // Used to store all player selections in a single array. Just needs to be at least the reward count
-        private constant integer OFFENSIVE_ATTACK_DAMAGE_1_INDEX        = 0
+        private constant integer OFFENSIVE_PRIMARY_STAT_1_INDEX         = 0
         private constant integer OFFENSIVE_PHYSICAL_POWER_2_INDEX       = 1
         private constant integer OFFENSIVE_MAGIC_POWER_3_INDEX          = 2
         private constant integer OFFENSIVE_STAT_4_INDEX                 = 3
@@ -48,7 +48,11 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         // Reward icons
         private constant string CLOSE_BUTTON_ICON                       = "ReplaceableTextures\\CommandButtons\\BTNuncheck.blp"
 
-        private constant string OFFENSIVE_ATTACK_DAMAGE_1_ICON          = "ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.blp"
+        // 3 different icons for a single reward depending on the player hero's primary stat
+        private constant string OFFENSIVE_PRIMARY_STAT_STR_1_ICON       = "ReplaceableTextures\\CommandButtons\\BTNRuby Amulet.blp"
+        private constant string OFFENSIVE_PRIMARY_STAT_AGI_1_ICON       = "ReplaceableTextures\\CommandButtons\\BTNEmerald Amulet.blp"
+        private constant string OFFENSIVE_PRIMARY_STAT_INT_1_ICON       = "ReplaceableTextures\\CommandButtons\\BTNSapphire Amulet.blp"
+
         private constant string OFFENSIVE_PHYSICAL_POWER_2_ICON         = "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp"
         private constant string OFFENSIVE_MAGIC_POWER_3_ICON            = "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp"
         private constant string OFFENSIVE_STAT_4_ICON                   = "ReplaceableTextures\\CommandButtons\\BTNSelectHeroOff.blp"
@@ -62,18 +66,18 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private constant string UTILITY_MANA_REGEN_4_ICON               = "ReplaceableTextures\\CommandButtons\\BTNManaStone.blp"
 
         // Reward values
-        private constant real ATTACK_DAMAGE_BONUS                       = 5.0
+        private constant real PRIMARY_STAT_BONUS                        = 15.0
         private constant real PHYSICAL_POWER_BONUS                      = 0.5
         private constant real MAGIC_POWER_BONUS                         = 0.5
         private constant real OFFENSIVE_STAT_BONUS                      = 0.
-        private constant real ARMOR_BONUS                               = 5.0
-        private constant real MAGIC_PROTECTION_BONUS                    = 0.5
-        private constant real BLOCK_BONUS                               = 10.0
+        private constant real ARMOR_BONUS                               = 4.0
+        private constant real MAGIC_PROTECTION_BONUS                    = 0.75
+        private constant real BLOCK_BONUS                               = 20.0
         private constant real DEFENSIVE_STAT_BONUS                      = 0.
-        private constant real HIT_POINTS_BONUS                          = 750.0
-        private constant real HIT_POINTS_REGEN_BONUS                    = 10.0
-        private constant real MANA_BONUS                                = 150.0
-        private constant real MANA_REGION_BONUS                         = 10.0
+        private constant real HIT_POINTS_BONUS                          = 800.0
+        private constant real HIT_POINTS_REGEN_BONUS                    = 25.0
+        private constant real MANA_BONUS                                = 600.0
+        private constant real MANA_REGION_BONUS                         = 30.0
 
         // Colors
         private constant string COLOR_END_TAG                           = "|r"
@@ -82,6 +86,9 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private constant string UTILITY_COLOR                           = "|cff4f95ff"
         private constant string AVAILABLE_POINTS_COLOR                  = "|cfff825ff"
         private constant string CLICK_ICON_COLOR                        = "|cffffae00"
+        private constant string PRIMARY_STAT_STR_COLOR                  = "|cffff6e6e"
+        private constant string PRIMARY_STAT_AGI_COLOR                  = "|cffe4e74a"
+        private constant string PRIMARY_STAT_INT_COLOR                  = "|cff4ae7df"
 
         private integer CurrentCategoryIndex                            = 0
         private integer CurrentIconIndex                                = 0
@@ -106,6 +113,8 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         private framehandle AvailablePointsFrame
         private framehandle array RewardSelectionFramehandles
         private framehandle array RewardSelectionParentFramehandles
+        private framehandle array RewardSelectionCountFramehandles
+        private framehandle array RewardSelectionCountParentFramehandles
 
         // Save what the player has selected, how many points they have, and the accumulation of rewards
         private integer array PlayerRewardSelection
@@ -155,52 +164,53 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
     endfunction
 
     private function CreateRewardIcon takes string iconPath, integer rewardIndex returns nothing
-        local framehandle submitButtonFrameHandle
-        local framehandle buttonBackdropFrameHandle
-        local framehandle buttonCountFrameHandle
-        local framehandle buttonCountBackdropFrameHandle
-        local integer buttonHandleId
-        local integer backdropHandleId
+        local framehandle rewardIconParentFrameHandle
+        local framehandle rewardIconFrameHandle
+        local framehandle rewardIconCountParentFrameHandle
+        local framehandle rewardIconCountFrameHandle
+        local integer rewardIconParentFrameHandleId
 
         // Create the icons frames and save them for later
-        set submitButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", RewardsFrameHandle, 0, 0) 
-        set buttonBackdropFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", submitButtonFrameHandle, "", 1)
-        set buttonHandleId = GetHandleId(submitButtonFrameHandle)
-        set backdropHandleId = GetHandleId(buttonBackdropFrameHandle)
+        set rewardIconParentFrameHandle = BlzCreateFrame("ScriptDialogButton", RewardsFrameHandle, 0, 0) 
+        set rewardIconFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", rewardIconParentFrameHandle, "", 1)
+        set rewardIconParentFrameHandleId = GetHandleId(rewardIconParentFrameHandle)
+
+        set RewardSelectionParentFramehandles[rewardIndex] = rewardIconParentFrameHandle
+        set RewardSelectionFramehandles[rewardIndex] = rewardIconFrameHandle
 
         // Dimensions for the button
-        call BlzFrameSetAbsPoint(submitButtonFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY()) 
-        call BlzFrameSetAbsPoint(submitButtonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ICON_WIDTH, GetTopLeftY() - ICON_WIDTH) 
+        call BlzFrameSetAbsPoint(rewardIconParentFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY()) 
+        call BlzFrameSetAbsPoint(rewardIconParentFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ICON_WIDTH, GetTopLeftY() - ICON_WIDTH) 
 
         // Reward count for the button. Save the framehandle for later to easily update the value
-        set buttonCountBackdropFrameHandle = BlzCreateFrame("TooltipText", RewardsFrameHandle, 0, 0)
-        set buttonCountFrameHandle = BlzGetFrameByName("TooltipTextTitle", 0)
-        call BlzFrameSetLevel(buttonCountBackdropFrameHandle, 2) // To have it appear above the button
-        call BlzFrameSetText(buttonCountFrameHandle, "0")
-        call BlzFrameSetPoint(buttonCountBackdropFrameHandle, FRAMEPOINT_TOPLEFT, submitButtonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, -0.01, 0.01)
-        call BlzFrameSetSize(buttonCountBackdropFrameHandle, 0.02, 0.02)
+        set rewardIconCountParentFrameHandle = BlzCreateFrame("TooltipText", RewardsFrameHandle, 0, 0)
+        set rewardIconCountFrameHandle = BlzGetFrameByName("TooltipTextTitle", 0)
+        call BlzFrameSetLevel(rewardIconCountParentFrameHandle, 2) // To have it appear above the button
+        call BlzFrameSetText(rewardIconCountFrameHandle, "0")
+        call BlzFrameSetPoint(rewardIconCountParentFrameHandle, FRAMEPOINT_TOPLEFT, rewardIconParentFrameHandle, FRAMEPOINT_BOTTOMRIGHT, -0.01, 0.01)
+        call BlzFrameSetSize(rewardIconCountParentFrameHandle, 0.02, 0.02)
 
-        set RewardSelectionFramehandles[rewardIndex] = buttonCountFrameHandle
-        set RewardSelectionParentFramehandles[rewardIndex] = buttonCountBackdropFrameHandle
+        set RewardSelectionCountParentFramehandles[rewardIndex] = rewardIconCountParentFrameHandle
+        set RewardSelectionCountFramehandles[rewardIndex] = rewardIconCountFrameHandle
 
         // Save the handle of this button to look it up later for mouse events
-        call SaveInteger(IconEventHandles, buttonHandleId, 1, rewardIndex)
+        call SaveInteger(IconEventHandles, rewardIconParentFrameHandleId, 1, rewardIndex)
 
         // Register with the single trigger about hovering over the icon
-        call BlzTriggerRegisterFrameEvent(IconEventTrigger, submitButtonFrameHandle, FRAMEEVENT_MOUSE_ENTER)
-        call BlzTriggerRegisterFrameEvent(IconEventTrigger, submitButtonFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
-        call BlzTriggerRegisterFrameEvent(IconEventTrigger, submitButtonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
+        call BlzTriggerRegisterFrameEvent(IconEventTrigger, rewardIconParentFrameHandle, FRAMEEVENT_MOUSE_ENTER)
+        call BlzTriggerRegisterFrameEvent(IconEventTrigger, rewardIconParentFrameHandle, FRAMEEVENT_MOUSE_LEAVE)
+        call BlzTriggerRegisterFrameEvent(IconEventTrigger, rewardIconParentFrameHandle, FRAMEEVENT_CONTROL_CLICK)
         
         // Apply the icon
-        call BlzFrameSetVisible(submitButtonFrameHandle, true)
-        call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
-        call BlzFrameSetAllPoints(buttonBackdropFrameHandle, submitButtonFrameHandle) 
+        call BlzFrameSetVisible(rewardIconParentFrameHandle, true)
+        call BlzFrameSetTexture(rewardIconFrameHandle, iconPath, 0, true) 
+        call BlzFrameSetAllPoints(rewardIconFrameHandle, rewardIconParentFrameHandle) 
 
         // Cleanup
-        set submitButtonFrameHandle = null
-        set buttonBackdropFrameHandle = null
-        set buttonCountFrameHandle = null
-        set buttonCountBackdropFrameHandle = null
+        set rewardIconParentFrameHandle = null
+        set rewardIconFrameHandle = null
+        set rewardIconCountFrameHandle = null
+        set rewardIconCountParentFrameHandle = null
     endfunction
 
     private function CreateCategoryText takes string value returns nothing
@@ -238,6 +248,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
         local string tooltipName
         local integer playerRewardIndex = 0
         local integer rewardCount = 0
+        local integer primaryStat
 
         if (BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK) then
             if (GetLocalPlayer() == triggerPlayer) then	
@@ -258,9 +269,9 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
                     set rewardCount = rewardCount + PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + playerRewardIndex]
                     set PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + playerRewardIndex] = 0
 
-                    if (RewardSelectionFramehandles[playerRewardIndex] != null and GetLocalPlayer() == triggerPlayer) then	
-                        call BlzFrameSetText(RewardSelectionFramehandles[playerRewardIndex], "0") 
-                        call BlzFrameSetSize(RewardSelectionParentFramehandles[playerRewardIndex], 0.02, 0.02)
+                    if (RewardSelectionCountFramehandles[playerRewardIndex] != null and GetLocalPlayer() == triggerPlayer) then	
+                        call BlzFrameSetText(RewardSelectionCountFramehandles[playerRewardIndex], "0") 
+                        call BlzFrameSetSize(RewardSelectionCountParentFramehandles[playerRewardIndex], 0.02, 0.02)
                     endif
 
                     set playerRewardIndex = playerRewardIndex + 1
@@ -278,11 +289,11 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
                 set PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex] = PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex] + 1
 
                 if (GetLocalPlayer() == triggerPlayer) then	
-                    call BlzFrameSetText(RewardSelectionFramehandles[rewardIndex], I2S(PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])) 
+                    call BlzFrameSetText(RewardSelectionCountFramehandles[rewardIndex], I2S(PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])) 
                     call BlzFrameSetText(AvailablePointsFrame, AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[triggerPlayerId])) 
 
                     if (PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex] >= 10) then
-                        call BlzFrameSetSize(RewardSelectionParentFramehandles[rewardIndex], 0.03, 0.02)
+                        call BlzFrameSetSize(RewardSelectionCountParentFramehandles[rewardIndex], 0.03, 0.02)
                     endif
                 endif
             endif
@@ -291,6 +302,29 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
             if (handleId == ResetHandleId) then
                 set tooltipName = "Reallocate Points"
                 set tooltipDescription = "Reset all currently selected rewards to reallocate the points.|n|nThis does not remove any bonuses already given to your hero."
+            elseif (rewardIndex == OFFENSIVE_PRIMARY_STAT_1_INDEX) then
+                set primaryStat = GetHeroPrimaryStat(PlayerHeroes[triggerPlayerId])
+
+                if (primaryStat == Stat_Strength) then
+                    set tooltipName = "Primary Stat - " + PRIMARY_STAT_STR_COLOR + "Strength" + COLOR_END_TAG
+                    set tooltipDescription = "Increase the Hero's strength by " + R2S(PRIMARY_STAT_BONUS) + " per point."
+                elseif (primaryStat == Stat_Agility) then
+                    set tooltipName = "Primary Stat - " + PRIMARY_STAT_AGI_COLOR + "Agility" + COLOR_END_TAG
+                    set tooltipDescription = "Increase the Hero's agility by " + R2S(PRIMARY_STAT_BONUS) + " per point."
+                elseif (primaryStat == Stat_Intelligence) then
+                    set tooltipName = "Primary Stat - " + PRIMARY_STAT_INT_COLOR + "Intelligence" + COLOR_END_TAG
+                    set tooltipDescription = "Increase the Hero's intelligence by " + R2S(PRIMARY_STAT_BONUS) + " per point."
+                endif
+
+                if (PlayerRewardPoints[triggerPlayerId] > 0) then
+                    set tooltipName = tooltipName + CLICK_ICON_COLOR + " - Click to redeem!" + COLOR_END_TAG
+                endif
+
+                // Show how much value per round you get for this value
+                set tooltipDescription = tooltipDescription + "|n|nCurrent round bonus accumulated: " + R2S(GetOrUpdateCurrentRewardBonus(triggerPlayerId, rewardIndex, false))
+
+                // Show the total accumulated for this reward
+                set tooltipDescription = tooltipDescription + "|n|nTotal bonus accumulated: " + R2S(PlayerTotalRewardValues[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])
             else
                 // Retrieve the cached information
                 set tooltipName = RewardTitles[rewardIndex]
@@ -416,23 +450,23 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
     private function CreateCategories takes nothing returns nothing
         // Offensive rewards
         call CreateCategoryTitle(OFFENSIVE_COLOR + "Offensive" + COLOR_END_TAG)
-        call CreateCategoryReward(OFFENSIVE_ATTACK_DAMAGE_1_ICON, OFFENSIVE_ATTACK_DAMAGE_1_INDEX)
+        call CreateCategoryReward(OFFENSIVE_PRIMARY_STAT_STR_1_ICON, OFFENSIVE_PRIMARY_STAT_1_INDEX) // Default to the STR icon, will be updated later
         call CreateCategoryReward(OFFENSIVE_PHYSICAL_POWER_2_ICON, OFFENSIVE_PHYSICAL_POWER_2_INDEX)
         call CreateCategoryReward(OFFENSIVE_MAGIC_POWER_3_ICON, OFFENSIVE_MAGIC_POWER_3_INDEX)
         // call CreateCategoryReward(OFFENSIVE_STAT_4_ICON, OFFENSIVE_STAT_4_INDEX)
 
         // Offensive tooltip information
-        set RewardTitles[OFFENSIVE_ATTACK_DAMAGE_1_INDEX] = OFFENSIVE_COLOR + "Attack Damage" + COLOR_END_TAG
+        // set RewardTitles[OFFENSIVE_PRIMARY_STAT_1_INDEX] = OFFENSIVE_COLOR + "Attack Damage" + COLOR_END_TAG
         set RewardTitles[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = OFFENSIVE_COLOR + "Physical Power" + COLOR_END_TAG
         set RewardTitles[OFFENSIVE_MAGIC_POWER_3_INDEX] = OFFENSIVE_COLOR + "Magic Power" + COLOR_END_TAG
         // set RewardTitles[OFFENSIVE_STAT_4_INDEX] = "Offensive Stat 4"
-        set RewardDescriptions[OFFENSIVE_ATTACK_DAMAGE_1_INDEX] = "Increase the Hero's base attack damage by " + R2S(ATTACK_DAMAGE_BONUS) + " per point."
+        // set RewardDescriptions[OFFENSIVE_PRIMARY_STAT_1_INDEX] = "Increase the Hero's primary stat by " + R2S(PRIMARY_STAT_BONUS) + " per point."
         set RewardDescriptions[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = "Increase the Hero's physical power by " + R2S(PHYSICAL_POWER_BONUS) + " per point."
         set RewardDescriptions[OFFENSIVE_MAGIC_POWER_3_INDEX] = "Increase the Hero's magic power by " + R2S(MAGIC_POWER_BONUS) + " per point."
         // set RewardDescriptions[OFFENSIVE_STAT_4_INDEX] = "Offensive Stat 4 Description"
 
         // Offensive index value mapping
-        set RewardIndexValues[OFFENSIVE_ATTACK_DAMAGE_1_INDEX] = ATTACK_DAMAGE_BONUS
+        set RewardIndexValues[OFFENSIVE_PRIMARY_STAT_1_INDEX] = PRIMARY_STAT_BONUS
         set RewardIndexValues[OFFENSIVE_PHYSICAL_POWER_2_INDEX] = PHYSICAL_POWER_BONUS
         set RewardIndexValues[OFFENSIVE_MAGIC_POWER_3_INDEX] = MAGIC_POWER_BONUS
         // set RewardIndexValues[OFFENSIVE_STAT_4_INDEX] = OFFENSIVE_STAT_BONUS
@@ -551,10 +585,10 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
         // Normal round end
         else
-            // Attack damage
-            if (PlayerRewardSelection[(REWARD_BUFFER * pid) + OFFENSIVE_ATTACK_DAMAGE_1_INDEX] > 0) then
-                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, OFFENSIVE_ATTACK_DAMAGE_1_INDEX, true)
-                call BlzSetUnitBaseDamage(playerHero, BlzGetUnitBaseDamage(playerHero, 0) + R2I(rewardValue), 0)
+            // Primary stat
+            if (PlayerRewardSelection[(REWARD_BUFFER * pid) + OFFENSIVE_PRIMARY_STAT_1_INDEX] > 0) then
+                set rewardValue = GetOrUpdateCurrentRewardBonus(pid, OFFENSIVE_PRIMARY_STAT_1_INDEX, true)
+                call SetHeroStat(playerHero, GetHeroPrimaryStat(playerHero), GetHeroStatBJ(GetHeroPrimaryStat(playerHero), playerHero, false) + R2I(rewardValue))
             endif
 
             // Physical power
@@ -614,6 +648,31 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames
 
         // Cleanup
         set playerHero = null
+    endfunction
+
+    function UpdateRewardsPrimaryStatIcon takes nothing returns nothing
+        local integer playerIdIndex = 0
+        local integer primaryStat
+
+        loop
+            exitwhen playerIdIndex == 8
+
+            if (PlayerHeroes[playerIdIndex] != null) then
+                set primaryStat = GetHeroPrimaryStat(PlayerHeroes[playerIdIndex])
+
+                if (Player(playerIdIndex) == GetLocalPlayer()) then
+                    if (primaryStat == Stat_Strength) then
+                        call BlzFrameSetTexture(RewardSelectionFramehandles[OFFENSIVE_PRIMARY_STAT_1_INDEX], OFFENSIVE_PRIMARY_STAT_STR_1_ICON, 0, true) 
+                    elseif (primaryStat == Stat_Agility) then
+                        call BlzFrameSetTexture(RewardSelectionFramehandles[OFFENSIVE_PRIMARY_STAT_1_INDEX], OFFENSIVE_PRIMARY_STAT_AGI_1_ICON, 0, true) 
+                    elseif (primaryStat == Stat_Intelligence) then
+                        call BlzFrameSetTexture(RewardSelectionFramehandles[OFFENSIVE_PRIMARY_STAT_1_INDEX], OFFENSIVE_PRIMARY_STAT_INT_1_ICON, 0, true) 
+                    endif
+                endif
+            endif
+
+            set playerIdIndex = playerIdIndex + 1
+        endloop
     endfunction
 
     private function init takes nothing returns nothing
