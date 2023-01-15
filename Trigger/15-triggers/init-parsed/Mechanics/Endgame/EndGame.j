@@ -4,6 +4,22 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
         return (IsTriggerEnabled(GetTriggeringTrigger()) == true) and (InitialPlayerCount > 1) and (PlayerCount == 1) and (GameComplete == false)
     endfunction
 
+    private function ActivePlayerFilter takes nothing returns boolean
+        return GetPlayerId(GetFilterPlayer()) < 8 and (not IsPlayerInForce(GetFilterPlayer(), LeaverPlayers)) and (not IsPlayerInForce(GetFilterPlayer(), DefeatedPlayers))
+    endfunction
+
+    // If a player leaves the game during the game, player count isn't decremented until the hero is killed.
+    private function IsOnlyOnePlayerRemainingWithLeaver takes nothing returns boolean
+        local force remainingActivePlayers = GetPlayersMatching(Condition(function ActivePlayerFilter))
+        local boolean isValid = (IsTriggerEnabled(GetTriggeringTrigger()) == true) and (InitialPlayerCount > 1) and (PlayerCount == 2) and (GameComplete == false) and (CountPlayersInForceBJ(remainingActivePlayers) == 1)
+
+        // Cleanup
+        call DestroyForce(remainingActivePlayers)
+        set remainingActivePlayers = null
+
+        return isValid
+    endfunction
+
     private function IsShortGameComplete takes nothing returns boolean
         return (GameModeShort == true) and (RoundNumber == 25) and (ElimModeEnabled == false)
     endfunction
@@ -21,7 +37,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
     endfunction
 
     private function EndGameConditions takes nothing returns boolean
-        return IsOnlyOnePlayerRemaining() or IsInitialSoloPlayerGame()
+        return IsOnlyOnePlayerRemaining() or IsInitialSoloPlayerGame() or IsOnlyOnePlayerRemainingWithLeaver()
     endfunction
 
     private function ShowScoreboardForPlayer takes nothing returns nothing

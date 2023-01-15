@@ -18,14 +18,15 @@ library PlayerLeavesGame initializer init requires RandomShit
 
         call UnitRemoveAbility(u, REINCARNATION_ABILITY_ID)
     endfunction
-/*
-    function Trig_Player_Leaves_Func007Func003002001001002 takes nothing returns boolean
-        return(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
+
+    private function RemovePlayerUnit takes nothing returns nothing
+        call RemoveUnit(GetEnumUnit())
     endfunction
-*/
+
     private function PlayerLeavesGameActions takes nothing returns nothing
         local player leaverPlayer = GetTriggerPlayer()
         local integer playerId = GetPlayerId(leaverPlayer)
+        local group leaverPlayerUnits
         local location arenaLocation
 
         call PlaySoundBJ(udg_sound04)
@@ -33,33 +34,22 @@ library PlayerLeavesGame initializer init requires RandomShit
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
         call ResetHero(PlayerHeroes[playerId])
 
+        // Try to end the game
+        if (BrStarted) then
+            set leaverPlayerUnits = GetUnitsOfPlayerAll(leaverPlayer)
+            call ForGroup(leaverPlayerUnits, function RemovePlayerUnit)
+
+            // Cleanup
+            call DestroyGroup(leaverPlayerUnits)
+            set leaverPlayerUnits = null
+
+            call ConditionalTriggerExecute(EndGameTrigger)
+        endif
+
         // Find a new host
         if (HostPlayer == leaverPlayer) then
             call ConditionalTriggerExecute(SetHostPlayerTrigger)
         endif
-
-        /* Don't try to create a random hero if the player leaves. I think this is using the old hero selector behavior
-        if (RoundNumber == 0 and PlayerHeroes[playerId] == null) then
-            set arenaLocation = GetRectCenter(PlayerArenaRects[GetPlayerId(GetTriggerPlayer())])
-
-            set SpawnedHeroCount = SpawnedHeroCount + 1 
-            call CreateNUnitsAtLoc(1,GetUnitTypeId(GroupPickRandomUnit(GetUnitsOfPlayerMatching(Player(8), Condition(function Trig_Player_Leaves_Func007Func003002001001002)))),GetTriggerPlayer(),arenaLocation,bj_UNIT_FACING)
-            call DisplayTimedTextToForce(GetPlayersAll(),5.00,((GetPlayerNameColour(GetTriggerPlayer())+(" |cffffcc00has randomed " +(GetUnitName(GetLastCreatedUnit())+ "! (+5 bonus gold)")))))
-            call AdjustPlayerStateBJ(5,GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD)
-            call ResourseRefresh(GetTriggerPlayer() )
-            set PlayerHeroes[GetPlayerId(GetTriggerPlayer())]= GetLastCreatedUnit()
-            call GroupAddUnit(OnPeriodGroup, GetLastCreatedUnit())
-            call UnitAddItemByIdSwapped('ankh',GetLastCreatedUnit())
-            call UnitAddItemByIdSwapped('pghe',GetLastCreatedUnit())
-            call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
-            call PanCameraToTimedLocForPlayer(GetTriggerPlayer(),arenaLocation,0.10)
-            call SelectUnitForPlayerSingle(GetLastCreatedUnit(),GetTriggerPlayer())
-            call TriggerSleepAction(2)
-            call ResetToGameCameraForPlayer(GetTriggerPlayer(),0)
-
-            call RemoveLocation(arenaLocation)
-            set arenaLocation = null
-        endif*/
 
         // Cleanup
         set leaverPlayer = null

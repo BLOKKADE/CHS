@@ -35,7 +35,7 @@ library PlayerDiesInBattleRoyale initializer init requires RandomShit, UnitFilte
 
         // Cleanup everything regarding to the dead player
         call ForceAddPlayerSimple(deadPlayer, DefeatedPlayers)
-        call ForGroupBJ(deadPlayerUnits, function KillPlayerUnit)
+        call ForGroup(deadPlayerUnits, function KillPlayerUnit)
         call ShowDiscordFrames(deadPlayer, true)
         set PlayerCount = PlayerCount - 1
 
