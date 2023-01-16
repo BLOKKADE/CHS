@@ -34,18 +34,6 @@ library PlayerLeavesGame initializer init requires RandomShit
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
         call ResetHero(PlayerHeroes[playerId])
 
-        // Try to end the game
-        if (BrStarted) then
-            set leaverPlayerUnits = GetUnitsOfPlayerAll(leaverPlayer)
-            call ForGroup(leaverPlayerUnits, function RemovePlayerUnit)
-
-            // Cleanup
-            call DestroyGroup(leaverPlayerUnits)
-            set leaverPlayerUnits = null
-
-            call ConditionalTriggerExecute(EndGameTrigger)
-        endif
-
         // Find a new host
         if (HostPlayer == leaverPlayer) then
             call ConditionalTriggerExecute(SetHostPlayerTrigger)
