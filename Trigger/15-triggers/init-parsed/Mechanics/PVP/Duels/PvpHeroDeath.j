@@ -361,7 +361,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call PlaySoundBJ(udg_sound07)
             call ConditionalTriggerExecute(DuelWinnerRewardsTrigger)
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + I2S(PvpGoldWinAmount) + " gold|r")
-            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff0000Patch 1.33 broke saving/loading.|r\n|cff00ff15Restart Warcraft after every game to make sure your stats are properly saved!|r")
 
             // Removes all duel game structs
             call DuelGame.cleanupDuels()
