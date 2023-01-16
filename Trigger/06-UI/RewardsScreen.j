@@ -556,7 +556,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         local real rewardValue
 
         // Don't do anything if this was the BR
-        if (eventInfo.isPvp and ((GameModeShort == true and RoundNumber == 25) or RoundNumber == 50)) then
+        if ((GameModeShort == true and RoundNumber == 25) or RoundNumber == 50) then
             // Cleanup
             set playerHero = null
             return
