@@ -9,7 +9,7 @@ library GameModeQuestSetup initializer init requires RandomShit, HeroSelector, H
     endfunction
 
     private function PlayingPlayerFilter takes nothing returns boolean
-        return (GetFilterPlayer() != Player(8)) and (GetFilterPlayer() != Player(11)) and (GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING)
+        return (GetFilterPlayer() != Player(20)) and (GetFilterPlayer() != Player(21)) and (GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING)
     endfunction
 
     private function ShortGamePlayerActions takes nothing returns nothing
@@ -53,6 +53,18 @@ library GameModeQuestSetup initializer init requires RandomShit, HeroSelector, H
             set Lives[6] = 1
             set Lives[7] = 1
             set Lives[8] = 1
+            set Lives[9] = 1
+            set Lives[10] = 1
+            set Lives[11] = 1
+            set Lives[12] = 1
+            set Lives[13] = 1
+            set Lives[14] = 1
+            set Lives[15] = 1
+            set Lives[16] = 1
+            set Lives[17] = 1
+            set Lives[18] = 1
+            set Lives[19] = 1
+
 
             call ForForce(playingPlayers, function ShortGamePlayerActions)
         else
@@ -67,6 +79,17 @@ library GameModeQuestSetup initializer init requires RandomShit, HeroSelector, H
             set Lives[6] = 1
             set Lives[7] = 1
             set Lives[8] = 1	
+            set Lives[9] = 1
+            set Lives[10] = 1
+            set Lives[11] = 1
+            set Lives[12] = 1
+            set Lives[13] = 1
+            set Lives[14] = 1
+            set Lives[15] = 1
+            set Lives[16] = 1
+            set Lives[17] = 1
+            set Lives[18] = 1
+            set Lives[19] = 1
 
             call ForForce(playingPlayers, function LongGamePlayerActions)
         endif

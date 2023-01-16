@@ -283,7 +283,7 @@ library CreepAutoCast initializer init requires RandomShit
     
     private function CreepAutoCastActions takes nothing returns nothing
         // Get all creep units
-        local group creeps = GetUnitsOfPlayerMatching(Player(11), null)
+        local group creeps = GetUnitsOfPlayerMatching(Player(21), null)
 
         // Autocast!
         call ForGroup(creeps, function CreepAutoCastAction)

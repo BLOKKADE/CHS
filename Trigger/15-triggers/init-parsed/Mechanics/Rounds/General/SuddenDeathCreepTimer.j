@@ -65,7 +65,7 @@ library SuddenDeathCreepTimer initializer init requires RandomShit
             endif
 
             if (SuddenDeathTick >= 120) then
-                set creepUnits = GetUnitsInRectOfPlayer(GetPlayableMapRect(), Player(11))
+                set creepUnits = GetUnitsInRectOfPlayer(GetPlayableMapRect(), Player(21))
                 call ForGroup(creepUnits, function BuffCreepUnit)
 
                 if (SuddenDeathTick >= 240) then

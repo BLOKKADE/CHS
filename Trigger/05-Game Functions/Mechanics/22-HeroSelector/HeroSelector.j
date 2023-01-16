@@ -988,7 +988,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set PlayerDraftOptions[playerIndex][randomUnit2] = 1
 
             set playerIndex = playerIndex + 1
-            exitwhen playerIndex == 8
+            exitwhen playerIndex == 20
         endloop
 
         // Cleanup
@@ -1073,7 +1073,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         loop
             exitwhen playerIndex == GetBJMaxPlayers()
             set p = Player(playerIndex)
-            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
+            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(20) and p != Player(21)then
                 call HeroSelectorDoRandom(p)
             endif
             set playerIndex = playerIndex + 1
@@ -1088,7 +1088,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         loop
             exitwhen playerIndex == GetBJMaxPlayers()
             set p = Player(playerIndex)
-            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
+            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(20) and p != Player(21)then
                 if GetPlayerTeam(p) == who then
                     call HeroSelectorDoRandom(p)
                 endif
@@ -1105,7 +1105,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         loop
             exitwhen playerIndex == GetBJMaxPlayers()
             set p = Player(playerIndex)
-            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
+            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(20) and p != Player(21)then
                 if GetPlayerRace(p) == who then
                     call HeroSelectorDoRandom(p)
                 endif
@@ -1121,7 +1121,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         loop
             exitwhen playerIndex == GetBJMaxPlayers()
             set p = Player(playerIndex)
-            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
+            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(20) and p != Player(21)then
                 if not HeroSelectorDoPick(p) then
                     call HeroSelectorDoRandom(p) 
                 endif
@@ -1137,7 +1137,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         loop
             exitwhen playerIndex == GetBJMaxPlayers()
             set p = Player(playerIndex)
-            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
+            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(20) and p != Player(21)then
                 if GetPlayerTeam(p) == who then
                     if not HeroSelectorDoPick(p) then
                         call HeroSelectorDoRandom(p) 
@@ -1155,7 +1155,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         loop
             exitwhen playerIndex == GetBJMaxPlayers()
             set p = Player(playerIndex)
-            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
+            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(20) and p != Player(21)then
                 if GetPlayerRace(p) == r then
                     if not HeroSelectorDoPick(p) then
                         call HeroSelectorDoRandom(p) 

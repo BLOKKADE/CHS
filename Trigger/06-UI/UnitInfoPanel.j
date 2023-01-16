@@ -211,7 +211,7 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 					set ToolTipA = ToolTipA + CustomStateValue[6]
 				elseif currentFrame == 7 then
 					set ToolTipA = ToolTipA + CustomStateValue[7]
-				elseif currentFrame == 8 then
+				elseif currentFrame == 20 then
 					set ToolTipA = ToolTipA + CustomStateValue[8]
 				elseif currentFrame == 9 then
 					set ToolTipA = ToolTipA + CustomStateValue[3] + "%%|r."

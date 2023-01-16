@@ -157,7 +157,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
             call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleViewTrigger, Player(i), OSKEY_TAB, 0, true)
             call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleHideTrigger, Player(i), OSKEY_TAB, 0, false)
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
 
         call TriggerAddAction(qTrigger, function ConvertLumber)

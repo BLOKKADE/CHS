@@ -6,7 +6,7 @@ library PlayerAntiStuck initializer init requires RandomShit
 
     private function CreepUnitFilter takes nothing returns boolean
         local unit currentUnit = GetFilterUnit()
-        local boolean isValid = (GetOwningPlayer(currentUnit) == Player(11)) and (UnitAlive(currentUnit) == true) and (GetUnitAbilityLevel(currentUnit, 'Aloc') == 0)
+        local boolean isValid = (GetOwningPlayer(currentUnit) == Player(21)) and (UnitAlive(currentUnit) == true) and (GetUnitAbilityLevel(currentUnit, 'Aloc') == 0)
 
         // Cleanup
         set currentUnit = null
@@ -20,7 +20,7 @@ library PlayerAntiStuck initializer init requires RandomShit
         local player currentPlayer
 
         loop
-            exitwhen currentPlayerId == 8
+            exitwhen currentPlayerId == 20
 
             set currentPlayer = Player(currentPlayerId)
             set playerArenaUnits = GetUnitsInRectMatching(PlayerArenaRects[currentPlayerId], Condition(function CreepUnitFilter))
@@ -32,7 +32,7 @@ library PlayerAntiStuck initializer init requires RandomShit
     
             // Player hero exists, arena has creeps, player isn't defeated, and has not completed the round yet
             if ((PlayerHeroes[currentPlayerId] != null) and (CountUnitsInGroup(playerArenaUnits) == 0) and (not IsPlayerInForce(currentPlayer, DefeatedPlayers)) and (not IsPlayerInForce(currentPlayer, RoundPlayersCompleted))) then
-                call CreateNUnitsAtLoc(1, 'n00T', Player(11), PlayerArenaRectCenters[currentPlayerId], bj_UNIT_FACING)
+                call CreateNUnitsAtLoc(1, 'n00T', Player(21), PlayerArenaRectCenters[currentPlayerId], bj_UNIT_FACING)
                 call SuspendHeroXPBJ(false, PlayerHeroes[currentPlayerId])
                 call UnitDamageTargetBJ(PlayerHeroes[currentPlayerId], GetLastCreatedUnit(), 500, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL)
                 call SuspendHeroXPBJ(true, PlayerHeroes[currentPlayerId])

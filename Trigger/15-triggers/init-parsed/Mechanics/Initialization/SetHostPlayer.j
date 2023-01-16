@@ -5,7 +5,7 @@ library SetHostPlayer initializer init requires RandomShit
         local player currentPlayer
         
         loop
-            exitwhen index == 8
+            exitwhen index == 20
 
             set currentPlayer = Player(index)
 

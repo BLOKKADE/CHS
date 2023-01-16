@@ -655,7 +655,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         local integer primaryStat
 
         loop
-            exitwhen playerIdIndex == 8
+            exitwhen playerIdIndex == 20
 
             if (PlayerHeroes[playerIdIndex] != null) then
                 set primaryStat = GetHeroPrimaryStat(PlayerHeroes[playerIdIndex])

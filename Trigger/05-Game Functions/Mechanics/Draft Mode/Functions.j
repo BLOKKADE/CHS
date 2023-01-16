@@ -127,11 +127,11 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
                     call SetPlayerAlliance(Player(i), Player(j), ALLIANCE_SHARED_VISION, false) 
                 endif
                 set j = j + 1 
-                exitwhen j == 8
+                exitwhen j == 20
             endloop
         
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
     endfunction
 

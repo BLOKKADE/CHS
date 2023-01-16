@@ -265,6 +265,18 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         set RoundCreepInfo[5] = ""
         set RoundCreepInfo[6] = ""
         set RoundCreepInfo[7] = ""
+        set RoundCreepInfo[8] = ""
+        set RoundCreepInfo[9] = ""
+        set RoundCreepInfo[10] = ""
+        set RoundCreepInfo[11] = ""
+        set RoundCreepInfo[12] = ""
+        set RoundCreepInfo[13] = ""
+        set RoundCreepInfo[14] = ""
+        set RoundCreepInfo[15] = ""
+        set RoundCreepInfo[16] = ""
+        set RoundCreepInfo[17] = ""
+        set RoundCreepInfo[18] = ""
+        set RoundCreepInfo[19] = ""
 
         call DisableTrigger(GetTriggeringTrigger())
         call ConditionalTriggerExecute(CreepTypesTrigger)
@@ -379,7 +391,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         call GroupClear(RoundCreeps)
 
         loop
-            exitwhen playerId == 8
+            exitwhen playerId == 20
 
             set g = NewGroup()
             set RoundGenCreepIndex = 1
@@ -413,7 +425,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
     
                 if (GetPlayerSlotState(Player(playerId)) != PLAYER_SLOT_STATE_EMPTY and IsPlayerInForce(Player(playerId), DefeatedPlayers) != true) then
                     set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-600.00, 600.00), GetRandomReal(-600.00, 600.00))
-                    set creep = CreateUnitAtLocSaveLast(Player(11), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
+                    set creep = CreateUnitAtLocSaveLast(Player(21), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
 
                     call GroupAddUnit(g, creep)
                     call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + damageBonus, 0)

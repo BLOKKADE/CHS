@@ -5,7 +5,7 @@ library CreepPeriodicAttack initializer init requires RandomShit
     endglobals
     
     private function FilterForArenaCreep takes nothing returns boolean
-        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
+        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(21))
     endfunction
 
     private function CreepAttackAction takes nothing returns nothing
@@ -23,7 +23,7 @@ library CreepPeriodicAttack initializer init requires RandomShit
 
         set CurrentArenaIndex = 0
         loop
-            exitwhen CurrentArenaIndex == 8
+            exitwhen CurrentArenaIndex == 20
 
             // Get all creeps in arena
             set arenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[CurrentArenaIndex], Condition(function FilterForArenaCreep))

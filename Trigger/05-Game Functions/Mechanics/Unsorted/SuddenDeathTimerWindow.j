@@ -22,7 +22,7 @@ library SuddenDeathTimerWindow requires TimerUtils, Utility
                 call DisplayTimedTextToPlayer(Player(i), 0, 0, 10, s)
             endif
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
     endfunction
 

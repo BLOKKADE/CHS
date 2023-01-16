@@ -12,7 +12,7 @@ library Utility requires NewBonus, FixDeleteUnit
     private function RemoveUnitsFilter takes nothing returns boolean
         local unit u = GetFilterUnit()
 
-        if UnitAlive(u) and GetOwningPlayer(u) != Player(11) and (not IsUnitExcluded(u)) then
+        if UnitAlive(u) and GetOwningPlayer(u) != Player(21) and (not IsUnitExcluded(u)) then
             call DeleteUnit(u)
         endif
 

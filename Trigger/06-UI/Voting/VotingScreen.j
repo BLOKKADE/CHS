@@ -75,7 +75,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return LoadInteger(HeroButtonEventHandles, handleId, 1) // Hero
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
-        elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9 or buttonType == 10) then
+        elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 20 or buttonType == 9 or buttonType == 10) then
             return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Disable Team duels, Double timers
         endif
 

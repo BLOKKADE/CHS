@@ -35,11 +35,11 @@ library ForceHelper requires GetPlayerNames
             return false
         endif
 
-        return GetPlayerId(GetFilterPlayer()) < 8
+        return GetPlayerId(GetFilterPlayer()) < 20
     endfunction
 
     private function PlayerFilter takes nothing returns boolean
-        return GetPlayerId(GetFilterPlayer()) < 8
+        return GetPlayerId(GetFilterPlayer()) < 20
     endfunction
 
     // Converts a force into a comma separated list of colored player names

@@ -47,7 +47,7 @@ library DiscordAdCommand initializer init requires Command, TimerUtils, DiscordF
             call TriggerRegisterPlayerChatEvent(trg, Player(i), "discord", false)
             call TriggerRegisterPlayerChatEvent(trg, Player(i), "Discord", false)
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
         call TriggerAddAction(trg, function ShowDiscordAd)
         call Command.create(CommandHandler.ToggleDiscordAd).name("ToggleAd").handles("togglead").handles("tad").help("Toggle Discord Ad", "Toggles whether the discord ad will display for you.")

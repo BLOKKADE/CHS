@@ -1,7 +1,7 @@
 library BonusExp initializer init requires RandomShit
 
     private function BonusExpConditions takes nothing returns boolean
-        return (GetOwningPlayer(GetTriggerUnit()) == Player(11)) and (IsUnitIllusion(GetTriggerUnit()) != true)
+        return (GetOwningPlayer(GetTriggerUnit()) == Player(21)) and (IsUnitIllusion(GetTriggerUnit()) != true)
     endfunction
 
     private function HeroFilter takes nothing returns boolean

@@ -9,7 +9,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
     endfunction
 
     private function CreepFilter takes nothing returns boolean
-        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
+        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(21))
     endfunction
 
     private function PlayerCompleteRoundConditions takes nothing returns boolean
@@ -18,7 +18,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         local boolean isValid
         local player currentPlayer
 
-        if ((killingUnit == null) or (GetOwningPlayer(GetTriggerUnit()) != Player(11)) or (GetOwningPlayer(killingUnit) == Player(11))) then
+        if ((killingUnit == null) or (GetOwningPlayer(GetTriggerUnit()) != Player(21)) or (GetOwningPlayer(killingUnit) == Player(21))) then
             // Cleanup
             set killingUnit = null
 

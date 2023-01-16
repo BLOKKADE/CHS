@@ -50,7 +50,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         boolean roundEnd
 
         private method periodic takes nothing returns nothing
-            if ((not this.roundEnd) and T32_Tick > this.endTick) or (this.p != Player(11) and HasPlayerFinishedLevel(this.source, this.p)) or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
+            if ((not this.roundEnd) and T32_Tick > this.endTick) or (this.p != Player(21) and HasPlayerFinishedLevel(this.source, this.p)) or (not UnitAlive(this.source)) or (this.enabled == false) or (this.buffLink and T32_Tick - this.startTick > 16 and GetUnitAbilityLevel(this.source, this.buffId) == 0) then
                 //call BJDebugMsg("disable tb")
                 call this.destroy()
             endif

@@ -11,7 +11,7 @@ library PetFollow initializer init requires RandomShit
         local PlayerStats ps
 
         loop 
-            exitwhen i == 8 // Max players?
+            exitwhen i == 20 // Max players?
 
             set ps = PlayerStats.forPlayer(Player(i))
 

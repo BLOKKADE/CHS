@@ -1,7 +1,7 @@
 library CreepDies initializer init requires RandomShit, CreepDeath
 
     private function CreepDiesConditions takes nothing returns boolean
-        return GetOwningPlayer(GetTriggerUnit()) == Player(11) and GetOwningPlayer(GetKillingUnitBJ()) != Player(11) and (GetKillingUnit() != null)
+        return GetOwningPlayer(GetTriggerUnit()) == Player(21) and GetOwningPlayer(GetKillingUnitBJ()) != Player(21) and (GetKillingUnit() != null)
     endfunction
 
     private function CreepDiesActions takes nothing returns nothing

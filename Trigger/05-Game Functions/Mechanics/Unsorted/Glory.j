@@ -30,6 +30,17 @@ library Glory initializer initLState
         set Glory[6] = 0
         set Glory[7] = 0
         set Glory[8] = 0
+        set Glory[9] = 0
+        set Glory[10] = 0
+        set Glory[11] = 0
+        set Glory[12] = 0
+        set Glory[13] = 0
+        set Glory[14] = 0
+        set Glory[15] = 0
+        set Glory[16] = 0
+        set Glory[17] = 0
+        set Glory[18] = 0
+        set Glory[19] = 0
     endfunction
 
     function GetPlayerGloryBonus takes integer pid returns real

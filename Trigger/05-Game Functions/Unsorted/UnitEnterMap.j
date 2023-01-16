@@ -137,7 +137,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         local integer hid = GetHandleId(u)
 
         //Summons
-        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
+        if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(21) then
             call SummonUnit(u)
         endif
 

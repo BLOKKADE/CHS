@@ -44,6 +44,14 @@ library GetPlayerNames initializer init
         call InitializePlayer(9, "|c007ebff1")
         call InitializePlayer(10, "|c00106246")
         call InitializePlayer(11, "|c004e2a04")
+        call InitializePlayer(12, "|c004e2a04")
+        call InitializePlayer(13, "|c004e2a04")
+        call InitializePlayer(14, "|c004e2a04")
+        call InitializePlayer(15, "|c004e2a04")
+        call InitializePlayer(16, "|c004e2a04")
+        call InitializePlayer(17, "|c004e2a04")
+        call InitializePlayer(18, "|c004e2a04")
+        call InitializePlayer(19, "|c004e2a04")
     endfunction
 endlibrary
 

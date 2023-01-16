@@ -147,7 +147,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     private function SpawnDummy takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid]), GetUnitY(PlayerHeroes[pid]), 0)
+        set PlayerDummy[pid] = CreateUnit(Player(21), dummyId, GetUnitX(PlayerHeroes[pid]), GetUnitY(PlayerHeroes[pid]), 0)
         set CreatedDummies[pid] = CreatedDummies[pid] + 1
         call BlzSetHeroProperName(PlayerDummy[pid], "Subject #" + I2S(CreatedDummies[pid]))
 
@@ -274,7 +274,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
                 call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 50)
             endif
             set pid = pid + 1
-            exitwhen pid == 8
+            exitwhen pid == 20
         endloop
         
         set u = null
@@ -294,7 +294,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
                     exitwhen true
                 endif
                 set i = i + 1
-                exitwhen i == 8
+                exitwhen i == 20
             endloop
         endif
     endfunction
@@ -311,7 +311,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
                 set pc = pc + 1
             endif
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
         
         if pc == 1 then

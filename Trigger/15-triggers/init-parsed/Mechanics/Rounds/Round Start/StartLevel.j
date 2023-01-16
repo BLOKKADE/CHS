@@ -14,7 +14,7 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
     endfunction
 
     private function IsValidPlayer takes nothing returns boolean
-        return (GetFilterPlayer() != Player(8)) and (GetFilterPlayer() != Player(11)) and (IsPlayerInForce(GetFilterPlayer(), DefeatedPlayers) != true)
+        return (GetFilterPlayer() != Player(20)) and (GetFilterPlayer() != Player(21)) and (IsPlayerInForce(GetFilterPlayer(), DefeatedPlayers) != true)
     endfunction
 
     private function RemoveItemFromArena takes nothing returns nothing

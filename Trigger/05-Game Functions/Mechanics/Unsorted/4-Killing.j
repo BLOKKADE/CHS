@@ -14,7 +14,7 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
         local timer t
         local effect fx
 
-        if GetUnitAbilityLevel(target, 'Aloc') > 0 or GetUnitTypeId(target) == 'uplg' or (killingPlayer != Player(11) and HasPlayerFinishedLevel(killer, killingPlayer)) or (targetPlayer != Player(11) and HasPlayerFinishedLevel(target, targetPlayer)) then
+        if GetUnitAbilityLevel(target, 'Aloc') > 0 or GetUnitTypeId(target) == 'uplg' or (killingPlayer != Player(21) and HasPlayerFinishedLevel(killer, killingPlayer)) or (targetPlayer != Player(21) and HasPlayerFinishedLevel(target, targetPlayer)) then
             set target = null
             set killer = null
             set killingHero = null
@@ -73,7 +73,7 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
 
             //Amulet of the Night
             set i = GetUnitItemTypeCount(killingHero, 'I07E') 
-            if i > 0 and GetOwningPlayer(target) == Player(11) then
+            if i > 0 and GetOwningPlayer(target) == Player(21) then
                 call TempBonus.create(killingHero, BONUS_MAGICPOW, i * 7, 10, 'I07E').activate()
             endif
 

@@ -23,7 +23,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
             endif
 
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
 
         return count
@@ -92,7 +92,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         loop
             call ReadyButtonVisibility(true, i, false)
             set i = i + 1
-            exitwhen i > 8
+            exitwhen i > 19
         endloop
     endfunction
 

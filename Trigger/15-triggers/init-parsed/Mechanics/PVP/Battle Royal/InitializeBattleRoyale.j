@@ -117,7 +117,7 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
 
         // Set alliances for everyone
         loop
-            exitwhen PlayerIdIndex == 8
+            exitwhen PlayerIdIndex == 20
 
             call ForGroup(playerUnits, function SetAllianceForPlayer)
 

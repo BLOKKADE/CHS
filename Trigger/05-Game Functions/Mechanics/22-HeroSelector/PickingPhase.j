@@ -22,7 +22,7 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
     private function ForcePickRandomHeroForPlayer takes nothing returns nothing
         set bj_wantDestroyGroup = true
         // This one has a hero?
-        if (GetEnumPlayer() != Player(8) and GetEnumPlayer() != Player(11) and DoesPlayerNotHaveHero()) then
+        if (GetEnumPlayer() != Player(20) and GetEnumPlayer() != Player(21)and DoesPlayerNotHaveHero()) then
             // No, force a Pick for him
             call HeroSelectorForcePickPlayer(GetEnumPlayer())
         endif

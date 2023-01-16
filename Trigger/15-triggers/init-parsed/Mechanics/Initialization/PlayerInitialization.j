@@ -2,7 +2,7 @@ library PlayerInitialization initializer init requires RandomShit
 
     private function ValidPlayerFilter takes nothing returns boolean
         local player currentPlayer = GetFilterPlayer()
-        local boolean isHumanPlayer = (currentPlayer != Player(8)) and (currentPlayer != Player(11))
+        local boolean isHumanPlayer = (currentPlayer != Player(20)) and (currentPlayer != Player(21))
         local boolean isPlayingPlayer = (IsPlayerInForce(currentPlayer, LeaverPlayers) == true) or (GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING)
 
         // Cleanup
@@ -19,7 +19,7 @@ library PlayerInitialization initializer init requires RandomShit
         set InitialPlayerCount = InitialPlayerCount + 1
 
         loop
-            exitwhen playerIdIndex == 8
+            exitwhen playerIdIndex == 20
             call SetPlayerAllianceStateBJ(currentPlayer, Player(playerIdIndex), bj_ALLIANCE_UNALLIED)
             set playerIdIndex = playerIdIndex + 1
         endloop
@@ -33,7 +33,7 @@ library PlayerInitialization initializer init requires RandomShit
     endfunction
 
     private function SetPlayerAlliances takes nothing returns nothing
-        call SetPlayerAllianceStateBJ(GetEnumPlayer(), Player(8), bj_ALLIANCE_ALLIED_VISION)
+        call SetPlayerAllianceStateBJ(GetEnumPlayer(), Player(20), bj_ALLIANCE_ALLIED_VISION)
         call SetPlayerAllianceStateBJ(Player(PLAYER_NEUTRAL_PASSIVE), GetEnumPlayer(), bj_ALLIANCE_ALLIED_ADVUNITS)
     endfunction
 

@@ -37,7 +37,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
         loop
             call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.create(Player(i), 0, RoundNumber))
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
     endfunction
 

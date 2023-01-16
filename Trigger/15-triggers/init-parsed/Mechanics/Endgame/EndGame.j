@@ -5,7 +5,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
     endfunction
 
     private function ActivePlayerFilter takes nothing returns boolean
-        return GetPlayerId(GetFilterPlayer()) < 8 and (not IsPlayerInForce(GetFilterPlayer(), LeaverPlayers)) and (not IsPlayerInForce(GetFilterPlayer(), DefeatedPlayers))
+        return GetPlayerId(GetFilterPlayer()) < 20 and (not IsPlayerInForce(GetFilterPlayer(), LeaverPlayers)) and (not IsPlayerInForce(GetFilterPlayer(), DefeatedPlayers))
     endfunction
 
     private function IsShortGameComplete takes nothing returns boolean
@@ -50,7 +50,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
             endif
 
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
 
         if (WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE)) then

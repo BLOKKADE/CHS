@@ -16,7 +16,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
     endfunction
 
     private function IsAliveCreepUnitFilter takes nothing returns boolean
-        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(11))
+        return (UnitAlive(GetFilterUnit()) == true) and (GetOwningPlayer(GetFilterUnit()) == Player(21))
     endfunction
 
     public function Death takes unit dyingUnit, unit killingHero returns nothing
@@ -143,7 +143,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
     endfunction
 
     private function SummonDeath takes nothing returns boolean
-        if GetOwningPlayer(GetDyingUnit()) != Player(11) and IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == false and GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
+        if GetOwningPlayer(GetDyingUnit()) != Player(21) and IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == false and GetMidasTouch(GetHandleId(GetDyingUnit())) != 0 then
             call NonCreepDeath(GetDyingUnit(), PlayerHeroes[GetPlayerId(GetOwningPlayer(GetKillingUnit()))])
         endif
 

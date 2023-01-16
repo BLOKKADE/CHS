@@ -64,7 +64,7 @@ library DebugCode requires RandomShit, GameInit
                 set debugCode = debugCode + "_"
             endif
             set i = i + 1
-            exitwhen i == 8
+            exitwhen i == 20
         endloop
 
         call SaveFile.create(p, "", 1, debugCode)

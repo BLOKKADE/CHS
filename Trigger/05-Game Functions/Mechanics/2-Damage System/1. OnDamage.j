@@ -91,11 +91,11 @@ scope OnDamage initializer init
         */
 
         //Modify player hero when creep because they dont have a hero
-        if GetOwningPlayer(DamageTarget) == Player(11) then
+        if GetOwningPlayer(DamageTarget) == Player(21) then
             set DamageTargetHero = DamageTarget
         endif
 
-        if GetOwningPlayer(DamageSource) == Player(11) then
+        if GetOwningPlayer(DamageSource) == Player(21) then
             set DamageSourceHero = DamageSource
         endif
 

@@ -29,7 +29,7 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
                 call this.endLastBreath()
                 call this.stopPeriodic()
                 call this.destroy()
-            elseif T32_Tick > this.endTick or (this.p != Player(11) and HasPlayerFinishedLevel(this.source, this.p)) then
+            elseif T32_Tick > this.endTick or (this.p != Player(21) and HasPlayerFinishedLevel(this.source, this.p)) then
                 call this.endLastBreath()
                 call this.kill()
                 call this.stopPeriodic()

@@ -168,7 +168,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         //call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
 
         if not ToggleSpell(caster, abilId) then
-            if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
+            if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(21)) then
 
                 set abilId = CheckAssociatedSpell(caster, abilId)
                 set abilLvl = GetUnitAbilityLevel(caster, abilId)

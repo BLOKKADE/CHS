@@ -10,7 +10,7 @@ library ShowPlayerLeavesGame initializer init requires Scoreboard
         // Register the player event leaves for every player
         local integer playerId = 0
         loop    
-            exitwhen playerId == 8
+            exitwhen playerId == 20
             call TriggerRegisterPlayerEvent(playerLeavesGameTrigger, Player(playerId), EVENT_PLAYER_LEAVE)
             set playerId = playerId + 1
         endloop
