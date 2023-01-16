@@ -217,7 +217,7 @@ library GameInit initializer init requires GroupUtils
     endfunction
 
     private function InitializeEnvironment takes nothing returns nothing
-        call SetCameraBounds(-5376.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -5632.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 5376.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 5120.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -5376.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 5120.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 5376.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -5632.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
+        call SetCameraBounds(-8000.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -8000.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 8000.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 8000.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -8000.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 8000.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 8000.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -8000.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
         call SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
         call NewSoundEnvironment("Default")
         call SetAmbientDaySound("SunkenRuinsDay")
