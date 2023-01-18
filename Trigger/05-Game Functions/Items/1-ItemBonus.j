@@ -14,6 +14,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		local integer prevCount = LoadInteger(HTi, hid, itemId)
 		local integer diff = 0
 		local integer uniqueDiff = 0
+		local boolean realUnit = IsUnitIllusion(u) == false
 		
 		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) or (not IsHeroUnitId(GetUnitTypeId(u)))) then
 			return
@@ -189,8 +190,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 			//Arena Ring
 		elseif itemId == 'I0AF' then
-			call RegisterEndOfRoundItem(pid, it)
-			call AddUnitCustomState(u, BONUS_BLOCK, - 30 *diff)
+			if realUnit then
+				call RegisterEndOfRoundItem(pid, it)
+				call AddUnitCustomState(u, BONUS_BLOCK, - 30 *diff)
+			endif
 
 		elseif itemId == 'I0D1' then
 			if ev == EVENT_ITEM_PICKUP then
