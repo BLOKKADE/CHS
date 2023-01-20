@@ -28,7 +28,7 @@ library ColdRune initializer init requires AreaDamage, AllowCasting
                     call GroupRemoveUnit(this.affectedUnits, p)
                     set UnitColdRuneDmgBonus.real[GetHandleId(p)] = UnitColdRuneDmgBonus.real[GetHandleId(p)] - ColdRuneDmgBonus[this].real[GetHandleId(p)]
                     set ColdRuneDmgBonus[this].real[GetHandleId(p)] = 0
-                    call BJDebugMsg("reset cr: " + I2S(this) + ": " + GetUnitName(p) + ", u: " + R2S(UnitColdRuneDmgBonus.real[GetHandleId(p)]) + ", crb: " + R2S(ColdRuneDmgBonus[this].real[GetHandleId(p)]))
+                    // call BJDebugMsg("reset cr: " + I2S(this) + ": " + GetUnitName(p) + ", u: " + R2S(UnitColdRuneDmgBonus.real[GetHandleId(p)]) + ", crb: " + R2S(ColdRuneDmgBonus[this].real[GetHandleId(p)]))
                 endif
 
                 set i = i + 1
@@ -43,7 +43,7 @@ library ColdRune initializer init requires AreaDamage, AllowCasting
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, this.x, this.y, 350, Player(this.pid), false, Target_Enemy)
 
-            call BJDebugMsg("size: " + I2S(BlzGroupGetSize(this.affectedUnits)))
+            // call BJDebugMsg("size: " + I2S(BlzGroupGetSize(this.affectedUnits)))
             if BlzGroupGetSize(this.affectedUnits) > 0 then
                 call this.resetDamageBonus()
             endif
@@ -55,7 +55,7 @@ library ColdRune initializer init requires AreaDamage, AllowCasting
                 set udg_NextDamageAbilitySource = 'I0D9'
                 set ColdRuneDmgBonus[this].real[GetHandleId(p)] = ColdRuneDmgBonus[this].real[GetHandleId(p)] + 0.1
                 set UnitColdRuneDmgBonus.real[GetHandleId(p)] = UnitColdRuneDmgBonus.real[GetHandleId(p)] + 0.1
-                call BJDebugMsg("cr: " + I2S(this) + " add: " + GetUnitName(p) + ", u: " + R2S(UnitColdRuneDmgBonus.real[GetHandleId(p)]) + ", crb: " + R2S(ColdRuneDmgBonus[this].real[GetHandleId(p)]))
+                // call BJDebugMsg("cr: " + I2S(this) + " add: " + GetUnitName(p) + ", u: " + R2S(UnitColdRuneDmgBonus.real[GetHandleId(p)]) + ", crb: " + R2S(ColdRuneDmgBonus[this].real[GetHandleId(p)]))
                 call Damage.apply(this.source, p, this.damage, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop

@@ -1356,7 +1356,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         call BlzFrameSetSize(boxBottom, 0.01, 0.1)
         
         if colCount*rowCount < ButtonHeroCount  then
-            call BJDebugMsg("FieldCount:"+ I2S(colCount*rowCount) + "HeroCount" + I2S(ButtonHeroCount))
+            // call BJDebugMsg("FieldCount:"+ I2S(colCount*rowCount) + "HeroCount" + I2S(ButtonHeroCount))
         endif
         
         set buttonIndex = 1
