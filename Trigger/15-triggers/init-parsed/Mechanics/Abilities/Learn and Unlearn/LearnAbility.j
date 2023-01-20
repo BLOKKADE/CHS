@@ -49,6 +49,7 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomGame
         endif
 
         call UnitAddAbility(u, abil)
+        call FuncEditParam(abil, u)
 
         if new then
             call CustomGameEvent_FireEvent(EVENT_LEARN_ABILITY, EventInfo.create(p, abil, RoundNumber))
@@ -56,7 +57,6 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomGame
             call CustomGameEvent_FireEvent(EVENT_LEVEL_ABILITY, EventInfo.create(p, abil, RoundNumber))
         endif
 
-        call FuncEditParam(abil, u)
         call DestroyEffect(AddSpecialEffectLocBJ(unitLocation, "Objects\\Spawnmodels\\Other\\ToonBoom\\ToonBoom.mdl"))
         call DisplayTimedTextToPlayer(p, 0, 0, 2.0, "|cffbbff00Learned |r" + BlzGetAbilityTooltip(abil, GetUnitAbilityLevel(u, abil) - 1))
 
