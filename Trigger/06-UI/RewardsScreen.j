@@ -609,7 +609,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
             // Armor
             if (PlayerRewardSelection[(REWARD_BUFFER * pid) + DEFENSIVE_ARMOR_1_INDEX] > 0) then
                 set rewardValue = GetOrUpdateCurrentRewardBonus(pid, DEFENSIVE_ARMOR_1_INDEX, true)
-                call BlzSetUnitArmor(playerHero, BlzGetUnitArmor(playerHero) + DEFENSIVE_ARMOR_1_INDEX)
+                call BlzSetUnitArmor(playerHero, BlzGetUnitArmor(playerHero) + rewardValue)
             endif
 
             // Magic protection
