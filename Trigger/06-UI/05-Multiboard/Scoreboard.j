@@ -96,6 +96,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private framehandle array CachedPlayerIndicatorFramehandles
 
         private boolean array PlayerLeftGame // If the player left the game
+        private boolean array PlayerDiedInBR // If the player died in the BR. e.g. They died on round 25 or 50
         private integer array PlayerDeathRound // The round the player died for good
         private integer PlayerBrWinner = -1
     endglobals
@@ -111,6 +112,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         if (PlayerDeathRound[GetPlayerId(currentPlayer)] == 0) then
             // Mark the player has died. Will be reflected in the update interval
             set PlayerDeathRound[GetPlayerId(currentPlayer)] = deathRound
+            set PlayerDiedInBR[GetPlayerId(currentPlayer)] = BrStarted
         endif
     endfunction
 
@@ -671,7 +673,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
 
             if (PlayerDeathRound[playerId] == -1) then
                 call CreateText(NO_HERO_STATUS_COLOR + "Left before hero selection" + COLOR_END_TAG, playerId)
-            elseif (PlayerDeathRound[playerId] == 50 or (GameModeShort == true and PlayerDeathRound[playerId] == 25)) then
+            elseif (PlayerDiedInBR[playerId] and PlayerDeathRound[playerId] == 50 or (GameModeShort == true and PlayerDeathRound[playerId] == 25)) then
                 call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
             else
                 call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
