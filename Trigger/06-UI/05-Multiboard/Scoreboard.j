@@ -688,15 +688,15 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         if (not PlayerLeftGame[playerId] and PlayerDeathRound[playerId] == 0) then
             // Update player ready status icon
             set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
-            if (PlayerHasReadied[playerId]) then
-                if (CachedPlayerPlayerReadyStatus[playerId] != PlayerHasReadied[playerId]) then
+            if (ps.isReady()) then
+                if (CachedPlayerPlayerReadyStatus[playerId] != ps.isReady()) then
                     call CreateIcon(GetIconPath("Ability_parry"), playerId)
                 endif
 
                 set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cff00ff08Player is ready|r"
                 set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
             else
-                if (CachedPlayerPlayerReadyStatus[playerId] != PlayerHasReadied[playerId]) then
+                if (CachedPlayerPlayerReadyStatus[playerId] != ps.isReady()) then
                     call CreateIcon(GetIconPath("Defend"), playerId)
                 endif
 
@@ -704,7 +704,7 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
                 set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
             endif
 
-            set CachedPlayerPlayerReadyStatus[playerId] = PlayerHasReadied[playerId]
+            set CachedPlayerPlayerReadyStatus[playerId] = ps.isReady()
 
             // Update the flashy ready status for the player
             call BlzFrameSetVisible(CachedPlayerIndicatorParentFramehandles[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX], PlayerIsAlwaysReady[playerId])
