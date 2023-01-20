@@ -297,8 +297,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			// Player ready status
 			elseif NumButton == 40 then
 				set ToolTipTitle = ReadyButtonTooltipTitle(p)
+				set ps = PlayerStats.forPlayer(p)
 
-				if (PlayerHasReadied[selectedUnitPid]) then
+				if (ps.isReady()) then
 					set ToolTipTitle = "|cff00ff08Player is ready|r"
 				else
 					set ToolTipTitle = "|cffff0000Player is not ready|r"
@@ -368,20 +369,12 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		set p = null
 	endfunction
 	
-	private function UpdateGlobalIcons takes EventInfo eventInfo returns nothing
+	private function UpdateRoundStartGlobalIcons takes EventInfo eventInfo returns nothing
 		local integer pid = GetPlayerId(eventInfo.p)
 
-        // Show rewards button
-        call BlzFrameSetVisible(ButtonParentId[6], RoundNumber > 5 and RewardsFrameHandle != null)
-
         // Show scoreboard button
-        call BlzFrameSetVisible(ButtonParentId[4], RoundNumber == 1 and ScoreboardFrameHandle != null)
+        call BlzFrameSetVisible(ButtonParentId[4], RoundNumber > 0 and ScoreboardFrameHandle != null)
 		
-        // Move the creep info button over after round 5 since we are now showing the rewards button
-        if (RoundNumber == 6) then
-            call BlzFrameSetPoint(ButtonParentId[2], FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y)
-        endif
-
         // Show sell all items/convert gold/lumber button
         if (ShopsCreated == false or BrStarted) then
             call BlzFrameSetVisible(ButtonParentId[3], false) // Sell all items
@@ -394,8 +387,25 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
             call BlzFrameSetVisible(ButtonParentId[5], true) // Ready button
             call BlzFrameSetVisible(ButtonParentId[36], true) // Convert to gold
             call BlzFrameSetVisible(ButtonParentId[37], true) // Convert to lumber
-            call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid]) // Creep info
+
+			if (GetLocalPlayer() == eventInfo.p) then
+				call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid]) // Creep info
+			endif
         endif
+	endfunction
+
+	private function UpdateRoundEndGlobalIcons takes EventInfo eventInfo returns nothing
+		local integer pid = GetPlayerId(eventInfo.p)
+
+        // Move the creep info button over after round 5 since we are now showing the rewards button
+        if (RoundNumber == 5) then
+            call BlzFrameSetPoint(ButtonParentId[2], FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y)
+        endif
+
+		// Creep info
+		if (GetLocalPlayer() == eventInfo.p) then
+			call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid])
+		endif
 	endfunction
 
 	public function UpdateAbilityIcons takes player p returns nothing
@@ -405,12 +415,24 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
         local string abilIcon = ""
         local integer selectedUnitPid = SelectedUnitPid[pid]
         local integer unitTypeId = 0
+		local PlayerStats ps
 
         if selectedUnitPid == 27 then
             set selectedUnitPid = pid
         endif
 
-		// -- Icons updated only for player
+		set ps = PlayerStats.forPlayer(Player(selectedUnitPid))
+
+		// Player ready status
+        if (ps != 0 and ps.isReady()) then
+            call BlzFrameSetTexture(ButtonId[40], GetIconPath("Ability_parry"), 0, true)
+		else
+            call BlzFrameSetTexture(ButtonId[40], GetIconPath("Defend"), 0, true)
+        endif
+
+		// Update the flashy ready status for the player
+		call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid])
+
         // Updates the ability icons displayed in top left
         loop
             exitwhen i > 21
@@ -418,7 +440,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
             if selectedUnitPid == 11 then
                 set abilId = roundAbilities.integer[i]
             else
-                set abilId = GetHeroSpellAtPosition(PlayerHeroes[selectedUnitPid] , i)
+                set abilId = GetHeroSpellAtPosition(PlayerHeroes[selectedUnitPid], i)
             endif
 
             if abilId != 0 then
@@ -465,14 +487,20 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
     private function UpdateFrameVisibility takes nothing returns nothing
         local integer pid = GetPlayerId(GetLocalPlayer())
+        local integer selectedUnitPid = SelectedUnitPid[pid]
+		local PlayerStats ps
+
+		if selectedUnitPid == 27 then
+            set selectedUnitPid = pid
+        endif
+
+		set ps = PlayerStats.forPlayer(Player(selectedUnitPid))
 
 		// Player ready status
-        if (PlayerHasReadied[pid]) then
-            call BlzFrameSetTexture(ButtonId[40], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
-		endif
-
-		if (not PlayerHasReadied[pid]) then
-            call BlzFrameSetTexture(ButtonId[40], "ReplaceableTextures\\CommandButtons\\BTNDefend.blp", 0, true)
+        if (ps != 0 and ps.isReady()) then
+            call BlzFrameSetTexture(ButtonId[40], GetIconPath("Ability_parry"), 0, true)
+		else
+            call BlzFrameSetTexture(ButtonId[40], GetIconPath("Defend"), 0, true)
         endif
 
 		// Update the flashy ready status for the player
@@ -483,7 +511,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// Indicator if the player has points
 		call BlzFrameSetVisible(ButtonIndicatorParentId[6], RoundNumber > 5 and PlayerRewardPoints[pid] > 0)
-		// -- Icons updated only for player
+
+		// Creep info
+		call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid] and ShopsCreated and (not BrStarted))
     endfunction
 
 	private function CreateIconWorld takes integer buttonIndex, string iconPath, real x, real y, real size returns nothing
@@ -625,8 +655,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
         set iconFrameUpdateTrigger = null
 
 		call CustomGameEvent_RegisterEventCode(EVENT_LEARN_ABILITY, CustomEvent.UpdateAbilityIconsEvent)
-		call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_START, CustomEvent.UpdateGlobalIcons)
-		call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.UpdateGlobalIcons)
+		call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_START, CustomEvent.UpdateRoundStartGlobalIcons)
+		call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.UpdateRoundEndGlobalIcons)
 	endfunction
 
 endlibrary

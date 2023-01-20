@@ -583,6 +583,9 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
                 call PlayerStats.forPlayer(Player(pid)).setHasRewardsOpen(true)
             endif
 
+            // Show the rewards icon
+            call BlzFrameSetVisible(ButtonParentId[6], true)
+
         // Normal round end
         else
             // Primary stat

@@ -31,6 +31,10 @@ library PlayerLeavesGame initializer init requires RandomShit
 
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayer(LeaverPlayers, leaverPlayer)
+
+        // Make sure the auto ready status is wiped
+        set PlayerIsAlwaysReady[GetPlayerId(leaverPlayer)] = false
+
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
         call ResetHero(PlayerHeroes[playerId])
 

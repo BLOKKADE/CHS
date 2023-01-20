@@ -3,7 +3,7 @@ library PlayerInitialization initializer init requires RandomShit
     private function ValidPlayerFilter takes nothing returns boolean
         local player currentPlayer = GetFilterPlayer()
         local boolean isHumanPlayer = (currentPlayer != Player(8)) and (currentPlayer != Player(11))
-        local boolean isPlayingPlayer = (IsPlayerInForce(currentPlayer, LeaverPlayers) == true) or (GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING)
+        local boolean isPlayingPlayer = (IsPlayerInForce(currentPlayer, LeaverPlayers) == false) or (GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING)
 
         // Cleanup
         set currentPlayer = null

@@ -118,6 +118,9 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         call PlaySoundBJ(udg_sound13)
         call ForceAddPlayer(DefeatedPlayers, currentPlayer)
 
+        // Make sure the auto ready status is wiped
+        set PlayerIsAlwaysReady[GetPlayerId(currentPlayer)] = false
+
         set PlayerCount = PlayerCount - 1
         call AllowSinglePlayerCommands()
         
