@@ -1,4 +1,4 @@
-library SelectedUnits initializer init
+library SelectedUnits initializer init requires IconFrames
 
     globals
         integer array SelectedUnitPid 
@@ -10,6 +10,8 @@ library SelectedUnits initializer init
 
         set SelectedUnitPid[pid] = GetPlayerId(GetOwningPlayer(GetTriggerUnit()))
         set SelectedUnit[pid] = GetTriggerUnit()
+
+        call IconFrames_UpdateAbilityIcons(GetTriggerPlayer())
     endfunction
 
     private function init takes nothing returns nothing

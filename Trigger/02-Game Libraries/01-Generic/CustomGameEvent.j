@@ -4,7 +4,6 @@ library CustomGameEvent initializer init requires ListT
 
         //when a round starts for all players
         integer EVENT_GAME_ROUND_START          =   0
-        
 
         // when all players have finished a round
         integer EVENT_GAME_ROUND_END            =   1
