@@ -1,25 +1,14 @@
 library AncientTeaching initializer init requires Cooldown, StableSpells, ToggleSpell
 
     private function ResetAbility_A05U takes unit u,integer abilId returns nothing
-        local integer OgAbilId = GetAssociatedSpell(u, abilId)
-        local integer tempAbilId = abilId
-
-        if OgAbilId != 0 then
-            set tempAbilId = OgAbilId
-        endif
-        
-        //call BJDebugMsg(GetObjectName(OgAbilId) + " : " + GetObjectName(abilId))
-        if BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_TEACHING_ABILITY_ID) <= 0.001 and GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID) > 0 and IsSpellResettable(tempAbilId) then
+        if BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_TEACHING_ABILITY_ID) <= 0.001 and GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID) > 0 and IsSpellResettable(abilId) then
             call AbilStartCD(u, ANCIENT_TEACHING_ABILITY_ID, BlzGetUnitAbilityCooldownRemaining(u, abilId) * (4 - 0.1 * I2R(GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID)))) 
             call BlzEndUnitAbilityCooldown(u, abilId)
-
-            if OgAbilId != 0 then
-                call BlzEndUnitAbilityCooldown(u, OgAbilId)
-            endif
         endif
     endfunction
 
-    private function ResetAbilit_Ec takes nothing returns nothing
+    //public because its used by an ExecuteFunc, maybe refactor some time
+    function ResetAbilit_Ec takes nothing returns nothing
         call ResetAbility_A05U(Global_u, Global_i)
     endfunction
 
