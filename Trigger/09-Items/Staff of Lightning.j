@@ -14,7 +14,7 @@ library StaffOfLightning requires AbilityCooldown
             call dummy.activate()
 
             set i = i + 1
-            exitwhen i > 4
+            exitwhen i > 2
         endloop
     endfunction
 endlibrary
