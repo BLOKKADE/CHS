@@ -297,7 +297,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			// Player ready status
 			elseif NumButton == 40 then
 				set ToolTipTitle = ReadyButtonTooltipTitle(p)
-				set ps = PlayerStats.forPlayer(p)
+				set ps = PlayerStats.forPlayer(Player(selectedUnitPid))
 
 				if (ps.isReady()) then
 					set ToolTipTitle = "|cff00ff08Player is ready|r"
@@ -506,10 +506,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		if (GetLocalPlayer() == Player(pid)) then
 			call BlzFrameSetTexture(ButtonId[40], playerReadyIconPath, 0, true)
+			call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid])
 		endif
-
-		// Update the flashy ready status for the player
-        call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[pid])
 
 		// Indicator if the player is auto-ready
 		call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])

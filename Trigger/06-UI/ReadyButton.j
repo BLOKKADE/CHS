@@ -86,11 +86,13 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
             set ReadyButtonDisabled[pid] = true
             if GetLocalPlayer() == Player(pid) then
                 call BlzFrameSetTexture(ButtonId[5], GetDisabledIconPath(tex), 0, true)
+                call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])
             endif
         else
             set ReadyButtonDisabled[pid] = false
             if GetLocalPlayer() == Player(pid) then
                 call BlzFrameSetTexture(ButtonId[5], GetIconPath(tex), 0, true)
+                call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])
             endif
         endif
     endfunction
