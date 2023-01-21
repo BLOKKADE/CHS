@@ -720,11 +720,9 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         else
             // Disable player ready status icon
             set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
+            call CreateIcon(GetDisabledIconPath("Defend"), playerId)
 
-            if (CachedPlayerPlayerReadyStatus[playerId]) then
-                set CachedPlayerPlayerReadyStatus[playerId] = false
-                call CreateIcon(GetDisabledIconPath("Defend"), playerId)
-            endif
+            set CachedPlayerPlayerReadyStatus[playerId] = false
 
             set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Cannot ready up|r"
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Defeated players cannot ready up|r.|n"
