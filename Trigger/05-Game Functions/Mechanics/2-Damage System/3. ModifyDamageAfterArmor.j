@@ -40,11 +40,16 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif*/
 
-        //Mask of Death lifesteal
-        if LoadInteger(HTi,GetHandleId(DamageSourceHero),1) == 1 then
-            set r2 = (Damage.index.amount/ 4)
+        //Mask of Death
+        if UnitHasItemType(DamageSourceHero, 'I04T') then
+            set r2 = (Damage.index.amount * 0.25)
             set vampAmount = vampAmount + r2
-            set vampCount = vampCount + 1	
+            set vampCount = vampCount + 1
+        endif
+
+        //Mask of death 
+        if UnitHasItemType(DamageTargetHero, 'I04T') then
+            set Damage.index.amount = Damage.index.amount * 0.75
         endif
 
         //Light Magic Shield
@@ -53,19 +58,9 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Medal of Honor
-        if LoadInteger(HTi,GetHandleId(DamageTargetHero),2) == 1 then 
+        if UnitHasItemType(DamageTargetHero, 'I04T') or UnitHasItemType(DamageSourceHero, 'I04T') then
             set Damage.index.amount = Damage.index.amount * 0.66
-        endif 
-
-        //Mask of Death damage reduction
-        if LoadInteger(HTi,GetHandleId(DamageSourceHero),1) == 1 then
-            set Damage.index.amount = Damage.index.amount * 0.75
         endif
-
-        //Medal of Honor
-        if LoadInteger(HTi,GetHandleId(DamageSourceHero),2) == 1 then 
-            set Damage.index.amount = Damage.index.amount * 0.66
-        endif 
 
         //Decaying Scythe
         if GetUnitAbilityLevel(DamageTarget, DECAYING_SCYTHE_BUFF2_ID) > 0 then
@@ -509,7 +504,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Finishing Blow
-        set i1 = GetUnitAbilityLevel(DamageSource, FINISHING_BLOW_ABILITY_ID)
+        set i1 = GetUnitAbilityLevel(DamageSourceHero, FINISHING_BLOW_ABILITY_ID)
         if Damage.index.amount > 0 and i1 > 0 then
             if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= i1  then
                 set Damage.index.amount = 9999999
