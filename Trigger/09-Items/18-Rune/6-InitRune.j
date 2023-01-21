@@ -56,6 +56,11 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
     function CreateRune takes item rune, real power, real x, real y, unit owner, integer id returns item
         local player p = GetOwningPlayer(owner)
         local integer pid = GetPlayerId(p)
+
+        if id == Element_None or id == Element_Summon then
+            set id = GetRandomInt(1,RuneCount)
+        endif
+
         set rune = CreateItem( Runes[id], x, y)
         set RuneIndex[GetHandleId(rune)] = pid
         //call BJDebugMsg("owner: " + GetUnitName(owner) + ", id: " + I2S(id))
