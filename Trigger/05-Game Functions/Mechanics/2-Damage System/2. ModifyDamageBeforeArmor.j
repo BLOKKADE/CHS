@@ -501,7 +501,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Hero Force
         set i1 = GetUnitAbilityLevel(DamageSourceHero, HERO_FORCE_ABILITY_ID)
         if i1 > 0 then
-            set i2 = GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)
+            set i2 = GetHeroStatBJ(GetHeroPrimaryStat(DamageSourceHero), DamageSourceHero                                                                                                                                                                                                                       , true)
             if GetUnitAbilityLevel(DamageTarget, 'Bams') > 0 or GetUnitAbilityLevel(DamageTarget, ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
 
                 set Damage.index.damage = Damage.index.damage  + (i1 * i2)/ 40
@@ -674,7 +674,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //call BJDebugMsg(GetUnitName(DamageTarget) + ", block:  " + R2S(GetUnitCustomState(DamageTarget, BONUS_BLOCK)) + ", calc: " + R2S(blockDamage))
             //Absolute Dark
-            set i1 = GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_DARK_ABILITY_ID)
+            //set i1 = GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_DARK_ABILITY_ID)
             //if i1 > 0 and GetUnitAbilityLevel(DamageSourceHero, NULL_VOID_ORB_BUFF_ID) == 0 then
             //    set blockDamage = blockDamage * (1 - ((0.009 + (0.001 * i1)) * GetUnitElementCount(DamageSourceHero, Element_Dark)))
             //endif
