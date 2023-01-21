@@ -1,4 +1,4 @@
-library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, SelectedUnits, ReadyButton
+library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, IconFrames, SelectedUnits, ReadyButton
 
     globals
         // Scoreboard static titles
@@ -76,6 +76,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         private framehandle ScoreboardTooltipFrame
 		private framehandle ScoreboardTooltipTitleFrame
 		private framehandle ScoreboardTooltipTextFrame
+        private framehandle ScoreboardGameDescriptionFrameHandle
+        private framehandle ScoreboardGameDescriptionTextFrameHandle
 
         private integer CloseHandleId
 
@@ -418,8 +420,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
 
-        set CurrentColumnIndex = 0
-        
         // Player stats icon
         set CurrentColumnIndex = PLAYER_STATS_INDEX
         call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", playerId)
@@ -435,31 +435,17 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // Create indicator for player ready status
         call CreateIndicatorForIcon(playerId)
 
-        if (playerHero != null) then
-            // Set the player hero icon
-            set CurrentColumnIndex = PLAYER_HERO_INDEX
-            call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), playerId)
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)) + COLOR_END_TAG
-            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(playerHero)
+        // Set the player hero icon to a missing icon
+        set CurrentColumnIndex = PLAYER_HERO_INDEX
+        call CreateIcon("ReplaceableTextures\\CommandButtons\\BTNSelectHeroOff.blp", playerId)
+        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffff0000Player has no hero|r"
+        set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = ""
 
-            // Element icon
-            set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
-            call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffd0ff00Element Counts|r"
-            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(playerHero)
-        else
-            // Set the player hero icon to a missing icon
-            set CurrentColumnIndex = PLAYER_HERO_INDEX
-            call CreateIcon("ReplaceableTextures\\CommandButtons\\BTNSelectHeroOff.blp", playerId)
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffff0000Player has no hero|r"
-            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = ""
-
-            // Element icon
-            set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
-            call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffff0000Player has no hero|r"
-            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = ""
-        endif
+        // Element icon
+        set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
+        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
+        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffff0000Player has no hero|r"
+        set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = ""
 
         // Set the player name
         set CurrentColumnIndex = PLAYER_NAME_INDEX
@@ -585,8 +571,6 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         local real mainFrameBottomRightY
         local framehandle titleFrameHandle
         local framehandle creditsTextFrameHandle
-        local framehandle scoreboardGameDescriptionFrameHandle
-        local framehandle scoreboardGameDescriptionTextFrameHandle
         local framehandle closeButtonFrameHandle
         local framehandle closeIconButtonFrameHandle
 
@@ -628,17 +612,14 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         call BlzFrameSetText(creditsTextFrameHandle, CREDITS) 
 
         // Create the box for the scoreboard description 
-        set scoreboardGameDescriptionFrameHandle = BlzCreateFrame("CheckListBox", ScoreboardFrameHandle, 0, 0)
-        call BlzFrameSetAbsPoint(scoreboardGameDescriptionFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX, MAIN_FRAME_TOP_LEFT_Y - 0.04) // Move it down a little so it doesn't block the timer
-        call BlzFrameSetSize(scoreboardGameDescriptionFrameHandle, 0.17, GetTooltipSize(ScoreboardGameDescription))
+        set ScoreboardGameDescriptionFrameHandle = BlzCreateFrame("CheckListBox", ScoreboardFrameHandle, 0, 0)
+        call BlzFrameSetAbsPoint(ScoreboardGameDescriptionFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX, MAIN_FRAME_TOP_LEFT_Y - 0.04) // Move it down a little so it doesn't block the timer
 
         // Create the actual text element that shows the scoreboard description
-        set scoreboardGameDescriptionTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardDescriptionTextArea", ScoreboardFrameHandle, "", 0)    
-        call BlzFrameSetAllPoints(scoreboardGameDescriptionTextFrameHandle, scoreboardGameDescriptionFrameHandle)
-        call BlzFrameSetEnable(scoreboardGameDescriptionTextFrameHandle, false) 
-        call BlzFrameSetScale(scoreboardGameDescriptionTextFrameHandle, 1.05) 
-        call BlzFrameSetTextAlignment(scoreboardGameDescriptionTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER)
-        call BlzFrameSetText(scoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescription) 
+        set ScoreboardGameDescriptionTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardDescriptionTextArea", ScoreboardFrameHandle, "", 0)    
+        call BlzFrameSetEnable(ScoreboardGameDescriptionTextFrameHandle, false) 
+        call BlzFrameSetScale(ScoreboardGameDescriptionTextFrameHandle, 1.05) 
+        call BlzFrameSetTextAlignment(ScoreboardGameDescriptionTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER)
 
         // Create the close button
         set closeButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", ScoreboardFrameHandle, 0, 0) 
@@ -653,8 +634,8 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         // Cleanup
         set titleFrameHandle = null
         set creditsTextFrameHandle = null
-        set scoreboardGameDescriptionFrameHandle = null
-        set scoreboardGameDescriptionTextFrameHandle = null
+        set closeButtonFrameHandle = null
+        set closeIconButtonFrameHandle = null
     endfunction
     
     private function UpdateDynamicPlayerValues takes nothing returns nothing
@@ -766,7 +747,56 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         call ForForce(ScoreboardForce, function UpdateDynamicPlayerValues)
     endfunction
 
-    function InitializeScoreboard takes nothing returns nothing
+    private function InitializePlayerHero takes nothing returns nothing
+        local player currentPlayer = GetEnumPlayer()
+        local integer playerId = GetPlayerId(currentPlayer)
+        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
+
+        if (playerHero != null) then
+            // Set the player hero icon
+            set CurrentColumnIndex = PLAYER_HERO_INDEX
+            call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), playerId)
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)) + COLOR_END_TAG
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(playerHero)
+
+            // Element icon
+            set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
+            call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffd0ff00Element Counts|r"
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(playerHero)
+        endif
+
+        // Set the player items
+        set CurrentColumnIndex = PLAYER_ITEMS_START_INDEX
+        call UpdatePlayerItems(currentPlayer)
+
+        // Set the player abilities
+        set CurrentColumnIndex = PLAYER_ABILITIES_START_INDEX
+        call UpdatePlayerAbilities(currentPlayer)
+
+        set CurrentRowIndex = CurrentRowIndex + 1
+
+        // Cleanup
+        set currentPlayer = null
+        set playerHero = null
+    endfunction
+
+    function StartScoreboardUpdate takes nothing returns nothing
+        // Need to update the scoreboard game mode description since it didn't exist when the frames were created
+        call BlzFrameSetSize(ScoreboardGameDescriptionFrameHandle, 0.17, GetTooltipSize(ScoreboardGameDescription))
+        call BlzFrameSetText(ScoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescription) 
+        call BlzFrameSetAllPoints(ScoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescriptionFrameHandle)
+
+        // Start at the first player row index
+        set CurrentRowIndex = 1
+
+        call ForForce(ScoreboardForce, function InitializePlayerHero)
+
+        // Timer to refresh the scoreboard at an interval
+        call TimerStart(CreateTimer(), SCOREBOARD_UPDATE_INTERVAL, true, function UpdateDynamicPlayersValues)
+    endfunction
+
+    private function InitializeScoreboard takes nothing returns nothing
         set IconEventHandles = InitHashtable()
 
         set ScoreboardTitle = "|cff2ff1ffCustom Hero Survival - |r |cffadff2f" + CurrentGameVersion.getVersionString() + "|r"
@@ -788,9 +818,10 @@ library Scoreboard requires PlayerTracking, HeroAbilityTable, IconFrames, Select
         call BlzFrameSetVisible(ScoreboardTooltipFrame, false) 
 
         call InitializeDefaultValues()
+    endfunction
 
-        // Timer to refresh the scoreboard at an interval
-        call TimerStart(CreateTimer(), SCOREBOARD_UPDATE_INTERVAL, true, function UpdateDynamicPlayersValues)
+    private function init takes nothing returns nothing
+        call TimerStart(CreateTimer(), 1, false, function InitializeScoreboard)
     endfunction
 
 endlibrary

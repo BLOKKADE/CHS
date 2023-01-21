@@ -48,7 +48,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         set AllPlayerHeroesSpawned = true
         set udg_boolean09 = true
 
-        call InitializeScoreboard() // Now that everyone has a hero, show the leaderboard
+        call StartScoreboardUpdate() // Start the automatic updating of the scoreboard
         call UpdateRewardsPrimaryStatIcon() // Update the primary stat icon for each player
 
         call PlaySoundBJ(udg_sound11)

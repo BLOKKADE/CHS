@@ -22,8 +22,6 @@ library PlayerLeavesGame initializer init requires RandomShit
     private function PlayerLeavesGameActions takes nothing returns nothing
         local player leaverPlayer = GetTriggerPlayer()
         local integer playerId = GetPlayerId(leaverPlayer)
-        local group leaverPlayerUnits
-        local location arenaLocation
 
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayer(LeaverPlayers, leaverPlayer)
