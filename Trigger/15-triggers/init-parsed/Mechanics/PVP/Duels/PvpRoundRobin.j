@@ -404,8 +404,8 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         local DuelGame currentDuelGame
         local integer teamPlayerLimit
 
-        // If team duel is enabled, and the 12.5% chance passes, and there are either 4 or 8 people, do a 2v2 fight
-        if (TeamDuelMode == 2 and (GetRandomInt(1, 8) == 1) and ModuloInteger(PlayerList.size(), 4) == 0) then
+        // If team duel is enabled, and the 16.7% chance passes, and there are either 4 or 8 people, do a 2v2 fight
+        if (TeamDuelMode == 2 and (GetRandomInt(1, 6) == 1) and ModuloInteger(PlayerList.size(), 4) == 0) then
             set teamPlayerLimit = 2
             set limit = PlayerList.size() / (2 * teamPlayerLimit)
         else
