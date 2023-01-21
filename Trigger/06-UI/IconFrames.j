@@ -488,6 +488,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
     private function UpdateFrameVisibility takes nothing returns nothing
         local integer pid = GetPlayerId(GetLocalPlayer())
         local integer selectedUnitPid = SelectedUnitPid[pid]
+		local string playerReadyIconPath
 		local PlayerStats ps
 
 		if selectedUnitPid == 27 then
@@ -498,10 +499,14 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// Player ready status
         if (ps != 0 and ps.isReady()) then
-            call BlzFrameSetTexture(ButtonId[40], GetIconPath("Ability_parry"), 0, true)
+			set playerReadyIconPath = GetIconPath("Ability_parry")
 		else
-            call BlzFrameSetTexture(ButtonId[40], GetIconPath("Defend"), 0, true)
+			set playerReadyIconPath = GetIconPath("Defend")
         endif
+
+		if (GetLocalPlayer() == Player(pid)) then
+			call BlzFrameSetTexture(ButtonId[40], playerReadyIconPath, 0, true)
+		endif
 
 		// Update the flashy ready status for the player
         call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[pid])
