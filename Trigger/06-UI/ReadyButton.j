@@ -18,7 +18,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         loop
             set ps = PlayerStats.forPlayer(Player(i))
 
-            if ps != 0 and ps.isReady() then
+            if ps != 0 and ps.isReady() and (not IsPlayerInForce(Player(i), DefeatedPlayers)) then
                 set count = count + 1
             endif
 
@@ -43,7 +43,9 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
         set ps = PlayerStats.forPlayer(p)
 
-        if ps.isReady() then
+        if (IsPlayerInForce(p, DefeatedPlayers)) then
+            return "|cffff0000Cannot ready up|r"
+        elseif ps.isReady() then
             return "|cfff3fc77Unready yourself|r (|cff77f3fcCtrl+R|r)"
         else
             return "|cff92fc77Ready|r (|cff77f3fcCtrl+R|r)"
@@ -52,6 +54,10 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
     function ReadyButtonTooltip takes player p, integer pid returns string
         local string s = ReadyTooltip()
+
+        if (IsPlayerInForce(p, DefeatedPlayers)) then
+            return "|cffff0000Defeated players cannot ready up|r"
+        endif
 
         if ReadyButtonDisabled[pid] then
             set s = "|cfffc9277Cannot be used during a round|r.|n"
@@ -67,7 +73,10 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     function ReadyButtonVisibility takes boolean disable, integer pid, boolean isReady returns nothing
         local string tex = ""
 
-        if isReady then
+        if (IsPlayerInForce(Player(pid), DefeatedPlayers)) then
+            set disable = true
+            set tex = UnreadyIcon
+        elseif isReady then
             set tex = ReadyIcon
         else
             set tex = UnreadyIcon
@@ -135,7 +144,9 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         local integer pid = GetPlayerId(p)
         local PlayerStats ps = PlayerStats.forPlayer(p)
 
-        if HoldShift[pid] then
+        if (IsPlayerInForce(p, DefeatedPlayers)) then
+            set PlayerIsAlwaysReady[pid] = false
+        elseif HoldShift[pid] then
             set PlayerIsAlwaysReady[pid] = not PlayerIsAlwaysReady[pid]
         endif
 

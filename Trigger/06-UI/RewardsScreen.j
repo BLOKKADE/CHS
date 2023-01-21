@@ -552,15 +552,15 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
 
     private function GiveRewardPoints takes EventInfo eventInfo returns nothing
         local integer pid = GetPlayerId(eventInfo.p)
-        local unit playerHero = PlayerHeroes[pid]
+        local unit playerHero
         local real rewardValue
 
-        // Don't do anything if this was the BR
-        if ((GameModeShort == true and RoundNumber == 25) or RoundNumber == 50) then
-            // Cleanup
-            set playerHero = null
+        // Don't do anything if this was the BR or the player is defeated
+        if (IsPlayerInForce(eventInfo.p, DefeatedPlayers) or (GameModeShort == true and RoundNumber == 25) or RoundNumber == 50) then
             return
         endif
+
+        set playerHero = PlayerHeroes[pid]
 
         // Give points if this was a pvp round
         if (eventInfo.isPvp or (PlayerCount == 1 and ModuloInteger(RoundNumber, 5) == 0)) then
