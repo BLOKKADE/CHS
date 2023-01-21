@@ -1,9 +1,5 @@
 library PlayerLeavesGame initializer init requires RandomShit
 
-    private function PlayerLeavesGameConditions takes nothing returns boolean
-        return (not IsPlayerInForce(GetTriggerPlayer(), DefeatedPlayers))
-    endfunction
-
     private function ResetHero takes unit u returns nothing
         if IsUnitType(u, UNIT_TYPE_HERO) then
             call RemoveItem(UnitItemInSlot(u, 0))
@@ -57,7 +53,6 @@ library PlayerLeavesGame initializer init requires RandomShit
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(5))
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(6))
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(7))
-        call TriggerAddCondition(PlayerLeavesGameTrigger, Condition(function PlayerLeavesGameConditions))
         call TriggerAddAction(PlayerLeavesGameTrigger, function PlayerLeavesGameActions)
     endfunction
 
