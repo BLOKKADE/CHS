@@ -127,7 +127,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
     
         if RoundCreepChanceWizardbane == 1 then
-            set s = ConcatAbility(s, "Wizardbane Aura ")
+            set s = ConcatAbility(s, "Wizardbane Aura")
             call AddRoundAbility('A088')
         endif
     
@@ -167,7 +167,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceImmortalAura == 1 then
-            set s = ConcatAbility(s, "Aura of Immortalit")
+            set s = ConcatAbility(s, "Aura of Immortality")
             call AddRoundAbility('A02L')
         endif
     

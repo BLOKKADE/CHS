@@ -56,7 +56,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         local string s = ReadyTooltip()
 
         if (IsPlayerInForce(p, DefeatedPlayers)) then
-            return "|cffff0000Defeated players cannot ready up|r"
+            return "|cffff0000Defeated players cannot ready up|r.|n"
         endif
 
         if ReadyButtonDisabled[pid] then

@@ -393,24 +393,30 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
     endfunction
 
     function MoveRoundRobin takes nothing returns nothing
+        local IntegerList tempPlayerList = IntegerList[PlayerList]
+        local boolean teamDuelOddsSuccess = GetRandomInt(1, 6) == 1
         local integer i = 0
         local integer j = 0
-        local integer limit
+        local integer duelGameCount
+        local integer duelGamePlayerSize
         local integer tempBack
         local integer tempFront
-        local IntegerList tempPlayerList = IntegerList[PlayerList]
         local force team1
         local force team2
         local DuelGame currentDuelGame
-        local integer teamPlayerLimit
 
-        // If team duel is enabled, and the 12.5% chance passes, and there are either 4 or 8 people, do a 2v2 fight
-        if (TeamDuelMode == 2 and (GetRandomInt(1, 8) == 1) and ModuloInteger(PlayerList.size(), 4) == 0) then
-            set teamPlayerLimit = 2
-            set limit = PlayerList.size() / (2 * teamPlayerLimit)
+        // If team duel is enabled, and the 16.7% chance passes, and there are 6 people, do a 3v3 fight
+        if (TeamDuelMode == 2 and teamDuelOddsSuccess and ModuloInteger(PlayerList.size(), 6) == 0) then
+            set duelGamePlayerSize = 3
+            set duelGameCount = 1 // Can never have more than 1 duel game for a 3v3
+        // If team duel is enabled, and the 16.7% chance passes, and there are either 4, 8 people, do a 2v2 fight
+        elseif (TeamDuelMode == 2 and teamDuelOddsSuccess and ModuloInteger(PlayerList.size(), 4) == 0) then
+            set duelGamePlayerSize = 2
+            set duelGameCount = PlayerList.size() / 4
+        // Normal 1v1 fight
         else
-            set teamPlayerLimit = 1
-            set limit = PlayerList.size() / (2 * teamPlayerLimit)
+            set duelGamePlayerSize = 1
+            set duelGameCount = PlayerList.size() / 2
         endif
 
         call DuelGameList.clear()
@@ -421,7 +427,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             set team1 = CreateForce()
             set team2 = CreateForce()
 
-            set j = teamPlayerLimit
+            set j = duelGamePlayerSize
             loop
                 call ForceAddPlayer(team1, Player(tempPlayerList.front()))
                 call ForceAddPlayer(team2, Player(tempPlayerList.back()))
@@ -437,7 +443,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call DuelGameListRemaining.push(currentDuelGame)
 
             set i = i + 1
-            exitwhen i >= limit
+            exitwhen i >= duelGameCount
         endloop
 
         set tempFront = PlayerList.front()
