@@ -10,6 +10,8 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
         // Temp variables
         private boolean SpawnLeft
+        private integer SpawnCount
+        private integer SpawnIndex
         private rect TempArena
     endglobals
 
@@ -77,17 +79,32 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         local location arenaCenter = GetRectCenter(TempArena)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
         local integer itemSlotIndex = 0
+        local real spawnYOffset = 0
         local item currentItem
         local location spawnOffset
 
         // Mark the player hero as fighting
         call GroupAddUnit(DuelingHeroes, playerHero)
 
+        if (SpawnCount == 3) then
+            if (SpawnIndex == 0) then
+                set spawnYOffset = 300
+            elseif (SpawnIndex == 2) then
+                set spawnYOffset = -300
+            endif
+        elseif (SpawnCount == 2) then
+            if (SpawnIndex == 0) then
+                set spawnYOffset = 300
+            elseif (SpawnIndex == 1) then
+                set spawnYOffset = -300
+            endif
+        endif
+
         // Determine the spawn offset
         if (SpawnLeft) then
-            set spawnOffset = OffsetLocation(arenaCenter, -500.00, 0)
+            set spawnOffset = OffsetLocation(arenaCenter, -500.00, spawnYOffset)
         else
-            set spawnOffset = OffsetLocation(arenaCenter, 500.00, 0)
+            set spawnOffset = OffsetLocation(arenaCenter, 500.00, spawnYOffset)
         endif
 
         // Actually move the unit
@@ -133,6 +150,8 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
             set itemSlotIndex = itemSlotIndex + 1
             exitwhen itemSlotIndex == 6
         endloop
+
+        set SpawnIndex = SpawnIndex + 1
 
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
 
@@ -185,8 +204,11 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         call EnumItemsInRect(arena, null, function RemoveItemFromArena)
 
         // Teleport team1 to the left side of the arena, team2 to the right side of the arena
+        set SpawnCount = CountPlayersInForceBJ(team1)
+        set SpawnIndex = 0
         set SpawnLeft = true
         call ForForce(team1, function SetupPlayerInArena)
+        set SpawnIndex = 0
         set SpawnLeft = false
         call ForForce(team2, function SetupPlayerInArena)
 
