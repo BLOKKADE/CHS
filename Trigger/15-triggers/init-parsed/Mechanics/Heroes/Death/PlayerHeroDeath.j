@@ -54,6 +54,10 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
 
         call StopRectLeaveDetection(GetHandleId(currentUnit))
         
+        if CreepAntagonisationReward[currentPlayerId] then
+            set CreepAntagonisationReward[currentPlayerId] = false
+        endif
+        
         //immortal mode
         if ModeNoDeath == true and BrStarted == false and GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
             call ReviveHeroLoc(currentUnit, RectMidArenaCenter, true)

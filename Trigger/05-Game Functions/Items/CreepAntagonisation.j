@@ -3,7 +3,7 @@ library CreepAntagonisation initializer init requires CustomState, CustomGameEve
     globals
         Table CreepAntagonisationBonus
         boolean array CreepAntagonisationBought
-        boolean array CreepAntagonisationEnabled
+        boolean array CreepAntagonisationReward
     endglobals
 
     private function BuffCreep takes unit u, real multiplier returns nothing
@@ -22,7 +22,7 @@ library CreepAntagonisation initializer init requires CustomState, CustomGameEve
         local integer i = 0
         local unit u = null
         if CreepAntagonisationBought[pid] then
-            set CreepAntagonisationEnabled[pid] = true
+            set CreepAntagonisationReward[pid] = true
             set CreepAntagonisationBought[pid] = false
             loop
                 set u = BlzGroupUnitAt(PlayerRoundCreeps[eventInfo.roundNumber].group[pid], i)
