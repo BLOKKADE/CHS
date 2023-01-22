@@ -513,6 +513,7 @@ library PlayerTracking initializer init requires GameInit
         set MapVersionLookup[3] = GameVersion.create("CHS v2.1.1", 3, false) // First version with new GameVersion struct
         set MapVersionLookup[4] = GameVersion.create("CHS v2.1.2", 4, false) // Scoreboard desync fix version
         set MapVersionLookup[5] = GameVersion.create("CHS v2.2.0", 5, false) // Scoreboard desync fix version
+        set MapVersionLookup[6] = GameVersion.create("CHS v2.2.1", 6, false) // Bunch of small fixes in this one
     endfunction
 
     private function init takes nothing returns nothing
