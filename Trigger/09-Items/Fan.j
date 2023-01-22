@@ -8,6 +8,7 @@ library Fan requires AbilityCooldown, DummyOrder
             set dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 5)
             call dummy.addActiveAbility(abilId, 1, 852526)
             call dummy.setAbilityRealField(abilId, ABILITY_RLF_DAMAGE_PER_TARGET_EFK1, 100 * level)
+            call dummy.setAbilityRealField(abilId, ABILITY_RLF_AREA_OF_EFFECT, 600)
             call dummy.instant()
 
             if dummy.activate() then
