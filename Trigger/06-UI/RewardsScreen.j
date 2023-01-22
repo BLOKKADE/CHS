@@ -573,7 +573,12 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
                     set PlayerRewardPoints[pid] = 2
                 endif
             else
-                set PlayerRewardPoints[pid] = PlayerRewardPoints[pid] + 1
+                // Greedy goblin gets an additional reward point
+                if (GetUnitTypeId(playerHero) == GREEDY_GOBLIN_UNIT_ID) then
+                    set PlayerRewardPoints[pid] = PlayerRewardPoints[pid] + 2
+                else
+                    set PlayerRewardPoints[pid] = PlayerRewardPoints[pid] + 1
+                endif
             endif
 
             // Show the rewards screen

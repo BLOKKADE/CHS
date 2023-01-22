@@ -157,7 +157,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun. +0.04 seconds cooldown" )
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )
-        call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. Starts with an extra point for the end of round reward shop. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
+        call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. Gets an extra point for the end of round reward shop. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
 
         call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCentaurArcher.blp" )
