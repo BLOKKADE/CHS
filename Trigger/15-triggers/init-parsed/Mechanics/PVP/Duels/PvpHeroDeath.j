@@ -96,7 +96,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local DuelGame duelGame = DuelGame.getPlayerDuelGame(currentPlayer)
         local string message
 
-        call ps.addPVPWin()
+        call ps.addDuelWin()
         
         set message = GetPlayerNameColour(currentPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"
 
@@ -133,7 +133,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
-        call ps.addPVPLoss()
+        call ps.addDuelLoss()
 
         // Don't add the loser twice
         if (not IsPlayerInForce(currentPlayer, DuelLosers)) then
@@ -156,8 +156,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
         local unit deadUnit = GetDyingUnit()
         local MidasTouch deadUnitMidasTouch = GetMidasTouch(GetHandleId(deadUnit))
+        local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
         local real bonus = 1
 
+        call ps.addPVPWin()
+        
         // Midas Touch
         if deadUnitMidasTouch != 0 then
             call CreepDeath_BountyText(playerHero, deadUnit, deadUnitMidasTouch.bonus)

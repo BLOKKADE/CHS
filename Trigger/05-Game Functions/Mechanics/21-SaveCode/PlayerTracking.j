@@ -84,8 +84,8 @@ library PlayerTracking initializer init requires GameInit
         private boolean IsReady = false
         private unit Pet = null
         private integer PetLastSwappedAt = 0
-        private integer PVPWins = 0 // PVP wins for the current game
-        private integer PVPLosses = 0 // PVP losses for the current game
+        private integer DuelWins = 0 // Duel wins for the current game
+        private integer DuelLosses = 0 // Duel losses for the current game
         private integer BRPVPKillCount = 0 // PVP kills during the BR
 
         // --- Temporary values that are not saved to the load code
@@ -139,12 +139,12 @@ library PlayerTracking initializer init requires GameInit
             return this.PetLastSwappedAt
         endmethod
 
-        public method getPVPWins takes nothing returns integer
-            return this.PVPWins
+        public method getDuelWins takes nothing returns integer
+            return this.DuelWins
         endmethod
 
-        public method getPVPLosses takes nothing returns integer
-            return this.PVPLosses
+        public method getDuelLosses takes nothing returns integer
+            return this.DuelLosses
         endmethod
 
         public method setCurrentHatEffect takes effect value returns nothing
@@ -215,6 +215,14 @@ library PlayerTracking initializer init requires GameInit
             endif
 
             return I2S(this.BRPVPKillCount) + " kills!"
+        endmethod
+
+        public method addDuelWin takes nothing returns nothing
+            set this.DuelWins = this.DuelWins + 1
+        endmethod
+
+        public method addDuelLoss takes nothing returns nothing
+            set this.DuelLosses = this.DuelLosses + 1
         endmethod
 
         // --- Functions for data that is not actually saved
@@ -454,8 +462,6 @@ library PlayerTracking initializer init requires GameInit
         endmethod
 
         public method addPVPWin takes nothing returns nothing
-            set this.PVPWins = this.PVPWins + 1
-
             // Random
             if (AbilityMode == 0) then
                 set this.ARPVPAllWins = this.tryIncrementValue(this.ARPVPAllWins, "All Random PVP All Wins")
@@ -469,10 +475,6 @@ library PlayerTracking initializer init requires GameInit
                 set this.DraftPVPAllWins = this.tryIncrementValue(this.DraftPVPAllWins, "Draft PVP All Wins")
                 set this.DraftPVPSeasonWins = this.tryIncrementValue(this.DraftPVPSeasonWins, "Draft PVP Season Wins")
             endif
-        endmethod
-
-        public method addPVPLoss takes nothing returns nothing
-            set this.PVPLosses = this.PVPLosses + 1
         endmethod
 
         public method resetSeasonStats takes nothing returns nothing

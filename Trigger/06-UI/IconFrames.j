@@ -25,8 +25,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		private hashtable ButtonParentHandles = InitHashtable()
 
 		// Button indicator frames
-		private framehandle array ButtonIndicatorId 
-		private framehandle array ButtonIndicatorParentId 
+		framehandle array ButtonIndicatorId 
+		framehandle array ButtonIndicatorParentId 
 
 		// Main GameUI that all frames should use
 		framehandle GameUI

@@ -705,7 +705,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
             // Set the PVP stats. We don't need to update the icon since that should never change
             set CurrentColumnIndex = PLAYER_DUELS_INDEX
-            call CreateText(PVP_WINS_COLOR + I2S(ps.getPVPWins()) + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + I2S(ps.getPVPLosses()) + COLOR_END_TAG, playerId)
+            call CreateText(PVP_WINS_COLOR + I2S(ps.getDuelWins()) + COLOR_END_TAG + SLASH + PVP_LOSSES_COLOR + I2S(ps.getDuelLosses()) + COLOR_END_TAG, playerId)
 
             // Update the tooltip description for the player element count. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(PlayerHeroes[playerId])
