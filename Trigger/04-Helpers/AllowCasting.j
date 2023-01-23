@@ -5,7 +5,7 @@ library AllowCasting
     endglobals
 
     private function CheckUnitGroup takes unit u returns boolean
-        if(not(IsUnitInGroup(u,DuelingHeroGroup)!=true))then
+        if(not(IsUnitInGroup(u,DuelingHeroes)!=true))then
             return false
         endif
         if(not(IsPlayerInForce(GetOwningPlayer(u),RoundPlayersCompleted)==true))then

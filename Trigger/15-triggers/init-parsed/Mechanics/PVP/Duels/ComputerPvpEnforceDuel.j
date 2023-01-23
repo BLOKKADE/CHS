@@ -7,7 +7,7 @@ library ComputerPvpEnforceDuel initializer init requires RandomShit, PvpRoundRob
     private function IsDuelingComputerPlayer takes nothing returns boolean
         local unit currentUnit = GetFilterUnit()
         local player currentPlayer = GetOwningPlayer(currentUnit)
-        local boolean isDuelingComputerPlayer = (UnitAlive(currentUnit)==true) and (IsUnitInGroup(currentUnit, DuelingHeroGroup)==true) and (((GetPlayerSlotState(currentPlayer)!=PLAYER_SLOT_STATE_PLAYING)) or (GetPlayerController(currentPlayer)==MAP_CONTROL_COMPUTER))
+        local boolean isDuelingComputerPlayer = (UnitAlive(currentUnit)==true) and (IsUnitInGroup(currentUnit, DuelingHeroes)==true) and (((GetPlayerSlotState(currentPlayer)!=PLAYER_SLOT_STATE_PLAYING)) or (GetPlayerController(currentPlayer)==MAP_CONTROL_COMPUTER))
         
         // Cleanup
         set currentUnit = null

@@ -1,7 +1,7 @@
 library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath, Scoreboard
 
     private function IsUnitNotHeroOrCreep takes unit currentUnit returns boolean
-        return (IsUnitType(currentUnit, UNIT_TYPE_HERO) == false) or (GetOwningPlayer(currentUnit) == Player(8)) or (GetOwningPlayer(currentUnit) == Player(11)) or (IsUnitInGroup(currentUnit, DuelingHeroGroup) == true) or (IsUnitInGroup(currentUnit, DuelingHeroes) == true)
+        return (IsUnitType(currentUnit, UNIT_TYPE_HERO) == false) or (GetOwningPlayer(currentUnit) == Player(8)) or (GetOwningPlayer(currentUnit) == Player(11)) or (IsUnitInGroup(currentUnit, DuelingHeroes) == true)
     endfunction
 
     private function RemoveUnitsInArena takes nothing returns boolean

@@ -33,7 +33,6 @@ library GameInit initializer init requires GroupUtils
         force LeaverPlayers = null
         force PlayersWithHero = null
         group DuelingHeroes = null
-        group DuelingHeroGroup = null
         group DuelWinnerDisabled = null
         group DuelWinners = null
         group GroupEmptyArenaCheck = null
@@ -199,7 +198,6 @@ library GameInit initializer init requires GroupUtils
         set PlayersWithHero = CreateForce()
         set DefeatedPlayers = CreateForce()
         set DuelingHeroes = CreateGroup()
-        set DuelingHeroGroup = CreateGroup()
         set DuelWinners = CreateGroup()
         set DuelWinnerDisabled = CreateGroup()
         set RoundPlayersCompleted = CreateForce()
