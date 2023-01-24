@@ -796,7 +796,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
     private function InitializeScoreboard takes nothing returns nothing
         set IconEventHandles = InitHashtable()
 
-        set ScoreboardTitle = "|cff2ff1ffCustom Hero Survival - |r |cffadff2f" + CurrentGameVersion.getVersionString() + "|r"
+        set ScoreboardTitle = "|cff2ff1ffCustom Hero Survival - |r|cffadff2f" + CurrentGameVersion.getVersionString() + "|r"
 
         // All buttons use the same trigger. However everything has a unique id to handle later on
         set IconEventTrigger = CreateTrigger()
