@@ -36,14 +36,13 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         endif
 
         if heroLevel < 250 then
-            call AdjustPlayerStateBJ((heroLevel + 20) * (levelsGained), p, PLAYER_STATE_RESOURCE_GOLD)
-            call AdjustPlayerStateBJ(8 * (levelsGained), p, PLAYER_STATE_RESOURCE_LUMBER)
-            call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S((heroLevel + 20) * levelsGained) + " gold|r and |cff1eff00+" + I2S(8 * levelsGained) + " lumber|r")
+            call AdjustPlayerStateBJ((8 * (levelsGained) * 30) + (heroLevel + 20) * (levelsGained), p, PLAYER_STATE_RESOURCE_GOLD)
+            call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S((heroLevel + 20) * levelsGained) + " gold|r")
         endif
 
         if ModuloInteger(heroLevel, 25) == 0 then
-            call AdjustPlayerStateBJ(heroLevel, p, PLAYER_STATE_RESOURCE_LUMBER) 
-            call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(heroLevel) + " bonus lumber|r for reaching |cffbda546level " + I2S(heroLevel) + "!|r")
+            call AdjustPlayerStateBJ(heroLevel * 30, p, PLAYER_STATE_RESOURCE_GOLD) 
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(heroLevel) + " bonus gold|r for reaching |cffbda546level " + I2S(heroLevel) + "!|r")
         endif
 
         call ResourseRefresh(p) 

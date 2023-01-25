@@ -28,15 +28,6 @@ library PlacePercentageBet initializer init requires RandomShit, PvpRoundRobin, 
             set ResourceBetPercentageGoldReward[playerId] = ResourceBetPercentageCalculation
         endif
 
-        // Compute the lumber resources
-        if (PlayerPlacedLumberBet[playerId] == true) then
-            set ResourceBetPercentageCalculation = ResourceBetPercentageLumberReward[playerId]
-            set ResourceBetPercentageCalculation = R2I(((I2R(GetPlayerState(currentPlayer,PLAYER_STATE_RESOURCE_LUMBER)) / 100.00) * I2R(PlayerResourceBetPercentage[playerId])))
-            call AdjustPlayerStateBJ((- 1 * ResourceBetPercentageCalculation), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
-            call ResourseRefresh(currentPlayer)
-            set ResourceBetPercentageLumberReward[playerId] = ResourceBetPercentageCalculation
-        endif
-
         // We don't support betting for simultaneous duels, so there should only be one duel with two forces
         if (IsPlayerInForce(currentPlayer, Team1BettingForce) == true) then
             call DisplayTimedTextToForce(GetPlayersAll(), 2.00, "|c00F08000" + GetPlayerNameColour(currentPlayer) + " placed a bet on " + ConvertForceToUnitString(CurrentDuelGame.team1) + "!")

@@ -38,7 +38,7 @@ library Quests initializer init requires PlayerTracking
         
         call AddQuest("Commands", "Type -list to see a list of all commands, type -help commandname to see what a command does.", "ReplaceableTextures\\PassiveButtons\\PASScarlet_Aegis_Icon.blp", false, true, false)
 
-        call AddQuest("Hotkeys", "|cff3cff00CTRL + Q|r to convert all lumber to gold. |cff3cff00CTRL + W|r to convert all gold to lumber.\nWhen buying an ability, creep upgrade, glory buff or time hold |cffeeff00SHIFT|r to buy as much of it as you can (does not convert resources).\nHolding |cff45ec53SHIFT|r when using a self-targetable spell such as Rejuvenation and Inner Fire or an AOE spell such as blizzard it will cast on yourself!", "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", false, true, false)
+        call AddQuest("Hotkeys", "When buying an ability, creep upgrade, glory buff or time hold |cffeeff00SHIFT|r to buy as much of it as you can (does not convert resources).\nHolding |cff45ec53SHIFT|r when using a self-targetable spell such as Rejuvenation and Inner Fire or an AOE spell such as blizzard it will cast on yourself!", "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_SealOfWrath.blp", false, true, false)
 
         call AddQuest("Credits", "Code\nBribe, Vexorian, Jesus4Lyf \n\nIcons\nPeeKay, Marcos DAB, Nightcrime, Dentothor, Darkfang, Kola, Mr. Goblin, JollyD, The Panda, Blood Raven, -Berz-,bu3ny \n\nModels\nJesusHipster, nGy, exfyre, Mythic, Hermit, xyzier_24, JetFangInferno", "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp" , false, true, false)
         call AddQuestItem(bj_lastCreatedQuest, "Thanks to N1 for making the ability draft mode.", false)

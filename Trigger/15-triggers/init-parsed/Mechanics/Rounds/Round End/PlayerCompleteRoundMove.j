@@ -24,36 +24,36 @@ library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
 
         if (ElimModeEnabled == true or GameModeShort == true) then
             if (RoundNumber <= 1) then
-                set LumberGained[currentPlayerId] = 21 * RoundNumber
-                call AdjustPlayerStateBJ((21 * RoundNumber), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+                set LumberGained[currentPlayerId] = 21 * RoundNumber * 30
+                call AdjustPlayerStateBJ((21 * RoundNumber * 30), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                 //call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 20, "|cff00aa0e+" + I2S(21*RoundNumber) + " lumber|r")
                 call ResourseRefresh(currentPlayer)
             else
                 if (RoundNumber < 4) then
-                    set LumberGained[currentPlayerId] = 11 * RoundNumber
-                    call AdjustPlayerStateBJ((11 * RoundNumber), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+                    set LumberGained[currentPlayerId] = 11 * RoundNumber * 30
+                    call AdjustPlayerStateBJ((11 * RoundNumber * 30), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                     call ResourseRefresh(currentPlayer)
                 else
-                    set LumberGained[currentPlayerId] = R2I((I2R(RoundNumber) / 2.00)) * 6
-                    call AdjustPlayerStateBJ((R2I((I2R(RoundNumber)/ 2.00))* 6), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+                    set LumberGained[currentPlayerId] = R2I((I2R(RoundNumber) / 2.00)) * 6 * 30
+                    call AdjustPlayerStateBJ((R2I((I2R(RoundNumber) / 2.00)) * 6 * 30), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                     call ResourseRefresh(currentPlayer)
                 endif
             endif
         else
             if (RoundNumber <= 1) then
-                set LumberGained[currentPlayerId] = 10 * RoundNumber
-                call AdjustPlayerStateBJ((10 * RoundNumber), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+                set LumberGained[currentPlayerId] = 10 * RoundNumber * 30
+                call AdjustPlayerStateBJ((10 * RoundNumber * 30), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                 //call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 20, "|cff00aa0e+" + I2S(10*RoundNumber) + " lumber|r")
                 call ResourseRefresh(currentPlayer)
             else
                 if (RoundNumber < 8) then
-                    set LumberGained[currentPlayerId] = 6 * RoundNumber
-                    call AdjustPlayerStateBJ((6 * RoundNumber), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+                    set LumberGained[currentPlayerId] = 6 * RoundNumber * 30
+                    call AdjustPlayerStateBJ((6 * RoundNumber * 30), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                     //call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 20, "|cff00aa0e+" + I2S(6*RoundNumber) + " lumber|r")
                     call ResourseRefresh(currentPlayer)
                 else
-                    set LumberGained[currentPlayerId] = R2I((I2R(RoundNumber)/ 4.00)) * 6
-                    call AdjustPlayerStateBJ((R2I((I2R(RoundNumber) / 4.00))* 6), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
+                    set LumberGained[currentPlayerId] = R2I((I2R(RoundNumber)/ 4.00)) * 6 * 30
+                    call AdjustPlayerStateBJ((R2I((I2R(RoundNumber) / 4.00)) * 6 * 30), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                     //call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 20, "|cff00aa0e+" + I2S((R2I((I2R(RoundNumber)/4.00))*6)) + " lumber|r")
                     call ResourseRefresh(currentPlayer)
                 endif

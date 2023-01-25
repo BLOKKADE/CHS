@@ -1,7 +1,7 @@
 library PlaceGoldBet initializer init requires RandomShit, InitializeBettingDialogs
 
     private function PlaceGoldBetConditions takes nothing returns boolean
-        return GetClickedButton() == BettingDialogButtons[5]
+        return GetClickedButton() == BettingDialogButtons[4]
     endfunction
 
     private function PlaceGoldBetActions takes nothing returns nothing
@@ -13,7 +13,6 @@ library PlaceGoldBet initializer init requires RandomShit, InitializeBettingDial
             call DialogSetMessage(BettingDialogs[3], "Betting Menu")
             call DialogDisplay(currentPlayer, BettingDialogs[3], true)
             set PlayerPlacedGoldBet[playerId] = true
-            set PlayerPlacedLumberBet[playerId] = false
         else
             // Check if they took too long trying to bet
             if (AllowBetSelection == true) then

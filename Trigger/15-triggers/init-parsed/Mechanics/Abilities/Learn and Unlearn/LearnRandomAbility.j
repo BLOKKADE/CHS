@@ -28,14 +28,14 @@ library LearnRandomAbility initializer init requires RandomShit
                 set ARLearningAbil = false
                 set ArNotLearningAbil = true
             else
-                call AdjustPlayerStateBJ(5, GetOwningPlayer(TempUnit), PLAYER_STATE_RESOURCE_LUMBER)
+                call AdjustPlayerStateBJ(5 * 30, GetOwningPlayer(TempUnit), PLAYER_STATE_RESOURCE_GOLD)
                 call ResourseRefresh(GetOwningPlayer(TempUnit))
                 call DisplayTimedTextToPlayer(GetOwningPlayer(TempUnit), 0, 0, 2.00, "|cffffcc00Failed to learn!")
                 return
             endif
         // Reached max attempts trying to get a random ability
         elseif (TryLearnRandomAbilityAttempts > 500) then
-            call AdjustPlayerStateBJ(5, GetOwningPlayer(TempUnit), PLAYER_STATE_RESOURCE_LUMBER)
+            call AdjustPlayerStateBJ(5 * 30, GetOwningPlayer(TempUnit), PLAYER_STATE_RESOURCE_GOLD)
             call ResourseRefresh(GetOwningPlayer(TempUnit))
             call DisplayTimedTextToPlayer(GetOwningPlayer(TempUnit), 0, 0, 2.00, "|cffffcc00Failed to learn!")
             return

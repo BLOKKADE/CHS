@@ -30,7 +30,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     private function ShowBettingDialogForPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
 
-        if (GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) > 0 or GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_LUMBER) > 0) then
+        if (GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) > 0) then
             call DialogDisplayBJ(true, BettingDialogs[1], currentPlayer)
         endif
 
