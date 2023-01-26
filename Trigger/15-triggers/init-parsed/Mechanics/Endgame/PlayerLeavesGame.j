@@ -1,4 +1,4 @@
-library PlayerLeavesGame initializer init requires RandomShit
+library PlayerLeavesGame initializer init requires RandomShit, Scoreboard
 
     private function ResetHero takes unit u returns nothing
         if IsUnitType(u, UNIT_TYPE_HERO) then
@@ -23,8 +23,15 @@ library PlayerLeavesGame initializer init requires RandomShit
         local player leaverPlayer = GetTriggerPlayer()
         local integer playerId = GetPlayerId(leaverPlayer)
 
+        // Player is only decremented when a hero dies. If the hero doesn't exist yet the game gets messed up in the beginning
+        if (ShopsCreated == false) then
+            set PlayerCount = PlayerCount - 1
+        endif
+
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayer(LeaverPlayers, leaverPlayer)
+
+        call UpdateScoreboardPlayerLeaves(leaverPlayer)
 
         // Make sure the auto ready status is wiped
         set PlayerIsAlwaysReady[GetPlayerId(leaverPlayer)] = false

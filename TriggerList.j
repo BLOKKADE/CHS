@@ -182,7 +182,6 @@
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Unsorted\5-Functions.j"
 //! import "C:\CHS\CHS\Trigger\05-Game Functions\Unsorted\UnitEnterMap.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\05-Multiboard\Scoreboard.j"
-//! import "C:\CHS\CHS\Trigger\06-UI\05-Multiboard\ShowPlayerLeavesGame.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\Voting\VotingResults.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\Voting\VotingScreen.j"
 //! import "C:\CHS\CHS\Trigger\07-Heroes\1-Lich\1-Event lich.j"
