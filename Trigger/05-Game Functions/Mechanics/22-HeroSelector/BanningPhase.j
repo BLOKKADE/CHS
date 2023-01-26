@@ -13,6 +13,7 @@ library BanningPhase initializer init requires PickingPhase, VotingResults
             call HeroInfoDestroy()
         elseif HeroMode == 1 then // Pick hero
             call EnableTrigger(PickingPhaseTrigger)
+            call HeroSelectorUpdate()
             call HeroSelectorShow(true)
             call HeroSelectorEnablePick(true)
         elseif HeroMode == 3 then // Draft hero
@@ -33,28 +34,32 @@ library BanningPhase initializer init requires PickingPhase, VotingResults
     private function BanningPhaseActions takes nothing returns nothing
         // Show Remaining Counts in the Title
         set Count = 25 - GetTriggerExecCount(GetTriggeringTrigger())
-        call HeroSelectorSetTitleText( GetLocalizedString("CHAT_ACTION_BAN")+": " + I2S(Count))
+
+        // Only update the title if the count is 0 or more
+        if (Count >= 0) then
+            call HeroSelectorSetTitleText(GetLocalizedString("CHAT_ACTION_BAN") + ": " + I2S(Count))
+        endif
         
-        if ( Count > 0 and Count <= 5 ) then
-            // call PlaySoundBJ( gg_snd_BattleNetTick )
+        // Disable everything for one second before going onto the next step
+        if (Count == 0) then
+            call HeroSelectorEnableBan(false)
         endif
 
         // Time Run up or everyone has banned
-        if ( Count <= 0 or PlayerBanCount >= PlayerCount) then
-            call DisableTrigger( GetTriggeringTrigger() )
+        if (Count < 0 or PlayerBanCount >= PlayerCount) then
+            call DisableTrigger(GetTriggeringTrigger())
 
-            call AfterBanningActions()
+            call TimerStart(CreateTimer(), 0, false, function AfterBanningActions)
 
             // Update Title Right Now
-            call HeroSelectorUpdate()
-            call HeroSelectorSetTitleText( "Picking: ")
+            call HeroSelectorSetTitleText("Picking: ")
         endif
     endfunction
     
     public function TryEnablingBanningPhase takes nothing returns nothing
         // Check if we should even ban
         if (HeroBanningMode == 1) then
-            call AfterBanningActions()
+            call TimerStart(CreateTimer(), 0, false, function AfterBanningActions)
             return
         endif
 
@@ -64,10 +69,10 @@ library BanningPhase initializer init requires PickingPhase, VotingResults
     endfunction
 
     private function init takes nothing returns nothing
-        set BanningPhaseTrigger = CreateTrigger(  )
-        call DisableTrigger( BanningPhaseTrigger )
-        call TriggerRegisterTimerEventPeriodic( BanningPhaseTrigger, 1.00 )
-        call TriggerAddAction( BanningPhaseTrigger, function BanningPhaseActions )
+        set BanningPhaseTrigger = CreateTrigger()
+        call DisableTrigger(BanningPhaseTrigger)
+        call TriggerRegisterTimerEventPeriodic(BanningPhaseTrigger, 1.00)
+        call TriggerAddAction(BanningPhaseTrigger, function BanningPhaseActions)
     endfunction
     
 endlibrary

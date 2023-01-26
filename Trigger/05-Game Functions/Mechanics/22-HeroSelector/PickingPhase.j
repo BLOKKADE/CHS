@@ -37,15 +37,18 @@ library PickingPhase initializer init requires HeroSelector, HeroInfo
     endfunction
 
     private function PickingPhaseActions takes nothing returns nothing
-        set Count = (25 - GetTriggerExecCount(GetTriggeringTrigger()))
-        call HeroSelectorSetTitleText(GetLocalizedString("DEFAULTTIMERDIALOGTEXT")+": " +I2S(Count))
+        set Count = 25 - GetTriggerExecCount(GetTriggeringTrigger())
 
-        if (Count <= 5 and Count > 0) then
-            // call PlaySoundBJ(gg_snd_BattleNetTick)
+        if (Count >= 0) then
+            call HeroSelectorSetTitleText(GetLocalizedString("DEFAULTTIMERDIALOGTEXT") + ": " + I2S(Count))
+        endif
+
+        if (Count == 0) then
+            call HeroSelectorEnablePick(false)
         endif
 
         // The Time run up?
-        if (Count <= 0) then
+        if (Count < 0) then
             // Pick everyone
             call ForForce(GetPlayersAll(), function ForcePickRandomHeroForPlayer)
             call DisableTrigger(GetTriggeringTrigger())
