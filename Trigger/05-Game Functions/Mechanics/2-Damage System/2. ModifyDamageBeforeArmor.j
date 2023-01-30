@@ -520,8 +520,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Grom Hellscream
-        if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID then
-            set Damage.index.damage = Damage.index.damage + (GetHeroStr(DamageSourceHero, true) * (0.1 + (0.01 * GetHeroLevel(DamageSourceHero))))
+        if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID and (not IsOnHitDamage()) then
+            set Damage.index.damage = Damage.index.damage + (GetHeroStr(DamageSourceHero, true) * (0.1 + (0.005 * GetHeroLevel(DamageSourceHero))))
             if not IsFxOnCooldownSet(DamageTargetId, ORC_CHAMPION_UNIT_ID, 1) then
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
             endif

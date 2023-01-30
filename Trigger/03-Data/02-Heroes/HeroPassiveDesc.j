@@ -25,7 +25,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Disease Cloud: +40 damage." )
         
         call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheClaw.blp" )
-        call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Animal Affection: Summon attack damage, armor, magic power and magic resistance are increased by a percentage of the Hero's amount. [|cff9e5d07Summon|r] spells have 50% reduced cooldown. ")
+        call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Animal Affection: Summon attack damage, armor, physical power, evasion, block, luck, magic power and magic resistance are increased by a percentage of the Hero's amount. [|cff9e5d07Summon|r] spells have 50% reduced cooldown. ")
         call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +1% Animal Affection summon stat increase." )
         
         call InitHeroDesc(MAULER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroPaladin.blp" )
@@ -85,8 +85,8 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bladestorm: +35 damage, +3 area of effect. (|cff68eef3Every 20 levels|r) reduces attacks required by 1." )
                                                     
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp" )
-        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Valiant Strike: All damage dealt by the Hero and its summons have 20% of the Hero's strength added to it.")
-        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Valiant Strike: +1% damage from strength. +3 armor and +6 hit point regeneration." )
+        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Valiant Strike: All damage dealt by the Hero and its summons have 10% of the Hero's strength added to it.[|cffd45e29onhit|r]")
+        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Valiant Strike: +0.5% damage from strength. +2 armor and +5 hit point regeneration." )
         
         call InitHeroDesc(TROLL_HEADHUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeadHunterBerserker.blp" )
         call InitHeroDesc(TROLL_HEADHUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Troll Anatomy: Gains bonus hit point regen based on 40% of its strength. ")

@@ -55,6 +55,10 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set r1 = GetHeroLevel(hero) * 0.01
             call AddUnitCustomState(u, BONUS_MAGICPOW, (GetUnitCustomState(hero, BONUS_MAGICPOW) * r1))
             call AddUnitCustomState(u, BONUS_MAGICRES, (GetUnitCustomState(hero, BONUS_MAGICRES) * r1))
+            call AddUnitCustomState(u, BONUS_EVASION, (GetUnitCustomState(hero, BONUS_EVASION) * r1))
+            call AddUnitCustomState(u, BONUS_PHYSPOW, (GetUnitCustomState(hero, BONUS_PHYSPOW) * r1))
+            call AddUnitCustomState(u, BONUS_LUCK, (GetUnitCustomState(hero, BONUS_LUCK) * r1))
+            call AddUnitCustomState(u, BONUS_BLOCK, (GetUnitCustomState(hero, BONUS_BLOCK) * r1))
             call AddUnitBonus(u, BONUS_DAMAGE, R2I((GetUnitDamage(hero, 0) * r1)))
             call AddUnitBonus(u, BONUS_ARMOR, R2I((BlzGetUnitArmor(hero) * r1)))
         endif

@@ -153,11 +153,11 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 1, 297 + 3 * heroLevel)
             call SetBonus(u, 2, BladestormAttackLimit[hid])
         elseif uid == ORC_CHAMPION_UNIT_ID then   
-            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 6 * levelsGained)
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (3 * levelsGained))
-            call UpdateBonus(u, 0, 3 * levelsGained)   
-            call UpdateBonus(u, 1, 6 * levelsGained)
-            call SetBonus(u, 2 , 20 + heroLevel) 
+            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 5 * levelsGained)
+            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (2 * levelsGained))
+            call UpdateBonus(u, 0, 2 * levelsGained)   
+            call UpdateBonus(u, 1, 5 * levelsGained)
+            call SetBonus(u, 2 , 10 + (heroLevel * 0.5)) 
         elseif uid == TROLL_HEADHUNTER_UNIT_ID then   
             call SetBonus(u, 0, 40 + 1.5 * heroLevel)
         elseif uid == TINKER_UNIT_ID then  
