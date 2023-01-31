@@ -33,9 +33,6 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         if (ShopsCreated == false) then
             set PlayerCount = PlayerCount - 1
 
-            call BJDebugMsg("Updated player count: " + I2S(PlayerCount) + ", Spawned hero count: " + I2S(SpawnedHeroCount))
-            call BJDebugMsg("Valid player count: " + I2S(GetValidPlayerForceCount()) + ", Initial player count: " + I2S(InitialPlayerCount))
-
             // May need this sleep to make sure the GetValidPlayerForceCount check works correctly since it checks player state
             call TriggerSleepAction(0)
 
@@ -45,6 +42,9 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
                 call PlayerHeroSelected_AllPlayersHaveHeroesActions()
             endif
         endif
+
+        call BJDebugMsg("Updated player count: " + I2S(PlayerCount) + ", Spawned hero count: " + I2S(SpawnedHeroCount))
+        call BJDebugMsg("Valid player count: " + I2S(GetValidPlayerForceCount()) + ", Initial player count: " + I2S(InitialPlayerCount))
 
         // Make sure the auto ready status is wiped
         set PlayerIsAlwaysReady[GetPlayerId(leaverPlayer)] = false
