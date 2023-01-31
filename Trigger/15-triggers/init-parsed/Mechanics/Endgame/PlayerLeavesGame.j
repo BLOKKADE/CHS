@@ -33,9 +33,9 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         if (ShopsCreated == false) then
             set PlayerCount = PlayerCount - 1
 
-            call BJDebugMsg("All heroes spawned: " + B2S(AllPlayerHeroesSpawned) + ", Round number: " + I2S(RoundNumber) + ", spawned hero count: " + I2S(SpawnedHeroCount) + ", spawned hero count: " + I2S(PlayerCount))
+            call BJDebugMsg("All heroes spawned: " + B2S(AllPlayerHeroesSpawned) + ", Round number: " + I2S(RoundNumber) + ", spawned hero count: " + I2S(SpawnedHeroCount) + ", player count: " + I2S(PlayerCount))
             // Check if someone left during hero selection to prevent softlock
-            if (AllPlayerHeroesSpawned == false and RoundNumber == 1 and SpawnedHeroCount == (PlayerCount - 1)) then
+            if (AllPlayerHeroesSpawned == false and RoundNumber == 1 and SpawnedHeroCount == PlayerCount) then
                 call BJDebugMsg("Last player to select hero left game, starting waves")
                 call PlayerHeroSelected_AllPlayersHaveHeroesActions()
             endif
