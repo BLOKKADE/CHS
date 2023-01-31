@@ -32,7 +32,8 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         // Player is only decremented when a hero dies. If the hero doesn't exist yet the game gets messed up in the beginning
         if (ShopsCreated == false) then
             set PlayerCount = PlayerCount - 1
-
+            call AllowSinglePlayerCommands()
+            
             call BJDebugMsg("All heroes spawned: " + B2S(AllPlayerHeroesSpawned) + ", Round number: " + I2S(RoundNumber) + ", spawned hero count: " + I2S(SpawnedHeroCount) + ", player count: " + I2S(PlayerCount))
             // Check if someone left during hero selection to prevent softlock
             if (AllPlayerHeroesSpawned == false and RoundNumber == 1 and SpawnedHeroCount == PlayerCount) then
