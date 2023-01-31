@@ -10,9 +10,7 @@ library DeathDialogInitialization initializer init requires RandomShit
     endfunction
 
     private function init takes nothing returns nothing
-        set DeathDialogInitializationTrigger = CreateTrigger()
-        call TriggerRegisterTimerEventSingle(DeathDialogInitializationTrigger, 0.00)
-        call TriggerAddAction(DeathDialogInitializationTrigger, function DeathDialogInitializationActions)
+        call TimerStart(CreateTimer(), 1, false, function DeathDialogInitializationActions)
     endfunction
 
 endlibrary

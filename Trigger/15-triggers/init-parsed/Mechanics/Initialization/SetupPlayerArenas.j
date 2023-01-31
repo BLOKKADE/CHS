@@ -21,8 +21,7 @@ library SetupPlayerArenas initializer init requires RandomShit
     endfunction
 
     private function init takes nothing returns nothing
-        set SetupPlayerArenasTrigger = CreateTrigger()
-        call TriggerAddAction(SetupPlayerArenasTrigger, function SetupPlayerArenasActions)
+        call TimerStart(CreateTimer(), 1, false, function SetupPlayerArenasActions)
     endfunction
 
 endlibrary

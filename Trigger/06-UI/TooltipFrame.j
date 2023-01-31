@@ -1,4 +1,5 @@
 library TooltipFrame initializer init requires StringFunctions
+    
     globals
         framehandle TooltipFrame = null
 		framehandle TooltipTitleFrame
@@ -36,16 +37,16 @@ library TooltipFrame initializer init requires StringFunctions
     
         call BlzFrameSetSize(TooltipFrame, 0.29, 0.03)
         call BlzFrameSetPoint(TooltipFrame, FRAMEPOINT_BOTTOMRIGHT, GameUI, FRAMEPOINT_BOTTOMRIGHT, TooltipX, TooltipY)
-        call BlzFrameSetVisible(TooltipFrame, false )   
+        call BlzFrameSetVisible(TooltipFrame, false)   
     endfunction
 
-    //===========================================================================
     private function init takes nothing returns nothing
         local trigger trg = CreateTrigger()
-        call TriggerRegisterTimerEventSingle( trg, 1.1)
-        call TriggerAddAction( trg, function CreateTooltipFrame)
+        call TriggerRegisterTimerEventSingle(trg, 1.1)
+        call TriggerAddAction(trg, function CreateTooltipFrame)
 
         set TooltipYSize = Table.create()
         set trg = null
     endfunction
+
 endlibrary

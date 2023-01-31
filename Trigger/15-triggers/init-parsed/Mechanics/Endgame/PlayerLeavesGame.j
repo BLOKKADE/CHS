@@ -1,4 +1,4 @@
-library PlayerLeavesGame initializer init requires RandomShit, Scoreboard
+library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected
 
     private function ResetHero takes unit u returns nothing
         if IsUnitType(u, UNIT_TYPE_HERO) then
@@ -23,21 +23,35 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard
         local player leaverPlayer = GetTriggerPlayer()
         local integer playerId = GetPlayerId(leaverPlayer)
 
-        // Player is only decremented when a hero dies. If the hero doesn't exist yet the game gets messed up in the beginning
-        if (ShopsCreated == false) then
-            set PlayerCount = PlayerCount - 1
-        endif
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
 
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayer(LeaverPlayers, leaverPlayer)
-
         call UpdateScoreboardPlayerLeaves(leaverPlayer)
+
+        // Player is only decremented when a hero dies. If the hero doesn't exist yet the game gets messed up in the beginning
+        if (ShopsCreated == false) then
+            set PlayerCount = PlayerCount - 1
+
+            call BJDebugMsg("Updated player count: " + I2S(PlayerCount) + ", Spawned hero count: " + I2S(SpawnedHeroCount))
+            call BJDebugMsg("Valid player count: " + I2S(GetValidPlayerForceCount()) + ", Initial player count: " + I2S(InitialPlayerCount))
+
+            // May need this sleep to make sure the GetValidPlayerForceCount check works correctly since it checks player state
+            call TriggerSleepAction(0)
+
+            // Check if someone left during hero selection to prevent softlock
+            if AllPlayerHeroesSpawned == false and RoundNumber == 1 and SpawnedHeroCount == (GetValidPlayerForceCount() - 1) then
+                call BJDebugMsg("Last player to select hero left game, starting waves")
+                call PlayerHeroSelected_AllPlayersHaveHeroesActions()
+            endif
+        endif
 
         // Make sure the auto ready status is wiped
         set PlayerIsAlwaysReady[GetPlayerId(leaverPlayer)] = false
 
-        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
-        call ResetHero(PlayerHeroes[playerId])
+        if (PlayerHeroes[playerId] != null) then
+            call ResetHero(PlayerHeroes[playerId])
+        endif
 
         // Find a new host
         if (HostPlayer == leaverPlayer) then

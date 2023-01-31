@@ -136,7 +136,6 @@ library GameInit initializer init requires GroupUtils
         trigger CreepPeriodicAttackTrigger = null
         trigger CreepPowerAndHpTrigger = null
         trigger CreepTypesTrigger = null
-        trigger DeathDialogInitializationTrigger = null
         trigger DeathDialogLeaveTrigger = null
         trigger DialogInitializationTrigger = null
         trigger DisableAbilitiesTrigger = null
@@ -173,9 +172,7 @@ library GameInit initializer init requires GroupUtils
         trigger PlayerInitializationTrigger = null
         trigger PlayerLeavesGameTrigger = null
         trigger PvpCountdownTimerTrigger = null
-        trigger ResourceBettingMenusTrigger = null
         trigger SetHostPlayerTrigger = null
-        trigger SetupPlayerArenasTrigger = null
         trigger SinglePvpHeroDeathTrigger = null
         trigger SpacebarCameraTrigger = null
         trigger StartLevelTrigger = null
@@ -304,9 +301,12 @@ library GameInit initializer init requires GroupUtils
     endfunction
 
     private function StartGame takes nothing returns nothing
-        call ConditionalTriggerExecute(SetupPlayerArenasTrigger)
+        call FogMaskEnableOff()
+        call FogEnableOff()
+
         call ConditionalTriggerExecute(PlayerInitializationTrigger)
         call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
+        call ConditionalTriggerExecute(VotingRightsDialogTrigger)
     endfunction  
 
     public function init takes nothing returns nothing
@@ -314,7 +314,9 @@ library GameInit initializer init requires GroupUtils
         call InitializeGlobals()
         call InitializeSounds()
 
-        call TimerStart(CreateTimer(), 0, false, function StartGame)
+        call DisplayTimedTextToForce(GetPlayersAll(), 3.00, "|cff52ff5bPlease wait while the game initializes..|r")
+
+        call TimerStart(CreateTimer(), 3, false, function StartGame)
     endfunction
 
 endlibrary

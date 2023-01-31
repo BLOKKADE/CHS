@@ -4,7 +4,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         boolean ShopsCreated = false
     endglobals
 
-    private function CreateNeutralPassiveBuildings2 takes nothing returns nothing
+    private function CreateShops takes nothing returns nothing
         local player p = Player(PLAYER_NEUTRAL_PASSIVE)
     
         if (ArNotLearningAbil == false and AbilityMode == 1) then
@@ -63,7 +63,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
             call InitUpgradeShop()
         endif
 
-        call CreateNeutralPassiveBuildings2()
+        call CreateShops()
 
         call TriggerSleepAction(2)
 

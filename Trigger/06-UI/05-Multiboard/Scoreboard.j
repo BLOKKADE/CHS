@@ -818,7 +818,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
     endfunction
 
     private function init takes nothing returns nothing
-        call TimerStart(CreateTimer(), 1, false, function InitializeScoreboard)
+        call TimerStart(CreateTimer(), 4, false, function InitializeScoreboard)
     endfunction
 
 endlibrary

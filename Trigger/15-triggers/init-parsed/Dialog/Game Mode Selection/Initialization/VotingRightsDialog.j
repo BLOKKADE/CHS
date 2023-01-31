@@ -2,9 +2,9 @@ library VotingRightsDialog initializer init requires RandomShit
 
     private function VotingRightsDialogActions takes nothing returns nothing
         call ConditionalTriggerExecute(SetHostPlayerTrigger) // Determine who decides the game mode. Saved as HostPlayer
-        
+
         // Don't bother showing the Voting rights if there is just one player in the game
-        if (InitialPlayerCount == 1) then
+        if (PlayerCount == 1) then
             call TriggerExecute(HostSelectsModeTrigger)
             return
         endif
@@ -29,7 +29,6 @@ library VotingRightsDialog initializer init requires RandomShit
 
     private function init takes nothing returns nothing
         set VotingRightsDialogTrigger = CreateTrigger()
-        call TriggerRegisterTimerEventSingle(VotingRightsDialogTrigger, 0.00)
         call TriggerAddAction(VotingRightsDialogTrigger, function VotingRightsDialogActions)
     endfunction
 

@@ -1,9 +1,5 @@
 library ResourceBettingMenus initializer init requires RandomShit, InitializeBettingDialogs
 
-    private function ResourceBettingMenusConditions takes nothing returns boolean
-        return BettingEnabled == true
-    endfunction
-
     private function ResourceBettingMenusActions takes nothing returns nothing
         call DialogSetMessage(BettingDialogs[2], "Betting Menu")
         call DialogAddButtonBJ(BettingDialogs[2], "Gold")
@@ -27,10 +23,7 @@ library ResourceBettingMenus initializer init requires RandomShit, InitializeBet
     endfunction
 
     private function init takes nothing returns nothing
-        set ResourceBettingMenusTrigger = CreateTrigger()
-        call TriggerRegisterTimerEventSingle(ResourceBettingMenusTrigger, 30.00)
-        call TriggerAddCondition(ResourceBettingMenusTrigger, Condition(function ResourceBettingMenusConditions))
-        call TriggerAddAction(ResourceBettingMenusTrigger, function ResourceBettingMenusActions)
+        call TimerStart(CreateTimer(), 1, false, function ResourceBettingMenusActions)
     endfunction
 
 endlibrary
