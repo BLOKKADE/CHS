@@ -18,6 +18,13 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         local boolean isRandom = HeroSelectorEventIsRandom
         set bj_lastCreatedUnit = u
 
+        // Don't spawn a hero for a leaver player
+        if (IsPlayerInForce(LeaverPlayers, p)) then
+            set p = null
+            set u = null
+            return
+        endif
+
         if isRandom then
             call AdjustPlayerStateBJ(900, p, PLAYER_STATE_RESOURCE_GOLD)
 
@@ -38,7 +45,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
             call ShowUnit(PreviewUnit, false)
         endif
 
-        call ForceAddPlayerSimple(p, PlayersWithHero)
+        call ForceAddPlayer(PlayersWithHero, p)
 
         call PanCameraToTimedForPlayer(p, GetUnitX(u), GetUnitY(u),0)
         call SelectUnitForPlayerSingle(u, p)

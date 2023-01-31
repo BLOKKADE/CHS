@@ -118,7 +118,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local integer playerArenaIndex = 0
         local group playerArenaUnits
 
-        call StopSoundBJ(udg_sound13,false)
+        call StopSoundBJ(udg_sound13, false)
         call PlaySoundBJ(udg_sound13)
         call ForceAddPlayer(DefeatedPlayers, currentPlayer)
 

@@ -5,7 +5,7 @@ library PlayerInitialization initializer init requires RandomShit
         local boolean isLeaverPlayer = GetPlayerController(currentPlayer) == MAP_CONTROL_USER and GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_LEFT
         local boolean isValid = (not isLeaverPlayer) and (GetPlayerId(currentPlayer) < 8)
 
-        call BJDebugMsg("Valid id ( + " + I2S(GetPlayerId(currentPlayer)) + "): " + B2S(GetPlayerId(currentPlayer) < 8) + ", Is playing: " + B2S(GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING) + ", Is a leaver: " + B2S(isLeaverPlayer))
+        call BJDebugMsg("Valid id (" + I2S(GetPlayerId(currentPlayer)) + "): " + B2S(GetPlayerId(currentPlayer) < 8) + ", Is playing: " + B2S(GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING) + ", Is a leaver: " + B2S(isLeaverPlayer))
 
         // Cleanup
         set currentPlayer = null
