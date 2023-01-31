@@ -34,16 +34,11 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
             set PlayerCount = PlayerCount - 1
             call AllowSinglePlayerCommands()
             
-            call BJDebugMsg("All heroes spawned: " + B2S(AllPlayerHeroesSpawned) + ", Round number: " + I2S(RoundNumber) + ", spawned hero count: " + I2S(SpawnedHeroCount) + ", player count: " + I2S(PlayerCount))
             // Check if someone left during hero selection to prevent softlock
             if (AllPlayerHeroesSpawned == false and RoundNumber == 1 and SpawnedHeroCount == PlayerCount) then
-                call BJDebugMsg("Last player to select hero left game, starting waves")
                 call PlayerHeroSelected_AllPlayersHaveHeroesActions()
             endif
         endif
-
-        call BJDebugMsg("Updated player count: " + I2S(PlayerCount) + ", Spawned hero count: " + I2S(SpawnedHeroCount))
-        call BJDebugMsg("Valid player count: " + I2S(GetValidPlayerForceCount()) + ", Initial player count: " + I2S(InitialPlayerCount))
 
         // Make sure the auto ready status is wiped
         set PlayerIsAlwaysReady[GetPlayerId(leaverPlayer)] = false

@@ -5,8 +5,6 @@ library PlayerInitialization initializer init requires RandomShit
         local boolean isLeaverPlayer = GetPlayerController(currentPlayer) == MAP_CONTROL_USER and GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_LEFT
         local boolean isValid = (not isLeaverPlayer) and (GetPlayerId(currentPlayer) < 8)
 
-        call BJDebugMsg("Valid id (" + I2S(GetPlayerId(currentPlayer)) + "): " + B2S(GetPlayerId(currentPlayer) < 8) + ", Is playing: " + B2S(GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING) + ", Is a leaver: " + B2S(isLeaverPlayer))
-
         // Cleanup
         set currentPlayer = null
 
@@ -65,10 +63,7 @@ library PlayerInitialization initializer init requires RandomShit
         call TriggerSleepAction(0.00)
 
         call ForForce(validPlayerForce, function SetPlayerAlliances)
-
-        call BJDebugMsg("Updated player count: " + I2S(PlayerCount) + ", Spawned hero count: " + I2S(SpawnedHeroCount))
-        call BJDebugMsg("Valid player count: " + I2S(GetValidPlayerForceCount()) + ", Initial player count: " + I2S(InitialPlayerCount))
-
+        
         // Cleanup
         call DestroyForce(validPlayerForce)
         set validPlayerForce = null
