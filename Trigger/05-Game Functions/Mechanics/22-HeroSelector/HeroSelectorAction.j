@@ -19,7 +19,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set bj_lastCreatedUnit = u
 
         // Don't spawn a hero for a leaver player
-        if (IsPlayerInForce(LeaverPlayers, p)) then
+        if (IsPlayerInForce(p, LeaverPlayers)) then
             set p = null
             set u = null
             return
