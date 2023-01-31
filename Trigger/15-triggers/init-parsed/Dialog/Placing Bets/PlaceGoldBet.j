@@ -1,7 +1,7 @@
 library PlaceGoldBet initializer init requires RandomShit, InitializeBettingDialogs
 
     private function PlaceGoldBetConditions takes nothing returns boolean
-        return GetClickedButton() == BettingDialogButtons[5]
+        return GetClickedButton() == BettingDialogButtons[4]
     endfunction
 
     private function PlaceGoldBetActions takes nothing returns nothing

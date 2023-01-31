@@ -15,7 +15,7 @@ library DistributeBets initializer init requires RandomShit, PvpRoundRobin
 
             call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", PlayerHeroes[currentPlayerId], "Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl"))
             
-            if (PlayerPlacedGoldBet[currentPlayerId] == true)then
+            if (PlayerPlacedGoldBet[currentPlayerId] == true) then
                 call AdjustPlayerStateBJ((ResourceBetPercentageGoldReward[currentPlayerId] * 2), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                 call ResourseRefresh(currentPlayer)
                 set winMessage = winMessage + I2S((ResourceBetPercentageGoldReward[currentPlayerId] * 2))

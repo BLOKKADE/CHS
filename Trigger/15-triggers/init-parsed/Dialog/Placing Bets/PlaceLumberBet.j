@@ -1,7 +1,7 @@
 library PlaceLumberBet initializer init requires RandomShit, InitializeBettingDialogs
 
     private function PlaceLumberBetConditions takes nothing returns boolean
-        return GetClickedButton() == BettingDialogButtons[4]
+        return GetClickedButton() == BettingDialogButtons[5]
     endfunction
 
     private function PlaceLumberBetActions takes nothing returns nothing

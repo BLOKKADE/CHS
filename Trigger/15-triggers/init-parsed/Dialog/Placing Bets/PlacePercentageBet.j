@@ -43,6 +43,9 @@ library PlacePercentageBet initializer init requires RandomShit, PvpRoundRobin, 
         else
             call DisplayTimedTextToForce(GetPlayersAll(), 2.00, "|c00F08000" + GetPlayerNameColour(currentPlayer) + " placed a bet on " + ConvertForceToUnitString(CurrentDuelGame.team2) + "!")
         endif
+
+        // Cleanup
+        set currentPlayer = null
     endfunction
 
     private function init takes nothing returns nothing

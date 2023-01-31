@@ -2,11 +2,15 @@ library PlayerInitialization initializer init requires RandomShit
 
     private function ValidPlayerFilter takes nothing returns boolean
         local player currentPlayer = GetFilterPlayer()
+        local boolean isLeaverPlayer = GetPlayerController(currentPlayer) == MAP_CONTROL_USER and GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_LEFT
+        local boolean isValid = (not isLeaverPlayer) and (GetPlayerId(currentPlayer) < 8)
+
+        call BJDebugMsg("Valid id ( + " + I2S(GetPlayerId(currentPlayer)) + "): " + B2S(GetPlayerId(currentPlayer) < 8) + ", Is playing: " + B2S(GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING) + ", Is a leaver: " + B2S(isLeaverPlayer))
 
         // Cleanup
         set currentPlayer = null
 
-        return GetPlayerId(currentPlayer) < 8 and GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING and (IsPlayerInForce(currentPlayer, LeaverPlayers) == false)
+        return isValid
     endfunction
 
     private function AddValidPlayer takes nothing returns nothing

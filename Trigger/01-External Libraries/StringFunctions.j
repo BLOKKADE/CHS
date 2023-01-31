@@ -7,12 +7,12 @@ library StringFunctions requires MathRound
         local integer msLength = StringLength(mainString)
         local integer sfLength = StringLength(stringToFind)
         local integer i = startingIndex
-        if(sfLength > msLength or i < 0)then
+        if(sfLength > msLength or i < 0) then
             return - 1
         endif
         loop
             exitwhen i > msLength - sfLength
-            if(SubString(mainString, i, i + sfLength) == stringToFind)then
+            if(SubString(mainString, i, i + sfLength) == stringToFind) then
                 return i
             endif
             set i = i + 1
