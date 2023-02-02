@@ -19,7 +19,7 @@ library PackingTape initializer init requires PlayerSummonGroups, SummonInfo
     function CastPackingTape takes unit caster, unit target returns nothing
         local integer i = 0
         local unit temp = null
-        local integer totalLevel = SummonLevel.integer[GetHandleId(target)]
+        local integer totalLevel = 0
 
         if GetUnitTypeId(target) == FAERIE_DRAGON_UNIT_ID or GetSummonSpell(GetUnitTypeId(target)) == 0 then
             call DisplayTimedTextToPlayer(GetOwningPlayer(caster), 0, 0, 10, "Packing Tape cannot be cast on this unit.")
@@ -50,12 +50,14 @@ library PackingTape initializer init requires PlayerSummonGroups, SummonInfo
                 set i = i - 1
                 exitwhen i <= 0
             endloop
+
+            call RemoveUnitBuffs(target, BUFFTYPE_BOTH, true)
+
+            call GetSummonStatFunction(GetUnitTypeId(target)).evaluate(target, totalLevel)
+
+            call BlzSetUnitName(target,GetUnitName(target)+ ": |cff00d9fflevel " + I2S(totalLevel) + "|r")
+            call SetWidgetLife(target, BlzGetUnitMaxHP(target))
         endif
-
-        call GetSummonStatFunction(GetUnitTypeId(target)).evaluate(target, totalLevel)
-
-        call BlzSetUnitName(target,GetUnitName(target)+ ": |cff00d9fflevel " + I2S(totalLevel) + "|r")
-        call SetWidgetLife(target, BlzGetUnitMaxHP(target))
 
         set temp = null
     endfunction
