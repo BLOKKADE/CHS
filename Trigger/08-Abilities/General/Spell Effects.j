@@ -116,7 +116,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             return true
         //Blink Strike
         elseif abilId == BLINK_STRIKE_ABILITY_ID or abilId == 'A06I' then
-            call BlinkStrike(hero, lvl)
+            call BlinkStrike(caster, lvl)
             return true
         //Whirlwind
         elseif abilId == 'A025' then
