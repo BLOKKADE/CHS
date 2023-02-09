@@ -105,7 +105,6 @@ scope ModifyDamageBeforeArmor initializer init
                 call AbilStartCD(DamageTarget, 'A08S', 10)
                 call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)  
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
-                return
             endif 
         endif 
 
