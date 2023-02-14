@@ -1,4 +1,4 @@
-library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerHeroSelected
+library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerHeroSelected, AbilityData
     //HeroSelectorAction V1.4.0
     
     globals
@@ -110,16 +110,57 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
     public function InitHeroes takes nothing returns nothing
         //create categories setuped in config
         local integer index
+        local integer elementIndex
         local integer categoryMelee = 1 //autodetected
         local integer categoryRanged = 2 //autodetected
         local integer categoryStr = 4
         local integer categoryAgi = 8
         local integer categoryInt = 16
-        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNSteelMelee", "MELEE")                 //1, automatic detected when adding an unit
-        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpOne", "Ranged")         //2, automatic detected when adding an unit
-        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower", "STRENGTH")    //4
-        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility", "AGILITY")        //8
-        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence", "INTELLECT")   //16
+
+        local integer array elementFilters
+        local integer array elementCategoryLookup
+
+        set elementFilters[0] = Element_Fire
+        set elementFilters[1] = Element_Water
+        set elementFilters[2] = Element_Dark
+        set elementFilters[3] = Element_Cold
+        set elementFilters[4] = Element_Arcane
+        set elementFilters[5] = Element_Wind
+        set elementFilters[6] = Element_Earth
+        set elementFilters[7] = Element_Wild
+        set elementFilters[8] = Element_Blood
+        set elementFilters[9] = Element_Light
+        set elementFilters[10] = Element_Poison
+
+        set elementCategoryLookup[0] = 32
+        set elementCategoryLookup[1] = 64
+        set elementCategoryLookup[2] = 128
+        set elementCategoryLookup[3] = 256
+        set elementCategoryLookup[4] = 512
+        set elementCategoryLookup[5] = 1024
+        set elementCategoryLookup[6] = 2048
+        set elementCategoryLookup[7] = 4096
+        set elementCategoryLookup[8] = 8192
+        set elementCategoryLookup[9] = 16384
+        set elementCategoryLookup[10] = 32768
+
+        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNSteelMelee", "MELEE", true)                 //1, automatic detected when adding an unit
+        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpOne", "Ranged", true)         //2, automatic detected when adding an unit
+        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower", "STRENGTH", true)    //4
+        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility", "AGILITY", true)        //8
+        call HeroSelectorAddCategory("ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence", "INTELLECT", true)   //16
+
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASbook1fire .blp", "Fire", false)   //32
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASbook1water .blp", "Water", false)   //64
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASDarkMagic.blp", "Dark", false)   //128
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASIceyBook.blp", "Cold", false)   //256
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASArcaneBooklet.blp", "Arcane", false)   //512
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASbook1wind .blp", "Wind", false)   //1024
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASEarthMagic.blp", "Earth", false)   //2048
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASbook1earth .blp", "Wild", false)   //4096
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASBloodBoundTome.blp", "Blood", false)   //8192
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASHolyMagic.blp", "Light", false)   //16384
+        call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASTomePowerPoison.BLP", "Poison", false)   //32768
 
         //read GUI, when the variable exist
         set HeroSelectorUnitCode[1] = ABOMINATION_UNIT_ID
@@ -194,57 +235,76 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
             set index = index + 1
         endloop
 
+        // Add element category filters
+        set index = 1
+        loop
+            exitwhen index > HeroSelector_HeroButtonCount
+
+            set elementIndex = 0
+            loop
+                exitwhen elementIndex > 10
+
+                if (GetObjectElementCount(HeroSelectorUnitCode[index], elementFilters[elementIndex]) > 0) then
+                    call HeroSelectorAddUnitCategory(HeroSelectorUnitCode[index], elementCategoryLookup[elementIndex])
+                endif
+
+                set elementIndex = elementIndex + 1
+            endloop
+
+            set index = index + 1
+        endloop
+
         // We have to manually specify the primary stat of each hero to improve loading times
-        call HeroSelectorAddUnitCategory(LIEUTENANT_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(DARK_HUNTER_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(BLOOD_MAGE_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(MAULER_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(NAGA_SIREN_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(MORTAR_TEAM_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(ABOMINATION_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(DRUID_OF_THE_CLAY_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(RANGER_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(SORCERER_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(ARENA_MASTER_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(DOOM_GUARD_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(ROCK_GOLEM_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(LICH_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(GNOME_MASTER_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(CENTAUR_ARCHER_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(OGRE_WARRIOR_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(TIME_WARRIOR_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(OGRE_MAGE_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(MURLOC_WARRIOR_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(MEDIVH_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(GHOUL_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(BANSHEE_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(GRUNT_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(SEER_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(FALLEN_RANGER_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(WAR_GOLEM_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(TROLL_HEADHUNTER_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(BLADE_MASTER_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(TINKER_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(SKELETON_BRUTE_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(BEAST_MASTER_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(URSA_WARRIOR_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(HUNTRESS_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(ORC_CHAMPION_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(COLD_KNIGHT_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(GREEDY_GOBLIN_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(TAUREN_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(THUNDER_WITCH_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(DEADLORD_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(AVATAR_SPIRIT_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(DEMON_HUNTER_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(PYROMANCER_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(WITCH_DOCTOR_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(PIT_LORD_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(MYSTIC_UNIT_ID, 16)
-        call HeroSelectorAddUnitCategory(TROLL_BERSERKER_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(YETI_UNIT_ID, 4)
-        call HeroSelectorAddUnitCategory(SATYR_TRICKSTER_UNIT_ID, 8)
-        call HeroSelectorAddUnitCategory(WOLF_RIDER_UNIT_ID, 8)
+        call HeroSelectorAddUnitCategory(LIEUTENANT_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(DARK_HUNTER_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(BLOOD_MAGE_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(MAULER_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(NAGA_SIREN_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(MORTAR_TEAM_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(ABOMINATION_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(DRUID_OF_THE_CLAY_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(RANGER_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(SORCERER_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(ARENA_MASTER_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(DOOM_GUARD_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(ROCK_GOLEM_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(LICH_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(GNOME_MASTER_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(CENTAUR_ARCHER_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(OGRE_WARRIOR_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(TIME_WARRIOR_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(OGRE_MAGE_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(MURLOC_WARRIOR_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(MEDIVH_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(GHOUL_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(BANSHEE_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(GRUNT_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(SEER_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(FALLEN_RANGER_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(WAR_GOLEM_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(TROLL_HEADHUNTER_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(BLADE_MASTER_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(TINKER_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(SKELETON_BRUTE_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(BEAST_MASTER_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(URSA_WARRIOR_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(HUNTRESS_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(ORC_CHAMPION_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(COLD_KNIGHT_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(GREEDY_GOBLIN_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(TAUREN_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(THUNDER_WITCH_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(DEADLORD_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(AVATAR_SPIRIT_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(DEMON_HUNTER_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(PYROMANCER_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(WITCH_DOCTOR_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(PIT_LORD_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(MYSTIC_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(TROLL_BERSERKER_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(YETI_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(SATYR_TRICKSTER_UNIT_ID, categoryAgi)
+        call HeroSelectorAddUnitCategory(WOLF_RIDER_UNIT_ID, categoryAgi)
 
         return
         //adding further units when using the GUI Array does not make much sense, except you would add rows.
@@ -256,7 +316,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         //when you have a ban phase it might be better to add the requirments after the ban phase is over, otherwise one can only ban own options.
         //human only work for human, as nightelf only for Nightelf
         call HeroSelectorSetUnitReqRace('Hpal', RACE_HUMAN)
-        call HeroSelectorSetUnitReqTechLevel('Hpal', 'hfoo', 4)
+        call HeroSelectorSetUnitReqTechLevel('Hpal', 'hfoo', categoryStr)
         call HeroSelectorSetUnitReqRace('Hamg', RACE_HUMAN)
         call HeroSelectorSetUnitReqRace('Hblm', RACE_HUMAN)
         call HeroSelectorSetUnitReqRace('Hmkg', RACE_HUMAN)

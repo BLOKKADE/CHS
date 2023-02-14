@@ -117,7 +117,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         integer PlayerBanCount                 = 0 // Keeps track of how many people have banned. We can then short circuit the ban timer if everyone has banned
         //Category
         private boolean CategoryAffectRandom   = true  //(false) random will not care about selected category
-        private boolean CategoryMultiSelect    = false //(false) deselect other category when selecting one, (true) can selected multiple categories and all heroes having any of them are not filtered.
+        private boolean CategoryMultiSelect    = true //(false) deselect other category when selecting one, (true) can selected multiple categories and all heroes having any of them are not filtered.
         private real CategorySize              = 0.02  //the size of the Category Button
         private real CategorySpaceX            = 0.0008 //space between 2 category Buttons, it is meant to need only one line of Categoryy Buttons.
         private integer CategoryFilteredAlpha  = 45     // Alpha value of Heroes being filtered by unselected categories
@@ -125,7 +125,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             //Icon path, tooltip Text (tries to localize)
         //Indicator
         private framehandle IndicatorSelected
+        private framehandle array FilterIndicatorSelected
         private framehandle IndicatorSelectedParent
+        private framehandle array FilterIndicatorSelectedParents
         private string IndicatorPathPick       = "UI\\Feedback\\Autocast\\UI-ModalButtonOn.mdl" //this model is used by the indicator during picking
         private string IndicatorPathBan        = "war3mapImported\\HeroSelectorBan.mdl" //this model is used by the indicator during baning
         //Grid
@@ -353,12 +355,18 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         return SubString(icon, 0, 34) + "Disabled\\DIS" + SubString(icon, 35, StringLength(icon))
     endfunction
 
-    function HeroSelectorAddCategory takes string icon, string text returns nothing
+    function HeroSelectorAddCategory takes string icon, string text, boolean tryGetDisabledIcon returns nothing
         //adds an data category construct
         set CategoryButtonCount = CategoryButtonCount + 1
         set CategoryText[CategoryButtonCount] = text
         set CategoryTexture[CategoryButtonCount] = icon
-        set CategoryTextureDisabled[CategoryButtonCount] = HeroSelectorGetDisabledIcon(icon)
+
+        if (tryGetDisabledIcon) then
+            set CategoryTextureDisabled[CategoryButtonCount] = HeroSelectorGetDisabledIcon(icon)
+        else
+            set CategoryTextureDisabled[CategoryButtonCount] = icon
+        endif
+
         if CategoryButtonCount > 1 then
             set CategoryButtonValue[CategoryButtonCount] = CategoryButtonValue[CategoryButtonCount - 1]*2
         else
@@ -1271,6 +1279,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             //yes, unable
             set PlayerSelectedCategory[playerIndex] = PlayerSelectedCategory[playerIndex] - CategoryButtonValue[categoryIndex]
             if GetLocalPlayer() == p then
+                call BlzFrameSetVisible(FilterIndicatorSelected[categoryIndex], false)
                 call BlzFrameSetTexture(CategoryIconFrame[categoryIndex], CategoryTextureDisabled[categoryIndex], 0, true)
                 call BlzFrameSetTexture(CategoryIconPushedFrame[categoryIndex], CategoryTextureDisabled[categoryIndex], 0, true)
             endif
@@ -1278,6 +1287,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         else
             if not CategoryMultiSelect and PlayerSelectedCategory[playerIndex] != 0 then
                 set lastCategoryIndex = PlayerLastSelectedCategoryIndex[playerIndex]
+                call BlzFrameSetVisible(FilterIndicatorSelected[categoryIndex], false)
                 call BlzFrameSetTexture(CategoryIconFrame[lastCategoryIndex], CategoryTextureDisabled[lastCategoryIndex], 0, true)
                 call BlzFrameSetTexture(CategoryIconPushedFrame[lastCategoryIndex], CategoryTextureDisabled[lastCategoryIndex], 0, true)
                 set PlayerSelectedCategory[playerIndex] = 0
@@ -1286,6 +1296,10 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             //no, enable
             set PlayerSelectedCategory[playerIndex] = PlayerSelectedCategory[playerIndex] + CategoryButtonValue[categoryIndex]
             if GetLocalPlayer() == p then
+                call BlzFrameSetVisible(FilterIndicatorSelected[categoryIndex], true)
+                call BlzFrameSetPoint(FilterIndicatorSelected[categoryIndex], FRAMEPOINT_TOPLEFT, fh, FRAMEPOINT_TOPLEFT, -0.001, 0.001)
+                call BlzFrameSetPoint(FilterIndicatorSelected[categoryIndex], FRAMEPOINT_BOTTOMRIGHT, fh, FRAMEPOINT_BOTTOMRIGHT, -0.0012, -0.0016)
+
                 call BlzFrameSetTexture(CategoryIconFrame[categoryIndex], CategoryTexture[categoryIndex], 0, true)
                 call BlzFrameSetTexture(CategoryIconPushedFrame[categoryIndex], CategoryTexture[categoryIndex], 0, true)
                 
@@ -1321,17 +1335,20 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local real borderSize = GetBorderSize()
         local integer colCount = ButtonColCount
         local integer rowCount = ButtonRowCount
-        local framehandle box = BlzCreateFrame(BoxFrameName, BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0)
+        local framehandle box = BlzCreateFrame(BoxFrameName, BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0)   
         local framehandle boxBottom = BlzCreateFrame("HeroSelectorRaceTopBox", box, 0, 0)
         local integer rowRemaining = colCount
         local real y = -borderSize - titleSize - 0.0125 - CategorySize
         local real x = borderSize
-        
+        local integer categoryIndex = 0
+
         set HeroSelectorBoxTitle = BlzCreateFrame("HeroSelectorTitle", box, 0, 0)
+
+        // Indicator for selecting a hero
         set IndicatorSelectedParent = BlzCreateFrameByType("BUTTON", "MyHeroIndikatorParent", box, "", 0)
         call BlzFrameSetLevel(IndicatorSelectedParent, 9)
         set IndicatorSelected = BlzCreateFrameByType("SPRITE", "MyHeroIndikator", IndicatorSelectedParent, "", 0)
-        set HeroSelectorBox = box   
+        set HeroSelectorBox = box
         set HeroSelectorBoxSeperator = boxBottom
         call BlzFrameSetModel(IndicatorSelected, IndicatorPathPick, 0)
         call BlzFrameSetScale(IndicatorSelected, ButtonSize/0.036) //scale the model to the button size.
@@ -1344,6 +1361,20 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         call BlzFrameSetTextAlignment(HeroSelectorBoxTitle, TEXT_JUSTIFY_MIDDLE, TEXT_JUSTIFY_CENTER)
         call BlzFrameSetSize(HeroSelectorBoxTitle, BlzFrameGetWidth(box) - borderSize*2, 0.03)
 
+        // Create the indicator frames for all categories
+        loop
+            exitwhen categoryIndex > CategoryButtonCount
+
+            // Indicator for selecting a filter
+            set FilterIndicatorSelectedParents[categoryIndex] = BlzCreateFrameByType("BUTTON", "MyHeroIndikatorParent", box, "", 0)
+            call BlzFrameSetLevel(FilterIndicatorSelectedParents[categoryIndex], 9)
+            set FilterIndicatorSelected[categoryIndex] = BlzCreateFrameByType("SPRITE", "MyHeroIndikator", FilterIndicatorSelectedParents[categoryIndex], "", 0)
+            call BlzFrameSetModel(FilterIndicatorSelected[categoryIndex], IndicatorPathPick, 0)
+            call BlzFrameSetScale(FilterIndicatorSelected[categoryIndex], CategorySize/0.036) //scale the model to the button size.
+            call BlzFrameSetVisible(FilterIndicatorSelected[categoryIndex], false)
+
+            set categoryIndex = categoryIndex + 1
+        endloop
 
         // human UI size differs much, needs other numbers
         if GetPlayerRace(GetLocalPlayer()) == RACE_HUMAN then
