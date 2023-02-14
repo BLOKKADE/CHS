@@ -1,4 +1,4 @@
-library PackingTape initializer init requires PlayerSummonGroups, SummonInfo
+library PackingTape initializer init requires PlayerSummonGroups, SummonInfo, RemoveBuffs
 
     globals
         Table RegisteredSummon

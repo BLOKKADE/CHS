@@ -34,10 +34,11 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant integer PLAYER_READY_STATUS_INDEX              = 2
         private constant integer PLAYER_ELEMENT_COUNT_INDEX             = 3
         private constant integer PLAYER_NAME_INDEX                      = 4
-        private constant integer PLAYER_STATUS_INDEX                    = 5
-        private constant integer PLAYER_DUELS_INDEX                     = 6
-        private constant integer PLAYER_ITEMS_START_INDEX               = 7
-        private constant integer PLAYER_ABILITIES_START_INDEX           = 13
+        private constant integer PLAYER_HERO_LEVEL_INDEX                = 5
+        private constant integer PLAYER_STATUS_INDEX                    = 6
+        private constant integer PLAYER_DUELS_INDEX                     = 7
+        private constant integer PLAYER_ITEMS_START_INDEX               = 8
+        private constant integer PLAYER_ABILITIES_START_INDEX           = 14
 
         // Specifications for a player name text
         private constant real TEXT_HEIGHT                               = 0.012
@@ -48,15 +49,24 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant real PLAYER_DUELS_WIDTH                        = 0.043
 
         // Colors
-        private constant string COLOR_END_TAG                           = "|r"
-        private constant string HEADER_COLOR                            = "|cff00ffff"
-        private constant string PVP_LOSSES_COLOR                        = "|cffdd2c00"
-        private constant string PVP_WINS_COLOR                          = "|cffbfff81"
-        private constant string LEAVER_COLOR                            = "|cff858585"	
-        private constant string SURVIVED_UNTIL_STATUS_COLOR             = "|cffdf50e4"	
         private constant string BR_WINNER_STATUS_COLOR                  = "|cfffcff4a"	
         private constant string FELL_IN_BR_STATUS_COLOR                 = "|cffff9925"	
+        private constant string HEADER_COLOR                            = "|cff00ffff"
+        private constant string INVALID_ACTION_COLOR                    = "|cffff0000"	
+        private constant string LEAVER_COLOR                            = "|cff858585"	
         private constant string NO_HERO_STATUS_COLOR                    = "|cffff2525"	
+        private constant string PLAYER_ALWAYS_READY_COLOR               = "|cffffdd00"
+        private constant string PLAYER_ELEMENT_COUNT_COLOR              = "|cffd0ff00"
+        private constant string PLAYER_HERO_LEVEL_COLOR                 = "|cff98fff6"
+        private constant string PLAYER_HERO_NAME_COLOR                  = "|cffffa8a8"
+        private constant string PLAYER_NOT_READY_COLOR                  = "|cffff0000"
+        private constant string PLAYER_READY_COLOR                      = "|cff00ff08"
+        private constant string PLAYER_STATS_COLOR                      = "|cffd0ff00"
+        private constant string PVP_LOSSES_COLOR                        = "|cffdd2c00"
+        private constant string PVP_WINS_COLOR                          = "|cffbfff81"
+        private constant string SURVIVED_UNTIL_STATUS_COLOR             = "|cffdf50e4"	
+
+        private constant string COLOR_END_TAG                           = "|r"
         private constant string SLASH                                   = "|cff858585/|r"
 
         // Specifications about the rows/columns
@@ -191,13 +201,18 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // (+ ROW_SPACING) is used to shift everything closer to the header row
         set value = value - TEXT_HEIGHT - (2 * ICON_WIDTH * CurrentRowIndex) - (ROW_SPACING * CurrentRowIndex) + ICON_WIDTH + ROW_SPACING
 
+        // Player hero level
+        if (CurrentColumnIndex == PLAYER_HERO_LEVEL_INDEX) then
+            return value - ICON_SPACING
+        endif
+
         // Player status
         if (CurrentColumnIndex == PLAYER_STATUS_INDEX) then
             return value - offset - ICON_SPACING
         endif
 
-        // Top row player stats icon, player hero icon, item icons, or ability icons
-        if (CurrentColumnIndex == PLAYER_STATS_INDEX or CurrentColumnIndex == PLAYER_HERO_INDEX or CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2) or CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
+        // Player name, top row player stats icon, player hero icon, item icons, or ability icons
+        if (CurrentColumnIndex == PLAYER_NAME_INDEX or CurrentColumnIndex == PLAYER_STATS_INDEX or CurrentColumnIndex == PLAYER_HERO_INDEX or CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2) or CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
             set value = value + offset
         endif
 
@@ -297,7 +312,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             call BlzFrameSetEnable(playerNameTextFrameHandle, false) 
 
             // Show smaller text for the player status
-            if (CurrentColumnIndex == PLAYER_STATUS_INDEX) then
+            if (CurrentColumnIndex == PLAYER_STATUS_INDEX or CurrentColumnIndex == PLAYER_HERO_LEVEL_INDEX) then
                 call BlzFrameSetScale(playerNameTextFrameHandle, 0.8) 
             else
                 call BlzFrameSetScale(playerNameTextFrameHandle, 1.2) 
@@ -423,13 +438,13 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Player stats icon
         set CurrentColumnIndex = PLAYER_STATS_INDEX
         call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", playerId)
-        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = "|cffd0ff00Stats for: |r" + GetPlayerNameColour(currentPlayer)
+        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PLAYER_STATS_COLOR + "Stats for: " + COLOR_END_TAG + GetPlayerNameColour(currentPlayer)
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PlayerStats.getTooltip(currentPlayer)
 
         // Default to the non ready status
         set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
         call CreateIcon(GetIconPath("Defend"), playerId)
-        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Player is not ready|r"
+        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = INVALID_ACTION_COLOR + "Player is not ready" + COLOR_END_TAG
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
 
         // Create indicator for player ready status
@@ -438,18 +453,22 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Set the player hero icon to a missing icon
         set CurrentColumnIndex = PLAYER_HERO_INDEX
         call CreateIcon("ReplaceableTextures\\CommandButtons\\BTNSelectHeroOff.blp", playerId)
-        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffff0000Player has no hero|r"
+        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = INVALID_ACTION_COLOR + "Player has no hero" + COLOR_END_TAG
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = ""
 
         // Element icon
         set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
         call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
-        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffff0000Player has no hero|r"
+        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = INVALID_ACTION_COLOR + "Player has no hero" + COLOR_END_TAG
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = ""
 
         // Set the player name
         set CurrentColumnIndex = PLAYER_NAME_INDEX
         call CreateText(GetPlayerNameColour(currentPlayer), playerId)
+
+        // Set the player hero level
+        set CurrentColumnIndex = PLAYER_HERO_LEVEL_INDEX
+        call CreateText(INVALID_ACTION_COLOR + "No Hero Level" + COLOR_END_TAG, playerId)
 
         // Initialize the player status
         set CurrentColumnIndex = PLAYER_STATUS_INDEX
@@ -511,9 +530,9 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             // Player hero icon - Add error message if player isn't in game or hero is invalid
             if (columnIndex == PLAYER_HERO_INDEX) then
                 if (PlayerLeftGame[playerId] or PlayerHeroes[playerId] == null or (not UnitAlive(PlayerHeroes[playerId]))) then
-                    set tooltipName = tooltipName + " - |cffff0000Cannot select hero!|r"
+                    set tooltipName = tooltipName + " - " + INVALID_ACTION_COLOR + "Cannot select hero!" + COLOR_END_TAG
                 else
-                    set tooltipName = tooltipName + " - |cffff0000Click for more details!|r"
+                    set tooltipName = tooltipName + " - " + INVALID_ACTION_COLOR + "Click for more details!" + COLOR_END_TAG
                 endif
 
             // Element count - Change the width of the tooltip
@@ -676,14 +695,14 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                     call CreateIcon(GetIconPath("Ability_parry"), playerId)
                 endif
 
-                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cff00ff08Player is ready|r"
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = PLAYER_READY_COLOR + "Player is ready" + COLOR_END_TAG
                 set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
             else
                 if (CachedPlayerPlayerReadyStatus[playerId] != ps.isReady()) then
                     call CreateIcon(GetIconPath("Defend"), playerId)
                 endif
 
-                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Player is not ready|r"
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = PLAYER_NOT_READY_COLOR + "Player is not ready" + COLOR_END_TAG
                 set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
             endif
 
@@ -693,7 +712,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             call BlzFrameSetVisible(CachedPlayerIndicatorParentFramehandles[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX], PlayerIsAlwaysReady[playerId])
 
             if (PlayerIsAlwaysReady[playerId]) then
-                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffffdd00Player is always ready|r"
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = PLAYER_ALWAYS_READY_COLOR + "Player is always ready" + COLOR_END_TAG
                 set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
             endif
 
@@ -702,6 +721,10 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
             // Update the tooltip description for the player stats. We don't need to update the icon since that should never change
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PlayerStats.getTooltip(currentPlayer)
+
+            // Update the player's hero level
+            set CurrentColumnIndex = PLAYER_HERO_LEVEL_INDEX
+            call CreateText(PLAYER_HERO_LEVEL_COLOR + "Hero Level " + I2S(GetHeroLevel(PlayerHeroes[playerId])) + COLOR_END_TAG, playerId)
 
             // Set the PVP stats. We don't need to update the icon since that should never change
             set CurrentColumnIndex = PLAYER_DUELS_INDEX
@@ -724,8 +747,8 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
             set CachedPlayerPlayerReadyStatus[playerId] = false
 
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Cannot ready up|r"
-            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = "|cffff0000Defeated players cannot ready up|r.|n"
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = INVALID_ACTION_COLOR + "Cannot ready up" + COLOR_END_TAG
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = INVALID_ACTION_COLOR + "Defeated players cannot ready up" + COLOR_END_TAG + ".|n"
 
             // Disable the flashy ready status for the player
             call BlzFrameSetVisible(CachedPlayerIndicatorParentFramehandles[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX], false)
@@ -753,13 +776,13 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             // Set the player hero icon
             set CurrentColumnIndex = PLAYER_HERO_INDEX
             call CreateIcon(BlzGetAbilityIcon(GetUnitTypeId(playerHero)), playerId)
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero)) + COLOR_END_TAG
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = PLAYER_HERO_NAME_COLOR + GetObjectName(GetUnitTypeId(playerHero)) + COLOR_END_TAG
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_HERO_INDEX] = GetHeroTooltip(playerHero)
 
             // Element icon
             set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
             call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
-            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = "|cffd0ff00Element Counts|r"
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = PLAYER_ELEMENT_COUNT_COLOR + "Element Counts" + COLOR_END_TAG
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(playerHero)
         endif
 
