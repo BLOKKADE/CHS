@@ -181,7 +181,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetUnitAbilityLevel(u, 'A031', 1)
             call SetBonus(u, 0, heroLevel * 3)   
         elseif uid == HUNTRESS_UNIT_ID then         
-            call SetBonus(u, 0, 24.5 + (heroLevel * 0.25))   
+            call SetBonus(u, 0, 24.5 + (heroLevel * 0.5))   
         elseif uid == SKELETON_BRUTE_UNIT_ID then   
             call SetBonus(u, 0, 1 + (heroLevel * 0.01))   
             call SetBonus(u, 1, 2 + (heroLevel * 0.05))   

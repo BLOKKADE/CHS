@@ -104,8 +104,8 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
         
         call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )
-        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 25% of her attack in |cffff00ffmagic damage|r. ")
-        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.25% of her attack damage" )
+        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies once every second when the Hero attacks, dealing 25% of her attack damage as |cffff00ffmagic damage|r. ")
+        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
             
         call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )
         call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 20% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons dies the Hero restores 2% of its max HP and the summon explodes, dealing 50% of its attack damage as |cffff00ffmagic damage|r to enemies.")

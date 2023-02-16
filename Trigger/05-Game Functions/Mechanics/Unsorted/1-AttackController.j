@@ -107,9 +107,13 @@ scope AttackController initializer init
         
         //Huntress
         if GetUnitTypeId(u2) == HUNTRESS_UNIT_ID then
-            call DummyInstantCast1(u2, GetUnitX(u2), GetUnitY(u2), 'A035', "fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.245 + (0.0025 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1'))
+            if BlzGetUnitAbilityCooldownRemaining(u2, 'A0DW') == 0 then
+                call ElemFuncStart(u2, HUNTRESS_UNIT_ID)
+                call DummyInstantCast1(u2, GetUnitX(u2), GetUnitY(u2), 'A035', "fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.245 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1'))
+                call AbilStartCD(u2, 'A0DW', 1)
+            endif
         endif
-
+        
         //Pyromancer
         if GetUnitTypeId(u2) == PYROMANCER_UNIT_ID then
             call PyromancerScorch(u2, u)
