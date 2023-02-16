@@ -506,7 +506,7 @@ scope ModifyDamageAfterArmor initializer init
         //Finishing Blow
         set i1 = GetUnitAbilityLevel(DamageSourceHero, FINISHING_BLOW_ABILITY_ID)
         if Damage.index.amount > 0 and i1 > 0 then
-            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= i1  then
+            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= (i1 * 0.7) then
                 set Damage.index.amount = 9999999
                 if not IsFxOnCooldownSet(DamageTargetId, FINISHING_BLOW_ABILITY_ID, 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
