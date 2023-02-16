@@ -262,7 +262,7 @@ scope LongPeriodCheck initializer init
                 else
                     set i1 = R2I(i1 * GetUnitElementCount(u, Element_Fire)/* * (1+ GetUnitAbsoluteEffective(u, Element_Fire))*/)
                 endif
-                call AddUnitCustomState(u, BONUS_MAGICPOW, 0.5 * I2R(i1 - i2))	
+                call AddUnitCustomState(u, BONUS_MAGICPOW, 0.3 * I2R(i1 - i2))	
                 call SaveInteger(HT, hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
             endif
 
