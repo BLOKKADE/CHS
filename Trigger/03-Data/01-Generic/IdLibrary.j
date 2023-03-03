@@ -417,7 +417,7 @@ library IdLibrary initializer init
         constant integer TEMPORARY_POWER_ABILITY_ID                     = 'A04E'
         constant integer THORNS_AURA_ABILITY_ID                         = 'A08F'
         constant integer THUNDER_CLAP_ABILITY_ID                        = 'AHtc'
-        constant integer THUNDER_FORCE_ABILITY_ID                       = 'A02S'
+        constant integer THUNDER_FORCE_ABILITY_ID                       = 'A0DX'
         constant integer TIME_MANIPULATION_ABILITY_ID                   = 'A0AS'
         constant integer TRANQUILITY_ABILITY_ID                         = 'AEtq'
         constant integer TRUESHOT_AURA_ABILITY_ID                       = 'AEar'

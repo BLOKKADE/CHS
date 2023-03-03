@@ -499,7 +499,8 @@ scope ModifyDamageAfterArmor initializer init
         
         //Thunder Force
         set i1 = GetUnitAbilityLevel(DamageSource, THUNDER_FORCE_ABILITY_ID)
-        if i1 > 0 and Damage.index.isAttack then
+        if i1 > 0 and Damage.index.isAttack and BlzGetUnitAbilityCooldownRemaining(DamageSource,THUNDER_FORCE_ABILITY_ID) == 0 then
+            call AbilStartCD(DamageSource, THUNDER_FORCE_ABILITY_ID, 0.5)
             call DummyTargetCast1(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroAgi(DamageSource,true) * (0.2 + (0.08 * i1)), ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif
 
