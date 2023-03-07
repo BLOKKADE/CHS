@@ -61,7 +61,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
             endif
 
             //Trickster
-            if DamageTargetTypeId == SATYR_TRICKSTER_UNIT_ID then
+            if DamageTargetTypeId == SATYR_TRICKSTER_UNIT_ID and GetRandomReal(0,100) <= 50 * GetUnitCustomState(DamageTarget, BONUS_LUCK) then
                 //set TypeDmg_b = 2
                 //set DamageIsAttack = true
                 //set GLOB_typeDmg = 2
@@ -69,7 +69,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = SATYR_TRICKSTER_UNIT_ID
                 set udg_NextDamageIsAttack = true
-                call Damage.applyPhys(DamageTarget, DamageSource, GetAttackDamage(DamageTarget) * (1 + (0.02 * GetHeroLevel(DamageTarget))), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                call Damage.applyPhys(DamageTarget, DamageSource, GetAttackDamage(DamageTarget) * (0.5 + (0.01 * GetHeroLevel(DamageTarget))), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
             endif
         endif
 
@@ -77,6 +77,12 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
         set abilLvl = GetUnitAbilityLevel(DamageSourceHero, TRUESHOT_AURA_ABILITY_ID)
         if abilLvl > 0 then
             set returnDamage = returnDamage * (0.005 * abilLvl)
+            set DamageIsTrue = true
+        endif
+
+        //Speed Blade and Arcane infused sword 
+        if (UnitHasItemType(DamageSource, 'I06B') or UnitHasItemType(DamageSource, ARCANE_INFUSED_SWORD_ITEM_ID)) and GetUnitAbilityLevel(DamageSourceHero, TRUESHOT_AURA_ABILITY_ID) == 0 then
+            set returnDamage = returnDamage * 0.1
             set DamageIsTrue = true
         endif
 

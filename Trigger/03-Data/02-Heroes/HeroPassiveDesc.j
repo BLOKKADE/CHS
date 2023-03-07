@@ -185,8 +185,8 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus strength, +2 armor limit." )
         
         call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSatyr.blp" )
-        call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it counterattacks, dealing 100% of its attack damage in |cffff8080physical damage|r back to the attacker.[|cffd45e29onhit|r]")
-        call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Trickshot: +2% damage. +0.5 evasion." )
+        call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it it has a 50% chance to counterattack, dealing 50% of its attack damage in |cffff8080physical damage|r back to the attacker.[|cff80ff80Luck|r][|cffd45e29onhit|r]")
+        call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Trickshot: +1% damage. +0.5 evasion." )
 
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy or takes damage, lasts until the end of the fight. (Max 2 billion)")
