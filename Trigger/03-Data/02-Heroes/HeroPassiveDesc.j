@@ -46,7 +46,7 @@ library HeroPassiveDesc initializer init
         
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power.")
-        call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.3 magic protection, +0.3 magic power." )
+        call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.8 magic protection, +0.8 magic power." )
             
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp" )
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Feedback: Every time the Hero damages an enemy it drains their mana, increasing its own mana. ")
