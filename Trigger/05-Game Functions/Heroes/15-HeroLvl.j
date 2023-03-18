@@ -36,13 +36,14 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         endif
 
         if heroLevel < 250 then
+            // This weird math is a combination of previously getting lumber and gold
             call AdjustPlayerStateBJ((8 * (levelsGained) * 30) + (heroLevel + 20) * (levelsGained), p, PLAYER_STATE_RESOURCE_GOLD)
-            call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S((heroLevel + 20) * levelsGained) + " gold|r")
+            call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S((8 * (levelsGained) * 30) + (heroLevel + 20) * (levelsGained)) + " gold|r")
         endif
 
         if ModuloInteger(heroLevel, 25) == 0 then
             call AdjustPlayerStateBJ(heroLevel * 30, p, PLAYER_STATE_RESOURCE_GOLD) 
-            call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(heroLevel) + " bonus gold|r for reaching |cffbda546level " + I2S(heroLevel) + "!|r")
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(heroLevel * 30) + " bonus gold|r for reaching |cffbda546level " + I2S(heroLevel) + "!|r")
         endif
 
         call ResourseRefresh(p) 
