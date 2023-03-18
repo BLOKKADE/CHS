@@ -11,6 +11,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,  GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD) + i)
     endfunction
 
+    // Function is currently not used
     private function GetItemCost takes item it, boolean gold returns integer
         local integer goldCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_RED)
         local integer lumberCost = BlzGetItemIntegerField(it, ITEM_IF_TINTING_COLOR_GREEN)
@@ -37,6 +38,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         endif
     endfunction
 
+    // Function is currently not used
     private function PlayerReturnLumber takes item it, integer II, player p returns nothing 
         call AdjustPlayerStateBJ(GetItemCost(it, false),p,PLAYER_STATE_RESOURCE_LUMBER)
         call ResourseRefresh(p)
@@ -76,14 +78,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             set goldCost = goldCost * multiplier
         endif
 
-        if lumberCost == 255 then
-            set lumberCost = 0
-        else
-            set lumberCost = lumberCost * multiplier
+        if lumberCost != 255 then
+            set goldCost = goldCost + lumberCost * multiplier * 30
         endif
-        if GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) >= goldCost and GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) >= lumberCost then
+        if GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) >= goldCost then
             call SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) - goldCost)
-            call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) - lumberCost)
             return true
         else
             return false

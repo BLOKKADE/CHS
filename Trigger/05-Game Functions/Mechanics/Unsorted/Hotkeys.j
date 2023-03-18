@@ -72,25 +72,6 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         endif
     endfunction
 
-    private function ConvertLumber takes nothing returns nothing
-        local integer pid = GetPlayerId(GetTriggerPlayer())
-        local integer lumber = 0
-        set lumber = GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER)
-        call SetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER,0)
-        call SetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD)  + lumber * 30)
-        call ResourseRefresh(Player(pid)) 
-    endfunction
-
-    private function ConvertGold takes nothing returns nothing
-        local integer pid = GetPlayerId(GetTriggerPlayer())
-        local integer gold = 0
-        set gold = GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD)/ 30
-
-        call SetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_GOLD) - gold * 30  )
-        call SetPlayerState(Player(pid), PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(Player(pid),PLAYER_STATE_RESOURCE_LUMBER) + gold)
-        call ResourseRefresh(Player(pid)) 
-    endfunction
-
     private function SellAllItems takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
@@ -133,8 +114,6 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
     private function HotKeyInit takes nothing returns nothing
         local trigger shiftDownTrigger = CreateTrigger()
         local trigger shiftReleaseTrigger = CreateTrigger()
-        local trigger qTrigger = CreateTrigger()
-        local trigger wTrigger = CreateTrigger()
         local trigger eTrigger = CreateTrigger()
         local trigger rTrigger = CreateTrigger()
         local trigger tTrigger = CreateTrigger()
@@ -145,8 +124,6 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         set HoldShiftStructTable = Table.create()
 
         loop
-            call BlzTriggerRegisterPlayerKeyEvent(qTrigger, Player(i), OSKEY_Q, 2, true)
-            call BlzTriggerRegisterPlayerKeyEvent(wTrigger, Player(i), OSKEY_W, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(eTrigger, Player(i), OSKEY_E, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(rTrigger, Player(i), OSKEY_R, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(tTrigger, Player(i), OSKEY_T, 2, true)
@@ -160,8 +137,6 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
             exitwhen i == 8
         endloop
 
-        call TriggerAddAction(qTrigger, function ConvertLumber)
-        call TriggerAddAction(wTrigger, function ConvertGold)
         call TriggerAddAction(eTrigger, function SellAllItems)
         call TriggerAddAction(rTrigger, function ReadyPlayer)
         call TriggerAddAction(tTrigger, function ToggleRewards)
@@ -171,8 +146,6 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         call TriggerAddAction(scoreboardToggleHideTrigger, function ToggleHideScoreboard)
 
         // Cleanup
-        set qTrigger = null
-        set wTrigger = null
         set eTrigger = null
         set rTrigger = null
         set tTrigger = null

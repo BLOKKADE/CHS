@@ -9,7 +9,7 @@ library DistributeBets initializer init requires RandomShit, PvpRoundRobin
         local integer currentPlayerId = GetPlayerId(currentPlayer)
         local string winMessage
 
-        if (ResourceBetPercentageGoldReward[currentPlayerId] > 0 or ResourceBetPercentageLumberReward[currentPlayerId] > 0) then
+        if (ResourceBetPercentageGoldReward[currentPlayerId] > 0) then
             set winMessage = GetPlayerNameColour(currentPlayer)
             set winMessage = winMessage + " won: "
 
@@ -18,20 +18,7 @@ library DistributeBets initializer init requires RandomShit, PvpRoundRobin
             if (PlayerPlacedGoldBet[currentPlayerId] == true) then
                 call AdjustPlayerStateBJ((ResourceBetPercentageGoldReward[currentPlayerId] * 2), currentPlayer, PLAYER_STATE_RESOURCE_GOLD)
                 call ResourseRefresh(currentPlayer)
-                set winMessage = winMessage + I2S((ResourceBetPercentageGoldReward[currentPlayerId] * 2))
-                
-                if (PlayerPlacedLumberBet[currentPlayerId] == true) then
-                    set winMessage = winMessage + " gold and "
-                endif
-            endif
-
-            if (PlayerPlacedLumberBet[currentPlayerId] == true) then
-                call AdjustPlayerStateBJ((ResourceBetPercentageLumberReward[currentPlayerId] * 2), currentPlayer, PLAYER_STATE_RESOURCE_LUMBER)
-                call ResourseRefresh(currentPlayer)
-                set winMessage = winMessage + I2S((ResourceBetPercentageLumberReward[currentPlayerId] * 2))
-                set winMessage = winMessage + " lumber!"
-            else
-                set winMessage = winMessage + " gold!"
+                set winMessage = winMessage + I2S((ResourceBetPercentageGoldReward[currentPlayerId] * 2)) + " gold!"
             endif
 
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, winMessage)
@@ -40,9 +27,7 @@ library DistributeBets initializer init requires RandomShit, PvpRoundRobin
         // Wipe all betting values
         set PlayerResourceBetPercentage[currentPlayerId] = 0
         set ResourceBetPercentageGoldReward[currentPlayerId] = 0
-        set ResourceBetPercentageLumberReward[currentPlayerId] = 0
         set PlayerPlacedGoldBet[currentPlayerId] = false
-        set PlayerPlacedLumberBet[currentPlayerId] = false
 
         // Cleanup
         set currentPlayer = null

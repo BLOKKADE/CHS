@@ -14,14 +14,6 @@ library TooltipFrame initializer init requires StringFunctions
 		Table TooltipYSize
     endglobals
 
-    function GoldConversionTooltip takes nothing returns string
-		return "Convert |cff96fc77Lumber|r to |cfffcd277Gold|r (|cff77f3fcCtrl+Q|r)"
-	endfunction
-
-	function LumberConversionTooltip takes nothing returns string
-		return "Convert |cfffcd277Gold|r to |cff96fc77Lumber|r (|cff77f3fcCtrl+W|r)"
-	endfunction
-
 	function SellAllItemsTooltip takes nothing returns string
 		return "Sell all your items for 100% gold/glory cost (|cff77f3fcCtrl+E|r)"
 	endfunction

@@ -10,7 +10,7 @@ library TryLearnRandomAbility initializer init requires RandomShit
             set TempUnit = GetTriggerUnit()
             call ConditionalTriggerExecute(LearnRandomAbilityTrigger)
         else
-            call AdjustPlayerStateBJ(5, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_LUMBER)
+            call AdjustPlayerStateBJ(5 * 30, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
             call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "Random is unavailable in Draft mode")
         endif
     endfunction

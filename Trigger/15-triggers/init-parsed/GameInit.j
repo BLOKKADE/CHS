@@ -6,7 +6,6 @@ library GameInit initializer init requires GroupUtils
         boolean ARLearningAbil = false
         boolean ArNotLearningAbil = false
         boolean array PlayerPlacedGoldBet
-        boolean array PlayerPlacedLumberBet
         boolean array RoundLiveLost
         boolean BettingEnabled = false
         boolean BrStarted = false
@@ -44,7 +43,6 @@ library GameInit initializer init requires GroupUtils
         integer array PlayerLastLearnedSpell
         integer array PlayerResourceBetPercentage
         integer array ResourceBetPercentageGoldReward
-        integer array ResourceBetPercentageLumberReward
         integer array ShopIds
         integer BettingPlayerCount = 0
         integer BoughtAbility = 0
@@ -160,9 +158,7 @@ library GameInit initializer init requires GroupUtils
         trigger ModifyCreepAbilitiesTrigger = null
         trigger PandarenDeathSoundsTrigger = null
         trigger PandarenDiesTrigger = null
-        trigger PlaceGoldAndLumberBetTrigger = null
         trigger PlaceGoldBetTrigger = null
-        trigger PlaceLumberBetTrigger = null
         trigger PlacePercentageBetTrigger = null
         trigger PlayerAntiStuckTrigger = null
         trigger PlayerCompleteRoundMoveTrigger = null
