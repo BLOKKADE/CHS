@@ -12,6 +12,10 @@ library ItemEffects initializer init
 
     function interface ItemEffect takes ItemAbilData data returns nothing
 
+    function SetupItemAbility takes integer itemid, integer abil1, integer abil2, integer abil3, integer abil4 returns nothing
+
+    endfunction
+
     function GetItemEffect takes integer itemId returns ItemEffect
         return ItemEffects.integer[itemId]
     endfunction

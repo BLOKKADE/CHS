@@ -1,5 +1,13 @@
 library ItemEffectdata initializer init requires ItemEffects
 
+    function ArmorofTheGoddessEffect takes ItemAbilData data returns nothing
+        call SetupItemAbility('I01D', 'ACev', 0, 0, 0)
+        call AddUnitBonus(data.source, BONUS_STRENGTH, data.itemDiff * 12)
+        call AddUnitBonus(data.source, BONUS_AGILITY, data.itemDiff * 12)
+        call AddUnitBonus(data.source, BONUS_INTELLIGENCE, data.itemDiff * 12)
+        call AddUnitBonus(data.source, BONUS_ARMOR, data.itemDiff * 10)
+    endfunction
+
     function BlokkadeshieldEffect takes ItemAbilData data returns nothing
         call AddUnitCustomState(data.source, BONUS_BLOCK, 1000 * data.itemUniqueDiff)
 		call AddUnitCustomState(data.source, BONUS_MAGICRES, 30 * data.itemUniqueDiff)
