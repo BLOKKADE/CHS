@@ -17,7 +17,7 @@ library HeroPassiveDesc initializer init
 
     private function SetupHeroPassives takes nothing returns nothing
         call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSpellBreaker.blp" )
-        call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Battlemaster: Gains bonus +1 bonus attack damage per point in agility and intelligence.")
+        call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Battlemaster: Gains +1 base attack damage per point in agility and intelligence.")
         call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +5 to two random stats. (|cff68eef3Every 10 levels|r) Battlemaster: +1 bonus to each stat on level up." )
 
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp" )
