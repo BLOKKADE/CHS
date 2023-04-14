@@ -499,7 +499,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Hero Force
         set i1 = GetUnitAbilityLevel(DamageSourceHero, HERO_FORCE_ABILITY_ID)
-        if i1 > 0 then
+        if i1 > 0 and CheckUnitHitCooldown(DamageTargetId, HERO_FORCE_ABILITY_ID, 0.3) then
             set i2 = GetHeroStatBJ(GetHeroPrimaryStat(DamageSourceHero), DamageSourceHero                                                                                                                                                                                                                       , true)
             if GetUnitAbilityLevel(DamageTarget, 'Bams') > 0 or GetUnitAbilityLevel(DamageTarget, ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
 
