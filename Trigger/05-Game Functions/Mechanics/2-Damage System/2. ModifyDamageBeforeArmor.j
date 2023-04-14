@@ -716,7 +716,7 @@ scope ModifyDamageBeforeArmor initializer init
             call MartialRetributionStore(DamageTarget, Damage.index.damage * 0.5)
         endif
 
-        if (not IsOnHitDamage()) and IsUnitEnemy(DamageTarget, GetOwningPlayer(DamageSource)) then   
+        if (not IsOnHitDamage()) and IsUnitEnemy(DamageTarget, Player(DamageSourcePid)) and IsUnitSpellTargetCheck(DamageTarget, Player(DamageSourcePid)) then   
 
             //Liquid Fire
             set i1 = GetUnitAbilityLevel(DamageSource,LIQUID_FIRE_ABILITY_ID)
