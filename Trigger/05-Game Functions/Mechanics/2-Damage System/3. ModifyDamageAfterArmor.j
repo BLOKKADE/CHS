@@ -175,9 +175,9 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Heavy Blow
-        if GetUnitAbilityLevel(DamageSource, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSource,HEAVY_BLOW_ABILITY_ID,0.3)
-            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSource  ,HEAVY_BLOW_ABILITY_ID)
+        if GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
+            call AbilStartCD(DamageSourceHero,HEAVY_BLOW_ABILITY_ID,0.3)
+            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\Devour\\DevourEffectArt.mdl", DamageTarget, "chest"))
         endif
         
