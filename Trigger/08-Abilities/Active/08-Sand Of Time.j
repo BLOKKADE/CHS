@@ -39,6 +39,16 @@ library SandOfTime requires RandomShit
             call ResetSpell(hero, 'A08V', time, true)
         endif*/
 
+        //Gnome
+        if GetUnitAbilityLevel(hero, GNOME_MASTER_PASSIVE_ABILITY_ID) > 0 then
+            call ResetSpell(hero, GNOME_MASTER_PASSIVE_ABILITY_ID, time, true)
+        endif
+
+        //Revenant
+        if GetUnitAbilityLevel(hero, COLD_KNIGHT_PASSIVE_ABILITY_ID) > 0 then
+            call ResetSpell(hero, COLD_KNIGHT_PASSIVE_ABILITY_ID, time, false)
+        endif
+
         //Centaur
         if GetUnitAbilityLevel(hero, 'A08T') > 0 then
             call ResetSpell(hero, 'A08T', time, true)
@@ -46,7 +56,7 @@ library SandOfTime requires RandomShit
 
         //Lich
         if GetUnitAbilityLevel(hero, 'A08W') > 0 then
-            call ResetSpell(hero, 'A08W', time, true)
+            call ResetSpell(hero, 'A08W', time, false)
         endif
     endfunction
 endlibrary
