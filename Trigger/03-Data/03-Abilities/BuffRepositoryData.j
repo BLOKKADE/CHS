@@ -19,6 +19,9 @@ library BuffRepositoryData initializer init requires BuffRepository
         //anti magic flag
         call SetupBuffInfo1('B01A', 'A085', BUFFTYPE_POSITIVE, true)
 
+        call SetupBuffInfo1('BHds', 'AHds', BUFFTYPE_POSITIVE, true)
+        call SetupBuffInfo1('BOwk', 'AOwk', BUFFTYPE_POSITIVE, false)
+
         call SetupBuffInfo2(LUCKY_PANTS_BUFF_ID, 'A09H', 0, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2(MANA_STARVATION_BUFF_ID, 'A09R', MANA_STARVATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2(WISDOM_CHESTPLATE_BUFF_ID, 'A09S', 0, BUFFTYPE_POSITIVE, false, true)
@@ -31,7 +34,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B028', 'A0CT', 0, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01E', 'A08C', DIVINE_BUBBLE_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B02O', ERUPTION_IMMUNE_ABILITY_ID, ERUPTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
-        call SetupBuffInfo2('B01K', 'A091', GRUNT_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
+        call SetupBuffInfo2('B01K', 'A091', CRYPT_LORD_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B02V', DRUNKEN_HAZE_IGNITE_BUFF_ID, DRUNKEN_HAZE_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B01D', 'A08B', LAST_BREATHS_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B02C', 'A086', MARTIAL_THEFT_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
