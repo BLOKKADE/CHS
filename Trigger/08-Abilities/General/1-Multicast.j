@@ -36,6 +36,15 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
 
         if CheckIfCastAllowed(caster) == false then
 
+            //Cheater Magic
+            if GetUnitAbilityLevel(caster, CHEATER_MAGIC_BUFF_ID) > 0 then
+                set amount = 1
+
+                if GetRandomInt(1,100) < 2 * GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) then
+                    set amount = 2
+                endif
+            endif
+
             //Blaze Staff
             if UnitHasItemType(caster,'I08X') and IsSpellElement(caster, abilId, Element_Fire) then
                 set amount = 2
