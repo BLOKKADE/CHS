@@ -14,7 +14,6 @@ library ArmorOfAncestors initializer init requires CustomState, CustomGameEvent,
         endif
     endfunction
 
-
     private function OnRoundStart takes EventInfo eventInfo returns nothing
         local integer itemCount = 0
 

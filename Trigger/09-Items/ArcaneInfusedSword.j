@@ -13,7 +13,6 @@ library ArcaneInfusedSword initializer init requires CustomState, CustomGameEven
         endif
     endfunction
 
-
     private function OnRoundStart takes EventInfo eventInfo returns nothing
         local integer itemCount = 0
         local integer bonus = 0
