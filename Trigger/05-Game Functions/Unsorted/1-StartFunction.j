@@ -168,23 +168,6 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
             call SetUnitState(Herou, UNIT_STATE_MANA, GetUnitState(Herou, UNIT_STATE_MANA) - 70000 * i1)
         endif
             
-        //Armor of Ancestors
-        set i1 = GetUnitItemTypeCount(Herou, 'I07G')
-        if i1 > 0 then
-            call ElemFuncStart(Herou, 'I07G')
-            call BlzSetUnitArmor(Herou, BlzGetUnitArmor(Herou) + i1 * 20 * RoundCreepNumber)
-            call AddUnitCustomState(Herou, BONUS_BLOCK, i1 * 20 * RoundCreepNumber)
-            call SaveInteger(HT, hid, 54001, LoadInteger(HT, hid, 54001) + i1 * 20 * RoundCreepNumber) 
-        endif
-
-        //Arcane Infused Sword
-        set i1 = GetUnitItemTypeCount(Herou, ARCANE_INFUSED_SWORD_ITEM_ID)
-        if i1 > 0 then
-            set i = R2I((GetUnitDamage(Herou, 0) - LoadInteger(HT, hid, ARCANE_INFUSED_SWORD_ITEM_ID)) * 0.05 * RoundCreepNumber)
-            call AddUnitBonus(Herou, BONUS_DAMAGE, i)
-            call SaveInteger(HT, hid, ARCANE_INFUSED_SWORD_ITEM_ID,LoadInteger(HT, hid, ARCANE_INFUSED_SWORD_ITEM_ID) + i) 
-        endif
-            
         //Book of Necromancy
         set i1 = GetUnitItemTypeCount(Herou, 'I06J')
         if i1 > 0 then
