@@ -239,10 +239,19 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, (2.5 + (0.025 * heroLevel)))
         elseif uid == BANSHEE_UNIT_ID then
 
-        elseif uid == GRUNT_UNIT_ID then
-            call SetBonus(u, 0, heroLevel * 20)
-            call SetBonus(u, 1, heroLevel * 20)
-            call SetBonus(u, 2, 10 + (heroLevel * 0.1))
+        elseif uid == CRYPT_LORD_UNIT_ID then      
+            set i = prevLevel + 1
+            loop
+                if ModuloInteger(i, 10) == 0 then
+                    set CryptLordLocustCount[hid] = CryptLordLocustCount[hid] + 1
+                endif
+    
+                set i = i + 1
+                exitwhen i >= heroLevel + 1
+            endloop
+
+            call SetBonus(u, 0, 60 * heroLevel)
+            call SetBonus(u, 1, 1 + CryptLordLocustCount[hid])
         elseif uid == SEER_UNIT_ID then
 
         elseif uid == SATYR_TRICKSTER_UNIT_ID then

@@ -181,7 +181,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[16] = GHOUL_UNIT_ID
         set HeroSelectorUnitCode[17] = GNOME_MASTER_UNIT_ID
         set HeroSelectorUnitCode[18] = GREEDY_GOBLIN_UNIT_ID
-        set HeroSelectorUnitCode[19] = GRUNT_UNIT_ID
+        set HeroSelectorUnitCode[19] = CRYPT_LORD_UNIT_ID
         set HeroSelectorUnitCode[20] = HUNTRESS_UNIT_ID
         set HeroSelectorUnitCode[21] = LICH_UNIT_ID
         set HeroSelectorUnitCode[22] = LIEUTENANT_UNIT_ID
@@ -278,7 +278,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(MEDIVH_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(GHOUL_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(BANSHEE_UNIT_ID, categoryInt)
-        call HeroSelectorAddUnitCategory(GRUNT_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(CRYPT_LORD_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(SEER_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(FALLEN_RANGER_UNIT_ID, categoryAgi)
         call HeroSelectorAddUnitCategory(WAR_GOLEM_UNIT_ID, categoryStr)

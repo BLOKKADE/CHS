@@ -118,6 +118,12 @@ scope ModifyDamageAfterArmor initializer init
             set vampCount = vampCount + 1
         endif
 
+        //Crypt lord Locust
+        if DamageSourceTypeId == 'u008' then
+            set vampAmount = vampAmount + Damage.index.amount
+            set vampCount = vampCount + 1
+        endif
+
         //Dreadlord Passive
         if GetUnitTypeId(DamageSourceHero) == DEADLORD_UNIT_ID then
             set r2 = Damage.index.amount * (0.02 * I2R(GetHeroLevel(DamageSourceHero)) )

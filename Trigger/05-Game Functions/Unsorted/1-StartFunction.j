@@ -118,11 +118,6 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
             endloop
         endif
             
-        //Grunt
-        if GetUnitTypeId(Herou) == GRUNT_UNIT_ID then
-            call GruntsGruntStruct.create(Herou, ChronusLevel)
-        endif
-            
         //Bone Armor
         if UnitHasItemType(Herou, 'I07O') then
             call ElemFuncStart(Herou, 'I07O')

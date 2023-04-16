@@ -203,9 +203,9 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp" )
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 40% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
         
-        call InitHeroDesc(GRUNT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp" )
-        call InitHeroDesc(GRUNT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: The Grunt's Grunt: At the start of every fight the Hero gains 20 bonus attack damage and strength for 10 seconds. ")
-        call InitHeroDesc(GRUNT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Grunt's Grunt: +20 attack damage and strength, +0.1 seconds duration." )
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroCryptLord.blp" )
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Locust Swarm: The Hero has 1 Locust that attacks nearby enemies once every second, dealing 60 damage and healing the hero for the damage dealt. [|cffff9696Lifesteal|r]")
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Locust Swarm: +60 attack damage. (|cff68eef3Every 10 levels|r) +1 Locust summoned." )
         
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0Most spells are affected by enemy armor, and not the Hero's magic power. Seer's passive can be disabled by the Staff of Power.|r" )

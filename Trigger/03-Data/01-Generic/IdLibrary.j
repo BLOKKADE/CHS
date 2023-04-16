@@ -192,7 +192,7 @@ library IdLibrary initializer init
         constant integer GHOUL_UNIT_ID                                  = 'H01H'
         constant integer GNOME_MASTER_UNIT_ID                           = 'H019'
         constant integer GREEDY_GOBLIN_UNIT_ID                          = 'N02P'
-        constant integer GRUNT_UNIT_ID                                  = 'H01J'
+        constant integer CRYPT_LORD_UNIT_ID                             = 'H01J'
         constant integer HUNTRESS_UNIT_ID                               = 'N00R'
         constant integer LICH_UNIT_ID                                   = 'H018'
         constant integer LIEUTENANT_UNIT_ID                             = 'E000'

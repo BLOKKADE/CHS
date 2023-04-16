@@ -25,7 +25,7 @@ library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
             if GetBuffLevel(this.source, 'A091') == 1 then
                 call UnitAddAbility(this.source, 'A091')
             endif
-            call ElemFuncStart(this.source,GRUNT_UNIT_ID)
+            call ElemFuncStart(this.source,CRYPT_LORD_UNIT_ID)
             call SetHeroStr(this.source,GetHeroStr(this.source,false)+ bonus,false)
             call BlzSetUnitBaseDamage(this.source,BlzGetUnitBaseDamage(this.source,0)+ bonus,0)
             set this.endTick = T32_Tick + R2I(duration * 32)

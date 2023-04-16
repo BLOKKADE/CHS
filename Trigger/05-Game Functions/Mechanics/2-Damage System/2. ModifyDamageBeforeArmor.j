@@ -151,6 +151,10 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        if DamageSourceTypeId == 'u008' then
+            set Damage.index.damage = 60 * GetHeroLevel(DamageSourceHero)
+        endif
+
         if Damage.index.damage <= 0 then
             set Damage.index.damage = 0
             return
