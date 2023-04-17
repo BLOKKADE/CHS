@@ -204,7 +204,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 40% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
         
         call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroCryptLord.blp" )
-        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Locust Swarm: The Hero has 1 Locust that attacks nearby enemies once every second, dealing 60 damage and healing the hero for the damage dealt. [|cffff9696Lifesteal|r]")
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Locust Swarm: The Hero has 1 Locust that attacks nearby enemies once every second, dealing 60 |cffff8080physical damage|r and healing the hero for the damage dealt. [|cffff9696Lifesteal|r]")
         call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Locust Swarm: +60 attack damage. (|cff68eef3Every 10 levels|r) +1 Locust summoned." )
         
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )
