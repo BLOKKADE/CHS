@@ -381,7 +381,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			if itemId == FIRE_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Fire, uniqueDiff)
 			elseif itemId == POISON_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Poison, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Poison, 2 * uniqueDiff)
 			elseif itemId == ARCANE_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
 			elseif itemId == WILD_RUNESTONE_ITEM_ID then

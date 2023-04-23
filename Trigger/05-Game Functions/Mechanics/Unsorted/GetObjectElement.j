@@ -109,11 +109,6 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
             set elementCount = elementCount + R2I(GetHeroLevel(u) / 10)
         endif
 
-        //Poison Runestone
-        if elementId == Element_Poison and UnitHasItemType(u, POISON_RUNESTONE_ITEM_ID) then
-            set elementCount = elementCount + 2
-        endif
-
         //Goblet of Blood
         if elementId == Element_Blood and UnitHasItemType(u, 'I0B9') then
             set elementCount = elementCount + 3
