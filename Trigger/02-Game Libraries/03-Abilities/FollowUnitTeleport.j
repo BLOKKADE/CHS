@@ -13,6 +13,7 @@ library FollowUnitTeleport initializer init requires Table
         integer interval
         integer nextTick
         integer endTick
+        boolean isRunning
 
         private method periodic takes nothing returns nothing
             if T32_Tick > this.nextTick then
@@ -20,7 +21,8 @@ library FollowUnitTeleport initializer init requires Table
                 call SetUnitY(this.follower, GetUnitY(this.target))
                 set this.nextTick = T32_Tick + this.interval
             endif
-            if T32_Tick > this.endTick or (not UnitAlive(this.follower)) or (not UnitAlive(this.target)) then
+            if T32_Tick > this.endTick or (not UnitAlive(this.follower)) or (not UnitAlive(this.target)) or (not this.isRunning) then
+                call this.stopPeriodic()
                 call this.destroy()
             endif
         endmethod
@@ -29,12 +31,13 @@ library FollowUnitTeleport initializer init requires Table
             local thistype this = thistype.setup()
             local FollowUnitStruct followStruct = GetFollowUnitStruct(follower)
 
-            if followStruct != 0 then
-                call followStruct.destroy()
+            if followStruct != 0 and followStruct.isRunning then
+                set followStruct.isRunning = false
             endif
 
             set this.follower = follower
             set this.target = target
+            set this.isRunning = true
             set FollowUnitData[GetHandleId(this.follower)] = this
             
             set this.interval = R2I(interval * 32)
@@ -45,10 +48,12 @@ library FollowUnitTeleport initializer init requires Table
         endmethod
         
         method destroy takes nothing returns nothing
-            call this.stopPeriodic()
-            set FollowUnitData[GetHandleId(this.follower)] = 0
+            if FollowUnitData[GetHandleId(this.follower)] == this then
+                set FollowUnitData[GetHandleId(this.follower)] = 0
+            endif
             set this.follower = null
             set this.target = null
+            set this.isRunning = false
             call this.recycle()
         endmethod
 

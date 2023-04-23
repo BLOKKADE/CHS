@@ -18,7 +18,7 @@ library CryptLord initializer init requires ElementalAbility, RandomShit, EditAb
                     if p != null then
                         set GetDummyOrder(GetDummyId(p)).stopDummy = true
                         call GroupRemoveUnit(LocustDummies.group[hid], p)
-                        call GetFollowUnitStruct(p).destroy()
+                        set GetFollowUnitStruct(p).isRunning = false
                     else
                         exitwhen true
                     endif
