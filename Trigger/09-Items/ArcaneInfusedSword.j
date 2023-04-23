@@ -20,7 +20,7 @@ library ArcaneInfusedSword initializer init requires CustomState, CustomGameEven
         if not eventInfo.isPvp then
             set itemCount = GetUnitItemTypeCount(eventInfo.hero, ARCANE_INFUSED_SWORD_ITEM_ID)
             if itemCount > 0 then
-                set bonus = R2I(GetUnitDamage(eventInfo.hero, 0) * 0.05 * RoundCreepNumber * itemCount)
+                set bonus = ArcaneInfusedSwordBonus[GetHandleId(eventInfo.hero)] + R2I(GetUnitDamage(eventInfo.hero, 0) * 0.05 * RoundCreepNumber * itemCount)
                 call AddUnitBonus(eventInfo.hero, BONUS_DAMAGE, bonus)
                 set ArcaneInfusedSwordBonus[GetHandleId(eventInfo.hero)] = bonus
             endif

@@ -23,7 +23,7 @@ library ArmorOfAncestors initializer init requires CustomState, CustomGameEvent,
                 call ElemFuncStart(eventInfo.hero, 'I07G')
                 call BlzSetUnitArmor(eventInfo.hero, BlzGetUnitArmor(eventInfo.hero) + itemCount * 20 * RoundCreepNumber)
                 call AddUnitCustomState(eventInfo.hero, BONUS_BLOCK, itemCount * 20 * RoundCreepNumber)
-                set ArmorOfAncestorsBonus[GetHandleId(eventInfo.hero)] = itemCount * 20 * RoundCreepNumber
+                set ArmorOfAncestorsBonus[GetHandleId(eventInfo.hero)] = ArmorOfAncestorsBonus[GetHandleId(eventInfo.hero)] + itemCount * 20 * RoundCreepNumber
             endif
         endif
     endfunction
