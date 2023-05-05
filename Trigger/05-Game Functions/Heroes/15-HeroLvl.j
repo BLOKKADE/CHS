@@ -36,14 +36,14 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         endif
 
         if heroLevel < 250 then
-            call AdjustPlayerStateBJ((heroLevel + 20) * (levelsGained), p, PLAYER_STATE_RESOURCE_GOLD)
-            call AdjustPlayerStateBJ(8 * (levelsGained), p, PLAYER_STATE_RESOURCE_LUMBER)
-            call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S((heroLevel + 20) * levelsGained) + " gold|r and |cff1eff00+" + I2S(8 * levelsGained) + " lumber|r")
+            // This weird math is a combination of previously getting lumber and gold
+            call AdjustPlayerStateBJ((8 * (levelsGained) * 30) + (heroLevel + 20) * (levelsGained), p, PLAYER_STATE_RESOURCE_GOLD)
+            call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S((8 * (levelsGained) * 30) + (heroLevel + 20) * (levelsGained)) + " gold|r")
         endif
 
         if ModuloInteger(heroLevel, 25) == 0 then
-            call AdjustPlayerStateBJ(heroLevel, p, PLAYER_STATE_RESOURCE_LUMBER) 
-            call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(heroLevel) + " bonus lumber|r for reaching |cffbda546level " + I2S(heroLevel) + "!|r")
+            call AdjustPlayerStateBJ(heroLevel * 30, p, PLAYER_STATE_RESOURCE_GOLD) 
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(heroLevel * 30) + " bonus gold|r for reaching |cffbda546level " + I2S(heroLevel) + "!|r")
         endif
 
         call ResourseRefresh(p) 
@@ -149,15 +149,15 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
                 exitwhen i >= heroLevel + 1
             endloop
 
-            call SetBonus(u, 0, 20 * heroLevel)
+            call SetBonus(u, 0, 35 * heroLevel)
             call SetBonus(u, 1, 297 + 3 * heroLevel)
             call SetBonus(u, 2, BladestormAttackLimit[hid])
         elseif uid == ORC_CHAMPION_UNIT_ID then   
-            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 6 * levelsGained)
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (3 * levelsGained))
-            call UpdateBonus(u, 0, 3 * levelsGained)   
-            call UpdateBonus(u, 1, 6 * levelsGained)
-            call SetBonus(u, 2 , 20 + heroLevel) 
+            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 5 * levelsGained)
+            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (2 * levelsGained))
+            call UpdateBonus(u, 0, 2 * levelsGained)   
+            call UpdateBonus(u, 1, 5 * levelsGained)
+            call SetBonus(u, 2 , 10 + (heroLevel * 0.5)) 
         elseif uid == TROLL_HEADHUNTER_UNIT_ID then   
             call SetBonus(u, 0, 40 + 1.5 * heroLevel)
         elseif uid == TINKER_UNIT_ID then  
@@ -181,7 +181,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetUnitAbilityLevel(u, 'A031', 1)
             call SetBonus(u, 0, heroLevel * 3)   
         elseif uid == HUNTRESS_UNIT_ID then         
-            call SetBonus(u, 0, 24.5 + (heroLevel * 0.25))   
+            call SetBonus(u, 0, 24.5 + (heroLevel * 0.5))   
         elseif uid == SKELETON_BRUTE_UNIT_ID then   
             call SetBonus(u, 0, 1 + (heroLevel * 0.01))   
             call SetBonus(u, 1, 2 + (heroLevel * 0.05))   
@@ -218,7 +218,6 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, heroLevel * 55)
             call SetBonus(u, 1, 11 + heroLevel * 0.04)
             call SetBonus(u, 2, heroLevel * 0.04)
-            call SetBonus(u, 3, heroLevel * 0.08)
         elseif uid == GREEDY_GOBLIN_UNIT_ID then
             call SetBonus(u, 0, 20 + (heroLevel * 4))
             call SetBonus(u, 1, 21 + (heroLevel * 3))
@@ -240,10 +239,19 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, (2.5 + (0.025 * heroLevel)))
         elseif uid == BANSHEE_UNIT_ID then
 
-        elseif uid == GRUNT_UNIT_ID then
-            call SetBonus(u, 0, heroLevel * 20)
-            call SetBonus(u, 1, heroLevel * 20)
-            call SetBonus(u, 2, 10 + (heroLevel * 0.1))
+        elseif uid == CRYPT_LORD_UNIT_ID then      
+            set i = prevLevel + 1
+            loop
+                if ModuloInteger(i, 10) == 0 then
+                    set CryptLordLocustCount[hid] = CryptLordLocustCount[hid] + 1
+                endif
+    
+                set i = i + 1
+                exitwhen i >= heroLevel + 1
+            endloop
+
+            call SetBonus(u, 0, 60 * heroLevel)
+            call SetBonus(u, 1, 1 + CryptLordLocustCount[hid])
         elseif uid == SEER_UNIT_ID then
 
         elseif uid == SATYR_TRICKSTER_UNIT_ID then

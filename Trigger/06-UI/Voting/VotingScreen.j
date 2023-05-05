@@ -491,10 +491,10 @@ library VotingScreen initializer init requires IconFrames, VotingResults
 
         call CreateVotingButtonCategory("|cffD26EFAOther Options|r")
         set ImmortalHandleId = CreateVotingCheckbox("Immortal Mode", "Unlimited lives with immortal mode. Otherwise, you are given a few lives. Once you lose them all, you lose the game.", false)
-        set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches.", false)
+        set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches. |n|nCannot be enabled with Simultaneous Duels.", false)
         set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.", false)
         call GoToNextRow()
-        set DisableSimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nThis will also disable PVP betting.", true)
+        set DisableSimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nDisabling this will allow PVP betting.", true)
         set DisableTeamDuelHandleId = CreateVotingCheckbox("Disable Team Duels", "There is a chance that a PVP duel will be a 2v2 PVP duel. |n|nWill only happen if there are 4 or 8 players in the game.", true)
         set LongerTimersHandleId = CreateVotingCheckbox("Double Timers", "Doubles the duration of the timers between rounds. |n|nUseful if you want to spend more time reading ability/item descriptions.", false)
         call GoToNextRow()

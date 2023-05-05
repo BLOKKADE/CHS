@@ -50,7 +50,6 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit, DraftModeFu
     private function SetupDraftMode takes nothing returns nothing
         // Enabling Draft should only require you to run this trigger once. It has to be run AFTER all the heroes have been added to udg_units01
         call ConfigureDraftMode()
-        call DisableVision()
 
         set DisplayedSpells = HashTable.create()
         set udg_Draft_PlayerSpells = InitHashtable()

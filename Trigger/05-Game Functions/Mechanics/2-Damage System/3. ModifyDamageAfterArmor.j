@@ -118,6 +118,12 @@ scope ModifyDamageAfterArmor initializer init
             set vampCount = vampCount + 1
         endif
 
+        //Crypt lord Locust
+        if DamageSourceTypeId == 'u008' then
+            set vampAmount = vampAmount + Damage.index.amount
+            set vampCount = vampCount + 1
+        endif
+
         //Dreadlord Passive
         if GetUnitTypeId(DamageSourceHero) == DEADLORD_UNIT_ID then
             set r2 = Damage.index.amount * (0.02 * I2R(GetHeroLevel(DamageSourceHero)) )
@@ -175,9 +181,9 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Heavy Blow
-        if GetUnitAbilityLevel(DamageSource, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSource,HEAVY_BLOW_ABILITY_ID,0.3)
-            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSource  ,HEAVY_BLOW_ABILITY_ID)
+        if GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
+            call AbilStartCD(DamageSourceHero,HEAVY_BLOW_ABILITY_ID,0.3)
+            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\Devour\\DevourEffectArt.mdl", DamageTarget, "chest"))
         endif
         
@@ -264,7 +270,7 @@ scope ModifyDamageAfterArmor initializer init
                     //call BJDebugMsg("mosc")
                     
                     set udg_NextDamageAbilitySource = MAGNET_OSC_ABILITY_ID
-                    call DelayedDamage(DamageTarget, DamageSource, GetSpellValue(30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                    call Damage.apply(DamageTarget, DamageSource, GetSpellValue(30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                     if IsAbilityEnabled(DamageTarget, MAGNET_OSC_ABILITY_ID) then
                         set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((11.75 - (0.25 * i)) * 32)
                         call KnockbackTarget(DamageTarget, DamageSource, GetAngleToTarget(DamageTarget, DamageSource) * bj_RADTODEG, RAbsBJ(700 - r1), 600, false, false, false, false)
@@ -333,12 +339,12 @@ scope ModifyDamageAfterArmor initializer init
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
                         set r3 = ((Damage.index.amount * ( 0.12 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
                         //call BJDebugMsg("thorns: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call DelayedDamage(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                         //call MagicDamage(DamageTarget,DamageSource, , true)
                     else
                         set r3 = ((Damage.index.amount * ( 0.18 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
                         //call BJDebugMsg("thorns: r1:" + R2S(1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call DelayedDamage(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                     endif
                 endif
 
@@ -351,11 +357,11 @@ scope ModifyDamageAfterArmor initializer init
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
                         set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.03))) * r1) * r2
                         //call BJDebugMsg("ref: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call DelayedDamage(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                     else
                         set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.045))) * r1) * r2
                         //call BJDebugMsg("ref: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call DelayedDamage(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                     endif
                 endif
 
@@ -368,7 +374,7 @@ scope ModifyDamageAfterArmor initializer init
                     //set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
                     set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID)))
                     //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                    call DelayedDamage(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                    call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                 endif
             endif
 
@@ -383,11 +389,11 @@ scope ModifyDamageAfterArmor initializer init
                     if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
                         set r3 = ((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.03)) * r1) * r2
                         //call BJDebugMsg("wb: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call DelayedDamage(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                     else
                         set r3 = ((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) * 0.05)) * r1) * r2
                         //call BJDebugMsg("wb: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call DelayedDamage(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                     endif
                     //call BJDebugMsg("wb damage: " + R2S(r3) + " mult: " + R2S(r2) + " reduce: " + R2S(r1))
                     call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", DamageSource, "chest"))
@@ -499,14 +505,15 @@ scope ModifyDamageAfterArmor initializer init
         
         //Thunder Force
         set i1 = GetUnitAbilityLevel(DamageSource, THUNDER_FORCE_ABILITY_ID)
-        if i1 > 0 and Damage.index.isAttack then
+        if i1 > 0 and Damage.index.isAttack and BlzGetUnitAbilityCooldownRemaining(DamageSource,THUNDER_FORCE_ABILITY_ID) == 0 then
+            call AbilStartCD(DamageSource, THUNDER_FORCE_ABILITY_ID, 0.5)
             call DummyTargetCast1(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroAgi(DamageSource,true) * (0.2 + (0.08 * i1)), ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif
 
         //Finishing Blow
         set i1 = GetUnitAbilityLevel(DamageSourceHero, FINISHING_BLOW_ABILITY_ID)
         if Damage.index.amount > 0 and i1 > 0 then
-            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= i1  then
+            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= (i1 * 0.7) then
                 set Damage.index.amount = 9999999
                 if not IsFxOnCooldownSet(DamageTargetId, FINISHING_BLOW_ABILITY_ID, 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))

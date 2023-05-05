@@ -25,7 +25,7 @@ library RoboGoblinSkin initializer init
                 set roboGoblinCounter = roboGoblinCounter + 1
             endif
 
-            if GetPlayerState(GetOwningPlayer(u), PLAYER_STATE_RESOURCE_LUMBER) > 8000 then
+            if GetPlayerState(GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD) > (8000 * 30) then
                 set roboGoblinCounter = roboGoblinCounter + 1
             endif
 

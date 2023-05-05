@@ -1,15 +1,15 @@
 library DiscordAdCommand initializer init requires Command, TimerUtils, DiscordFrame, PlayerTracking
-    //===========================================================================
+
     globals
         integer array DiscordAdTimeout
     endglobals
 
-    function HideDiscordAd takes nothing returns nothing
+    private function HideDiscordAd takes nothing returns nothing
         call ReleaseTimer(GetExpiredTimer())
         call ShowDiscordFramesAllPlayers(false)
     endfunction
 
-    function ShowDiscordAd takes nothing returns nothing
+    private function ShowDiscordAd takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         if T32_Tick - DiscordAdTimeout[pid] > 20 * 32 then
             call ShowDiscordFramesAllPlayers(true)
@@ -22,7 +22,7 @@ library DiscordAdCommand initializer init requires Command, TimerUtils, DiscordF
         endif
     endfunction
 
-    function ToggleDiscordAd takes Args args returns nothing
+    private function ToggleDiscordAd takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         local PlayerStats ps = PlayerStats.forPlayer(GetTriggerPlayer())
         set DiscordAdDisabled[pid] = DiscordAdDisabled[pid] != true
@@ -38,7 +38,6 @@ library DiscordAdCommand initializer init requires Command, TimerUtils, DiscordF
         endif
     endfunction
     
-    //===========================================================================
     private function init takes nothing returns nothing
         local trigger trg = CreateTrigger()
         local integer i = 0
@@ -53,4 +52,5 @@ library DiscordAdCommand initializer init requires Command, TimerUtils, DiscordF
         call Command.create(CommandHandler.ToggleDiscordAd).name("ToggleAd").handles("togglead").handles("tad").help("Toggle Discord Ad", "Toggles whether the discord ad will display for you.")
         set trg = null
     endfunction
+
 endlibrary

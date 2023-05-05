@@ -2,13 +2,13 @@ library PlayerInitialization initializer init requires RandomShit
 
     private function ValidPlayerFilter takes nothing returns boolean
         local player currentPlayer = GetFilterPlayer()
-        local boolean isHumanPlayer = (currentPlayer != Player(8)) and (currentPlayer != Player(11))
-        local boolean isPlayingPlayer = (IsPlayerInForce(currentPlayer, LeaverPlayers) == false) or (GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_PLAYING)
+        local boolean isLeaverPlayer = GetPlayerController(currentPlayer) == MAP_CONTROL_USER and GetPlayerSlotState(currentPlayer) == PLAYER_SLOT_STATE_LEFT
+        local boolean isValid = (not isLeaverPlayer) and (GetPlayerId(currentPlayer) < 8)
 
         // Cleanup
         set currentPlayer = null
 
-        return isHumanPlayer and isPlayingPlayer
+        return isValid
     endfunction
 
     private function AddValidPlayer takes nothing returns nothing
@@ -41,6 +41,9 @@ library PlayerInitialization initializer init requires RandomShit
         // Find valid players
         local force validPlayerForce = GetPlayersMatching(Condition(function ValidPlayerFilter))
 
+        set PlayerCount = 0
+        set InitialPlayerCount = 0
+
         call SetMapFlag(MAP_ALLIANCE_CHANGES_HIDDEN, true)
         call SetMapFlag(MAP_LOCK_RESOURCE_TRADING, true)
         call SetTimeOfDay(12)
@@ -60,7 +63,7 @@ library PlayerInitialization initializer init requires RandomShit
         call TriggerSleepAction(0.00)
 
         call ForForce(validPlayerForce, function SetPlayerAlliances)
-
+        
         // Cleanup
         call DestroyForce(validPlayerForce)
         set validPlayerForce = null

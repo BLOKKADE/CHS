@@ -1,4 +1,4 @@
-library PlayerLeavesGame initializer init requires RandomShit
+library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected
 
     private function ResetHero takes unit u returns nothing
         if IsUnitType(u, UNIT_TYPE_HERO) then
@@ -23,14 +23,29 @@ library PlayerLeavesGame initializer init requires RandomShit
         local player leaverPlayer = GetTriggerPlayer()
         local integer playerId = GetPlayerId(leaverPlayer)
 
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
+
         call PlaySoundBJ(udg_sound04)
         call ForceAddPlayer(LeaverPlayers, leaverPlayer)
+        call UpdateScoreboardPlayerLeaves(leaverPlayer)
+
+        // Player is only decremented when a hero dies. If the hero doesn't exist yet the game gets messed up in the beginning
+        if (ShopsCreated == false) then
+            set PlayerCount = PlayerCount - 1
+            call AllowSinglePlayerCommands()
+            
+            // Check if someone left during hero selection to prevent softlock
+            if (AllPlayerHeroesSpawned == false and RoundNumber == 1 and SpawnedHeroCount == PlayerCount) then
+                call PlayerHeroSelected_AllPlayersHaveHeroesActions()
+            endif
+        endif
 
         // Make sure the auto ready status is wiped
         set PlayerIsAlwaysReady[GetPlayerId(leaverPlayer)] = false
 
-        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(leaverPlayer) + " |cffffcc00has left the game!|r")
-        call ResetHero(PlayerHeroes[playerId])
+        if (PlayerHeroes[playerId] != null) then
+            call ResetHero(PlayerHeroes[playerId])
+        endif
 
         // Find a new host
         if (HostPlayer == leaverPlayer) then

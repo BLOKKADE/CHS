@@ -30,7 +30,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
     private function ShowBettingDialogForPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
 
-        if (GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) > 0 or GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_LUMBER) > 0) then
+        if (GetPlayerState(currentPlayer, PLAYER_STATE_RESOURCE_GOLD) > 0) then
             call DialogDisplayBJ(true, BettingDialogs[1], currentPlayer)
         endif
 
@@ -128,7 +128,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
             call SelectUnitForPlayerSingle(playerHero, currentPlayer)
         endif
         call RefreshHero(playerHero)
-        call GroupAddUnit(DuelingHeroGroup, playerHero)
 
         // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
         loop
@@ -296,7 +295,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
 
     function ResetPvpState takes nothing returns nothing
         set OddPlayerDuelStarted = false
-        call GroupClear(DuelingHeroGroup) // Don't know the exact purpose of this one
         call GroupClear(DuelingHeroes) // DuelingHeroes keeps track of all heroes that are fighting
         call GroupClear(DuelWinners) // DuelWinners keeps track of all heroes that won
         call GroupClear(DuelWinnerDisabled) // DuelWinnerDisabled keeps track of all heroes that won and is used to prevent them from casting spells in other libraries

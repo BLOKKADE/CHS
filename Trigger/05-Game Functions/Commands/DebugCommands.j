@@ -335,7 +335,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     endfunction
 
     private function init takes nothing returns nothing
-        call TimerStart(CreateTimer(), 0, false, function SetupDebugCommands)
+        call TimerStart(CreateTimer(), 3, false, function SetupDebugCommands)
     endfunction
 
 endlibrary

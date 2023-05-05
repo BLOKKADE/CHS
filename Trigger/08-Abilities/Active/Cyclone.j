@@ -16,10 +16,6 @@ library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
                     set this.damageTick = T32_Tick + 6
                     call AreaDamage(this.source, this.x, this.y, this.damage, 350, false, CYCLONE_ABILITY_ID, true)
                 endif
-                if T32_Tick > this.pullTick then
-                    set this.pullTick = T32_Tick + (3 * 32)
-                    call MoveToPointAoE(this.source, this.x, this.y, 350, false, Target_Enemy, false)
-                endif
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, Player(this.pid)) then
                 call this.stopPeriodic()
                 call this.destroy()

@@ -12,20 +12,20 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
 
     private function BuyLevel takes player p, unit u, integer abil, boolean maxBuy, boolean new returns nothing
         local integer i = GetUnitAbilityLevel(u, abil) + 1
-        local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr'))
-        local integer lumber = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
+        local integer cost = BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30
+        local integer gold = GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD)
         local location unitLocation = GetUnitLoc(u)
 
         if maxBuy then
             loop
-                if lumber - cost < 0 then
+                if gold - cost < 0 then
                     exitwhen true
                 endif
-                set lumber = lumber - cost
+                set gold = gold - cost
                 set i = i + 1
                 exitwhen i >= 30
             endloop
-            call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, lumber)
+            call SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold)
         endif
 
         if new then
@@ -74,7 +74,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
                     if abilityLevel < 30 then
                         call BuyLevel(GetOwningPlayer(u), u, abilityId, HoldShift[GetPlayerId(GetOwningPlayer(u))], false)
                     else
-                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(u), PLAYER_STATE_RESOURCE_LUMBER)
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)
                         call ResourseRefresh(GetOwningPlayer(u))
                         call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "|cffffe600Failed to learn|r: maximum abilities reached")
                     endif
@@ -90,12 +90,12 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
                     elseif counter > GetHeroMaxAbsoluteAbility(u) then
                         //call BJDebugMsg("aalu acorn")
                         call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "Buy an |cffbbff00Absolute Acorn|r at |cffffd900Power Ups Shop II|r to buy more Absolute abilities. (|cffff1100Max:" + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)" ) 
-                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(u), PLAYER_STATE_RESOURCE_LUMBER)
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)
                         call ResourseRefresh(GetOwningPlayer(u))
 
                     else
                         call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "You have reached the maximum amount of 10 absolute abilities" ) 
-                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')), GetOwningPlayer(u), PLAYER_STATE_RESOURCE_LUMBER)
+                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)
                         call ResourseRefresh(GetOwningPlayer(u))
                     endif
                 endif

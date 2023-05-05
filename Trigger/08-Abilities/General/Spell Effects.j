@@ -116,7 +116,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             return true
         //Blink Strike
         elseif abilId == BLINK_STRIKE_ABILITY_ID or abilId == 'A06I' then
-            call BlinkStrike(hero, lvl)
+            call BlinkStrike(caster, lvl)
             return true
         //Whirlwind
         elseif abilId == 'A025' then
@@ -272,7 +272,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         endif
                         
                         //multicast
-                        if (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemType(caster, 'I08X'))  and abilId != RESET_TIME_ABILITY_ID then
+                        if (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemType(caster, 'I08X') or GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) > 0)  and abilId != RESET_TIME_ABILITY_ID then
                             call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                         endif
                     endif

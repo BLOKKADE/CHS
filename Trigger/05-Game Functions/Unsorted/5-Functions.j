@@ -226,21 +226,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         set RectPid = pid
         call EnumItemsInRectBJ(PlayerArenaRects[pid], function SellItemsOnGround)
 
-        //Armor of the Ancestors
-        set i1 = LoadInteger(HT, GetHandleId(u), 54001)
-        if i1 != 0 then 
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) - i1)
-            call AddUnitCustomState(u, BONUS_BLOCK, - i1)
-            call SaveInteger(HT, GetHandleId(u), 54001, 0)
-        endif
-
-        //Arcane Infused Sword
-        set i1 = LoadInteger(HT, GetHandleId(u), ARCANE_INFUSED_SWORD_ITEM_ID)
-        if i1 != 0 then 
-            call AddUnitBonus(u, BONUS_DAMAGE, 0 - i1)
-            call SaveInteger(HT, GetHandleId(u), ARCANE_INFUSED_SWORD_ITEM_ID, 0)
-        endif
-
         //Murloc Warrior
         set i1 = LoadInteger(HT, GetHandleId(u), 54021)
         if i1 != 0 then 
@@ -305,7 +290,7 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         set Glory[pid] = Glory[pid] + GetPlayerGloryBonus(pid)
         call ResourseRefresh(Player(pid)) 
         call AdjustPlayerStateBJ(Income[pid], p, PLAYER_STATE_RESOURCE_GOLD)
-        call DisplayTextToPlayer(p, 0, 0, "|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " - |cff00aa0eLumber|r: +" + I2S(LumberGained[pid]) + " - |cff7af0f8Glory|r: +" + I2S(R2I((GetPlayerGloryBonus(pid)))))
+        call DisplayTextToPlayer(p, 0, 0, "|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " + (|cffffee00Bonus|r: +" + I2S(LumberGained[pid]) + ") - |cff7af0f8Glory|r: +" + I2S(R2I((GetPlayerGloryBonus(pid)))))
 
         if (RoundNumber == 16 or RoundNumber == 32) then
             set Lives[pid] = Lives[pid] + 1

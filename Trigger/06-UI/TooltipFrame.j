@@ -1,4 +1,5 @@
 library TooltipFrame initializer init requires StringFunctions
+    
     globals
         framehandle TooltipFrame = null
 		framehandle TooltipTitleFrame
@@ -12,14 +13,6 @@ library TooltipFrame initializer init requires StringFunctions
 
 		Table TooltipYSize
     endglobals
-
-    function GoldConversionTooltip takes nothing returns string
-		return "Convert |cff96fc77Lumber|r to |cfffcd277Gold|r (|cff77f3fcCtrl+Q|r)"
-	endfunction
-
-	function LumberConversionTooltip takes nothing returns string
-		return "Convert |cfffcd277Gold|r to |cff96fc77Lumber|r (|cff77f3fcCtrl+W|r)"
-	endfunction
 
 	function SellAllItemsTooltip takes nothing returns string
 		return "Sell all your items for 100% gold/glory cost (|cff77f3fcCtrl+E|r)"
@@ -36,16 +29,16 @@ library TooltipFrame initializer init requires StringFunctions
     
         call BlzFrameSetSize(TooltipFrame, 0.29, 0.03)
         call BlzFrameSetPoint(TooltipFrame, FRAMEPOINT_BOTTOMRIGHT, GameUI, FRAMEPOINT_BOTTOMRIGHT, TooltipX, TooltipY)
-        call BlzFrameSetVisible(TooltipFrame, false )   
+        call BlzFrameSetVisible(TooltipFrame, false)   
     endfunction
 
-    //===========================================================================
     private function init takes nothing returns nothing
         local trigger trg = CreateTrigger()
-        call TriggerRegisterTimerEventSingle( trg, 1.1)
-        call TriggerAddAction( trg, function CreateTooltipFrame)
+        call TriggerRegisterTimerEventSingle(trg, 1.1)
+        call TriggerAddAction(trg, function CreateTooltipFrame)
 
         set TooltipYSize = Table.create()
         set trg = null
     endfunction
+
 endlibrary

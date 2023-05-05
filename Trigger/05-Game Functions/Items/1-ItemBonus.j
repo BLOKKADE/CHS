@@ -317,12 +317,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 			//Archmage Staff
 		elseif itemId == 'I086' then
-			call AddUnitAbsoluteBonusCount(u,Element_Water, diff)
-			call AddUnitAbsoluteBonusCount(u,Element_Arcane, diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Water, uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
 
 			//Wizards Gemstone
 		elseif itemId == 'I0BQ' then
-			call AddUnitAbsoluteBonusCount(u,Element_Arcane, diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
 
 			//Book of Creatures
 		elseif itemId == 'I07K' then
@@ -330,7 +330,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 			//Bloodstone
 		elseif itemId == 'I0AK' then
-			call AddUnitAbsoluteBonusCount(u,Element_Blood, diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Blood, uniqueDiff)
 
 			//Bone Armor
 		elseif itemId == 'I07O' then
@@ -338,18 +338,18 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 			//Panda Relic
 		elseif itemId == 'I05L' then
-			call AddUnitAbsoluteBonusCount(u,Element_Blood, diff)
-			call AddUnitAbsoluteBonusCount(u,Element_Water, diff)
-			call AddUnitAbsoluteBonusCount(u,Element_Wind, diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Blood, uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Water, uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Wind, uniqueDiff)
 
 			//Frost Circlet
 		elseif itemId == 'I0BP' then
-			call AddUnitAbsoluteBonusCount(u,Element_Cold, diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Cold, uniqueDiff)
 
 			//Frostmourne
 		elseif itemId == 'I04P' then
-			call AddUnitAbsoluteBonusCount(u,Element_Cold, diff)
-			call AddUnitAbsoluteBonusCount(u,Element_Dark, diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Cold, uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 
 			//Good Luck Charm
 		elseif itemId == 'I083' then
@@ -381,7 +381,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			if itemId == FIRE_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Fire, uniqueDiff)
 			elseif itemId == POISON_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Poison, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Poison, 2 * uniqueDiff)
 			elseif itemId == ARCANE_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
 			elseif itemId == WILD_RUNESTONE_ITEM_ID then
@@ -452,7 +452,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 		//Speed Blade
 		elseif itemId == 'I06B' then
-			call AddUnitBonus(u, BONUS_DAMAGE, 750 * diff)
+			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1000 * diff, 0 )
 
 		//Bloody Axe
 		elseif itemId == 'I078' then

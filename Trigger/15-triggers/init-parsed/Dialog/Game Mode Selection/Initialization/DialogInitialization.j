@@ -1,7 +1,7 @@
 library DialogInitialization initializer init requires RandomShit, VotingScreen
 
     private function ShowVotingDialogToPlayer takes nothing returns nothing
-        if (InitialPlayerCount > 1) then
+        if (PlayerCount > 1) then
             if (udg_boolean15 == true) then // If everyone should vote
                 if GetLocalPlayer() == GetEnumPlayer() then
                     call BlzFrameSetVisible(MainVotingFrameHandle, true)

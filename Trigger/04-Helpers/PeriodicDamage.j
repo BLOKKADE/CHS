@@ -47,7 +47,7 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
                 set this.endTick = T32_Tick + interval
             endif
             
-            if this.limit <= 0 or UnitAlive(this.target) == false or GetDivineBubbleStruct(GetHandleId(this.target)) != 0 then
+            if this.limit <= 0 or UnitAlive(this.target) == false or GetDivineBubbleStruct(GetHandleId(this.target)) != 0 or (this.magic and IsUnitMagicImmune(this.target)) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif

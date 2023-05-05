@@ -105,7 +105,6 @@ scope ModifyDamageBeforeArmor initializer init
                 call AbilStartCD(DamageTarget, 'A08S', 10)
                 call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)  
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
-                return
             endif 
         endif 
 
@@ -150,6 +149,10 @@ scope ModifyDamageBeforeArmor initializer init
                     endif
                 endif
             endif
+        endif
+
+        if DamageSourceTypeId == 'u008' then
+            set Damage.index.damage = 60 * GetHeroLevel(DamageSourceHero)
         endif
 
         if Damage.index.damage <= 0 then
@@ -398,10 +401,10 @@ scope ModifyDamageBeforeArmor initializer init
         //Scorched Scimitar
         set i = GetUnitAbilityLevel(DamageSource, SCORCHED_SCIMITAR_ABILITY_ID)
         if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
-            set DamageTargetMagicRes = DamageTargetMagicRes * 0.5
+            set DamageTargetMagicRes = DamageTargetMagicRes * 0.7
 
             if IsPhysDamage() then
-                set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.5)
+                set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.3)
                 //call BJDebugMsg("ss armor pierce: " + R2S(Damage.index.armorPierced))
             endif
         endif
@@ -500,7 +503,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Hero Force
         set i1 = GetUnitAbilityLevel(DamageSourceHero, HERO_FORCE_ABILITY_ID)
-        if i1 > 0 then
+        if i1 > 0 and CheckUnitHitCooldown(DamageTargetId, HERO_FORCE_ABILITY_ID, 0.3) then
             set i2 = GetHeroStatBJ(GetHeroPrimaryStat(DamageSourceHero), DamageSourceHero                                                                                                                                                                                                                       , true)
             if GetUnitAbilityLevel(DamageTarget, 'Bams') > 0 or GetUnitAbilityLevel(DamageTarget, ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
 
@@ -520,8 +523,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Grom Hellscream
-        if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID then
-            set Damage.index.damage = Damage.index.damage + (GetHeroStr(DamageSourceHero, true) * (0.1 + (0.01 * GetHeroLevel(DamageSourceHero))))
+        if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID and (not IsOnHitDamage()) then
+            set Damage.index.damage = Damage.index.damage + (GetHeroStr(DamageSourceHero, true) * (0.1 + (0.005 * GetHeroLevel(DamageSourceHero))))
             if not IsFxOnCooldownSet(DamageTargetId, ORC_CHAMPION_UNIT_ID, 1) then
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
             endif
@@ -717,7 +720,7 @@ scope ModifyDamageBeforeArmor initializer init
             call MartialRetributionStore(DamageTarget, Damage.index.damage * 0.5)
         endif
 
-        if (not IsOnHitDamage()) and IsUnitEnemy(DamageTarget, GetOwningPlayer(DamageSource)) then   
+        if (not IsOnHitDamage()) and IsUnitEnemy(DamageTarget, Player(DamageSourcePid)) and IsUnitSpellTargetCheck(DamageTarget, Player(DamageSourcePid)) then   
 
             //Liquid Fire
             set i1 = GetUnitAbilityLevel(DamageSource,LIQUID_FIRE_ABILITY_ID)

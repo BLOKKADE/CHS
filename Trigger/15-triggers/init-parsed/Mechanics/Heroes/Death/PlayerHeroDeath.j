@@ -1,7 +1,7 @@
 library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath, Scoreboard
 
     private function IsUnitNotHeroOrCreep takes unit currentUnit returns boolean
-        return (IsUnitType(currentUnit, UNIT_TYPE_HERO) == false) or (GetOwningPlayer(currentUnit) == Player(8)) or (GetOwningPlayer(currentUnit) == Player(11)) or (IsUnitInGroup(currentUnit, DuelingHeroGroup) == true)
+        return (IsUnitType(currentUnit, UNIT_TYPE_HERO) == false) or (GetOwningPlayer(currentUnit) == Player(8)) or (GetOwningPlayer(currentUnit) == Player(11)) or (IsUnitInGroup(currentUnit, DuelingHeroes) == true)
     endfunction
 
     private function RemoveUnitsInArena takes nothing returns boolean
@@ -118,7 +118,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local integer playerArenaIndex = 0
         local group playerArenaUnits
 
-        call StopSoundBJ(udg_sound13,false)
+        call StopSoundBJ(udg_sound13, false)
         call PlaySoundBJ(udg_sound13)
         call ForceAddPlayer(DefeatedPlayers, currentPlayer)
 

@@ -145,8 +145,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(GNOME_MASTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr(GNOME_MASTER_UNIT_ID, 1, "|cffd6e049Cooldown|r: ,0, seconds")
-        call SetBonusStr(GNOME_MASTER_UNIT_ID, 2, "|cff4daed4Hero Stun|r: ,0, seconds")
-        call SetBonusStr(GNOME_MASTER_UNIT_ID, 3, "|cff51d44dCreep Stun|r: ,0, seconds")
+        call SetBonusStr(GNOME_MASTER_UNIT_ID, 2, "|cff4daed4Stun duration|r: ,0, seconds")
 
         call SetBonusStr(CENTAUR_ARCHER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,%%")
 
@@ -172,9 +171,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(GHOUL_UNIT_ID, 0, "|cffe7544aAttack damage bonus|r: ,0,%%")
 
-        call SetBonusStr(GRUNT_UNIT_ID, 0, "|cffe7544aAttack damage|r: ,0,")
-        call SetBonusStr(GRUNT_UNIT_ID, 1, "|cffd6e049Strength bonus|r: ,0,")
-        call SetBonusStr(GRUNT_UNIT_ID, 2, "|cff4daed4Duration|r: ,0, seconds")
+        call SetBonusStr(CRYPT_LORD_UNIT_ID, 0, "|cffe7544aLocust damage|r: ,0,")
+        call SetBonusStr(CRYPT_LORD_UNIT_ID, 1, "|cffd6e049Locust count|r: ,0,")
 
         call SetBonusStr(ARENA_MASTER_UNIT_ID, 0, "|cffe7544aTotal glory gained|r: ,0,")
     endfunction

@@ -59,7 +59,7 @@ scope LongPeriodCheck initializer init
             if GetUnitTypeId(u) == GNOME_MASTER_UNIT_ID and CheckProc(u, 2200) and BlzGetUnitAbilityCooldownRemaining(u, GNOME_MASTER_PASSIVE_ABILITY_ID) == 0 then
                 call ElemFuncStart(u,GNOME_MASTER_UNIT_ID)
                 call AbilStartCD(u, GNOME_MASTER_PASSIVE_ABILITY_ID, 11 + (GetHeroLevel(u) * 0.04))
-                call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'A03Z',"stomp",55 * GetHeroLevel(u),ABILITY_RLF_DAMAGE_INCREASE,2200,ABILITY_RLF_AREA_OF_EFFECT , 1 +(GetHeroLevel(u) * 0.04),ABILITY_RLF_DURATION_HERO,2 +(GetHeroLevel(u) * 0.08),ABILITY_RLF_DURATION_NORMAL)
+                call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'A03Z',"stomp",55 * GetHeroLevel(u),ABILITY_RLF_DAMAGE_INCREASE,2200,ABILITY_RLF_AREA_OF_EFFECT , 1 +(GetHeroLevel(u) * 0.04),ABILITY_RLF_DURATION_HERO,1 +(GetHeroLevel(u) * 0.04),ABILITY_RLF_DURATION_NORMAL)
             endif
         endif
     endfunction
@@ -262,7 +262,7 @@ scope LongPeriodCheck initializer init
                 else
                     set i1 = R2I(i1 * GetUnitElementCount(u, Element_Fire)/* * (1+ GetUnitAbsoluteEffective(u, Element_Fire))*/)
                 endif
-                call AddUnitCustomState(u, BONUS_MAGICPOW, 0.5 * I2R(i1 - i2))	
+                call AddUnitCustomState(u, BONUS_MAGICPOW, 0.3 * I2R(i1 - i2))	
                 call SaveInteger(HT, hid,ABSOLUTE_FIRE_ABILITY_ID,i1)	
             endif
 

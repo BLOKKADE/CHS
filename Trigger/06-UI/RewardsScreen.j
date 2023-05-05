@@ -684,7 +684,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
     endfunction
 
     private function init takes nothing returns nothing
-        call TimerStart(CreateTimer(), 2, false, function InitializeRewards)
+        call TimerStart(CreateTimer(), 1, false, function InitializeRewards)
 
         call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.GiveRewardPoints)
     endfunction

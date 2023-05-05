@@ -16,7 +16,7 @@ library HostSelectsMode initializer init requires RandomShit
         call ConditionalTriggerExecute(DialogInitializationTrigger)
 
         // Don't show the message if there is only 1 person in the game
-        if (InitialPlayerCount == 1)then
+        if (PlayerCount == 1) then
             return
         endif
 

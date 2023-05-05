@@ -117,26 +117,9 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         endif
     endfunction
 
-    function DisableVision takes nothing returns nothing
-        local integer i = 0
-        local integer j
-        loop
-            set j = 0
-            loop  
-                if (i != j) then
-                    call SetPlayerAlliance(Player(i), Player(j), ALLIANCE_SHARED_VISION, false) 
-                endif
-                set j = j + 1 
-                exitwhen j == 8
-            endloop
-        
-            set i = i + 1
-            exitwhen i == 8
-        endloop
-    endfunction
-
     // Takes id for ability Draft Mode Rules
     function SetDraftModeRules takes integer DraftRules returns nothing
         call BlzSetAbilityExtendedTooltip(DraftRules, "You get to choose between " + I2S(udg_Draft_NODraftSpells) + " spells each time.|nDraft spells refresh each time you buy one.|nEach spell only shows up once per game per player.", 0)
     endfunction
+    
 endlibrary

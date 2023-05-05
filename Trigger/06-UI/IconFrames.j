@@ -69,7 +69,6 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		endif
 
 		set ToolTipS = ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_GOLD))
-		set ToolTipS = ToolTipS + "|n|cff41e400Lumber|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_LUMBER))
 		set ToolTipS = ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[GetPlayerId(owningPlayer)]))
 
 		// Cleanup
@@ -172,22 +171,6 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			elseif NumButton == 5 then
 				call PlayerReadies(p)
 
-			// Convert to gold
-			elseif NumButton == 36 then
-				set i1 = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER)
-
-				call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER,0)
-				call SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD)  + i1 * 30)
-				call ResourseRefresh(p) 
-			
-			// Convert to lumber
-			elseif NumButton == 37 then
-				set i1 = GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD)/ 30
-
-				call SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) - i1 * 30)
-				call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) + i1)
-				call ResourseRefresh(p) 
-
 			// Show hats menu
 			elseif NumButton == 39 then
 				set ps = PlayerStats.forPlayer(p)
@@ -250,22 +233,6 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					call BlzFrameSetText(TooltipTitleFrame, ToolTipTitle)
 					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
 					call BlzFrameSetSize(TooltipFrame, 0.31, GetTooltipSize(ToolTipS))
-					call BlzFrameSetVisible(TooltipFrame, true)
-				endif
-
-			// Gold conversion
-			elseif NumButton == 36 then
-				if GetLocalPlayer() == p then
-					call BlzFrameSetText(TooltipTitleFrame, GoldConversionTooltip())
-					call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
-					call BlzFrameSetVisible(TooltipFrame, true)
-				endif
-
-			// Lumber conversion
-			elseif NumButton == 37 then
-				if GetLocalPlayer() == p then
-					call BlzFrameSetText(TooltipTitleFrame, LumberConversionTooltip())
-					call BlzFrameSetSize(TooltipFrame, 0.29, 0.02)
 					call BlzFrameSetVisible(TooltipFrame, true)
 				endif
 
@@ -375,18 +342,14 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
         // Show scoreboard button
         call BlzFrameSetVisible(ButtonParentId[4], RoundNumber > 0 and ScoreboardFrameHandle != null)
 		
-        // Show sell all items/convert gold/lumber button
+        // Show specific button
         if (ShopsCreated == false or BrStarted) then
             call BlzFrameSetVisible(ButtonParentId[3], false) // Sell all items
             call BlzFrameSetVisible(ButtonParentId[5], false) // Ready button
-            call BlzFrameSetVisible(ButtonParentId[36], false) // Convert to gold
-            call BlzFrameSetVisible(ButtonParentId[37], false) // Convert to lumber
             call BlzFrameSetVisible(ButtonParentId[2], false) // Creep info
         else
             call BlzFrameSetVisible(ButtonParentId[3], true) // Sell all items
             call BlzFrameSetVisible(ButtonParentId[5], true) // Ready button
-            call BlzFrameSetVisible(ButtonParentId[36], true) // Convert to gold
-            call BlzFrameSetVisible(ButtonParentId[37], true) // Convert to lumber
 
 			if (GetLocalPlayer() == eventInfo.p) then
 				call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid]) // Creep info
@@ -597,14 +560,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		// -- Big buttons
 
 		// -- Currency buttons - Top middle rightish
-		// Convert lumber to gold
-		call CreateIconWorld(36, "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp", TOP_RIGHT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
-
-		// Convert gold to lumber
-		call CreateIconWorld(37, "ReplaceableTextures\\CommandButtons\\BTNBundleOfLumber.blp", TOP_RIGHT_ICON_ROW_X + 1 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
-
-		// Sell all items - Have a gap between the gold to lumber button
-		call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", TOP_RIGHT_ICON_ROW_X + 3 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		// Sell all items
+		call CreateIconWorld(3, "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp", TOP_RIGHT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
 		// -- Currency buttons
 
 		// -- Top left buttons

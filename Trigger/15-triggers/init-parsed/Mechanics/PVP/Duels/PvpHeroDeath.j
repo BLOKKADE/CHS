@@ -116,7 +116,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
         endif
 
-        call GroupRemoveUnit(DuelingHeroGroup, playerHero)
         call GroupRemoveUnit(DuelingHeroes, playerHero)
         call SetUnitInvulnerable(playerHero, true)
         
@@ -140,7 +139,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
         endif
 
-        call GroupRemoveUnit(DuelingHeroGroup, playerHero)
         call GroupRemoveUnit(DuelingHeroes, playerHero)
 
         // Mark that they player is not fighting
@@ -283,6 +281,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             
             // Only display a message to everyone when this duel is completely over
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
+
+            // Try to distribute bets
+            call ConditionalTriggerExecute(DistributeBetsTrigger)
         else
             // Only show message to the two teams if there are still units alive in the dead player force
             call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
@@ -348,11 +349,10 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             // Reward glory and stuff
             call ForGroup(DuelWinners, function AwardFunToWinningUnit)
 
-            // Hand out bet rewards, try to end the game?
-            call ConditionalTriggerExecute(DistributeBetsTrigger)
+            // Try to end the game?
             call ConditionalTriggerExecute(EndGameTrigger)
 
-            // udg_integer41 has some random math done on it and assigned to UnknownInteger01 which alters gold/lumber of players?
+            // udg_integer41 has some random math done on it and assigned to UnknownInteger01 which alters gold of players?
             call TriggerSleepAction(2.00)
             set udg_integer41 = udg_integer41 + 1 // Some variable used for calculating rewards
             call TriggerSleepAction(1.00)

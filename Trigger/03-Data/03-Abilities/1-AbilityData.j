@@ -722,7 +722,6 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //102 - Hero Force 
         call SaveAbilData(HERO_FORCE_ABILITY_ID, HERO_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Wind, 1)
 
         //103 - Fire Force 
         call SaveAbilData(FIRE_FORCE_ABILITY_ID, FIRE_FORCE_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -1197,7 +1196,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         /*
         call SetObjectElement(CENTAUR_ARCHER_UNIT_ID, Element_Energy, 1)
         
-        call SetObjectElement(GRUNT_UNIT_ID, Element_Energy, 1)
+        call SetObjectElement(CRYPT_LORD_UNIT_ID, Element_Energy, 1)
         call SetObjectElement(DARK_HUNTER_UNIT_ID, Element_Energy, 1)
         call SetObjectElement(MEDIVH_UNIT_ID, Element_Energy, 1)
         call SetObjectElement(TAUREN_UNIT_ID, Element_Energy, 1)
@@ -1227,6 +1226,14 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(TIME_WARRIOR_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(BANSHEE_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(BANSHEE_UNIT_ID, Element_Water, 1)
+        call SetObjectElement(HUNTRESS_UNIT_ID, Element_Wind, 1)
+        call SetObjectElement(TAUREN_UNIT_ID, Element_Arcane, 1)
+        call SetObjectElement(MEDIVH_UNIT_ID, Element_Arcane, 1)
+        call SetObjectElement(CENTAUR_ARCHER_UNIT_ID, Element_Blood, 1)
+        call SetObjectElement(CRYPT_LORD_UNIT_ID, Element_Dark, 1)
+        call SetObjectElement(CRYPT_LORD_UNIT_ID, Element_Wild, 1)
+        call SetObjectElement(MORTAR_TEAM_UNIT_ID, Element_Blood, 1)
+        call SetObjectElement(WOLF_RIDER_UNIT_ID, Element_Wind, 1)
         
     endfunction 
 

@@ -17,7 +17,7 @@ library HeroPassiveDesc initializer init
 
     private function SetupHeroPassives takes nothing returns nothing
         call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSpellBreaker.blp" )
-        call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Battlemaster: Gains bonus +1 bonus attack damage per point in agility and intelligence.")
+        call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Battlemaster: Gains +1 base attack damage per point in agility and intelligence.")
         call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +5 to two random stats. (|cff68eef3Every 10 levels|r) Battlemaster: +1 bonus to each stat on level up." )
 
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp" )
@@ -25,7 +25,7 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Disease Cloud: +40 damage." )
         
         call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheClaw.blp" )
-        call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Animal Affection: Summon attack damage, armor, magic power and magic resistance are increased by a percentage of the Hero's amount. [|cff9e5d07Summon|r] spells have 50% reduced cooldown. ")
+        call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Animal Affection: Summon attack damage, armor, physical power, evasion, block, luck, magic power and magic resistance are increased by a percentage of the Hero's amount. [|cff9e5d07Summon|r] spells have 50% reduced cooldown. ")
         call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +1% Animal Affection summon stat increase." )
         
         call InitHeroDesc(MAULER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroPaladin.blp" )
@@ -46,7 +46,7 @@ library HeroPassiveDesc initializer init
         
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power.")
-        call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.3 magic protection, +0.3 magic power." )
+        call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.8 magic protection, +0.8 magic power." )
             
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp" )
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Feedback: Every time the Hero damages an enemy it drains their mana, increasing its own mana. ")
@@ -85,8 +85,8 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bladestorm: +35 damage, +3 area of effect. (|cff68eef3Every 20 levels|r) reduces attacks required by 1." )
                                                     
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp" )
-        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Valiant Strike: All damage dealt by the Hero and its summons have 20% of the Hero's strength added to it.")
-        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Valiant Strike: +1% damage from strength. +3 armor and +6 hit point regeneration." )
+        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Valiant Strike: All damage dealt by the Hero and its summons have 10% of the Hero's strength added to it.[|cffd45e29onhit|r]")
+        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Valiant Strike: +0.5% damage from strength. +2 armor and +5 hit point regeneration." )
         
         call InitHeroDesc(TROLL_HEADHUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeadHunterBerserker.blp" )
         call InitHeroDesc(TROLL_HEADHUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Troll Anatomy: Gains bonus hit point regen based on 40% of its strength. ")
@@ -104,8 +104,8 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
         
         call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )
-        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies every time the Hero attacks, dealing 25% of her attack in |cffff00ffmagic damage|r. ")
-        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.25% of her attack damage" )
+        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies once every second when the Hero attacks, dealing 25% of her attack damage as |cffff00ffmagic damage|r. ")
+        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
             
         call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )
         call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 20% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons dies the Hero restores 2% of its max HP and the summon explodes, dealing 50% of its attack damage as |cffff00ffmagic damage|r to enemies.")
@@ -153,8 +153,8 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: Once Every 11 seconds |cffff00ffmagical damage|r and stuns all heroes in a 2200 AOE for 1 second and creeps for 2 seconds. ")
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds hero stun, +0.08 seconds creep stun. +0.04 seconds cooldown" )
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: Once Every 11 seconds deal 55 |cffff00ffmagical damage|r and stun all units in a 2200 AOE for 1 second. ")
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds stun, +0.04 seconds cooldown" )
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. Gets an extra point for the end of round reward shop every 5 rounds. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
@@ -185,8 +185,8 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus strength, +2 armor limit." )
         
         call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSatyr.blp" )
-        call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it counterattacks, dealing 100% of its attack damage in |cffff8080physical damage|r back to the attacker.[|cffd45e29onhit|r]")
-        call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Trickshot: +2% damage. +0.5 evasion." )
+        call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it it has a 50% chance to counterattack, dealing 50% of its attack damage in |cffff8080physical damage|r back to the attacker.[|cff80ff80Luck|r][|cffd45e29onhit|r]")
+        call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Trickshot: +1% damage. +0.5 evasion." )
 
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy or takes damage, lasts until the end of the fight. (Max 2 billion)")
@@ -203,9 +203,9 @@ library HeroPassiveDesc initializer init
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp" )
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 40% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
         
-        call InitHeroDesc(GRUNT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGrunt.blp" )
-        call InitHeroDesc(GRUNT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: The Grunt's Grunt: At the start of every fight the Hero gains 20 bonus attack damage and strength for 10 seconds. ")
-        call InitHeroDesc(GRUNT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Grunt's Grunt: +20 attack damage and strength, +0.1 seconds duration." )
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroCryptLord.blp" )
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Locust Swarm: The Hero has 1 Locust that attacks nearby enemies once every second, dealing 60 |cffff8080physical damage|r and healing the hero for the damage dealt. [|cffff9696Lifesteal|r]")
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Locust Swarm: +60 attack damage. (|cff68eef3Every 10 levels|r) +1 Locust summoned." )
         
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0Most spells are affected by enemy armor, and not the Hero's magic power. Seer's passive can be disabled by the Staff of Power.|r" )

@@ -6,7 +6,6 @@ library GameInit initializer init requires GroupUtils
         boolean ARLearningAbil = false
         boolean ArNotLearningAbil = false
         boolean array PlayerPlacedGoldBet
-        boolean array PlayerPlacedLumberBet
         boolean array RoundLiveLost
         boolean BettingEnabled = false
         boolean BrStarted = false
@@ -33,7 +32,6 @@ library GameInit initializer init requires GroupUtils
         force LeaverPlayers = null
         force PlayersWithHero = null
         group DuelingHeroes = null
-        group DuelingHeroGroup = null
         group DuelWinnerDisabled = null
         group DuelWinners = null
         group GroupEmptyArenaCheck = null
@@ -45,7 +43,6 @@ library GameInit initializer init requires GroupUtils
         integer array PlayerLastLearnedSpell
         integer array PlayerResourceBetPercentage
         integer array ResourceBetPercentageGoldReward
-        integer array ResourceBetPercentageLumberReward
         integer array ShopIds
         integer BettingPlayerCount = 0
         integer BoughtAbility = 0
@@ -137,7 +134,6 @@ library GameInit initializer init requires GroupUtils
         trigger CreepPeriodicAttackTrigger = null
         trigger CreepPowerAndHpTrigger = null
         trigger CreepTypesTrigger = null
-        trigger DeathDialogInitializationTrigger = null
         trigger DeathDialogLeaveTrigger = null
         trigger DialogInitializationTrigger = null
         trigger DisableAbilitiesTrigger = null
@@ -162,9 +158,7 @@ library GameInit initializer init requires GroupUtils
         trigger ModifyCreepAbilitiesTrigger = null
         trigger PandarenDeathSoundsTrigger = null
         trigger PandarenDiesTrigger = null
-        trigger PlaceGoldAndLumberBetTrigger = null
         trigger PlaceGoldBetTrigger = null
-        trigger PlaceLumberBetTrigger = null
         trigger PlacePercentageBetTrigger = null
         trigger PlayerAntiStuckTrigger = null
         trigger PlayerCompleteRoundMoveTrigger = null
@@ -174,9 +168,7 @@ library GameInit initializer init requires GroupUtils
         trigger PlayerInitializationTrigger = null
         trigger PlayerLeavesGameTrigger = null
         trigger PvpCountdownTimerTrigger = null
-        trigger ResourceBettingMenusTrigger = null
         trigger SetHostPlayerTrigger = null
-        trigger SetupPlayerArenasTrigger = null
         trigger SinglePvpHeroDeathTrigger = null
         trigger SpacebarCameraTrigger = null
         trigger StartLevelTrigger = null
@@ -199,7 +191,6 @@ library GameInit initializer init requires GroupUtils
         set PlayersWithHero = CreateForce()
         set DefeatedPlayers = CreateForce()
         set DuelingHeroes = CreateGroup()
-        set DuelingHeroGroup = CreateGroup()
         set DuelWinners = CreateGroup()
         set DuelWinnerDisabled = CreateGroup()
         set RoundPlayersCompleted = CreateForce()
@@ -306,9 +297,12 @@ library GameInit initializer init requires GroupUtils
     endfunction
 
     private function StartGame takes nothing returns nothing
-        call ConditionalTriggerExecute(SetupPlayerArenasTrigger)
+        call FogMaskEnableOff()
+        call FogEnableOff()
+
         call ConditionalTriggerExecute(PlayerInitializationTrigger)
         call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger)
+        call ConditionalTriggerExecute(VotingRightsDialogTrigger)
     endfunction  
 
     public function init takes nothing returns nothing
@@ -316,7 +310,9 @@ library GameInit initializer init requires GroupUtils
         call InitializeGlobals()
         call InitializeSounds()
 
-        call TimerStart(CreateTimer(), 0, false, function StartGame)
+        call DisplayTimedTextToForce(GetPlayersAll(), 3.00, "|cff52ff5bPlease wait while the game initializes..|r")
+
+        call TimerStart(CreateTimer(), 3, false, function StartGame)
     endfunction
 
 endlibrary
