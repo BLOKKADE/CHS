@@ -433,6 +433,8 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         set closeButtonFrameHandle = null
         set resetButtonFrameHandle = null
         set titleFrameHandle = null
+        set closeIconButtonFrameHandle = null
+        set descriptionTextFrameHandle = null
     endfunction
     
     private function CreateCategoryTitle takes string categoryTitle returns nothing
