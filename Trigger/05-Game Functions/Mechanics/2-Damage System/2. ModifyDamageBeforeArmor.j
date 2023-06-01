@@ -208,8 +208,10 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Energy Shield
         set i1 = GetUnitAbilityLevel(DamageTargetHero, ENERGY_SHIELD_ABILITY_ID)
-        if i1 > 0 and GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 1 and CalculateDistance(GetUnitX(DamageTargetHero), GetWidgetX(DamageSource), GetUnitY(DamageTargetHero), GetWidgetY(DamageSource)) >= 300 then
-            set Damage.index.damage = Damage.index.damage - (Damage.index.damage * (0.05 + (i1 * 0.01)))
+        set r1 = CalculateDistance(GetUnitX(DamageTargetHero), GetWidgetX(DamageSource), GetUnitY(DamageTargetHero), GetWidgetY(DamageSource))
+        if i1 > 0 and GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 1 and r1 >= 300 then
+            set Damage.index.damage = Damage.index.damage * Pow((1 - (0.05 + (i1 * 0.01))),  r1 / 300)
+            call BJDebugMsg("reduction: " + R2S(Pow((1 - (0.05 + (i1 * 0.01))),  r1 / 300)) + " distance: " + R2S(r1))
         endif
 /*
         //Damage Spread
