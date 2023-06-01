@@ -25,20 +25,12 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
                 set spellTarget = caster
             endif
 
-            //if caster has the ability do 100% bonus damage
-            set lvl = GetUnitAbilityLevel(caster, abilId)
-            if lvl > 0 then
-                if lvl > abilLevel then
-                    set abilLevel = lvl
-                endif
-                set damage = 1
-            endif
             //get dummy
             set dummy = CastSpell(caster, spellTarget, abilId, abilLevel, GetAbilityOrderType(abilId), GetUnitX(source), GetUnitY(source))
             call AddUnitCustomState(dummy.dummy, BONUS_MAGICPOW, GetUnitCustomState(source, BONUS_MAGICPOW))
 
             //Set bonus damage
-            set AbilityModifiers.createOrGet(dummy.dummy).RetaliationAuraBonus = 0.25 + (0.025 * GetUnitAbilityLevel(caster, RETALIATION_AUR_ABILITY_ID)) + damage
+            set AbilityModifiers.createOrGet(dummy.dummy).RetaliationAuraBonus = 0.25 + (0.025 * GetUnitAbilityLevel(caster, RETALIATION_AUR_ABILITY_ID))
             //call BJDebugMsg("retdmg: " + R2S(RetaliationDamage.real[GetHandleId(dummy.dummy)]) + " hid: " + I2S(GetHandleId(dummy.dummy)))
             call DestroyEffect(AddLocalizedSpecialEffectTarget("war3mapImported\\Shiva'sWrath.mdx", caster, "origin"))
             call dummy.activate()
