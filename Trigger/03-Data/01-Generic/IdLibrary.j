@@ -498,6 +498,7 @@ library IdLibrary initializer init
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
         constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
         constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
+        constant integer ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID         = 'A0DY'
 
         // --- Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'

@@ -144,7 +144,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             return true
         //Divine Source
         elseif abilId == 'A01D' then
-                call UseDivineSource(hero)
+            call UseDivineSource(hero)
             return true
         endif
 
@@ -288,6 +288,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
                         call SpellbaneSpellCast(caster, abilId, abilLvl)
+                    endif
+
+                    if GetUnitAbilityLevel(caster, 'B02Z') > 0 then
+                        call ArcaneAbsorptionGauntletsActivate(caster, abilId, abilLvl, target)
                     endif
 
                     //call BJDebugMsg("cd")
