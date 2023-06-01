@@ -4,36 +4,32 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
         unit source
         unit target
         integer manaLimit
-        integer bonus
-        integer damageBonus
-        boolean finalStage
+        integer damageAmount
         integer beginTick
         integer endTick
+        integer tick
 
         private method periodic takes nothing returns nothing
             local integer mana = R2I(GetUnitState(this.target, UNIT_STATE_MANA))
-            local integer currentBonus = 0
-            local integer tmpDmgBonus
-            if this.finalStage == false and GetUnitAbilityLevel(this.target, MANA_STARVATION_NERF_BUFF_ID) > 0 and IsUnitTarget(this.target) then
+            set this.tick = this.tick + 1
+            if GetUnitAbilityLevel(this.target, MANA_STARVATION_NERF_BUFF_ID) > 0 and IsUnitTarget(this.target) then
                 if mana > this.manaLimit then
-                    //call BJDebugMsg("ms: " + I2S(this.bonus))
                     call SetUnitState(this.target, UNIT_STATE_MANA, this.manaLimit)
+                    set this.damageAmount = this.damageAmount + (mana - this.manaLimit)
                 else
-                    //call BJDebugMsg("ms: " + I2S(this.bonus))
                     set this.manaLimit = mana
                 endif
-                set tmpDmgBonus = R2I((1 - (GetUnitState(this.target, UNIT_STATE_MANA) / GetUnitState(this.target, UNIT_STATE_MAX_MANA))) * BlzGetUnitBaseDamage(this.source, 0))
-                if tmpDmgBonus != this.damageBonus then
-                    call AddUnitBonus(this.source, BONUS_DAMAGE,tmpDmgBonus - this.damageBonus)
-                    set this.damageBonus = tmpDmgBonus
-                endif
-            elseif this.finalStage == false and ((T32_Tick - this.beginTick > 32 and GetUnitAbilityLevel(this.target, MANA_STARVATION_NERF_BUFF_ID) == 0) or T32_Tick > this.endTick) then
-                //call BJDebugMsg("final stage")
-                set this.finalStage = true
-                set this.endTick = T32_Tick + (8 * 32)
             endif
 
-            if this.finalStage and T32_Tick > this.endTick then
+            if this.tick > 32 then
+                set this.tick = 0
+                if this.damageAmount > 0 then
+                    call Damage.applyMagic(this.source, this.target, this.damageAmount, DAMAGE_TYPE_MAGIC)
+                    set this.damageAmount = 0
+                endif
+            endif
+
+            if ((T32_Tick - this.beginTick > 32 and GetUnitAbilityLevel(this.target, MANA_STARVATION_NERF_BUFF_ID) == 0) or T32_Tick > this.endTick) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
@@ -42,12 +38,12 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
         static method create takes unit source, unit target, real duration returns thistype
             local thistype this = thistype.setup()
 
-            set this.finalStage = false
+            set this.tick = 0
             set this.source = source
             set this.sourceId = GetHandleId(source)
             set this.target = target
             set this.manaLimit = R2I(GetUnitState(target, UNIT_STATE_MANA))
-            set this.damageBonus = 0
+            set this.damageAmount = 0
 
             set this.beginTick = T32_Tick
             set this.endTick = T32_Tick + R2I(duration * 32)
@@ -57,9 +53,7 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
         
         method destroy takes nothing returns nothing
             set this.target = null
-            call AddUnitBonus(this.source, BONUS_DAMAGE, 0 - this.damageBonus)
             set this.source = null
-            //call BJDebugMsg("ms end: " + I2S(this.bonus))
             call this.recycle()
         endmethod
     
