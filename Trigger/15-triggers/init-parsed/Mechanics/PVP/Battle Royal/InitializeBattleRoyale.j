@@ -64,6 +64,7 @@ library InitializeBattleRoyale initializer init requires RandomShit, StartFuncti
     private function StartFightForPlayerHero takes nothing returns nothing
         local unit currentUnit = GetEnumUnit()
 
+        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(GetOwningPlayer(currentUnit), 0, RoundNumber))
         call PauseUnit(currentUnit, false)
         call SetUnitInvulnerable(currentUnit, false)
         call RectLeaveDetection.create(currentUnit, RectMidArena)
