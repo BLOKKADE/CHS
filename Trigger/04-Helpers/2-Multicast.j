@@ -76,6 +76,8 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 if GetUnitState(this.caster, UNIT_STATE_MANA) > this.manaCost then
                     call this.castSpell()
                 endif
+            else
+                call SetUnitState(this.caster, UNIT_STATE_MANA, GetUnitState(this.caster, UNIT_STATE_MANA) - this.manaCost)
             endif
 
             return true
