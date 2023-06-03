@@ -1,4 +1,4 @@
-library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, AchievementsFrame
+library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, AchievementsFrame, HeroSelector, LoadSaveCommon
 
     // This is responsible for parsing the input and determining how to load the code
     // An event is fired from the savecode library once it is done loading
@@ -53,6 +53,8 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         local boolean resetSeasonStats = false
         local integer hatIndexTemp = 0
         local integer petIndexTemp = 0
+        local integer heroIndex = 0
+        local integer currentUnitTypeId = 0
 
         // Don't load anything if the player has already loaded. A player should only need to load once
         if (ps.hasLoaded()) then
@@ -143,6 +145,22 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         if ps.getDiscordAdToggle() > 0 then
             set DiscordAdDisabled[GetPlayerId(SaveLoadEvent_Player)] = true
         endif
+
+        // Indexing for heroes starts at the last index of the first batch we saved
+        set heroIndex = FIRST_HERO_SAVE_COUNT
+
+        loop
+            // ONLY LOAD THE FIRST CHUNK OF HEROES WHEN THIS WAS ADDED
+            // DO ANOTHER LOOP IF ADDITIONAL PROPERTIES ARE ADDED TO THE SAVE CODE IN THE FUTURE
+            exitwhen heroIndex == 0
+
+            set currentUnitTypeId = HeroSelectorUnitCode[heroIndex]
+
+            call ps.setHeroPVPWins(currentUnitTypeId, LoadNextBasicValue())
+            call ps.setHeroBRWins(currentUnitTypeId, LoadNextBasicValue())
+
+            set heroIndex = heroIndex - 1
+        endloop
 
         // Preset hat. The hat index will get saved in AchievementsFrame_TryToWearHat
         call AchievementsFrame_TryToWearHat(hatIndexTemp, SaveLoadEvent_Player, false)

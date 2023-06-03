@@ -27,8 +27,10 @@ library PlayerDiesInBattleRoyale initializer init requires RandomShit, UnitFilte
     private function PlayerDiesInBattleRoyaleActions takes nothing returns nothing
         local player deadPlayer = GetOwningPlayer(GetTriggerUnit())
         local group deadPlayerUnits = GetUnitsOfPlayerAll(deadPlayer)
+        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit()))
 
-        call PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit())).addBRPVPKill()
+        call ps.addBRPVPKill()
+        call ps.addPlayerKill()
 
         // Set the wave the player left
         call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)

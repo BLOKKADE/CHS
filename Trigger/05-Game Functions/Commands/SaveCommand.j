@@ -1,4 +1,4 @@
-library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore
+library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, HeroSelector, LoadSaveCommon
 
     /*
         The main idea in saving is that you save an integer into the `Save` array for every `thing` you want to save
@@ -19,6 +19,8 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
     public function SaveCodeForPlayer takes player p, boolean showMessage returns nothing
         local integer saveIndex = 0
+        local integer heroIndex = 0
+        local integer currentUnitTypeId = 0
         local PlayerStats ps = PlayerStats.forPlayer(p)
         set SaveCount = -1 // This must get set to -1 every time we generate a new code
 
@@ -46,6 +48,22 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setAPPVPAllWins(ps.getAPPVPAllWins() + 11)
         call ps.setAPBRAllWins(ps.getAPBRAllWins() + 12)
         */
+
+        // Indexing for heroes starts at 1
+        set heroIndex = 1
+
+        loop
+            // ONLY LOAD THE FIRST CHUNK OF HEROES WHEN THIS WAS ADDED
+            // DO ANOTHER LOOP IF ADDITIONAL PROPERTIES ARE ADDED TO THE SAVE CODE IN THE FUTURE STARTING AT FIRST_HERO_SAVE_COUNT + 1
+            exitwhen heroIndex > FIRST_HERO_SAVE_COUNT
+
+            set currentUnitTypeId = HeroSelectorUnitCode[heroIndex]
+
+            call SaveNextBasicValue(ps.getHeroBRWins(currentUnitTypeId))
+            call SaveNextBasicValue(ps.getHeroPVPWins(currentUnitTypeId))
+
+            set heroIndex = heroIndex + 1
+        endloop
 
         call SaveNextBasicValue(ps.getPetIndex())
         call SaveNextBasicValue(ps.getHatIndex())
@@ -80,14 +98,11 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
             set saveIndex = saveIndex + 1
         endloop
 
-        set SaveTempString = ""
         set SaveTempString = Savecode(SaveTempInt).Save(p, 1)
         call SaveFile.create(p, "", 0, SaveTempString)
         
         if (showMessage) then
-            set SaveCodeColored = Savecode_colorize(SaveTempString)
-
-            call DisplayTimedTextToPlayer(p, 0, 0, 30, SaveCodeColored)
+            call DisplayTimedTextToPlayer(p, 0, 0, 30, SaveTempString)
             call DisplayTimedTextToPlayer(p, 0, 0, 30, "Your Save Code has been saved to:")
             call DisplayTimedTextToPlayer(p, 0, 0, 30, "Documents//Warcraft III//CustomMapData//CHS")
         endif
