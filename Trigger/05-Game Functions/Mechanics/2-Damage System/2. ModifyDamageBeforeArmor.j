@@ -108,6 +108,23 @@ scope ModifyDamageBeforeArmor initializer init
             endif 
         endif 
 
+        // Light Magic Shield activate
+        if UnitHasItemType(DamageTarget, LIGHT_MAGIC_SHIELD_ITEM_ID) then
+            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, LIGHT_MAGIC_SHIELD_ABILITY_ID) == 0 and DistanceBetweenUnits(DamageTarget, DamageSource) > 300 + BlzGetUnitWeaponRealField(DamageTarget, UNIT_WEAPON_RF_ATTACK_RANGE, 0) then
+                call AbilStartCD(DamageTarget, LIGHT_MAGIC_SHIELD_ABILITY_ID, 18)
+                set Damage.index.damage = 0
+                call TempAbil.create(DamageTarget, LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, 3)
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                return
+            endif
+        endif
+
+        // Light Magic Shield damage immunity
+        if GetUnitAbilityLevel(DamageTarget, LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID) > 0 then
+            set Damage.index.damage = 0
+            return
+        endif
+
         //Strong Chestmail
         if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO)) then
             set Damage.index.damage = StrongChestMailDamage(DamageTargetId, Damage.index.damage)
@@ -191,7 +208,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Cloak of Sorrow
             if GetUnitAbilityLevel(DamageSource, 'B007') > 0 then
-                set Damage.index.damage = Damage.index.damage - RMinBJ(BlzGetUnitBaseDamage(DamageSource, 0), 4000)
+                set Damage.index.damage = RMaxBJ(0,  Damage.index.damage - 4000)
             endif
 
             //Cloak of Sorrow

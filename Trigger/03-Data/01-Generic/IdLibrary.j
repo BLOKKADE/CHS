@@ -499,6 +499,8 @@ library IdLibrary initializer init
         constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
         constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
         constant integer ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID         = 'A0DY'
+        constant integer LIGHT_MAGIC_SHIELD_ABILITY_ID                  = 'A0E1'
+        constant integer LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID             = 'A0E0'
 
         // --- Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'
@@ -812,6 +814,7 @@ library IdLibrary initializer init
         constant integer ERUPTION_ITEM_ID                               = 'I039'
         constant integer CONTEMPORARY_RUNES_ITEM_ID                     = 'I0D3'
         constant integer ENERGY_BOMBARDMENT_ITEM_ID                     = 'I0D4'
+        constant integer LIGHT_MAGIC_SHIELD_ITEM_ID                     = 'I06K'
 
         // --- Buff IDs ---
         constant integer DARK_SEAL_BUFF_ID                              = 'A0DE'
