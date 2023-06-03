@@ -1,7 +1,6 @@
 library Eruption requires UnitHelpers, RandomShit, SpellFormula
     struct EruptionStruct extends array
         unit source
-        unit target
         integer level
         integer pid
         integer maxUnits
@@ -50,7 +49,6 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
             local thistype this = thistype.setup()
            // call BJDebugMsg("sl start")
             set this.source = source
-            set this.target = target
             set this.endTick = T32_Tick + (12 * 32)
             set this.tick = T32_Tick + 16
             set this.level = level
@@ -66,7 +64,6 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
         
         method destroy takes nothing returns nothing
             set this.source = null
-            set this.target = null
             //call BJDebugMsg("sl end")
             call DestroyEffect(this.fx)
             set this.fx = null
