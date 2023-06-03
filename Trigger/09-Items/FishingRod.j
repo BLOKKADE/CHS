@@ -24,7 +24,7 @@ library FishingRod initializer init requires TempAbilSystem
         endmethod
     
         private method periodic takes nothing returns nothing
-            if T32_Tick < this.hookEndTick and DistanceBetweenUnits(this.source, this.target) > 300 then
+            if T32_Tick < this.hookEndTick and DistanceBetweenUnits(this.source, this.target) > 200 then
                 call this.teleportBack()
             endif
             if T32_Tick > this.immuneEndTick or GetUnitAbilityLevel(this.target, 'A0DI') == 0 or (not UnitAlive(this.source)) or (not UnitAlive(this.target)) then
@@ -38,8 +38,8 @@ library FishingRod initializer init requires TempAbilSystem
 
             set this.source = source
             set this.target = target
-            set this.hookEndTick = T32_Tick + R2I(3 * 32)
-            set this.immuneEndTick = T32_Tick + R2I(5 * 32)
+            set this.hookEndTick = T32_Tick + R2I(6 * 32)
+            set this.immuneEndTick = T32_Tick + R2I(9 * 32)
 
             call this.startPeriodic()
             return this
