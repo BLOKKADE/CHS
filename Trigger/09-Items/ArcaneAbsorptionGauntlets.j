@@ -47,6 +47,16 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
             call this.startPeriodic()
             return this
         endmethod
+
+        static method createOrExtend takes unit target, integer abilId, integer bonus, real duration returns thistype
+            local thistype aag = GetAAGStruct(GetHandleId(target))
+            if aag == 0 then
+                return ArcaneAbsorptionGauntlets.create(target, abilId, bonus, 10)
+            else
+                set aag.endTick = T32_Tick + R2I(10 * 32)
+                return aag
+            endif
+        endmethod
         
         method destroy takes nothing returns nothing
             set AAGStruct[GetHandleId(this.target)] = 0
@@ -87,13 +97,9 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
             set multiplier = 2
         endif
         
-        call Heal(u, mana * multiplier)
+        call Heal(u, mana)
         call BJDebugMsg("original mana cost: " + R2S(mana) + " bonus mana cost: " + R2S(mana * multiplier))
-        if GetMopStruct(GetHandleId(u)) == 0 then
-            call ArcaneAbsorptionGauntlets.create(target, abilId, R2I(mana * multiplier), 10)
-        else
-            set GetAAGStruct(GetHandleId(u)).endTick = T32_Tick + R2I(10 * 32)
-        endif
+        call ArcaneAbsorptionGauntlets.createOrExtend(u, abilId, R2I(mana * multiplier), 10)
     endfunction
 
     private function init takes nothing returns nothing
