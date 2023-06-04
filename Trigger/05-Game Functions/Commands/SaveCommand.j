@@ -1,4 +1,4 @@
-library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, BattleRoyaleHelper
+library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, HeroSelector, LoadSaveCommon, BattleRoyaleHelper
 
     /*
         The main idea in saving is that you save an integer into the `Save` array for every `thing` you want to save
@@ -11,14 +11,16 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
             Save[2] = 127               - The total amount of wins across versions
     */
 
-    private function SaveNextBasicValue takes integer value returns nothing
+    private function SaveNextBasicValue takes integer value, integer maxValue returns nothing
         set SaveCount = SaveCount + 1
-        set SaveMaxValue[SaveCount] = MAX_SAVE_VALUE
+        set SaveMaxValue[SaveCount] = maxValue
         set SaveValue[SaveCount] = value
     endfunction
 
     public function SaveCodeForPlayer takes player p, boolean showMessage returns nothing
         local integer saveIndex = 0
+        local integer heroIndex = 0
+        local integer currentUnitTypeId = 0
         local PlayerStats ps = PlayerStats.forPlayer(p)
         set SaveCount = -1 // This must get set to -1 every time we generate a new code
 
@@ -52,31 +54,47 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call ps.setAPBRAllWins(ps.getAPBRAllWins() + 12)
         */
 
-        call SaveNextBasicValue(ps.getPetIndex())
-        call SaveNextBasicValue(ps.getHatIndex())
-        call SaveNextBasicValue(ps.getDiscordAdToggle())
+        // Indexing for heroes starts at 1
+        set heroIndex = 1
+
+        loop
+            // ONLY LOAD THE FIRST CHUNK OF HEROES WHEN THIS WAS ADDED
+            // DO ANOTHER LOOP IF ADDITIONAL PROPERTIES ARE ADDED TO THE SAVE CODE IN THE FUTURE STARTING AT FIRST_HERO_SAVE_COUNT + 1
+            exitwhen heroIndex > FIRST_HERO_SAVE_COUNT
+
+            set currentUnitTypeId = HeroSelectorUnitCode[heroIndex]
+
+            call SaveNextBasicValue(ps.getHeroBRWins(currentUnitTypeId), MAX_MINIMAL_SAVE_VALUE)
+            call SaveNextBasicValue(ps.getHeroPVPWins(currentUnitTypeId), MAX_MINIMAL_SAVE_VALUE)
+
+            set heroIndex = heroIndex + 1
+        endloop
+
+        call SaveNextBasicValue(ps.getPetIndex(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getHatIndex(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getDiscordAdToggle(), MAX_SAVE_VALUE)
 
         // All Pick Save Values
-        call SaveNextBasicValue(ps.getAPBRAllWins())
-        call SaveNextBasicValue(ps.getAPPVPAllWins())
-        call SaveNextBasicValue(ps.getAPBRSeasonWins())
-        call SaveNextBasicValue(ps.getAPPVPSeasonWins())
+        call SaveNextBasicValue(ps.getAPBRAllWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getAPPVPAllWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getAPBRSeasonWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getAPPVPSeasonWins(), MAX_SAVE_VALUE)
 
         // All Random Save Values
-        call SaveNextBasicValue(ps.getARBRAllWins())
-        call SaveNextBasicValue(ps.getARPVPAllWins())
-        call SaveNextBasicValue(ps.getARBRSeasonWins())
-        call SaveNextBasicValue(ps.getARPVPSeasonWins())
+        call SaveNextBasicValue(ps.getARBRAllWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getARPVPAllWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getARBRSeasonWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getARPVPSeasonWins(), MAX_SAVE_VALUE)
 
         // Draft Save Values
-        call SaveNextBasicValue(ps.getDraftBRAllWins())
-        call SaveNextBasicValue(ps.getDraftPVPAllWins())
-        call SaveNextBasicValue(ps.getDraftBRSeasonWins())
-        call SaveNextBasicValue(ps.getDraftPVPSeasonWins())
+        call SaveNextBasicValue(ps.getDraftBRAllWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getDraftPVPAllWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getDraftBRSeasonWins(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(ps.getDraftPVPSeasonWins(), MAX_SAVE_VALUE)
 
         // Misc Save Values
-        call SaveNextBasicValue(ps.getCameraZoom())
-        call SaveNextBasicValue(CurrentGameVersion.getVersion())
+        call SaveNextBasicValue(ps.getCameraZoom(), MAX_SAVE_VALUE)
+        call SaveNextBasicValue(CurrentGameVersion.getVersion(), MAX_SAVE_VALUE)
 
         set SaveTempInt = Savecode.create()
         loop
@@ -85,16 +103,13 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
             set saveIndex = saveIndex + 1
         endloop
 
-        set SaveTempString = ""
         set SaveTempString = Savecode(SaveTempInt).Save(p, 1)
         call SaveFile.create(p, "", 0, SaveTempString)
         
         if (showMessage) then
-            set SaveCodeColored = Savecode_colorize(SaveTempString)
-
-            call DisplayTimedTextToPlayer(p, 0, 0, 30, SaveCodeColored)
             call DisplayTimedTextToPlayer(p, 0, 0, 30, "Your Save Code has been saved to:")
             call DisplayTimedTextToPlayer(p, 0, 0, 30, "Documents//Warcraft III//CustomMapData//CHS")
+            call DisplayTimedTextToPlayer(p, 0, 0, 30, "It will automatically load at the beginning of the game.")
         endif
 	endfunction
 	

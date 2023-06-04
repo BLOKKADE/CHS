@@ -1,4 +1,4 @@
-library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, AchievementsFrame
+library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, AchievementsFrame, HeroSelector, LoadSaveCommon
 
     // This is responsible for parsing the input and determining how to load the code
     // An event is fired from the savecode library once it is done loading
@@ -38,9 +38,9 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         endif
     endfunction
 
-    private function LoadNextBasicValue takes nothing returns integer 
+    private function LoadNextBasicValue takes integer maxSaveValue returns integer 
         set SaveCount = SaveCount + 1
-        set SaveMaxValue[SaveCount] = MAX_SAVE_VALUE
+        set SaveMaxValue[SaveCount] = maxSaveValue
         call SaveHelper.GUILoadNext()
         return SaveValue[SaveCount]
     endfunction
@@ -53,6 +53,8 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         local boolean resetSeasonStats = false
         local integer hatIndexTemp = 0
         local integer petIndexTemp = 0
+        local integer heroIndex = 0
+        local integer currentUnitTypeId = 0
 
         // Don't load anything if the player has already loaded. A player should only need to load once
         if (ps.hasLoaded()) then
@@ -70,7 +72,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         endif
 
         // Load Game Version
-        call ps.setMapVersion(LoadNextBasicValue())
+        call ps.setMapVersion(LoadNextBasicValue(MAX_SAVE_VALUE))
 
         // Check if the game version is different. If so, reset current map version values
         if (ps.getMapVersion() != CurrentGameVersion.getVersion()) then
@@ -97,7 +99,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         endif
 
         // Load camera settings
-        call ps.setCameraZoom(LoadNextBasicValue())
+        call ps.setCameraZoom(LoadNextBasicValue(MAX_SAVE_VALUE))
 
         // The camera setting should be saved correct already, but validate against bad values to prevent errors
         if (ps.getCameraZoom() > 0) then
@@ -118,31 +120,47 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         endif
 
         // Draft Save Values
-        call ps.setDraftPVPSeasonWins(LoadNextBasicValue())
-        call ps.setDraftBRSeasonWins(LoadNextBasicValue())
-        call ps.setDraftPVPAllWins(LoadNextBasicValue())
-        call ps.setDraftBRAllWins(LoadNextBasicValue())
+        call ps.setDraftPVPSeasonWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setDraftBRSeasonWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setDraftPVPAllWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setDraftBRAllWins(LoadNextBasicValue(MAX_SAVE_VALUE))
 
         // All Random Save Values
-        call ps.setARPVPSeasonWins(LoadNextBasicValue())
-        call ps.setARBRSeasonWins(LoadNextBasicValue())
-        call ps.setARPVPAllWins(LoadNextBasicValue())
-        call ps.setARBRAllWins(LoadNextBasicValue())
+        call ps.setARPVPSeasonWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setARBRSeasonWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setARPVPAllWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setARBRAllWins(LoadNextBasicValue(MAX_SAVE_VALUE))
 
         // All Pick Save Values
-        call ps.setAPPVPSeasonWins(LoadNextBasicValue())
-        call ps.setAPBRSeasonWins(LoadNextBasicValue())
-        call ps.setAPPVPAllWins(LoadNextBasicValue())
-        call ps.setAPBRAllWins(LoadNextBasicValue())
+        call ps.setAPPVPSeasonWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setAPBRSeasonWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setAPPVPAllWins(LoadNextBasicValue(MAX_SAVE_VALUE))
+        call ps.setAPBRAllWins(LoadNextBasicValue(MAX_SAVE_VALUE))
 
-        call ps.setDiscordAdToggle(LoadNextBasicValue())
-        set hatIndexTemp = LoadNextBasicValue()
-        set petIndexTemp = LoadNextBasicValue()
+        call ps.setDiscordAdToggle(LoadNextBasicValue(MAX_SAVE_VALUE))
+        set hatIndexTemp = LoadNextBasicValue(MAX_SAVE_VALUE)
+        set petIndexTemp = LoadNextBasicValue(MAX_SAVE_VALUE)
 
         //Discord ad toggle
         if ps.getDiscordAdToggle() > 0 then
             set DiscordAdDisabled[GetPlayerId(SaveLoadEvent_Player)] = true
         endif
+
+        // Indexing for heroes starts at the last index of the first batch we saved
+        set heroIndex = FIRST_HERO_SAVE_COUNT
+
+        loop
+            // ONLY LOAD THE FIRST CHUNK OF HEROES WHEN THIS WAS ADDED
+            // DO ANOTHER LOOP IF ADDITIONAL PROPERTIES ARE ADDED TO THE SAVE CODE IN THE FUTURE
+            exitwhen heroIndex == 0
+
+            set currentUnitTypeId = HeroSelectorUnitCode[heroIndex]
+
+            call ps.setHeroPVPWins(currentUnitTypeId, LoadNextBasicValue(MAX_MINIMAL_SAVE_VALUE))
+            call ps.setHeroBRWins(currentUnitTypeId, LoadNextBasicValue(MAX_MINIMAL_SAVE_VALUE))
+
+            set heroIndex = heroIndex - 1
+        endloop
 
         // Preset hat. The hat index will get saved in AchievementsFrame_TryToWearHat
         call AchievementsFrame_TryToWearHat(hatIndexTemp, SaveLoadEvent_Player, false)

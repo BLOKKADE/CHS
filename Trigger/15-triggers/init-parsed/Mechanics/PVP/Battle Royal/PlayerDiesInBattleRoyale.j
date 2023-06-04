@@ -8,10 +8,12 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         local unit deadHero = GetTriggerUnit()
         local player deadPlayer = GetOwningPlayer(deadHero)
         local integer deadPlayerId = GetPlayerId(deadPlayer)
+        local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit()))
         local location randomSpawnLocation
 
         if (not IsFunBRRound) then
-            call PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit())).addBRPVPKill()
+            call ps.addBRPVPKill()
+            call ps.addPlayerKill()
         endif
 
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")

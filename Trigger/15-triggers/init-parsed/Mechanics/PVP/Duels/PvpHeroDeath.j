@@ -97,7 +97,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local string message
 
         call ps.addDuelWin()
-        
+        call ps.addPVPWin()
+
         set message = GetPlayerNameColour(currentPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"
 
         // Show the PVP kill count if this is not simultaneous duels. Otherwise it will be a lot of spam
@@ -149,7 +150,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         set playerHero = null
     endfunction
 
-    private function AddPvpWinToPlayer takes nothing returns nothing
+    private function AddPlayerKillToPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
         local unit deadUnit = GetDyingUnit()
@@ -157,7 +158,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
         local real bonus = 1
 
-        call ps.addPVPWin()
+        call ps.addPlayerKill()
         
         // Midas Touch
         if deadUnitMidasTouch != 0 then
@@ -258,7 +259,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local DuelGame oddDuelGame
 
         // All players in the winning team should get the pvp kill
-        call ForForce(winningPlayerForce, function AddPvpWinToPlayer)
+        call ForForce(winningPlayerForce, function AddPlayerKillToPlayer)
 
         // Check if everyone is dead in the dead units team
         if (not AreAnyForceUnitsAlive(deadPlayerForce)) then
