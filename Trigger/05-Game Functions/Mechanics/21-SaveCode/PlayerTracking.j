@@ -225,6 +225,10 @@ library PlayerTracking initializer init requires GameInit
             set this.DuelLosses = this.DuelLosses + 1
         endmethod
 
+        public method resetBRPVPKillCount takes nothing returns nothing
+            set this.BRPVPKillCount = 0
+        endmethod
+
         // --- Functions for data that is not actually saved
 
         // --- Functions for data that is actually saved

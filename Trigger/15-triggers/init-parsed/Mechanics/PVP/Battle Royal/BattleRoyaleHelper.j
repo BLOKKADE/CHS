@@ -1,0 +1,342 @@
+library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, ScoreboardManager
+
+    globals
+        // Track player's lives during the BR
+        integer array PlayerBRDeaths
+        constant integer MAX_BR_DEATH_COUNT = 3
+
+        // Temp global variables
+        private integer PlayerIdIndex = 0
+        private integer CurrentPlayerHeroPlacement = 0
+
+        // Flag if the official br round is complete
+        boolean IsFunBRRound = false
+
+        // Arrays containing items and item charges before the BR
+        integer array PreBRItemIds
+        integer array PreBRItemCharges
+
+        // Timer properties
+        integer BattleRoyalFunWaitTime = 30
+        integer BattleRoyalWaitTime = 120
+        timer BattleRoyalTimer
+        timerdialog BattleRoyalTimerDialog
+        boolean WaitingForBattleRoyal = false
+    endglobals
+
+    private function IsValidPlayerHeroUnit takes nothing returns boolean
+        return IsPlayerHero(GetFilterUnit()) and (not IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), LeaverPlayers)) and (not IsPlayerInForce(GetOwningPlayer(GetFilterUnit()), DefeatedPlayers))
+    endfunction
+
+    private function SetAllianceForPlayer takes nothing returns nothing
+        call SetPlayerAllianceStateBJ(GetOwningPlayer(GetEnumUnit()), Player(PlayerIdIndex), bj_ALLIANCE_UNALLIED)
+    endfunction
+
+    private function PlacePlayerHeroInCenterArena takes nothing returns nothing
+        local unit currentUnit = GetEnumUnit()
+        local player currentPlayer = GetOwningPlayer(currentUnit)
+        local integer playerId = GetPlayerId(currentPlayer)
+        local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
+        local location projectionLocation = PolarProjectionBJ(RectMidArenaCenter, 1200, I2R(CurrentPlayerHeroPlacement) * (360.0 / I2R(PlayerCount)))
+        local integer itemSlotIndex = 0
+        local item currentItem
+
+        // Place hero and pet in a circle
+        call ReviveHeroLoc(currentUnit, projectionLocation, true)
+        call SetUnitPositionLocFacingLocBJ(currentUnit, projectionLocation, RectMidArenaCenter)
+
+        set TempUnit = currentUnit // Used in HeroRefreshTrigger
+        call PauseUnit(TempUnit, true)
+        call ConditionalTriggerExecute(HeroRefreshTrigger)
+
+        if (ps.getPet() != null) then
+            call SetUnitPositionLocFacingLocBJ(ps.getPet(), projectionLocation, RectMidArenaCenter)
+        else
+            // Revive the pet if it died
+            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
+        endif
+
+        // Select and chagne camera to the player
+        call SelectUnitForPlayerSingle(currentUnit, currentPlayer)
+        call PanCameraToTimedLocForPlayer(currentPlayer, projectionLocation, 0.50)
+
+        // Reset stats in the scoreboard
+        call ResetPlayerBRProperties(currentPlayer)
+        call ps.resetBRPVPKillCount()
+
+        set PlayerBRDeaths[playerId] = 0
+
+        set CurrentPlayerHeroPlacement = CurrentPlayerHeroPlacement + 1
+
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
+
+        if (IsFunBRRound) then
+            if GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
+                // Make sure there is an actual item
+                if (PreBRItemIds[(6 * playerId) + itemSlotIndex] != -1) then
+                    set currentItem = UnitAddItemByIdSwapped(PreBRItemIds[(6 * playerId) + itemSlotIndex], currentUnit)
+                    call SetItemUserData(currentItem, playerId + 1)
+
+                    if PreBRItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
+                        call SetItemCharges(currentItem, PreBRItemCharges[(6 * playerId) + itemSlotIndex])
+                    endif
+
+                    call SetItemPawnable(currentItem, true)
+                endif
+            endif
+        else
+            // Save the items and item charges for the player before the BR starts. Make items unpawnable as well
+            loop
+                set currentItem = UnitItemInSlot(currentUnit, itemSlotIndex)
+
+                if (currentItem != null) then
+                    // Save all item information in a single array with the playerId as the offset
+                    set PreBRItemIds[(6 * playerId) + itemSlotIndex] = GetItemTypeId(currentItem)
+                    set PreBRItemCharges[(6 * playerId) + itemSlotIndex] = GetItemCharges(currentItem)
+                    call SetItemPawnable(currentItem, false)
+
+                    // Cleanup
+                    set currentItem = null
+                else
+                    set PreBRItemIds[(6 * playerId) + itemSlotIndex] = -1
+                    set PreBRItemCharges[(6 * playerId) + itemSlotIndex] = -1
+                endif
+
+                set itemSlotIndex = itemSlotIndex + 1
+                exitwhen itemSlotIndex == 6
+            endloop
+        endif
+
+        // Cleanup
+        call RemoveLocation(projectionLocation)
+        set projectionLocation = null
+        set currentUnit = null
+        set currentPlayer = null
+    endfunction
+
+    private function RemoveItemFromArena takes nothing returns nothing
+        call RemoveItem(GetEnumItem())
+    endfunction
+
+    private function StartFightForPlayerHero takes nothing returns nothing
+        local unit currentUnit = GetEnumUnit()
+
+        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(GetOwningPlayer(currentUnit), 0, RoundNumber))
+        call PauseUnit(currentUnit, false)
+        call SetUnitInvulnerable(currentUnit, false)
+        call RectLeaveDetection.create(currentUnit, RectMidArena)
+        call StartFunctionSpell(currentUnit, 1)
+
+        // Cleanup
+        set currentUnit = null
+    endfunction
+
+    private function ShowDraftBuildings takes boolean b returns nothing
+        local integer i = 0
+
+        if AbilityMode != 0 then
+            loop
+                if AbilityMode == 2 then
+                    call ShowUnit(circle1, b)
+                    call ShowUnit(udg_Draft_DraftBuildings[i], b)
+                    call SetTextTagVisibility(FloatingTextBuy, b)
+                endif
+                
+                call ShowUnit(circle2, b)
+                call ShowUnit(udg_Draft_UpgradeBuildings[i], b)
+                call SetTextTagVisibility(FloatingTextUpgrade, b)
+                set i = i + 1
+                exitwhen i > 9
+            endloop
+        endif
+    endfunction
+
+    private function HideScoreboardForPlayer takes nothing returns nothing
+        call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(false)
+    endfunction
+
+    private function ShopFilter takes nothing returns boolean
+        return (IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == true)
+    endfunction
+
+    private function DeleteShop takes nothing returns nothing
+        call DeleteUnit(GetEnumUnit())
+    endfunction
+
+    private function BattleRoyalInitialization takes nothing returns nothing
+        local group shops = GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE), Condition(function ShopFilter))
+        local group playerUnits = CreateGroup()
+        local group randomPlayerUnits = CreateGroup()
+        local unit randomUnit
+        local integer currentPlayerId = 0
+
+        call ResetScoreboardBrWinner()
+
+        call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
+        call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+
+        loop
+            exitwhen currentPlayerId == 8
+
+            if (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
+                call GroupAddUnit(playerUnits, PlayerHeroes[currentPlayerId])
+            endif
+
+            set currentPlayerId = currentPlayerId + 1
+        endloop
+
+        // Reset the player count since it gets decrementing during the PlayerDiesInBattleRoyale trigger
+        set PlayerCount = CountUnitsInGroup(playerUnits)
+
+        call EnableTrigger(IsGameFinishedTrigger)
+        call ForceClear(DefeatedPlayers)
+
+        // Final message about BR, hide shops, cleanup before the actual fight
+        set BrStarted = true
+        call SetVersion()
+        call PlaySoundBJ(udg_sound10)
+
+        if (IsFunBRRound) then
+            call DisplayTextToForce(GetPlayersAll(), "|cffffcc00EXTRA BATTLE - THE WINNER TAKES SOME PRIDE|r")
+            call TriggerSleepAction(2)
+            call DisplayTextToForce(GetPlayersAll(), "|cffff2b23Your items will be restored for further BR fun rounds, so feel free to drop items during the fight.|r")
+            call TriggerSleepAction(2)
+        else
+            call DisplayTextToForce(GetPlayersAll(), "|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL|r")
+            call TriggerSleepAction(2)
+            call DisplayTextToForce(GetPlayersAll(), "|cffff5e00Reminder: After the official BR, you can play additional BR rounds for fun!|r")
+            call TriggerSleepAction(2)
+            call DisplayTextToForce(GetPlayersAll(), "|cffff2b23Your items will be restored for further BR fun rounds, so feel free to drop items during the fight.|r")
+            call TriggerSleepAction(2)
+        endif
+        
+        call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
+        call ShowDraftBuildings(false)
+        call RemoveUnitsInRect(bj_mapInitialPlayableArea)
+
+        // Set alliances for everyone
+        loop
+            exitwhen PlayerIdIndex == 8
+
+            call ForGroup(playerUnits, function SetAllianceForPlayer)
+
+            set PlayerIdIndex = PlayerIdIndex + 1
+        endloop
+
+        // Randomize the player hero group to mix things up every time
+        loop
+            set randomUnit = GroupPickRandomUnit(playerUnits)
+
+            exitwhen randomUnit == null
+
+            call GroupRemoveUnit(playerUnits, randomUnit)
+            call GroupAddUnit(randomPlayerUnits, randomUnit)
+        endloop
+
+        // Cleanup
+        call DestroyGroup(playerUnits)
+        set playerUnits = null
+
+        // Delete shops
+        call ForGroup(shops, function DeleteShop)
+
+        // Cleanup
+        call DestroyGroup(shops)
+        set shops = null
+
+        // Place units in a circle in center arena
+        call ForGroup(randomPlayerUnits, function PlacePlayerHeroInCenterArena)
+
+        // Remove all items on the ground
+        call EnumItemsInRectBJ(GetPlayableMapRect(), function RemoveItemFromArena)
+
+        // Disable a whole bunch of trigger
+        call DisableTrigger(CenterArenaInvulnerabilityTrigger)
+        call DisableTrigger(CenterArenaRemoveUnitTrigger)
+        call DisableTrigger(PlayerHeroDeathTrigger)
+        call DisableTrigger(HeroDiesInRoundTrigger)
+        call EnableTrigger(PlayerDiesInBattleRoyaleTrigger)
+
+        call TriggerSleepAction(5)
+        call DisplayTextToForce(GetPlayersAll(), "|cffffcc005|r")
+        call PlaySoundBJ(udg_sound09) // Ticking noise
+        call TriggerSleepAction(1)
+        call DisplayTextToForce(GetPlayersAll(), "|cffffcc004|r")
+        call PlaySoundBJ(udg_sound09) // Ticking noise
+        call TriggerSleepAction(1)
+        call DisplayTextToForce(GetPlayersAll(), "|cffffcc003|r")
+        call PlaySoundBJ(udg_sound09) // Ticking noise
+        call TriggerSleepAction(1)
+        call DisplayTextToForce(GetPlayersAll(), "|cffffcc002|r")
+        call PlaySoundBJ(udg_sound09) // Ticking noise
+        call TriggerSleepAction(1)
+        call DisplayTextToForce(GetPlayersAll(), "|cffffcc001|r")
+        call PlaySoundBJ(udg_sound09) // Ticking noise
+        call TriggerSleepAction(1)
+        
+        call PlaySoundBJ(udg_sound08) // Horn noise
+        call DisplayTimedTextToForce(GetPlayersAll(), 1.00, "|cffffcc00GO!!!|r")
+        call SetAllCurrentlyFighting(true)
+        call ForGroup(randomPlayerUnits, function StartFightForPlayerHero)
+        
+        // Cleanup
+        call DestroyGroup(randomPlayerUnits)
+        set randomPlayerUnits = null
+
+        set playerUnits = GetUnitsInRectMatching(GetPlayableMapRect(), Condition(function IsValidPlayerHeroUnit))
+
+        // Check if people left before the BR started
+        if (CountUnitsInGroup(playerUnits) == 1) then
+            call ConditionalTriggerExecute(EndGameTrigger)
+        endif
+
+        // Cleanup
+        call DestroyGroup(playerUnits)
+        set playerUnits = null
+
+        // Save debug codes
+        call DebugCode_SavePlayerDebugEveryone()
+    endfunction
+
+    function StartBattleRoyal takes nothing returns nothing
+        set WaitingForBattleRoyal = false
+        call DestroyTimer(BattleRoyalTimer)
+        call DestroyTimerDialog(BattleRoyalTimerDialog)
+        call BattleRoyalInitialization.execute()
+    endfunction
+
+    function InitializeBattleRoyale takes nothing returns nothing
+        call TriggerSleepAction(5.00)
+
+        call DisplayTextToForce(GetPlayersAll(), "Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
+
+        set BattleRoyalTimer = CreateTimer()
+        set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
+        call TimerDialogSetTitle(BattleRoyalTimerDialog, "Battle Royale...")
+        call TimerDialogDisplay(BattleRoyalTimerDialog, true)
+
+        set WaitingForBattleRoyal = true
+        
+        call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function StartBattleRoyal)
+    endfunction
+
+    function InitializeFunBattleRoyale takes nothing returns nothing
+        set BattleRoyalTimer = CreateTimer()
+        set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
+        call TimerDialogSetTitle(BattleRoyalTimerDialog, "Extra Battle Royale...")
+        call TimerDialogDisplay(BattleRoyalTimerDialog, true)
+
+        set WaitingForBattleRoyal = true
+
+        // Reset some game state stuff for end game
+        set GameComplete = false
+
+        call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function StartBattleRoyal)
+    endfunction
+
+    private function init takes nothing returns nothing
+        set InitializeBattleRoyaleTrigger = CreateTrigger()
+        call TriggerAddAction(InitializeBattleRoyaleTrigger, function InitializeBattleRoyale)
+    endfunction
+
+endlibrary

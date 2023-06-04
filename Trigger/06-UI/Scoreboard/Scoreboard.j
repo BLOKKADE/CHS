@@ -1,4 +1,4 @@
-library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, IconFrames, SelectedUnits, ReadyButton
+library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, IconFrames, SelectedUnits, ReadyButton, ScoreboardManager
 
     globals
         // Scoreboard static titles
@@ -27,18 +27,6 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant real ICON_SPACING                              = 0.003
         private constant real ROW_SPACING                               = 0.01
         private constant real CLOSE_ICON_WIDTH                          = 0.032
-
-        // Column indexes
-        private constant integer PLAYER_STATS_INDEX                     = 0
-        private constant integer PLAYER_HERO_INDEX                      = 1
-        private constant integer PLAYER_READY_STATUS_INDEX              = 2
-        private constant integer PLAYER_ELEMENT_COUNT_INDEX             = 3
-        private constant integer PLAYER_NAME_INDEX                      = 4
-        private constant integer PLAYER_HERO_LEVEL_INDEX                = 5
-        private constant integer PLAYER_STATUS_INDEX                    = 6
-        private constant integer PLAYER_DUELS_INDEX                     = 7
-        private constant integer PLAYER_ITEMS_START_INDEX               = 8
-        private constant integer PLAYER_ABILITIES_START_INDEX           = 14
 
         // Specifications for a player name text
         private constant real TEXT_HEIGHT                               = 0.012
@@ -93,53 +81,18 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Keep track of what is currently in the scoreboard to be smarter about what needs to be updated/removed to improve performance. Is also a separation of concerns from the PlayerHeroes array and if the hero gets removed for whatever reason.
         // NOTE: CachedPlayerItems and CachedPlayerAbilities could be merged into a single array, but I thought it would be simpler if they are separate
-        private constant integer CACHING_BUFFER = 50 // Used as a separator in the caching arrays so we can use a single array for all players. This value just needs to be bigger than the amount of columns in the scoreboard
         private integer array CachedPlayerItems // Item ids for each player hero
         private integer array CachedPlayerAbilities // Ability ids for each player hero
         private boolean array CachedPlayerPlayerReadyStatus // Cached status if their ready status has changed
-        private string array CachedPlayerStrings // Strings for each player column. NOTE: Not the most useful caching, but it could help with performance to not have to update a framehandle
         private string array CachedPlayerTooltipNames // Tooltip names
         private string array CachedPlayerTooltipDescriptions // Tooltip descriptions
 
         // Framehandles for all columns for each player to easily be referenced to update them
         private framehandle array CachedPlayerFramehandles
-        private framehandle array CachedPlayerParentFramehandles
         private framehandle array CachedPlayerIndicatorParentFramehandles
         private framehandle array CachedPlayerIndicatorFramehandles
-
-        private boolean array PlayerLeftGame // If the player left the game
-        private boolean array PlayerDiedInBR // If the player died in the BR. e.g. They died on round 25 or 50
-        private integer array PlayerDeathRound // The round the player died for good
-        private integer PlayerBrWinner = -1
     endglobals
     
-    function UpdateScoreboardBrWinner takes player currentPlayer returns nothing
-        if (currentPlayer != null and PlayerBrWinner == -1) then
-            set PlayerBrWinner = GetPlayerId(currentPlayer)
-        endif
-    endfunction
-
-    function UpdateScoreboardPlayerDies takes player currentPlayer, integer deathRound returns nothing
-        // Don't overwrite a value if it already exists
-        if (PlayerDeathRound[GetPlayerId(currentPlayer)] == 0) then
-            // Mark the player has died. Will be reflected in the update interval
-            set PlayerDeathRound[GetPlayerId(currentPlayer)] = deathRound
-            set PlayerDiedInBR[GetPlayerId(currentPlayer)] = BrStarted
-        endif
-    endfunction
-
-    function UpdateScoreboardPlayerLeaves takes player currentPlayer returns nothing
-        // Mark the player left the game. Will be reflected in the update interval
-        set PlayerLeftGame[GetPlayerId(currentPlayer)] = true
-
-        // Set the wave the player left
-        if (PlayerHeroes[GetPlayerId(currentPlayer)] == null) then
-            call UpdateScoreboardPlayerDies(currentPlayer, -1)
-        else
-            call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
-        endif
-    endfunction
-
     private function GetTopLeftX takes nothing returns real
         local real value = MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN
         local real offset

@@ -1,49 +1,74 @@
-library PlayerDiesInBattleRoyale initializer init requires RandomShit, UnitFilteringUtility, Scoreboard
+library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, Scoreboard
 
     private function PlayerDiesInBattleRoyaleConditions takes nothing returns boolean
         return BrStarted == true and IsPlayerHero(GetTriggerUnit())
     endfunction
 
-    private function KillPlayerUnit takes nothing returns nothing
-        local unit u = GetEnumUnit()
-    
-        if (IsUnitType(u, UNIT_TYPE_HERO)) then
-            call RemoveItem(UnitItemInSlot(u, 0))
-            call RemoveItem(UnitItemInSlot(u, 1))
-            call RemoveItem(UnitItemInSlot(u, 2))
-            call RemoveItem(UnitItemInSlot(u, 3))
-            call RemoveItem(UnitItemInSlot(u, 4))
-            call RemoveItem(UnitItemInSlot(u, 5))
-    
-            call RemoveHeroAbilities(u)
-        endif
-    
-        call KillUnit(u)
-
-        // Cleanup
-        set u = null
-    endfunction
-
     private function PlayerDiesInBattleRoyaleActions takes nothing returns nothing
-        local player deadPlayer = GetOwningPlayer(GetTriggerUnit())
-        local group deadPlayerUnits = GetUnitsOfPlayerAll(deadPlayer)
+        local unit deadHero = GetTriggerUnit()
+        local player deadPlayer = GetOwningPlayer(deadHero)
+        local integer deadPlayerId = GetPlayerId(deadPlayer)
+        local location randomSpawnLocation
 
-        call PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit())).addBRPVPKill()
+        if (not IsFunBRRound) then
+            call PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit())).addBRPVPKill()
+        endif
 
-        // Set the wave the player left
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
+
+        // Try to revive the hero if there are BR lives
+        if (BRLivesMode == 2) then
+            // Increment the player deaths
+            set PlayerBRDeaths[deadPlayerId] = PlayerBRDeaths[deadPlayerId] + 1
+
+            // Don't revive the hero if they died too many times
+            if (PlayerBRDeaths[deadPlayerId] > MAX_BR_DEATH_COUNT) then
+                // Set the status of their death in the BR
+                call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
+
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has no lives left. Will not respawn.|r")
+
+                // Set the status of their death in the BR
+                call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
+                set PlayerCount = PlayerCount - 1
+
+                // Cleanup
+                set deadHero = null
+                set deadPlayer = null
+
+                // Try to end the game
+                call ConditionalTriggerExecute(EndGameTrigger)
+            else
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has |r" + I2S(MAX_BR_DEATH_COUNT - PlayerBRDeaths[deadPlayerId]) + " |cffffcc00lives remaining! Respawning in 5 seconds.|r")
+                
+                call TriggerSleepAction(5)
+
+                // Respawn the hero
+                set randomSpawnLocation = GetRandomLocInRect(RectMidArena)
+                call ReviveHeroLoc(deadHero, randomSpawnLocation, true)
+                call SelectUnitForPlayerSingle(deadHero, deadPlayer)
+                call PanCameraToTimedLocForPlayer(deadPlayer, randomSpawnLocation, 0.50)
+
+                set TempUnit = deadHero // Used in HeroRefreshTrigger
+                call ConditionalTriggerExecute(HeroRefreshTrigger)
+
+                // Cleanup
+                call RemoveLocation(randomSpawnLocation)
+                set randomSpawnLocation = null
+                set deadHero = null
+                set deadPlayer = null
+            endif
+
+            return
+        endif
+
+        // Set the status of their death in the BR
         call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
-
-        // Cleanup everything regarding to the dead player
-        call ForceAddPlayerSimple(deadPlayer, DefeatedPlayers)
-        call ForGroup(deadPlayerUnits, function KillPlayerUnit)
         call ShowDiscordFrames(deadPlayer, true)
         set PlayerCount = PlayerCount - 1
 
-        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())))
-
         // Cleanup
-        call DestroyGroup(deadPlayerUnits)
-        set deadPlayerUnits = null
+        set deadHero = null
         set deadPlayer = null
 
         // Try to end the game

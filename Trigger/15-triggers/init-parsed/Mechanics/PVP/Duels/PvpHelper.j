@@ -48,18 +48,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         endloop
     endfunction
 
-    private function RefreshHero takes unit playerHero returns nothing
-        // Hp/mana restore
-        call SetUnitLifePercentBJ(playerHero, 100)
-        call SetUnitManaPercentBJ(playerHero, 100)
-    
-        // Reset cooldowns
-        call UnitResetCooldown(playerHero)
-
-        // Remove any debuffs
-        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true)
-    endfunction
-
     private function MoveCameraToArenaForPlayer takes nothing returns nothing
         local location arenaCenter = GetRectCenter(TempArena)
 
@@ -127,7 +115,9 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         if not CamMoveDisabled[playerId] then
             call SelectUnitForPlayerSingle(playerHero, currentPlayer)
         endif
-        call RefreshHero(playerHero)
+
+        set TempUnit = playerHero // Used in HeroRefreshTrigger
+        call ConditionalTriggerExecute(HeroRefreshTrigger)
 
         // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
         loop

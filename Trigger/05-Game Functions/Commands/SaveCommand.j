@@ -1,4 +1,4 @@
-library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore
+library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, SaveCore, BattleRoyaleHelper
 
     /*
         The main idea in saving is that you save an integer into the `Save` array for every `thing` you want to save
@@ -24,6 +24,11 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
         if (not IsSavingEnabled()) then
             call DisplayTimedTextToPlayer(p, 0, 0, 10, "Saving is disabled since there are computer players")
+            return
+        endif
+
+        if (IsFunBRRound) then
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "Saving is disabled after the official BR")
             return
         endif
 

@@ -1,4 +1,4 @@
-library ReadyButton initializer init requires PlayerTracking, AllPlayersCompletedRound, InitializeBattleRoyale, InitializePvp
+library ReadyButton initializer init requires PlayerTracking, AllPlayersCompletedRound, InitializePvp
     //button is setup in IconFrames.j
     globals
         boolean array PlayerHasReadied
