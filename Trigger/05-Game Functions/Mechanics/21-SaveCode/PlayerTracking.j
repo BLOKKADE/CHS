@@ -6,6 +6,7 @@ library PlayerTracking initializer init requires GameInit, Table
 
     globals
         constant integer MAX_SAVE_VALUE = 9999
+        constant integer MAX_MINIMAL_SAVE_VALUE = 999
 
         private GameVersion array MapVersionLookup
         private boolean SaveEnabled
@@ -127,7 +128,7 @@ library PlayerTracking initializer init requires GameInit, Table
             set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins()) + " (" + I2S(ps.getDraftPVPAllWins()) + " total)"
 
             if (heroUnitTypeId != 0) then
-                set tooltip = tooltip + "|n|cffd0ff00Current Hero Stats for " + GetObjectName(heroUnitTypeId) + "|r"
+                set tooltip = tooltip + "|n|n|cff00f7ffCurrent Hero Stats for " + GetObjectName(heroUnitTypeId) + "|r"
                 set tooltip = tooltip + "|n -Total BR Wins: " + I2S(ps.getHeroBRWins(heroUnitTypeId))
                 set tooltip = tooltip + "|n -Total PVP Wins: " + I2S(ps.getHeroBRWins(heroUnitTypeId))
             endif
@@ -479,8 +480,8 @@ library PlayerTracking initializer init requires GameInit, Table
         endmethod
         // --- Functions for data that is actually saved
 
-        private method tryIncrementValue takes integer currentValue, string valueName returns integer 
-            if (currentValue >= MAX_SAVE_VALUE) then
+        private method tryIncrementValue takes integer currentValue, string valueName, integer maxSaveValue returns integer 
+            if (currentValue >= maxSaveValue) then
                 // TODO maybe reenable one day
                 // call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"You have maxed out " + valueName + " at " + I2S(MAX_SAVE_VALUE))
                 // call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"Please consider stepping outside for a bit")
@@ -494,19 +495,19 @@ library PlayerTracking initializer init requires GameInit, Table
         public method addBRWin takes nothing returns nothing
             // Random
             if (AbilityMode == 0) then
-                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random BR All Wins")
-                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random BR Season Wins")
+                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random BR All Wins", MAX_SAVE_VALUE)
+                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random BR Season Wins", MAX_SAVE_VALUE)
             // Pick
             elseif (AbilityMode == 1) then
-                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick BR All Wins")
-                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick BR Season Wins")
+                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick BR All Wins", MAX_SAVE_VALUE)
+                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick BR Season Wins", MAX_SAVE_VALUE)
             // Draft
             elseif (AbilityMode == 2) then
-                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft BR All Wins")
-                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft BR Season Wins")
+                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft BR All Wins", MAX_SAVE_VALUE)
+                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft BR Season Wins", MAX_SAVE_VALUE)
             endif
 
-            set HeroBRWins[this.HeroUnitTypeId] = this.tryIncrementValue(HeroBRWins[this.HeroUnitTypeId], "Hero BR Wins")
+            set HeroBRWins[this.HeroUnitTypeId] = this.tryIncrementValue(HeroBRWins[this.HeroUnitTypeId], "Hero BR Wins", MAX_MINIMAL_SAVE_VALUE)
         endmethod
 
         public method addPlayerKill takes nothing returns nothing
@@ -516,19 +517,19 @@ library PlayerTracking initializer init requires GameInit, Table
         public method addPVPWin takes nothing returns nothing
             // Random
             if (AbilityMode == 0) then
-                set this.ARPVPAllWins = this.tryIncrementValue(this.ARPVPAllWins, "All Random PVP All Wins")
-                set this.ARPVPSeasonWins = this.tryIncrementValue(this.ARPVPSeasonWins, "All Random PVP Season Wins")
+                set this.ARPVPAllWins = this.tryIncrementValue(this.ARPVPAllWins, "All Random PVP All Wins", MAX_SAVE_VALUE)
+                set this.ARPVPSeasonWins = this.tryIncrementValue(this.ARPVPSeasonWins, "All Random PVP Season Wins", MAX_SAVE_VALUE)
             // Pick
             elseif (AbilityMode == 1) then
-                set this.APPVPAllWins = this.tryIncrementValue(this.APPVPAllWins, "All Pick PVP All Wins")
-                set this.APPVPSeasonWins = this.tryIncrementValue(this.APPVPSeasonWins, "All Pick PVP Season Wins")
+                set this.APPVPAllWins = this.tryIncrementValue(this.APPVPAllWins, "All Pick PVP All Wins", MAX_SAVE_VALUE)
+                set this.APPVPSeasonWins = this.tryIncrementValue(this.APPVPSeasonWins, "All Pick PVP Season Wins", MAX_SAVE_VALUE)
             // Draft
             elseif (AbilityMode == 2) then
-                set this.DraftPVPAllWins = this.tryIncrementValue(this.DraftPVPAllWins, "Draft PVP All Wins")
-                set this.DraftPVPSeasonWins = this.tryIncrementValue(this.DraftPVPSeasonWins, "Draft PVP Season Wins")
+                set this.DraftPVPAllWins = this.tryIncrementValue(this.DraftPVPAllWins, "Draft PVP All Wins", MAX_SAVE_VALUE)
+                set this.DraftPVPSeasonWins = this.tryIncrementValue(this.DraftPVPSeasonWins, "Draft PVP Season Wins", MAX_SAVE_VALUE)
             endif
 
-            set HeroPVPWins[this.HeroUnitTypeId] = this.tryIncrementValue(HeroPVPWins[this.HeroUnitTypeId], "Hero PVP Wins")
+            set HeroPVPWins[this.HeroUnitTypeId] = this.tryIncrementValue(HeroPVPWins[this.HeroUnitTypeId], "Hero PVP Wins", MAX_MINIMAL_SAVE_VALUE)
         endmethod
 
         public method resetSeasonStats takes nothing returns nothing
