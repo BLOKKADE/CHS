@@ -47,8 +47,7 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
             set this.p = GetOwningPlayer(this.source)
 
             call UnitAddAbility(this.source, 'A08B')
-            call AbilStartCD(this.source, LAST_BREATHS_ABILITY_ID, 60 + GetAbilityCooldownBonus(abil))
-            call SetAbilityCooldownBonus(abil, 5)
+            call AbilStartCD(this.source, LAST_BREATHS_ABILITY_ID, 60)
             set LastBreaths[GetHandleId(this.source)] = this
 
             set this.endTick = T32_Tick + R2I(duration * 32)   
