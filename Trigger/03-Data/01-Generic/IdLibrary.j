@@ -55,7 +55,8 @@ library IdLibrary initializer init
         constant integer ITEM_SHOP_IV_UNIT_ID                           = 'n02J'
         constant integer ITEM_SHOP_V_UNIT_ID                            = 'n02Q'
         constant integer ITEM_SHOP_VI_UNIT_ID                           = 'n02Y'
-        constant integer ITEM_SHOP_VII_UNIT_ID                          = 'n03A'
+        constant integer ITEM_SHOP_VII_UNIT_ID                          = 'n01P'
+        constant integer ITEM_SHOP_VIII_UNIT_ID                         = 'n03A'
 
         constant integer RUNESTONE_SHOP_UNIT_ID                         = 'n02Z'
         constant integer ELEMENTAL_ITEM_SHOP_UNIT_ID                    = 'n030'
@@ -454,6 +455,8 @@ library IdLibrary initializer init
         constant integer STUN_ABILITY_ID                                = 'A0C2'
         constant integer CARBEE_SPIKED_CARAP_ABILITY_ID                 = 'A0CD'
         constant integer ERUPTION_IMMUNE_ABILITY_ID                     = 'A0D9'
+        constant integer DEATH_AND_DECAY_DUMMY_ABILITY_ID               = 'A0E2'
+        constant integer FOG_DUMMY_ABILITY_ID                           = 'A0E3'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
