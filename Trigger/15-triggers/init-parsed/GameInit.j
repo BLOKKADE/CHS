@@ -46,7 +46,6 @@ library GameInit initializer init requires GroupUtils
         integer array ShopIds
         integer BettingPlayerCount = 0
         integer BoughtAbility = 0
-        integer CountdownCount = 0
         integer HideShopsCount = 0
         integer HideShopsIndex = 0
         integer InitialPlayerCount = 0
@@ -167,7 +166,6 @@ library GameInit initializer init requires GroupUtils
         trigger PlayerHeroDeathTrigger = null
         trigger PlayerInitializationTrigger = null
         trigger PlayerLeavesGameTrigger = null
-        trigger PvpCountdownTimerTrigger = null
         trigger SetHostPlayerTrigger = null
         trigger SinglePvpHeroDeathTrigger = null
         trigger SpacebarCameraTrigger = null

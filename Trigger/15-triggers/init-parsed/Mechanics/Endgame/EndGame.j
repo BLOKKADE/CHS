@@ -1,11 +1,7 @@
-library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
+library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, BattleRoyaleHelper
 
     private function IsOnlyOnePlayerRemaining takes nothing returns boolean
         return (IsTriggerEnabled(GetTriggeringTrigger()) == true) and (InitialPlayerCount > 1) and (PlayerCount == 1) and (GameComplete == false)
-    endfunction
-
-    private function ActivePlayerFilter takes nothing returns boolean
-        return GetPlayerId(GetFilterPlayer()) < 8 and (not IsPlayerInForce(GetFilterPlayer(), LeaverPlayers)) and (not IsPlayerInForce(GetFilterPlayer(), DefeatedPlayers))
     endfunction
 
     private function IsShortGameComplete takes nothing returns boolean
@@ -81,9 +77,11 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
             if (WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE)) then
                 call UpdateScoreboardBrWinner(WinningPlayer)
 
-                // Update the player's stats that they won a BR
-                set ps = PlayerStats.forPlayer(WinningPlayer)
-                call ps.addBRWin()
+                if (not IsFunBRRound) then
+                    // Update the player's stats that they won a BR
+                    set ps = PlayerStats.forPlayer(WinningPlayer)
+                    call ps.addBRWin()
+                endif
 
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(WinningPlayer) + " |cffffcc00survived longer than all other players with " + ps.getBRPVPKillCount() + " Congratulations!!")
@@ -94,19 +92,23 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
             endif
         endif
 
-        call EndThematicMusicBJ()
-        call SetMusicVolumeBJ(0.00)
         call PlaySoundBJ(udg_sound05)
         call TriggerSleepAction(2.00)
-        call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cffffcc00Thank you for playing|r " + "|cff7bff00" + CurrentGameVersion.getVersionString() + "|r")
 
         // Save everyones codes
-        call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
+        if (not IsFunBRRound) then
+            call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cffffcc00Thank you for playing|r " + "|cff7bff00" + CurrentGameVersion.getVersionString() + "|r")
+            call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
+        endif
 
         // Show the scoreboard to everyone
         call TriggerSleepAction(3.00)
         call ForForce(GetPlayersAll(), function ShowScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, true)
+
+        set IsFunBRRound = true
+
+        call InitializeFunBattleRoyale()
     endfunction
 
     private function init takes nothing returns nothing
