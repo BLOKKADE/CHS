@@ -61,6 +61,13 @@ library Fog requires NewBonus, Utility, UnitHelpers
             endif
         endmethod 
 
+        private method createDummy takes real duration returns nothing
+            local DummyOrder dummy = DummyOrder.create(this.source, this.x, this.y, 0, duration)
+            call dummy.addActiveAbility(FOG_DUMMY_ABILITY_ID, 1, 852473)
+            call dummy.setAbilityRealField(FOG_DUMMY_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, duration)
+            call dummy.point(this.x, this.y).activate()
+        endmethod
+
         static method create takes unit source, real x, real y, real duration returns thistype
             local thistype this = thistype.setup()
             
@@ -68,8 +75,11 @@ library Fog requires NewBonus, Utility, UnitHelpers
             set this.endTick = T32_Tick + R2I(duration * 32)
             set this.trappedUnits = NewGroup()
             set this.pid = GetPlayerId(GetOwningPlayer(source))
+            set this.x = x
+            set this.y = y
             call BJDebugMsg("fog start")
 
+            call this.createDummy(duration)
             call this.startPeriodic()
             return this
         endmethod
