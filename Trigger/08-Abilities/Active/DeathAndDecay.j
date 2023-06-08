@@ -38,16 +38,25 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
             endif
         endmethod 
 
+        private method createDummy takes real duration returns nothing
+            local DummyOrder dummy = DummyOrder.create(this.source, this.x, this.y, 0, duration)
+            call dummy.addActiveAbility(DEATH_AND_DECAY_DUMMY_ABILITY_ID, 1, 852221)
+            call dummy.setAbilityRealField(DEATH_AND_DECAY_DUMMY_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 25)
+            call dummy.point(this.x, this.y).activate()
+        endmethod
+
         static method create takes unit source, real x, real y, integer level returns thistype
             local thistype this = thistype.setup()
            // call BJDebugMsg("sl start")
             set this.source = source
-            set this.endTick = T32_Tick + (12 * 32)
+            set this.endTick = T32_Tick + (25 * 32)
             set this.tick = T32_Tick + 32
             set this.level = level
             set this.x = x
             set this.y = y
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
+
+            call this.createDummy(25)
             call this.startPeriodic()
             return this
         endmethod
