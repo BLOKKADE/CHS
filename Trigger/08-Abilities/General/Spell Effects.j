@@ -164,6 +164,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
     function SpellEffectActions takes nothing returns nothing
         local unit caster = GetTriggerUnit()
+        local unit hero = PlayerHeroes[GetPlayerId(GetOwningPlayer(caster))]
         local unit target = GetSpellTargetUnit()
         local real targetX = GetSpellTargetX()
         local real targetY = GetSpellTargetY()
@@ -183,7 +184,12 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
                 
                 //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
-                set abilityChanneled = AbilityChannel(caster, PlayerHeroes[GetPlayerId(GetOwningPlayer(caster))], target,targetX,targetY,abilId, abilLvl)
+                set abilityChanneled = AbilityChannel(caster, hero, target,targetX,targetY,abilId, abilLvl)
+
+                //Druidic focus on immobilization
+                if UnitHasItemType(hero, DRUIDIC_FOCUS_ITEM_ID) and (abilId == ENTAGLING_ROOTS_ABILITY_ID or abilId == ENSNARE_ABILITY_ID or abilId == 'A075') then
+                    call DruidicFocusPhyspowerbonus(hero)
+                endif
             
                 if GetUnitTypeId(caster) != PRIEST_1_UNIT_ID and (not CheckIfCastAllowed(caster)) then
                     //call BJDebugMsg("caster: " + GetUnitName(caster))
@@ -192,6 +198,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     if (not abilityChanneled) and dummyAbilId then
                         //call BJDebugMsg("channel")
                         call CastSpell(caster, target, abilId, abilLvl, GetAbilityOrderType(abilId), targetX, targetY).activate()
+                    endif
+
+                    if GetUnitAbilityLevel(caster, DRUIDIC_FOCUS_BUFF_ID) > 0 and T32_Tick - DruidicFocusLastTick[GetHandleId(caster)] > 320 then
+                        call CastDruidicFocus(caster)
                     endif
 
                     if GetUnitAbilityLevel(caster, ABSOLUTE_POISON_ABILITY_ID) > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then

@@ -368,11 +368,6 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        //Druidic Focus
-        if UnitHasItemType(DamageSource, DRUIDIC_FOCUS_ITEM_ID) and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Wild) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Earth)) then
-            set Damage.index.damage = Damage.index.damage * 1.5
-        endif
-
         //Hero's Hammer
         set i1 = GetUnitItemTypeCount( DamageSource,'I064' )
         if i1 > 0 and Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then 

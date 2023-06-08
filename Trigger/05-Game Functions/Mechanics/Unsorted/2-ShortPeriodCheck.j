@@ -144,11 +144,6 @@ scope ShortPeriodCheck initializer init
                 call SetUnitManaPercentBJ(u, GetUnitManaPercent(u) + 1)
             endif
 
-            //Druidic Focus Roots
-            if GetUnitAbilityLevel(u, DRUIDIC_FOCUS_BUFF_ID) > 0 and T32_Tick - DruidicFocusLastTick[hid] > 320 then
-                call CastDruidicFocus(u)
-            endif
-
             //Blood Elf Mage
             if unitTypeId == BLOOD_MAGE_UNIT_ID then
                 set i1 = GetHeroInt(u, true)
