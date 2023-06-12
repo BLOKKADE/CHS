@@ -77,7 +77,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         private constant real HIT_POINTS_BONUS                          = 800.0
         private constant real HIT_POINTS_REGEN_BONUS                    = 25.0
         private constant real MANA_BONUS                                = 600.0
-        private constant real MANA_REGION_BONUS                         = 30.0
+        private constant real MANA_REGEN_BONUS                          = 30.0
 
         // Colors
         private constant string COLOR_END_TAG                           = "|r"
@@ -515,13 +515,13 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         set RewardDescriptions[UTILITY_HIT_POINTS_1_INDEX] = "Increase the Hero's hit points by " + R2S(HIT_POINTS_BONUS) + " per point."
         set RewardDescriptions[UTILITY_HIT_POINTS_REGEN_2_INDEX] = "Increase the Hero's hit point regeneration by " + R2S(HIT_POINTS_REGEN_BONUS) + " per point."
         set RewardDescriptions[UTILITY_MANA_3_INDEX] = "Increase the Hero's mana by " + R2S(MANA_BONUS) + " per point."
-        set RewardDescriptions[UTILITY_MANA_REGEN_4_INDEX] = "Increase the Hero's mana regeneration by " + R2S(MANA_REGION_BONUS) + " per point."
+        set RewardDescriptions[UTILITY_MANA_REGEN_4_INDEX] = "Increase the Hero's mana regeneration by " + R2S(MANA_REGEN_BONUS) + " per point."
 
         // Utility index value mapping
         set RewardIndexValues[UTILITY_HIT_POINTS_1_INDEX] = HIT_POINTS_BONUS
         set RewardIndexValues[UTILITY_HIT_POINTS_REGEN_2_INDEX] = HIT_POINTS_REGEN_BONUS
         set RewardIndexValues[UTILITY_MANA_3_INDEX] = MANA_BONUS
-        set RewardIndexValues[UTILITY_MANA_REGEN_4_INDEX] = MANA_REGION_BONUS
+        set RewardIndexValues[UTILITY_MANA_REGEN_4_INDEX] = MANA_REGEN_BONUS
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
     endfunction

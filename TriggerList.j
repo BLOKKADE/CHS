@@ -194,6 +194,8 @@
 //! import "C:\CHS\CHS\Trigger\06-UI\22-HeroSelector\HeroSelector.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\22-HeroSelector\HeroSelectorAction.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\22-HeroSelector\PickingPhase.j"
+//! import "C:\CHS\CHS\Trigger\06-UI\BattleCreator\BattleCreator.j"
+//! import "C:\CHS\CHS\Trigger\06-UI\BattleCreator\BattleCreatorManager.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\Scoreboard\Scoreboard.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\Scoreboard\ScoreboardManager.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\Voting\VotingResults.j"

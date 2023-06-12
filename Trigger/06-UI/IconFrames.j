@@ -35,6 +35,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		framehandle MainVotingFrameHandle // Voting main frame
 		framehandle ScoreboardFrameHandle // Scoreboard main frame
 		framehandle RewardsFrameHandle // Rewards main frame
+        framehandle BattleCreatorFrameHandle // Battle creator main frame
 
 		// Parent frame and frame for each icon
 		framehandle array ButtonId 
