@@ -91,6 +91,7 @@ library GameInit initializer init requires GroupUtils
         player SingleplayerPlayer = null
         real RoundCreepPower = 0
         rect RectMidArena
+        rect RectMidBRRespawnArena
         rect array PlayerArenaRects
         sound array udg_sounds01
         sound udg_sound01 = null
@@ -201,6 +202,8 @@ library GameInit initializer init requires GroupUtils
 
         // Needs to be specified right away since a lot of triggers depend on it
         set RectMidArena = Rect(-1696.0, -1952.0, 1696.0, 1440.0)
+        set RectMidBRRespawnArena = Rect(-1200.0, -1500.0, 1200.0, 1000.0)
+
         set RectMidArenaCenter = GetRectCenter(RectMidArena)
     endfunction
 

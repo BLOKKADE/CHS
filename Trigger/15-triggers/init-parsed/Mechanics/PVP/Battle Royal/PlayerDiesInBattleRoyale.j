@@ -47,7 +47,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 call TriggerSleepAction(5)
 
                 // Respawn the hero
-                set randomSpawnLocation = GetRandomLocInRect(RectMidArena)
+                set randomSpawnLocation = GetRandomLocInRect(RectMidBRRespawnArena)
                 call ReviveHeroLoc(deadHero, randomSpawnLocation, true)
                 call SelectUnitForPlayerSingle(deadHero, deadPlayer)
                 call PanCameraToTimedLocForPlayer(deadPlayer, randomSpawnLocation, 0.50)
