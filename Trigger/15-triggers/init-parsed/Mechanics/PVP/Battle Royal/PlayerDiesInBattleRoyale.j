@@ -31,6 +31,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has no lives left. Will not respawn.|r")
 
                 // Set the status of their death in the BR
+                call StopRectLeaveDetection(GetHandleId(deadHero))
                 call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
                 set PlayerCount = PlayerCount - 1
 
@@ -65,6 +66,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         endif
 
         // Set the status of their death in the BR
+        call StopRectLeaveDetection(GetHandleId(deadHero))
         call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
         call ShowDiscordFrames(deadPlayer, true)
         set PlayerCount = PlayerCount - 1

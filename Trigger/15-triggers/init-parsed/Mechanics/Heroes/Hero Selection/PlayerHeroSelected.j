@@ -1,4 +1,4 @@
-library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard, InitializeDraftMode, RewardsScreen
+library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard, InitializeDraftMode, RewardsScreen, HeroPassiveDesc
 
     globals
         boolean ShopsCreated = false

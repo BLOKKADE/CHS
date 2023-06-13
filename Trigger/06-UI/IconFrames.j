@@ -43,40 +43,6 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		boolean array ShowCreepAbilButton
 	endglobals
-
-	function GetHeroTooltip takes unit SpellU returns string
-		local player owningPlayer = GetOwningPlayer(SpellU)
-		local string temp = GetObjectElementsAsString(SpellU, GetUnitTypeId(SpellU), false)
-		local string ToolTipS = ""
-
-		if temp != "" and temp != null then
-			set ToolTipS = ToolTipS + temp + "|n"
-		endif
-
-		set temp = GetHeroPassiveDescription(GetUnitTypeId(SpellU), HeroPassive_Desc)
-		if temp != "" and temp != null then
-			set ToolTipS = ToolTipS + temp + "|n"
-		endif
-
-		set temp = GetHeroPassiveDescription(GetUnitTypeId(SpellU), HeroPassive_Lvlup)
-		if temp != "" and temp != null then
-			set ToolTipS = ToolTipS + temp
-		endif
-
-		set ToolTipS = ToolTipS + GetPassiveStr(SpellU)
-
-		if EconomyMode or IncomeMode != 2 then
-			set ToolTipS = ToolTipS + "|n|n|cffd4954dIncome|r: " + I2S(Income[GetPlayerId(owningPlayer)])
-		endif
-
-		set ToolTipS = ToolTipS + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_GOLD))
-		set ToolTipS = ToolTipS + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[GetPlayerId(owningPlayer)]))
-
-		// Cleanup
-		set owningPlayer = null
-
-		return ToolTipS
-	endfunction
 	
 	function GetElementCountTooltip takes unit SpellU returns string
 		local integer i1 = 1

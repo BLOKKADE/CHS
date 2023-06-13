@@ -21,7 +21,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
     endfunction
 
     private function EndGameConditions takes nothing returns boolean
-        return IsOnlyOnePlayerRemaining() or IsInitialSoloPlayerGame()
+        return IsOnlyOnePlayerRemaining() or IsInitialSoloPlayerGame() or (BrStarted and IsBROver())
     endfunction
 
     private function ShowScoreboardForPlayer takes nothing returns nothing
@@ -98,6 +98,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
         // Save everyones codes
         if (not IsFunBRRound) then
             call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cffffcc00Thank you for playing|r " + "|cff7bff00" + CurrentGameVersion.getVersionString() + "|r")
+            call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cff63ff44Stay for the fun BR rounds!!!|r")
             call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
         endif
 
@@ -107,6 +108,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
         call BlzFrameSetVisible(ScoreboardFrameHandle, true)
 
         set IsFunBRRound = true
+        set BrStarted = false
 
         call InitializeFunBattleRoyale()
     endfunction

@@ -1,4 +1,4 @@
-library HeroPassiveDesc initializer init
+library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonus, Glory, GetObjectElement
     globals
         HashTable HeroPassiveDesc
 
@@ -10,6 +10,40 @@ library HeroPassiveDesc initializer init
     function GetHeroPassiveDescription takes integer unitTypeId, integer heroPassiveField returns string
         return HeroPassiveDesc[unitTypeId].string[heroPassiveField]
     endfunction
+
+    function GetHeroTooltip takes unit playerHero returns string
+		local player owningPlayer = GetOwningPlayer(playerHero)
+		local string temp = GetObjectElementsAsString(playerHero, GetUnitTypeId(playerHero), false)
+		local string tooltip = ""
+
+		if temp != "" and temp != null then
+			set tooltip = tooltip + temp + "|n"
+		endif
+
+		set temp = GetHeroPassiveDescription(GetUnitTypeId(playerHero), HeroPassive_Desc)
+		if temp != "" and temp != null then
+			set tooltip = tooltip + temp + "|n"
+		endif
+
+		set temp = GetHeroPassiveDescription(GetUnitTypeId(playerHero), HeroPassive_Lvlup)
+		if temp != "" and temp != null then
+			set tooltip = tooltip + temp
+		endif
+
+		set tooltip = tooltip + GetPassiveStr(playerHero)
+
+		if EconomyMode or IncomeMode != 2 then
+			set tooltip = tooltip + "|n|n|cffd4954dIncome|r: " + I2S(Income[GetPlayerId(owningPlayer)])
+		endif
+
+		set tooltip = tooltip + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_GOLD))
+		set tooltip = tooltip + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[GetPlayerId(owningPlayer)]))
+
+		// Cleanup
+		set owningPlayer = null
+
+		return tooltip
+	endfunction
 
     private function InitHeroDesc takes integer unitTypeId, integer heroPassiveField, string data returns nothing
         set HeroPassiveDesc[unitTypeId].string[heroPassiveField] = data

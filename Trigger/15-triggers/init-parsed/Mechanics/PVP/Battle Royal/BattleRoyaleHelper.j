@@ -201,6 +201,10 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         if (IsFunBRRound) then
             call CalculatePlayerForces()
             call ForForce(BRObservers, function MoveObserver)
+
+            call TriggerSleepAction(5)
+
+            call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
         else
             call CalculateFreeForAllPlayerForces(playersToFight)
         endif
@@ -331,12 +335,23 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
     endfunction
 
     function StartBattleRoyal takes nothing returns nothing
-        call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
-
-        set WaitingForBattleRoyal = false
         call DestroyTimer(BattleRoyalTimer)
         call DestroyTimerDialog(BattleRoyalTimerDialog)
-        call BattleRoyalInitialization.execute()
+
+        if (IsBRSetupValid()) then
+            set WaitingForBattleRoyal = false
+            call BattleRoyalInitialization.execute()
+        else
+            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff0000Invalid Battle Royale Setup. Try again.|r")
+
+            set BattleRoyalTimer = CreateTimer()
+            set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
+            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Extra Battle Royale...")
+            call TimerDialogDisplay(BattleRoyalTimerDialog, true)
+
+            call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function StartBattleRoyal)
+        endif
+
     endfunction
 
     function InitializeBattleRoyale takes nothing returns nothing
@@ -364,6 +379,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         // Reset some game state stuff for end game
         set GameComplete = false
+        set BRLockedIn = false
 
         call BlzFrameSetVisible(BattleCreatorFrameHandle, true) 
 
