@@ -79,18 +79,26 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
 
         if (IsFunBRRound) then
-            if GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
-                // Make sure there is an actual item
-                if (PreBRItemIds[(6 * playerId) + itemSlotIndex] != -1) then
-                    set currentItem = UnitAddItemByIdSwapped(PreBRItemIds[(6 * playerId) + itemSlotIndex], currentUnit)
-                    call SetItemUserData(currentItem, playerId + 1)
+            if (GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT) then
+                // Restore all items
+                loop
+                    call RemoveItem(UnitItemInSlot(currentUnit, itemSlotIndex))
 
-                    if PreBRItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
-                        call SetItemCharges(currentItem, PreBRItemCharges[(6 * playerId) + itemSlotIndex])
+                    // Make sure there is an actual item
+                    if (PreBRItemIds[(6 * playerId) + itemSlotIndex] != -1) then
+                        set currentItem = UnitAddItemByIdSwapped(PreBRItemIds[(6 * playerId) + itemSlotIndex], currentUnit)
+                        call SetItemUserData(currentItem, playerId + 1)
+
+                        if PreBRItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
+                            call SetItemCharges(currentItem, PreBRItemCharges[(6 * playerId) + itemSlotIndex])
+                        endif
+
+                        call SetItemPawnable(currentItem, true)
                     endif
 
-                    call SetItemPawnable(currentItem, true)
-                endif
+                    set itemSlotIndex = itemSlotIndex + 1
+                    exitwhen itemSlotIndex == 6
+                endloop
             endif
         else
             // Save the items and item charges for the player before the BR starts. Make items unpawnable as well
