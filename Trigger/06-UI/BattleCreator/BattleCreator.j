@@ -31,6 +31,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         private constant real CHECKBOX_WIDTH                            = 0.025
         private constant real CHECKBOX_TEXT_WIDTH                       = 0.15
         private constant real CHECKBOX_SPACING                          = 0.005
+        private constant real MESSAGE_TEXT_WIDTH                        = 0.3
 
         // The only trigger that handles hovering over icons and clicking buttons
         private trigger EventTrigger
@@ -38,15 +39,6 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         private framehandle BattleCreatorTooltipFrame
 		private framehandle BattleCreatorTooltipTitleFrame
 		private framehandle BattleCreatorTooltipTextFrame
-
-        // Framehandles that need to be referenced later
-        private integer ObserverHandleId
-        private integer SoloHandleId
-        private integer RandomTeamHandleId
-        private integer Team1HandleId
-        private integer Team2HandleId
-        private integer Team3HandleId
-        private integer Team4HandleId
 
         private integer CurrentCategoryIndex
         private integer CurrentPlayerSlotIndex
@@ -170,7 +162,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_TOPLEFT, x + ICON_WIDTH + ICON_SPACING, y - 0.004)
         call BlzFrameSetAbsPoint(playerNameTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, x + ICON_WIDTH + ICON_SPACING + TEXT_WIDTH, y - TEXT_HEIGHT) 
         call BlzFrameSetEnable(playerNameTextFrameHandle, false) 
-        call BlzFrameSetScale(playerNameTextFrameHandle, 1.2) 
+        call BlzFrameSetScale(playerNameTextFrameHandle, 1.0) 
         call BlzFrameSetTextAlignment(playerNameTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_LEFT) 
         call BlzFrameSetVisible(playerNameTextFrameHandle, false)
 
@@ -180,7 +172,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         set playerNameTextFrameHandle = null
     endfunction
 
-    private function CreateCategoryButton takes string value, string title, string description returns integer
+    private function CreateCategoryButton takes string value, string title, string description returns framehandle
         // First create the button
         local framehandle buttonFrameHandle = BlzCreateFrame("ScriptDialogButton", BattleCreatorFrameHandle, 0, 0) 
         local integer frameHandleId = GetHandleId(buttonFrameHandle)
@@ -199,30 +191,38 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         set BRHandleDescriptions.string[frameHandleId] = description
         set BRHandleTitles.string[frameHandleId] = title
 
-        // Cleanup
-        set buttonFrameHandle = null
-
-        return frameHandleId
+        return buttonFrameHandle
     endfunction
 
-    private function CreateCheckbox takes string checkboxText, string title, string description returns integer
+    private function CreateCheckbox takes string checkboxText, string title, string description returns framehandle
         // First create the checkbox
+        local real x = GetTopLeftX()
+        local real y = GetTopLeftY()
         local framehandle checkboxFrameHandle = BlzCreateFrame("QuestCheckBox", BattleCreatorFrameHandle, 0, 0) 
         local integer checkboxFrameHandleId = GetHandleId(checkboxFrameHandle)
 
         set BRCheckboxTextFrameHandle = BlzCreateFrameByType("TEXT", "CheckboxText", BattleCreatorFrameHandle, "", 0) 
+        set BRMessageTextFrameHandle = BlzCreateFrameByType("TEXT", "MessageText", BattleCreatorFrameHandle, "", 0) 
 
         // Dimensions for the button
-        call BlzFrameSetAbsPoint(checkboxFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY()) 
-        call BlzFrameSetAbsPoint(checkboxFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + CHECKBOX_WIDTH, GetTopLeftY() - CHECKBOX_WIDTH) 
+        call BlzFrameSetAbsPoint(checkboxFrameHandle, FRAMEPOINT_TOPLEFT, x, y) 
+        call BlzFrameSetAbsPoint(checkboxFrameHandle, FRAMEPOINT_BOTTOMRIGHT, x + CHECKBOX_WIDTH, y - CHECKBOX_WIDTH) 
 
         // Setup the checkbox text
-        call BlzFrameSetAbsPoint(BRCheckboxTextFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX() + 0.029, GetTopLeftY() - 0.007) 
-        call BlzFrameSetAbsPoint(BRCheckboxTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + 0.029 + CHECKBOX_TEXT_WIDTH, GetTopLeftY() - 0.014) 
+        call BlzFrameSetAbsPoint(BRCheckboxTextFrameHandle, FRAMEPOINT_TOPLEFT, x + 0.029, y - 0.008) 
+        call BlzFrameSetAbsPoint(BRCheckboxTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, x + 0.029 + CHECKBOX_TEXT_WIDTH, y - 0.015) 
         call BlzFrameSetText(BRCheckboxTextFrameHandle, checkboxText) 
         call BlzFrameSetEnable(BRCheckboxTextFrameHandle, false) 
         call BlzFrameSetScale(BRCheckboxTextFrameHandle, 1.2) 
         call BlzFrameSetTextAlignment(BRCheckboxTextFrameHandle, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT) 
+
+        // Setup the message text
+        call BlzFrameSetAbsPoint(BRMessageTextFrameHandle, FRAMEPOINT_TOPLEFT, x + 0.029 + CHECKBOX_TEXT_WIDTH, y - 0.008) 
+        call BlzFrameSetAbsPoint(BRMessageTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, x + 0.029 + CHECKBOX_TEXT_WIDTH + MESSAGE_TEXT_WIDTH, y - 0.015) 
+        call BlzFrameSetText(BRMessageTextFrameHandle, "") 
+        call BlzFrameSetEnable(BRMessageTextFrameHandle, false) 
+        call BlzFrameSetScale(BRMessageTextFrameHandle, 1.2) 
+        call BlzFrameSetTextAlignment(BRMessageTextFrameHandle, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT) 
 
         // Save the handle of this button to look it up later for mouse events
         call BlzTriggerRegisterFrameEvent(EventTrigger, checkboxFrameHandle, FRAMEEVENT_CHECKBOX_CHECKED)
@@ -233,10 +233,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         set BRHandleDescriptions.string[checkboxFrameHandleId] = description
         set BRHandleTitles.string[checkboxFrameHandleId] = title
 
-        // Cleanup
-        set checkboxFrameHandle = null
-
-        return checkboxFrameHandleId
+        return checkboxFrameHandle
     endfunction
 
     private function BattleCreatorMouseEventActions takes nothing returns nothing
@@ -254,20 +251,25 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
 				call BlzFrameSetEnable(currentFrameHandle, true)
 			endif
 
-            if (handleId == ObserverHandleId) then
+            if (IsPlayerInForce(triggerPlayer, BRRandomTeam)) then
+                if (GetLocalPlayer() == triggerPlayer) then	
+                    call BlzFrameSetText(BRMessageTextFrameHandle, BR_MESSAGE_COLOR + "You must unselect from the Random Teams Vote first!" + BR_COLOR_END_TAG)
+                    call BlzFrameSetVisible(BRMessageTextFrameHandle, true)
+                endif
+            elseif (handleId == GetHandleId(ObserverHandle)) then
                 set change = TryMovePlayerToForce(triggerPlayer, BRObservers)
-            elseif (handleId == SoloHandleId) then
+            elseif (handleId == GetHandleId(SoloHandle)) then
                 set change = TryMovePlayerToForce(triggerPlayer, BRSolo)
-            elseif (handleId == Team1HandleId) then
+            elseif (handleId == GetHandleId(Team1Handle)) then
                 set change = TryMovePlayerToForce(triggerPlayer, BRTeam1)
-            elseif (handleId == Team2HandleId) then
+            elseif (handleId == GetHandleId(Team2Handle)) then
                 set change = TryMovePlayerToForce(triggerPlayer, BRTeam2)
-            elseif (handleId == Team3HandleId) then
+            elseif (handleId == GetHandleId(Team3Handle)) then
                 set change = TryMovePlayerToForce(triggerPlayer, BRTeam3)
-            elseif (handleId == Team4HandleId) then
+            elseif (handleId == GetHandleId(Team4Handle)) then
                 set change = TryMovePlayerToForce(triggerPlayer, BRTeam4)
             endif
-
+            
         elseif (BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER) then
             set tooltipName = BRHandleTitles.string[handleId]
             set tooltipDescription = BRHandleDescriptions.string[handleId]
@@ -291,10 +293,15 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_CHECKBOX_CHECKED then
             set change = TryMovePlayerToForce(triggerPlayer, BRRandomTeam)
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_CHECKBOX_UNCHECKED then
+            call ForceRemovePlayer(BRRandomTeam, triggerPlayer) // Force remove since it's the only way to leave this force
             set change = TryMovePlayerToForce(triggerPlayer, BRObservers)
         endif
 
         if (change) then
+            if (GetLocalPlayer() == triggerPlayer) then	
+                call BlzFrameSetVisible(BRMessageTextFrameHandle, false)
+            endif
+
             call UpdateBRPlayerSlots()
             call UpdateRandomTeamVoteText()
         endif
@@ -324,14 +331,14 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         set titleFrameHandle = null
     endfunction
     
-    private function CreatePlayerForceSectionButton takes string categoryName, string title, string description returns integer
-        local integer frameHandleId
+    private function CreatePlayerForceSectionButton takes string categoryName, string title, string description returns framehandle
+        local framehandle frameHandle
 
         set CurrentRowIndex = 0
-        set frameHandleId = CreateCategoryButton(categoryName, title, description)
+        set frameHandle = CreateCategoryButton(categoryName, title, description)
         set CurrentRowIndex = 1
 
-        return frameHandleId
+        return frameHandle
     endfunction
 
     private function CreatePlayerForcePlayerSlot takes nothing returns nothing
@@ -356,41 +363,41 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         set CurrentPlayerSlotIndex = 0
 
         // BRObservers
-        set ObserverHandleId = CreatePlayerForceSectionButton(BR_OBSERVERS_COLOR + "BRObservers" + BR_COLOR_END_TAG, "Join the BRObservers", "Join the BRObservers. You won't be in the next fight.|n")
+        set ObserverHandle = CreatePlayerForceSectionButton(BR_OBSERVERS_COLOR + "Observers" + BR_COLOR_END_TAG, "Join the BRObservers", "Join the BRObservers. You won't be in the next fight.|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // BRSolo
-        set SoloHandleId = CreatePlayerForceSectionButton(BR_SOLO_COLOR + "BRSolo" + BR_COLOR_END_TAG, "Play BRSolo", "Fight alone in the next fight. Even if there are teams.|n")
+        set SoloHandle = CreatePlayerForceSectionButton(BR_SOLO_COLOR + "Solo" + BR_COLOR_END_TAG, "Play BRSolo", "Fight alone in the next fight. Even if there are teams.|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
-        set RandomTeamHandleId = CreateCheckbox(BR_RANDOM_TEAM_COLOR + "Random Teams (0/0)" + BR_COLOR_END_TAG, "Vote on Random Teams", "If majority vote, all players will be randomly assigned|nto teams. If not enough votes, voters will fight solo.|n")
+        set RandomTeamHandle = CreateCheckbox(BR_RANDOM_TEAM_COLOR + "Random Teams (0/0)" + BR_COLOR_END_TAG, "Vote on Random Teams", "If majority vote, all players will be randomly assigned|nto teams. If not enough votes, voters will fight solo.|n")
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Team 1
-        set Team1HandleId = CreatePlayerForceSectionButton(BR_TEAM_1_COLOR + "Team 1" + BR_COLOR_END_TAG, "Join a Team", "Join Team 1 and fight together to defeat everyone else.|n")
+        set Team1Handle = CreatePlayerForceSectionButton(BR_TEAM_1_COLOR + "Team 1" + BR_COLOR_END_TAG, "Join a Team", "Join Team 1 and fight together to defeat everyone else.|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Team 2
-        set Team2HandleId = CreatePlayerForceSectionButton(BR_TEAM_2_COLOR + "Team 2" + BR_COLOR_END_TAG, "Join a Team", "Join Team 2 and fight together to defeat everyone else.|n")
+        set Team2Handle = CreatePlayerForceSectionButton(BR_TEAM_2_COLOR + "Team 2" + BR_COLOR_END_TAG, "Join a Team", "Join Team 2 and fight together to defeat everyone else.|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Team 3
-        set Team3HandleId = CreatePlayerForceSectionButton(BR_TEAM_3_COLOR + "Team 3" + BR_COLOR_END_TAG, "Join a Team", "Join Team 3 and fight together to defeat everyone else.|n")
+        set Team3Handle = CreatePlayerForceSectionButton(BR_TEAM_3_COLOR + "Team 3" + BR_COLOR_END_TAG, "Join a Team", "Join Team 3 and fight together to defeat everyone else.|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Team 4
-        set Team4HandleId = CreatePlayerForceSectionButton(BR_TEAM_4_COLOR + "Team 4" + BR_COLOR_END_TAG, "Join a Team", "Join Team 4 and fight together to defeat everyone else.|n")
+        set Team4Handle = CreatePlayerForceSectionButton(BR_TEAM_4_COLOR + "Team 4" + BR_COLOR_END_TAG, "Join a Team", "Join Team 4 and fight together to defeat everyone else.|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
     endfunction
 

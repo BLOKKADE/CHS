@@ -17,6 +17,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         constant string BR_TEAM_2_COLOR                            = "|cff5cff2a"
         constant string BR_TEAM_3_COLOR                            = "|cff00ccff"
         constant string BR_TEAM_4_COLOR                            = "|cffbcf520"
+        constant string BR_MESSAGE_COLOR                           = "|cffeb5701"
 
         integer UsedTeamCount
 
@@ -42,7 +43,17 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         framehandle array PlayerSlotIconFramehandles
         framehandle array PlayerSlotIconParentFramehandles
         framehandle BRCheckboxTextFrameHandle
-                
+        framehandle BRMessageTextFrameHandle
+
+        // Framehandles for each button
+        framehandle ObserverHandle
+        framehandle SoloHandle
+        framehandle RandomTeamHandle
+        framehandle Team1Handle
+        framehandle Team2Handle
+        framehandle Team3Handle
+        framehandle Team4Handle
+
         Table BRHandleTitles
         Table BRHandleDescriptions
 
@@ -58,6 +69,18 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         call BlzFrameSetText(BRCheckboxTextFrameHandle, BR_RANDOM_TEAM_COLOR + "Random Teams (" + I2S(CountPlayersInForceBJ(BRRandomTeam)) + "/" + I2S(BRRoundPlayerCount - CountPlayersInForceBJ(BRObservers)) + ")" + BR_COLOR_END_TAG)
     endfunction
     
+    function SetBRLockStatus takes boolean enabled returns nothing
+        set BRLockedIn = not enabled
+
+        call BlzFrameSetEnable(ObserverHandle, enabled) 
+        call BlzFrameSetEnable(SoloHandle, enabled) 
+        call BlzFrameSetEnable(RandomTeamHandle, enabled) 
+        call BlzFrameSetEnable(Team1Handle, enabled) 
+        call BlzFrameSetEnable(Team2Handle, enabled) 
+        call BlzFrameSetEnable(Team3Handle, enabled) 
+        call BlzFrameSetEnable(Team4Handle, enabled) 
+    endfunction
+
     private function UpdateEnumPlayerSlot takes nothing returns nothing
         local player p = GetEnumPlayer()
         local integer playerId = GetPlayerId(p)
@@ -71,6 +94,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set BRHandleTitles.string[GetHandleId(PlayerSlotIconParentFramehandles[BRPlayerSlotIndex])] = GetPlayerNameColour(p) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero))
 
         // Update the player name
+        call BJDebugMsg(GetPlayerNameColour(p))
         call BlzFrameSetText(PlayerSlotNameFramehandles[BRPlayerSlotIndex], GetPlayerNameColour(p))
         call BlzFrameSetVisible(PlayerSlotNameFramehandles[BRPlayerSlotIndex], true)
 
@@ -95,7 +119,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
     endfunction
 
     function IsBRSetupValid takes nothing returns boolean
-        local integer observerCount = CountPlayersInForceBJ(BRObservers)
+        /*local integer observerCount = CountPlayersInForceBJ(BRObservers)
         local integer soloCount = CountPlayersInForceBJ(BRSolo)
         local integer team1Count = CountPlayersInForceBJ(BRTeam1)
         local integer team2Count = CountPlayersInForceBJ(BRTeam2)
@@ -127,7 +151,8 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
             return false
         endif
 
-        return true
+        return true*/
+        return BRTeamCount > 1
     endfunction
 
     function UpdateBRPlayerSlots takes nothing returns nothing
@@ -164,7 +189,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
 
     function TryMovePlayerToForce takes player p, force destinationForce returns boolean
         // Remove the player from everything if they left the game
-        if (GetPlayerSlotState(p) != PLAYER_SLOT_STATE_PLAYING) then
+        if (GetPlayerController(p) != MAP_CONTROL_COMPUTER and GetPlayerSlotState(p) != PLAYER_SLOT_STATE_PLAYING) then
             call ForceRemovePlayer(BRRandomTeam, p)
             call ForceRemovePlayer(BRObservers, p)
             call ForceRemovePlayer(BRSolo, p)
@@ -218,6 +243,28 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set ForceHasHeroesAlive = UnitAlive(PlayerHeroes[GetPlayerId(GetEnumPlayer())])
     endfunction
 
+    // This only returns correct data assuming IsBROver has returned true
+    function GetBRWinningForce takes nothing returns force
+        local integer brPlayerForceIndex = 0
+
+        loop
+            exitwhen brPlayerForceIndex == BRTeamCount
+
+            set ForceHasHeroesAlive = false
+
+            call ForForce(BRPlayerForce[brPlayerForceIndex], function IsPlayerHeroAlive)
+
+            if (ForceHasHeroesAlive) then
+                return BRPlayerForce[brPlayerForceIndex]
+            endif
+
+            set brPlayerForceIndex = brPlayerForceIndex + 1
+        endloop
+
+        // Shouldn't happen
+        return null
+    endfunction
+
     function IsBROver takes nothing returns boolean
         local integer brPlayerForceIndex = 0
         local integer aliveForces = 0
@@ -239,7 +286,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         return aliveForces == 1
     endfunction
 
-    private function ResetBRPlayerSlots takes nothing returns nothing
+    function ResetBRPlayerSlots takes nothing returns nothing
         set BRTempForce = BRSolo
         call ForForce(BRTempForce, function MoveEnumPlayerToObservers)
         set BRTempForce = BRTeam1
@@ -303,17 +350,24 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set AddedPlayerToForce = true
     endfunction
 
+    private function AddToBRTempForce takes nothing returns nothing
+        call ForceAddPlayer(BRTempForce, GetEnumPlayer())
+    endfunction
+
     function CalculateFreeForAllPlayerForces takes force validPlayers returns nothing
         // Set the players for the rest of the game. All players will be managed from here for the fun BR rounds
-        set BRObservers = validPlayers // TODO Copy instead of reference?
+        set BRTempForce = BRObservers
+        call ForForce(validPlayers, function AddToBRTempForce)
 
+        call ResetBRPlayerSlots()
         call ResetBRPlayerForce()
+        call BJDebugMsg("Reset BR player force")
 
         set TempPlayerForceIndex = 0
         call ForForce(validPlayers, function AddPlayerToNextAvailableForce)
         set BRTeamCount = TempPlayerForceIndex
 
-        set BRLockedIn = true
+        call SetBRLockStatus(false)
     endfunction
 
     private function CopyForceToNextAvailableForce takes force sourceForce returns nothing
@@ -327,10 +381,6 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
             set BRUsedTeams[UsedTeamCount] = sourceForce
             set UsedTeamCount = UsedTeamCount + 1
         endif
-    endfunction
-
-    private function AddToBRTempForce takes nothing returns nothing
-        call ForceAddPlayer(BRTempForce, GetEnumPlayer())
     endfunction
 
     function CalculatePlayerForces takes nothing returns nothing
@@ -435,7 +485,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         // Update the UI so everyone sees what happened
         call UpdateBRPlayerSlots()
 
-        set BRLockedIn = true
+        call SetBRLockStatus(false)
 
         // Cleanup
         set randomPlayer = null

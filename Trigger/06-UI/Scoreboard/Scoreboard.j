@@ -616,7 +616,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         // If this is the BR winner, set the status
-        if (PlayerBrWinner == playerId) then
+        if (IsPlayerInForce(currentPlayer, WinnerPlayerForce)) then
             set CurrentColumnIndex = PLAYER_STATUS_INDEX
             call CreateText(BR_WINNER_STATUS_COLOR + "Battle Royale Winner with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
 

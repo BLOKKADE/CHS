@@ -89,7 +89,6 @@ library GameInit initializer init requires GroupUtils
         location RectMidArenaCenter
         player HostPlayer = null
         player SingleplayerPlayer = null
-        player WinningPlayer
         real RoundCreepPower = 0
         rect RectMidArena
         rect array PlayerArenaRects

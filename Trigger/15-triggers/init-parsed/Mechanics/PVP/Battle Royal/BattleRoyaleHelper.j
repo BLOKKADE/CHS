@@ -19,6 +19,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         // Timer properties
         integer BattleRoyalFunWaitTime = 30
         integer BattleRoyalWaitTime = 120
+        integer BattleRoyalReviewWaitTime = 30
         timer BattleRoyalTimer
         timerdialog BattleRoyalTimerDialog
         boolean WaitingForBattleRoyal = false
@@ -32,6 +33,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         local unit currentUnit = PlayerHeroes[GetPlayerId(GetEnumPlayer())]
         local location randomLocation = GetRandomLocInRect(PlayerArenaRects[1])
 
+        call ReviveHeroLoc(currentUnit, randomLocation, true)
         call SetUnitPositionLoc(currentUnit, randomLocation)
 
         // Cleanup
@@ -173,47 +175,79 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
     endfunction
 
     private function BattleRoyalInitialization takes nothing returns nothing
-        local group shops = GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE), Condition(function ShopFilter))
         local force playersToFight = CreateForce()
+        local group shops
         local unit randomUnit
         local integer currentPlayerId = 0
         local integer forceIndex = 0
         local integer nestedForceIndex = 0
         local integer randomCount = 0
-
         set CurrentPlayerHeroPlacement = 0
 
         call ResetScoreboardBrWinner()
 
+        call DestroyTimer(BattleRoyalTimer)
+        call DestroyTimerDialog(BattleRoyalTimerDialog)
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
-
-        loop
-            exitwhen currentPlayerId == 8
-
-            if (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
-                call ForceAddPlayer(playersToFight, Player(currentPlayerId))
-            endif
-
-            set currentPlayerId = currentPlayerId + 1
-        endloop
 
         if (IsFunBRRound) then
             call CalculatePlayerForces()
             call ForForce(BRObservers, function MoveObserver)
+        else
+            // Calculate the initial valid players
+            loop
+                exitwhen currentPlayerId == 8
+
+                if (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
+                    call ForceAddPlayer(playersToFight, Player(currentPlayerId))
+                endif
+
+                set currentPlayerId = currentPlayerId + 1
+            endloop
+
+            call CalculateFreeForAllPlayerForces(playersToFight)
+
+            // Cleanup
+            call DestroyForce(playersToFight)
+            set playersToFight = null
+        endif
+
+        call SetBRLockStatus(false)
+
+        if (IsBRSetupValid()) then
+            set WaitingForBattleRoyal = false
 
             call TriggerSleepAction(5)
 
             call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
         else
-            call CalculateFreeForAllPlayerForces(playersToFight)
+            call BlzFrameSetText(BRMessageTextFrameHandle, BR_MESSAGE_COLOR + "Invalid Battle Royale Setup. Try again." + BR_COLOR_END_TAG)
+            call BlzFrameSetVisible(BRMessageTextFrameHandle, true)
+
+            call TriggerSleepAction(5)
+
+            call BlzFrameSetVisible(BRMessageTextFrameHandle, false)
+
+            call SetBRLockStatus(true)
+
+            set BattleRoyalTimer = CreateTimer()
+            set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
+            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Extra Battle Royale...")
+            call TimerDialogDisplay(BattleRoyalTimerDialog, true)
+
+            call ResetBRPlayerSlots()
+
+            call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function BattleRoyalInitialization)
+
+            return
         endif
 
         // Reset the player count since it gets decrementing during the PlayerDiesInBattleRoyale trigger
         set PlayerCount = BRRoundPlayerCount
 
         call EnableTrigger(IsGameFinishedTrigger)
-        call ForceClear(DefeatedPlayers)
+        // call ForceClear(DefeatedPlayers)
 
         // Final message about BR, hide shops, cleanup before the actual fight
         set BrStarted = true
@@ -273,12 +307,9 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
             exitwhen randomCount == BRTeamCount
         endloop
-    
-        // Cleanup
-        call DestroyForce(playersToFight)
-        set playersToFight = null
 
         // Delete shops
+        set shops = GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE), Condition(function ShopFilter))
         call ForGroup(shops, function DeleteShop)
 
         // Cleanup
@@ -338,20 +369,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call DestroyTimer(BattleRoyalTimer)
         call DestroyTimerDialog(BattleRoyalTimerDialog)
 
-        if (IsBRSetupValid()) then
-            set WaitingForBattleRoyal = false
-            call BattleRoyalInitialization.execute()
-        else
-            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff0000Invalid Battle Royale Setup. Try again.|r")
-
-            set BattleRoyalTimer = CreateTimer()
-            set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
-            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Extra Battle Royale...")
-            call TimerDialogDisplay(BattleRoyalTimerDialog, true)
-
-            call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function StartBattleRoyal)
-        endif
-
+        call BattleRoyalInitialization.execute()
     endfunction
 
     function InitializeBattleRoyale takes nothing returns nothing
@@ -368,19 +386,28 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         
         call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function StartBattleRoyal)
     endfunction
-
+    
     function InitializeFunBattleRoyale takes nothing returns nothing
+        call DestroyTimer(BattleRoyalTimer)
+        call DestroyTimerDialog(BattleRoyalTimerDialog)
+
+        call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
+        call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+
         set BattleRoyalTimer = CreateTimer()
         set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
         call TimerDialogSetTitle(BattleRoyalTimerDialog, "Extra Battle Royale...")
         call TimerDialogDisplay(BattleRoyalTimerDialog, true)
 
-        set WaitingForBattleRoyal = true
-
         // Reset some game state stuff for end game
+        set IsFunBRRound = true
+        set BrStarted = false
+        set WaitingForBattleRoyal = true
         set GameComplete = false
-        set BRLockedIn = false
 
+        call SetBRLockStatus(true)
+
+        call ResetBRPlayerSlots()
         call BlzFrameSetVisible(BattleCreatorFrameHandle, true) 
 
         call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function StartBattleRoyal)

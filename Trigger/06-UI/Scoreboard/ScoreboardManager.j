@@ -21,16 +21,16 @@ library ScoreboardManager
         boolean array PlayerLeftGame // If the player left the game
         boolean array PlayerDiedInBR // If the player died in the BR. e.g. They died on round 25 or 50
         integer array PlayerDeathRound // The round the player died for good
-        integer PlayerBrWinner = -1
+        force WinnerPlayerForce = null
     endglobals
     
     function ResetScoreboardBrWinner takes nothing returns nothing
-        set PlayerBrWinner = -1
+        set WinnerPlayerForce = null
     endfunction
 
-    function UpdateScoreboardBrWinner takes player currentPlayer returns nothing
-        if (currentPlayer != null and PlayerBrWinner == -1) then
-            set PlayerBrWinner = GetPlayerId(currentPlayer)
+    function UpdateScoreboardBrWinner takes force winningForce returns nothing
+        if (winningForce != null and WinnerPlayerForce == null) then
+            set WinnerPlayerForce = winningForce
         endif
     endfunction
 
