@@ -94,7 +94,6 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set BRHandleTitles.string[GetHandleId(PlayerSlotIconParentFramehandles[BRPlayerSlotIndex])] = GetPlayerNameColour(p) + ": " + "|cffffa8a8" + GetObjectName(GetUnitTypeId(playerHero))
 
         // Update the player name
-        call BJDebugMsg(GetPlayerNameColour(p))
         call BlzFrameSetText(PlayerSlotNameFramehandles[BRPlayerSlotIndex], GetPlayerNameColour(p))
         call BlzFrameSetVisible(PlayerSlotNameFramehandles[BRPlayerSlotIndex], true)
 
@@ -361,7 +360,6 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
 
         call ResetBRPlayerSlots()
         call ResetBRPlayerForce()
-        call BJDebugMsg("Reset BR player force")
 
         set TempPlayerForceIndex = 0
         call ForForce(validPlayers, function AddPlayerToNextAvailableForce)
@@ -481,6 +479,9 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         endif
         
         call ForForce(BRSolo, function AddPlayerToNextAvailableForce)
+
+        // Set the team count
+        set BRTeamCount = TempPlayerForceIndex
 
         // Update the UI so everyone sees what happened
         call UpdateBRPlayerSlots()
