@@ -183,7 +183,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
     endfunction
 
     private function BattleRoyalInitialization takes nothing returns nothing
-        local force playersToFight = CreateForce()
+        local force playersToFight
         local group shops
         local unit randomUnit
         local integer currentPlayerId = 0
@@ -205,6 +205,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             call ForForce(BRObservers, function MoveObserver)
             call SetForceAllianceStateBJ(BRObservers, BRObservers, bj_ALLIANCE_ALLIED)
         else
+            set playersToFight = CreateForce()
+
             // Calculate the initial valid players
             loop
                 exitwhen currentPlayerId == 8
@@ -247,6 +249,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             call TimerDialogDisplay(BattleRoyalTimerDialog, true)
 
             call ResetBRPlayerSlots()
+            call ResetBRPlayerForce()
 
             call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function BattleRoyalInitialization)
 

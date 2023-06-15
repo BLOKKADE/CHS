@@ -304,7 +304,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         call UpdateRandomTeamVoteText()
     endfunction
 
-    private function ResetBRPlayerForce takes nothing returns nothing
+    function ResetBRPlayerForce takes nothing returns nothing
         call ForceClear(BRPlayerForce[0])
         call ForceClear(BRPlayerForce[1])
         call ForceClear(BRPlayerForce[2])
@@ -539,8 +539,8 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set BRPlayerForce[6] = CreateForce()
         set BRPlayerForce[7] = CreateForce()
 
-		call Command.create(CommandHandler.Random).name("random").handles("random").help("blah", "changes the distance of the camera")
-        call Command.create(CommandHandler.Random).name("solo").handles("solo").help("solo", "changes the distance of the camera")
+		call Command.create(CommandHandler.Random).name("random").handles("random").help("random", "move all computer players to random teams")
+        call Command.create(CommandHandler.Random).name("solo").handles("solo").help("solo", "move all computer players to the solo team")
     endfunction
 
 endlibrary

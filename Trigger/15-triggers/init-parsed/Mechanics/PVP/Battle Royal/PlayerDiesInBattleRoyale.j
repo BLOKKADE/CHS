@@ -11,10 +11,6 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit()))
         local location randomSpawnLocation
 
-        // Allow these stats to go up, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
-        call ps.addBRPVPKill()
-        call ps.addPlayerKill()
-
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
 
         // Try to revive the hero if there are BR lives
@@ -24,6 +20,10 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
 
             // Don't revive the hero if they died too many times
             if (PlayerBRDeaths[deadPlayerId] > MAX_BR_DEATH_COUNT) then
+                // Allow these stats to go up for fun BR rounds, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
+                call ps.addBRPVPKill()
+                call ps.addPlayerKill()
+
                 // Set the status of their death in the BR
                 call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
 
@@ -63,6 +63,10 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
 
             return
         endif
+
+        // Allow these stats to go up for fun BR rounds, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
+        call ps.addBRPVPKill()
+        call ps.addPlayerKill()
 
         // Set the status of their death in the BR
         call StopRectLeaveDetection(GetHandleId(deadHero))
