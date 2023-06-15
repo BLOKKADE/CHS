@@ -203,6 +203,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         if (IsFunBRRound) then
             call CalculatePlayerForces()
             call ForForce(BRObservers, function MoveObserver)
+            call SetForceAllianceStateBJ(BRObservers, BRObservers, bj_ALLIANCE_ALLIED)
         else
             // Calculate the initial valid players
             loop
