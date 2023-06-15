@@ -11,10 +11,9 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit()))
         local location randomSpawnLocation
 
-        if (not IsFunBRRound) then
-            call ps.addBRPVPKill()
-            call ps.addPlayerKill()
-        endif
+        // Allow these stats to go up, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
+        call ps.addBRPVPKill()
+        call ps.addPlayerKill()
 
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
 

@@ -393,6 +393,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         local integer randomTeamIndex
 
         set AddedPlayerToForce = false
+        set TempPlayerForceIndex = 0
 
         call ResetBRPlayerForce()
 
@@ -492,6 +493,30 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set randomPlayer = null
     endfunction
 
+    private function RandomizeComputers takes nothing returns nothing
+        if (GetPlayerController(GetEnumPlayer()) == MAP_CONTROL_COMPUTER) then
+            call TryMovePlayerToForce(GetEnumPlayer(), BRUsedTeams[GetRandomInt(0, 3)])
+        endif
+    endfunction
+
+    private function MoveToSolo takes nothing returns nothing
+        if (GetPlayerController(GetEnumPlayer()) == MAP_CONTROL_COMPUTER) then
+            call TryMovePlayerToForce(GetEnumPlayer(), BRSolo)
+        endif
+    endfunction
+
+    private function Random takes Args args returns nothing
+        call ForForce(BRObservers, function RandomizeComputers)
+
+        call UpdateBRPlayerSlots()
+	endfunction
+	
+    private function Solo takes Args args returns nothing
+        call ForForce(BRObservers, function MoveToSolo)
+
+        call UpdateBRPlayerSlots()
+	endfunction
+
     private function init takes nothing returns nothing
         set BRHandleTitles = Table.create()
         set BRHandleDescriptions = Table.create()
@@ -513,6 +538,9 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set BRPlayerForce[5] = CreateForce()
         set BRPlayerForce[6] = CreateForce()
         set BRPlayerForce[7] = CreateForce()
+
+		call Command.create(CommandHandler.Random).name("random").handles("random").help("blah", "changes the distance of the camera")
+        call Command.create(CommandHandler.Random).name("solo").handles("solo").help("solo", "changes the distance of the camera")
     endfunction
 
 endlibrary

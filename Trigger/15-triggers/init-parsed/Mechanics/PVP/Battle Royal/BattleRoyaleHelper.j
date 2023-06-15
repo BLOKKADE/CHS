@@ -31,14 +31,14 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
     private function MoveObserver takes nothing returns nothing
         local unit currentUnit = PlayerHeroes[GetPlayerId(GetEnumPlayer())]
-        local location randomLocation = GetRandomLocInRect(PlayerArenaRects[1])
+        local location centerLocation = GetRectCenter(PlayerArenaRects[1])
 
-        call ReviveHeroLoc(currentUnit, randomLocation, true)
-        call SetUnitPositionLoc(currentUnit, randomLocation)
+        call ReviveHeroLoc(currentUnit, centerLocation, true)
+        call SetUnitPositionLoc(currentUnit, centerLocation)
 
         // Cleanup
-        call RemoveLocation(randomLocation)
-        set randomLocation = null
+        call RemoveLocation(centerLocation)
+        set centerLocation = null
         set currentUnit = null
     endfunction
 
@@ -190,6 +190,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         local integer forceIndex = 0
         local integer nestedForceIndex = 0
         local integer randomCount = 0
+
         set CurrentPlayerHeroPlacement = 0
 
         call ResetScoreboardBrWinner()
