@@ -193,7 +193,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         set CurrentPlayerHeroPlacement = 0
 
-        call ResetScoreboardBrWinner()
 
         call DestroyTimer(BattleRoyalTimer)
         call DestroyTimerDialog(BattleRoyalTimerDialog)
@@ -229,6 +228,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         if (IsBRSetupValid()) then
             set WaitingForBattleRoyal = false
+            call ResetScoreboardBrWinner()
 
             call TriggerSleepAction(5)
 
@@ -264,7 +264,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         // Final message about BR, hide shops, cleanup before the actual fight
         set BrStarted = true
-        call SetVersion()
         call PlaySoundBJ(udg_sound10)
 
         if (IsFunBRRound) then
@@ -273,6 +272,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             call DisplayTextToForce(GetPlayersAll(), "|cffff2b23Your items will be restored for further BR fun rounds, so feel free to drop items during the fight.|r")
             call TriggerSleepAction(2)
         else
+            call SetVersion()
+
             call DisplayTextToForce(GetPlayersAll(), "|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL|r")
             call TriggerSleepAction(2)
             call DisplayTextToForce(GetPlayersAll(), "|cffff5e00Reminder: After the official BR, you can play additional BR rounds for fun!|r")
