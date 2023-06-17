@@ -181,9 +181,6 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                 set abilId = CheckAssociatedSpell(caster, abilId)
                 set abilLvl = GetUnitAbilityLevel(caster, abilId)
-                    //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
-                
-                //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
                 set abilityChanneled = AbilityChannel(caster, hero, target,targetX,targetY,abilId, abilLvl)
 
                 //Druidic focus on immobilization
