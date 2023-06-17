@@ -86,6 +86,11 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Dark Shield
         elseif UnitHasItemType( DamageTarget,'I060' )  then
+            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08S') <= 0 then
+                call AbilStartCD(DamageTarget, 'A08S', 10)
+                call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)  
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
+            endif 
             if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
                 if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08R') <= 0 then
                     call AbilStartCD(DamageTarget, 'A08R', 1)
@@ -101,11 +106,6 @@ scope ModifyDamageBeforeArmor initializer init
                     return
                 endif 
             endif      
-            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08S') <= 0 then
-                call AbilStartCD(DamageTarget, 'A08S', 10)
-                call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)  
-                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
-            endif 
         endif 
 
         // Light Magic Shield activate
