@@ -34,6 +34,9 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
                 set PlayerCount = PlayerCount - 1
 
+                call SetUnitX(deadHero, GetRectCenterX(PlayerArenaRects[deadPlayerId]))
+                call SetUnitY(deadHero, GetRectCenterY(PlayerArenaRects[deadPlayerId]))
+
                 // Cleanup
                 set deadHero = null
                 set deadPlayer = null
