@@ -181,8 +181,15 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
     private function DeleteShop takes nothing returns nothing
         call DeleteUnit(GetEnumUnit())
     endfunction
+    
+    function StartBattleRoyal takes nothing returns nothing
+        call DestroyTimer(BattleRoyalTimer)
+        call DestroyTimerDialog(BattleRoyalTimerDialog)
 
-    private function BattleRoyalInitialization takes nothing returns nothing
+        call ExecuteFunc("BattleRoyalInitialization")
+    endfunction
+
+    function BattleRoyalInitialization takes nothing returns nothing
         local force playersToFight
         local group shops
         local unit randomUnit
@@ -193,9 +200,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         set CurrentPlayerHeroPlacement = 0
 
-
-        call DestroyTimer(BattleRoyalTimer)
-        call DestroyTimerDialog(BattleRoyalTimerDialog)
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
 
@@ -251,7 +255,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             call ResetBRPlayerSlots()
             call ResetBRPlayerForce()
 
-            call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function BattleRoyalInitialization)
+            call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function StartBattleRoyal)
 
             return
         endif
@@ -377,13 +381,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         // Save debug codes
         call DebugCode_SavePlayerDebugEveryone()
-    endfunction
-
-    function StartBattleRoyal takes nothing returns nothing
-        call DestroyTimer(BattleRoyalTimer)
-        call DestroyTimerDialog(BattleRoyalTimerDialog)
-
-        call BattleRoyalInitialization.execute()
     endfunction
 
     function InitializeBattleRoyale takes nothing returns nothing
