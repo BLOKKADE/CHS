@@ -118,39 +118,6 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
     endfunction
 
     function IsBRSetupValid takes nothing returns boolean
-        /*local integer observerCount = CountPlayersInForceBJ(BRObservers)
-        local integer soloCount = CountPlayersInForceBJ(BRSolo)
-        local integer team1Count = CountPlayersInForceBJ(BRTeam1)
-        local integer team2Count = CountPlayersInForceBJ(BRTeam2)
-        local integer team3Count = CountPlayersInForceBJ(BRTeam3)
-        local integer team4Count = CountPlayersInForceBJ(BRTeam4)
-        local integer nonObserverCount = BRRoundPlayerCount - observerCount
-
-        if (soloCount > 1) then
-            return true
-        endif
-
-        if (team1Count == nonObserverCount) then
-            return false
-        elseif (team2Count == nonObserverCount) then
-            return false
-        elseif (team3Count == nonObserverCount) then
-            return false
-        elseif (team4Count == nonObserverCount) then
-            return false
-        elseif (observerCount == BRRoundPlayerCount) then
-            return false
-        elseif (team1Count == 1 and team2Count == 0 and team3Count == 0 and team4Count == 0) then
-            return false
-        elseif (team1Count == 0 and team2Count == 1 and team3Count == 0 and team4Count == 0) then
-            return false
-        elseif (team1Count == 0 and team2Count == 0 and team3Count == 1 and team4Count == 0) then
-            return false
-        elseif (team1Count == 0 and team2Count == 0 and team3Count == 0 and team4Count == 1) then
-            return false
-        endif
-
-        return true*/
         return BRTeamCount > 1
     endfunction
 
@@ -298,6 +265,12 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         call ForForce(BRTempForce, function MoveEnumPlayerToObservers)
         set BRTempForce = null
 
+        call ForceClear(BRSolo)
+        call ForceClear(BRTeam1)
+        call ForceClear(BRTeam2)
+        call ForceClear(BRTeam3)
+        call ForceClear(BRTeam4)
+
         set BRRoundPlayerCount = CountPlayersInForceBJ(BRObservers) + CountPlayersInForceBJ(BRRandomTeam)
 
         call UpdateBRPlayerSlots()
@@ -398,7 +371,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         call ResetBRPlayerForce()
 
         // Make random teams if majority voted
-        if (CountPlayersInForceBJ(BRRandomTeam) > (nonObserverCount / 2)) then
+        if (CountPlayersInForceBJ(BRRandomTeam) > 1 and CountPlayersInForceBJ(BRRandomTeam) > (nonObserverCount / 2)) then
             // Use the amount of players, excluding those in the solo queue
             set remainingPlayerCount = nonObserverCount - CountPlayersInForceBJ(BRSolo)
 
@@ -444,6 +417,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
                 loop
                     exitwhen currentTeamSize == teamSize or randomPlayer == null
     
+                    call ForceAddPlayer(BRPlayers, randomPlayer)
                     call ForceAddPlayer(BRUsedTeams[currentTeamCount], randomPlayer)
                     call ForceAddPlayer(BRPlayerForce[currentTeamCount], randomPlayer)
     
@@ -454,10 +428,8 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
                 set currentTeamCount = currentTeamCount + 1
             endloop
 
-            // Cleanup
-            call ForceClear(availableRandomForce)
-            call DestroyForce(availableRandomForce)
-            set availableRandomForce = null
+            // Manually set the temp player force index for the solo players to be added to
+            set TempPlayerForceIndex = teamCount
         else
             // Each specified team gets assigned to their own team
             call CopyForceToNextAvailableForce(BRTeam1)
@@ -465,20 +437,34 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
             call CopyForceToNextAvailableForce(BRTeam3)
             call CopyForceToNextAvailableForce(BRTeam4)
 
+            // Create a pool of possible people to select from
+            set availableRandomForce = CreateForce()
+            set BRTempForce = availableRandomForce
+            call ForForce(BRRandomTeam, function AddToBRTempForce)
+
             // Add anyone in the BRRandomTeam to the created teams
-            set randomPlayer = ForcePickRandomPlayer(BRRandomTeam)
+            set randomPlayer = ForcePickRandomPlayer(availableRandomForce)
+            call ForceRemovePlayer(availableRandomForce, randomPlayer)
 
             loop
                 exitwhen randomPlayer == null
 
                 set randomTeamIndex = GetRandomInt(0, TempPlayerForceIndex)
 
-                call ForceRemovePlayer(BRRandomTeam, randomPlayer)
+                call ForceRemovePlayer(availableRandomForce, randomPlayer)
+                call ForceAddPlayer(BRPlayers, randomPlayer)
                 call ForceAddPlayer(BRUsedTeams[randomTeamIndex], randomPlayer)
                 call ForceAddPlayer(BRPlayerForce[randomTeamIndex], randomPlayer)
+
+                set randomPlayer = ForcePickRandomPlayer(availableRandomForce)
             endloop
+
+            // Hack? If there was only one person in the random vote. Can probably remove?
+            if (TempPlayerForceIndex == 0) then
+                set TempPlayerForceIndex = 1
+            endif
         endif
-        
+
         call ForForce(BRSolo, function AddPlayerToNextAvailableForce)
 
         // Set the team count
@@ -490,6 +476,9 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         call SetBRLockStatus(false)
 
         // Cleanup
+        call ForceClear(availableRandomForce)
+        call DestroyForce(availableRandomForce)
+        set availableRandomForce = null
         set randomPlayer = null
     endfunction
 
@@ -505,6 +494,12 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         endif
     endfunction
 
+    private function MoveToRandomVote takes nothing returns nothing
+        if (GetPlayerController(GetEnumPlayer()) == MAP_CONTROL_COMPUTER) then
+            call TryMovePlayerToForce(GetEnumPlayer(), BRRandomTeam)
+        endif
+    endfunction
+
     private function Random takes Args args returns nothing
         call ForForce(BRObservers, function RandomizeComputers)
 
@@ -515,6 +510,13 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         call ForForce(BRObservers, function MoveToSolo)
 
         call UpdateBRPlayerSlots()
+	endfunction
+
+    private function RandomVote takes Args args returns nothing
+        call ForForce(BRObservers, function MoveToRandomVote)
+
+        call UpdateBRPlayerSlots()
+        call UpdateRandomTeamVoteText()
 	endfunction
 
     private function init takes nothing returns nothing
@@ -541,6 +543,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
 
 		call Command.create(CommandHandler.Random).name("random").handles("random").help("random", "move all computer players to random teams")
         call Command.create(CommandHandler.Solo).name("solo").handles("solo").help("solo", "move all computer players to the solo team")
+        call Command.create(CommandHandler.RandomVote).name("randomvote").handles("randomvote").help("randomvote", "move all computer players to the solo team")
     endfunction
 
 endlibrary
