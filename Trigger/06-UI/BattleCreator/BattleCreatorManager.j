@@ -540,7 +540,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set BRPlayerForce[7] = CreateForce()
 
 		call Command.create(CommandHandler.Random).name("random").handles("random").help("random", "move all computer players to random teams")
-        call Command.create(CommandHandler.Random).name("solo").handles("solo").help("solo", "move all computer players to the solo team")
+        call Command.create(CommandHandler.Solo).name("solo").handles("solo").help("solo", "move all computer players to the solo team")
     endfunction
 
 endlibrary
