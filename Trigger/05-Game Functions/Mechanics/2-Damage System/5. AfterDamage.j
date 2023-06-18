@@ -7,9 +7,9 @@ scope AfterDamage initializer init
     private function AfterDamage takes nothing returns nothing
 
         // Cold Wind
-        if DamageSourceAbility == COLD_WIND_ABILITY_ID and Damage.index.damage == 0 and (not ColdWindDamageIncreased.boolean[DamageSourceId]) then
-            call BJDebugMsg("CW Damage is 0 and not increased")
+        if DamageSourceAbility == COLD_WIND_ABILITY_ID and Damage.index.damage < 1 and (not ColdWindDamageIncreased.boolean[DamageSourceId]) then
             set ColdwindDamageBonus[DamageSourceId] = ColdwindDamageBonus[DamageSourceId] + 1
+            set ColdWindDamageIncreased.boolean[DamageSourceId] = true
         endif
 
         if DamageShowText and Damage.index.damage >= 1 then

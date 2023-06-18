@@ -5,7 +5,7 @@ library DruidicFocus initializer init requires DummyOrder, UnitHelpers
     endglobals
 
     function DruidicFocusPhyspowerbonus takes unit u returns nothing
-        call TempBonus.create(u, BONUS_PHYSPOW, 35, 15, DRUIDIC_FOCUS_ABILITY_ID)
+        call TempBonus.create(u, BONUS_PHYSPOW, 35, 15, DRUIDIC_FOCUS_ABILITY_ID).activate()
     endfunction
 
     private function GetNearbyDruidicFocusHeroes takes unit target, real x, real y returns nothing
@@ -19,7 +19,7 @@ library DruidicFocus initializer init requires DummyOrder, UnitHelpers
             set p = BlzGroupUnitAt(ENUM_GROUP, i)
             exitwhen p == null
             if UnitHasItemType(p, DRUIDIC_FOCUS_ITEM_ID) then
-                call TempBonus.create(p, BONUS_PHYSPOW, 35, 15, DRUIDIC_FOCUS_ABILITY_ID)
+                call TempBonus.create(p, BONUS_PHYSPOW, 35, 15, DRUIDIC_FOCUS_ABILITY_ID).activate()
             endif
             set i = i + 1
         endloop
@@ -27,7 +27,6 @@ library DruidicFocus initializer init requires DummyOrder, UnitHelpers
 
     function CastDruidicFocus takes unit target returns nothing
         local DummyOrder dummyOrder = DummyOrder.create(target, GetUnitX(target), GetUnitY(target), GetUnitFacing(target), 5)
-        call BJDebugMsg("Druidic Focus")
         call dummyOrder.addActiveAbility(DRUIDIC_FOCUS_ROOTS_ABILITY_ID, 1, 852171)
         call dummyOrder.target(target)
         if dummyOrder.activate() then
