@@ -27,7 +27,7 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
         //call BJDebugMsg("cs casted")
     endfunction
 
-    function CastSpellAuto takes unit caster, unit target, integer abilId, integer abilLevel, real targetX, real targetY, real range returns boolean
+    function CastSpellAuto takes unit caster, unit target, integer abilId, integer abilLevel, real targetX, real targetY, real range returns DummyOrder
         local integer orderType = 0
         local integer targetType = 0
         local boolean getNewTarget = true
@@ -59,7 +59,7 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
                 endif
 
                 //call BJDebugMsg(GetUnitName(target))
-                return CastSpell(caster, target, abilId, abilLevel, orderType, GetUnitX(target), GetUnitY(target)).activate()
+                return CastSpell(caster, target, abilId, abilLevel, orderType, GetUnitX(target), GetUnitY(target))
             else                   
                 if orderType == Order_Point then
                     //call   BJDebugMsg("point")
@@ -73,16 +73,16 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
                     //call BJDebugMsg(GetUnitName(target))
                     if target == null then
                         if targetX != 0.0 and targetY != 0.0 then
-                            return CastSpell(caster, target, abilId, abilLevel, orderType, targetX, targetY).activate()
+                            return CastSpell(caster, target, abilId, abilLevel, orderType, targetX, targetY)
                         else
-                            return CastSpell(caster, target, abilId, abilLevel, orderType, GetUnitX(caster)+ GetRandomReal(0, 200)* Cos(GetRandomReal(0,360)* bj_DEGTORAD), GetUnitY(caster)+ GetRandomReal(0, 200)* Sin(GetRandomReal(0,360)* bj_DEGTORAD)).activate()
+                            return CastSpell(caster, target, abilId, abilLevel, orderType, GetUnitX(caster)+ GetRandomReal(0, 200)* Cos(GetRandomReal(0,360)* bj_DEGTORAD), GetUnitY(caster)+ GetRandomReal(0, 200)* Sin(GetRandomReal(0,360)* bj_DEGTORAD))
                         endif
                     else
-                        return CastSpell(caster, target, abilId, abilLevel, orderType, GetUnitX(target), GetUnitY(target)).activate()
+                        return CastSpell(caster, target, abilId, abilLevel, orderType, GetUnitX(target), GetUnitY(target))
                     endif
                 elseif orderType == Order_Instant then
                     //call BJDebugMsg("instant")
-                    return CastSpell(caster, null, abilId, abilLevel, orderType, GetUnitX(caster), GetUnitY(caster)).activate()
+                    return CastSpell(caster, null, abilId, abilLevel, orderType, GetUnitX(caster), GetUnitY(caster))
                 endif
             endif
         endif 

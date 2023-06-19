@@ -146,10 +146,6 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == 'A01D' then
             call UseDivineSource(hero)
             return true
-        //Fog
-        elseif abilId == FOG_ABILITY_ID then
-            call CastFog(hero, x, y, lvl)
-            return true
         // Death and Decay
         elseif abilId == DEATH_AND_DECAY_ABILITY_ID then
             call CastDeathAndDecay(hero, x, y, lvl)

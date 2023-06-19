@@ -62,7 +62,7 @@ library Sorcerer initializer init requires AbilityData, CastSpellOnTarget, Stabl
                 set i = i + 1
             endloop
 
-            call CastSpellAuto(caster, null, abilId, GetUnitAbilityLevel(caster, abilId), 0, 0, 600)
+            call CastSpellAuto(caster, null, abilId, GetUnitAbilityLevel(caster, abilId), 0, 0, 600).activate()
             set amount = amount - 1
             exitwhen amount == 0
         endloop
