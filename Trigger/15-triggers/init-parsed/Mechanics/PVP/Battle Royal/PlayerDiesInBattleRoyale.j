@@ -19,7 +19,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
             set PlayerBRDeaths[deadPlayerId] = PlayerBRDeaths[deadPlayerId] + 1
 
             // Don't revive the hero if they died too many times
-            if (PlayerBRDeaths[deadPlayerId] > MAX_BR_DEATH_COUNT) then
+            if (PlayerBRDeaths[deadPlayerId] > MaxBRDeathCount) then
                 // Allow these stats to go up for fun BR rounds, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
                 call ps.addBRPVPKill()
                 call ps.addPlayerKill()
@@ -44,7 +44,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 // Try to end the game
                 call ConditionalTriggerExecute(EndGameTrigger)
             else
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has |r" + I2S(MAX_BR_DEATH_COUNT - PlayerBRDeaths[deadPlayerId]) + " |cffffcc00lives remaining! Respawning in 5 seconds.|r")
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has |r" + I2S(MaxBRDeathCount - PlayerBRDeaths[deadPlayerId]) + " |cffffcc00lives remaining! Respawning in 5 seconds.|r")
                 
                 call TriggerSleepAction(5)
 

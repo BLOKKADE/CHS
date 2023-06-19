@@ -63,6 +63,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
             call EnableTrigger(HeroDiesInRoundTrigger)
         endif
 
+        call DestroyTimer(BattleRoyalRemoveLifeTimer)
         call ConditionalTriggerExecute(IsGameFinishedTrigger)
 
         // Get the winner before the trigger sleep

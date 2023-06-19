@@ -3,7 +3,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
     globals
         // Track player's lives during the BR
         integer array PlayerBRDeaths
-        constant integer MAX_BR_DEATH_COUNT = 3
+        integer MaxBRDeathCount = 3
 
         // Temp global variables
         private integer forceIndex = 0
@@ -17,11 +17,15 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         integer array PreBRItemCharges
 
         // Timer properties
+        integer BattleRoyalRemoveLifeLowTime = 120
+        integer BattleRoyalRemoveLifeHighTime = 140
+
         integer BattleRoyalFunWaitTime = 30
         integer BattleRoyalWaitTime = 120
         integer BattleRoyalReviewWaitTime = 30
         timer BattleRoyalTimer
         timerdialog BattleRoyalTimerDialog
+        timer BattleRoyalRemoveLifeTimer
         boolean WaitingForBattleRoyal = false
     endglobals
 
@@ -189,6 +193,14 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call ExecuteFunc("BattleRoyalInitialization")
     endfunction
 
+    private function RemoveBattleRoyaleLife takes nothing returns nothing
+        if (MaxBRDeathCount > 0) then
+            set MaxBRDeathCount = MaxBRDeathCount - 1
+
+            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff3b3bThe BR has gone on for too long, removing one life from all remaining players.|r")
+        endif
+    endfunction
+
     function BattleRoyalInitialization takes nothing returns nothing
         local force playersToFight
         local group shops
@@ -199,6 +211,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         local integer randomCount = 0
 
         set CurrentPlayerHeroPlacement = 0
+        set MaxBRDeathCount = 3
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
@@ -378,6 +391,10 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call DisplayTimedTextToForce(GetPlayersAll(), 1.00, "|cffffcc00GO!!!|r")
         call SetAllCurrentlyFighting(true)
         call ForForce(BRPlayers, function StartFightForPlayerHero)
+
+        // Invisible timer with a random time to remove lives
+        set BattleRoyalRemoveLifeTimer = CreateTimer()
+        call TimerStart(BattleRoyalRemoveLifeTimer, GetRandomReal(BattleRoyalRemoveLifeLowTime, BattleRoyalRemoveLifeHighTime), true, function RemoveBattleRoyaleLife)
 
         // Save debug codes
         call DebugCode_SavePlayerDebugEveryone()
