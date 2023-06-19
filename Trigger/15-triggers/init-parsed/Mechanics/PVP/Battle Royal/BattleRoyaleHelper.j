@@ -193,12 +193,26 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call ExecuteFunc("BattleRoyalInitialization")
     endfunction
 
+    private function ShowPlayerLivesRemaining takes nothing returns nothing
+        local player currentPlayer = GetEnumPlayer()
+        local integer playerDeaths = PlayerBRDeaths[GetPlayerId(currentPlayer)]
+
+        if (playerDeaths <= MaxBRDeathCount and IsPlayerInForce(currentPlayer, BRPlayers)) then
+            call DisplayTimedTextToForce(GetForceOfPlayer(currentPlayer), 10.00, "|cffffcc00You have |r" + I2S(IMaxBJ(MaxBRDeathCount - playerDeaths, 0)) + " |cffffcc00lives remaining.|r")
+        endif
+
+        // Cleanup
+        set currentPlayer = null
+    endfunction
+
     private function RemoveBattleRoyaleLife takes nothing returns nothing
         if (MaxBRDeathCount > 0) then
             set MaxBRDeathCount = MaxBRDeathCount - 1
 
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff3b3bThe BR has gone on for too long, removing one life from all remaining players.|r")
         endif
+
+        call ForForce(GetPlayersAll(), function ShowPlayerLivesRemaining)
     endfunction
 
     function BattleRoyalInitialization takes nothing returns nothing
@@ -392,9 +406,11 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call SetAllCurrentlyFighting(true)
         call ForForce(BRPlayers, function StartFightForPlayerHero)
 
-        // Invisible timer with a random time to remove lives
-        set BattleRoyalRemoveLifeTimer = CreateTimer()
-        call TimerStart(BattleRoyalRemoveLifeTimer, GetRandomReal(BattleRoyalRemoveLifeLowTime, BattleRoyalRemoveLifeHighTime), true, function RemoveBattleRoyaleLife)
+        if (BRLivesMode == 2) then
+            // Invisible timer with a random time to remove lives
+            set BattleRoyalRemoveLifeTimer = CreateTimer()
+            call TimerStart(BattleRoyalRemoveLifeTimer, GetRandomReal(BattleRoyalRemoveLifeLowTime, BattleRoyalRemoveLifeHighTime), true, function RemoveBattleRoyaleLife)
+        endif
 
         // Save debug codes
         call DebugCode_SavePlayerDebugEveryone()
