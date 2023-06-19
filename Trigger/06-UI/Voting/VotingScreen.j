@@ -12,7 +12,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         private integer HeroBanningHandleId
         private integer DisableBRLivesHandleId
         private integer DisableSimultaneousDuelHandleId
-        private integer DisableTeamDuelHandleId
+        private integer TeamDuelHandleId
         private integer LongerTimersHandleId
         private integer SubmitHandleId
 
@@ -77,7 +77,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
         elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9 or buttonType == 10 or buttonType == 11) then
-            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Disable Team duels, Double timers, Disable BR Lives
+            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Team duels, Double timers, Disable BR Lives
         endif
 
         return 0
@@ -101,8 +101,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return 7 // Hero banning
         elseif (handleId == DisableSimultaneousDuelHandleId) then
             return 8 // Disable Simultaneous Duels
-        elseif (handleId == DisableTeamDuelHandleId) then
-            return 9 // Disable Team Duels
+        elseif (handleId == TeamDuelHandleId) then
+            return 9 // Team Duels
         elseif (handleId == LongerTimersHandleId) then
             return 10 // Double timers
         elseif (handleId == DisableBRLivesHandleId) then
@@ -169,8 +169,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             call pv.setHeroBanningVote(value)
         elseif (handleId == DisableSimultaneousDuelHandleId) then // Disable Simultaneous Duels
             call pv.setDisableSimultaneousDuelVote(value)
-        elseif (handleId == DisableTeamDuelHandleId) then // Disable Team Duels
-            call pv.setDisableTeamDuelVote(value)
+        elseif (handleId == TeamDuelHandleId) then // Team Duels
+            call pv.setTeamDuelVote(value)
         elseif (handleId == LongerTimersHandleId) then // Double timers
             call pv.setLongerTimersVote(value)
         elseif (handleId == DisableBRLivesHandleId) then // Disable BR Lives
@@ -500,7 +500,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.", false)
         call GoToNextRow()
         set DisableSimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nDisabling this will allow PVP betting.", true)
-        set DisableTeamDuelHandleId = CreateVotingCheckbox("Disable Team Duels", "There is a chance that a PVP duel will be a 2v2 PVP duel. |n|nWill only happen if there are 4 or 8 players in the game.", true)
+        set TeamDuelHandleId = CreateVotingCheckbox("Team Duels", "There is a chance that a PVP duel will be a 2v2 or 3v3 PVP duel (If there are enough people). |n|nWill only happen if there are 4 or 8 players in the game.", false)
         set LongerTimersHandleId = CreateVotingCheckbox("Double Timers", "Doubles the duration of the timers between rounds. |n|nUseful if you want to spend more time reading ability/item descriptions.", false)
         call GoToNextRow()
         set DisableBRLivesHandleId = CreateVotingCheckbox("Disable BR Lives", "Players will have 3 lives during the BR. |n|nHelps prolong the BR if players die right away and want to try again with a different strategy.", true)
