@@ -210,9 +210,9 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             set MaxBRDeathCount = MaxBRDeathCount - 1
 
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffff3b3bThe BR has gone on for too long, removing one life from all remaining players.|r")
-        endif
 
-        call ForForce(GetPlayersAll(), function ShowPlayerLivesRemaining)
+            call ForForce(GetPlayersAll(), function ShowPlayerLivesRemaining)
+        endif
     endfunction
 
     function BattleRoyalInitialization takes nothing returns nothing
