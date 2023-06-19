@@ -80,6 +80,7 @@ library PlayerTracking initializer init requires GameInit, Table
         // --- Values that are actually saved in the save code
  
         // --- Temporary values that are not saved to the load code
+        private force BRPlayersKilled = null
         private effect CurrentHatEffect = null
         private integer HeroUnitTypeId = 0
         private boolean DebugEnabled = false
@@ -99,6 +100,7 @@ library PlayerTracking initializer init requires GameInit, Table
             local thistype this = thistype.allocate()
             set this.HeroBRWins = Table.create()
             set this.HeroPVPWins = Table.create()
+            set this.BRPlayersKilled = CreateForce()
 
             return this
         endmethod
@@ -130,7 +132,8 @@ library PlayerTracking initializer init requires GameInit, Table
             if (heroUnitTypeId != 0) then
                 set tooltip = tooltip + "|n|n|cff00f7ffCurrent Hero Stats for " + GetObjectName(heroUnitTypeId) + "|r"
                 set tooltip = tooltip + "|n -Total BR Wins: " + I2S(ps.getHeroBRWins(heroUnitTypeId))
-                set tooltip = tooltip + "|n -Total PVP Wins: " + I2S(ps.getHeroBRWins(heroUnitTypeId))
+                set tooltip = tooltip + "|n -Total PVP Wins: " + I2S(ps.getHeroPVPWins(heroUnitTypeId))
+                set tooltip = tooltip + "|n -PVP Kills This Game: " + I2S(ps.getPlayerKillCount())
             endif
 
             return tooltip
@@ -261,14 +264,19 @@ library PlayerTracking initializer init requires GameInit, Table
 
         public method resetBRPVPKillCount takes nothing returns nothing
             set this.BRPVPKillCount = 0
+
+            call ForceClear(this.BRPlayersKilled)
         endmethod
 
         // --- Functions for data that is not actually saved
 
         // --- Functions for data that is actually saved
 
-        public method addBRPVPKill takes nothing returns nothing
-            set this.BRPVPKillCount = this.BRPVPKillCount + 1
+        public method addBRPVPKill takes player playerKilled returns nothing
+            if (not IsPlayerInForce(playerKilled, this.BRPlayersKilled)) then
+                set this.BRPVPKillCount = this.BRPVPKillCount + 1
+                call ForceAddPlayer(this.BRPlayersKilled, playerKilled)
+            endif
         endmethod
 
         public method getAllBRWins takes nothing returns integer

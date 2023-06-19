@@ -21,7 +21,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
             // Don't revive the hero if they died too many times
             if (PlayerBRDeaths[deadPlayerId] > MAX_BR_DEATH_COUNT) then
                 // Allow these stats to go up for fun BR rounds, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
-                call ps.addBRPVPKill()
+                call ps.addBRPVPKill(deadPlayer)
                 call ps.addPlayerKill()
 
                 // Set the status of their death in the BR
@@ -68,7 +68,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         endif
 
         // Allow these stats to go up for fun BR rounds, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
-        call ps.addBRPVPKill()
+        call ps.addBRPVPKill(deadPlayer)
         call ps.addPlayerKill()
 
         // Set the status of their death in the BR
