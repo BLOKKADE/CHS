@@ -162,7 +162,7 @@ library CritDamage requires RandomShit, Vampirism
         endif
 
         //Medivh
-        if GetUnitTypeId(DamageSource) == MEDIVH_UNIT_ID then
+        if DamageSourceTypeId == MEDIVH_UNIT_ID or DamageSourceTypeId == MORTAR_TEAM_UNIT_ID then
             set critDmg = 0
         endif
         
