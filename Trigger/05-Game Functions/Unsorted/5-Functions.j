@@ -1,4 +1,4 @@
-library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomGameEvent, HeroAbilityTable
+library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomGameEvent, HeroAbilityTable, SellItems
     globals 
         integer RectPid
         integer array Lives
