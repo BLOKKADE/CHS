@@ -86,6 +86,6 @@ library CastSpellOnTarget requires UnitHelpers, AbilityData, GetRandomUnit
                 endif
             endif
         endif 
-        return false
+        return 0
     endfunction
 endlibrary
