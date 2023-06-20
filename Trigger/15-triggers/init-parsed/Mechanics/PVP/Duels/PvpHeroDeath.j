@@ -99,9 +99,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call ps.addDuelWin()
         call ps.addPVPWin()
 
-        set message = GetPlayerNameColour(currentPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"
+        set message = GetPlayerNameColour(currentPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP wins this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"
 
-        // Show the PVP kill count if this is not simultaneous duels. Otherwise it will be a lot of spam
+        // Show the PVP win count if this is not simultaneous duels. Otherwise it will be a lot of spam
         if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, message)
         else
@@ -281,7 +281,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForForce(duelGame.team2, function DuelEndedPlayerActions)
             
             // Only display a message to everyone when this duel is completely over
-            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
+            if (CountPlayersInForceBJ(winningPlayerForce) > 1) then
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00have defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
+            else
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
+            endif
 
             // Try to distribute bets
             call ConditionalTriggerExecute(DistributeBetsTrigger)
