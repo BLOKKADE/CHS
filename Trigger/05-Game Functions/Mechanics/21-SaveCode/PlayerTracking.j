@@ -103,6 +103,46 @@ library PlayerTracking initializer init requires GameInit, Table
             return this
         endmethod
 
+        method reset takes nothing returns nothing
+            call this.HeroBRWins.destroy()
+            call this.HeroPVPWins.destroy()
+
+            set this.HeroBRWins = Table.create()
+            set this.HeroPVPWins = Table.create()
+
+            // All Pick Save Values
+            set this.APBRAllWins = 0
+            set this.APPVPAllWins = 0
+            set this.APBRSeasonWins = 0
+            set this.APPVPSeasonWins = 0
+    
+            // All Random Save Values
+            set this.ARBRAllWins = 0
+            set this.ARPVPAllWins = 0
+            set this.ARBRSeasonWins = 0
+            set this.ARPVPSeasonWins = 0
+    
+            // Draft Save Values
+            set this.DraftBRAllWins = 0
+            set this.DraftPVPAllWins = 0
+            set this.DraftBRSeasonWins = 0
+            set this.DraftPVPSeasonWins = 0
+    
+            // Misc Save Values
+            set this.CameraZoom = 0
+            set this.DiscordAdToggle = 0
+            set this.MapVersion = 0
+    
+            // Hats
+            set this.HatIndex = 0
+            set this.PetIndex = 0
+
+            // Temp values
+            call this.setCurrentHatEffect(null)
+            call this.setPet(null)
+            set HasLoaded = false
+        endmethod
+
         // --- Temporary values that are not saved to the load code
 
         // Easy helper function to get the PlayerTracking struct of a player

@@ -24,7 +24,7 @@ library SaveFile requires FileIO, SaveCore
         
         static method create takes player p, string title, integer slot, string data returns thistype
             if (GetLocalPlayer() == p) then
-                call FileIO_Write(.getPath(p, slot), title + "\n" + data)
+                call FileIO_Write(.getPath(p, slot), title + "\n" + "n" + data)
             endif
             return slot
         endmethod

@@ -1,5 +1,9 @@
 library Savecode requires BigNum
 
+    globals
+        private boolean alternate = false
+    endglobals
+
     private constant function uppercolor takes nothing returns string
         return "|cffcfcfcf"
     endfunction
@@ -24,19 +28,31 @@ library Savecode requires BigNum
         return "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     endfunction
 
+    private function alternate_charset takes nothing returns string
+        return "khcXwVRBe2m1q67vso4fY05ZzgjNuIEFHJalr3Cdtx9yMOAWPbQiDTUSLK8Gp"
+    endfunction
+
     private function charsetlen takes nothing returns integer
         return StringLength(charset())
+    endfunction
+
+    private function alternate_charsetlen takes nothing returns integer
+        return StringLength(alternate_charset())
     endfunction
 
     private function BASE takes nothing returns integer
         return charsetlen()
     endfunction
 
+    private function ALTERNATE_BASE takes nothing returns integer
+        return alternate_charsetlen()
+    endfunction
+
     private constant function HASHN takes nothing returns integer
         return 5000 //1./HASHN() is the probability of a random code being valid
     endfunction
 
-    private constant function MAXINT takes nothing returns integer
+    constant function MAXINT takes nothing returns integer
         return 2147483647
     endfunction
 
@@ -55,6 +71,18 @@ library Savecode requires BigNum
         local integer i = 0
         local string cs = charset()
         local integer len = charsetlen()
+
+        if (alternate) then
+            set cs = alternate_charset()
+            set len = alternate_charsetlen()
+            loop
+                exitwhen i>=len or c == SubString(cs,i,i+1)
+                set i = i + 1
+            endloop
+
+            return i
+        endif
+
         loop
             exitwhen i>=len or c == SubString(cs,i,i+1)
             set i = i + 1
@@ -63,12 +91,12 @@ library Savecode requires BigNum
     endfunction
 
     private function itochar takes integer i returns string
-        return SubString(charset(),i,i+1)
+        return SubString(alternate_charset(),i,i+1)
     endfunction
 
     //You probably want to use a different char set for this
     //Also, use a hash that doesn't suck so much
-    private function scommhash takes string s returns integer
+    function scommhash takes string s returns integer
         local integer array count
         local integer i = 0
         local integer len = StringLength(s)
@@ -113,7 +141,7 @@ library Savecode requires BigNum
         static method create takes nothing returns Savecode
             local Savecode sc = Savecode.allocate()
             set sc.digits = 0.
-            set sc.bignum = BigNum.create(BASE())
+            set sc.bignum = BigNum.create(ALTERNATE_BASE())
             return sc
         endmethod
         
@@ -122,7 +150,7 @@ library Savecode requires BigNum
         endmethod
 
         method Encode takes integer val, integer max returns nothing
-            set .digits = .digits + log(max+1,BASE())
+            set .digits = .digits + log(max+1,ALTERNATE_BASE())
             call .bignum.MulSmall(max+1)
             call .bignum.AddSmall(val)
         endmethod
@@ -194,7 +222,7 @@ library Savecode requires BigNum
             loop
                 exitwhen cur == 0
                 set x = cur.leaf
-                set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/BASE())*BASE()) + 479,HASHN())
+                set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/ALTERNATE_BASE())*ALTERNATE_BASE()) + 479,HASHN())
                 set cur = cur.next
             endloop
             return hash
@@ -270,7 +298,6 @@ library Savecode requires BigNum
             ///////////////////////
             
             call .Pad()
-            call .Obfuscate(key,1)
             return .ToString()
         endmethod
         
@@ -278,8 +305,18 @@ library Savecode requires BigNum
             local integer ikey = scommhash(GetPlayerName(p))+loadtype*73
             local integer inputhash
             
-            call .FromString(s)
-            call .Obfuscate(ikey,-1)
+            if (SubString(s, 0, 1) == "n") then
+                set alternate = true
+                set s = SubString(s, 1, StringLength(s))
+                call .FromString(s)
+            else
+                set alternate = false
+                call .bignum.destroy()
+                set .bignum = BigNum.create(BASE())
+                call .FromString(s)
+                call .Obfuscate(ikey,-1)
+            endif
+
             set inputhash = .Decode(HASHN())
             
             call .Clean()

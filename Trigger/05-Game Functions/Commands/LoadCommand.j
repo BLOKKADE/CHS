@@ -146,6 +146,12 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
             set DiscordAdDisabled[GetPlayerId(SaveLoadEvent_Player)] = true
         endif
 
+        if (LoadNextBasicValue(MAXINT()) != scommhash(GetPlayerName(SaveLoadEvent_Player))) then
+            call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "Invalid load code.")
+            call ps.reset()
+            return
+        endif
+
         // Indexing for heroes starts at the last index of the first batch we saved
         set heroIndex = FIRST_HERO_SAVE_COUNT
 
