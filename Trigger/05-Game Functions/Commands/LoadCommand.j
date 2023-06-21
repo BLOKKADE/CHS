@@ -63,7 +63,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         endif
 
         set SaveCount = -1
-        set SaveTempInt = integer(Savecode.create())
+        set SaveTempInt = integer(Savecode.create(SubString(SaveLoadEvent_Code, 0, 1) == "n"))
 
         // Try to load the code
         if not (Savecode(SaveTempInt).Load(SaveLoadEvent_Player, SaveLoadEvent_Code, 1)) then

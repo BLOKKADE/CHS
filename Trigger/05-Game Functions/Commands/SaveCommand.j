@@ -98,7 +98,7 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
         call SaveNextBasicValue(ps.getCameraZoom(), MAX_SAVE_VALUE)
         call SaveNextBasicValue(CurrentGameVersion.getVersion(), MAX_SAVE_VALUE)
 
-        set SaveTempInt = Savecode.create()
+        set SaveTempInt = Savecode.create(true)
         loop
             exitwhen saveIndex > SaveCount
             call Savecode(SaveTempInt).Encode(SaveValue[saveIndex], SaveMaxValue[saveIndex])

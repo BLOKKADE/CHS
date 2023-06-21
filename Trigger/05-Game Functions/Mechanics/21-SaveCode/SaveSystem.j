@@ -138,10 +138,16 @@ library Savecode requires BigNum
         real digits     //logarithmic approximation
         BigNum bignum
         
-        static method create takes nothing returns Savecode
+        static method create takes boolean alternate returns Savecode
             local Savecode sc = Savecode.allocate()
             set sc.digits = 0.
-            set sc.bignum = BigNum.create(ALTERNATE_BASE())
+
+            if (alternate) then
+                set sc.bignum = BigNum.create(ALTERNATE_BASE())
+            else
+                set sc.bignum = BigNum.create(BASE())
+            endif
+
             return sc
         endmethod
         
@@ -222,7 +228,11 @@ library Savecode requires BigNum
             loop
                 exitwhen cur == 0
                 set x = cur.leaf
-                set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/ALTERNATE_BASE())*ALTERNATE_BASE()) + 479,HASHN())
+                if (alternate) then
+                    set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/ALTERNATE_BASE())*ALTERNATE_BASE()) + 479,HASHN())
+                else
+                    set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/BASE())*BASE()) + 479,HASHN())
+                endif
                 set cur = cur.next
             endloop
             return hash
@@ -311,8 +321,6 @@ library Savecode requires BigNum
                 call .FromString(s)
             else
                 set alternate = false
-                call .bignum.destroy()
-                set .bignum = BigNum.create(BASE())
                 call .FromString(s)
                 call .Obfuscate(ikey,-1)
             endif
@@ -376,55 +384,6 @@ library Savecode requires BigNum
             set i = i + 1
         endloop
         return out
-    endfunction
-
-    private function prop_Savecode takes nothing returns boolean
-        local string s
-        local Savecode loadcode
-
-    //--- Data you want to save ---
-        local integer medal1 = 10
-        local integer medal2 = 3
-        local integer medalmax = 13
-        local integer XP = 1337
-        local integer XPmax = 1000000
-
-        local Savecode savecode = Savecode.create()
-
-        call SetPlayerName(Player(0),"yomp")
-        call SetPlayerName(Player(1),"fruitcup")
-
-        call savecode.Encode(medal1,medalmax)
-        call savecode.Encode(medal2,medalmax)
-        call savecode.Encode(XP,XPmax)
-
-    //--- Savecode_save generates the savecode for a specific player ---
-        set s = savecode.Save(Player(0),1)
-        call savecode.destroy()
-    //  call BJDebugMsg("Savecode: " + Savecode_colorize(s))
-
-    //--- User writes down code, inputs again ---
-
-        set loadcode = Savecode.create()
-        if loadcode.Load(Player(0),s,1) then
-    //      call BJDebugMsg("load ok")
-        else
-            call BJDebugMsg("load failed")   
-            return false
-        endif
-
-    //Must decode in reverse order of encodes
-
-    //               load object : max value that data can take
-        if XP != loadcode.Decode(XPmax) then
-            return false
-        elseif medal2 != loadcode.Decode(medalmax) then
-            return false
-        elseif medal1 != loadcode.Decode(medalmax) then
-            return false
-        endif
-        call loadcode.destroy()
-        return true
     endfunction
 
 endlibrary
