@@ -146,12 +146,6 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
             set DiscordAdDisabled[GetPlayerId(SaveLoadEvent_Player)] = true
         endif
 
-        if (LoadNextBasicValue(MAXINT()) != scommhash(GetPlayerName(SaveLoadEvent_Player))) then
-            call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "Invalid load code.")
-            call ps.reset()
-            return
-        endif
-
         // Indexing for heroes starts at the last index of the first batch we saved
         set heroIndex = FIRST_HERO_SAVE_COUNT
 
@@ -167,6 +161,12 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
             set heroIndex = heroIndex - 1
         endloop
+
+        if (LoadNextBasicValue(MAXINT()) != scommhash(GetPlayerName(SaveLoadEvent_Player))) then
+            call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "Invalid load code.")
+            call ps.reset()
+            return
+        endif
 
         // Preset hat. The hat index will get saved in AchievementsFrame_TryToWearHat
         call AchievementsFrame_TryToWearHat(hatIndexTemp, SaveLoadEvent_Player, false)
