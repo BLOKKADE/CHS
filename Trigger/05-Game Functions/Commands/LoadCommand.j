@@ -162,7 +162,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
             set heroIndex = heroIndex - 1
         endloop
 
-        if (LoadNextBasicValue(MAXINT()) != scommhash(GetPlayerName(SaveLoadEvent_Player))) then
+        if (SubString(SaveLoadEvent_Code, 0, 1) == "n" and LoadNextBasicValue(MAXINT()) != scommhash(GetPlayerName(SaveLoadEvent_Player))) then
             call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "Invalid load code.")
             call ps.reset()
             return
