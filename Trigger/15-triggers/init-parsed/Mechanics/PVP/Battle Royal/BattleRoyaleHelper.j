@@ -198,7 +198,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         local integer playerDeaths = PlayerBRDeaths[GetPlayerId(currentPlayer)]
 
         if (playerDeaths <= MaxBRDeathCount and IsPlayerInForce(currentPlayer, BRPlayers)) then
-            call DisplayTimedTextToForce(GetForceOfPlayer(currentPlayer), 10.00, "|cffffcc00You have |r" + I2S(IMaxBJ(MaxBRDeathCount - playerDeaths, 0)) + " |cffffcc00lives remaining.|r")
+            call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffffcc00You have |r" + I2S(IMaxBJ(MaxBRDeathCount - playerDeaths, 0)) + " |cffffcc00lives remaining.|r")
         endif
 
         // Cleanup

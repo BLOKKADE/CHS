@@ -9,7 +9,7 @@ library DebugCommand initializer init uses Command, RandomShit, PlayerTracking, 
             call DebugCode_SavePlayerDebug(GetTriggerPlayer())
         endif
         
-        call DisplayTextToForce(GetForceOfPlayer(GetTriggerPlayer()), "Successfully toggled debug mode for your hero. Your hero's abilities/items will be saved Documents//Warcraft III//CustomMapData//CHS")
+        call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "Successfully toggled debug mode for your hero. Your hero's abilities/items will be saved Documents//Warcraft III//CustomMapData//CHS")
     endfunction
 
 	private function init takes nothing returns nothing
