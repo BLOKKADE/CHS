@@ -59,7 +59,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
         // Don't load anything if the player has already loaded. A player should only need to load once
         if (ps.hasLoaded()) then
-            call DisplayTextToForce(SaveLoadEvent_Player, 0, 0, 10, "You have already loaded your Save Code.")
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "You have already loaded your Save Code.")
             return
         endif
 
@@ -68,7 +68,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
         // Try to load the code
         if not (Savecode(SaveTempInt).Load(SaveLoadEvent_Player, SaveLoadEvent_Code, 1)) then
-            call DisplayTextToForce(SaveLoadEvent_Player, 0, 0, 10, , "Invalid load code 1.")
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Invalid load code 1.")
             return
         endif
 
