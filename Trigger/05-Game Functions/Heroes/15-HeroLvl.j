@@ -257,7 +257,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == SATYR_TRICKSTER_UNIT_ID then
             call AddUnitCustomState(u, BONUS_EVASION, 0.5 * levelsGained)
             call UpdateBonus(u, 0, 0.5 * levelsGained)
-            call SetBonus(u, 1, 98 + (heroLevel * 2))
+            call SetBonus(u, 1, 49 + (heroLevel * 1))
         elseif uid == MEDIVH_UNIT_ID then
             call AddUnitCustomState(u, BONUS_MAGICPOW, 2 * levelsGained)
             call UpdateBonus(u, 0, 2 * levelsGained)   
