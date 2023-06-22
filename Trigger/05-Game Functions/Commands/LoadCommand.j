@@ -68,7 +68,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
         // Try to load the code
         if not (Savecode(SaveTempInt).Load(SaveLoadEvent_Player, SaveLoadEvent_Code, 1)) then
-            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Invalid load code 1.")
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Invalid load code.")
             return
         endif
 
@@ -166,7 +166,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         set playerHash = LoadNextBasicValue(MAXINT())
 
         if (SubString(SaveLoadEvent_Code, 0, 1) == "n" and playerHash != scommhash(GetPlayerName(SaveLoadEvent_Player))) then
-            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Invalid load code 2.")
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Invalid load code.")
             call ps.reset()
             return
         endif

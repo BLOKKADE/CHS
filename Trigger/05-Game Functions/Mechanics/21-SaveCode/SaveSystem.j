@@ -154,7 +154,6 @@ library Savecode requires BigNum
         endmethod
 
         method Encode takes integer val, integer max returns nothing
-            call BJDebugMsg("Encode")
             set .digits = .digits + log(max+1,ALTERNATE_BASE())
             call .bignum.MulSmall(max+1)
             call .bignum.AddSmall(val)
