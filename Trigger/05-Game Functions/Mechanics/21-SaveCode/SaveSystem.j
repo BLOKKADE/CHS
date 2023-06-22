@@ -1,9 +1,5 @@
 library Savecode requires BigNum
 
-    globals
-        private boolean alternate = false
-    endglobals
-
     private constant function uppercolor takes nothing returns string
         return "|cffcfcfcf"
     endfunction
@@ -67,12 +63,12 @@ library Savecode requires BigNum
         return i
     endfunction
 
-    private function chartoi takes string c returns integer
+    private function chartoi takes string c, boolean a returns integer
         local integer i = 0
         local string cs = charset()
         local integer len = charsetlen()
 
-        if (alternate) then
+        if (a) then
             set cs = alternate_charset()
             set len = alternate_charsetlen()
             loop
@@ -137,12 +133,14 @@ library Savecode requires BigNum
     struct Savecode
         real digits     //logarithmic approximation
         BigNum bignum
-        
-        static method create takes boolean alternate returns Savecode
+        boolean a
+
+        static method create takes boolean a returns Savecode
             local Savecode sc = Savecode.allocate()
             set sc.digits = 0.
+            set sc.a = a
 
-            if (alternate) then
+            if (a) then
                 set sc.bignum = BigNum.create(ALTERNATE_BASE())
             else
                 set sc.bignum = BigNum.create(BASE())
@@ -156,6 +154,7 @@ library Savecode requires BigNum
         endmethod
 
         method Encode takes integer val, integer max returns nothing
+            call BJDebugMsg("Encode")
             set .digits = .digits + log(max+1,ALTERNATE_BASE())
             call .bignum.MulSmall(max+1)
             call .bignum.AddSmall(val)
@@ -213,7 +212,7 @@ library Savecode requires BigNum
             local BigNum_l cur = BigNum_l.create()
             set .bignum.list = cur
             loop
-                set cur.leaf = chartoi(SubString(s,i,i+1))      
+                set cur.leaf = chartoi(SubString(s,i,i+1), .a)      
                 exitwhen i <= 0
                 set cur.next = BigNum_l.create()
                 set cur = cur.next
@@ -228,7 +227,7 @@ library Savecode requires BigNum
             loop
                 exitwhen cur == 0
                 set x = cur.leaf
-                if (alternate) then
+                if (.a) then
                     set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/ALTERNATE_BASE())*ALTERNATE_BASE()) + 479,HASHN())
                 else
                     set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/BASE())*BASE()) + 479,HASHN())
@@ -316,11 +315,9 @@ library Savecode requires BigNum
             local integer inputhash
             
             if (SubString(s, 0, 1) == "n") then
-                set alternate = true
                 set s = SubString(s, 1, StringLength(s))
                 call .FromString(s)
             else
-                set alternate = false
                 call .FromString(s)
                 call .Obfuscate(ikey,-1)
             endif
