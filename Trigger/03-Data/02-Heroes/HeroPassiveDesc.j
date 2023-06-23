@@ -115,7 +115,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained." )
                 
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )
-        call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 50% of its attack damage to nearby enemies as |cffff8080physical damage|r.")
+        call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 35 + 50% of its attack damage to nearby enemies as |cffff8080physical damage|r.")
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bladestorm: +35 damage, +3 area of effect. (|cff68eef3Every 20 levels|r) reduces attacks required by 1." )
                                                     
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp" )
@@ -147,7 +147,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
                 
         call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNJaina.blp" )
         call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mysterious Sorcery: Once every 50 seconds automatically cast 1 of your active spells at a random target in a 600 AOE. |cffc0c0c0Cannot cast abilities with the|r [|cffffff00plain|r] |cffc0c0c0or |r |n[|cff96ffffStable|r] |cffc0c0c0tag.|r |cffc0c0c0Can cast the same spell multiple times. Max 15 seconds cooldown from leveling. |r[|cff96ffffStable|r]")
-        call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mysterious Sorcery: 0.2 seconds cooldown reduction. (|cff68eef3Every 35 levels|r) +1 target." )
+        call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mysterious Sorcery: 0.2 seconds cooldown reduction. (|cff68eef3Every 35 levels|r) +1 spell." )
                     
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp" )
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bleed: Every time it attacks it causes enemies to bleed for 3 seconds, dealing 30% of its attack in |cffff8080physical damage|r per second.")
