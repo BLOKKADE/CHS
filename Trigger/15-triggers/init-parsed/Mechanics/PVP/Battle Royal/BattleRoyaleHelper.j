@@ -147,7 +147,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call PauseUnit(currentUnit, false)
         call SetUnitInvulnerable(currentUnit, false)
         call RectLeaveDetection.create(currentUnit, RectMidArena)
-        call StartFunctionSpell(currentUnit, 1)
+        call FireRoundStartEvent(currentUnit, 1) // 1 = br
 
         // Cleanup
         set currentPlayer = null

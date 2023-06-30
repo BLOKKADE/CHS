@@ -1,4 +1,4 @@
-library Cooldown requires  AbilityCooldown, DummyActiveSpell
+library Cooldown requires  AbilityCooldown, DummySpell
     globals
         hashtable HT_SPELC = InitHashtable()
     endglobals

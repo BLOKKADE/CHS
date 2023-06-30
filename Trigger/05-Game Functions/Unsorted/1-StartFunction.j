@@ -1,228 +1,17 @@
-library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, BoneArmor, TimeManipulation, HeroBuff, TempPower, CustomGameEvent
+library StartFunction requires TimerUtils, CustomGameEvent
     
     globals
-        hashtable HT_timerSpell = InitHashtable()
         integer array RoundTimer
     endglobals
 
-    function PreRoundStart takes unit hero, integer hid returns nothing
-        //Blokkade's Shield
-        if GetUnitAbilityLevel(hero, BLOKKADE_SHIELD_ABIL_ID) > 0 then
-            set BlokShieldCharges[hid] = 0
-            set BlokShieldStartTick[hid] = T32_Tick
-            set BlokShieldAttackCount[hid] = 0
-            call SetBlokShieldCharges(hero, hid)
-        endif
-    endfunction
+    private function StartRoundEvent takes nothing returns nothing
+        local timer t = GetExpiredTimer()
+        local integer pid = GetTimerData(t)
 
-    function OnRoundStart takes unit hero, integer hid returns nothing
-        //local item it 
-        
-        if GetUnitAbilityLevel(hero, SHOCKWAVE_ABILITY_ID) != 0 then
-            call ResetShockwaveDamageBonus(GetHandleId(hero))
-        endif
-        //set it = null
-    endfunction
-
-    function FunctionTimerSpell takes nothing returns nothing
-        local timer startbattle = GetExpiredTimer()
-        local timer nTimer = null
-        local unit Herou = LoadUnitHandle(HT_timerSpell, GetHandleId(startbattle), 1)
-        local integer startType = LoadInteger(HT_timerSpell, GetHandleId(startbattle), 4)
-        local integer pid = GetPlayerId(GetOwningPlayer(Herou))
-        local real abilLevel = 0
-        local real heroLevel = 0
-        local real ChronusLevel = 1 + (0.05 * I2R(GetUnitAbilityLevel(Herou,CHRONUS_WIZARD_ABILITY_ID)))
-        local real r4 = 0
-        local real r5 = 0
-        local integer i = 0
-        local integer i1 = 0
-        local unit U = null
-        local integer hid = GetHandleId(Herou)
-        local boolean chronusActivated = false
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_START, EventInfo.create(Player(pid), 0, RoundNumber))
-            
-        if Herou != null and (IsPlayerInForce(GetOwningPlayer(Herou), LeaverPlayers) or GetPlayerSlotState(GetOwningPlayer(Herou)) != PLAYER_SLOT_STATE_PLAYING) then
-            call SetUnitInvulnerable(Herou, false)
-            call KillUnit(Herou)
-            set Herou = null
-            set startbattle = null
-            return
-        endif
-        set heroLevel = GetHeroLevel(Herou)
 
-        if startType != 6 then
-            call OnRoundStart(Herou, hid)
-        endif
-
-        call ResetTimeManipulation(Herou, startType)
-            
-        //Hero Buff
-        set abilLevel = GetUnitAbilityLevel(Herou, HERO_BUFF_ABILITY_ID)
-        if abilLevel > 0 then
-            call HeroBuffCast(Herou, R2I(abilLevel), R2I(heroLevel), ChronusLevel, (10 + (heroLevel * 0.02)) * ChronusLevel)
-            set chronusActivated = true
-        endif
-        
-        //Temporary Inisibility
-        set abilLevel = GetUnitAbilityLevel(Herou, TEMPORARY_INVISIBILITY_ABILITY_ID)    
-        if abilLevel > 0 then
-            call TempInvisStruct.create(Herou, (1.8 + (0.2 * abilLevel)) * ChronusLevel)
-            set chronusActivated = true
-        endif
-            
-        //Temporary Power
-        set abilLevel = GetUnitAbilityLevel(Herou, TEMPORARY_POWER_ABILITY_ID)    
-        if abilLevel > 0 then
-            call TempPowerCast(Herou, (10 + (0.02 * heroLevel)) * ChronusLevel)
-            set chronusActivated = true
-        endif
-            
-        //Holy Enlightenment
-        set abilLevel = GetUnitAbilityLevel(Herou, HOLY_ENLIGHTENMENT_ABILITY_ID)    
-        if abilLevel > 0 and startType != 6 then
-            call ElemFuncStart(Herou,HOLY_ENLIGHTENMENT_ABILITY_ID)
-            set r4 = 50 *(heroLevel + 3) * (heroLevel + 4) - 110  
-            set r5 = GetHeroXP(Herou)
-
-            if GetUnitAbilityLevel(Herou,PILLAGE_ABILITY_ID) > 0 then   
-                call AddHeroXP(Herou, R2I((r4 - r5) * (abilLevel * 1.5)) / 200, true) 
-            else
-                call AddHeroXP(Herou, R2I((r4 - r5) * (abilLevel * 1.5)) / 100, true) 
-            endif
-        endif
-        
-        //Cheater Magic
-        set abilLevel = GetUnitAbilityLevel(Herou, CHEATER_MAGIC_ABILITY_ID)    
-        if abilLevel > 0 then
-            call CheaterMagicStruct.create(Herou, (2.75 + (0.25 * abilLevel)) * ChronusLevel)
-            set chronusActivated = true
-        endif
-            
-        //Blessed Protection
-        set abilLevel = GetUnitAbilityLevel(Herou, BLESSED_PROTECTIO_ABILITY_ID)    
-        if abilLevel > 0 then
-            call BlessedProtectionStruct.create(Herou, (2.70 + (0.3 * abilLevel)) * ChronusLevel)
-            set chronusActivated = true
-        endif
-            
-        //Shining Runestone
-        set i1 = GetUnitItemTypeCount(Herou, SHINING_RUNESTONE_ITEM_ID)
-        set i = 0
-        if i1 > 0 then
-            //call ElemFuncStart(Herou, SHINING_RUNESTONE_ITEM_ID)
-            loop 
-                exitwhen i >= R2I(i1)
-                call CreateRandomRune(0, GetRandomReal(- 100, 100) + GetUnitX(Herou), GetRandomReal(-100, 100) + GetUnitY(Herou), Herou)
-                set i = i + 1
-            endloop
-        endif
-            
-        //Bone Armor
-        if UnitHasItemType(Herou, 'I07O') then
-            call ElemFuncStart(Herou, 'I07O')
-            set U = CreateUnit(GetOwningPlayer(Herou), 'u003', GetUnitX(Herou), GetUnitY(Herou), 0)
-            call UnitApplyTimedLife(U, FEARLESS_DEFENDERS_ABILITY_ID, 40 * ChronusLevel)
-            set U = CreateUnit(GetOwningPlayer(Herou), 'u003', GetUnitX(Herou), GetUnitY(Herou), 0)
-            call UnitApplyTimedLife(U, FEARLESS_DEFENDERS_ABILITY_ID, 40 * ChronusLevel)
-            set U = CreateUnit(GetOwningPlayer(Herou), 'u003', GetUnitX(Herou), GetUnitY(Herou), 0)
-            call UnitApplyTimedLife(U, FEARLESS_DEFENDERS_ABILITY_ID, 40 * ChronusLevel)
-            set U = CreateUnit(GetOwningPlayer(Herou), 'u003', GetUnitX(Herou), GetUnitY(Herou), 0)
-            call UnitApplyTimedLife(U, FEARLESS_DEFENDERS_ABILITY_ID, 40 * ChronusLevel)
-            call StartBoneArmor(Herou)
-        endif
-            
-        //Fearless Defenders
-        set abilLevel = GetUnitAbilityLevel(Herou, FEARLESS_DEFENDERS_ABILITY_ID)   
-        if abilLevel > 0 then
-            call ElemFuncStart(Herou,FEARLESS_DEFENDERS_ABILITY_ID)
-            set U = CreateUnit(GetOwningPlayer(Herou), FEARLESS_DEFENDER_CAPTAIN_UNIT_ID, GetUnitX(Herou) + 40 * CosBJ(- 30 + GetUnitFacing(Herou)), GetUnitY(Herou) + 40 * SinBJ(-30 + GetUnitFacing(Herou)), GetUnitFacing(Herou))
-            call BlzSetUnitName(U, "Jeremy The Fearless")
-            call UnitApplyTimedLife(U, FEARLESS_DEFENDERS_ABILITY_ID, (8 + (heroLevel * 0.09)) * ChronusLevel)
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", U, "head"))
-
-            set U = CreateUnit(GetOwningPlayer(Herou), FEARLESS_DEFENDER_CAPTAIN_UNIT_ID, GetUnitX(Herou) + 40 * CosBJ(30 + GetUnitFacing(Herou)), GetUnitY(Herou) + 40 * SinBJ(30 + GetUnitFacing(Herou)), GetUnitFacing(Herou))
-            call BlzSetUnitName(U, "Julian The Gallant")
-            call UnitApplyTimedLife(U, FEARLESS_DEFENDERS_ABILITY_ID, (8 + (heroLevel * 0.09)) * ChronusLevel)
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", U, "head"))  
-            set chronusActivated = true     
-        endif
-
-        //Faerie Dragon
-        if GetUnitTypeId(Herou) == MYSTIC_UNIT_ID then
-            set r4 = GetUnitX(Herou) + 40 * CosBJ(- 30 + GetUnitFacing(Herou))
-            set r5 = GetUnitY(Herou) + 40 * SinBJ(- 30 + GetUnitFacing(Herou))
-            call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, r4, r5))
-            set U = CreateUnit(GetOwningPlayer(Herou), FAERIE_DRAGON_UNIT_ID, r4, r5, GetUnitFacing(Herou))
-        endif
-
-        //Magic Blade
-        set i1 = GetUnitItemTypeCount(Herou, 'I06I')
-        if i1 > 0 then
-            call ElemFuncStart(Herou, 'I06I')
-            call SetUnitState(Herou, UNIT_STATE_MANA, GetUnitState(Herou, UNIT_STATE_MANA) - 70000 * i1)
-        endif
-            
-        //Book of Necromancy
-        set i1 = GetUnitItemTypeCount(Herou, 'I06J')
-        if i1 > 0 then
-            call ElemFuncStart(Herou, 'I06J')
-            set SummonDamage[pid] = SummonDamage[pid] + i1
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon Attack Bonus - [|cffffcc00Level " + I2S(SummonDamage[pid]) + "|r] - (|cff89ff52+" + I2S(SummonDamage[pid] * 20) + ")|r")
-            set SummonArmor[pid] = SummonArmor[pid] + i1
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon Armor Bonus - [|cffffcc00Level " + I2S(SummonArmor[pid]) + "|r] - (|cff89ff52+" + I2S(SummonArmor[pid] * 2) + ")|r")
-            set SummonHitPoints[pid] = SummonHitPoints[pid] + i1  
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon HP Bonus - [|cffffcc00Level " + I2S(SummonHitPoints[pid]) + "|r] - (|cff89ff52+" + I2S(SummonHitPoints[pid] * 200) + ")|r")
-            
-        endif 
-
-        //Blokkade's Shield
-        if GetUnitAbilityLevel(Herou, BLOKKADE_SHIELD_ABIL_ID) > 0 then
-            set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 6
-            call SetBlokShieldCharges(Herou, hid)
-        endif
-                
-        //Rapid Recovery
-        set abilLevel = GetUnitAbilityLevel(Herou,RAPID_RECOVERY_ABILITY_ID)    
-        if abilLevel > 0 then
-            call ElemFuncStart(Herou,RAPID_RECOVERY_ABILITY_ID)
-            call DummyInstantCast4(Herou, GetUnitX(Herou), GetUnitY(Herou), 'A03W', "battleroar", (BlzGetUnitMaxHP(Herou) * 0.002 * abilLevel) * (1 + 0.02 * heroLevel), ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(Herou, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel) * (1 + 0.02 * heroLevel), ABILITY_RLF_MANA_REGEN, (10 + (heroLevel * 0.02)) * ChronusLevel, ABILITY_RLF_DURATION_HERO, (10 + (heroLevel * 0.02)) * ChronusLevel, ABILITY_RLF_DURATION_NORMAL)
-            set chronusActivated = true
-        endif
-            
-        //Demon Curse
-        set abilLevel = GetUnitAbilityLevel(Herou,DEMONS_CURSE_ABILITY_ID)    
-        if abilLevel > 0 then
-            call ElemFuncStart(Herou,DEMONS_CURSE_ABILITY_ID)
-            call DummyInstantCast4(Herou, GetUnitX(Herou), GetUnitY(Herou), 'A043', "howlofterror", 0, ABILITY_RLF_DAMAGE_INCREASE_PERCENT_ROA1, (10 * abilLevel) * (1 + 0.02 * heroLevel), ABILITY_RLF_DAMAGE_HBZ2, (8 + (heroLevel * 0.09)) * ChronusLevel, ABILITY_RLF_DURATION_HERO, (8 + (heroLevel * 0.09)) * ChronusLevel, ABILITY_RLF_DURATION_NORMAL)
-            set chronusActivated = true
-        endif
-
-        //Time Manipulation
-        if GetUnitAbilityLevel(Herou, TIME_MANIPULATION_ABILITY_ID) > 0 then
-            call TimeManipulationStart(Herou, chronusActivated)
-        endif
-        
-        call FlushChildHashtable(HT_timerSpell, GetHandleId(startbattle)) 
-        call ReleaseTimer(startbattle)
-        set U = null
-        set Herou = null
-        set startbattle = null
-        set nTimer = null
-    endfunction
-
-    function FixAbilityU takes unit u returns nothing
-        local integer i1 = 0
-        local real r1 = 0
-        call CustomGameEvent_FireEvent(EVENT_FIX_START_ROUND, EventInfo.create(GetOwningPlayer(u), 0, RoundNumber))
-
-        set i1 = LoadInteger(HT, GetHandleId(u), 54021)
-        if i1 != 0 then 
-            call SetHeroStr(u, GetHeroStr(u, false) - i1, false)
-            call SetHeroAgi(u, GetHeroAgi(u, false) - i1, false)
-            call SetHeroInt(u, GetHeroInt(u, false) - i1, false)
-            call SaveInteger(HT, GetHandleId(u), 54021, 0)
-        endif
+        call ReleaseTimer(t)
+        set t = null
     endfunction
 
     //i1 = 1 = battle royale
@@ -231,23 +20,14 @@ library StartFunction requires TimerUtils, DummyOrder RandomShit, RuneInit, Bone
     //i1 = 4 = duels
     //i1 = 5 = elimination
     //i1 = 6 = urn/time manipulation
-    function StartFunctionSpell takes unit Hero, integer i1 returns nothing
-        local timer startbattle = NewTimer()
-            
-        if i1 != 6 then
-            call FixAbilityU(Hero)
-        endif    
+    function FireRoundStartEvent takes unit Hero, integer i1 returns nothing
+        local timer t = NewTimerEx(GetPlayerId(GetOwningPlayer(Hero)))
 
-        if i1 == 3 then
-            call PreRoundStart(Hero, GetHandleId(Hero))
-        endif
-        
-        call SaveInteger(HT_timerSpell, GetHandleId(startbattle), 4, i1)
-        call SaveUnitHandle(HT_timerSpell, GetHandleId(startbattle), 1, Hero)     
+        //for Wolf Rider passive, todo: refactor with event system
         set RoundTimer[GetPlayerId(GetOwningPlayer(Hero))] = T32_Tick + R2I(0.05 * 32)
-        call TimerStart(startbattle, 0.05, false, function FunctionTimerSpell)   
-        set startbattle = null
-        //	call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "yea"+I2S(i1))
-    endfunction
 
+        call TimerStart(t, 0.05, false, function StartRoundEvent)
+
+        set t = null
+    endfunction
 endlibrary

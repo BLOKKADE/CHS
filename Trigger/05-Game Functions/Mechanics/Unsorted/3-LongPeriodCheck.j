@@ -4,18 +4,23 @@ scope LongPeriodCheck initializer init
         local integer i
         local integer hid = GetHandleId(u)
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
+
+            call CastChronusSpells(u, hid, false)
+
             //Mysterious Talent
             set i = GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID)
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 then
                 call MysteriousTalentActivate(u)
                 call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - i) 
             endif
+
             //Sorcerer Passive (uses same spell as thunderwitch for now (A08P), not sure if it matters, easy to change)
             if GetUnitTypeId(u) == SORCERER_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and FilterListNotEmpty(u, SORCERER_UNIT_ID) and CheckProc(u, 600) then
                 call SorcererPassive(u, hid)
                 call ElemFuncStart(u, SORCERER_UNIT_ID)
                 call AbilStartCD(u, 'A08P', RMaxBJ(15, 50 - I2R(GetHeroLevel(u) / 5)))
             endif
+
             //Holy Shield
             if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 then
                 call UseSpellsHolyShield(u)
@@ -393,8 +398,9 @@ scope LongPeriodCheck initializer init
             //Time Manipulation
             if GetUnitAbilityLevel(u, TIME_MANIPULATION_ABILITY_ID) > 0 and CurrentlyFighting[GetPlayerId(GetOwningPlayer(u))] and TimeManipulationTable[hid].boolean[1] then
                 if BlzGetUnitAbilityCooldownRemaining(u, TIME_MANIPULATION_ABILITY_ID) == 0 then
-                    set TimeManipulationTable[hid].real[2] = TimeManipulationTable[hid].real[2] + 1
-                    call StartFunctionSpell(u, 6)
+                    call FireRoundStartEvent(u, 6) // 6 = urn
+                    call TimeManipulationStart(u, HeroHasChronusSpell(u))
+                    call CastChronusSpells(u, hid, true)
                 endif
             endif
 

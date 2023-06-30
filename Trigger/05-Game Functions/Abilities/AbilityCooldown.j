@@ -1,4 +1,4 @@
-library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex, RuneMaster, NewAbilityCooldown
+library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex, RuneMaster, NewAbilityCooldown
 
     function GetHeroTotalAbilitiesCooldown takes unit u returns real
         local real total = 0
@@ -144,8 +144,17 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
 
     function AbilStartCD takes unit u, integer id, real cd returns real
         local real newCooldown = CalculateCooldown(u, id, cd, false)
+        local integer assocspell = GetAssociatedSpell(u, id)
         call ElemFuncStart(u, id)
+
+        if assocspell != 0 then
+            call BlzStartUnitAbilityCooldown(u, assocspell, newCooldown)
+        endif
+
         call BlzStartUnitAbilityCooldown(u, id, newCooldown)
+
+        //call BJDebugMsg("Start cd: " + GetObjectName(id) + " newced: " + R2S(newCooldown))
+        //call BJDebugMsg("assoc cd: " + GetObjectName(CheckAssociatedSpell(u, id)) + " newced: " + R2S(BlzGetUnitAbilityCooldownRemaining(u, CheckAssociatedSpell(u, id))))
 
         if id != ANCIENT_TEACHING_ABILITY_ID then
             set Global_i = id

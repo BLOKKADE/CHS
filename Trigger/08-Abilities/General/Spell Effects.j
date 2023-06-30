@@ -156,7 +156,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
     endfunction
 endlibrary
 
-library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, AbilityChannel, Cooldown, AncientRunes, DummyActiveSpell, ToggleSpell
+library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, AbilityChannel, Cooldown, AncientRunes, DummySpell, ToggleSpell
 
     function SpellEffectActions takes nothing returns nothing
         local unit caster = GetTriggerUnit()

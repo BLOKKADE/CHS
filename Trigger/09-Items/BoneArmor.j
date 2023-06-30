@@ -1,4 +1,4 @@
-library BoneArmor initializer init requires Utility
+library BoneArmor initializer init requires Utility, RandomShit
     globals
         Table BoneArmorTable
     endglobals
@@ -72,14 +72,29 @@ library BoneArmor initializer init requires Utility
         implement Recycle
     endstruct
 
-    function StartBoneArmor takes unit caster returns nothing
+    function StartBoneArmor takes unit caster, integer abilId, real duration returns nothing
         local integer hid = GetHandleId(caster)
+        local unit summon = null
+
+        call ElemFuncStart(caster, 'I07O')
+
+        set summon = CreateUnit(GetOwningPlayer(caster), 'u003', GetUnitX(caster), GetUnitY(caster), 0)
+        call UnitApplyTimedLife(summon, abilId, duration)
+        set summon = CreateUnit(GetOwningPlayer(caster), 'u003', GetUnitX(caster), GetUnitY(caster), 0)
+        call UnitApplyTimedLife(summon, abilId, duration)
+        set summon = CreateUnit(GetOwningPlayer(caster), 'u003', GetUnitX(caster), GetUnitY(caster), 0)
+        call UnitApplyTimedLife(summon, abilId, duration)
+        set summon = CreateUnit(GetOwningPlayer(caster), 'u003', GetUnitX(caster), GetUnitY(caster), 0)
+        call UnitApplyTimedLife(summon, abilId, duration)
+
         if GetBoneArmorStruct(hid).enabled == false then
             set BoneArmorTable[hid] = BoneArmorStruct.create(caster)
         elseif GetBoneArmorStruct(hid).enabled then
             //call BJDebugMsg("ba dur update")
             set GetBoneArmorStruct(hid).endTick = T32_Tick + R2I(60 * 32)
         endif
+
+        set summon = null
     endfunction
 
     private function init takes nothing returns nothing

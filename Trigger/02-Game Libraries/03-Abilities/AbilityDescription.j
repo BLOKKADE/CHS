@@ -9,6 +9,7 @@ library AbilityDescription initializer init requires ReplaceTextLib
         endif
     endfunction
 
+    //lvl index starts at 0 (so 0 = 1)
     function GetAbilityDescription takes integer abilId, integer lvl returns string
         call SetAbilityDescription(abilId, lvl)
         

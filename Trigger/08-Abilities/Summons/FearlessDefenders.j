@@ -1,4 +1,22 @@
-library FearlessDefenders requires CustomState, SpellFormula
+library FearlessDefenders requires CustomState, SpellFormula, RandomShit, HideEffects
+    
+    function StartFearlessDefenders takes unit caster, integer abilId, real duration returns nothing
+        local unit summon = null
+
+        call ElemFuncStart(caster,abilId)
+        set summon = CreateUnit(GetOwningPlayer(caster), FEARLESS_DEFENDER_CAPTAIN_UNIT_ID, GetUnitX(caster) + 40 * CosBJ(- 30 + GetUnitFacing(caster)), GetUnitY(caster) + 40 * SinBJ(-30 + GetUnitFacing(caster)), GetUnitFacing(caster))
+        call BlzSetUnitName(summon, "Jeremy The Fearless")
+        call UnitApplyTimedLife(summon, abilId, duration)
+        call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", summon, "head"))
+
+        set summon = CreateUnit(GetOwningPlayer(caster), FEARLESS_DEFENDER_CAPTAIN_UNIT_ID, GetUnitX(caster) + 40 * CosBJ(30 + GetUnitFacing(caster)), GetUnitY(caster) + 40 * SinBJ(30 + GetUnitFacing(caster)), GetUnitFacing(caster))
+        call BlzSetUnitName(summon, "Julian The Gallant")
+        call UnitApplyTimedLife(summon, abilId, duration)
+        call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", summon, "head"))
+
+        set summon = null
+    endfunction
+
     function FearlessDefendersStats takes unit u, integer totalLevel returns nothing
         local integer summonLevel = IMaxBJ(totalLevel - 30, 0)
         local integer abilityLevel = IMinBJ(totalLevel, 30)

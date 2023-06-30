@@ -166,7 +166,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         if (duelGame.isInitialized and (not duelGame.fightStarted)) then
             call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
             call SetUnitInvulnerable(currentUnit, false)
-            call StartFunctionSpell(currentUnit, 4) // 4 = duels
+            call FireRoundStartEvent(currentUnit, 4) // 4 = duels
             call PauseUnit(currentUnit, false)
             call SetCurrentlyFighting(currentPlayer, true)
             call GroupRemoveUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities

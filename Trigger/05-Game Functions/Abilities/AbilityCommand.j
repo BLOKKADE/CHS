@@ -1,4 +1,4 @@
-library AbilityCommand initializer init requires AbilityData, CastSpellOnTarget, DummyActiveSpell, Cooldown
+library AbilityCommand initializer init requires AbilityData, CastSpellOnTarget, DummySpell, Cooldown
     globals
         Table TriggerAbilityId
     endglobals

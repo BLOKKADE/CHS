@@ -1,4 +1,4 @@
-library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, DummyOrder, Table, UnitHelpers, DummyActiveSpell
+library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, DummyOrder, Table, UnitHelpers, DummySpell
 
     globals
         Table AAGStruct

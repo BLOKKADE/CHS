@@ -43,9 +43,7 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
             call SelectUnitForPlayerSingle(playerHero, GetOwningPlayer(playerHero))
             call PanCameraToTimedLocForPlayer(currentPlayer, PlayerArenaRectCenters[currentPlayerId], 0)
         endif
-
-        call SetCurrentlyFighting(currentPlayer, true)
-
+        
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.create(currentPlayer, 0, RoundNumber))
 
         // Cleanup
@@ -73,11 +71,11 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         endif
     endfunction
 
-    private function StartFunctionSpells takes nothing returns nothing
+    private function FireRoundStartEvents takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
 
         call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
-        call StartFunctionSpell(PlayerHeroes[GetPlayerId(currentPlayer)], 3)
+        call FireRoundStartEvent(PlayerHeroes[GetPlayerId(currentPlayer)], 3) // 3 = pve
         call SetCurrentlyFighting(currentPlayer, true) 
 
         // Cleanup
@@ -148,7 +146,7 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         call DebugCode_SavePlayerDebugEveryone()
 
         call PlaySoundBJ(udg_sound01)
-        call ForForce(validPlayerForce, function StartFunctionSpells)
+        call ForForce(validPlayerForce, function FireRoundStartEvents)
         call ConditionalTriggerExecute(CreepPeriodicAttackTrigger)
         set SuddenDeathTick = 0
         set RoundStartTick = T32_Tick
