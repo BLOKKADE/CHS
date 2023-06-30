@@ -56,6 +56,15 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         set leaverPlayer = null
     endfunction
 
+    // kill players hero at start of round if they left
+    private function OnRoundStart takes EventInfo eventInfo returns nothing
+        if eventInfo.hero != null and (IsPlayerInForce(eventInfo.p, LeaverPlayers) or GetPlayerSlotState(eventInfo.p) != PLAYER_SLOT_STATE_PLAYING) then
+            call SetUnitInvulnerable(eventInfo.hero, false)
+            call KillUnit(eventInfo.hero)
+        endif
+    endfunction
+
+
     private function init takes nothing returns nothing
         set PlayerLeavesGameTrigger = CreateTrigger()
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(0))
@@ -67,6 +76,7 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(6))
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(7))
         call TriggerAddAction(PlayerLeavesGameTrigger, function PlayerLeavesGameActions)
+        call CustomGameEvent_RegisterEventCode(EVENT_PLAYER_ROUND_START, CustomEvent.OnRoundStart)
     endfunction
 
 endlibrary
