@@ -49,7 +49,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         endif
 
         //Bone Armor
-        set abilId = 0 // TODO
+        set abilId = 'A0EF' // TODO
         if UnitHasItemType(u, 'I07O') and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
             call StartBoneArmor(u, abilId, 40 * ChronusLevel)
             call AbilStartCD(u, abilId, 120)

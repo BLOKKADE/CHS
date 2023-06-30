@@ -36,5 +36,12 @@ library StableSpells initializer init
         set StableSpells.boolean[DESTRUCTION_BLOCK_ABILITY_ID] = true
         set StableSpells.boolean[CONTEMPORARY_RUNES_ABILITY_ID] = true
         set StableSpells.boolean[ANCIENT_ELEMENT_ABILITY_ID] = true
+        set StableSpells.boolean[HERO_BUFF_ABILITY_ID] = true
+        set StableSpells.boolean[TEMPORARY_INVISIBILITY_ABILITY_ID] = true
+        set StableSpells.boolean[TEMPORARY_POWER_ABILITY_ID] = true
+        set StableSpells.boolean[CHEATER_MAGIC_ABILITY_ID] = true
+        set StableSpells.boolean[BLESSED_PROTECTIO_ABILITY_ID] = true
+        set StableSpells.boolean[RAPID_RECOVERY_ABILITY_ID] = true
+        set StableSpells.boolean[DEMONS_CURSE_ABILITY_ID] = true
     endfunction
 endlibrary
