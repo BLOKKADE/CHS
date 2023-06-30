@@ -558,7 +558,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         local real rewardValue
 
         // Don't do anything if this was the BR or the player is defeated
-        if (IsPlayerInForce(eventInfo.p, DefeatedPlayers) or (GameModeShort == true and RoundNumber == 25) or RoundNumber == 50) then
+        if IsPlayerInForce(eventInfo.p, DefeatedPlayers) then
             return
         endif
 
