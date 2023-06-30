@@ -12,7 +12,7 @@ scope AfterDamage initializer init
             set ColdWindDamageIncreased.boolean[DamageSourceId] = true
         endif
 
-        if DamageShowText and Damage.index.damage >= 1 then
+        if DamageIsCrit and Damage.index.damage >= 1 then
             if IsPhysDamage() then
                 call CreateTextTagTimerColor( I2S(R2I(Damage.index.damage)) + "!", 1, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 50, 1, 177, 0, 0)
             elseif IsMagicDamage() then

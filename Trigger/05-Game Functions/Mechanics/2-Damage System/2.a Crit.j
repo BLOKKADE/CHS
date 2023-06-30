@@ -189,7 +189,7 @@ library CritDamage requires RandomShit, Vampirism
 
             set Damage.index.damage = Dmg + critDmg
 
-            set DamageShowText = true
+            set DamageIsCrit = true
 
             if lifesteal > 0 and critDmg > 0 then
                 call Vamp(DamageSource, DamageTarget, critDmg * lifesteal)

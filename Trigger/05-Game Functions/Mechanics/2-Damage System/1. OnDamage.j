@@ -69,7 +69,7 @@ scope OnDamage initializer init
         set DamageIsTrue = false
         set DamageIsCutting = false
         set StaffOfPowerCritNegate = false
-        set DamageShowText = false
+        set DamageIsCrit = false
 
         if Damage.index.userType == DamageType_Onhit then
             set DamageIsOnHit = 1

@@ -4,6 +4,19 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
         Table ShowDmgText
     endglobals
 
+    function ShowOtherDamageText takes unit source, unit target, real value, string damageType returns string
+        local string output = ""
+
+        set output = (GetPlayerNameColour(GetOwningPlayer(source)) + ": " + damageType + "|r dealt " + R2S(value) + "|r dmg to " + GetPlayerNameColour(GetOwningPlayer(target)) + "|r")
+    
+        //debug mode shows handle id to differentiate between multiple units
+        if DebugModeEnabled then
+            set output = output + " id: " + I2S(GetHandleId(DamageTarget))
+        endif
+        
+        return output
+    endfunction
+
     function DamageText takes boolean death returns string
         local string colour = "|ccffdde31"
         local string aType = ""
@@ -53,9 +66,7 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
         return output
     endfunction
 
-    //death = true shows for all players
-    function ShowDamageText takes boolean death returns nothing
-        local string output = DamageText(death)
+    function ShowLoggingText takes boolean death, string output returns nothing
         local DuelGame duelGame
 
         if death then
@@ -78,6 +89,13 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
             if ShowDmgText.boolean[DamageTargetPid] then
                 call DisplayTimedTextToPlayer(Player(DamageTargetPid), 0, 0, 20, output)
             endif
+        endif
+    endfunction
+
+    //death = true shows for all players
+    function ShowDamageText takes boolean death returns nothing
+        if ShowDmgText.boolean[DamageSourcePid] or ShowDmgText.boolean[DamageTargetPid] then
+            call ShowLoggingText(death, DamageText(death))
         endif
     endfunction
 
