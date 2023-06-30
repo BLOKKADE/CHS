@@ -1,16 +1,21 @@
-library DisableAbilities initializer init requires RandomShit, DummyActiveSpell
+library DisableAbilities initializer init requires RandomShit, DummySpell
 
     private function DisableAbilitiesActions takes nothing returns nothing
-        if (GetUnitAbilityLevel(GetTriggerUnit(), 'BEer') > 0 and GetAssociatedSpell(GetTriggerUnit(), BLINK_STRIKE_ABILITY_ID) != 0) then
-            call IssueImmediateOrder(GetTriggerUnit(), "stop")
-            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 20, "|cffffcc00Caster movement has been disabled.|r")
+        local unit u = GetTriggerUnit()
+        local player p = GetTriggerPlayer()
+        if (GetUnitAbilityLevel(u, 'BEer') > 0 and GetAssociatedSpell(u, BLINK_STRIKE_ABILITY_ID) != 0) then
+            call IssueImmediateOrder(u, "stop")
+            call DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00Caster movement has been disabled.|r")
             return
         endif
 
-        if CheckIfCastAllowed(GetTriggerUnit()) then
-            call IssueImmediateOrder(GetTriggerUnit(), "stop")
-            //call BJDebugMsg(GetUnitName(GetTriggerUnit()) +  "disable abilities stop")
+        if CheckIfCastAllowed(u) or ((p != Player(8) and p != Player(11))  and CurrentlyFighting[GetPlayerId(p)] == false) then
+            call IssueImmediateOrder(u, "stop")
+            //call BJDebugMsg(GetUnitName(u) +  "disable abilities stop")
         endif
+
+        set u = null
+        set p = null
     endfunction
 
     private function init takes nothing returns nothing
