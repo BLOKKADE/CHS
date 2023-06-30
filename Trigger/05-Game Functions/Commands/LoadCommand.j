@@ -55,19 +55,20 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         local integer petIndexTemp = 0
         local integer heroIndex = 0
         local integer currentUnitTypeId = 0
+        local integer playerHash
 
         // Don't load anything if the player has already loaded. A player should only need to load once
         if (ps.hasLoaded()) then
-            call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "You have already loaded your Save Code.")
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "You have already loaded your Save Code.")
             return
         endif
 
         set SaveCount = -1
-        set SaveTempInt = integer(Savecode.create())
+        set SaveTempInt = integer(Savecode.create(SubString(SaveLoadEvent_Code, 0, 1) == "n"))
 
         // Try to load the code
         if not (Savecode(SaveTempInt).Load(SaveLoadEvent_Player, SaveLoadEvent_Code, 1)) then
-            call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "Invalid load code.")
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Invalid load code.")
             return
         endif
 
@@ -162,8 +163,10 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
             set heroIndex = heroIndex - 1
         endloop
 
-        if (SubString(SaveLoadEvent_Code, 0, 1) == "n" and LoadNextBasicValue(MAXINT()) != scommhash(GetPlayerName(SaveLoadEvent_Player))) then
-            call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "Invalid load code.")
+        set playerHash = LoadNextBasicValue(MAXINT())
+
+        if (SubString(SaveLoadEvent_Code, 0, 1) == "n" and playerHash != scommhash(GetPlayerName(SaveLoadEvent_Player))) then
+            call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Invalid load code.")
             call ps.reset()
             return
         endif
@@ -183,7 +186,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
 
         call Savecode(SaveTempInt).destroy()
 
-        call DisplayTextToForce(GetForceOfPlayer(SaveLoadEvent_Player), "Successfully loaded your Save Code")
+        call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Successfully loaded your Save Code")
     endfunction
 
 	private function init takes nothing returns nothing
