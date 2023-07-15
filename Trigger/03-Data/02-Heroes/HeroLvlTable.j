@@ -84,6 +84,9 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(MYSTIC_UNIT_ID, 1, "|cffd6e049Faerie Dragon attack speed|r: ,0,%%")
 
         call SetBonusStr(PIT_LORD_UNIT_ID, 0, "|cffe7544aAbsolute Fire magic power bonus|r: ,0,%%")
+        call SetBonusStr(PIT_LORD_UNIT_ID, 1, "|cffd6e049Rain of Fire initial damage|r: ,0,")
+        call SetBonusStr(PIT_LORD_UNIT_ID, 2, "|cff4daed4Rain of Fire damage per second|r: ,0,")
+        call SetBonusStr(PIT_LORD_UNIT_ID, 3, "|cff51d44dRain of Fire instances|r: ,0,")
 
         call SetBonusStr(THUNDER_WITCH_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr(THUNDER_WITCH_UNIT_ID, 1, "|cffd6e049Targets|r: ,0,")
@@ -159,7 +162,6 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(TROLL_BERSERKER_UNIT_ID, 0, "|cffe7544aAttack cooldown reduction bonus|r: ,0,%%")
 
         call SetBonusStr(YETI_UNIT_ID, 0, "|cffe7544aStrength bonus|r: ,0,")
-        call SetBonusStr(YETI_UNIT_ID, 1, "|cffd6e049Armor limit|r: ,0,")
 
         call SetBonusStr(SATYR_TRICKSTER_UNIT_ID, 0, "|cffe7544aEvasion bonus|r: ,0,")
         call SetBonusStr(SATYR_TRICKSTER_UNIT_ID, 1, "|cffd6e049Counter damage|r: ,0,")

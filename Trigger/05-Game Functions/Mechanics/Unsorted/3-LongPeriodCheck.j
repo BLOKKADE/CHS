@@ -255,8 +255,7 @@ scope LongPeriodCheck initializer init
             set i2 = LoadInteger(HT, hid,ABSOLUTE_FIRE_ABILITY_ID)
             if i1 >= 1 or i2 != 0 then
                 if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
-                    set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
-                    set i1 = R2I(/*(1+ GetUnitAbsoluteEffective(u, Element_Fire)) * */(i1 * GetUnitElementCount(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
+                    set i1 = R2I(/*(1+ GetUnitAbsoluteEffective(u, Element_Fire)) * */(i1 * GetUnitElementCount(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))))
                 else
                     set i1 = R2I(i1 * GetUnitElementCount(u, Element_Fire)/* * (1+ GetUnitAbsoluteEffective(u, Element_Fire))*/)
                 endif
@@ -368,8 +367,7 @@ scope LongPeriodCheck initializer init
 
             //Pit Lord
             if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
-                set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
-                set i1 = R2I(GetUnitCustomState(u, BONUS_MAGICPOW) * r1)
+                set i1 = R2I(GetUnitCustomState(u, BONUS_MAGICPOW))
                 set i2 = LoadInteger(HT, hid,PIT_LORD_UNIT_ID)
                 if i1 != i2 then
                     call AddUnitCustomState(u, BONUS_PHYSPOW, 0 - i2)

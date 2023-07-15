@@ -199,21 +199,10 @@ scope ShortPeriodCheck initializer init
 
                 //Yeti
             elseif unitTypeId == YETI_UNIT_ID then
-                if BlzGetUnitArmor(u) <= (50 + (2 * GetHeroLevel(u))) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) then
-                    if GetUnitAbilityLevel(u, 'A092') == 0 then
-                        call UnitAddAbility(u, 'A092')
-                    endif
-                    set i1 = LoadInteger(DataUnitHT, hid,542)
-                    set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) - i1)
-                    call SetHeroStr(u, GetHeroStr(u,false) + i2, false)
-                    call SaveInteger(DataUnitHT, hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold)))))
-                else
-                    set i1 = LoadInteger(DataUnitHT, hid,542)
-                    call SetHeroStr(u, GetHeroStr(u,false)- i1, false)
-                    call SaveInteger(DataUnitHT, hid,542,0)
-                    call RemoveUnitBuff(u, 'A092')
-                endif
-
+                set i1 = LoadInteger(DataUnitHT, hid,542)
+                set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) - i1)
+                call SetHeroStr(u, GetHeroStr(u,false) + i2, false)
+                call SaveInteger(DataUnitHT, hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold)))))
             elseif unitTypeId == WOLF_RIDER_UNIT_ID then
                 call WolfRiderStatBonus(u, hid)
             

@@ -216,6 +216,7 @@
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\Murloc.j"
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\Mystic.j"
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\NagaSiren.j"
+//! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\Pitlord.j"
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\Pyromancer.j"
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\SkeletonBrute.j"
 //! import "C:\CHS\CHS\Trigger\07-Heroes\Passives\Sorcerer.j"

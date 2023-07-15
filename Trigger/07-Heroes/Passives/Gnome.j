@@ -50,7 +50,7 @@ library Gnome initializer init requires AbilityCooldown, TempAbilSystem
             set this.source = source
             set this.charges = charges
             set this.pid = GetPlayerId(GetOwningPlayer(source))
-            set this.endTick = T32_Tick + (R2I(this.charges - (ModuloInteger(this.charges, 4) / 4)) * 32)
+            set this.endTick = T32_Tick + (R2I((this.charges - ModuloInteger(this.charges, 4)) / 4) * 32)
             set this.nexttick = T32_Tick + 32
 
             if charges >= 20 then

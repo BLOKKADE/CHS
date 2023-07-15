@@ -109,6 +109,10 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 1, 3 * heroLevel)
         elseif uid == PIT_LORD_UNIT_ID then          
             call SetBonus(u, 0, heroLevel * 0.5)
+            call SetBonus(u, 1, heroLevel * 40)
+            call SetBonus(u, 2, heroLevel * 20)
+            call SetBonus(u, 3, 1 + (heroLevel - ModuloInteger(heroLevel, 75) / 75))
+            call PitlordLevelup(u, heroLevel)
         elseif uid == THUNDER_WITCH_UNIT_ID then      
             set i = prevLevel + 1
             loop
@@ -231,7 +235,6 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, heroLevel * 0.5)
         elseif uid == YETI_UNIT_ID then
             call SetBonus(u, 0, heroLevel * 20)
-            call SetBonus(u, 1, 50 + (heroLevel * 2))
         elseif uid == MURLOC_WARRIOR_UNIT_ID then
             call SetBonus(u, 0, (heroLevel / 10) + 1)
         elseif uid == GHOUL_UNIT_ID then

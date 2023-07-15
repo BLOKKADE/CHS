@@ -230,12 +230,21 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = Damage.index.damage * Pow((1 - (0.05 + (i1 * 0.01))),  r1 / 300)
             call BJDebugMsg("reduction: " + R2S(Pow((1 - (0.05 + (i1 * 0.01))),  r1 / 300)) + " distance: " + R2S(r1))
         endif
-/*
-        //Damage Spread
-        if 
-            call PeriodicDamage.create(DamageSource, DamageTarget, 0.0333 * Damage.index.damage, true, 0.1, 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1)
+
+        //Sword of Bloodthirst
+        set i1 = GetUnitItemTypeCount(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
+        if i1 > 0 and IsPhysDamage() then
+            set Damage.index.damage = Damage.index.damage + 900 * i1
         endif
-*/
+
+        //Crits
+        call SetCritDamage()
+
+        //Yeti cold based crit negation
+        if DamageTargetTypeId == YETI_UNIT_ID and DamageIsCrit and GetRandomReal(0, 1) < 0.08 * GetUnitElementCount(DamageTarget, Element_Cold) then
+            set Damage.index.damage = 0
+            return
+        endif
 
         //Shadow Dance
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
@@ -261,15 +270,15 @@ scope ModifyDamageBeforeArmor initializer init
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * i1))))
         endif
 
-         //Demon Hunter
-         if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID then
+        //Demon Hunter
+        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID then
             set r1 = RMinBJ(GetHeroLevel(DamageSource) * 20, GetUnitState(DamageTarget, UNIT_STATE_MANA))
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - r1)
             call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) + r1)
 
             if not IsFxOnCooldownSet(DamageTargetId, DEMON_HUNTER_UNIT_ID, 1) then
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", DamageTarget, "head"))
-            endif		
+            endif
         endif
 
         //Blizzard
@@ -292,15 +301,6 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0 and DamageSourceAbility == MONSOON_ABILITY_ID then
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.03)))
         endif
-
-        //Sword of Bloodthirst
-        set i1 = GetUnitItemTypeCount(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
-        if i1 > 0 and IsPhysDamage() then
-            set Damage.index.damage = Damage.index.damage + 900 * i1
-        endif
-
-        //Crits
-        call SetCritDamage()
 
         //Pyromancer fire attack
         if DamageSourceTypeId == PYROMANCER_UNIT_ID and Damage.index.isAttack and DamageSourceAbility != PYROMANCER_UNIT_ID then
@@ -484,13 +484,9 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Pit Lord
-        /*if GetUnitTypeId(DamageSource) == PIT_LORD_UNIT_ID then
-            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08V') <= 0 then
-                call AbilStartCD(DamageSource, 'A08V', 2)
-                call ElemFuncStart(DamageSource,PIT_LORD_UNIT_ID)
-                call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A08N',"rainoffire", GetHeroLevel(DamageSource)* 40, GetHeroLevel(DamageSource)* 20, ABILITY_RLF_DAMAGE_HBZ2, ABILITY_RLF_DAMAGE_PER_SECOND_HBZ5)
-            endif
-        endif*/
+        if GetUnitTypeId(DamageSource) == PIT_LORD_UNIT_ID then
+            call CastPitlordRainOfFire(DamageSource, DamageTarget)
+        endif
 
         //Ogre Warrior Stomp block ignore
         if DamageSourceAbility == 'A047' and GetUnitCustomState(DamageTarget, BONUS_BLOCK) > 0 then

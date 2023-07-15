@@ -103,8 +103,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: Bonus attack speed. (|cff68eef3Every 3 levels|r) increases Faerie Dragon damage." )
             
         call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )
-        call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Hellforged: Starts with Absolute Fire. 1 magic power increases |cffff8080physical power|r by 1. |cffc0c0c0Hellforged and Absolute Fire become 25% less effective for every |r [|cff00f7ffWater|r] |cffc0c0c0spell learned.|r")
-        call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Hellforged: +0.5% Absolute Fire magic power bonus." )
+        call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Hellforged: Starts with Absolute Fire. Every 1 magic power increases |cffff8080physical power|r by 1. Rain of Fire: When the Hero damages an enemy it casts a Rain of Fire on it, dealing 40 initial damage and 20 damage per second for 3 seconds, this has a 2 second cooldown.")
+        call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Hellforged: +0.5% Absolute Fire magic power bonus. Rain of Fire: +40 initial damage, +20 damage per second.  (|cff68eef3Every 75 levels|r) +1 instance of Rain of Fire (Max 5)")
             
         call InitHeroDesc(THUNDER_WITCH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp" )
         call InitHeroDesc(THUNDER_WITCH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Thunder Bolt: Deals |cffff00ffmagic damage|r to 2 nearby enemies every second. [|cff96ffffStable|r]. Your magic power is doubled for Thunder Bolt.")
@@ -179,7 +179,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )
         //   call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )
-        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Deep Freeze: Every 10 seconds, the Hero freezes nearby enemies. For every [|cff8080ffCold|r] spell the Hero has, the freeze deals 30 |cffff00ffmagic damage|r and freezes enemies for 0.15 seconds. |n|nAfter activating a [|cff8080ffCold|r] spell, enemy heroes' spells are put on cooldown for 0.20 seconds.")
+        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Deep Freeze: Every 10 seconds, the Hero freezes nearby enemies. For every [|cff8080ffCold|r] the Hero has, the freeze deals 30 |cffff00ffmagic damage|r and freezes enemies for 0.15 seconds. |n|nAfter activating a [|cff8080ffCold|r] spell, enemy heroes' spells are put on cooldown for 0.20 seconds.")
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Deep Freeze: +30 damage per [|cff8080ffCold|r], +0.01 stun duration" )
 
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroLich.blp" )
@@ -215,7 +215,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.5% attack cooldown reduction." )
 
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )
-        call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength and immunity to |cffff8080physical|r [|cff00ffffCrit|r] damage if it hass less than 50 armor. Gains +10% strength and +10% armor limit from its passive for every [|cff8080ffCold|r] spell it has.")
+        call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength. Gains +10% strength and an 8% chance to negate [|cff00ffffCrit|r] damage for every [|cff8080ffCold|r] it has.")
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus strength, +2 armor limit." )
         
         call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSatyr.blp" )
