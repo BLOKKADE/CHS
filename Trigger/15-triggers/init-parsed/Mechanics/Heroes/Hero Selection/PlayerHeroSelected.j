@@ -2,6 +2,10 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
     globals
         boolean ShopsCreated = false
+
+        private timer GameStartTimer
+        private timerdialog GameStartTimerDialog
+        private integer GameStartWaitTime = 7
     endglobals
 
     private function CreateShops takes nothing returns nothing
@@ -45,6 +49,24 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         // Cleanup
         set p = null
     endfunction
+    
+    private function HideScoreboardForPlayer takes nothing returns nothing
+        call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(false)
+    endfunction
+
+    private function ShowScoreboardForPlayer takes nothing returns nothing
+        call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(true)
+    endfunction
+
+    private function StartGame takes nothing returns nothing
+        call DestroyTimer(GameStartTimer)
+        call DestroyTimerDialog(GameStartTimerDialog)
+
+        call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
+        call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+
+        call TriggerExecute(StartLevelTrigger)
+    endfunction
 
     public function AllPlayersHaveHeroesActions takes nothing returns nothing
         set AllPlayerHeroesSpawned = true
@@ -69,7 +91,16 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
         call TriggerSleepAction(2)
 
-        call TriggerExecute(StartLevelTrigger)
+        // Show the scoreboard to everyone, hide it after some time, then start the game
+        call ForForce(GetPlayersAll(), function ShowScoreboardForPlayer) 
+        call BlzFrameSetVisible(ScoreboardFrameHandle, true)
+
+        set GameStartTimer = CreateTimer()
+        set GameStartTimerDialog = CreateTimerDialog(GameStartTimer)
+        call TimerDialogSetTitle(GameStartTimerDialog, "Game Starts...")
+        call TimerDialogDisplay(GameStartTimerDialog, true)
+
+        call TimerStart(GameStartTimer, GameStartWaitTime, false, function StartGame)
     endfunction
 
     public function SpawnedHeroActions takes player p, unit hero returns nothing
