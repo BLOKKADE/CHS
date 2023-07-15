@@ -502,7 +502,6 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 	endfunction
 
 	private function IconFramesActions takes nothing returns nothing
-		call BlzChangeMinimapTerrainTex("minimap.blp")
 		call InitGameUI()
 
 		set GameUI = BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)

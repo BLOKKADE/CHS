@@ -1,4 +1,4 @@
-library CritDamage requires RandomShit, Vampirism
+library CritDamage requires RandomShit, Vampirism, Gnome
 
     function SetCritDamage takes nothing returns nothing
         local boolean magicDmgType = IsMagicDamage()
@@ -185,6 +185,10 @@ library CritDamage requires RandomShit, Vampirism
                     set Dmg = 0
                     set critDmg = 0
                 endif
+            endif
+
+            if DamageTargetTypeId == GNOME_MASTER_UNIT_ID then
+                call GnomeIncreaseCharge(DamageTarget)
             endif
 
             set Damage.index.damage = Dmg + critDmg

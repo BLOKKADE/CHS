@@ -187,8 +187,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Gnome Stomp: Once Every 11 seconds deal 55 |cffff00ffmagical damage|r and stun all units in a 2200 AOE for 1 second. ")
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gnome Stomp: +55 damage, +0.04 seconds stun, +0.04 seconds cooldown" )
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Seismic Surge: When casting an active ability the Hero creates an earthquake, damaging and slowing nearby enemies each second. For every charge it does +10 damage, slows by +3%,  and lasts +0.25 seconds longer. Charges accumulate at a rate of 1 per second and upon receiving [|cff00ffffCrit|r] damage. When used at 20 charges the Hero become immune to magic for 3 seconds.")
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Seismic Surge: +10 damage per charge." )
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. Gets an extra point for the end of round reward shop every 5 rounds. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")

@@ -230,6 +230,10 @@ scope ShortPeriodCheck initializer init
                 //Dark Avatar
             elseif unitTypeId == AVATAR_SPIRIT_UNIT_ID then
                 call SetAvatarMode(u, GetHeroLevel(u))
+            
+                //Gnome
+            elseif unitTypeId == GNOME_MASTER_UNIT_ID then
+                call GnomeIncreaseCharge(u)
             endif
         endif
 

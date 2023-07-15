@@ -143,9 +143,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(GREEDY_GOBLIN_UNIT_ID, 0, "|cffe7544aExperience per kill|r: ,0,")
         call SetBonusStr(GREEDY_GOBLIN_UNIT_ID, 1, "|cffd6e049Gold per kill|r: ,0,")
 
-        call SetBonusStr(GNOME_MASTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
-        call SetBonusStr(GNOME_MASTER_UNIT_ID, 1, "|cffd6e049Cooldown|r: ,0, seconds")
-        call SetBonusStr(GNOME_MASTER_UNIT_ID, 2, "|cff4daed4Stun duration|r: ,0, seconds")
+        call SetBonusStr(GNOME_MASTER_UNIT_ID, 0, "|cffe7544aDamage per charge|r: ,0,")
+        call SetBonusStr(GNOME_MASTER_UNIT_ID, 1, "|cffd6e049Charges|r: ,0,")
 
         call SetBonusStr(CENTAUR_ARCHER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,%%")
 
