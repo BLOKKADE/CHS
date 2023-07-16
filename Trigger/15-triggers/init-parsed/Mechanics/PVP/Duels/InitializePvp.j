@@ -1,4 +1,5 @@
 library InitializePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults, PvpHelper
+
     globals
         real pvpWaitDuration = 25
         timer PvpWaitTimer
