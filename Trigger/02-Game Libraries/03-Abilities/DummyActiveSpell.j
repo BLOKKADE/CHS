@@ -76,11 +76,14 @@ library DummySpell initializer init requires AbilityData, ListT
         local integer dummyAbilId = UnitDummySpells[GetHandleId(u)].integer[abilityId]
         if dummyAbilId != 0 then
             call UnitRemoveAbility(u, dummyAbilId)
-
-            if GetAbilityOrderType(abilityId) == Order_Target then
-                call AddDummySpellToList(u, dummyAbilId, 1)
+            if not IsAbilityCasteable(abilityId, false) then
+                call AddDummySpellToList(u, dummyAbilId, 2)
             else
-                call AddDummySpellToList(u, dummyAbilId, 0)
+                if GetAbilityOrderType(abilityId) == Order_Target then
+                    call AddDummySpellToList(u, dummyAbilId, 1)
+                else
+                    call AddDummySpellToList(u, dummyAbilId, 0)
+                endif
             endif
 
             set UnitDummySpells[GetHandleId(u)].integer[abilityId] = 0
