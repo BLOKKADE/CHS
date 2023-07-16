@@ -1213,6 +1213,7 @@ library IdLibrary initializer init
         call DUMMIES.add(DRAFT_BUY_UNIT_ID)
         call DUMMIES.add(DRAFT_UPGRADE_UNIT_ID)
         call DUMMIES.add(SUDDEN_DEATH_UNIT_ID)
+        call DUMMIES.add(SHADE_BR_RESPAWN_UNIT_ID)
 
         // Feral Spirit Wolfs
         set FERAL_SPIRIT_WOLVES = StaticIdGroup.create()
