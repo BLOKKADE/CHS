@@ -436,6 +436,7 @@
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\Heroes\Hero Selection\PlayerLeavesGameBeforeHeroSelection.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Battle Royal\BattleRoyaleHelper.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Battle Royal\PlayerDiesInBattleRoyale.j"
+//! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Battle Royal\PlayerShadeDeath.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\ComputerPvpEnforceDuel.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\DuelWinnerRewards.j"
 //! import "C:\CHS\CHS\Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\InitializePvp.j"

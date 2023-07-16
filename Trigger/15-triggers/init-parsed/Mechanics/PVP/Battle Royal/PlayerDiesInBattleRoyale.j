@@ -1,5 +1,9 @@
 library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, Scoreboard
 
+    globals
+        private constant integer PLAYER_BR_SHADE_TIMED_LIFE = 5
+    endglobals
+
     private function PlayerDiesInBattleRoyaleConditions takes nothing returns boolean
         return BrStarted == true and IsPlayerHero(GetTriggerUnit())
     endfunction
@@ -9,7 +13,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         local player deadPlayer = GetOwningPlayer(deadHero)
         local integer deadPlayerId = GetPlayerId(deadPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit()))
-        local location randomSpawnLocation
+        local unit shadeUnit
 
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
 
@@ -46,20 +50,13 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
             else
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has |r" + I2S(MaxBRDeathCount - PlayerBRDeaths[deadPlayerId]) + " |cffffcc00lives remaining! Respawning in 5 seconds.|r")
                 
-                call TriggerSleepAction(5)
-
-                // Respawn the hero
-                set randomSpawnLocation = GetRandomLocInRect(RectMidBRRespawnArena)
-                call ReviveHeroLoc(deadHero, randomSpawnLocation, true)
-                call SelectUnitForPlayerSingle(deadHero, deadPlayer)
-                call PanCameraToTimedLocForPlayer(deadPlayer, randomSpawnLocation, 0.50)
-
-                set TempUnit = deadHero // Used in HeroRefreshTrigger
-                call ConditionalTriggerExecute(HeroRefreshTrigger)
+                // Create an invlunerable/invisible unit for the dead player
+                set shadeUnit = CreateUnit(deadPlayer, SHADE_BR_RESPAWN_UNIT_ID, GetUnitX(deadHero), GetUnitY(deadHero), 270)
+                call UnitApplyTimedLife(shadeUnit, 'BTLF', PLAYER_BR_SHADE_TIMED_LIFE)
+                call SelectUnitForPlayerSingle(shadeUnit, deadPlayer)
 
                 // Cleanup
-                call RemoveLocation(randomSpawnLocation)
-                set randomSpawnLocation = null
+                set shadeUnit = null
                 set deadHero = null
                 set deadPlayer = null
             endif
