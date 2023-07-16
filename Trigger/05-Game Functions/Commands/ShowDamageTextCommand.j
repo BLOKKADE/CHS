@@ -2,6 +2,7 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
     //===========================================================================
     globals
         Table ShowDmgText
+        Table ShowDmgTextAt
     endglobals
 
     function ShowOtherDamageText takes unit source, unit target, real value, string damageType returns string
@@ -82,11 +83,11 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
                 call DisplayTimedTextToForce(duelGame.team2, 20, output)
             endif
         else
-            if ShowDmgText.boolean[DamageSourcePid] then
+            if ShowDmgText.boolean[DamageSourcePid] and Damage.index.damage > ShowDmgTextAt.integer[DamageSourcePid] then
                 call DisplayTimedTextToPlayer(Player(DamageSourcePid), 0, 0, 20, output)
             endif
 
-            if ShowDmgText.boolean[DamageTargetPid] then
+            if ShowDmgText.boolean[DamageTargetPid] and Damage.index.damage > ShowDmgTextAt.integer[DamageTargetPid] then
                 call DisplayTimedTextToPlayer(Player(DamageTargetPid), 0, 0, 20, output)
             endif
         endif
@@ -94,25 +95,28 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
 
     //death = true shows for all players
     function ShowDamageText takes boolean death returns nothing
-        if ShowDmgText.boolean[DamageSourcePid] or ShowDmgText.boolean[DamageTargetPid] then
+        if (ShowDmgText.boolean[DamageSourcePid] and Damage.index.damage > ShowDmgTextAt.integer[DamageSourcePid]) or (ShowDmgText.boolean[DamageTargetPid] and Damage.index.damage > ShowDmgTextAt.integer[DamageTargetPid]) then
             call ShowLoggingText(death, DamageText(death))
         endif
     endfunction
 
     function ToggleDmgTxt takes Args args returns nothing
+        local integer limit = S2I(args[1])
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        if ShowDmgText.boolean[pid] then
+        if ShowDmgText.boolean[pid] and limit == 0 then
             set ShowDmgText.boolean[pid] = false
             call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|ccffdde31Disabled damage text|r")
         else
             set ShowDmgText.boolean[pid] = true
-            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|ccf61fd31Enabled damage text|r")
+            set ShowDmgTextAt.integer[pid] = limit
+            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|ccf61fd31Enabled damage text|r when damage instance is higher than " + I2S(limit))
         endif
     endfunction
     
     //===========================================================================
     private function init takes nothing returns nothing
         set ShowDmgText = Table.create()
+        set ShowDmgTextAt = Table.create()
         call Command.create(CommandHandler.ToggleDmgTxt).name("DamageText").handles("damagetext").handles("dt").help("dt", "Toggles text display for damage taken by your hero. (can lag)")
     endfunction
 endlibrary
