@@ -28,10 +28,10 @@ library PlayerShadeDeath initializer init requires IdLibrary, GameInit
 
     private function init takes nothing returns nothing
         local trigger playerShadeDeathTrigger = CreateTrigger()
-        call DisableTrigger(playerShadeDeathTrigger)
         call TriggerRegisterAnyUnitEventBJ(playerShadeDeathTrigger, EVENT_PLAYER_UNIT_DEATH)
         call TriggerAddCondition(playerShadeDeathTrigger, Condition(function PlayerShadeDeathConditions))
         call TriggerAddAction(playerShadeDeathTrigger, function PlayerShadeDeathActions)
+        set playerShadeDeathTrigger = null
     endfunction
 
 endlibrary
