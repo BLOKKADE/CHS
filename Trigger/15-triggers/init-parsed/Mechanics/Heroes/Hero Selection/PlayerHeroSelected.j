@@ -62,6 +62,8 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call DestroyTimer(GameStartTimer)
         call DestroyTimerDialog(GameStartTimerDialog)
 
+        call CreateShops()
+
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
 
@@ -86,8 +88,6 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         elseif (AbilityMode == 1) then
             call InitUpgradeShop()
         endif
-
-        call CreateShops()
 
         call TriggerSleepAction(2)
 
