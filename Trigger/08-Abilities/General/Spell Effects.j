@@ -288,7 +288,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         endif
                         
                         //multicast
-                        if (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemType(caster, 'I08X') or GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) > 0)  and abilId != RESET_TIME_ABILITY_ID then
+                        if CanMulticast(caster, abilId) then
                             call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                         endif
                     endif

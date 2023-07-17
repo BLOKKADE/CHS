@@ -1,4 +1,13 @@
 library MultiBonusCast requires RandomShit, AbilityData, CustomState
+
+    function IsAbilityMulticastable takes integer abilId returns boolean
+        return abilId != RESET_TIME_ABILITY_ID and abilId != DEATH_AND_DECAY_ABILITY_ID
+    endfunction
+
+    function CanMulticast takes unit caster, integer abilId returns boolean
+        return (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or (UnitHasItemType(caster, 'I08X') and IsSpellElement(caster, abilId, Element_Fire) ) or GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) > 0) and IsAbilityMulticastable(abilId)
+    endfunction
+
     function MultiBonusCast takes unit caster, unit target, integer abilId, integer abilOrder, location spellLoc returns nothing
         local real targetX
         local real targetY
