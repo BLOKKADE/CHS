@@ -47,6 +47,9 @@ library TempAbilSystem initializer init requires BuffLevel
         
         method destroy takes nothing returns nothing
             call RemoveLeveledBuffs(this.source, this.abilId)
+            if GetBuffLevel(this.source, this.abilId) == 0 and GetUnitAbilityLevel(this.source, this.abilId) > 0 then
+                call UnitRemoveAbility(this.source, this.abilId)
+            endif
             set UnitTempAbilities[GetHandleId(this.source)].integer[this.abilId] = 0
             set this.source = null
             set this.stop = true
