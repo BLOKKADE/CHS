@@ -67,7 +67,7 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         if abilId == MEGA_LUCK_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT, hid, abilId) 
-            call AddUnitCustomState(u, BONUS_LUCK, 0.01 * I2R(i1 - i2))	
+            call AddUnitCustomState(u, BONUS_LUCK, 0.015 * I2R(i1 - i2))	
             call SaveInteger(HT, hid, abilId, i1)
         endif 
 

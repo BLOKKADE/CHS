@@ -495,6 +495,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			elseif GetUnitAbilityLevel(u, DRUIDIC_FOCUS_ABILITY_ID) == 0 then
 				call UnitAddAbility(u, DRUIDIC_FOCUS_ABILITY_ID)
 			endif
+
+			// Dark Shield
+		elseif itemId == 'I060' then
+			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 		endif 
 
 		call SecretCheck_CheckAbilitiesAndItems(u)
