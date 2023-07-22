@@ -216,7 +216,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Yeti Strength: Gives the Hero +20 strength. Gains +10% strength and an 8% chance to negate [|cff00ffffCrit|r] damage for every [|cff8080ffCold|r] it has.")
-        call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus strength, +2 armor limit." )
+        call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Yeti Strength: +20 bonus strength" )
         
         call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSatyr.blp" )
         call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it it has a 50% chance to counterattack, dealing 50% of its attack damage in |cffff8080physical damage|r back to the attacker.[|cff80ff80Luck|r][|cffd45e29onhit|r]")
