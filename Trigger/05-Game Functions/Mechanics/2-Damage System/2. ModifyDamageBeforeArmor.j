@@ -13,7 +13,7 @@ scope ModifyDamageBeforeArmor initializer init
 
          //Extradimensional Cooperation
          if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not IsOnHitDamage()) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
-            call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, IsMagicDamage())
+            call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, Damage.index.isAttack, IsMagicDamage())
         endif
 
         //Contract of the Living no damage
@@ -432,7 +432,7 @@ scope ModifyDamageBeforeArmor initializer init
         if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)
             call TempAbil.create(DamageTarget, 'A08O', 3)
-            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, 0).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1).start()
+            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, URSA_WARRIOR_UNIT_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1).start()
         endif
 
         //Pvp Bonus
@@ -630,7 +630,7 @@ scope ModifyDamageBeforeArmor initializer init
             call AbilStartCD(DamageTarget, 'A0AH', 1)
             call ElementStartAbility(DamageTarget, ROCK_GOLEM_UNIT_ID)
             call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
-            call AreaDamage(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitCustomState(DamageTarget, BONUS_BLOCK) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, false, ROCK_GOLEM_UNIT_ID, false)
+            call AreaDamage(DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), GetUnitCustomState(DamageTarget, BONUS_BLOCK) * (0.49 + (0.01 * GetHeroLevel(DamageTarget))), 400, false, ROCK_GOLEM_UNIT_ID, false, false)
         endif
 
         //Spirit Link
@@ -772,7 +772,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call AddCooldowns(DamageSource,0.95 + I2R(i1)* 0.05)
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = FROSTBITE_OF_THE_SOUL_ABILITY_ID
-                call Damage.applyMagic(DamageTarget, DamageSource, 200 * i1, DAMAGE_TYPE_MAGIC)
+                call Damage.applyMagic(DamageTarget, DamageSource, 200 * i1, false, DAMAGE_TYPE_MAGIC)
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl", DamageSource, "chest"))
             endif
         endif 

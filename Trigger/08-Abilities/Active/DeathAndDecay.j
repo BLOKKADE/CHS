@@ -20,7 +20,7 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
                 exitwhen p == null
                 if p != null then
                     set udg_NextDamageAbilitySource = DEATH_AND_DECAY_ABILITY_ID
-                    call Damage.applyMagic(this.source, p, BlzGetUnitMaxHP(p) * (0.01 * this.level), DAMAGE_TYPE_MAGIC)
+                    call Damage.applyMagic(this.source, p, BlzGetUnitMaxHP(p) * (0.01 * this.level), false, DAMAGE_TYPE_MAGIC)
                 endif
                 set i = i + 1
             endloop

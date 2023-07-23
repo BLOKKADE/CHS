@@ -50,9 +50,8 @@ library Pyromancer initializer init requires ElementalAbility, RandomShit
             if p != target and IsUnitEnemy(p, GetOwningPlayer(source)) then
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
-                set udg_NextDamageIsAttack = true
                 set udg_NextDamageAbilitySource = PYROMANCER_UNIT_ID
-                call Damage.applyPhys(source, p, GetUnitDamage(source, 0), true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                call Damage.applyPhys(source, p, GetUnitDamage(source, 0), true, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
             endif
             call GroupRemoveUnit(PyromancerDamage, p)
         endloop

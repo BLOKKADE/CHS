@@ -68,8 +68,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
                 //set udg_NextDamageIsAttack = true
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = SATYR_TRICKSTER_UNIT_ID
-                set udg_NextDamageIsAttack = true
-                call Damage.applyPhys(DamageTarget, DamageSource, GetAttackDamage(DamageTarget) * (0.5 + (0.01 * GetHeroLevel(DamageTarget))), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                call Damage.applyPhys(DamageTarget, DamageSource, GetAttackDamage(DamageTarget) * (0.5 + (0.01 * GetHeroLevel(DamageTarget))), true, false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
             endif
         endif
 

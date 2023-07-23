@@ -7,6 +7,7 @@ library AreaDamage requires DamageEngine, UnitHelpers
         real damage
         real area
         boolean onHit
+        boolean attack
         integer abilSourceId
         boolean magicDamage
     endstruct
@@ -32,9 +33,10 @@ library AreaDamage requires DamageEngine, UnitHelpers
             set udg_NextDamageAbilitySource = data.abilSourceId
 
             if data.magicDamage then
-                call Damage.applyMagic(data.source, p, data.damage, DAMAGE_TYPE_MAGIC)
+                set udg_NextDamageIsAttack = data.attack
+                call Damage.applyMagic(data.source, p, data.damage, data.attack, DAMAGE_TYPE_MAGIC)
             else
-                call Damage.applyPhys(data.source, p, data.damage, false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                call Damage.applyPhys(data.source, p, data.damage, data.attack, false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
             endif
             call GroupRemoveUnit(ENUM_GROUP, p)
             set i = i + 1
@@ -47,7 +49,7 @@ library AreaDamage requires DamageEngine, UnitHelpers
         set p = null
     endfunction
 
-    function AreaDamage takes unit source, real x, real y, real damage, real area, boolean onHit, integer abilSourceId, boolean magicDamage returns nothing
+    function AreaDamage takes unit source, real x, real y, real damage, real area, boolean onHit, integer abilSourceId, boolean magicDamage, boolean attack returns nothing
         local timer t = NewTimer()
         local AreaDamageData timerData = AreaDamageData.create()
         set timerData.source = source
@@ -58,6 +60,7 @@ library AreaDamage requires DamageEngine, UnitHelpers
         set timerData.onHit = onHit
         set timerData.abilSourceId = abilSourceId
         set timerData.magicDamage = magicDamage
+        set timerData.attack = attack
 
         call SetTimerData(t, timerData)
         call TimerStart(t, 0, false, function DealAreaDamage)

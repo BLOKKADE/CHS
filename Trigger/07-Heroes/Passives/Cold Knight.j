@@ -16,7 +16,7 @@ library ColdKnight requires DummyOrder, AbilityCooldown, UnitHelpers, DivineBubb
             call dummy.target(u).activate()
 
             set udg_NextDamageAbilitySource = 'A07W'
-            call Damage.applyMagic(GLOB_ABSOLUTE_COLD_U, u, GLOB_ABSOLUTE_COLD_DMG, DAMAGE_TYPE_MAGIC)
+            call Damage.applyMagic(GLOB_ABSOLUTE_COLD_U, u, GLOB_ABSOLUTE_COLD_DMG, false, DAMAGE_TYPE_MAGIC)
         endif
 
         set u = null

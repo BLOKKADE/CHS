@@ -50,14 +50,14 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
                 //set DamageIsAttack = true
                 set udg_NextDamageAbilitySource = ARCANE_ASSAUL_ABILITY_ID
                 set udg_NextDamageIsAttack = true
-                call Damage.applyPhys(damageSource, target, damage, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                call Damage.applyPhys(damageSource, target, damage, true, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 //call BJDebugMsg("full aa" + I2S(GetHandleId(target)) + " targets: " + I2S(targets))
             elseif damageBonus != 0 then
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
                 set udg_NextDamageAbilitySource = ARCANE_ASSAUL_ABILITY_ID
                 set udg_NextDamageIsAttack = true
-                call Damage.applyPhys(damageSource, target, damage * damageBonus, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                call Damage.applyPhys(damageSource, target, damage * damageBonus, true, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 //call BJDebugMsg("db aa" + I2S(GetHandleId(target)) + " dmg: " + R2S(damage * damageBonus) + " targets: " + I2S(targets))
                 call GroupClear(ENUM_GROUP)
             endif

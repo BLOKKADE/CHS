@@ -35,24 +35,24 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
             set dmgType = "|r killed " + GetPlayerNameColour(GetOwningPlayer(DamageTarget)) + "|r dealing: "
         endif
 
+        //if damage source is a summon
+        if SUMMONS.contains(DamageSourceTypeId) then
+            set aType = aType + GetObjectName(DamageSourceTypeId) + " "
+        endif
+
+        if Damage.index.isSpell then
+            set aType = aType + "spell"
+        endif
+
+        if Damage.index.isAttack then
+            set aType = aType + "attack"
+        endif
+
         //if damage source was an ability
         if DamageSourceAbility != 0 then
-            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
+            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
         //if damage source is an attack or unknown ability
         else
-            //if damage source is a summon
-            if SUMMONS.contains(DamageSourceTypeId) then
-                set aType = aType + GetObjectName(DamageSourceTypeId) + " "
-            endif
-
-            if Damage.index.isSpell then
-                set aType = aType + "spell"
-            endif
-    
-            if Damage.index.isAttack then
-                set aType = aType + "attack"
-            endif
-
             set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
         endif
 

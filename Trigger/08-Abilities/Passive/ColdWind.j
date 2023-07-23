@@ -13,7 +13,7 @@ library ColdWind initializer init requires HideEffects, AreaDamage, AbilityCoold
             call DestroyEffect(AddLocalizedSpecialEffectTarget("war3mapImported\\Ice Shard.mdx", source, "origin"))
         endif
 
-        call AreaDamage(source, GetUnitX(source), GetUnitY(source), GetSpellValue(80, 14, abilLvl) * (1 + ColdwindDamageBonus[GetHandleId(source)]), 500, false, COLD_WIND_ABILITY_ID, false)
+        call AreaDamage(source, GetUnitX(source), GetUnitY(source), GetSpellValue(80, 14, abilLvl) * (1 + ColdwindDamageBonus[GetHandleId(source)]), 500, false, COLD_WIND_ABILITY_ID, false, false)
         call AbilStartCD(source, COLD_WIND_ABILITY_ID, 1)
         set ColdWindDamageIncreased.boolean[hid] = false
     endfunction

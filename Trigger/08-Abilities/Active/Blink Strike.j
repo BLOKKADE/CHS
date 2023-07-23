@@ -27,8 +27,7 @@ library BlinkStrike initializer init requires RandomShit, GetRandomUnit
         //set DamageIsAttack = true
         set udg_NextDamageType = DamageType_BlinkStrike
         set udg_NextDamageAbilitySource = BLINK_STRIKE_ABILITY_ID
-        set udg_NextDamageIsAttack = true
-        call Damage.applyPhys(caster, target, GetAttackDamage(caster), false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+        call Damage.applyPhys(caster, target, GetAttackDamage(caster), true, false, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
         //set BlinkStrikeEnabled.boolean[GetHandleId(caster)] = false
     endfunction
 

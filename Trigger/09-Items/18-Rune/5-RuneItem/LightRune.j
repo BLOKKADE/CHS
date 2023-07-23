@@ -4,7 +4,7 @@ library LightRune requires RandomShit, UnitHelpers
         if IsUnitEnemy(GLOB_RUNE_U,GetOwningPlayer(GetFilterUnit())) and IsUnitTarget(GetFilterUnit()) then
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl", GetFilterUnit(), "origin"))  
             set udg_NextDamageAbilitySource = 'I0AW'
-            call Damage.applyMagic(GLOB_RUNE_U, GetFilterUnit(), (0.02 * GLOB_RUNE_POWER) * BlzGetUnitMaxHP(GLOB_RUNE_U), DAMAGE_TYPE_MAGIC)
+            call Damage.applyMagic(GLOB_RUNE_U, GetFilterUnit(), (0.02 * GLOB_RUNE_POWER) * BlzGetUnitMaxHP(GLOB_RUNE_U), false, DAMAGE_TYPE_MAGIC)
         endif
         return false
     endfunction

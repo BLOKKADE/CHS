@@ -20,6 +20,7 @@ library ExtradimensionalCooperation initializer init requires DamageEngine, Hide
         unit ssdummy
         unit caster
         boolean magic
+        boolean attack
         integer endTick
         boolean dummyEnabled
 
@@ -59,10 +60,10 @@ library ExtradimensionalCooperation initializer init requires DamageEngine, Hide
             if T32_Tick > this.endTick then
                 set udg_NextDamageAbilitySource = EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID
                 if magic then
-                    call Damage.applyMagic(this.caster, this.target, this.dmg, DAMAGE_TYPE_MAGIC)
+                    call Damage.applyMagic(this.caster, this.target, this.dmg, this.attack, DAMAGE_TYPE_MAGIC)
                 else
                     //set GLOB_typeDmg = 2
-                    call Damage.applyPhys(this.caster, this.target, this.dmg, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                    call Damage.applyPhys(this.caster, this.target, this.dmg, this.attack, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 endif
                 if this.dummyEnabled then
                     call this.endDummy()
@@ -72,13 +73,14 @@ library ExtradimensionalCooperation initializer init requires DamageEngine, Hide
             endif
         endmethod  
 
-        static method create takes unit caster, unit target, real damage, boolean magic returns ExtraDimensionalCoop
+        static method create takes unit caster, unit target, real damage, boolean attack, boolean magic returns ExtraDimensionalCoop
             local thistype this = thistype.setup()
 
             set this.dmg = damage
             set this.target = target
             set this.magic = magic
             set this.caster = caster
+            set this.attack = attack
 
             if T32_Tick - ExtraDimLastTime[GetHandleId(caster)]  < 16 then
                 set this.dummyEnabled = false
@@ -105,10 +107,10 @@ library ExtradimensionalCooperation initializer init requires DamageEngine, Hide
         implement Recycle
     endstruct
 
-    function CastExtradimensionalCoop takes unit caster, unit target, real damage, boolean magic returns nothing
+    function CastExtradimensionalCoop takes unit caster, unit target, real damage, boolean attack, boolean magic returns nothing
         local integer i = ExtraDimHits.integer[GetHandleId(caster)]
         if i > 0 then
-            call ExtraDimensionalCoop.create(caster, target, damage, magic)
+            call ExtraDimensionalCoop.create(caster, target, damage, attack, magic)
             set ExtraDimHits.integer[GetHandleId(caster)] = i - 1
             if i - 1 == 0 then
                 call UnitRemoveAbility(caster, EXTRADIMENSIONAL_COOPERATION_BUFF_ID)
