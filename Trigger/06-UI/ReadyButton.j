@@ -6,8 +6,8 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         boolean array ReadyButtonDisabled
         integer PlayersNeeded
 
-        string ReadyIcon = "Ability_parry"
-        string UnreadyIcon = "Defend"
+        string ReadyIcon = "Ready"
+        string UnreadyIcon = "NotReady"
     endglobals
 
     function ReadyPlayerCount takes nothing returns integer
@@ -109,9 +109,9 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
     function ReadyButtonTexture takes boolean isReady returns nothing
         if isReady then
-            call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNDefend.blp", 0, true)
+            call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNNotReady.blp", 0, true)
         else
-            call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNAbility_parry.blp", 0, true)
+            call BlzFrameSetTexture(ButtonId[5], "ReplaceableTextures\\CommandButtons\\BTNReady.blp", 0, true)
         endif
     endfunction
     

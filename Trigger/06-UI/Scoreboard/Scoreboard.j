@@ -396,7 +396,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Default to the non ready status
         set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
-        call CreateIcon(GetIconPath("Defend"), playerId)
+        call CreateIcon(GetIconPath("NotReady"), playerId)
         set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = INVALID_ACTION_COLOR + "Player is not ready" + COLOR_END_TAG
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
 
@@ -645,14 +645,14 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
             if (ps.isReady()) then
                 if (CachedPlayerPlayerReadyStatus[playerId] != ps.isReady()) then
-                    call CreateIcon(GetIconPath("Ability_parry"), playerId)
+                    call CreateIcon(GetIconPath("Ready"), playerId)
                 endif
 
                 set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = PLAYER_READY_COLOR + "Player is ready" + COLOR_END_TAG
                 set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
             else
                 if (CachedPlayerPlayerReadyStatus[playerId] != ps.isReady()) then
-                    call CreateIcon(GetIconPath("Defend"), playerId)
+                    call CreateIcon(GetIconPath("NotReady"), playerId)
                 endif
 
                 set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = PLAYER_NOT_READY_COLOR + "Player is not ready" + COLOR_END_TAG
@@ -696,7 +696,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         else
             // Disable player ready status icon
             set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
-            call CreateIcon(GetDisabledIconPath("Defend"), playerId)
+            call CreateIcon(GetDisabledIconPath("NotReady"), playerId)
 
             set CachedPlayerPlayerReadyStatus[playerId] = false
 
