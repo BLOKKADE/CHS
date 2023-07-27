@@ -1,4 +1,4 @@
-library PlayerShadeDeath initializer init requires IdLibrary, GameInit
+library PlayerShadeDeath initializer init requires IdLibrary, GameInit, CustomGameEvent
 
     private function PlayerShadeDeathConditions takes nothing returns boolean
         return BrStarted == true and (GetUnitTypeId(GetTriggerUnit()) == SHADE_BR_RESPAWN_UNIT_ID)
@@ -14,6 +14,8 @@ library PlayerShadeDeath initializer init requires IdLibrary, GameInit
         call ReviveHeroLoc(playerHero, respawnLocation, true)
         call SelectUnitForPlayerSingle(playerHero, deadPlayer)
         call PanCameraToTimedLocForPlayer(deadPlayer, respawnLocation, 0.50)
+        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.createAll(deadPlayer, 0, RoundNumber, true))
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_START, EventInfo.createAll(deadPlayer, 0, RoundNumber, true))
 
         set TempUnit = playerHero // Used in HeroRefreshTrigger
         call ConditionalTriggerExecute(HeroRefreshTrigger)

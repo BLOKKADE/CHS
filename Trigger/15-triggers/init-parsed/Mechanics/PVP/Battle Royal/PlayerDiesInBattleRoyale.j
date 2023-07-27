@@ -54,6 +54,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 set shadeUnit = CreateUnit(deadPlayer, SHADE_BR_RESPAWN_UNIT_ID, GetUnitX(deadHero), GetUnitY(deadHero), 270)
                 call UnitApplyTimedLife(shadeUnit, 'BTLF', PLAYER_BR_SHADE_TIMED_LIFE)
                 call SelectUnitForPlayerSingle(shadeUnit, deadPlayer)
+                call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.createAll(deadPlayer, 0, RoundNumber, true))
 
                 // Cleanup
                 set shadeUnit = null
