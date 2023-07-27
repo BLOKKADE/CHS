@@ -27,8 +27,8 @@ library Gnome initializer init requires AbilityCooldown, TempAbilSystem
             local integer level = GetHeroLevel(this.source)
             local DummyOrder dummy = DummyOrder.create(this.source, GetUnitX(this.source), GetUnitY(this.source), GetUnitFacing(this.source), 1.5)
             call dummy.addActiveAbility(GNOME_MASTER_PASSIVE_DUMMY_ABILITY_ID, 1, 852096)
-            call dummy.setAbilityRealField('A061', ABILITY_RLF_AOE_DAMAGE, 10 * level * this.charges)
-            call dummy.setAbilityRealField('A061', ABILITY_RLF_MOVEMENT_SPEED_REDUCTION_PERCENT_HTC3, 0.03 * this.charges)
+            call dummy.setAbilityRealField(GNOME_MASTER_PASSIVE_DUMMY_ABILITY_ID, ABILITY_RLF_AOE_DAMAGE, 10 * level * this.charges)
+            call dummy.setAbilityRealField(GNOME_MASTER_PASSIVE_DUMMY_ABILITY_ID, ABILITY_RLF_MOVEMENT_SPEED_REDUCTION_PERCENT_HTC3, 0.03 * this.charges)
             call dummy.instant()
             call dummy.activate()
         endmethod
