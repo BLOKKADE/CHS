@@ -87,6 +87,9 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
                 else
                     call DisplayTimedTextToForce(GetPlayersAll(), 30, ConvertForceToString(winningForce) + " |cffffcc00survived longer than all other players. Congratulations!!")
                 endif
+
+                // Cleanup
+                set winningForce = null
             else
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, "|cffff7b00No winner detected.|r |cffffcc00That sucks bro, the game ends here.")
