@@ -418,6 +418,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
     private function UpdateFrameVisibility takes nothing returns nothing
         local integer pid = GetPlayerId(GetLocalPlayer())
         local integer selectedUnitPid = SelectedUnitPid[pid]
+		local boolean hideEndGameIcons = BrStarted or IsFunBRRound
 		local string playerReadyIconPath
 		local PlayerStats ps
 
@@ -436,17 +437,17 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		if (GetLocalPlayer() == Player(pid)) then
 			call BlzFrameSetTexture(ButtonId[40], playerReadyIconPath, 0, true)
-			call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid])
+			call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid] and (not hideEndGameIcons))
 		endif
 
 		// Indicator if the player is auto-ready
-		call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])
+		call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid] and (not hideEndGameIcons))
 
 		// Indicator if the player has points
-		call BlzFrameSetVisible(ButtonIndicatorParentId[6], RoundNumber > 5 and PlayerRewardPoints[pid] > 0)
+		call BlzFrameSetVisible(ButtonIndicatorParentId[6], PlayerRewardPoints[pid] > 0 and (not hideEndGameIcons))
 
 		// Creep info
-		call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid] and ShopsCreated and (not BrStarted))
+		call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid] and ShopsCreated and (not hideEndGameIcons))
     endfunction
 
 	private function CreateIconWorld takes integer buttonIndex, string iconPath, real x, real y, real size returns nothing
@@ -512,16 +513,16 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		// Scoreboard
 		call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNScoreboard.blp", BOTTOM_LEFT_ICON_ROW_X + 0 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 
-		// Ready
-		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNReady.blp", BOTTOM_LEFT_ICON_ROW_X + 1 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
-		call CreateIndicatorForButton(5, BIG_BUTTON_WIDTH)
-
 		// Rewards
-		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNRewards.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNRewards.blp", BOTTOM_LEFT_ICON_ROW_X + 1 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 		call CreateIndicatorForButton(6, BIG_BUTTON_WIDTH)
 
-		// Creep info - Create at same place as the Rewards button above. This button will move over after round 5
-		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNWaveInfo.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		// Ready
+		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNReady.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		call CreateIndicatorForButton(5, BIG_BUTTON_WIDTH)
+
+		// Creep info
+		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNWaveInfo.blp", BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 		// -- Big buttons
 
 		// -- Currency buttons - Top middle rightish
