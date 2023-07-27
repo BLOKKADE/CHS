@@ -32,7 +32,6 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
                 set i = i + 1
             endloop
         endmethod
-    
 
         private method periodic takes nothing returns nothing
             if T32_Tick > this.tick and (not HasPlayerFinishedLevel(this.source, Player(pid))) then
