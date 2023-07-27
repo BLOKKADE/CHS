@@ -133,7 +133,7 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		endif
 		call BlzFrameSetText(TextUI[4], R2SW(GetUnitCustomState(u, BONUS_BLOCK), 1, 0))
 		call BlzFrameSetText(TextUI[5], R2SW(GetUnitCustomState(u, BONUS_PVP), 1, 1))
-		call BlzFrameSetText(TextUI[9], I2S(MathRound_round(100 + GetUnitCustomState(u, BONUS_MAGICPOW))) + "/" + I2S(MathRound_round(100 + GetUnitCustomState(u, BONUS_PHYSPOW))))
+		call BlzFrameSetText(TextUI[9], I2S(MathRound_round(GetUnitCustomState(u, BONUS_MAGICPOW))) + "/" + I2S(MathRound_round(GetUnitCustomState(u, BONUS_PHYSPOW))))
 		call BlzFrameSetText(TextUI[10], R2SW(GetUnitCustomState(u, BONUS_MAGICRES), 1, 1))
 		call BlzFrameSetText(TextUI[11], R2SW(GetUnitCustomState(u, BONUS_EVASION), 1, 1))
 
