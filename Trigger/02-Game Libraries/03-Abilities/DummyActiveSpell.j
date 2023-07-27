@@ -137,14 +137,16 @@ library DummySpell initializer init requires AbilityData, ListT
     function SetupDummySpell takes unit u, integer abilId, integer lvl, boolean new returns nothing
         local integer orderType = 0
         //call BJDebugMsg("hello?")
-        if  IsAbilityReplaceable(abilId) then
+        if IsAbilityReplaceable(abilId) then
             if not IsAbilityCasteable(abilId, false) then
-                set orderType = 2
-                call BJDebugMsg("sds passive abil: " + GetObjectName(abilId) + " lvl: " + I2S(lvl - 1) + "new: " + B2S(new) + " ordertype: " + I2S(orderType))
-                if new then
-                    call AddDummySpell(u, abilId, lvl - 1, orderType)
-                else
-                    call UpdateDummySpells(u, abilId, lvl - 1)
+                if GetAbilityOrder(abilId) == 0 then
+                    set orderType = 2
+                    //call BJDebugMsg("sds passive abil: " + GetObjectName(abilId) + " lvl: " + I2S(lvl - 1) + "new: " + B2S(new) + " ordertype: " + I2S(orderType))
+                    if new then
+                        call AddDummySpell(u, abilId, lvl - 1, orderType)
+                    else
+                        call UpdateDummySpells(u, abilId, lvl - 1)
+                    endif
                 endif
             elseif GetAbilityTargetType(abilId) == Target_Enemy then
 

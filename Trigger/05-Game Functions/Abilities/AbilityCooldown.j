@@ -153,8 +153,8 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
 
         call BlzStartUnitAbilityCooldown(u, id, newCooldown)
 
-        call BJDebugMsg("Start cd: " + GetObjectName(id) + " newced: " + R2S(newCooldown))
-        call BJDebugMsg("assoc cd: " + GetObjectName(CheckAssociatedSpell(u, id)) + " newced: " + R2S(BlzGetUnitAbilityCooldownRemaining(u, CheckAssociatedSpell(u, id))))
+        //call BJDebugMsg("Start cd: " + GetObjectName(id) + " newced: " + R2S(newCooldown))
+        //call BJDebugMsg("assoc cd: " + GetObjectName(CheckAssociatedSpell(u, id)) + " newced: " + R2S(BlzGetUnitAbilityCooldownRemaining(u, CheckAssociatedSpell(u, id))))
 
         if id != ANCIENT_TEACHING_ABILITY_ID then
             set Global_i = id

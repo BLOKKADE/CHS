@@ -226,7 +226,6 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     endif
 
                     if GetUnitTypeId(caster) == GNOME_MASTER_UNIT_ID then
-                        call BJDebugMsg("GNOME0")
                         call CastGnomePassive(caster)
                     endif
 
