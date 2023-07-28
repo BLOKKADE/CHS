@@ -363,7 +363,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         set CurrentPlayerSlotIndex = 0
 
         // BRObservers
-        set ObserverHandle = CreatePlayerForceSectionButton(BR_OBSERVERS_COLOR + "Observers" + BR_COLOR_END_TAG, "Join the BRObservers", "Join the BRObservers. You won't be in the next fight.|n")
+        set ObserverHandle = CreatePlayerForceSectionButton(BR_OBSERVERS_COLOR + "Observers" + BR_COLOR_END_TAG, "Join the Observers", "Join the Observers. You won't be in the next fight.|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
