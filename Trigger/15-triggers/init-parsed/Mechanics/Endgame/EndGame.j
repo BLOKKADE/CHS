@@ -1,5 +1,9 @@
 library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, BattleRoyaleHelper
 
+    globals
+        private force AwardedPlayers = CreateForce()
+    endglobals
+
     private function IsOnlyOnePlayerRemaining takes nothing returns boolean
         return (IsTriggerEnabled(GetTriggeringTrigger()) == true) and (InitialPlayerCount > 1) and (PlayerCount == 1) and (GameComplete == false)
     endfunction
@@ -41,15 +45,20 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
         call StopRectLeaveDetection(GetHandleId(PlayerHeroes[GetPlayerId(GetEnumPlayer())]))
     endfunction
 
-    private function AddBRWinnerToPlayer takes nothing returns nothing
+    private function AddBRWinToPlayer takes nothing returns nothing
         // Update the player's stats that they won a BR
         local PlayerStats ps = PlayerStats.forPlayer(GetEnumPlayer())
-        call ps.addBRWin()
 
-        call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
-        call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(GetEnumPlayer()) + " |cffffcc00survived longer than all other players with " + ps.getBRPVPKillCount() + " Congratulations!!")
-        call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(GetEnumPlayer()) + " has |cffc2154f" + I2S(ps.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(ps.getAllBRWins()) + "|r all time for this game mode")
+        // Ensure a player doesn't get more than one BR win for some reason
+        if (not IsPlayerInForce(GetEnumPlayer(), AwardedPlayers)) then
+            call ForceAddPlayer(AwardedPlayers, GetEnumPlayer())
 
+            call ps.addBRWin()
+
+            call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
+            call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(GetEnumPlayer()) + " |cffffcc00survived longer than all other players with " + ps.getBRPVPKillCount() + " Congratulations!!")
+            call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(GetEnumPlayer()) + " has |cffc2154f" + I2S(ps.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(ps.getAllBRWins()) + "|r all time for this game mode")
+        endif
     endfunction
 
     private function EndGameActions takes nothing returns nothing
@@ -83,7 +92,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
 
                 if (not IsFunBRRound) then
                     // There should only be one player in this force since there can only be one winner
-                    call ForForce(winningForce, function AddBRWinnerToPlayer)
+                    call ForForce(winningForce, function AddBRWinToPlayer)
                 else
                     call DisplayTimedTextToForce(GetPlayersAll(), 30, ConvertForceToString(winningForce) + " |cffffcc00survived longer than all other players. Congratulations!!")
                 endif
