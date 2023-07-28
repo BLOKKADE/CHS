@@ -309,11 +309,14 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
         // Show scoreboard button
         call BlzFrameSetVisible(ButtonParentId[4], RoundNumber > 0 and ScoreboardFrameHandle != null)
 		
+		// Show rewards button
+        call BlzFrameSetVisible(ButtonParentId[6], RoundNumber > 0 and RewardsFrameHandle != null)
+
         // Show specific button
         if (ShopsCreated == false or BrStarted) then
+            call BlzFrameSetVisible(ButtonParentId[2], false) // Creep info
             call BlzFrameSetVisible(ButtonParentId[3], false) // Sell all items
             call BlzFrameSetVisible(ButtonParentId[5], false) // Ready button
-            call BlzFrameSetVisible(ButtonParentId[2], false) // Creep info
         else
             call BlzFrameSetVisible(ButtonParentId[3], true) // Sell all items
             call BlzFrameSetVisible(ButtonParentId[5], true) // Ready button
@@ -326,11 +329,6 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 	private function UpdateRoundEndGlobalIcons takes EventInfo eventInfo returns nothing
 		local integer pid = GetPlayerId(eventInfo.p)
-
-        // Move the creep info button over after round 5 since we are now showing the rewards button
-        if (RoundNumber == 5) then
-            call BlzFrameSetPoint(ButtonParentId[2], FRAMEPOINT_TOPLEFT, GameUI, FRAMEPOINT_TOPLEFT, BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y)
-        endif
 
 		// Creep info
 		if (GetLocalPlayer() == eventInfo.p) then
@@ -443,8 +441,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		// Indicator if the player is auto-ready
 		call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid] and (not hideEndGameIcons))
 
-		// Indicator if the player has points
+		// Rewards button
 		call BlzFrameSetVisible(ButtonIndicatorParentId[6], PlayerRewardPoints[pid] > 0 and (not hideEndGameIcons))
+		call BlzFrameSetVisible(ButtonParentId[6], ShopsCreated and (not hideEndGameIcons))
 
 		// Creep info
 		call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid] and ShopsCreated and (not hideEndGameIcons))
