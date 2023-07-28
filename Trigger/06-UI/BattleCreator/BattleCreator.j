@@ -407,7 +407,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         call TriggerAddAction(EventTrigger, function BattleCreatorMouseEventActions)
 
         // Create the main frame. All elements use this frame as the parent
-        set BattleCreatorFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
+        set BattleCreatorFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0) 
         call BlzFrameSetLevel(BattleCreatorFrameHandle, 1)
         call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
         
