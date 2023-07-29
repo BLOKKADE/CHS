@@ -1,4 +1,4 @@
-library MagicRune requires RandomShit
+library MagicRune requires RandomShit, DummySpell
     globals
         constant real RuneOfMagic_base = 5
     endglobals
@@ -13,14 +13,14 @@ library MagicRune requires RandomShit
         loop
             exitwhen i1 > 10
             set SpellId = GetHeroSpellAtPosition(u ,i1)
-            set dummyspell = GetDummySpellId(SpellId)
+            set dummyspell = GetDummySpell(u, SpellId)
             if IsSpellResettable(SpellId) then
                 if BlzGetUnitAbilityCooldownRemaining(u,SpellId) < RuneOfMagic_base * power then
                     call BlzEndUnitAbilityCooldown(u,SpellId)
-                    call BlzEndUnitAbilityCooldown(u,GetDummySpellId(u, SpellId))
+                    call BlzEndUnitAbilityCooldown(u, dummyspell)
                 elseif BlzGetUnitAbilityCooldownRemaining(u,SpellId) > 0 then
                     call BlzStartUnitAbilityCooldown(u,SpellId,BlzGetUnitAbilityCooldownRemaining(u,SpellId)- RuneOfMagic_base * power )
-                    call BlzStartUnitAbilityCooldown(u,GetDummySpellId(u, SpellId),BlzGetUnitAbilityCooldownRemaining(u,GetDummySpellId(u, SpellId))- RuneOfMagic_base * power )
+                    call BlzStartUnitAbilityCooldown(u, dummyspell,BlzGetUnitAbilityCooldownRemaining(u, dummyspell)- RuneOfMagic_base * power )
                 endif
             endif
             set i1 = i1 + 1

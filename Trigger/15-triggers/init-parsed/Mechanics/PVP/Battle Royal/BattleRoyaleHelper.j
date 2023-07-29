@@ -258,7 +258,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         set shops = null
     endfunction
 
-    private function StartBattleRoyale takes nothing returns nothing
+    function StartBattleRoyale takes nothing returns nothing
         call DestroyTimer(BattleRoyalTimer)
         call DestroyTimerDialog(BattleRoyalTimerDialog)
 

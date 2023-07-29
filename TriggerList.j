@@ -31,6 +31,7 @@
 //! import "C:\CHS\CHS\Trigger\04-Helpers\DelayedBuffRemoval.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\DummySpellCasts.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\EditAbilityInfo.j"
+//! import "C:\CHS\CHS\Trigger\04-Helpers\EventHelpers.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\FixUnits.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\ForceHelper.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\Generic.j"
