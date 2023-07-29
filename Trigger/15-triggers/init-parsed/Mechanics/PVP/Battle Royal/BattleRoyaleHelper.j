@@ -196,6 +196,14 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         endif
     endfunction
 
+    private function HideBattleCreatorForPlayer takes nothing returns nothing
+        call PlayerStats.forPlayer(GetEnumPlayer()).setHasBattleCreatorOpen(false)
+    endfunction
+
+    private function ShowBattleCreatorForPlayer takes nothing returns nothing
+        call PlayerStats.forPlayer(GetEnumPlayer()).setHasBattleCreatorOpen(true)
+    endfunction
+
     private function HideScoreboardForPlayer takes nothing returns nothing
         call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(false)
     endfunction
@@ -412,6 +420,15 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         set currentPlayer = null
         set currentUnit = null
     endfunction
+    
+    private function EndroundEventForAllPlayers takes nothing returns nothing
+        local integer i = 0
+        loop
+            call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.createAll(Player(i), 0, RoundNumber, true))
+            set i = i + 1
+            exitwhen i == 8
+        endloop
+    endfunction
 
     function BattleRoyalPrep takes nothing returns nothing
         local force playersToFight
@@ -451,6 +468,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
             call TriggerSleepAction(5)
 
+            call ForForce(GetPlayersAll(), function HideBattleCreatorForPlayer) 
             call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
         else
             call BlzFrameSetText(BRMessageTextFrameHandle, BR_MESSAGE_COLOR + "Invalid Fun Battle Royale Setup. Try again." + BR_COLOR_END_TAG)
@@ -474,7 +492,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
             return
         endif
-
+        
         // Reset the player count since it gets decremented during the PlayerDiesInBattleRoyale trigger
         set PlayerCount = BRRoundPlayerCount
 
@@ -495,6 +513,9 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
             // Show shops
             call SetShopVisibility(true)
+
+            // Reenable ready button
+            call EndroundEventForAllPlayers()
 
             set BattleRoyalTimer = CreateTimer()
             set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
@@ -543,6 +564,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call SetBRLockStatus(true)
 
         call ResetBRPlayerSlots()
+
+        call ForForce(GetPlayersAll(), function ShowBattleCreatorForPlayer) 
         call BlzFrameSetVisible(BattleCreatorFrameHandle, true) 
 
         call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function FinalizeBattleRoyaleSetup)
