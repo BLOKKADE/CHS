@@ -382,7 +382,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             set PvpRoundEndWait = true
             set PvpRoundEndTimer = CreateTimer()
             set PvpRoundEndTimerDialog = CreateTimerDialog(PvpRoundEndTimer)
-            call TimerDialogSetTitle(PvpRoundEndTimerDialog, "Next Level ...")
+            call TimerDialogSetTitle(PvpRoundEndTimerDialog, "Next Level...")
             call TimerDialogDisplay(PvpRoundEndTimerDialog, true)
             call TimerStart(PvpRoundEndTimer, RoundTime, false, function PvpStartNextRound)
              // Start the next normal level
@@ -391,7 +391,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call AfterDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle
-            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
+            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle...")
             call StartTimerBJ(GetLastCreatedTimerBJ(), false, 3.00)
             call TriggerSleepAction(3.00)
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())

@@ -434,6 +434,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
         endif
 
 		if (GetLocalPlayer() == Player(pid)) then
+			// Ready icon
 			call BlzFrameSetTexture(ButtonId[40], playerReadyIconPath, 0, true)
 			call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid] and (not hideEndGameIcons))
 
@@ -441,8 +442,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid] and (not hideEndGameIcons))
 
 			// Rewards button
-			call BlzFrameSetVisible(ButtonIndicatorParentId[6], PlayerRewardPoints[pid] > 0 and (not hideEndGameIcons))
-			call BlzFrameSetVisible(ButtonParentId[6], ShopsCreated and (not hideEndGameIcons))
+			call BlzFrameSetVisible(ButtonIndicatorParentId[6], PlayerRewardPoints[pid] > 0)
+			call BlzFrameSetVisible(ButtonParentId[6], ShopsCreated)
 
 			// Creep info
 			call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid] and ShopsCreated and (not hideEndGameIcons))

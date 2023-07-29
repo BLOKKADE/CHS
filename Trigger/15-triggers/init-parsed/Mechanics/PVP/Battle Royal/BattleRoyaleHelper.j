@@ -23,6 +23,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         integer BattleRoyalFunWaitTime = 30
         integer BattleRoyalWaitTime = 120
         integer BattleRoyalReviewWaitTime = 30
+        integer FunBattleRoyalPrepTime = 30
         timer BattleRoyalTimer
         timerdialog BattleRoyalTimerDialog
         timer BattleRoyalRemoveLifeTimer
@@ -46,65 +47,13 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         set currentUnit = null
     endfunction
 
-    private function PlacePlayerHeroInCenterArena takes nothing returns nothing
-        local player currentPlayer = GetEnumPlayer()
+    private function SaveItemsForPlayer takes player currentPlayer returns nothing
         local integer playerId = GetPlayerId(currentPlayer)
         local unit currentUnit = PlayerHeroes[playerId]
-        local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-        local location projectionLocation = PolarProjectionBJ(RectMidArenaCenter, 1200, I2R(CurrentPlayerHeroPlacement) * (360.0 / I2R(BRTeamCount)))
         local integer itemSlotIndex = 0
         local item currentItem
 
-        // Place hero and pet in a circle
-        call ReviveHeroLoc(currentUnit, projectionLocation, true)
-        call SetUnitPositionLocFacingLocBJ(currentUnit, projectionLocation, RectMidArenaCenter)
-
-        set TempUnit = currentUnit // Used in HeroRefreshTrigger
-        call PauseUnit(TempUnit, true)
-        call ConditionalTriggerExecute(HeroRefreshTrigger)
-
-        if (ps.getPet() != null) then
-            call SetUnitPositionLocFacingLocBJ(ps.getPet(), projectionLocation, RectMidArenaCenter)
-        else
-            // Revive the pet if it died
-            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
-        endif
-
-        // Select and chagne camera to the player
-        call SelectUnitForPlayerSingle(currentUnit, currentPlayer)
-        call PanCameraToTimedLocForPlayer(currentPlayer, projectionLocation, 0.50)
-
-        // Reset stats in the scoreboard
-        call ResetPlayerBRProperties(currentPlayer)
-        call ps.resetBRPVPKillCount()
-
-        set PlayerBRDeaths[playerId] = 0
-
-        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
-
-        if (IsFunBRRound) then
-            if (GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT) then
-                // Restore all items
-                loop
-                    call RemoveItem(UnitItemInSlot(currentUnit, itemSlotIndex))
-
-                    // Make sure there is an actual item
-                    if (PreBRItemIds[(6 * playerId) + itemSlotIndex] != -1) then
-                        set currentItem = UnitAddItemByIdSwapped(PreBRItemIds[(6 * playerId) + itemSlotIndex], currentUnit)
-                        call SetItemUserData(currentItem, playerId + 1)
-
-                        if PreBRItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
-                            call SetItemCharges(currentItem, PreBRItemCharges[(6 * playerId) + itemSlotIndex])
-                        endif
-
-                        call SetItemPawnable(currentItem, true)
-                    endif
-
-                    set itemSlotIndex = itemSlotIndex + 1
-                    exitwhen itemSlotIndex == 6
-                endloop
-            endif
-        else
+        if (GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT) then
             // Save the items and item charges for the player before the BR starts. Make items unpawnable as well
             loop
                 set currentItem = UnitItemInSlot(currentUnit, itemSlotIndex)
@@ -126,6 +75,79 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
                 exitwhen itemSlotIndex == 6
             endloop
         endif
+
+        // Cleanup
+        set currentUnit = null
+        set currentItem = null
+    endfunction
+
+    private function ResetItemsForPlayer takes player currentPlayer returns nothing
+        local integer playerId = GetPlayerId(currentPlayer)
+        local unit currentUnit = PlayerHeroes[playerId]
+        local integer itemSlotIndex = 0
+        local item currentItem
+
+        if (GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT) then
+            // Restore all items
+            loop
+                call RemoveItem(UnitItemInSlot(currentUnit, itemSlotIndex))
+
+                // Make sure there is an actual item
+                if (PreBRItemIds[(6 * playerId) + itemSlotIndex] != -1) then
+                    set currentItem = UnitAddItemByIdSwapped(PreBRItemIds[(6 * playerId) + itemSlotIndex], currentUnit)
+                    call SetItemUserData(currentItem, playerId + 1)
+
+                    if PreBRItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
+                        call SetItemCharges(currentItem, PreBRItemCharges[(6 * playerId) + itemSlotIndex])
+                    endif
+
+                    call SetItemPawnable(currentItem, true)
+                endif
+
+                set itemSlotIndex = itemSlotIndex + 1
+                exitwhen itemSlotIndex == 6
+            endloop
+        endif
+
+        // Cleanup
+        set currentUnit = null
+        set currentItem = null
+    endfunction
+
+    private function PlacePlayerHeroInCenterArena takes nothing returns nothing
+        local player currentPlayer = GetEnumPlayer()
+        local integer playerId = GetPlayerId(currentPlayer)
+        local unit currentUnit = PlayerHeroes[playerId]
+        local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
+        local location projectionLocation = PolarProjectionBJ(RectMidArenaCenter, 1200, I2R(CurrentPlayerHeroPlacement) * (360.0 / I2R(BRTeamCount)))
+
+        // Place hero and pet in a circle
+        call SetUnitPositionLocFacingLocBJ(currentUnit, projectionLocation, RectMidArenaCenter)
+
+        call PauseUnit(currentUnit, true)
+
+        if (ps.getPet() != null) then
+            call SetUnitPositionLocFacingLocBJ(ps.getPet(), projectionLocation, RectMidArenaCenter)
+        else
+            // Revive the pet if it died
+            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
+        endif
+
+        // Select and change camera to the player
+        call SelectUnitForPlayerSingle(currentUnit, currentPlayer)
+        call PanCameraToTimedLocForPlayer(currentPlayer, projectionLocation, 0.50)
+
+        // Reset stats in the scoreboard
+        call ResetPlayerBRProperties(currentPlayer)
+        call ps.resetBRPVPKillCount()
+
+        // Reset lives
+        set PlayerBRDeaths[playerId] = 0
+
+        // Save items
+        call SaveItemsForPlayer(currentPlayer)
+
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_TELEPORT, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
 
         // Cleanup
         call RemoveLocation(projectionLocation)
@@ -182,17 +204,14 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         return (IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == true)
     endfunction
 
-    private function DeleteShop takes nothing returns nothing
-        call DeleteUnit(GetEnumUnit())
+    private function HideShop takes nothing returns nothing
+        call ShowUnit(GetEnumUnit(), false)
     endfunction
     
-    function StartBattleRoyal takes nothing returns nothing
-        call DestroyTimer(BattleRoyalTimer)
-        call DestroyTimerDialog(BattleRoyalTimerDialog)
-
-        call ExecuteFunc("BattleRoyalInitialization")
+    private function ShowShop takes nothing returns nothing
+        call ShowUnit(GetEnumUnit(), true)
     endfunction
-
+    
     private function ShowPlayerLivesRemaining takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerDeaths = PlayerBRDeaths[GetPlayerId(currentPlayer)]
@@ -215,107 +234,48 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         endif
     endfunction
 
-    function BattleRoyalInitialization takes nothing returns nothing
-        local force playersToFight
-        local group shops
-        local unit randomUnit
-        local integer currentPlayerId = 0
+    private function SetShopVisibility takes boolean visible returns nothing
+        local group shops = GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE), Condition(function ShopFilter))
+
+        call ShowDraftBuildings(visible)
+
+        if (visible) then
+            call ForGroup(shops, function ShowShop)
+        else
+            call ForGroup(shops, function HideShop)
+        endif
+
+        // Cleanup
+        call DestroyGroup(shops)
+        set shops = null
+    endfunction
+
+    private function StartBattleRoyale takes nothing returns nothing
+        call DestroyTimer(BattleRoyalTimer)
+        call DestroyTimerDialog(BattleRoyalTimerDialog)
+
+        call ExecuteFunc("StartBattleRoyaleActions")
+    endfunction
+
+    function StartBattleRoyaleActions takes nothing returns nothing
         local integer forceIndex = 0
         local integer nestedForceIndex = 0
         local integer randomCount = 0
-
+        
         set CurrentPlayerHeroPlacement = 0
         set MaxBRDeathCount = 3
 
-        call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
-        call BlzFrameSetVisible(ScoreboardFrameHandle, false)
-
-        if (IsFunBRRound) then
-            call CalculatePlayerForces()
-            call ForForce(BRObservers, function MoveObserver)
-            call SetForceAllianceStateBJ(BRObservers, BRObservers, bj_ALLIANCE_ALLIED)
-        else
-            set playersToFight = CreateForce()
-
-            // Calculate the initial valid players
-            loop
-                exitwhen currentPlayerId == 8
-
-                if (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
-                    call ForceAddPlayer(playersToFight, Player(currentPlayerId))
-                endif
-
-                set currentPlayerId = currentPlayerId + 1
-            endloop
-
-            call CalculateFreeForAllPlayerForces(playersToFight)
-
-            // Cleanup
-            call DestroyForce(playersToFight)
-            set playersToFight = null
-        endif
-
-        call SetBRLockStatus(false)
-
-        if (IsBRSetupValid()) then
-            set WaitingForBattleRoyal = false
-            call ResetScoreboardBrWinner()
-
-            call TriggerSleepAction(5)
-
-            call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
-        else
-            call BlzFrameSetText(BRMessageTextFrameHandle, BR_MESSAGE_COLOR + "Invalid Battle Royale Setup. Try again." + BR_COLOR_END_TAG)
-            call BlzFrameSetVisible(BRMessageTextFrameHandle, true)
-
-            call TriggerSleepAction(5)
-
-            call BlzFrameSetVisible(BRMessageTextFrameHandle, false)
-
-            call SetBRLockStatus(true)
-
-            set BattleRoyalTimer = CreateTimer()
-            set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
-            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Extra Battle Royale...")
-            call TimerDialogDisplay(BattleRoyalTimerDialog, true)
-
-            call ResetBRPlayerSlots()
-            call ResetBRPlayerForce()
-
-            call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function StartBattleRoyal)
-
-            return
-        endif
-
-        // Reset the player count since it gets decrementing during the PlayerDiesInBattleRoyale trigger
-        set PlayerCount = BRRoundPlayerCount
-
-        call EnableTrigger(IsGameFinishedTrigger)
-        // call ForceClear(DefeatedPlayers)
+        call DestroyTimer(BattleRoyalTimer)
+        call DestroyTimerDialog(BattleRoyalTimerDialog)
+        call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
 
         // Final message about BR, hide shops, cleanup before the actual fight
         set BrStarted = true
         call PlaySoundBJ(udg_sound10)
 
-        if (IsFunBRRound) then
-            call DisplayTextToForce(GetPlayersAll(), "|cffffcc00EXTRA BATTLE - THE WINNER TAKES SOME PRIDE|r")
-            call TriggerSleepAction(2)
-            call DisplayTextToForce(GetPlayersAll(), "|cffff2b23Your items will be restored for further BR fun rounds, so feel free to drop items during the fight.|r")
-            call TriggerSleepAction(2)
-        else
-            call SetVersion()
+        call SetShopVisibility(false)
 
-            call DisplayTextToForce(GetPlayersAll(), "|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL|r")
-            call TriggerSleepAction(2)
-            call DisplayTextToForce(GetPlayersAll(), "|cffff5e00Reminder: After the official BR, you can play additional BR rounds for fun!|r")
-            call TriggerSleepAction(2)
-            call DisplayTextToForce(GetPlayersAll(), "|cffff2b23Your items will be restored for further BR fun rounds, so feel free to drop items during the fight.|r")
-            call TriggerSleepAction(2)
-        endif
-        
-        call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
-        call ShowDraftBuildings(false)
-        call RemoveUnitsInRect(bj_mapInitialPlayableArea)
+        call SetForceAllianceStateBJ(BRObservers, BRObservers, bj_ALLIANCE_ALLIED)
 
         // Set alliances for everyone
         loop
@@ -353,13 +313,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             exitwhen randomCount == BRTeamCount
         endloop
 
-        // Delete shops
-        set shops = GetUnitsOfPlayerMatching(Player(PLAYER_NEUTRAL_PASSIVE), Condition(function ShopFilter))
-        call ForGroup(shops, function DeleteShop)
-
-        // Cleanup
-        call DestroyGroup(shops)
-        set shops = null
+        // Teleport observers to an arena
+        call ForForce(BRObservers, function MoveObserver)
 
         set forceIndex = 0
 
@@ -374,9 +329,20 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             set forceIndex = forceIndex + 1
         endloop
 
-        // Remove all items on the ground
-        call EnumItemsInRectBJ(GetPlayableMapRect(), function RemoveItemFromArena)
+        if (IsFunBRRound) then
+            call DisplayTextToForce(GetPlayersAll(), "|cffffcc00EXTRA BATTLE - THE WINNER TAKES SOME PRIDE|r")
+            call TriggerSleepAction(2)
+            call DisplayTextToForce(GetPlayersAll(), "|cffff2b23Your items will be restored for further BR fun rounds, so feel free to drop items during the fight.|r")
+        else
+            call SetVersion()
 
+            call DisplayTextToForce(GetPlayersAll(), "|cffffcc00FINAL BATTLE - THE WINNER TAKES IT ALL|r")
+            call TriggerSleepAction(2)
+            call DisplayTextToForce(GetPlayersAll(), "|cffff5e00Reminder: After the official BR, you can play additional BR rounds for fun!|r")
+            call TriggerSleepAction(2)
+            call DisplayTextToForce(GetPlayersAll(), "|cffff2b23Your items will be restored for further BR fun rounds, so feel free to drop items during the fight.|r")
+        endif
+        
         // Disable a whole bunch of trigger
         call DisableTrigger(CenterArenaInvulnerabilityTrigger)
         call DisableTrigger(CenterArenaRemoveUnitTrigger)
@@ -406,9 +372,10 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call SetAllCurrentlyFighting(true)
         call ForForce(BRPlayers, function StartFightForPlayerHero)
 
+        // Invisible timer with a random time to remove lives
+        set BattleRoyalRemoveLifeTimer = CreateTimer()
+
         if (BRLivesMode == 2) then
-            // Invisible timer with a random time to remove lives
-            set BattleRoyalRemoveLifeTimer = CreateTimer()
             call TimerStart(BattleRoyalRemoveLifeTimer, GetRandomReal(BattleRoyalRemoveLifeLowTime, BattleRoyalRemoveLifeHighTime), true, function RemoveBattleRoyaleLife)
         endif
 
@@ -416,7 +383,131 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call DebugCode_SavePlayerDebugEveryone()
     endfunction
 
-    function InitializeBattleRoyale takes nothing returns nothing
+    function FinalizeBattleRoyaleSetup takes nothing returns nothing
+        call DestroyTimer(BattleRoyalTimer)
+        call DestroyTimerDialog(BattleRoyalTimerDialog)
+
+        call ExecuteFunc("BattleRoyalPrep")
+    endfunction
+
+    private function SetupPlayerForPrep takes nothing returns nothing
+        local player currentPlayer = GetEnumPlayer()
+        local integer playerId = GetPlayerId(currentPlayer)
+        local unit currentUnit = PlayerHeroes[playerId]
+
+        // Respawn hero in center arena
+        call ReviveHeroLoc(currentUnit, RectMidArenaCenter, true)
+        call SetUnitInvulnerable(currentUnit, true)
+        call SetUnitPositionLoc(currentUnit, RectMidArenaCenter)
+
+        // Reset items
+        call ResetItemsForPlayer(currentPlayer)
+
+        // Reset the hero
+        set TempUnit = currentUnit // Used in HeroRefreshTrigger
+        call PauseUnit(currentUnit, false)
+        call ConditionalTriggerExecute(HeroRefreshTrigger)
+
+        // Cleanup
+        set currentPlayer = null
+        set currentUnit = null
+    endfunction
+
+    function BattleRoyalPrep takes nothing returns nothing
+        local force playersToFight
+        local integer currentPlayerId = 0
+
+        call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
+        call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+
+        if (IsFunBRRound) then
+            call CalculatePlayerForces()
+        else
+            set playersToFight = CreateForce()
+
+            // Calculate the initial valid players
+            loop
+                exitwhen currentPlayerId == 8
+
+                if (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
+                    call ForceAddPlayer(playersToFight, Player(currentPlayerId))
+                endif
+
+                set currentPlayerId = currentPlayerId + 1
+            endloop
+
+            call CalculateFreeForAllPlayerForces(playersToFight)
+
+            // Cleanup
+            call DestroyForce(playersToFight)
+            set playersToFight = null
+        endif
+
+        call SetBRLockStatus(false)
+
+        if (IsBRSetupValid()) then
+            set WaitingForBattleRoyal = false
+            call ResetScoreboardBrWinner()
+
+            call TriggerSleepAction(5)
+
+            call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
+        else
+            call BlzFrameSetText(BRMessageTextFrameHandle, BR_MESSAGE_COLOR + "Invalid Fun Battle Royale Setup. Try again." + BR_COLOR_END_TAG)
+            call BlzFrameSetVisible(BRMessageTextFrameHandle, true)
+
+            call TriggerSleepAction(5)
+
+            call BlzFrameSetVisible(BRMessageTextFrameHandle, false)
+
+            call SetBRLockStatus(true)
+
+            set BattleRoyalTimer = CreateTimer()
+            set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
+            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Fun Battle Royale Setup...")
+            call TimerDialogDisplay(BattleRoyalTimerDialog, true)
+
+            call ResetBRPlayerSlots()
+            call ResetBRPlayerForce()
+
+            call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function FinalizeBattleRoyaleSetup)
+
+            return
+        endif
+
+        // Reset the player count since it gets decremented during the PlayerDiesInBattleRoyale trigger
+        set PlayerCount = BRRoundPlayerCount
+
+        call EnableTrigger(IsGameFinishedTrigger) // This probably doesn't need to be here?
+
+        call RemoveUnitsInRect(bj_mapInitialPlayableArea)
+
+        // If this is the fun BR round, respawn all heroes in the center for buying items. Otherwise just start the normal BR
+        if (IsFunBRRound) then
+            // Remove all items on the ground
+            call EnumItemsInRectBJ(GetPlayableMapRect(), function RemoveItemFromArena)
+
+            // Revive/move all heroes to the middle of the center arena
+            call ForForce(BRPlayers, function SetupPlayerForPrep)
+
+            // Make everyone allied to wipe previous alliances
+            call SetForceAllianceStateBJ(BRPlayers, BRPlayers, bj_ALLIANCE_ALLIED)
+
+            // Show shops
+            call SetShopVisibility(true)
+
+            set BattleRoyalTimer = CreateTimer()
+            set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
+            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Fun Battle Royale Prep...")
+            call TimerDialogDisplay(BattleRoyalTimerDialog, true)
+    
+            call TimerStart(BattleRoyalTimer, FunBattleRoyalPrepTime, false, function StartBattleRoyale)
+        else
+            call StartBattleRoyale()
+        endif
+    endfunction
+
+    private function InitializeBattleRoyale takes nothing returns nothing
         call TriggerSleepAction(5.00)
 
         call DisplayTextToForce(GetPlayersAll(), "Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
@@ -428,7 +519,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         set WaitingForBattleRoyal = true
         
-        call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function StartBattleRoyal)
+        call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function FinalizeBattleRoyaleSetup)
     endfunction
     
     function InitializeFunBattleRoyale takes nothing returns nothing
@@ -440,7 +531,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         set BattleRoyalTimer = CreateTimer()
         set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
-        call TimerDialogSetTitle(BattleRoyalTimerDialog, "Extra Battle Royale...")
+        call TimerDialogSetTitle(BattleRoyalTimerDialog, "Organize Teams...")
         call TimerDialogDisplay(BattleRoyalTimerDialog, true)
 
         // Reset some game state stuff for end game
@@ -454,7 +545,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call ResetBRPlayerSlots()
         call BlzFrameSetVisible(BattleCreatorFrameHandle, true) 
 
-        call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function StartBattleRoyal)
+        call TimerStart(BattleRoyalTimer, BattleRoyalFunWaitTime, false, function FinalizeBattleRoyaleSetup)
     endfunction
 
     private function init takes nothing returns nothing

@@ -251,7 +251,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call TimerStart(this.NextPvpBattleTimer, NextPvpBattleDuration, false, null)
             set this.NextPvpBattleDialog = CreateTimerDialog(this.NextPvpBattleTimer)
             call TimerDialogDisplay(this.NextPvpBattleDialog, false)
-            call TimerDialogSetTitle(this.NextPvpBattleDialog, "Next PvP Battle ...")
+            call TimerDialogSetTitle(this.NextPvpBattleDialog, "Next PvP Battle...")
             
             if SimultaneousDuelMode == 1 or BlzForceHasPlayer(this.team1, GetLocalPlayer()) or BlzForceHasPlayer(this.team2, GetLocalPlayer()) then
                 call TimerDialogDisplay(this.NextPvpBattleDialog, true)
@@ -265,7 +265,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call TimerStart(this.DuelPrepareTimer, DuelPrepareDuration, false, null)
             set this.DuelPrepareDialog = CreateTimerDialog(this.DuelPrepareTimer)
             call TimerDialogDisplay(this.DuelPrepareDialog, false)
-            call TimerDialogSetTitle(this.DuelPrepareDialog, "Prepare ...")
+            call TimerDialogSetTitle(this.DuelPrepareDialog, "Prepare...")
 
             // Show the dialog for everyone if this is not simulataneous duels
             if SimultaneousDuelMode == 1 then

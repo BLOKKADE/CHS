@@ -122,7 +122,13 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
 
         set BattleRoyalTimer = CreateTimer()
         set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
-        call TimerDialogSetTitle(BattleRoyalTimerDialog, "Setup Extra Battle Royale...")
+
+        if (not IsFunBRRound) then
+            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Battle Royale Review...")
+        else
+            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Fun Battle Royale Review...")
+        endif
+
         call TimerDialogDisplay(BattleRoyalTimerDialog, true)
 
         call TimerStart(BattleRoyalTimer, BattleRoyalReviewWaitTime, false, function InitializeFunBattleRoyale)

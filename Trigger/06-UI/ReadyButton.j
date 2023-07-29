@@ -118,7 +118,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     private function StartRound takes nothing returns nothing
         call ReleaseTimer(GetExpiredTimer())
         if WaitingForBattleRoyal then
-            call StartBattleRoyal()
+            call BattleRoyalPrep()
         elseif WaitingForPvp then
             call StartPvp()
         elseif PvpRoundEndWait then
