@@ -76,6 +76,7 @@ library Gnome initializer init requires AbilityCooldown, TempAbilSystem
         local integer charges = GnomeCharges[hid]
 
         if charges > 0 and BlzGetUnitAbilityCooldownRemaining(u, GNOME_MASTER_PASSIVE_ABILITY_ID) == 0 then
+            call BJDebugMsg("Gnome passive casted")
             if GnomePassiveFx.effect[hid] != null then
                 call DestroyEffect(GnomePassiveFx.effect[hid])
                 set GnomePassiveFx.effect[hid] = null
@@ -88,7 +89,7 @@ library Gnome initializer init requires AbilityCooldown, TempAbilSystem
             endif
 
             call GnomeStruct.create(u, charges)
-            call AbilStartCD(u, GNOME_MASTER_PASSIVE_ABILITY_ID, 1)
+            call BlzStartUnitAbilityCooldown(u, GNOME_MASTER_PASSIVE_ABILITY_ID, 1)
         endif
     endfunction
 
