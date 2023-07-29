@@ -59,6 +59,8 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
         call DisableTrigger(AllPlayersDeadTrigger)
         call DisableTrigger(PlayerHeroDeathTrigger)
 
+        call EventHelpers_FireEventForAllPlayers(EVENT_PLAYER_ROUND_COMPLETE, 0, RoundNumber, true)
+
         if (BrStarted == false) then
             call EnableTrigger(HeroDiesInRoundTrigger)
         endif

@@ -42,6 +42,7 @@ library CustomGameEvent initializer init requires ListT
         integer roundNumber
         boolean isPvp
 
+        //all arguments
         static method createAll takes player p, integer abilId, integer roundNumber, boolean pvp returns thistype
 			local thistype this = thistype.allocate()
 			
@@ -54,6 +55,7 @@ library CustomGameEvent initializer init requires ListT
 			return this
 		endmethod
 
+        //set pvp automatically
         static method create takes player p, integer abilId, integer roundNumber returns thistype
 			local thistype this = thistype.allocate()
 			

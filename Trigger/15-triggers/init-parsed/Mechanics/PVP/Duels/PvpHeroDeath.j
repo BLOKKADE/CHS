@@ -1,4 +1,4 @@
-library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent
+library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers
 
     globals
         boolean PvpRoundEndWait = false
@@ -228,15 +228,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call RemoveUnitsInRect(duelGame.getDuelArena())
     endfunction
 
-    private function EndroundEventForAllPlayers takes nothing returns nothing
-        local integer i = 0
-        loop
-            call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.createAll(Player(i), 0, RoundNumber, true))
-            set i = i + 1
-            exitwhen i == 8
-        endloop
-    endfunction
-
     function PvpStartNextRound takes nothing returns nothing
         set PvpRoundEndWait = false
         call DestroyTimer(PvpRoundEndTimer)
@@ -375,7 +366,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ResetPvpState()
 
             //End round event for all players
-            call EndroundEventForAllPlayers()
+            call EventHelpers_FireEventForAllPlayers(EVENT_GAME_ROUND_END, 0, RoundNumber, true)
             
             // Go to the next basic level
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger) // Setup creeps for next wave
