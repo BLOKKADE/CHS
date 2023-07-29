@@ -75,6 +75,12 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             return this
         endmethod
 
+        method setAbilityDurationFields takes integer abilityId, real duration returns thistype
+            call SetAbilityRealField(this.dummy, abilityId, GetUnitAbilityLevel(this.dummy, abilityId), ABILITY_RLF_DURATION_NORMAL, duration)
+            call SetAbilityRealField(this.dummy, abilityId, GetUnitAbilityLevel(this.dummy, abilityId), ABILITY_RLF_DURATION_HERO, duration)
+            return this
+        endmethod
+
         method setAbilityIntegerField takes integer abilityId, abilityintegerlevelfield field, integer value returns thistype
             call SetAbilityIntegerField(this.dummy, abilityId, GetUnitAbilityLevel(this.dummy, abilityId), field, value)
             //call BJDebugMsg("dummy set int field")

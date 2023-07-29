@@ -8,17 +8,30 @@ library DummySpell initializer init requires AbilityData, ListT
         //[unitid].
         HashTable HeroAvailableDummySpells
         HashTable UnitDummySpells
+        HashTable UnitOriginalSpells
         //spell id = lvl of ability
     endglobals
+
+    function HasDummySpell takes unit u, integer abilId returns boolean
+        return UnitDummySpells[GetHandleId(u)].integer[abilId] != 0
+    endfunction
+
+    function GetDummySpell takes unit u, integer abilId returns integer
+        return UnitDummySpells[GetHandleId(u)].integer[abilId]
+    endfunction
+
+    function GetOriginalSpell takes unit u, integer dummyAbilId returns integer
+        return UnitOriginalSpells[GetHandleId(u)].integer[dummyAbilId]
+    endfunction
 
     //gets dummy spell if it exists otherwise 0
     function GetAssociatedSpell takes unit u, integer abilId returns integer
         return UnitDummySpells[GetHandleId(u)].integer[abilId]
     endfunction
 
-    //gets dummy spell if it exists otherwise returns abilId
-    function CheckAssociatedSpell takes unit u, integer abilId returns integer
-        local integer dummyAbilId = UnitDummySpells[GetHandleId(u)].integer[abilId]
+    //gets original spell if it exists otherwise returns abilId
+    function GetOriginalSpellIfExists takes unit u, integer abilId returns integer
+        local integer dummyAbilId = GetOriginalSpell(u, abilId)
         if dummyAbilId == 0 then
             return abilId
         else
@@ -87,7 +100,7 @@ library DummySpell initializer init requires AbilityData, ListT
             endif
 
             set UnitDummySpells[GetHandleId(u)].integer[abilityId] = 0
-            set UnitDummySpells[GetHandleId(u)].integer[dummyAbilId] = 0
+            set UnitOriginalSpells[GetHandleId(u)].integer[dummyAbilId] = 0
         endif
     endfunction
 
@@ -129,7 +142,7 @@ library DummySpell initializer init requires AbilityData, ListT
         call UnitAddAbility(u, dummyAbilId)
 
         set UnitDummySpells[GetHandleId(u)].integer[abilityId] = dummyAbilId
-        set UnitDummySpells[GetHandleId(u)].integer[dummyAbilId] = abilityId
+        set UnitOriginalSpells[GetHandleId(u)].integer[dummyAbilId] = abilityId
 
         call UpdateDummySpells(u, abilityId, level)
     endfunction
@@ -206,6 +219,7 @@ library DummySpell initializer init requires AbilityData, ListT
         set DummySpellList = HashTable.create()
         set HeroAvailableDummySpells = HashTable.create()
         set UnitDummySpells = HashTable.create()
+        set UnitOriginalSpells = HashTable.create()
 
         call SetupDummySpellIds()
     endfunction

@@ -165,9 +165,11 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local real targetX = GetSpellTargetX()
         local real targetY = GetSpellTargetY()
         local integer abilId = GetSpellAbilityId()
+        local integer originalAbilId = GetOriginalSpellIfExists(caster, GetSpellAbilityId())
+        local integer castAbilId = abilId
         local integer abilLvl
         local location spelLLoc = GetSpellTargetLoc()
-        local boolean dummyAbilId = GetAssociatedSpell(caster, abilId) != 0
+        local boolean isDummySpell = abilId != originalAbilId
         local integer lvl = 0
         local boolean abilityChanneled = false
         //call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
@@ -175,7 +177,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         if not ToggleSpell(caster, abilId) then
             if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
 
-                set abilId = CheckAssociatedSpell(caster, abilId)
+                set abilId = originalAbilId
                 set abilLvl = GetUnitAbilityLevel(caster, abilId)
                 set abilityChanneled = AbilityChannel(caster, hero, target,targetX,targetY,abilId, abilLvl)
 
@@ -188,7 +190,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     //call BJDebugMsg("caster: " + GetUnitName(caster))
                     call ElementStartAbility(caster, abilId)
 
-                    if (not abilityChanneled) and dummyAbilId then
+                    if (not abilityChanneled) and isDummySpell then
                         //call BJDebugMsg("channel")
                         call CastSpell(caster, target, abilId, abilLvl, GetAbilityOrderType(abilId), targetX, targetY).activate()
                     endif
@@ -306,7 +308,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     endif
 
                     if GetUnitAbilityLevel(caster, 'B02Z') > 0 then
-                        call ArcaneAbsorptionGauntletsActivate(caster, abilId, abilLvl, target)
+                        call ArcaneAbsorptionGauntletsActivate(caster, castAbilId, target)
                     endif
 
                     //call BJDebugMsg("cd")

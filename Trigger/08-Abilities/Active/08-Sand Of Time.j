@@ -24,7 +24,7 @@ library SandOfTime requires RandomShit
             exitwhen i1 > 10
             set SpellId = GetHeroSpellAtPosition(hero ,i1)
             if SpellId != 0 and IsSpellResettable(SpellId) then
-                call ResetSpell(hero, CheckAssociatedSpell(hero, SpellId), time, true)
+                call ResetSpell(hero, GetOriginalSpellIfExists(hero, SpellId), time, true)
             endif
             set i1 = i1 + 1
         endloop
@@ -38,11 +38,6 @@ library SandOfTime requires RandomShit
         /*if GetUnitTypeId(hero) == PIT_LORD_UNIT_ID then
             call ResetSpell(hero, 'A08V', time, true)
         endif*/
-
-        //Gnome
-        if GetUnitAbilityLevel(hero, GNOME_MASTER_PASSIVE_ABILITY_ID) > 0 then
-            call ResetSpell(hero, GNOME_MASTER_PASSIVE_ABILITY_ID, time, true)
-        endif
 
         //Revenant
         if GetUnitAbilityLevel(hero, COLD_KNIGHT_PASSIVE_ABILITY_ID) > 0 then

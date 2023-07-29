@@ -11,6 +11,7 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
     struct ArcaneAbsorptionGauntlets extends array
         unit target
         integer abilId
+        boolean stop
         integer bonus
         integer startTick
         integer endTick
@@ -22,22 +23,24 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
         endmethod
     
         private method periodic takes nothing returns nothing
-            if T32_Tick > this.endTick or (GetUnitAbilityLevel(this.target, 'B030') == 0 and T32_Tick > this.startTick + 32) then
+            if T32_Tick > this.endTick or (GetUnitAbilityLevel(this.target, 'B030') == 0 and T32_Tick > this.startTick + 32) or this.stop then
                 call this.disableBonus()
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
-    
+        endmethod
+
         static method create takes unit target, integer abilId, integer bonus, real duration returns thistype
             local thistype this = thistype.setup()
-            local integer level = GetUnitAbilityLevel(this.target, this.abilId) - 1
+            local integer level = GetUnitAbilityLevel(target, abilId) - 1
 
             set this.target = target
             set this.bonus = bonus
             set this.abilId = abilId
+            set this.stop = false
+    
             call BlzSetUnitAbilityManaCost(this.target, this.abilId, level, BlzGetUnitAbilityManaCost(this.target, this.abilId, level) + this.bonus)
-            call DummyOrder.create(this.target, GetUnitX(this.target), GetUnitY(this.target), GetUnitFacing(this.target), 2).addActiveAbility(ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, 1, 852189).target(this.target).activate()
+            call DummyOrder.create(this.target, GetUnitX(this.target), GetUnitY(this.target), GetUnitFacing(this.target), 2).addActiveAbility(ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, 1, 852189).setAbilityDurationFields(ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, 30).target(this.target).activate()
             call RegisterLeveledBuff(this.target, 'B030')
 
             set AAGStruct[GetHandleId(this.target)] = this
@@ -51,10 +54,10 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
         static method createOrExtend takes unit target, integer abilId, integer bonus, real duration returns thistype
             local thistype aag = GetAAGStruct(GetHandleId(target))
             if aag == 0 then
-                return ArcaneAbsorptionGauntlets.create(target, abilId, bonus, 10)
+                return ArcaneAbsorptionGauntlets.create(target, abilId, bonus, duration)
             else
-                set aag.endTick = T32_Tick + R2I(10 * 32)
-                return aag
+                set aag.stop = true
+                return ArcaneAbsorptionGauntlets.create(target, abilId, bonus, duration)
             endif
         endmethod
         
@@ -79,7 +82,6 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
             set p = BlzGroupUnitAt(ENUM_GROUP, i)
             exitwhen p == null
             if UnitHasItemType(p, 'I06I') then
-                call BJDebugMsg("target: " + GetUnitName(p) + "heal: " + R2S(healAmount))
                 call SetUnitState(p, UNIT_STATE_LIFE, GetUnitState(p, UNIT_STATE_LIFE) + healAmount)
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", p, "chest"))
             endif
@@ -87,10 +89,12 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
         endloop
     endfunction
 
-    function ArcaneAbsorptionGauntletsActivate takes unit u, integer abilId, integer level, unit target returns nothing
+    function ArcaneAbsorptionGauntletsActivate takes unit u, integer abilId, unit target returns nothing
         local real multiplier = 1
         local real mana = 0
-        set abilId = CheckAssociatedSpell(u, abilId)
+        local integer level
+
+        set level = GetUnitAbilityLevel(u, abilId)
         set mana = BlzGetUnitAbilityManaCost(u, abilId, level - 1)
 
         if target != null and UnitHasItemType(target, 'I06I') then
@@ -98,8 +102,8 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
         endif
         
         call Heal(u, mana)
-        call BJDebugMsg("original mana cost: " + R2S(mana) + " bonus mana cost: " + R2S(mana * multiplier))
-        call ArcaneAbsorptionGauntlets.createOrExtend(u, abilId, R2I(mana * multiplier), 10)
+
+        call ArcaneAbsorptionGauntlets.createOrExtend(u, abilId, R2I(mana * multiplier), 30)
     endfunction
 
     private function init takes nothing returns nothing

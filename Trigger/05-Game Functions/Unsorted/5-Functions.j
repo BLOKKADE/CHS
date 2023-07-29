@@ -144,7 +144,9 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
 
         if abilId == MYSTERIOUS_TALENT_ABILITY_ID or abilId == ANCIENT_TEACHING_ABILITY_ID or abilId == TIME_MANIPULATION_ABILITY_ID and level == 1 then
             call BlzStartUnitAbilityCooldown(u, abilId, 60)
-            call BlzStartUnitAbilityCooldown(u, CheckAssociatedSpell(u, abilId), 60)
+            if HasDummySpell(u, abilId) then
+                call BlzStartUnitAbilityCooldown(u, GetDummySpell(u, abilId), 60)
+            endif
         endif
 
         /*if abilId == MYSTERIOUS_TALENT_ABILITY_ID then

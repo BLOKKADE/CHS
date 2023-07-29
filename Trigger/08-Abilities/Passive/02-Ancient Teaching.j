@@ -4,6 +4,7 @@ library AncientTeaching initializer init requires Cooldown, StableSpells, Toggle
         if BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_TEACHING_ABILITY_ID) <= 0.001 and GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID) > 0 and IsSpellResettable(abilId) then
             call AbilStartCD(u, ANCIENT_TEACHING_ABILITY_ID, BlzGetUnitAbilityCooldownRemaining(u, abilId) * (4 - 0.1 * I2R(GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID)))) 
             call BlzEndUnitAbilityCooldown(u, abilId)
+            call BlzEndUnitAbilityCooldown(u, GetDummySpell(u, abilId))
         endif
     endfunction
 
