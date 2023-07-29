@@ -436,17 +436,17 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		if (GetLocalPlayer() == Player(pid)) then
 			call BlzFrameSetTexture(ButtonId[40], playerReadyIconPath, 0, true)
 			call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid] and (not hideEndGameIcons))
+
+			// Indicator if the player is auto-ready
+			call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid] and (not hideEndGameIcons))
+
+			// Rewards button
+			call BlzFrameSetVisible(ButtonIndicatorParentId[6], PlayerRewardPoints[pid] > 0 and (not hideEndGameIcons))
+			call BlzFrameSetVisible(ButtonParentId[6], ShopsCreated and (not hideEndGameIcons))
+
+			// Creep info
+			call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid] and ShopsCreated and (not hideEndGameIcons))
 		endif
-
-		// Indicator if the player is auto-ready
-		call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid] and (not hideEndGameIcons))
-
-		// Rewards button
-		call BlzFrameSetVisible(ButtonIndicatorParentId[6], PlayerRewardPoints[pid] > 0 and (not hideEndGameIcons))
-		call BlzFrameSetVisible(ButtonParentId[6], ShopsCreated and (not hideEndGameIcons))
-
-		// Creep info
-		call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid] and ShopsCreated and (not hideEndGameIcons))
     endfunction
 
 	private function CreateIconWorld takes integer buttonIndex, string iconPath, real x, real y, real size returns nothing

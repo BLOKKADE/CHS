@@ -632,9 +632,9 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                 call CreateText(NO_HERO_STATUS_COLOR + "Left before hero selection" + COLOR_END_TAG, playerId)
             elseif (PlayerDiedInBR[playerId] and (PlayerDeathRound[playerId] == 50 or (GameModeShort == true and PlayerDeathRound[playerId] == 25))) then
                 if (IsFunBRRound) then
-                    call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Fun Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
+                    call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Fun Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
                 else
-                    call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in the Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
+                    call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
                 endif
             else
                 call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
