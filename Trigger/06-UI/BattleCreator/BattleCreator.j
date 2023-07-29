@@ -363,7 +363,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         set CurrentPlayerSlotIndex = 0
 
         // BRObservers
-        set ObserverHandle = CreatePlayerForceSectionButton(BR_OBSERVERS_COLOR + "Observers" + BR_COLOR_END_TAG, "Join the BRObservers", "Join the BRObservers. You won't be in the next fight.|n")
+        set ObserverHandle = CreatePlayerForceSectionButton(BR_OBSERVERS_COLOR + "Observers" + BR_COLOR_END_TAG, "Join the Observers", "Join the Observers. You won't be in the next fight.|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
@@ -407,7 +407,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         call TriggerAddAction(EventTrigger, function BattleCreatorMouseEventActions)
 
         // Create the main frame. All elements use this frame as the parent
-        set BattleCreatorFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
+        set BattleCreatorFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0) 
         call BlzFrameSetLevel(BattleCreatorFrameHandle, 1)
         call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
         

@@ -460,7 +460,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
             endloop
 
             // Hack? If there was only one person in the random vote. Can probably remove?
-            if (TempPlayerForceIndex == 0) then
+            if (TempPlayerForceIndex == 0 and CountPlayersInForceBJ(BRRandomTeam) > 0) then
                 set TempPlayerForceIndex = 1
             endif
         endif

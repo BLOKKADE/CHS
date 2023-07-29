@@ -90,8 +90,16 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
     private function ToggleRewards takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
-        if (RoundNumber > 5 and RewardsFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
+        if (RewardsFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
             call BlzFrameSetVisible(RewardsFrameHandle, PlayerStats.forPlayer(GetTriggerPlayer()).toggleHasRewardsOpen()) 
+        endif
+    endfunction
+
+    private function ToggleBattleCreator takes nothing returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+
+        if (IsFunBRRound and BattleCreatorFrameHandle != null and GetLocalPlayer() == GetTriggerPlayer()) then
+            call BlzFrameSetVisible(BattleCreatorFrameHandle, PlayerStats.forPlayer(GetTriggerPlayer()).toggleHasBattleCreatorOpen()) 
         endif
     endfunction
 
@@ -117,6 +125,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         local trigger eTrigger = CreateTrigger()
         local trigger rTrigger = CreateTrigger()
         local trigger tTrigger = CreateTrigger()
+        local trigger bTrigger = CreateTrigger()
         local trigger scoreboardToggleViewTrigger = CreateTrigger()
         local trigger scoreboardToggleHideTrigger = CreateTrigger()
         local integer i = 0
@@ -127,6 +136,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
             call BlzTriggerRegisterPlayerKeyEvent(eTrigger, Player(i), OSKEY_E, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(rTrigger, Player(i), OSKEY_R, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(tTrigger, Player(i), OSKEY_T, 2, true)
+            call BlzTriggerRegisterPlayerKeyEvent(bTrigger, Player(i), OSKEY_B, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(shiftDownTrigger, Player(i), OSKEY_LSHIFT, 1, true)
             call BlzTriggerRegisterPlayerKeyEvent(shiftReleaseTrigger, Player(i), OSKEY_LSHIFT, 0, false)
             call BlzTriggerRegisterPlayerKeyEvent(shiftDownTrigger, Player(i), OSKEY_RSHIFT, 1, true)
@@ -140,6 +150,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         call TriggerAddAction(eTrigger, function SellAllItems)
         call TriggerAddAction(rTrigger, function ReadyPlayer)
         call TriggerAddAction(tTrigger, function ToggleRewards)
+        call TriggerAddAction(bTrigger, function ToggleBattleCreator)
         call TriggerAddAction(shiftDownTrigger, function ShiftDown)
         call TriggerAddAction(shiftReleaseTrigger, function ShiftRelease)
         call TriggerAddAction(scoreboardToggleViewTrigger, function ToggleViewScoreboard)
@@ -149,6 +160,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         set eTrigger = null
         set rTrigger = null
         set tTrigger = null
+        set bTrigger = null
         set shiftDownTrigger = null
         set shiftReleaseTrigger = null
         set scoreboardToggleViewTrigger = null
