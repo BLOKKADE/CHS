@@ -148,16 +148,22 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
         local integer dummySpell = GetDummySpell(u, abilId)
         call ElemFuncStart(u, abilId)
 
-        if dummySpell != 0 then
-            call BlzStartUnitAbilityCooldown(u, dummySpell, newCooldown)
-        endif
-
         call BlzStartUnitAbilityCooldown(u, abilId, newCooldown)
 
-        if abilId != ANCIENT_TEACHING_ABILITY_ID then
-            set Global_i = abilId
-            set Global_u = u
-            call ExecuteFunc("ResetAbilit_Ec")
+        if dummySpell != 0 then
+            call BlzStartUnitAbilityCooldown(u, dummySpell, newCooldown)
+
+            if abilId != ANCIENT_TEACHING_ABILITY_ID then
+                set Global_i = dummySpell
+                set Global_u = u
+                call ExecuteFunc("ResetAbilit_Ec")
+            endif
+        else
+            if abilId != ANCIENT_TEACHING_ABILITY_ID then
+                set Global_i = abilId
+                set Global_u = u
+                call ExecuteFunc("ResetAbilit_Ec")
+            endif
         endif
         
         return newCooldown 
