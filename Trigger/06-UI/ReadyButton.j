@@ -107,18 +107,14 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         endloop
     endfunction
 
-    function ReadyButtonTexture takes boolean isReady returns nothing
-        if isReady then
-            call BlzFrameSetTexture(ButtonId[5], GetIconPath(ReadyIcon), 0, true)
-        else
-            call BlzFrameSetTexture(ButtonId[5], GetIconPath(UnreadyIcon), 0, true)
-        endif
-    endfunction
-    
     private function StartRound takes nothing returns nothing
         call ReleaseTimer(GetExpiredTimer())
         if WaitingForBattleRoyal then
-            call StartBattleRoyale()
+            if IsFunBRRound then
+                call StartBattleRoyale()
+            else
+                call BattleRoyalPrep()
+            endif
         elseif WaitingForPvp then
             call StartPvp()
         elseif PvpRoundEndWait then
@@ -134,7 +130,6 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Battle Royal!|r")
             elseif WaitingForPvp then
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Pvp battles!|r")
-                
             else
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Next round!|r")
             endif

@@ -272,6 +272,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         
         set CurrentPlayerHeroPlacement = 0
         set MaxBRDeathCount = 3
+        set WaitingForBattleRoyal = false
 
         call DestroyTimer(BattleRoyalTimer)
         call DestroyTimerDialog(BattleRoyalTimerDialog)
@@ -420,15 +421,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         set currentPlayer = null
         set currentUnit = null
     endfunction
-    
-    private function EndroundEventForAllPlayers takes nothing returns nothing
-        local integer i = 0
-        loop
-            call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.createAll(Player(i), 0, RoundNumber, true))
-            set i = i + 1
-            exitwhen i == 8
-        endloop
-    endfunction
 
     function BattleRoyalPrep takes nothing returns nothing
         local force playersToFight
@@ -463,7 +455,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call SetBRLockStatus(false)
 
         if (IsBRSetupValid()) then
-            set WaitingForBattleRoyal = false
             call ResetScoreboardBrWinner()
 
             call TriggerSleepAction(5)
@@ -502,6 +493,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         // If this is the fun BR round, respawn all heroes in the center for buying items. Otherwise just start the normal BR
         if (IsFunBRRound) then
+            set WaitingForBattleRoyal = true
+
             // Remove all items on the ground
             call EnumItemsInRectBJ(GetPlayableMapRect(), function RemoveItemFromArena)
 
@@ -513,9 +506,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
             // Show shops
             call SetShopVisibility(true)
-
-            // Reenable ready button
-            call EndroundEventForAllPlayers()
 
             set BattleRoyalTimer = CreateTimer()
             set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
@@ -558,7 +548,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         // Reset some game state stuff for end game
         set IsFunBRRound = true
         set BrStarted = false
-        set WaitingForBattleRoyal = true
         set GameComplete = false
 
         call SetBRLockStatus(true)

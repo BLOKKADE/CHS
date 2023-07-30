@@ -43,6 +43,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant string INVALID_ACTION_COLOR                    = "|cffff0000"	
         private constant string LEAVER_COLOR                            = "|cff858585"	
         private constant string NO_HERO_STATUS_COLOR                    = "|cffff2525"	
+        private constant string OBSERVER_STATUS_COLOR                   = "|cff2cd8ff"	
         private constant string PLAYER_ALWAYS_READY_COLOR               = "|cffffdd00"
         private constant string PLAYER_ELEMENT_COUNT_COLOR              = "|cffd0ff00"
         private constant string PLAYER_HERO_LEVEL_COLOR                 = "|cff98fff6"
@@ -615,29 +616,32 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         local integer playerId = GetPlayerId(currentPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
-        // If this is the BR winner, set the status
-        if (IsPlayerInForce(currentPlayer, WinnerPlayerForce)) then
-            set CurrentColumnIndex = PLAYER_STATUS_INDEX
-            if (IsFunBRRound) then
-                call CreateText(BR_WINNER_STATUS_COLOR + "Fun Battle Royale Winner with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
-            else
-                call CreateText(BR_WINNER_STATUS_COLOR + "Battle Royale Winner with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
-            endif
+        set CurrentColumnIndex = PLAYER_STATUS_INDEX
 
-        // Player status for dying
-        elseif (PlayerDeathRound[playerId] != 0) then
-            set CurrentColumnIndex = PLAYER_STATUS_INDEX
-
-            if (PlayerDeathRound[playerId] == -1) then
-                call CreateText(NO_HERO_STATUS_COLOR + "Left before hero selection" + COLOR_END_TAG, playerId)
-            elseif (PlayerDiedInBR[playerId] and (PlayerDeathRound[playerId] == 50 or (GameModeShort == true and PlayerDeathRound[playerId] == 25))) then
+        if (IsFunBRRound and IsPlayerInForce(currentPlayer, BRObservers)) then
+            call CreateText(OBSERVER_STATUS_COLOR + "Fun Battle Royale Observer" + COLOR_END_TAG, playerId)
+        else
+            // If this is the BR winner, set the status
+            if (IsPlayerInForce(currentPlayer, WinnerPlayerForce)) then
                 if (IsFunBRRound) then
-                    call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Fun Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
+                    call CreateText(BR_WINNER_STATUS_COLOR + "Fun Battle Royale Winner with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
                 else
-                    call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
+                    call CreateText(BR_WINNER_STATUS_COLOR + "Battle Royale Winner with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
                 endif
-            else
-                call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
+
+            // Player status for dying
+            elseif (PlayerDeathRound[playerId] != 0) then
+                if (PlayerDeathRound[playerId] == -1) then
+                    call CreateText(NO_HERO_STATUS_COLOR + "Left before hero selection" + COLOR_END_TAG, playerId)
+                elseif (PlayerDiedInBR[playerId] and (PlayerDeathRound[playerId] == 50 or (GameModeShort == true and PlayerDeathRound[playerId] == 25))) then
+                    if (IsFunBRRound) then
+                        call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Fun Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
+                    else
+                        call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
+                    endif
+                else
+                    call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
+                endif
             endif
         endif
 

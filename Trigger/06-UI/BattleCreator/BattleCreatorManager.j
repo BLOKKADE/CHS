@@ -153,16 +153,20 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         call CleanupRemainingSlots(BRPlayerSlotIndex, 47)
     endfunction
 
+    private function RemovePlayerFromEverything takes player p returns nothing
+        call ForceRemovePlayer(BRRandomTeam, p)
+        call ForceRemovePlayer(BRObservers, p)
+        call ForceRemovePlayer(BRSolo, p)
+        call ForceRemovePlayer(BRTeam1, p)
+        call ForceRemovePlayer(BRTeam2, p)
+        call ForceRemovePlayer(BRTeam3, p)
+        call ForceRemovePlayer(BRTeam4, p)
+    endfunction
+
     function TryMovePlayerToForce takes player p, force destinationForce returns boolean
         // Remove the player from everything if they left the game
-        if (GetPlayerController(p) != MAP_CONTROL_COMPUTER and GetPlayerSlotState(p) != PLAYER_SLOT_STATE_PLAYING) then
-            call ForceRemovePlayer(BRRandomTeam, p)
-            call ForceRemovePlayer(BRObservers, p)
-            call ForceRemovePlayer(BRSolo, p)
-            call ForceRemovePlayer(BRTeam1, p)
-            call ForceRemovePlayer(BRTeam2, p)
-            call ForceRemovePlayer(BRTeam3, p)
-            call ForceRemovePlayer(BRTeam4, p)
+        if (IsPlayerInForce(p, LeaverPlayers)) then
+            call RemovePlayerFromEverything(p)
 
             return true
         endif
@@ -185,6 +189,13 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
     endfunction
 
     function TryMovePlayerFromForceToForce takes player p, force sourceFource, force destinationForce returns boolean
+        // Remove the player from everything if they left the game
+        if (IsPlayerInForce(p, LeaverPlayers)) then
+            call RemovePlayerFromEverything(p)
+
+            return true
+        endif
+
         // Don't do anything if the player is already in the destination force
         if (IsPlayerInForce(p, destinationForce) or IsPlayerInForce(p, BRRandomTeam)) then
             return false
@@ -364,6 +375,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         local player randomPlayer
         local force availableRandomForce
         local integer randomTeamIndex
+        local integer randomTeam
 
         set AddedPlayerToForce = false
         set TempPlayerForceIndex = 0
@@ -426,6 +438,21 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
 
                 // Create the next team
                 set currentTeamCount = currentTeamCount + 1
+            endloop
+
+            // Ensure everyone is in a team, usually due to rounding errors
+            set randomPlayer = ForcePickRandomPlayer(availableRandomForce)
+
+            loop
+                exitwhen randomPlayer == null
+
+                // Put the player in one of the random teams generated above
+                set randomTeam = GetRandomInt(0, teamCount - 1)
+
+                call ForceRemovePlayer(availableRandomForce, randomPlayer)
+                call ForceAddPlayer(BRPlayers, randomPlayer)
+                call ForceAddPlayer(BRUsedTeams[randomTeam], randomPlayer)
+                call ForceAddPlayer(BRPlayerForce[randomTeam], randomPlayer)
             endloop
 
             // Manually set the temp player force index for the solo players to be added to
