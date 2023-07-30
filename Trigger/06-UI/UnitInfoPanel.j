@@ -253,7 +253,8 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		set statColour[0] = "|cffff6e6e"
 		set statColour[1] = "|cffe4e74a"
 		set statColour[2] = "|cff4ae7df"
-		set isReforged = GetLocalizedString("REFORGED") != "REFORGED"      
+		set isReforged = GetLocalizedString("REFORGED") != "REFORGED"
+		call BlzChangeMinimapTerrainTex("minimap.blp")
 		call BlzLoadTOCFile("war3mapImported\\UnitInfoPanels.toc")
 		call BlzLoadTOCFile("war3mapimported\\BoxedText.toc")
 		set UnitInfoFrame = BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0)   
