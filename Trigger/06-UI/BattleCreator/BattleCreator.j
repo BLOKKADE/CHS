@@ -4,6 +4,8 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         // Static messages
         private constant string BATTLE_CREATOR_TITLE                    = "|cff2ff1ffBattle Creator - Customize Your BR Experience|r"
 
+        private constant string CLOSE_BUTTON_ICON                       = "ReplaceableTextures\\CommandButtons\\BTNuncheck.blp"
+
         // The X,Y coordinate for the top left of the main frame
         private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.08
         private constant real MAIN_FRAME_TOP_LEFT_Y                     = 0.54
@@ -21,6 +23,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         private constant real BUTTON_WIDTH                              = 0.13
         private constant real BUTTON_HEIGHT                             = 0.03
         private constant real BUTTON_SPACING                            = 0.009
+        private constant real CLOSE_ICON_WIDTH                          = 0.032
 
         // Specifications for a player name text
         private constant real TEXT_HEIGHT                               = 0.009
@@ -35,6 +38,8 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
 
         // The only trigger that handles hovering over icons and clicking buttons
         private trigger EventTrigger
+
+        private integer CloseHandleId
 
         private framehandle BattleCreatorTooltipFrame
 		private framehandle BattleCreatorTooltipTitleFrame
@@ -251,7 +256,12 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
 				call BlzFrameSetEnable(currentFrameHandle, true)
 			endif
 
-            if (IsPlayerInForce(triggerPlayer, BRRandomTeam)) then
+            if (handleId == CloseHandleId) then
+                if (GetLocalPlayer() == triggerPlayer) then	
+                    call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
+                    call PlayerStats.forPlayer(triggerPlayer).setHasBattleCreatorOpen(false)
+                endif
+            elseif (IsPlayerInForce(triggerPlayer, BRRandomTeam)) then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetText(BRMessageTextFrameHandle, BR_MESSAGE_COLOR + "You must unselect from the Random Teams Vote first!" + BR_COLOR_END_TAG)
                     call BlzFrameSetVisible(BRMessageTextFrameHandle, true)
@@ -313,6 +323,8 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
 
     private function FinalizeMainFrame takes nothing returns nothing
         local framehandle titleFrameHandle
+        local framehandle closeButtonFrameHandle
+        local framehandle closeIconButtonFrameHandle
 
         // Set the frame for the backdrop of the entire battle creator
         call BlzFrameSetAbsPoint(BattleCreatorFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X, MAIN_FRAME_TOP_LEFT_Y) 
@@ -327,8 +339,20 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         call BlzFrameSetScale(titleFrameHandle, 1.2) 
         call BlzFrameSetText(titleFrameHandle, BATTLE_CREATOR_TITLE) 
 
+        // Create the close button
+        set closeButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", BattleCreatorFrameHandle, 0, 0) 
+        set closeIconButtonFrameHandle = BlzCreateFrameByType("BACKDROP", "Backdrop", closeButtonFrameHandle, "", 1)
+        call BlzFrameSetPoint(closeButtonFrameHandle, FRAMEPOINT_TOPRIGHT, BattleCreatorFrameHandle, FRAMEPOINT_TOPRIGHT, -(CLOSE_ICON_WIDTH / 4), -(CLOSE_ICON_WIDTH / 4))
+        call BlzFrameSetAllPoints(closeIconButtonFrameHandle, closeButtonFrameHandle) 
+        call BlzFrameSetTexture(closeIconButtonFrameHandle, CLOSE_BUTTON_ICON, 0, true) 
+        call BlzFrameSetSize(closeButtonFrameHandle, CLOSE_ICON_WIDTH, CLOSE_ICON_WIDTH)
+        set CloseHandleId = GetHandleId(closeButtonFrameHandle)
+        call BlzTriggerRegisterFrameEvent(EventTrigger, closeButtonFrameHandle, FRAMEEVENT_CONTROL_CLICK)
+
         // Cleanup
         set titleFrameHandle = null
+        set closeButtonFrameHandle = null
+        set closeIconButtonFrameHandle = null
     endfunction
     
     private function CreatePlayerForceSectionButton takes string categoryName, string title, string description returns framehandle

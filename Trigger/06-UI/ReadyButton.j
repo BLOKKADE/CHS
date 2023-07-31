@@ -227,13 +227,10 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         call ReadyButtonVisibility(false, pid, false)
     
         if PlayerIsAlwaysReady[pid] then
-            call BJDebugMsg("Round end, always ready")
             //reset when battle royal wait time starts
             if (not (eventInfo.roundNumber == BattleRoyalRound)) and (not (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber, 5) == 0)) then
-                call BJDebugMsg("Round end, ready up")
                 call PlayerReadies(eventInfo.p, true)
             else
-                call BJDebugMsg("Round end, is pvp or br")
                 set PlayerIsAlwaysReady[pid] = false
                 call ps.setIsReady(false)
             endif
