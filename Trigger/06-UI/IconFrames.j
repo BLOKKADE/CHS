@@ -147,8 +147,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			elseif NumButton == 5 then
 				call PlayerReadies(p, false)
 
-			// Show hats menu
-			elseif NumButton == 39 then
+			// Show hats/achievments menu
+			elseif NumButton == 39 or NumButton == 8 then
 				set ps = PlayerStats.forPlayer(p)
 				set TypT = ps.toggleHasAchievementsOpen()
 
@@ -233,6 +233,18 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 				endif
 
 			// Player stats
+			elseif NumButton == 8 then
+				set ToolTipS = PlayerStats.getTooltip(p)
+				set ToolTipS = ToolTipS + "|n|n|cffff0000Clicking this toggles the rewards menu!|r"
+
+				if GetLocalPlayer() == p then
+					call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Stats for: |r" + GetPlayerNameColour(p))
+					call BlzFrameSetText(TooltipTextFrame, ToolTipS)
+					call BlzFrameSetSize(TooltipFrame, 0.23, GetTooltipSize(ToolTipS))
+					call BlzFrameSetVisible(TooltipFrame, true)
+				endif
+
+			// Other Player stats
 			elseif NumButton == 39 then
 				set SpellU = PlayerHeroes[selectedUnitPid]
 				set ToolTipS = PlayerStats.getTooltip(GetOwningPlayer(SpellU))
@@ -322,6 +334,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 	
 	private function UpdateRoundStartGlobalIcons takes EventInfo eventInfo returns nothing
 		local integer pid = GetPlayerId(eventInfo.p)
+
+		// Show stats button
+        call BlzFrameSetVisible(ButtonParentId[8], RoundNumber > 0 and MainAchievementFrameHandle != null)
 
         // Show scoreboard button
         call BlzFrameSetVisible(ButtonParentId[4], RoundNumber > 0 and ScoreboardFrameHandle != null)
@@ -534,22 +549,25 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		call TriggerAddAction(ButtonTrigger, function SkillSysStart)
 
 		// -- Big buttons - Bottom left
+		// Stats/Achievements
+		call CreateIconWorld(8, "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", BOTTOM_LEFT_ICON_ROW_X + 0 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+
 		// Scoreboard
-		call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNScoreboard.blp", BOTTOM_LEFT_ICON_ROW_X + 0 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNScoreboard.blp", BOTTOM_LEFT_ICON_ROW_X + 1 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 
 		// Rewards
-		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNRewards.blp", BOTTOM_LEFT_ICON_ROW_X + 1 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(6, "ReplaceableTextures\\CommandButtons\\BTNRewards.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 		call CreateIndicatorForButton(6, BIG_BUTTON_WIDTH)
 
 		// Ready
-		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNReady.blp", BOTTOM_LEFT_ICON_ROW_X + 2 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(5, "ReplaceableTextures\\CommandButtons\\BTNReady.blp", BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 		call CreateIndicatorForButton(5, BIG_BUTTON_WIDTH)
 
 		// Creep info
-		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNWaveInfo.blp", BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(2, "ReplaceableTextures\\CommandButtons\\BTNWaveInfo.blp", BOTTOM_LEFT_ICON_ROW_X + 4 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 
 		// Battle Creator - Same position as creep info since it will replace it during fun br
-		call CreateIconWorld(7, "ReplaceableTextures\\CommandButtons\\BTNBattleCreator.blp", BOTTOM_LEFT_ICON_ROW_X + 3 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(7, "ReplaceableTextures\\CommandButtons\\BTNBattleCreator.blp", BOTTOM_LEFT_ICON_ROW_X + 4 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 		// -- Big buttons
 
 		// -- Currency buttons - Top middle rightish
