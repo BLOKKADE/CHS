@@ -41,6 +41,8 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
     private function MakeWinnerInvulnerable takes nothing returns nothing
         call SetUnitInvulnerable(PlayerHeroes[GetPlayerId(GetEnumPlayer())], true)
 
+        call SetCurrentlyFighting(GetEnumPlayer(), false)
+
         // Extra cleanup
         call StopRectLeaveDetection(GetHandleId(PlayerHeroes[GetPlayerId(GetEnumPlayer())]))
     endfunction
