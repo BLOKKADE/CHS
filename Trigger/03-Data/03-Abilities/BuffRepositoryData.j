@@ -126,6 +126,11 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+
+        call SetupBuffInfo1('B00C', AURA_OF_FEAR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1('B00H', 'A031', BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1('B00E', AURA_OF_VULNERABILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1('B006', DRAIN_AURA_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         //fishing rod
         call SetupBuffInfo2('B02U', 'A0DI', 0, BUFFTYPE_NEGATIVE, false, true)
     endfunction
