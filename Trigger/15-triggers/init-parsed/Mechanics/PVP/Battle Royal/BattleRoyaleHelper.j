@@ -409,6 +409,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call SetUnitInvulnerable(currentUnit, true)
         call SetUnitPositionLoc(currentUnit, RectMidArenaCenter)
 
+        call SetCurrentlyFighting(currentPlayer, false)
+
         // Reset items
         call ResetItemsForPlayer(currentPlayer)
 
