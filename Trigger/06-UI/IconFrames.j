@@ -10,7 +10,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		private constant real BIG_BUTTON_TOTAL_WIDTH = 0.04
 
 		// Starting x positions
-		private constant real TOP_RIGHT_ICON_ROW_X = 0.455
+		private constant real TOP_RIGHT_ICON_ROW_X = 0.457
 		private constant real TOP_LEFT_ICON_ROW_X = 0
 		private constant real BOTTOM_LEFT_ICON_ROW_X = 0
 
