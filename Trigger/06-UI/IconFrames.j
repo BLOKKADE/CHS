@@ -145,7 +145,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 			// Ready button
 			elseif NumButton == 5 then
-				call PlayerReadies(p)
+				call PlayerReadies(p, false)
 
 			// Show hats menu
 			elseif NumButton == 39 then
@@ -370,15 +370,17 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		set ps = PlayerStats.forPlayer(Player(selectedUnitPid))
 
-		// Player ready status
-        if (ps != 0 and ps.isReady()) then
-            call BlzFrameSetTexture(ButtonId[40], GetIconPath("Ready"), 0, true)
-		else
-            call BlzFrameSetTexture(ButtonId[40], GetIconPath("NotReady"), 0, true)
-        endif
+		if (GetLocalPlayer() == p) then
+			// Player ready status
+			if (ps != 0 and ps.isReady()) then
+				call BlzFrameSetTexture(ButtonId[40], GetIconPath("Ready"), 0, true)
+			else
+				call BlzFrameSetTexture(ButtonId[40], GetIconPath("NotReady"), 0, true)
+			endif
 
-		// Update the flashy ready status for the player
-		call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid])
+			// Update the flashy ready status for the player
+			call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid])
+		endif
 
         // Updates the ability icons displayed in top left
         loop

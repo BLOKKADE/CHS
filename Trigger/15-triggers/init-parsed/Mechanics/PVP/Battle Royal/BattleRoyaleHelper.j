@@ -1,4 +1,4 @@
-library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager
+library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers
 
     globals
         // Track player's lives during the BR
@@ -274,8 +274,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         set MaxBRDeathCount = 3
         set WaitingForBattleRoyal = false
 
-        call DestroyTimer(BattleRoyalTimer)
-        call DestroyTimerDialog(BattleRoyalTimerDialog)
+        call EventHelpers_FireEventForAllPlayers(EVENT_FUN_BR_ROUND_START, 0, RoundNumber, true)
+
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
 
         // Final message about BR, hide shops, cleanup before the actual fight
@@ -417,6 +417,9 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call PauseUnit(currentUnit, false)
         call ConditionalTriggerExecute(HeroRefreshTrigger)
 
+        // Reset ready button
+        call CustomGameEvent_FireEvent(EVENT_FUN_BR_ROUND_END, EventInfo.create(currentPlayer, 0, RoundNumber))
+
         // Cleanup
         set currentPlayer = null
         set currentUnit = null
@@ -519,8 +522,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
     endfunction
 
     private function InitializeBattleRoyale takes nothing returns nothing
-        call TriggerSleepAction(5.00)
-
         call DisplayTextToForce(GetPlayersAll(), "Hold |cffffcc00SHIFT|r while buying |cff7bff00glory buffs|r or |cff00ff37tomes|r to buy |cff00fff21000|r of them at once, provided you have the gold.")
 
         set BattleRoyalTimer = CreateTimer()

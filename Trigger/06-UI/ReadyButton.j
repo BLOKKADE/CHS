@@ -8,6 +8,8 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
         string ReadyIcon = "Ready"
         string UnreadyIcon = "NotReady"
+
+        private boolean ReadyEventInitiated = false
     endglobals
 
     function ReadyPlayerCount takes nothing returns integer
@@ -107,13 +109,20 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         endloop
     endfunction
 
+    private function ResetFlags takes nothing returns nothing
+        call ReleaseTimer(GetExpiredTimer())
+
+        set ReadyEventInitiated = false
+    endfunction
+
     private function StartRound takes nothing returns nothing
         call ReleaseTimer(GetExpiredTimer())
+
         if WaitingForBattleRoyal then
             if IsFunBRRound then
                 call StartBattleRoyale()
             else
-                call BattleRoyalPrep()
+                call FinalizeBattleRoyaleSetup()
             endif
         elseif WaitingForPvp then
             call StartPvp()
@@ -125,19 +134,34 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     endfunction
 
     function CheckReadyPlayers takes nothing returns nothing
-        if ReadyPlayerCount() >= PlayersNeeded then
+        local real resetFlagTime = 5
+
+        if ReadyPlayerCount() >= PlayersNeeded and (not ReadyEventInitiated) then
+            // Flag to make sure the event doesn't get fired off more than once
+            set ReadyEventInitiated = true
+
             if WaitingForBattleRoyal then
-                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Battle Royal!|r")
+                if (IsFunBRRound) then
+                    call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Fun Battle Royal!|r")
+                else
+                    call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Battle Royal!|r")
+                endif
+
+                set resetFlagTime = 10
             elseif WaitingForPvp then
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Pvp battles!|r")
             else
                 call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 2, "|c00fbff08Everyone is ready!|r Starting the |c003bff34Next round!|r")
             endif
+
+            // Reset flags after some time to prevent this function from getting fired off again
+            call TimerStart(NewTimer(), resetFlagTime, false, function ResetFlags)
+
             call TimerStart(NewTimer(), 2., false, function StartRound)
         endif
     endfunction
 
-    function PlayerReadies takes player p returns nothing
+    function PlayerReadies takes player p, boolean isEndRound returns nothing
         local integer pid = GetPlayerId(p)
         local PlayerStats ps = PlayerStats.forPlayer(p)
 
@@ -145,10 +169,22 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
             set PlayerIsAlwaysReady[pid] = false
         elseif HoldShift[pid] then
             set PlayerIsAlwaysReady[pid] = not PlayerIsAlwaysReady[pid]
+            call ps.setIsReady(PlayerIsAlwaysReady[pid])
+            call ReadyButtonVisibility(ReadyButtonDisabled[pid], pid, PlayerIsAlwaysReady[pid])
         endif
 
         if not ReadyButtonDisabled[pid] then
-            call ps.toggleIsReady()
+            if (HoldShift[pid] and PlayerIsAlwaysReady[pid]) then
+                call ps.setIsReady(true)
+            elseif ((not isEndRound) and (not HoldShift[pid]) and PlayerIsAlwaysReady[pid]) then
+                call ps.toggleIsReady()
+                set PlayerIsAlwaysReady[pid] = ps.isReady()
+            elseif (PlayerIsAlwaysReady[pid]) then
+                call ps.setIsReady(true)
+            else
+                call ps.toggleIsReady()
+            endif
+
             call ReadyButtonVisibility(false, pid, ps.isReady())
 
             call UpdatePlayersNeeded()
@@ -171,20 +207,35 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     endfunction
 
     private function OnRoundStart takes EventInfo eventInfo returns nothing
-        call ReadyButtonVisibility(true, GetPlayerId(eventInfo.p), false)
-        call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
-        set PlayerHasReadied[GetPlayerId(eventInfo.p)] = false
+        local integer pid = GetPlayerId(eventInfo.p)
+
+        if (PlayerIsAlwaysReady[pid]) then
+            call ReadyButtonVisibility(true, pid, true)
+            call PlayerStats.forPlayer(eventInfo.p).setIsReady(true)
+            set PlayerHasReadied[pid] = true
+        else
+            call ReadyButtonVisibility(true, pid, false)
+            call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
+            set PlayerHasReadied[pid] = false
+        endif
     endfunction
 
     private function OnRoundEnd takes EventInfo eventInfo returns nothing
         local integer pid = GetPlayerId(eventInfo.p)
+        local PlayerStats ps = PlayerStats.forPlayer(eventInfo.p)
 
         call ReadyButtonVisibility(false, pid, false)
     
         if PlayerIsAlwaysReady[pid] then
+            call BJDebugMsg("Round end, always ready")
             //reset when battle royal wait time starts
-            if (not ((eventInfo.roundNumber + 1) == BattleRoyalRound)) and (not (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber, 5) == 0)) then
-                call PlayerReadies(eventInfo.p)
+            if (not (eventInfo.roundNumber == BattleRoyalRound)) and (not (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber, 5) == 0)) then
+                call BJDebugMsg("Round end, ready up")
+                call PlayerReadies(eventInfo.p, true)
+            else
+                call BJDebugMsg("Round end, is pvp or br")
+                set PlayerIsAlwaysReady[pid] = false
+                call ps.setIsReady(false)
             endif
         endif
     endfunction
@@ -192,5 +243,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     private function init takes nothing returns nothing
         call CustomGameEvent_RegisterEventCode(EVENT_PLAYER_ROUND_TELEPORT, CustomEvent.OnRoundStart)
         call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.OnRoundEnd)
+        call CustomGameEvent_RegisterEventCode(EVENT_FUN_BR_ROUND_END, CustomEvent.OnRoundEnd)
+        call CustomGameEvent_RegisterEventCode(EVENT_FUN_BR_ROUND_START, CustomEvent.OnRoundStart)
     endfunction
 endlibrary

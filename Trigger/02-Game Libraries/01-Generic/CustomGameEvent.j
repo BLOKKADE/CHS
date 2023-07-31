@@ -28,6 +28,12 @@ library CustomGameEvent initializer init requires ListT
         //when a player finished a round
         integer EVENT_PLAYER_ROUND_COMPLETE     =   8
 
+        // when a fun br round ends
+        integer EVENT_FUN_BR_ROUND_END          =   9
+
+        // when a fun br round ends
+        integer EVENT_FUN_BR_ROUND_START        =   10
+
         string array EventName
 
         //stores all functions registered to events

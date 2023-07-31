@@ -84,7 +84,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
     private function ReadyPlayer takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
-        call PlayerReadies(GetTriggerPlayer())
+        call PlayerReadies(GetTriggerPlayer(), false)
     endfunction
 
     private function ToggleRewards takes nothing returns nothing
