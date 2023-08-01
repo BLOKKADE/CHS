@@ -1,4 +1,4 @@
-library SummonInfo initializer init
+library SummonInfo initializer init requires Locust
     globals
         Table SummonSpells
         Table SummonCode

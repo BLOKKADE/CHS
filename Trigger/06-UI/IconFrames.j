@@ -388,9 +388,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		if (GetLocalPlayer() == p) then
 			// Player ready status
 			if (ps != 0 and ps.isReady()) then
-				call BlzFrameSetTexture(ButtonId[40], GetIconPath("Ready"), 0, true)
+				call BlzFrameSetTexture(ButtonId[40], GetIconPath("ReadyNoText"), 0, true)
 			else
-				call BlzFrameSetTexture(ButtonId[40], GetIconPath("NotReady"), 0, true)
+				call BlzFrameSetTexture(ButtonId[40], GetIconPath("NotReadyNoText"), 0, true)
 			endif
 
 			// Update the flashy ready status for the player
@@ -464,9 +464,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// Player ready status
         if (ps != 0 and ps.isReady()) then
-			set playerReadyIconPath = GetIconPath("Ready")
+			set playerReadyIconPath = GetIconPath("ReadyNoText")
 		else
-			set playerReadyIconPath = GetIconPath("NotReady")
+			set playerReadyIconPath = GetIconPath("NotReadyNoText")
         endif
 
 		if (GetLocalPlayer() == Player(pid)) then
@@ -550,7 +550,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// -- Big buttons - Bottom left
 		// Stats/Achievements
-		call CreateIconWorld(8, "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", BOTTOM_LEFT_ICON_ROW_X + 0 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
+		call CreateIconWorld(8, "ReplaceableTextures\\CommandButtons\\BTNStats.blp", BOTTOM_LEFT_ICON_ROW_X + 0 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
 
 		// Scoreboard
 		call CreateIconWorld(4, "ReplaceableTextures\\CommandButtons\\BTNScoreboard.blp", BOTTOM_LEFT_ICON_ROW_X + 1 * BIG_BUTTON_TOTAL_WIDTH, BOTTOM_ICON_ROW_Y, BIG_BUTTON_WIDTH)
@@ -577,14 +577,14 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 		// -- Top left buttons
 		// Player stats
-		call CreateIconWorld(39, "ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", TOP_LEFT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(39, "ReplaceableTextures\\CommandButtons\\BTNStatsNoText.blp", TOP_LEFT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)
 
 		// Player ready status
-		call CreateIconWorld(40, "ReplaceableTextures\\CommandButtons\\BTNNotReady.blp", TOP_LEFT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(40, "ReplaceableTextures\\CommandButtons\\BTNNotReadyNoText.blp", TOP_LEFT_ICON_ROW_X + 0 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
 		call CreateIndicatorForButton(40, SMALL_BUTTON_WIDTH)
 
 		// Player element count
-		call CreateIconWorld(38, "ReplaceableTextures\\PassiveButtons\\PASElements.blp", TOP_LEFT_ICON_ROW_X + 1 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
+		call CreateIconWorld(38, "ReplaceableTextures\\CommandButtons\\BTNElements.blp", TOP_LEFT_ICON_ROW_X + 1 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH)
 
 		// Abilities/absolutes
 		call CreateIconWorld(100, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 1 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y, SMALL_BUTTON_WIDTH)

@@ -391,13 +391,13 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Player stats icon
         set CurrentColumnIndex = PLAYER_STATS_INDEX
-        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASSaveBook.blp", playerId)
+        call CreateIcon("ReplaceableTextures\\CommandButtons\\BTNStatsNoText.blp", playerId)
         set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PLAYER_STATS_COLOR + "Stats for: " + COLOR_END_TAG + GetPlayerNameColour(currentPlayer)
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_STATS_INDEX] = PlayerStats.getTooltip(currentPlayer)
 
         // Default to the non ready status
         set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
-        call CreateIcon(GetIconPath("NotReady"), playerId)
+        call CreateIcon(GetIconPath("NotReadyNoText"), playerId)
         set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = INVALID_ACTION_COLOR + "Player is not ready" + COLOR_END_TAG
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
 
@@ -412,7 +412,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Element icon
         set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
-        call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
+        call CreateIcon("ReplaceableTextures\\CommandButtons\\BTNElements.blp", playerId)
         set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = INVALID_ACTION_COLOR + "Player has no hero" + COLOR_END_TAG
         set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = ""
 
@@ -664,7 +664,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                 set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = ""
             else
                 if (CachedPlayerPlayerReadyStatus[playerId] != ps.isReady()) then
-                    call CreateIcon(GetIconPath("NotReady"), playerId)
+                    call CreateIcon(GetIconPath("NotReadyNoText"), playerId)
                 endif
 
                 set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = PLAYER_NOT_READY_COLOR + "Player is not ready" + COLOR_END_TAG
@@ -708,7 +708,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         else
             // Disable player ready status icon
             set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
-            call CreateIcon(GetDisabledIconPath("NotReady"), playerId)
+            call CreateIcon(GetDisabledIconPath("NotReadyNoText"), playerId)
 
             set CachedPlayerPlayerReadyStatus[playerId] = false
 
@@ -746,7 +746,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
             // Element icon
             set CurrentColumnIndex = PLAYER_ELEMENT_COUNT_INDEX
-            call CreateIcon("ReplaceableTextures\\PassiveButtons\\PASElements.blp", playerId)
+            call CreateIcon("ReplaceableTextures\\CommandButtons\\BTNElements.blp", playerId)
             set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = PLAYER_ELEMENT_COUNT_COLOR + "Element Counts" + COLOR_END_TAG
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + PLAYER_ELEMENT_COUNT_INDEX] = GetElementCountTooltip(playerHero)
         endif

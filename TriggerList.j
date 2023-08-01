@@ -314,6 +314,7 @@
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Summons\Hawk.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Summons\Inferno.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Summons\LavaSpawn.j"
+//! import "C:\CHS\CHS\Trigger\08-Abilities\Summons\Locust.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Summons\MountainGiant.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Summons\Parasite.j"
 //! import "C:\CHS\CHS\Trigger\08-Abilities\Summons\Phoenix.j"
