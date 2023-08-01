@@ -657,7 +657,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
             if (ps.isReady()) then
                 if (CachedPlayerPlayerReadyStatus[playerId] != ps.isReady()) then
-                    call CreateIcon(GetIconPath("Ready"), playerId)
+                    call CreateIcon(GetIconPath("ReadyNoText"), playerId)
                 endif
 
                 set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + PLAYER_READY_STATUS_INDEX] = PLAYER_READY_COLOR + "Player is ready" + COLOR_END_TAG
@@ -708,7 +708,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         else
             // Disable player ready status icon
             set CurrentColumnIndex = PLAYER_READY_STATUS_INDEX
-            call CreateIcon(GetDisabledIconPath("NotReadyNoText"), playerId)
+            call CreateIcon(GetIconPath("NotReadyNoText"), playerId)
 
             set CachedPlayerPlayerReadyStatus[playerId] = false
 
