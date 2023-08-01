@@ -109,15 +109,15 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         // Save debug logs for the player before the fight
         call DebugCode_SavePlayerDebug(currentPlayer)
 
+        set TempUnit = playerHero // Used in HeroRefreshTrigger
+        call ConditionalTriggerExecute(HeroRefreshTrigger)
+
         // Pause the unit, select it for the player, refresh the unit, add to group of dueling heroes
         call PauseUnit(playerHero, true)
         
         if not CamMoveDisabled[playerId] then
             call SelectUnitForPlayerSingle(playerHero, currentPlayer)
         endif
-
-        set TempUnit = playerHero // Used in HeroRefreshTrigger
-        call ConditionalTriggerExecute(HeroRefreshTrigger)
 
         // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
         loop
