@@ -18,8 +18,8 @@ library SellItems requires DummyRecycler, GloryItemCosts, BattleRoyaleHelper
         local integer i = 0
         local integer cost = 0
 
-        if (BrStarted or IsFunBRRound) then
-            call DisplayTimedTextToPlayer(GetOwningPlayer(playerHero),0,0,10,"|cffffcc00You cannot sell items during PVP|r")
+        if (BrStarted and not (IsFunBRRound and WaitingForBattleRoyal)) then
+            call DisplayTimedTextToPlayer(GetOwningPlayer(playerHero),0,0,10,"|cffffcc00You cannot sell items during the BR|r")
             return
         endif
 

@@ -10,7 +10,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		private constant real BIG_BUTTON_TOTAL_WIDTH = 0.04
 
 		// Starting x positions
-		private constant real TOP_RIGHT_ICON_ROW_X = 0.457
+		private constant real TOP_RIGHT_ICON_ROW_X = 0.459
 		private constant real TOP_LEFT_ICON_ROW_X = 0
 		private constant real BOTTOM_LEFT_ICON_ROW_X = 0
 
@@ -364,6 +364,10 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 	private function UpdateRoundEndGlobalIcons takes EventInfo eventInfo returns nothing
 		local integer pid = GetPlayerId(eventInfo.p)
 
+		if (IsFunBRRound and WaitingForBattleRoyal) then
+            call BlzFrameSetVisible(ButtonParentId[3], true) // Sell all items
+		endif
+
 		// Creep info
 		if (GetLocalPlayer() == eventInfo.p) then
 			call BlzFrameSetVisible(ButtonParentId[2], ShowCreepAbilButton[pid])
@@ -628,6 +632,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 		call CustomGameEvent_RegisterEventCode(EVENT_LEARN_ABILITY, CustomEvent.UpdateAbilityIconsEvent)
 		call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_START, CustomEvent.UpdateRoundStartGlobalIcons)
 		call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.UpdateRoundEndGlobalIcons)
+		call CustomGameEvent_RegisterEventCode(EVENT_FUN_BR_ROUND_END, CustomEvent.UpdateRoundEndGlobalIcons)
 	endfunction
 
 endlibrary
