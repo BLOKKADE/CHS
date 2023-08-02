@@ -74,6 +74,10 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
     private function FireRoundStartEvents takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
 
+        // Reset the hero
+        set TempUnit = PlayerHeroes[GetPlayerId(currentPlayer)] // Used in HeroRefreshTrigger
+        call ConditionalTriggerExecute(HeroRefreshTrigger)
+
         call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
         call FireRoundStartEvent(PlayerHeroes[GetPlayerId(currentPlayer)], 3) // 3 = pve
         call SetCurrentlyFighting(currentPlayer, true) 
