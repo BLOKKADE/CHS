@@ -92,15 +92,6 @@ scope AttackController initializer init
             call CastColdWind(attacker, i1)
         endif
         
-        //Magical Blade
-        set i1 = GetUnitItemTypeCount(attacker, 'I06I')
-        if i1 > 0 then
-            call SetUnitState(target, UNIT_STATE_MANA, GetUnitState(target, UNIT_STATE_MANA)- 200 * i1 )
-            //call SetUnitState(attacker, UNIT_STATE_MANA, GetUnitState(attacker, UNIT_STATE_MANA) + 50 * i1 )
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", target, "head"))
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", attacker, "head"))
-        endif
-        
         //Huntress
         if GetUnitTypeId(attacker) == HUNTRESS_UNIT_ID then
             if BlzGetUnitAbilityCooldownRemaining(attacker, 'A0DW') == 0 then
