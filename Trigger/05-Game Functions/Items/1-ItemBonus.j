@@ -487,6 +487,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 20 * diff)
 			call AddUnitCustomState(u, BONUS_PHYSPOW, 20 * diff)
 			call AddUnitAbsoluteBonusCount(u,Element_Fire, uniqueDiff)
+
+		//Arcane Absoprtion Gauntlets
+		elseif itemId == 'I06I' then
+			call AddUnitCustomState(u, BONUS_MAGICRES, 35 * uniqueDiff)
 		
 			//Druidic Focus
 		elseif itemId == DRUIDIC_FOCUS_ITEM_ID then
