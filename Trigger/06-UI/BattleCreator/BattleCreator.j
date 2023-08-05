@@ -34,7 +34,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         private constant real CHECKBOX_WIDTH                            = 0.025
         private constant real CHECKBOX_TEXT_WIDTH                       = 0.15
         private constant real CHECKBOX_SPACING                          = 0.005
-        private constant real MESSAGE_TEXT_WIDTH                        = 0.3
+        private constant real MESSAGE_TEXT_WIDTH                        = 0.35
 
         // The only trigger that handles hovering over icons and clicking buttons
         private trigger EventTrigger

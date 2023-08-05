@@ -224,15 +224,21 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
         local integer pid = GetPlayerId(eventInfo.p)
         local PlayerStats ps = PlayerStats.forPlayer(eventInfo.p)
 
-        call ReadyButtonVisibility(false, pid, false)
-    
+        // Reset the ready button for BR
+        if (eventInfo.roundNumber == BattleRoyalRound) then
+            call ReadyButtonVisibility(false, pid, false)
+            call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
+            set PlayerHasReadied[pid] = false
+        else
+            call ReadyButtonVisibility(false, pid, PlayerIsAlwaysReady[pid])
+            call PlayerStats.forPlayer(eventInfo.p).setIsReady(PlayerIsAlwaysReady[pid])
+            set PlayerHasReadied[pid] = PlayerIsAlwaysReady[pid]
+        endif
+
         if PlayerIsAlwaysReady[pid] then
             //reset when battle royal wait time starts
-            if (not (eventInfo.roundNumber == BattleRoyalRound)) and (not (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber, 5) == 0)) then
+            if (not (PlayerCount > 1 and ModuloInteger(eventInfo.roundNumber, 5) == 0)) then
                 call PlayerReadies(eventInfo.p, true)
-            else
-                set PlayerIsAlwaysReady[pid] = false
-                call ps.setIsReady(false)
             endif
         endif
     endfunction

@@ -393,16 +393,19 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
             elseif (remainingPlayerCount == 7) then
                 set teamCount = GetRandomInt(2, 4)
             elseif (remainingPlayerCount == 6) then
-                set teamCount = GetRandomInt(2, 3)
+                set teamCount = GetRandomInt(2, 4)
             elseif (remainingPlayerCount == 5) then
                 set teamCount = GetRandomInt(2, 3)
             elseif (remainingPlayerCount == 4) then
-                set teamCount = GetRandomInt(2, 2)
+                set teamCount = GetRandomInt(2, 3)
             elseif (remainingPlayerCount == 3) then
-                set teamCount = GetRandomInt(2, 2)
+                set teamCount = GetRandomInt(2, 3)
             elseif (remainingPlayerCount == 2) then
                 set teamCount = GetRandomInt(2, 2)
             endif
+
+            call BlzFrameSetText(BRMessageTextFrameHandle, BR_MESSAGE_COLOR + "Majority vote for random teams. Randomizing " + I2S(teamCount) + " teams." + BR_COLOR_END_TAG)
+            call BlzFrameSetVisible(BRMessageTextFrameHandle, true)
 
             // Create a pool of possible people to select from
             set availableRandomForce = CreateForce()
@@ -421,7 +424,6 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
                 exitwhen currentTeamCount == teamCount
 
                 set randomPlayer = ForcePickRandomPlayer(availableRandomForce)
-                call ForceRemovePlayer(availableRandomForce, randomPlayer)
 
                 set currentTeamSize = 0
 
@@ -429,11 +431,14 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
                 loop
                     exitwhen currentTeamSize == teamSize or randomPlayer == null
     
+                    call ForceRemovePlayer(availableRandomForce, randomPlayer)
                     call ForceAddPlayer(BRPlayers, randomPlayer)
                     call ForceAddPlayer(BRUsedTeams[currentTeamCount], randomPlayer)
                     call ForceAddPlayer(BRPlayerForce[currentTeamCount], randomPlayer)
     
                     set currentTeamSize = currentTeamSize + 1
+
+                    set randomPlayer = ForcePickRandomPlayer(availableRandomForce)
                 endloop
 
                 // Create the next team
@@ -453,6 +458,8 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
                 call ForceAddPlayer(BRPlayers, randomPlayer)
                 call ForceAddPlayer(BRUsedTeams[randomTeam], randomPlayer)
                 call ForceAddPlayer(BRPlayerForce[randomTeam], randomPlayer)
+
+                set randomPlayer = ForcePickRandomPlayer(availableRandomForce)
             endloop
 
             // Manually set the temp player force index for the solo players to be added to

@@ -557,6 +557,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         call ResetBRPlayerSlots()
 
+        call BlzFrameSetVisible(BRMessageTextFrameHandle, false)
+
         call ForForce(GetPlayersAll(), function ShowBattleCreatorForPlayer) 
         call BlzFrameSetVisible(BattleCreatorFrameHandle, true) 
 
