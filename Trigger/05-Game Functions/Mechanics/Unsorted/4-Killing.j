@@ -43,6 +43,11 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
 
         if IsHeroUnitId(GetUnitTypeId(target)) == false then
 
+            //Clockwerk Goblin
+            if GetUnitTypeId(target) == CLOCKWORK_GOBLIN_1_UNIT_ID then
+                call AreaDamage(target, GetUnitX(target), GetUnitY(target), GetUnitAbilityLevel(target, 'A00P') * 30, 250, false, 'A00P', true, false)
+            endif
+
             //Skeleton Brute
             if GetUnitTypeId(targetHero) == SKELETON_BRUTE_UNIT_ID then
                 call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + ((0.02 + (0.0005 * GetHeroLevel(targetHero))) * BlzGetUnitMaxHP(targetHero)))
