@@ -168,7 +168,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			else
 				call AddStatLevelBonus(u, BONUS_STRENGTH, 2 *diff)
 			endif
-			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Ring of the Bookworm
 		elseif itemId == 'I072' then
@@ -177,7 +176,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			else
 				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 2 *diff)
 			endif
-			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Trainers Ring
 		elseif itemId == 'I073' then
@@ -186,13 +184,11 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			else
 				call AddStatLevelBonus(u, BONUS_AGILITY, 2 *diff)
 			endif
-			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Arena Ring
 		elseif itemId == 'I0AF' then
 			if realUnit then
 				call RegisterEndOfRoundItem(pid, it)
-				call AddUnitCustomState(u, BONUS_BLOCK, - 30 *diff)
 			endif
 
 		elseif itemId == 'I0D1' then

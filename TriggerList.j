@@ -95,6 +95,7 @@
 //! import "C:\CHS\CHS\Trigger\09-Items\MysteriousRunestone.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\Non-Lucrative Tome.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\Packing Tape.j"
+//! import "C:\CHS\CHS\Trigger\09-Items\Rings.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\Rune Mastery.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\ScepterOfConfusion.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\Scroll Of Transformation.j"

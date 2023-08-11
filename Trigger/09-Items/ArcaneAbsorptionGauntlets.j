@@ -13,6 +13,7 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
         integer abilId
         boolean stop
         integer bonus
+        integer level
         integer startTick
         integer endTick
 
@@ -23,6 +24,11 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
         endmethod
     
         private method periodic takes nothing returns nothing
+            local integer lvl = GetUnitAbilityLevel(target, GetOriginalSpellIfExists(target, abilId))
+            if lvl > this.level then
+                set this.level = lvl
+                call BlzSetUnitAbilityManaCost(this.target, this.abilId, GetUnitAbilityLevel(this.target, this.abilId) - 1, BlzGetUnitAbilityManaCost(this.target, this.abilId, GetUnitAbilityLevel(this.target, this.abilId) - 1) + this.bonus)
+            endif
             if T32_Tick > this.endTick or (GetUnitAbilityLevel(this.target, 'B030') == 0 and T32_Tick > this.startTick + 32) or this.stop then
                 call this.disableBonus()
                 call this.stopPeriodic()
@@ -38,6 +44,7 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
             set this.bonus = bonus
             set this.abilId = abilId
             set this.stop = false
+            set this.level = GetUnitAbilityLevel(target, GetOriginalSpellIfExists(target, abilId))
     
             call BlzSetUnitAbilityManaCost(this.target, this.abilId, level, BlzGetUnitAbilityManaCost(this.target, this.abilId, level) + this.bonus)
             call DummyOrder.create(this.target, GetUnitX(this.target), GetUnitY(this.target), GetUnitFacing(this.target), 2).addActiveAbility(ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, 1, 852189).setAbilityDurationFields(ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, 30).target(this.target).activate()

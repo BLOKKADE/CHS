@@ -6,14 +6,14 @@ scope OnDamage initializer init
 
     private function SetTypeDamage takes unit u returns nothing
         if Damage.index.damageType != DAMAGE_TYPE_SPIRIT_LINK then
-
+            
             //last breath kill set to enhanced damage
             if DamageSourceAbility == LAST_BREATHS_ABILITY_ID then
                 set Damage.index.damageType = DAMAGE_TYPE_ENHANCED
                 return
             endif
 
-            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID or DamageSourceAbility == 'A0DP' then
+            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID or DamageSourceAbility == 'A0DP' or GetUnitTypeId(u) == CRYPT_LORD_LOCUST_UNIT_ID then
                 set Damage.index.damageType = DAMAGE_TYPE_NORMAL
             endif
 

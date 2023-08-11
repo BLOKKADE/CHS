@@ -1,5 +1,9 @@
-library Locust
+library Locust requires EditAbilityInfo
     function LocustStats takes unit u, integer totalLevel returns nothing
-        call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (totalLevel * 60), 0)
+        call BJDebugMsg("LocustStats")
+        call UnitAddAbility(u, 'A0EL')
+        call SetAbilityRealField(u, 'AOEL', 1, ABILITY_RLF_INITIAL_DAMAGE_PXF1, (totalLevel * 60))
+        call SetPlayerAbilityAvailable(GetOwningPlayer(u), 'A0EL', false)
+        call SetPlayerAbilityAvailable(GetOwningPlayer(u), 'A0EL', true)
     endfunction
 endlibrary
