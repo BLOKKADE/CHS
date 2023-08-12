@@ -223,6 +223,14 @@ scope ShortPeriodCheck initializer init
                 //Gnome
             elseif unitTypeId == GNOME_MASTER_UNIT_ID then
                 call GnomeIncreaseCharge(u)
+
+                //Crypt Lord
+            elseif unitTypeId == CRYPT_LORD_UNIT_ID then
+                if BlzGetUnitAbilityCooldownRemaining(u, 'A0EM') == 0 then
+                    call ElemFuncStart(u, CRYPT_LORD_UNIT_ID)
+                    call BlzStartUnitAbilityCooldown(u, 'A0EM', 10)
+                    call SpawnLocustSwarm(u)
+                endif
             endif
         endif
 

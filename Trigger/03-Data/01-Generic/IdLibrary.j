@@ -25,6 +25,7 @@ library IdLibrary initializer init
         constant integer SUDDEN_DEATH_UNIT_ID                           = 'n00V'
         constant integer SUDDEN_DEATH_ABILITY_ID                        = 'A0CU'
         constant integer SHADE_BR_RESPAWN_UNIT_ID                       = 'u009'
+        constant integer CRYPT_LORD_PASSIVE_UNIT_ID                     = 'h00H'
 
         // --- Shops ---
         constant integer DRAFT_BUY_UNIT_ID                              = 'h00C'
@@ -1216,6 +1217,7 @@ library IdLibrary initializer init
         call DUMMIES.add(DRAFT_UPGRADE_UNIT_ID)
         call DUMMIES.add(SUDDEN_DEATH_UNIT_ID)
         call DUMMIES.add(SHADE_BR_RESPAWN_UNIT_ID)
+        call DUMMIES.add(CRYPT_LORD_PASSIVE_UNIT_ID)
 
         // Feral Spirit Wolfs
         set FERAL_SPIRIT_WOLVES = StaticIdGroup.create()

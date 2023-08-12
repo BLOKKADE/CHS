@@ -128,7 +128,6 @@
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\DummyId.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\DummyOrder.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\FilteredSpellList.j"
-//! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\FollowUnitTeleport.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\FxCooldown.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\GetRandomUnit.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\HideEffects.j"
