@@ -40,7 +40,7 @@ library AllowCasting
         if(not(GetUnitTypeId(u)!=SUDDEN_DEATH_UNIT_ID)) then
             return false
         endif
-        if not DUMMIES.contains(GetUnitTypeId(u)) then
+        if (not(GetUnitTypeId(u)!=PRIEST_1_UNIT_ID)) then
             return false
         endif	
         return true
