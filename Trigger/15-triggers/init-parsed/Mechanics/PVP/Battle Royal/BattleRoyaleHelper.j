@@ -167,6 +167,11 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
         call PauseUnit(currentUnit, false)
+
+        // Reset the hero
+        set TempUnit = currentUnit // Used in HeroRefreshTrigger
+        call ConditionalTriggerExecute(HeroRefreshTrigger)
+
         call SetUnitInvulnerable(currentUnit, false)
         call RectLeaveDetection.create(currentUnit, RectMidArena)
         call FireRoundStartEvent(currentUnit, 1) // 1 = br
