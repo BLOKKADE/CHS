@@ -20,13 +20,15 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
             loop
                 set p = BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP)))
                 exitwhen i == maxUnits
-                if p != null and GetUnitAbilityLevel(p, ERUPTION_IMMUNE_BUFF_ID) == 0 then
+                if p != null then
                     set udg_NextDamageAbilitySource = ERUPTION_ABILITY_ID
                     //call BJDebugMsg("DMG: " + I2S(GetHandleId(p)))
                     call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", p, "chest"))
                     call Damage.applyMagic(this.source, p, GetSpellValue(50, 10, this.level), false, DAMAGE_TYPE_MAGIC)
-                    call DummyOrder.create(this.source, GetUnitX(p), GetUnitY(p), GetUnitFacing(p), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 0.5).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 0.5).target(p).activate()
-                    call TempAbil.create(p, ERUPTION_IMMUNE_ABILITY_ID, 1)
+                    if GetUnitAbilityLevel(p, ERUPTION_IMMUNE_BUFF_ID) == 0 then
+                        call DummyOrder.create(this.source, GetUnitX(p), GetUnitY(p), GetUnitFacing(p), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 0.5).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 0.5).target(p).activate()
+                        call TempAbil.create(p, ERUPTION_IMMUNE_ABILITY_ID, 2)
+                    endif
                     call GroupRemoveUnit(ENUM_GROUP, p)
                 endif
                 set i = i + 1
