@@ -23,6 +23,15 @@ scope ShortPeriodCheck initializer init
                         call SetBlokShieldCharges(u, hid)
                     endif
                 endif
+
+                //Crypt Lord
+                if unitTypeId == CRYPT_LORD_UNIT_ID then
+                    if BlzGetUnitAbilityCooldownRemaining(u, 'A0EM') == 0 then
+                        call ElemFuncStart(u, CRYPT_LORD_UNIT_ID)
+                        call BlzStartUnitAbilityCooldown(u, 'A0EM', 10)
+                        call SpawnLocustSwarm(u)
+                    endif
+                endif
                 
                 //Fire Shield
                 set i1 = GetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID)
@@ -224,13 +233,6 @@ scope ShortPeriodCheck initializer init
             elseif unitTypeId == GNOME_MASTER_UNIT_ID then
                 call GnomeIncreaseCharge(u)
 
-                //Crypt Lord
-            elseif unitTypeId == CRYPT_LORD_UNIT_ID then
-                if BlzGetUnitAbilityCooldownRemaining(u, 'A0EM') == 0 then
-                    call ElemFuncStart(u, CRYPT_LORD_UNIT_ID)
-                    call BlzStartUnitAbilityCooldown(u, 'A0EM', 10)
-                    call SpawnLocustSwarm(u)
-                endif
             endif
         endif
 
