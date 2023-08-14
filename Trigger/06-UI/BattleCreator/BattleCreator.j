@@ -387,41 +387,41 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         set CurrentPlayerSlotIndex = 0
 
         // Observers
-        set ObserverHandle = CreatePlayerForceSectionButton(BR_OBSERVERS_COLOR + "Observers" + BR_COLOR_END_TAG, "Join the Observers", "Join the Observers. You won't be in the next fight.|n")
+        set ObserverHandle = CreatePlayerForceSectionButton(BR_OBSERVERS_COLOR + "Observers" + BR_COLOR_END_TAG, "Join the Observers", "Join the Observers. You won't be in the next fight!|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Solo
-        set SoloHandle = CreatePlayerForceSectionButton(BR_SOLO_COLOR + "Solo" + BR_COLOR_END_TAG, "Play Solo", "Fight alone in the next fight. Even if there are teams.|n")
+        set SoloHandle = CreatePlayerForceSectionButton(BR_SOLO_COLOR + "Solo" + BR_COLOR_END_TAG, "Play Solo", "Fight alone in the next fight. Even if there are other teams!|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
-        set RandomTeamHandle = CreateCheckbox(BR_RANDOM_TEAM_COLOR + "Random Teams (0/0)" + BR_COLOR_END_TAG, "Vote on Random Teams", "If majority vote, all players will be randomly assigned|nto teams. If not enough votes, voters will fight solo.|n")
+        set RandomTeamHandle = CreateCheckbox(BR_RANDOM_TEAM_COLOR + "Random Teams (0/0)" + BR_COLOR_END_TAG, "Vote on Random Teams", "If majority vote, all players will be randomly assigned|nto teams. If not enough votes, voters will join existing teams.|n")
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Team 1
-        set Team1Handle = CreatePlayerForceSectionButton(BR_TEAM_1_COLOR + "Team 1" + BR_COLOR_END_TAG, "Join a Team", "Join Team 1 and fight together to defeat everyone else.|n")
+        set Team1Handle = CreatePlayerForceSectionButton(BR_TEAM_1_COLOR + "Team 1" + BR_COLOR_END_TAG, "Join a Team", "Join Team 1 and fight together to defeat everyone else!|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Team 2
-        set Team2Handle = CreatePlayerForceSectionButton(BR_TEAM_2_COLOR + "Team 2" + BR_COLOR_END_TAG, "Join a Team", "Join Team 2 and fight together to defeat everyone else.|n")
+        set Team2Handle = CreatePlayerForceSectionButton(BR_TEAM_2_COLOR + "Team 2" + BR_COLOR_END_TAG, "Join a Team", "Join Team 2 and fight together to defeat everyone else!|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Team 3
-        set Team3Handle = CreatePlayerForceSectionButton(BR_TEAM_3_COLOR + "Team 3" + BR_COLOR_END_TAG, "Join a Team", "Join Team 3 and fight together to defeat everyone else.|n")
+        set Team3Handle = CreatePlayerForceSectionButton(BR_TEAM_3_COLOR + "Team 3" + BR_COLOR_END_TAG, "Join a Team", "Join Team 3 and fight together to defeat everyone else!|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
 
         set CurrentCategoryIndex = CurrentCategoryIndex + 1
 
         // Team 4
-        set Team4Handle = CreatePlayerForceSectionButton(BR_TEAM_4_COLOR + "Team 4" + BR_COLOR_END_TAG, "Join a Team", "Join Team 4 and fight together to defeat everyone else.|n")
+        set Team4Handle = CreatePlayerForceSectionButton(BR_TEAM_4_COLOR + "Team 4" + BR_COLOR_END_TAG, "Join a Team", "Join Team 4 and fight together to defeat everyone else!|n")
         call CreatePlayerForcePlayerSlots() // Creates all 8 slots
     endfunction
 

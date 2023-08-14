@@ -142,7 +142,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         set hatIndexTemp = LoadNextBasicValue(MAX_SAVE_VALUE)
         set petIndexTemp = LoadNextBasicValue(MAX_SAVE_VALUE)
 
-        //Discord ad toggle
+        // Discord ad toggle
         if ps.getDiscordAdToggle() > 0 then
             set DiscordAdDisabled[GetPlayerId(SaveLoadEvent_Player)] = true
         endif
