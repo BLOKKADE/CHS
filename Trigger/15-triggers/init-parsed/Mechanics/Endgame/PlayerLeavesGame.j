@@ -1,23 +1,4 @@
-library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected
-
-    private function ResetHero takes unit u returns nothing
-        if IsUnitType(u, UNIT_TYPE_HERO) then
-            call RemoveItem(UnitItemInSlot(u, 0))
-            call RemoveItem(UnitItemInSlot(u, 1))
-            call RemoveItem(UnitItemInSlot(u, 2))
-            call RemoveItem(UnitItemInSlot(u, 3))
-            call RemoveItem(UnitItemInSlot(u, 4))
-            call RemoveItem(UnitItemInSlot(u, 5))
-    
-            call RemoveHeroAbilities(u)
-        endif
-
-        call UnitRemoveAbility(u, REINCARNATION_ABILITY_ID)
-    endfunction
-
-    private function RemovePlayerUnit takes nothing returns nothing
-        call RemoveUnit(GetEnumUnit())
-    endfunction
+library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected, HeroRefresh
 
     private function PlayerLeavesGameActions takes nothing returns nothing
         local player leaverPlayer = GetTriggerPlayer()
@@ -63,7 +44,6 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
             call KillUnit(eventInfo.hero)
         endif
     endfunction
-
 
     private function init takes nothing returns nothing
         set PlayerLeavesGameTrigger = CreateTrigger()

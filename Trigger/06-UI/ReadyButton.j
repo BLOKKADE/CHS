@@ -229,6 +229,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
             call ReadyButtonVisibility(false, pid, false)
             call PlayerStats.forPlayer(eventInfo.p).setIsReady(false)
             set PlayerHasReadied[pid] = false
+            set PlayerIsAlwaysReady[pid] = false
         else
             call ReadyButtonVisibility(false, pid, PlayerIsAlwaysReady[pid])
             call PlayerStats.forPlayer(eventInfo.p).setIsReady(PlayerIsAlwaysReady[pid])

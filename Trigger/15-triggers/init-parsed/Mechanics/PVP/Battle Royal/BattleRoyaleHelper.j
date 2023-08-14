@@ -1,4 +1,4 @@
-library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers
+library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh
 
     globals
         // Track player's lives during the BR
@@ -40,6 +40,12 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         call ReviveHeroLoc(currentUnit, centerLocation, true)
         call SetUnitPositionLoc(currentUnit, centerLocation)
+
+        // Remove player hero from game if they left the game and are an observer
+        if (IsPlayerInForce(GetEnumPlayer(), LeaverPlayers)) then
+            call ResetHero(currentUnit)
+            call RemoveUnit(currentUnit)
+        endif
 
         // Cleanup
         call RemoveLocation(centerLocation)

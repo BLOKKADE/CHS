@@ -1,4 +1,4 @@
-library BattleCreatorManager initializer init requires HeroPassiveDesc
+library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefresh
 
     globals
         // Player force array representing all teams. Can be up to 8 teams.
@@ -263,6 +263,23 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         return aliveForces == 1
     endfunction
 
+    private function CleanupObserver takes nothing returns nothing
+        local player currentPlayer = GetEnumPlayer()
+        local integer pid = GetPlayerId(currentPlayer)
+
+        // Remove the player from everything if they left the game
+        if (IsPlayerInForce(currentPlayer, LeaverPlayers)) then
+            call RemovePlayerFromEverything(currentPlayer)
+
+            // Reset the hero and remove it from the game
+            call ResetHero(PlayerHeroes[pid])
+            call RemoveUnit(PlayerHeroes[pid])
+        endif
+
+        // Cleanup
+        set currentPlayer = null
+    endfunction
+
     function ResetBRPlayerSlots takes nothing returns nothing
         set BRTempForce = BRSolo
         call ForForce(BRTempForce, function MoveEnumPlayerToObservers)
@@ -275,6 +292,9 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc
         set BRTempForce = BRTeam4
         call ForForce(BRTempForce, function MoveEnumPlayerToObservers)
         set BRTempForce = null
+
+        // Cleanup observers if players left the game
+        call ForForce(BRObservers, function CleanupObserver)
 
         call ForceClear(BRSolo)
         call ForceClear(BRTeam1)
