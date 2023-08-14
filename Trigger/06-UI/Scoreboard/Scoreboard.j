@@ -2,7 +2,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
     globals
         // Scoreboard static titles
-        private constant string CREDITS                                 = "Developed by |cffff0000BLOKKADE|r, Snowww, |cffae4affA Black Death|r, and |cff57f4ffKomoset|r"
+        private constant string CREDITS                                 = "Developed by |cffff0000BLOKKADE|r, |cffae4affA Black Death|r, and |cff57f4ffKomoset|r"
         private string ScoreboardTitle
 
         // How often the scoreboard is updated
