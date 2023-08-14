@@ -42,6 +42,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant string HEADER_COLOR                            = "|cff00ffff"
         private constant string INVALID_ACTION_COLOR                    = "|cffff0000"	
         private constant string LEAVER_COLOR                            = "|cff858585"	
+        private constant string LEFT_FUN_BR_COLOR                       = "|cffb1ff69"	
         private constant string NO_HERO_STATUS_COLOR                    = "|cffff2525"	
         private constant string OBSERVER_STATUS_COLOR                   = "|cff2cd8ff"	
         private constant string PLAYER_ALWAYS_READY_COLOR               = "|cffffdd00"
@@ -634,7 +635,9 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                 if (PlayerDeathRound[playerId] == -1) then
                     call CreateText(NO_HERO_STATUS_COLOR + "Left before hero selection" + COLOR_END_TAG, playerId)
                 elseif (PlayerDiedInBR[playerId] and (PlayerDeathRound[playerId] == 50 or (GameModeShort == true and PlayerDeathRound[playerId] == 25))) then
-                    if (IsFunBRRound) then
+                    if (IsFunBRRound and IsPlayerInForce(currentPlayer, LeaverPlayers)) then
+                        call CreateText(LEFT_FUN_BR_COLOR + "Left the game" + COLOR_END_TAG, playerId)
+                    elseif (IsFunBRRound) then
                         call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Fun Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
                     else
                         call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
