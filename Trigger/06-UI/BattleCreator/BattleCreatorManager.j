@@ -249,7 +249,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefr
         local integer aliveForces = 0
 
         loop
-            exitwhen brPlayerForceIndex == 8
+            exitwhen brPlayerForceIndex == BRTeamCount
 
             set ForceHasHeroesAlive = false
 
