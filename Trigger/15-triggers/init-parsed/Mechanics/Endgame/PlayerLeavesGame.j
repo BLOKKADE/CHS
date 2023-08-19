@@ -22,7 +22,7 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         endif
 
         // Make sure the auto ready status is wiped
-        set PlayerIsAlwaysReady[GetPlayerId(leaverPlayer)] = false
+        set PlayerIsAlwaysReady[playerId] = false
 
         if (PlayerHeroes[playerId] != null) then
             call ResetHero(PlayerHeroes[playerId])

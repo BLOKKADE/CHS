@@ -154,13 +154,17 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefr
     endfunction
 
     private function RemovePlayerFromEverything takes player p returns nothing
+        // Reset the hero and remove it from the game
+        call ResetHero(PlayerHeroes[GetPlayerId(p)])
+        call RemoveUnit(PlayerHeroes[GetPlayerId(p)])
+        
         call ForceRemovePlayer(BRRandomTeam, p)
-        call ForceRemovePlayer(BRObservers, p)
         call ForceRemovePlayer(BRSolo, p)
         call ForceRemovePlayer(BRTeam1, p)
         call ForceRemovePlayer(BRTeam2, p)
         call ForceRemovePlayer(BRTeam3, p)
         call ForceRemovePlayer(BRTeam4, p)
+        call ForceRemovePlayer(BRObservers, p)
     endfunction
 
     function TryMovePlayerToForce takes player p, force destinationForce returns boolean
@@ -176,12 +180,12 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefr
             return false
         endif
 
-        call ForceRemovePlayer(BRObservers, p)
         call ForceRemovePlayer(BRSolo, p)
         call ForceRemovePlayer(BRTeam1, p)
         call ForceRemovePlayer(BRTeam2, p)
         call ForceRemovePlayer(BRTeam3, p)
         call ForceRemovePlayer(BRTeam4, p)
+        call ForceRemovePlayer(BRObservers, p)
 
         call ForceAddPlayer(destinationForce, p)
 
@@ -265,23 +269,6 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefr
         return aliveForces == 1
     endfunction
 
-    private function CleanupObserver takes nothing returns nothing
-        local player currentPlayer = GetEnumPlayer()
-        local integer pid = GetPlayerId(currentPlayer)
-
-        // Remove the player from everything if they left the game
-        if (IsPlayerInForce(currentPlayer, LeaverPlayers)) then
-            call RemovePlayerFromEverything(currentPlayer)
-
-            // Reset the hero and remove it from the game
-            call ResetHero(PlayerHeroes[pid])
-            call RemoveUnit(PlayerHeroes[pid])
-        endif
-
-        // Cleanup
-        set currentPlayer = null
-    endfunction
-
     function ResetBRPlayerSlots takes nothing returns nothing
         set BRTempForce = BRSolo
         call ForForce(BRTempForce, function MoveEnumPlayerToObservers)
@@ -294,9 +281,6 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefr
         set BRTempForce = BRTeam4
         call ForForce(BRTempForce, function MoveEnumPlayerToObservers)
         set BRTempForce = null
-
-        // Cleanup observers if players left the game
-        call ForForce(BRObservers, function CleanupObserver)
 
         call ForceClear(BRSolo)
         call ForceClear(BRTeam1)
