@@ -1,23 +1,4 @@
-library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected
-
-    private function ResetHero takes unit u returns nothing
-        if IsUnitType(u, UNIT_TYPE_HERO) then
-            call RemoveItem(UnitItemInSlot(u, 0))
-            call RemoveItem(UnitItemInSlot(u, 1))
-            call RemoveItem(UnitItemInSlot(u, 2))
-            call RemoveItem(UnitItemInSlot(u, 3))
-            call RemoveItem(UnitItemInSlot(u, 4))
-            call RemoveItem(UnitItemInSlot(u, 5))
-    
-            call RemoveHeroAbilities(u)
-        endif
-
-        call UnitRemoveAbility(u, REINCARNATION_ABILITY_ID)
-    endfunction
-
-    private function RemovePlayerUnit takes nothing returns nothing
-        call RemoveUnit(GetEnumUnit())
-    endfunction
+library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected, HeroRefresh
 
     private function PlayerLeavesGameActions takes nothing returns nothing
         local player leaverPlayer = GetTriggerPlayer()
@@ -41,7 +22,7 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         endif
 
         // Make sure the auto ready status is wiped
-        set PlayerIsAlwaysReady[GetPlayerId(leaverPlayer)] = false
+        set PlayerIsAlwaysReady[playerId] = false
 
         if (PlayerHeroes[playerId] != null) then
             call ResetHero(PlayerHeroes[playerId])
@@ -56,6 +37,14 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         set leaverPlayer = null
     endfunction
 
+    // kill players hero at start of round if they left
+    private function OnRoundStart takes EventInfo eventInfo returns nothing
+        if eventInfo.hero != null and (IsPlayerInForce(eventInfo.p, LeaverPlayers) or GetPlayerSlotState(eventInfo.p) != PLAYER_SLOT_STATE_PLAYING) then
+            call SetUnitInvulnerable(eventInfo.hero, false)
+            call KillUnit(eventInfo.hero)
+        endif
+    endfunction
+
     private function init takes nothing returns nothing
         set PlayerLeavesGameTrigger = CreateTrigger()
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(0))
@@ -67,6 +56,7 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(6))
         call TriggerRegisterPlayerEventLeave(PlayerLeavesGameTrigger, Player(7))
         call TriggerAddAction(PlayerLeavesGameTrigger, function PlayerLeavesGameActions)
+        call CustomGameEvent_RegisterEventCode(EVENT_PLAYER_ROUND_START, CustomEvent.OnRoundStart)
     endfunction
 
 endlibrary

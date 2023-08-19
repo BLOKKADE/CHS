@@ -1,23 +1,37 @@
-library DummyActiveSpell initializer init requires AbilityData, ListT
+library DummySpell initializer init requires AbilityData, ListT
     
     globals
         integer DummySpell_PointInstant = 0
         integer DummySpell_Unit = 1
+        integer DummySpell_Passive = 2
         HashTable DummySpellList
         //[unitid].
         HashTable HeroAvailableDummySpells
         HashTable UnitDummySpells
+        HashTable UnitOriginalSpells
         //spell id = lvl of ability
     endglobals
+
+    function HasDummySpell takes unit u, integer abilId returns boolean
+        return UnitDummySpells[GetHandleId(u)].integer[abilId] != 0
+    endfunction
+
+    function GetDummySpell takes unit u, integer abilId returns integer
+        return UnitDummySpells[GetHandleId(u)].integer[abilId]
+    endfunction
+
+    function GetOriginalSpell takes unit u, integer dummyAbilId returns integer
+        return UnitOriginalSpells[GetHandleId(u)].integer[dummyAbilId]
+    endfunction
 
     //gets dummy spell if it exists otherwise 0
     function GetAssociatedSpell takes unit u, integer abilId returns integer
         return UnitDummySpells[GetHandleId(u)].integer[abilId]
     endfunction
 
-    //gets dummy spell if it exists otherwise returns abilId
-    function CheckAssociatedSpell takes unit u, integer abilId returns integer
-        local integer dummyAbilId = UnitDummySpells[GetHandleId(u)].integer[abilId]
+    //gets original spell if it exists otherwise returns abilId
+    function GetOriginalSpellIfExists takes unit u, integer abilId returns integer
+        local integer dummyAbilId = GetOriginalSpell(u, abilId)
         if dummyAbilId == 0 then
             return abilId
         else
@@ -75,15 +89,18 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
         local integer dummyAbilId = UnitDummySpells[GetHandleId(u)].integer[abilityId]
         if dummyAbilId != 0 then
             call UnitRemoveAbility(u, dummyAbilId)
-
-            if GetAbilityOrderType(abilityId) == Order_Target then
-                call AddDummySpellToList(u, dummyAbilId, 1)
+            if not IsAbilityCasteable(abilityId, false) then
+                call AddDummySpellToList(u, dummyAbilId, 2)
             else
-                call AddDummySpellToList(u, dummyAbilId, 0)
+                if GetAbilityOrderType(abilityId) == Order_Target then
+                    call AddDummySpellToList(u, dummyAbilId, 1)
+                else
+                    call AddDummySpellToList(u, dummyAbilId, 0)
+                endif
             endif
 
             set UnitDummySpells[GetHandleId(u)].integer[abilityId] = 0
-            set UnitDummySpells[GetHandleId(u)].integer[dummyAbilId] = 0
+            set UnitOriginalSpells[GetHandleId(u)].integer[dummyAbilId] = 0
         endif
     endfunction
 
@@ -125,7 +142,7 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
         call UnitAddAbility(u, dummyAbilId)
 
         set UnitDummySpells[GetHandleId(u)].integer[abilityId] = dummyAbilId
-        set UnitDummySpells[GetHandleId(u)].integer[dummyAbilId] = abilityId
+        set UnitOriginalSpells[GetHandleId(u)].integer[dummyAbilId] = abilityId
 
         call UpdateDummySpells(u, abilityId, level)
     endfunction
@@ -133,20 +150,32 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
     function SetupDummySpell takes unit u, integer abilId, integer lvl, boolean new returns nothing
         local integer orderType = 0
         //call BJDebugMsg("hello?")
-        if GetAbilityTargetType(abilId) == Target_Enemy and IsAbilityCasteable(abilId, false) and IsAbilityReplaceable(abilId) then
+        if IsAbilityReplaceable(abilId) then
+            if not IsAbilityCasteable(abilId, false) then
+                if GetAbilityOrder(abilId) == 0 then
+                    set orderType = 2
+                    //call BJDebugMsg("sds passive abil: " + GetObjectName(abilId) + " lvl: " + I2S(lvl - 1) + "new: " + B2S(new) + " ordertype: " + I2S(orderType))
+                    if new then
+                        call AddDummySpell(u, abilId, lvl - 1, orderType)
+                    else
+                        call UpdateDummySpells(u, abilId, lvl - 1)
+                    endif
+                endif
+            elseif GetAbilityTargetType(abilId) == Target_Enemy then
 
-            set orderType = GetAbilityOrderType(abilId)
-            if orderType == 2 or orderType == 3 then
-                set orderType = 0   
-            else
-                set orderType = 1
-            endif
+                set orderType = GetAbilityOrderType(abilId)
+                if orderType == 2 or orderType == 3 then
+                    set orderType = 0   
+                else
+                    set orderType = 1
+                endif
 
-            //call BJDebugMsg("sds abil: " + GetObjectName(abilId) + " lvl: " + I2S(lvl - 1) + "new: " + B2S(new) + " ordertype: " + I2S(orderType))
-            if new then
-                call AddDummySpell(u, abilId, lvl - 1, orderType)
-            else
-                call UpdateDummySpells(u, abilId, lvl - 1)
+                //call BJDebugMsg("sds abil: " + GetObjectName(abilId) + " lvl: " + I2S(lvl - 1) + "new: " + B2S(new) + " ordertype: " + I2S(orderType))
+                if new then
+                    call AddDummySpell(u, abilId, lvl - 1, orderType)
+                else
+                    call UpdateDummySpells(u, abilId, lvl - 1)
+                endif
             endif
         endif
     endfunction
@@ -173,12 +202,24 @@ library DummyActiveSpell initializer init requires AbilityData, ListT
         set DummySpellList[DummySpell_Unit][7] = 'A0BT'
         set DummySpellList[DummySpell_Unit][8] = 'A0BU'
         set DummySpellList[DummySpell_Unit][9] = 'A0BV'
+
+        set DummySpellList[DummySpell_Passive][0] = 'A0E5'
+        set DummySpellList[DummySpell_Passive][1] = 'A0E6'
+        set DummySpellList[DummySpell_Passive][2] = 'A0E7'
+        set DummySpellList[DummySpell_Passive][3] = 'A0E8'
+        set DummySpellList[DummySpell_Passive][4] = 'A0E9'
+        set DummySpellList[DummySpell_Passive][5] = 'A0EA'
+        set DummySpellList[DummySpell_Passive][6] = 'A0EB'
+        set DummySpellList[DummySpell_Passive][7] = 'A0EC'
+        set DummySpellList[DummySpell_Passive][8] = 'A0ED'
+        set DummySpellList[DummySpell_Passive][9] = 'A0EE'
     endfunction
 
     private function init takes nothing returns nothing
         set DummySpellList = HashTable.create()
         set HeroAvailableDummySpells = HashTable.create()
         set UnitDummySpells = HashTable.create()
+        set UnitOriginalSpells = HashTable.create()
 
         call SetupDummySpellIds()
     endfunction

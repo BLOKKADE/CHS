@@ -1,4 +1,4 @@
-library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAbsolute
+library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAbsolute, MathRound
 	globals
 		boolean isReforged
 
@@ -48,7 +48,6 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		set s = s + "|cffe7694aIncome|r: " + I2S(Income[pid]) + "\n"
 		set s = s + "|cff4aa8e7Glory per Round|r: " + I2S(R2I(GetPlayerGloryBonus(pid))) + "\n"
 		set s = s + "|cff9b67faMovespeed|r: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"
-		set s = s + "|cffe7e44aPhysical Power|r: " + R2SW(100 + GetUnitCustomState(u, BONUS_PHYSPOW), 1, 1) + "\n"
 		set s = s + "|cffda4ae7Rune Power|r: " + R2SW((100 + GetUnitCustomState(u, BONUS_RUNEPOW) + GetHeroLevel(u)) / 100, 1, 2) + "\n"
 		set s = s + "|cff5ce74aLuck|r: +" + R2SW(((GetUnitCustomState(u, BONUS_LUCK) - 1) * 100), 1, 1) + "%%\n"
 		set s = s + "|cff6ac8ffAbsolute Slots|r: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1)
@@ -98,6 +97,10 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		return s + "Intelligence per level: " + statColour[2] + R2S(BlzGetUnitRealField(u, ConvertUnitRealField('uinp')) + GetStatLevelBonus(u, BONUS_INTELLIGENCE)) + "|r"
 	endfunction
 
+	function MagicPhysInfo takes unit u returns string
+		return "Increases magic damage dealt by |cff4daed4" + R2SW(GetUnitCustomState(u, BONUS_MAGICPOW), 1, 2) + "%|r\n" + "Increases physical damage dealt by |cffe7e44a" + R2SW(GetUnitCustomState(u, BONUS_PHYSPOW), 1, 2) + "%|r"
+	endfunction
+
 	function UpdateTooltipText takes unit u returns nothing
 		set CustomStateValue[1] = R2S(100 * (1 - (50 /(50 + GetUnitCustomState(u, BONUS_EVASION)))))
 
@@ -111,7 +114,7 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 			set CustomStateValue[2] = CustomStateValue[2] + "Increases physical damage taken by |cffe7544a" + R2S(((((BlzGetUnitArmor(u)))* 0.03)/(1 + 0.03 *(BlzGetUnitArmor(u)))) * 100)
 		endif
 
-		set CustomStateValue[3] = R2S(GetUnitCustomState(u, BONUS_MAGICPOW))
+		set CustomStateValue[3] = MagicPhysInfo(u)
 		set CustomStateValue[4] = R2S( (1 - (50 / ( 50 + GetUnitCustomState(u, BONUS_MAGICRES) ))) * 100 )
 		set CustomStateValue[5] = ExtraFieldInfo(u)
 		set CustomStateValue[6] = StrInfo(u)
@@ -130,7 +133,7 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		endif
 		call BlzFrameSetText(TextUI[4], R2SW(GetUnitCustomState(u, BONUS_BLOCK), 1, 0))
 		call BlzFrameSetText(TextUI[5], R2SW(GetUnitCustomState(u, BONUS_PVP), 1, 1))
-		call BlzFrameSetText(TextUI[9], R2SW(GetUnitCustomState(u, BONUS_MAGICPOW), 1, 1))
+		call BlzFrameSetText(TextUI[9], I2S(MathRound_round(GetUnitCustomState(u, BONUS_MAGICPOW))) + "/" + I2S(MathRound_round(GetUnitCustomState(u, BONUS_PHYSPOW))))
 		call BlzFrameSetText(TextUI[10], R2SW(GetUnitCustomState(u, BONUS_MAGICRES), 1, 1))
 		call BlzFrameSetText(TextUI[11], R2SW(GetUnitCustomState(u, BONUS_EVASION), 1, 1))
 
@@ -173,14 +176,14 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 	function GameUINewPanel takes nothing returns nothing
 		local framehandle NewPanel = BlzCreateSimpleFrame("CustomUnitInfoPanel3x4", BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0), 0)
 		call InitDataInfoPanel(1 , "Damage: " , "ReplaceableTextures\\CommandButtons\\BTNAttack.blp" , "")
-		call InitDataInfoPanel(2 , "Attack cooldown: " , "ReplaceableTextures\\CommandButtons\\BTNHoldPosition.blp" , "Time between the unit's attacks / Time to start the effect of a spell.\nAbilities and items can affect these values making them inaccurate.")
+		call InitDataInfoPanel(2 , "Attack cooldown/cast time: " , "ReplaceableTextures\\CommandButtons\\BTNHoldPosition.blp" , "Time between the unit's attacks / Time to start the effect of a spell.\nAbilities and items can affect these values making them inaccurate.")
 		call InitDataInfoPanel(3 , "Armor: " , "ReplaceableTextures\\CommandButtons\\BTNStop.blp" , "")
 		call InitDataInfoPanel(4 , "Block: " , "ReplaceableTextures\\CommandButtons\\BTNDefend.blp" , "Flat Damage reduction applied to all damage taken.\nBlock is calculated before armor and magic protection.")
 		call InitDataInfoPanel(5 , "Pvp bonus: " , "BTNHUHoldPosition.blp" , "Increases damage dealt to enemy heroes\nReduces damage taken from enemy heroes. ")
 		call InitDataInfoPanel(6 , "Strength: " , "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower" , "")
 		call InitDataInfoPanel(7 , "Agility: " , "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility" , "")
 		call InitDataInfoPanel(8 , "Intelligence: " , "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence" , "")
-		call InitDataInfoPanel(9 , "Magic power: " , "ReplaceableTextures\\CommandButtons\\BTNControlMagic" , "Increases magic damage dealt by |cff4daed4")
+		call InitDataInfoPanel(9 , "Magic power/Phys power: " , "ReplaceableTextures\\CommandButtons\\BTNControlMagic" , "")
 		call InitDataInfoPanel(10 , "Magic protection: " , "ReplaceableTextures\\CommandButtons\\BTNRunedBracers.blp" , "Reduces magic damage taken by |cff51d44d")
 		call InitDataInfoPanel(11 , "Evasion: " , "ReplaceableTextures\\CommandButtons\\BTNEvasion" , "Increases the chance to evade enemy attacks by |cffd6e049")
 		call InitDataInfoPanel(12 , "" , "ReplaceableTextures\\CommandButtons\\BTNEngineeringUpgrade.blp", "")
@@ -214,7 +217,7 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 				elseif currentFrame == 8 then
 					set ToolTipA = ToolTipA + CustomStateValue[8]
 				elseif currentFrame == 9 then
-					set ToolTipA = ToolTipA + CustomStateValue[3] + "%%|r."
+					set ToolTipA = ToolTipA + CustomStateValue[3]
 				elseif currentFrame == 10 then
 					set ToolTipA = ToolTipA + CustomStateValue[4] + "%%|r."
 				elseif currentFrame == 11 then
@@ -250,7 +253,8 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		set statColour[0] = "|cffff6e6e"
 		set statColour[1] = "|cffe4e74a"
 		set statColour[2] = "|cff4ae7df"
-		set isReforged = GetLocalizedString("REFORGED") != "REFORGED"      
+		set isReforged = GetLocalizedString("REFORGED") != "REFORGED"
+		call BlzChangeMinimapTerrainTex("minimap.blp")
 		call BlzLoadTOCFile("war3mapImported\\UnitInfoPanels.toc")
 		call BlzLoadTOCFile("war3mapimported\\BoxedText.toc")
 		set UnitInfoFrame = BlzGetFrameByName("SimpleInfoPanelUnitDetail", 0)   

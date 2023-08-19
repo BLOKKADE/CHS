@@ -2,7 +2,21 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
     //===========================================================================
     globals
         Table ShowDmgText
+        Table ShowDmgTextAt
     endglobals
+
+    function ShowOtherDamageText takes unit source, unit target, real value, string damageType returns string
+        local string output = ""
+
+        set output = (GetPlayerNameColour(GetOwningPlayer(source)) + ": " + damageType + "|r dealt " + R2S(value) + "|r dmg to " + GetPlayerNameColour(GetOwningPlayer(target)) + "|r")
+    
+        //debug mode shows handle id to differentiate between multiple units
+        if DebugModeEnabled then
+            set output = output + " id: " + I2S(GetHandleId(DamageTarget))
+        endif
+        
+        return output
+    endfunction
 
     function DamageText takes boolean death returns string
         local string colour = "|ccffdde31"
@@ -21,24 +35,24 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
             set dmgType = "|r killed " + GetPlayerNameColour(GetOwningPlayer(DamageTarget)) + "|r dealing: "
         endif
 
+        //if damage source is a summon
+        if SUMMONS.contains(DamageSourceTypeId) then
+            set aType = aType + GetObjectName(DamageSourceTypeId) + " "
+        endif
+
+        if Damage.index.isSpell then
+            set aType = aType + "spell"
+        endif
+
+        if Damage.index.isAttack then
+            set aType = aType + "attack"
+        endif
+
         //if damage source was an ability
         if DamageSourceAbility != 0 then
-            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
+            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + " " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
         //if damage source is an attack or unknown ability
         else
-            //if damage source is a summon
-            if SUMMONS.contains(DamageSourceTypeId) then
-                set aType = aType + GetObjectName(DamageSourceTypeId) + " "
-            endif
-
-            if Damage.index.isSpell then
-                set aType = aType + "spell"
-            endif
-    
-            if Damage.index.isAttack then
-                set aType = aType + "attack"
-            endif
-
             set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
         endif
 
@@ -53,9 +67,7 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
         return output
     endfunction
 
-    //death = true shows for all players
-    function ShowDamageText takes boolean death returns nothing
-        local string output = DamageText(death)
+    function ShowLoggingText takes boolean death, string output returns nothing
         local DuelGame duelGame
 
         if death then
@@ -71,30 +83,40 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
                 call DisplayTimedTextToForce(duelGame.team2, 20, output)
             endif
         else
-            if ShowDmgText.boolean[DamageSourcePid] then
+            if ShowDmgText.boolean[DamageSourcePid] and Damage.index.damage > ShowDmgTextAt.integer[DamageSourcePid] then
                 call DisplayTimedTextToPlayer(Player(DamageSourcePid), 0, 0, 20, output)
             endif
 
-            if ShowDmgText.boolean[DamageTargetPid] then
+            if ShowDmgText.boolean[DamageTargetPid] and Damage.index.damage > ShowDmgTextAt.integer[DamageTargetPid] then
                 call DisplayTimedTextToPlayer(Player(DamageTargetPid), 0, 0, 20, output)
             endif
         endif
     endfunction
 
+    //death = true shows for all players
+    function ShowDamageText takes boolean death returns nothing
+        if (ShowDmgText.boolean[DamageSourcePid] and Damage.index.damage > ShowDmgTextAt.integer[DamageSourcePid]) or (ShowDmgText.boolean[DamageTargetPid] and Damage.index.damage > ShowDmgTextAt.integer[DamageTargetPid]) then
+            call ShowLoggingText(death, DamageText(death))
+        endif
+    endfunction
+
     function ToggleDmgTxt takes Args args returns nothing
+        local integer limit = S2I(args[1])
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        if ShowDmgText.boolean[pid] then
+        if ShowDmgText.boolean[pid] and limit == 0 then
             set ShowDmgText.boolean[pid] = false
             call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|ccffdde31Disabled damage text|r")
         else
             set ShowDmgText.boolean[pid] = true
-            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|ccf61fd31Enabled damage text|r")
+            set ShowDmgTextAt.integer[pid] = limit
+            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|ccf61fd31Enabled damage text|r when damage instance is higher than " + I2S(limit))
         endif
     endfunction
     
     //===========================================================================
     private function init takes nothing returns nothing
         set ShowDmgText = Table.create()
+        set ShowDmgTextAt = Table.create()
         call Command.create(CommandHandler.ToggleDmgTxt).name("DamageText").handles("damagetext").handles("dt").help("dt", "Toggles text display for damage taken by your hero. (can lag)")
     endfunction
 endlibrary

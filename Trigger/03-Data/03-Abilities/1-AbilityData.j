@@ -771,6 +771,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //114 - Fearless Defenders 
         call SaveAbilData(FEARLESS_DEFENDERS_ABILITY_ID, FEARLESS_DEFENDERS_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
+        call SetLastObjectElement(Element_Summon, 1)
 
         //115 - Demon's Curse 
         call SaveAbilData(DEMONS_CURSE_ABILITY_ID, DEMONS_CURSE_ITEM_ID, false, 0, 0, false, Order_None, null)

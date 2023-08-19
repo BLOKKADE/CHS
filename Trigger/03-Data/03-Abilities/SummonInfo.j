@@ -1,4 +1,4 @@
-library SummonInfo initializer init
+library SummonInfo initializer init requires Locust
     globals
         Table SummonSpells
         Table SummonCode
@@ -35,12 +35,13 @@ library SummonInfo initializer init
         call SetSummonInfo(PARASITE_1_UNIT_ID, PARASITE_ABILITY_ID, SummonStatCode.ParasiteStats)
         call SetSummonInfo(CARRION_BEETLE_1_UNIT_ID, CARRION_BEETLES_ABILITY_ID, SummonStatCode.CarrionBeetleStats)
         call SetSummonInfo(SKELETON_BATTLEMASTER_1_UNIT_ID, BLACK_ARROW_PASSIVE_ABILITY_ID, SummonStatCode.BlackArrowMeleeSkeletonStats)
-        call SetSummonInfo(SKELETON_WARMAGE_1_UNIT_ID, BLACK_ARROW_PASSIVE_ABILITY_ID, SummonStatCode.BlackArrowMeleeSkeletonStats)
+        call SetSummonInfo(SKELETON_WARMAGE_1_UNIT_ID, BLACK_ARROW_PASSIVE_ABILITY_ID, SummonStatCode.BlackArrowRangedSkeletonStats)
         call SetSummonInfo(NECRO_BOOK_WARRIOR_1_UNIT_ID, 0, SummonStatCode.SkeletonStats)
         call SetSummonInfo(NECRO_BOOK_ARCHER_1_UNIT_ID, 0, SummonStatCode.SkeletonStats)
         call SetSummonInfo(BONE_ARMOR_SKELETON_UNIT_ID, 0, SummonStatCode.SkeletonStats)
         call SetSummonInfo(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID, FEARLESS_DEFENDERS_ABILITY_ID, SummonStatCode.FearlessDefendersStats)
         call SetSummonInfo('h01N', ABSOLUTE_WILD_ABILITY_ID, 0)
+        call SetSummonInfo('u008', CRYPT_LORD_UNIT_ID, SummonStatCode.LocustStats)
         call SetSummonInfo(FAERIE_DRAGON_UNIT_ID, MYSTIC_UNIT_ID, SummonStatCode.FaerieDragonStats)
     endfunction
 

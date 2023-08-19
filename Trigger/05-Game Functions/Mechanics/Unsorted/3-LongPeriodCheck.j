@@ -4,18 +4,23 @@ scope LongPeriodCheck initializer init
         local integer i
         local integer hid = GetHandleId(u)
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
+
+            call CastChronusSpells(u, hid, false)
+
             //Mysterious Talent
             set i = GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID)
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 then
                 call MysteriousTalentActivate(u)
                 call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - i) 
             endif
+
             //Sorcerer Passive (uses same spell as thunderwitch for now (A08P), not sure if it matters, easy to change)
             if GetUnitTypeId(u) == SORCERER_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and FilterListNotEmpty(u, SORCERER_UNIT_ID) and CheckProc(u, 600) then
                 call SorcererPassive(u, hid)
                 call ElemFuncStart(u, SORCERER_UNIT_ID)
                 call AbilStartCD(u, 'A08P', RMaxBJ(15, 50 - I2R(GetHeroLevel(u) / 5)))
             endif
+
             //Holy Shield
             if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 then
                 call UseSpellsHolyShield(u)
@@ -53,13 +58,6 @@ scope LongPeriodCheck initializer init
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,EARTHQUAKE_ABILITY_ID) <= 0.001 and CheckProc(u, 600) then
                 call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap", GetSpellValue(75, 10, i), ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5 + (0.05 * i),ABILITY_RLF_DURATION_HERO,0.5 + (0.05 * i),ABILITY_RLF_DURATION_NORMAL)
                 call AbilStartCD(u,EARTHQUAKE_ABILITY_ID,5) 
-            endif
-
-            //Gnome
-            if GetUnitTypeId(u) == GNOME_MASTER_UNIT_ID and CheckProc(u, 2200) and BlzGetUnitAbilityCooldownRemaining(u, GNOME_MASTER_PASSIVE_ABILITY_ID) == 0 then
-                call ElemFuncStart(u,GNOME_MASTER_UNIT_ID)
-                call AbilStartCD(u, GNOME_MASTER_PASSIVE_ABILITY_ID, 11 + (GetHeroLevel(u) * 0.04))
-                call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'A03Z',"stomp",55 * GetHeroLevel(u),ABILITY_RLF_DAMAGE_INCREASE,2200,ABILITY_RLF_AREA_OF_EFFECT , 1 +(GetHeroLevel(u) * 0.04),ABILITY_RLF_DURATION_HERO,1 +(GetHeroLevel(u) * 0.04),ABILITY_RLF_DURATION_NORMAL)
             endif
         endif
     endfunction
@@ -257,8 +255,7 @@ scope LongPeriodCheck initializer init
             set i2 = LoadInteger(HT, hid,ABSOLUTE_FIRE_ABILITY_ID)
             if i1 >= 1 or i2 != 0 then
                 if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
-                    set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
-                    set i1 = R2I(/*(1+ GetUnitAbsoluteEffective(u, Element_Fire)) * */(i1 * GetUnitElementCount(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))) * r1)
+                    set i1 = R2I(/*(1+ GetUnitAbsoluteEffective(u, Element_Fire)) * */(i1 * GetUnitElementCount(u, Element_Fire)) * (1 + (0.005 * GetHeroLevel(u))))
                 else
                     set i1 = R2I(i1 * GetUnitElementCount(u, Element_Fire)/* * (1+ GetUnitAbsoluteEffective(u, Element_Fire))*/)
                 endif
@@ -370,8 +367,7 @@ scope LongPeriodCheck initializer init
 
             //Pit Lord
             if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
-                set r1 = 1 - RMaxBJ(0.25 * GetUnitElementCount(u, Element_Water), 0)
-                set i1 = R2I(GetUnitCustomState(u, BONUS_MAGICPOW) * r1)
+                set i1 = R2I(GetUnitCustomState(u, BONUS_MAGICPOW))
                 set i2 = LoadInteger(HT, hid,PIT_LORD_UNIT_ID)
                 if i1 != i2 then
                     call AddUnitCustomState(u, BONUS_PHYSPOW, 0 - i2)
@@ -393,8 +389,9 @@ scope LongPeriodCheck initializer init
             //Time Manipulation
             if GetUnitAbilityLevel(u, TIME_MANIPULATION_ABILITY_ID) > 0 and CurrentlyFighting[GetPlayerId(GetOwningPlayer(u))] and TimeManipulationTable[hid].boolean[1] then
                 if BlzGetUnitAbilityCooldownRemaining(u, TIME_MANIPULATION_ABILITY_ID) == 0 then
-                    set TimeManipulationTable[hid].real[2] = TimeManipulationTable[hid].real[2] + 1
-                    call StartFunctionSpell(u, 6)
+                    call FireRoundStartEvent(u, 6) // 6 = urn
+                    call TimeManipulationStart(u, HeroHasChronusSpell(u))
+                    call CastChronusSpells(u, hid, true)
                 endif
             endif
 

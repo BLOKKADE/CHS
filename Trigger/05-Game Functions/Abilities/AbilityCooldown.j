@@ -1,4 +1,4 @@
-library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex, RuneMaster, NewAbilityCooldown
+library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement, SpellbaneToken, UnitItems, StableSpells, RandomShit, DousingHex, RuneMaster, NewAbilityCooldown
 
     function GetHeroTotalAbilitiesCooldown takes unit u returns real
         local real total = 0
@@ -8,7 +8,7 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
 
         loop
             set abilId = GetHeroSpellAtPosition(u, i)
-            set abilIdCurrent = CheckAssociatedSpell(u, abilId)
+            set abilIdCurrent = GetOriginalSpellIfExists(u, abilId)
 
             set total = total + BlzGetUnitAbilityCooldownRemaining(u, abilIdCurrent)
  
@@ -26,7 +26,7 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         
         loop
             exitwhen i1 > 10
-            set id = CheckAssociatedSpell(u, GetHeroSpellAtPosition(u, i1))
+            set id = GetOriginalSpellIfExists(u, GetHeroSpellAtPosition(u, i1))
 
             call BlzStartUnitAbilityCooldown(u, id, cd + BlzGetUnitAbilityCooldownRemaining(u, id))
 
@@ -142,15 +142,28 @@ library AbilityCooldown requires HeroAbilityTable, DummyActiveSpell, GetObjectEl
         return (time * ResCD) + timeBonus
     endfunction
 
-    function AbilStartCD takes unit u, integer id, real cd returns real
-        local real newCooldown = CalculateCooldown(u, id, cd, false)
-        call ElemFuncStart(u, id)
-        call BlzStartUnitAbilityCooldown(u, id, newCooldown)
+    // abilId should not be a dummyspell
+    function AbilStartCD takes unit u, integer abilId, real cd returns real
+        local real newCooldown = CalculateCooldown(u, abilId, cd, false)
+        local integer dummySpell = GetDummySpell(u, abilId)
+        call ElemFuncStart(u, abilId)
 
-        if id != ANCIENT_TEACHING_ABILITY_ID then
-            set Global_i = id
-            set Global_u = u
-            call ExecuteFunc("ResetAbilit_Ec")
+        call BlzStartUnitAbilityCooldown(u, abilId, newCooldown)
+
+        if dummySpell != 0 then
+            call BlzStartUnitAbilityCooldown(u, dummySpell, newCooldown)
+
+            if abilId != ANCIENT_TEACHING_ABILITY_ID then
+                set Global_i = dummySpell
+                set Global_u = u
+                call ExecuteFunc("ResetAbilit_Ec")
+            endif
+        else
+            if abilId != ANCIENT_TEACHING_ABILITY_ID then
+                set Global_i = abilId
+                set Global_u = u
+                call ExecuteFunc("ResetAbilit_Ec")
+            endif
         endif
         
         return newCooldown 

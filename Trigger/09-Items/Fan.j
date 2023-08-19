@@ -12,7 +12,7 @@ library Fan requires AbilityCooldown, DummyOrder
             call dummy.instant()
 
             if dummy.activate() then
-                call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) - level * 7)
+                call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) - level * 20)
                 call AbilStartCD(caster, 'A0DC', 0.3)
             endif
         endif

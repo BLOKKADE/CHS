@@ -6,7 +6,7 @@ library ResetTime requires RandomShit
             set abilId = BlzGetAbilityId(BlzGetUnitAbilityByIndex(u, i))
             exitwhen abilId == 0
 
-            if BlzGetUnitAbilityCooldownRemaining(u, abilId) != 0 and IsSpellResettable(abilId) and IsSpellResettable(GetAssociatedSpell(u, abilId)) then
+            if BlzGetUnitAbilityCooldownRemaining(u, abilId) != 0 and IsSpellResettable(GetOriginalSpellIfExists(u, abilId)) then
                 call BlzEndUnitAbilityCooldown(u, abilId)
             endif
 

@@ -109,6 +109,10 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 1, 3 * heroLevel)
         elseif uid == PIT_LORD_UNIT_ID then          
             call SetBonus(u, 0, heroLevel * 0.5)
+            call SetBonus(u, 1, heroLevel * 40)
+            call SetBonus(u, 2, heroLevel * 20)
+            call SetBonus(u, 3, 1 + (heroLevel - ModuloInteger(heroLevel, 75) / 75))
+            call PitlordLevelup(u, heroLevel)
         elseif uid == THUNDER_WITCH_UNIT_ID then      
             set i = prevLevel + 1
             loop
@@ -215,9 +219,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == LICH_UNIT_ID then
             call SetBonus(u, 0, 100 + heroLevel)
         elseif uid == GNOME_MASTER_UNIT_ID then
-            call SetBonus(u, 0, heroLevel * 55)
-            call SetBonus(u, 1, 11 + heroLevel * 0.04)
-            call SetBonus(u, 2, heroLevel * 0.04)
+            call SetBonus(u, 0, heroLevel * 10)
+            call SetBonus(u, 1, GnomeCharges.integer[hid])
         elseif uid == GREEDY_GOBLIN_UNIT_ID then
             call SetBonus(u, 0, 20 + (heroLevel * 4))
             call SetBonus(u, 1, 21 + (heroLevel * 3))
@@ -232,7 +235,6 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, heroLevel * 0.5)
         elseif uid == YETI_UNIT_ID then
             call SetBonus(u, 0, heroLevel * 20)
-            call SetBonus(u, 1, 50 + (heroLevel * 2))
         elseif uid == MURLOC_WARRIOR_UNIT_ID then
             call SetBonus(u, 0, (heroLevel / 10) + 1)
         elseif uid == GHOUL_UNIT_ID then
@@ -257,7 +259,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == SATYR_TRICKSTER_UNIT_ID then
             call AddUnitCustomState(u, BONUS_EVASION, 0.5 * levelsGained)
             call UpdateBonus(u, 0, 0.5 * levelsGained)
-            call SetBonus(u, 1, 98 + (heroLevel * 2))
+            call SetBonus(u, 1, 49 + (heroLevel * 1))
         elseif uid == MEDIVH_UNIT_ID then
             call AddUnitCustomState(u, BONUS_MAGICPOW, 2 * levelsGained)
             call UpdateBonus(u, 0, 2 * levelsGained)   

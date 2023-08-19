@@ -24,19 +24,31 @@ library Savecode requires BigNum
         return "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     endfunction
 
+    private function alternate_charset takes nothing returns string
+        return "khcXwVRBe2m1q67vso4fY05ZzgjNuIEFHJalr3Cdtx9yMOAWPbQiDTUSLK8Gp"
+    endfunction
+
     private function charsetlen takes nothing returns integer
         return StringLength(charset())
+    endfunction
+
+    private function alternate_charsetlen takes nothing returns integer
+        return StringLength(alternate_charset())
     endfunction
 
     private function BASE takes nothing returns integer
         return charsetlen()
     endfunction
 
+    private function ALTERNATE_BASE takes nothing returns integer
+        return alternate_charsetlen()
+    endfunction
+
     private constant function HASHN takes nothing returns integer
         return 5000 //1./HASHN() is the probability of a random code being valid
     endfunction
 
-    private constant function MAXINT takes nothing returns integer
+    constant function MAXINT takes nothing returns integer
         return 2147483647
     endfunction
 
@@ -51,10 +63,22 @@ library Savecode requires BigNum
         return i
     endfunction
 
-    private function chartoi takes string c returns integer
+    private function chartoi takes string c, boolean a returns integer
         local integer i = 0
         local string cs = charset()
         local integer len = charsetlen()
+
+        if (a) then
+            set cs = alternate_charset()
+            set len = alternate_charsetlen()
+            loop
+                exitwhen i>=len or c == SubString(cs,i,i+1)
+                set i = i + 1
+            endloop
+
+            return i
+        endif
+
         loop
             exitwhen i>=len or c == SubString(cs,i,i+1)
             set i = i + 1
@@ -63,12 +87,12 @@ library Savecode requires BigNum
     endfunction
 
     private function itochar takes integer i returns string
-        return SubString(charset(),i,i+1)
+        return SubString(alternate_charset(),i,i+1)
     endfunction
 
     //You probably want to use a different char set for this
     //Also, use a hash that doesn't suck so much
-    private function scommhash takes string s returns integer
+    function scommhash takes string s returns integer
         local integer array count
         local integer i = 0
         local integer len = StringLength(s)
@@ -109,11 +133,19 @@ library Savecode requires BigNum
     struct Savecode
         real digits     //logarithmic approximation
         BigNum bignum
-        
-        static method create takes nothing returns Savecode
+        boolean a
+
+        static method create takes boolean a returns Savecode
             local Savecode sc = Savecode.allocate()
             set sc.digits = 0.
-            set sc.bignum = BigNum.create(BASE())
+            set sc.a = a
+
+            if (a) then
+                set sc.bignum = BigNum.create(ALTERNATE_BASE())
+            else
+                set sc.bignum = BigNum.create(BASE())
+            endif
+
             return sc
         endmethod
         
@@ -122,7 +154,7 @@ library Savecode requires BigNum
         endmethod
 
         method Encode takes integer val, integer max returns nothing
-            set .digits = .digits + log(max+1,BASE())
+            set .digits = .digits + log(max+1,ALTERNATE_BASE())
             call .bignum.MulSmall(max+1)
             call .bignum.AddSmall(val)
         endmethod
@@ -179,7 +211,7 @@ library Savecode requires BigNum
             local BigNum_l cur = BigNum_l.create()
             set .bignum.list = cur
             loop
-                set cur.leaf = chartoi(SubString(s,i,i+1))      
+                set cur.leaf = chartoi(SubString(s,i,i+1), .a)      
                 exitwhen i <= 0
                 set cur.next = BigNum_l.create()
                 set cur = cur.next
@@ -194,7 +226,11 @@ library Savecode requires BigNum
             loop
                 exitwhen cur == 0
                 set x = cur.leaf
-                set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/BASE())*BASE()) + 479,HASHN())
+                if (.a) then
+                    set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/ALTERNATE_BASE())*ALTERNATE_BASE()) + 479,HASHN())
+                else
+                    set hash = ModuloInteger(hash+79*hash/(x+1) + 293*x/(1+hash - (hash/BASE())*BASE()) + 479,HASHN())
+                endif
                 set cur = cur.next
             endloop
             return hash
@@ -270,7 +306,6 @@ library Savecode requires BigNum
             ///////////////////////
             
             call .Pad()
-            call .Obfuscate(key,1)
             return .ToString()
         endmethod
         
@@ -278,8 +313,14 @@ library Savecode requires BigNum
             local integer ikey = scommhash(GetPlayerName(p))+loadtype*73
             local integer inputhash
             
-            call .FromString(s)
-            call .Obfuscate(ikey,-1)
+            if (SubString(s, 0, 1) == "n") then
+                set s = SubString(s, 1, StringLength(s))
+                call .FromString(s)
+            else
+                call .FromString(s)
+                call .Obfuscate(ikey,-1)
+            endif
+
             set inputhash = .Decode(HASHN())
             
             call .Clean()
@@ -339,55 +380,6 @@ library Savecode requires BigNum
             set i = i + 1
         endloop
         return out
-    endfunction
-
-    private function prop_Savecode takes nothing returns boolean
-        local string s
-        local Savecode loadcode
-
-    //--- Data you want to save ---
-        local integer medal1 = 10
-        local integer medal2 = 3
-        local integer medalmax = 13
-        local integer XP = 1337
-        local integer XPmax = 1000000
-
-        local Savecode savecode = Savecode.create()
-
-        call SetPlayerName(Player(0),"yomp")
-        call SetPlayerName(Player(1),"fruitcup")
-
-        call savecode.Encode(medal1,medalmax)
-        call savecode.Encode(medal2,medalmax)
-        call savecode.Encode(XP,XPmax)
-
-    //--- Savecode_save generates the savecode for a specific player ---
-        set s = savecode.Save(Player(0),1)
-        call savecode.destroy()
-    //  call BJDebugMsg("Savecode: " + Savecode_colorize(s))
-
-    //--- User writes down code, inputs again ---
-
-        set loadcode = Savecode.create()
-        if loadcode.Load(Player(0),s,1) then
-    //      call BJDebugMsg("load ok")
-        else
-            call BJDebugMsg("load failed")   
-            return false
-        endif
-
-    //Must decode in reverse order of encodes
-
-    //               load object : max value that data can take
-        if XP != loadcode.Decode(XPmax) then
-            return false
-        elseif medal2 != loadcode.Decode(medalmax) then
-            return false
-        elseif medal1 != loadcode.Decode(medalmax) then
-            return false
-        endif
-        call loadcode.destroy()
-        return true
     endfunction
 
 endlibrary

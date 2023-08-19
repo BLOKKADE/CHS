@@ -30,7 +30,7 @@ library Plague requires AreaDamage
 
                 if GetUnitAbilityLevel(hero, 'A0BA') > 0 then
                     call SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + ( (0.02 + (0.0005 * GetHeroLevel(caster))) * BlzGetUnitMaxHP(caster)))
-                    call AreaDamage(caster, x, y, 20 + (30 * GetHeroLevel(caster)), 400, false, 'N00O', true)
+                    call AreaDamage(caster, x, y, 20 + (30 * GetHeroLevel(caster)), 400, false, 'N00O', true, false)
                     set fx = AddLocalizedSpecialEffect("war3mapImported\\Arcane Explosion.mdx", dummyX, dummyY)
                     call BlzSetSpecialEffectTimeScale(fx, 2)
                     call DestroyEffect(fx)

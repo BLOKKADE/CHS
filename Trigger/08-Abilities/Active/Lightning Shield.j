@@ -20,7 +20,7 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula
                 exitwhen p == null
                 set udg_NextDamageAbilitySource = LIGHTNING_SHIELD_ABILITY_ID
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\LightningShield\\LightningShieldBuff.mdl", p, "chest"))
-                call Damage.applyMagic(this.source, p, GetSpellValue(20, 10, this.level), DAMAGE_TYPE_MAGIC)
+                call Damage.applyMagic(this.source, p, GetSpellValue(20, 10, this.level), false, DAMAGE_TYPE_MAGIC)
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
         endmethod

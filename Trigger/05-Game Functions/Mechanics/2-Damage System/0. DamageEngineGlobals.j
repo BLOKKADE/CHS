@@ -38,5 +38,5 @@ globals
     boolean DamageIsTrue = false
     boolean DamageIsCutting = false
 
-    boolean DamageShowText = false
+    boolean DamageIsCrit = false
 endglobals

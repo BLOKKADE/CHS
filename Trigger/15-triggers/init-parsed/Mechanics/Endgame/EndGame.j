@@ -1,11 +1,11 @@
-library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
+library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, BattleRoyaleHelper
+
+    globals
+        private force AwardedPlayers = CreateForce()
+    endglobals
 
     private function IsOnlyOnePlayerRemaining takes nothing returns boolean
         return (IsTriggerEnabled(GetTriggeringTrigger()) == true) and (InitialPlayerCount > 1) and (PlayerCount == 1) and (GameComplete == false)
-    endfunction
-
-    private function ActivePlayerFilter takes nothing returns boolean
-        return GetPlayerId(GetFilterPlayer()) < 8 and (not IsPlayerInForce(GetFilterPlayer(), LeaverPlayers)) and (not IsPlayerInForce(GetFilterPlayer(), DefeatedPlayers))
     endfunction
 
     private function IsShortGameComplete takes nothing returns boolean
@@ -25,7 +25,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
     endfunction
 
     private function EndGameConditions takes nothing returns boolean
-        return IsOnlyOnePlayerRemaining() or IsInitialSoloPlayerGame()
+        return IsOnlyOnePlayerRemaining() or IsInitialSoloPlayerGame() or (BrStarted and IsBROver())
     endfunction
 
     private function ShowScoreboardForPlayer takes nothing returns nothing
@@ -38,75 +38,104 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard
         endif
     endfunction
 
-    private function GetWinner takes nothing returns nothing
-        local integer i = 0
+    private function MakeWinnerInvulnerable takes nothing returns nothing
+        call SetUnitInvulnerable(PlayerHeroes[GetPlayerId(GetEnumPlayer())], true)
 
-        set WinningPlayer = Player(PLAYER_NEUTRAL_PASSIVE)
+        call SetCurrentlyFighting(GetEnumPlayer(), false)
 
-        loop
-            if UnitAlive(PlayerHeroes[i]) then
-                // call BJDebugMsg(GetPlayerName(Player(i)) + ", hero alive: " + GetUnitName(PlayerHeroes[i]))
-                set WinningPlayer = Player(i)
-            endif
+        // Extra cleanup
+        call StopRectLeaveDetection(GetHandleId(PlayerHeroes[GetPlayerId(GetEnumPlayer())]))
+    endfunction
 
-            set i = i + 1
-            exitwhen i == 8
-        endloop
+    private function AddBRWinToPlayer takes nothing returns nothing
+        // Update the player's stats that they won a BR
+        local PlayerStats ps = PlayerStats.forPlayer(GetEnumPlayer())
 
-        if (WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE)) then
-            call SetUnitInvulnerable(PlayerHeroes[GetPlayerId(WinningPlayer)], true)
+        // Ensure a player doesn't get more than one BR win for some reason
+        if (not IsPlayerInForce(GetEnumPlayer(), AwardedPlayers)) then
+            call ForceAddPlayer(AwardedPlayers, GetEnumPlayer())
+
+            call ps.addBRWin()
+
+            call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
+            call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(GetEnumPlayer()) + " |cffffcc00survived longer than all other players with " + ps.getBRPVPKillCount() + " Congratulations!!")
+            call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(GetEnumPlayer()) + " has |cffc2154f" + I2S(ps.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(ps.getAllBRWins()) + "|r all time for this game mode")
         endif
     endfunction
 
     private function EndGameActions takes nothing returns nothing
-        local PlayerStats ps
+        local force winningForce
 
         set GameComplete = true
         call DisableTrigger(AllPlayersDeadTrigger)
         call DisableTrigger(PlayerHeroDeathTrigger)
 
+        call EventHelpers_FireEventForAllPlayers(EVENT_PLAYER_ROUND_COMPLETE, 0, RoundNumber, true)
+
         if (BrStarted == false) then
             call EnableTrigger(HeroDiesInRoundTrigger)
         endif
 
+        call DestroyTimer(BattleRoyalRemoveLifeTimer)
         call ConditionalTriggerExecute(IsGameFinishedTrigger)
 
         // Get the winner before the trigger sleep
-        call GetWinner()
+        set winningForce = GetBRWinningForce()
+
+        if (winningForce != null) then
+            call ForForce(winningForce, function MakeWinnerInvulnerable)
+        endif
+
         call TriggerSleepAction(2)
 
         if (InitialPlayerCount == 1 and PlayerCount == 1) then
             call DisplayTimedTextToForce(GetPlayersAll(), 30, "|cffffcc00You survived all levels! Congratulations!!")
         else
-            if (WinningPlayer != Player(PLAYER_NEUTRAL_PASSIVE)) then
-                call UpdateScoreboardBrWinner(WinningPlayer)
+            if (winningForce != null) then
+                call UpdateScoreboardBrWinner(winningForce)
 
-                // Update the player's stats that they won a BR
-                set ps = PlayerStats.forPlayer(WinningPlayer)
-                call ps.addBRWin()
+                if (not IsFunBRRound) then
+                    // There should only be one player in this force since there can only be one winner
+                    call ForForce(winningForce, function AddBRWinToPlayer)
+                else
+                    call DisplayTimedTextToForce(GetPlayersAll(), 30, ConvertForceToString(winningForce) + " |cffffcc00survived longer than all other players. Congratulations!!")
+                endif
 
-                call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
-                call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(WinningPlayer) + " |cffffcc00survived longer than all other players with " + ps.getBRPVPKillCount() + " Congratulations!!")
-                call DisplayTimedTextToForce(GetPlayersAll(), 30, GetPlayerNameColour(WinningPlayer) + " has |cffc2154f" + I2S(ps.getSeasonBRWins()) + "|r Battle Royale wins this season, |cffc2154f" + I2S(ps.getAllBRWins()) + "|r all time for this game mode")
+                // Cleanup
+                set winningForce = null
             else
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, GameDescription)
                 call DisplayTimedTextToForce(GetPlayersAll(), 30, "|cffff7b00No winner detected.|r |cffffcc00That sucks bro, the game ends here.")
             endif
         endif
 
-        call EndThematicMusicBJ()
-        call SetMusicVolumeBJ(0.00)
         call PlaySoundBJ(udg_sound05)
         call TriggerSleepAction(2.00)
-        call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cffffcc00Thank you for playing|r " + "|cff7bff00" + CurrentGameVersion.getVersionString() + "|r")
 
         // Save everyones codes
-        call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
+        if (not IsFunBRRound) then
+            call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cffffcc00Thank you for playing|r " + "|cff7bff00" + CurrentGameVersion.getVersionString() + "|r")
+            call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cff63ff44Stay for the fun BR rounds!!!|r")
+            call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
+        endif
 
         // Show the scoreboard to everyone
         call TriggerSleepAction(3.00)
         call ForForce(GetPlayersAll(), function ShowScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, true)
+
+        set BattleRoyalTimer = CreateTimer()
+        set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)
+
+        if (not IsFunBRRound) then
+            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Battle Royale Review...")
+        else
+            call TimerDialogSetTitle(BattleRoyalTimerDialog, "Fun Battle Royale Review...")
+        endif
+
+        call TimerDialogDisplay(BattleRoyalTimerDialog, true)
+
+        call TimerStart(BattleRoyalTimer, BattleRoyalReviewWaitTime, false, function InitializeFunBattleRoyale)
     endfunction
 
     private function init takes nothing returns nothing

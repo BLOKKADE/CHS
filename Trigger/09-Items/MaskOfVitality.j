@@ -12,7 +12,7 @@ library MaskOfVitality requires UnitHelpers
             set p = FirstOfGroup(ENUM_GROUP)
             exitwhen p == null
             set udg_NextDamageAbilitySource = MASK_OF_VITALITY_ITEM_ID
-            call Damage.applyMagic(u, p, damage, DAMAGE_TYPE_MAGIC)
+            call Damage.applyMagic(u, p, damage, false, DAMAGE_TYPE_MAGIC)
             call GroupRemoveUnit(ENUM_GROUP, p)
         endloop
     endfunction

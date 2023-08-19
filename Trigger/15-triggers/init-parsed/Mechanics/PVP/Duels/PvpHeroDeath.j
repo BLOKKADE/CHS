@@ -1,4 +1,4 @@
-library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent
+library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers
 
     globals
         boolean PvpRoundEndWait = false
@@ -97,10 +97,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local string message
 
         call ps.addDuelWin()
-        
-        set message = GetPlayerNameColour(currentPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP kills this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"
+        call ps.addPVPWin()
 
-        // Show the PVP kill count if this is not simultaneous duels. Otherwise it will be a lot of spam
+        set message = GetPlayerNameColour(currentPlayer) + " has |cffc2154f" + I2S(ps.getSeasonPVPWins()) + "|r PVP wins this season, |cffc2154f" + I2S(ps.getAllPVPWins()) + "|r all time for this game mode"
+
+        // Show the PVP win count if this is not simultaneous duels. Otherwise it will be a lot of spam
         if (SimultaneousDuelMode == 1 or DuelGameList.size() == 1) then // No simultaneous duels or there is only one duel (Only 2 people in game, or odd player duel)
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, message)
         else
@@ -149,7 +150,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         set playerHero = null
     endfunction
 
-    private function AddPvpWinToPlayer takes nothing returns nothing
+    private function AddPlayerKillToPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
         local unit deadUnit = GetDyingUnit()
@@ -157,7 +158,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
         local real bonus = 1
 
-        call ps.addPVPWin()
+        call ps.addPlayerKill()
         
         // Midas Touch
         if deadUnitMidasTouch != 0 then
@@ -227,15 +228,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         call RemoveUnitsInRect(duelGame.getDuelArena())
     endfunction
 
-    private function EndroundEventForAllPlayers takes nothing returns nothing
-        local integer i = 0
-        loop
-            call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_END, EventInfo.createAll(Player(i), 0, RoundNumber, true))
-            set i = i + 1
-            exitwhen i == 8
-        endloop
-    endfunction
-
     function PvpStartNextRound takes nothing returns nothing
         set PvpRoundEndWait = false
         call DestroyTimer(PvpRoundEndTimer)
@@ -258,7 +250,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local DuelGame oddDuelGame
 
         // All players in the winning team should get the pvp kill
-        call ForForce(winningPlayerForce, function AddPvpWinToPlayer)
+        call ForForce(winningPlayerForce, function AddPlayerKillToPlayer)
 
         // Check if everyone is dead in the dead units team
         if (not AreAnyForceUnitsAlive(deadPlayerForce)) then
@@ -280,7 +272,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForForce(duelGame.team2, function DuelEndedPlayerActions)
             
             // Only display a message to everyone when this duel is completely over
-            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
+            if (CountPlayersInForceBJ(winningPlayerForce) > 1) then
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00have defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
+            else
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
+            endif
 
             // Try to distribute bets
             call ConditionalTriggerExecute(DistributeBetsTrigger)
@@ -370,14 +366,14 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ResetPvpState()
 
             //End round event for all players
-            call EndroundEventForAllPlayers()
+            call EventHelpers_FireEventForAllPlayers(EVENT_GAME_ROUND_END, 0, RoundNumber, true)
             
             // Go to the next basic level
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger) // Setup creeps for next wave
             set PvpRoundEndWait = true
             set PvpRoundEndTimer = CreateTimer()
             set PvpRoundEndTimerDialog = CreateTimerDialog(PvpRoundEndTimer)
-            call TimerDialogSetTitle(PvpRoundEndTimerDialog, "Next Level ...")
+            call TimerDialogSetTitle(PvpRoundEndTimerDialog, "Next Level...")
             call TimerDialogDisplay(PvpRoundEndTimerDialog, true)
             call TimerStart(PvpRoundEndTimer, RoundTime, false, function PvpStartNextRound)
              // Start the next normal level
@@ -386,7 +382,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call AfterDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle
-            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle ...")
+            call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "Next PvP Battle...")
             call StartTimerBJ(GetLastCreatedTimerBJ(), false, 3.00)
             call TriggerSleepAction(3.00)
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())

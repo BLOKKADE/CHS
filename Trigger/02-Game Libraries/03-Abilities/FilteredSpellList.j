@@ -38,6 +38,7 @@ library FilteredSpellList initializer init requires ListT, Utility
     function RemoveSpellFromFilterList takes unit u, integer abilId, integer abilToRemoveId returns nothing
         local IntegerList spellList = GetFilterList(GetHandleId(u), abilId)
         if spellList != 0 then
+            //call BJDebugMsg("remove spell: " + GetObjectName(abilToRemoveId))
             call spellList.removeElem(abilToRemoveId)
         endif
     endfunction
@@ -49,9 +50,10 @@ library FilteredSpellList initializer init requires ListT, Utility
         local integer max = UnitFilteredSpellListIndex[hid].integer[0]
 
         loop
+            //call BJDebugMsg("remove spell: " + GetObjectName(abilToRemoveId)
             call RemoveSpellFromFilterList(u, UnitFilteredSpellListIndex[hid].integer[i], abilToRemoveId)
             set i = i + 1
-            exitwhen i >= max
+            exitwhen i > max
         endloop
     endfunction
 

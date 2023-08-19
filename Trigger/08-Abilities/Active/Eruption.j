@@ -1,7 +1,6 @@
 library Eruption requires UnitHelpers, RandomShit, SpellFormula
     struct EruptionStruct extends array
         unit source
-        unit target
         integer level
         integer pid
         integer maxUnits
@@ -21,19 +20,20 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
             loop
                 set p = BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP)))
                 exitwhen i == maxUnits
-                if p != null and GetUnitAbilityLevel(p, ERUPTION_IMMUNE_BUFF_ID) == 0 then
+                if p != null then
                     set udg_NextDamageAbilitySource = ERUPTION_ABILITY_ID
                     //call BJDebugMsg("DMG: " + I2S(GetHandleId(p)))
                     call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", p, "chest"))
-                    call Damage.applyMagic(this.source, p, GetSpellValue(50, 10, this.level), DAMAGE_TYPE_MAGIC)
-                    call DummyOrder.create(this.source, GetUnitX(p), GetUnitY(p), GetUnitFacing(p), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 0.5).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 0.5).target(p).activate()
-                    call TempAbil.create(p, ERUPTION_IMMUNE_ABILITY_ID, 1)
+                    call Damage.applyMagic(this.source, p, GetSpellValue(50, 10, this.level), false, DAMAGE_TYPE_MAGIC)
+                    if GetUnitAbilityLevel(p, ERUPTION_IMMUNE_BUFF_ID) == 0 then
+                        call DummyOrder.create(this.source, GetUnitX(p), GetUnitY(p), GetUnitFacing(p), 2).addActiveAbility(STUN_ABILITY_ID, 1, 852095).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_NORMAL, 0.5).setAbilityRealField(STUN_ABILITY_ID, ABILITY_RLF_DURATION_HERO, 0.5).target(p).activate()
+                        call TempAbil.create(p, ERUPTION_IMMUNE_ABILITY_ID, 2)
+                    endif
                     call GroupRemoveUnit(ENUM_GROUP, p)
                 endif
                 set i = i + 1
             endloop
         endmethod
-    
 
         private method periodic takes nothing returns nothing
             if T32_Tick > this.tick and (not HasPlayerFinishedLevel(this.source, Player(pid))) then
@@ -50,7 +50,6 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
             local thistype this = thistype.setup()
            // call BJDebugMsg("sl start")
             set this.source = source
-            set this.target = target
             set this.endTick = T32_Tick + (12 * 32)
             set this.tick = T32_Tick + 16
             set this.level = level
@@ -66,7 +65,6 @@ library Eruption requires UnitHelpers, RandomShit, SpellFormula
         
         method destroy takes nothing returns nothing
             set this.source = null
-            set this.target = null
             //call BJDebugMsg("sl end")
             call DestroyEffect(this.fx)
             set this.fx = null

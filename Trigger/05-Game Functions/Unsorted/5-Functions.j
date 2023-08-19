@@ -1,4 +1,4 @@
-library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomGameEvent, HeroAbilityTable
+library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomGameEvent, HeroAbilityTable, SellItems
     globals 
         integer RectPid
         integer array Lives
@@ -67,7 +67,7 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         if abilId == MEGA_LUCK_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT, hid, abilId) 
-            call AddUnitCustomState(u, BONUS_LUCK, 0.01 * I2R(i1 - i2))	
+            call AddUnitCustomState(u, BONUS_LUCK, 0.015 * I2R(i1 - i2))	
             call SaveInteger(HT, hid, abilId, i1)
         endif 
 
@@ -144,6 +144,9 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
 
         if abilId == MYSTERIOUS_TALENT_ABILITY_ID or abilId == ANCIENT_TEACHING_ABILITY_ID or abilId == TIME_MANIPULATION_ABILITY_ID and level == 1 then
             call BlzStartUnitAbilityCooldown(u, abilId, 60)
+            if HasDummySpell(u, abilId) then
+                call BlzStartUnitAbilityCooldown(u, GetDummySpell(u, abilId), 60)
+            endif
         endif
 
         /*if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
@@ -226,15 +229,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         set RectPid = pid
         call EnumItemsInRectBJ(PlayerArenaRects[pid], function SellItemsOnGround)
 
-        //Murloc Warrior
-        set i1 = LoadInteger(HT, GetHandleId(u), 54021)
-        if i1 != 0 then 
-            call SetHeroStr(u, GetHeroStr(u, false) - i1, false)
-            call SetHeroAgi(u, GetHeroAgi(u, false) - i1, false)
-            call SetHeroInt(u, GetHeroInt(u, false) - i1, false)
-            call SaveInteger(HT, GetHandleId(u), 54021, 0)
-        endif
-
         //Obsidian Armor
         set i1 = GetValidEndOfRoundItems(u, 'I0CW') 
         if i1 > 0 then
@@ -268,13 +262,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         //Extra-dimensional Cooperation
         if GetUnitAbilityLevel(u, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID) > 0 then
             call ResetExtraDimensional(u)
-        endif
-
-        //Time Manipulation
-        if GetUnitAbilityLevel(u, TIME_MANIPULATION_ABILITY_ID) > 0 then
-            set TimeManipulationTable[GetHandleId(u)].boolean[1] = false
-            set TimeManipulationTable[GetHandleId(u)].real[2] = 0
-            call BlzEndUnitAbilityCooldown(u, TIME_MANIPULATION_ABILITY_ID)
         endif
 
         //Wolf Rider - Thrall

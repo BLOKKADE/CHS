@@ -46,7 +46,6 @@ library GameInit initializer init requires GroupUtils
         integer array ShopIds
         integer BettingPlayerCount = 0
         integer BoughtAbility = 0
-        integer CountdownCount = 0
         integer HideShopsCount = 0
         integer HideShopsIndex = 0
         integer InitialPlayerCount = 0
@@ -90,9 +89,9 @@ library GameInit initializer init requires GroupUtils
         location RectMidArenaCenter
         player HostPlayer = null
         player SingleplayerPlayer = null
-        player WinningPlayer
         real RoundCreepPower = 0
         rect RectMidArena
+        rect RectMidBRRespawnArena
         rect array PlayerArenaRects
         sound array udg_sounds01
         sound udg_sound01 = null
@@ -167,7 +166,6 @@ library GameInit initializer init requires GroupUtils
         trigger PlayerHeroDeathTrigger = null
         trigger PlayerInitializationTrigger = null
         trigger PlayerLeavesGameTrigger = null
-        trigger PvpCountdownTimerTrigger = null
         trigger SetHostPlayerTrigger = null
         trigger SinglePvpHeroDeathTrigger = null
         trigger SpacebarCameraTrigger = null
@@ -204,6 +202,8 @@ library GameInit initializer init requires GroupUtils
 
         // Needs to be specified right away since a lot of triggers depend on it
         set RectMidArena = Rect(-1696.0, -1952.0, 1696.0, 1440.0)
+        set RectMidBRRespawnArena = Rect(-1200.0, -1500.0, 1200.0, 1000.0)
+
         set RectMidArenaCenter = GetRectCenter(RectMidArena)
     endfunction
 

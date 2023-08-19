@@ -199,7 +199,8 @@ scope ModifyDamageAfterArmor initializer init
             call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,5)
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.08)
-            call Damage.applyMagic(DamageSource, DamageTarget, r2, DAMAGE_TYPE_MAGIC)
+            set udg_NextDamageAbilitySource = DEVASTATING_BLOW_ABILITY_ID
+            call Damage.applyMagic(DamageSource, DamageTarget, r2, false, DAMAGE_TYPE_MAGIC)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
         endif
         
@@ -307,14 +308,14 @@ scope ModifyDamageAfterArmor initializer init
                     set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
                     if i > 0 and GetRandomReal(0, 100) <= 20 * DamageSourceLuck then
                         call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
-                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID, true)
+                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID, true, false)
                     endif
 
                     //Destruction
                     set i = GetUnitAbilityLevel(DamageSource, DESTRUCTION_ABILITY_ID) 
                     if i > 0 and GetRandomReal(0, 100) <= 15 * DamageSourceLuck then
                         call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
-                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID, true)
+                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID, true, false)
                     endif
                     
                     //Bash
@@ -322,11 +323,6 @@ scope ModifyDamageAfterArmor initializer init
                     if i > 0 and GetRandomReal(0, 100) <= I2R(i) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                         call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
                     endif
-
-                    //Volcanic Armor
-                    if UnitHasItemType(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
-                        call ActivateVolcanicArmor(DamageSource, DamageTarget)
-                    endif    
                 endif
 
                 //Thorns
@@ -398,6 +394,11 @@ scope ModifyDamageAfterArmor initializer init
                     //call BJDebugMsg("wb damage: " + R2S(r3) + " mult: " + R2S(r2) + " reduce: " + R2S(r1))
                     call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", DamageSource, "chest"))
                 endif
+            endif
+
+            //Volcanic Armor
+            if UnitHasItemType(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
+                call ActivateVolcanicArmor(DamageSource, DamageTarget)
             endif
 
             //Spiked Shield heal

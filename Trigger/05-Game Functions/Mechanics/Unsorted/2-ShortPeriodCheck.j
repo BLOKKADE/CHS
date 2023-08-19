@@ -23,11 +23,20 @@ scope ShortPeriodCheck initializer init
                         call SetBlokShieldCharges(u, hid)
                     endif
                 endif
+
+                //Crypt Lord
+                if unitTypeId == CRYPT_LORD_UNIT_ID then
+                    if BlzGetUnitAbilityCooldownRemaining(u, 'A0EM') == 0 then
+                        call ElemFuncStart(u, CRYPT_LORD_UNIT_ID)
+                        call BlzStartUnitAbilityCooldown(u, 'A0EM', 10)
+                        call SpawnLocustSwarm(u)
+                    endif
+                endif
                 
                 //Fire Shield
                 set i1 = GetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID)
                 if i1 > 0 then
-                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 300, false, FIRE_SHIELD_ABILITY_ID, true)
+                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 300, false, FIRE_SHIELD_ABILITY_ID, true, false)
                 endif
 
                 //Absolute Arcane Drain
@@ -144,11 +153,6 @@ scope ShortPeriodCheck initializer init
                 call SetUnitManaPercentBJ(u, GetUnitManaPercent(u) + 1)
             endif
 
-            //Druidic Focus Roots
-            if GetUnitAbilityLevel(u, DRUIDIC_FOCUS_BUFF_ID) > 0 and T32_Tick - DruidicFocusLastTick[hid] > 320 then
-                call CastDruidicFocus(u)
-            endif
-
             //Blood Elf Mage
             if unitTypeId == BLOOD_MAGE_UNIT_ID then
                 set i1 = GetHeroInt(u, true)
@@ -199,26 +203,15 @@ scope ShortPeriodCheck initializer init
             elseif unitTypeId == ABOMINATION_UNIT_ID then
                 if CheckProc(u, 350) then
                     call ElemFuncStart(u,ABOMINATION_UNIT_ID)
-                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * GetHeroLevel(u), 350, false, ABOMINATION_UNIT_ID, true)
+                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * GetHeroLevel(u), 350, false, ABOMINATION_UNIT_ID, true, false)
                 endif
 
                 //Yeti
             elseif unitTypeId == YETI_UNIT_ID then
-                if BlzGetUnitArmor(u) <= (50 + (2 * GetHeroLevel(u))) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) then
-                    if GetUnitAbilityLevel(u, 'A092') == 0 then
-                        call UnitAddAbility(u, 'A092')
-                    endif
-                    set i1 = LoadInteger(DataUnitHT, hid,542)
-                    set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) - i1)
-                    call SetHeroStr(u, GetHeroStr(u,false) + i2, false)
-                    call SaveInteger(DataUnitHT, hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold)))))
-                else
-                    set i1 = LoadInteger(DataUnitHT, hid,542)
-                    call SetHeroStr(u, GetHeroStr(u,false)- i1, false)
-                    call SaveInteger(DataUnitHT, hid,542,0)
-                    call RemoveUnitBuff(u, 'A092')
-                endif
-
+                set i1 = LoadInteger(DataUnitHT, hid,542)
+                set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) - i1)
+                call SetHeroStr(u, GetHeroStr(u,false) + i2, false)
+                call SaveInteger(DataUnitHT, hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold)))))
             elseif unitTypeId == WOLF_RIDER_UNIT_ID then
                 call WolfRiderStatBonus(u, hid)
             
@@ -235,6 +228,11 @@ scope ShortPeriodCheck initializer init
                 //Dark Avatar
             elseif unitTypeId == AVATAR_SPIRIT_UNIT_ID then
                 call SetAvatarMode(u, GetHeroLevel(u))
+            
+                //Gnome
+            elseif unitTypeId == GNOME_MASTER_UNIT_ID then
+                call GnomeIncreaseCharge(u)
+
             endif
         endif
 

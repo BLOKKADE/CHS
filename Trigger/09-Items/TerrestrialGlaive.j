@@ -5,7 +5,7 @@ library TerrestrialGlaive initializer init requires Table, AbilityData, StableSp
     endglobals
 
     function TerrestrialGlaiveFilter takes unit u, integer abilId returns boolean
-        return IsAbilityCasteable(abilId, false) and IsSpellResettable(abilId) and GetAbilityTargetType(abilId) == Target_Enemy and GetAbilityOrderType(abilId) != Order_Instant
+        return IsAbilityCasteable(abilId, false) and IsSpellResettable(abilId)
     endfunction
 
     function CastTerrestrialGlaive takes unit caster, unit target returns nothing
@@ -27,7 +27,7 @@ library TerrestrialGlaive initializer init requires Table, AbilityData, StableSp
         endloop
 
         set level = GetUnitAbilityLevel(caster, abilId)
-        set dummy = CastSpell(caster, target, abilId, level, GetAbilityOrderType(abilId), GetUnitX(target), GetUnitY(target))
+        set dummy = CastSpellAuto(caster, target, abilId, level, GetUnitX(target), GetUnitY(target), 600)
         set AbilityModifiers.createOrGet(dummy.dummy).TerrestrialGlaiveDamage = true
 
         call dummy.activate()

@@ -1101,11 +1101,11 @@ endif// \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ /
         call clearNexts()
         return d
     endmethod
-    static method applyMagic takes unit src, unit tgt, real amt, damagetype dt returns Damage
-        return apply(src, tgt, amt, false, false, null, dt, null)
+    static method applyMagic takes unit src, unit tgt, real amt, boolean attack, damagetype dt returns Damage
+        return apply(src, tgt, amt, attack, false, null, dt, null)
     endmethod
-    static method applyPhys takes unit src, unit tgt, real amt, boolean ranged, attacktype at, weapontype wt returns Damage
-        return apply(src, tgt, amt, true, ranged, at, DAMAGE_TYPE_NORMAL, wt)
+    static method applyPhys takes unit src, unit tgt, real amt, boolean attack, boolean ranged, attacktype at, weapontype wt returns Damage
+        return apply(src, tgt, amt, attack, ranged, at, DAMAGE_TYPE_NORMAL, wt)
     endmethod
     //===========================================================================
     private static method onInit takes nothing returns nothing

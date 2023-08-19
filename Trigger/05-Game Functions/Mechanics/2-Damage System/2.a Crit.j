@@ -1,4 +1,4 @@
-library CritDamage requires RandomShit, Vampirism
+library CritDamage requires RandomShit, Vampirism, Gnome
 
     function SetCritDamage takes nothing returns nothing
         local boolean magicDmgType = IsMagicDamage()
@@ -162,7 +162,7 @@ library CritDamage requires RandomShit, Vampirism
         endif
 
         //Medivh
-        if GetUnitTypeId(DamageSource) == MEDIVH_UNIT_ID then
+        if DamageSourceTypeId == MEDIVH_UNIT_ID or DamageSourceTypeId == MORTAR_TEAM_UNIT_ID then
             set critDmg = 0
         endif
         
@@ -187,9 +187,13 @@ library CritDamage requires RandomShit, Vampirism
                 endif
             endif
 
+            if DamageTargetTypeId == GNOME_MASTER_UNIT_ID then
+                call GnomeIncreaseCharge(DamageTarget)
+            endif
+
             set Damage.index.damage = Dmg + critDmg
 
-            set DamageShowText = true
+            set DamageIsCrit = true
 
             if lifesteal > 0 and critDmg > 0 then
                 call Vamp(DamageSource, DamageTarget, critDmg * lifesteal)

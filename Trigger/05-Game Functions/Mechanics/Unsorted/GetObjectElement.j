@@ -129,7 +129,12 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         endif
 
         //Counts
-        set elementCount = elementCount + GetUnitAbsoluteBonusCount(u, elementId)
+        //pretty bright gem bonus to light and dark
+        if UnitHasItemType(u, 'I0AM') and (elementId == Element_Light or elementId == Element_Dark) then
+            set elementCount = elementCount + GetUnitAbsoluteBonusCount(u, Element_Light) + GetUnitAbsoluteBonusCount(u, Element_Dark)
+        else
+            set elementCount = elementCount + GetUnitAbsoluteBonusCount(u, elementId)
+        endif
         
         if elementCount > 0 then
             return elementCount

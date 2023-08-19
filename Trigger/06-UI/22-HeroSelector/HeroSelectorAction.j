@@ -13,6 +13,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
     //what happens to the unit beeing picked, player is the one having pressed the button
     function HeroSelectorUnitCreated takes nothing returns nothing
         local player p = HeroSelectorEventPlayer
+        local PlayerStats ps = PlayerStats.forPlayer(p)
         local integer playerIndex = GetPlayerId(p)
         local unit u = HeroSelectorEventUnit
         local boolean isRandom = HeroSelectorEventIsRandom
@@ -24,6 +25,8 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
             set u = null
             return
         endif
+
+        call ps.setHeroUnitTypeId(GetUnitTypeId(u))
 
         if isRandom then
             call AdjustPlayerStateBJ(900, p, PLAYER_STATE_RESOURCE_GOLD)

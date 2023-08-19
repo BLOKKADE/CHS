@@ -24,6 +24,8 @@ library IdLibrary initializer init
         constant integer PET_BASE_UNIT_ID                               = 'e002'
         constant integer SUDDEN_DEATH_UNIT_ID                           = 'n00V'
         constant integer SUDDEN_DEATH_ABILITY_ID                        = 'A0CU'
+        constant integer SHADE_BR_RESPAWN_UNIT_ID                       = 'u009'
+        constant integer CRYPT_LORD_PASSIVE_UNIT_ID                     = 'h00H'
 
         // --- Shops ---
         constant integer DRAFT_BUY_UNIT_ID                              = 'h00C'
@@ -55,7 +57,8 @@ library IdLibrary initializer init
         constant integer ITEM_SHOP_IV_UNIT_ID                           = 'n02J'
         constant integer ITEM_SHOP_V_UNIT_ID                            = 'n02Q'
         constant integer ITEM_SHOP_VI_UNIT_ID                           = 'n02Y'
-        constant integer ITEM_SHOP_VII_UNIT_ID                          = 'n03A'
+        constant integer ITEM_SHOP_VII_UNIT_ID                          = 'n01P'
+        constant integer ITEM_SHOP_VIII_UNIT_ID                         = 'n03A'
 
         constant integer RUNESTONE_SHOP_UNIT_ID                         = 'n02Z'
         constant integer ELEMENTAL_ITEM_SHOP_UNIT_ID                    = 'n030'
@@ -80,6 +83,7 @@ library IdLibrary initializer init
         constant integer PARASITE_1_UNIT_ID                             = 'ncfs'
         constant integer PHOENIX_1_UNIT_ID                              = 'h009'
         constant integer POCKET_FACTORY_1_UNIT_ID                       = 'n010'
+        constant integer CRYPT_LORD_LOCUST_UNIT_ID                      = 'u008'
         
         constant integer SKELETON_BATTLEMASTER_1_UNIT_ID                = 'n015'
         constant integer SKELETON_MAGE_1_UNIT_ID                        = 'uskm'
@@ -454,6 +458,9 @@ library IdLibrary initializer init
         constant integer STUN_ABILITY_ID                                = 'A0C2'
         constant integer CARBEE_SPIKED_CARAP_ABILITY_ID                 = 'A0CD'
         constant integer ERUPTION_IMMUNE_ABILITY_ID                     = 'A0D9'
+        constant integer DEATH_AND_DECAY_DUMMY_ABILITY_ID               = 'A0E2'
+        constant integer FOG_DUMMY_ABILITY_ID                           = 'A0E3'
+        constant integer GNOME_MASTER_PASSIVE_DUMMY_ABILITY_ID          = 'A0EG'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
@@ -498,6 +505,9 @@ library IdLibrary initializer init
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
         constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
         constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
+        constant integer ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID         = 'A0DY'
+        constant integer LIGHT_MAGIC_SHIELD_ABILITY_ID                  = 'A0E1'
+        constant integer LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID             = 'A0E0'
 
         // --- Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'
@@ -811,6 +821,7 @@ library IdLibrary initializer init
         constant integer ERUPTION_ITEM_ID                               = 'I039'
         constant integer CONTEMPORARY_RUNES_ITEM_ID                     = 'I0D3'
         constant integer ENERGY_BOMBARDMENT_ITEM_ID                     = 'I0D4'
+        constant integer LIGHT_MAGIC_SHIELD_ITEM_ID                     = 'I06K'
 
         // --- Buff IDs ---
         constant integer DARK_SEAL_BUFF_ID                              = 'A0DE'
@@ -1188,6 +1199,7 @@ library IdLibrary initializer init
         call SUMMONS.add(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID)
         call SUMMONS.add(BONE_ARMOR_SKELETON_UNIT_ID)
         call SUMMONS.add(FAERIE_DRAGON_UNIT_ID)
+        call SUMMONS.add(CRYPT_LORD_LOCUST_UNIT_ID)
 
         // Bears
         set BEARS = StaticIdGroup.create()
@@ -1204,6 +1216,8 @@ library IdLibrary initializer init
         call DUMMIES.add(DRAFT_BUY_UNIT_ID)
         call DUMMIES.add(DRAFT_UPGRADE_UNIT_ID)
         call DUMMIES.add(SUDDEN_DEATH_UNIT_ID)
+        call DUMMIES.add(SHADE_BR_RESPAWN_UNIT_ID)
+        call DUMMIES.add(CRYPT_LORD_PASSIVE_UNIT_ID)
 
         // Feral Spirit Wolfs
         set FERAL_SPIRIT_WOLVES = StaticIdGroup.create()

@@ -16,7 +16,7 @@ library ChaosMagic requires UnitHelpers, AbilityData, CastSpellOnTarget, RandomS
             set abilId = GetRandomChaosAbility(0, Target_Any)
         endif
 
-        if CastSpellAuto(caster, target, abilId, chaosLevel, GetLocationX(spellLoc), GetLocationY(spellLoc), -1) then
+        if CastSpellAuto(caster, target, abilId, chaosLevel, GetLocationX(spellLoc), GetLocationY(spellLoc), -1).activate() then
             call CreateTextTagTimerColor(GetObjectName(abilId) + "!?", 1, GetUnitX(caster), GetUnitY(caster), 50, 1, GetRandomInt(100,255), GetRandomInt(100,255),GetRandomInt(100,255))
         endif
             /*if target != null and IsUnitTargettable(target) then

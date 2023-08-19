@@ -1,4 +1,4 @@
-library BlokkadesShield initializer init requires RandomShit
+library BlokkadesShield initializer init requires RandomShit, CustomGameEvent
 
     globals
         Table BlokShieldAttackCount
@@ -21,10 +21,32 @@ library BlokkadesShield initializer init requires RandomShit
         endif
     endfunction
 
+    private function OnGameRoundStart takes EventInfo eventInfo returns nothing
+        local integer hid = GetHandleId(eventInfo.hero)
+
+        if GetUnitAbilityLevel(eventInfo.hero, BLOKKADE_SHIELD_ABIL_ID) > 0 then
+            set BlokShieldCharges[hid] = 0
+            set BlokShieldStartTick[hid] = T32_Tick
+            set BlokShieldAttackCount[hid] = 0
+            call SetBlokShieldCharges(eventInfo.hero, hid)
+        endif
+    endfunction
+
+    private function OnRoundStart takes EventInfo eventInfo returns nothing
+        local integer hid = GetHandleId(eventInfo.hero)
+
+        if GetUnitAbilityLevel(eventInfo.hero, BLOKKADE_SHIELD_ABIL_ID) > 0 then
+            set BlokShieldCharges[hid] = BlokShieldCharges[hid] + 6
+            call SetBlokShieldCharges(eventInfo.hero, hid)
+        endif
+    endfunction
+
     private function init takes nothing returns nothing
         set BlokShieldAttackCount = Table.create()
         set BlokShieldCharges = Table.create()
         set BlokShieldStartTick = Table.create()
         set BlokShieldDmgReductionTick = Table.create()
+        call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_START, CustomEvent.OnGameRoundStart)
+        call CustomGameEvent_RegisterEventCode(EVENT_PLAYER_ROUND_START, CustomEvent.OnRoundStart)
     endfunction
 endlibrary

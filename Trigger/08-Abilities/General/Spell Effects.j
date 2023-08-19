@@ -144,7 +144,11 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             return true
         //Divine Source
         elseif abilId == 'A01D' then
-                call UseDivineSource(hero)
+            call UseDivineSource(hero)
+            return true
+        // Death and Decay
+        elseif abilId == DEATH_AND_DECAY_ABILITY_ID then
+            call CastDeathAndDecay(hero, x, y, lvl)
             return true
         endif
 
@@ -152,17 +156,20 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
     endfunction
 endlibrary
 
-library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, AbilityChannel, Cooldown, AncientRunes, DummyActiveSpell, ToggleSpell
+library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, AbilityChannel, Cooldown, AncientRunes, DummySpell, ToggleSpell
 
     function SpellEffectActions takes nothing returns nothing
         local unit caster = GetTriggerUnit()
+        local unit hero = PlayerHeroes[GetPlayerId(GetOwningPlayer(caster))]
         local unit target = GetSpellTargetUnit()
         local real targetX = GetSpellTargetX()
         local real targetY = GetSpellTargetY()
         local integer abilId = GetSpellAbilityId()
+        local integer originalAbilId = GetOriginalSpellIfExists(caster, GetSpellAbilityId())
+        local integer castAbilId = abilId
         local integer abilLvl
         local location spelLLoc = GetSpellTargetLoc()
-        local boolean dummyAbilId = GetAssociatedSpell(caster, abilId) != 0
+        local boolean isDummySpell = abilId != originalAbilId
         local integer lvl = 0
         local boolean abilityChanneled = false
         //call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
@@ -170,20 +177,26 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         if not ToggleSpell(caster, abilId) then
             if (not HasPlayerFinishedLevel(caster, GetOwningPlayer(caster)) or GetOwningPlayer(caster) == Player(11)) then
 
-                set abilId = CheckAssociatedSpell(caster, abilId)
+                set abilId = originalAbilId
                 set abilLvl = GetUnitAbilityLevel(caster, abilId)
-                    //call BJDebugMsg("abil: " + GetObjectName(abilId) + " lvl: " + I2S(abilLvl))
-                
-                //call BJDebugMsg("se" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + I2S(GetUnitCurrentOrder(caster)))
-                set abilityChanneled = AbilityChannel(caster, PlayerHeroes[GetPlayerId(GetOwningPlayer(caster))], target,targetX,targetY,abilId, abilLvl)
+                set abilityChanneled = AbilityChannel(caster, hero, target,targetX,targetY,abilId, abilLvl)
+
+                //Druidic focus on immobilization
+                if UnitHasItemType(hero, DRUIDIC_FOCUS_ITEM_ID) and (abilId == ENTAGLING_ROOTS_ABILITY_ID or abilId == ENSNARE_ABILITY_ID or abilId == 'A075') then
+                    call DruidicFocusPhyspowerbonus(hero)
+                endif
             
                 if GetUnitTypeId(caster) != PRIEST_1_UNIT_ID and (not CheckIfCastAllowed(caster)) then
                     //call BJDebugMsg("caster: " + GetUnitName(caster))
                     call ElementStartAbility(caster, abilId)
 
-                    if (not abilityChanneled) and dummyAbilId then
+                    if (not abilityChanneled) and isDummySpell then
                         //call BJDebugMsg("channel")
                         call CastSpell(caster, target, abilId, abilLvl, GetAbilityOrderType(abilId), targetX, targetY).activate()
+                    endif
+
+                    if GetUnitAbilityLevel(caster, DRUIDIC_FOCUS_BUFF_ID) > 0 and T32_Tick - DruidicFocusLastTick[GetHandleId(caster)] > 320 then
+                        call CastDruidicFocus(caster)
                     endif
 
                     if GetUnitAbilityLevel(caster, ABSOLUTE_POISON_ABILITY_ID) > 0 and IsSpellElement(caster, abilId, Element_Poison) and target != null and IsUnitEnemy(target, GetOwningPlayer(caster)) then
@@ -212,6 +225,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if UnitHasItemType(caster, ORB_OF_ELEMENTS) then
                         call SetElementalOrbAbil(caster, abilId)
+                    endif
+
+                    if GetUnitTypeId(caster) == GNOME_MASTER_UNIT_ID then
+                        call CastGnomePassive(caster)
                     endif
 
                     if abilId == ACTIVATE_AVATAR_ABILITY_ID then
@@ -272,7 +289,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         endif
                         
                         //multicast
-                        if (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or UnitHasItemType(caster, 'I08X') or GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) > 0)  and abilId != RESET_TIME_ABILITY_ID then
+                        if CanMulticast(caster, abilId) then
                             call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                         endif
                     endif
@@ -288,6 +305,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
                         call SpellbaneSpellCast(caster, abilId, abilLvl)
+                    endif
+
+                    if GetUnitAbilityLevel(caster, 'B02Z') > 0 then
+                        call ArcaneAbsorptionGauntletsActivate(caster, castAbilId, target)
                     endif
 
                     //call BJDebugMsg("cd")

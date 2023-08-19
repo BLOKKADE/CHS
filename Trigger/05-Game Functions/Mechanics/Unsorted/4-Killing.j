@@ -27,7 +27,7 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
         //Incinerate
         if GetUnitAbilityLevel(target, 'A06L') > 0 then
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", target, "head"))
-            call AreaDamage(LoadUnitHandle(HT, targetId, -300003), GetUnitX(target), GetUnitY(target), LoadInteger(HT, targetId, -300002), 300, true, INCINERATE_ABILITY_ID, true)
+            call AreaDamage(LoadUnitHandle(HT, targetId, -300003), GetUnitX(target), GetUnitY(target), LoadInteger(HT, targetId, -300002), 300, true, INCINERATE_ABILITY_ID, true, false)
         endif
 
         //Dreadlord
@@ -43,10 +43,15 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
 
         if IsHeroUnitId(GetUnitTypeId(target)) == false then
 
+            //Clockwerk Goblin
+            if GetUnitTypeId(target) == CLOCKWORK_GOBLIN_1_UNIT_ID then
+                call AreaDamage(target, GetUnitX(target), GetUnitY(target), GetUnitAbilityLevel(target, 'A00P') * 30, 250, false, 'A00P', true, false)
+            endif
+
             //Skeleton Brute
             if GetUnitTypeId(targetHero) == SKELETON_BRUTE_UNIT_ID then
                 call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + ((0.02 + (0.0005 * GetHeroLevel(targetHero))) * BlzGetUnitMaxHP(targetHero)))
-                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), GetUnitDamage(target, 0) * (0.5 + (0.01 * GetHeroLevel(targetHero))), 400, false, SKELETON_BRUTE_UNIT_ID, true)
+                call AreaDamage(targetHero, GetUnitX(target), GetUnitY(target), GetUnitDamage(target, 0) * (0.5 + (0.01 * GetHeroLevel(targetHero))), 400, false, SKELETON_BRUTE_UNIT_ID, true, false)
                 set fx = AddLocalizedSpecialEffect("war3mapImported\\Arcane Explosion.mdx", GetUnitX(target), GetUnitY(target))
                 call BlzSetSpecialEffectTimeScale(fx, 2)
                 call DestroyEffect(fx)

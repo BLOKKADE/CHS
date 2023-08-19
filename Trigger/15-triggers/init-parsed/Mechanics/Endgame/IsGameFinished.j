@@ -22,7 +22,7 @@ library IsGameFinished initializer init requires RandomShit
             set udg_boolean09 = true
             call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
             call TriggerSleepAction(8.00)
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 120, "The game has finished, you can leave whenever you want.")
+            // call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 120, "The game has finished, you can leave whenever you want.")
         endif
     endfunction
 

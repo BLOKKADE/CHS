@@ -48,7 +48,7 @@ library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHe
                     exitwhen p == null
                     set udg_NextDamageAbilitySource = IMMOLATION_ABILITY_ID
                     call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\NightElf\\Immolation\\ImmolationDamage.mdl", p, "head"))
-                    call Damage.applyMagic(this.source, p, GetSpellValue(40, 13, this.level), DAMAGE_TYPE_MAGIC)
+                    call Damage.applyMagic(this.source, p, GetSpellValue(40, 13, this.level), false, DAMAGE_TYPE_MAGIC)
                     call GroupRemoveUnit(ENUM_GROUP, p)
                 endloop
             endif

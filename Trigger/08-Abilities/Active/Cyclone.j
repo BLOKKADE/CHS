@@ -14,7 +14,7 @@ library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
         private method periodic takes nothing returns nothing
                 if T32_Tick > this.damageTick then
                     set this.damageTick = T32_Tick + 6
-                    call AreaDamage(this.source, this.x, this.y, this.damage, 350, false, CYCLONE_ABILITY_ID, true)
+                    call AreaDamage(this.source, this.x, this.y, this.damage, 350, false, CYCLONE_ABILITY_ID, true, false)
                 endif
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, Player(this.pid)) then
                 call this.stopPeriodic()

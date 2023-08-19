@@ -99,7 +99,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
 
             set RoundWaitTimer = NewTimer()
             set RoundWaitTimerDialog = CreateTimerDialog(RoundWaitTimer)
-            call TimerDialogSetTitle(RoundWaitTimerDialog, "Next Level ...")
+            call TimerDialogSetTitle(RoundWaitTimerDialog, "Next Level...")
             call TimerDialogDisplay(RoundWaitTimerDialog, true)
 
             set NextRound[RoundNumber + 1] = true

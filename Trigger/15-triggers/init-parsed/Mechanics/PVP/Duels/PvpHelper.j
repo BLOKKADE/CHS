@@ -48,18 +48,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         endloop
     endfunction
 
-    private function RefreshHero takes unit playerHero returns nothing
-        // Hp/mana restore
-        call SetUnitLifePercentBJ(playerHero, 100)
-        call SetUnitManaPercentBJ(playerHero, 100)
-    
-        // Reset cooldowns
-        call UnitResetCooldown(playerHero)
-
-        // Remove any debuffs
-        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true)
-    endfunction
-
     private function MoveCameraToArenaForPlayer takes nothing returns nothing
         local location arenaCenter = GetRectCenter(TempArena)
 
@@ -121,13 +109,15 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         // Save debug logs for the player before the fight
         call DebugCode_SavePlayerDebug(currentPlayer)
 
+        set TempUnit = playerHero // Used in HeroRefreshTrigger
+        call ConditionalTriggerExecute(HeroRefreshTrigger)
+
         // Pause the unit, select it for the player, refresh the unit, add to group of dueling heroes
         call PauseUnit(playerHero, true)
         
         if not CamMoveDisabled[playerId] then
             call SelectUnitForPlayerSingle(playerHero, currentPlayer)
         endif
-        call RefreshHero(playerHero)
 
         // Save the items and item charges for the player before the duel starts. Make items unpawnable as well
         loop
@@ -176,7 +166,7 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         if (duelGame.isInitialized and (not duelGame.fightStarted)) then
             call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
             call SetUnitInvulnerable(currentUnit, false)
-            call StartFunctionSpell(currentUnit, 4) // 4 = duels
+            call FireRoundStartEvent(currentUnit, 4) // 4 = duels
             call PauseUnit(currentUnit, false)
             call SetCurrentlyFighting(currentPlayer, true)
             call GroupRemoveUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities

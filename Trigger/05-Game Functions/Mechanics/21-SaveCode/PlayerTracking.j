@@ -1,4 +1,4 @@
-library PlayerTracking initializer init requires GameInit
+library PlayerTracking initializer init requires GameInit, Table
     
     // GameInit contains values about what mode is selected
     // AbilityMode -> Pick == 1, AR == 0, Draft == 2
@@ -6,6 +6,7 @@ library PlayerTracking initializer init requires GameInit
 
     globals
         constant integer MAX_SAVE_VALUE = 9999
+        constant integer MAX_MINIMAL_SAVE_VALUE = 999
 
         private GameVersion array MapVersionLookup
         private boolean SaveEnabled
@@ -72,21 +73,76 @@ library PlayerTracking initializer init requires GameInit
         // Hats
         private integer HatIndex = 0
         private integer PetIndex = 0
+
+        // Hero stats
+        private Table HeroBRWins
+        private Table HeroPVPWins
         // --- Values that are actually saved in the save code
  
         // --- Temporary values that are not saved to the load code
         private effect CurrentHatEffect = null
+        private integer HeroUnitTypeId = 0
         private boolean DebugEnabled = false
         private boolean HasAchievementsOpen = false
         private boolean HasScoreboardOpen = false
+        private boolean HasBattleCreatorOpen = false
         private boolean HasRewardsOpen = false
         private boolean HasLoaded = false
         private boolean IsReady = false
         private unit Pet = null
+        private integer PlayerKillCount = 0
         private integer PetLastSwappedAt = 0
         private integer DuelWins = 0 // Duel wins for the current game
         private integer DuelLosses = 0 // Duel losses for the current game
         private integer BRPVPKillCount = 0 // PVP kills during the BR
+
+        static method create takes nothing returns thistype
+            local thistype this = thistype.allocate()
+            set this.HeroBRWins = Table.create()
+            set this.HeroPVPWins = Table.create()
+
+            return this
+        endmethod
+
+        method reset takes nothing returns nothing
+            call this.HeroBRWins.destroy()
+            call this.HeroPVPWins.destroy()
+
+            set this.HeroBRWins = Table.create()
+            set this.HeroPVPWins = Table.create()
+
+            // All Pick Save Values
+            set this.APBRAllWins = 0
+            set this.APPVPAllWins = 0
+            set this.APBRSeasonWins = 0
+            set this.APPVPSeasonWins = 0
+    
+            // All Random Save Values
+            set this.ARBRAllWins = 0
+            set this.ARPVPAllWins = 0
+            set this.ARBRSeasonWins = 0
+            set this.ARPVPSeasonWins = 0
+    
+            // Draft Save Values
+            set this.DraftBRAllWins = 0
+            set this.DraftPVPAllWins = 0
+            set this.DraftBRSeasonWins = 0
+            set this.DraftPVPSeasonWins = 0
+    
+            // Misc Save Values
+            set this.CameraZoom = 0
+            set this.DiscordAdToggle = 0
+            set this.MapVersion = 0
+    
+            // Hats
+            set this.HatIndex = 0
+            set this.PetIndex = 0
+
+            // Temp values
+            call this.setCurrentHatEffect(null)
+            call this.setPet(null)
+            set HasLoaded = false
+        endmethod
 
         // --- Temporary values that are not saved to the load code
 
@@ -98,6 +154,7 @@ library PlayerTracking initializer init requires GameInit
         public static method getTooltip takes player p returns string
             local thistype ps = thistype.forPlayer(p)
             local string tooltip = ""
+            local integer heroUnitTypeId = ps.getHeroUnitTypeId()
 
             set tooltip = tooltip + "|cffd0ff00All Pick Stats|r"
             set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getAPBRSeasonWins()) + " (" + I2S(ps.getAPBRAllWins()) + " total)"
@@ -110,6 +167,13 @@ library PlayerTracking initializer init requires GameInit
             set tooltip = tooltip + "|n|cffd0ff00Draft Stats|r"
             set tooltip = tooltip + "|n -Season BR Wins: " + I2S(ps.getDraftBRSeasonWins()) + " (" + I2S(ps.getDraftBRAllWins()) + " total)"
             set tooltip = tooltip + "|n -Season PVP Wins: " + I2S(ps.getDraftPVPSeasonWins()) + " (" + I2S(ps.getDraftPVPAllWins()) + " total)"
+
+            if (heroUnitTypeId != 0) then
+                set tooltip = tooltip + "|n|n|cff00f7ffCurrent Hero Stats for " + GetObjectName(heroUnitTypeId) + "|r"
+                set tooltip = tooltip + "|n -Total BR Wins: " + I2S(ps.getHeroBRWins(heroUnitTypeId))
+                set tooltip = tooltip + "|n -Total PVP Wins: " + I2S(ps.getHeroPVPWins(heroUnitTypeId))
+                set tooltip = tooltip + "|n -PVP Kills This Game: " + I2S(ps.getPlayerKillCount())
+            endif
 
             return tooltip
         endmethod
@@ -147,6 +211,14 @@ library PlayerTracking initializer init requires GameInit
             return this.DuelLosses
         endmethod
 
+        public method getHeroUnitTypeId takes nothing returns integer
+            return this.HeroUnitTypeId
+        endmethod
+
+        public method getPlayerKillCount takes nothing returns integer
+            return this.PlayerKillCount
+        endmethod
+
         public method setCurrentHatEffect takes effect value returns nothing
             if (value == null) then
                 call DestroyEffect(this.CurrentHatEffect)
@@ -167,6 +239,10 @@ library PlayerTracking initializer init requires GameInit
             set this.Pet = value
         endmethod
 
+        public method setHeroUnitTypeId takes integer heroUnitTypeId returns nothing
+            set this.HeroUnitTypeId = heroUnitTypeId
+        endmethod
+
         public method setPetLastSwappedAt takes integer value returns nothing
             set this.PetLastSwappedAt = value
         endmethod
@@ -183,6 +259,15 @@ library PlayerTracking initializer init requires GameInit
 
         public method setHasScoreboardOpen takes boolean value returns nothing
             set this.HasScoreboardOpen = value
+        endmethod
+
+        public method toggleHasBattleCreatorOpen takes nothing returns boolean
+            set this.HasBattleCreatorOpen = not this.HasBattleCreatorOpen
+            return this.HasBattleCreatorOpen
+        endmethod
+
+        public method setHasBattleCreatorOpen takes boolean value returns nothing
+            set this.HasBattleCreatorOpen = value
         endmethod
 
         public method toggleHasRewardsOpen takes nothing returns boolean
@@ -225,14 +310,15 @@ library PlayerTracking initializer init requires GameInit
             set this.DuelLosses = this.DuelLosses + 1
         endmethod
 
+        public method resetBRPVPKillCount takes nothing returns nothing
+            set this.BRPVPKillCount = 0
+        endmethod
+
         // --- Functions for data that is not actually saved
 
         // --- Functions for data that is actually saved
 
         public method addBRPVPKill takes nothing returns nothing
-            // Add the pvp win like normal
-            call this.addPVPWin()
-
             set this.BRPVPKillCount = this.BRPVPKillCount + 1
         endmethod
 
@@ -352,6 +438,14 @@ library PlayerTracking initializer init requires GameInit
             return this.DiscordAdToggle
         endmethod
         
+        public method getHeroBRWins takes integer unitCode returns integer
+            return this.HeroBRWins[unitCode]
+        endmethod
+
+        public method getHeroPVPWins takes integer unitCode returns integer
+            return this.HeroPVPWins[unitCode]
+        endmethod
+
         public method getMapVersion takes nothing returns integer
             return this.MapVersion
         endmethod
@@ -420,6 +514,14 @@ library PlayerTracking initializer init requires GameInit
             set this.DiscordAdToggle = value
         endmethod
 
+        public method setHeroBRWins takes integer unitCode, integer value returns nothing
+            set this.HeroBRWins[unitCode] = value
+        endmethod
+
+        public method setHeroPVPWins takes integer unitCode, integer value returns nothing
+            set this.HeroPVPWins[unitCode] = value
+        endmethod
+
         public method setMapVersion takes integer value returns nothing
             set this.MapVersion = value
         endmethod
@@ -433,8 +535,8 @@ library PlayerTracking initializer init requires GameInit
         endmethod
         // --- Functions for data that is actually saved
 
-        private method tryIncrementValue takes integer currentValue, string valueName returns integer 
-            if (currentValue >= MAX_SAVE_VALUE) then
+        private method tryIncrementValue takes integer currentValue, string valueName, integer maxSaveValue returns integer 
+            if (currentValue >= maxSaveValue) then
                 // TODO maybe reenable one day
                 // call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"You have maxed out " + valueName + " at " + I2S(MAX_SAVE_VALUE))
                 // call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,30,"Please consider stepping outside for a bit")
@@ -448,33 +550,41 @@ library PlayerTracking initializer init requires GameInit
         public method addBRWin takes nothing returns nothing
             // Random
             if (AbilityMode == 0) then
-                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random BR All Wins")
-                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random BR Season Wins")
+                set this.ARBRAllWins = this.tryIncrementValue(this.ARBRAllWins, "All Random BR All Wins", MAX_SAVE_VALUE)
+                set this.ARBRSeasonWins = this.tryIncrementValue(this.ARBRSeasonWins, "All Random BR Season Wins", MAX_SAVE_VALUE)
             // Pick
             elseif (AbilityMode == 1) then
-                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick BR All Wins")
-                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick BR Season Wins")
+                set this.APBRAllWins = this.tryIncrementValue(this.APBRAllWins, "All Pick BR All Wins", MAX_SAVE_VALUE)
+                set this.APBRSeasonWins = this.tryIncrementValue(this.APBRSeasonWins, "All Pick BR Season Wins", MAX_SAVE_VALUE)
             // Draft
             elseif (AbilityMode == 2) then
-                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft BR All Wins")
-                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft BR Season Wins")
+                set this.DraftBRAllWins = this.tryIncrementValue(this.DraftBRAllWins, "Draft BR All Wins", MAX_SAVE_VALUE)
+                set this.DraftBRSeasonWins = this.tryIncrementValue(this.DraftBRSeasonWins, "Draft BR Season Wins", MAX_SAVE_VALUE)
             endif
+
+            set HeroBRWins[this.HeroUnitTypeId] = this.tryIncrementValue(HeroBRWins[this.HeroUnitTypeId], "Hero BR Wins", MAX_MINIMAL_SAVE_VALUE)
+        endmethod
+
+        public method addPlayerKill takes nothing returns nothing
+            set PlayerKillCount = PlayerKillCount + 1
         endmethod
 
         public method addPVPWin takes nothing returns nothing
             // Random
             if (AbilityMode == 0) then
-                set this.ARPVPAllWins = this.tryIncrementValue(this.ARPVPAllWins, "All Random PVP All Wins")
-                set this.ARPVPSeasonWins = this.tryIncrementValue(this.ARPVPSeasonWins, "All Random PVP Season Wins")
+                set this.ARPVPAllWins = this.tryIncrementValue(this.ARPVPAllWins, "All Random PVP All Wins", MAX_SAVE_VALUE)
+                set this.ARPVPSeasonWins = this.tryIncrementValue(this.ARPVPSeasonWins, "All Random PVP Season Wins", MAX_SAVE_VALUE)
             // Pick
             elseif (AbilityMode == 1) then
-                set this.APPVPAllWins = this.tryIncrementValue(this.APPVPAllWins, "All Pick PVP All Wins")
-                set this.APPVPSeasonWins = this.tryIncrementValue(this.APPVPSeasonWins, "All Pick PVP Season Wins")
+                set this.APPVPAllWins = this.tryIncrementValue(this.APPVPAllWins, "All Pick PVP All Wins", MAX_SAVE_VALUE)
+                set this.APPVPSeasonWins = this.tryIncrementValue(this.APPVPSeasonWins, "All Pick PVP Season Wins", MAX_SAVE_VALUE)
             // Draft
             elseif (AbilityMode == 2) then
-                set this.DraftPVPAllWins = this.tryIncrementValue(this.DraftPVPAllWins, "Draft PVP All Wins")
-                set this.DraftPVPSeasonWins = this.tryIncrementValue(this.DraftPVPSeasonWins, "Draft PVP Season Wins")
+                set this.DraftPVPAllWins = this.tryIncrementValue(this.DraftPVPAllWins, "Draft PVP All Wins", MAX_SAVE_VALUE)
+                set this.DraftPVPSeasonWins = this.tryIncrementValue(this.DraftPVPSeasonWins, "Draft PVP Season Wins", MAX_SAVE_VALUE)
             endif
+
+            set HeroPVPWins[this.HeroUnitTypeId] = this.tryIncrementValue(HeroPVPWins[this.HeroUnitTypeId], "Hero PVP Wins", MAX_MINIMAL_SAVE_VALUE)
         endmethod
 
         public method resetSeasonStats takes nothing returns nothing
@@ -516,6 +626,7 @@ library PlayerTracking initializer init requires GameInit
         set MapVersionLookup[6] = GameVersion.create("CHS v2.2.1", 6, false) // Bunch of small fixes in this one
         set MapVersionLookup[7] = GameVersion.create("CHS v2.2.2", 7, false) // Removed gold and other stuff :)
         set MapVersionLookup[8] = GameVersion.create("CHS v2.2.3", 8, false) // Bugfixes
+        set MapVersionLookup[9] = GameVersion.create("CHS v2.3.0", 9, true) // New save system, new map terrain
     endfunction
 
     private function init takes nothing returns nothing

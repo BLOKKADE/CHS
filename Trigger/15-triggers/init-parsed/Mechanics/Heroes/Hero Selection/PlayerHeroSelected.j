@@ -1,7 +1,11 @@
-library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard, InitializeDraftMode, RewardsScreen
+library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopIndex, Scoreboard, InitializeDraftMode, RewardsScreen, HeroPassiveDesc
 
     globals
         boolean ShopsCreated = false
+
+        private timer GameStartTimer
+        private timerdialog GameStartTimerDialog
+        private integer GameStartWaitTime = 7
     endglobals
 
     private function CreateShops takes nothing returns nothing
@@ -37,11 +41,33 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call SetShopIndex(CreateUnit(p, ELEMENTAL_ITEM_SHOP_UNIT_ID, 372, -1152 - 256, 270.00))
         call SetShopIndex(CreateUnit(p, ITEM_SHOP_V_UNIT_ID, 620, -1152, 270.00))
         call SetShopIndex(CreateUnit(p, ITEM_SHOP_VI_UNIT_ID, 868, -1152, 270.00))
+        call SetShopIndex(CreateUnit(p, ITEM_SHOP_VII_UNIT_ID, 620, -1152 - 256, 270.00))
+        call SetShopIndex(CreateUnit(p, ITEM_SHOP_VIII_UNIT_ID, 868, -1152 - 256, 270.00))
 
         set ShopsCreated = true
 
         // Cleanup
         set p = null
+    endfunction
+    
+    private function HideScoreboardForPlayer takes nothing returns nothing
+        call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(false)
+    endfunction
+
+    private function ShowScoreboardForPlayer takes nothing returns nothing
+        call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(true)
+    endfunction
+
+    private function StartGame takes nothing returns nothing
+        call DestroyTimer(GameStartTimer)
+        call DestroyTimerDialog(GameStartTimerDialog)
+
+        call CreateShops()
+
+        call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
+        call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+
+        call TriggerExecute(StartLevelTrigger)
     endfunction
 
     public function AllPlayersHaveHeroesActions takes nothing returns nothing
@@ -63,11 +89,18 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
             call InitUpgradeShop()
         endif
 
-        call CreateShops()
-
         call TriggerSleepAction(2)
 
-        call TriggerExecute(StartLevelTrigger)
+        // Show the scoreboard to everyone, hide it after some time, then start the game
+        call ForForce(GetPlayersAll(), function ShowScoreboardForPlayer) 
+        call BlzFrameSetVisible(ScoreboardFrameHandle, true)
+
+        set GameStartTimer = CreateTimer()
+        set GameStartTimerDialog = CreateTimerDialog(GameStartTimer)
+        call TimerDialogSetTitle(GameStartTimerDialog, "Game Starts...")
+        call TimerDialogDisplay(GameStartTimerDialog, true)
+
+        call TimerStart(GameStartTimer, GameStartWaitTime, false, function StartGame)
     endfunction
 
     public function SpawnedHeroActions takes player p, unit hero returns nothing

@@ -1,4 +1,4 @@
-library SellItems requires DummyRecycler, GloryItemCosts
+library SellItems requires DummyRecycler, GloryItemCosts, BattleRoyaleHelper
     function SellItem takes integer pid, item it returns boolean
             local boolean success = false
             local unit u = CreateUnit(Player(pid), SELL_ITEM_DUMMY, GetItemX(it), GetItemY(it), 0)
@@ -17,6 +17,11 @@ library SellItems requires DummyRecycler, GloryItemCosts
         local item tempItem
         local integer i = 0
         local integer cost = 0
+
+        if (BrStarted and not (IsFunBRRound and WaitingForBattleRoyal)) then
+            call DisplayTimedTextToPlayer(GetOwningPlayer(playerHero),0,0,10,"|cffffcc00You cannot sell items during the BR|r")
+            return
+        endif
 
         loop
             set itemToSell = UnitItemInSlot(playerHero, i)

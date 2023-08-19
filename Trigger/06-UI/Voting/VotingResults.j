@@ -17,6 +17,7 @@ library VotingResults initializer init
         integer SimultaneousDuelMode
         integer TeamDuelMode
         integer LongerTimersMode
+        integer BRLivesMode
 
         string GameDescription
         string ScoreboardGameDescription
@@ -40,8 +41,9 @@ library VotingResults initializer init
         private integer PvpBettingVote = 1 // No betting
         private integer HeroBanningVote = 1 // No banning
         private integer DisableSimultaneousDuelVote = 1 // Disable Simultaneous duels off
-        private integer DisableTeamDuelVote = 1 // Disable Team duels off
+        private integer TeamDuelVote = 1 // Team duels off
         private integer LongerTimersVote = 1 // Double timers off
+        private integer DisableBRLivesVote = 1 // Disable BR Lives off
 
         public method setRoundVote takes integer value returns nothing 
             set this.RoundVote = value
@@ -75,12 +77,16 @@ library VotingResults initializer init
             set this.DisableSimultaneousDuelVote = value
         endmethod
 
-        public method setDisableTeamDuelVote takes integer value returns nothing 
-            set this.DisableTeamDuelVote = value
+        public method setTeamDuelVote takes integer value returns nothing 
+            set this.TeamDuelVote = value
         endmethod
 
         public method setLongerTimersVote takes integer value returns nothing 
             set this.LongerTimersVote = value
+        endmethod
+
+        public method setDisableBRLivesVote takes integer value returns nothing 
+            set this.DisableBRLivesVote = value
         endmethod
 
         public method getRoundVote takes nothing returns integer 
@@ -115,12 +121,16 @@ library VotingResults initializer init
             return this.DisableSimultaneousDuelVote
         endmethod
 
-        public method getDisableTeamDuelVote takes nothing returns integer 
-            return this.DisableTeamDuelVote
+        public method getTeamDuelVote takes nothing returns integer 
+            return this.TeamDuelVote
         endmethod
 
         public method getLongerTimersVote takes nothing returns integer 
             return this.LongerTimersVote
+        endmethod
+
+        public method getDisableBRLivesVote takes nothing returns integer 
+            return this.DisableBRLivesVote
         endmethod
     endstruct
 
@@ -218,15 +228,23 @@ library VotingResults initializer init
         endif
 
         if (LongerTimersMode == 1) then
-            set GameDescription = GameDescription + "Double Timers Off"
-            set ScoreboardGameDescription = ScoreboardGameDescription + "Double Timers Off"
+            set GameDescription = GameDescription + "Double Timers Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Double Timers Off|n"
         elseif (LongerTimersMode == 2) then
-            set GameDescription = GameDescription + "Double Timers On"
-            set ScoreboardGameDescription = ScoreboardGameDescription + "Double Timers On"
+            set GameDescription = GameDescription + "Double Timers On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Double Timers On|n"
 
             set RoundTime = RoundTime * 2
             set BattleRoyalWaitTime = BattleRoyalWaitTime * 2
             set pvpWaitDuration = pvpWaitDuration * 2
+        endif
+
+        if (BRLivesMode == 1) then
+            set GameDescription = GameDescription + "BR Lives Off"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "BR Lives Off"
+        elseif (BRLivesMode == 2) then
+            set GameDescription = GameDescription + "BR Lives On"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "BR Lives On"
         endif
 
         set GameDescription = GameDescription + "|r"
@@ -324,6 +342,7 @@ library VotingResults initializer init
         local integer array simultaneousDuelModeCounts
         local integer array teamDuelModeCounts
         local integer array longerTimersModeCounts
+        local integer array brLivesModeCounts
         local PlayerVotes currentPlayerVotes
         local integer i = 0
 
@@ -341,8 +360,9 @@ library VotingResults initializer init
                 set pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] = pvpBettingModeCounts[currentPlayerVotes.getPvpBettingVote()] + 1
                 set heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] = heroBanningModeCounts[currentPlayerVotes.getHeroBanningVote()] + 1
                 set simultaneousDuelModeCounts[currentPlayerVotes.getDisableSimultaneousDuelVote()] = simultaneousDuelModeCounts[currentPlayerVotes.getDisableSimultaneousDuelVote()] + 1
-                set teamDuelModeCounts[currentPlayerVotes.getDisableTeamDuelVote()] = teamDuelModeCounts[currentPlayerVotes.getDisableTeamDuelVote()] + 1
+                set teamDuelModeCounts[currentPlayerVotes.getTeamDuelVote()] = teamDuelModeCounts[currentPlayerVotes.getTeamDuelVote()] + 1
                 set longerTimersModeCounts[currentPlayerVotes.getLongerTimersVote()] = longerTimersModeCounts[currentPlayerVotes.getLongerTimersVote()] + 1
+                set brLivesModeCounts[currentPlayerVotes.getDisableBRLivesVote()] = brLivesModeCounts[currentPlayerVotes.getDisableBRLivesVote()] + 1
             endif
 
             set i = i + 1
@@ -429,7 +449,7 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
-        set TeamDuelMode = GetNegatedCheckboxVoteFromAnyDuplicates()
+        set TeamDuelMode = GetCheckboxVoteFromAnyDuplicates()
 
         // Double timers vote counting
         set i = 1
@@ -439,6 +459,15 @@ library VotingResults initializer init
             exitwhen i > 2
         endloop
         set LongerTimersMode = GetCheckboxVoteFromAnyDuplicates()
+
+        // BR lives vote counting
+        set i = 1
+        loop
+            set CategoryVotes[i] = brLivesModeCounts[i]
+            set i = i + 1
+            exitwhen i > 2
+        endloop
+        set BRLivesMode = GetNegatedCheckboxVoteFromAnyDuplicates()
 
         // Set the weird global variables based off of the results
         set GameModeShort = RoundMode == 2 // Boolean that flags if the game is short

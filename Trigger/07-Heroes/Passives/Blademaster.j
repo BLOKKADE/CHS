@@ -20,7 +20,7 @@ library Blademaster initializer init requires AreaDamage, RandomShit
         endif
         
         call ElemFuncStart(u, BLADE_MASTER_UNIT_ID)
-        call AreaDamage(u, x, y, (damage * 0.5) + (35 * GetHeroLevel(u)), 297 + (3 * GetHeroLevel(u)), false, BLADE_MASTER_UNIT_ID, magic)
+        call AreaDamage(u, x, y, (damage * 0.5) + (35 * GetHeroLevel(u)), 297 + (3 * GetHeroLevel(u)), false, BLADE_MASTER_UNIT_ID, magic, true)
 
         set dummy = null
     endfunction
