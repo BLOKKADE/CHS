@@ -212,12 +212,14 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefr
     endfunction
 
     private function IsPlayerHeroAlive takes nothing returns nothing
+        local integer pid = GetPlayerId(GetEnumPlayer())
+
         // Don't check if we already know there is a hero alive for this force
         if (ForceHasHeroesAlive) then
             return
         endif
 
-        set ForceHasHeroesAlive = UnitAlive(PlayerHeroes[GetPlayerId(GetEnumPlayer())])
+        set ForceHasHeroesAlive = UnitAlive(PlayerHeroes[pid]) or (BRLivesMode == 2 and PlayerBRDeaths[pid] <= MaxBRDeathCount)
     endfunction
 
     // This only returns correct data assuming IsBROver has returned true
