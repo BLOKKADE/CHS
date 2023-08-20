@@ -1,7 +1,7 @@
 library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
 
     private function PlayerCompleteRoundMoveConditions takes nothing returns boolean
-        return IsUnitInGroup(GetTriggerUnit(),GroupEmptyArenaCheck)==true
+        return IsUnitInGroup(GetTriggerUnit(), GroupEmptyArenaCheck) == true
     endfunction
 
     private function PlayerCompleteRoundMoveActions takes nothing returns nothing
