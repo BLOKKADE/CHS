@@ -1,11 +1,11 @@
-library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, Scoreboard
+library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, Scoreboard, HeroDeathHelper
 
     globals
         private constant integer PLAYER_BR_SHADE_TIMED_LIFE = 5
     endglobals
 
     private function PlayerDiesInBattleRoyaleConditions takes nothing returns boolean
-        return BrStarted == true and IsPlayerHero(GetTriggerUnit())
+        return BrStarted == true and IsPlayerHero(GetTriggerUnit()) and (not CanUnitReincarnate(GetTriggerUnit()))
     endfunction
 
     private function PlayerDiesInBattleRoyaleActions takes nothing returns nothing

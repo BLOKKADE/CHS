@@ -1,4 +1,4 @@
-library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath, Scoreboard
+library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath, Scoreboard, HeroDeathHelper
 
     private function IsUnitNotHeroOrCreep takes unit currentUnit returns boolean
         return (IsUnitType(currentUnit, UNIT_TYPE_HERO) == false) or (GetOwningPlayer(currentUnit) == Player(8)) or (GetOwningPlayer(currentUnit) == Player(11)) or (IsUnitInGroup(currentUnit, DuelingHeroes) == true)
@@ -46,7 +46,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         //call BJDebugMsg(GetUnitName(currentUnit))
-        if IsUnitNotHeroOrCreep(currentUnit) then
+        if IsUnitNotHeroOrCreep(currentUnit) or CanUnitReincarnate(currentUnit) then
             set currentUnit = null
             set currentPlayer = null
             return false

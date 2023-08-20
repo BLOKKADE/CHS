@@ -1,4 +1,4 @@
-library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers
+library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers, HeroDeathHelper
 
     globals
         boolean PvpRoundEndWait = false
@@ -7,7 +7,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     endglobals
 
     private function PvpHeroDeathConditions takes nothing returns boolean
-        return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true
+        return IsUnitInGroup(GetTriggerUnit(), DuelingHeroes) == true and (not CanUnitReincarnate(GetTriggerUnit()))
     endfunction
 
     private function ResetCameraToCenterArenaForPlayer takes nothing returns nothing
