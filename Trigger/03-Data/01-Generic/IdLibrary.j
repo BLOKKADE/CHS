@@ -388,7 +388,7 @@ library IdLibrary initializer init
         constant integer RAPID_RECOVERY_ABILITY_ID                      = 'A03X'
         constant integer REACTION_ABILITY_ID                            = 'A06C'
         constant integer REFLECTION_AUR_ABILITY_ID                      = 'A093'
-        constant integer REINCARNATION_ABILITY_ID                       = 'ANr2'
+        constant integer REINCARNATION_ABILITY_ID                       = 'A0EO'
         constant integer REJUVENATION_ABILITY_ID                        = 'Arej'
         constant integer RESET_TIME_ABILITY_ID                          = 'A024'
         constant integer ENERGY_TRAP_ABILITY_ID                         = 'A052'

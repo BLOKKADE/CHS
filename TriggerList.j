@@ -135,6 +135,7 @@
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\HitCooldown.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\Knockback.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\Lightning.j"
+//! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\Reincarnation.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\SpellFormula.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\TempAbilSystem.j"
 //! import "C:\CHS\CHS\Trigger\02-Game Libraries\03-Abilities\ToggleAbility.j"
