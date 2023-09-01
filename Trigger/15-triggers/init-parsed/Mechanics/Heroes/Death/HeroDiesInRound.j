@@ -1,4 +1,4 @@
-library HeroDiesInRound initializer init requires RandomShit, PetDeath, HeroDeathHelper
+library HeroDiesInRound initializer init requires RandomShit, PetDeath
 
     private function HeroDiesInRoundConditions takes nothing returns boolean
         return IsPlayerHero(GetTriggerUnit())

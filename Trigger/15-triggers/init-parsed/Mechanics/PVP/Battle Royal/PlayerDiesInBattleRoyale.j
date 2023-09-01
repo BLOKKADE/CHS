@@ -1,4 +1,4 @@
-library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, Scoreboard, HeroDeathHelper
+library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, Scoreboard
 
     globals
         private constant integer PLAYER_BR_SHADE_TIMED_LIFE = 5
