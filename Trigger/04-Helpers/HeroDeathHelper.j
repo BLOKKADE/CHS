@@ -1,9 +1,9 @@
 library HeroDeathHelper requires UnitItems
 
     function CanUnitReincarnate takes unit u returns boolean
-        call BJDebugMsg(GetUnitName(u) + " ankh status: " + B2S(GetUnitItem(u, 'ankh') != null))
+        call BJDebugMsg(GetUnitName(u) + " ankh status: " + B2S(GetUnitItem(u, ANKH_ITEM_ID) != null))
 
-        /*if (GetUnitItem(u, 'ankh') != null) then
+        if (GetUnitItem(u, ANKH_ITEM_ID) != null) then
             return true
         endif*/
 
