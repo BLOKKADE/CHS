@@ -643,12 +643,16 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             endif	
             //Ankh of Reincarnation
         elseif II == 'I0BH' then
-            set It = GetUnitItem(u, 'ankh')
-            if UnitHasInventorySpace(u) and It == null then
-                call UnitAddItemById(u, 'ankh')
-            else
+            set It = GetUnitItem(u, ANKH_ITEM_ID)
+
+            if (It != null) then
                 call DisplayTimedTextToPlayer(p, 0, 0, 2, "Cannot buy more |cffdf9432" + GetObjectName(II) + "|r")
                 call PlayerAddGold(GetOwningPlayer(u), 400)
+            elseif (not HasPlayerFinishedLevel(u, p)) then
+                call DisplayTimedTextToPlayer(p, 0, 0, 2, "Cannot buy |cffdf9432" + GetObjectName(II) + "|r during a round")
+                call PlayerAddGold(GetOwningPlayer(u), 400)
+            elseif UnitHasInventorySpace(u) and It == null then
+                call UnitAddItemById(u, ANKH_ITEM_ID)
             endif
             //Non-Lucrative Tome
         elseif II == NON_LUCRATIVE_TOME_ITEM_ID then

@@ -540,6 +540,7 @@ library IdLibrary initializer init
         constant integer ENERGY_TRAP_ITEM_ID                            = 'I0BJ'
         constant integer ENERGY_SHIELD_ITEM_ID                          = 'I0CJ'
         constant integer MAGNET_OSC_ITEM_ID                             = 'I0BK'
+        constant integer ANKH_ITEM_ID                                   = 'ankh'
         constant integer ANCIENT_ELEMENT_ITEM_ID                        = 'I0C0'
         constant integer ANCIENT_BLOOD_ITEM_ID                          = 'I09B'
         constant integer ANCIENT_DAGGER_ITEM_ID                         = 'I06X'

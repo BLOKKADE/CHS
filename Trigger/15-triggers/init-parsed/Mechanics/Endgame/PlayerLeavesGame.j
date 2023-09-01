@@ -43,7 +43,7 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
 
         if eventInfo.hero != null and (IsPlayerInForce(eventInfo.p, LeaverPlayers) or GetPlayerSlotState(eventInfo.p) != PLAYER_SLOT_STATE_PLAYING) then
             // Remove ankh item if the hero has one
-            set ankhItem = GetUnitItem(eventInfo.hero, 'ankh')
+            set ankhItem = GetUnitItem(eventInfo.hero, ANKH_ITEM_ID)
 
             if (ankhItem != null) then
                 call UnitRemoveItem(eventInfo.hero, ankhItem)   

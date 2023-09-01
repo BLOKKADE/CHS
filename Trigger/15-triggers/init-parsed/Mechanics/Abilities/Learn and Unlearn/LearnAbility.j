@@ -81,6 +81,15 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomGame
             set maxAbil = true
         endif
 
+        // Prevent buying the reincarnation ability during a round
+        if (BoughtAbility == REINCARNATION_ABILITY_ID and (not HasPlayerFinishedLevel(BuyingUnit, GetOwningPlayer(GetTriggerUnit())))) then
+            call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2, "Cannot buy |cffdf9432Reincarnation|r during a round")
+            call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_GOLD)
+            call ResourseRefresh(GetOwningPlayer(BuyingUnit))
+            
+            return
+        endif
+
         // Economy abiliy logic
         if (EconomicModeAbility(BoughtAbility)) then
             if (ARLearningAbil == true) then

@@ -132,7 +132,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call LoadCommand_AutoLoadPlayerSaveCode(p)
                     
         // Starting items
-        call UnitAddItemByIdSwapped('ankh', hero)
+        call UnitAddItemByIdSwapped(ANKH_ITEM_ID, hero)
         call UnitAddItemByIdSwapped('pghe', hero)
         call UnitAddItemByIdSwapped('I04R', hero)
 
