@@ -117,6 +117,15 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             set ctrl = true
         endif
 
+        if (II == ANKH_ITEM_ID and GetUnitItemTypeCount(u, ANKH_ITEM_ID) > 1) then
+            call DisplayTimedTextToPlayer(p, 0, 0, 2, "Cannot have more than 1 |cffdf9432" + GetObjectName(II) + "|r")
+            call UnitRemoveItem(u, It)
+            set u = null
+            set p = null
+            set It = null
+            return
+        endif
+
         loop
             //Agility level bonus
             if II == AGILITY_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
