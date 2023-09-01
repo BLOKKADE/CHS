@@ -23,7 +23,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Reincarnation
-        if GetUnitAbilityLevel(DamageSource, 'A0EP') > 0 then
+        if GetUnitAbilityLevel(DamageTarget, 'A0EP') > 0 then
             set Damage.index.damage = 0
             return
         endif
