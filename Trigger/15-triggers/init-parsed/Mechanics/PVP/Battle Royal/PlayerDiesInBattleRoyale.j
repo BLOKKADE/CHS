@@ -5,7 +5,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
     endglobals
 
     private function PlayerDiesInBattleRoyaleConditions takes nothing returns boolean
-        return BrStarted == true and IsPlayerHero(GetTriggerUnit()) and (not CanUnitReincarnate(GetTriggerUnit()))
+        return BrStarted == true and IsPlayerHero(GetTriggerUnit())
     endfunction
 
     private function PlayerDiesInBattleRoyaleActions takes nothing returns nothing

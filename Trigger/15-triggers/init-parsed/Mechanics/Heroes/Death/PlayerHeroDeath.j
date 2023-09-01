@@ -46,7 +46,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         //call BJDebugMsg(GetUnitName(currentUnit))
-        if IsUnitNotHeroOrCreep(currentUnit) or CanUnitReincarnate(currentUnit) then
+        if IsUnitNotHeroOrCreep(currentUnit) then
             set currentUnit = null
             set currentPlayer = null
             return false

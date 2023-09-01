@@ -1,7 +1,7 @@
 library HeroDiesInRound initializer init requires RandomShit, PetDeath, HeroDeathHelper
 
     private function HeroDiesInRoundConditions takes nothing returns boolean
-        return IsPlayerHero(GetTriggerUnit()) and (not CanUnitReincarnate(GetTriggerUnit()))
+        return IsPlayerHero(GetTriggerUnit())
     endfunction
 
     private function RemovePlayerUnit takes nothing returns nothing
