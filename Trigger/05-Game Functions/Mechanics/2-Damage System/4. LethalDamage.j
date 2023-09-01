@@ -33,7 +33,7 @@ scope LethalDamage initializer init
         if GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, REINCARNATION_ABILITY_ID) == 0 then
             call BJDebugMsg("Reincarnation")
             set udg_LethalDamageHP = 1
-            call AbilStartCD(DamageTarget, REINCARNATION_ABILITY_ID, 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
+            call BlzStartUnitAbilityCooldown(DamageTarget, REINCARNATION_ABILITY_ID, 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
             call Reincarnate.start(DamageTarget, 2, BlzGetUnitMaxHP(DamageTarget))
             return
         endif
