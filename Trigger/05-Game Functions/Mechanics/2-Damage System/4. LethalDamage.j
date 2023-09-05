@@ -34,6 +34,7 @@ scope LethalDamage initializer init
             call BJDebugMsg("Reincarnation") 
             set udg_LethalDamageHP = 1
             call BlzStartUnitAbilityCooldown(DamageTarget, REINCARNATION_ABILITY_ID, 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
+            call BlzStartUnitAbilityCooldown(DamageTarget, GetDummySpell(DamageTarget, REINCARNATION_ABILITY_ID), 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
             call Reincarnate.start(DamageTarget, 2, BlzGetUnitMaxHP(DamageTarget))
             return
         endif
