@@ -22,7 +22,6 @@ scope LethalDamage initializer init
 
         //Ankh of Reincarnation
         if UnitHasItemType(DamageTarget, 'ankh') and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 then
-            call BJDebugMsg("Ankh")
             set udg_LethalDamageHP = 1
             call RemoveItem(GetUnitItem(DamageTarget, 'ankh'))
             call Reincarnate.start(DamageTarget, 1, 500)
@@ -31,7 +30,6 @@ scope LethalDamage initializer init
 
         //Reincarnation
         if GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, REINCARNATION_ABILITY_ID) == 0 and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 then
-            call BJDebugMsg("Reincarnation") 
             set udg_LethalDamageHP = 1
             call BlzStartUnitAbilityCooldown(DamageTarget, REINCARNATION_ABILITY_ID, 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
             call BlzStartUnitAbilityCooldown(DamageTarget, GetDummySpell(DamageTarget, REINCARNATION_ABILITY_ID), 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))

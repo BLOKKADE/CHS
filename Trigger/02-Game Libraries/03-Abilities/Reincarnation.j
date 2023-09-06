@@ -12,7 +12,7 @@ library Reincarnation requires RemoveBuffs, DummyOrder, T32
         private method periodic takes nothing returns nothing
             call this.regenerate()
             if T32_Tick > this.tick then
-                set this.tick = T32_Tick + 48
+                set this.tick = T32_Tick + 32
                 call TempFx.point("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", GetUnitX(this.source), GetUnitY(this.source), 3, true)
             endif
             if T32_Tick > this.endTick then
@@ -32,7 +32,7 @@ library Reincarnation requires RemoveBuffs, DummyOrder, T32
             set this.newHp = newHp
             call SetUnitState(this.source, UNIT_STATE_LIFE, newHp)
             set this.endTick = T32_Tick + R2I(delay * 32)
-            set this.tick  = T32_Tick + 48
+            set this.tick  = T32_Tick + 32
 
             call TempFx.point("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", GetUnitX(this.source), GetUnitY(this.source), 3, true)
 
