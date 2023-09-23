@@ -55,6 +55,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant string PVP_LOSSES_COLOR                        = "|cffdd2c00"
         private constant string PVP_WINS_COLOR                          = "|cffbfff81"
         private constant string SURVIVED_UNTIL_STATUS_COLOR             = "|cffdf50e4"	
+        private constant string ABILITY_LEVEL_COLOR                     = "|cfffff8b9"	
 
         private constant string COLOR_END_TAG                           = "|r"
         private constant string SLASH                                   = "|cff858585/|r"
@@ -85,11 +86,13 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // NOTE: CachedPlayerItems and CachedPlayerAbilities could be merged into a single array, but I thought it would be simpler if they are separate
         private integer array CachedPlayerItems // Item ids for each player hero
         private integer array CachedPlayerAbilities // Ability ids for each player hero
+        private integer array CachedPlayerAbilityLevels // Ability levels for each player hero
         private boolean array CachedPlayerPlayerReadyStatus // Cached status if their ready status has changed
         private string array CachedPlayerTooltipNames // Tooltip names
         private string array CachedPlayerTooltipDescriptions // Tooltip descriptions
 
         // Framehandles for all columns for each player to easily be referenced to update them
+        private framehandle array CachedPlayerAbilityLevelFramehandles
         private framehandle array CachedPlayerFramehandles
         private framehandle array CachedPlayerIndicatorParentFramehandles
         private framehandle array CachedPlayerIndicatorFramehandles
@@ -344,6 +347,8 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId]
         local integer currentAbility
+        local framehandle abilityLevelFrameHandle
+        local integer abilityLevel = 0
 
         if (playerHero != null) then
             loop
@@ -361,8 +366,10 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                         call CreateIcon(BlzGetAbilityIcon(currentAbility), playerId)
                     endif
 
+                    set abilityLevel = GetUnitAbilityLevel(playerHero, currentAbility) - 1 // What is the -1 for?
+
                     // Cache the tooltip information about the ability. Need to always recalculate since abilities show element counts
-                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityTooltip(currentAbility, GetUnitAbilityLevel(playerHero, currentAbility) - 1) // What is the -1 for?
+                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityTooltip(currentAbility, abilityLevel) 
                     set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetAbilityElementCountTooltip(playerHero, abilityIndex)
                 else
                     // Hide the icon if something was there
@@ -376,6 +383,34 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                     set CachedPlayerAbilities[(playerId * CACHING_BUFFER) + abilityIndex] = -1
                 endif
 
+                if (CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex] == null) then
+                    // Ability level for the button. Save the framehandle for later to easily update the value
+                    set abilityLevelFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardText", ScoreboardFrameHandle, "", 0) 
+                    call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
+                    call BlzFrameSetPoint(abilityLevelFrameHandle, FRAMEPOINT_TOPLEFT, CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], FRAMEPOINT_BOTTOMRIGHT, -0.009, 0.009)
+                    call BlzFrameSetEnable(abilityLevelFrameHandle, false) 
+                    call BlzFrameSetScale(abilityLevelFrameHandle, 0.75) 
+                    call BlzFrameSetText(abilityLevelFrameHandle, "0") 
+
+                    set CachedPlayerAbilityLevels[(playerId * CACHING_BUFFER) + abilityIndex] = 0
+
+                    set CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex] = abilityLevelFrameHandle
+                else
+                    set abilityLevelFrameHandle = CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex]
+                endif
+
+                // Only update the text if it is different
+                if (currentAbility != 0 and CachedPlayerAbilityLevels[(playerId * CACHING_BUFFER) + abilityIndex] != (abilityLevel + 1)) then
+                    call BlzFrameSetText(abilityLevelFrameHandle, ABILITY_LEVEL_COLOR + I2S(abilityLevel + 1) + COLOR_END_TAG) // Ability level is 0 based above for our other libraries
+
+                    if (abilityLevel > 9) then
+                        call BlzFrameSetPoint(abilityLevelFrameHandle, FRAMEPOINT_TOPLEFT, CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], FRAMEPOINT_BOTTOMRIGHT, -0.013, 0.009)
+                    endif
+                endif
+
+                // Only show the ability level ui if has at least one level
+                call BlzFrameSetVisible(abilityLevelFrameHandle, currentAbility != 0)
+
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set abilityIndex = abilityIndex + 1
             endloop
@@ -383,6 +418,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Cleanup
         set playerHero = null
+        set abilityLevelFrameHandle = null
     endfunction
 
     private function AddPlayerToScoreboard takes nothing returns nothing
