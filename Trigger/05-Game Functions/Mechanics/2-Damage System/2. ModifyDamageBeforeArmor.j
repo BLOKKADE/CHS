@@ -22,6 +22,12 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
+        //Reincarnation
+        if GetUnitAbilityLevel(DamageTarget, 'A0EP') > 0 then
+            set Damage.index.damage = 0
+            return
+        endif
+
         //enhanced damage ignores everything but mana shield
         if Damage.index.damageType == DAMAGE_TYPE_ENHANCED then
             set Damage.index.armorPierced = BlzGetUnitArmor(DamageTarget)

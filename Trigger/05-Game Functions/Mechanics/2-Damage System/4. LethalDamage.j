@@ -20,6 +20,23 @@ scope LethalDamage initializer init
             return
         endif
 
+        //Ankh of Reincarnation
+        if UnitHasItemType(DamageTarget, 'ankh') and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 then
+            set udg_LethalDamageHP = 1
+            call RemoveItem(GetUnitItem(DamageTarget, 'ankh'))
+            call Reincarnate.start(DamageTarget, 1, 500)
+            return
+        endif
+
+        //Reincarnation
+        if GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, REINCARNATION_ABILITY_ID) == 0 and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 then
+            set udg_LethalDamageHP = 1
+            call BlzStartUnitAbilityCooldown(DamageTarget, REINCARNATION_ABILITY_ID, 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
+            call BlzStartUnitAbilityCooldown(DamageTarget, GetDummySpell(DamageTarget, REINCARNATION_ABILITY_ID), 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
+            call Reincarnate.start(DamageTarget, 2, BlzGetUnitMaxHP(DamageTarget))
+            return
+        endif
+
         //Magic Necklace
         if UnitHasItemType(DamageSourceHero, 'I05G') and IsMagicDamage() then
             set MagicNecklaceBonus.boolean[GetHandleId(DamageTarget)] = true

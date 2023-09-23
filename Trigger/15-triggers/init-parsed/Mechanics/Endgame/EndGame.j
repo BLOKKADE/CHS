@@ -115,7 +115,9 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
         // Save everyones codes
         if (not IsFunBRRound) then
             call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cffffcc00Thank you for playing|r " + "|cff7bff00" + CurrentGameVersion.getVersionString() + "|r")
+            call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cffff5a44Upload your save code to the CHS discord leaderboard!!!|r")
             call DisplayTimedTextToForce(GetPlayersAll(), 30.00, "|cff63ff44Stay for the fun BR rounds!!!|r")
+
             call ForForce(GetPlayersAll(), function AutoSaveForPlayer)
         endif
 

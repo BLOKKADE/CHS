@@ -1,4 +1,4 @@
-library StartLevel initializer init requires RandomShit, StartFunction, SellItems, DebugCode, HeroSelectorAction, CustomGameEvent
+library StartLevel initializer init requires RandomShit, StartFunction, SellItems, HeroSelectorAction, CustomGameEvent
 
     globals
         integer RoundStartTick
@@ -145,9 +145,6 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         else
             call RemoveHeroPreviewUnit()
         endif
-
-        // Save debug codes
-        call DebugCode_SavePlayerDebugEveryone()
 
         call PlaySoundBJ(udg_sound01)
         call ForForce(validPlayerForce, function FireRoundStartEvents)

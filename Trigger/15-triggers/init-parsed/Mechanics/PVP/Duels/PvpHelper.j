@@ -1,4 +1,4 @@
-library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, VotingResults, GameInit, InitializeBettingDialogs, CustomGameEvent
+library PvpHelper requires RandomShit, StartFunction, UnitFilteringUtility, VotingResults, GameInit, InitializeBettingDialogs, CustomGameEvent
 
     globals
         // Keep track if the odd player duel has been started
@@ -105,9 +105,6 @@ library PvpHelper requires RandomShit, StartFunction, DebugCode, UnitFilteringUt
         if (ps.getPet() != null) then
             call SetUnitPositionLocFacingLocBJ(ps.getPet(), spawnOffset, arenaCenter)
         endif
-
-        // Save debug logs for the player before the fight
-        call DebugCode_SavePlayerDebug(currentPlayer)
 
         set TempUnit = playerHero // Used in HeroRefreshTrigger
         call ConditionalTriggerExecute(HeroRefreshTrigger)

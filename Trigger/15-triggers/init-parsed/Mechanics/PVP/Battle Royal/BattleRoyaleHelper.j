@@ -1,4 +1,4 @@
-library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, DebugCode, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh
+library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh
 
     globals
         // Track player's lives during the BR
@@ -398,9 +398,6 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         if (BRLivesMode == 2) then
             call TimerStart(BattleRoyalRemoveLifeTimer, GetRandomReal(BattleRoyalRemoveLifeLowTime, BattleRoyalRemoveLifeHighTime), true, function RemoveBattleRoyaleLife)
         endif
-
-        // Save debug codes
-        call DebugCode_SavePlayerDebugEveryone()
     endfunction
 
     function FinalizeBattleRoyaleSetup takes nothing returns nothing

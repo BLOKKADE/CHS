@@ -39,7 +39,24 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
 
     // kill players hero at start of round if they left
     private function OnRoundStart takes EventInfo eventInfo returns nothing
+        local item ankhItem
+
         if eventInfo.hero != null and (IsPlayerInForce(eventInfo.p, LeaverPlayers) or GetPlayerSlotState(eventInfo.p) != PLAYER_SLOT_STATE_PLAYING) then
+            // Remove ankh item if the hero has one
+            set ankhItem = GetUnitItem(eventInfo.hero, ANKH_ITEM_ID)
+
+            if (ankhItem != null) then
+                call UnitRemoveItem(eventInfo.hero, ankhItem)   
+                
+                // Cleanup
+                set ankhItem = null
+            endif
+            
+            // Remove reincarnation if they have it
+            if (GetUnitAbilityLevel(eventInfo.hero, REINCARNATION_ABILITY_ID) > 0) then
+                call UnitRemoveAbility(eventInfo.hero, REINCARNATION_ABILITY_ID)
+            endif
+
             call SetUnitInvulnerable(eventInfo.hero, false)
             call KillUnit(eventInfo.hero)
         endif

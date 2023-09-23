@@ -627,6 +627,7 @@ library PlayerTracking initializer init requires GameInit, Table
         set MapVersionLookup[7] = GameVersion.create("CHS v2.2.2", 7, false) // Removed gold and other stuff :)
         set MapVersionLookup[8] = GameVersion.create("CHS v2.2.3", 8, false) // Bugfixes
         set MapVersionLookup[9] = GameVersion.create("CHS v2.3.0", 9, true) // New save system, new map terrain
+        set MapVersionLookup[10] = GameVersion.create("CHS v2.3.1", 10, false) // ankh and reincarnation bugfixes
     endfunction
 
     private function init takes nothing returns nothing
