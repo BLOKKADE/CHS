@@ -14,7 +14,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 		private constant string IndicatorPathPick                       = "UI\\Feedback\\Autocast\\UI-ModalButtonOn.mdl"
 
         // The X,Y coordinate for the top left of the main frame
-        private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.14
+        private constant real MAIN_FRAME_TOP_LEFT_X                     = 0.05
         private constant real MAIN_FRAME_TOP_LEFT_Y                     = 0.56
         private constant real MAIN_FRAME_X_MARGIN                       = 0.03
         private constant real MAIN_FRAME_Y_TOP_MARGIN                   = 0.027
@@ -25,6 +25,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Specifications for a button
         private constant real ICON_WIDTH                                = 0.016
         private constant real ICON_SPACING                              = 0.003
+        private constant real ABILITY_ICON_SPACING                      = 0.015
         private constant real ROW_SPACING                               = 0.01
         private constant real CLOSE_ICON_WIDTH                          = 0.032
 
@@ -93,6 +94,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Framehandles for all columns for each player to easily be referenced to update them
         private framehandle array CachedPlayerAbilityLevelFramehandles
+        private framehandle array CachedPlayerAbilityLevelParentFramehandles
         private framehandle array CachedPlayerFramehandles
         private framehandle array CachedPlayerIndicatorParentFramehandles
         private framehandle array CachedPlayerIndicatorFramehandles
@@ -134,13 +136,13 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Top 10 row abilities
         if (CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
             set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
-            set value = value + offset + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ICON_WIDTH) + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ICON_SPACING)
+            set value = value + offset + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ICON_WIDTH) + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ABILITY_ICON_SPACING)
         endif
 
         // Bottom 10 row absolutes
         if (CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
             set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
-            set value = value + offset + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ICON_SPACING)
+            set value = value + offset + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ABILITY_ICON_SPACING)
         endif
 
         return value
@@ -347,6 +349,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId]
         local integer currentAbility
+        local framehandle abilityLevelParentFrameHandle
         local framehandle abilityLevelFrameHandle
         local integer abilityLevel = 0
 
@@ -384,18 +387,20 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                 endif
 
                 if (CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex] == null) then
-                    // Ability level for the button. Save the framehandle for later to easily update the value
-                    set abilityLevelFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardText", ScoreboardFrameHandle, "", 0) 
-                    call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
-                    call BlzFrameSetPoint(abilityLevelFrameHandle, FRAMEPOINT_TOPLEFT, CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], FRAMEPOINT_BOTTOMRIGHT, -0.009, 0.009)
-                    call BlzFrameSetEnable(abilityLevelFrameHandle, false) 
-                    call BlzFrameSetScale(abilityLevelFrameHandle, 0.75) 
-                    call BlzFrameSetText(abilityLevelFrameHandle, "0") 
-
+                    set abilityLevelParentFrameHandle = BlzCreateFrame("TooltipText", ScoreboardFrameHandle, 0, 0)
+                    set abilityLevelFrameHandle = BlzGetFrameByName("TooltipTextTitle", 0)
+                    call BlzFrameSetLevel(abilityLevelParentFrameHandle, 2) // To have it appear above the button
+                    call BlzFrameSetText(abilityLevelFrameHandle, "0")
+                    call BlzFrameSetScale(abilityLevelFrameHandle, 0.6) 
+                    call BlzFrameSetPoint(abilityLevelParentFrameHandle, FRAMEPOINT_TOPLEFT, CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], FRAMEPOINT_BOTTOMRIGHT, -(ICON_WIDTH / 2) + (ICON_WIDTH / 6), 0.01)
+                    call BlzFrameSetSize(abilityLevelParentFrameHandle, 0.0128, 0.0128)
+            
                     set CachedPlayerAbilityLevels[(playerId * CACHING_BUFFER) + abilityIndex] = 0
 
+                    set CachedPlayerAbilityLevelParentFramehandles[(playerId * CACHING_BUFFER) + abilityIndex] = abilityLevelParentFrameHandle
                     set CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex] = abilityLevelFrameHandle
                 else
+                    set abilityLevelParentFrameHandle = CachedPlayerAbilityLevelParentFramehandles[(playerId * CACHING_BUFFER) + abilityIndex]
                     set abilityLevelFrameHandle = CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex]
                 endif
 
@@ -404,12 +409,12 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                     call BlzFrameSetText(abilityLevelFrameHandle, ABILITY_LEVEL_COLOR + I2S(abilityLevel + 1) + COLOR_END_TAG) // Ability level is 0 based above for our other libraries
 
                     if (abilityLevel > 9) then
-                        call BlzFrameSetPoint(abilityLevelFrameHandle, FRAMEPOINT_TOPLEFT, CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], FRAMEPOINT_BOTTOMRIGHT, -0.013, 0.009)
+                        call BlzFrameSetSize(abilityLevelParentFrameHandle, 0.017, 0.0128)
                     endif
                 endif
 
                 // Only show the ability level ui if has at least one level
-                call BlzFrameSetVisible(abilityLevelFrameHandle, currentAbility != 0)
+                call BlzFrameSetVisible(abilityLevelParentFrameHandle, currentAbility != 0)
 
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set abilityIndex = abilityIndex + 1
@@ -419,6 +424,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Cleanup
         set playerHero = null
         set abilityLevelFrameHandle = null
+        set abilityLevelParentFrameHandle = null
     endfunction
 
     private function AddPlayerToScoreboard takes nothing returns nothing
@@ -594,7 +600,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Compute the main scoreboard box
         // Width - Main frame margins, all icon widths, all icon spacings
-        set mainFrameBottomRightX = MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (16 * ICON_WIDTH) + (14 * ICON_SPACING)
+        set mainFrameBottomRightX = MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (16 * ICON_WIDTH) + (5 * ICON_SPACING) + (9 * ABILITY_ICON_SPACING)
         // Height - Compute the same y coordinate like normal, but use the top row offset. Then add the credits height, and main frame margin
         set mainFrameBottomRightY = MAIN_FRAME_TOP_LEFT_Y - MAIN_FRAME_Y_TOP_MARGIN - TEXT_HEIGHT - (2 * ICON_WIDTH * CurrentRowIndex) - (ROW_SPACING * CurrentRowIndex) + ICON_WIDTH + ROW_SPACING - CREDITS_HEIGHT - MAIN_FRAME_Y_BOTTOM_MARGIN + (ICON_WIDTH / 2) + (ICON_SPACING / 2)
 
