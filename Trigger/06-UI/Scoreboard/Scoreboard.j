@@ -25,7 +25,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Specifications for a button
         private constant real ICON_WIDTH                                = 0.016
         private constant real ICON_SPACING                              = 0.003
-        private constant real ABILITY_ICON_SPACING                      = 0.015
+        private constant real ABILITY_ICON_SPACING                      = 0.01
         private constant real ROW_SPACING                               = 0.01
         private constant real CLOSE_ICON_WIDTH                          = 0.032
 
@@ -349,7 +349,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId]
         local integer currentAbility
-        local framehandle abilityLevelParentFrameHandle
+        //local framehandle abilityLevelParentFrameHandle
         local framehandle abilityLevelFrameHandle
         local integer abilityLevel = 0
 
@@ -387,20 +387,18 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                 endif
 
                 if (CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex] == null) then
-                    set abilityLevelParentFrameHandle = BlzCreateFrame("TooltipText", ScoreboardFrameHandle, 0, 0)
-                    set abilityLevelFrameHandle = BlzGetFrameByName("TooltipTextTitle", 0)
-                    call BlzFrameSetLevel(abilityLevelParentFrameHandle, 2) // To have it appear above the button
-                    call BlzFrameSetText(abilityLevelFrameHandle, "0")
-                    call BlzFrameSetScale(abilityLevelFrameHandle, 0.6) 
-                    call BlzFrameSetPoint(abilityLevelParentFrameHandle, FRAMEPOINT_TOPLEFT, CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], FRAMEPOINT_BOTTOMRIGHT, -(ICON_WIDTH / 2) + (ICON_WIDTH / 6), 0.01)
-                    call BlzFrameSetSize(abilityLevelParentFrameHandle, 0.0128, 0.0128)
-            
+                    // Ability level for the button. Save the framehandle for later to easily update the value
+                    set abilityLevelFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardText", ScoreboardFrameHandle, "", 0) 
+                    call BlzFrameSetLevel(abilityLevelFrameHandle, 2) // To have it appear above the scoreboard
+                    call BlzFrameSetPoint(abilityLevelFrameHandle, FRAMEPOINT_TOPLEFT, CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], FRAMEPOINT_BOTTOMRIGHT, -(ICON_WIDTH / 6), 0.01)
+                    call BlzFrameSetEnable(abilityLevelFrameHandle, false) 
+                    call BlzFrameSetScale(abilityLevelFrameHandle, 0.7) 
+                    call BlzFrameSetText(abilityLevelFrameHandle, "0") 
+
                     set CachedPlayerAbilityLevels[(playerId * CACHING_BUFFER) + abilityIndex] = 0
 
-                    set CachedPlayerAbilityLevelParentFramehandles[(playerId * CACHING_BUFFER) + abilityIndex] = abilityLevelParentFrameHandle
                     set CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex] = abilityLevelFrameHandle
                 else
-                    set abilityLevelParentFrameHandle = CachedPlayerAbilityLevelParentFramehandles[(playerId * CACHING_BUFFER) + abilityIndex]
                     set abilityLevelFrameHandle = CachedPlayerAbilityLevelFramehandles[(playerId * CACHING_BUFFER) + abilityIndex]
                 endif
 
@@ -409,12 +407,12 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                     call BlzFrameSetText(abilityLevelFrameHandle, ABILITY_LEVEL_COLOR + I2S(abilityLevel + 1) + COLOR_END_TAG) // Ability level is 0 based above for our other libraries
 
                     if (abilityLevel > 9) then
-                        call BlzFrameSetSize(abilityLevelParentFrameHandle, 0.017, 0.0128)
+                        call BlzFrameSetPoint(abilityLevelFrameHandle, FRAMEPOINT_TOPLEFT, CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex], FRAMEPOINT_BOTTOMRIGHT, -(ICON_WIDTH / 6), 0.01)
                     endif
                 endif
 
                 // Only show the ability level ui if has at least one level
-                call BlzFrameSetVisible(abilityLevelParentFrameHandle, currentAbility != 0)
+                call BlzFrameSetVisible(abilityLevelFrameHandle, currentAbility != 0)
 
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set abilityIndex = abilityIndex + 1
@@ -424,7 +422,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Cleanup
         set playerHero = null
         set abilityLevelFrameHandle = null
-        set abilityLevelParentFrameHandle = null
+        //set abilityLevelParentFrameHandle = null
     endfunction
 
     private function AddPlayerToScoreboard takes nothing returns nothing
