@@ -95,17 +95,26 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     private function DuelEndedPlayerActions takes player currentPlayer, unit playerHero returns nothing
         call BJDebugMsg("Start Duel ended for player: " + GetPlayerName(currentPlayer) + " for hero: " + GetUnitName(playerHero))
 
-        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
-        // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
-        call SaveCommand_SaveCodeForPlayer(currentPlayer, false)
-
-        call GroupRemoveUnit(DuelingHeroes, playerHero)
-
         // Mark that they player is not fighting
         call SetCurrentlyFighting(currentPlayer, false)
 
+        call BJDebugMsg("Duel end 2")
+
+        call GroupRemoveUnit(DuelingHeroes, playerHero)
+
+        call BJDebugMsg("Duel end 3")
+
         // Stop the triggers for unit leaving an arena
         call StopRectLeaveDetection(GetHandleId(playerHero))
+
+        call BJDebugMsg("Duel end 4")
+
+        // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
+        call SaveCommand_SaveCodeForPlayer(currentPlayer, false)
+
+        call BJDebugMsg("Duel end 5")
+
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
 
         call BJDebugMsg("End of Duel ended for player: " + GetPlayerName(currentPlayer) + " for hero: " + GetUnitName(playerHero))
     endfunction
