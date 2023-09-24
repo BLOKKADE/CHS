@@ -91,6 +91,22 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     private function ShowWinningSpecialEffect takes nothing returns nothing
         call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", GetEnumUnit(), "Abilities\\Spells\\Human\\Resurrect\\ResurrectCaster.mdl"))
     endfunction
+    
+    private function DuelEndedPlayerActions takes player currentPlayer, unit playerHero returns nothing
+        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
+        // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
+        call SaveCommand_SaveCodeForPlayer(currentPlayer, false)
+
+        call GroupRemoveUnit(DuelingHeroes, playerHero)
+
+        // Mark that they player is not fighting
+        call SetCurrentlyFighting(currentPlayer, false)
+
+        // Stop the triggers for unit leaving an arena
+        call StopRectLeaveDetection(GetHandleId(playerHero))
+
+        call BJDebugMsg("Duel ended for player: " + GetPlayerName(currentPlayer) + " for hero: " + GetUnitName(playerHero))
+    endfunction
 
     private function EndDuelActionsForWinningPlayer takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
@@ -120,11 +136,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
         endif
 
-        call GroupRemoveUnit(DuelingHeroes, playerHero)
         call SetUnitInvulnerable(playerHero, true)
-        
-        // Mark that they player is not fighting
-        call SetCurrentlyFighting(currentPlayer, false)
+
+        call DuelEndedPlayerActions(currentPlayer, playerHero)
 
         // Cleanup
         set currentPlayer = null
@@ -143,11 +157,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
         endif
 
-        call GroupRemoveUnit(DuelingHeroes, playerHero)
+        call DuelEndedPlayerActions(currentPlayer, playerHero)
 
-        // Mark that they player is not fighting
-        call SetCurrentlyFighting(currentPlayer, false)
-        
         // Cleanup
         set currentPlayer = null
         set playerHero = null
@@ -179,24 +190,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         set currentPlayer = null
         set playerHero = null
         set deadUnit = null
-    endfunction
-
-    private function DuelEndedPlayerActions takes nothing returns nothing
-        local player currentPlayer = GetEnumPlayer()
-        local unit playerHero = PlayerHeroes[GetPlayerId(currentPlayer)]
-
-        call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
-        // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
-        call SaveCommand_SaveCodeForPlayer(currentPlayer, false)
-
-        // Stop the triggers for unit leaving an arena
-        call StopRectLeaveDetection(GetHandleId(playerHero))
-
-        call BJDebugMsg("Duel ended for player: " + GetPlayerName(currentPlayer) + " for hero: " + GetUnitName(playerHero))
-
-        // Cleanup
-        set currentPlayer = null
-        set playerHero = null
     endfunction
 
     private function AwardFunToWinningUnit takes nothing returns nothing
@@ -273,18 +266,8 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             set duelGame.team1Won = IsPlayerInForce(deadUnitPlayer, duelGame.team2)
 
             // Add player unit to DuelWinnerDisabled, set invulnerable
-            call ForForce(winningPlayerForce, function EndDuelActionsForWinningPlayer)
             call ForForce(deadPlayerForce, function EndDuelActionsForLosingPlayer) 
-
-            // Alliance reset
-            call SetForceAllianceStateBJ(duelGame.team1, duelGame.team1, bj_ALLIANCE_UNALLIED)
-            call SetForceAllianceStateBJ(duelGame.team2, duelGame.team2, bj_ALLIANCE_UNALLIED)
-            call SetForceAllianceStateBJ(duelGame.team2, duelGame.team1, bj_ALLIANCE_UNALLIED)
-            call SetForceAllianceStateBJ(duelGame.team1, duelGame.team2, bj_ALLIANCE_UNALLIED)
-
-            // Save code, end arena leave detection
-            call ForForce(duelGame.team1, function DuelEndedPlayerActions)
-            call ForForce(duelGame.team2, function DuelEndedPlayerActions)
+            call ForForce(winningPlayerForce, function EndDuelActionsForWinningPlayer)
             
             // Only display a message to everyone when this duel is completely over
             if (CountPlayersInForceBJ(winningPlayerForce) > 1) then
@@ -293,12 +276,18 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, ConvertForceToUnitString(winningPlayerForce) + " |cffffcc00has defeated |r" + ConvertForceToUnitString(deadPlayerForce) + "|cffffcc00!!|r")
             endif
 
+            // Alliance reset
+            call SetForceAllianceStateBJ(deadPlayerForce, deadPlayerForce, bj_ALLIANCE_UNALLIED)
+            call SetForceAllianceStateBJ(winningPlayerForce, winningPlayerForce, bj_ALLIANCE_UNALLIED)
+            call SetForceAllianceStateBJ(winningPlayerForce, deadPlayerForce, bj_ALLIANCE_UNALLIED)
+            call SetForceAllianceStateBJ(deadPlayerForce, winningPlayerForce, bj_ALLIANCE_UNALLIED)
+
             // Try to distribute bets
             call ConditionalTriggerExecute(DistributeBetsTrigger)
         else
             // Only show message to the two teams if there are still units alive in the dead player force
-            call DisplayTimedTextToForce(duelGame.team1, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
-            call DisplayTimedTextToForce(duelGame.team2, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
+            call DisplayTimedTextToForce(winningPlayerForce, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
+            call DisplayTimedTextToForce(deadPlayerForce, 5.00, GetPlayerNameColour(killingUnitPlayer) + " |cffffcc00has defeated |r" + GetPlayerNameColour(deadUnitPlayer) + "|cffffcc00!!|r")
 
             // Cleanup
             set deadUnit = null
