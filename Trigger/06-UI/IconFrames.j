@@ -425,7 +425,7 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 					call BlzFrameSetText(AbilityButtonId[100 + i], I2S(abilLevel))
 
 					if (abilLevel > 9) then
-						call BlzFrameSetSize(AbilityButtonParentId[100 + i], 0.017, 0.013)
+						call BlzFrameSetSize(AbilityButtonParentId[100 + i], 0.016, 0.0128)
 					endif
 				endif
             else
@@ -528,9 +528,9 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 			set abilityLevelFrameHandle = BlzGetFrameByName("TooltipTextTitle", 0)
 			call BlzFrameSetLevel(abilityLevelParentFrameHandle, 2) // To have it appear above the button
 			call BlzFrameSetText(abilityLevelFrameHandle, "0")
-			call BlzFrameSetScale(abilityLevelFrameHandle, 0.58) 
-			call BlzFrameSetPoint(abilityLevelParentFrameHandle, FRAMEPOINT_BOTTOMRIGHT, buttonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, 0, 0)
-			call BlzFrameSetSize(abilityLevelParentFrameHandle, 0.013, 0.013)
+			call BlzFrameSetScale(abilityLevelFrameHandle, 0.55) 
+			call BlzFrameSetPoint(abilityLevelParentFrameHandle, FRAMEPOINT_BOTTOMRIGHT, buttonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, 0.001, -0.001)
+			call BlzFrameSetSize(abilityLevelParentFrameHandle, 0.0125, 0.0128)
 			call BlzFrameSetVisible(abilityLevelParentFrameHandle, false)
 
 			set AbilityButtonParentId[buttonIndex] = abilityLevelParentFrameHandle
