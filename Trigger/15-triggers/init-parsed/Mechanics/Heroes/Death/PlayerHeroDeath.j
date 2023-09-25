@@ -51,8 +51,6 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
             set currentPlayer = null
             return false
         endif
-
-        call BJDebugMsg("PlayerHeroDeath trigger for dying hero: " + GetPlayerName(currentPlayer) + " hero: " + GetUnitName(currentUnit))
         
         call StopRectLeaveDetection(GetHandleId(currentUnit))
         

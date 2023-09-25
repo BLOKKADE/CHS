@@ -14,7 +14,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Move camera to center arena
         if not CamMoveDisabled[GetPlayerId(GetEnumPlayer())] then
             call PanCameraToTimedLocForPlayer(GetEnumPlayer(), RectMidArenaCenter, 0.20)
-            call BJDebugMsg("Resetting camera to center arena for player: " + GetPlayerName(GetEnumPlayer()))
         endif
     endfunction
 
@@ -23,8 +22,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId]
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
-
-        call BJDebugMsg("Resetting to center arena for player: " + GetPlayerName(currentPlayer))
 
         // Revive the unit if it died
         call SetUnitPositionLoc(playerHero, RectMidArenaCenter)
@@ -93,30 +90,15 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
     endfunction
     
     private function DuelEndedPlayerActions takes player currentPlayer, unit playerHero returns nothing
-        call BJDebugMsg("Start Duel ended for player: " + GetPlayerName(currentPlayer) + " for hero: " + GetUnitName(playerHero))
-
         // Mark that they player is not fighting
         call SetCurrentlyFighting(currentPlayer, false)
 
-        call BJDebugMsg("Duel end 2")
-
         call GroupRemoveUnit(DuelingHeroes, playerHero)
-
-        call BJDebugMsg("Duel end 3")
 
         // Stop the triggers for unit leaving an arena
         call StopRectLeaveDetection(GetHandleId(playerHero))
 
-        call BJDebugMsg("Duel end 4")
-
-        // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
-        call SaveCommand_SaveCodeForPlayer(currentPlayer, false)
-
-        call BJDebugMsg("Duel end 5")
-
         call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
-
-        call BJDebugMsg("End of Duel ended for player: " + GetPlayerName(currentPlayer) + " for hero: " + GetUnitName(playerHero))
     endfunction
 
     private function EndDuelActionsForWinningPlayer takes nothing returns nothing
@@ -154,6 +136,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Cleanup
         set currentPlayer = null
         set playerHero = null
+
+        // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
+        call SaveCommand_SaveCodeForPlayer(GetEnumPlayer(), false)
     endfunction
 
     private function EndDuelActionsForLosingPlayer takes nothing returns nothing
@@ -209,15 +194,11 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
 
     // This function should only be called when all initial duels are over
     private function AfterDuelCleanupActions takes DuelGame duelGame returns nothing
-        call BJDebugMsg("After duel cleanup start")
-
         call TriggerSleepAction(3.00)
 
         // Move hero to center arena, pets, items
         call ForForce(duelGame.team1, function ResetToCenterArenaForPlayer)
         call ForForce(duelGame.team2, function ResetToCenterArenaForPlayer)
-        
-        call BJDebugMsg("Reset duel game players to center")
 
         // Move camera depending on game mode
         if (SimultaneousDuelMode == 2) then
@@ -227,13 +208,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call ForForce(GetPlayersAll(), function ResetCameraToCenterArenaForPlayer)
         endif
 
-        call BJDebugMsg("Reset duel game player cameras to center")
-
         // Reset to the items to before the duels
         call ForForce(duelGame.team1, function ResetItemsForPlayer)
         call ForForce(duelGame.team2, function ResetItemsForPlayer)
-
-        call BJDebugMsg("Reset duel game items for players")
 
         // Remove the arena from used arenas so it can be used again
         call duelGame.removeUsedArena()
@@ -243,8 +220,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Removes all non heroes/hops/dummy units
         call EnumItemsInRectBJ(duelGame.getDuelArena(), function RemoveItemFromArena)
         call RemoveUnitsInRect(duelGame.getDuelArena())
-
-        call BJDebugMsg("Reset duel game items/units from arena")
     endfunction
 
     function PvpStartNextRound takes nothing returns nothing
@@ -323,11 +298,7 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         set startSimultaneousOddDuel = SimultaneousDuelMode == 2 and OddPlayer != -1 and OddPlayerDuelStarted == false
         set startNonSimultaneousOddDuel = SimultaneousDuelMode == 1 and DuelGame.areAllDuelsOver() and OddPlayer != -1 and OddPlayerDuelStarted == false
 
-        call BJDebugMsg("All duels are over: " + B2S(DuelGame.areAllDuelsOver()))
-
         if (startSimultaneousOddDuel or startNonSimultaneousOddDuel) then
-            call BJDebugMsg("Start of odd duel setup")
-
             set OddPlayerDuelStarted = true
 
             // Create a new duel using a random loser
@@ -358,7 +329,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             set randomOddDuelPlayer = null
         // All duels are over, no odd player
         elseif (DuelGame.areAllDuelsOver()) then
-            call BJDebugMsg("Start of all duels are over")
             call AfterDuelCleanupActions(duelGame)
             call EnumItemsInRectBJ(RectMidArena, function RemoveItemFromArena) // Remove items from center arena when all duels are done
 
@@ -399,7 +369,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
              // Start the next normal level
         // Check if all single pvp rounds are over
         elseif (SimultaneousDuelMode == 1 and DuelGameListRemaining.size() > 0) then
-            call BJDebugMsg("Start of all non simultaneous duels are over")
             call AfterDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle
@@ -415,7 +384,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Duels are not over but this duel is over, send them to the center
         // We need this trigger sleep later because it will cause race conditions when checking if all duels are complete
         else
-            call BJDebugMsg("Duel is over, but not all duels start")
             call AfterDuelCleanupActions(duelGame)
         endif
     endfunction
