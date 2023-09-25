@@ -15,7 +15,7 @@ library SaveFile requires FileIO, SaveCore
 
         static method getPatha takes player p, integer slot returns string
             if (slot == 0) then
-                return .Folder + "\\SaveSlotv2_" + GetPlayerName(p) + ".pld"
+                return .Folder + "\\SaveSlotv3_" + GetPlayerName(p) + ".pld"
             elseif (slot == 1) then
                 return .Folder + "\\SaveSlot_" + GetPlayerName(p) + "_Debug.pld"
             endif
@@ -24,8 +24,8 @@ library SaveFile requires FileIO, SaveCore
 
         static method getPath takes player p, integer slot returns string
             if (slot == 0) then
-                if (StringLength(FileIO_Read(.Folder + "\\SaveSlotv2_" + GetPlayerName(p) + ".pld")) > 1) then
-                    return .Folder + "\\SaveSlotv2_" + GetPlayerName(p) + ".pld"
+                if (StringLength(FileIO_Read(.Folder + "\\SaveSlotv3_" + GetPlayerName(p) + ".pld")) > 1) then
+                    return .Folder + "\\SaveSlotv3_" + GetPlayerName(p) + ".pld"
                 endif
 
                 return .Folder + "\\SaveSlot_" + GetPlayerName(p) + ".pld"
