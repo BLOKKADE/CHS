@@ -136,9 +136,6 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
         // Cleanup
         set currentPlayer = null
         set playerHero = null
-
-        // Save the code for everyone at the end so we don't call SaveCommand_SaveCodeForPlayer too much
-        call SaveCommand_SaveCodeForPlayer(GetEnumPlayer(), false)
     endfunction
 
     private function EndDuelActionsForLosingPlayer takes nothing returns nothing
