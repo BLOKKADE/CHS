@@ -34,7 +34,9 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
 
     private function AutoSaveForPlayer takes nothing returns nothing
         if (GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING) then
+            call BJDebugMsg("Saving for player: " + GetPlayerName(GetEnumPlayer()))
             call SaveCommand_SaveCodeForPlayer(GetEnumPlayer(), false)
+            call BJDebugMsg("Saved for player: " + GetPlayerName(GetEnumPlayer()))
         endif
     endfunction
 
