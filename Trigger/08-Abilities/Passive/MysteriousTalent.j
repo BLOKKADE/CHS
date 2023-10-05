@@ -16,7 +16,7 @@ library MysteriousTalent requires HeroAbilityTable, AbilityData, CastSpellOnTarg
         
         loop
             set abilId = GetHeroSpellAtPosition(caster, i)
-            if IsSpellResettable(abilId) then
+            if abilId != 0 and IsSpellResettable(abilId) then
                 call CastSpellAuto(caster, null, abilId, GetUnitAbilityLevel(caster, abilId), 0, 0, -1).activate()
             endif 
             set i = i + 1
