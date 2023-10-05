@@ -426,6 +426,8 @@ library IconFrames initializer init requires TooltipFrame, AchievementsFrame, Cu
 
 					if (abilLevel > 9) then
 						call BlzFrameSetSize(AbilityButtonParentId[100 + i], 0.016, 0.0128)
+					else
+						call BlzFrameSetSize(AbilityButtonParentId[100 + i], 0.0125, 0.0128)
 					endif
 				endif
             else
