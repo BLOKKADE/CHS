@@ -58,7 +58,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Medal of Honor
-        if UnitHasItemType(DamageTargetHero, 'I04T') or UnitHasItemType(DamageSourceHero, 'I04T') then
+        if UnitHasItemType(DamageTargetHero, 'I04U') or UnitHasItemType(DamageSourceHero, 'I04U') then
             set Damage.index.amount = Damage.index.amount * 0.66
         endif
 

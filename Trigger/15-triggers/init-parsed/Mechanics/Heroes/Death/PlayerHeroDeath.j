@@ -51,7 +51,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
             set currentPlayer = null
             return false
         endif
-
+        
         call StopRectLeaveDetection(GetHandleId(currentUnit))
         
         if CreepAntagonisationReward[currentPlayerId] then
