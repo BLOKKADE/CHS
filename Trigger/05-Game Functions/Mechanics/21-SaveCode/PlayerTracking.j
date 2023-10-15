@@ -588,7 +588,8 @@ library PlayerTracking initializer init requires GameInit, Table
         endmethod
 
         method shouldResetStats takes nothing returns boolean
-            local integer startIndex = this.getMapVersion()
+            // Assuming we only ever increase versions by one.. which we should
+            local integer startIndex = this.getMapVersion() + 1
 
             loop
                 exitwhen startIndex > CurrentGameVersion.getVersion()
