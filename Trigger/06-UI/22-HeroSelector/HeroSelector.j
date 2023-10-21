@@ -213,11 +213,15 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
 
         private TableArray PlayerDraftOptions
         private boolean DraftEnabled = false
+        private boolean SameDraftEnabled = false
 
         private integer HeroCount = 0
         private integer array HeroUnitCode
         private integer array HeroButtonIndex
 
+        private Table DraftSelectionHeroes
+        private Table SummonedHeroes
+        private force DraftForce
 
         public hashtable Hash = InitHashtable()
         framehandle HeroSelectorBox
@@ -532,7 +536,13 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local integer index =  LoadInteger(Hash, unitCode, 0)
         local integer playerId = GetPlayerId(p)
 
-        if DraftEnabled and not PlayerDraftOptions[playerId].has(unitCode) then        
+        // Not a player's draft selection
+        if (DraftEnabled or SameDraftEnabled) and not PlayerDraftOptions[playerId].has(unitCode) then        
+            return false
+        endif
+
+        // Hero has already been selected for AP
+        if (not DraftEnabled and not SameDraftEnabled and SummonedHeroes.boolean[unitCode]) then
             return false
         endif
 
@@ -684,6 +694,22 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         else
             return options[GetRandomInt(1, optionCount)]
         endif
+    endfunction
+
+    function HeroSelectorRollOptionUnique takes player p, boolean includeRandomOnly, integer exculdedIndex, integer category, boolean ignoreReqs returns integer
+        local integer currentUnitId
+
+        loop
+            set currentUnitId = HeroSelectorRollOption(p, includeRandomOnly, exculdedIndex, category, ignoreReqs)
+
+            if (not DraftSelectionHeroes.boolean[currentUnitId]) then
+                set DraftSelectionHeroes.boolean[currentUnitId] = true
+                return currentUnitId
+            endif
+        endloop
+
+        // Should never happen since the above loop is infinite
+        return -1
     endfunction
 
     function HeroSelectorEnablePickDelayBanAction takes nothing returns nothing
@@ -904,6 +930,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
                 return
             endif
             
+            set DraftSelectionHeroes.boolean[unitCode] = false
+            set SummonedHeroes.boolean[unitCode] = false
+
             set HeroCount = HeroCount + 1
             set HeroUnitCode[HeroCount] = unitCode
             
@@ -918,24 +947,24 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endif
     endfunction
 
-    function ApplyDraftSelectionForPlayer takes nothing returns nothing
-        local integer playerIndex = GetPlayerId(GetEnumPlayer())
+    function ApplyDraftSelectionForPlayer takes player p returns nothing
+        local integer playerIndex = GetPlayerId(p)
         local integer currentCount = 0
         local integer currentUnitId = 0
 
         set DraftEnabled = true
 
         // Select one of each type of hero
-        set currentUnitId = HeroSelectorRollOption(GetEnumPlayer(), false, 0, 4, true)
+        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 4, true)
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
-        set currentUnitId = HeroSelectorRollOption(GetEnumPlayer(), false, 0, 8, true)
+        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 8, true)
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
-        set currentUnitId = HeroSelectorRollOption(GetEnumPlayer(), false, 0, 16, true)
+        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 16, true)
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
 
         // Get 2 random heroes
         loop
-            set currentUnitId = HeroSelectorRollOption(GetEnumPlayer(), false, 0, 0, true)
+            set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 0, true)
 
             if (not PlayerDraftOptions[playerIndex].has(currentUnitId)) then
                 set currentCount = currentCount + 1
@@ -946,8 +975,33 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endloop
     endfunction
 
+    function CopyPlayerToForce takes nothing returns nothing
+        if (GetEnumPlayer() != Player(8) and GetEnumPlayer() != Player(11)) then
+            call ForceAddPlayer(DraftForce, GetEnumPlayer())
+        endif
+    endfunction
+
     function ApplyDraftSelectionForPlayers takes nothing returns nothing
-        call ForForce(GetPlayersAll(), function ApplyDraftSelectionForPlayer)
+        local player randomPlayer
+
+        set DraftForce = CreateForce()
+
+        call ForForce(GetPlayersAll(), function CopyPlayerToForce)
+
+        loop
+            set randomPlayer = ForcePickRandomPlayer(DraftForce)
+
+            exitwhen randomPlayer == null
+
+            call ApplyDraftSelectionForPlayer(randomPlayer)
+
+            call ForceRemovePlayer(DraftForce, randomPlayer)
+        endloop
+
+        // Cleanup
+        call DestroyForce(DraftForce)
+        set DraftForce = null
+        set randomPlayer = null
     endfunction
 
     function ApplySameDraftSelectionForPlayers takes nothing returns nothing
@@ -967,7 +1021,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         set draftHeroes[agiUnitId] = 1
         set draftHeroes[intUnitId] = 1
 
-        set DraftEnabled = true
+        set SameDraftEnabled = true
         
         // Get 2 random heroes
         loop
@@ -1011,13 +1065,15 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         if CategoryAffectRandom then
             set category = PlayerSelectedCategory[GetPlayerId(p)]
         endif
-        set unitCode = HeroSelectorRollOption(p, true, 0, category, false)
+        set unitCode = HeroSelectorRollOptionUnique(p, true, 0, category, false)
         if unitCode == 0 then
             return
         endif
 
         // Make sure they don't already have a hero
         if (PlayerHeroes[GetPlayerId(p)] == null and (not IsPlayerInForce(p, LeaverPlayers))) then
+            set SummonedHeroes.boolean[unitCode] = true
+
             set u = CreateUnitAtLoc(p, unitCode, PlayerArenaRectCenters[GetPlayerId(p)], bj_UNIT_FACING)
             set PlayerHeroes[GetPlayerId(p)] = u
             call GroupAddUnit(OnPeriodGroup, u)
@@ -1052,6 +1108,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
 
         // Make sure they don't already have a hero
         if (PlayerHeroes[GetPlayerId(p)] == null and (not IsPlayerInForce(p, LeaverPlayers))) then
+            set SummonedHeroes.boolean[unitCode] = true
+
             set u = CreateUnitAtLoc(p, unitCode, PlayerArenaRectCenters[GetPlayerId(p)], bj_UNIT_FACING)
             set PlayerHeroes[GetPlayerId(p)] = u
             call GroupAddUnit(OnPeriodGroup, u)
@@ -1217,7 +1275,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         if RandomButtonPick then
             call HeroSelectorDoRandom(p)
         else
-            set unitCode = HeroSelectorRollOption(p, false, PlayerSelectedButtonIndex[playerIndex], PlayerSelectedCategory[playerIndex], false)
+            set unitCode = HeroSelectorRollOptionUnique(p, false, PlayerSelectedButtonIndex[playerIndex], PlayerSelectedCategory[playerIndex], false)
             if unitCode > 0 and GetLocalPlayer() == p then
                 set unitCodeIndex = LoadInteger(Hash, unitCode, 0)
                 set buttonIndex = HeroButtonIndex[unitCodeIndex]
@@ -1516,6 +1574,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local integer playerIndex = 0
         local integer teamIndexLoop
         local integer teamNr
+
+        set DraftSelectionHeroes = Table.create()
+        set SummonedHeroes = Table.create()
 
         set PlayerDraftOptions = TableArray[8]
 
