@@ -367,7 +367,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if ((RoundNumber + 1) <= 8) then
             set RoundCreepNumber = GetRandomInt(2, (RoundNumber / 2 + 4))
         else
-            set RoundCreepNumber = GetRandomInt(2,25)
+            if RoundCreepChanceLastBreath == 1 then
+                set RoundCreepNumber = GetRandomInt(2,5)
+            else
+                set RoundCreepNumber = GetRandomInt(2,25)
+            endif
         endif
     
         if RoundNumber > 0 then
