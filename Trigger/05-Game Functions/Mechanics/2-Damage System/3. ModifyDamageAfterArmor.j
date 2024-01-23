@@ -45,10 +45,6 @@ scope ModifyDamageAfterArmor initializer init
             set r2 = (Damage.index.amount * 0.25)
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
-        endif
-
-        //Mask of death 
-        if UnitHasItemType(DamageTargetHero, 'I04T') then
             set Damage.index.amount = Damage.index.amount * 0.75
         endif
 
