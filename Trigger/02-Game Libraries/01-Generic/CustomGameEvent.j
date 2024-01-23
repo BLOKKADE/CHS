@@ -68,7 +68,7 @@ library CustomGameEvent initializer init requires ListT
 			set this.hero = PlayerHeroes[GetPlayerId(p)]
             set this.abilId = abilId
             set this.roundNumber = roundNumber
-            set this.isPvp = IsUnitInGroup(this.hero, DuelingHeroes)
+            set this.isPvp = IsUnitInGroup(this.hero, DuelingHeroes) or BrStarted
             set this.p = p
 
 			return this
