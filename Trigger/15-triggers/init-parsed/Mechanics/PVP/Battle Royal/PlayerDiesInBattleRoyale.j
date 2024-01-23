@@ -29,6 +29,9 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
 
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
 
+        set deadPlayerUnits = GetUnitsOfPlayerAll(deadPlayer)
+        call ForGroup(deadPlayerUnits, function KillPlayerUnit)
+
         // Try to revive the hero if there are BR lives
         if (BRLivesMode == 2) then
             // Increment the player deaths
@@ -36,8 +39,6 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
 
             // Don't revive the hero if they died too many times
             if (PlayerBRDeaths[deadPlayerId] > MaxBRDeathCount) then
-                set deadPlayerUnits = GetUnitsOfPlayerAll(deadPlayer)
-                call ForGroup(deadPlayerUnits, function KillPlayerUnit)
 
                 // Allow these stats to go up for fun BR rounds, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
                 call ps.addBRPVPKill()
