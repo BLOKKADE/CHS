@@ -470,7 +470,7 @@ scope ModifyDamageBeforeArmor initializer init
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
             set Damage.index.damage = Damage.index.damage * r1
             call AbilStartCD(DamageTarget, ICE_FORCE_ABILITY_ID, 2.05 - (0.05 * i1))
-            call UpdateAbilityDescriptionString(GetAbilityDescription(ICE_FORCE_ABILITY_ID, i1 - 1), Player(DamageTargetPid), ICE_FORCE_ABILITY_ID, ",s01,", R2S((1 - r1) * 100.), i1)
+            call UpdateAbilityDescriptionString(GetAbilityDescription(ICE_FORCE_ABILITY_ID, i1 - 1), Player(DamageTargetPid), GetDummySpell(DamageTarget, ICE_FORCE_ABILITY_ID), ",s01,", R2S((1 - r1) * 100.), i1)
         endif  
 
         //Blessed Protection

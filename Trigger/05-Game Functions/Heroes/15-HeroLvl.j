@@ -14,7 +14,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
 
         set abilLvl = GetUnitAbilityLevel(h, ICE_FORCE_ABILITY_ID)
         if abilLvl > 0 then
-            call UpdateAbilityDescriptionString(GetAbilityDescription(ICE_FORCE_ABILITY_ID, abilLvl - 1), p, ICE_FORCE_ABILITY_ID, ",s01,", R2S((1 - (500. / (500. + GetHeroInt(h, true)))) * 100), abilLvl)
+            call UpdateAbilityDescriptionString(GetAbilityDescription(ICE_FORCE_ABILITY_ID, abilLvl - 1), p, GetDummySpell(DamageTarget, ICE_FORCE_ABILITY_ID), ",s01,", R2S((1 - (500. / (500. + GetHeroInt(h, true)))) * 100), abilLvl)
         endif
     endfunction
 
