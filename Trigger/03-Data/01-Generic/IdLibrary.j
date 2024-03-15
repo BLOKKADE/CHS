@@ -27,10 +27,10 @@ library IdLibrary initializer init
         constant integer SHADE_BR_RESPAWN_UNIT_ID                       = 'u009'
         constant integer CRYPT_LORD_PASSIVE_UNIT_ID                     = 'h00H'
 
-        // --- Shops ---
         constant integer DRAFT_BUY_UNIT_ID                              = 'h00C'
         constant integer DRAFT_UPGRADE_UNIT_ID                          = 'h00D'
 
+        // --- Shops ---
         constant integer ABSOLUTE_SHOP_UNIT_ID                          = 'n031'
         constant integer AUTOCAST_TOGGLE_SPELLS_UNIT_ID                 = 'n013'
         constant integer CHRONUS_SPELLS_UNIT_ID                         = 'n02M'
