@@ -147,12 +147,14 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
 
     private function SpawnDummy takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
+        call GroupRemoveUnit(OnPeriodGroup, PlayerDummy[pid])
         set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid]), GetUnitY(PlayerHeroes[pid]), 0)
         set CreatedDummies[pid] = CreatedDummies[pid] + 1
         call BlzSetHeroProperName(PlayerDummy[pid], "Subject #" + I2S(CreatedDummies[pid]))
 
         call GroupRefresh(DummyGroup)
         call GroupAddUnit(DummyGroup, PlayerDummy[pid])
+        call GroupAddUnit(OnPeriodGroup, PlayerDummy[pid])
 
         if dummyEnabled[pid] == false then
             set dummyEnabled[pid] = true
