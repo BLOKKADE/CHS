@@ -587,6 +587,23 @@ library PlayerTracking initializer init requires GameInit, Table
             set HeroPVPWins[this.HeroUnitTypeId] = this.tryIncrementValue(HeroPVPWins[this.HeroUnitTypeId], "Hero PVP Wins", MAX_MINIMAL_SAVE_VALUE)
         endmethod
 
+        method shouldResetStats takes nothing returns boolean
+            // Assuming we only ever increase versions by one.. which we should
+            local integer startIndex = this.getMapVersion() + 1
+
+            loop
+                exitwhen startIndex > CurrentGameVersion.getVersion()
+
+                if (MapVersionLookup[startIndex].shouldResetStats()) then
+                    return true
+                endif
+
+                set startIndex = startIndex + 1
+            endloop
+
+            return false
+        endmethod
+
         public method resetSeasonStats takes nothing returns nothing
             // All Pick Season Save Values
             set this.APBRSeasonWins = 0
@@ -629,6 +646,7 @@ library PlayerTracking initializer init requires GameInit, Table
         set MapVersionLookup[9] = GameVersion.create("CHS v2.3.0", 9, true) // New save system, new map terrain
         set MapVersionLookup[10] = GameVersion.create("CHS v2.3.1", 10, false) // ankh and reincarnation bugfixes
         set MapVersionLookup[11] = GameVersion.create("CHS v2.3.2", 11, false) // ankh and reincarnation bugfixes
+        set MapVersionLookup[12] = GameVersion.create("CHS v2.3.3", 12, true) // Reset season fix
     endfunction
 
     private function init takes nothing returns nothing

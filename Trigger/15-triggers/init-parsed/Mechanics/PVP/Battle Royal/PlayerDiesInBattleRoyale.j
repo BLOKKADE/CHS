@@ -8,14 +8,29 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         return BrStarted == true and IsPlayerHero(GetTriggerUnit())
     endfunction
 
+    private function KillPlayerUnit takes nothing returns nothing
+        local unit currentUnit = GetEnumUnit()
+
+        if (not IsUnitType(currentUnit, UNIT_TYPE_HERO) and not DUMMIES.contains(GetUnitTypeId(currentUnit))) then
+            call KillUnit(currentUnit)
+        endif
+
+        // Cleanup
+        set currentUnit = null
+    endfunction
+
     private function PlayerDiesInBattleRoyaleActions takes nothing returns nothing
         local unit deadHero = GetTriggerUnit()
         local player deadPlayer = GetOwningPlayer(deadHero)
         local integer deadPlayerId = GetPlayerId(deadPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(GetOwningPlayer(GetKillingUnit()))
+        local group deadPlayerUnits
         local unit shadeUnit
 
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
+
+        set deadPlayerUnits = GetUnitsOfPlayerAll(deadPlayer)
+        call ForGroup(deadPlayerUnits, function KillPlayerUnit)
 
         // Try to revive the hero if there are BR lives
         if (BRLivesMode == 2) then
@@ -24,6 +39,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
 
             // Don't revive the hero if they died too many times
             if (PlayerBRDeaths[deadPlayerId] > MaxBRDeathCount) then
+
                 // Allow these stats to go up for fun BR rounds, won't be allowed to save them though. TODO Possibly show fun kills/wins separately from save code stats?
                 call ps.addBRPVPKill()
                 call ps.addPlayerKill()
@@ -42,6 +58,8 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 call SetUnitY(deadHero, GetRectCenterY(PlayerArenaRects[deadPlayerId]))
 
                 // Cleanup
+                call DestroyGroup(deadPlayerUnits)
+                set deadPlayerUnits = null
                 set deadHero = null
                 set deadPlayer = null
 

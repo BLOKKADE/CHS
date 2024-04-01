@@ -4,8 +4,8 @@ library MartialRetribution initializer init requires AreaDamage, HideEffects, Ab
     endglobals
 
     function UpdateMartialRetributionText takes integer handleId, player p, integer abilLvl, integer heroLvl returns nothing
-        local string s = UpdateAbilityDescription(GetAbilityDescription(MARTIAL_RETRIBUTION_ABILITY_ID, abilLvl - 1), p, MARTIAL_RETRIBUTION_ABILITY_ID, ",s00,", R2I(MartialRetributionStorage.real[handleId]), abilLvl)
-        call UpdateAbilityDescription(s, p, MARTIAL_RETRIBUTION_ABILITY_ID, ",s01,", R2I((300 * abilLvl) * (1 + 0.02 * heroLvl)), abilLvl)
+        local string s = UpdateAbilityDescription(GetAbilityDescription(MARTIAL_RETRIBUTION_ABILITY_ID, abilLvl - 1), p, GetDummySpell(DamageTarget, MARTIAL_RETRIBUTION_ABILITY_ID), ",s00,", R2I(MartialRetributionStorage.real[handleId]), abilLvl)
+        call UpdateAbilityDescription(s, p, GetDummySpell(DamageTarget, MARTIAL_RETRIBUTION_ABILITY_ID), ",s01,", R2I((300 * abilLvl) * (1 + 0.02 * heroLvl)), abilLvl)
     endfunction
 
     function MartialRetributionDamage takes unit source, integer handleId, real damage returns nothing

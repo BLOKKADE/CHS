@@ -78,7 +78,7 @@ library LoadCommand initializer init uses Command, RandomShit, PlayerTracking, S
         // Check if the game version is different. If so, reset current map version values
         if (ps.getMapVersion() != CurrentGameVersion.getVersion()) then
             // Not every version requires a season reset
-            if (CurrentGameVersion.shouldResetStats()) then
+            if (ps.shouldResetStats()) then
                 // Trying to load a code that is older than the curret version
                 if (ps.getMapVersion() < CurrentGameVersion.getVersion()) then
                     call DisplayTimedTextToPlayer(SaveLoadEvent_Player, 0, 0, 10, "Your Save Code is for an older version of CHS. Resetting Season stats.")

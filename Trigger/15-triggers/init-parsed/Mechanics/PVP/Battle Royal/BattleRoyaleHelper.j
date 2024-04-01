@@ -171,7 +171,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         local integer playerId = GetPlayerId(currentPlayer)
         local unit currentUnit = PlayerHeroes[playerId]
 
-        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.create(currentPlayer, 0, RoundNumber))
+        call CustomGameEvent_FireEvent(EVENT_GAME_ROUND_START, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
         call PauseUnit(currentUnit, false)
 
         // Reset the hero
@@ -428,7 +428,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call ConditionalTriggerExecute(HeroRefreshTrigger)
 
         // Reset ready button
-        call CustomGameEvent_FireEvent(EVENT_FUN_BR_ROUND_END, EventInfo.create(currentPlayer, 0, RoundNumber))
+        call CustomGameEvent_FireEvent(EVENT_FUN_BR_ROUND_END, EventInfo.createAll(currentPlayer, 0, RoundNumber, true))
 
         // Cleanup
         set currentPlayer = null

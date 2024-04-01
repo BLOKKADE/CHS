@@ -45,7 +45,6 @@ scope LongPeriodCheck initializer init
                 call UseArcaneStrike(u)
             endif
 
-
             //Runestone of Creation
             if GetUnitAbilityLevel(u,'A073') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A073') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
                 call CreateRandomRune(0,GetUnitX(u),GetUnitY(u),u)
@@ -58,6 +57,39 @@ scope LongPeriodCheck initializer init
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,EARTHQUAKE_ABILITY_ID) <= 0.001 and CheckProc(u, 600) then
                 call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'A07M',"thunderclap", GetSpellValue(75, 10, i), ABILITY_RLF_DAMAGE_INCREASE,600,ABILITY_RLF_CAST_RANGE ,0.5 + (0.05 * i),ABILITY_RLF_DURATION_HERO,0.5 + (0.05 * i),ABILITY_RLF_DURATION_NORMAL)
                 call AbilStartCD(u,EARTHQUAKE_ABILITY_ID,5) 
+            endif
+
+            //Drain aura
+            set i = GetUnitAbilityLevel(u, DRAIN_AURA_ABILITY_ID)
+            if i > 0 or UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) then
+                if UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) then
+                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i * 0.01) + 0.1, 500, true)
+                else
+                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i * 0.01), 500, true)
+                endif
+            endif
+
+            //Thunder Witch
+            if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID then
+                if BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and CheckProc(u, 610) then
+                    call ThunderWitchBolt(u, GetHeroLevel(u), hid)
+                endif
+            endif
+
+            //Cold Knight
+            if GetUnitTypeId(u) == COLD_KNIGHT_UNIT_ID then
+                if BlzGetUnitAbilityCooldownRemaining(u, COLD_KNIGHT_PASSIVE_ABILITY_ID) == 0 and CheckProc(u, 600) then
+                    call ColdKnight(u, GetUnitElementCount(u,Element_Cold), GetHeroLevel(u))
+                endif
+            endif
+
+            //Time Manipulation
+            if GetUnitAbilityLevel(u, TIME_MANIPULATION_ABILITY_ID) > 0 and TimeManipulationTable[hid].boolean[1] then
+                if BlzGetUnitAbilityCooldownRemaining(u, TIME_MANIPULATION_ABILITY_ID) == 0 then
+                    call FireRoundStartEvent(u, 6) // 6 = urn
+                    call TimeManipulationStart(u, HeroHasChronusSpell(u))
+                    call CastChronusSpells(u, hid, true)
+                endif
             endif
         endif
     endfunction
@@ -201,17 +233,6 @@ scope LongPeriodCheck initializer init
                 call SaveInteger(HT, hid,'B026',0)
             endif
 
-            if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
-                //Drain aura
-                set i1 = GetUnitAbilityLevel(u, DRAIN_AURA_ABILITY_ID)
-                if i1 > 0 or UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) then
-                    if UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) then
-                        call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i1 * 0.01) + 0.1, 500, true)
-                    else
-                        call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i1 * 0.01), 500, true)
-                    endif
-                endif
-            endif
             call OnCooldownEnd(u)
 
             //Banshee
@@ -351,20 +372,6 @@ scope LongPeriodCheck initializer init
                 call SaveInteger(HT, hid, 12,0)	
             endif
 
-            //Thunder Witch
-            if GetUnitTypeId(u) == THUNDER_WITCH_UNIT_ID then
-                if BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and CheckProc(u, 610) then
-                    call ThunderWitchBolt(u, GetHeroLevel(u), hid)
-                endif
-            endif
-
-            //Cold Knight
-            if GetUnitTypeId(u) == COLD_KNIGHT_UNIT_ID then
-                if BlzGetUnitAbilityCooldownRemaining(u, COLD_KNIGHT_PASSIVE_ABILITY_ID) == 0 and CheckProc(u, 600) then
-                    call ColdKnight(u, GetUnitElementCount(u,Element_Cold), GetHeroLevel(u))
-                endif
-            endif
-
             //Pit Lord
             if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
                 set i1 = R2I(GetUnitCustomState(u, BONUS_MAGICPOW))
@@ -383,15 +390,6 @@ scope LongPeriodCheck initializer init
                 if i1 != i2 then
                     call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2 + i1)
                     call SaveInteger(HT, hid, NAGA_SIREN_UNIT_ID, i1)
-                endif
-            endif
-
-            //Time Manipulation
-            if GetUnitAbilityLevel(u, TIME_MANIPULATION_ABILITY_ID) > 0 and CurrentlyFighting[GetPlayerId(GetOwningPlayer(u))] and TimeManipulationTable[hid].boolean[1] then
-                if BlzGetUnitAbilityCooldownRemaining(u, TIME_MANIPULATION_ABILITY_ID) == 0 then
-                    call FireRoundStartEvent(u, 6) // 6 = urn
-                    call TimeManipulationStart(u, HeroHasChronusSpell(u))
-                    call CastChronusSpells(u, hid, true)
                 endif
             endif
 

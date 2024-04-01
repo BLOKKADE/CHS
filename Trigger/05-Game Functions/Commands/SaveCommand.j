@@ -29,6 +29,12 @@ library SaveCommand initializer init uses Command, RandomShit, PlayerTracking, S
             return
         endif
 
+        // Don't save unless we have tried loading their code first
+        if (not ShopsCreated) then
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "Please wait until your Save Code has loaded.")
+            return
+        endif
+
         if (IsFunBRRound) then
             call DisplayTimedTextToPlayer(p, 0, 0, 10, "Saving is disabled after the official BR")
             return
