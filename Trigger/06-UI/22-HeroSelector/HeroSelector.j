@@ -219,6 +219,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         private integer array HeroUnitCode
         private integer array HeroButtonIndex
 
+        private Table TakenSelectionHeroes
         private Table DraftSelectionHeroes
         private Table SummonedHeroes
         private force DraftForce
@@ -696,13 +697,18 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endif
     endfunction
 
-    function HeroSelectorRollOptionUnique takes player p, boolean includeRandomOnly, integer exculdedIndex, integer category, boolean ignoreReqs returns integer
+    function HeroSelectorRollOptionUnique takes player p, boolean includeRandomOnly, integer exculdedIndex, integer category, boolean ignoreReqs, boolean initialRolling returns integer
         local integer currentUnitId
 
         loop
             set currentUnitId = HeroSelectorRollOption(p, includeRandomOnly, exculdedIndex, category, ignoreReqs)
 
-            if (not DraftSelectionHeroes.boolean[currentUnitId]) then
+            if (initialRolling) then
+                if (not TakenSelectionHeroes.boolean[currentUnitId]) then
+                    set TakenSelectionHeroes.boolean[currentUnitId] = true
+                    return currentUnitId
+                endif
+            elseif (not DraftSelectionHeroes.boolean[currentUnitId]) then
                 set DraftSelectionHeroes.boolean[currentUnitId] = true
                 return currentUnitId
             endif
@@ -930,6 +936,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
                 return
             endif
             
+            set TakenSelectionHeroes.boolean[unitCode] = false
             set DraftSelectionHeroes.boolean[unitCode] = false
             set SummonedHeroes.boolean[unitCode] = false
 
@@ -955,16 +962,16 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         set DraftEnabled = true
 
         // Select one of each type of hero
-        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 4, true)
+        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 4, true, true)
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
-        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 8, true)
+        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 8, true, true)
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
-        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 16, true)
+        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 16, true, true)
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
 
         // Get 2 random heroes
         loop
-            set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 0, true)
+            set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 0, true, true)
 
             if (not PlayerDraftOptions[playerIndex].has(currentUnitId)) then
                 set currentCount = currentCount + 1
@@ -1057,16 +1064,17 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         call draftHeroes.destroy()
     endfunction
 
-    function HeroSelectorDoRandom takes player p returns nothing
+    function HeroSelectorDoRandom takes player p, boolean enforceCategory returns nothing
         local integer category = 0
         local integer unitCode
         local unit u
 
-        if CategoryAffectRandom then
+        if enforceCategory and CategoryAffectRandom then
             set category = PlayerSelectedCategory[GetPlayerId(p)]
         endif
-        set unitCode = HeroSelectorRollOptionUnique(p, true, 0, category, false)
+        set unitCode = HeroSelectorRollOptionUnique(p, true, 0, category, false, false)
         if unitCode == 0 then
+            call DisplayTimedTextToPlayer(p, 0, 0, 5, "Unable to random a Hero with the selected filters")
             return
         endif
 
@@ -1140,7 +1148,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             exitwhen playerIndex == GetBJMaxPlayers()
             set p = Player(playerIndex)
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
-                call HeroSelectorDoRandom(p)
+                call HeroSelectorDoRandom(p, false)
             endif
             set playerIndex = playerIndex + 1
         endloop
@@ -1156,7 +1164,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set p = Player(playerIndex)
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if GetPlayerTeam(p) == who then
-                    call HeroSelectorDoRandom(p)
+                    call HeroSelectorDoRandom(p, false)
                 endif
             endif
             set playerIndex = playerIndex + 1
@@ -1173,7 +1181,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set p = Player(playerIndex)
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if GetPlayerRace(p) == who then
-                    call HeroSelectorDoRandom(p)
+                    call HeroSelectorDoRandom(p, false)
                 endif
             endif
             set playerIndex = playerIndex + 1
@@ -1189,7 +1197,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set p = Player(playerIndex)
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if not HeroSelectorDoPick(p) then
-                    call HeroSelectorDoRandom(p) 
+                    call HeroSelectorDoRandom(p, false) 
                 endif
             endif
             set playerIndex = playerIndex + 1
@@ -1206,7 +1214,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if GetPlayerTeam(p) == who then
                     if not HeroSelectorDoPick(p) then
-                        call HeroSelectorDoRandom(p) 
+                        call HeroSelectorDoRandom(p, false) 
                     endif
                 endif
             endif
@@ -1224,7 +1232,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if GetPlayerRace(p) == r then
                     if not HeroSelectorDoPick(p) then
-                        call HeroSelectorDoRandom(p) 
+                        call HeroSelectorDoRandom(p, false) 
                     endif
                 endif
             endif
@@ -1234,7 +1242,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
     
     function HeroSelectorForcePickPlayer takes player p returns nothing
         if not HeroSelectorDoPick(p) then
-            call HeroSelectorDoRandom(p) 
+            call HeroSelectorDoRandom(p, false) 
         endif
     endfunction
 
@@ -1273,9 +1281,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local integer buttonIndex
         call HeroSelectorframeLoseFocus(BlzGetTriggerFrame())
         if RandomButtonPick then
-            call HeroSelectorDoRandom(p)
+            call HeroSelectorDoRandom(p, true)
         else
-            set unitCode = HeroSelectorRollOptionUnique(p, false, PlayerSelectedButtonIndex[playerIndex], PlayerSelectedCategory[playerIndex], false)
+            set unitCode = HeroSelectorRollOptionUnique(p, false, PlayerSelectedButtonIndex[playerIndex], PlayerSelectedCategory[playerIndex], false, false)
             if unitCode > 0 and GetLocalPlayer() == p then
                 set unitCodeIndex = LoadInteger(Hash, unitCode, 0)
                 set buttonIndex = HeroButtonIndex[unitCodeIndex]
@@ -1576,6 +1584,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local integer teamNr
 
         set DraftSelectionHeroes = Table.create()
+        set TakenSelectionHeroes = Table.create()
         set SummonedHeroes = Table.create()
 
         set PlayerDraftOptions = TableArray[8]
