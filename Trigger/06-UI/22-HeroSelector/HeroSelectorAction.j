@@ -378,6 +378,8 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         //call HeroSelectorAddUnit('Udre', false)
         //call HeroSelectorAddUnit('Ucrl', true)
 
+        // This must be the last operation here. This will randomize the str/agi/int heroes that will be used to assign to players
+        call RandomizeArrays()
     endfunction
 
     private function Init takes nothing returns nothing

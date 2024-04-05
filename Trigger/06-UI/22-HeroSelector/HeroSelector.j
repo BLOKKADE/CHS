@@ -219,8 +219,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         private integer array HeroUnitCode
         private integer array HeroButtonIndex
 
-        private Table TakenSelectionHeroes
-        private Table DraftSelectionHeroes
         private Table SummonedHeroes
         private force DraftForce
 
@@ -244,6 +242,18 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         private integer array PlayerLastSelectedCategoryIndex
 
         private integer LastAction = 0
+
+        private Table BannedUnits
+        private integer array TempUnitsArray
+        private integer array StrUnits
+        private integer StrUnitsCount = 0
+        private integer UsedStrUnitsCounts = 0
+        private integer array AgiUnits
+        private integer AgiUnitsCount = 0
+        private integer UsedAgiUnitsCounts = 0
+        private integer array IntUnits
+        private integer IntUnitsCount = 0
+        private integer UsedIntUnitsCounts = 0
     endglobals
 
     private function AutoDetectCategory takes integer unitCode returns integer
@@ -473,9 +483,137 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         set HeroCategory[index] =  category
     endfunction
 
+    private function SelectRandomHero takes integer category returns integer
+        local integer randomCategory = GetRandomInt(1, 3)
+        local integer selectedUnitId
+
+        if (category == -1) then
+            // Random Str
+            if (randomCategory == 1) then
+                set selectedUnitId = StrUnits[UsedStrUnitsCounts]
+                set UsedStrUnitsCounts = UsedStrUnitsCounts + 1
+            // Random Agi
+            elseif (randomCategory == 2) then
+                set selectedUnitId = AgiUnits[UsedAgiUnitsCounts]
+                set UsedAgiUnitsCounts = UsedAgiUnitsCounts + 1
+            // Random Int
+            elseif (randomCategory == 3) then
+                set selectedUnitId = IntUnits[UsedIntUnitsCounts]
+                set UsedIntUnitsCounts = UsedIntUnitsCounts + 1
+            endif
+
+            return selectedUnitId
+        else
+            // Random Str
+            if (category == 4) then
+                set selectedUnitId = StrUnits[UsedStrUnitsCounts]
+                set UsedStrUnitsCounts = UsedStrUnitsCounts + 1
+            // Random Agi
+            elseif (category == 8) then
+                set selectedUnitId = AgiUnits[UsedAgiUnitsCounts]
+                set UsedAgiUnitsCounts = UsedAgiUnitsCounts + 1
+            // Random Int
+            elseif (category == 16) then
+                set selectedUnitId = IntUnits[UsedIntUnitsCounts]
+                set UsedIntUnitsCounts = UsedIntUnitsCounts + 1
+            endif
+        endif
+
+        // Select again if this is already a banned unit or we somehow failed to select a unit
+        // TODO This is possibly another case of infinite looping, or at least a lot of operations, if the randomness keeps selecting the same type of hero atr/agi/int and we run out
+        if (selectedUnitId == 0 or BannedUnits.has(selectedUnitId)) then
+            return SelectRandomHero(category)
+        endif
+
+        return selectedUnitId
+    endfunction
+
+    private function RandomizeArray takes integer size returns nothing
+        local integer index = size - 1
+        local integer temp
+        local integer i
+    
+        // Shuffle the array
+        loop
+            set temp = TempUnitsArray[index]
+            set i = GetRandomInt(1, size)
+            set TempUnitsArray[index] = TempUnitsArray[i]
+            set TempUnitsArray[i] = temp
+            set index = index - 1
+            exitwhen index == 1
+        endloop
+    endfunction
+
+    function RandomizeArrays takes nothing returns nothing
+        local integer index = 0
+
+        // Randomize str units
+        set index = 0
+        loop
+            set TempUnitsArray[index] = StrUnits[index]
+            set index = index + 1
+            exitwhen index == StrUnitsCount
+        endloop
+
+        call RandomizeArray(StrUnitsCount)
+
+        set index = 0
+        loop
+            set StrUnits[index] = TempUnitsArray[index]
+            set index = index + 1
+            exitwhen index == StrUnitsCount
+        endloop
+
+        // Randomize agi units
+        set index = 0
+        loop
+            set TempUnitsArray[index] = AgiUnits[index]
+            set index = index + 1
+            exitwhen index == AgiUnitsCount
+        endloop
+
+        call RandomizeArray(AgiUnitsCount)
+
+        set index = 0
+        loop
+            set AgiUnits[index] = TempUnitsArray[index]
+            set index = index + 1
+            exitwhen index == AgiUnitsCount
+        endloop
+
+        // Randomize int units
+        set index = 0
+        loop
+            set TempUnitsArray[index] = IntUnits[index]
+            set index = index + 1
+            exitwhen index == IntUnitsCount
+        endloop
+
+        call RandomizeArray(IntUnitsCount)
+
+        set index = 0
+        loop
+            set IntUnits[index] = TempUnitsArray[index]
+            set index = index + 1
+            exitwhen index == IntUnitsCount
+        endloop
+    endfunction
+
     function HeroSelectorAddUnitCategory takes integer unitCode, integer category returns nothing
         local integer index =  LoadInteger(Hash, unitCode, 0)
         set HeroCategory[index] =  BlzBitOr(category, HeroCategory[index])
+
+        // Add the units to the arrays that will be randomed
+        if (category == 4) then
+            set StrUnits[StrUnitsCount] = unitCode
+            set StrUnitsCount = StrUnitsCount + 1
+        elseif (category == 8) then
+            set AgiUnits[AgiUnitsCount] = unitCode
+            set AgiUnitsCount = AgiUnitsCount + 1
+        elseif (category == 16) then
+            set IntUnits[IntUnitsCount] = unitCode
+            set IntUnitsCount = IntUnitsCount + 1
+        endif
     endfunction
 
     function HeroSelectorDeselectButton takes integer buttonIndex returns nothing
@@ -697,27 +835,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endif
     endfunction
 
-    function HeroSelectorRollOptionUnique takes player p, boolean includeRandomOnly, integer exculdedIndex, integer category, boolean ignoreReqs, boolean initialRolling returns integer
-        local integer currentUnitId
-
-        loop
-            set currentUnitId = HeroSelectorRollOption(p, includeRandomOnly, exculdedIndex, category, ignoreReqs)
-
-            if (initialRolling) then
-                if (not TakenSelectionHeroes.boolean[currentUnitId]) then
-                    set TakenSelectionHeroes.boolean[currentUnitId] = true
-                    return currentUnitId
-                endif
-            elseif (not DraftSelectionHeroes.boolean[currentUnitId]) then
-                set DraftSelectionHeroes.boolean[currentUnitId] = true
-                return currentUnitId
-            endif
-        endloop
-
-        // Should never happen since the above loop is infinite
-        return -1
-    endfunction
-
     function HeroSelectorEnablePickDelayBanAction takes nothing returns nothing
         loop
             exitwhen DelayBanCount <= 0
@@ -936,8 +1053,6 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
                 return
             endif
             
-            set TakenSelectionHeroes.boolean[unitCode] = false
-            set DraftSelectionHeroes.boolean[unitCode] = false
             set SummonedHeroes.boolean[unitCode] = false
 
             set HeroCount = HeroCount + 1
@@ -956,30 +1071,21 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
 
     function ApplyDraftSelectionForPlayer takes player p returns nothing
         local integer playerIndex = GetPlayerId(p)
-        local integer currentCount = 0
         local integer currentUnitId = 0
 
-        set DraftEnabled = true
-
         // Select one of each type of hero
-        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 4, true, true)
+        set currentUnitId = SelectRandomHero(4) // Str
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
-        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 8, true, true)
+        set currentUnitId = SelectRandomHero(8) // Agi
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
-        set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 16, true, true)
+        set currentUnitId = SelectRandomHero(16) // Int
         set PlayerDraftOptions[playerIndex][currentUnitId] = 1
 
-        // Get 2 random heroes
-        loop
-            set currentUnitId = HeroSelectorRollOptionUnique(p, false, 0, 0, true, true)
-
-            if (not PlayerDraftOptions[playerIndex].has(currentUnitId)) then
-                set currentCount = currentCount + 1
-                set PlayerDraftOptions[playerIndex][currentUnitId] = 1
-            endif
-
-            exitwhen currentCount == 2
-        endloop
+        // Select 2 random units
+        set currentUnitId = SelectRandomHero(-1) // Random
+        set PlayerDraftOptions[playerIndex][currentUnitId] = 1
+        set currentUnitId = SelectRandomHero(-1) // Random
+        set PlayerDraftOptions[playerIndex][currentUnitId] = 1
     endfunction
 
     function CopyPlayerToForce takes nothing returns nothing
@@ -994,6 +1100,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         set DraftForce = CreateForce()
 
         call ForForce(GetPlayersAll(), function CopyPlayerToForce)
+
+        set DraftEnabled = true
 
         loop
             set randomPlayer = ForcePickRandomPlayer(DraftForce)
@@ -1013,40 +1121,17 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
 
     function ApplySameDraftSelectionForPlayers takes nothing returns nothing
         local integer playerIndex = 0
-        local integer currentCount = 0
         local integer randomUnit1 = 0
         local integer randomUnit2 = 0
-        local integer tempUnitId = 0
+        local integer strUnitId = SelectRandomHero(4) // Str
+        local integer agiUnitId = SelectRandomHero(8) // Agi
+        local integer intUnitId = SelectRandomHero(16) // Int
 
-        local Table draftHeroes = Table.create()
-
-        // HostPlayer == Host player. It needs some player to prevent errors. Player doesn't actually matter here
-        local integer strUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 4, true)
-        local integer agiUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 8, true)
-        local integer intUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 16, true)
-        set draftHeroes[strUnitId] = 1
-        set draftHeroes[agiUnitId] = 1
-        set draftHeroes[intUnitId] = 1
+        // Select 2 random units
+        set randomUnit1 = SelectRandomHero(-1) // Random
+        set randomUnit2 = SelectRandomHero(-1) // Random
 
         set SameDraftEnabled = true
-        
-        // Get 2 random heroes
-        loop
-            set tempUnitId = HeroSelectorRollOption(HostPlayer, false, 0, 0, true)
-
-            if (not draftHeroes.has(tempUnitId)) then
-                set currentCount = currentCount + 1
-                set draftHeroes[tempUnitId] = 1
-
-                if (randomUnit1 == 0) then
-                    set randomUnit1 = tempUnitId
-                else
-                    set randomUnit2 = tempUnitId
-                endif
-            endif
-
-            exitwhen currentCount == 2
-        endloop
 
         // Set the same draft options for every player
         loop
@@ -1059,20 +1144,12 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set playerIndex = playerIndex + 1
             exitwhen playerIndex == 8
         endloop
-
-        // Cleanup
-        call draftHeroes.destroy()
     endfunction
 
-    function HeroSelectorDoRandom takes player p, boolean enforceCategory returns nothing
-        local integer category = 0
-        local integer unitCode
+    function HeroSelectorDoRandom takes player p returns nothing
+        local integer unitCode = HeroSelectorRollOption(p, true, 0, 0, false)
         local unit u
 
-        if enforceCategory and CategoryAffectRandom then
-            set category = PlayerSelectedCategory[GetPlayerId(p)]
-        endif
-        set unitCode = HeroSelectorRollOptionUnique(p, true, 0, category, false, false)
         if unitCode == 0 then
             call DisplayTimedTextToPlayer(p, 0, 0, 5, "Unable to random a Hero with the selected filters")
             return
@@ -1148,7 +1225,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             exitwhen playerIndex == GetBJMaxPlayers()
             set p = Player(playerIndex)
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
-                call HeroSelectorDoRandom(p, false)
+                call HeroSelectorDoRandom(p)
             endif
             set playerIndex = playerIndex + 1
         endloop
@@ -1164,7 +1241,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set p = Player(playerIndex)
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if GetPlayerTeam(p) == who then
-                    call HeroSelectorDoRandom(p, false)
+                    call HeroSelectorDoRandom(p)
                 endif
             endif
             set playerIndex = playerIndex + 1
@@ -1181,7 +1258,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set p = Player(playerIndex)
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if GetPlayerRace(p) == who then
-                    call HeroSelectorDoRandom(p, false)
+                    call HeroSelectorDoRandom(p)
                 endif
             endif
             set playerIndex = playerIndex + 1
@@ -1197,7 +1274,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             set p = Player(playerIndex)
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if not HeroSelectorDoPick(p) then
-                    call HeroSelectorDoRandom(p, false) 
+                    call HeroSelectorDoRandom(p) 
                 endif
             endif
             set playerIndex = playerIndex + 1
@@ -1214,7 +1291,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if GetPlayerTeam(p) == who then
                     if not HeroSelectorDoPick(p) then
-                        call HeroSelectorDoRandom(p, false) 
+                        call HeroSelectorDoRandom(p) 
                     endif
                 endif
             endif
@@ -1232,7 +1309,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and p != Player(8) and p != Player(11) then
                 if GetPlayerRace(p) == r then
                     if not HeroSelectorDoPick(p) then
-                        call HeroSelectorDoRandom(p, false) 
+                        call HeroSelectorDoRandom(p) 
                     endif
                 endif
             endif
@@ -1242,7 +1319,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
     
     function HeroSelectorForcePickPlayer takes player p returns nothing
         if not HeroSelectorDoPick(p) then
-            call HeroSelectorDoRandom(p, false) 
+            call HeroSelectorDoRandom(p) 
         endif
     endfunction
 
@@ -1281,9 +1358,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local integer buttonIndex
         call HeroSelectorframeLoseFocus(BlzGetTriggerFrame())
         if RandomButtonPick then
-            call HeroSelectorDoRandom(p, true)
+            call HeroSelectorDoRandom(p)
         else
-            set unitCode = HeroSelectorRollOptionUnique(p, false, PlayerSelectedButtonIndex[playerIndex], PlayerSelectedCategory[playerIndex], false, false)
+            set unitCode = HeroSelectorRollOption(p, false, PlayerSelectedButtonIndex[playerIndex], PlayerSelectedCategory[playerIndex], false)
             if unitCode > 0 and GetLocalPlayer() == p then
                 set unitCodeIndex = LoadInteger(Hash, unitCode, 0)
                 set buttonIndex = HeroButtonIndex[unitCodeIndex]
@@ -1316,6 +1393,9 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
                     set DelayBanPlayer[DelayBanCount] = p
                     set DelayBanUnitCode[DelayBanCount] = unitCode
                 endif
+
+                // Save the banned heroes
+                set BannedUnits[unitCode] = 1
 
                 set HeroSelectorEventUnit = null
                 set HeroSelectorEventUnitCode = unitCode
@@ -1583,8 +1663,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         local integer teamIndexLoop
         local integer teamNr
 
-        set DraftSelectionHeroes = Table.create()
-        set TakenSelectionHeroes = Table.create()
+        set BannedUnits = Table.create()
         set SummonedHeroes = Table.create()
 
         set PlayerDraftOptions = TableArray[8]
