@@ -529,26 +529,25 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
     endfunction
 
     private function RandomizeArray takes integer size returns nothing
-        local integer index = size - 1
+        local integer index = 0
         local integer temp
-        local integer i
+        local integer randomIndex
     
         // Shuffle the array
         loop
             set temp = TempUnitsArray[index]
-            set i = GetRandomInt(1, size)
-            set TempUnitsArray[index] = TempUnitsArray[i]
-            set TempUnitsArray[i] = temp
-            set index = index - 1
-            exitwhen index == 1
+            set randomIndex = GetRandomInt(0, size - 1)
+            set TempUnitsArray[index] = TempUnitsArray[randomIndex]
+            set TempUnitsArray[randomIndex] = temp
+            set index = index + 1
+            exitwhen index == size
         endloop
     endfunction
 
-    function RandomizeArrays takes nothing returns nothing
+    function RandomizeHeroArrays takes nothing returns nothing
         local integer index = 0
 
         // Randomize str units
-        set index = 0
         loop
             set TempUnitsArray[index] = StrUnits[index]
             set index = index + 1
