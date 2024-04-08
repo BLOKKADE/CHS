@@ -309,6 +309,9 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(SATYR_TRICKSTER_UNIT_ID, categoryAgi)
         call HeroSelectorAddUnitCategory(WOLF_RIDER_UNIT_ID, categoryAgi)
 
+        // This must be the last operation here. This will randomize the str/agi/int heroes that will be used to assign to players
+        call RandomizeHeroArrays()
+
         return
         //adding further units when using the GUI Array does not make much sense, except you would add rows.
 
@@ -377,7 +380,6 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         //call HeroSelectorAddUnit('Ulic', false)
         //call HeroSelectorAddUnit('Udre', false)
         //call HeroSelectorAddUnit('Ucrl', true)
-
     endfunction
 
     private function Init takes nothing returns nothing
