@@ -10,7 +10,8 @@ library PlayerTracking initializer init requires GameInit, Table
 
         private GameVersion array MapVersionLookup
         private boolean SaveEnabled
-        
+        private integer CurrentGameVersionIndex = 0
+
         GameVersion CurrentGameVersion
     endglobals
 
@@ -631,24 +632,30 @@ library PlayerTracking initializer init requires GameInit, Table
         return SaveEnabled
     endfunction
 
+    private function AddGameVersion takes string versionString, boolean resetStats returns nothing
+        set MapVersionLookup[CurrentGameVersionIndex] = GameVersion.create(versionString, CurrentGameVersionIndex, resetStats)
+        set CurrentGameVersionIndex = CurrentGameVersionIndex + 1
+    endfunction
+
     private function SetupMapVersionLookups takes nothing returns nothing
         // The array index should match the version input to GameVersion.Create(). index == version for GetMapVersionName()
-        set MapVersionLookup[0] = GameVersion.create("Invalid Map Version", 0, false) // Placeholder for default map version
-        set MapVersionLookup[1] = GameVersion.create("CHS_v1.9.30-beta1", 1, false) // The first game version that supports save codes
-        set MapVersionLookup[2] = GameVersion.create("CHS v2.0.2", 2, true) // First version to reset seasonal stats. Had major balancing changes
+        call AddGameVersion("Invalid Map Version", false) // Placeholder for default map version
+        call AddGameVersion("CHS_v1.9.30-beta1", false) // The first game version that supports save codes
+        call AddGameVersion("CHS v2.0.2", true) // First version to reset seasonal stats. Had major balancing changes
         // CHS v2.0.3 is missing because we didn't have the GameVersion framework yet. Would have caused a seasonal stat reset otherwise
-        set MapVersionLookup[3] = GameVersion.create("CHS v2.1.1", 3, false) // First version with new GameVersion struct
-        set MapVersionLookup[4] = GameVersion.create("CHS v2.1.2", 4, false) // Scoreboard desync fix version
-        set MapVersionLookup[5] = GameVersion.create("CHS v2.2.0", 5, false) // Scoreboard desync fix version
-        set MapVersionLookup[6] = GameVersion.create("CHS v2.2.1", 6, false) // Bunch of small fixes in this one
-        set MapVersionLookup[7] = GameVersion.create("CHS v2.2.2", 7, false) // Removed gold and other stuff :)
-        set MapVersionLookup[8] = GameVersion.create("CHS v2.2.3", 8, false) // Bugfixes
-        set MapVersionLookup[9] = GameVersion.create("CHS v2.3.0", 9, true) // New save system, new map terrain
-        set MapVersionLookup[10] = GameVersion.create("CHS v2.3.1", 10, false) // ankh and reincarnation bugfixes
-        set MapVersionLookup[11] = GameVersion.create("CHS v2.3.2", 11, false) // ankh and reincarnation bugfixes
-        set MapVersionLookup[12] = GameVersion.create("CHS v2.3.3", 12, true) // Reset season fix
-        set MapVersionLookup[13] = GameVersion.create("CHS v2.3.4", 13, true) // Draft random fix
-        set MapVersionLookup[13] = GameVersion.create("CHS v2.3.5", 14, false) // Ban/Draft fix
+        call AddGameVersion("CHS v2.1.1", false) // First version with new GameVersion struct
+        call AddGameVersion("CHS v2.1.2", false) // Scoreboard desync fix version
+        call AddGameVersion("CHS v2.2.0", false) // Scoreboard desync fix version
+        call AddGameVersion("CHS v2.2.1", false) // Bunch of small fixes in this one
+        call AddGameVersion("CHS v2.2.2", false) // Removed gold and other stuff :)
+        call AddGameVersion("CHS v2.2.3", false) // Bugfixes
+        call AddGameVersion("CHS v2.3.0", true) // New save system, new map terrain
+        call AddGameVersion("CHS v2.3.1", false) // ankh and reincarnation bugfixes
+        call AddGameVersion("CHS v2.3.2", false) // ankh and reincarnation bugfixes
+        call AddGameVersion("CHS v2.3.3", true) // Reset season fix
+        call AddGameVersion("CHS v2.3.4", true) // Draft random fix
+        call AddGameVersion("CHS v2.3.5", false) // Ban/Draft fix
+        call AddGameVersion("CHS v2.3.6", false) // Another Ban/Draft fix
     endfunction
 
     private function init takes nothing returns nothing

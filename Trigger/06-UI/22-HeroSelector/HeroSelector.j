@@ -1,4 +1,4 @@
-library HeroSelector initializer init_function requires optional FrameLoader, GameInit
+library HeroSelector initializer init_function requires optional FrameLoader, GameInit, VotingResults
     //HeroSelector V1.6b
     //API
     //=====
@@ -254,6 +254,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         private integer array IntUnits
         private integer IntUnitsCount = 0
         private integer UsedIntUnitsCounts = 0
+        private integer TempHeroUnitId
     endglobals
 
     private function AutoDetectCategory takes integer unitCode returns integer
@@ -483,49 +484,144 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         set HeroCategory[index] =  category
     endfunction
 
-    private function SelectRandomHero takes integer category returns integer
-        local integer randomCategory = GetRandomInt(1, 3)
+    private function TrySelectNextStrHero takes nothing returns boolean
         local integer selectedUnitId
 
-        if (category == -1) then
-            // Random Str
-            if (randomCategory == 1) then
-                set selectedUnitId = StrUnits[UsedStrUnitsCounts]
-                set UsedStrUnitsCounts = UsedStrUnitsCounts + 1
-            // Random Agi
-            elseif (randomCategory == 2) then
-                set selectedUnitId = AgiUnits[UsedAgiUnitsCounts]
-                set UsedAgiUnitsCounts = UsedAgiUnitsCounts + 1
-            // Random Int
-            elseif (randomCategory == 3) then
-                set selectedUnitId = IntUnits[UsedIntUnitsCounts]
-                set UsedIntUnitsCounts = UsedIntUnitsCounts + 1
-            endif
-
-            return selectedUnitId
-        else
-            // Random Str
-            if (category == 4) then
-                set selectedUnitId = StrUnits[UsedStrUnitsCounts]
-                set UsedStrUnitsCounts = UsedStrUnitsCounts + 1
-            // Random Agi
-            elseif (category == 8) then
-                set selectedUnitId = AgiUnits[UsedAgiUnitsCounts]
-                set UsedAgiUnitsCounts = UsedAgiUnitsCounts + 1
-            // Random Int
-            elseif (category == 16) then
-                set selectedUnitId = IntUnits[UsedIntUnitsCounts]
-                set UsedIntUnitsCounts = UsedIntUnitsCounts + 1
-            endif
+        // Have possibility of duplicate random hero
+        if (UniqueHeroesMode == 1) then
+            set TempHeroUnitId = StrUnits[GetRandomInt(0, StrUnitsCount - 1)]
+            return true
         endif
 
-        // Select again if this is already a banned unit or we somehow failed to select a unit
-        // TODO This is possibly another case of infinite looping, or at least a lot of operations, if the randomness keeps selecting the same type of hero atr/agi/int and we run out
-        if (selectedUnitId == 0 or BannedUnits.has(selectedUnitId)) then
+        if (UsedStrUnitsCounts >= StrUnitsCount) then
+            set TempHeroUnitId = -1
+            return false
+        else
+            // Keep selecting the next unit until we have on that is not banned or we reached the end
+            loop
+                set selectedUnitId = StrUnits[UsedStrUnitsCounts]
+                set UsedStrUnitsCounts = UsedStrUnitsCounts + 1
+
+                if (selectedUnitId != 0 and (not BannedUnits.has(selectedUnitId))) then
+                    set TempHeroUnitId = selectedUnitId
+                    return true
+                endif
+
+                if (UsedStrUnitsCounts >= StrUnitsCount) then
+                    return false
+                endif
+            endloop
+        endif
+
+        return false
+    endfunction
+
+    private function TrySelectNextAgiHero takes nothing returns boolean
+        local integer selectedUnitId
+
+        // Have possibility of duplicate random hero
+        if (UniqueHeroesMode == 1) then
+            set TempHeroUnitId = AgiUnits[GetRandomInt(0, AgiUnitsCount - 1)]
+            return true
+        endif
+
+        if (UsedAgiUnitsCounts >= AgiUnitsCount) then
+            set TempHeroUnitId = -1
+            return false
+        else
+            // Keep selecting the next unit until we have on that is not banned or we reached the end
+            loop
+                set selectedUnitId = AgiUnits[UsedAgiUnitsCounts]
+                set UsedAgiUnitsCounts = UsedAgiUnitsCounts + 1
+
+                if (selectedUnitId != 0 and (not BannedUnits.has(selectedUnitId))) then
+                    set TempHeroUnitId = selectedUnitId
+                    return true
+                endif
+
+                if (UsedAgiUnitsCounts >= AgiUnitsCount) then
+                    return false
+                endif
+            endloop
+        endif
+
+        return false
+    endfunction
+
+    private function TrySelectNextIntHero takes nothing returns boolean
+        local integer selectedUnitId
+
+        // Have possibility of duplicate random hero
+        if (UniqueHeroesMode == 1) then
+            set TempHeroUnitId = IntUnits[GetRandomInt(0, IntUnitsCount - 1)]
+            return true
+        endif
+
+        if (UsedIntUnitsCounts >= IntUnitsCount) then
+            set TempHeroUnitId = -1
+            return false
+        else
+            // Keep selecting the next unit until we have on that is not banned or we reached the end
+            loop
+                set selectedUnitId = IntUnits[UsedIntUnitsCounts]
+                set UsedIntUnitsCounts = UsedIntUnitsCounts + 1
+
+                if (selectedUnitId != 0 and (not BannedUnits.has(selectedUnitId))) then
+                    set TempHeroUnitId = selectedUnitId
+                    return true
+                endif
+
+                if (UsedIntUnitsCounts >= IntUnitsCount) then
+                    return false
+                endif
+            endloop
+        endif
+
+        return false
+    endfunction
+
+    private function SelectRandomHero takes integer category returns integer
+        local integer attemptCount = 0
+        local integer index = 0
+        local boolean success = true
+
+        // Convert category to an index to cycle through
+        if (category == -1) then
+            set index = GetRandomInt(1, 3)
+        elseif (category == 4) then
+            set index = 1
+        elseif (category == 8) then
+            set index = 2
+        elseif (category == 16) then
+            set index = 3
+        endif
+
+        set TempHeroUnitId = -1
+
+        loop
+            if (index == 1) then
+                set success = TrySelectNextStrHero()
+            elseif (index == 2) then
+                set success = TrySelectNextAgiHero()
+            elseif (index == 3) then
+                set success = TrySelectNextIntHero()
+            endif
+
+            set attemptCount = attemptCount + 1
+
+            if (success or attemptCount == 3) then
+                exitwhen true
+            endif
+
+            set index = ModuloInteger(index, 3) + 1
+        endloop
+
+        // This SHOULDN'T happen. We should never run out of heroes even after 8 bans
+        if (TempHeroUnitId == -1) then
             return SelectRandomHero(category)
         endif
 
-        return selectedUnitId
+        return TempHeroUnitId
     endfunction
 
     private function RandomizeArray takes integer size returns nothing
@@ -680,7 +776,7 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
         endif
 
         // Hero has already been selected for AP
-        if (not DraftEnabled and not SameDraftEnabled and SummonedHeroes.boolean[unitCode]) then
+        if (UniqueHeroesMode == 2 and not DraftEnabled and not SameDraftEnabled and SummonedHeroes.boolean[unitCode]) then
             return false
         endif
 
