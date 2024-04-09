@@ -12,6 +12,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         private integer HeroBanningHandleId
         private integer DisableBRLivesHandleId
         private integer DisableSimultaneousDuelHandleId
+        private integer DisableUniqueHeroesHandleId
         private integer TeamDuelHandleId
         private integer LongerTimersHandleId
         private integer SubmitHandleId
@@ -76,8 +77,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return LoadInteger(HeroButtonEventHandles, handleId, 1) // Hero
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
-        elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9 or buttonType == 10 or buttonType == 11) then
-            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Team duels, Double timers, Disable BR Lives
+        elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9 or buttonType == 10 or buttonType == 11 or buttonType == 12) then
+            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Team duels, Double timers, Disable BR Lives, Disable Unique Heroes
         endif
 
         return 0
@@ -107,6 +108,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             return 10 // Double timers
         elseif (handleId == DisableBRLivesHandleId) then
             return 11 // Disable BR Lives
+        elseif (handleId == DisableUniqueHeroesHandleId) then
+            return 12 // Disable Unique Heroes
         endif
         
         return 0
@@ -175,6 +178,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             call pv.setLongerTimersVote(value)
         elseif (handleId == DisableBRLivesHandleId) then // Disable BR Lives
             call pv.setDisableBRLivesVote(value)
+        elseif (handleId == DisableUniqueHeroesHandleId) then // Disable Unique Heroes
+            call pv.setDisableUniqueHeroesVote(value)
         endif
     endfunction
 
@@ -504,6 +509,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         set LongerTimersHandleId = CreateVotingCheckbox("Double Timers", "Doubles the duration of the timers between rounds. |n|nUseful if you want to spend more time reading ability/item descriptions.", false)
         call GoToNextRow()
         set DisableBRLivesHandleId = CreateVotingCheckbox("Disable BR Lives", "Players will have 3 lives during the BR. |n|nHelps prolong the BR if players die right away and want to try again with a different strategy.", true)
+        set DisableUniqueHeroesHandleId = CreateVotingCheckbox("Disable Unique Heroes", "All players will have a unique hero. |n|nThis applies to all game modes.", true)
 
         // Compute the main voting box based on how many buttons there are and the column restrictions
         set mainFrameBottomRightX = MainFrameTopLeftX + (2 * MainFrameMargin) + (IMinBJ(MaxColumnCount, TotalButtonCount) * ButtonWidth) + ((IMinBJ(MaxColumnCount, TotalButtonCount) - 1) * ButtonSpacing)

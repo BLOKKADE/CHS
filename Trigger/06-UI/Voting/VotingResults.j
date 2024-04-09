@@ -18,6 +18,7 @@ library VotingResults initializer init
         integer TeamDuelMode
         integer LongerTimersMode
         integer BRLivesMode
+        integer UniqueHeroesMode
 
         string GameDescription
         string ScoreboardGameDescription
@@ -44,6 +45,7 @@ library VotingResults initializer init
         private integer TeamDuelVote = 1 // Team duels off
         private integer LongerTimersVote = 1 // Double timers off
         private integer DisableBRLivesVote = 1 // Disable BR Lives off
+        private integer DisableUniqueHeroesVote = 1 // Disable unique heroes off
 
         public method setRoundVote takes integer value returns nothing 
             set this.RoundVote = value
@@ -89,6 +91,10 @@ library VotingResults initializer init
             set this.DisableBRLivesVote = value
         endmethod
 
+        public method setDisableUniqueHeroesVote takes integer value returns nothing 
+            set this.DisableUniqueHeroesVote = value
+        endmethod
+
         public method getRoundVote takes nothing returns integer 
             return this.RoundVote
         endmethod
@@ -131,6 +137,10 @@ library VotingResults initializer init
 
         public method getDisableBRLivesVote takes nothing returns integer 
             return this.DisableBRLivesVote
+        endmethod
+
+        public method getDisableUniqueHeroesVote takes nothing returns integer 
+            return this.DisableUniqueHeroesVote
         endmethod
     endstruct
 
@@ -240,11 +250,19 @@ library VotingResults initializer init
         endif
 
         if (BRLivesMode == 1) then
-            set GameDescription = GameDescription + "BR Lives Off"
-            set ScoreboardGameDescription = ScoreboardGameDescription + "BR Lives Off"
+            set GameDescription = GameDescription + "BR Lives Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "BR Lives Off|n"
         elseif (BRLivesMode == 2) then
-            set GameDescription = GameDescription + "BR Lives On"
-            set ScoreboardGameDescription = ScoreboardGameDescription + "BR Lives On"
+            set GameDescription = GameDescription + "BR Lives On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "BR Lives On|n"
+        endif
+
+        if (UniqueHeroesMode == 1) then
+            set GameDescription = GameDescription + "Unique Heroes Off"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Unique Heroes Off"
+        elseif (UniqueHeroesMode == 2) then
+            set GameDescription = GameDescription + "Unique Heroes On"
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Unique Heroes On"
         endif
 
         set GameDescription = GameDescription + "|r"
@@ -343,6 +361,7 @@ library VotingResults initializer init
         local integer array teamDuelModeCounts
         local integer array longerTimersModeCounts
         local integer array brLivesModeCounts
+        local integer array uniqueHeroesModeCounts
         local PlayerVotes currentPlayerVotes
         local integer i = 0
 
@@ -363,6 +382,7 @@ library VotingResults initializer init
                 set teamDuelModeCounts[currentPlayerVotes.getTeamDuelVote()] = teamDuelModeCounts[currentPlayerVotes.getTeamDuelVote()] + 1
                 set longerTimersModeCounts[currentPlayerVotes.getLongerTimersVote()] = longerTimersModeCounts[currentPlayerVotes.getLongerTimersVote()] + 1
                 set brLivesModeCounts[currentPlayerVotes.getDisableBRLivesVote()] = brLivesModeCounts[currentPlayerVotes.getDisableBRLivesVote()] + 1
+                set uniqueHeroesModeCounts[currentPlayerVotes.getDisableUniqueHeroesVote()] = uniqueHeroesModeCounts[currentPlayerVotes.getDisableUniqueHeroesVote()] + 1
             endif
 
             set i = i + 1
@@ -468,6 +488,15 @@ library VotingResults initializer init
             exitwhen i > 2
         endloop
         set BRLivesMode = GetNegatedCheckboxVoteFromAnyDuplicates()
+
+        // Unique heroes vote counting
+        set i = 1
+        loop
+            set CategoryVotes[i] = uniqueHeroesModeCounts[i]
+            set i = i + 1
+            exitwhen i > 2
+        endloop
+        set UniqueHeroesMode = GetNegatedCheckboxVoteFromAnyDuplicates()
 
         // Set the weird global variables based off of the results
         set GameModeShort = RoundMode == 2 // Boolean that flags if the game is short
