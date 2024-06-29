@@ -321,6 +321,8 @@ scope ModifyDamageBeforeArmor initializer init
                 //call BJDebugMsg("sa: " + I2S(GetSpellValue(60, 30, i1)))
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
                 set Damage.index.damage = Damage.index.damage + GetSpellValue(60, 30, i1)
+            else
+                call ToggleSearingArrows(DamageSource)
             endif
         endif
 
@@ -333,6 +335,8 @@ scope ModifyDamageBeforeArmor initializer init
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
                 set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
                 call DummyOrder.create(DamageSource, GetUnitX(DamageSource), GetUnitY(DamageSource), GetUnitFacing(DamageSource), 4).addActiveAbility('A04X', 1, 852662).setAbilityRealField('A04X', ABILITY_RLF_DURATION_NORMAL, 2.8 + (0.2 * i1)).target(DamageTarget).activate()
+            else
+                call ToggleColdArrows(DamageSource)
             endif
         endif
 
