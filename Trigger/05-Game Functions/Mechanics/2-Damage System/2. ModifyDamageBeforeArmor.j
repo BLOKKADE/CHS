@@ -214,7 +214,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Cloak of Sorrow
             if GetUnitAbilityLevel(DamageSource, 'B007') > 0 then
-                set Damage.index.damage = RMaxBJ(0,  Damage.index.damage - 4000)
+                set Damage.index.damage = RMaxBJ(1,  Damage.index.damage - 4000)
             endif
 
             //Cloak of Sorrow
