@@ -20,7 +20,7 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
         private method disableBonus takes nothing returns nothing
             local integer level = GetUnitAbilityLevel(this.target, this.abilId) - 1
             call BlzSetUnitAbilityManaCost(this.target, this.abilId, level, BlzGetUnitAbilityManaCost(this.target, this.abilId, level) - this.bonus)
-            call RemoveLeveledBuffs(this.target, 'B030')
+            call RemoveLeveledBuffs(this.target, ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID)
         endmethod
     
         private method periodic takes nothing returns nothing
@@ -29,7 +29,7 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
                 set this.level = lvl
                 call BlzSetUnitAbilityManaCost(this.target, this.abilId, GetUnitAbilityLevel(this.target, this.abilId) - 1, BlzGetUnitAbilityManaCost(this.target, this.abilId, GetUnitAbilityLevel(this.target, this.abilId) - 1) + this.bonus)
             endif
-            if T32_Tick > this.endTick or (GetUnitAbilityLevel(this.target, 'B030') == 0 and T32_Tick > this.startTick + 32) or this.stop then
+            if T32_Tick > this.endTick or (GetUnitAbilityLevel(this.target, ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID) == 0 and T32_Tick > this.startTick + 32) or this.stop then
                 call this.disableBonus()
                 call this.stopPeriodic()
                 call this.destroy()
@@ -48,7 +48,7 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
     
             call BlzSetUnitAbilityManaCost(this.target, this.abilId, level, BlzGetUnitAbilityManaCost(this.target, this.abilId, level) + this.bonus)
             call DummyOrder.create(this.target, GetUnitX(this.target), GetUnitY(this.target), GetUnitFacing(this.target), 2).addActiveAbility(ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, 1, 852189).setAbilityDurationFields(ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, 30).target(this.target).activate()
-            call RegisterLeveledBuff(this.target, 'B030')
+            call RegisterLeveledBuff(this.target, ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID)
 
             set AAGStruct[GetHandleId(this.target)] = this
 
@@ -63,7 +63,6 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
             if aag == 0 then
                 return ArcaneAbsorptionGauntlets.create(target, abilId, bonus, duration)
             else
-                set aag.stop = true
                 return ArcaneAbsorptionGauntlets.create(target, abilId, bonus, duration)
             endif
         endmethod

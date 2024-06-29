@@ -924,6 +924,7 @@ library IdLibrary initializer init
         constant integer ERUPTION_IMMUNE_BUFF_ID                        = 'B02O'
         constant integer DRUNKEN_HAZE_IGNITE_BUFF_ID                    = 'A0DL'
         constant integer DRIED_MUSHROOM_DUMMY_BUFF_ID                   = 'B02Y'
+        constant integer ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID            = 'B030'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 
