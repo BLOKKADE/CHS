@@ -414,7 +414,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Absolute Poison
         set i = GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID)
         if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison) then
-            set Damage.index.damage = Damage.index.damage * (1 + ((i * 0.01) * GetUnitElementCount(DamageSource, Element_Poison)))
+            set Damage.index.damage = Damage.index.damage * (1.38 + ((i * 0.062) * GetUnitElementCount(DamageSource, Element_Poison)))
         endif
 
         if UnitColdRuneDmgBonus.real[DamageTargetId] != 0. then
