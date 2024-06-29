@@ -1,6 +1,7 @@
 library Blademaster initializer init requires AreaDamage, RandomShit
     globals
         Table BladestormAttackCounter
+        Table BladestormArmorPierceBonus
         Table BladestormAttackLimit
         Table BladestormLastTime
     endglobals
@@ -40,5 +41,6 @@ library Blademaster initializer init requires AreaDamage, RandomShit
         set BladestormAttackCounter = Table.create()
         set BladestormAttackLimit = Table.create()
         set BladestormLastTime = Table.create()
+        set BladestormArmorPierceBonus = Table.create()
     endfunction
 endlibrary

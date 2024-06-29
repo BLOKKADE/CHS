@@ -115,8 +115,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained." )
                 
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )
-        call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 35 + 50% of its attack damage to nearby enemies as |cffff8080physical damage|r.")
-        call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bladestorm: +35 damage, +3 area of effect. (|cff68eef3Every 20 levels|r) reduces attacks required by 1." )
+        call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 35 + 50% of its attack damage to nearby enemies as |cffff8080physical damage|r and ignoring 30% of their armor.")
+        call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bladestorm: +35 damage, +3 area of effect. (|cff68eef3Every 20 levels|r) Reduces attacks required by 1 and ignores 2% more armor." )
                                                     
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp" )
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Valiant Strike: All damage dealt by the Hero and its summons have 10% of the Hero's strength added to it.[|cffd45e29onhit|r]")
