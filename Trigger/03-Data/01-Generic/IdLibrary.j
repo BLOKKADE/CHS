@@ -461,6 +461,7 @@ library IdLibrary initializer init
         constant integer DEATH_AND_DECAY_DUMMY_ABILITY_ID               = 'A0E2'
         constant integer FOG_DUMMY_ABILITY_ID                           = 'A0E3'
         constant integer GNOME_MASTER_PASSIVE_DUMMY_ABILITY_ID          = 'A0EG'
+        constant integer ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID            = 'A0DP'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
