@@ -183,6 +183,14 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
+        //Energy Bombardment
+        if DamageSourceAbility == ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID then
+            set udg_NextDamageAbilitySource = ENERGY_BOMBARDMENT_ABILITY_ID
+            call Damage.applyPhys(DamageSourceHero, DamageTarget, Damage.index.damage, true, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+            set Damage.index.damage = 0
+            return
+        endif
+
         //Shadow dance - start shadow form
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
         if i1 > 0 and  BlzGetUnitAbilityCooldownRemaining(DamageSource,SHADOW_DANCE_ABILITY_ID) <= 0 and Damage.index.isAttack and not IsOnHitDamage() then

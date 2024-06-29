@@ -15,7 +15,6 @@ library EnergyBombardment requires Utility, AbilityCooldown
         real currentAcd
 
         private method setFields takes nothing returns nothing
-            //call BJDebugMsg("eb update field")
             set this.level = GetUnitAbilityLevel(this.source, ENERGY_BOMBARDMENT_ABILITY_ID)
             set dmgMult = 0.25 + (0.025 * this.level)
             set this.currentAcd = BlzGetUnitAttackCooldown(this.source, 0)
@@ -29,8 +28,7 @@ library EnergyBombardment requires Utility, AbilityCooldown
 
             set target = RUH.GetRandomUnit(false)
             if target != null then
-                //call BJDebugMsg("dist: " + R2S(DistanceBetweenUnits(this.source, target)) + ", max: " + R2S(GetUnitTrueRange(this.source, 0) + (BlzGetUnitCollisionSize(target) / 2)))
-                call DummyOrder.create(this.source, GetUnitX(this.source), GetUnitY(this.source), GetUnitFacing(this.source), 3).addActiveAbility('A0DP', 1, 852662).setAbilityRealField('A0DP', ABILITY_RLF_PRIMARY_DAMAGE, GetUnitDamage(this.source, 0) * dmgMult).target(target).activate()
+                call DummyOrder.create(this.source, GetUnitX(this.source), GetUnitY(this.source), GetUnitFacing(this.source), 3).addActiveAbility(ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID, 1, 852662).setAbilityRealField(ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID, ABILITY_RLF_PRIMARY_DAMAGE, GetUnitDamage(this.source, 0) * dmgMult).target(target).activate()
                 call AbilStartCD(this.source, ENERGY_BOMBARDMENT_ABILITY_ID, this.cd)
                 set this.tick = 0
                 set target = null
@@ -55,7 +53,6 @@ library EnergyBombardment requires Utility, AbilityCooldown
 
         static method create takes unit source returns thistype
             local thistype this = thistype.setup()
-           // call BJDebugMsg("eb start")
             set this.source = source
             set this.tick = 0
             set this.level = 0
@@ -69,7 +66,6 @@ library EnergyBombardment requires Utility, AbilityCooldown
         method destroy takes nothing returns nothing
             set this.source = null
             set this.p = null
-            //call BJDebugMsg("eb end")
             call this.recycle()
         endmethod
 
