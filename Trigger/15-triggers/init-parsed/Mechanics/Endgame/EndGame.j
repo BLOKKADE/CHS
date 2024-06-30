@@ -94,6 +94,8 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
             if (winningForce != null) then
                 call UpdateScoreboardBrWinner(winningForce)
 
+                call BlzFrameSetVisible(BRLivesFrameHandle, false)
+
                 if (not IsFunBRRound) then
                     // There should only be one player in this force since there can only be one winner
                     call ForForce(winningForce, function AddBRWinToPlayer)

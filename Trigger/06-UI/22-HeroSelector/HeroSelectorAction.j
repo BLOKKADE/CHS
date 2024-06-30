@@ -26,7 +26,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
             return
         endif
 
-        call ps.setHeroUnitTypeId(GetUnitTypeId(u))
+        call ps.setHeroUnitTypeId(GetUnitTypeId(u), isRandom)
 
         if isRandom then
             call AdjustPlayerStateBJ(900, p, PLAYER_STATE_RESOURCE_GOLD)

@@ -251,6 +251,8 @@ library PvpHelper requires RandomShit, StartFunction, UnitFilteringUtility, Voti
     endfunction
 
     function StartDuels takes nothing returns nothing
+        call BlzFrameSetVisible(BRLivesFrameHandle, false)
+
         // Show the prepare timer dialogs
         call DuelGame.showPrepareTimerDialogs()
 

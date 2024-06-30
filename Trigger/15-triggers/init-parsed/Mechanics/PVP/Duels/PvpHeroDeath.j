@@ -352,9 +352,12 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call DuelGame.cleanupDuels()
             call ResetPvpState()
 
-            //End round event for all players
+            // End round event for all players
             call EventHelpers_FireEventForAllPlayers(EVENT_GAME_ROUND_END, 0, RoundNumber, true)
-            
+
+            // Reshow the player lives
+            call BlzFrameSetVisible(BRLivesFrameHandle, true)
+
             // Go to the next basic level
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger) // Setup creeps for next wave
             set PvpRoundEndWait = true

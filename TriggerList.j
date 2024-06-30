@@ -51,6 +51,7 @@
 //! import "C:\CHS\CHS\Trigger\04-Helpers\UnitItems.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\Utility.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\AchievementsFrame.j"
+//! import "C:\CHS\CHS\Trigger\06-UI\BRLivesFrame.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\DiscordFrame.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\IconFrames.j"
 //! import "C:\CHS\CHS\Trigger\06-UI\ReadyButton.j"

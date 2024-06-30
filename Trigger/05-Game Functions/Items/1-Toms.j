@@ -382,6 +382,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif II == LIFE_TOME_ITEM_ID and (not maxLevel) then
                 if GetHeroXP(u) >= 100000  then
                     set Lives[pid] = Lives[pid] + 1
+                    call UpdateLivesForPlayer(p, Lives[pid], false)
                     call DisplayTimedTextToPlayer(p, 0, 0, 5, "|cffffcc00Lives: |r" + I2S(Lives[pid]))
                     call UnitAddItemById(u,EXPERIENCE_100000_TOME_ITEM_ID)
                     call RemoveItem(It)

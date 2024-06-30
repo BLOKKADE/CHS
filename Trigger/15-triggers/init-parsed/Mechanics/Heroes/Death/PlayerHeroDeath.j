@@ -83,6 +83,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
             call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId], Condition(function RemoveUnitsInArena))
     
             set Lives[currentPlayerId] = Lives[currentPlayerId] - 1
+            call UpdateLivesForPlayer(currentPlayer, Lives[currentPlayerId], false)
             call DisplayTextToPlayer(currentPlayer, 0, 0, "You have " + I2S(Lives[currentPlayerId]) + " lives left")
             
             // Cleanup
