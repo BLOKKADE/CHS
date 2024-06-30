@@ -27,42 +27,52 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             local real newRegen = 0
 
             if GetUnitAbilityLevel(this.target, PARASITE_BUFF_ID) > 0 then
+                call BJDebugMsg("parasite buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, ACID_BOMB_BUFF_ID) > 0 then
+                call BJDebugMsg("acid bomb buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, 'BNhs') > 0 then
+                call BJDebugMsg("Healing spray buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, SHADOW_STRIKE_BUFF_ID) > 0 then
+                call BJDebugMsg("shadow strike buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, DRUNKEN_HAZE_BUFF_ID) > 0 then
+                call BJDebugMsg("drunken haze buff")
                 set count = count + 2
             endif
 
             if GetUnitAbilityLevel(this.target, 'Bapl') > 0 then
-                set count = count + 2
+                call BJDebugMsg("bapl buff")
+                set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, 'B01J') > 0 then
+                call BJDebugMsg("b01j buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, DECAYING_SCYTHE_BUFF_ID) > 0 then
+                call BJDebugMsg("decaying scythe buff")
                 set count = count + 3
             endif
 
             if GetUnitAbilityLevel(this.target, POISON_NON_STACKING_CUSTOM_BUFF_ID) > 0 then
+                call BJDebugMsg("poison non stacking buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.source, NULL_VOID_ORB_BUFF_ID) > 0 then
+                call BJDebugMsg("null void orb buff")
                 set count = 0
             endif
             
