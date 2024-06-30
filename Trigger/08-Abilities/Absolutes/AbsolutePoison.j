@@ -37,42 +37,42 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             endif
 
             if GetUnitAbilityLevel(this.target, 'BNhs') > 0 then
-                call BJDebugMsg("Healing spray buff")
+                //call BJDebugMsg("Healing spray buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, SHADOW_STRIKE_BUFF_ID) > 0 then
-                call BJDebugMsg("shadow strike buff")
+                //call BJDebugMsg("shadow strike buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, DRUNKEN_HAZE_BUFF_ID) > 0 then
-                call BJDebugMsg("drunken haze buff")
+                //call BJDebugMsg("drunken haze buff")
                 set count = count + 2
             endif
 
             if GetUnitAbilityLevel(this.target, 'Bapl') > 0 then
-                call BJDebugMsg("bapl buff")
+                //call BJDebugMsg("bapl buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, 'B01J') > 0 then
-                call BJDebugMsg("b01j buff")
+                //call BJDebugMsg("b01j buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, DECAYING_SCYTHE_BUFF_ID) > 0 then
-                call BJDebugMsg("decaying scythe buff")
+                //call BJDebugMsg("decaying scythe buff")
                 set count = count + 3
             endif
 
             if GetUnitAbilityLevel(this.target, POISON_NON_STACKING_CUSTOM_BUFF_ID) > 0 then
-                call BJDebugMsg("poison non stacking buff")
+                //call BJDebugMsg("poison non stacking buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.source, NULL_VOID_ORB_BUFF_ID) > 0 then
-                call BJDebugMsg("null void orb buff")
+                //call BJDebugMsg("null void orb buff")
                 set count = 0
             endif
             
