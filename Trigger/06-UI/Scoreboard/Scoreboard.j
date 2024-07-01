@@ -80,6 +80,8 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private hashtable IconEventHandles
         
         // Tooltip information
+        private framehandle ScoreboardBrTimesFrameHandle
+        private framehandle ScoreboardBrTimesTextFrameHandle
         private framehandle ScoreboardTooltipFrame
 		private framehandle ScoreboardTooltipTitleFrame
 		private framehandle ScoreboardTooltipTextFrame
@@ -645,11 +647,22 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set ScoreboardGameDescriptionFrameHandle = BlzCreateFrame("CheckListBox", ScoreboardFrameHandle, 0, 0)
         call BlzFrameSetAbsPoint(ScoreboardGameDescriptionFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX, MAIN_FRAME_TOP_LEFT_Y - 0.04) // Move it down a little so it doesn't block the timer
 
+        // Create the box for the BR times
+        set ScoreboardBrTimesFrameHandle = BlzCreateFrame("CheckListBox", ScoreboardFrameHandle, 0, 0)
+        call BlzFrameSetAbsPoint(ScoreboardBrTimesFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX, MAIN_FRAME_TOP_LEFT_Y - 0.2) // Move it under the game description
+        call BlzFrameSetVisible(ScoreboardBrTimesFrameHandle, false) 
+
         // Create the actual text element that shows the scoreboard description
         set ScoreboardGameDescriptionTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardDescriptionTextArea", ScoreboardFrameHandle, "", 0)    
         call BlzFrameSetEnable(ScoreboardGameDescriptionTextFrameHandle, false) 
         call BlzFrameSetScale(ScoreboardGameDescriptionTextFrameHandle, 1.05) 
         call BlzFrameSetTextAlignment(ScoreboardGameDescriptionTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER)
+
+        // Create the actual text element that shows the br times
+        set ScoreboardBrTimesTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardBrTimesTextArea", ScoreboardFrameHandle, "", 0)    
+        call BlzFrameSetEnable(ScoreboardBrTimesTextFrameHandle, false) 
+        call BlzFrameSetScale(ScoreboardBrTimesTextFrameHandle, 1.05) 
+        call BlzFrameSetTextAlignment(ScoreboardBrTimesTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER)
 
         // Create the close button
         set closeButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", ScoreboardFrameHandle, 0, 0) 
@@ -855,11 +868,51 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set playerHero = null
     endfunction
 
+    function UpdateBrTimes takes nothing returns nothing
+        local string brTimes
+        local integer sec
+        local integer min
+        
+        if (BattleRoyaleStartTime == 0) then
+            return
+        endif
+
+        call BlzFrameSetVisible(ScoreboardBrTimesFrameHandle, true) 
+
+        if (BattleRoyaleEndTime == 0) then
+            set sec = ModuloInteger(T32_Tick - BattleRoyaleStartTime, 1920)
+            set min = ((T32_Tick - BattleRoyaleStartTime - sec) / 1920)
+            set brTimes = "|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+        else
+            set sec = ModuloInteger(BattleRoyaleEndTime - BattleRoyaleStartTime, 1920)
+            set min = ((BattleRoyaleEndTime - BattleRoyaleStartTime - sec) / 1920)
+            set brTimes = "|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+        endif
+
+        if (FunBattleRoyaleStartTime != 0) then
+            if (FunBattleRoyaleEndTime == 0) then
+                set sec = ModuloInteger(T32_Tick - FunBattleRoyaleStartTime, 1920)
+                set min = ((T32_Tick - FunBattleRoyaleStartTime - sec) / 1920)
+                set brTimes = brTimes + "|n|cff00ff62Fun Br Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            else
+                set sec = ModuloInteger(FunBattleRoyaleEndTime - FunBattleRoyaleStartTime, 1920)
+                set min = ((FunBattleRoyaleEndTime - FunBattleRoyaleStartTime - sec) / 1920)
+                set brTimes = brTimes + "|n|cff00ff62Fun Br Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            endif
+        endif
+
+        call BlzFrameSetSize(ScoreboardBrTimesFrameHandle, 0.17, GetTooltipSize(brTimes))
+        call BlzFrameSetText(ScoreboardBrTimesTextFrameHandle, brTimes) 
+        call BlzFrameSetAllPoints(ScoreboardBrTimesTextFrameHandle, ScoreboardBrTimesFrameHandle)
+    endfunction
+
     function StartScoreboardUpdate takes nothing returns nothing
         // Need to update the scoreboard game mode description since it didn't exist when the frames were created
         call BlzFrameSetSize(ScoreboardGameDescriptionFrameHandle, 0.17, GetTooltipSize(ScoreboardGameDescription))
         call BlzFrameSetText(ScoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescription) 
         call BlzFrameSetAllPoints(ScoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescriptionFrameHandle)
+
+        call BlzFrameSetAbsPoint(ScoreboardBrTimesFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (16 * ICON_WIDTH) + (5 * ICON_SPACING) + (9 * ABILITY_ICON_SPACING), MAIN_FRAME_TOP_LEFT_Y - 0.04 - BlzFrameGetHeight(ScoreboardGameDescriptionFrameHandle)) // Move it under the game description
 
         // Start at the first player row index
         set CurrentRowIndex = 1
@@ -868,6 +921,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Timer to refresh the scoreboard at an interval
         call TimerStart(CreateTimer(), SCOREBOARD_UPDATE_INTERVAL, true, function UpdateDynamicPlayersValues)
+        call TimerStart(CreateTimer(), .1, true, function UpdateBrTimes)
     endfunction
 
     private function InitializeScoreboard takes nothing returns nothing

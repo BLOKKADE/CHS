@@ -22,6 +22,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         integer BattleRoyaleStartTime = 0
         integer BattleRoyaleEndTime = 0
+        integer FunBattleRoyaleStartTime = 0
+        integer FunBattleRoyaleEndTime = 0
 
         integer BattleRoyalFunWaitTime = 30
         integer BattleRoyalWaitTime = 120
@@ -404,7 +406,11 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call SetAllCurrentlyFighting(true)
         call ForForce(BRPlayers, function StartFightForPlayerHero)
 
-        set BattleRoyaleStartTime = T32_Tick
+        if (IsFunBRRound) then
+            set FunBattleRoyaleStartTime = T32_Tick
+        else
+            set BattleRoyaleStartTime = T32_Tick
+        endif
 
         // Invisible timer with a random time to remove lives
         set BattleRoyalRemoveLifeTimer = CreateTimer()

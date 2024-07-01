@@ -86,6 +86,12 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
             call ForForce(winningForce, function MakeWinnerInvulnerable)
         endif
 
+        if (IsFunBRRound) then
+            set FunBattleRoyaleEndTime = T32_Tick
+        else
+            set BattleRoyaleEndTime = T32_Tick
+        endif
+
         call TriggerSleepAction(2)
 
         if (InitialPlayerCount == 1 and PlayerCount == 1) then
