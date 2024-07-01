@@ -356,7 +356,9 @@ library PvpHeroDeath initializer init requires RandomShit, PlayerTracking, Creep
             call EventHelpers_FireEventForAllPlayers(EVENT_GAME_ROUND_END, 0, RoundNumber, true)
 
             // Reshow the player lives
-            call BlzFrameSetVisible(BRLivesFrameHandle, true)
+            if (ModeNoDeath == false) then
+                call BlzFrameSetVisible(BRLivesFrameHandle, true)
+            endif
 
             // Go to the next basic level
             call ConditionalTriggerExecute(GenerateNextCreepLevelTrigger) // Setup creeps for next wave
