@@ -471,7 +471,10 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             loop
                 exitwhen currentPlayerId == 8
 
-                if (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
+                if (IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) then
+                    call ResetHero(PlayerHeroes[currentPlayerId])
+                    call RemoveUnit(PlayerHeroes[currentPlayerId])
+                elseif (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
                     call ForceAddPlayer(playersToFight, Player(currentPlayerId))
                 endif
 
