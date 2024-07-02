@@ -868,39 +868,50 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set playerHero = null
     endfunction
 
-    function UpdateBrTimes takes nothing returns nothing
+    private function UpdateBrTimes takes nothing returns nothing
         local string brTimes
         local integer sec
         local integer min
         
-        if (BattleRoyaleStartTime == 0) then
-            return
-        endif
-
-        call BlzFrameSetVisible(ScoreboardBrTimesFrameHandle, true) 
-
         if (BattleRoyaleEndTime == 0) then
-            set sec = ModuloInteger(T32_Tick - BattleRoyaleStartTime, 1920)
-            set min = ((T32_Tick - BattleRoyaleStartTime - sec) / 1920)
-            set brTimes = "|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            // Ongoing Game time
+            set sec = ModuloInteger(T32_Tick, 1920)
+            set min = ((T32_Tick - sec) / 1920)
+            set brTimes = "|cffff49d1Game Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+
+            if (BattleRoyaleStartTime > 0) then
+                // Ongoing BR time
+                set sec = ModuloInteger(T32_Tick - BattleRoyaleStartTime, 1920)
+                set min = ((T32_Tick - BattleRoyaleStartTime - sec) / 1920)
+                set brTimes = brTimes + "|n|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            endif
         else
+            // Ending Game time
+            set sec = ModuloInteger(BattleRoyaleEndTime, 1920)
+            set min = ((BattleRoyaleEndTime - sec) / 1920)
+            set brTimes = "|cffff49d1Game Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+
+            // Ending BR time
             set sec = ModuloInteger(BattleRoyaleEndTime - BattleRoyaleStartTime, 1920)
             set min = ((BattleRoyaleEndTime - BattleRoyaleStartTime - sec) / 1920)
-            set brTimes = "|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            set brTimes = "|n|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
         endif
 
         if (FunBattleRoyaleStartTime != 0) then
             if (FunBattleRoyaleEndTime == 0) then
+                // Ongoing Fun BR time
                 set sec = ModuloInteger(T32_Tick - FunBattleRoyaleStartTime, 1920)
                 set min = ((T32_Tick - FunBattleRoyaleStartTime - sec) / 1920)
                 set brTimes = brTimes + "|n|cff00ff62Fun Br Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
             else
+                // Ending Fun BR time
                 set sec = ModuloInteger(FunBattleRoyaleEndTime - FunBattleRoyaleStartTime, 1920)
                 set min = ((FunBattleRoyaleEndTime - FunBattleRoyaleStartTime - sec) / 1920)
                 set brTimes = brTimes + "|n|cff00ff62Fun Br Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
             endif
         endif
 
+        call BlzFrameSetVisible(ScoreboardBrTimesFrameHandle, true) 
         call BlzFrameSetSize(ScoreboardBrTimesFrameHandle, 0.17, GetTooltipSize(brTimes))
         call BlzFrameSetText(ScoreboardBrTimesTextFrameHandle, brTimes) 
         call BlzFrameSetAllPoints(ScoreboardBrTimesTextFrameHandle, ScoreboardBrTimesFrameHandle)

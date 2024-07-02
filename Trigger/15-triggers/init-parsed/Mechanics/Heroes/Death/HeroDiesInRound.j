@@ -16,7 +16,6 @@ library HeroDiesInRound initializer init requires RandomShit, PetDeath
         local player currentPlayer = GetOwningPlayer(GetTriggerUnit())
         local group playerUnits = GetUnitsOfPlayerAll(currentPlayer)
 
-        set PlayerCount = PlayerCount - 1
         call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(currentPlayer) + " |cffffcc00has fallen at level " + I2S(RoundNumber) + "!|r")
         call DisableTrigger(FaerieDragonDiesTrigger)
         call ForGroup(playerUnits, function RemovePlayerUnit)
@@ -27,7 +26,7 @@ library HeroDiesInRound initializer init requires RandomShit, PetDeath
         set playerUnits = null
         set currentPlayer = null
 
-        if (PlayerCount == 0) then
+        if (PlayerCount - 1 <= 0) then
             call DisableTrigger(PlayerAntiStuckTrigger)
             call DisableTrigger(GetTriggeringTrigger())
             call DisableTrigger(PlayerCompleteRoundTrigger)
