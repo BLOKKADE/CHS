@@ -737,11 +737,6 @@ scope ModifyDamageBeforeArmor initializer init
             //call BJDebugMsg("ts armor pierce: " + R2S(Damage.index.armorPierced))
         endif
 
-        //Blademaster Bladestorm
-        if DamageSourceAbility == BLADE_MASTER_UNIT_ID then
-            set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * (0.3 + (BladestormArmorPierceBonus[DamageSourceId] * 0.01) ))
-        endif
-
         //Wisdom Chestplate
         if IsMagicDamage() and UnitHasItemType(DamageTarget, WISDOM_CHESTPLATE_ITEM_ID) then 
             call ActivateWisdomChestplate(DamageTarget, Damage.index.damage)
