@@ -75,7 +75,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +2 physical power bonus." )
                     
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )
-        call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. ")
+        call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. [|cffd45e29onhit|r]")
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Water Addiction: +0.1% attack damage added to spell damage. (Every 50 levels) + 1 bonus attack damage per intelligence" )
         
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )
