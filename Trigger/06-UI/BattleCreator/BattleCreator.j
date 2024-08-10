@@ -332,7 +332,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
 
         // Create the battle creator title
         set titleFrameHandle = BlzCreateFrameByType("GLUETEXTBUTTON", "BattleCreatorTitle", BattleCreatorFrameHandle, "ScriptDialogButton", 0) 
-        call BlzFrameSetLevel(titleFrameHandle, 2) // To have it appear above the battle creator
+        call BlzFrameSetLevel(titleFrameHandle, 3) // To have it appear above the battle creator
         call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + (MainFrameBottomRightX - MAIN_FRAME_TOP_LEFT_X) * 0.2, MAIN_FRAME_TOP_LEFT_Y + (TITLE_HEIGHT / 2)) 
         call BlzFrameSetAbsPoint(titleFrameHandle, FRAMEPOINT_BOTTOMRIGHT, MAIN_FRAME_TOP_LEFT_X + (MainFrameBottomRightX - MAIN_FRAME_TOP_LEFT_X) * 0.8, MAIN_FRAME_TOP_LEFT_Y - TITLE_HEIGHT) 
         call BlzFrameSetEnable(titleFrameHandle, false) 
@@ -432,14 +432,14 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
 
         // Create the main frame. All elements use this frame as the parent
         set BattleCreatorFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0), 0, 0) 
-        call BlzFrameSetLevel(BattleCreatorFrameHandle, 1)
+        call BlzFrameSetLevel(BattleCreatorFrameHandle, 2)
         call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
         
         // Create the primary tooltip window
         set BattleCreatorTooltipFrame = BlzCreateFrame("TooltipText", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
         set BattleCreatorTooltipTitleFrame = BlzGetFrameByName("TooltipTextTitle", 0)
         set BattleCreatorTooltipTextFrame = BlzGetFrameByName("TooltipTextValue", 0)
-        call BlzFrameSetLevel(BattleCreatorTooltipFrame, 3) // To have it appear above the battle creator
+        call BlzFrameSetLevel(BattleCreatorTooltipFrame, 4) // To have it appear above the battle creator
         call BlzFrameSetVisible(BattleCreatorTooltipFrame, false) 
 
         // Setup the battle creator section
