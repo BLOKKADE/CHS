@@ -894,7 +894,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             // Ending BR time
             set sec = ModuloInteger(BattleRoyaleEndTime - BattleRoyaleStartTime, 1920)
             set min = ((BattleRoyaleEndTime - BattleRoyaleStartTime - sec) / 1920)
-            set brTimes = "|n|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            set brTimes = brTimes + "|n|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
         endif
 
         if (FunBattleRoyaleStartTime != 0) then
