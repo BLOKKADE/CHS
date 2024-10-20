@@ -38,7 +38,7 @@ library BRLivesFrame initializer init requires PlayerTracking, Utility
         endif
     endfunction
 
-    private function InitializeRewards takes nothing returns nothing
+    private function InitializeBrLives takes nothing returns nothing
         local real mainFrameBottomRightX
         local real mainFrameBottomRightY
 
@@ -69,7 +69,7 @@ library BRLivesFrame initializer init requires PlayerTracking, Utility
     endfunction
 
     private function init takes nothing returns nothing
-        call TimerStart(CreateTimer(), 1, false, function InitializeRewards)
+        call TimerStart(CreateTimer(), 1, false, function InitializeBrLives)
     endfunction
 
 endlibrary
