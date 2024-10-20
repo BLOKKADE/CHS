@@ -75,9 +75,9 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         force team2
         boolean isDuelOver
         boolean isInitialized
-        boolean team1Won
+        integer winningTeam
         boolean fightStarted
-        SuddenDeath suddenDeath
+        SuddenDraw suddenDeath
 
         // Duel prepare timer dialog properties
         private timer DuelPrepareTimer
@@ -318,9 +318,9 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             set this.team1 = team1
             set this.team2 = team2
             set this.arenaIndex = arenaIndex
-            set this.suddenDeath = SuddenDeath.create(this)
+            set this.suddenDeath = SuddenDraw.create(this)
             set this.isDuelOver = false
-            set this.team1Won = false
+            set this.winningTeam = -1
             set this.fightStarted = false
             set this.isInitialized = false
             set this.currentCountdown = 5
