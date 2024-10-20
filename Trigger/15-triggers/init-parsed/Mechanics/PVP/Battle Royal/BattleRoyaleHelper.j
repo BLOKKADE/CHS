@@ -1,4 +1,4 @@
-library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh
+library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh, BRLivesFrame
 
     globals
         // Track player's lives during the BR
@@ -19,6 +19,11 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         // Timer properties
         integer BattleRoyalRemoveLifeLowTime = 120
         integer BattleRoyalRemoveLifeHighTime = 140
+
+        integer BattleRoyaleStartTime = 0
+        integer BattleRoyaleEndTime = 0
+        integer FunBattleRoyaleStartTime = 0
+        integer FunBattleRoyaleEndTime = 0
 
         integer BattleRoyalFunWaitTime = 30
         integer BattleRoyalWaitTime = 120
@@ -150,6 +155,9 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         // Reset lives
         set PlayerBRDeaths[playerId] = 0
 
+        // Update the UI
+        call UpdateLivesForPlayer(currentPlayer, MaxBRDeathCount, true)
+
         // Save items
         call SaveItemsForPlayer(currentPlayer)
 
@@ -237,6 +245,9 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         if (playerDeaths <= MaxBRDeathCount and IsPlayerInForce(currentPlayer, BRPlayers)) then
             call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffffcc00You have |r" + I2S(IMaxBJ(MaxBRDeathCount - playerDeaths, 0)) + " |cffffcc00lives remaining.|r")
+
+            // Update the UI
+            call UpdateLivesForPlayer(currentPlayer, IMaxBJ(MaxBRDeathCount - playerDeaths, 0), true)
         endif
 
         // Cleanup
@@ -370,6 +381,9 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call DisableTrigger(HeroDiesInRoundTrigger)
         call EnableTrigger(PlayerDiesInBattleRoyaleTrigger)
 
+        // Show the BR lives
+        call BlzFrameSetVisible(BRLivesFrameHandle, true) 
+
         call TriggerSleepAction(5)
         call DisplayTextToForce(GetPlayersAll(), "|cffffcc005|r")
         call PlaySoundBJ(udg_sound09) // Ticking noise
@@ -391,6 +405,12 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call DisplayTimedTextToForce(GetPlayersAll(), 1.00, "|cffffcc00GO!!!|r")
         call SetAllCurrentlyFighting(true)
         call ForForce(BRPlayers, function StartFightForPlayerHero)
+
+        if (IsFunBRRound) then
+            set FunBattleRoyaleStartTime = T32_Tick
+        else
+            set BattleRoyaleStartTime = T32_Tick
+        endif
 
         // Invisible timer with a random time to remove lives
         set BattleRoyalRemoveLifeTimer = CreateTimer()
@@ -451,7 +471,10 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             loop
                 exitwhen currentPlayerId == 8
 
-                if (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
+                if (IsPlayerInForce(Player(currentPlayerId), LeaverPlayers)) then
+                    call ResetHero(PlayerHeroes[currentPlayerId])
+                    call RemoveUnit(PlayerHeroes[currentPlayerId])
+                elseif (PlayerHeroes[currentPlayerId] != null and (not IsPlayerInForce(Player(currentPlayerId), DefeatedPlayers))) then
                     call ForceAddPlayer(playersToFight, Player(currentPlayerId))
                 endif
 

@@ -34,9 +34,9 @@ library DistributeBets initializer init requires RandomShit, PvpRoundRobin
     endfunction
 
     private function DistributeBetsActions takes nothing returns nothing
-        if (CurrentDuelGame.team1Won) then
+        if (CurrentDuelGame.winningTeam == 1) then
             call ForForce(Team1BettingForce, function DistributeBetsForPlayer)
-        else
+        elseif (CurrentDuelGame.winningTeam == 2) then
             call ForForce(Team2BettingForce, function DistributeBetsForPlayer)
         endif
 

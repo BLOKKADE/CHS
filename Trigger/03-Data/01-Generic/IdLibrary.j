@@ -461,6 +461,7 @@ library IdLibrary initializer init
         constant integer DEATH_AND_DECAY_DUMMY_ABILITY_ID               = 'A0E2'
         constant integer FOG_DUMMY_ABILITY_ID                           = 'A0E3'
         constant integer GNOME_MASTER_PASSIVE_DUMMY_ABILITY_ID          = 'A0EG'
+        constant integer ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID            = 'A0DP'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
@@ -924,6 +925,7 @@ library IdLibrary initializer init
         constant integer ERUPTION_IMMUNE_BUFF_ID                        = 'B02O'
         constant integer DRUNKEN_HAZE_IGNITE_BUFF_ID                    = 'A0DL'
         constant integer DRIED_MUSHROOM_DUMMY_BUFF_ID                   = 'B02Y'
+        constant integer ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID            = 'B030'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 

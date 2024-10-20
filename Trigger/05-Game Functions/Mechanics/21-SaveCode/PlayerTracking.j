@@ -83,6 +83,7 @@ library PlayerTracking initializer init requires GameInit, Table
         // --- Temporary values that are not saved to the load code
         private effect CurrentHatEffect = null
         private integer HeroUnitTypeId = 0
+        private boolean IsHeroRandom = false
         private boolean DebugEnabled = false
         private boolean HasAchievementsOpen = false
         private boolean HasScoreboardOpen = false
@@ -216,6 +217,10 @@ library PlayerTracking initializer init requires GameInit, Table
             return this.HeroUnitTypeId
         endmethod
 
+        public method getIsHeroRandom takes nothing returns boolean
+            return this.IsHeroRandom
+        endmethod
+
         public method getPlayerKillCount takes nothing returns integer
             return this.PlayerKillCount
         endmethod
@@ -240,8 +245,9 @@ library PlayerTracking initializer init requires GameInit, Table
             set this.Pet = value
         endmethod
 
-        public method setHeroUnitTypeId takes integer heroUnitTypeId returns nothing
+        public method setHeroUnitTypeId takes integer heroUnitTypeId, boolean random returns nothing
             set this.HeroUnitTypeId = heroUnitTypeId
+            set this.IsHeroRandom = random
         endmethod
 
         public method setPetLastSwappedAt takes integer value returns nothing
@@ -656,6 +662,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.3.4", true) // Draft random fix
         call AddGameVersion("CHS v2.3.5", false) // Ban/Draft fix
         call AddGameVersion("CHS v2.3.6", false) // Another Ban/Draft fix
+        call AddGameVersion("CHS v2.4.0", false) // Draws, fixes, live ui
     endfunction
 
     private function init takes nothing returns nothing

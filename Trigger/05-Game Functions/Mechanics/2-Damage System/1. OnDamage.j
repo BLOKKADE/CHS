@@ -13,7 +13,7 @@ scope OnDamage initializer init
                 return
             endif
 
-            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID or DamageSourceAbility == 'A0DP' or GetUnitTypeId(u) == CRYPT_LORD_LOCUST_UNIT_ID then
+            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID or DamageSourceAbility == ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID or GetUnitTypeId(u) == CRYPT_LORD_LOCUST_UNIT_ID then
                 set Damage.index.damageType = DAMAGE_TYPE_NORMAL
             endif
 

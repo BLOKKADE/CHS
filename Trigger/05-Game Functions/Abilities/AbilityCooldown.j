@@ -152,19 +152,19 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
 
         if dummySpell != 0 then
             call BlzStartUnitAbilityCooldown(u, dummySpell, newCooldown)
-
-            if abilId != ANCIENT_TEACHING_ABILITY_ID then
-                set Global_i = dummySpell
-                set Global_u = u
-                call ExecuteFunc("ResetAbilit_Ec")
-            endif
-        else
-            if abilId != ANCIENT_TEACHING_ABILITY_ID then
-                set Global_i = abilId
-                set Global_u = u
-                call ExecuteFunc("ResetAbilit_Ec")
-            endif
         endif
+
+        if abilId != ANCIENT_TEACHING_ABILITY_ID then
+            //Should only be used for Fearless Defenders as the original ability does not have a cd, only the dummy (chronus weirdness)
+            if BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 and dummySpell != 0 then
+                set Global_i = dummySpell
+            else
+                set Global_i = abilId
+            endif
+            set Global_u = u
+            call ExecuteFunc("ResetAbilit_Ec")
+        endif
+        
         
         return newCooldown 
     endfunction

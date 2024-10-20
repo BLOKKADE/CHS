@@ -147,6 +147,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             loop
                 if ModuloInteger(i, 20) == 0 and BladestormAttackLimit.integer[hid] > 1 then
                     set BladestormAttackLimit[hid] = BladestormAttackLimit[hid] - 1
+                    set BladestormArmorPierceBonus[hid] = BladestormArmorPierceBonus[hid] + 2
                 endif
     
                 set i = i + 1
@@ -155,7 +156,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
 
             call SetBonus(u, 0, 35 * heroLevel)
             call SetBonus(u, 1, 297 + 3 * heroLevel)
-            call SetBonus(u, 2, BladestormAttackLimit[hid])
+            call SetBonus(u, 2, 30 + BladestormArmorPierceBonus[hid])
+            call SetBonus(u, 3, BladestormAttackLimit[hid])
         elseif uid == ORC_CHAMPION_UNIT_ID then   
             call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 5 * levelsGained)
             call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (2 * levelsGained))

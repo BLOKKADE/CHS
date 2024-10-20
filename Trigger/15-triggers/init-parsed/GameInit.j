@@ -168,6 +168,7 @@ library GameInit initializer init requires GroupUtils
         trigger PlayerLeavesGameTrigger = null
         trigger SetHostPlayerTrigger = null
         trigger SinglePvpHeroDeathTrigger = null
+        trigger DuelDrawTrigger = null
         trigger SpacebarCameraTrigger = null
         trigger StartLevelTrigger = null
         trigger SuddenDeathCreepTimerTrigger = null

@@ -16,11 +16,12 @@ library RemoveBuffs requires BuffRepository
     function RemoveUnitBuffs takes unit u, integer buffType, boolean removeUnpurgeable returns nothing
         local integer abilId
         local integer i = 0
+
         loop
             set abilId = BlzGetAbilityId(BlzGetUnitAbilityByIndex(u, i))
             exitwhen abilId == 0
 
-            if IsBuff(abilId) and GetBuffType(abilId) == buffType and (removeUnpurgeable == false and IsBuffPurgeable(abilId)) then
+            if IsBuff(abilId) and (GetBuffType(abilId) == buffType or buffType == 0) and (removeUnpurgeable or IsBuffPurgeable(abilId)) then
                 if RemoveBuffAssociatedAbility(abilId) then
                     call UnitRemoveAbility(u, GetBuffAssociatedAbility(abilId))
                 endif

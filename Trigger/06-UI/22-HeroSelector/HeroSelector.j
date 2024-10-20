@@ -1738,8 +1738,8 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             call BlzFrameSetVisible(box, false)
         endif
 
-        call HeroSelectorUpdate()
         call ExecuteFunc("HeroInfoInit")
+        call HeroSelectorUpdate()
 
         // LastAction is used to Restore the current Pick/Bann Phase after Save&Load
         if LastAction == 1 then

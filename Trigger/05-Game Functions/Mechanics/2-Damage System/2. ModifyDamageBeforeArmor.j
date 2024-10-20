@@ -183,6 +183,14 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
+        //Energy Bombardment
+        if DamageSourceAbility == ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID then
+            set udg_NextDamageAbilitySource = ENERGY_BOMBARDMENT_ABILITY_ID
+            call Damage.applyPhys(DamageSourceHero, DamageTarget, Damage.index.damage, true, true, ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+            set Damage.index.damage = 0
+            return
+        endif
+
         //Shadow dance - start shadow form
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
         if i1 > 0 and  BlzGetUnitAbilityCooldownRemaining(DamageSource,SHADOW_DANCE_ABILITY_ID) <= 0 and Damage.index.isAttack and not IsOnHitDamage() then
@@ -214,7 +222,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Cloak of Sorrow
             if GetUnitAbilityLevel(DamageSource, 'B007') > 0 then
-                set Damage.index.damage = RMaxBJ(0,  Damage.index.damage - 4000)
+                set Damage.index.damage = RMaxBJ(1,  Damage.index.damage - 4000)
             endif
 
             //Cloak of Sorrow
@@ -321,6 +329,8 @@ scope ModifyDamageBeforeArmor initializer init
                 //call BJDebugMsg("sa: " + I2S(GetSpellValue(60, 30, i1)))
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
                 set Damage.index.damage = Damage.index.damage + GetSpellValue(60, 30, i1)
+            else
+                call ToggleSearingArrows(DamageSource)
             endif
         endif
 
@@ -333,6 +343,8 @@ scope ModifyDamageBeforeArmor initializer init
                 call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
                 set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
                 call DummyOrder.create(DamageSource, GetUnitX(DamageSource), GetUnitY(DamageSource), GetUnitFacing(DamageSource), 4).addActiveAbility('A04X', 1, 852662).setAbilityRealField('A04X', ABILITY_RLF_DURATION_NORMAL, 2.8 + (0.2 * i1)).target(DamageTarget).activate()
+            else
+                call ToggleColdArrows(DamageSource)
             endif
         endif
 
@@ -410,7 +422,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Absolute Poison
         set i = GetUnitAbilityLevel(DamageSource, ABSOLUTE_POISON_ABILITY_ID)
         if i > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison) then
-            set Damage.index.damage = Damage.index.damage * (1 + ((i * 0.01) * GetUnitElementCount(DamageSource, Element_Poison)))
+            set Damage.index.damage = Damage.index.damage * (1.0138 + ((i * 0.0062) * GetUnitElementCount(DamageSource, Element_Poison)))
         endif
 
         if UnitColdRuneDmgBonus.real[DamageTargetId] != 0. then
@@ -533,7 +545,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Naga Siren passive
-        if DamageSourceTypeId == NAGA_SIREN_UNIT_ID and Damage.index.isSpell then
+        if DamageSourceTypeId == NAGA_SIREN_UNIT_ID and Damage.index.isSpell and (not IsOnHitDamage()) then
             set Damage.index.damage = Damage.index.damage + (GetAttackDamage(DamageSource) * (0.1 + (0.001 * GetHeroLevel(DamageSource))))
         endif
 

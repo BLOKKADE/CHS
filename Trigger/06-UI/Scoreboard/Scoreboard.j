@@ -39,8 +39,11 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Colors
         private constant string BR_WINNER_STATUS_COLOR                  = "|cfffcff4a"	
+        private constant string BR_LIVES_COLOR                          = "|cffff3e25"	
         private constant string FELL_IN_BR_STATUS_COLOR                 = "|cffff9925"	
         private constant string HEADER_COLOR                            = "|cff00ffff"
+        private constant string HERO_PICKED_COLOR                       = "|cfffffc34"
+        private constant string HERO_RANDOMED_COLOR                     = "|cffffae34"
         private constant string INVALID_ACTION_COLOR                    = "|cffff0000"	
         private constant string LEAVER_COLOR                            = "|cff858585"	
         private constant string LEFT_FUN_BR_COLOR                       = "|cffb1ff69"	
@@ -61,6 +64,8 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant string COLOR_END_TAG                           = "|r"
         private constant string SLASH                                   = "|cff858585/|r"
 
+        private constant string NOTES                                   = HERO_RANDOMED_COLOR + " (r)" + COLOR_END_TAG + " = Random Hero" + HERO_PICKED_COLOR + " (p)" + COLOR_END_TAG + " = Picked Hero"
+
         // Specifications about the rows/columns
         private integer CurrentRowIndex                                 = 0
         private integer CurrentColumnIndex                              = 0
@@ -75,6 +80,8 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private hashtable IconEventHandles
         
         // Tooltip information
+        private framehandle ScoreboardBrTimesFrameHandle
+        private framehandle ScoreboardBrTimesTextFrameHandle
         private framehandle ScoreboardTooltipFrame
 		private framehandle ScoreboardTooltipTitleFrame
 		private framehandle ScoreboardTooltipTextFrame
@@ -587,6 +594,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         local framehandle creditsTextFrameHandle
         local framehandle closeButtonFrameHandle
         local framehandle closeIconButtonFrameHandle
+        local framehandle notesTextFrameHandle
 
         // This will get all players, even if they left the game already
         set ScoreboardForce = GetPlayerForce()
@@ -625,15 +633,36 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         call BlzFrameSetTextAlignment(creditsTextFrameHandle, TEXT_JUSTIFY_BOTTOM, TEXT_JUSTIFY_RIGHT) 
         call BlzFrameSetText(creditsTextFrameHandle, CREDITS) 
 
+        // Create the scoreboard notes
+        set notesTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardNotes", ScoreboardFrameHandle, "", 0) 
+        call BlzFrameSetLevel(ScoreboardTooltipFrame, 2) // To have it appear above the scoreboard
+        call BlzFrameSetAbsPoint(notesTextFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_TOP_MARGIN + CREDITS_HEIGHT) 
+        call BlzFrameSetAbsPoint(notesTextFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX - MAIN_FRAME_X_MARGIN, mainFrameBottomRightY + MAIN_FRAME_Y_BOTTOM_MARGIN) 
+        call BlzFrameSetEnable(notesTextFrameHandle, false) 
+        call BlzFrameSetScale(notesTextFrameHandle, 0.8) 
+        call BlzFrameSetTextAlignment(notesTextFrameHandle, TEXT_JUSTIFY_BOTTOM, TEXT_JUSTIFY_LEFT) 
+        call BlzFrameSetText(notesTextFrameHandle, NOTES) 
+
         // Create the box for the scoreboard description 
         set ScoreboardGameDescriptionFrameHandle = BlzCreateFrame("CheckListBox", ScoreboardFrameHandle, 0, 0)
         call BlzFrameSetAbsPoint(ScoreboardGameDescriptionFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX, MAIN_FRAME_TOP_LEFT_Y - 0.04) // Move it down a little so it doesn't block the timer
+
+        // Create the box for the BR times
+        set ScoreboardBrTimesFrameHandle = BlzCreateFrame("CheckListBox", ScoreboardFrameHandle, 0, 0)
+        call BlzFrameSetAbsPoint(ScoreboardBrTimesFrameHandle, FRAMEPOINT_TOPLEFT, mainFrameBottomRightX, MAIN_FRAME_TOP_LEFT_Y - 0.2) // Move it under the game description
+        call BlzFrameSetVisible(ScoreboardBrTimesFrameHandle, false) 
 
         // Create the actual text element that shows the scoreboard description
         set ScoreboardGameDescriptionTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardDescriptionTextArea", ScoreboardFrameHandle, "", 0)    
         call BlzFrameSetEnable(ScoreboardGameDescriptionTextFrameHandle, false) 
         call BlzFrameSetScale(ScoreboardGameDescriptionTextFrameHandle, 1.05) 
         call BlzFrameSetTextAlignment(ScoreboardGameDescriptionTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER)
+
+        // Create the actual text element that shows the br times
+        set ScoreboardBrTimesTextFrameHandle = BlzCreateFrameByType("TEXT", "ScoreboardBrTimesTextArea", ScoreboardFrameHandle, "", 0)    
+        call BlzFrameSetEnable(ScoreboardBrTimesTextFrameHandle, false) 
+        call BlzFrameSetScale(ScoreboardBrTimesTextFrameHandle, 1.05) 
+        call BlzFrameSetTextAlignment(ScoreboardBrTimesTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER)
 
         // Create the close button
         set closeButtonFrameHandle = BlzCreateFrame("ScriptDialogButton", ScoreboardFrameHandle, 0, 0) 
@@ -651,7 +680,37 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set closeButtonFrameHandle = null
         set closeIconButtonFrameHandle = null
     endfunction
-    
+
+    private function GetPluralLife takes integer value, string singular, string plural returns string
+        if (value <= 0) then
+            return "0 " + plural
+        elseif (value == 1) then
+            return "1 " + singular
+        endif
+        
+        return I2S(value) + " " + plural
+    endfunction
+
+    private function GetPlayerHeroLevelText takes PlayerStats ps, integer playerId returns string
+        local string text = PLAYER_HERO_LEVEL_COLOR + "Hero Level " + I2S(GetHeroLevel(PlayerHeroes[playerId])) + COLOR_END_TAG
+
+        // Hero select status
+        if (ps.getIsHeroRandom()) then
+            set text = text + HERO_RANDOMED_COLOR + " (r)" + COLOR_END_TAG
+        else
+            set text = text + HERO_PICKED_COLOR + " (p)" + COLOR_END_TAG
+        endif
+
+        // Show lives
+        if (BrStarted == true) then
+            set text = text + " " + BR_LIVES_COLOR + GetPluralLife(IMaxBJ(MaxBRDeathCount - PlayerBRDeaths[playerId], 0), "BR Life", "BR Lives") + COLOR_END_TAG
+        elseif (ModeNoDeath == false) then
+            set text = text + " " + BR_LIVES_COLOR + GetPluralLife(Lives[playerId], "Life", "Lives") + COLOR_END_TAG
+        endif
+
+        return text
+    endfunction
+
     private function UpdateDynamicPlayerValues takes nothing returns nothing
         local player currentPlayer = GetEnumPlayer()
         local integer playerId = GetPlayerId(currentPlayer)
@@ -732,7 +791,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
             // Update the player's hero level
             set CurrentColumnIndex = PLAYER_HERO_LEVEL_INDEX
-            call CreateText(PLAYER_HERO_LEVEL_COLOR + "Hero Level " + I2S(GetHeroLevel(PlayerHeroes[playerId])) + COLOR_END_TAG, playerId)
+            call CreateText(GetPlayerHeroLevelText(ps, playerId), playerId)
 
             // Set the PVP stats. We don't need to update the icon since that should never change
             set CurrentColumnIndex = PLAYER_DUELS_INDEX
@@ -809,11 +868,62 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set playerHero = null
     endfunction
 
+    private function UpdateBrTimes takes nothing returns nothing
+        local string brTimes
+        local integer sec
+        local integer min
+        
+        if (BattleRoyaleEndTime == 0) then
+            // Ongoing Game time
+            set sec = ModuloInteger(T32_Tick, 1920)
+            set min = ((T32_Tick - sec) / 1920)
+            set brTimes = "|cffff49d1Game Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+
+            if (BattleRoyaleStartTime > 0) then
+                // Ongoing BR time
+                set sec = ModuloInteger(T32_Tick - BattleRoyaleStartTime, 1920)
+                set min = ((T32_Tick - BattleRoyaleStartTime - sec) / 1920)
+                set brTimes = brTimes + "|n|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            endif
+        else
+            // Ending Game time
+            set sec = ModuloInteger(BattleRoyaleEndTime, 1920)
+            set min = ((BattleRoyaleEndTime - sec) / 1920)
+            set brTimes = "|cffff49d1Game Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+
+            // Ending BR time
+            set sec = ModuloInteger(BattleRoyaleEndTime - BattleRoyaleStartTime, 1920)
+            set min = ((BattleRoyaleEndTime - BattleRoyaleStartTime - sec) / 1920)
+            set brTimes = brTimes + "|n|cff00ffffBr Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+        endif
+
+        if (FunBattleRoyaleStartTime != 0) then
+            if (FunBattleRoyaleEndTime == 0) then
+                // Ongoing Fun BR time
+                set sec = ModuloInteger(T32_Tick - FunBattleRoyaleStartTime, 1920)
+                set min = ((T32_Tick - FunBattleRoyaleStartTime - sec) / 1920)
+                set brTimes = brTimes + "|n|cff00ff62Fun Br Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            else
+                // Ending Fun BR time
+                set sec = ModuloInteger(FunBattleRoyaleEndTime - FunBattleRoyaleStartTime, 1920)
+                set min = ((FunBattleRoyaleEndTime - FunBattleRoyaleStartTime - sec) / 1920)
+                set brTimes = brTimes + "|n|cff00ff62Fun Br Duration:|r|n|ccffafd31" + I2S(min) + " min|r |ccffd9431" + I2S(R2I(sec / 32)) + " sec|r|n"
+            endif
+        endif
+
+        call BlzFrameSetVisible(ScoreboardBrTimesFrameHandle, true) 
+        call BlzFrameSetSize(ScoreboardBrTimesFrameHandle, 0.17, GetTooltipSize(brTimes))
+        call BlzFrameSetText(ScoreboardBrTimesTextFrameHandle, brTimes) 
+        call BlzFrameSetAllPoints(ScoreboardBrTimesTextFrameHandle, ScoreboardBrTimesFrameHandle)
+    endfunction
+
     function StartScoreboardUpdate takes nothing returns nothing
         // Need to update the scoreboard game mode description since it didn't exist when the frames were created
         call BlzFrameSetSize(ScoreboardGameDescriptionFrameHandle, 0.17, GetTooltipSize(ScoreboardGameDescription))
         call BlzFrameSetText(ScoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescription) 
         call BlzFrameSetAllPoints(ScoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescriptionFrameHandle)
+
+        call BlzFrameSetAbsPoint(ScoreboardBrTimesFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (16 * ICON_WIDTH) + (5 * ICON_SPACING) + (9 * ABILITY_ICON_SPACING), MAIN_FRAME_TOP_LEFT_Y - 0.04 - BlzFrameGetHeight(ScoreboardGameDescriptionFrameHandle)) // Move it under the game description
 
         // Start at the first player row index
         set CurrentRowIndex = 1
@@ -822,6 +932,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Timer to refresh the scoreboard at an interval
         call TimerStart(CreateTimer(), SCOREBOARD_UPDATE_INTERVAL, true, function UpdateDynamicPlayersValues)
+        call TimerStart(CreateTimer(), .1, true, function UpdateBrTimes)
     endfunction
 
     private function InitializeScoreboard takes nothing returns nothing

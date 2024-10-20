@@ -1,7 +1,7 @@
 library StaticQueue /* v1.0.0.2
     ************************************************************************************
     *
-    *   */uses/*
+    *   */requires/*
     *   
     *       */ ErrorMessage /*         hiveworkshop.com/forums/submissions-414/snippet-error-message-239210/
     *

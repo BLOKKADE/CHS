@@ -100,7 +100,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(BLADE_MASTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr(BLADE_MASTER_UNIT_ID, 1, "|cffd6e049Area of effect|r: ,0,")
-        call SetBonusStr(BLADE_MASTER_UNIT_ID, 2, "|cff4daed4Attacks required|r: ,0,")
+        call SetBonusStr(BLADE_MASTER_UNIT_ID, 2, "|cff4daed4Armor ignored|r: ,0,%")
+        call SetBonusStr(BLADE_MASTER_UNIT_ID, 3, "|cff51d44dAttacks required|r: ,0,")
 
         call SetBonusStr(ORC_CHAMPION_UNIT_ID, 0, "|cffe7544aArmor bonus|r: ,0,")
         call SetBonusStr(ORC_CHAMPION_UNIT_ID, 1, "|cffd6e049Hit point regeneration bonus|r: ,0,")

@@ -153,7 +153,7 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefr
         call CleanupRemainingSlots(BRPlayerSlotIndex, 47)
     endfunction
 
-    private function RemovePlayerFromEverything takes player p returns nothing
+    function RemovePlayerFromEverything takes player p returns nothing
         // Reset the hero and remove it from the game
         call ResetHero(PlayerHeroes[GetPlayerId(p)])
         call RemoveUnit(PlayerHeroes[GetPlayerId(p)])

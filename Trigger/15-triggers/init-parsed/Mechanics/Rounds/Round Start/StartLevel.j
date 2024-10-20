@@ -94,6 +94,10 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
 
         if (udg_boolean12 == false and RoundNumber == 1) then
+            if (ModeNoDeath == false) then
+                call BlzFrameSetVisible(BRLivesFrameHandle, true)
+            endif
+            
             set udg_boolean12 = true
             set udg_boolean09 = true
 

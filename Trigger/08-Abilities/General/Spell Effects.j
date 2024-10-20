@@ -207,10 +207,6 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call ActivateBlokkadeShield(caster)
                     endif
 
-                    if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID then
-                        call ActivateXesilManaCostNegation(caster, abilId, abilLvl)
-                    endif
-
                     if GetUnitAbilityLevel(caster, 'B024') > 0 then
                         call GetRetaliationSource(caster, target, abilId, abilLvl)
                     endif
@@ -309,6 +305,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if GetUnitAbilityLevel(caster, 'B02Z') > 0 then
                         call ArcaneAbsorptionGauntletsActivate(caster, castAbilId, target)
+                    endif
+
+                    if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID then
+                        call ActivateXesilManaCostNegation(caster, castAbilId, abilLvl)
                     endif
 
                     //call BJDebugMsg("cd")

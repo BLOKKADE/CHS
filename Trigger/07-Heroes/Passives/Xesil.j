@@ -21,7 +21,7 @@ library Xesil requires RandomShit
         local timer t = NewTimer()
         local XesilData timerData = XesilData.create()
         set timerData.u = u
-        set timerData.manaCost = BlzGetAbilityManaCost(abilId, lvl - 1)
+        set timerData.manaCost = BlzGetUnitAbilityManaCost(u, abilId, lvl - 1)
         call SetTimerData(t, timerData)
         call TimerStart(t, 0.01, false, function DoManaCostNegation)
 

@@ -1,4 +1,4 @@
-library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected, HeroRefresh
+library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected, HeroRefresh, BattleCreatorManager
 
     private function PlayerLeavesGameActions takes nothing returns nothing
         local player leaverPlayer = GetTriggerPlayer()
@@ -26,6 +26,11 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
 
         if (PlayerHeroes[playerId] != null) then
             call ResetHero(PlayerHeroes[playerId])
+        endif
+
+        // Remove the player from the fun BR setup to prevent the fun BR from starting
+        if (IsFunBRRound == true and BrStarted == false) then
+            call RemovePlayerFromEverything(leaverPlayer)
         endif
 
         // Find a new host

@@ -12,6 +12,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(SPIRIT_LINK_BUFF_ID, SPIRIT_LINK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(HERO_BUFF_ID, HERO_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(EXTRADIMENSIONAL_COOPERATION_BUFF_ID, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1('Bblo', BLOODLUST_ABILITY_ID, BUFFTYPE_POSITIVE, false)
 
         call SetupBuffInfo1(SCROLL_OF_PROTECTION_BUFF_ID, 0, BUFFTYPE_POSITIVE, false) // unused?
         call SetupBuffInfo1(SENSATUS_SHIELD_OF_HONOR_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
@@ -105,6 +106,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(UNHOLY_FRENZY_BUFF_ID, UNHOLY_FRENZY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(NULL_VOID_ORB_BUFF_ID, 'A09L', BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(BLOODSTONE_BUFF_ID, 'A0AR', BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID, ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         
         call SetupBuffInfo1(MANA_STARVATION_NERF_BUFF_ID, MANA_STARVATIO_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(MIDAS_TOUCH_BUFF_ID, MIDAS_TOUCH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)

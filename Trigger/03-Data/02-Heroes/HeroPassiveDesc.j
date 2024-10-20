@@ -75,7 +75,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +2 physical power bonus." )
                     
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )
-        call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. ")
+        call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. [|cffd45e29onhit|r]")
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Water Addiction: +0.1% attack damage added to spell damage. (Every 50 levels) + 1 bonus attack damage per intelligence" )
         
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )
@@ -116,7 +116,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
                 
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 35 + 50% of its attack damage to nearby enemies as |cffff8080physical damage|r.")
-        call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bladestorm: +35 damage, +3 area of effect. (|cff68eef3Every 20 levels|r) reduces attacks required by 1." )
+        call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bladestorm: +35 damage, +3 area of effect. (|cff68eef3Every 20 levels|r) Reduces attacks required by 1." )
                                                     
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp" )
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Valiant Strike: All damage dealt by the Hero and its summons have 10% of the Hero's strength added to it.[|cffd45e29onhit|r]")
@@ -158,7 +158,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Construct: +1% bonus hit points from strength." )
             
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOrcWarlockRed.blp" )
-        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with a bonus absolute slot.")
+        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with a bonus absolute slot. Can only carry up to 4 items.")
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 25 levels|r) Gets a bonus Absolute slot. (max 10)" ) 
         
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )
