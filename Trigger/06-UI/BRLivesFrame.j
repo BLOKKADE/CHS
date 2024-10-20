@@ -55,7 +55,7 @@ library BRLivesFrame initializer init requires PlayerTracking, Utility
         call BlzFrameSetEnable(BRLivesTextFrameHandle, true) 
         call BlzFrameSetScale(BRLivesTextFrameHandle, 1.12) 
         call BlzFrameSetTextAlignment(BRLivesTextFrameHandle, TEXT_JUSTIFY_CENTER, TEXT_JUSTIFY_CENTER) 
-        call BlzFrameSetText(BRLivesTextFrameHandle, LIVES_TITLE_TEXT + ": 3") // Initial lives
+        call BlzFrameSetText(BRLivesTextFrameHandle, LIVES_TITLE_TEXT + ": 1") // Initial lives
 
         // Finalize the main window
         // Width
