@@ -27,12 +27,12 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             local real newRegen = 0
 
             if GetUnitAbilityLevel(this.target, PARASITE_BUFF_ID) > 0 then
-                call BJDebugMsg("parasite buff")
+                //call BJDebugMsg("parasite buff")
                 set count = count + 1
             endif
 
             if GetUnitAbilityLevel(this.target, ACID_BOMB_BUFF_ID) > 0 then
-                call BJDebugMsg("acid bomb buff")
+                //call BJDebugMsg("acid bomb buff")
                 set count = count + 1
             endif
 
