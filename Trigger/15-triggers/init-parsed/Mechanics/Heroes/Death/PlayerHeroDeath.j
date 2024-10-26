@@ -51,8 +51,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
             return true
         endif
 
-        //call BJDebugMsg(GetUnitName(currentUnit))
-        if IsUnitNotHeroOrCreep(currentUnit) then
+        if IsUnitNotHeroOrCreep(currentUnit) or IsPlayerInForce(currentPlayer, DefeatedPlayers) then
             set currentUnit = null
             set currentPlayer = null
             return false
@@ -138,7 +137,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         // Mark the round the player died on
         call UpdateScoreboardPlayerDies(currentPlayer, RoundNumber)
 
-        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(currentPlayer) + "|cffC60000 was defeated!|r")
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(currentPlayer) + "|cffC60000 was defeated!|r\nThere are " + I2S(PlayerCount) + " players left.")
         call GroupRemoveUnit(OnPeriodGroup, PlayerHeroes[GetPlayerId(currentPlayer)])
         
         call DisableTrigger(FaerieDragonDiesTrigger)
