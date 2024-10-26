@@ -502,7 +502,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Cold, 1)
 
         //51 - Inferno 
-        call SaveAbilData(INFERNO_ABILITY_ID, INFERNO_ITEM_ID, false, 0, 0, false, Order_Point, "inferno")
+        call SaveAbilData(INFERNO_ABILITY_ID, INFERNO_ITEM_ID, false, 0, 0, false, Order_Point, "dreadlordinferno")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Dark, 1)
