@@ -28,7 +28,7 @@ library PvpSuddenDraw /*initializer init*/ requires TimerUtils, PvpEnd
 
         private method periodic takes nothing returns nothing
             if (not duelGame.isDuelOver) and this.suddenDrawActive then
-                if (not this.countdownActive) and T32_Tick > this.startCountdown then
+                if (not this.countdownActive) and T32_Tick >= this.startCountdown then
                     call this.Countdown()
                 endif
                 if T32_Tick > this.endTick then
