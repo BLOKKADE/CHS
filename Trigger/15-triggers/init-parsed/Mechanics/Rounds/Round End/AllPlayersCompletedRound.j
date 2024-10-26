@@ -16,6 +16,8 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
             set NextRound[RoundNumber + 1] = false
             call DestroyTimer(RoundWaitTimer)
             call DestroyTimerDialog(RoundWaitTimerDialog)
+
+            set RoundWaitTimer = null
             call TriggerExecute(StartLevelTrigger)
         endif
     endfunction
@@ -42,7 +44,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
     endfunction
 
     private function AllPlayersCompletedRoundActions takes nothing returns nothing
-        if (RoundFinishedCount >= PlayerCount) then
+        if (RoundFinishedCount >= PlayerCount) and RoundWaitTimer == null then
             if (IsGameOver()) then
                 return
             endif
@@ -110,6 +112,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
 
     private function init takes nothing returns nothing
         set AllPlayersCompletedRoundTrigger = CreateTrigger()
+        set RoundWaitTimer = null 
         call TriggerAddAction(AllPlayersCompletedRoundTrigger, function AllPlayersCompletedRoundActions)
     endfunction
 
