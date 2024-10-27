@@ -101,7 +101,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
                 set currentDuelGame = node.data
 
                 if (currentDuelGame.isInitialized and (not currentDuelGame.fightStarted)) then
-                    call currentDuelGame.startCountdown()
+                    call currentDuelGame.startCountdown(5)
                 endif
 
                 set node = node.next
@@ -306,9 +306,10 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             endif
         endmethod 
 
-        method startCountdown takes nothing returns nothing
+        method startCountdown takes integer duration returns nothing
             set this.startTick = T32_Tick
             set this.nextTick = T32_Tick + 32
+            set this.currentCountdown = duration
             call this.startPeriodic()
         endmethod
 
@@ -323,7 +324,6 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             set this.winningTeam = -1
             set this.fightStarted = false
             set this.isInitialized = false
-            set this.currentCountdown = 5
 
             return this
         endmethod

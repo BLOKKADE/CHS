@@ -19,7 +19,7 @@ library Fog requires NewBonus, Utility, UnitHelpers
                 if GetUnitAbilityLevel(p, 'Bclf') == 1 and CalculateDistance(this.x, GetUnitX(p), this.y, GetUnitY(p)) > 400 then
                     set angle = GetAngleToTargetPoint(this.x, GetUnitX(p), this.y, GetUnitY(p))
                     call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, GetUnitX(p), GetUnitY(p)))
-                    call BJDebugMsg("fog stop trapped unit")
+
                     call SetUnitX(p, CalcX(this.x, angle, 400))
                     call SetUnitY(p, CalcY(this.y, angle, 400))
 
@@ -39,7 +39,6 @@ library Fog requires NewBonus, Utility, UnitHelpers
                 set p = FirstOfGroup(ENUM_GROUP)
                 exitwhen p == null
                 if GetUnitAbilityLevel(p, 'Bclf') == 1 then
-                    call BJDebugMsg("fog add trapped unit")
                     call GroupAddUnit(this.trappedUnits, p)
                 endif
                 call GroupRemoveUnit(ENUM_GROUP, p)
@@ -77,7 +76,6 @@ library Fog requires NewBonus, Utility, UnitHelpers
             set this.pid = GetPlayerId(GetOwningPlayer(source))
             set this.x = x
             set this.y = y
-            call BJDebugMsg("fog start")
 
             call this.createDummy(duration)
             call this.startPeriodic()
@@ -89,7 +87,6 @@ library Fog requires NewBonus, Utility, UnitHelpers
             call ReleaseGroup(this.trappedUnits)
             set this.source = null
             set this.trappedUnits = null
-            call BJDebugMsg("fog end")
             call this.recycle()
         endmethod
     

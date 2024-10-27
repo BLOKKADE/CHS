@@ -36,7 +36,6 @@ library GameInit initializer init requires GroupUtils
         group DuelWinners = null
         group GroupEmptyArenaCheck = null
         group OnPeriodGroup
-        group RoundCreeps = null
         integer array CreepUnitTypeIds
         integer array HeroAbilityCount
         integer array LumberGained
@@ -196,7 +195,6 @@ library GameInit initializer init requires GroupUtils
         set Team1BettingForce = CreateForce()
         set Team2BettingForce = CreateForce()
         set DeathDialog = DialogCreate()
-        set RoundCreeps = CreateGroup()
         set LeaverPlayers = CreateForce()
         set GroupEmptyArenaCheck = CreateGroup()
         set VotingRightsDialog = DialogCreate()

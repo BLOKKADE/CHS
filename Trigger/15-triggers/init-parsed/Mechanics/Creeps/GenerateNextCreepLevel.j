@@ -379,8 +379,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         set RoundNumber = (RoundNumber + 1)
-        call ForGroup(RoundCreeps, function RemovePreviousUnit)
-        call GroupClear(RoundCreeps)
 
         loop
             exitwhen playerId == 8
