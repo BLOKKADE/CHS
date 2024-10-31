@@ -45,16 +45,16 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local integer currentPlayerId = GetPlayerId(currentPlayer)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
-        if (IsPlayerInForce(currentPlayer, LeaverPlayers)) then
-            set currentUnit = null
-            set currentPlayer = null
-            return true
-        endif
-
         if IsUnitNotHeroOrCreep(currentUnit) or IsPlayerInForce(currentPlayer, DefeatedPlayers) then
             set currentUnit = null
             set currentPlayer = null
             return false
+        endif
+
+        if (IsPlayerInForce(currentPlayer, LeaverPlayers)) then
+            set currentUnit = null
+            set currentPlayer = null
+            return true
         endif
         
         call StopRectLeaveDetection(GetHandleId(currentUnit))

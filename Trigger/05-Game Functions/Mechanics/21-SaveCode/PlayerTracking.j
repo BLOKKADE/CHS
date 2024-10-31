@@ -665,6 +665,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.4.0", false) // Draws, fixes, live ui
         call AddGameVersion("CHS v2.4.1", true) // Draws, fixes, live ui
         call AddGameVersion("CHS v2.4.2", true) // bugfixes
+        call AddGameVersion("CHS v2.4.3", true) // player leave bugfix?
     endfunction
 
     private function init takes nothing returns nothing
