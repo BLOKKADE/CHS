@@ -232,7 +232,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Banish and Scroll of Transformation phys immunity and negative dmg ignore
-        if Damage.index.damage <= 0 or ((GetUnitAbilityLevel(DamageTarget, 'B028') > 0 or GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0) and IsPhysDamage()) then
+        if Damage.index.damage <= 0 or ((GetUnitAbilityLevel(DamageTarget, 'B028') > 0 or (GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0 and not (DamageSourceTypeId ==  PHOENIX_1_UNIT_ID or HAWKS.contains(DamageSourceTypeId)))) and IsPhysDamage()) then
             set Damage.index.damage = 0
             return
         endif
