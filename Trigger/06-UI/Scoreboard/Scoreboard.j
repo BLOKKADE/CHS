@@ -105,6 +105,9 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private framehandle array CachedPlayerFramehandles
         private framehandle array CachedPlayerIndicatorParentFramehandles
         private framehandle array CachedPlayerIndicatorFramehandles
+
+        // Random static data
+        private string array DeathOrder
     endglobals
     
     private function GetTopLeftX takes nothing returns real
@@ -737,9 +740,9 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                     if (IsFunBRRound and IsPlayerInForce(currentPlayer, LeaverPlayers)) then
                         call CreateText(LEFT_FUN_BR_COLOR + "Left the game" + COLOR_END_TAG, playerId)
                     elseif (IsFunBRRound) then
-                        call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Fun Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
+                        call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell " + DeathOrder[PlayerBRDeathOrder[playerId]] + " in the Fun Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
                     else
-                        call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell in Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
+                        call CreateText(FELL_IN_BR_STATUS_COLOR + "Fell " + DeathOrder[PlayerBRDeathOrder[playerId]] + " in the Battle Royale with " + ps.getBRPVPKillCount() + COLOR_END_TAG, playerId)
                     endif
                 else
                     call CreateText(SURVIVED_UNTIL_STATUS_COLOR + "Survived until round " + I2S(PlayerDeathRound[playerId]) + COLOR_END_TAG, playerId)
@@ -960,6 +963,15 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
     endfunction
 
     private function init takes nothing returns nothing
+        set DeathOrder[1] = "1st"
+        set DeathOrder[2] = "2nd"
+        set DeathOrder[3] = "3rd"
+        set DeathOrder[4] = "4th"
+        set DeathOrder[5] = "5th"
+        set DeathOrder[6] = "6th"
+        set DeathOrder[7] = "7th"
+        set DeathOrder[8] = "8th"
+
         call TimerStart(CreateTimer(), 4, false, function InitializeScoreboard)
     endfunction
 
