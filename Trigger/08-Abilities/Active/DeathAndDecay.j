@@ -12,7 +12,7 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
             local unit p
             local integer i = 0
             call GroupClear(ENUM_GROUP)
-            call EnumTargettableUnitsInRange(ENUM_GROUP, this.x, this.y, 300, Player(this.pid), false, Target_Enemy)
+            call EnumTargettableUnitsInRange(ENUM_GROUP, this.x, this.y, 300, Player(this.pid), false, Target_Any)
             //call BJDebugMsg("sldmg")
             //call BJDebugMsg("dmg: " + I2S(GetSpellValue(50, 10, this.level)) + " grp: " + I2S(BlzGroupGetSize(ENUM_GROUP)))
             loop
