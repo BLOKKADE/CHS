@@ -315,6 +315,15 @@ scope ModifyDamageBeforeArmor initializer init
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.03)))
         endif
 
+        //Acid Spray
+        set i1 = GetUnitAbilityLevel(DamageSource, ACID_SPRAY_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
+            set r1 = GetHeroInt(DamageSource, true) * (1.5 + (0.25 * i1))
+            if Damage.index.damage < r1 then
+                set Damage.index.damage = r1
+            endif
+        endif
+
         //Pyromancer fire attack
         if DamageSourceTypeId == PYROMANCER_UNIT_ID and Damage.index.isAttack and DamageSourceAbility != PYROMANCER_UNIT_ID then
             set DamageSourceAbility = PYROMANCER_UNIT_ID 
