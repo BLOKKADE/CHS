@@ -129,7 +129,7 @@ scope ShortPeriodCheck initializer init
             set i1 = GetUnitAbilityLevel(u, 'A05T')
             set i2 = LoadInteger(HT, hid,'A05T')
             if i1 > 0 or i2 != 0 then
-                set i1 = R2I(GetHeroStr(u, true) * 0.25) * i1
+                set i1 = R2I(GetHeroStr(u, true) * 0.15) * i1
                 if i1 != i2 then
                     call AddUnitCustomState(u, BONUS_BLOCK, i1 - i2)
                     call SaveInteger(HT, hid, 'A05T', i1)	

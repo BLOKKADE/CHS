@@ -106,6 +106,7 @@
 //! import "C:\CHS\CHS\Trigger\09-Items\SpellbaneToken.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\Staff of Lightning.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\Staff Of Power.j"
+//! import "C:\CHS\CHS\Trigger\09-Items\Stone Helmet.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\Strong Chestmail.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\TerrestrialGlaive.j"
 //! import "C:\CHS\CHS\Trigger\09-Items\VigourToken.j"

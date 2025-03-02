@@ -247,6 +247,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call StaffOfPowerCast(caster)
                     endif
 
+                    if abilId == 'A0ER' then
+                        call StoneHelmetCast(caster)
+                    endif
+
                     if abilId == RUNE_MASTERY_ABILITY_ID then
                         call CastRuneMaster(caster)
                     endif
