@@ -54,8 +54,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 		//Mask of Death
 		if itemId == 'I04T' then
+			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 			if UnitHasItemType(u ,itemId ) then
-				call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 				call SaveInteger(HTi, hid, itemId,1)
 			else
 				call SaveInteger(HTi, hid, itemId,0)
