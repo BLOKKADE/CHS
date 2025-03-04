@@ -315,6 +315,12 @@ scope ModifyDamageBeforeArmor initializer init
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.03)))
         endif
 
+        //Inferno
+        set i1 = GetUnitAbilityLevel(DamageSource, INFERNO_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == INFERNO_ABILITY_ID then
+            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * 0.2
+        endif
+
         //Acid Spray
         set i1 = GetUnitAbilityLevel(DamageSource, ACID_SPRAY_ABILITY_ID)
         if i1 > 0 and DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
@@ -376,9 +382,10 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         // Carrion Swarm
-        /*if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
-            call ActivateCarrionSwarmDarkBonus(DamageSource)
-        endif*/
+        set i1 = GetUnitAbilityLevel(DamageSource, CARRION_SWARM_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
+            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.005 * i1)
+        endif
 
         //Frost Circlet
         if GetUnitAbilityLevel(DamageSource, FROST_CIRCLET_ABILITY_ID) > 0 then
