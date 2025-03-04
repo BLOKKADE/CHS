@@ -203,6 +203,14 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call PoisonSpellCast(caster, target)
                     endif
 
+                    if GetUnitAbilityLevel(caster, CHAIN_LIGHTNING_ABILITY_ID) > 0 then
+                        call CastChainLightning(caster)
+                    endif
+
+                    if GetUnitAbilityLevel(caster, INNER_FIRE_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(caster, INNER_FIRE_ABILITY_ID) == 0 then
+                        call CastInnerFireOnSpellCast(caster, abilLvl)
+                    endif
+
                     if GetUnitAbilityLevel(caster, 'A01X') > 0 then
                         call ActivateBlokkadeShield(caster)
                     endif
