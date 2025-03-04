@@ -12,6 +12,11 @@ scope AfterDamage initializer init
             set ColdWindDamageIncreased.boolean[DamageSourceId] = true
         endif
 
+        //Carrion Swarm heal
+        if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
+            call SetUnitState(DamageSource, UNIT_STATE_LIFE, GetUnitState(DamageSource, UNIT_STATE_LIFE) + Damage.index.damage)
+        endif
+
         if DamageIsCrit and Damage.index.damage >= 1 then
             if IsPhysDamage() then
                 call CreateTextTagTimerColor( I2S(R2I(Damage.index.damage)) + "!", 1, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 50, 1, 177, 0, 0)
