@@ -4,8 +4,11 @@ library ChainLightning requires DummyOrder, GetRandomUnit
         local DummyOrder dummy
         local unit target = null
 
+        call RUH.reset().doHeroPriority().checkMagicImmune()
+        call RUH.EnumUnits(GetUnitX(caster), GetUnitY(caster), 600, Target_Enemy, GetOwningPlayer(caster))
+
         loop
-            set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), 600, GetOwningPlayer(caster), Target_Enemy, true, false)
+            set target = RUH.GetRandomUnit(true)
 
             if target == null then
                 exitwhen true

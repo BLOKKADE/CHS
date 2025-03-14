@@ -384,7 +384,7 @@ scope ModifyDamageBeforeArmor initializer init
         // Carrion Swarm
         set i1 = GetUnitAbilityLevel(DamageSource, CARRION_SWARM_ABILITY_ID)
         if i1 > 0 and DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
-            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.005 * i1)
+            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.0462 + (0.0038 * i1))
         endif
 
         //Frost Circlet

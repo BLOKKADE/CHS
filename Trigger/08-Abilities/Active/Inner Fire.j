@@ -12,8 +12,11 @@ library InnerFire requires RuneInit, AbilityCooldown, DummyOrder, GetRandomUnit,
         local DummyOrder dummy
         local unit target = null
 
+        call RUH.reset().doHeroPriority().checkMagicImmune()
+        call RUH.EnumUnits(GetUnitX(caster), GetUnitY(caster), 500, Target_Ally, GetOwningPlayer(caster))
+
         loop
-            set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), 600, GetOwningPlayer(caster), Target_Ally, true, false)
+            set target = RUH.GetRandomUnit(true)
 
             if target == null then
                 exitwhen true
