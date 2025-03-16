@@ -324,7 +324,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Acid Spray
         set i1 = GetUnitAbilityLevel(DamageSource, ACID_SPRAY_ABILITY_ID)
         if i1 > 0 and DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSource, true) * (1.5 + (0.25 * i1))
+            set r1 = GetHeroInt(DamageSource, true) * (1.5 + (0.15 * i1))
             if Damage.index.damage < r1 then
                 set Damage.index.damage = r1
             endif
