@@ -71,7 +71,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +7 intelligence." )
         
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )
-        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mortar Might: Increases physical power but the hero can't deal [|cff00ffffCrit|r] damage. ")
+        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mortar Might: Increases physical power but the hero can't deal [|cff00ffffCrit|r] damage. Also works on summons. ")
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +2 physical power bonus." )
                     
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )

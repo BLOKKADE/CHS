@@ -563,6 +563,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //63 - Carrion Beetles 
         call SaveAbilData(CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //65 - Hardened Skin 
@@ -633,6 +634,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //78 - Summon Quilbeast 
         call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID, SUMMON_QUILBEAST_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Poison, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //79 - Phoenix 
