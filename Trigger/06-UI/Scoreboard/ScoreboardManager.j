@@ -20,8 +20,11 @@ library ScoreboardManager
 
         boolean array PlayerLeftGame // If the player left the game
         boolean array PlayerDiedInBR // If the player died in the BR. e.g. They died on round 25 or 50
+        integer array PlayerBRDeathOrder // The order of which players died in the BR
         integer array PlayerDeathRound // The round the player died for good
         force WinnerPlayerForce = null
+
+        integer CurrentDeadHeroCount = 0
     endglobals
     
     function ResetScoreboardBrWinner takes nothing returns nothing
@@ -42,6 +45,11 @@ library ScoreboardManager
             // Mark the player has died. Will be reflected in the update interval
             set PlayerDeathRound[playerId] = deathRound
             set PlayerDiedInBR[playerId] = BrStarted
+
+            if (BrStarted) then
+                set CurrentDeadHeroCount = CurrentDeadHeroCount + 1
+                set PlayerBRDeathOrder[playerId] = CurrentDeadHeroCount
+            endif
         endif
     endfunction
 
@@ -65,6 +73,7 @@ library ScoreboardManager
 
         set PlayerDeathRound[playerId] = 0
         set PlayerDiedInBR[playerId] = false
+        set PlayerBRDeathOrder[playerId] = 0
 
         set CachedPlayerStrings[(playerId * CACHING_BUFFER) + PLAYER_STATUS_INDEX] = ""
         call BlzFrameSetText(playerNameTextFrameHandle, "") 

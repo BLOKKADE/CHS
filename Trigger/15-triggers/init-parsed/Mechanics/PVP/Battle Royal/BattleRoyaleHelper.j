@@ -462,6 +462,9 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
 
+        // Reset the dead hero count
+        set CurrentDeadHeroCount = 0
+
         if (IsFunBRRound) then
             call CalculatePlayerForces()
         else
