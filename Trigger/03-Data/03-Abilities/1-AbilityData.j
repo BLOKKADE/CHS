@@ -633,8 +633,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //78 - Summon Quilbeast 
         call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID, SUMMON_QUILBEAST_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
-        call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Poison, 1)
+        call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //79 - Phoenix 
@@ -1165,7 +1165,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
          call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "burrow")
          call SetLastObjectElement(Element_Arcane, 1)
 
-         //198 - Energy Bombardment
+         //199 - Energy Bombardment
          call SaveAbilData(ENERGY_BOMBARDMENT_ABILITY_ID, ENERGY_BOMBARDMENT_ITEM_ID, false, Target_Enemy, 0, false, Order_None, null)
     endfunction
 
