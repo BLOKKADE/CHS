@@ -156,6 +156,15 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         if GetUnitTypeId(u) == ROCK_GOLEM_UNIT_ID then
             call AddUnitCustomState(u, BONUS_BLOCK, 50)
             call AddUnitCustomState(u, BONUS_MAGICRES, 15)
+            call UnitAddAbility(u, ABSOLUTE_EARTH_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_EARTH_ABILITY_ID,false,true)
+            
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_EARTH_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_EARTH_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
         endif
 
         //Medivh
