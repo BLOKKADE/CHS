@@ -45,7 +45,6 @@ scope ModifyDamageAfterArmor initializer init
             set r2 = (Damage.index.amount * 0.25)
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
-            set Damage.index.amount = Damage.index.amount * 0.75
         endif
 
         //Light Magic Shield
@@ -297,7 +296,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         if IsNotOnHitOrIsDivineBubbleOnHit() and Damage.index.amount > 0 then
-            if IsPhysDamage() then
+            if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID) then
 
                 if not IsOnHitDamage() then
                     //Pulverize
@@ -322,38 +321,42 @@ scope ModifyDamageAfterArmor initializer init
                 endif
 
                 //Thorns
-                if (GetUnitAbilityLevel(DamageTarget, 'B01C') > 0 and IsUnitType(DamageSource, UNIT_TYPE_MELEE_ATTACKER)) then
-                    
-                    set r1 = 1 - (0.01 * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) + GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID)))
-                    set udg_NextDamageType = DamageType_Onhit
-                    set udg_NextDamageAbilitySource = THORNS_AURA_ABILITY_ID
-                    
-                    if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
-                        set r3 = ((Damage.index.amount * ( 0.12 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
-                        //call BJDebugMsg("thorns: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
-                        //call MagicDamage(DamageTarget,DamageSource, , true)
-                    else
-                        set r3 = ((Damage.index.amount * ( 0.18 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
-                        //call BJDebugMsg("thorns: r1:" + R2S(1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                if IsPhysDamage() then
+                    if (GetUnitAbilityLevel(DamageTarget, 'B01C') > 0 and IsUnitType(DamageSource, UNIT_TYPE_MELEE_ATTACKER)) then
+                        
+                        set r1 = 1 - (0.01 * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) + GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID)))
+                        set udg_NextDamageType = DamageType_Onhit
+                        set udg_NextDamageAbilitySource = THORNS_AURA_ABILITY_ID
+                        
+                        if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
+                            set r3 = ((Damage.index.amount * ( 0.12 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
+                            //call BJDebugMsg("thorns: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
+                            call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                            //call MagicDamage(DamageTarget,DamageSource, , true)
+                        else
+                            set r3 = ((Damage.index.amount * ( 0.18 + (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) * 0.03))) * r1) * r2
+                            //call BJDebugMsg("thorns: r1:" + R2S(1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
+                            call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        endif
                     endif
                 endif
 
                 //Reflection
-                if (GetUnitAbilityLevel(DamageTarget, 'B01O') > 0 and IsUnitType(DamageSource, UNIT_TYPE_RANGED_ATTACKER)) then
-                    set r1 = 1 - (0.01 * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) + GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID)))
-                    //call BJDebugMsg("ref: r1:" + R2S(r1) + " ttl: " + R2S((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.01)) * r1))
-                    set udg_NextDamageType = DamageType_Onhit
-                    set udg_NextDamageAbilitySource = REFLECTION_AUR_ABILITY_ID
-                    if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
-                        set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.03))) * r1) * r2
-                        //call BJDebugMsg("ref: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
-                    else
-                        set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.045))) * r1) * r2
-                        //call BJDebugMsg("ref: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                        call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                if IsPhysDamage() then
+                    if (GetUnitAbilityLevel(DamageTarget, 'B01O') > 0 and IsUnitType(DamageSource, UNIT_TYPE_RANGED_ATTACKER)) then
+                        set r1 = 1 - (0.01 * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) + GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID)))
+                        //call BJDebugMsg("ref: r1:" + R2S(r1) + " ttl: " + R2S((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.01)) * r1))
+                        set udg_NextDamageType = DamageType_Onhit
+                        set udg_NextDamageAbilitySource = REFLECTION_AUR_ABILITY_ID
+                        if IsUnitType(DamageSource, UNIT_TYPE_HERO) then
+                            set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.03))) * r1) * r2
+                            //call BJDebugMsg("ref: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
+                            call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        else
+                            set r3 = ((Damage.index.amount * (0.12 + (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.045))) * r1) * r2
+                            //call BJDebugMsg("ref: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
+                            call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        endif
                     endif
                 endif
 
@@ -372,6 +375,18 @@ scope ModifyDamageAfterArmor initializer init
 
             if IsMagicDamage() then
 
+                //call BJDebugMsg("trgt: " + GetUnitName(DamageTarget) + " attack: " + B2S(Damage.index.isAttack))
+                //Spiked Carapaces
+                set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID) + GetUnitAbilityLevel(DamageTarget, CARBEE_SPIKED_CARAP_ABILITY_ID) 
+                if i > 0 and Damage.index.isAttack then
+                    set udg_NextDamageType = DamageType_Onhit
+                    set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
+                    //set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
+                    set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID)))
+                    //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
+                    call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                endif  
+                
                 //Wizardbane
                 if GetUnitAbilityLevel(DamageTarget, 'B01B') > 0 then
                     set r1 = 1 - (0.01 * (GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID) + GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID)))
