@@ -52,7 +52,7 @@ library AncientElement initializer init requires RandomShit, AbsoluteElements, A
         call SetAeElementData('AE02', Element_Wind)
         call SetAeElementData('AE03', Element_Earth)
         call SetAeElementData('AE04', Element_Wild)
-        call SetAeElementData('AE05', Element_Energy)
+     //   call SetAeElementData('AE05', Element_Energy)
         call SetAeElementData('AE06', Element_Dark)
         call SetAeElementData('AE07', Element_Light)
         call SetAeElementData('AE08', Element_Cold)
