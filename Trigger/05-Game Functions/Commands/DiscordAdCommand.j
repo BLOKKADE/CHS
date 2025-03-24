@@ -17,7 +17,7 @@ library DiscordAdCommand initializer init requires Command, TimerUtils, DiscordF
             set DiscordAdTimeout[pid] = T32_Tick
 
             if not DiscordAdDisabled[GetPlayerId(GetLocalPlayer())] then
-                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "You can disable the Discord ad (forever) by typing -togglead")
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "You can disable the Discord ad permanently by typing -togglead")
             endif
         endif
     endfunction

@@ -162,7 +162,7 @@ library CritDamage requires RandomShit, Vampirism, Gnome
         endif
 
         //Medivh
-        if DamageSourceTypeId == MEDIVH_UNIT_ID or DamageSourceTypeId == MORTAR_TEAM_UNIT_ID then
+        if DamageSourceTypeId == MEDIVH_UNIT_ID or GetUnitTypeId(DamageSourceHero) == MORTAR_TEAM_UNIT_ID then
             set critDmg = 0
         endif
         
@@ -173,9 +173,9 @@ library CritDamage requires RandomShit, Vampirism, Gnome
                 set critDmg = critDmg / 2
             endif 
 
-     //       if (DamageSourceTypeId != SEER_UNIT_ID and StaffOfPowerCritNegate) or (magicDmgType and GetUnitAbilityLevel(DamageSource, SUMMON_MAGIC_DMG_ABILITY_ID) > 0) then
-       //         set critDmg = critDmg / 2
-      //      endif
+            if (DamageSourceTypeId != SEER_UNIT_ID and StaffOfPowerCritNegate) or (magicDmgType and GetUnitAbilityLevel(DamageSource, SUMMON_MAGIC_DMG_ABILITY_ID) > 0) then
+                set critDmg = critDmg / 2
+            endif
 
             //Mithril Helmet
             if UnitHasItemType(DamageTarget, 'I091') then

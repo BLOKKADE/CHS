@@ -232,7 +232,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Banish and Scroll of Transformation phys immunity and negative dmg ignore
-        if Damage.index.damage <= 0 or ((GetUnitAbilityLevel(DamageTarget, 'B028') > 0 or (GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0 and not (DamageSourceTypeId ==  PHOENIX_1_UNIT_ID or HAWKS.contains(DamageSourceTypeId)))) and IsPhysDamage()) then
+        if Damage.index.damage <= 0 or (IsPhysDamage() and (GetUnitAbilityLevel(DamageTarget, 'B028') > 0 or (GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0 and not (DamageSourceTypeId ==  PHOENIX_1_UNIT_ID or HAWKS.contains(DamageSourceTypeId))))) then
             set Damage.index.damage = 0
             return
         endif
@@ -313,12 +313,6 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageSource, MONSOON_ABILITY_ID)
         if i1 > 0 and DamageSourceAbility == MONSOON_ABILITY_ID then
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.03)))
-        endif
-
-        //Inferno
-        set i1 = GetUnitAbilityLevel(DamageSource, INFERNO_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == INFERNO_ABILITY_ID then
-            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * 0.2
         endif
 
         //Acid Spray
@@ -567,7 +561,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Grom Hellscream
         if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID and (not IsOnHitDamage()) then
-            set Damage.index.damage = Damage.index.damage + (GetHeroStr(DamageSourceHero, true) * (0.1 + (0.005 * GetHeroLevel(DamageSourceHero))))
+            set Damage.index.damage = Damage.index.damage + (GetHeroStatBJ(GetHeroPrimaryStat(DamageSourceHero), DamageSourceHero, true) * (0.1 + (0.005 * GetHeroLevel(DamageSourceHero))))
             if not IsFxOnCooldownSet(DamageTargetId, ORC_CHAMPION_UNIT_ID, 1) then
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
             endif

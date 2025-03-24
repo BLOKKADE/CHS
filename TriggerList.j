@@ -46,6 +46,7 @@
 //! import "C:\CHS\CHS\Trigger\04-Helpers\PlayerSummonGroups.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\RemoveBuffs.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\SellItem.j"
+//! import "C:\CHS\CHS\Trigger\04-Helpers\StatHelpers.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\TextTag.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\UnitFilteringUtility.j"
 //! import "C:\CHS\CHS\Trigger\04-Helpers\UnitHelpers.j"

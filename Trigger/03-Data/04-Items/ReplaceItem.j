@@ -3,6 +3,8 @@ library ReplaceItem initializer init
         Table ReplaceItemTable
         Table ReplacedItemId
     endglobals
+    
+    // When an item is of PICKUP type register it in SetupItems and it will automatically be replaced with a new item when picked up
 
     function IsItemReplaced takes integer itemHid returns boolean
         return ReplacedItemId.boolean[itemHid]
@@ -25,10 +27,6 @@ library ReplaceItem initializer init
     endfunction
 
     private function SetupItems takes nothing returns nothing
-        call InitializeItemReplacement('I0CM', 'I0CY')
-        call InitializeItemReplacement('I0CO', 'I0CX')
-        call InitializeItemReplacement('I07H', 'I0CW')
-        call InitializeItemReplacement('I0CP', 'I0CZ')
     endfunction
 
     private function init takes nothing returns nothing

@@ -243,28 +243,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Armor of the Ancestors
 		elseif itemId == 'I07G' then
 			call AddUnitCustomState(u, BONUS_BLOCK, 50 * diff)
-		
-			//Obsidian Armor
-		elseif itemId == 'I0CW' then
-			call AddUnitCustomState(u, BONUS_BLOCK, 200 * diff)
-			call RegisterEndOfRoundItem(pid, it)
 
-			//Golden Armor
-	//	elseif itemId == 'I0CV' then
-	//		call AddUnitCustomState(u, BONUS_MAGICRES, 10 * diff)
-	//		call RegisterEndOfRoundItem(pid, it)
-
-		elseif itemId == 'I0CX' then
-			call RegisterEndOfRoundItem(pid, it)
-			//Leather Armor
-		elseif itemId == 'I0CY' then
-			call RegisterEndOfRoundItem(pid, it)
-			//Rapira
-		elseif itemId == 'I0CZ' then
-			call AddUnitBonus(u, BONUS_DAMAGE, 300 * diff)
-			call RegisterEndOfRoundItem(pid, it)
-
-			//Blokkades Shield - imba
+			//Blokkades Shield
 		elseif itemId == BLOKKADE_SHIELD_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_BLOCK, 1000 * uniqueDiff)
 			call AddUnitCustomState(u, BONUS_MAGICRES, 30 * uniqueDiff)
@@ -284,6 +264,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I07V' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 60 * uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u, Element_Arcane, uniqueDiff)
+			
 			//Holy Shield
 		elseif itemId == 'I07W' then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)

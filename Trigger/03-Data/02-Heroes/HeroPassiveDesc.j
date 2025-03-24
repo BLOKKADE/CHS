@@ -16,26 +16,32 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 		local string temp = GetObjectElementsAsString(playerHero, GetUnitTypeId(playerHero), false)
 		local string tooltip = ""
 
+        // add hero elements to tooltip
 		if temp != "" and temp != null then
 			set tooltip = tooltip + temp + "|n"
 		endif
 
+        // add passive description to tooltip
 		set temp = GetHeroPassiveDescription(GetUnitTypeId(playerHero), HeroPassive_Desc)
 		if temp != "" and temp != null then
 			set tooltip = tooltip + temp + "|n"
 		endif
 
+        // add level up bonus to tooltip
 		set temp = GetHeroPassiveDescription(GetUnitTypeId(playerHero), HeroPassive_Lvlup)
 		if temp != "" and temp != null then
 			set tooltip = tooltip + temp
 		endif
 
+        // add current level up bonus to tooltip
 		set tooltip = tooltip + GetPassiveStr(playerHero)
 
+        // Add income and gold to tooltip
 		if EconomyMode or IncomeMode != 2 then
 			set tooltip = tooltip + "|n|n|cffd4954dIncome|r: " + I2S(Income[GetPlayerId(owningPlayer)])
 		endif
 
+        // Add player gold and glory to tooltip
 		set tooltip = tooltip + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_GOLD))
 		set tooltip = tooltip + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[GetPlayerId(owningPlayer)]))
 
@@ -71,8 +77,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +7 intelligence." )
         
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )
-        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mortar Might: Increases physical power of the Hero and its summons, but they can't deal [|cff00ffffCrit|r] damage. ")
-        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +1.5 physical power bonus." )
+        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mortar Might: Increases physical power of the Hero and its summons, but also prevents [|cff00ffffCrit|r] damage.")
+        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +2 physical power bonus." )
                     
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. [|cffd45e29onhit|r]")

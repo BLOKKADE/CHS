@@ -54,6 +54,9 @@
 				"filePath": "Trigger\\05-Game Functions\\Unsorted\\5-Functions.j",
 				"group": "Default"
 			}
-		]
+		],
+		"search.exclude": {
+			"**/*.ini": true
+		}
 	}
 }
