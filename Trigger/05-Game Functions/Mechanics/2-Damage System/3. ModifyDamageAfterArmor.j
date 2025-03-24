@@ -159,7 +159,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Bloody Axe
-        if IsPhysDamage() and IsHeroUnitId(DamageTargetTypeId) == false then
+        if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID and GetRandomReal(0, 100) <= 20 + 0.33 * I2R(GetHeroLevel(DamageSource))) and IsHeroUnitId(DamageTargetTypeId) == false then
             set i = GetUnitItemTypeCount( DamageSource,'I078') 
             if i > 0 then
                 set r2 = Damage.index.amount * (0.25 * I2R(i))
@@ -296,7 +296,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         if IsNotOnHitOrIsDivineBubbleOnHit() and Damage.index.amount > 0 then
-            if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID) then
+            if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID and GetRandomReal(0, 100) <= 20 + 0.33 * I2R(GetHeroLevel(DamageSource))) then
 
                 if not IsOnHitDamage() then
                     //Pulverize
@@ -450,7 +450,15 @@ scope ModifyDamageAfterArmor initializer init
                 set Damage.index.amount = r1 * 0.1
             endif
         endif
-            
+
+        //Mountain Giant
+        if DamageTargetTypeId == MOUNTAIN_GIANT_1_UNIT_ID then
+            set r1 = BlzGetUnitMaxHP(DamageTarget)
+            if r1 > 100000 and Damage.index.amount > r1 * 0.1 then
+                set Damage.index.amount = r1 * 0.1
+            endif
+        endif
+  
         //Holy Chain Mail
         if UnitHasItemType(DamageTarget,'I07U') then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then

@@ -60,11 +60,11 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             endif
         endif
 
-        if IsPhysDamage() then
+        if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID and GetRandomReal(0, 100) <= 20 + 0.33 * I2R(GetHeroLevel(DamageSource))) then
 
             //Trident of Pain
             if UnitHasItemType(DamageSource, 'I061')  then
-                if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
+                if Damage.index.damageType == DAMAGE_TYPE_NORMAL or Damage.index.damageType == DAMAGE_TYPE_MAGIC then
                     if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
                         call AbilStartCD(DamageSource, 'A08X', 7)
                         set critDmg = critDmg + Dmg
@@ -173,9 +173,9 @@ library CritDamage requires RandomShit, Vampirism, Gnome
                 set critDmg = critDmg / 2
             endif 
 
-            if (DamageSourceTypeId != SEER_UNIT_ID and StaffOfPowerCritNegate) or (magicDmgType and GetUnitAbilityLevel(DamageSource, SUMMON_MAGIC_DMG_ABILITY_ID) > 0) then
-                set critDmg = critDmg / 2
-            endif
+     //       if (DamageSourceTypeId != SEER_UNIT_ID and StaffOfPowerCritNegate) or (magicDmgType and GetUnitAbilityLevel(DamageSource, SUMMON_MAGIC_DMG_ABILITY_ID) > 0) then
+       //         set critDmg = critDmg / 2
+      //      endif
 
             //Mithril Helmet
             if UnitHasItemType(DamageTarget, 'I091') then

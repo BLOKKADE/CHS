@@ -222,7 +222,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Cloak of Sorrow
             if GetUnitAbilityLevel(DamageSource, 'B007') > 0 then
-                set Damage.index.damage = RMaxBJ(1,  Damage.index.damage - 4000)
+                set Damage.index.damage = RMaxBJ(300,  Damage.index.damage - 4000)
             endif
 
             //Cloak of Sorrow
@@ -637,7 +637,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif	
         endif
 
-        if IsPhysDamage() and (not IsOnHitDamage()) and DamageSourceAbility != INCINERATE_ABILITY_ID then
+        if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID and GetRandomReal(0, 100) <= 20 + 0.33 * I2R(GetHeroLevel(DamageSource))) and (not IsOnHitDamage()) and DamageSourceAbility != INCINERATE_ABILITY_ID then
             //Incinerate
             set i1 = GetUnitAbilityLevel(DamageSource,INCINERATE_ABILITY_ID) + GetUnitAbilityLevel(DamageSource, 'A0C8')
             if i1 > 0 then
@@ -767,7 +767,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Liquid Fire
             set i1 = GetUnitAbilityLevel(DamageSource,LIQUID_FIRE_ABILITY_ID)
-            if IsPhysDamage() and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, LIQUID_FIRE_ABILITY_ID) == 0 then
+            if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID and GetRandomReal(0, 100) <= 20 + 0.33 * I2R(GetHeroLevel(DamageSource))) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, LIQUID_FIRE_ABILITY_ID) == 0 then
 
                 call TempAbil.create(DamageTarget, 'A06R', 3)
                 //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitCustomState(DamageSource, BONUS_MAGICPOW)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
@@ -776,7 +776,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Envenomed Weapons heroes
             set i1 = GetUnitAbilityLevel(DamageSource,ENVENOMED_WEAPONS_ABILITY_ID) + PoisonRuneBonus[DamageSourcePid]
-            if (IsPhysDamage() or (PoisonRuneBonus[DamageSourcePid] > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison))) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
+            if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID and GetRandomReal(0, 100) <= 20 + 0.33 * I2R(GetHeroLevel(DamageSource))) or (PoisonRuneBonus[DamageSourcePid] > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison)) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
 
                 call TempAbil.create(DamageTarget, 'A06P', 8)
                 //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
