@@ -74,8 +74,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             //call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (levelsGained * 250))
             
         elseif uid == MORTAR_TEAM_UNIT_ID then  
-            call AddUnitCustomState(u, BONUS_PHYSPOW, levelsGained * 2)
-            call SetBonus(u, 0, 2 * heroLevel)
+            call AddUnitCustomState(u, BONUS_PHYSPOW, levelsGained * 1.5)
+            call SetBonus(u, 0, 1.5 * heroLevel)
         elseif uid == NAGA_SIREN_UNIT_ID then  
             set i = prevLevel + 1
             loop
@@ -265,8 +265,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call UpdateBonus(u, 0, 0.5 * levelsGained)
             call SetBonus(u, 1, 49 + (heroLevel * 1))
         elseif uid == MEDIVH_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_MAGICPOW, 2 * levelsGained)
-            call UpdateBonus(u, 0, 2 * levelsGained)   
+            call AddUnitCustomState(u, BONUS_MAGICPOW, 1.5 * levelsGained)
+            call UpdateBonus(u, 0, 1.5 * levelsGained)   
         endif
         
         call UpdateAbilityDescriptionLevelup(u, p, GetHeroLevel(u))

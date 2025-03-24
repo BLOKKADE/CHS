@@ -72,7 +72,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mortar Might: Increases physical power of the Hero and its summons, but they can't deal [|cff00ffffCrit|r] damage. ")
-        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +2 physical power bonus." )
+        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +1.5 physical power bonus." )
                     
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. [|cffd45e29onhit|r]")
@@ -228,7 +228,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         
         call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )
         call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Maximum Magic: Gives the hero +15 magic power but the hero can't deal [|cff00ffffCrit|r] damage." )
-        call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2 magic power." )
+        call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +1.5 magic power." )
         
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's current hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it.")
