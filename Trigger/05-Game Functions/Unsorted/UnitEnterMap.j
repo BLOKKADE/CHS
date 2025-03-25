@@ -116,6 +116,18 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * (0.1 * i2)))
         endif
 
+        //Brilliance Aura
+        set i2 = GetUnitAbilityLevel(hero, BRILLIANCE_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call AddUnitBonus(u, BONUS_MAGICPOW, (i2))
+        endif
+
+        //Devotion Aura
+        set i2 = GetUnitAbilityLevel(hero, DEVOTION_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call AddUnitBonus(u, BONUS_MAGICRES, (i2))
+        endif
+
         //Banner of Many
         if UnitHasItemType(hero, BANNER_OF_MANY_ITEM_ID) then
 

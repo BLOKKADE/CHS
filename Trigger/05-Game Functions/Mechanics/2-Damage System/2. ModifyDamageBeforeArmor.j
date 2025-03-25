@@ -250,6 +250,15 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = Damage.index.damage + 900 * i1
         endif
 
+        //Finger of Death
+        set i1 = GetUnitAbilityLevel(DamageSource, FINGER_OF_DEATH_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == FINGER_OF_DEATH_ABILITY_ID then
+            set r1 = GetHeroInt(DamageSource, true) * (0.5 * i1)
+            if Damage.index.damage < r1 then
+                set Damage.index.damage = r1
+            endif
+        endif
+
         //Crits
         call SetCritDamage()
 

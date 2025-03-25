@@ -338,8 +338,13 @@ scope LongPeriodCheck initializer init
 
             //Brilliance Aura
             set i1 = GetUnitAbilityLevel(u, BRILLIANCE_AURA_ABILITY_ID)
+            set i2 = LoadInteger(HT, hid, BRILLIANCE_AURA_ABILITY_ID)
             if i1 > 0 then
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) + ((0.0001 * i1) * GetUnitState(u, UNIT_STATE_MAX_MANA)))
+            endif
+            if i2 != i1 then
+                call AddUnitBonus(u, BONUS_MAGICPOW, (i1 - i2))
+                call SaveInteger(HT, hid, BRILLIANCE_AURA_ABILITY_ID, i1)
             endif
 
             //strength hp regen

@@ -696,6 +696,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //95 - Finger of Death 
         call SaveAbilData(FINGER_OF_DEATH_ABILITY_ID, FINGER_OF_DEATH_ITEM_ID, false, 0, 0, true, Order_Target, "fingerofdeath")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Blood, 1)
 
         //96 - Aura of immortality 
         call SaveAbilData(AURA_OF_IMMORTALITY_ABILITY_ID, AURA_OF_IMMORTALITY_ITEM_ID, false, 0, 0, false, Order_None, null)
