@@ -54,6 +54,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 		//Mask of Death
 		if itemId == 'I04T' then
+			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 			if UnitHasItemType(u ,itemId ) then
 				call SaveInteger(HTi, hid, itemId,1)
 			else
@@ -219,6 +220,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitAbsoluteBonusCount(u,Element_Water, 2*uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Earth, 2*uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Wind, 2*uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Dark, 2*uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Wild, 2*uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Arcane, 2*uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Blood, 2*uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Cold, 2*uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Poison, 2*uniqueDiff)
 
 		elseif itemId == SHADOW_BLADE_ITEM_ID then
 			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1500*diff, 0 )
@@ -243,9 +250,9 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call RegisterEndOfRoundItem(pid, it)
 
 			//Golden Armor
-		elseif itemId == 'I0CV' then
-			call AddUnitCustomState(u, BONUS_MAGICRES, 10 * diff)
-			call RegisterEndOfRoundItem(pid, it)
+	//	elseif itemId == 'I0CV' then
+	//		call AddUnitCustomState(u, BONUS_MAGICRES, 10 * diff)
+	//		call RegisterEndOfRoundItem(pid, it)
 
 		elseif itemId == 'I0CX' then
 			call RegisterEndOfRoundItem(pid, it)
@@ -406,9 +413,18 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I08Z' then
 			call AddUnitCustomState(u, BONUS_EVASION, 15 * uniqueDiff)
 
+			//Volcanic armor
+		elseif itemId == 'I03T' then
+			call AddUnitAbsoluteBonusCount(u,Element_Fire, uniqueDiff)
+
 			//Stone Helmet
 		elseif itemId == 'I090' then
 			call AddUnitCustomState(u, BONUS_BLOCK, 1000 * uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Earth, uniqueDiff)
+
+			//Stone Helmet turned off
+		elseif itemId == 'I0CV' then
+			call AddUnitCustomState(u, BONUS_BLOCK, 1500 * uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Earth, uniqueDiff)
 		
 			//Mithril Helmet
@@ -428,6 +444,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Heart of Darkness
 		elseif itemId == 'I04V' then
 			call AddUnitBonus(u, BONUS_DAMAGE, 150 * diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 
 		//Hammer of the Gods
 		elseif itemId == 'I066' then
@@ -436,10 +453,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		//Hammer of Chaos
 		elseif itemId == 'I06H' then
 			//call AddUnitBonus(u, BONUS_DAMAGE, -300 * diff)
-
-		//Titanium Armor
-		elseif itemId == 'I07M' then
-			call AddUnitBonus(u, BONUS_DAMAGE, -500 * diff)
 
 		//Titanium Spike
 		elseif itemId == TITANIUM_SPIKE_ITEM_ID then

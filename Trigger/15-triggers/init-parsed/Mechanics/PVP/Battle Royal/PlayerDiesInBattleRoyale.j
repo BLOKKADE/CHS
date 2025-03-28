@@ -27,8 +27,12 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         local group deadPlayerUnits
         local unit shadeUnit
 
-        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
-
+        if GetPlayerNameColour(deadPlayer)== GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) then
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by themself!")
+        else
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
+        endif
+        
         set deadPlayerUnits = GetUnitsOfPlayerAll(deadPlayer)
         call ForGroup(deadPlayerUnits, function KillPlayerUnit)
 

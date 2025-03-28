@@ -222,7 +222,7 @@ scope LongPeriodCheck initializer init
             set i2 = LoadInteger(HT, hid,'B026')
             //Goblet of Blood
             if GetUnitAbilityLevel(u, 'B026') > 0 then
-                set i1 = R2I(BlzGetUnitMaxHP(u) * 0.03)
+                set i1 = R2I(BlzGetUnitMaxHP(u) * 0.05)
 
                 if i1 != i2 then
                     call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2 + i1)

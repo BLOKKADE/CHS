@@ -232,7 +232,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Banish and Scroll of Transformation phys immunity and negative dmg ignore
-        if Damage.index.damage <= 0 or ((GetUnitAbilityLevel(DamageTarget, 'B028') > 0 or GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0) and IsPhysDamage()) then
+        if Damage.index.damage <= 0 or ((GetUnitAbilityLevel(DamageTarget, 'B028') > 0 or (GetUnitAbilityLevel(DamageTarget, BANISH_BUFF_ID) > 0 and not (DamageSourceTypeId ==  PHOENIX_1_UNIT_ID or HAWKS.contains(DamageSourceTypeId)))) and IsPhysDamage()) then
             set Damage.index.damage = 0
             return
         endif
@@ -315,6 +315,21 @@ scope ModifyDamageBeforeArmor initializer init
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.03)))
         endif
 
+        //Inferno
+        set i1 = GetUnitAbilityLevel(DamageSource, INFERNO_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == INFERNO_ABILITY_ID then
+            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * 0.2
+        endif
+
+        //Acid Spray
+        set i1 = GetUnitAbilityLevel(DamageSource, ACID_SPRAY_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
+            set r1 = GetHeroInt(DamageSource, true) * (1.5 + (0.15 * i1))
+            if Damage.index.damage < r1 then
+                set Damage.index.damage = r1
+            endif
+        endif
+
         //Pyromancer fire attack
         if DamageSourceTypeId == PYROMANCER_UNIT_ID and Damage.index.isAttack and DamageSourceAbility != PYROMANCER_UNIT_ID then
             set DamageSourceAbility = PYROMANCER_UNIT_ID 
@@ -367,9 +382,10 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         // Carrion Swarm
-        /*if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
-            call ActivateCarrionSwarmDarkBonus(DamageSource)
-        endif*/
+        set i1 = GetUnitAbilityLevel(DamageSource, CARRION_SWARM_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
+            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.0462 + (0.0038 * i1))
+        endif
 
         //Frost Circlet
         if GetUnitAbilityLevel(DamageSource, FROST_CIRCLET_ABILITY_ID) > 0 then
@@ -760,11 +776,11 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Envenomed Weapons heroes
             set i1 = GetUnitAbilityLevel(DamageSource,ENVENOMED_WEAPONS_ABILITY_ID) + PoisonRuneBonus[DamageSourcePid]
-            if (IsPhysDamage() or PoisonRuneBonus[DamageSourcePid] > 0) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
+            if (IsPhysDamage() or (PoisonRuneBonus[DamageSourcePid] > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison))) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
 
                 call TempAbil.create(DamageTarget, 'A06P', 8)
                 //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1).start()
+                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 20, 1).start()
             endif
 
             //Qiulbeasts
@@ -804,7 +820,7 @@ scope ModifyDamageBeforeArmor initializer init
             if GetRandomReal(1,100)  <= i1 * 8 * DamageSourceLuck then
                 if GetUnitState(DamageTarget,UNIT_STATE_MANA) >= 750 then
                     set RandomSpellLoc = Location(GetUnitX(DamageSource), GetUnitY(DamageSource))
-                    call CastRandomSpell(DamageTarget, 0, DamageSource, RandomSpellLoc, true, 15)
+                    call CastRandomSpell(DamageTarget, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 20))
                     call RemoveLocation(RandomSpellLoc)
                     set RandomSpellLoc = null
                     call SetUnitState(DamageTarget,UNIT_STATE_MANA,GetUnitState(DamageTarget,UNIT_STATE_MANA)- 750 )

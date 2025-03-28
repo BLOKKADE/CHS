@@ -254,10 +254,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         endif
 
          //Golden Armor
-        set i1 = GetValidEndOfRoundItems(u, 'I0CV') 
-        if i1 > 0 then
-             call AddUnitCustomState(u, BONUS_MAGICRES, 1 * i1)
-        endif
+      //  set i1 = GetValidEndOfRoundItems(u, 'I0CV') 
+       // if i1 > 0 then
+       //      call AddUnitCustomState(u, BONUS_MAGICRES, 1 * i1)
+      //  endif
 
         //Extra-dimensional Cooperation
         if GetUnitAbilityLevel(u, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID) > 0 then

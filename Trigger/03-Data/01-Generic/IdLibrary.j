@@ -462,6 +462,7 @@ library IdLibrary initializer init
         constant integer FOG_DUMMY_ABILITY_ID                           = 'A0E3'
         constant integer GNOME_MASTER_PASSIVE_DUMMY_ABILITY_ID          = 'A0EG'
         constant integer ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID            = 'A0DP'
+        constant integer CHAIN_LIGHTNING_DUMMY_ABILITY_ID               = 'A0ES'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'

@@ -31,7 +31,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B02B', CONTRACT_LIVING_BUFF_ID, 0, BUFFTYPE_BOTH, false, true)
         call SetupBuffInfo2('B025', 'A0AF', BLESSED_PROTECTIO_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01F', 'A08D', REACTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
-        call SetupBuffInfo2('B031', 'A0E1', LIGHT_MAGIC_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
+        call SetupBuffInfo2('B031', 'A0E0', LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         //scroll of transformation
         call SetupBuffInfo2('B028', 'A0CT', 0, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01E', 'A08C', DIVINE_BUBBLE_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)

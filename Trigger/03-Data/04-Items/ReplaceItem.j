@@ -25,7 +25,6 @@ library ReplaceItem initializer init
     endfunction
 
     private function SetupItems takes nothing returns nothing
-        call InitializeItemReplacement('I0C1', 'I0CV')
         call InitializeItemReplacement('I0CM', 'I0CY')
         call InitializeItemReplacement('I0CO', 'I0CX')
         call InitializeItemReplacement('I07H', 'I0CW')

@@ -31,17 +31,17 @@ library GloryItemCosts initializer init requires Glory
     endfunction
 
     private function SetupGloryItemCosts takes nothing returns nothing
-        set GloryItemCosts[GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID] = 10000
-        set GloryItemCosts[GLORY_ABSOLUTE_BLOOD_COUNT_TOME_ITEM_ID] = 6000
-        set GloryItemCosts[GLORY_ABSOLUTE_DARK_COUNT_TOME_ITEM_ID] = 7000
+        set GloryItemCosts[GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID] = 6000
+        set GloryItemCosts[GLORY_ABSOLUTE_BLOOD_COUNT_TOME_ITEM_ID] = 4000
+        set GloryItemCosts[GLORY_ABSOLUTE_DARK_COUNT_TOME_ITEM_ID] = 9000
         set GloryItemCosts[GLORY_ABSOLUTE_EARTH_COUNT_TOME_ITEM_ID] = 6000
-        set GloryItemCosts[GLORY_ABSOLUTE_COLD_COUNT_TOME_ITEM_ID] = 8000
+        set GloryItemCosts[GLORY_ABSOLUTE_COLD_COUNT_TOME_ITEM_ID] = 4000
         set GloryItemCosts[GLORY_ABSOLUTE_FIRE_COUNT_TOME_ITEM_ID] = 6000
-        set GloryItemCosts[GLORY_ABSOLUTE_LIGHT_COUNT_TOME_ITEM_ID] = 6000
-        set GloryItemCosts[GLORY_ABSOLUTE_POISION_COUNT_TOME_ITEM_ID] = 7000
-        set GloryItemCosts[GLORY_ABSOLUTE_WATER_COUNT_TOME_ITEM_ID] = 6000
-        set GloryItemCosts[GLORY_ABSOLUTE_WILD_COUNT_TOME_ITEM_ID] = 10000
-        set GloryItemCosts[GLORY_ABSOLUTE_WIND_COUNT_TOME_ITEM_ID] = 7000
+        set GloryItemCosts[GLORY_ABSOLUTE_LIGHT_COUNT_TOME_ITEM_ID] = 4000
+        set GloryItemCosts[GLORY_ABSOLUTE_POISION_COUNT_TOME_ITEM_ID] = 6000
+        set GloryItemCosts[GLORY_ABSOLUTE_WATER_COUNT_TOME_ITEM_ID] = 4000
+        set GloryItemCosts[GLORY_ABSOLUTE_WILD_COUNT_TOME_ITEM_ID] = 9000
+        set GloryItemCosts[GLORY_ABSOLUTE_WIND_COUNT_TOME_ITEM_ID] = 6000
 
         set GloryItemCosts[GLORY_ARMOR_TOME_ITEM_ID] = 1500
         set GloryItemCosts[GLORY_ATTACK_DAMAGE_TOME_ITEM_ID] = 1500

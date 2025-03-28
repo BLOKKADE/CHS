@@ -163,7 +163,6 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
                 call BlzSetUnitBaseDamage(U,BlzGetUnitBaseDamage(U,0) + 200 + (50 + GetHeroLevel(u))* GetHeroLevel(u) ,0)
                 call SetWidgetLife(U,BlzGetUnitMaxHP(U) )
                 call UnitApplyTimedLife(U,FEARLESS_DEFENDERS_ABILITY_ID,30)
-        
             endif
         endif
 
