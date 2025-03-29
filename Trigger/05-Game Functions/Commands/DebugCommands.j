@@ -53,6 +53,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             set s = "|cffffcc00" + GetUnitName(u) + "|r: " + R2S(value) + " attack damage"
         elseif command == "-dbas" then
             call BlzSetUnitAttackCooldown(u, value, 0)
+            call SaveReal(HT, GetHandleId(u), -1001, value)
             set s = "|cfffff242" + GetUnitName(u) + "|r: " + R2S(value) + " base attack speed"
         elseif command == "-dhpo" then
             call SetUnitMaxHp(u, R2I(value))
@@ -151,6 +152,8 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         set PlayerDummy[pid] = CreateUnit(Player(11), dummyId, GetUnitX(PlayerHeroes[pid]), GetUnitY(PlayerHeroes[pid]), 0)
         set CreatedDummies[pid] = CreatedDummies[pid] + 1
         call BlzSetHeroProperName(PlayerDummy[pid], "Subject #" + I2S(CreatedDummies[pid]))
+
+        call SaveReal(HT, GetHandleId(PlayerDummy[pid]), -1001, BlzGetUnitAttackCooldown(PlayerDummy[pid], 0))
 
         call GroupRefresh(DummyGroup)
         call GroupAddUnit(DummyGroup, PlayerDummy[pid])
