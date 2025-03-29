@@ -56,7 +56,8 @@
 			}
 		],
 		"search.exclude": {
-			"**/*.ini": true
+			"**/*.ini": true,
+			"**/*.jh": true
 		}
 	}
 }
