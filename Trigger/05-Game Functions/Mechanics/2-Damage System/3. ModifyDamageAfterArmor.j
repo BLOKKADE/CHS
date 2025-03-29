@@ -268,11 +268,11 @@ scope ModifyDamageAfterArmor initializer init
                     set udg_NextDamageAbilitySource = MAGNET_OSC_ABILITY_ID
                     call Damage.apply(DamageTarget, DamageSource, GetSpellValue(30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                     if IsAbilityEnabled(DamageTarget, MAGNET_OSC_ABILITY_ID) then
-                        set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((11.75 - (0.25 * i)) * 32)
+                        set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((12.21 - (0.21 * i)) * 32)
                         call KnockbackTarget(DamageTarget, DamageSource, GetAngleToTarget(DamageTarget, DamageSource) * bj_RADTODEG, RAbsBJ(700 - r1), 600, false, false, false, false)
                     else
                         if r1 > 150 then
-                            set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((8 - (0.2 * i)) * 32)
+                            set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((8.12 - (0.12 * i)) * 32)
                             call MoveToPoint(DamageTarget, DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget))
                         endif
                     endif

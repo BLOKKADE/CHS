@@ -250,7 +250,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) + (BlzGetAbilityManaCost(abilId, abilLvl - 1) * 0.3))
                     endif
 
-                    if UnitHasItemType(caster, ORB_OF_ELEMENTS) then
+                    if UnitHasItemType(caster, ORB_OF_ELEMENTS_ITEM_ID) then
                         call SetElementalOrbAbil(caster, abilId)
                     endif
 

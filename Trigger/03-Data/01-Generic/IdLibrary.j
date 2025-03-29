@@ -694,7 +694,7 @@ library IdLibrary initializer init
         constant integer PACKING_TAPE_ITEM_ID                           = 'I0D7'
         constant integer PACKING_TAPE_TOME_ITEM_ID                      = 'I0D6'
         constant integer MULTISHOT_ITEM_ID                              = 'I03N'
-        constant integer ORB_OF_ELEMENTS                                = 'I0CQ'
+        constant integer ORB_OF_ELEMENTS_ITEM_ID                        = 'I0CQ'
         constant integer NON_LUCRATIVE_TOME_ITEM_ID                     = 'I0B4'
         constant integer RAPIRA_ITEM_ID                                 = 'I0CP'
         constant integer SPELLBANE_TOKEN_TOME_ITEM_ID                   = 'I0A5'

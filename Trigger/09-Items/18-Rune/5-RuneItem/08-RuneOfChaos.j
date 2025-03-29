@@ -28,7 +28,7 @@ library ChaosRune initializer init requires ChaosMagic
         local integer pid = GetPlayerId(GetOwningPlayer(u))
 
         if lvl > 30 then
-            set lp = (lp + lvl - 30) / 2
+            set lp = (lvl - 30) / 2
             set RuneOfChaosMagicPower.real[pid] = lp * 10
             set lvl = 30
         endif

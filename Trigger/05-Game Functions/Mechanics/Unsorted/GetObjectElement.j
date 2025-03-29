@@ -76,7 +76,7 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         endif
 
         //Elemental Orb
-        if UnitHasItemType(u, ORB_OF_ELEMENTS) and IsSpellElement(u, GetElementalOrbAbil(u), elementId) then
+        if UnitHasItemType(u, ORB_OF_ELEMENTS_ITEM_ID) and IsSpellElement(u, GetElementalOrbAbil(u), elementId) then
             set elementCount = elementCount + 2
         endif
 

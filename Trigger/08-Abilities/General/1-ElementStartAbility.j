@@ -32,7 +32,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
             if BlzGetUnitAbilityCooldownRemaining(u,WATER_RUNESTONE_ABIL_ID) <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,Element_Water)  )
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
-                call AbilStartCD(u,WATER_RUNESTONE_ABIL_ID, GetRuneCooldown(Element_Water) ) 
+                call AbilStartCD(u, WATER_RUNESTONE_ABIL_ID, GetRuneCooldown(Element_Water) ) 
             endif
         endif
         

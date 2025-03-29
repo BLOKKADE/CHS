@@ -215,7 +215,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 				call UnitRemoveAbility(u,'A05K')
 			endif
 			
-		elseif itemId == ORB_OF_ELEMENTS then
+		elseif itemId == ORB_OF_ELEMENTS_ITEM_ID then
 			call AddUnitAbsoluteBonusCount(u,Element_Fire, 2*uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Water, 2*uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Earth, 2*uniqueDiff)
@@ -372,7 +372,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			elseif itemId == ARCANE_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
 			elseif itemId == WILD_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Wild, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Wild, 2 * uniqueDiff)
 			elseif itemId == LIGHT_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Light, uniqueDiff)
 			elseif itemId == DARK_RUNESTONE_ITEM_ID then
