@@ -60,21 +60,19 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             endif
         endif
 
-        if IsPhysDamage() or (IsMagicDamage() and DamageSourceTypeId == SEER_UNIT_ID and GetRandomReal(0, 100) <= 20 + 0.33 * I2R(GetHeroLevel(DamageSource))) then
+        if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) then
 
             //Trident of Pain
             if UnitHasItemType(DamageSource, 'I061')  then
-                if Damage.index.damageType == DAMAGE_TYPE_NORMAL or Damage.index.damageType == DAMAGE_TYPE_MAGIC then
-                    if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
-                        call AbilStartCD(DamageSource, 'A08X', 7)
-                        set critDmg = critDmg + Dmg
-                    elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Y') <= 0 then
-                        call AbilStartCD(DamageSource, 'A08Y', 7)
-                        set critDmg = critDmg + Dmg
-                    elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Z') <= 0 then
-                        call AbilStartCD(DamageSource, 'A08Z', 7)
-                        set critDmg = critDmg + Dmg
-                    endif
+                if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
+                    call AbilStartCD(DamageSource, 'A08X', 7)
+                    set critDmg = critDmg + Dmg
+                elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Y') <= 0 then
+                    call AbilStartCD(DamageSource, 'A08Y', 7)
+                    set critDmg = critDmg + Dmg
+                elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Z') <= 0 then
+                    call AbilStartCD(DamageSource, 'A08Z', 7)
+                    set critDmg = critDmg + Dmg
                 endif
             endif
 
