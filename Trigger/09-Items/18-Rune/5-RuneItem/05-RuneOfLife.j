@@ -8,8 +8,6 @@ library LifeRune requires RandomShit, TempStateBonus
         local unit u = GLOB_RUNE_U
         local real power = GLOB_RUNE_POWER 
 
-        //call AddRuneBonus(GetHandleId(u), BONUS_HEALTH, RuneOfLife_base * power)
-        //call AddRuneBonus(GetHandleId(u), BONUS_MANA, RuneOfLife_base * power) 
         call TempBonus.create(u, BONUS_HEALTH, RuneOfLife_base * power, 10 * power, Runes[Life_Rune_Id]).activate()
         call TempBonus.create(u, BONUS_MANA, RuneOfLife_base * power, 10 * power, Runes[Life_Rune_Id]).activate()
         set u = null

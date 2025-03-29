@@ -107,7 +107,6 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         call TriggerAddAction( trg, function InitialiseRune )
         set trg = null
         
-        set StatRuneBonus = HashTable.create()
         set RuneIndex = Table.create()
         set RuneCooldown = Table.create()
 

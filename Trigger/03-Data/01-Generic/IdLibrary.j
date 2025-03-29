@@ -91,90 +91,22 @@ library IdLibrary initializer init
         constant integer SKELETON_WARRIOR_1_UNIT_ID                     = 'uske'
 
         // Group Summons
-        // Bears
-        StaticIdGroup BEARS
         constant integer BEAR_1_UNIT_ID                                 = 'ngz1'
-        constant integer BEAR_2_UNIT_ID                                 = 'ngz2'
-        constant integer BEAR_3_UNIT_ID                                 = 'ngz3'
-
-        // Feral Spirit Wolfs
-        StaticIdGroup FERAL_SPIRIT_WOLVES
         constant integer FERAL_SPIRIT_WOLF_1_UNIT_ID                    = 'osw1'
-        constant integer FERAL_SPIRIT_WOLF_2_UNIT_ID                    = 'osw2'
-        constant integer FERAL_SPIRIT_WOLF_3_UNIT_ID                    = 'osw3'
-
-        // Hawks
-        StaticIdGroup HAWKS
         constant integer HAWK_1_UNIT_ID                                 = 'nwe1'
-        constant integer HAWK_2_UNIT_ID                                 = 'nwe2'
-        constant integer HAWK_3_UNIT_ID                                 = 'nwe3'
-
-        // Infernals
-        StaticIdGroup INFERNALS
-        constant integer INFERNAL_1_UNIT_ID                             = 'n01N'
-        constant integer INFERNAL_2_UNIT_ID                             = 'n01E'
-        constant integer INFERNAL_3_UNIT_ID                             = 'n01M'
-        constant integer INFERNAL_4_UNIT_ID                             = 'n01O'
-        constant integer INFERNAL_5_UNIT_ID                             = 'n01P'
-        constant integer INFERNAL_6_UNIT_ID                             = 'n01Q'
-        constant integer INFERNAL_7_UNIT_ID                             = 'n01R'
-        constant integer INFERNAL_8_UNIT_ID                             = 'n01S'
-        constant integer INFERNAL_9_UNIT_ID                             = 'n01T'
-        constant integer INFERNAL_10_UNIT_ID                            = 'n01U'
-        constant integer INFERNAL_11_UNIT_ID                            = 'n01V'
-        constant integer INFERNAL_12_UNIT_ID                            = 'n01W'
-        constant integer INFERNAL_13_UNIT_ID                            = 'n01X'
-        constant integer INFERNAL_14_UNIT_ID                            = 'n01Y'
-        constant integer INFERNAL_15_UNIT_ID                            = 'n01Z'
-        constant integer INFERNAL_16_UNIT_ID                            = 'n020'
-        constant integer INFERNAL_17_UNIT_ID                            = 'n021'
-        constant integer INFERNAL_18_UNIT_ID                            = 'n022'
-        constant integer INFERNAL_19_UNIT_ID                            = 'n023'
-        constant integer INFERNAL_20_UNIT_ID                            = 'n026'
-        constant integer INFERNAL_21_UNIT_ID                            = 'n025'
-        constant integer INFERNAL_22_UNIT_ID                            = 'n027'
-        constant integer INFERNAL_23_UNIT_ID                            = 'n028'
-        constant integer INFERNAL_24_UNIT_ID                            = 'n029'
-        constant integer INFERNAL_25_UNIT_ID                            = 'n02A'
-        constant integer INFERNAL_26_UNIT_ID                            = 'n02C'
-        constant integer INFERNAL_27_UNIT_ID                            = 'n02D'
-        constant integer INFERNAL_28_UNIT_ID                            = 'n02E'
-        constant integer INFERNAL_29_UNIT_ID                            = 'n02F'
-        constant integer INFERNAL_30_UNIT_ID                            = 'n02G'
-
-        // Lava Spawns
-        StaticIdGroup LAVA_SPAWNS
         constant integer LAVA_SPAWN_1_UNIT_ID                           = 'nlv1'
-        constant integer LAVA_SPAWN_2_UNIT_ID                           = 'nlv2'
-        constant integer LAVA_SPAWN_3_UNIT_ID                           = 'nlv3'
-
-        // Quilbeasts
-        StaticIdGroup QUILBEASTS
         constant integer QUILBEAST_1_UNIT_ID                            = 'nqb1'
-        constant integer QUILBEAST_2_UNIT_ID                            = 'nqb2'
-        constant integer QUILBEAST_3_UNIT_ID                            = 'nqb3'
-        constant integer QUILBEAST_4_UNIT_ID                            = 'nqb4'
-
+        constant integer SERPENT_WARD_1_UNIT_ID                         = 'osp1'
+        constant integer WATER_ELEMENTAL_1_UNIT_ID                      = 'hwat'
+        constant integer FAERIE_DRAGON_UNIT_ID                          = 'e001'
+        constant integer INFERNAL_1_UNIT_ID                             = 'n01N'
+        
         // Raise Dead Units
         StaticIdGroup SKELLIESCAPTAINS
         constant integer NECRO_BOOK_WARRIOR_1_UNIT_ID                   = 'n02S'
         constant integer NECRO_BOOK_ARCHER_1_UNIT_ID                    = 'n02R'
         constant integer FEARLESS_DEFENDER_CAPTAIN_UNIT_ID              = 'h01A'
         constant integer BONE_ARMOR_SKELETON_UNIT_ID                    = 'u003'
-
-        // Serpant Wards
-        StaticIdGroup SERPENT_WARDS
-        constant integer SERPENT_WARD_1_UNIT_ID                         = 'osp1'
-        constant integer SERPENT_WARD_2_UNIT_ID                         = 'osp2'
-        constant integer SERPENT_WARD_3_UNIT_ID                         = 'osp3'
-
-        // Water Elementals
-        StaticIdGroup WATER_ELEMENTALS
-        constant integer WATER_ELEMENTAL_1_UNIT_ID                      = 'hwat'
-        constant integer WATER_ELEMENTAL_2_UNIT_ID                      = 'hwt2'
-        constant integer WATER_ELEMENTAL_3_UNIT_ID                      = 'hwt3'
-
-        constant integer FAERIE_DRAGON_UNIT_ID                          = 'e001'
 
         // Heroes
         StaticIdGroup HEROES
@@ -249,7 +181,6 @@ library IdLibrary initializer init
         constant integer ANCIENT_BLOOD_ABILITY_ID                       = 'A0CH'
         constant integer ANCIENT_ELEMENT_ABILITY_ID                     = 'A07T'
         constant integer ANCIENT_RUNES_ABILITY_ID                       = 'A06Z'
-        constant integer RUNE_MASTERY_ABILITY_ID                        = 'A09O'
         constant integer ANCIENT_TEACHING_ABILITY_ID                    = 'A05U'
         constant integer ANTI_MAGIC_SHEL_ABILITY_ID                     = 'Aam2'
         constant integer ARCANE_ASSAUL_ABILITY_ID                       = 'A098'
@@ -305,7 +236,6 @@ library IdLibrary initializer init
         constant integer DIVINE_BUBBLE_ABILITY_ID                       = 'A07S'
         constant integer DIVINE_GIFT_ABILITY_ID                         = 'A082'
         constant integer DIVINE_SHIELD_ABILITY_ID                       = 'AHds'
-        constant integer DOME_OF_PROTECTION_ABILITY_ID                  = 'A0B9'
         constant integer DOUSING_HE_ABILITY_ID                          = 'A09I'
         constant integer DRAIN_AURA_ABILITY_ID                          = 'A023'
         constant integer DRUNKEN_HAZE_ABILITY_ID                        = 'ANdh'
@@ -360,7 +290,6 @@ library IdLibrary initializer init
         constant integer MANA_SHIELD_ABILITY_ID                         = 'ANms'
         constant integer MANA_STARVATIO_ABILITY_ID                      = 'A09J'
         constant integer MARTIAL_RETRIBUTION_ABILITY_ID                 = 'A089'
-        constant integer PACKING_TAPE_ABILITY_ID                        = 'A0DU'
         constant integer MEGA_LUCK_ABILITY_ID                           = 'A06V'
         constant integer MEGA_SPEED_ABILITY_ID                          = 'A02O'
         constant integer MIDAS_TOUCH_ABILITY_ID                         = 'A0A2'
@@ -446,15 +375,6 @@ library IdLibrary initializer init
         constant integer COLD_KNIGHT_PASSIVE_ABILITY_ID                 = 'A0DR'
         
         // Dummy Abilities
-        constant integer ACID_SPRAY_DUMMY_ABILITY_ID                    = 'ANhs'
-        constant integer BLIZZARD_DUMMY_ABILITY_ID                      = 'AHbz'
-        constant integer CLOUD_DUMMY_ABILITY_ID                         = 'Aclf'
-        constant integer CLUSTER_ROCKETS_DUMMY_ABILITY_ID               = 'ANcs'
-        constant integer MONSOON_DUMMY_ABILITY_ID                       = 'ANmo'
-        constant integer RAIN_OF_FIRE_DUMMY_ABILITY_ID                  = 'ANrf'
-        constant integer STAMPEDE_DUMMY_ABILITY_ID                      = 'ANst'
-        constant integer STARFALL_DUMMY_ABILITY_ID                      = 'AEsf'
-        constant integer TRANQUILITY_DUMMY_ABILITY_ID                   = 'AEtq'
         constant integer STUN_ABILITY_ID                                = 'A0C2'
         constant integer CARBEE_SPIKED_CARAP_ABILITY_ID                 = 'A0CD'
         constant integer ERUPTION_IMMUNE_ABILITY_ID                     = 'A0D9'
@@ -463,6 +383,7 @@ library IdLibrary initializer init
         constant integer GNOME_MASTER_PASSIVE_DUMMY_ABILITY_ID          = 'A0EG'
         constant integer ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID            = 'A0DP'
         constant integer CHAIN_LIGHTNING_DUMMY_ABILITY_ID               = 'A0ES'
+        constant integer CURSE_OF_DEMONS_DUMMY_ABILITY_ID               = 'A043' 
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
@@ -503,25 +424,17 @@ library IdLibrary initializer init
         constant integer DRUIDIC_FOCUS_ROOTS_ABILITY_ID                 = 'A0CF'
         constant integer BANNER_OF_MANY_DUMMY_ABILITY_ID                = 'A0CG'
         constant integer SPEED_BLADE_BUFF_ID                            = 'B02I'
-        constant integer CONQ_BAMBOO_STICK_ABILITY_ID                   = 'A0CM'
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
         constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
-        constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
         constant integer ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID         = 'A0DY'
         constant integer LIGHT_MAGIC_SHIELD_ABILITY_ID                  = 'A0E1'
         constant integer LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID             = 'A0E0'
 
         // --- Item IDs ---
-        constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'
-        constant integer ARCANE_INFUSED_SWORD_ITEM_ID                   = 'I0BN'
         constant integer MARTIAL_THEFT_ITEM_ID                          = 'I0BL'
-        constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'
-        constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'
-        constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BE'
-        constant integer ABSOLUTE_ACORN_TOME_ITEM_ID                    = 'I09D'
-        constant integer ABSOLUTE_ARCANE_ITEM_ID                        = 'I0CT'
-        constant integer ABSOLUTE_BLOOD_ITEM_ID                         = 'I099'
-        constant integer ABSOLUTE_COLD_ITEM_ID                          = 'I09F'
+        constant integer ABSOLUTE_ARCANE_ITEM_ID                        = 'I0CT'                                                                                              
+        constant integer ABSOLUTE_BLOOD_ITEM_ID                         = 'I099'                                                                                              
+        constant integer ABSOLUTE_COLD_ITEM_ID                          = 'I09F'                                                                                              
         constant integer ABSOLUTE_DARK_ITEM_ID                          = 'I098'
         constant integer ABSOLUTE_EARTH_ITEM_ID                         = 'I08V'
         constant integer ABSOLUTE_FIRE_ITEM_ID                          = 'I08T'
@@ -533,23 +446,13 @@ library IdLibrary initializer init
         constant integer ACID_BOMB_ITEM_ID                              = 'I01Z'
         constant integer ACID_SPRAY_ITEM_ID                             = 'I028'
         constant integer ACTIVATE_AVATAR_ITEM_ID                        = 'I027'
-        constant integer AGILITY_LEVEL_BONUS_TOME_ITEM_ID               = 'I05H'
         constant integer HERO_FORCE_ITEM_ID                             = 'I054'
-        constant integer ANCIENT_AXE_ITEM_ID                            = 'I06Y'
-        constant integer DRIED_MUSHROOM_ITEM_ID                         = 'I0BT'
-        constant integer DRIED_MUSHROOM_TOME_ITEM_ID                    = 'I0D8'
-        constant integer ANCIENT_AXE_TOME_ITEM_ID                       = 'I06Z'
         constant integer ENERGY_TRAP_ITEM_ID                            = 'I0BJ'
         constant integer ENERGY_SHIELD_ITEM_ID                          = 'I0CJ'
         constant integer MAGNET_OSC_ITEM_ID                             = 'I0BK'
-        constant integer ANKH_ITEM_ID                                   = 'ankh'
         constant integer ANCIENT_ELEMENT_ITEM_ID                        = 'I0C0'
         constant integer ANCIENT_BLOOD_ITEM_ID                          = 'I09B'
-        constant integer ANCIENT_DAGGER_ITEM_ID                         = 'I06X'
-        constant integer ANCIENT_DAGGER_TOME_ITEM_ID                    = 'I070'
         constant integer ANCIENT_RUNES_ITEM_ID                          = 'I08K'
-        constant integer ANCIENT_STAFF_ITEM_ID                          = 'I06V'
-        constant integer ANCIENT_STAFF_TOME_ITEM_ID                     = 'I06W'
         constant integer ANCIENT_TEACHING_ITEM_ID                       = 'I07N'
         constant integer ANTI_MAGIC_SHEL_ITEM_ID                        = 'I03S'
         constant integer ARCANE_ASSAUL_ITEM_ID                          = 'I09Z'
@@ -576,8 +479,6 @@ library IdLibrary initializer init
         constant integer CHAIN_LIGHTNING_ITEM_ID                        = 'I010'
         constant integer CHAOS_MAGIC_ITEM_ID                            = 'I06D'
         constant integer CHEATER_MAGIC_ITEM_ID                          = 'I05R'
-        constant integer CHRONUS_WIZARD_ITEM_ID                         = 'I05Q'
-        constant integer CLEAVING_ATTACK_ITEM_ID                        = 'I00N'
         constant integer CLUSTER_ROCKETS_ITEM_ID                        = 'I01A'
         constant integer COLD_ARROWS_ITEM_ID                            = 'I02S'
         constant integer COLD_WIND_ITEM_ID                              = 'I096'
@@ -611,9 +512,6 @@ library IdLibrary initializer init
         constant integer ENTANGLING_ROOTS_ITEM_ID                       = 'I00Q'
         constant integer ENVENOMED_WEAPONS_ITEM_ID                      = 'I03E'
         constant integer EVASION_ITEM_ID                                = 'I00A'
-        constant integer EXPERIENCE_20000_TOME_ITEM_ID                  = 'I05K'
-        constant integer EXPERIENCE_50000_TOME_ITEM_ID                  = 'I09E'
-        constant integer EXPERIENCE_100000_TOME_ITEM_ID                 = 'I07C'
         constant integer EXTRADIMENSIONAL_CO_OPERATIO_ITEM_ID           = 'I09Q'
         constant integer FAERIE_FIRE_ITEM_ID                            = 'I02T'
         constant integer FAN_OF_KNIVES_ITEM_ID                          = 'I003'
@@ -626,14 +524,129 @@ library IdLibrary initializer init
         constant integer FIRE_FORCE_ITEM_ID                             = 'I055'
         constant integer FIRE_SHIELD_ITEM_ID                            = 'I07L'
         constant integer FLAME_STRIKE_ITEM_ID                           = 'I005'
-        constant integer FLIMSY_TOKEN_ITEM_ID                           = 'I0A3'
-        constant integer FLIMSY_TOKEN_TOME_ITEM_ID                      = 'I0A6'
         constant integer FOG_ITEM_ID                                    = 'I063'
         constant integer FORKED_LIGHTNING_ITEM_ID                       = 'I001'
         constant integer FROSTBITE_OF_THE_SOUL_ITEM_ID                  = 'I09H'
         constant integer FROST_ARMOR_ITEM_ID                            = 'I01W'
         constant integer FROST_BOLT_ITEM_ID                             = 'I09G'
         constant integer FROST_NOVA_ITEM_ID                             = 'I00C'
+        constant integer HARDENED_SKIN_ITEM_ID                          = 'I02O'
+        constant integer HEALING_WAVE_ITEM_ID                           = 'I029'
+        constant integer HEAVY_BLOW_ITEM_ID                             = 'I069'
+        constant integer HERO_BUFF_ITEM_ID                              = 'I05N'
+        constant integer HOLY_ENLIGHTENMENT_ITEM_ID                     = 'I06C'
+        constant integer HOLY_LIGHT_ITEM_ID                             = 'I00D'
+        constant integer HOWL_OF_TERROR_ITEM_ID                         = 'I040'
+        constant integer ICE_FORCE_ITEM_ID                              = 'I06L'
+        constant integer ICY_BREATH_ITEM_ID                             = 'I05Z'
+        constant integer IMMOLATION_ITEM_ID                             = 'I00V'
+        constant integer IMPALE_ITEM_ID                                 = 'I006'
+        constant integer INCINERATE_ITEM_ID                             = 'I045'
+        constant integer INFERNO_ITEM_ID                                = 'I02A'
+        constant integer INNER_FIRE_ITEM_ID                             = 'I02W'
+        constant integer LAST_BREATHS_ITEM_ID                           = 'I07J'
+        constant integer LEARNABILITY_ITEM_ID                           = 'I056'
+        constant integer LIFE_DRAIN_ITEM_ID                             = 'I00M'
+        constant integer LIGHTNING_SHIELD_ITEM_ID                       = 'I038'
+        constant integer LIQUID_FIRE_ITEM_ID                            = 'I03B'
+        constant integer MAGIC_CRITICAL_HIT_ITEM_ID                     = 'I081'
+        constant integer MANA_BONUS_ITEM_ID                             = 'I057'
+        constant integer MANA_SHIELD_ITEM_ID                            = 'I03F'
+        constant integer MANA_STARVATIO_ITEM_ID                         = 'I0AO'
+        constant integer MARTIAL_RETRIBUTION_ITEM_ID                    = 'I09L'
+        constant integer MEGA_LUCK_ITEM_ID                              = 'I085'
+        constant integer MEGA_SPEED_ITEM_ID                             = 'I051'
+        constant integer MIDAS_TOUCH_ITEM_ID                            = 'I00G'
+        constant integer MIRROR_IMAGE_ITEM_ID                           = 'I00Z'
+        constant integer MONSOON_ITEM_ID                                = 'I06G'
+        constant integer MULTICAST_ITEM_ID                              = 'I068'
+        constant integer MYSTERIOUS_TALENT_ITEM_ID                      = 'I07R'
+        constant integer NECROMANCERS_ARMY_ITEM_ID                      = 'I02Q'
+        constant integer PARASITE_ITEM_ID                               = 'I02U'
+        constant integer PHASE_SHIFT_ITEM_ID                            = 'I03U'
+        constant integer PHOENIX_ITEM_ID                                = 'I032'
+        constant integer PILLAGE_ITEM_ID                                = 'I03D'
+        constant integer PLAGUE_ITEM_ID                                 = 'I03V'
+        constant integer POCKET_FACTORY_ITEM_ID                         = 'I02G'
+        constant integer POWER_OF_ICE_ITEM_ID                           = 'I058'
+        constant integer POWER_OF_WATER_ITEM_ID                         = 'I0CR'
+        constant integer PULVERIZE_ITEM_ID                              = 'I02H'
+        constant integer PURGE_ITEM_ID                                  = 'I09N'
+        constant integer RAIN_OF_FIRE_ITEM_ID                           = 'I025'
+        constant integer RANDOM_SPELL_ITEM_ID                           = 'I09C'
+        constant integer RAPID_RECOVERY_ITEM_ID                         = 'I05P'
+        constant integer REACTION_ITEM_ID                               = 'I07Z'
+        constant integer REFLECTION_AUR_ITEM_ID                         = 'I09S'
+        constant integer REINCARNATION_ITEM_ID                          = 'I00Y'
+        constant integer REJUVENATION_ITEM_ID                           = 'I037'
+        constant integer RESET_TIME_ITEM_ID                             = 'I04I'
+        constant integer RETALIATION_AUR_ITEM_ID                        = 'I0B1'
+        constant integer SAND_OF_TIME_ITEM_ID                           = 'I09K'
+        constant integer SEARING_ARROWS_ITEM_ID                         = 'I02P'
+        constant integer SERPANT_WARD_ITEM_ID                           = 'I00E'
+        constant integer SHADOW_STRIKE_ITEM_ID                          = 'I00F'
+        constant integer SHOCKWAVE_ITEM_ID                              = 'I00R'
+        constant integer SILENCE_ITEM_ID                                = 'I03C'
+        constant integer SLOW_AURA_ITEM_ID                              = 'I03G'
+        constant integer SOUL_BURN_ITEM_ID                              = 'I062'
+        constant integer SPIKED_CARAPACE_ITEM_ID                        = 'I00O'
+        constant integer SPIRIT_LINK_ITEM_ID                            = 'I035'
+        constant integer STAMPEDE_ITEM_ID                               = 'I026'
+        constant integer STARFALL_ITEM_ID                               = 'I01Y'
+        constant integer STASIS_TRAP_ITEM_ID                            = 'I044'
+        constant integer STONE_PROTECTION_ITEM_ID                       = 'I07S'
+        constant integer STORM_BOLT_ITEM_ID                             = 'I00X'
+        constant integer SHADOW_DANCE_ITEM_ID                           = 'I0CL'
+        constant integer SHADOW_STEP_ITEM_ID                            = 'I0CI'
+        constant integer SUMMON_BEAR_ITEM_ID                            = 'I030'
+        constant integer SUMMON_HAWK_ITEM_ID                            = 'I02Z'
+        constant integer SUMMON_LAVA_SPAWN_ITEM_ID                      = 'I00T'
+        constant integer SUMMON_MOUNTAIN_GIANT_ITEM_ID                  = 'I03Y'
+        constant integer SUMMON_QUILBEAST_ITEM_ID                       = 'I031'
+        constant integer SUMMON_WATER_ELEMENTAL_ITEM_ID                 = 'I00S'
+        constant integer WILD_DEFENSE_ITEM_ID                           = 'I087'
+        constant integer TEMPORARY_INVISIBILITY_ITEM_ID                 = 'I05O'
+        constant integer TEMPORARY_POWER_ITEM_ID                        = 'I067'
+        constant integer THORNS_AURA_ITEM_ID                            = 'I00H'
+        constant integer THUNDER_CLAP_ITEM_ID                           = 'I00I'
+        constant integer THUNDER_FORCE_ITEM_ID                          = 'I053'
+        constant integer TIME_MANIPULATION_ITEM_ID                      = 'I0BA'
+        constant integer TRANQUILITY_ITEM_ID                            = 'I042'
+        constant integer TRUESHOT_AURA_ITEM_ID                          = 'I00W'
+        constant integer UNHOLY_AURA_ITEM_ID                            = 'I007'
+        constant integer UNHOLY_FRENZY_ITEM_ID                          = 'I034'
+        constant integer VAMPIRISM_ITEM_ID                              = 'I00J'
+        constant integer WAR_STOMP_ITEM_ID                              = 'I00K'
+        constant integer WHIRLWIND_ITEM_ID                              = 'I02B'
+        constant integer WIND_WALK_ITEM_ID                              = 'I01R'
+        constant integer WIZARDBANE_AURA_ITEM_ID                        = 'I09M'
+        constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
+        constant integer ERUPTION_ITEM_ID                               = 'I039'
+
+        // --- Shop Item IDs ---
+        constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'                                                                                              
+        constant integer ARCANE_INFUSED_SWORD_ITEM_ID                   = 'I0BN'                                                                                              
+        constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'                                                                                              
+        constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'                                                                                              
+        constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BE'
+        constant integer ABSOLUTE_ACORN_TOME_ITEM_ID                    = 'I09D'
+        constant integer AGILITY_LEVEL_BONUS_TOME_ITEM_ID               = 'I05H'
+        constant integer ANCIENT_AXE_ITEM_ID                            = 'I06Y'
+        constant integer DRIED_MUSHROOM_ITEM_ID                         = 'I0BT'
+        constant integer DRIED_MUSHROOM_TOME_ITEM_ID                    = 'I0D8'
+        constant integer ANCIENT_AXE_TOME_ITEM_ID                       = 'I06Z'
+        constant integer ANKH_ITEM_ID                                   = 'ankh'
+        constant integer ANCIENT_DAGGER_ITEM_ID                         = 'I06X'
+        constant integer ANCIENT_DAGGER_TOME_ITEM_ID                    = 'I070'
+        constant integer ANCIENT_STAFF_ITEM_ID                          = 'I06V'
+        constant integer ANCIENT_STAFF_TOME_ITEM_ID                     = 'I06W'
+        constant integer CHRONUS_WIZARD_ITEM_ID                         = 'I05Q'
+        constant integer CLEAVING_ATTACK_ITEM_ID                        = 'I00N'
+        constant integer EXPERIENCE_20000_TOME_ITEM_ID                  = 'I05K'
+        constant integer EXPERIENCE_50000_TOME_ITEM_ID                  = 'I09E'
+        constant integer EXPERIENCE_100000_TOME_ITEM_ID                 = 'I07C'
+        constant integer FLIMSY_TOKEN_ITEM_ID                           = 'I0A3'
+        constant integer FLIMSY_TOKEN_TOME_ITEM_ID                      = 'I0A6'
         constant integer GLORY_ABSOLUTE_ARCANE_COUNT_TOME_ITEM_ID      = 'I0C5'
         constant integer GLORY_ABSOLUTE_BLOOD_COUNT_TOME_ITEM_ID       = 'I0C7'
         constant integer GLORY_ABSOLUTE_DARK_COUNT_TOME_ITEM_ID        = 'I0CA'
@@ -663,38 +676,14 @@ library IdLibrary initializer init
         constant integer GLORY_MOVESPEED_TOME_ITEM_ID                   = 'I09T'
         constant integer GLORY_PVP_BONUS_TOME_ITEM_ID                   = 'I06S'
         constant integer GLORY_STRENGTH_TOME_ITEM_ID                    = 'I09W'
-        constant integer HARDENED_SKIN_ITEM_ID                          = 'I02O'
         constant integer HEALING_WARD_ITEM_ID                           = 'I033'
-        constant integer HEALING_WAVE_ITEM_ID                           = 'I029'
-        constant integer HEAVY_BLOW_ITEM_ID                             = 'I069'
-        constant integer HERO_BUFF_ITEM_ID                              = 'I05N'
-        constant integer HOLY_ENLIGHTENMENT_ITEM_ID                     = 'I06C'
-        constant integer HOLY_LIGHT_ITEM_ID                             = 'I00D'
-        constant integer HOWL_OF_TERROR_ITEM_ID                         = 'I040'
-        constant integer ICE_FORCE_ITEM_ID                              = 'I06L'
-        constant integer ICY_BREATH_ITEM_ID                             = 'I05Z'
-        constant integer IMMOLATION_ITEM_ID                             = 'I00V'
-        constant integer IMPALE_ITEM_ID                                 = 'I006'
-        constant integer INCINERATE_ITEM_ID                             = 'I045'
         constant integer INCOME_DEFAULT_TOME_ITEM_ID                    = 'I074'
         constant integer INCOME_INDIVIDUAL_TOME_ITEM_ID                 = 'I09O'
         constant integer ANTAGONIZE_CREEPS_ITEM_ID                      = 'I0D5'
-        constant integer INFERNO_ITEM_ID                                = 'I02A'
-        constant integer INNER_FIRE_ITEM_ID                             = 'I02W'
         constant integer INTELLIGENCE_LEVEL_BONUS_TOME_ITEM_ID          = 'I05I'
-        constant integer LAST_BREATHS_ITEM_ID                           = 'I07J'
-        constant integer LEARNABILITY_ITEM_ID                           = 'I056'
-        constant integer LIFE_DRAIN_ITEM_ID                             = 'I00M'
         constant integer LIFE_TOME_ITEM_ID                              = 'I07D'
-        constant integer LIGHTNING_SHIELD_ITEM_ID                       = 'I038'
-        constant integer LIQUID_FIRE_ITEM_ID                            = 'I03B'
         constant integer LUCKY_PANTS_ITEM_ID                            = 'I0AJ'
         constant integer LUCKY_PANTS_TOME_ITEM_ID                       = 'I0AB'
-        constant integer MAGIC_CRITICAL_HIT_ITEM_ID                     = 'I081'
-        constant integer MANA_BONUS_ITEM_ID                             = 'I057'
-        constant integer MANA_SHIELD_ITEM_ID                            = 'I03F'
-        constant integer MANA_STARVATIO_ITEM_ID                         = 'I0AO'
-        constant integer MARTIAL_RETRIBUTION_ITEM_ID                    = 'I09L'
         constant integer MANA_GEM_ITEM_ID                               = 'I0CO'
         constant integer MASK_OF_ELUSION_ITEM_ID                        = 'I0AD'
         constant integer MASK_OF_ELUSION_TOME_ITEM_ID                   = 'I0A8'
@@ -704,108 +693,18 @@ library IdLibrary initializer init
         constant integer MASK_OF_VITALITY_TOME_ITEM_ID                  = 'I0A7'
         constant integer PACKING_TAPE_ITEM_ID                           = 'I0D7'
         constant integer PACKING_TAPE_TOME_ITEM_ID                      = 'I0D6'
-        constant integer MEGA_LUCK_ITEM_ID                              = 'I085'
-        constant integer MEGA_SPEED_ITEM_ID                             = 'I051'
-        constant integer MIDAS_TOUCH_ITEM_ID                            = 'I00G'
-        constant integer MIRROR_IMAGE_ITEM_ID                           = 'I00Z'
-        constant integer MONSOON_ITEM_ID                                = 'I06G'
-        constant integer MULTICAST_ITEM_ID                              = 'I068'
         constant integer MULTISHOT_ITEM_ID                              = 'I03N'
-        constant integer MYSTERIOUS_TALENT_ITEM_ID                      = 'I07R'
         constant integer ORB_OF_ELEMENTS                                = 'I0CQ'
-        constant integer NECROMANCERS_ARMY_ITEM_ID                      = 'I02Q'
         constant integer NON_LUCRATIVE_TOME_ITEM_ID                     = 'I0B4'
         constant integer RAPIRA_ITEM_ID                                 = 'I0CP'
-        constant integer PARASITE_ITEM_ID                               = 'I02U'
-        constant integer PHASE_SHIFT_ITEM_ID                            = 'I03U'
-        constant integer PHOENIX_ITEM_ID                                = 'I032'
-        constant integer PILLAGE_ITEM_ID                                = 'I03D'
-        constant integer PLAGUE_ITEM_ID                                 = 'I03V'
-        constant integer POCKET_FACTORY_ITEM_ID                         = 'I02G'
-        constant integer POWER_OF_ICE_ITEM_ID                           = 'I058'
-        constant integer POWER_OF_WATER_ITEM_ID                         = 'I0CR'
-        constant integer PULVERIZE_ITEM_ID                              = 'I02H'
-        constant integer PURGE_ITEM_ID                                  = 'I09N'
-        constant integer RAIN_OF_FIRE_ITEM_ID                           = 'I025'
-        constant integer RANDOM_SPELL_ITEM_ID                           = 'I09C'
-        constant integer RAPID_RECOVERY_ITEM_ID                         = 'I05P'
-        constant integer REACTION_ITEM_ID                               = 'I07Z'
-        constant integer REFLECTION_AUR_ITEM_ID                         = 'I09S'
-        constant integer REINCARNATION_ITEM_ID                          = 'I00Y'
-        constant integer REJUVENATION_ITEM_ID                           = 'I037'
-        constant integer RESET_TIME_ITEM_ID                             = 'I04I'
-        constant integer RETALIATION_AUR_ITEM_ID                        = 'I0B1'
-        constant integer SAND_OF_TIME_ITEM_ID                           = 'I09K'
-        constant integer SEARING_ARROWS_ITEM_ID                         = 'I02P'
-        constant integer SERPANT_WARD_ITEM_ID                           = 'I00E'
-        constant integer SHADOW_STRIKE_ITEM_ID                          = 'I00F'
-        constant integer SHOCKWAVE_ITEM_ID                              = 'I00R'
-        constant integer SILENCE_ITEM_ID                                = 'I03C'
-        constant integer SLOW_AURA_ITEM_ID                              = 'I03G'
-        constant integer SOUL_BURN_ITEM_ID                              = 'I062'
         constant integer SPELLBANE_TOKEN_TOME_ITEM_ID                   = 'I0A5'
         constant integer SPELL_BANE_TOKEN_ITEM_ID                       = 'I0A1'
-        constant integer SPIKED_CARAPACE_ITEM_ID                        = 'I00O'
-        constant integer SPIRIT_LINK_ITEM_ID                            = 'I035'
-        constant integer STAMPEDE_ITEM_ID                               = 'I026'
-        constant integer STARFALL_ITEM_ID                               = 'I01Y'
-        constant integer STASIS_TRAP_ITEM_ID                            = 'I044'
-        constant integer STONE_PROTECTION_ITEM_ID                       = 'I07S'
-        constant integer STORM_BOLT_ITEM_ID                             = 'I00X'
-        constant integer STRENGTH_LEVEL_BONUS_TOME_ITEM_ID              = 'I05J'
-        constant integer SHADOW_BLADE_ITEM_ID                           = 'I0CN'
-        constant integer SHADOW_DANCE_ITEM_ID                           = 'I0CL'
-        constant integer SHADOW_STEP_ITEM_ID                            = 'I0CI'
-        constant integer SUMMON_ARMOR_BONUS_ITEM_ID                     = 'I04L'
-        constant integer SUMMON_ATTACK_BONUS_ITEM_ID                    = 'I04K'
-        constant integer SUMMON_BEAR_ITEM_ID                            = 'I030'
-        constant integer SUMMON_CRITICAL_STRIKE_ITEM_ID                 = 'I0AP'
-        constant integer SUMMON_CUTTING_ITEM_ID                         = 'I0AS'
-        constant integer SUMMON_DOME_OF_PROTECTION_ITEM_ID              = 'I0BC'
-        constant integer SUMMON_HAWK_ITEM_ID                            = 'I02Z'
-        constant integer SUMMON_HP_BONUS_ITEM_ID                        = 'I04M'
         constant integer SUMMON_ICE_FORCE_ITEM_ID                       = 'I0AQ'
         constant integer SUMMON_LAST_BREATHS_ITEM_ID                    = 'I0AR'
-        constant integer SUMMON_LAVA_SPAWN_ITEM_ID                      = 'I00T'
-        constant integer SUMMON_MOUNTAIN_GIANT_ITEM_ID                  = 'I03Y'
-        constant integer SUMMON_QUILBEAST_ITEM_ID                       = 'I031'
-        constant integer SUMMON_WATER_ELEMENTAL_ITEM_ID                 = 'I00S'
-        constant integer WILD_DEFENSE_ITEM_ID                           = 'I087'
-        constant integer SWORD_OF_BLOODTHRIST_ITEM_ID                   = 'I0AI'
-        constant integer SWORD_OF_BLOODTHRIST_TOME_ITEM_ID              = 'I0AG'
-        constant integer TEMPORARY_INVISIBILITY_ITEM_ID                 = 'I05O'
-        constant integer TEMPORARY_POWER_ITEM_ID                        = 'I067'
-        constant integer THORNS_AURA_ITEM_ID                            = 'I00H'
-        constant integer THUNDER_CLAP_ITEM_ID                           = 'I00I'
-        constant integer THUNDER_FORCE_ITEM_ID                          = 'I053'
-        constant integer TIME_MANIPULATION_ITEM_ID                      = 'I0BA'
-        constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
-        constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
-        constant integer TOME_OF_AGILITY_ITEM_ID                        = 'tdex'
-        constant integer TOME_OF_EXPERIENCE_100_ITEM_ID                 = 'texp'
-        constant integer TOME_OF_INTELLIGENCE_5_ITEM_ID                 = 'tin2'
-        constant integer TOME_OF_INTELLIGENCE_10_ITEM_ID                = 'I03J'
-        constant integer TOME_OF_INTELLIGENCE_ITEM_ID                   = 'tint'
-        constant integer TOME_OF_POWER_2000_ITEM_ID                     = 'tkno'
-        constant integer TOME_OF_STRENGTH_5_ITEM_ID                     = 'tst2'
-        constant integer TOME_OF_STRENGTH_10_ITEM_ID                    = 'I03I'
-        constant integer TOME_OF_STRENGTH_ITEM_ID                       = 'tstr'
-        constant integer TRANQUILITY_ITEM_ID                            = 'I042'
-        constant integer TRUESHOT_AURA_ITEM_ID                          = 'I00W'
-        constant integer UNHOLY_AURA_ITEM_ID                            = 'I007'
-        constant integer UNHOLY_FRENZY_ITEM_ID                          = 'I034'
-        constant integer UNLIMITED_AGON_ITEM_ID                         = 'I0BB'
-        constant integer VAMPIRISM_ITEM_ID                              = 'I00J'
-        constant integer VIGOUR_TOKEN_ITEM_ID                           = 'I0A2'
-        constant integer VIGOUR_TOKEN_TOME_ITEM_ID                      = 'I0A4'
         constant integer WAR_DRUMS_ITEM_ID                              = 'I002'
-        constant integer WAR_STOMP_ITEM_ID                              = 'I00K'
-        constant integer WHIRLWIND_ITEM_ID                              = 'I02B'
-        constant integer WIND_WALK_ITEM_ID                              = 'I01R'
-        constant integer WISDOM_CHESTPLATE_ITEM_ID                      = 'I0AH'
-        constant integer WISDOM_CHESTPLATE_TOME_ITEM_ID                 = 'I0AA'
-        constant integer WIZARDBANE_AURA_ITEM_ID                        = 'I09M'
-        constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
+        constant integer CONTEMPORARY_RUNES_ITEM_ID                     = 'I0D3'
+        constant integer ENERGY_BOMBARDMENT_ITEM_ID                     = 'I0D4'
+        constant integer LIGHT_MAGIC_SHIELD_ITEM_ID                     = 'I06K'
         constant integer SCORCHED_SCIMITAR_ITEM_ID                      = 'I0BO'
         constant integer DRUIDIC_FOCUS_ITEM_ID                          = 'I0BW'
         constant integer BANNER_OF_MANY_ITEM_ID                         = 'I0BY'
@@ -821,10 +720,26 @@ library IdLibrary initializer init
         constant integer WATER_RUNESTONE_ITEM_ID                        = 'I08Q'
         constant integer EARTH_RUNESTONE_ITEM_ID                        = 'I08R'
         constant integer WIND_RUNESTONE_ITEM_ID                         = 'I08S'
-        constant integer ERUPTION_ITEM_ID                               = 'I039'
-        constant integer CONTEMPORARY_RUNES_ITEM_ID                     = 'I0D3'
-        constant integer ENERGY_BOMBARDMENT_ITEM_ID                     = 'I0D4'
-        constant integer LIGHT_MAGIC_SHIELD_ITEM_ID                     = 'I06K'
+        constant integer WISDOM_CHESTPLATE_ITEM_ID                      = 'I0AH'
+        constant integer WISDOM_CHESTPLATE_TOME_ITEM_ID                 = 'I0AA'
+        constant integer VIGOUR_TOKEN_ITEM_ID                           = 'I0A2'
+        constant integer VIGOUR_TOKEN_TOME_ITEM_ID                      = 'I0A4'
+        constant integer SWORD_OF_BLOODTHRIST_ITEM_ID                   = 'I0AI'
+        constant integer SWORD_OF_BLOODTHRIST_TOME_ITEM_ID              = 'I0AG'
+        constant integer STRENGTH_LEVEL_BONUS_TOME_ITEM_ID              = 'I05J'
+        constant integer SHADOW_BLADE_ITEM_ID                           = 'I0CN'
+
+        constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
+        constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
+        constant integer TOME_OF_AGILITY_ITEM_ID                        = 'tdex'
+        constant integer TOME_OF_EXPERIENCE_100_ITEM_ID                 = 'texp'
+        constant integer TOME_OF_INTELLIGENCE_5_ITEM_ID                 = 'tin2'
+        constant integer TOME_OF_INTELLIGENCE_10_ITEM_ID                = 'I03J'
+        constant integer TOME_OF_INTELLIGENCE_ITEM_ID                   = 'tint'
+        constant integer TOME_OF_POWER_2000_ITEM_ID                     = 'tkno'
+        constant integer TOME_OF_STRENGTH_5_ITEM_ID                     = 'tst2'
+        constant integer TOME_OF_STRENGTH_10_ITEM_ID                    = 'I03I'
+        constant integer TOME_OF_STRENGTH_ITEM_ID                       = 'tstr'
 
         // --- Buff IDs ---
         constant integer DARK_SEAL_BUFF_ID                              = 'A0DE'
@@ -927,6 +842,8 @@ library IdLibrary initializer init
         constant integer DRUNKEN_HAZE_IGNITE_BUFF_ID                    = 'A0DL'
         constant integer DRIED_MUSHROOM_DUMMY_BUFF_ID                   = 'B02Y'
         constant integer ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID            = 'B030'
+        constant integer ANCIENT_BLOOD_BUFF_ABILITY_ID                  = 'A0CI'
+        constant integer CUTTING_BUFF_ABILITY_ID                        = 'A0ET'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 
@@ -943,6 +860,59 @@ library IdLibrary initializer init
         constant integer CREATION_RUNESTONE_ABIL_ID                     = 'A073'
         constant integer MYSTERIOUS_RUNESTONE_ABIL_ID                   = 'A072'
         constant integer SHINING_RUNESTONE_ABIL_ID                      = 'A0DM'
+
+        constant integer FULL_RESTORE_ITEM_ID                           = 'I04G'
+        constant integer POTION_OF_GREATER_HEALING_ITEM_ID              = 'pghe'
+        constant integer POTION_OF_GREATER_MANA_ITEM_ID                 = 'pgma'
+        constant integer SUPER_POTION_OF_HEALING_ITEM_ID                = 'I020'
+        constant integer SUPER_POTION_OF_MANA_ITEM_ID                   = 'I021'
+        constant integer VAMPIRIC_POTION_ITEM_ID                        = 'vamp'
+        constant integer STRONG_SHIELD_ITEM_ID                          = 'I07F'
+        constant integer MAGIC_AMULET_ITEM_ID                           = 'I07B'
+        constant integer BOOK_OF_NECROMANCY_ITEM_ID                     = 'I06J'
+        constant integer HEART_OF_DARKNESS_ITEM_ID                      = 'I04V'
+
+        constant integer SENSATUS_SHIELD_OF_HONOR_ITEM_ID               = 'I016'
+        constant integer THE_DIVINE_SOURCE_ITEM_ID                      = 'I043'
+        constant integer URN_ITEM_ID                                    = 'I05U'
+        constant integer ANTI_MAGIC_FLAG_ITEM_ID                        = 'I04Q'
+        constant integer BLOOD_STONE_ITEM_ID                            = 'I0AK'
+        constant integer NULL_VOID_ORB_ITEM_ID                          = 'I0AL'
+        constant integer SCROLL_OF_TRANSFORMATION_ITEM_ID               = 'I065'
+        constant integer SPEED_BLADE_ITEM_ID                            = 'I06B'
+        constant integer GUIDE_TO_RUNE_MASTERY_ITEM_ID                  = 'I0BZ'
+
+        // --- Item Ability Ids
+        constant integer FULL_RESTORE_ABIL_ID                           = 'A0EY'
+        constant integer POTION_OF_GREATER_HEALING_ABIL_ID              = 'A0EV'
+        constant integer POTION_OF_GREATER_MANA_ABIL_ID                 = 'A0EW'
+        constant integer SUPER_POTION_OF_HEALING_ABIL_ID                = 'A0EX'
+        constant integer SUPER_POTION_OF_MANA_ABIL_ID                   = 'A0EU'
+        constant integer VAMPIRIC_POTION_ABIL_ID                        = 'AIpv'
+        constant integer MASK_OF_ELUSION_ABIL_ID                        = 'A09E'
+        constant integer MASK_OF_PROTECTION_ABIL_ID                     = 'A09D'
+        constant integer MASK_OF_VITALITY_ABIL_ID                       = 'A09F'
+        constant integer STRONG_SHIELD_ABIL_ID                          = 'A05N'
+        constant integer MAGIC_AMULET_ABIL_ID                           = 'A05L'
+        constant integer BOOK_OF_NECROMANCY_ABIL_ID                     = 'A04T'
+        constant integer HEART_OF_DARKNESS_ABIL_ID                      = 'A02I'
+        constant integer PACKING_TAPE_ABILITY_ID                        = 'A0DU'
+        constant integer ANCIENT_AXE_ABIL_ID                            = 'A096'
+        constant integer ANCIENT_DAGGER_ABIL_ID                         = 'A097'
+        constant integer ANCIENT_STAFF_ABIL_ID                          = 'A094'
+
+        constant integer SENSATUS_SHIELD_OF_HONOR_ABIL_ID               = 'AIdb'
+        constant integer THE_DIVINE_SOURCE_ABIL_ID                      = 'A01D'
+        constant integer URN_ABIL_ID                                    = 'A044'
+        constant integer ANTI_MAGIC_FLAG_ABIL_ID                        = 'A085'
+        constant integer BLOOD_STONE_ABIL_ID                            = 'A0AR'
+        constant integer NULL_VOID_ORB_ABIL_ID                          = 'A09L'
+        constant integer SCROLL_OF_TRANSFORMATION_ABIL_ID               = 'A049'
+        constant integer SPEED_BLADE_ABIL_ID                            = 'A0CJ'
+        constant integer RUNE_MASTERY_ABILITY_ID                        = 'A09O'
+        constant integer CONQ_BAMBOO_STICK_ABILITY_ID                   = 'A0CM'
+        constant integer SHADOW_BLADE_ABIL_ID                           = 'A0D2'
+        constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
 
         // --- Buff IDs ---
 
@@ -1205,12 +1175,6 @@ library IdLibrary initializer init
         call SUMMONS.add(FAERIE_DRAGON_UNIT_ID)
         call SUMMONS.add(CRYPT_LORD_LOCUST_UNIT_ID)
 
-        // Bears
-        set BEARS = StaticIdGroup.create()
-        call BEARS.add(BEAR_1_UNIT_ID)
-        call BEARS.add(BEAR_2_UNIT_ID)
-        call BEARS.add(BEAR_3_UNIT_ID)
-
         // Dummy units
         set DUMMIES = StaticIdGroup.create()
         call DUMMIES.add(PET_BASE_UNIT_ID)
@@ -1223,81 +1187,11 @@ library IdLibrary initializer init
         call DUMMIES.add(SHADE_BR_RESPAWN_UNIT_ID)
         call DUMMIES.add(CRYPT_LORD_PASSIVE_UNIT_ID)
 
-        // Feral Spirit Wolfs
-        set FERAL_SPIRIT_WOLVES = StaticIdGroup.create()
-        call FERAL_SPIRIT_WOLVES.add(FERAL_SPIRIT_WOLF_1_UNIT_ID)
-        call FERAL_SPIRIT_WOLVES.add(FERAL_SPIRIT_WOLF_2_UNIT_ID)
-        call FERAL_SPIRIT_WOLVES.add(FERAL_SPIRIT_WOLF_3_UNIT_ID)
-
-        // Hawks
-        set HAWKS = StaticIdGroup.create()
-        call HAWKS.add(HAWK_1_UNIT_ID)
-        call HAWKS.add(HAWK_2_UNIT_ID)
-        call HAWKS.add(HAWK_3_UNIT_ID)
-
-        // Infernals
-        set INFERNALS = StaticIdGroup.create()
-        call INFERNALS.add(INFERNAL_1_UNIT_ID)
-        call INFERNALS.add(INFERNAL_2_UNIT_ID)
-        call INFERNALS.add(INFERNAL_3_UNIT_ID)
-        call INFERNALS.add(INFERNAL_4_UNIT_ID)
-        call INFERNALS.add(INFERNAL_5_UNIT_ID)
-        call INFERNALS.add(INFERNAL_6_UNIT_ID)
-        call INFERNALS.add(INFERNAL_7_UNIT_ID)
-        call INFERNALS.add(INFERNAL_8_UNIT_ID)
-        call INFERNALS.add(INFERNAL_9_UNIT_ID)
-        call INFERNALS.add(INFERNAL_10_UNIT_ID)
-        call INFERNALS.add(INFERNAL_11_UNIT_ID)
-        call INFERNALS.add(INFERNAL_12_UNIT_ID)
-        call INFERNALS.add(INFERNAL_13_UNIT_ID)
-        call INFERNALS.add(INFERNAL_14_UNIT_ID)
-        call INFERNALS.add(INFERNAL_15_UNIT_ID)
-        call INFERNALS.add(INFERNAL_16_UNIT_ID)
-        call INFERNALS.add(INFERNAL_17_UNIT_ID)
-        call INFERNALS.add(INFERNAL_18_UNIT_ID)
-        call INFERNALS.add(INFERNAL_19_UNIT_ID)
-        call INFERNALS.add(INFERNAL_20_UNIT_ID)
-        call INFERNALS.add(INFERNAL_21_UNIT_ID)
-        call INFERNALS.add(INFERNAL_22_UNIT_ID)
-        call INFERNALS.add(INFERNAL_23_UNIT_ID)
-        call INFERNALS.add(INFERNAL_24_UNIT_ID)
-        call INFERNALS.add(INFERNAL_25_UNIT_ID)
-        call INFERNALS.add(INFERNAL_26_UNIT_ID)
-        call INFERNALS.add(INFERNAL_27_UNIT_ID)
-        call INFERNALS.add(INFERNAL_28_UNIT_ID)
-        call INFERNALS.add(INFERNAL_29_UNIT_ID)
-        call INFERNALS.add(INFERNAL_30_UNIT_ID)
-
-        // Lava Spawns
-        set LAVA_SPAWNS = StaticIdGroup.create()
-        call LAVA_SPAWNS.add(LAVA_SPAWN_1_UNIT_ID)
-        call LAVA_SPAWNS.add(LAVA_SPAWN_2_UNIT_ID)
-        call LAVA_SPAWNS.add(LAVA_SPAWN_3_UNIT_ID)
-
-        // Quilbeasts
-        set QUILBEASTS = StaticIdGroup.create()
-        call QUILBEASTS.add(QUILBEAST_1_UNIT_ID)
-        call QUILBEASTS.add(QUILBEAST_2_UNIT_ID)
-        call QUILBEASTS.add(QUILBEAST_3_UNIT_ID)
-        call QUILBEASTS.add(QUILBEAST_4_UNIT_ID)
-
         // Raise Dead Units
         set SKELLIESCAPTAINS = StaticIdGroup.create()
         call SKELLIESCAPTAINS.add(NECRO_BOOK_WARRIOR_1_UNIT_ID)
         call SKELLIESCAPTAINS.add(NECRO_BOOK_ARCHER_1_UNIT_ID)
         call SKELLIESCAPTAINS.add(BONE_ARMOR_SKELETON_UNIT_ID)
-
-        // Serpant Wards
-        set SERPENT_WARDS = StaticIdGroup.create()
-        call SERPENT_WARDS.add(SERPENT_WARD_1_UNIT_ID)
-        call SERPENT_WARDS.add(SERPENT_WARD_2_UNIT_ID)
-        call SERPENT_WARDS.add(SERPENT_WARD_3_UNIT_ID)
-
-        // Water Elementals
-        set WATER_ELEMENTALS = StaticIdGroup.create()
-        call WATER_ELEMENTALS.add(WATER_ELEMENTAL_1_UNIT_ID)
-        call WATER_ELEMENTALS.add(WATER_ELEMENTAL_2_UNIT_ID)
-        call WATER_ELEMENTALS.add(WATER_ELEMENTAL_3_UNIT_ID)
 
         set RUNESTONE_ITEM_ABILITIES = StaticIdGroup.create()
         call RUNESTONE_ITEM_ABILITIES.add(FIRE_RUNESTONE_ABIL_ID)
