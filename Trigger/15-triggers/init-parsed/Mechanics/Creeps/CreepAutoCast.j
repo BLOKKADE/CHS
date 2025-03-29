@@ -101,13 +101,13 @@ library CreepAutoCast initializer init requires RandomShit
             set creepLocation = GetUnitLoc(creep)
     
             // Mana burn
-            if (GetUnitAbilityLevel(creep, 'A00V') > 0) then
+            if (GetUnitAbilityLevel(creep, MANA_BURN_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, 'A00V', ((RoundNumber * 4) / RoundCreepNumber))
+                        call SetUnitAbilityLevel(creep, MANA_BURN_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevel(creep, 'A00V', (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                        call SetUnitAbilityLevel(creep, MANA_BURN_CREEP_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
                     endif
 
                     // Use mana burn on random unit
@@ -138,13 +138,13 @@ library CreepAutoCast initializer init requires RandomShit
             endif
 
             // Shockwave
-            if (GetUnitAbilityLevel(creep, 'A00U') > 0) then
+            if (GetUnitAbilityLevel(creep, SHOCKWAVE_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, 'A00U', ((RoundNumber * 4) / RoundCreepNumber))
+                        call SetUnitAbilityLevel(creep, SHOCKWAVE_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevel(creep, 'A00U', (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                        call SetUnitAbilityLevel(creep, SHOCKWAVE_CREEP_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
                     endif
 
                     // Use shockwave on random unit
@@ -160,13 +160,13 @@ library CreepAutoCast initializer init requires RandomShit
             endif
 
             // Hurl boulder
-            if (GetUnitAbilityLevel(creep, 'A00W') > 0) then
+            if (GetUnitAbilityLevel(creep, HURL_BOULDER_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, 'A00W', ((RoundNumber * 4) / RoundCreepNumber))
+                        call SetUnitAbilityLevel(creep, HURL_BOULDER_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevel(creep, 'A00W', (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                        call SetUnitAbilityLevel(creep, HURL_BOULDER_CREEP_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
                     endif
 
                     // Hurl boulder to random unit
@@ -180,13 +180,13 @@ library CreepAutoCast initializer init requires RandomShit
             endif
 
             // Rejuvination
-            if (GetUnitAbilityLevel(creep, 'A00X') > 0) then
+            if (GetUnitAbilityLevel(creep, REJUVENATION_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, 'A00X', ((RoundNumber * 4) / RoundCreepNumber))
+                        call SetUnitAbilityLevel(creep, REJUVENATION_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevel(creep, 'A00X', (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                        call SetUnitAbilityLevel(creep, REJUVENATION_CREEP_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
                     endif
 
                     // Cast rejuvination on ally creep
@@ -229,13 +229,13 @@ library CreepAutoCast initializer init requires RandomShit
             endif
 
             // Faerie fire
-            if (GetUnitAbilityLevel(creep, 'A016') > 0) then
+            if (GetUnitAbilityLevel(creep, FAERIE_FIRE_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, 'A016', ((RoundNumber * 4) / RoundCreepNumber))
+                        call SetUnitAbilityLevel(creep, FAERIE_FIRE_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevel(creep, 'A016', (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                        call SetUnitAbilityLevel(creep, FAERIE_FIRE_CREEP_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
                     endif
 
                     // Cast Faerie fire on a random unit
@@ -249,13 +249,13 @@ library CreepAutoCast initializer init requires RandomShit
             endif
 
             // Thunder clap
-            if (GetUnitAbilityLevel(creep, 'A01B') > 0) then
+            if (GetUnitAbilityLevel(creep, THUNDER_CLAP_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, 'A01B', ((RoundNumber * 4) / RoundCreepNumber))
+                        call SetUnitAbilityLevel(creep, THUNDER_CLAP_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevel(creep, 'A01B', (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                        call SetUnitAbilityLevel(creep, THUNDER_CLAP_CREEP_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
                     endif
 
                     // Cast thunder clap if there is a unit nearby

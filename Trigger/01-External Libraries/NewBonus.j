@@ -92,14 +92,14 @@ library NewBonus
         //The abilities codes for each bonus
         //When pasting the abilities over to your map
         //their raw code should match the bonus here
-        private constant integer DAMAGE_ABILITY           = 'A0A8'
+        private constant integer DAMAGE_ABILITY           = DAMAGE_BONUS_ABILITY_ID
         private constant integer ARMOR_ABILITY            = 'A00L'
-        private constant integer STATS_ABILITY            = 'A0B4'
+        private constant integer STATS_ABILITY            = STAT_BONUS_ABILITY_ID
         private constant integer HEALTH_ABILITY           = 'A00N'
         private constant integer MANA_ABILITY             = 'A00S'
         private constant integer HEALTHREGEN_ABILITY      = 'A01C'
         private constant integer MANAREGEN_ABILITY        = 'A01G'
-        private constant integer ATTACKSPEED_ABILITY      = 'A0A5'
+        private constant integer ATTACKSPEED_ABILITY      = ATTACK_SPEED_BONUS_ABILITY_ID
     
         //The abilities fields that are modified. For the sake of readability
         private constant abilityintegerlevelfield DAMAGE_FIELD           = ABILITY_ILF_ATTACK_BONUS

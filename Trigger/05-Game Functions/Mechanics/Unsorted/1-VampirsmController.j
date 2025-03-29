@@ -5,7 +5,7 @@ library Vampirism requires UnitItems, DivineBubble
         local integer i1 = 0
         
         //Bloodstone passive
-        if UnitHasItemType(target, 'I0AK') then
+        if UnitHasItemType(target, BLOOD_STONE_ITEM_ID) then
             set amount = amount * 0.4
         endif
 

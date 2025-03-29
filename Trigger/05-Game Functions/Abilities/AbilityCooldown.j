@@ -132,7 +132,7 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
         endif
 
         //Guide To Rune Mastery cd reset toggle
-        if UnitHasItemType(u, 'I0BZ') and RUNESTONE_ITEM_ABILITIES.contains(id) then
+        if UnitHasItemType(u, GUIDE_TO_RUNE_MASTERY_ITEM_ID) and RUNESTONE_ITEM_ABILITIES.contains(id) then
             if IsRunestoneRuneMasteryCdResettable(u, id) then
                 set ResCD = 0.001
             endif

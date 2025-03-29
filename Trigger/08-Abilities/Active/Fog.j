@@ -16,7 +16,7 @@ library Fog requires NewBonus, Utility, UnitHelpers
             loop
                 set p = BlzGroupUnitAt(this.trappedUnits, i)
                 exitwhen p == null
-                if GetUnitAbilityLevel(p, 'Bclf') == 1 and CalculateDistance(this.x, GetUnitX(p), this.y, GetUnitY(p)) > 400 then
+                if GetUnitAbilityLevel(p, CLOUD_BUFF_ID) == 1 and CalculateDistance(this.x, GetUnitX(p), this.y, GetUnitY(p)) > 400 then
                     set angle = GetAngleToTargetPoint(this.x, GetUnitX(p), this.y, GetUnitY(p))
                     call DestroyEffect(AddLocalizedSpecialEffect(FX_BLINK, GetUnitX(p), GetUnitY(p)))
 
@@ -38,7 +38,7 @@ library Fog requires NewBonus, Utility, UnitHelpers
             loop
                 set p = FirstOfGroup(ENUM_GROUP)
                 exitwhen p == null
-                if GetUnitAbilityLevel(p, 'Bclf') == 1 then
+                if GetUnitAbilityLevel(p, CLOUD_BUFF_ID) == 1 then
                     call GroupAddUnit(this.trappedUnits, p)
                 endif
                 call GroupRemoveUnit(ENUM_GROUP, p)

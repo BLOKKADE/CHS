@@ -21,9 +21,9 @@ scope LethalDamage initializer init
         endif
 
         //Ankh of Reincarnation
-        if UnitHasItemType(DamageTarget, 'ankh') and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 then
+        if UnitHasItemType(DamageTarget, ANKH_ITEM_ID) and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 then
             set udg_LethalDamageHP = 1
-            call RemoveItem(GetUnitItem(DamageTarget, 'ankh'))
+            call RemoveItem(GetUnitItem(DamageTarget, ANKH_ITEM_ID))
             call Reincarnate.start(DamageTarget, 1, 500)
             return
         endif

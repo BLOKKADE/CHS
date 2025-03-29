@@ -81,7 +81,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         endif
 
         //Urn of Memories
-        set itemCount = GetUnitItemTypeCount(killingHero, 'I05U')
+        set itemCount = GetUnitItemTypeCount(killingHero, URN_ITEM_ID)
         if itemCount > 0 then
             if pillageBonus == 0 then
                 set expBounty = expBounty + ((2 * GetHeroLevel(killingHero)) * itemCount)

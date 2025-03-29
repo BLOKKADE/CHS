@@ -4,13 +4,13 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
 
         //Mysterious Runestone
-        if abilId == 'A072' then
+        if abilId == MYSTERIOUS_RUNESTONE_ABIL_ID then
             call CastMysteriousRunestone(hero)
-            return true
+
         //Scroll of Transformation
-        elseif abilId == 'A049' then
+        elseif abilId == SCROLL_OF_TRANSFORMATION_ABIL_ID then
             call CastScrollOfTransformation(hero)
-            return true
+
         //Random Spell
         elseif abilId == RANDOM_SPELL_ABILITY_ID then
             //call BJDebugMsg("random spell: " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
@@ -27,132 +27,155 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             endif
-            return true
+
         //Contemporary Runes
         elseif abilId == CONTEMPORARY_RUNES_ABILITY_ID then
             call CastContemporaryRunes(hero, lvl)
-            return true
+
         //Mana Starvation
         elseif abilId == MANA_STARVATIO_ABILITY_ID then
             call CastManaStarvation(hero, target, lvl)
-            return true
+
         elseif abilId == PACKING_TAPE_ABILITY_ID then
             call CastPackingTape(hero, target)
-            return true
+
             //Midas Touch
         elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false and (not IsUnitType(target, UNIT_TYPE_HERO)) then
             call CastMidasTouch(hero, target, lvl)
-            return true
+
         //Holy Light
         elseif abilId == HOLY_LIGHT_ABILITY_ID then
             call CastHolyLight(caster, target, lvl)
-            return true
+
         //Parasite
         elseif abilId == PARASITE_ABILITY_ID then
             call CastParasite(caster, target, lvl)
-            return true
+
         //Lightning Shield
         elseif abilId == LIGHTNING_SHIELD_ABILITY_ID then
             call CastLightningShield(caster, target, lvl)
-            return true
+
         //Plague
         elseif abilId == PLAGUE_ABILITY_ID then
             call CastPlague(caster, x, y, lvl)
-            return true
+
         //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(hero, target, lvl)
-            return true
+
         //Dark Seal
         elseif abilId == DARK_SEAL_ABILITY_ID then
             call CastDarkSeal(target, lvl)
-            return true
+
         //Destruction of Block
         elseif abilId == DESTRUCTION_BLOCK_ABILITY_ID then
             call CastDestrOfBlock(target, lvl)
-            return true
+
         //Inner Fire
         elseif abilId == INNER_FIRE_ABILITY_ID then
             call CastInnerFire(hero, target, lvl)
-            return true
+
         //Battle Roar
         elseif abilId == BATTLE_ROAR_ABILITY_ID then
             call CastBattleRoar(hero, abilId, lvl)
-            return true
+
         //Cyclone
         elseif abilId == CYCLONE_ABILITY_ID then
             call Cyclone(caster, x, y, lvl)
-            return true
+
         //Ancient Axe
-        elseif abilId == 'A096' then
+        elseif abilId == ANCIENT_AXE_ABIL_ID then
             call AncientAxe(hero)
-            return true
+
         //Ancient Dagger
-        elseif abilId == 'A097' then
+        elseif abilId == ANCIENT_DAGGER_ABIL_ID then
             call AncientDagger(hero)
-            return true
+
         //Death Pact
         elseif abilId == DEATH_PACT_ABILITY_ID then
             call CastDeathPact(hero, target, lvl)
-            return true
+
         //Ancient Staff
-        elseif abilId == 'A094' then
+        elseif abilId == ANCIENT_STAFF_ABIL_ID then
             call AncientStaff(hero)
-            return true
+
+        //Full Restore 
+        elseif abilId == FULL_RESTORE_ABIL_ID then
+            call PotionHeal(GetUnitState(hero, UNIT_STATE_MAX_LIFE), GetUnitState(hero, UNIT_STATE_MAX_MANA))
+
+        //Potion of Greater Healing
+        elseif abilId == POTION_OF_GREATER_HEALING_ABIL_ID then
+            call PotionHeal(500, 0)
+
+        //Potion of Greater Mana
+        elseif abilId == POTION_OF_GREATER_MANA_ABIL_ID then
+            call PotionHeal(0, 200)
+
+        //Super Potion of Healing
+        elseif abilId == SUPER_POTION_OF_HEALING_ABIL_ID then
+            call PotionHeal(1000, 0)
+
+        //Super Potion of Mana
+        elseif abilId == SUPER_POTION_OF_MANA_ABIL_ID then
+            call PotionHeal(0, 600)
+
         //ShadowBlade
-        elseif abilId == 'A0D2' then
+        elseif abilId == SHADOW_BLADE_ABIL_ID then
             call ShadowBlade(hero)
+
         //Reset Time
         elseif abilId == RESET_TIME_ABILITY_ID then
             call ResetTime(hero)
-            return true
+
         //Energy Trap
         elseif abilId == ENERGY_TRAP_ABILITY_ID then
             call CastEnergyTrap(caster, x, y, lvl)
-            return true
+
         //Spirit Link
         elseif abilId == SPIRIT_LINK_ABILITY_ID then
             call CastSpiritLink(hero, lvl)
-            return true
+
         //Blink Strike
         elseif abilId == BLINK_STRIKE_ABILITY_ID or abilId == 'A06I' then
             call BlinkStrike(caster, lvl)
-            return true
+
         //Whirlwind
-        elseif abilId == 'A025' then
+        elseif abilId == WHIRLWIND_ABILITY_ID then
             call CastWhirlwind(hero, x, y, lvl)
-            return true
+
         //Extra dimensional cooperation
         elseif abilId == EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
             call ExtradimensionalCooperation(hero, abilId, lvl)
-            return true
+
         //Frost Bolt
         elseif abilId == FROST_BOLT_ABILITY_ID then
             call UsFrostBolt(hero,target,120 * lvl * (1 + 0.25 * R2I(GetUnitElementCount(hero,Element_Dark))), GetUnitElementCount(hero,Element_Cold))
-            return true
+
         //Sand of time
         elseif abilId == SAND_OF_TIME_ABILITY_ID then
-            call SandRefreshAbility(hero,1.75 + 0.25 * lvl)
-            return true
+            call CastSandOfTime(hero,1.75 + 0.25 * lvl)
+
         //Purge wait
         elseif abilId == PURGE_ABILITY_ID then
             call Purge(hero, target, lvl)
-            return true
+
         //Eruption
         elseif abilId == ERUPTION_ABILITY_ID then
             call CastEruption(caster, x, y, lvl)
-            return true
+
         //Divine Source
-        elseif abilId == 'A01D' then
+        elseif abilId == THE_DIVINE_SOURCE_ABIL_ID then
             call UseDivineSource(hero)
-            return true
+
         // Death and Decay
         elseif abilId == DEATH_AND_DECAY_ABILITY_ID then
             call CastDeathAndDecay(hero, x, y, lvl)
-            return true
+        
+        else
+            return false
         endif
 
-        return false
+        return true
     endfunction
 endlibrary
 
@@ -211,7 +234,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call CastInnerFireOnSpellCast(caster, abilLvl)
                     endif
 
-                    if GetUnitAbilityLevel(caster, 'A01X') > 0 then
+                    if GetUnitAbilityLevel(caster, BLOKKADE_SHIELD_ABIL_ID) > 0 then
                         call ActivateBlokkadeShield(caster)
                     endif
 
@@ -239,11 +262,11 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call CastAvatar(caster, abilLvl)
                     endif
 
-                    if abilId == 'AEsh' then
+                    if abilId == SHADOW_STRIKE_ABILITY_ID then
                         call UnitAddTimeForm(caster,FORM_SHADOW, 1)
                     endif
 
-                    if abilId == 'A044' then
+                    if abilId == URN_ABIL_ID then
                         call Urn(caster)
                     endif   
 
@@ -263,15 +286,15 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call CastRuneMaster(caster)
                     endif
 
-                    if abilId == 'A09D' then
+                    if abilId == MASK_OF_PROTECTION_ABIL_ID then
                         call MaskOfProtectionCast(caster)
                     endif
         
-                    if abilId == 'A09F' then
+                    if abilId == MASK_OF_VITALITY_ABIL_ID then
                         call MaskOfVitality(caster)
                     endif
 
-                    if abilId == 'A085' then
+                    if abilId == ANTI_MAGIC_FLAG_ABIL_ID then
                         call ActivateAntiMagicFlag(caster)
                     endif
 
@@ -323,8 +346,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call ActivateXesilManaCostNegation(caster, castAbilId, abilLvl)
                     endif
 
-                    //call BJDebugMsg("cd")
-                    call SetCooldown(caster, abilId, false) 
+                    call SetCooldown(caster, abilId, true) 
                 endif
             endif
         endif

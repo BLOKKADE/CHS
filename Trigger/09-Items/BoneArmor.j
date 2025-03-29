@@ -4,7 +4,7 @@ library BoneArmor initializer init requires Utility, RandomShit
     endglobals
 
     private function BoneArmorFilter takes nothing returns boolean
-        return UnitAlive(GetFilterUnit()) and GetUnitTypeId(GetFilterUnit()) == 'u003'
+        return UnitAlive(GetFilterUnit()) and GetUnitTypeId(GetFilterUnit()) == BONE_ARMOR_SKELETON_UNIT_ID
     endfunction
 
     function GetBoneArmorStruct takes integer id returns BoneArmorStruct
@@ -78,13 +78,13 @@ library BoneArmor initializer init requires Utility, RandomShit
 
         call ElemFuncStart(caster, 'I07O')
 
-        set summon = CreateUnit(GetOwningPlayer(caster), 'u003', GetUnitX(caster), GetUnitY(caster), 0)
+        set summon = CreateUnit(GetOwningPlayer(caster), BONE_ARMOR_SKELETON_UNIT_ID, GetUnitX(caster), GetUnitY(caster), 0)
         call UnitApplyTimedLife(summon, abilId, duration)
-        set summon = CreateUnit(GetOwningPlayer(caster), 'u003', GetUnitX(caster), GetUnitY(caster), 0)
+        set summon = CreateUnit(GetOwningPlayer(caster), BONE_ARMOR_SKELETON_UNIT_ID, GetUnitX(caster), GetUnitY(caster), 0)
         call UnitApplyTimedLife(summon, abilId, duration)
-        set summon = CreateUnit(GetOwningPlayer(caster), 'u003', GetUnitX(caster), GetUnitY(caster), 0)
+        set summon = CreateUnit(GetOwningPlayer(caster), BONE_ARMOR_SKELETON_UNIT_ID, GetUnitX(caster), GetUnitY(caster), 0)
         call UnitApplyTimedLife(summon, abilId, duration)
-        set summon = CreateUnit(GetOwningPlayer(caster), 'u003', GetUnitX(caster), GetUnitY(caster), 0)
+        set summon = CreateUnit(GetOwningPlayer(caster), BONE_ARMOR_SKELETON_UNIT_ID, GetUnitX(caster), GetUnitY(caster), 0)
         call UnitApplyTimedLife(summon, abilId, duration)
 
         if GetBoneArmorStruct(hid).enabled == false then

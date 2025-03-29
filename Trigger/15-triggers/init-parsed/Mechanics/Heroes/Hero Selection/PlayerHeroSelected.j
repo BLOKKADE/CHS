@@ -118,9 +118,9 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
     
         call BlzUnitHideAbility(hero, 'A030', true)
         call BlzUnitHideAbility(hero, 'A031', true)
-        call BlzUnitHideAbility(hero, 'A032', true)
+        call BlzUnitHideAbility(hero, TITANIUM_SPIKE_IMMUN_ABIL_ID, true)
         call BlzUnitHideAbility(hero, 'A033', true)
-        call BlzUnitHideAbility(hero, 'A034', true)
+        call BlzUnitHideAbility(hero, SEARING_ARROWS_ABILITY_ID, true)
         call BlzUnitHideAbility(hero, 'A03H', true)    
     
         call FunctionStartUnit(hero) 
@@ -133,7 +133,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
                     
         // Starting items
         call UnitAddItemByIdSwapped(ANKH_ITEM_ID, hero)
-        call UnitAddItemByIdSwapped('pghe', hero)
+        call UnitAddItemByIdSwapped(POTION_OF_GREATER_HEALING_ITEM_ID, hero)
         call UnitAddItemByIdSwapped('I04R', hero)
 
         // Move hero and camera to arena
@@ -148,7 +148,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         loop
             exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
 
-            if (GetUnitTypeId(hero) == 'H008') then
+            if (GetUnitTypeId(hero) == SORCERER_UNIT_ID) then
                 // Create the unit around the hero
                 set projectionLocation = PolarProjectionBJ(PlayerArenaRectCenters[playerId], 50.00, 45.00 * I2R(bj_forLoopAIndex))
                 call CreateUnitAtLoc(p, 'e003', projectionLocation, 270.00)

@@ -11,7 +11,7 @@ library ModifyCreepAbilities initializer init requires RandomShit
 
         // Crit Strike
         if (RoundCreepChanceCritStrike == 1) then
-            call UnitAddAbility(creep, 'AOcr')
+            call UnitAddAbility(creep, CRITICAL_STRIKE_ABILITY_ID)
         endif
 
         // Evasion
@@ -31,29 +31,29 @@ library ModifyCreepAbilities initializer init requires RandomShit
 
         // Thorns
         if (RoundCreepChanceThorns == 1) then
-            call UnitAddAbility(creep, 'A08F')
-            call SetUnitAbilityLevel(creep, 'A08F', IMinBJ(R2I(RoundNumber * 0.4), 30))
+            call UnitAddAbility(creep, THORNS_AURA_ABILITY_ID)
+            call SetUnitAbilityLevel(creep, THORNS_AURA_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
 
         // --- Remove Abilities
         // Shockwave
         if (RoundCreepChanceShockwave != 1) then
-            call UnitRemoveAbility(creep, 'A00U')
+            call UnitRemoveAbility(creep, SHOCKWAVE_CREEP_ABILITY_ID)
         endif
 
         // Mana burn
         if (RoundCreepChanceManaBurn != 1) then
-            call UnitRemoveAbility(creep, 'A00V')
+            call UnitRemoveAbility(creep, MANA_BURN_CREEP_ABILITY_ID)
         endif
 
         // Hurl boulder
         if (RoundCreepChanceHurlBoulder != 1) then
-            call UnitRemoveAbility(creep, 'A00W')
+            call UnitRemoveAbility(creep, HURL_BOULDER_CREEP_ABILITY_ID)
         endif
 
         // Rejuvination
         if (RoundCreepChanceRejuv != 1) then
-            call UnitRemoveAbility(creep, 'A00X')
+            call UnitRemoveAbility(creep, REJUVENATION_CREEP_ABILITY_ID)
         endif
 
         // Slow
@@ -68,7 +68,7 @@ library ModifyCreepAbilities initializer init requires RandomShit
 
         // Faerie fire
         if (RoundCreepChanceFaerieFire != 1) then
-            call UnitRemoveAbility(creep, 'A016')
+            call UnitRemoveAbility(creep, FAERIE_FIRE_CREEP_ABILITY_ID)
         endif
 
         // Blink
@@ -78,7 +78,7 @@ library ModifyCreepAbilities initializer init requires RandomShit
 
         // Thunder clap
         if (RoundCreepChanceThunderClap != 1) then
-            call UnitRemoveAbility(creep, 'A01B')
+            call UnitRemoveAbility(creep, THUNDER_CLAP_CREEP_ABILITY_ID)
         endif
 
         // Cleanup

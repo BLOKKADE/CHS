@@ -16,26 +16,26 @@ library BuffRepositoryData initializer init requires BuffRepository
 
         call SetupBuffInfo1(SCROLL_OF_PROTECTION_BUFF_ID, 0, BUFFTYPE_POSITIVE, false) // unused?
         call SetupBuffInfo1(SENSATUS_SHIELD_OF_HONOR_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
-        call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, 'A0CJ', BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, SPEED_BLADE_ABIL_ID, BUFFTYPE_POSITIVE, false)
         //anti magic flag
-        call SetupBuffInfo1('B01A', 'A085', BUFFTYPE_POSITIVE, true)
+        call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true)
 
-        call SetupBuffInfo1('BHds', 'AHds', BUFFTYPE_POSITIVE, true)
-        call SetupBuffInfo1('BOwk', 'AOwk', BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
+        call SetupBuffInfo1('BOwk', WIND_WALK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
 
         call SetupBuffInfo2(LUCKY_PANTS_BUFF_ID, 'A09H', 0, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2(MANA_STARVATION_BUFF_ID, 'A09R', MANA_STARVATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2(WISDOM_CHESTPLATE_BUFF_ID, 'A09S', 0, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2(CHEATER_MAGIC_BUFF_ID, 'A08G', CHEATER_MAGIC_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
-        call SetupBuffInfo2('B02H', 'A0CI', ANCIENT_BLOOD_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
+        call SetupBuffInfo2('B02H', ANCIENT_BLOOD_BUFF_ABILITY_ID, ANCIENT_BLOOD_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B02B', CONTRACT_LIVING_BUFF_ID, 0, BUFFTYPE_BOTH, false, true)
         call SetupBuffInfo2('B025', 'A0AF', BLESSED_PROTECTIO_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01F', 'A08D', REACTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
-        call SetupBuffInfo2('B031', 'A0E0', LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
+        call SetupBuffInfo2('B031', LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         //scroll of transformation
         call SetupBuffInfo2('B028', 'A0CT', 0, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01E', 'A08C', DIVINE_BUBBLE_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
-        call SetupBuffInfo2('B02O', ERUPTION_IMMUNE_ABILITY_ID, ERUPTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
+        call SetupBuffInfo2(ERUPTION_IMMUNE_BUFF_ID, ERUPTION_IMMUNE_ABILITY_ID, ERUPTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01K', 'A091', CRYPT_LORD_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B02V', DRUNKEN_HAZE_IGNITE_BUFF_ID, DRUNKEN_HAZE_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B01D', 'A08B', LAST_BREATHS_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
@@ -104,8 +104,8 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(ACID_BOMB_BUFF_ID, ACID_BOMB_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(BREATH_OF_FROST_BUFF_ID, ICY_BREATH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(UNHOLY_FRENZY_BUFF_ID, UNHOLY_FRENZY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(NULL_VOID_ORB_BUFF_ID, 'A09L', BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(BLOODSTONE_BUFF_ID, 'A0AR', BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(NULL_VOID_ORB_BUFF_ID, NULL_VOID_ORB_ABIL_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(BLOODSTONE_BUFF_ID, BLOOD_STONE_ABIL_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID, ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         
         call SetupBuffInfo1(MANA_STARVATION_NERF_BUFF_ID, MANA_STARVATIO_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
@@ -113,6 +113,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1('A03V', TEMPORARY_INVISIBILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
         call SetupBuffInfo1('Bcrs', CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
 
+        call SetupBuffInfo2('B035', CUTTING_BUFF_ABILITY_ID, CUTTING_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2(INCINERATE_CUSTOM_BUFF_ID, 'A06L', INCINERATE_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2(POISON_NON_STACKING_CUSTOM_BUFF_ID, 'A06P', ENVENOMED_WEAPONS_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2(LIQUID_FIRE_CUSTOM_BUFF_ID, 'A06R', LIQUID_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
@@ -124,13 +125,13 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B02P', FAN_OF_KNIVES_BUFF_ID, FAN_OF_KNIVES_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02T', DARK_SEAL_BUFF_ID, DARK_SEAL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B02S', 'A0DF', DESTRUCTION_BLOCK_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B02S', DESTR_OF_BLOCK_BUFF_ID, DESTRUCTION_BLOCK_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
 
         call SetupBuffInfo1('B00C', AURA_OF_FEAR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1('B00H', 'A031', BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(FEAR_AURA_BUFF_ID, 'A031', BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1('B00E', AURA_OF_VULNERABILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1('B006', DRAIN_AURA_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         //fishing rod

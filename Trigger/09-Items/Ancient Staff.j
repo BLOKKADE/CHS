@@ -20,8 +20,8 @@ library AncientStaff requires DummyOrder, Cooldown, CustomState, GetRandomUnit, 
         call dummy.setAbilityRealField(abilId, ABILITY_RLF_DAMAGE_HTB1, GetHeroInt(u, true) * 3)
         call dummy.target(target)
         call dummy.activate()
-        call AbilStartCD(u, 'A094', 30)
-        call TempBonus.create(target, BONUS_MAGICRES, 0 - (GetUnitCustomState(target, BONUS_MAGICRES)* CalculateReduction(GetUnitItemTypeCount(u, ANCIENT_STAFF_ITEM_ID))), 5, 'A094').activate()
+        call AbilStartCD(u, ANCIENT_STAFF_ABIL_ID, 30)
+        call TempBonus.create(target, BONUS_MAGICRES, 0 - (GetUnitCustomState(target, BONUS_MAGICRES)* CalculateReduction(GetUnitItemTypeCount(u, ANCIENT_STAFF_ITEM_ID))), 5, ANCIENT_STAFF_ABIL_ID).activate()
         set target = null
     endfunction
 endlibrary
