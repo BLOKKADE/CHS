@@ -20,11 +20,13 @@ library SandOfTime requires RandomShit
         local integer abilId = 0
 
         loop
-            exitwhen i > 10
-            set abilId = GetHeroSpellAtPosition(hero, i)
-            if abilId != 0 and IsSpellResettable(abilId) and BlzGetUnitAbilityCooldownRemaining(hero, abilId) > 0 then
+            set abilId = BlzGetAbilityId(BlzGetUnitAbilityByIndex(hero, i))
+            exitwhen abilId == 0
+
+            if BlzGetUnitAbilityCooldownRemaining(hero, abilId) != 0 and IsSpellResettable(abilId) then
                 call ResetSpell(hero, abilId, cooldownReduction, IsSpellElement(hero, abilId, Element_Earth))
             endif
+
             set i = i + 1
         endloop
 

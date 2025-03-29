@@ -12,16 +12,6 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         HashTable AbilityElement
 
         integer LastObject
-        /*
-        hashtable HT_AbilityData = InitHashtable()
-        integer array AbilSpellRA1
-        integer AbilSRA1_count = 0 
-        integer array AbilSpellRA2
-        integer AbilSRA2_count = 0 
-        
-        integer array AbilSpellRA3
-        integer AbilSRA3_count = 0
-        */
 
         integer Element_Any = -1
         integer Element_None = 0
@@ -175,13 +165,13 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
     //typ = order type (none target point instant)
     //element = ability element
     //order = ability order
-    private function SaveAbilData takes integer abilId, integer itemId, boolean absolute, integer targetType, integer mono, boolean chaos, integer typ, string order returns nothing
+    private function SaveAbilData takes integer abilId, integer itemId, boolean absolute, integer targetType, integer mono, boolean chaos, integer orderType, string order returns nothing
         local integer index = 0
         set LastObject = abilId
         set ItemData[itemId] = abilId
 
         set AbilityData[abilId].integer[0] = itemId
-        set AbilityData[abilId].integer[2] = typ
+        set AbilityData[abilId].integer[2] = orderType
         set AbilityData[abilId].integer[3] = mono
         set AbilityData[abilId].integer[5] = targetType
 
@@ -198,13 +188,13 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
             if chaos and OrderId(order) != 0 then
                 
                 if targetType == 1 then
-                    set index = ChaosDataAlly[typ].integer[0] + 1
-                    set ChaosDataAlly[typ].integer[index] = abilId
-                    set ChaosDataAlly[typ].integer[0] = index
+                    set index = ChaosDataAlly[orderType].integer[0] + 1
+                    set ChaosDataAlly[orderType].integer[index] = abilId
+                    set ChaosDataAlly[orderType].integer[0] = index
                 else
-                    set index = ChaosDataEnemy[typ].integer[0] + 1
-                    set ChaosDataEnemy[typ].integer[index] = abilId
-                    set ChaosDataEnemy[typ].integer[0] = index
+                    set index = ChaosDataEnemy[orderType].integer[0] + 1
+                    set ChaosDataEnemy[orderType].integer[index] = abilId
+                    set ChaosDataEnemy[orderType].integer[0] = index
                 endif
 
                 //list of all chaos abilities
@@ -213,23 +203,36 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
                 set ChaosData[0].integer[0] = index
 
                 //list of chaos abilities per order type
-                set index = ChaosData[typ].integer[0] + 1
-                set ChaosData[typ].integer[index] = abilId
-                set ChaosData[typ].integer[0] = index
+                set index = ChaosData[orderType].integer[0] + 1
+                set ChaosData[orderType].integer[index] = abilId
+                set ChaosData[orderType].integer[0] = index
             endif
         endif
     endfunction
 
     private function SaveItemAbilityData takes integer abilId, integer itemId, integer targetType, integer mono, integer orderType, string order returns nothing
-        call SaveAbilData(abilId, itemId, false, targetType, mono, false, orderType, order)
-    endfunction
+        set LastObject = abilId
 
-    private function SaveCreepAbilityData takes integer abilId, integer targetType, integer typ, string order returns nothing
-        set AbilityData[abilId].integer[1] = OrderId(order)
-        set AbilityData[abilId].integer[2] = typ
+        set AbilityData[abilId].integer[0] = itemId
+        set AbilityData[abilId].integer[2] = orderType
+        set AbilityData[abilId].integer[3] = mono
         set AbilityData[abilId].integer[5] = targetType
 
-        if typ != Order_None then
+        if orderType != Order_None then
+            set AbilityData[abilId].boolean[4] = true
+        endif
+
+        if order != null then
+            set AbilityData[abilId].integer[1] = OrderId(order)
+        endif
+    endfunction
+
+    private function SaveCreepAbilityData takes integer abilId, integer targetType, integer orderType, string order returns nothing
+        set AbilityData[abilId].integer[1] = OrderId(order)
+        set AbilityData[abilId].integer[2] = orderType
+        set AbilityData[abilId].integer[5] = targetType
+
+        if orderType != Order_None then
             set AbilityData[abilId].boolean[4] = true
         endif
     endfunction
