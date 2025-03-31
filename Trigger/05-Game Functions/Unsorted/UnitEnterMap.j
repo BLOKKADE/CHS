@@ -119,13 +119,13 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         //Brilliance Aura
         set i2 = GetUnitAbilityLevel(hero, BRILLIANCE_AURA_ABILITY_ID)
         if i2 > 0 then
-            call AddUnitBonus(u, BONUS_MAGICPOW, (i2))
+            call AddUnitCustomState(u, BONUS_MAGICPOW, (i2))
         endif
 
         //Devotion Aura
         set i2 = GetUnitAbilityLevel(hero, DEVOTION_AURA_ABILITY_ID)
         if i2 > 0 then
-            call AddUnitBonus(u, BONUS_MAGICRES, (i2))
+            call AddUnitCustomState(u, BONUS_MAGICRES, (i2))
         endif
 
         //Banner of Many
@@ -184,6 +184,11 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call AddUnitCustomState(u, BONUS_MAGICPOW, 15)
         endif
 
+        //Mortar Team
+        if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
+            call AddUnitCustomState(u, BONUS_MAGICRES, 15)
+        endif
+
         //Pit Lord
         if GetUnitTypeId(u) == PIT_LORD_UNIT_ID then
             call UnitAddAbility(u, ABSOLUTE_FIRE_ABILITY_ID)
@@ -240,11 +245,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
             call CreateSpellList(u, SORCERER_UNIT_ID, SpellListFilter.SorcerSpellListFilter)
             set SorcererAmount[hid] = 1
-        endif
-
-        //Mortar Team
-        if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_PHYSPOW, 2)  
         endif
 
         //Set base luck

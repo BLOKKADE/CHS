@@ -36,6 +36,8 @@ library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
         local unit u = CreateUnit(GetEnumPlayer(), DRAFT_UPGRADE_UNIT_ID, upgradeShopX, upgradeShopY, 0)
 
         set udg_Draft_UpgradeBuildings[GetPlayerId(GetEnumPlayer())] = u
+
+        call SetBuildingVisibleForPlayer(GetEnumPlayer(), u, 'nbsm')
         set u = null
     endfunction
 

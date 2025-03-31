@@ -368,11 +368,16 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Cutting
         set i1 = GetUnitAbilityLevel(DamageSource,CUTTING_ABILITY_ID)
-        if i1 > 0 and Damage.index.isAttack and GetRandomReal(1,100) < 20 * DamageSourceLuck then
+        if i1 > 0 and Damage.index.isAttack then
+            if GetRandomReal(1,100) < 20 * DamageSourceLuck then
             set Damage.index.damage = Damage.index.damage+ (i1 * 100) * (1 + 0.02 * GetHeroLevel(DamageSource))
             set DamageIsCutting = true
-            call TempAbil.create(DamageTarget, CUTTING_BUFF_ABILITY_ID, 3)
+            endif
+
+            if BlzGetUnitArmor(DamageTarget) >= 0 then
+                call TempAbil.create(DamageTarget, CUTTING_BUFF_ABILITY_ID, 8.25 + (i1 * 1.75))
             call TempBonus.create(DamageTarget, BONUS_ARMOR, 0 - 3, 8.25 + (i1 * 1.75), CUTTING_BUFF_ABILITY_ID).addBuffLink(CUTTING_BUFF_ABILITY_ID).activate()
+            endif
         endif
 
         //Ancient Blood

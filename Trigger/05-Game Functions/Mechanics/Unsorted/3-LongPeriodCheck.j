@@ -343,8 +343,16 @@ scope LongPeriodCheck initializer init
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) + ((0.0001 * i1) * GetUnitState(u, UNIT_STATE_MAX_MANA)))
             endif
             if i2 != i1 then
-                call AddUnitBonus(u, BONUS_MAGICPOW, (i1 - i2))
+                call AddUnitCustomState(u, BONUS_MAGICPOW, (i1 - i2))
                 call SaveInteger(HT, hid, BRILLIANCE_AURA_ABILITY_ID, i1)
+            endif
+
+            //Devotion Aura
+            set i1 = GetUnitAbilityLevel(u, DEVOTION_AURA_ABILITY_ID)
+            set i2 = LoadInteger(HT, hid, DEVOTION_AURA_ABILITY_ID)
+            if i1 > 0 and i2 != i1 then
+                call AddUnitCustomState(u, BONUS_MAGICRES, (i1 - i2))
+                call SaveInteger(HT, hid, DEVOTION_AURA_ABILITY_ID, i1)
             endif
 
             //strength hp regen

@@ -157,8 +157,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
             if LoadReal(HT, GetHandleId(u), 1) == 0 then 
                 call SaveReal(HT, GetHandleId(u), 1, BlzGetUnitAttackCooldown(u, 0))
             endif
-            call SaveReal(HT, GetHandleId(u), MEGA_SPEED_ABILITY_ID, 0.02 * level)	
-            //     call BlzSetUnitAttackCooldown(u, 0.92 - (0.02*I2R(GetUnitAbilityLevel(u, abilId))), 0)
         endif
 
         if abilId == ICE_FORCE_ABILITY_ID then
@@ -204,10 +202,8 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
     endfunction
 
     function FunctionStartUnit takes unit U returns nothing
-        if LoadReal(HT, GetHandleId(U), 1) == 0 then 
-            call SaveReal(HT, GetHandleId(U), -1001, BlzGetUnitAttackCooldown(U, 0))
-            call SaveInteger(HT, GetHandleId(U), -1000, BlzGetUnitIntegerField(U, UNIT_IF_PRIMARY_ATTRIBUTE))
-        endif
+        call SaveReal(HT, GetHandleId(U), -1001, BlzGetUnitAttackCooldown(U, 0))
+        call SaveInteger(HT, GetHandleId(U), -1000, BlzGetUnitIntegerField(U, UNIT_IF_PRIMARY_ATTRIBUTE))
     endfunction
 
     function SellItemsOnGround takes nothing returns nothing
