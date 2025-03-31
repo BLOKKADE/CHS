@@ -112,10 +112,6 @@
           "Value": "0.45"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "unam",
           "Value": "Tauren"
         },
@@ -443,10 +439,6 @@
           "Value": "STR"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "unam",
           "Value": "Dreadlord"
         },
@@ -604,10 +596,6 @@
         {
           "Id": "ucpt",
           "Value": "0.3"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "umdl",
@@ -965,10 +953,6 @@
           "Value": "0.45"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "ua1m",
           "Value": "Abilities\\Weapons\\LavaSpawnMissile\\LavaSpawnMissile.mdl"
         },
@@ -1058,10 +1042,6 @@
         {
           "Id": "ucpt",
           "Value": "0.45"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "umdl",
@@ -1323,7 +1303,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "unam",
@@ -1483,10 +1463,6 @@
         {
           "Id": "ucpt",
           "Value": "0.15"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "unam",
@@ -1682,10 +1658,6 @@
         {
           "Id": "uabi",
           "Value": "A08H,AInv"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "unam",
@@ -1896,10 +1868,6 @@
         {
           "Id": "ucpt",
           "Value": "0.3"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "unam",
@@ -2138,10 +2106,6 @@
         {
           "Id": "uint",
           "Value": "30"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "unam",
@@ -2436,10 +2400,6 @@
           "Value": "0.15"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "unam",
           "Value": "Avatar Spirit"
         },
@@ -2599,10 +2559,6 @@
           "Value": "0.15"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "umdl",
           "Value": "units\\undead\\Abomination\\Abomination.mdl"
         },
@@ -2747,7 +2703,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "unam",
@@ -2846,7 +2802,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "350"
+          "Value": "150"
         },
         {
           "Id": "ubs1",
@@ -3160,7 +3116,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "upro",
@@ -3287,7 +3243,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "upro",
@@ -3431,10 +3387,6 @@
         {
           "Id": "ua1f",
           "Value": "100"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "unam",
@@ -3702,10 +3654,6 @@
           "Value": "0.3"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "umdl",
           "Value": "units\\nightelf\\DruidoftheClaw\\DruidoftheClaw.mdl"
         },
@@ -3847,10 +3795,6 @@
         {
           "Id": "ua1c",
           "Value": "1.4"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "upru",
@@ -4010,10 +3954,6 @@
         {
           "Id": "uabi",
           "Value": "A0A4,A08H,AInv"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "unam",
@@ -4196,7 +4136,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "unam",
@@ -4303,7 +4243,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "150"
         },
         {
           "Id": "ucam",
@@ -4482,7 +4422,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "unam",
@@ -5143,7 +5083,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "325"
+          "Value": "125"
         },
         {
           "Id": "uhpr",
@@ -5314,7 +5254,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "upru",
@@ -6131,10 +6071,6 @@
           "Value": "A08P,A08H,AInv"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "upru",
           "Value": "8"
         },
@@ -6287,7 +6223,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "unam",
@@ -7380,10 +7316,6 @@
           "Value": "10"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "upro",
           "Value": "Grom Hellscream"
         },
@@ -7844,7 +7776,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "0"
         },
         {
           "Id": "ua1c",
@@ -8082,7 +8014,7 @@
       "0": [
         {
           "Id": "usei",
-          "Value": "I05U,I059,I07O,I05B,I05C,I05D,I05E,I05F,I05G,I05L,I060,I061"
+          "Value": "I059,I07O,I05B,I05C,I05D,I05E,I05F,I05G,I05L,I060,I061"
         },
         {
           "Id": "uabi",
@@ -8269,7 +8201,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "upro",
@@ -8428,7 +8360,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "unam",
@@ -8654,10 +8586,6 @@
         {
           "Id": "ucpt",
           "Value": "0.3"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "umdl",
@@ -8912,10 +8840,6 @@
           "Value": "1.4"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "upro",
           "Value": "Greedy Goblin"
         },
@@ -9031,10 +8955,6 @@
           "Value": "0.15"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "usnd",
           "Value": "CentaurArcher"
         },
@@ -9148,10 +9068,6 @@
         {
           "Id": "ucpt",
           "Value": "0.15"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "umdl",
@@ -9329,7 +9245,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "usnd",
@@ -9441,10 +9357,6 @@
         {
           "Id": "ucpt",
           "Value": "0.45"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "umdl",
@@ -9579,7 +9491,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "unam",
@@ -9801,10 +9713,6 @@
         {
           "Id": "ucpt",
           "Value": "0.15"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "unam",
@@ -10092,7 +10000,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "unam",
@@ -10429,7 +10337,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "upru",
@@ -10565,10 +10473,6 @@
         {
           "Id": "ucpt",
           "Value": "0.15"
-        },
-        {
-          "Id": "uhpm",
-          "Value": "300"
         },
         {
           "Id": "umdl",
@@ -11130,7 +11034,7 @@
         },
         {
           "Id": "uhpm",
-          "Value": "300"
+          "Value": "200"
         },
         {
           "Id": "umdl",
@@ -11985,7 +11889,7 @@
         },
         {
           "Id": "uabi",
-          "Value": "Apiv,A09P,Avul,Ane2,Asid"
+          "Value": "Avul,Ane2,Asid"
         },
         {
           "Id": "uibo",
@@ -12020,10 +11924,6 @@
           "Value": "2"
         },
         {
-          "Id": "umdl",
-          "Value": "buildings\\other\\BookOfSummoning\\BookOfSummoning.mdl"
-        },
-        {
           "Id": "uubs",
           "Value": ""
         },
@@ -12046,6 +11946,10 @@
         {
           "Id": "usca",
           "Value": "1.2"
+        },
+        {
+          "Id": "umdl",
+          "Value": "war3mapImported\\dummy.mdl"
         }
       ]
     }
@@ -12080,7 +11984,7 @@
         },
         {
           "Id": "uabi",
-          "Value": "Apiv,Avul,Ane2,Asid"
+          "Value": "Avul,Ane2,Asid"
         },
         {
           "Id": "udtm",
@@ -12104,11 +12008,7 @@
         },
         {
           "Id": "uabs",
-          "Value": "Apiv,Anei,Asid"
-        },
-        {
-          "Id": "umdl",
-          "Value": "buildings\\other\\BookOfSummoning\\BookOfSummoning.mdl"
+          "Value": "Anei,Asid"
         },
         {
           "Id": "uico",
@@ -12133,6 +12033,10 @@
         {
           "Id": "usca",
           "Value": "1.2"
+        },
+        {
+          "Id": "umdl",
+          "Value": "war3mapImported\\dummy.mdl"
         }
       ]
     }
@@ -12610,7 +12514,7 @@
       "0": [
         {
           "Id": "usei",
-          "Value": ""
+          "Value": "IBBB"
         },
         {
           "Id": "uabi",
@@ -13308,10 +13212,6 @@
           "Value": "2"
         },
         {
-          "Id": "umdl",
-          "Value": "buildings\\other\\BookOfSummoning\\BookOfSummoning.mdl"
-        },
-        {
           "Id": "uico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNBookOfSummoning.blp"
         },
@@ -13458,10 +13358,6 @@
           "Value": "A0EM,AInv"
         },
         {
-          "Id": "uhpm",
-          "Value": "300"
-        },
-        {
           "Id": "uhas",
           "Value": ""
         }
@@ -13474,7 +13370,7 @@
       "0": [
         {
           "Id": "ua1b",
-          "Value": "100"
+          "Value": "60"
         },
         {
           "Id": "umvs",
@@ -13486,19 +13382,31 @@
         },
         {
           "Id": "ua1t",
-          "Value": "unknown"
-        },
-        {
-          "Id": "uaen",
-          "Value": "0"
+          "Value": "normal"
         },
         {
           "Id": "uine",
           "Value": "1"
         },
         {
+          "Id": "ua1r",
+          "Value": "300"
+        },
+        {
+          "Id": "ua1s",
+          "Value": "1"
+        },
+        {
+          "Id": "ua1z",
+          "Value": "900"
+        },
+        {
           "Id": "unsf",
           "Value": "(Crypt Lord Passive)"
+        },
+        {
+          "Id": "ua1m",
+          "Value": "Abilities\\Weapons\\SludgeMissile\\SludgeMissile.mdl"
         }
       ]
     }

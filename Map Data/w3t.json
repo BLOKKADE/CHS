@@ -490,7 +490,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff000000Dark|r]|nSends a horde of bats in a cone, dealing |cffff00ffmagic damage|r equal to a percentage of each enemy unit\u0027s maximum hit points. The Hero is healed for the amount of damage dealt. |n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff00ffDamage at level 30|r: 16% of enemy\u0027s maximum hit points|n|cffd45e3aRange at level 30|r: 1500|n|cffd49696Cooldown at level 30|r: 3 seconds|n|n[|cff8080ffManifold|r]"
+          "Value": "[|cff000000Dark|r]|nSends a horde of bats in a cone, dealing |cffff00ffmagic damage|r equal toa percentage of each enemy unit\u0027s maximum hit points. The Hero is healed for the amount of damage dealt. |n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff00ffDamage at level 30|r: 15% of enemy\u0027s maximum hit points|n|cffd45e3aRange at level 30|r: 1400|n|cffd49696Cooldown at level 30|r: 3 seconds|n|n[|cff8080ffManifold|r]"
         },
         {
           "Id": "ides",
@@ -557,7 +557,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffd2d2d2Light|r]x2|nGives additional armor to nearby friendly units.|n|n|cffffff00Ability level bonus|r|nArmor bonus|n|n|cffff8080Bonus armor at level 30|r: 300|n|cffd45e3aArea of effect at level 30|r: 900"
+          "Value": "[|cffd2d2d2Light|r]x2|nGives additional armor and magic protection to the Hero and its summons.|n|n|cffffff00Ability level bonus|r|nArmor bonus|n|n|cffff8080Bonus armor at level 30|r: 210|n|cffd49696Bonus magic protection at level 30|r: 30|n"
         },
         {
           "Id": "ides",
@@ -683,7 +683,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff800000Blood|r]|nWhen dealing |cffff8080physical damage|r, there is a 20% chance of dealing bonus damage.|n|n|cffffff00Ability level bonus|r|nDamage multiplier|n|n|cffff8080Damage bonus at level 30|r: 4.9x|n|n[|cff80ff80Luck|r][|cff00ffffCrit|r]"
+          "Value": "[|cff800000Blood|r]|nWhen dealing |cffff8080physical damage|r, there is a 20% chance of dealing bonus damage.|n|n|cffffff00Ability level bonus|r|nDamage multiplier|n|n|cffff8080Damage at level 30|r: 4.9x|n|n[|cff80ff80Luck|r][|cff00ffffCrit|r]"
         },
         {
           "Id": "ides",
@@ -1829,7 +1829,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff000080Water|r]|nIncreases the Hero\u0027s mana regeneration by a flat amount and percentage.|n|n|cffffff00Ability level bonus|r|nMana regeneration|n|n|cffff00ffBonus mana regen at level 30|r: 300 \u002B 3.0% of the Hero\u0027s total mana|n"
+          "Value": "[|cff000080Water|r]|nIncreases the Hero\u0027s mana regeneration by a flat amount and percentage and gives the Hero and its summons bonus magic power.|n|n|cffffff00Ability level bonus|r|nMana regeneration|n|n|cffff00ffBonus mana regen at level 30|r: 300 \u002B 3.0% of the Hero\u0027s total mana|n|cff80ff80Bonus magic power at level 30|r: 30"
         },
         {
           "Id": "ides",
@@ -2160,7 +2160,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffc0c0c0Wind|r]|n|cffffcc00Active effect|r|nCalls forth a bolt of lightning that bounces from enemy to enemy, dealing |cffff00ffmagic damage|r.|n|n|cffffcc00Passive effect|r|nWhenever the Hero casts a spell it also casts two small Chain Lightnings dealing |cffff00ffmagic damage|r based on the Hero\u0027s intelligence. |n|n|cffffff00Ability level bonus|r|nDamage, number of targets|n|n|cffff00ffDamage at level 30|r: 4312 (active) / 1x Int (passive)|n|cff80ff80Extra targets at level 30|r: 16 (active) / 1 (passive)|n|cffd45e3aRange at level 30|r: 700 (active) / 600 (passive)|n|cffd49696Cooldown at level 30|r: 9s (active) / 0s (passive)|n"
+          "Value": "[|cffc0c0c0Wind|r]|n|cffffcc00Active effect|r|nCalls forth a bolt of lightning that bounces from enemy to enemy, dealing |cffff00ffmagic damage|r.|n|n|cffffcc00Passive effect|r|nWhenever the Hero casts a spell it also casts two small Chain Lightnings dealing |cffff00ffmagic damage|r based on the Hero\u0027s intelligence. |n|n|cffffff00Ability level bonus|r|nDamage, number of targets|n|n|cffff00ffDamage at level 30|r: 4312 (active) / 0.5x Int (passive)|n|cff80ff80Extra targets at level 30|r: 16 (active) / 1 (passive)|n|cffd45e3aRange at level 30|r: 700 (active) / 600 (passive)|n|cffd49696Cooldown at level 30|r: 9s (active) / 0s (passive)|n"
         },
         {
           "Id": "ides",
@@ -2403,7 +2403,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B20 armor.|n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* Increases the armor of nearby units by \u003CAIdb,DataA1\u003E for \u003CAIdb,Dur1\u003E seconds when used.|n|n|cffffff00Cooldown:|r 16 seconds."
+          "Value": "|cffff8080Effects|r|n* \u002B20 armor.|n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* Increases the armor of nearby units by \u003CAIdb,DataA1\u003E for \u003CAIdb,Dur1\u003E seconds when used.|n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffffff00Cooldown:|r 16 seconds."
         },
         {
           "Id": "unam",
@@ -4018,7 +4018,7 @@
         },
         {
           "Id": "iabi",
-          "Value": "A00I"
+          "Value": "A0EX"
         },
         {
           "Id": "igol",
@@ -4027,6 +4027,10 @@
         {
           "Id": "ista",
           "Value": "10"
+        },
+        {
+          "Id": "icid",
+          "Value": "A0EX"
         },
         {
           "Id": "unam",
@@ -4042,7 +4046,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cff80ff80Abilities|r|n* Heals \u003CA00I,DataA1\u003E hit points when used.|n|n|cffd49696Cooldown|r: 40 seconds"
+          "Value": "|cff80ff80Abilities|r|n* Heals 1000 hit points when used.|n|n|cffd49696Cooldown|r: 40 seconds"
         },
         {
           "Id": "iico",
@@ -4069,7 +4073,7 @@
         },
         {
           "Id": "iabi",
-          "Value": "A00J"
+          "Value": "A0EU"
         },
         {
           "Id": "icla",
@@ -4078,6 +4082,10 @@
         {
           "Id": "ista",
           "Value": "10"
+        },
+        {
+          "Id": "icid",
+          "Value": "A0EU"
         },
         {
           "Id": "unam",
@@ -4093,7 +4101,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cff80ff80Abilities|r|n* Restores \u003CA00J,DataA1\u003E mana when used.|n|n|cffd49696Cooldown|r: 10 seconds"
+          "Value": "|cff80ff80Abilities|r|n* Restores 600 mana when used.|n|n|cffd49696Cooldown|r: 10 seconds"
         },
         {
           "Id": "iico",
@@ -4423,7 +4431,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff50e74ePoison|r]|nSprays waves of acid, causing |cffff00ffmagic damage|r to units in a target area. |cffff0000\u26A0 This spell can also damage the caster and friendly units!|r|n|n|cffffff00Ability level bonus|r|nDamage, waves|n|n|cffff00ffDamage at level 30|r: 40000 or 600% of int, whichever is higher|n|cffd45e3aRange at level 30|r: 500|n|cffd45e3aArea of effect at level 30|r: 250|n|cffff5e44Waves at level 30|r: 3|n|cffd49696Cooldown at level 30|r: 20 seconds|n"
+          "Value": "[|cff50e74ePoison|r]|nSprays waves of acid, causing |cffff00ffmagic damage|r to units in a target area.  |n|n|cffc0c0c0May harm the caster|r.|r|n|n|cffffff00Ability level bonus|r|nDamage, waves|n|n|cffff00ffDamage at level 30|r: 40000 or 6* int, whichever is higher|n|cffd45e3aRange at level 30|r: 500|n|cffd45e3aArea of effect at level 30|r: 250|n|cffff5e44Waves at level 30|r: 3|n|cffd49696Cooldown at level 30|r: 20 seconds|n"
         },
         {
           "Id": "ides",
@@ -4742,7 +4750,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff000000Dark|r]|nCauses |cffff00ffmagic damage|r to enemies in its area of effect based on a percentage of their maximum hit points per second. |cffff0000\u26A0 This spell can also damage the caster and friendly units!|r|n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff00ffDamage at level 30|r: 29% max HP|n|cffd45e3aRange at level 30|r: 1000|n|cffd45e3aArea of effect at level 30|r: 300|n|cffff5e44Duration at level 30|r: 25 seconds|n|cffd49696Cooldown at level 30|r: 30 seconds|n"
+          "Value": "[|cff000000Dark|r]|nCauses |cffff00ffmagic damage|r to enemies in its area of effect based on a percentage of their maximum hit points per second. |n|n|cffc0c0c0May harm the caster.|r|r|n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff00ffDamage at level 30|r: 29% max HP|n|cffd45e3aRange at level 30|r: 1000|n|cffd45e3aArea of effect at level 30|r: 300|n|cffff5e44Duration at level 30|r: 25 seconds|n|cffd49696Cooldown at level 30|r: 30 seconds|n"
         },
         {
           "Id": "ides",
@@ -5131,7 +5139,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff000000Dark|r][|cff9e5d07Summon|r]|nSummons a Beetle with Spiked Carapace.|n|n|cffffff00Ability level bonus|r|nSummon hit points, summon damage"
+          "Value": "[|cff000000Dark|r][|cff008000Wild|r][|cff9e5d07Summon|r]|nSummons a Beetle with Spiked Carapace.|n|n|cffffff00Ability level bonus|r|nSummon hit points, summon damage"
         },
         {
           "Id": "ides",
@@ -5706,7 +5714,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffd2d2d2Light|r][|cffff0000Fire|r]|nIncreases a target friendly unit\u0027s damage and armor.|n|nWhen the Hero casts any spell Inner Fire is automatically cast on the Hero and up to 5 other allies.|n|n|cffffff00Ability level bonus|r|nDamage bonus, armor bonus|n|n|cffff8080Bonus attack damage at level 30|r: 300%|n|cffff8080Bonus armor at level 30|r: 300|n|cffd45e3aRange at level 30|r: 500|n|cffff5e44Duration at level 30|r: 15 seconds|n|cffd49696Cooldown at level 30|r: 15 seconds|n"
+          "Value": "[|cffd2d2d2Light|r][|cffff0000Fire|r]|nIncreases a target friendly unit\u0027s damage and armor.|n|n|cffffff00Ability level bonus|r|nDamage bonus, armor bonus|n|n|cffff8080Bonus attack damage at level 30|r: 300%|n|cffff8080Bonus armor at level 30|r: 300|n|cffd45e3aRange at level 30|r: 500|n|cffff5e44Duration at level 30|r: 40 seconds|n|cffd49696Cooldown at level 30|r: 3 seconds|n"
         },
         {
           "Id": "ides",
@@ -5978,7 +5986,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff008000Wild|r][|cff9e5d07Summon|r]|nSummons an angry quilbeast to fling poisonous spines at enemies, dealing |cffff00ffmagic damage|r per second.|n|n|cffffff00Ability level bonus|r|nSummon hit points, summon damage, summon attack speed, poison damage per second"
+          "Value": "[|cff50e74ePoison|r][|cff008000Wild|r][|cff9e5d07Summon|r]|nSummons an angry quilbeast to fling poisonous spines at enemies, dealing |cffff00ffmagic damage|r per second.|n|n|cffffff00Ability level bonus|r|nSummon hit points, summon damage, summon attack speed, poison damage per second"
         },
         {
           "Id": "ides",
@@ -6557,7 +6565,7 @@
         },
         {
           "Id": "utub",
-          "Value": "Causes a target enemy unit to be bound to the ground so that it cannot move. Air units that are ensnared can be attacked as though they were land units.|n|n|cffffff00Ability level bonus|r|nNon-hero duration, cooldown reduction|n|n|cffd45e3aRange at level 30|r: 600|n|cffff5e44Duration at level 30|r: 35/3 seconds|n|cffd49696Cooldown at level 30|r: 3 seconds|n|n[|cffc880ffUnpurgeable|r]"
+          "Value": "Causes a target enemy unit to be bound to the ground so that it cannot move. Air units that are ensnared can be attacked as though they were land units.|n|n|cffffff00Ability level bonus|r|nNon-hero duration, cooldown reduction|n|n|cffd45e3aRange at level 30|r: 600|n|cffff5e44Duration at level 30|r: 35/3.50 seconds|n|cffd49696Cooldown at level 30|r: 5 seconds|n|n[|cffc880ffUnpurgeable|r]"
         },
         {
           "Id": "ides",
@@ -7316,7 +7324,7 @@
         },
         {
           "Id": "ides",
-          "Value": "[|cffff8c00Artifact|r]|n|cffff8080Effects|r|n* \u002B24 intelligence.|n* When the Hero casts a spell there is a 25% of the spells cooldown being reset."
+          "Value": "|cffff8080Effects|r|n* \u002B24 intelligence.|n|n[|cffff8c00Unique|r]|n* When the Hero casts a spell, there is a 25% chance of the spell\u0027s cooldown being reset. This applies to both active and passive spells.|n|n|cffc0c0c0Cooldowns of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag cannot be reset.|r |n|n[|cff80ff80Luck|r]"
         },
         {
           "Id": "iico",
@@ -7324,7 +7332,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B24 intelligence.|n|n[|cffff8c00Unique|r]|n* When the Hero casts a spell there is a 25% of the spell\u0027s cooldown being reset. Works on active and passive spells.|n|n|cffc0c0c0Cannot reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r |n|n[|cff80ff80Luck|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B24 intelligence.|n|n[|cffff8c00Unique|r]|n* When the Hero casts a spell, there is a 25% chance of the spell\u0027s cooldown being reset. This applies to both active and passive spells.|n|n|cffc0c0c0Cooldowns of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag cannot be reset.|r |n|n[|cff80ff80Luck|r]"
         },
         {
           "Id": "ubpy",
@@ -7371,7 +7379,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff000000Dark|r]|nHorribly cripples the innards of a creature, dealing |cffff00ffmagic damage|r.|n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff00ffDamage at level 30|r: 50666|n|cffd45e3aRange at level 30|r: 800|n|cffd49696Cooldown at level 30|r: 30 seconds|n"
+          "Value": "[|cff000000Dark|r][|cff800000Blood|r]|nHorribly cripples the innards of a creature, dealing a fixed amount of damage or a percentage of the Hero\u0027s intelligence as |cffff00ffmagic damage|r, whichever is higher.|n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff00ffDamage at level 30|r: 50666|n|cffff5e44Intelligence damage at level 30|r: 1500%|n|cffd45e3aRange at level 30|r: 800|n|cffd49696Cooldown at level 30|r: 30 seconds|n"
         },
         {
           "Id": "ides",
@@ -7493,11 +7501,11 @@
         },
         {
           "Id": "ides",
-          "Value": "[|cffff8c00Artifact|r]|n|cffff8080Effects|r|n* \u002B10 strength, agility and intelligence.|n* When the Hero casts a spell there is a 75% chance to create an illusionary double of the Hero. The illusion deals 50% damage to enemy units and takes 300% damage. The illusion lasts for 7 seconds or until it killed."
+          "Value": "|cffff8080Effects|r|n* \u002B10 strength, agility and intelligence.|n|n[|cffff8c00Unique|r]|n* When the Hero casts a spell, there is a 75% chance to create an illusionary double. The illusion deals 50% damage to enemies, takes 300% damage, and lasts for 7 seconds or until destroyed."
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B10 strength, agility and intelligence.|n|n[|cffff8c00Unique|r]|n* When the Hero casts a spell there is a 75% chance to create an illusionary double of the Hero. The illusion deals 50% damage to enemy units and takes 300% damage. The illusion lasts for 7 seconds or until it is killed."
+          "Value": "|cffff8080Effects|r|n* \u002B10 strength, agility and intelligence.|n|n[|cffff8c00Unique|r]|n* When the Hero casts a spell, there is a 75% chance to create an illusionary double. The illusion deals 50% damage to enemies, takes 300% damage, and lasts for 7 seconds or until destroyed."
         },
         {
           "Id": "utip",
@@ -9307,6 +9315,10 @@
         {
           "Id": "ubpy",
           "Value": "1"
+        },
+        {
+          "Id": "iico",
+          "Value": "ReplaceableTextures\\CommandButtons\\BTNRoyal Armor.blp"
         }
       ]
     }
@@ -9489,11 +9501,11 @@
         },
         {
           "Id": "iabi",
-          "Value": "A020"
+          "Value": "A0EY"
         },
         {
           "Id": "icid",
-          "Value": "A020"
+          "Value": "A0EY"
         },
         {
           "Id": "ista",
@@ -9993,7 +10005,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* Reduces the damage dealt through attacks of nearby enemies by 4000. Can not reduce damage below 1."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* Reduces the damage dealt through attacks of nearby enemies by 4000. Can not reduce damage below 300."
         },
         {
           "Id": "ides",
@@ -10252,7 +10264,7 @@
         },
         {
           "Id": "iabi",
-          "Value": "A021"
+          "Value": "M0DA,A021"
         },
         {
           "Id": "ilev",
@@ -10280,7 +10292,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B30 armor.|n|n[|cffff8c00Unique|r]|n* \u002B1 [|cff000000Dark|r] spell count.|n* The Hero and its summons gain back 25% of all damage dealt by them as hit points.|n* Reduces all damage dealt by the Hero and its summons by 25%.|n|n[|cffff9696Lifesteal|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B30 armor.|n|n[|cffff8c00Unique|r]|n* \u002B1 [|cff000000Dark|r] spell count.|n* The Hero and its summons gain back 25% of all damage dealt by them as hit points.|n|n[|cffff9696Lifesteal|r]"
         },
         {
           "Id": "ides",
@@ -10843,7 +10855,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002BIncreases the Hero\u0027s armor by 100%."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002BIncreases the Hero\u0027s armor by 100%|n|n|cffc0c0c0Also doubles the effects of negative armor.|r"
         },
         {
           "Id": "ides",
@@ -11457,11 +11469,11 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B200 all stats. |n* Once every 10 seconds when the Hero deals damage to an enemy it casts 3 Chain Lightnings at it, each lightning can bounce to up to 10 targets and deals damage equal to the Hero\u0027s strength \u002B agility \u002B intelligence."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B200 all stats.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* Every 10 seconds, when the Hero deals damage to an enemy, it casts 3 Chain Lightnings. Each lightning can bounce to up to 10 targets and deals damage equal to the Hero\u0027s strength, agility, and intelligence combined."
         },
         {
           "Id": "ides",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B200 all stats. |n* Once every 10 seconds when the Hero deals damage to an enemy it casts 3 Chain Lightnings at it, each lightning can bounce to up to 10 targets and deals damage equal to the Hero\u0027s strength \u002B agility \u002B intelligence."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B200 all stats.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* Every 10 seconds, when the Hero deals damage to an enemy, it casts 3 Chain Lightnings. Each lightning can bounce to up to 10 targets and deals damage equal to the Hero\u0027s strength, agility, and intelligence combined."
         },
         {
           "Id": "uhot",
@@ -11563,7 +11575,7 @@
         },
         {
           "Id": "iico",
-          "Value": "ReplaceableTextures\\CommandButtons\\BTNScepterOfMastery.blp"
+          "Value": "ReplaceableTextures\\CommandButtons\\BTNEnergyStaff.blp"
         },
         {
           "Id": "utip",
@@ -12322,7 +12334,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff6f2583Arcane|r]|nWhen off cooldown the Hero\u0027s active spells temporarily recharge faster and whenever it casts a spell it is multicast at least once, with a chance to multicast twice. |n|n|cffc0c0c0Does not affect the cooldown of spells with the|r|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|n|cffc0c0c0Lasts 0.0\u003CA040,Cool1\u003E seconds longer for each Hero level. |r|n|n|cffffff00Ability level bonus|r|nDuration|n|n|cffff5e44Duration at level 30|r: 10.2 seconds|n|cffd49696Cooldown at level 30|r: 120 seconds|n|n[|cff80ffffChronus|r][|cff96ffffStable|r]"
+          "Value": "[|cff6f2583Arcane|r]|nWhen off cooldown the Hero\u0027s active spells temporarily recharge faster and whenever it casts a spell it is multicast at least once, with a chance to multicast twice. |n|n|cffc0c0c0Does not affect the cooldown of spells with the|r|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|n|cffffff00Ability level bonus|r|nDuration|n|n|cffff5e44Duration at level 30|r: 10.2 seconds|n|cffd49696Cooldown at level 30|r: 120 seconds|n|n[|cff80ffffChronus|r][|cff96ffffStable|r]"
         },
         {
           "Id": "ides",
@@ -12535,7 +12547,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B10.000 hit points. |n* Gives bonus experience equal to twice the Hero\u0027s level for every creep you kill. |n|n|cffc0c0c0When Pillage is learned the experience bonus is only 50% effective.|r |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used it activates all spells of the Hero that are normally activated at the start of a round.|n|n|cffffff00Cooldown:|r 60 seconds|n|n|cffc0c0c0Cannot reset the cooldown of spells with the|r [|cff96ffffStable|r]|cffc0c0c0 tag.|r|n[|cffffff00Plain|r][|cff96ffffStable|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B10.000 hit points. |n* Grants bonus experience equal to twice the Hero\u0027s level for every creep killed. |n|n|cffc0c0c0When Pillage is learned, the experience bonus is only 50% effective.|r |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used, it activates all spells of the Hero that are normally triggered at the start of a round.|n|n|cffffff00Cooldown:|r 60 seconds|n|n|cffc0c0c0Cannot reset the cooldown of spells with the|r [|cff96ffffStable|r]|cffc0c0c0 tag.|r|n[|cffffff00Plain|r][|cff96ffffStable|r]"
         },
         {
           "Id": "ides",
@@ -12543,11 +12555,7 @@
         },
         {
           "Id": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Id": "ubpy",
-          "Value": "2"
+          "Value": "3"
         },
         {
           "Id": "uhot",
@@ -13181,7 +13189,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B400 primary stat.|n* \u002B60 physical power.|n|n|cff80ff80Abilities|r|n* When the Hero deals |cffff8080physical damage|r it deals bonus damage equal to 300% of its primary stat."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B400 primary stat.|n* \u002B60 physical power.|n* When the Hero deals |cffff8080physical damage|r it also deals bonus damage equal to 300% of its primary attribute."
         },
         {
           "Id": "ides",
@@ -13248,11 +13256,11 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B25 magic protection. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used the Hero turns ethereal, it cannot take |cffff8080physical damage|r for 6 seconds. |n|n|cffffff00Cooldown:|r 30 seconds.|n[|cff96ffffStable|r][|cffc880ffUnpurgeable|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B25 Magic Protection. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used, the Hero becomes ethereal and cannot take |cffff8080physical damage|r for 6 seconds. |n|n|cffffff00Cooldown:|r 30 seconds.|n[|cff96ffffStable|r][|cffc880ffUnpurgeable|r]"
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* \u002B25 magic protection. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used the Hero turns ethereal, it cannot take physical damage or attack enemy units for 6 seconds. |n|n|cffffff00Cooldown:|r 30 seconds."
+          "Value": "|cffff8080Effects|r|n* \u002B25 Magic Protection. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used, the Hero becomes ethereal and cannot take |cffff8080physical damage|r for 6 seconds. |n|n|cffffff00Cooldown:|r 30 seconds.|n[|cff96ffffStable|r][|cffc880ffUnpurgeable|r]"
         },
         {
           "Id": "ubpx",
@@ -13421,7 +13429,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff6f2583Arcane|r][|cff000000Dark|r][|cff800000Blood|r]|nWhen the Hero casts an active spell it has a chance to re-cast the spell up to 6 times at 50% mana cost for each re-cast.|n|n|cffc0c0c0Cannot cast passives or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0 |cffc0c0c0tag.|r|n|n|cffffff00Ability level bonus|r|nRe-cast chance|n|n|cffffff00\u003CA07O,HeroDur30,.\u003E% chance|r: \u003CA04F,Area30\u003E re-cast at level 30|n|cffff8080\u003CA07O,Cool30\u003E% chance|r: \u003CA04F,Rng30\u003E re-casts at level 30|n|cff80ff80\u003CA07O,Cast30,.\u003E% chance|r: \u003CA04F,Cast30\u003E re-casts at level 30|n|cff8080ff\u003CA07O,Rng30\u003E% chance|r: \u003CA04F,Cool30\u003E re-casts at level 30|n|cffc0c0c0\u003CA07O,Area30\u003E% chance|r: \u003CA04F,HeroDur30\u003E re-casts at level 30|n"
+          "Value": "When the Hero casts an active spell it has a chance to re-cast the spell up to 6 times at 50% mana cost for each re-cast.|n|n|cffc0c0c0Spells recast this way won\u2019t trigger effects that normally activate on spell cast. Cannot cast passives or spells with the |r|r[|cffffff00Plain|r]|cffc0c0c0 |cffc0c0c0tag.|r|n|n|cffffff00Ability level bonus|r|nRe-cast chance|n|n|cffffff00\u003CA07O,HeroDur30,.\u003E% chance|r: \u003CA04F,Area30\u003E re-cast at level 30|n|cffff8080\u003CA07O,Cool30\u003E% chance|r: \u003CA04F,Rng30\u003E re-casts at level 30|n|cff80ff80\u003CA07O,Cast30,.\u003E% chance|r: \u003CA04F,Cast30\u003E re-casts at level 30|n|cff8080ff\u003CA07O,Rng30\u003E% chance|r: \u003CA04F,Cool30\u003E re-casts at level 30|n|cffc0c0c0\u003CA07O,Area30\u003E% chance|r: \u003CA04F,HeroDur30\u003E re-casts at level 30|n"
         },
         {
           "Id": "ides",
@@ -13626,7 +13634,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B1000 base attack damage.|n* \u002B250 agility.|n|n[|cffff8c00Unique|r]|n* \u002B20% base attack speed.|n* Truestrike. When an enemy evades an attack 10% of the damage dealt still hits it, this damage ignores block.|n|cffc0c0c0Different sources of truestrike do no stack.|r|n|n|cff80ff80Abilities|r|n* When activated sets the Hero\u0027s base attack speed to 0.60 for 8 seconds.|n|n|cffc0c0c0Ability is overriden by Mega Speed.|r|n|n|cffd49696Cooldown|r: 40 seconds|r"
+          "Value": "|cffff8080Effects|r|n* \u002B1000 base attack damage.|n* \u002B250 agility.|n|n[|cffff8c00Unique|r]|n* \u002B20% base attack speed.|n* Truestrike: When an enemy evades an attack, 10% of the damage still hits it. This damage ignores block.|n|cffc0c0c0Different sources of Truestrike do not stack.|r|n|n|cff80ff80Abilities|r|n* When activated, sets the Hero\u0027s base attack speed to 0.60 for 8 seconds.|n|n|cffc0c0c0This ability is overridden by Mega Speed.|n|cffc0c0c0Cannot be multicast.|r|r|n|n|cffd49696Cooldown|r: 40 seconds|r"
         },
         {
           "Id": "ides",
@@ -13720,7 +13728,7 @@
         },
         {
           "Id": "igol",
-          "Value": "900"
+          "Value": "1200"
         },
         {
           "Id": "iper",
@@ -13748,7 +13756,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff6f2583Arcane|r][|cff000000Dark|r][|cffd2d2d2Light|r][|cff50e74ePoison|r][|cff008000Wild|r][|cff800000Blood|r][|cff8080ffCold|r][|cffff0000Fire|r][|cff000080Water|r][|cffc0c0c0Wind|r][|cffd45e19Earth|r]|nWhenever the Hero casts an active spell, any random active spell is cast within a maximum of \u003CA04L,Area1\u003E range. Fails if it can\u0027t find any nearby valid targets.|n|n|cffc0c0c0Cannot cast passives or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0, |r[|cff9e5d07Summon|r]|cffc0c0c0 or|r [|cff96ffffStable|r] |cffc0c0c0tags. Does not require the spell to have been purchased.|r|n|n|cffffff00Ability level bonus|r|nSpell level|n|n|cffff00ffRandom spell level at level 30|r: 30|n"
+          "Value": "[|cff6f2583Arcane|r][|cff000000Dark|r][|cffd2d2d2Light|r][|cff50e74ePoison|r][|cff008000Wild|r][|cff800000Blood|r][|cff8080ffCold|r][|cffff0000Fire|r][|cff000080Water|r][|cffc0c0c0Wind|r][|cffd45e19Earth|r]|nWhenever the Hero casts an active spell, a random active spell is also cast within a maximum range of \u003CA04L,Area1\u003E. This fails if no valid nearby targets are found.|n|n|cffc0c0c0Cannot cast passive spells or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0, |r[|cff9e5d07Summon|r]|cffc0c0c0, or|r [|cff96ffffStable|r] |cffc0c0c0tags. The spell does not need to have been purchased.|n|nCan cast spells that may harm the caster.|r|n|n|cffffff00Ability Level Bonus|r|nSpell Level|n|n|cffff00ffRandom spell level at level 30|r: 30"
         },
         {
           "Id": "ides",
@@ -13819,11 +13827,11 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B35000 hit points.|n|nWhen the Hero takes damage there is an 8% chance for a random level 1-20 spell to be cast on the attacker or self. Costs 750 mana."
+          "Value": "|cffff8080Effects|r|n* \u002B35,000 hit points.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* When the Hero takes damage, there is an 8% chance that a random level 1-20 spell will be cast on either the attacker or the Hero. Costs 750 mana."
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* \u002B35000 hit points.|n|nWhen the Hero takes damage there is an 8% chance for a random level 1-20 spell to be cast on the attacker or self. Costs 750 mana."
+          "Value": "|cffff8080Effects|r|n* \u002B35,000 hit points.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* When the Hero takes damage, there is an 8% chance that a random level 1-20 spell will be cast on either the attacker or the Hero. Costs 750 mana."
         },
         {
           "Id": "ubpy",
@@ -13984,11 +13992,11 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B300 strength.|n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When the Hero deals damage to an enemy it also deals |cffff00ffmagic damage|r equal to its attack damage to nearby enemy units and stuns them for 0.50 seconds. |n|n|cffffff00Cooldown:|r 3 seconds."
+          "Value": "|cffff8080Effects|r|n* \u002B300 strength.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* When the Hero deals damage to an enemy, it also deals |cffff00ffmagic damage|r equal to its attack damage to nearby enemy units and stuns them for 0.5 seconds. |n|n|cffd45e3aArea of effect|r: 500|n|cffffff00Cooldown:|r 3 seconds."
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* \u002B300 strength.|n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When the Hero deals damage to an enemy it also deals |cffff00ffmagic damage|r equal to its attack damage to nearby enemy units and stuns them for 0.50 seconds. |n|n|cffffff00Cooldown:|r 3 seconds."
+          "Value": "|cffff8080Effects|r|n* \u002B300 strength.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* When the Hero deals damage to an enemy, it also deals |cffff00ffmagic damage|r equal to its attack damage to nearby enemy units and stuns them for 0.5 seconds. |n|n|cffd45e3aArea of effect|r: 500|n|cffffff00Cooldown:|r 3 seconds."
         },
         {
           "Id": "uhot",
@@ -14039,7 +14047,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B35 magic protection.|n|n|cff80ff80Abilities|r|n*After a nearby enemy finishes casting a spell, its mana cost is doubled. If the spell is targeted at the Hero, its cost is tripled instead. This effect lasts 30 seconds and stacks. |n* When a nearby enemy casts a spell, the Hero is healed for an amount equal to the mana cost of that spell.\r\n|n|cffd45e3aArea of effect|r: 900"
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B35 magic protection.|n|n|cff80ff80Passive Abilities|r|n*After a nearby enemy finishes casting a spell, its mana cost is doubled. If the spell is targeted at the Hero, its cost is tripled instead. This effect lasts 30 seconds and stacks. |n* When a nearby enemy casts a spell, the Hero is healed for an amount equal to the mana cost of that spell.\r\n|n|cffd45e3aArea of effect|r: 900"
         },
         {
           "Id": "ides",
@@ -14169,11 +14177,11 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B3000 hit points.|n|n[|cffff8c00Unique|r]|n* When the Hero has less than or equal to 50 \u002B level armor it takes 50% less damage.|n|n|cff80ff80Abilities|r|n* When the hero is damaged by an enemy outside of the range it becomes immune to damage for a short period of time.|n|n|cffd45e3aRange|r: 300 \u002B attack range|n|cffff5e44Duration|r: 4 seconds |n|cffd49696Cooldown|r: 18 seconds|r"
+          "Value": "|cffff8080Effects|r|n* \u002B3000 hit points.|n|n[|cffff8c00Unique|r]|n* When the Hero has (50 \u002B level) or less armor, it takes 50% less damage.|n|n|cff80ff80Abilities|r|n* When the Hero is damaged by an enemy outside of the range, it becomes immune to damage for a short period of time.|n|n|cffd45e3aRange|r: 300 \u002B attack range|n|cffff5e44Duration|r: 4 seconds |n|cffd49696Cooldown|r: 18 seconds|r"
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* \u002B1000 hit points.|n|n[|cffff8c00Unique|r]|n* When the Hero has less than or equal to 50 armor it takes 50% less damage."
+          "Value": "|cffff8080Effects|r|n* \u002B3000 hit points.|n|n[|cffff8c00Unique|r]|n* When the Hero has 50 or less \u002B level armor, it takes 50% less damage.|n|n|cff80ff80Abilities|r|n* When the Hero is damaged by an enemy outside of the range, it becomes immune to damage for a short period of time.|n|n|cffd45e3aRange|r: 300 \u002B attack range|n|cffff5e44Duration|r: 4 seconds |n|cffd49696Cooldown|r: 18 seconds|r"
         },
         {
           "Id": "ubpy",
@@ -15623,7 +15631,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B\u003CA05J,DataA1\u003E armor.|n* Reduces the armor of nearby enemy creeps and summons by 50."
+          "Value": "|cffff8080Effects|r|n* \u002B\u003CA05J,DataA1\u003E armor.|n* Reduces the armor of nearby enemy creeps and summons by 50 (700 range)."
         },
         {
           "Id": "iico",
@@ -16342,7 +16350,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff6f2583Arcane|r]|nWhen the Hero uses a spell the cooldown is instantly reset. The cooldown of Ancient Teaching is based on the cooldown of the used spell. |n|n|cffc0c0c0Cannot reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|n|cffffff00Ability level bonus|r|nCooldown reduction|n|n|cffd49696Cooldown at level 30|r: 100% of the used spell\u0027s cooldown|n|n[|cff96ffffStable|r]"
+          "Value": "[|cff6f2583Arcane|r]|nWhen the Hero uses a spell, its cooldown is instantly reset. The cooldown of Ancient Teaching is determined by the cooldown of the spell that was cast. |n|n|cffc0c0c0This effect does not apply to spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|n|cffffff00Ability Level Bonus|r|nCooldown Reduction|n|n|cffd49696Cooldown at Level 30|r: 100% of the spell\u0027s cooldown|n|n[|cff96ffffStable|r]"
         },
         {
           "Id": "ides",
@@ -16409,7 +16417,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cff000000Dark|r] spell count.|n* \u002B60 armor.|n* \u002BNearby allied units gain \u002B50% attack speed and \u002B10% movement speed. |n* Summons 4 Guardian Skeletons when off cooldown.|n* For every Skeleton Guardian that\u0027s alive, damage taken by the Hero is reduced by 8%.|n|n|cffc0c0c0Cannot have more than 12 Guardian Skeletons alive at once.|r|n|n|cffffff00Cooldown:|r 120 seconds"
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cff000000Dark|r] spell count.|n* \u002B60 armor.|n* \u002BNearby allied units gain \u002B75% attack speed and \u002B50% movement speed. |n* Summons 4 Guardian Skeletons when off cooldown.|n* For every Skeleton Guardian that\u0027s alive, damage taken by the Hero is reduced by 8%.|n|n|cffc0c0c0Cannot have more than 12 Guardian Skeletons alive at once.|r|n|n|cffffff00Cooldown:|r 120 seconds"
         },
         {
           "Id": "iico",
@@ -16582,7 +16590,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff6f2583Arcane|r]|nThe hero automatically casts all available spells, ignoring cooldowns.|n|n|cffc0c0c0Cannot cast passives or spells with the|r [|cffffff00plain|r] |cffc0c0c0or |r[|cff96ffffStable|r]|cffc0c0c0 tag.|r|n|n|cffffff00Ability level bonus|r|nCooldown reduction|n|n|cffd49696Cooldown at level 30|r: 15 seconds|n"
+          "Value": "[|cff6f2583Arcane|r]|nThe hero automatically casts all available learned spells, bypassing cooldowns.|n|n|cffc0c0c0Cannot cast passive abilities, item spells, or spells with the|r [|cffffff00Plain|r] |cffc0c0c0or |r[|cff96ffffStable|r]|cffc0c0c0 tags.|r|n|n|cffffff00Ability Level Bonus|r|nReduces cooldowns.|n|n|cffd49696Cooldown at Level 30|r: 15 seconds|n"
         },
         {
           "Id": "ides",
@@ -16810,7 +16818,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cff6f2583Arcane|r] spell count.|n* \u002B25.000 mana.|n* \u002B60 magic power.|n* Reduces the attack and movement speed of nearby enemies by 15%. 1500 range."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cff6f2583Arcane|r] spell count.|n* \u002B25.000 mana.|n* \u002B60 magic power.|n* Reduces the attack and movement speed of nearby enemies by 15% (1500 range)."
         },
         {
           "Id": "iico",
@@ -16865,11 +16873,11 @@
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* \u002B50 armor.|n|n[|cffff8c00Unique|r]|n* \u002B50 block.|n* \u002B25 magic protection.|n* \u002B15 evasion.|n|n|cff80ff80Abilities|r|n* When the Hero\u0027s hit points are reduced to 75% or less and it has available healing spells, they are automatically cast.|n|n|cffffff00Cooldown:|r 10 seconds |n|n|cffc0c0c0Can cast Holy Light, Healing Wave, Healing Ward, Rejuvenation|r"
+          "Value": "|cffff8080Effects|r|n* \u002B200 Armor.|n|n[|cffff8c00Unique|r]|n* \u002B500 Block.|n* \u002B50 Magic Protection.|n* \u002B30 Evasion.|n* \u002B1 [|cffd2d2d2Light|r] Spell Count.|n|n|cff80ff80Passive Abilities|r|n* When the Hero\u0027s hit points drop to 75% or lower and it has one of the listed healing spells, a random spell is automatically cast for free.|n|n|cffffff00Cooldown:|r 10 seconds.|n|n|cffc0c0c0Can cast: Holy Light, Healing Wave, Tranquility, Rejuvenation.|r"
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B200 armor.|n|n[|cffff8c00Unique|r]|n* \u002B500 block.|n* \u002B50 magic protection.|n* \u002B30 evasion.|n* \u002B1 [|cffd2d2d2Light|r] spell count.|n|n|cff80ff80Abilities|r|n* When the Hero\u0027s hit points are reduced to 75% or less and it has one of the mentioned healing spells, they are automatically cast for free.|n|n|cffffff00Cooldown:|r 10 seconds |n|n|cffc0c0c0Can cast Holy Light, Healing Wave, Tranquility, Rejuvenation|r"
+          "Value": "|cffff8080Effects|r|n* \u002B200 Armor.|n|n[|cffff8c00Unique|r]|n* \u002B500 Block.|n* \u002B50 Magic Protection.|n* \u002B30 Evasion.|n* \u002B1 [|cffd2d2d2Light|r] Spell Count.|n|n|cff80ff80Passive Abilities|r|n* When the Hero\u0027s hit points drop to 75% or lower and it has one of the listed healing spells, a random spell is automatically cast for free.|n|n|cffffff00Cooldown:|r 10 seconds.|n|n|cffc0c0c0Can cast: Holy Light, Healing Wave, Tranquility, Rejuvenation.|r"
         },
         {
           "Id": "iico",
@@ -17125,7 +17133,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* When the Hero does |cffff8080physical damage|r through attacks or abilities it is instead turned into |cffff00ffmagic damage|r, but reduces [|cff00ffffCrit|r] bonuses by 50% on the converted damage.|n|n|cffc0c0c0Can be activated to toggle its effect (20s cooldown).|nThe Seer is unnaffected by the |r[|cff00ffffCrit|r] |cffc0c0c0reduction."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* When the Hero does |cffff8080physical damage|r through attacks or abilities it is instead turned into |cffff00ffmagic damage|r, but reduces [|cff00ffffCrit|r] bonuses by 50% on the converted damage.|n|n|cffc0c0c0Can be activated to toggle its effect (20s cooldown)."
         },
         {
           "Id": "iico",
@@ -18187,7 +18195,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B5000 hitpoints. |n* \u002B2500 mana. |n|n[|cffff8c00Unique|r]|n* Creates 3 random runes near the hero. |n|n|cffffff00Cooldown:|r 20 seconds"
+          "Value": "|cffff8080Effects|r|n* \u002B5000 hitpoints. |n* \u002B2500 mana. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* Creates 3 random runes near the hero. |n|n|cffffff00Cooldown:|r 20 seconds"
         },
         {
           "Id": "ides",
@@ -18258,7 +18266,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B10.000 hitpoints. |n* \u002B10.000 mana. |n|n[|cffff8c00Unique|r]|n* \u002B0.75 rune power. |n* Creates a rune on the ground every 10 seconds."
+          "Value": "|cffff8080Effects|r|n* \u002B10.000 hitpoints. |n* \u002B10.000 mana. |n|n[|cffff8c00Unique|r]|n* \u002B0.75 rune power. |n* Creates a rune on the ground every 10 seconds, costs 2000 mana."
         },
         {
           "Id": "ides",
@@ -18443,7 +18451,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B10.000 mana.|n* \u002B1 rune power.|n* \u002B1 [|cff00ffffWater|r] spell count.|n|n[|cffff8c00Unique|r]|n* When using a [|cff00ffffWater|r] spell a Storm rune is automatically used. Costs 1000 mana.|n|n|cff64ff64Water Rune|r|nTeleports nearby enemies to the caster and deals 1000 * Rune Power |cffff00ffmagic damage|r to them.|n|n|cffd45e3aArea of effect|r: 300 \u002B (Rune Power * 100)|n|cffffff00Cooldown:|r 3 seconds"
+          "Value": "|cffff8080Effects|r|n* \u002B10.000 mana.|n* \u002B1 rune power.|n* \u002B1 [|cff00ffffWater|r] spell count.|n|n[|cffff8c00Unique|r]|n* When using a [|cff00ffffWater|r] spell a Storm rune is automatically used. Costs 1000 mana.|n|n|cff64ff64Water Rune|r|nTeleports nearby enemies to the caster and deals 1000 * Rune Power |cffff00ffmagic damage|r to them.|n|n|cffd45e3aArea of effect|r: 300 \u002B (Rune Power * 100)|n|cffffff00Cooldown:|r 6 seconds"
         },
         {
           "Id": "ides",
@@ -18876,7 +18884,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B300 strength. |n|n[|cffff8c00Unique|r]|n* \u002B15 magic power.|n* \u002B1 [|cffff0000Fire|r] spell count.|n* All active [|cffff0000Fire|r] spells are cast two more times. Follows the same rules as Multicast."
+          "Value": "|cffff8080Effects|r|n* \u002B300 strength. |n|n[|cffff8c00Unique|r]|n* \u002B15 magic power.|n* \u002B1 [|cffff0000Fire|r] spell count.|n* All active [|cffff0000Fire|r] spells are cast two additional times, following the same rules as Multicast."
         },
         {
           "Id": "iico",
@@ -18907,11 +18915,11 @@
         },
         {
           "Id": "unam",
-          "Value": "The Staff of the Archmage of Water"
+          "Value": "Hydromancer\u0027s Staff"
         },
         {
           "Id": "utip",
-          "Value": "Purchase The Staff of the Archmage of Water"
+          "Value": "Purchase Hydromancer\u0027s Staff"
         },
         {
           "Id": "uhot",
@@ -18923,7 +18931,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B1 [|cff00ffffWater|r] spell count.|n* \u002B20.000 mana.|n* \u002B500 intelligence.|n* \u002B500 mana regeneration.|n|n[|cffff8c00Unique|r]|n* When the Hero casts a [|cff00ffffWater|r] spell it has a 40% chance of its cooldown being reset.|n|cffa5a6a2Reset chance can not go above 90%|r|n|n[|cff80ff80Luck|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B1 [|cff00ffffWater|r] spell count.|n* \u002B20.000 mana.|n* \u002B500 intelligence.|n* \u002B500 mana regeneration.|n|n[|cffff8c00Unique|r]|n* When the Hero casts a [|cff00ffffWater|r] spell, there is a 40% chance that its cooldown will be reset.|n|cffa5a6a2The reset chance cannot exceed 90%.|r|n|n[|cff80ff80Luck|r]"
         },
         {
           "Id": "iico",
@@ -19600,7 +19608,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffd2d2d2Light|r]|nRemoves all negative buffs for a short period of time and makes the Hero immune to the effects of [|cffd45e29onhit|r] and [|cffff9696Lifesteal|r] abilities, automatically activates when the Hero is damaged.|n|n|cffffff00Ability level bonus|r|nCooldown reduction |n|n|cffff5e44Duration at level 30|r: 6 seconds |n|cffd49696Cooldown at level 30|r: 20.0 seconds|n|n[|cff96ffffStable|r][|cffc880ffUnpurgeable|r]"
+          "Value": "[|cffd2d2d2Light|r]|nRemoves all negative buffs for a short period of time and makes the Hero immune to the effects of [|cffd45e29onhit|r] and [|cffff9696Lifesteal|r] abilities, automatically activates when the Hero is damaged.|n|n|cffffff00Ability level bonus|r|nCooldown reduction |n|n|cffff5e44Duration at level 30|r: 6 seconds |n|cffd49696Cooldown at level 30|r: 30.0 seconds|n|n[|cff96ffffStable|r][|cffc880ffUnpurgeable|r]"
         },
         {
           "Id": "iclr",
@@ -19686,7 +19694,7 @@
         },
         {
           "Id": "igol",
-          "Value": "600"
+          "Value": "1200"
         },
         {
           "Id": "iper",
@@ -19714,7 +19722,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff6f2583Arcane|r][|cff000000Dark|r][|cffd2d2d2Light|r][|cff50e74ePoison|r][|cff008000Wild|r][|cff800000Blood|r][|cff8080ffCold|r][|cffff0000Fire|r][|cff000080Water|r][|cffc0c0c0Wind|r][|cffd45e19Earth|r]|nCasts a random level \u003CA07U,Area1\u003E active spell on the target unit or area.|n|n|cffc0c0c0Cannot cast passives or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0 or |r[|cff9e5d07Summon|r] |cffc0c0c0tags. Does not require the spell to have been purchased.|r|n|n|cffffff00Ability level bonus|r|nSpell level|n|n|cffff00ffRandom spell level at level 30|r: 30|n|cffd45e3aRange at level 30|r: 1500|n|cffd49696Cooldown at level 30|r: 14|n"
+          "Value": "[|cff6f2583Arcane|r][|cff000000Dark|r][|cffd2d2d2Light|r][|cff50e74ePoison|r][|cff008000Wild|r][|cff800000Blood|r][|cff8080ffCold|r][|cffff0000Fire|r][|cff000080Water|r][|cffc0c0c0Wind|r][|cffd45e19Earth|r]|nCasts a random level \u003CA07U,Area1\u003E active spell on the target unit or area.|n|n|cffc0c0c0Cannot cast passives or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0 or |r[|cff9e5d07Summon|r] |cffc0c0c0tags. Does not require the spell to have been purchased.|n|nCan cast spells that may harm the caster.|r|n|n|cffffff00Ability level bonus|r|nSpell level|n|n|cffff00ffRandom spell level at level 30|r: 30|n|cffd45e3aRange at level 30|r: 1500|n|cffd49696Cooldown at level 30|r: 14|n"
         },
         {
           "Id": "ides",
@@ -20068,7 +20076,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff800000Blood|r]|nWhen the Hero attacks an enemy it has a chance to deal increased damage and heal for a percentage of the damage dealt by that attack. Damage is increased by your level. |n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff8080Damage at level 30|r: 3000 \u002B 2% per level|n|n[|cffff9696Lifesteal|r][|cff80ff80Luck|r]"
+          "Value": "[|cff800000Blood|r]|nWhen the Hero attacks an enemy it has a chance to deal increased damage and heal for a percentage of the damage dealt by that attack, it then temporarily reduces the enemy\u0027s armor. Damage is increased by the Hero\u0027s level. |n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff8080Damage at level 30|r: 3000 \u002B 2% per level|n|n[|cffff9696Lifesteal|r][|cff80ff80Luck|r]"
         },
         {
           "Id": "uhot",
@@ -20127,7 +20135,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffd2d2d2Light|r]|nIncreases the Hero\u0027s maximum hit points by a percentage of its total hit points.|n|nHeals the Hero and resets all negative buffs every few seconds.|n|n|cffffff00Ability level bonus|r|nHit point bonus, heal amount|n|n|cff80ff80Hit points increase at level 30|r: 150%|n|cffff00ffHeal at level 30|r: 75000|n|cffd49696Cooldown at level 30|r: 9 seconds|n"
+          "Value": "[|cffd2d2d2Light|r]|nIncreases the Hero\u0027s maximum hit points by a percentage of its total hit points.|n|nHeals the Hero and resets all negative buffs every few seconds.|n|n|cffffff00Ability level bonus|r|nHit point bonus, heal amount|n|n|cff80ff80Hit points increase at level 30|r: 150%|n|cffff00ffHeal at level 30|r: 75000|n|cffd49696Cooldown at level 30|r: 12 seconds|n"
         },
         {
           "Id": "uhot",
@@ -20186,7 +20194,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffd45e19Earth|r][|cff6f2583Arcane|r]|nReduces the remaining cooldown of all of the Hero\u0027s spells currently on cooldown. |n|nTwice as effective on [|cffd45e19Earth|r] spells.|n|n|cffc0c0c0Cannot reduce the cooldown of itself or|r [|cff96ffffStable|r] |cffc0c0c0spells|r.|n|n|cffffff00Ability level bonus|r|nCooldown reduction|n|n|cffff8080Cooldown reduction at level 30|r: 9.2 seconds|n[|cffd45e29Earth|r]|cffff00ff cooldown reduction at level 30|r: 18.5 seconds|n|cffd49696Cooldown at level 30|r: 23 seconds|n|n[|cff96ffffStable|r]"
+          "Value": "[|cffd45e19Earth|r][|cff6f2583Arcane|r]|nReduces the remaining cooldown of all the Hero\u0027s spells that are currently on cooldown. |n|nThis effect is twice as effective on [|cffd45e19Earth|r] spells.|n|n|cffc0c0c0It cannot reduce its own cooldown or the cooldown of|r [|cff96ffffStable|r] |cffc0c0c0spells|r.|n|n|cffffff00Ability Level Bonus|r|nCooldown Reduction|n|n|cffff8080Cooldown reduction at level 30|r: 9.2 seconds|n[|cffd45e19Earth|r]|cffff00ff cooldown reduction at level 30|r: 18.5 seconds|n|cffd49696Cooldown at level 30|r: 23 seconds|n|n[|cff96ffffStable|r]"
         },
         {
           "Id": "uhot",
@@ -21142,11 +21150,11 @@
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* \u002B10.000 mana.|n|n[|cffff8c00Unique|r]|n* Casts all single target spells to up to 10 nearby targets when they\u0027re cast, each additional target costs 40% of the initial spells mana cost and fails if the Hero does not have enough mana.|n|n|cffc0c0c0Cannot cast passives, spells with the|r [|cffffff00plain|r] |cffc0c0c0tag, or Transmute.|r"
+          "Value": "|cffff8080Effects|r|n* \u002B10.000 mana.|n|n[|cffff8c00Unique|r]|n* When cast, all single-target and [|cff8080ffManifold|r] spells are applied to up to 10 nearby targets. Each additional target costs 60% of the original spell\u0027s mana cost. The spell will fail if the Hero does not have enough mana.|n|n|cffc0c0c0Cannot cast passive abilities or spells with the|r [|cffffff00plain|r] |cffc0c0c0tag.|r"
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B10.000 mana.|n|n[|cffff8c00Unique|r]|n* Casts all single target and [|cff8080ffManifold|r] spells to up to 10 nearby targets when they\u0027re cast, each additional target costs 60% of the initial spells mana cost and fails if the Hero does not have enough mana.|n|n|cffc0c0c0Cannot cast passives, or spells with the|r [|cffffff00plain|r] |cffc0c0c0tag.|r"
+          "Value": "|cffff8080Effects|r|n* \u002B10.000 mana.|n|n[|cffff8c00Unique|r]|n* When cast, all single-target and [|cff8080ffManifold|r] spells are applied to up to 10 nearby targets. Each additional target costs 60% of the original spell\u0027s mana cost. The spell will fail if the Hero does not have enough mana.|n|n|cffc0c0c0Cannot cast passive abilities or spells with the|r [|cffffff00plain|r] |cffc0c0c0tag.|r"
         },
         {
           "Id": "iico",
@@ -21205,7 +21213,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B50% damage against enemies with a higher mana maximum than the Hero.|n* \u002B40 magic protection|n|n[|cffff8c00Unique|r]|n* When any nearby enemy Hero casts an active spell it costs an additional 5% of their total mana.The cooldown of their non-passive spells is also increased by 0.5 seconds for every 5% of missing mana. |n|n|cffd45e3aArea of effect|r: 900"
+          "Value": "|cffff8080Effects|r|n* \u002B50% damage against enemies whose maximum mana is higher than the Hero\u0027s.|n* \u002B40 magic protection.|n|n[|cffff8c00Unique|r]|n* When any nearby enemy Hero casts an active spell, it costs them an additional 5% of their total mana. Additionally, the cooldown of their non-passive spells increases by 0.5 seconds for every 5% of their missing mana.|n|n|cffd45e3aArea of effect|r: 900"
         },
         {
           "Id": "iico",
@@ -22199,7 +22207,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n* When the Hero evades damage it temporarily gains 0.8 bonus luck. |n|n|cffff5e44Duration|r: 10 seconds"
+          "Value": "[|cffff8c00Unique|r]|n* When the Hero evades damage it temporarily gains 0.8 bonus luck. |n|n|cffff5e44Duration|r: 7 seconds"
         },
         {
           "Id": "iico",
@@ -22266,7 +22274,7 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B20.000 hit points. |n* \u002B400 all stats.|n|n[|cffff8c00Unique|r]|n* \u002B1 [|cff800000Blood|r] spell count.|n* Enemies that damage the Hero gain 60% less health from [|cffff8080Lifesteal|r] items and abilities.|n|n|cff80ff80Abilities|r|n* Disables the [|cffff8080Lifesteal|r] abilities and items of the Hero and all nearby enemies for 10 seconds. |n|n|cffd45e3aArea of effect|r: 1000|n|cffffff00Cooldown:|r 15 seconds"
+          "Value": "|cffff8080Effects|r|n* \u002B20.000 hit points.|n* \u002B400 to all stats.|n|n[|cffff8c00Unique|r]|n* \u002B1 [|cff800000Blood|r] spell count.|n* Enemies that damage the Hero recover 60% less health from [|cffff8080Lifesteal|r] items and abilities.|n|n|cff80ff80Abilities|r|n* Disables the [|cffff8080Lifesteal|r] abilities and items of the Hero and all nearby enemies for 10 seconds.|n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffd45e3aArea of Effect|r: 1000|n|cffffff00Cooldown:|r 15 seconds"
         },
         {
           "Id": "ides",
@@ -22337,11 +22345,11 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B150 armor.|n* \u002B40 magic protection.|n* 10% chance to completely ignore damage taken. |n|n[|cffff8c00Unique|r]|n* Nearby enemies lose 2 of each element they have.|n|n|cff80ff80Abilities|r|n*Reduces [element] tags to 0 of the Hero and nearby enemies for 10 seconds.|n|n|cffd45e3aArea of effect|r: \u003CA09L,Area1\u003E  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B150 armor.|n* \u002B40 magic protection.|n* 10% chance to completely ignore incoming damage. |n|n[|cffff8c00Unique|r]|n* Nearby enemies lose 2 of each element they possess.|n|n|cff80ff80Abilities|r|n*Reduces [element] tags to 0 for the Hero and nearby enemies for 10 seconds.|n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffd45e3aArea of effect|r: \u003CA09L,Area1\u003E  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* 10% chance to completely ignore damage taken. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n*Disables the Absolute spells of the Hero and all nearby enemies for 10 seconds. |n|n|cffffff00Cooldown:|r 20 seconds|n|n[|cff80ff80Luck|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B150 armor.|n* \u002B40 magic protection.|n* 10% chance to completely ignore incoming damage. |n|n[|cffff8c00Unique|r]|n* Nearby enemies lose 2 of each element they possess.|n|n|cff80ff80Abilities|r|n*Reduces [element] tags to 0 for the Hero and nearby enemies for 10 seconds.|n|n|cffd45e3aArea of effect|r: \u003CA09L,Area1\u003E  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
         },
         {
           "Id": "ubpx",
@@ -22404,11 +22412,11 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cffd2d2d2Light|r] spell count|n* \u002B1 [|cff000000Dark|r] spell count. |n|n|cff80ff80Abilities|r|n* All [|cff000000Dark|r] spells also become [|cffd2d2d2Light|r].|n* All [|cffd2d2d2Light|r] spells also become [|cff000000Dark|r]."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cffd2d2d2Light|r] spell count|n* \u002B1 [|cff000000Dark|r] spell count.|n* All [|cff000000Dark|r] spells also become [|cffd2d2d2Light|r].|n* All [|cffd2d2d2Light|r] spells also become [|cff000000Dark|r]."
         },
         {
           "Id": "ides",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cffd2d2d2Light|r] spell count|n* \u002B1 [|cff000000Dark|r] spell count. |n|n|cff80ff80Abilities|r|n* All [|cff000000Dark|r] spells also become [|cffd2d2d2Light|r].|n* All [|cffd2d2d2Light|r] spells also become [|cff000000Dark|r]."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cffd2d2d2Light|r] spell count|n* \u002B1 [|cff000000Dark|r] spell count.|n* All [|cff000000Dark|r] spells also become [|cffd2d2d2Light|r].|n* All [|cffd2d2d2Light|r] spells also become [|cff000000Dark|r]."
         },
         {
           "Id": "ubpx",
@@ -23679,7 +23687,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 rune power.|n* \u002B1 [|cff008000Wild|r] spell count.|n* The Hero\u0027s Summons take 30% less damage. |n* When using a [|cff008000Wild|r] spell a Wild Rune is automatically used. Costs 500 mana.|n|n|cff64ff64Wild Rune|r|nIncreases a random summon upgrade (attack, armor or hp) by 1 \u002B 1 for every 0.75 Rune Power.|n|n|cffffff00Cooldown:|r 10 seconds"
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 rune power.|n* \u002B2 [|cff008000Wild|r] spell count.|n* The Hero\u0027s summons take 30% less damage. |n* When using a [|cff008000Wild|r] spell a Wild Rune is automatically used. Costs 500 mana.|n|n|cff64ff64Wild Rune|r|nIncreases a random summon upgrade (attack, armor or hp) by 1 \u002B 1 for every 0.75 Rune Power.|n|n|cffffff00Cooldown:|r 10 seconds"
         },
         {
           "Id": "ides",
@@ -24387,7 +24395,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cff009292Energy|r][|cff00f7ffWater|r]|nSends a gigantic wave of water which deals |cffff8080physical damage|r to each enemy unit in a line, and reduces their current mana by a percentage of their maximum mana.|n|n|cffffff00Ability level bonus|r|nDamage, mana reduction|n|n|cffff8080Damage at level 30|r: 18640|n|cffff00ffMana burn at level 30|r: 20%|n|cffd45e3aRange at level 30|r: 700|n|cffd49696Cooldown at level 30|r: 6 seconds|n|n[|cff8080ffManifold|r]"
+          "Value": "[|cff00f7ffWater|r]|nSends a gigantic wave of water which deals |cffff8080physical damage|r to each enemy unit in a line, and reduces their current mana by a percentage of their maximum mana.|n|n|cffffff00Ability level bonus|r|nDamage, mana reduction|n|n|cffff8080Damage at level 30|r: 18640|n|cffff00ffMana burn at level 30|r: 20%|n|cffd45e3aRange at level 30|r: 700|n|cffd49696Cooldown at level 30|r: 6 seconds|n|n[|cff8080ffManifold|r]"
         },
         {
           "Id": "ides",
@@ -24533,7 +24541,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffd45e19Earth|r]|nWhen the Hero is damaged by an enemy within range it deals |cffff8080physical damage|r back, if Magnetic Oscillation is enabled it pushes the enemy away and if it is disabled it pulls the enemy towards the Hero. \r\n\r\nEnemies cannot be affected by Magnetic Oscillation more than once every few seconds.|n|n|cffffff00Ability level bonus|r|nDamage, per target cooldown|n|n|cffff8080Damage at level 30|r: 6990|n|cffd49696Pull cooldown per target at level 30|r: 4.4 seconds|n|cffd49696Push cooldown per target at level 30|r: 6 seconds"
+          "Value": "[|cffd45e19Earth|r]|nWhen the Hero is damaged by an enemy within range it deals |cffff8080physical damage|r back, if Magnetic Oscillation is enabled it pushes the enemy away and if it is disabled it pulls the enemy towards the Hero. \r\n\r\nEnemies cannot be affected by Magnetic Oscillation more than once every few seconds.|n|n|cffffff00Ability level bonus|r|nDamage, per target cooldown|n|n|cffff8080Damage at level 30|r: 6990|n|cffd49696Pull cooldown per target at level 30|r: 4.52 seconds|n|cffd49696Push cooldown per target at level 30|r: 5.91 seconds"
         },
         {
           "Id": "iclr",
@@ -24843,7 +24851,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cff6f2583Arcane|r] spell count|n* When casting an active spell the Wizard\u0027s Gemstone automatically creates and applies one of the following runes to the Hero.|n|nRunes last for 10 * Rune Power seconds|n|n|cffffff96Power Rune|r: 2 * Rune Power bonus magic and physical power.|n|cffffff96Life Rune|r: 3000 * Rune Power bonus hp and mana.|n|cffffff96Might Rune|r: 50 * Rune Power bonus stats|n|n|cffffff00Cooldown:|r 5 seconds|n|n|cffc0c0c0Does not activate when casting spells with the|r [|cffffff00plain|r] |cffc0c0c0 tag.|r"
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B1 [|cff6f2583Arcane|r] spell count|n* When casting an active spell, the Wizard\u0027s Gemstone automatically creates and applies one of the following runes to the Hero.|n|nRunes last for 10 * Rune Power seconds.|n|n|cffffff96Power Rune|r: Grants 2 * Rune Power bonus magic and physical power.|n|cffffff96Life Rune|r: Grants 3000 * Rune Power bonus HP and mana.|n|cffffff96Might Rune|r: Grants 50 * Rune Power bonus stats.|n|n|cffffff00Cooldown:|r 5 seconds.|n|n|cffc0c0c0Does not activate when casting spells with the|r [|cffffff00plain|r] |cffc0c0c0tag.|r"
         },
         {
           "Id": "utip",
@@ -25157,7 +25165,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* The Hero gains 35 physical power whenever it immobilizes an enemy, this lasts for 15 seconds. |n* When an enemy Hero within range casts a spell it becomes rooted to the ground, immobilizing it for 6 seconds and becoming immune for 6 seconds afterwards. Ignores invisibility. |n|n|cffc0c0c0Cannot be used when the Hero has learned Blink. Blink Strike or Shadow Step|n|nEnemies can be immobilized by Entangling Roots, Druidic Focus, Ensnare and Wind Rune.|r|n|n|cffd45e3aArea of effect|r: 600"
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* The Hero gains 35 physical power for 15 seconds whenever it immobilizes an enemy. |n* When an enemy Hero within range casts a spell, it becomes rooted for 6 seconds and gains immunity for 6 seconds afterward. This effect ignores invisibility. |n|n|cffc0c0c0Cannot be used if the Hero has learned Blink, Blink Strike, or Shadow Step.|n|nEnemies can be immobilized by Entangling Roots, Druidic Focus, Ensnare, and Wind Rune.|r|n|n|cffd45e3aArea of Effect|r: 600"
         },
         {
           "Id": "utip",
@@ -25338,11 +25346,11 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B0.5 rune power. |n* \u002B10 all stats for every 0.1 rune power. |n|n[|cffff8c00Unique|r]|n* All Runestones ignore cooldown every 2nd time they\u0027re activated.|n|n|cff80ff80Abilities|r|n*Uses all nearby runes that have been created by the Hero or its items. Each initial rune used has a 10% chance to create and use a random new rune at the same rune power. |n|n|cffd45e3aArea of effect|r: 500  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B0.5 rune power. |n* \u002B\u002B10 to all stats for every 0.1 rune power. |n|n[|cffff8c00Unique|r]|n* Runestones ignore cooldown every second activation.|n|n|cff80ff80Abilities|r|n* Activates all nearby runes created by the Hero or its items. Each initial rune used has a 10% chance to generate and activate a random new rune with the same rune power. |n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffd45e3aArea of Effect|r: 500  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* \u002B0.5 rune power. |n* \u002B10 all stats for every 0.1 rune power. |n|n[|cffff8c00Unique|r]|n* All Runestones ignore cooldown every 2nd time they\u0027re activated.|n|n|cff80ff80Abilities|r|n*Uses all nearby runes that have been created by the Hero or its items. Each initial rune used has a 10% chance to create and use a random new rune at the same rune power. |n|n|cffd45e3aArea of effect|r: 500  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
+          "Value": "|cffff8080Effects|r|n* \u002B0.5 rune power. |n* \u002B\u002B10 to all stats for every 0.1 rune power. |n|n[|cffff8c00Unique|r]|n* Runestones ignore cooldown every second activation.|n|n|cff80ff80Abilities|r|n* Activates all nearby runes created by the Hero or its items. Each initial rune used has a 10% chance to generate and activate a random new rune with the same rune power. |n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffd45e3aArea of Effect|r: 500  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
         },
         {
           "Id": "ubpx",
@@ -25523,7 +25531,7 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B20 evasion.|n* \u002B30 magic protection.|n* \u002B10.000 hit points|n* \u002B100 armor.|n* \u002B30% less damage taken from summons. |n|n|cff80ff80Abilities|r|n* When activated the Hero deals 100% bonus damage to summons and becomes immune to damage from summons for a maximum of 10 seconds, as long as the Hero that summoned them isn\u0027t within range. |n|n|cffd45e3aArea of effect|r: 600|n|cffffff00Cooldown:|r 25 seconds"
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B20 evasion.|n* \u002B30 magic protection.|n* \u002B10.000 hit points|n* \u002B100 armor.|n* Reduces damage taken from summons by 30%.|n|n|cff80ff80Abilities|r|n* When activated, the Hero deals 100% bonus damage to summons and becomes immune to damage from summons for up to 10 seconds, provided the Hero that summoned them is not within range.|n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffd45e3aArea of Effect|r: 600|n|cffffff00Cooldown:|r 25 seconds"
         },
         {
           "Id": "ides",
@@ -26742,11 +26750,11 @@
         },
         {
           "Id": "utub",
-          "Value": "|cffff8080Effects|r|n* \u002B1500 base attack damage. |n* \u002B6000 attack damage. |n* \u002B20 evasion. |n|n[|cffff8c00Unique|r]|n|r* During |cffc0c0c0shadow form|r, the hero can also dodge damage from spells.|n|cff80ff80Abilities|r|n* The hero instantly goes into |cffc0c0c0shadow form|r for a short time |n|cffff5e44|nDuration|r: 3 seconds |n|cffd49696Cooldown|r: 20 seconds|r"
+          "Value": "|cffff8080Effects|r|n* \u002B1500 base attack damage.|n* \u002B6000 attack damage.|n* \u002B20 evasion.|n|n[|cffff8c00Unique|r]|n|r* While in |cffc0c0c0shadow form|r, the hero can also dodge spell damage.|n|n|cff80ff80Abilities|r|n* The hero instantly enters |cffc0c0c0shadow form|r for a short duration.|n|n|cffc0c0c0Cannot be multicast.|r|n|cffff5e44|nDuration|r: 3 seconds.|n|cffd49696Cooldown|r: 20 seconds.|r"
         },
         {
           "Id": "ides",
-          "Value": "|cffff8080Effects|r|n* \u002B1500 base attack damage. |n* \u002B6000 attack damage. |n* \u002B20 evasion. |n|n[|cffff8c00Unique|r]|n|r* During |cffc0c0c0shadow form|r, the hero can also dodge damage from spells.|n|cff80ff80Abilities|r|n* The hero instantly goes into |cffc0c0c0shadow form|r for a short time |n|cffff5e44|nDuration|r: 3 seconds |n|cffd49696Cooldown|r: 20 seconds|r"
+          "Value": "|cffff8080Effects|r|n* \u002B1500 base attack damage.|n* \u002B6000 attack damage.|n* \u002B20 evasion.|n|n[|cffff8c00Unique|r]|n|r* While in |cffc0c0c0shadow form|r, the hero can also dodge spell damage.|n|n|cff80ff80Abilities|r|n* The hero instantly enters |cffc0c0c0shadow form|r for a short duration.|n|n|cffc0c0c0Cannot be multicast.|r|n|cffff5e44|nDuration|r: 3 seconds.|n|cffd49696Cooldown|r: 20 seconds.|r"
         },
         {
           "Id": "ubpy",
@@ -26923,7 +26931,7 @@
         },
         {
           "Id": "utub",
-          "Value": "* \u002B2 to [|cff6f2583Arcane|r], [|cff000000Dark|r], [|cff50e74ePoison|r], [|cff008000Wild|r], [|cff800000Blood|r], [|cff8080ffCold|r], [|cffff0000Fire|r], [|cff000080Water|r], [|cffc0c0c0Wind|r], and [|cffd45e19Earth|r].|n* \u002B2 to the [element] count of the Hero\u0027s last used spell."
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B2 to [|cff6f2583Arcane|r], [|cff000000Dark|r], [|cff50e74ePoison|r], [|cff008000Wild|r], [|cff800000Blood|r], [|cff8080ffCold|r], [|cffff0000Fire|r], [|cff000080Water|r], [|cffc0c0c0Wind|r], and [|cffd45e19Earth|r].|n* \u002B2 to the [element] count of the Hero\u0027s last used spell."
         },
         {
           "Id": "ides",
@@ -27253,11 +27261,11 @@
         },
         {
           "Id": "utub",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B30 physical power. |n* When the Hero attacks an enemy it casts a random active ability it has on the target. If this ability deals damage it is turned into |cffff8080physical damage|r when cast this way. The cooldown of this effect is equal to the cooldown of the ability.|n|n|cffc0c0c0Cannot cast passives or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0, or|r [|cff96ffffStable|r] |cffc0c0c0tags.|r"
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B30 physical power. |n* When the Hero attacks an enemy, it casts a random active non-item spell it knows on the target. If the ability deals damage, it is converted to |cffff8080physical damage|r when cast this way. The cooldown of this effect matches the cooldown of the ability.|n|n|cffc0c0c0Cannot cast passive abilities or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0 or|r [|cff96ffffStable|r] |cffc0c0c0tags.|r"
         },
         {
           "Id": "ides",
-          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B30 physical power. |n* When the Hero attacks an enemy it casts a random active ability it has on the target. If this ability deals damage it is turned into |cffff8080physical damage|r when cast this way. The cooldown of this effect is equal to the cooldown of the ability.|n|n|cffc0c0c0Cannot cast passives or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0, or|r [|cff96ffffStable|r] |cffc0c0c0tags.|r"
+          "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* \u002B30 physical power. |n* When the Hero attacks an enemy, it casts a random active non-item spell it knows on the target. If the ability deals damage, it is converted to |cffff8080physical damage|r when cast this way. The cooldown of this effect matches the cooldown of the ability.|n|n|cffc0c0c0Cannot cast passive abilities or spells with the |r|r|n[|cffffff00Plain|r]|cffc0c0c0 or|r [|cff96ffffStable|r] |cffc0c0c0tags.|r"
         },
         {
           "Id": "uhot",
