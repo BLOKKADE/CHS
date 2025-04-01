@@ -16,7 +16,7 @@ library ChainLightning requires DummyOrder, GetRandomUnit
 
             set dummy = DummyOrder.create(caster, GetUnitX(caster), GetUnitY(caster), GetUnitFacing(caster), 5)
             call dummy.addActiveAbility(CHAIN_LIGHTNING_DUMMY_ABILITY_ID, 1, 852119)
-            call dummy.setAbilityRealField(CHAIN_LIGHTNING_DUMMY_ABILITY_ID, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, GetHeroInt(caster,true) * 0.5)
+            call dummy.setAbilityRealField(CHAIN_LIGHTNING_DUMMY_ABILITY_ID, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, GetHeroInt(caster,true) * 1)
             call dummy.target(target)
             call dummy.activate()
 

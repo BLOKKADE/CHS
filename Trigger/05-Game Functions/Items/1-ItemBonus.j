@@ -435,10 +435,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I06H' then
 			//call AddUnitBonus(u, BONUS_DAMAGE, -300 * diff)
 
-		//Titanium Armor
-		elseif itemId == 'I07M' then
-			call AddUnitBonus(u, BONUS_DAMAGE, -500 * diff)
-
 		//Titanium Spike
 		elseif itemId == TITANIUM_SPIKE_ITEM_ID then
 			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (1000 * diff), 0)

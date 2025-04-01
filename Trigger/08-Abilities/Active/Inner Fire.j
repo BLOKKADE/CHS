@@ -25,7 +25,7 @@ library InnerFire requires RuneInit, AbilityCooldown, DummyOrder, GetRandomUnit,
             call CastSpell(caster, target, INNER_FIRE_ABILITY_ID, lvl, Order_Target, 0, 0).activate()
 
             set i = i + 1
-            exitwhen i >= 5
+            exitwhen i > 5
         endloop
 
         call AbilStartCD(caster, INNER_FIRE_ABILITY_ID, 15)
