@@ -9,7 +9,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         integer RoundCreepChanceLastBreath = 0
         integer FireshieldChance = 0
         integer RoundCreepChanceCorrosiveSkin = 0 
-        integer RoundCreepChanceMulticast = 0
         integer RoundCreepChanceFastMagic = 0
         integer RoundCreepChanceImmortalAura = 0
         boolean wizardbaneDebug = false
@@ -155,12 +154,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set s = ConcatAbility(s, "Corrosive Skin")
             call AddRoundAbility(CORROSIVE_SKIN_ABILITY_ID)
         endif
-    
-        if RoundCreepChanceMulticast == 1 then
-            set s = ConcatAbility(s, "Multicast")
-            call AddRoundAbility(MULTICAST_ABILITY_ID)
-        endif
-    
+
         if RoundCreepChanceFastMagic == 1 then
             set s = ConcatAbility(s, "Fast Magic")
             call AddRoundAbility(FAST_MAGIC_ABILITY_ID)
@@ -223,11 +217,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if RoundCreepChanceCorrosiveSkin == 1 then
             call UnitAddAbility(u, CORROSIVE_SKIN_ABILITY_ID)
             call SetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
-        endif
-    
-        if RoundCreepChanceMulticast == 1 then
-            call UnitAddAbility(u, MULTICAST_ABILITY_ID)
-            call SetUnitAbilityLevel(u, MULTICAST_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.5), 30))
         endif
     
         if RoundCreepChanceFastMagic == 1 then
@@ -354,7 +343,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceCorrosiveSkin = GetRandomInt(1, newAbilChance)
         endif
         if RoundNumber >= 35 then
-            set RoundCreepChanceMulticast = GetRandomInt(1, newAbilChance + 10)
             set RoundCreepChanceFastMagic = GetRandomInt(1, newAbilChance + 6)
         endif
     

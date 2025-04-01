@@ -14,6 +14,7 @@ library IdLibrary initializer init
         constant integer ID_NOT_FOUND                                   = -1
 
         // --- Unit IDs ---
+        constant integer FLYING_SHEEP_UNIT_ID                        = 'n01Q'
 
         // --- Dummies ---
         StaticIdGroup DUMMIES
