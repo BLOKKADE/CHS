@@ -1,13 +1,12 @@
-library AttackCooldown initializer init requires MegaSpeed, UnitItems, RemoveBuffs
+library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
 
     function ModifyAttackCooldown takes unit u, integer hid returns real
         // base attack cooldown
         local real r1 = LoadReal(HT, hid, - 1001)
         local real r2 = r1
-        local integer i1 = GetUnitAbilityLevel(u,MEGA_SPEED_ABILITY_ID)
+        local integer i1 = GetUnitAbilityLevel(u, MEGA_SPEED_ABILITY_ID)
         local real temp = 0
         local real gloryAttackCdBonus = r1 * GloryAttackCdBonus.real[hid]
-
 
         //Mega Speed and Glory Attack Cd
         if gloryAttackCdBonus != 0 then
@@ -37,7 +36,7 @@ library AttackCooldown initializer init requires MegaSpeed, UnitItems, RemoveBuf
         endif
 
         //Speed Blade passive
-        if UnitHasItemType(u,'I06B') then
+        if UnitHasItemType(u,SPEED_BLADE_ITEM_ID) then
             set r2 = r2 * 0.8
         endif
 
@@ -51,15 +50,10 @@ library AttackCooldown initializer init requires MegaSpeed, UnitItems, RemoveBuf
                 set r2 = r2 * 0.5
         endif
 
-        //  call DisplayTextToPlayer(GetLocalPlayer(),0,0,R2S(r2))
         if r2 != BlzGetUnitAttackCooldown(u, 0) then
-            call BlzSetUnitAttackCooldown(u,r2,0)
+            call BlzSetUnitAttackCooldown(u, r2, 0)
         endif
 
         return r2
-    endfunction
-
-    private function init takes nothing returns nothing
-        
     endfunction
 endlibrary

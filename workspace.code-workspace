@@ -7,6 +7,10 @@
 	"settings": {
 		"favorites.resources": [
 			{
+				"filePath": "Utility\\Temp.txt",
+				"group": "Default"
+			},
+			{
 				"filePath": "Trigger\\05-Game Functions\\Mechanics\\2-Damage System\\2. ModifyDamageBeforeArmor.j",
 				"group": "Default"
 			},
@@ -54,6 +58,11 @@
 				"filePath": "Trigger\\05-Game Functions\\Unsorted\\5-Functions.j",
 				"group": "Default"
 			}
-		]
+		],
+		"search.exclude": {
+			"**/*.ini": true,
+			"**/*.jh": true
+		},
+		"favorites.sortOrder": "MANUAL"
 	}
 }

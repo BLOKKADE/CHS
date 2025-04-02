@@ -80,7 +80,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
         endif
 
         //Speed Blade and Arcane infused sword 
-        if (UnitHasItemType(DamageSource, 'I06B') or UnitHasItemType(DamageSource, ARCANE_INFUSED_SWORD_ITEM_ID)) and GetUnitAbilityLevel(DamageSourceHero, TRUESHOT_AURA_ABILITY_ID) == 0 then
+        if (UnitHasItemType(DamageSource, SPEED_BLADE_ITEM_ID) or UnitHasItemType(DamageSource, ARCANE_INFUSED_SWORD_ITEM_ID)) and GetUnitAbilityLevel(DamageSourceHero, TRUESHOT_AURA_ABILITY_ID) == 0 then
             set returnDamage = returnDamage * 0.1
             set DamageIsTrue = true
         endif

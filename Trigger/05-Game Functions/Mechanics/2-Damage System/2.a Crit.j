@@ -60,21 +60,19 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             endif
         endif
 
-        if IsPhysDamage() then
+        if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) then
 
             //Trident of Pain
             if UnitHasItemType(DamageSource, 'I061')  then
-                if Damage.index.damageType ==  DAMAGE_TYPE_NORMAL then
-                    if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
-                        call AbilStartCD(DamageSource, 'A08X', 7)
-                        set critDmg = critDmg + Dmg
-                    elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Y') <= 0 then
-                        call AbilStartCD(DamageSource, 'A08Y', 7)
-                        set critDmg = critDmg + Dmg
-                    elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Z') <= 0 then
-                        call AbilStartCD(DamageSource, 'A08Z', 7)
-                        set critDmg = critDmg + Dmg
-                    endif
+                if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
+                    call AbilStartCD(DamageSource, 'A08X', 7)
+                    set critDmg = critDmg + Dmg
+                elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Y') <= 0 then
+                    call AbilStartCD(DamageSource, 'A08Y', 7)
+                    set critDmg = critDmg + Dmg
+                elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Z') <= 0 then
+                    call AbilStartCD(DamageSource, 'A08Z', 7)
+                    set critDmg = critDmg + Dmg
                 endif
             endif
 
@@ -162,7 +160,7 @@ library CritDamage requires RandomShit, Vampirism, Gnome
         endif
 
         //Medivh
-        if DamageSourceTypeId == MEDIVH_UNIT_ID or DamageSourceTypeId == MORTAR_TEAM_UNIT_ID then
+        if DamageSourceTypeId == MEDIVH_UNIT_ID or GetUnitTypeId(DamageSourceHero) == MORTAR_TEAM_UNIT_ID then
             set critDmg = 0
         endif
         

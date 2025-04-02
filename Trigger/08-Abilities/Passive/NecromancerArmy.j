@@ -14,17 +14,18 @@ library NecromancerArmy initializer init requires CustomState
     function ActivateNecromancerArmy takes unit source, unit dyingUnit, integer level returns nothing
         local player p = GetOwningPlayer(source)
         local integer pid = GetPlayerId(p)
+        local integer unitTypeId = GetUnitTypeId(dyingUnit)
         local unit summon
 
         call GroupClear(ENUM_GROUP)
         call GroupEnumUnitsOfPlayer(ENUM_GROUP, p, Filter(function NecroSummonFilter))
 
         if BlzGroupGetSize(ENUM_GROUP) < level then
-            if GetUnitTypeId(dyingUnit) == PHOENIX_1_UNIT_ID then
+            if unitTypeId == PHOENIX_1_UNIT_ID then
                 set summon = CreateUnit(p, 'u006', GetUnitX(dyingUnit), GetUnitY(dyingUnit), GetUnitFacing(dyingUnit))
-            elseif HAWKS.contains(GetUnitTypeId(dyingUnit)) then
+            elseif unitTypeId == HAWK_1_UNIT_ID then
                 set summon = CreateUnit(p, 'u007', GetUnitX(dyingUnit), GetUnitY(dyingUnit), GetUnitFacing(dyingUnit))
-            elseif SERPENT_WARDS.contains(GetUnitTypeId(dyingUnit)) then
+            elseif unitTypeId == SERPENT_WARD_1_UNIT_ID then
                 set summon = CreateUnit(p, 'o00D', GetUnitX(dyingUnit), GetUnitY(dyingUnit), GetUnitFacing(dyingUnit))
             else
                 if IsUnitType(dyingUnit, UNIT_TYPE_RANGED_ATTACKER) then

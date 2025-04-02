@@ -89,7 +89,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_MAGICRES, 10 * diff)
 			
 			//Scroll of Transformation
-		elseif itemId == 'I065' then
+		elseif itemId == SCROLL_OF_TRANSFORMATION_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 25 * diff)
 
 			//Magic Necklace
@@ -215,7 +215,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 				call UnitRemoveAbility(u,'A05K')
 			endif
 			
-		elseif itemId == ORB_OF_ELEMENTS then
+		elseif itemId == ORB_OF_ELEMENTS_ITEM_ID then
 			call AddUnitAbsoluteBonusCount(u,Element_Fire, 2*uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Water, 2*uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Earth, 2*uniqueDiff)
@@ -233,7 +233,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
 
 			//Magic Amulet
-		elseif itemId == 'I07B' then
+		elseif itemId == MAGIC_AMULET_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 10 * diff)
 		
 			//Night Amulet
@@ -243,28 +243,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Armor of the Ancestors
 		elseif itemId == 'I07G' then
 			call AddUnitCustomState(u, BONUS_BLOCK, 50 * diff)
-		
-			//Obsidian Armor
-		elseif itemId == 'I0CW' then
-			call AddUnitCustomState(u, BONUS_BLOCK, 200 * diff)
-			call RegisterEndOfRoundItem(pid, it)
 
-			//Golden Armor
-	//	elseif itemId == 'I0CV' then
-	//		call AddUnitCustomState(u, BONUS_MAGICRES, 10 * diff)
-	//		call RegisterEndOfRoundItem(pid, it)
-
-		elseif itemId == 'I0CX' then
-			call RegisterEndOfRoundItem(pid, it)
-			//Leather Armor
-		elseif itemId == 'I0CY' then
-			call RegisterEndOfRoundItem(pid, it)
-			//Rapira
-		elseif itemId == 'I0CZ' then
-			call AddUnitBonus(u, BONUS_DAMAGE, 300 * diff)
-			call RegisterEndOfRoundItem(pid, it)
-
-			//Blokkades Shield - imba
+			//Blokkades Shield
 		elseif itemId == BLOKKADE_SHIELD_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_BLOCK, 1000 * uniqueDiff)
 			call AddUnitCustomState(u, BONUS_MAGICRES, 30 * uniqueDiff)
@@ -284,6 +264,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I07V' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 60 * uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u, Element_Arcane, uniqueDiff)
+			
 			//Holy Shield
 		elseif itemId == 'I07W' then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
@@ -335,7 +316,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitAbsoluteBonusCount(u,Element_Wild, diff)
 
 			//Bloodstone
-		elseif itemId == 'I0AK' then
+		elseif itemId == BLOOD_STONE_ITEM_ID then
 			call AddUnitAbsoluteBonusCount(u,Element_Blood, uniqueDiff)
 
 			//Bone Armor
@@ -370,11 +351,11 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_RUNEPOW, 75 * uniqueDiff)
 
 			//Guide to Rune Master
-		elseif itemId == 'I0BZ' then
+		elseif itemId == GUIDE_TO_RUNE_MASTERY_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_RUNEPOW, 50 * diff)
 
 			//Conqueror's Bamboo Stick
-		elseif itemId == 'I0C2' then
+		elseif itemId == CONQ_BAMBOO_STICK_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_EVASION, 20 * uniqueDiff)
 			call AddUnitCustomState(u, BONUS_MAGICRES, 30 * uniqueDiff)
 			call AddUnitBonus(u, BONUS_ARMOR, 100 * uniqueDiff)
@@ -391,7 +372,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			elseif itemId == ARCANE_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
 			elseif itemId == WILD_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Wild, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Wild, 2 * uniqueDiff)
 			elseif itemId == LIGHT_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Light, uniqueDiff)
 			elseif itemId == DARK_RUNESTONE_ITEM_ID then
@@ -442,7 +423,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + 400 * uniqueDiff)
 		
 			//Heart of Darkness
-		elseif itemId == 'I04V' then
+		elseif itemId == HEART_OF_DARKNESS_ITEM_ID then
 			call AddUnitBonus(u, BONUS_DAMAGE, 150 * diff)
 			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 
@@ -463,7 +444,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitBonus(u, BONUS_DAMAGE, 350 * diff)
 
 		//Speed Blade
-		elseif itemId == 'I06B' then
+		elseif itemId == SPEED_BLADE_ITEM_ID then
 			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1000 * diff, 0 )
 
 		//Bloody Axe
@@ -487,7 +468,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitBonus(u, BONUS_DAMAGE, 80 * diff)
 
 			//Null Void Orb
-		elseif itemId == 'I0AL' then
+		elseif itemId == NULL_VOID_ORB_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 40 * diff)
 
 		//Rapier of the Gods

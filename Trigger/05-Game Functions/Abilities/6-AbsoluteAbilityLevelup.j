@@ -89,7 +89,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
                         endif
                     elseif counter > GetHeroMaxAbsoluteAbility(u) then
                         //call BJDebugMsg("aalu acorn")
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "Buy an |cffbbff00Absolute Acorn|r at |cffffd900Power Ups Shop II|r to buy more Absolute abilities. (|cffff1100Max:" + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)" ) 
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "Buy an |cffbbff00Absolute Acorn|r at the |cffffd900Power Ups Shop II|r to purchase more Absolute abilities. (|cffff1100Max: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)" ) 
                         call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)
                         call ResourseRefresh(GetOwningPlayer(u))
 

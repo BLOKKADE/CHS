@@ -46,10 +46,10 @@ scope LongPeriodCheck initializer init
             endif
 
             //Runestone of Creation
-            if GetUnitAbilityLevel(u,'A073') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A073') <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
+            if GetUnitAbilityLevel(u,CREATION_RUNESTONE_ABIL_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u,CREATION_RUNESTONE_ABIL_ID) <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
                 call CreateRandomRune(0,GetUnitX(u),GetUnitY(u),u)
                 call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 2000)
-                call AbilStartCD(u,'A073', 10) 
+                call AbilStartCD(u,CREATION_RUNESTONE_ABIL_ID, 10) 
             endif
             
             //Earthquake
@@ -110,22 +110,22 @@ scope LongPeriodCheck initializer init
             call ModifyAttackCooldown(u, hid)
 
             //Guide To Rune Mastery
-            if GetUnitAbilityLevel(u ,'A09O') >= 1 then
+            if GetUnitAbilityLevel(u ,RUNE_MASTERY_ABILITY_ID) >= 1 then
                 set i1 = R2I(100 + GetUnitCustomState(u, BONUS_RUNEPOW) + GetHeroLevel(u))
-                set i2 = LoadInteger(HT, hid, 'A09O')
+                set i2 = LoadInteger(HT, hid, RUNE_MASTERY_ABILITY_ID)
                 if i1 != i2 then
-                    call SaveInteger(HT, hid, 'A09O', i1)
+                    call SaveInteger(HT, hid, RUNE_MASTERY_ABILITY_ID, i1)
 
                     call AddUnitBonus(u, BONUS_STRENGTH, i1 - i2)
                     call AddUnitBonus(u, BONUS_AGILITY, i1 - i2)
                     call AddUnitBonus(u, BONUS_INTELLIGENCE, i1 - i2)
                 endif
-            elseif LoadInteger(HT, hid, 'A09O') != 0 then
-                set i1 = LoadInteger(HT, hid, 'A09O')
+            elseif LoadInteger(HT, hid, RUNE_MASTERY_ABILITY_ID) != 0 then
+                set i1 = LoadInteger(HT, hid, RUNE_MASTERY_ABILITY_ID)
                 call AddUnitBonus(u, BONUS_STRENGTH, 0 - i1)
                 call AddUnitBonus(u, BONUS_AGILITY, 0 - i1)
                 call AddUnitBonus(u, BONUS_INTELLIGENCE, 0 - i1)
-                call SaveInteger(HT, hid, 'A09O', 0)
+                call SaveInteger(HT, hid, RUNE_MASTERY_ABILITY_ID, 0)
             endif
 
             //Double Armor
@@ -338,8 +338,21 @@ scope LongPeriodCheck initializer init
 
             //Brilliance Aura
             set i1 = GetUnitAbilityLevel(u, BRILLIANCE_AURA_ABILITY_ID)
+            set i2 = LoadInteger(HT, hid, BRILLIANCE_AURA_ABILITY_ID)
             if i1 > 0 then
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) + ((0.0001 * i1) * GetUnitState(u, UNIT_STATE_MAX_MANA)))
+            endif
+            if i2 != i1 then
+                call AddUnitCustomState(u, BONUS_MAGICPOW, (i1 - i2))
+                call SaveInteger(HT, hid, BRILLIANCE_AURA_ABILITY_ID, i1)
+            endif
+
+            //Devotion Aura
+            set i1 = GetUnitAbilityLevel(u, DEVOTION_AURA_ABILITY_ID)
+            set i2 = LoadInteger(HT, hid, DEVOTION_AURA_ABILITY_ID)
+            if i1 > 0 and i2 != i1 then
+                call AddUnitCustomState(u, BONUS_MAGICRES, (i1 - i2))
+                call SaveInteger(HT, hid, DEVOTION_AURA_ABILITY_ID, i1)
             endif
 
             //strength hp regen

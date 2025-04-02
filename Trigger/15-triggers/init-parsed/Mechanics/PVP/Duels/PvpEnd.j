@@ -272,7 +272,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
             call AfterDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle for the odd player
-            call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "|cffff0000Odd player amount detected. Starting duel for odd player out!|r")
+            call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "|cffff0000Odd player amount detected. Starting duel for the odd player out!|r")
 
             call oddDuelGame.setupNextPvpBattleTimer()
             call DisplayNemesisNames()

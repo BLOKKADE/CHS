@@ -12,16 +12,6 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         HashTable AbilityElement
 
         integer LastObject
-        /*
-        hashtable HT_AbilityData = InitHashtable()
-        integer array AbilSpellRA1
-        integer AbilSRA1_count = 0 
-        integer array AbilSpellRA2
-        integer AbilSRA2_count = 0 
-        
-        integer array AbilSpellRA3
-        integer AbilSRA3_count = 0
-        */
 
         integer Element_Any = -1
         integer Element_None = 0
@@ -175,13 +165,13 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
     //typ = order type (none target point instant)
     //element = ability element
     //order = ability order
-    private function SaveAbilData takes integer abilId, integer itemId, boolean absolute, integer targetType, integer mono, boolean chaos, integer typ, string order returns nothing
+    private function SaveAbilData takes integer abilId, integer itemId, boolean absolute, integer targetType, integer mono, boolean chaos, integer orderType, string order returns nothing
         local integer index = 0
         set LastObject = abilId
         set ItemData[itemId] = abilId
 
         set AbilityData[abilId].integer[0] = itemId
-        set AbilityData[abilId].integer[2] = typ
+        set AbilityData[abilId].integer[2] = orderType
         set AbilityData[abilId].integer[3] = mono
         set AbilityData[abilId].integer[5] = targetType
 
@@ -198,13 +188,13 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
             if chaos and OrderId(order) != 0 then
                 
                 if targetType == 1 then
-                    set index = ChaosDataAlly[typ].integer[0] + 1
-                    set ChaosDataAlly[typ].integer[index] = abilId
-                    set ChaosDataAlly[typ].integer[0] = index
+                    set index = ChaosDataAlly[orderType].integer[0] + 1
+                    set ChaosDataAlly[orderType].integer[index] = abilId
+                    set ChaosDataAlly[orderType].integer[0] = index
                 else
-                    set index = ChaosDataEnemy[typ].integer[0] + 1
-                    set ChaosDataEnemy[typ].integer[index] = abilId
-                    set ChaosDataEnemy[typ].integer[0] = index
+                    set index = ChaosDataEnemy[orderType].integer[0] + 1
+                    set ChaosDataEnemy[orderType].integer[index] = abilId
+                    set ChaosDataEnemy[orderType].integer[0] = index
                 endif
 
                 //list of all chaos abilities
@@ -213,19 +203,36 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
                 set ChaosData[0].integer[0] = index
 
                 //list of chaos abilities per order type
-                set index = ChaosData[typ].integer[0] + 1
-                set ChaosData[typ].integer[index] = abilId
-                set ChaosData[typ].integer[0] = index
+                set index = ChaosData[orderType].integer[0] + 1
+                set ChaosData[orderType].integer[index] = abilId
+                set ChaosData[orderType].integer[0] = index
             endif
         endif
     endfunction
 
-    private function SaveCreepAbilityData takes integer abilId, integer targetType, integer typ, string order returns nothing
-        set AbilityData[abilId].integer[1] = OrderId(order)
-        set AbilityData[abilId].integer[2] = typ
+    private function SaveItemAbilityData takes integer abilId, integer itemId, integer targetType, integer mono, integer orderType, string order returns nothing
+        set LastObject = abilId
+
+        set AbilityData[abilId].integer[0] = itemId
+        set AbilityData[abilId].integer[2] = orderType
+        set AbilityData[abilId].integer[3] = mono
         set AbilityData[abilId].integer[5] = targetType
 
-        if typ != Order_None then
+        if orderType != Order_None then
+            set AbilityData[abilId].boolean[4] = true
+        endif
+
+        if order != null then
+            set AbilityData[abilId].integer[1] = OrderId(order)
+        endif
+    endfunction
+
+    private function SaveCreepAbilityData takes integer abilId, integer targetType, integer orderType, string order returns nothing
+        set AbilityData[abilId].integer[1] = OrderId(order)
+        set AbilityData[abilId].integer[2] = orderType
+        set AbilityData[abilId].integer[5] = targetType
+
+        if orderType != Order_None then
             set AbilityData[abilId].boolean[4] = true
         endif
     endfunction
@@ -563,6 +570,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //63 - Carrion Beetles 
         call SaveAbilData(CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //65 - Hardened Skin 
@@ -632,6 +640,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //78 - Summon Quilbeast 
         call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID, SUMMON_QUILBEAST_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
+        call SetLastObjectElement(Element_Poison, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
@@ -694,6 +703,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //95 - Finger of Death 
         call SaveAbilData(FINGER_OF_DEATH_ABILITY_ID, FINGER_OF_DEATH_ITEM_ID, false, 0, 0, true, Order_Target, "fingerofdeath")
         call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Blood, 1)
 
         //96 - Aura of immortality 
         call SaveAbilData(AURA_OF_IMMORTALITY_ABILITY_ID, AURA_OF_IMMORTALITY_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -1163,8 +1173,101 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
          call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "burrow")
          call SetLastObjectElement(Element_Arcane, 1)
 
-         //198 - Energy Bombardment
+         //199 - Energy Bombardment
          call SaveAbilData(ENERGY_BOMBARDMENT_ABILITY_ID, ENERGY_BOMBARDMENT_ITEM_ID, false, Target_Enemy, 0, false, Order_None, null)
+    endfunction
+
+    function InitItemAbilities takes nothing returns nothing
+        // Potion of Greater Healing
+        call SaveItemAbilityData(POTION_OF_GREATER_HEALING_ABIL_ID, POTION_OF_GREATER_HEALING_ITEM_ID, Target_Ally, 0, Order_Instant, "roar")
+
+        // Potion of Greater Mana
+        call SaveItemAbilityData(POTION_OF_GREATER_MANA_ABIL_ID, POTION_OF_GREATER_MANA_ITEM_ID, Target_Ally, 0, Order_Instant, "roar")
+
+        // Super Potion of Healing
+        call SaveItemAbilityData(SUPER_POTION_OF_HEALING_ABIL_ID, SUPER_POTION_OF_HEALING_ITEM_ID, Target_Ally, 0, Order_Instant, "roar")
+
+        // Super Potion of Mana
+        call SaveItemAbilityData(SUPER_POTION_OF_MANA_ABIL_ID, SUPER_POTION_OF_MANA_ITEM_ID, Target_Ally, 0, Order_Instant, "roar")
+
+        // Vampiric Potion
+        call SaveItemAbilityData(VAMPIRIC_POTION_ABIL_ID, VAMPIRIC_POTION_ITEM_ID, Target_Ally, 1, Order_Instant, null)
+    
+        // Mask of Vitality
+        call SaveItemAbilityData(MASK_OF_VITALITY_ABIL_ID, MASK_OF_VITALITY_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
+
+        // Mask of Elusion
+        call SaveItemAbilityData(MASK_OF_ELUSION_ABIL_ID, MASK_OF_ELUSION_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
+
+        // Mask of Protection
+        call SaveItemAbilityData(MASK_OF_PROTECTION_ABIL_ID, MASK_OF_PROTECTION_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
+
+        // Full Restore
+        call SaveItemAbilityData(FULL_RESTORE_ABIL_ID, FULL_RESTORE_ITEM_ID, Target_Ally, 0, Order_Instant, "roar")
+
+        // Strong Shield
+        call SaveItemAbilityData(STRONG_SHIELD_ABIL_ID, STRONG_SHIELD_ITEM_ID, Target_Enemy, 1, Order_Instant, "howlofterror")
+
+        // Magic Amulet
+        call SaveItemAbilityData(MAGIC_AMULET_ABIL_ID, MAGIC_AMULET_ITEM_ID, Target_Enemy, 0, Order_Instant, "fanofknives")
+
+        // Book of Necromancy
+        call SaveItemAbilityData(BOOK_OF_NECROMANCY_ABIL_ID, BOOK_OF_NECROMANCY_ITEM_ID, Target_Any, 0, Order_Instant, "darkportal")
+
+        // Heart of Darkness
+        call SaveItemAbilityData(HEART_OF_DARKNESS_ABIL_ID, HEART_OF_DARKNESS_ITEM_ID, Target_Enemy, 0, Order_Instant, "stomp")
+
+        // Mysterious Runestone
+        call SaveItemAbilityData(MYSTERIOUS_RUNESTONE_ABIL_ID, MYSTERIOUS_RUNESTONE_ITEM_ID, Target_Any, 0, Order_Instant, "spiritwolf")
+
+        // Packing Tape
+        call SaveItemAbilityData(PACKING_TAPE_ABILITY_ID, PACKING_TAPE_ITEM_ID, Target_Any, 0, Order_Target, "bloodlust")
+
+        // Ancient Axe
+        call SaveItemAbilityData(ANCIENT_AXE_ABIL_ID, ANCIENT_AXE_ITEM_ID, Target_Enemy, 0, Order_Instant, "stomp")
+
+        // Ancient Dagger
+        call SaveItemAbilityData(ANCIENT_DAGGER_ABIL_ID, ANCIENT_DAGGER_ITEM_ID, Target_Enemy, 0, Order_Instant, "roar")
+
+        // Ancient Staff
+        call SaveItemAbilityData(ANCIENT_STAFF_ABIL_ID, ANCIENT_STAFF_ITEM_ID, Target_Enemy, 0, Order_Instant, "roar")
+
+        // Sensatus Shield of Honor
+        call SaveItemAbilityData(SENSATUS_SHIELD_OF_HONOR_ABIL_ID, SENSATUS_SHIELD_OF_HONOR_ITEM_ID, Target_Ally, 1, Order_Instant, null)
+
+        // The Divine Source
+        call SaveItemAbilityData(THE_DIVINE_SOURCE_ABIL_ID, THE_DIVINE_SOURCE_ITEM_ID, Target_Ally, 1, Order_Instant, "dispel")
+
+        // Urn
+        call SaveItemAbilityData(URN_ABIL_ID, URN_ITEM_ID, Target_Ally, 1, Order_Instant, "spiritwolf")
+
+        // Anti Magic Flag
+        call SaveItemAbilityData(ANTI_MAGIC_FLAG_ABIL_ID, ANTI_MAGIC_FLAG_ITEM_ID, Target_Ally, 1, Order_Instant, "antimagicshell")
+
+        // Blood Stone
+        call SaveItemAbilityData(BLOOD_STONE_ABIL_ID, BLOOD_STONE_ITEM_ID, Target_Enemy, 1, Order_Instant, "howlofterror")
+
+        // Null Void Orb
+        call SaveItemAbilityData(NULL_VOID_ORB_ABIL_ID, NULL_VOID_ORB_ITEM_ID, Target_Enemy, 1, Order_Instant, "howlofterror")
+
+        // Scroll of Transformation
+        call SaveItemAbilityData(SCROLL_OF_TRANSFORMATION_ABIL_ID, SCROLL_OF_TRANSFORMATION_ITEM_ID, Target_Ally, 1, Order_Instant, "spiritwolf")
+
+        // Speed Blade
+        call SaveItemAbilityData(SPEED_BLADE_ABIL_ID, SPEED_BLADE_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
+
+        // Guide To Rune Mastery
+        call SaveItemAbilityData(RUNE_MASTERY_ABILITY_ID, GUIDE_TO_RUNE_MASTERY_ITEM_ID, Target_Ally, 1, Order_Instant, "howlofterror")
+
+        // Conqueror's Bamboo Stick
+        call SaveItemAbilityData(CONQ_BAMBOO_STICK_ABILITY_ID, CONQ_BAMBOO_STICK_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
+
+        // Shadow Blade
+        call SaveItemAbilityData(SHADOW_BLADE_ABIL_ID, SHADOW_BLADE_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
+        
+        // Dried Mushroom
+        call SaveItemAbilityData(DRIED_MUSHROOM_ABILITY_ID, DRIED_MUSHROOM_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
+
     endfunction
 
     function InitHeroElements takes nothing returns nothing
@@ -1179,7 +1282,6 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(LICH_UNIT_ID, Element_Cold, 1)
         call SetObjectElement(NAGA_SIREN_UNIT_ID, Element_Water, 1)
         call SetObjectElement(BLOOD_MAGE_UNIT_ID, Element_Water, 1)
-        call SetObjectElement(SORCERER_UNIT_ID, Element_Wind, 1)
         call SetObjectElement(SORCERER_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(THUNDER_WITCH_UNIT_ID, Element_Wind, 1)
         call SetObjectElement(TROLL_BERSERKER_UNIT_ID, Element_Wind, 1)
@@ -1318,16 +1420,16 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
     endfunction
 
     function InitDummySpellAbilities takes nothing returns nothing
-        call SaveDummyAbilOrder('A0BJ', "charm")
-        call SaveDummyAbilOrder('A0BL', "chemicalrage")
-        call SaveDummyAbilOrder('A0BO', "channel")
-        call SaveDummyAbilOrder('A0BN', "chainlightning")
-        call SaveDummyAbilOrder('A0BM', "carrionswarm")
-        call SaveDummyAbilOrder('A0BG', "cloudoffog")
-        call SaveDummyAbilOrder('A0BH', "controlmagic")
-        call SaveDummyAbilOrder('A0BI', "creepthunderclap")
-        call SaveDummyAbilOrder('A0BP', "corporealform")
-        call SaveDummyAbilOrder('A0BK', "corrosivebreath")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_0, "charm")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_9, "chemicalrage")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_1, "channel")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_2, "chainlightning")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_3, "carrionswarm")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_4, "cloudoffog")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_5, "controlmagic")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_6, "creepthunderclap")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_7, "corporealform")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_8, "corrosivebreath")
 
         call SaveDummyAbilOrder('A0BX', "rejuvination")
         call SaveDummyAbilOrder('A0BV', "root")
@@ -1352,6 +1454,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         set AbilityElement = HashTable.create()
         
         call InitAbilities()
+        call InitItemAbilities()
         call InitCreepAbilities()
         call InitDummyAbilElements()
         call InitHeroElements()

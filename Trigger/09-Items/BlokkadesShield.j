@@ -8,7 +8,7 @@ library BlokkadesShield initializer init requires RandomShit, CustomGameEvent
     endglobals
 
     function SetBlokShieldCharges takes unit u, integer hid returns nothing
-        call SetItemCharges(GetUnitItem(u, 'I0BD') , BlokShieldCharges[hid])
+        call SetItemCharges(GetUnitItem(u, BLOKKADE_SHIELD_ITEM_ID) , BlokShieldCharges[hid])
     endfunction
 
     function ActivateBlokkadeShield takes unit u returns nothing

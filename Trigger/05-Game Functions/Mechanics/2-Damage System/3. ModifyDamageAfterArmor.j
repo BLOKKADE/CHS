@@ -28,7 +28,7 @@ scope ModifyDamageAfterArmor initializer init
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
         //Fishing Rod
-        if UnitHasItemType(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, 'BEer') == 0 then
+        if UnitHasItemType(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, ENTANGLING_ROOTS_BUFF_ID) == 0 then
             call FishingRod(DamageSource, DamageTarget)
         endif
 
@@ -45,11 +45,10 @@ scope ModifyDamageAfterArmor initializer init
             set r2 = (Damage.index.amount * 0.25)
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
-            set Damage.index.amount = Damage.index.amount * 0.75
         endif
 
         //Light Magic Shield
-        if UnitHasItemType(DamageTarget,'I06K') and BlzGetUnitArmor(DamageTarget)<= (50 + GetHeroLevel(DamageTarget))  then
+        if UnitHasItemType(DamageTarget,LIGHT_MAGIC_SHIELD_ITEM_ID) and BlzGetUnitArmor(DamageTarget)<= (50 + GetHeroLevel(DamageTarget))  then
             set Damage.index.amount = Damage.index.amount * 0.5
         endif
 
@@ -69,7 +68,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Blokkades Shield damage reduction
-        if GetUnitAbilityLevel(DamageTarget, 'A01X') > 0 then
+        if GetUnitAbilityLevel(DamageTarget, BLOKKADE_SHIELD_ABIL_ID) > 0 then
 
             //attack ignore
             if Damage.index.isAttack then
@@ -115,7 +114,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Crypt lord Locust
-        if DamageSourceTypeId == 'u008' then
+        if DamageSourceTypeId == CRYPT_LORD_LOCUST_UNIT_ID then
             set vampAmount = vampAmount + Damage.index.amount
             set vampCount = vampCount + 1
         endif
@@ -269,11 +268,11 @@ scope ModifyDamageAfterArmor initializer init
                     set udg_NextDamageAbilitySource = MAGNET_OSC_ABILITY_ID
                     call Damage.apply(DamageTarget, DamageSource, GetSpellValue(30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                     if IsAbilityEnabled(DamageTarget, MAGNET_OSC_ABILITY_ID) then
-                        set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((11.75 - (0.25 * i)) * 32)
+                        set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((12.21 - (0.21 * i)) * 32)
                         call KnockbackTarget(DamageTarget, DamageSource, GetAngleToTarget(DamageTarget, DamageSource) * bj_RADTODEG, RAbsBJ(700 - r1), 600, false, false, false, false)
                     else
                         if r1 > 150 then
-                            set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((8 - (0.2 * i)) * 32)
+                            set MagnetOscHitTick[DamageSourceId] = T32_Tick + R2I((8.12 - (0.12 * i)) * 32)
                             call MoveToPoint(DamageTarget, DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget))
                         endif
                     endif
@@ -297,7 +296,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         if IsNotOnHitOrIsDivineBubbleOnHit() and Damage.index.amount > 0 then
-            if IsPhysDamage() then
+            if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) then
 
                 if not IsOnHitDamage() then
                     //Pulverize
@@ -356,21 +355,11 @@ scope ModifyDamageAfterArmor initializer init
                         call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                     endif
                 endif
-
-                //call BJDebugMsg("trgt: " + GetUnitName(DamageTarget) + " attack: " + B2S(Damage.index.isAttack))
-                //Spiked Carapaces
-                set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID) + GetUnitAbilityLevel(DamageTarget, CARBEE_SPIKED_CARAP_ABILITY_ID) 
-                if i > 0 and Damage.index.isAttack then
-                    set udg_NextDamageType = DamageType_Onhit
-                    set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
-                    //set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
-                    set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID)))
-                    //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
-                    call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
-                endif
             endif
 
             if IsMagicDamage() then
+
+                //call BJDebugMsg("trgt: " + GetUnitName(DamageTarget) + " attack: " + B2S(Damage.index.isAttack))
 
                 //Wizardbane
                 if GetUnitAbilityLevel(DamageTarget, 'B01B') > 0 then
@@ -391,6 +380,17 @@ scope ModifyDamageAfterArmor initializer init
                     call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", DamageSource, "chest"))
                 endif
             endif
+
+            //Spiked Carapaces
+            set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID) + GetUnitAbilityLevel(DamageTarget, CARBEE_SPIKED_CARAP_ABILITY_ID) 
+            if i > 0 and Damage.index.isAttack then
+                set udg_NextDamageType = DamageType_Onhit
+                set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
+                //set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
+                set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID)))
+                //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
+                call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+            endif  
 
             //Volcanic Armor
             if UnitHasItemType(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
@@ -435,7 +435,7 @@ scope ModifyDamageAfterArmor initializer init
                 set Damage.index.amount = r1 * 0.1
             endif
         endif
-            
+
         //Holy Chain Mail
         if UnitHasItemType(DamageTarget,'I07U') then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then

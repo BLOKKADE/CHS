@@ -181,16 +181,16 @@ library DummySpell initializer init requires AbilityData, ListT
     endfunction
 
     private function SetupDummySpellIds takes nothing returns nothing
-        set DummySpellList[DummySpell_PointInstant][0] = 'A0BJ'
-        set DummySpellList[DummySpell_PointInstant][1] = 'A0BO'
-        set DummySpellList[DummySpell_PointInstant][2] = 'A0BN'
-        set DummySpellList[DummySpell_PointInstant][3] = 'A0BM'
-        set DummySpellList[DummySpell_PointInstant][4] = 'A0BG'
-        set DummySpellList[DummySpell_PointInstant][5] = 'A0BH'
-        set DummySpellList[DummySpell_PointInstant][6] = 'A0BI'
-        set DummySpellList[DummySpell_PointInstant][7] = 'A0BP'
-        set DummySpellList[DummySpell_PointInstant][8] = 'A0BK'
-        set DummySpellList[DummySpell_PointInstant][9] = 'A0BL'
+        set DummySpellList[DummySpell_PointInstant][0] = ACTIVE_SPELL_DUMMY_0
+        set DummySpellList[DummySpell_PointInstant][1] = ACTIVE_SPELL_DUMMY_1
+        set DummySpellList[DummySpell_PointInstant][2] = ACTIVE_SPELL_DUMMY_2
+        set DummySpellList[DummySpell_PointInstant][3] = ACTIVE_SPELL_DUMMY_3
+        set DummySpellList[DummySpell_PointInstant][4] = ACTIVE_SPELL_DUMMY_4
+        set DummySpellList[DummySpell_PointInstant][5] = ACTIVE_SPELL_DUMMY_5
+        set DummySpellList[DummySpell_PointInstant][6] = ACTIVE_SPELL_DUMMY_6
+        set DummySpellList[DummySpell_PointInstant][7] = ACTIVE_SPELL_DUMMY_7
+        set DummySpellList[DummySpell_PointInstant][8] = ACTIVE_SPELL_DUMMY_8
+        set DummySpellList[DummySpell_PointInstant][9] = ACTIVE_SPELL_DUMMY_9
 
         set DummySpellList[DummySpell_Unit][0] = 'A0BX'
         set DummySpellList[DummySpell_Unit][1] = 'A0BZ'

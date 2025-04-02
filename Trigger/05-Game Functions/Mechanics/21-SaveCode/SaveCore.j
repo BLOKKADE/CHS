@@ -107,30 +107,30 @@ library SaveCore initializer init
         // -------------------
         // Store ability types that can be saved here
         // -------------------
-        set SaveAbilityType[1] = 'AOae'
+        set SaveAbilityType[1] = ENDURANCE_AURA_ABILITY_ID
         set SaveAbilityType[2] = 'AOre'
-        set SaveAbilityType[3] = 'AOws'
-        set SaveAbilityType[4] = 'AUfn'
-        set SaveAbilityType[5] = 'AUfu'
+        set SaveAbilityType[3] = WAR_STOMP_ABILITY_ID
+        set SaveAbilityType[4] = FROST_NOVA_ABILITY_ID
+        set SaveAbilityType[5] = FROST_ARMOR_ABILITY_ID
         set SaveAbilityType[6] = 'AUdr'
-        set SaveAbilityType[7] = 'AUdd'
+        set SaveAbilityType[7] = DEATH_AND_DECAY_ABILITY_ID
         set SaveAbilityType[8] = 'AEmb'
         set SaveAbilityType[9] = 'AEim'
-        set SaveAbilityType[10] = 'AEev'
+        set SaveAbilityType[10] = EVASION_ABILITY_ID
         set SaveAbilityType[11] = 'AEme'
-        set SaveAbilityType[12] = 'ANfl'
+        set SaveAbilityType[12] = FORKED_LIGHTNING_ABILITY_ID
         set SaveAbilityType[13] = 'ANfa'
-        set SaveAbilityType[14] = 'ANms'
+        set SaveAbilityType[14] = MANA_SHIELD_ABILITY_ID
         set SaveAbilityType[15] = 'ANto'
-        set SaveAbilityType[16] = 'ANsg'
+        set SaveAbilityType[16] = SUMMON_BEAR_ABILITY_ID
         set SaveAbilityType[17] = 'ANsq'
-        set SaveAbilityType[18] = 'ANsw'
-        set SaveAbilityType[19] = 'ANst'
-        set SaveAbilityType[20] = 'AHfs'
-        set SaveAbilityType[21] = 'AHbn'
+        set SaveAbilityType[18] = SUMMON_HAWK_ABILITY_ID
+        set SaveAbilityType[19] = STAMPEDE_ABILITY_ID
+        set SaveAbilityType[20] = FLAME_STRIKE_ABILITY_ID
+        set SaveAbilityType[21] = BANISH_ABILITY_ID
         set SaveAbilityType[22] = 'AHdr'
-        set SaveAbilityType[23] = 'AHpx'
-        set SaveAbilityType[24] = 'AOsh'
+        set SaveAbilityType[23] = PHEONIX_ABILITY_ID
+        set SaveAbilityType[24] = SHOCKWAVE_ABILITY_ID
         set SaveAbilityTypeMax = 199*/
         // Note: Changing max values can cause a code wipe
         // -------------------

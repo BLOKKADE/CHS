@@ -16,26 +16,32 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 		local string temp = GetObjectElementsAsString(playerHero, GetUnitTypeId(playerHero), false)
 		local string tooltip = ""
 
+        // add hero elements to tooltip
 		if temp != "" and temp != null then
 			set tooltip = tooltip + temp + "|n"
 		endif
 
+        // add passive description to tooltip
 		set temp = GetHeroPassiveDescription(GetUnitTypeId(playerHero), HeroPassive_Desc)
 		if temp != "" and temp != null then
 			set tooltip = tooltip + temp + "|n"
 		endif
 
+        // add level up bonus to tooltip
 		set temp = GetHeroPassiveDescription(GetUnitTypeId(playerHero), HeroPassive_Lvlup)
 		if temp != "" and temp != null then
 			set tooltip = tooltip + temp
 		endif
 
+        // add current level up bonus to tooltip
 		set tooltip = tooltip + GetPassiveStr(playerHero)
 
+        // Add income and gold to tooltip
 		if EconomyMode or IncomeMode != 2 then
 			set tooltip = tooltip + "|n|n|cffd4954dIncome|r: " + I2S(Income[GetPlayerId(owningPlayer)])
 		endif
 
+        // Add player gold and glory to tooltip
 		set tooltip = tooltip + "|n|cfffaf61cGold|r: " + I2S(GetPlayerState(owningPlayer, PLAYER_STATE_RESOURCE_GOLD))
 		set tooltip = tooltip + "|n|cff8bfdfdGlory|r: " + I2S(R2I(Glory[GetPlayerId(owningPlayer)]))
 
@@ -71,8 +77,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +7 intelligence." )
         
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )
-        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mortar Might: Increases physical power but the hero can't deal [|cff00ffffCrit|r] damage. ")
-        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +2 physical power bonus." )
+        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mortar Might: Increases physical power of the Hero and its summons, but also prevents [|cff00ffffCrit|r] damage.")
+        call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mortar Might: +1.5 physical power bonus." )
                     
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp" )
         call InitHeroDesc(NAGA_SIREN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Water Addiction: Starts with Absolute Water. +1 bonus attack damage per intelligence. 10% of her attack damage is added to all spell damage dealt. [|cffd45e29onhit|r]")
@@ -158,7 +164,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Construct: +1% bonus hit points from strength." )
             
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOrcWarlockRed.blp" )
-        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with a bonus absolute slot. Can only carry up to 4 items.")
+        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with a bonus absolute slot.")
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 25 levels|r) Gets a bonus Absolute slot. (max 10)" ) 
         
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )
@@ -228,7 +234,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         
         call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMedivh.blp" )
         call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Maximum Magic: Gives the hero +15 magic power but the hero can't deal [|cff00ffffCrit|r] damage." )
-        call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2 magic power." )
+        call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +1.5 magic power." )
         
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's current hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it.")
@@ -242,8 +248,9 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Locust Swarm: +60 attack damage. (|cff68eef3Every 10 levels|r) +1 Locust summoned." )
         
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )
-        call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Magical Insight: The Hero's |cffff8080physical damage|r dealt becomes |cffff00ffmagic damage|r and its |cffff00ffmagic damage|r dealt becomes |cffff8080physical damage|r. |cffc0c0c0Most spells are affected by enemy armor, and not the Hero's magic power. Seer's passive can be disabled by the Staff of Power.|r" )
-    
+        call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Magical Insight: The Hero's attacks deal |cffff00ffmagic damage|r. When dealing |cffff00ffmagic damage|r from [|cff00ffffCrit|r] or [|cffd45e29onhit|r] effects, there is a 20% chance to trigger abilities that normally activate on |cffff8080physical damage|r." )
+        call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Magical Insight: +0.33% chance." )
+
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Passionate Student: All Rings in PVE Shop I are twice as effective.")
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +200 glory." )

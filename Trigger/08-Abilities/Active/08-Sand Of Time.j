@@ -1,57 +1,60 @@
 library SandOfTime requires RandomShit
-    function ResetSpell takes unit hero, integer SpellId, real time, boolean earthBonus returns nothing
-        local real cur_time
-            
-        if earthBonus and IsSpellElement(hero, SpellId,Element_Earth) then
-            set cur_time = time * 2
-        else
-            set cur_time = time
+    private function ResetSpell takes unit hero, integer abilId, real reduction, boolean isEarth returns nothing
+        local real cd = BlzGetUnitAbilityCooldownRemaining(hero, abilId) - reduction
+
+        if isEarth then
+            set cd = cd - reduction
         endif 
 
-        if BlzGetUnitAbilityCooldownRemaining(hero,SpellId) - cur_time > 0 then
-            call BlzStartUnitAbilityCooldown(hero,SpellId,BlzGetUnitAbilityCooldownRemaining(hero,SpellId)- cur_time )
+        if cd > 0 then
+            call BlzStartUnitAbilityCooldown(hero, abilId, cd)
+            call BlzStartUnitAbilityCooldown(hero, GetDummySpell(hero, abilId), cd)
         else
-            call BlzEndUnitAbilityCooldown(hero,SpellId)
+            call BlzEndUnitAbilityCooldown(hero, abilId)
+            call BlzEndUnitAbilityCooldown(hero, GetDummySpell(hero, abilId))
         endif
     endfunction
 
-    function SandRefreshAbility takes unit hero, real time returns nothing
-        local integer i1 = 0
-        local integer SpellId = 0
-        local integer dummyAbilId = 0
-    
+    function CastSandOfTime takes unit hero, real cooldownReduction returns nothing
+        local integer i = 0
+        local integer abilId = 0
+
         loop
-            exitwhen i1 > 10
-            set SpellId = GetHeroSpellAtPosition(hero ,i1)
-            if SpellId != 0 and IsSpellResettable(SpellId) then
-                call ResetSpell(hero, GetOriginalSpellIfExists(hero, SpellId), time, true)
+            set abilId = BlzGetAbilityId(BlzGetUnitAbilityByIndex(hero, i))
+            exitwhen abilId == 0
+
+            if BlzGetUnitAbilityCooldownRemaining(hero, abilId) != 0 and IsSpellResettable(abilId) then
+                call ResetSpell(hero, abilId, cooldownReduction, IsSpellElement(hero, abilId, Element_Earth))
             endif
-            set i1 = i1 + 1
+
+            set i = i + 1
         endloop
 
-        //Ogre Warrior
+        // Ogre Warrior
         if GetUnitAbilityLevel(hero, 'A08U') > 0 then
-            call ResetSpell(hero, 'A08U', time, true)
+            call ResetSpell(hero, 'A08U', cooldownReduction, IsObjectElement(OGRE_WARRIOR_UNIT_ID, Element_Earth))
         endif
 
-        //Pit Lord
-        /*if GetUnitTypeId(hero) == PIT_LORD_UNIT_ID then
-            call ResetSpell(hero, 'A08V', time, true)
-        endif*/
+        // Pit Lord
+        /*
+        if GetUnitTypeId(hero) == PIT_LORD_UNIT_ID then
+            call ResetSpell(hero, 'A08V', cooldownReduction, true)
+        endif
+        */
 
-        //Revenant
+        // Revenant
         if GetUnitAbilityLevel(hero, COLD_KNIGHT_PASSIVE_ABILITY_ID) > 0 then
-            call ResetSpell(hero, COLD_KNIGHT_PASSIVE_ABILITY_ID, time, false)
+            call ResetSpell(hero, COLD_KNIGHT_PASSIVE_ABILITY_ID, cooldownReduction, IsObjectElement(COLD_KNIGHT_UNIT_ID, Element_Earth))
         endif
 
-        //Centaur
+        // Centaur
         if GetUnitAbilityLevel(hero, 'A08T') > 0 then
-            call ResetSpell(hero, 'A08T', time, true)
+            call ResetSpell(hero, 'A08T', cooldownReduction, IsObjectElement(CENTAUR_ARCHER_UNIT_ID, Element_Earth))
         endif
 
-        //Lich
+        // Lich
         if GetUnitAbilityLevel(hero, 'A08W') > 0 then
-            call ResetSpell(hero, 'A08W', time, false)
+            call ResetSpell(hero, 'A08W', cooldownReduction, IsObjectElement(LICH_UNIT_ID, Element_Earth))
         endif
     endfunction
 endlibrary

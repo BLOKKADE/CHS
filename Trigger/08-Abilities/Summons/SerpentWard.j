@@ -11,7 +11,7 @@ library SerpentWard requires CustomState, SpellFormula
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
         call UnitAddAbility(u, SUMMON_MAGIC_DMG_ABILITY_ID)
 
-        call UnitAddAbility(u, 'Aroc')
-        call SetUnitAbilityLevel(u, 'Aroc', IMinBJ(R2I(totalLevel / 20), 5))
+        call UnitAddAbility(u, MULTISHOT_ABILITY_ID)
+        call SetUnitAbilityLevel(u, MULTISHOT_ABILITY_ID, IMinBJ(R2I(totalLevel / 20), 5))
     endfunction
 endlibrary

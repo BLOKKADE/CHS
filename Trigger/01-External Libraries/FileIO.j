@@ -300,10 +300,10 @@ library FileIO
                 // tooltips return the first level's value if the value hasn't
                 // been set. This way we don't need to edit any object editor data.
                 set File.AbilityList[0] = 'Amls'
-                set File.AbilityList[1] = 'Aroc'
+                set File.AbilityList[1] = MULTISHOT_ABILITY_ID
                 set File.AbilityList[2] = 'Amic'
                 set File.AbilityList[3] = 'Amil'
-                set File.AbilityList[4] = 'Aclf'
+                set File.AbilityList[4] = FOG_ABILITY_ID
                 set File.AbilityList[5] = 'Acmg'
                 set File.AbilityList[6] = 'Adef'
                 set File.AbilityList[7] = 'Adis'

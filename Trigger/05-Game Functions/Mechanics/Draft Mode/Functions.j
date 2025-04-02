@@ -106,6 +106,19 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         return floatingtext
     endfunction
 
+    function SetBuildingVisibleForPlayer takes player p, unit u, integer skin returns nothing
+        if p == GetLocalPlayer() then
+            call BlzSetUnitSkin(u, skin)
+        endif
+    endfunction
+
+    private function SetBuildingVisibleForOwningPlayers takes nothing returns nothing
+        local integer pid = GetPlayerId(GetEnumPlayer())
+
+        call SetBuildingVisibleForPlayer(GetEnumPlayer(), udg_Draft_DraftBuildings[pid], 'nbsm')
+        call SetBuildingVisibleForPlayer(GetEnumPlayer(), udg_Draft_UpgradeBuildings[pid], 'nbsm')
+    endfunction
+
     function CreateDraftBuildings takes nothing returns nothing
         if DraftInitialised == false then
             set DraftInitialised = true
@@ -114,6 +127,7 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', OffsetX, OffsetY, 0)
             set FloatingTextUpgrade = ShopText(OffsetX, OffsetY, "Upgrade abilities", 0, 255, 100)
             call ForForce(PlayersWithHero, function CreateDraftBuildingsLoop)
+            call ForForce(PlayersWithHero, function SetBuildingVisibleForOwningPlayers)
         endif
     endfunction
 

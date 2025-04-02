@@ -182,7 +182,7 @@ library PvpHelper requires RandomShit, StartFunction, UnitFilteringUtility, Voti
 
         // Validate. Hopefully should never happen.
         if (CountPlayersInForceBJ(team1) == 0 or CountPlayersInForceBJ(team2) == 0) then
-            call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: One of the forces are empty trying to start a duel")
+            call DisplayTimedTextToForce(GetPlayersAll(), 90, "|cfffd2727Duel Error|r: One of the forces is empty while trying to start a duel")
             return
         endif
 

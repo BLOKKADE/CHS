@@ -1,11 +1,11 @@
 library BookOfNecromancy initializer init requires RandomShit, CustomGameEvent, UnitItems
 
     private function OnRoundStart takes EventInfo eventInfo returns nothing
-        local integer count = GetUnitItemTypeCount(eventInfo.hero, 'I06J')
+        local integer count = GetUnitItemTypeCount(eventInfo.hero, BOOK_OF_NECROMANCY_ITEM_ID)
         local integer pid = GetPlayerId(eventInfo.p)
 
         if count > 0 then
-            call ElemFuncStart(eventInfo.hero, 'I06J')
+            call ElemFuncStart(eventInfo.hero, BOOK_OF_NECROMANCY_ITEM_ID)
             set SummonDamage[pid] = SummonDamage[pid] + count
             call DisplayTimedTextToPlayer(Player(pid), 0, 0, 2, "Summon Attack Bonus - [|cffffcc00Level " + I2S(SummonDamage[pid]) + "|r] - (|cff89ff52+" + I2S(SummonDamage[pid] * 20) + ")|r")
             set SummonArmor[pid] = SummonArmor[pid] + count

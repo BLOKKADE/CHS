@@ -1,8 +1,10 @@
 library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNames, Command, VotingResults, PvpRoundRobin
     //===========================================================================
     globals
-        Table ShowDmgText
-        Table ShowDmgTextAt
+        Table ShowDmgTextIn     // For incoming damage
+        Table ShowDmgTextOut    // For outgoing damage
+        Table ShowDmgTextInAt   // Threshold for incoming
+        Table ShowDmgTextOutAt  // Threshold for outgoing
     endglobals
 
     function ShowOtherDamageText takes unit source, unit target, real value, string damageType returns string
@@ -83,11 +85,12 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
                 call DisplayTimedTextToForce(duelGame.team2, 20, output)
             endif
         else
-            if ShowDmgText.boolean[DamageSourcePid] and Damage.index.damage > ShowDmgTextAt.integer[DamageSourcePid] then
+            // Show outgoing damage to source player
+            if ShowDmgTextOut.boolean[DamageSourcePid] and Damage.index.damage > ShowDmgTextOutAt.integer[DamageSourcePid] then
                 call DisplayTimedTextToPlayer(Player(DamageSourcePid), 0, 0, 20, output)
             endif
-
-            if ShowDmgText.boolean[DamageTargetPid] and Damage.index.damage > ShowDmgTextAt.integer[DamageTargetPid] then
+            // Show incoming damage to target player
+            if ShowDmgTextIn.boolean[DamageTargetPid] and Damage.index.damage > ShowDmgTextInAt.integer[DamageTargetPid] then
                 call DisplayTimedTextToPlayer(Player(DamageTargetPid), 0, 0, 20, output)
             endif
         endif
@@ -95,28 +98,98 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
 
     //death = true shows for all players
     function ShowDamageText takes boolean death returns nothing
-        if (ShowDmgText.boolean[DamageSourcePid] and Damage.index.damage > ShowDmgTextAt.integer[DamageSourcePid]) or (ShowDmgText.boolean[DamageTargetPid] and Damage.index.damage > ShowDmgTextAt.integer[DamageTargetPid]) then
+        if (ShowDmgTextOut.boolean[DamageSourcePid] and Damage.index.damage > ShowDmgTextOutAt.integer[DamageSourcePid]) or /*
+        */ (ShowDmgTextIn.boolean[DamageTargetPid] and Damage.index.damage > ShowDmgTextInAt.integer[DamageTargetPid]) then
             call ShowLoggingText(death, DamageText(death))
         endif
     endfunction
 
     function ToggleDmgTxt takes Args args returns nothing
-        local integer limit = S2I(args[1])
         local integer pid = GetPlayerId(GetTriggerPlayer())
-        if ShowDmgText.boolean[pid] and limit == 0 then
-            set ShowDmgText.boolean[pid] = false
-            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|ccffdde31Disabled damage text|r")
-        else
-            set ShowDmgText.boolean[pid] = true
-            set ShowDmgTextAt.integer[pid] = limit
-            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|ccf61fd31Enabled damage text|r when damage instance is higher than " + I2S(limit))
+        local string cmd = args[0]
+        local integer limit = 0
+        local player p = GetTriggerPlayer()
+        local string incomingStatus
+        local string outgoingStatus
+        
+        if cmd == "dtc" then  // Damage text current command
+            // Set incoming status message
+            if ShowDmgTextIn.boolean[pid] then
+                set incomingStatus = "|ccf61fd31Enabled|r (threshold: " + I2S(ShowDmgTextInAt.integer[pid]) + ")"
+            else
+                set incomingStatus = "|ccffdde31Disabled|r"
+            endif
+            // Set outgoing status message
+            if ShowDmgTextOut.boolean[pid] then
+                set outgoingStatus = "|ccf61fd31Enabled|r (threshold: " + I2S(ShowDmgTextOutAt.integer[pid]) + ")"
+            else
+                set outgoingStatus = "|ccffdde31Disabled|r"
+            endif
+            // Display the current settings
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "Current Damage Text Settings:")
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "Incoming: " + incomingStatus)
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "Outgoing: " + outgoingStatus)
+        elseif cmd == "dti" or cmd == "dtin" or cmd == "dtt" then  // Incoming damage commands
+            if args.length > 1 then
+                set limit = S2I(args[1])
+            endif
+            if ShowDmgTextIn.boolean[pid] and limit == 0 then
+                set ShowDmgTextIn.boolean[pid] = false
+                call DisplayTimedTextToPlayer(p, 0, 0, 10, "|ccffdde31Disabled incoming damage text|r")
+            else
+                set ShowDmgTextIn.boolean[pid] = true
+                set ShowDmgTextInAt.integer[pid] = limit
+                call DisplayTimedTextToPlayer(p, 0, 0, 10, "|ccf61fd31Enabled incoming damage text|r when damage taken > " + I2S(limit))
+            endif
+        elseif cmd == "dto" or cmd == "dtout" or cmd == "dtd" then  // Outgoing damage commands
+            if args.length > 1 then
+                set limit = S2I(args[1])
+            endif
+            if ShowDmgTextOut.boolean[pid] and limit == 0 then
+                set ShowDmgTextOut.boolean[pid] = false
+                call DisplayTimedTextToPlayer(p, 0, 0, 10, "|ccffdde31Disabled outgoing damage text|r")
+            else
+                set ShowDmgTextOut.boolean[pid] = true
+                set ShowDmgTextOutAt.integer[pid] = limit
+                call DisplayTimedTextToPlayer(p, 0, 0, 10, "|ccf61fd31Enabled outgoing damage text|r when damage dealt > " + I2S(limit))
+            endif
+        else  // dt command enables/disables both
+            if args.length > 1 then
+                set limit = S2I(args[1])
+            endif
+            if ShowDmgTextIn.boolean[pid] and ShowDmgTextOut.boolean[pid] and limit == 0 then
+                set ShowDmgTextIn.boolean[pid] = false
+                set ShowDmgTextOut.boolean[pid] = false
+                call DisplayTimedTextToPlayer(p, 0, 0, 10, "|ccffdde31Disabled all damage text|r")
+            else
+                set ShowDmgTextIn.boolean[pid] = true
+                set ShowDmgTextOut.boolean[pid] = true
+                set ShowDmgTextInAt.integer[pid] = limit
+                set ShowDmgTextOutAt.integer[pid] = limit
+                call DisplayTimedTextToPlayer(p, 0, 0, 10, "|ccf61fd31Enabled all damage text|r when damage > " + I2S(limit))
+            endif
         endif
+        
+        set p = null
     endfunction
     
     //===========================================================================
     private function init takes nothing returns nothing
-        set ShowDmgText = Table.create()
-        set ShowDmgTextAt = Table.create()
-        call Command.create(CommandHandler.ToggleDmgTxt).name("DamageText").handles("damagetext").handles("dt").help("dt", "Toggles text display for damage taken by your hero. (can lag)")
+        set ShowDmgTextIn = Table.create()
+        set ShowDmgTextOut = Table.create()
+        set ShowDmgTextInAt = Table.create()
+        set ShowDmgTextOutAt = Table.create()
+        
+        // dt command (toggles both incoming and outgoing)
+        call Command.create(CommandHandler.ToggleDmgTxt).name("damagetext").handles("damagetext").handles("dt").help("dt", "Toggles text display for damage dealt and taken by your hero. (can lag). Optional threshold: -dt 1000")
+        
+        // dti command (toggles incoming damage)
+        call Command.create(CommandHandler.ToggleDmgTxt).name("damagetextincoming").handles("dti").handles("dtin").handles("dtt").help("dti", "Toggles text display for damage taken by your hero. (can lag). Optional threshold: -dti 1000")
+        
+        // dto command (toggles outgoing damage)
+        call Command.create(CommandHandler.ToggleDmgTxt).name("damagetextoutgoing").handles("dto").handles("dtout").handles("dtd").help("dto", "Toggles text display for damage dealt by your hero. (can lag). Optional threshold: -dto 1000")
+        
+        // dtc command (shows current damage text settings)
+        call Command.create(CommandHandler.ToggleDmgTxt).name("damagetextcurrent").handles("dtc").help("dtc", "Shows the current damage text settings for incoming and outgoing damage.")
     endfunction
 endlibrary

@@ -9,7 +9,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         integer RoundCreepChanceLastBreath = 0
         integer FireshieldChance = 0
         integer RoundCreepChanceCorrosiveSkin = 0 
-        integer RoundCreepChanceMulticast = 0
         integer RoundCreepChanceFastMagic = 0
         integer RoundCreepChanceImmortalAura = 0
         boolean wizardbaneDebug = false
@@ -54,12 +53,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
     
         if RoundCreepChanceHurlBoulder == 1 then
             set s = ConcatAbility(s, "Hurl Boulder")
-            call AddRoundAbility('A00W')
+            call AddRoundAbility(HURL_BOULDER_CREEP_ABILITY_ID)
         endif
     
         if RoundCreepChanceRejuv == 1 then
             set s = ConcatAbility(s, "Rejuvenation")
-            call AddRoundAbility('A00X')
+            call AddRoundAbility(REJUVENATION_CREEP_ABILITY_ID)
         endif
     
         if RoundCreepChanceBigBadV == 1 then
@@ -74,7 +73,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
     
         if RoundCreepChanceCritStrike == 1 then
             set s = ConcatAbility(s, "Critical Strike")
-            call AddRoundAbility('AOcr')
+            call AddRoundAbility(CRITICAL_STRIKE_ABILITY_ID)
         endif
     
         if RoundCreepChanceEvasion == 1 then
@@ -83,7 +82,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
     
         if RoundCreepChanceFaerieFire == 1 then
             set s = ConcatAbility(s, "Faerie Fire")
-            call AddRoundAbility('A016')
+            call AddRoundAbility(FAERIE_FIRE_CREEP_ABILITY_ID)
         endif
     
         if RoundCreepChanceLifesteal == 1 then
@@ -93,12 +92,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
     
         if RoundCreepChanceManaBurn == 1 then
             set s = ConcatAbility(s, "Mana Burn")
-            call AddRoundAbility('A00V')
+            call AddRoundAbility(MANA_BURN_CREEP_ABILITY_ID)
         endif
     
         if RoundCreepChanceShockwave == 1 then
             set s = ConcatAbility(s, "Shockwave")
-            call AddRoundAbility('A00U')
+            call AddRoundAbility(SHOCKWAVE_CREEP_ABILITY_ID)
         endif
     
         if RoundCreepChanceSlow == 1 then
@@ -113,62 +112,57 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
     
         if RoundCreepChanceThorns == 1 then
             set s = ConcatAbility(s, "Thorns Aura")
-            call AddRoundAbility('A08F')
+            call AddRoundAbility(THORNS_AURA_ABILITY_ID)
         endif
     
         if RoundCreepChanceThunderClap == 1 then
             set s = ConcatAbility(s, "Thunder Clap")
-            call AddRoundAbility('A01B')
+            call AddRoundAbility(THUNDER_CLAP_CREEP_ABILITY_ID)
         endif
     
         if RoundCreepChanceReflectAura == 1 then
             set s = ConcatAbility(s, "Reflection Aura")
-            call AddRoundAbility('A093')
+            call AddRoundAbility(REFLECTION_AUR_ABILITY_ID)
         endif
     
         if RoundCreepChanceWizardbane == 1 then
             set s = ConcatAbility(s, "Wizardbane Aura")
-            call AddRoundAbility('A088')
+            call AddRoundAbility(WIZARDBANE_AURA_ABILITY_ID)
         endif
     
         if RoundCreepChanceDrunkMaster == 1 then
             set s = ConcatAbility(s, "Drunken Master")
-            call AddRoundAbility('Acdb')
+            call AddRoundAbility(DRUNKEN_MASTER_ABILITY_ID)
         endif
     
         if RoundCreepChanceSlowAura == 1 then
             set s = ConcatAbility(s, "Slow Aura")
-            call AddRoundAbility('AOr2')
+            call AddRoundAbility(SLOW_AURA_ABILITY_ID)
         endif
     
         if RoundCreepChancePulverize == 1 then
             set s = ConcatAbility(s, "Pulverize")
-            call AddRoundAbility('Awar')
+            call AddRoundAbility(PULVERIZE_ABILITY_ID)
         endif
     
         if RoundCreepChanceLastBreath == 1 then
             set s = ConcatAbility(s, "Last Breath")
-            call AddRoundAbility('A05R')
+            call AddRoundAbility(LAST_BREATHS_ABILITY_ID)
         endif
     
         if RoundCreepChanceCorrosiveSkin == 1 then
             set s = ConcatAbility(s, "Corrosive Skin")
-            call AddRoundAbility('A00Q')
+            call AddRoundAbility(CORROSIVE_SKIN_ABILITY_ID)
         endif
-    
-        if RoundCreepChanceMulticast == 1 then
-            set s = ConcatAbility(s, "Multicast")
-            call AddRoundAbility('A04F')
-        endif
-    
+
         if RoundCreepChanceFastMagic == 1 then
             set s = ConcatAbility(s, "Fast Magic")
-            call AddRoundAbility('A03P')
+            call AddRoundAbility(FAST_MAGIC_ABILITY_ID)
         endif
 
         if RoundCreepChanceImmortalAura == 1 then
             set s = ConcatAbility(s, "Aura of Immortality")
-            call AddRoundAbility('A02L')
+            call AddRoundAbility(AURA_OF_IMMORTALITY_ABILITY_ID)
         endif
     
         if s == "" then
@@ -185,59 +179,54 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
     private function UnitAddNewAbilities takes unit u returns nothing
         if RoundCreepChanceCritStrike == 1 then
-            call SetUnitAbilityLevel(u, 'AOcr', IMinBJ(R2I(RoundNumber * 0.2), 30))
+            call SetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.2), 30))
         endif
     
         if RoundCreepChanceDrunkMaster == 1 then
-            call UnitAddAbility(u, 'Acdb')
-            call FuncEditParam('Acdb',u)
-            call SetUnitAbilityLevel(u, 'Acdb', IMinBJ(R2I(RoundNumber * 0.3), 30))
+            call UnitAddAbility(u, DRUNKEN_MASTER_ABILITY_ID)
+            call FuncEditParam(DRUNKEN_MASTER_ABILITY_ID,u)
+            call SetUnitAbilityLevel(u, DRUNKEN_MASTER_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.3), 30))
         endif
     
         if RoundCreepChanceReflectAura == 1 then
-            call UnitAddAbility(u, 'A093')
-            call SetUnitAbilityLevel(u, 'A093', IMinBJ(R2I(RoundNumber * 0.4), 30))
+            call UnitAddAbility(u, REFLECTION_AUR_ABILITY_ID)
+            call SetUnitAbilityLevel(u, REFLECTION_AUR_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
     
         if RoundCreepChanceWizardbane == 1 then
-            call UnitAddAbility(u, 'A088')
-            call SetUnitAbilityLevel(u, 'A088', IMinBJ(R2I(RoundNumber * 0.4), 30))
+            call UnitAddAbility(u, WIZARDBANE_AURA_ABILITY_ID)
+            call SetUnitAbilityLevel(u, WIZARDBANE_AURA_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
     
         if RoundCreepChanceSlowAura == 1 then
-            call UnitAddAbility(u, 'AOr2')
-            call SetUnitAbilityLevel(u, 'AOr2', IMinBJ(R2I(RoundNumber * 0.75), 30))
+            call UnitAddAbility(u, SLOW_AURA_ABILITY_ID)
+            call SetUnitAbilityLevel(u, SLOW_AURA_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.75), 30))
         endif
     
         if RoundCreepChancePulverize == 1 then
-            call UnitAddAbility(u, 'Awar')
-            call SetUnitAbilityLevel(u, 'Awar', IMinBJ(R2I(RoundNumber * 0.4), 30))
+            call UnitAddAbility(u, PULVERIZE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, PULVERIZE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
     
         if RoundCreepChanceLastBreath == 1 then
-            call UnitAddAbility(u, 'A05R')
-            call FuncEditParam('A05R', u)
-            call SetUnitAbilityLevel(u, 'A05R', IMinBJ(R2I(RoundNumber * 0.2), 30))
+            call UnitAddAbility(u, LAST_BREATHS_ABILITY_ID)
+            call FuncEditParam(LAST_BREATHS_ABILITY_ID, u)
+            call SetUnitAbilityLevel(u, LAST_BREATHS_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.2), 30))
         endif
     
         if RoundCreepChanceCorrosiveSkin == 1 then
-            call UnitAddAbility(u, 'A00Q')
-            call SetUnitAbilityLevel(u, 'A00Q', IMinBJ(R2I(RoundNumber * 0.6), 30))
-        endif
-    
-        if RoundCreepChanceMulticast == 1 then
-            call UnitAddAbility(u, 'A04F')
-            call SetUnitAbilityLevel(u, 'A04F', IMinBJ(R2I(RoundNumber * 0.5), 30))
+            call UnitAddAbility(u, CORROSIVE_SKIN_ABILITY_ID)
+            call SetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
     
         if RoundCreepChanceFastMagic == 1 then
-            call UnitAddAbility(u, 'A03P')
-            call SetUnitAbilityLevel(u, 'A03P', IMinBJ(R2I(RoundNumber * 0.6), 30))
+            call UnitAddAbility(u, FAST_MAGIC_ABILITY_ID)
+            call SetUnitAbilityLevel(u, FAST_MAGIC_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
 
         if RoundCreepChanceImmortalAura == 1 then
-            call UnitAddAbility(u, 'A02L')
-            call SetUnitAbilityLevel(u, 'A02L', IMinBJ(R2I(RoundNumber * 0.6), 30))
+            call UnitAddAbility(u, AURA_OF_IMMORTALITY_ABILITY_ID)
+            call SetUnitAbilityLevel(u, AURA_OF_IMMORTALITY_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
     endfunction
 
@@ -354,7 +343,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceCorrosiveSkin = GetRandomInt(1, newAbilChance)
         endif
         if RoundNumber >= 35 then
-            set RoundCreepChanceMulticast = GetRandomInt(1, newAbilChance + 10)
             set RoundCreepChanceFastMagic = GetRandomInt(1, newAbilChance + 6)
         endif
     

@@ -214,6 +214,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             //set DummyInfo[GetUnitId(this.dummy)].boolean[3] = false
             call GetUnitAbilMods(this.dummy).destroy()
             call BlzSetUnitFacingEx(this.dummy, 0)
+            call ResetUnitCustomState(this.dummy)
             call RecycleDummy(this.dummy) 
             //call RemoveUnit(this.dummy)
             //set this.callback = null

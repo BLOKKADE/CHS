@@ -1,7 +1,7 @@
 
 $JassFolder = "..\..\Trigger"
-$CommonJ = ".\JassHelper\common.j"
-$BlizzardJ = ".\JassHelper\blizzard.j"
+$CommonJ = ".\JassHelper\common.jh"
+$BlizzardJ = ".\JassHelper\blizzard.jh"
 $OutputJ = "war3map.j"
 $logs1 = ".\logs\currentmapscript.j"
 $logs2 = ".\logs\inputwar3map.j"

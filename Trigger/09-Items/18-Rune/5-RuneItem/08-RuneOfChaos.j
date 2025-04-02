@@ -25,10 +25,11 @@ library ChaosRune initializer init requires ChaosMagic
         local real power = GLOB_RUNE_POWER 
         local integer lvl = 10 + R2I((power - 1)* 10)
         local integer lp = 0
+        local integer pid = GetPlayerId(GetOwningPlayer(u))
 
         if lvl > 30 then
-            set lp = (lp + lvl - 30) / 2
-            set RuneOfChaosMagicPower.real[GetPlayerId(GetOwningPlayer(u))] = lp * 10
+            set lp = (lvl - 30) / 2
+            set RuneOfChaosMagicPower.real[pid] = lp * 10
             set lvl = 30
         endif
 
@@ -39,7 +40,7 @@ library ChaosRune initializer init requires ChaosMagic
         call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
         call CastRuneOfChaos(BlzGroupUnitAt(ENUM_GROUP, GetRandomInt(0, BlzGroupGetSize(ENUM_GROUP))))
 
-        set RuneOfChaosMagicPower.real[GetHandleId(u)] = 0
+        set RuneOfChaosMagicPower.real[pid] = 0
 
         set u = null
         return false

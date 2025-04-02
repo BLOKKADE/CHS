@@ -6,10 +6,10 @@ library SuddenDeathCreepTimer initializer init requires RandomShit
         if (GetUnitTypeId(currentUnit) != dummyId) then
             call SetUnitMoveSpeed(currentUnit, GetUnitMoveSpeed(currentUnit) + 25.00)
 
-            if (GetUnitAbilityLevel(currentUnit, 'AOcr') == 0) then
-                call UnitAddAbility(currentUnit, 'AOcr')
-            elseif (GetUnitAbilityLevel(currentUnit, 'AOcr') < 10) then
-                call SetUnitAbilityLevel(currentUnit, 'AOcr', 10)
+            if (GetUnitAbilityLevel(currentUnit, CRITICAL_STRIKE_ABILITY_ID) == 0) then
+                call UnitAddAbility(currentUnit, CRITICAL_STRIKE_ABILITY_ID)
+            elseif (GetUnitAbilityLevel(currentUnit, CRITICAL_STRIKE_ABILITY_ID) < 10) then
+                call SetUnitAbilityLevel(currentUnit, CRITICAL_STRIKE_ABILITY_ID, 10)
             endif
         endif
 
@@ -22,8 +22,8 @@ library SuddenDeathCreepTimer initializer init requires RandomShit
 
         if (GetUnitTypeId(currentUnit) != dummyId) then
             call UnitAddAbility(currentUnit, 'Atru')
-            call UnitAddAbility(currentUnit, 'A00W')
-            call UnitAddAbility(currentUnit, 'A01B')
+            call UnitAddAbility(currentUnit, HURL_BOULDER_CREEP_ABILITY_ID)
+            call UnitAddAbility(currentUnit, THUNDER_CLAP_CREEP_ABILITY_ID)
 
             if (GetUnitBonus(currentUnit, BONUS_DAMAGE) < 1000000) then
                 if (GetUnitBonus(currentUnit, BONUS_DAMAGE) == 0) then

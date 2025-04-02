@@ -51,7 +51,7 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
                 set count = count + 2
             endif
 
-            if GetUnitAbilityLevel(this.target, 'Bapl') > 0 then
+            if GetUnitAbilityLevel(this.target, DISEASE_BUFF_ID) > 0 then
                 //call BJDebugMsg("bapl buff")
                 set count = count + 1
             endif

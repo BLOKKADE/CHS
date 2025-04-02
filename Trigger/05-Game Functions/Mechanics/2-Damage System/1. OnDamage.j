@@ -33,13 +33,17 @@ scope OnDamage initializer init
             endif
 
             //Seer
-            if DamageSourceTypeId == SEER_UNIT_ID and GetUnitAbilityLevel(u, 'A09Q') == 0 then
-                if IsPhysDamage() then
-                    set Damage.index.damageType = DAMAGE_TYPE_MAGIC
-                elseif IsMagicDamage() then
-                    set Damage.index.damageType = DAMAGE_TYPE_NORMAL
-                endif
+        
+            if DamageSourceTypeId == SEER_UNIT_ID and Damage.index.isAttack then
+             set Damage.index.damageType = DAMAGE_TYPE_MAGIC
             endif
+            //if DamageSourceTypeId == SEER_UNIT_ID and GetUnitAbilityLevel(u, 'A09Q') == 0 then
+            //    if IsPhysDamage() then
+             //       set Damage.index.damageType = DAMAGE_TYPE_MAGIC
+             //   elseif IsMagicDamage() then
+             //       set Damage.index.damageType = DAMAGE_TYPE_NORMAL
+             //   endif
+           // endif
             
         endif
     endfunction

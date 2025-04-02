@@ -116,6 +116,18 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * (0.1 * i2)))
         endif
 
+        //Brilliance Aura
+        set i2 = GetUnitAbilityLevel(hero, BRILLIANCE_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call AddUnitCustomState(u, BONUS_MAGICPOW, (i2))
+        endif
+
+        //Devotion Aura
+        set i2 = GetUnitAbilityLevel(hero, DEVOTION_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call AddUnitCustomState(u, BONUS_MAGICRES, (i2))
+        endif
+
         //Banner of Many
         if UnitHasItemType(hero, BANNER_OF_MANY_ITEM_ID) then
 
@@ -156,11 +168,25 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         if GetUnitTypeId(u) == ROCK_GOLEM_UNIT_ID then
             call AddUnitCustomState(u, BONUS_BLOCK, 50)
             call AddUnitCustomState(u, BONUS_MAGICRES, 15)
+            call UnitAddAbility(u, ABSOLUTE_EARTH_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_EARTH_ABILITY_ID,false,true)
+            
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_EARTH_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_EARTH_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
         endif
 
         //Medivh
         if GetUnitTypeId(u) == MEDIVH_UNIT_ID then
             call AddUnitCustomState(u, BONUS_MAGICPOW, 15)
+        endif
+
+        //Mortar Team
+        if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
+            call AddUnitCustomState(u, BONUS_MAGICRES, 15)
         endif
 
         //Pit Lord
@@ -219,11 +245,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
             call CreateSpellList(u, SORCERER_UNIT_ID, SpellListFilter.SorcerSpellListFilter)
             set SorcererAmount[hid] = 1
-        endif
-
-        //Mortar Team
-        if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_PHYSPOW, 2)  
         endif
 
         //Set base luck

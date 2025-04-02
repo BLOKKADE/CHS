@@ -27,8 +27,8 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         local group deadPlayerUnits
         local unit shadeUnit
 
-        if GetPlayerNameColour(deadPlayer)== GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) then
-            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by themself!")
+        if deadPlayer == GetOwningPlayer(GetKillingUnit()) then
+            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by themselves!")
         else
             call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " was defeated by |r" + GetPlayerNameColour(GetOwningPlayer(GetKillingUnit())) + "!")
         endif
@@ -51,7 +51,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 // Set the status of their death in the BR
                 call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
 
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has no lives left. Will not respawn.|r")
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has no lives left and will not respawn.|r")
 
                 // Set the status of their death in the BR
                 call StopRectLeaveDetection(GetHandleId(deadHero))
