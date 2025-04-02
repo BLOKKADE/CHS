@@ -1,7 +1,7 @@
 library MultiBonusCast requires RandomShit, AbilityData, CustomState
 
     function IsAbilityMulticastable takes integer abilId returns boolean
-        return abilId != RESET_TIME_ABILITY_ID and abilId != DEATH_AND_DECAY_ABILITY_ID
+        return abilId != RESET_TIME_ABILITY_ID and abilId != DEATH_AND_DECAY_ABILITY_ID and abilId != SAND_OF_TIME_ABILITY_ID
     endfunction
 
     function CanMulticast takes unit caster, integer abilId returns boolean

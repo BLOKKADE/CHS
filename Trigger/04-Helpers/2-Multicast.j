@@ -57,7 +57,9 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
             //call BJDebugMsg("cast")
             if dummy.activate() then
-                call SetUnitState(this.caster, UNIT_STATE_MANA, GetUnitState(this.caster, UNIT_STATE_MANA) - this.manaCost)
+                if GetUnitTypeId(this.caster) != TIME_WARRIOR_UNIT_ID then
+                    call SetUnitState(this.caster, UNIT_STATE_MANA, GetUnitState(this.caster, UNIT_STATE_MANA) - this.manaCost)
+                endif
             else
                 //call BJDebugMsg("fail")
             endif

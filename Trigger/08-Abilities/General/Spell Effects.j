@@ -346,7 +346,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call ActivateXesilManaCostNegation(caster, castAbilId, abilLvl)
                     endif
 
-                    call SetCooldown(caster, abilId, true) 
+                    call SetCooldown(caster, abilId, false) 
                 endif
             endif
         endif

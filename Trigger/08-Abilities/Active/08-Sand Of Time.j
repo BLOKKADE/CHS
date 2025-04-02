@@ -22,8 +22,7 @@ library SandOfTime requires RandomShit
         loop
             set abilId = BlzGetAbilityId(BlzGetUnitAbilityByIndex(hero, i))
             exitwhen abilId == 0
-
-            if BlzGetUnitAbilityCooldownRemaining(hero, abilId) != 0 and IsSpellResettable(abilId) then
+            if (not IsDummySpell(abilId)) and BlzGetUnitAbilityCooldownRemaining(hero, abilId) != 0 and IsSpellResettable(abilId) then
                 call ResetSpell(hero, abilId, cooldownReduction, IsSpellElement(hero, abilId, Element_Earth))
             endif
 

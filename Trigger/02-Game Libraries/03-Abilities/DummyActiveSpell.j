@@ -4,6 +4,7 @@ library DummySpell initializer init requires AbilityData, ListT
         integer DummySpell_PointInstant = 0
         integer DummySpell_Unit = 1
         integer DummySpell_Passive = 2
+        Table DummySpellIds
         HashTable DummySpellList
         //[unitid].
         HashTable HeroAvailableDummySpells
@@ -11,6 +12,10 @@ library DummySpell initializer init requires AbilityData, ListT
         HashTable UnitOriginalSpells
         //spell id = lvl of ability
     endglobals
+
+    function IsDummySpell takes integer dummyAbilId returns boolean
+        return DummySpellIds.boolean[dummyAbilId]
+    endfunction
 
     function HasDummySpell takes unit u, integer abilId returns boolean
         return UnitDummySpells[GetHandleId(u)].integer[abilId] != 0
@@ -180,6 +185,24 @@ library DummySpell initializer init requires AbilityData, ListT
         endif
     endfunction
 
+    private function AddDummySpellsToList takes integer listId returns nothing
+        local integer dummyAbilId
+        local integer max = 9
+        local integer i = 0
+
+        loop
+            set dummyAbilId = DummySpellList[listId].integer[i]
+
+            if dummyAbilId != 0 then
+                set DummySpellIds.boolean[dummyAbilId] = true
+            endif
+
+            set i = i + 1
+            exitwhen i > max
+        endloop
+
+    endfunction
+
     private function SetupDummySpellIds takes nothing returns nothing
         set DummySpellList[DummySpell_PointInstant][0] = ACTIVE_SPELL_DUMMY_0
         set DummySpellList[DummySpell_PointInstant][1] = ACTIVE_SPELL_DUMMY_1
@@ -213,6 +236,10 @@ library DummySpell initializer init requires AbilityData, ListT
         set DummySpellList[DummySpell_Passive][7] = 'A0EC'
         set DummySpellList[DummySpell_Passive][8] = 'A0ED'
         set DummySpellList[DummySpell_Passive][9] = 'A0EE'
+
+        call AddDummySpellsToList(DummySpell_PointInstant)
+        call AddDummySpellsToList(DummySpell_Unit)
+        call AddDummySpellsToList(DummySpell_Passive)
     endfunction
 
     private function init takes nothing returns nothing
@@ -220,6 +247,7 @@ library DummySpell initializer init requires AbilityData, ListT
         set HeroAvailableDummySpells = HashTable.create()
         set UnitDummySpells = HashTable.create()
         set UnitOriginalSpells = HashTable.create()
+        set DummySpellIds = Table.create()
 
         call SetupDummySpellIds()
     endfunction
