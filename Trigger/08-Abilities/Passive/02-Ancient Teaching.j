@@ -1,7 +1,7 @@
 library AncientTeaching initializer init requires Cooldown, StableSpells, ToggleSpell
 
     private function ResetAbility_A05U takes unit u,integer abilId returns nothing
-        if BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_TEACHING_ABILITY_ID) <= 0.001 and GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID) > 0 and IsSpellResettable(abilId) and IsSpellResettable(GetOriginalSpell(u, abilId)) then
+        if GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_TEACHING_ABILITY_ID) <= 0.001 and IsSpellResettable(abilId) and IsSpellResettable(GetOriginalSpell(u, abilId)) then
             //call BJDebugMsg("cooldown: " + R2S(BlzGetUnitAbilityCooldownRemaining(u, abilId)) + " new cooldown: " + R2S(BlzGetUnitAbilityCooldownRemaining(u, abilId) * (4 - 0.1 * I2R(GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID)))))
             call AbilStartCD(u, ANCIENT_TEACHING_ABILITY_ID, BlzGetUnitAbilityCooldownRemaining(u, abilId) * (4 - 0.1 * I2R(GetUnitAbilityLevel(u, ANCIENT_TEACHING_ABILITY_ID)))) 
             call BlzEndUnitAbilityCooldown(u, abilId)

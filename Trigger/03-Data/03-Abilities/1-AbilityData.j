@@ -1427,7 +1427,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_3, "carrionswarm")
         call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_4, "cloudoffog")
         call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_5, "controlmagic")
-        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_6, "creepthunderclap")
+        call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_6, "darkritual")
         call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_7, "corporealform")
         call SaveDummyAbilOrder(ACTIVE_SPELL_DUMMY_8, "corrosivebreath")
 

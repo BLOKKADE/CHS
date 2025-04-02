@@ -668,6 +668,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.4.3", true) // player leave bugfix?
         call AddGameVersion("CHS v2.5.0", true) // items, skills, hp/str change
         call AddGameVersion("CHS v2.5.1", false) // seer, items, skills
+        call AddGameVersion("CHS v2.5.2", false) // cooldown fixes
     endfunction
 
     private function init takes nothing returns nothing
