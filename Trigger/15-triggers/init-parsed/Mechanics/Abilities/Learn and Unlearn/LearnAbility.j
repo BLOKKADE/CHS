@@ -30,12 +30,18 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomGame
             endloop
             call SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold)
         endif
-        //call BJDebugMsg("u: " + GetUnitName(u) + " abil: " + GetObjectName(abil) + " lvl: " + I2S(i) + " new: " + B2S(new))
+        
         if new then
             call UnitAddAbility(u, abil)
             call SpellLearnedFunc(u, abil)
-            if AbilityMode == 1 then
+
+            call BJDebugMsg(I2S(AbilityMode))
+            if AbilityMode == 1 or AbilityMode == 2 then
                 call AddItemToUpgradeShop(GetPlayerId(p), GetItemTypeId(GetManipulatedItem()))
+            endif
+
+            if AbilityMode == 2 then
+                call DraftOnBuyAbility(GetPlayerId(p), abil)
             endif
         endif
         if i > 1 and i < 31 then

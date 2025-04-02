@@ -4,7 +4,7 @@
         {
             "label": "Create import file",
             "type": "shell",
-            "command": "./Build/CompileTriggerList/CreateImportFile.exe",
+            "command": "./Build/CompileTriggerList/CreateImportFile.py",
             "args": [
                 "${workspaceFolder}/Trigger",
                 "TriggerList.j"
@@ -20,10 +20,19 @@
             }
         },
         {
+            "label": "Compile vjass py",
+            "type": "shell",
+            "command": "./compile.py",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceFolder}/Build/CompileJass/"
+            }
+        },
+        {
             "label": "Build",
             "dependsOn": [
                 "Create import file",
-                "Compile vjass"
+                "Compile vjass py"
             ],
             "problemMatcher": [],
             "group": {
