@@ -45,6 +45,7 @@ library AbilityUpgradeShop requires DraftModeFunctions, RandomShit
         if UpgradeShopInitialized == false then
             set UpgradeShopInitialized = true
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', upgradeShopX, upgradeShopY, 0)
+            set draftBuilding2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', upgradeShopX, upgradeShopY, 0)
             //set FloatingTextUpgrade = ShopText(upgradeShopX, upgradeShopY, "Upgrade abilities", 0, 255, 100)
             //call SetTextTagVisibility(FloatingTextUpgrade, true)
             call ForForce( PlayersWithHero, function CreateUpgradeShop) 

@@ -11,7 +11,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
     private function KillPlayerUnit takes nothing returns nothing
         local unit currentUnit = GetEnumUnit()
 
-        if (not IsUnitType(currentUnit, UNIT_TYPE_HERO) and not DUMMIES.contains(GetUnitTypeId(currentUnit))) then
+        if not IsUnitExcluded(currentUnit) then
             call KillUnit(currentUnit)
         endif
 

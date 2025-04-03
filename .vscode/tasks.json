@@ -4,11 +4,14 @@
         {
             "label": "Create import file",
             "type": "shell",
-            "command": "./Build/CompileTriggerList/CreateImportFile.py",
+            "command": "./CreateImportFile.py",
             "args": [
                 "${workspaceFolder}/Trigger",
-                "TriggerList.j"
-            ]
+                "${workspaceFolder}/TriggerList.j"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Build/CompileTriggerList/"
+            },
         },
         {
             "label": "Compile vjass",

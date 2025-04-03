@@ -5,8 +5,8 @@ library FixDeleteUnit requires DummyOrder
             call FlushChildHashtable(DataUnitHT,GetHandleId(u))  
         endif
 
-        if IsHeroUnitId(GetUnitTypeId(GetTriggerUnit())) == false then
-            call FlushChildHashtable(HT,GetHandleId(GetTriggerUnit())) 
+        if IsHeroUnitId(GetUnitTypeId(u)) == false then
+            call FlushChildHashtable(HT,GetHandleId(u)) 
         endif
 
         if GetUnitTypeId(u) == PRIEST_1_UNIT_ID then

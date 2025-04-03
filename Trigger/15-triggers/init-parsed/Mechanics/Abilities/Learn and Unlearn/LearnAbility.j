@@ -35,7 +35,6 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomGame
             call UnitAddAbility(u, abil)
             call SpellLearnedFunc(u, abil)
 
-            call BJDebugMsg(I2S(AbilityMode))
             if AbilityMode == 1 or AbilityMode == 2 then
                 call AddItemToUpgradeShop(GetPlayerId(p), GetItemTypeId(GetManipulatedItem()))
             endif

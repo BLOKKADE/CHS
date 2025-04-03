@@ -7,7 +7,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
     private function RemoveUnitsInArena takes nothing returns boolean
         local unit currentUnit = GetFilterUnit()
 
-        if (not IsUnitType(currentUnit, UNIT_TYPE_HERO) and not DUMMIES.contains(GetUnitTypeId(currentUnit))) then
+        if (not IsUnitExcluded(currentUnit)) then
             call DeleteUnit(currentUnit)
         endif
 
