@@ -11,6 +11,8 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         HashTable DisplayedSpells
         unit circle1 = null
         unit circle2 = null
+        unit draftBuilding1 = null
+        unit draftBuilding2 = null
         boolean DraftInitialised = false
         texttag FloatingTextBuy = null
         texttag FloatingTextUpgrade = null
@@ -126,6 +128,8 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
             set FloatingTextBuy = ShopText(0 - OffsetX, OffsetY, "Buy abilities", 255, 100, 0)
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', OffsetX, OffsetY, 0)
             set FloatingTextUpgrade = ShopText(OffsetX, OffsetY, "Upgrade abilities", 0, 255, 100)
+            set draftBuilding1 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', 0 - OffsetX, OffsetY, 0)
+            set draftBuilding2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', OffsetX, OffsetY, 0)
             call ForForce(PlayersWithHero, function CreateDraftBuildingsLoop)
             call ForForce(PlayersWithHero, function SetBuildingVisibleForOwningPlayers)
         endif

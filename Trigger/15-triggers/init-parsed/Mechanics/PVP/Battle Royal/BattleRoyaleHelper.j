@@ -202,11 +202,13 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
             loop
                 if AbilityMode == 2 then
                     call ShowUnit(circle1, b)
+                    call ShowUnit(draftBuilding1, b)
                     call ShowUnit(udg_Draft_DraftBuildings[i], b)
                     call SetTextTagVisibility(FloatingTextBuy, b)
                 endif
                 
                 call ShowUnit(circle2, b)
+                call ShowUnit(draftBuilding2, b)
                 call ShowUnit(udg_Draft_UpgradeBuildings[i], b)
                 call SetTextTagVisibility(FloatingTextUpgrade, b)
                 set i = i + 1
