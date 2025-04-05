@@ -50,10 +50,6 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         set p = null
     endfunction
 
-    private function CreateFlyingSheep takes nothing returns nothing
-        //call CreateUnit(GetEnumPlayer(), FLYING_SHEEP_UNIT_ID, 0, 0, 0)
-    endfunction
-    
     private function HideScoreboardForPlayer takes nothing returns nothing
         call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(false)
     endfunction
@@ -69,7 +65,6 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call CreateShops()
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
-        call ForForce(GetPlayersAll(), function CreateFlyingSheep)
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
 
         call TriggerExecute(StartLevelTrigger)

@@ -162,6 +162,7 @@
 //! import "C:\CHS\CHS/Trigger\05-Game Functions\Mechanics\Unsorted\GetObjectElement.j"
 //! import "C:\CHS\CHS/Trigger\05-Game Functions\Mechanics\Unsorted\Glory.j"
 //! import "C:\CHS\CHS/Trigger\05-Game Functions\Mechanics\Unsorted\Hotkeys.j"
+//! import "C:\CHS\CHS/Trigger\05-Game Functions\Mechanics\Unsorted\ItemStock.j"
 //! import "C:\CHS\CHS/Trigger\05-Game Functions\Mechanics\Unsorted\PvpSuddenDraw.j"
 //! import "C:\CHS\CHS/Trigger\05-Game Functions\Mechanics\Unsorted\SuddenDeathTimerWindow.j"
 //! import "C:\CHS\CHS/Trigger\05-Game Functions\Unsorted\1-StartFunction.j"

@@ -1,6 +1,6 @@
 library Utility requires NewBonus, FixDeleteUnit
     function IsUnitExcluded takes unit u returns boolean
-        return IsUnitType(u, UNIT_TYPE_STRUCTURE) or IsUnitType(u, UNIT_TYPE_HERO) or DUMMIES.contains(GetUnitTypeId(u))
+        return IsUnitType(u, UNIT_TYPE_STRUCTURE) or IsUnitType(u, UNIT_TYPE_HERO) or DUMMIES.contains(GetUnitTypeId(u)) or GetUnitTypeId(u) == FLYING_SHEEP_UNIT_ID
     endfunction
 
     private function RemoveUnitsFilter takes nothing returns boolean

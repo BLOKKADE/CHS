@@ -1,4 +1,4 @@
-library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh, BRLivesFrame
+library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, StartFunction, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh, BRLivesFrame
 
     globals
         // Track player's lives during the BR
@@ -568,6 +568,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call TimerDialogDisplay(BattleRoyalTimerDialog, true)
 
         set WaitingForBattleRoyal = true
+        
+        call SetUpItemStocks(GetPlayersAll())
         
         call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function FinalizeBattleRoyaleSetup)
     endfunction

@@ -87,6 +87,18 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         call PlayerReadies(GetTriggerPlayer(), false)
     endfunction
 
+    private function SwapItemQ takes nothing returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+
+        call SwapItem(pid, 0)
+    endfunction
+
+    private function SwapItemW takes nothing returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+
+        call SwapItem(pid, 1)
+    endfunction
+
     private function ToggleRewards takes nothing returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
 
@@ -122,10 +134,13 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
     private function HotKeyInit takes nothing returns nothing
         local trigger shiftDownTrigger = CreateTrigger()
         local trigger shiftReleaseTrigger = CreateTrigger()
+        local trigger qTrigger = CreateTrigger()
+        local trigger wTrigger = CreateTrigger()
         local trigger eTrigger = CreateTrigger()
         local trigger rTrigger = CreateTrigger()
         local trigger tTrigger = CreateTrigger()
         local trigger bTrigger = CreateTrigger()
+        local trigger numTrigger = CreateTrigger()
         local trigger scoreboardToggleViewTrigger = CreateTrigger()
         local trigger scoreboardToggleHideTrigger = CreateTrigger()
         local integer i = 0
@@ -133,32 +148,35 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         set HoldShiftStructTable = Table.create()
 
         loop
+            call BlzTriggerRegisterPlayerKeyEvent(qTrigger, Player(i), OSKEY_Q, 2, true)
+            call BlzTriggerRegisterPlayerKeyEvent(wTrigger, Player(i), OSKEY_W, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(eTrigger, Player(i), OSKEY_E, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(rTrigger, Player(i), OSKEY_R, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(tTrigger, Player(i), OSKEY_T, 2, true)
-            call BlzTriggerRegisterPlayerKeyEvent(bTrigger, Player(i), OSKEY_B, 2, true)
             call BlzTriggerRegisterPlayerKeyEvent(shiftDownTrigger, Player(i), OSKEY_LSHIFT, 1, true)
             call BlzTriggerRegisterPlayerKeyEvent(shiftReleaseTrigger, Player(i), OSKEY_LSHIFT, 0, false)
             call BlzTriggerRegisterPlayerKeyEvent(shiftDownTrigger, Player(i), OSKEY_RSHIFT, 1, true)
             call BlzTriggerRegisterPlayerKeyEvent(shiftReleaseTrigger, Player(i), OSKEY_RSHIFT, 0, false)
             call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleViewTrigger, Player(i), OSKEY_TAB, 0, true)
             call BlzTriggerRegisterPlayerKeyEvent(scoreboardToggleHideTrigger, Player(i), OSKEY_TAB, 0, false)
+
             set i = i + 1
             exitwhen i == 8
         endloop
 
+        call TriggerAddAction(qTrigger, function SwapItemQ)
+        call TriggerAddAction(wTrigger, function SwapItemW)
         call TriggerAddAction(eTrigger, function SellAllItems)
         call TriggerAddAction(rTrigger, function ReadyPlayer)
         call TriggerAddAction(tTrigger, function ToggleRewards)
-        call TriggerAddAction(bTrigger, function ToggleBattleCreator)
         call TriggerAddAction(shiftDownTrigger, function ShiftDown)
         call TriggerAddAction(shiftReleaseTrigger, function ShiftRelease)
         call TriggerAddAction(scoreboardToggleViewTrigger, function ToggleViewScoreboard)
         call TriggerAddAction(scoreboardToggleHideTrigger, function ToggleHideScoreboard)
 
         // Cleanup
-        set eTrigger = null
-        set rTrigger = null
+        set qTrigger = null
+        set wTrigger = null
         set tTrigger = null
         set bTrigger = null
         set shiftDownTrigger = null
