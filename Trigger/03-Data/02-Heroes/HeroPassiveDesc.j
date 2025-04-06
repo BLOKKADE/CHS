@@ -248,7 +248,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Locust Swarm: +60 attack damage. (|cff68eef3Every 10 levels|r) +1 Locust summoned." )
         
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )
-        call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Magical Insight: The Hero's attacks deal |cffff00ffmagic damage|r. When dealing |cffff00ffmagic damage|r from [|cff00ffffCrit|r] or [|cffd45e29onhit|r] effects, there is a 20% chance to trigger abilities that normally activate on |cffff8080physical damage|r." )
+        call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Magical Insight: The Hero's attacks deal |cffff00ffmagic damage|r. When dealing |cffff00ffmagic damage|r, there is a 20% to trigger [|cff00ffffCrit|r] or [|cffd45e29onhit|r] effects that normally activate on |cffff8080physical damage|r." )
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Magical Insight: +0.33% chance." )
 
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )
