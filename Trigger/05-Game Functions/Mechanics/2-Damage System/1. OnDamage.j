@@ -147,9 +147,9 @@ scope OnDamage initializer init
         endif
 
         //Terrestrial Glaive
-        if GetUnitAbilMods(DamageSource).TerrestrialGlaiveDamage then
-            set Damage.index.damageType = DAMAGE_TYPE_NORMAL
-        endif
+       // if GetUnitAbilMods(DamageSource).TerrestrialGlaiveDamage then
+        //    set Damage.index.damageType = DAMAGE_TYPE_NORMAL
+        //endif
 
         //Scorched Earth
         if ScorchedEarthDummy.boolean[DamageSourceId] then

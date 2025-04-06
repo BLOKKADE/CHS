@@ -199,7 +199,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			if ev == EVENT_ITEM_PICKUP then
 				call CreateSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, SpellListFilter.TerrestrialGlaiveFilter)
 			endif
-			call AddUnitCustomState(u, BONUS_PHYSPOW, 30 * uniqueDiff)
+			call AddUnitCustomState(u, BONUS_MAGICPOW, 30 * uniqueDiff)
 
 			//Gladiator Helmet
 		elseif itemId == 'I07A' then
