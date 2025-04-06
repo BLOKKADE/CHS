@@ -92,7 +92,7 @@ scope ModifyDamageAfterArmor initializer init
         //Vampirism
         set r1 = GetUnitAbilityLevel(DamageSource,VAMPIRISM_ABILITY_ID)
         if r1 > 0 then
-            set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.02 )
+            set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.05 )
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
