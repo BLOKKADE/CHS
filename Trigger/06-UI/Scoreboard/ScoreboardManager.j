@@ -11,7 +11,8 @@ library ScoreboardManager
         constant integer PLAYER_STATUS_INDEX                    = 6
         constant integer PLAYER_DUELS_INDEX                     = 7
         constant integer PLAYER_ITEMS_START_INDEX               = 8
-        constant integer PLAYER_ABILITIES_START_INDEX           = 14
+        constant integer PLAYER_STORAGE_ITEMS_START_INDEX       = 14
+        constant integer PLAYER_ABILITIES_START_INDEX           = 16
 
         constant integer CACHING_BUFFER = 50 // Used as a separator in the caching arrays so we can use a single array for all players. This value just needs to be bigger than the amount of columns in the scoreboard
         string array CachedPlayerStrings // Strings for each player column. NOTE: Not the most useful caching, but it could help with performance to not have to update a framehandle
