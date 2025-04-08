@@ -172,8 +172,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2% base damage to all critical hits.")
         
         call InitHeroDesc(DARK_HUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNUnbroken.blp" )
-        call InitHeroDesc(DARK_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Void Bash: When the Hero damages an enemy it has a 20% chance to deal 50 bonus |cffff00ffmagical damage|r and stun it for 0.2 seconds. [|cff80ff80Luck|r]")
-        call InitHeroDesc(DARK_HUNTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Void Bash: +50 damage" )
+        call InitHeroDesc(DARK_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Void Bash: When the Hero damages an enemy, it has a 20% chance to deal 50 bonus |cffff00ffmagical damage|r and stun it for 0.2 seconds, after which the target becomes immune to the stun for 0.4 seconds. [|cff80ff80Luck|r]")
+        call InitHeroDesc(DARK_HUNTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Void Bash: +50 damage. +0.01 second stun duration. +0.01 second target stun immunity" )
                 
         call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDoomGuard.blp" )
         call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Hellfire: Deals |cffff00ffmagic damage|r per second to a random nearby enemy for 8 seconds. 1 second cooldown. [|cff96ffffStable|r]")
