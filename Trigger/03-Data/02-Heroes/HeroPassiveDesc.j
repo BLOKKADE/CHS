@@ -200,7 +200,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
 
         call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCentaurArcher.blp" )
-        call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus damage + 6% of the targets total hit points once every 2 seconds. [|cff00ffffCrit|r]")
+        call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Horsepower: Attacks deal 100% bonus damage + 6% of the target's total hit points, after which the target becomes immune for 2 seconds. [|cff00ffffCrit|r]")
         call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Horsepower: +5% damage." )
 
         call InitHeroDesc(OGRE_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOgre.blp" )
