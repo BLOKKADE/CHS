@@ -422,7 +422,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
                 set abilIcon = BlzGetAbilityIcon(abilId)
 				
 				if selectedUnitPid == 11 then
-					set abilLevel = GetUnitAbilityLevel(SelectedUnit[selectedUnitPid], abilId)
+					set abilLevel = GetUnitAbilityLevel(SelectedUnit[pid], abilId)
 				else
 					set abilLevel = GetUnitAbilityLevel(PlayerHeroes[selectedUnitPid], abilId)
 				endif
@@ -441,7 +441,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 				endif
             else
 				if (GetLocalPlayer() == p) then
-                	call BlzFrameSetVisible(ButtonParentId[100 + i], false)
+					call BlzFrameSetVisible(ButtonParentId[100 + i], false)
 					call BlzFrameSetVisible(AbilityButtonParentId[100 + i], false)
 				endif
             endif
