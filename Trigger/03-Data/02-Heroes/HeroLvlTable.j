@@ -133,6 +133,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(RANGER_UNIT_ID, 0, "|cffe7544aBase Crit bonus|r: ,0,%%")
 
         call SetBonusStr(DARK_HUNTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
+        call SetBonusStr(DARK_HUNTER_UNIT_ID, 1, "|cffd6e049Stun duration|r: ,0,")
+        call SetBonusStr(DARK_HUNTER_UNIT_ID, 2, "|cff4daed4Stun immunity|r: ,0,")
 
         call SetBonusStr(DOOM_GUARD_UNIT_ID, 0, "|cffd6e049Damage per second|r: ,0,")
 
