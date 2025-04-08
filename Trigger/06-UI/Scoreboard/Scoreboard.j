@@ -143,15 +143,27 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             set value = value + offset + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ICON_SPACING)
         endif
 
+        // Top storage item
+        if (CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX) then
+            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
+            set value = value + offset + ((CurrentColumnIndex - PLAYER_STORAGE_ITEMS_START_INDEX) * ICON_WIDTH) + ((CurrentColumnIndex - PLAYER_STORAGE_ITEMS_START_INDEX) * ABILITY_ICON_SPACING)
+        endif
+
+        // Bottom storage item
+        if (CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX + 1) then
+            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
+            set value = value + offset + ((CurrentColumnIndex - (PLAYER_STORAGE_ITEMS_START_INDEX + 1)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_STORAGE_ITEMS_START_INDEX + 1)) * ICON_SPACING)
+        endif
+
         // Top 10 row abilities
         if (CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
-            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
+            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 5) + (ICON_SPACING * 3) // Item and buffer offset
             set value = value + offset + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ICON_WIDTH) + ((CurrentColumnIndex - PLAYER_ABILITIES_START_INDEX) * ABILITY_ICON_SPACING)
         endif
 
         // Bottom 10 row absolutes
         if (CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
-            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
+            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 5) + (ICON_SPACING * 3) // Item and buffer offset
             set value = value + offset + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_ABILITIES_START_INDEX + 10)) * ABILITY_ICON_SPACING)
         endif
 
@@ -182,12 +194,12 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         endif
 
         // Player name, top row player stats icon, player hero icon, item icons, or ability icons
-        if (CurrentColumnIndex == PLAYER_NAME_INDEX or CurrentColumnIndex == PLAYER_STATS_INDEX or CurrentColumnIndex == PLAYER_HERO_INDEX or CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2) or CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
+        if (CurrentColumnIndex == PLAYER_NAME_INDEX or CurrentColumnIndex == PLAYER_STATS_INDEX or CurrentColumnIndex == PLAYER_HERO_INDEX or CurrentColumnIndex >= PLAYER_ITEMS_START_INDEX and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 2) or CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX or CurrentColumnIndex >= PLAYER_ABILITIES_START_INDEX and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 9)) then
             set value = value + offset
         endif
 
         // Bottom row player ready status, player element count icon, item icons, or ability icons
-        if (CurrentColumnIndex == PLAYER_READY_STATUS_INDEX or CurrentColumnIndex == PLAYER_ELEMENT_COUNT_INDEX or CurrentColumnIndex >= (PLAYER_ITEMS_START_INDEX + 3) and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 5) or CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
+        if (CurrentColumnIndex == PLAYER_READY_STATUS_INDEX or CurrentColumnIndex == PLAYER_ELEMENT_COUNT_INDEX or CurrentColumnIndex >= (PLAYER_ITEMS_START_INDEX + 3) and CurrentColumnIndex <= (PLAYER_ITEMS_START_INDEX + 5) or CurrentColumnIndex == (PLAYER_STORAGE_ITEMS_START_INDEX + 1) or CurrentColumnIndex >= (PLAYER_ABILITIES_START_INDEX + 10) and CurrentColumnIndex <= (PLAYER_ABILITIES_START_INDEX + 19)) then
             set value = value - offset
         endif
 
@@ -305,12 +317,42 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set playerNameTextFrameHandle = null
     endfunction
 
+    private function UpdatePlayerItem takes item currentItem, integer itemIndex, integer playerId returns nothing
+        local integer currentItemTypeId
+
+        if (currentItem != null) then
+            set currentItemTypeId = GetItemTypeId(currentItem)
+
+            // Only update the data if it changed
+            if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemIndex] != currentItemTypeId) then
+                set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemIndex] = currentItemTypeId
+
+                // Display the icon
+                call CreateIcon(BlzGetItemIconPath(currentItem), playerId)
+
+                // Cache the tooltip information about the item
+                set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
+                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0)
+            endif
+        else
+            // Hide the icon if something was there
+            if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemIndex] != -1) then
+                call CreateIcon(null, playerId)
+            endif
+
+            // Wipe the tooltip information and itemId
+            set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
+            set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
+            set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemIndex] = -1
+        endif
+    endfunction
+
     private function UpdatePlayerItems takes player currentPlayer returns nothing
         local integer itemSlotIndex = 0
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId]
         local item currentItem
-        local integer currentItemTypeId
+        local unit storageUnit
 
         if (playerHero != null) then
             loop
@@ -318,40 +360,43 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
                 set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
 
-                if (currentItem != null) then
-                    set currentItemTypeId = GetItemTypeId(currentItem)
-
-                    // Only update the data if it changed
-                    if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != currentItemTypeId) then
-                        set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = currentItemTypeId
-
-                        // Display the icon
-                        call CreateIcon(BlzGetItemIconPath(currentItem), playerId)
-
-                        // Cache the tooltip information about the item
-                        set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
-                        set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0)
-                    endif
-                else
-                    // Hide the icon if something was there
-                    if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] != -1) then
-                        call CreateIcon(null, playerId)
-                    endif
-
-                    // Wipe the tooltip information and itemId
-                    set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
-                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
-                    set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemSlotIndex] = -1
-                endif
+                call UpdatePlayerItem(currentItem, itemSlotIndex, playerId)
 
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
             endloop
+
+            set storageUnit = GetItemStock(playerId)
+
+            // Storage unit actually exists
+            if (storageUnit != null) then
+                // Storage item 1
+                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 0), itemSlotIndex, playerId)
+                set CurrentColumnIndex = CurrentColumnIndex + 1
+                set itemSlotIndex = itemSlotIndex + 1
+
+                // Storage item 2
+                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 1), itemSlotIndex, playerId)
+                set CurrentColumnIndex = CurrentColumnIndex + 1
+                set itemSlotIndex = itemSlotIndex + 1
+            // Storage unit doesn't exist
+            else
+                // Storage item 1
+                call UpdatePlayerItem(null, itemSlotIndex, playerId)
+                set CurrentColumnIndex = CurrentColumnIndex + 1
+                set itemSlotIndex = itemSlotIndex + 1
+
+                // Storage item 2
+                call UpdatePlayerItem(null, itemSlotIndex, playerId)
+                set CurrentColumnIndex = CurrentColumnIndex + 1
+                set itemSlotIndex = itemSlotIndex + 1
+            endif
         endif
 
         // Cleanup
         set playerHero = null
         set currentItem = null
+        set storageUnit = null
     endfunction
 
     private function UpdatePlayerAbilities takes player currentPlayer returns nothing
@@ -609,7 +654,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Compute the main scoreboard box
         // Width - Main frame margins, all icon widths, all icon spacings
-        set mainFrameBottomRightX = MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (16 * ICON_WIDTH) + (5 * ICON_SPACING) + (9 * ABILITY_ICON_SPACING)
+        set mainFrameBottomRightX = MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (17 * ICON_WIDTH) + (6 * ICON_SPACING) + (9 * ABILITY_ICON_SPACING)
         // Height - Compute the same y coordinate like normal, but use the top row offset. Then add the credits height, and main frame margin
         set mainFrameBottomRightY = MAIN_FRAME_TOP_LEFT_Y - MAIN_FRAME_Y_TOP_MARGIN - TEXT_HEIGHT - (2 * ICON_WIDTH * CurrentRowIndex) - (ROW_SPACING * CurrentRowIndex) + ICON_WIDTH + ROW_SPACING - CREDITS_HEIGHT - MAIN_FRAME_Y_BOTTOM_MARGIN + (ICON_WIDTH / 2) + (ICON_SPACING / 2)
 
@@ -926,7 +971,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         call BlzFrameSetText(ScoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescription) 
         call BlzFrameSetAllPoints(ScoreboardGameDescriptionTextFrameHandle, ScoreboardGameDescriptionFrameHandle)
 
-        call BlzFrameSetAbsPoint(ScoreboardBrTimesFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (16 * ICON_WIDTH) + (5 * ICON_SPACING) + (9 * ABILITY_ICON_SPACING), MAIN_FRAME_TOP_LEFT_Y - 0.04 - BlzFrameGetHeight(ScoreboardGameDescriptionFrameHandle)) // Move it under the game description
+        call BlzFrameSetAbsPoint(ScoreboardBrTimesFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X + (2 * MAIN_FRAME_X_MARGIN) + PLAYER_NAME_WIDTH + PLAYER_DUELS_WIDTH + (17 * ICON_WIDTH) + (6 * ICON_SPACING) + (9 * ABILITY_ICON_SPACING), MAIN_FRAME_TOP_LEFT_Y - 0.04 - BlzFrameGetHeight(ScoreboardGameDescriptionFrameHandle)) // Move it under the game description
 
         // Start at the first player row index
         set CurrentRowIndex = 1
