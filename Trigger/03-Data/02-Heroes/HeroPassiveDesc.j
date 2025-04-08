@@ -73,8 +73,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(MAULER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Lightbringer: +1 point towards [|cffd2d2d2Light|r].")
     
         call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroBloodElfPrince.blp" )
-        call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 60 intelligence")
-        call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +7 intelligence." )
+        call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mana Lifeforce: Gains 1 magic power per 60 intelligence.")
+        call InitHeroDesc(BLOOD_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Mana Lifeforce: Requires 3 less intelligence." )
         
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp" )
         call InitHeroDesc(MORTAR_TEAM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mortar Might: Increases physical power of the Hero and its summons, but also prevents [|cff00ffffCrit|r] damage.")

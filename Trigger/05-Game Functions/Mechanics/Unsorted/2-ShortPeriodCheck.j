@@ -155,8 +155,9 @@ scope ShortPeriodCheck initializer init
 
             //Blood Elf Mage
             if unitTypeId == BLOOD_MAGE_UNIT_ID then
+                set r1 = 60 - (3 * R2I((GetHeroLevel(u) - ModuloInteger(GetHeroLevel(u), 30)) / 30))
                 set i1 = GetHeroInt(u, true)
-                set i1 = R2I((i1 - ModuloInteger(i1, 60)) / 60)
+                set i1 = R2I((i1 - ModuloInteger(i1, R2I(r1))) / r1)
                 set i2 = LoadInteger(DataUnitHT, hid, 542)
                 if i1 != i2 then
                     call AddUnitCustomState(u, BONUS_MAGICPOW, 0 - i2)

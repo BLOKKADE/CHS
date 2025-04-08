@@ -69,8 +69,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             endloop
 
         elseif uid == BLOOD_MAGE_UNIT_ID then  
-            call UpdateBonus(u, 0, (levelsGained * 7))
-            call SetHeroInt(u, GetHeroInt(u, false)+ (7 * levelsGained), false) 
+            call SetBonus(u, 0, 60 - (3 * R2I((heroLevel - ModuloInteger(heroLevel, 30)) / 30)))
             //call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (levelsGained * 250))
             
         elseif uid == MORTAR_TEAM_UNIT_ID then  

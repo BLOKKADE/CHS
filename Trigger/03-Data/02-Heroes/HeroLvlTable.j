@@ -59,7 +59,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(MAULER_UNIT_ID, 0, "|cffe7544aLight bonus|r: ,0,")
 
-        call SetBonusStr(BLOOD_MAGE_UNIT_ID, 0, "|cffe7544aBonus Intelligence|r: ,0,")
+        call SetBonusStr(BLOOD_MAGE_UNIT_ID, 0, "|cffe7544aIntelligence needed for 1 magic power|r: ,0,")
 
         call SetBonusStr(MORTAR_TEAM_UNIT_ID, 0, "|cffe7544aDamage bonus|r: ,0,%%")
 
