@@ -407,7 +407,7 @@ scope ModifyDamageAfterArmor initializer init
             if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                 set r1 = GetHeroLevel(DamageSource) * 50
                 set r2 = DarkHunterStun.real[DamageSourceId]
-                if CheckUnitHitCooldown(DamageTargetId, DARK_HUNTER_UNIT_ID, r2 + 0.2) then
+                if CheckUnitHitCooldown(DamageTargetId, DARK_HUNTER_UNIT_ID, r2 + 0.4) then
                     call ApplyDarkHunterStun(DamageSource, DamageTarget, r1, r2)
                 endif
             endif
