@@ -19,6 +19,7 @@
 //! import "C:\CHS\CHS/Trigger\01-External Libraries\StringFunctions.j"
 //! import "C:\CHS\CHS/Trigger\01-External Libraries\StringHashEx.j"
 //! import "C:\CHS\CHS/Trigger\01-External Libraries\T32.j"
+//! import "C:\CHS\CHS/Trigger\01-External Libraries\table5BC.j"
 //! import "C:\CHS\CHS/Trigger\01-External Libraries\Terrain_Pathability.j"
 //! import "C:\CHS\CHS/Trigger\01-External Libraries\TimerUtils.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\01-Generic\CustomGameEvent.j"
