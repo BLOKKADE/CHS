@@ -474,8 +474,8 @@ scope ModifyDamageBeforeArmor initializer init
         //Ursa Warrior
         if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)
-            call TempAbil.create(DamageTarget, 'A08O', 3)
-            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, URSA_WARRIOR_UNIT_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1).start()
+            call TempAbil.create(DamageTarget, 'A08O', 2)
+            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 2, 0, true, BLEED_BUFF_ID, URSA_WARRIOR_UNIT_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 20, 1).start()
         endif
 
         //Pvp Bonus

@@ -156,7 +156,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mysterious Sorcery: 0.2 seconds cooldown reduction. (|cff68eef3Every 35 levels|r) +1 spell." )
                     
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp" )
-        call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bleed: Every time it attacks it causes enemies to bleed for 3 seconds, dealing 30% of its attack in |cffff8080physical damage|r per second.")
+        call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bleed: Every time it attacks it causes enemies to bleed for 2 seconds, dealing 30% of its attack in |cffff8080physical damage|r per second. Stacks up to 20 times.")
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +10 attack damage." )
                             
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFleshGolem.blp" )
