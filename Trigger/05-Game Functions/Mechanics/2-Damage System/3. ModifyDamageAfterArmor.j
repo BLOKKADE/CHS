@@ -127,7 +127,7 @@ scope ModifyDamageAfterArmor initializer init
         endif	
 
         //Ghoul Passive
-        if DamageSourceTypeId == GHOUL_UNIT_ID and Damage.index.isAttack then
+        if DamageSourceTypeId == GHOUL_UNIT_ID and Damage.index.isAttack and CheckUnitHitCooldown(DamageTargetId, GHOUL_UNIT_ID, 0.35) then
             //call BJDebugMsg(GetUnitName(DamageSource) + " Damage.index.isAttack " + GetUnitName(DamageTarget) + ": " + I2S(DamageTargetId))
             set i = GetHeroLevel(DamageSource)
             //set r2 = BlzGetUnitMaxHP(DamageTarget) * (0.025 + (0.00025 * i))
