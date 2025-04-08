@@ -28,7 +28,6 @@ library TerrestrialGlaive initializer init requires Table, AbilityData, StableSp
 
         set level = GetUnitAbilityLevel(caster, abilId)
         set dummy = CastSpellAuto(caster, target, abilId, level, GetUnitX(target), GetUnitY(target), 600)
-        set AbilityModifiers.createOrGet(dummy.dummy).TerrestrialGlaiveDamage = true
 
         call dummy.activate()
         call AbilStartCD(caster, TERRESTRIAL_GLAIVE_ABILITY_ID, BlzGetAbilityCooldown(abilId, level - 1))

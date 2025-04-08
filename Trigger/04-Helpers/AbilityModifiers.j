@@ -21,21 +21,18 @@ library AbilityMOdifiers initializer init requires TimerUtils
     struct AbilityModifiers extends array
         unit source
 
-        boolean TerrestrialGlaiveDamage
         real RetaliationAuraBonus
 
         static method copy takes unit source, unit target returns thistype
             local AbilityModifiers targetAbilMod = AbilityModifiers.create(target)
             local AbilityModifiers sourceAbilMod = GetUnitAbilMods(source)
 
-            set targetAbilMod.TerrestrialGlaiveDamage = sourceAbilMod.TerrestrialGlaiveDamage
             set targetAbilMod.RetaliationAuraBonus = sourceAbilMod.RetaliationAuraBonus
 
             return targetAbilMod
         endmethod
 
         method reset takes nothing returns nothing
-            set this.TerrestrialGlaiveDamage = false
             set this.RetaliationAuraBonus = 0
         endmethod
 

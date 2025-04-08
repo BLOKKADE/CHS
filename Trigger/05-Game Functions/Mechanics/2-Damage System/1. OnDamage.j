@@ -146,11 +146,6 @@ scope OnDamage initializer init
             set Damage.index.damage = (Damage.index.damage * RetaliationDamage.real[DamageSourceId])
         endif
 
-        //Terrestrial Glaive
-       // if GetUnitAbilMods(DamageSource).TerrestrialGlaiveDamage then
-      //      set Damage.index.damageType = DAMAGE_TYPE_NORMAL
-     //   endif
-
         //Scorched Earth
         if ScorchedEarthDummy.boolean[DamageSourceId] then
             set ScorchedEarthSource[DamageTargetId] = DamageSourcePid
