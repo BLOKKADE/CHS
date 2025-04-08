@@ -184,8 +184,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Stone Edge: +1% block damage. +1% block." )
         
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )
-        //   call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFrostRevenant.blp" )
-        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Deep Freeze: Every 10 seconds, the Hero freezes nearby enemies. For every [|cff8080ffCold|r] the Hero has, the freeze deals 30 |cffff00ffmagic damage|r and freezes enemies for 0.15 seconds. |n|nAfter activating a [|cff8080ffCold|r] spell, enemy heroes' spells are put on cooldown for 0.20 seconds.")
+        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Deep Freeze: Every 10 seconds, the Hero freezes nearby enemies. For every [|cff8080ffCold|r] the Hero has, the freeze deals 30 |cffff00ffmagic damage|r and freezes enemies for 0.15 seconds. |n|nAfter activating a [|cff8080ffCold|r] spell, enemy heroes' spells are put on cooldown for 0.2 seconds, this has a 0.5 second cooldown per unit.")
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Deep Freeze: +30 damage per [|cff8080ffCold|r], +0.01 stun duration" )
 
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroLich.blp" )
