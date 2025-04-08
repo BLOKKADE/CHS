@@ -182,8 +182,9 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, heroLevel * 2)
         elseif uid == DARK_HUNTER_UNIT_ID then         
             call SetBonus(u, 0, heroLevel * 50)
-            call SetBonus(u, 1, 0.19 + (heroLevel * 0.01))
-            call SetBonus(u, 2, 0.39 + (heroLevel * 0.01))
+            set DarkHunterStun.real[hid] =  0.20 + (R2I((heroLevel - ModuloInteger(heroLevel, 8)) / 8) * 0.01)
+            call SetBonus(u, 1, DarkHunterStun.real[hid])
+            call SetBonus(u, 2, DarkHunterStun.real[hid] + 0.40)
             set prevLevel = heroLevel     
         elseif uid == DOOM_GUARD_UNIT_ID then     
             call SetBonus(u, 0, heroLevel * 25)
