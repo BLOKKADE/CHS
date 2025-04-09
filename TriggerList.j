@@ -328,7 +328,7 @@
 //! import "C:\CHS\CHS/Trigger\09-Items\AntiMagicFlag.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\ArcaneAbsorptionGauntlets.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\ArcaneInfusedSword.j"
-//! import "C:\CHS\CHS/Trigger\09-Items\ArenaRing.j"
+//! import "C:\CHS\CHS/Trigger\09-Items\ArenaMasterBonus.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\ArmorOfAncestors.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\BattleRunestone and ArcaneGemstone.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\BlokkadesShield.j"

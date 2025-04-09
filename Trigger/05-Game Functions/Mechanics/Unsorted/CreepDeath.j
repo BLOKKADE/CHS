@@ -1,4 +1,4 @@
-library CreepDeath initializer init requires RandomShit, MidasTouch
+library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMasterBonus
 
     public function BountyText takes unit source, unit u, integer goldBounty returns nothing
         local texttag floatingtext
@@ -73,11 +73,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch
         //Golden Ring
         set itemCount = GetUnitItemTypeCount(killingHero, 'I04R')
         if itemCount > 0 then
-            if GetUnitTypeId(killingHero) == ARENA_MASTER_UNIT_ID then
-                set goldBounty = goldBounty + (20 * itemCount)
-            else
-                set goldBounty = goldBounty + (10 * itemCount)
-            endif
+            set goldBounty = goldBounty + ((10 * ArenaMasterMultiplier(killingHero)) * itemCount)
         endif
 
         //Urn of Memories
