@@ -234,6 +234,12 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call CastInnerFireOnSpellCast(caster, abilLvl)
                     endif
 
+                    if GetUnitAbilityLevel(caster, FROST_ARMOR_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(caster, FROST_ARMOR_ABILITY_ID) == 0 then
+                        if IsSpellElement(caster, abilId, Element_Water) or IsSpellElement(caster, abilId, Element_Cold) then
+                            call CastFrostArmorOnSpellCast(caster, abilLvl)
+                        endif
+                    endif
+
                     if GetUnitAbilityLevel(caster, BLOKKADE_SHIELD_ABIL_ID) > 0 then
                         call ActivateBlokkadeShield(caster)
                     endif

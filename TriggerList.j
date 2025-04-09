@@ -251,6 +251,7 @@
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Extradimensional Cooperation.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\FanOfKnives.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Fog.j"
+//! import "C:\CHS\CHS/Trigger\08-Abilities\Active\FrostArmor.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\HolyLight.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Inner Fire.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Lightning Shield.j"
