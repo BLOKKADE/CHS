@@ -257,6 +257,8 @@ scope ModifyDamageBeforeArmor initializer init
             if Damage.index.damage < r1 then
                 set Damage.index.damage = r1
             endif
+
+            set FingerOfDeathTable.real[DamageTargetId] = Damage.index.damage * 0.25
         endif
 
         //Crits
