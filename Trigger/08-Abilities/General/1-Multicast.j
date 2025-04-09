@@ -14,8 +14,8 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
         local real multicastLvl = GetUnitAbilityLevel(caster,MULTICAST_ABILITY_ID)
         local integer orderType = 0
         local integer amount = 0
-        local integer OGRE_i
-        local integer OGRE_i2
+        local real ogreMage1
+        local real ogreMage2
 
         local real luck = GetUnitCustomState(caster, BONUS_LUCK)
 
@@ -61,30 +61,22 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
 
             //amounticast chances
             if multicastLvl > 0 then
-                if GetRandomReal(0,100)   <=  (1.9 + 0.1 * multicastLvl)* luck then
-                    set amount = 5 + amount
-                elseif GetRandomReal(0,100)  <=  (3.85 + 0.15 * multicastLvl)* luck then
-                    set amount = 4 + amount
-                elseif GetRandomReal(0,100)  <=  (4.8 + 0.2 * multicastLvl)* luck then
-                    set amount = 3 + amount
-                elseif GetRandomReal(0,100)  <=   (8.75 + 0.25 * multicastLvl)* luck then
+                if GetRandomReal(0,100)  <=   (8.75 + 0.25 * multicastLvl)* luck then
                     set amount = 2 + amount
                 elseif GetRandomReal(0,100)  <=  (13.6 + 0.4 * multicastLvl)* luck then
                     set amount = 1 + amount
-                else
-                    set amount = 0 + amount
                 endif
             endif
 
             //Ogre Mage multicast chances
             if GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID then
-                set OGRE_i = 15 + GetHeroLevel(caster) * 2
-                set OGRE_i2 = OGRE_i / 100 
-                set OGRE_i = OGRE_i - OGRE_i2 * 100
+                set ogreMage1 = 15 + GetHeroLevel(caster) * 1.2
+                set ogreMage2 = ogreMage1 / 100 
+                set ogreMage1 = ogreMage1 - ogreMage2 * 100
                 
-                set amount = amount + OGRE_i2
+                set amount = amount + R2I(ogreMage2)
                 
-                if GetRandomInt(1,100) <= OGRE_i * luck then
+                if GetRandomReal(1,100) <= ogreMage1 * luck then
                     set amount = amount + 1
                 endif
             endif

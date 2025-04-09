@@ -213,7 +213,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )
         call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ogre's Luck: Whenever the Hero casts an ability it has a 15% chance to cast it again at 50% mana cost. [|cff80ff80Luck|r] ")
-        call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Ogre's Luck: +2% chance." )
+        call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Ogre's Luck: +1.2% chance." )
 
         call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp" )
         call InitHeroDesc(TROLL_BERSERKER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Steadfast Pacing: Starts with maximum movement speed. Its movement speed can't be lowered by enemy abilities or items." )
