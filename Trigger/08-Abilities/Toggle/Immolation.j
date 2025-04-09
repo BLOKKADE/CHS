@@ -1,4 +1,4 @@
-library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHelpers, HideEffects
+library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHelpers, HideEffects, RandomShit
     globals
         Table ImmolationTable
     endglobals
@@ -58,6 +58,7 @@ library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHe
         private method periodic takes nothing returns nothing
             if T32_Tick > this.tick and (not HasPlayerFinishedLevel(this.source, Player(pid))) then
                 set this.tick = T32_Tick + 32
+                call ElemFuncStart(this.source, IMMOLATION_ABILITY_ID) 
                 call this.damage()
             endif
         endmethod 
