@@ -27,12 +27,12 @@ library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
            // call BJDebugMsg("sl start")
             set this.source = source
             set this.endTick = T32_Tick + (10 * 32)
-            set this.damageTick = T32_Tick + 6
+            set this.damageTick = T32_Tick + 11
             set this.pullTick = T32_Tick + (3 * 32)
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
             set this.x = x
             set this.y = y
-            set this.damage = level * 10 + (GetHeroLevel(PlayerHeroes[this.pid]) * (2 + (level / 2)))
+            set this.damage = level * 15 + (GetHeroLevel(PlayerHeroes[this.pid]) * (level - 1))
             set this.fx = AddLocalizedSpecialEffect("Abilities\\Spells\\NightElf\\Cyclone\\CycloneTarget.mdl", this.x, this.y)
             set this.auraFx = AddLocalizedSpecialEffect("war3mapImported\\TornadoAura_noTC.mdx", this.x, this.y)
             call BlzSetSpecialEffectScale(this.auraFx, 2.5)
