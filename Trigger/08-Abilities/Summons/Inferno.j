@@ -1,6 +1,6 @@
 library Inferno requires CustomState, SpellFormula
     function InfernoStats takes unit u, integer totalLevel returns nothing
-        local integer summonLevel = IMaxBJ(totalLevel - 1, 0)
+        local integer summonLevel = IMaxBJ(totalLevel - 30, 0)
         local integer abilityLevel = IMinBJ(totalLevel, 30)
 
         call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + GetSpellValue(50, 13, abilityLevel) + (totalLevel * 300), 0)
