@@ -105,6 +105,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         local boolean maxLevel = GetHeroLevel(u) == 600
         local boolean expTome = false
         local string max = "|cffff0000You already have 4 Glory Absolute Bonuses|r"
+        local integer currentPvpBonus = LoadInteger(HT, GetHandleId(u), BONUS_PVP)
+        set p = GetOwningPlayer(u) // Ensure correct player; adjust if `p` is passed differently
 
         if ((GetItemType(It) == ITEM_TYPE_POWERUP or GetItemType(It) == ITEM_TYPE_CAMPAIGN) and not IsHeroUnitId(GetUnitTypeId(u))) then
             set u = null
@@ -245,16 +247,21 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 endif  
 
                 //glory pvp bonus
-            elseif II  == GLORY_PVP_BONUS_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
-                    // set PvpBonus[pid] = PvpBonus[pid]+1.5
-                    call AddUnitCustomState(u, BONUS_PVP,1.5)
-                    
-                    
-                    set gloryBonus = gloryBonus + 1.5
+            elseif II == GLORY_PVP_BONUS_TOME_ITEM_ID then           
+                if currentPvpBonus >= 50 then
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432You cannot buy more than 50 Pvp Bonus.|r")
+                    set ctrl = false
+                elseif BuyGloryItem(pid, II) then
+                    set currentPvpBonus = currentPvpBonus + 1
+                    call SaveInteger(HT, GetHandleId(u), BONUS_PVP, currentPvpBonus) // Explicitly update hashtable
+                    call AddUnitCustomState(u, BONUS_PVP, 1) // Add bonus
+                    set gloryBonus = gloryBonus + 1
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "Pvp Bonus increased to " + I2S(currentPvpBonus)) // Debug
                 else
                     set ctrl = false
-                endif  
+                endif
+                
+                set p = null // Clean up
 
                 //glory hit points
             elseif II  == GLORY_HIT_POINTS_TOME_ITEM_ID then
@@ -283,10 +290,17 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set GloryAttackCdBonus.real[GetHandleId(u)] = 1 - Pow(0.94, GloryAttackCdLevel.integer[GetHandleId(u)])
                     set temp = BlzGetUnitAttackCooldown(u, 0)
                     if ModifyAttackCooldown(u, GetHandleId(u)) <= 0.40 then
+                        call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432Glory Attack Cooldown cannot go lower than 0.4.|r")
                         set ctrl = false
+                        set GloryAttackCdLevel.integer[GetHandleId(u)] = GloryAttackCdLevel.integer[GetHandleId(u)] - 1
+                        set GloryAttackCdBonus.real[GetHandleId(u)] = 1 - Pow(0.94, GloryAttackCdLevel.integer[GetHandleId(u)])
+                    else
+                        set gloryBonus = temp - BlzGetUnitAttackCooldown(u, 0)
                     endif
-                    set gloryBonus = temp - BlzGetUnitAttackCooldown(u, 0)
                 else
+                    if LoadReal(HT, GetHandleId(u), - 1001) - (LoadReal(HT, GetHandleId(u), - 1001) * GloryAttackCdBonus.real[GetHandleId(u)]) <= 0.40 then
+                        call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432Glory Attack Cooldown cannot go lower than 0.4.|r")
+                    endif
                     set ctrl = false
                 endif  
 
@@ -344,13 +358,16 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory movespeed
             elseif II  == GLORY_MOVESPEED_TOME_ITEM_ID then
-                if BuyGloryItem(pid, II) then
-                    //call SetUnitMoveSpeed(u, 522)
+                if LoadBoolean(HT, GetHandleId(u), GLORY_MOVESPEED_TOME_ITEM_ID) then
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432You cannot buy more than one |cffdf9432" + GetObjectName(II) + "|r")
+                    set ctrl = false
+                elseif BuyGloryItem(pid, II) then
                     call BlzSetUnitRealField(u, UNIT_RF_SPEED, 522)
-                    
                     set gloryBonus = gloryBonus + 522
-                endif   
-                set ctrl = false
+                    call SaveBoolean(HT, GetHandleId(u), GLORY_MOVESPEED_TOME_ITEM_ID, true)
+                else
+                    set ctrl = false
+                endif
             
                 //Income all
             elseif II  == INCOME_DEFAULT_TOME_ITEM_ID then   
