@@ -109,10 +109,10 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         
         set RuneIndex = Table.create()
         set RuneCooldown = Table.create()
-
+//cooldowns for fire runestone, water runestone, wind runestone, earth runestone, wild runestone, power runestone, dark runestone, light runestone, cold runestone, poison runestone, blood runestone, defense runestone, time runestone, chaos runestone, life runestone, healing runestone, might runestone
         call AddRune('I08D',function DefenseRune, "Defense Rune", Defense_Rune_Id, 5)
         call AddRune('I08J',function RuneOfChaos, "Chaos Rune", Chaos_Rune_Id, 15)
-        call AddRune('I08G',function RuneOfFire, "Fire Rune", Fire_Rune_Id, 3)
+        call AddRune('I08G',function RuneOfFire, "Fire Rune", Fire_Rune_Id, 1.5)
         call AddRune('I088',function RuneOfLife, "Life Rune", Life_Rune_Id, 5)
         call AddRune('I08B',function RuneOfMagic, "Arcane Rune", Time_Rune_Id, 12)    
         call AddRune('I08F',function RuneOfHealing, "Healing Rune", Healing_Rune_Id, 5)
