@@ -606,6 +606,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //71 - Parasite 
         call SaveAbilData(PARASITE_ABILITY_ID, PARASITE_ITEM_ID, false, 0, 1, true, Order_Target, "parasite")
         call SetLastObjectElement(Element_Poison, 1)
+        call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
         call SetLastAbilityNotReplaceable()
 
@@ -630,6 +631,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //76 - Summon Hawk 
         call SaveAbilData(SUMMON_HAWK_ABILITY_ID, SUMMON_HAWK_ITEM_ID, false, 0, 0, false, Order_Instant, "summonwareagle")
+        call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
@@ -647,6 +649,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //79 - Phoenix 
         call SaveAbilData(PHEONIX_ABILITY_ID, PHOENIX_ITEM_ID, false, 0, 0, false, Order_Instant, "summonphoenix")
         call SetLastObjectElement(Element_Fire, 1)
+        call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //81 - Unholy Frenzy 
