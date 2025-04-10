@@ -257,6 +257,8 @@ scope ModifyDamageBeforeArmor initializer init
             if Damage.index.damage < r1 then
                 set Damage.index.damage = r1
             endif
+
+            set FingerOfDeathTable.real[DamageTargetId] = Damage.index.damage * 0.25
         endif
 
         //Crits
@@ -293,7 +295,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Demon Hunter
-        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID then
+        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID and (IsMagicDamage() and CheckUnitHitCooldown(DamageTargetId, DEMON_HUNTER_UNIT_ID, 0.7) or IsPhysDamage()) then
             set r1 = RMinBJ(GetHeroLevel(DamageSource) * 20, GetUnitState(DamageTarget, UNIT_STATE_MANA))
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - r1)
             call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) + r1)
@@ -474,8 +476,8 @@ scope ModifyDamageBeforeArmor initializer init
         //Ursa Warrior
         if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)
-            call TempAbil.create(DamageTarget, 'A08O', 3)
-            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, URSA_WARRIOR_UNIT_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1).start()
+            call TempAbil.create(DamageTarget, 'A08O', 2)
+            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 2, 0, true, BLEED_BUFF_ID, URSA_WARRIOR_UNIT_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 20, 1).start()
         endif
 
         //Pvp Bonus

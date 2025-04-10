@@ -1,4 +1,4 @@
-library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin, ItemAbilityCooldown
+library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin, ItemAbilityCooldown, ArenaMasterBonus
 	globals
 		hashtable HTi = InitHashtable()
 		HashTable UniqueItemCount
@@ -164,29 +164,17 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			
 			//Ring of Musculature
 		elseif itemId == 'I071' then
-			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddStatLevelBonus(u, BONUS_STRENGTH, 4 *diff)
-			else
-				call AddStatLevelBonus(u, BONUS_STRENGTH, 2 *diff)
-			endif
+			call AddStatLevelBonus(u, BONUS_STRENGTH, 2 * ArenaMasterMultiplier(u) *diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Ring of the Bookworm
 		elseif itemId == 'I072' then
-			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 4 *diff)
-			else
-				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 2 *diff)
-			endif
+			call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 2 * ArenaMasterMultiplier(u) *diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Trainers Ring
 		elseif itemId == 'I073' then
-			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddStatLevelBonus(u, BONUS_AGILITY, 4 *diff)
-			else
-				call AddStatLevelBonus(u, BONUS_AGILITY, 2 *diff)
-			endif
+			call AddStatLevelBonus(u, BONUS_AGILITY, 2 * ArenaMasterMultiplier(u)*diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Arena Ring

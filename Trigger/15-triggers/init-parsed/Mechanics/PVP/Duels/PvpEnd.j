@@ -26,8 +26,8 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
         // Revive the unit if it died
-        call SetUnitPositionLoc(playerHero, RectMidArenaCenter)
-        call ReviveHeroLoc(playerHero, RectMidArenaCenter, true)
+        call SetUnitPosition(playerHero, GetLocationX(RectMidArenaCenter) + GetRandomReal(-300, 300), GetLocationY(RectMidArenaCenter) + GetRandomReal(-300, 300))
+        call ReviveHero(playerHero, GetUnitX(playerHero), GetUnitY(playerHero), true)
 
         // Move the pet
         if (ps.getPet() != null) then

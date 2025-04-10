@@ -5,26 +5,31 @@ library ColdKnight requires DummyOrder, AbilityCooldown, UnitHelpers, DivineBubb
         real GLOB_ABSOLUTE_COLD_DUR = 0
     endglobals
 
-    function ColdKnightEffect takes nothing returns boolean
-        local DummyOrder dummy
-        local unit u = GetFilterUnit()
-        if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U,GetOwningPlayer(u)) and IsUnitSpellTargetCheck(u, GetOwningPlayer(GLOB_ABSOLUTE_COLD_U)) and IsUnitDivineBubbled(u) == false then
-            set dummy = DummyOrder.create(GLOB_ABSOLUTE_COLD_U, GetUnitX(GLOB_ABSOLUTE_COLD_U),GetUnitY(GLOB_ABSOLUTE_COLD_U), GetUnitFacing(GLOB_ABSOLUTE_COLD_U), 3)
-            call dummy.addActiveAbility('A07W', 1, 852171)
-            call dummy.setAbilityRealField('A07W', ABILITY_RLF_DURATION_NORMAL, GLOB_ABSOLUTE_COLD_DUR)
-            call dummy.setAbilityRealField('A07W', ABILITY_RLF_DURATION_HERO, GLOB_ABSOLUTE_COLD_DUR)
-            call dummy.target(u).activate()
+    private function ApplyColdKnightEffect takes unit target returns nothing
+        local DummyOrder dummy = DummyOrder.create(GLOB_ABSOLUTE_COLD_U, GetUnitX(GLOB_ABSOLUTE_COLD_U), GetUnitY(GLOB_ABSOLUTE_COLD_U), GetUnitFacing(GLOB_ABSOLUTE_COLD_U), 3)
+        
+        call dummy.addActiveAbility('A07W', 1, 852171)
+        call dummy.setAbilityRealField('A07W', ABILITY_RLF_DURATION_NORMAL, GLOB_ABSOLUTE_COLD_DUR)
+        call dummy.setAbilityRealField('A07W', ABILITY_RLF_DURATION_HERO, GLOB_ABSOLUTE_COLD_DUR)
+        call dummy.target(target).activate()
 
-            set udg_NextDamageAbilitySource = 'A07W'
-            call Damage.applyMagic(GLOB_ABSOLUTE_COLD_U, u, GLOB_ABSOLUTE_COLD_DMG, false, DAMAGE_TYPE_MAGIC)
+        set udg_NextDamageAbilitySource = 'A07W'
+        call Damage.applyMagic(GLOB_ABSOLUTE_COLD_U, target, GLOB_ABSOLUTE_COLD_DMG, false, DAMAGE_TYPE_MAGIC)
+    endfunction
+
+    private function ColdKnightEffect takes nothing returns boolean
+        local unit target = GetFilterUnit()
+
+        if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U, GetOwningPlayer(target)) and IsUnitSpellTargetCheck(target, GetOwningPlayer(GLOB_ABSOLUTE_COLD_U)) and not IsUnitDivineBubbled(target) then
+            call ApplyColdKnightEffect(target)
         endif
 
-        set u = null
+        set target = null
         return false
     endfunction
 
     function ColdKnight takes unit u, integer elementCount, integer heroLevel returns boolean
-        set GLOB_ABSOLUTE_COLD_U = u 
+        set GLOB_ABSOLUTE_COLD_U = u
         set GLOB_ABSOLUTE_COLD_DMG = elementCount * (30 * heroLevel)
         set GLOB_ABSOLUTE_COLD_DUR = 0.15 + (0.01 * heroLevel)
 
@@ -34,17 +39,23 @@ library ColdKnight requires DummyOrder, AbilityCooldown, UnitHelpers, DivineBubb
         return false
     endfunction
 
-    function ColdKnightCdEffect takes nothing returns boolean
-        if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U,GetOwningPlayer(GetFilterUnit())) and IsHeroUnitId(GetUnitTypeId(GetFilterUnit())) and IsUnitSpellTargetCheck(GetFilterUnit(), GetOwningPlayer(GLOB_ABSOLUTE_COLD_U)) and IsUnitDivineBubbled(GetFilterUnit()) == false then
-            call AddCooldowns(GetFilterUnit(),0.2)
+    private function ColdKnightCdEffect takes nothing returns boolean
+        local unit target = GetFilterUnit()
+
+        if IsUnitEnemy(GLOB_ABSOLUTE_COLD_U, GetOwningPlayer(target)) and IsHeroUnitId(GetUnitTypeId(target)) and IsUnitSpellTargetCheck(target, GetOwningPlayer(GLOB_ABSOLUTE_COLD_U)) and not IsUnitDivineBubbled(target) and CheckUnitHitCooldown(GetHandleId(target), GHOUL_UNIT_ID, 0.7) then
+            call AddCooldowns(target, 0.2)
         endif
+
+        set target = null
         return false
     endfunction
 
     function ColdKnightCooldown takes unit u returns boolean
-        set GLOB_ABSOLUTE_COLD_U = u 
+        set GLOB_ABSOLUTE_COLD_U = u
+        
         call GroupClear(ENUM_GROUP)
-        call GroupEnumUnitsInArea(ENUM_GROUP,GetUnitX(u),GetUnitY(u),500,Condition(function ColdKnightCdEffect) )
+        call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 500, Condition(function ColdKnightCdEffect))
+
         return false
     endfunction
 endlibrary

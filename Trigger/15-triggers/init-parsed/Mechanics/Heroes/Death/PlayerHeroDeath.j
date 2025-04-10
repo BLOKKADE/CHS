@@ -23,7 +23,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         local player currentPlayer = GetOwningPlayer(currentUnit)
         local PlayerStats ps = PlayerStats.forPlayer(currentPlayer)
 
-        call ReviveHeroLoc(currentUnit, RectMidArenaCenter, true)
+        call ReviveHero(currentUnit, GetLocationX(RectMidArenaCenter) + GetRandomReal(-300, 300), GetLocationY(RectMidArenaCenter) + GetRandomReal(-300, 300), true)
         call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
         call FixAbominationPassive(currentUnit)
@@ -65,7 +65,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         
         //immortal mode
         if ModeNoDeath == true and BrStarted == false and GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
-            call ReviveHeroLoc(currentUnit, RectMidArenaCenter, true)
+            call ReviveHero(currentUnit, GetLocationX(RectMidArenaCenter) + GetRandomReal(-300, 300), GetLocationY(RectMidArenaCenter) + GetRandomReal(-300, 300), true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
 
             call FixAbominationPassive(currentUnit)

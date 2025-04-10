@@ -127,7 +127,7 @@ scope ModifyDamageAfterArmor initializer init
         endif	
 
         //Ghoul Passive
-        if DamageSourceTypeId == GHOUL_UNIT_ID and Damage.index.isAttack then
+        if DamageSourceTypeId == GHOUL_UNIT_ID and Damage.index.isAttack and CheckUnitHitCooldown(DamageTargetId, GHOUL_UNIT_ID, 0.35) then
             //call BJDebugMsg(GetUnitName(DamageSource) + " Damage.index.isAttack " + GetUnitName(DamageTarget) + ": " + I2S(DamageTargetId))
             set i = GetHeroLevel(DamageSource)
             //set r2 = BlzGetUnitMaxHP(DamageTarget) * (0.025 + (0.00025 * i))
@@ -405,8 +405,11 @@ scope ModifyDamageAfterArmor initializer init
 
             //Dark Hunter Bash
             if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
-                //call BJDebugMsg("src: " + GetUnitName(DamageSource) + " doh: " + I2S(DamageIsOnHit) + " dmg: " + R2S(Damage.index.damage))
-                call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", 50 * GetHeroLevel(DamageSource), ABILITY_RLF_DAMAGE_HTB1 )
+                set r1 = GetHeroLevel(DamageSource) * 50
+                set r2 = DarkHunterStun.real[DamageSourceId]
+                if CheckUnitHitCooldown(DamageTargetId, DARK_HUNTER_UNIT_ID, r2 + 0.4) then
+                    call ApplyDarkHunterStun(DamageSource, DamageTarget, r1, r2)
+                endif
             endif
         endif
 

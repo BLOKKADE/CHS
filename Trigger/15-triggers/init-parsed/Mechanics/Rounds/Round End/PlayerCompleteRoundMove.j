@@ -11,7 +11,7 @@ library PlayerCompleteRoundMove initializer init requires RandomShit, Functions
 
         if (IsPlayerInForce(currentPlayer, DefeatedPlayers) != true) then
             call RemoveUnitBuffs(PlayerHeroes[currentPlayerId], BUFFTYPE_BOTH, true)
-            call SetUnitPositionLoc(PlayerHeroes[currentPlayerId], RectMidArenaCenter)
+            call SetUnitPosition(PlayerHeroes[currentPlayerId], GetLocationX(RectMidArenaCenter) + GetRandomReal(-300, 300), GetLocationY(RectMidArenaCenter) + GetRandomReal(-300, 300))
 
             if (ps.getPet() != null) then
                 call SetUnitPositionLoc(ps.getPet(), RectMidArenaCenter)
