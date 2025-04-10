@@ -195,11 +195,14 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 				call RegisterEndOfRoundItem(pid, it)
 			endif
 
+			//Terrestrial Glaive
 		elseif itemId == 'I0D1' then
 			if ev == EVENT_ITEM_PICKUP then
 				call CreateSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, SpellListFilter.TerrestrialGlaiveFilter)
 			endif
-			call AddUnitCustomState(u, BONUS_PHYSPOW, 30 * uniqueDiff)
+			call AddUnitCustomState(u, BONUS_MAGICPOW, 30 * uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Earth, uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Wind, uniqueDiff)
 
 			//Gladiator Helmet
 		elseif itemId == 'I07A' then
@@ -366,23 +369,23 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_RUNEPOW, 100 * uniqueDiff)
 			
 			if itemId == FIRE_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Fire, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Fire, 2 * uniqueDiff)
 			elseif itemId == POISON_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Poison, 2 * uniqueDiff)
 			elseif itemId == ARCANE_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Arcane, 2 * uniqueDiff)
 			elseif itemId == WILD_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Wild, 2 * uniqueDiff)
 			elseif itemId == LIGHT_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Light, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Light, 2 * uniqueDiff)
 			elseif itemId == DARK_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Dark, 2 * uniqueDiff)
 			elseif itemId == WIND_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Wind, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Wind, 1 * uniqueDiff)
 			elseif itemId == WATER_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Water, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u, Element_Water, 2 * uniqueDiff)
 			elseif itemId == EARTH_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Earth, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Earth, 2 * uniqueDiff)
 			endif
 		
 			//Blaze Staff
