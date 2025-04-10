@@ -155,16 +155,16 @@ scope ModifyDamageAfterArmor initializer init
         
         //Magic Necklace of Absorption
         if GetUnitAbilityLevel(DamageTarget  ,'B00R') >= 1 and IsMagicDamage() then
-            call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.75 )
+            call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.50 )
         endif
 
         //Bloody Axe
         if IsPhysDamage() and IsHeroUnitId(DamageTargetTypeId) == false then
             set i = GetUnitItemTypeCount( DamageSource,'I078') 
             if i > 0 then
-                set r2 = Damage.index.amount * (0.25 * I2R(i))
-                set vampAmount = vampAmount + r2
-                set vampCount = vampCount + 1  
+            set r2 = Damage.index.amount * (0.25 * I2R(i))
+            set vampAmount = vampAmount + r2
+            set vampCount = vampCount + 1  
             endif
         endif
 
