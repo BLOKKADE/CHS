@@ -109,7 +109,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: Bonus attack speed. (|cff68eef3Every 3 levels|r) increases Faerie Dragon damage." )
             
         call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNPitLord.blp" )
-        call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Hellforged: Starts with Absolute Fire. Every 1 magic power increases |cffff8080physical power|r by 1. Rain of Fire: When the Hero damages an enemy it casts a Rain of Fire on it, dealing 40 initial damage and 20 damage per second for 3 seconds, this has a 2 second cooldown.")
+        call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Hellforged: Starts with Absolute Fire. Every 1 magic power increases |cffff8080physical power|r by 1. Rain of Fire: When the Hero damages an enemy it casts a Rain of Fire on it, dealing 40 initial |cffff00ffmagic damage|r and 20 |cffff00ffmagic damage|r per second for 3 seconds, this has a 2 second cooldown.")
         call InitHeroDesc(PIT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Hellforged: +0.5% Absolute Fire magic power bonus. Rain of Fire: +40 initial damage, +20 damage per second.  (|cff68eef3Every 75 levels|r) +1 instance of Rain of Fire (Max 5)")
             
         call InitHeroDesc(THUNDER_WITCH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp" )
@@ -192,7 +192,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Seismic Surge: When casting an active ability the Hero creates an earthquake, dealing |cffff00ffmagical damage|r and slowing nearby enemies each second. For every charge it does +10 damage, slows by +3%,  and lasts +0.25 seconds longer. Charges accumulate at a rate of 1 per second and upon receiving [|cff00ffffCrit|r] damage. When used at 20 charges the Hero become immune to magic for 3 seconds.")
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Seismic Surge: When using an activated ability or item the Hero creates an earthquake, dealing |cffff00ffmagical damage|r and slowing nearby enemies each second. For every charge it does +10 damage, slows by +3%,  and lasts +0.25 seconds longer. Charges accumulate at a rate of 1 per second and upon receiving [|cff00ffffCrit|r] damage. When used at 20 charges the Hero become immune to magic for 3 seconds.")
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Seismic Surge: +10 damage per charge." )
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )
