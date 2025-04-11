@@ -382,7 +382,7 @@ scope ModifyDamageAfterArmor initializer init
             endif
 
             //Spiked Carapaces
-            set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID) + GetUnitAbilityLevel(DamageTarget, CARBEE_SPIKED_CARAP_ABILITY_ID) 
+            set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID)
             if i > 0 and Damage.index.isAttack then
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
