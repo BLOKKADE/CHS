@@ -387,7 +387,7 @@ scope ModifyDamageAfterArmor initializer init
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
                 //set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
-                set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID)))
+                set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * i)
                 //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                 call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
             endif  
