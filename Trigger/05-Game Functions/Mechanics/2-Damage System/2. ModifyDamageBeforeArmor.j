@@ -274,9 +274,11 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
         if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 and Damage.index.isAttack then
             set Damage.index.damage = Damage.index.damage + 50 * i1
-            call SetUnitX(DamageSource, GetWidgetX(DamageTarget) - 65 * CosBJ(GetUnitFacing(DamageTarget)))
-            call SetUnitY(DamageSource, GetWidgetY(DamageTarget) - 65 * SinBJ(GetUnitFacing(DamageTarget))) 
-            call BlzSetUnitFacingEx( DamageSource, GetUnitFacing(DamageTarget))
+            if IsTerrainWalkable(GetWidgetX(DamageTarget) - 65 * CosBJ(GetUnitFacing(DamageTarget)), GetWidgetY(DamageTarget) - 65 * SinBJ(GetUnitFacing(DamageTarget))) then
+                call SetUnitX(DamageSource, GetWidgetX(DamageTarget) - 65 * CosBJ(GetUnitFacing(DamageTarget)))
+                call SetUnitY(DamageSource, GetWidgetY(DamageTarget) - 65 * SinBJ(GetUnitFacing(DamageTarget))) 
+                call BlzSetUnitFacingEx( DamageSource, GetUnitFacing(DamageTarget))
+            endif
         endif
     
         //Backstab
