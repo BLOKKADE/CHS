@@ -90,6 +90,8 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_BUY_UNIT_ID, 0 - OffsetX, OffsetY, 0)
         set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_UPGRADE_UNIT_ID, OffsetX, OffsetY, 0)
 
+        call AddItemToStock(udg_Draft_DraftBuildings[pid], NON_LUCRATIVE_TOME_ITEM_ID, 1, 1)
+
         if IncomeMode == 3 then
             call GenerateDraftSpells(pid, udg_Draft_NODraftSpells)
         else
