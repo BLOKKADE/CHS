@@ -664,7 +664,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call SaveInteger(HT,DamageTargetId,- 300002,i1 * 100)
                 call SaveUnitHandle(HT,DamageTargetId,- 300003, DamageSourceHero)
                 call SaveInteger(HT,DamageTargetId,- 300004,T32_Tick)
-                call TempAbil.create(DamageTarget, 'A06L', 5)
+                call TempAbil.create(DamageTarget, 'A06L', 8)
 
                 if Damage.index.damage > 0 then
                     set Damage.index.damage = Damage.index.damage+ r1
