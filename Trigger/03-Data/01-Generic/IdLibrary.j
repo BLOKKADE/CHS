@@ -385,6 +385,7 @@ library IdLibrary initializer init
         constant integer CHAIN_LIGHTNING_DUMMY_ABILITY_ID               = 'A0ES'
         constant integer CURSE_OF_DEMONS_DUMMY_ABILITY_ID               = 'A043' 
         constant integer STARFALL_DUMMY_ABILITY_ID                      = 'A0F0'
+        constant integer BLADE_STORM_DUMMY_ABILITY_ID                   = 'A090'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'

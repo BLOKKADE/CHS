@@ -224,7 +224,7 @@ scope ModifyDamageAfterArmor initializer init
         endif 
 
         //Blademaster
-        if DamageSourceTypeId == BLADE_MASTER_UNIT_ID and BladestormReady(DamageSource) and Damage.index.isAttack then
+        if DamageSourceTypeId == BLADE_MASTER_UNIT_ID and DamageSourceAbility != BLADE_STORM_DUMMY_ABILITY_ID and BladestormReady(DamageSource) and Damage.index.isAttack then
             call BladestormDamage(DamageSource, Damage.index.amount , IsMagicDamage())
         endif
 
