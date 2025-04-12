@@ -261,6 +261,18 @@ scope ModifyDamageBeforeArmor initializer init
             set FingerOfDeathTable.real[DamageTargetId] = Damage.index.damage * 0.25
         endif
 
+        //Starfall
+        set i1 = GetUnitAbilityLevel(DamageSource, STARFALL_ABILITY_ID)
+        if i1 > 0 and DamageSourceAbility == STARFALL_ABILITY_ID then
+            if GetUnitAbilityLevel(DamageTarget, STARFALL_BUFF_ABILITY_ID) == 1 then
+                set StarfallTable.real[DamageTargetId] = StarfallTable.real[DamageTargetId] + 0.05
+                set Damage.index.damage = Damage.index.damage * (1 + StarfallTable.real[DamageTargetId])
+            else
+                set StarfallTable.real[DamageTargetId] = 0
+            endif
+            call TempAbil.create(DamageTarget, STARFALL_BUFF_ABILITY_ID, 3)
+        endif
+
         //Crits
         call SetCritDamage()
 

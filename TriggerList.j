@@ -263,6 +263,7 @@
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Plague.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Shockwave.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\SpiritLink.j"
+//! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Starfall.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Chronus Abilities\BlessedProtection.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Chronus Abilities\CheaterMagic.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Chronus Abilities\DemonsCurse.j"

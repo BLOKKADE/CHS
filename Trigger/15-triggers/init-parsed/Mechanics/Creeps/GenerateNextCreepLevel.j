@@ -265,7 +265,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1, MaxCreepUnitTypes)]
         endif
 
-        set RoundCreepMoveSpeed = GetRandomInt(GetRandomInt(150, 150 + RoundNumber * 2), 400)
+        set RoundCreepMoveSpeed = GetRandomInt(GetRandomInt(150, 150 + RoundNumber * 2), 422 + RoundNumber * 2)
         set RoundCreepMaxAttackSpeed = GetRandomInt(1, RoundNumber)
         
         if RoundNumber > 25 then
@@ -531,6 +531,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_MAGICRES) - magicDefBonus)) + " + |cff9bf1a9" + I2S(R2I(magicDefBonus)) + "|r|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_EVASION) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r"
                         endif
+
+                        set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bf1a9Movespeed|r: " + I2S(RoundCreepMoveSpeed) + "|n"
                         //call BJDebugMsg("e")
                         set s = s + RoundAbilities
 

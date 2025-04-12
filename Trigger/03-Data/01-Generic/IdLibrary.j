@@ -384,6 +384,7 @@ library IdLibrary initializer init
         constant integer ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID            = 'A0DP'
         constant integer CHAIN_LIGHTNING_DUMMY_ABILITY_ID               = 'A0ES'
         constant integer CURSE_OF_DEMONS_DUMMY_ABILITY_ID               = 'A043' 
+        constant integer STARFALL_DUMMY_ABILITY_ID                      = 'A0F0'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
@@ -844,6 +845,7 @@ library IdLibrary initializer init
         constant integer ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID            = 'B030'
         constant integer ANCIENT_BLOOD_BUFF_ABILITY_ID                  = 'A0CI'
         constant integer CUTTING_BUFF_ABILITY_ID                        = 'A0ET'
+        constant integer STARFALL_BUFF_ABILITY_ID                       = 'A0F0'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 
