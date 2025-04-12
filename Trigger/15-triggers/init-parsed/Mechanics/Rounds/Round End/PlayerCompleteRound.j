@@ -72,9 +72,13 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         call SetUnitInvulnerable(PlayerHeroes[pid], true)
         set ShowCreepAbilButton[pid] = false
 
-        if (RoundLiveLost[pid]) then
-            set RoundLiveLost[pid] = false
-            call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")
+        if (PlayerDiedInRound[pid]) then
+            set PlayerDiedInRound[pid] = false
+            if ModeNoDeath then
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300died!|r, but it's immortal mode anyway. 😩")
+            else
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")
+            endif
         else
             if (roundClearXpBonus == 0) then
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r")

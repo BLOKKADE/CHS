@@ -1,5 +1,4 @@
 library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, AchievementsFrame, PetDeath, Scoreboard
-
     private function IsUnitNotHeroOrCreep takes unit currentUnit returns boolean
         return (IsUnitType(currentUnit, UNIT_TYPE_HERO) == false) or (GetOwningPlayer(currentUnit) == Player(8)) or (GetOwningPlayer(currentUnit) == Player(11)) or (IsUnitInGroup(currentUnit, DuelingHeroes) == true)
     endfunction
@@ -67,6 +66,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         if ModeNoDeath == true and BrStarted == false and GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
             call ReviveHero(currentUnit, GetLocationX(RectMidArenaCenter) + GetRandomReal(-300, 300), GetLocationY(RectMidArenaCenter) + GetRandomReal(-300, 300), true)
             call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
+            set PlayerDiedInRound[currentPlayerId] = true
 
             call FixAbominationPassive(currentUnit)
             if not CamMoveDisabled[currentPlayerId] then
@@ -83,7 +83,7 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
     
         if Lives[GetPlayerId(currentPlayer)] > 0 and BrStarted == false and GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
             call TimerStart(NewTimerEx(currentPlayerId), 1, false, function EnableDeathTrigger)
-            set RoundLiveLost[currentPlayerId] = true
+            set PlayerDiedInRound[currentPlayerId] = true
             
             call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId], Condition(function RemoveUnitsInArena))
     
