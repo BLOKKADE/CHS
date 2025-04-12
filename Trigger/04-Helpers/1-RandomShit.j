@@ -35,6 +35,10 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
             set abilId = GetHeroSpellAtPosition(u, i)
             if abilId != 0 then
                 call UnitRemoveAbility(u, abilId)
+
+                if HasDummySpell(u, abilId) then
+                    call UnitRemoveAbility(u, GetDummySpell(u, abilId))
+                endif
             endif
             set i = i + 1
             exitwhen i > 20

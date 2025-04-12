@@ -1,6 +1,8 @@
-library HeroRefresh initializer init requires RandomShit
+library HeroRefresh initializer init requires RandomShit, NewBonus, CustomState
 
     function ResetHero takes unit u returns nothing
+        local integer i = 11
+        
         if IsUnitType(u, UNIT_TYPE_HERO) then
             call RemoveItem(UnitItemInSlot(u, 0))
             call RemoveItem(UnitItemInSlot(u, 1))
@@ -10,6 +12,16 @@ library HeroRefresh initializer init requires RandomShit
             call RemoveItem(UnitItemInSlot(u, 5))
     
             call RemoveHeroAbilities(u)
+
+            call ResetUnitCustomState(u)
+            
+            loop
+                call RemoveUnitBonus(u, i)
+                call RemoveUnitBonusReal(u, i)
+
+                set i = i + 1
+                exitwhen i > 20
+            endloop
         endif
 
         call UnitRemoveAbility(u, REINCARNATION_ABILITY_ID)
