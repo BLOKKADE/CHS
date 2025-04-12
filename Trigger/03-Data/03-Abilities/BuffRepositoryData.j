@@ -114,7 +114,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1('A03V', TEMPORARY_INVISIBILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
         call SetupBuffInfo1('Bcrs', CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
 
-        call SetupBuffInfo2('B035', CUTTING_BUFF_ABILITY_ID, CUTTING_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B035', CUTTING_BUFF_ABILITY_ID, CUTTING_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2(INCINERATE_CUSTOM_BUFF_ID, 'A06L', INCINERATE_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2(POISON_NON_STACKING_CUSTOM_BUFF_ID, 'A06P', ENVENOMED_WEAPONS_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2(LIQUID_FIRE_CUSTOM_BUFF_ID, 'A06R', LIQUID_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
@@ -131,6 +131,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B036', STARFALL_BUFF_ABILITY_ID, STARFALL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B037', LIGHTNING_SHIELD_DUMMY_ABILITY_ID, LIGHTNING_SHIELD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
 
         call SetupBuffInfo1('B00C', AURA_OF_FEAR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(FEAR_AURA_BUFF_ID, 'A031', BUFFTYPE_NEGATIVE, false)

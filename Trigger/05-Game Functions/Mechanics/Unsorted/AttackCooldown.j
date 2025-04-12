@@ -35,6 +35,11 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
             set r2 = r2 + 0.6
         endif
 
+        //Lightning Shield
+        if GetUnitAbilityLevel(u, LIGHTNING_SHIELD_BUFF_ID) > 0 then
+            set r2 = r2 + 0.2
+        endif
+
         //Speed Blade passive
         if UnitHasItemType(u,SPEED_BLADE_ITEM_ID) then
             set r2 = r2 * 0.8
