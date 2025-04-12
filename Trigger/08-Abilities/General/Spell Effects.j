@@ -189,12 +189,11 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
         local real targetY = GetSpellTargetY()
         local integer abilId = GetSpellAbilityId()
         local integer originalAbilId = GetOriginalSpellIfExists(caster, GetSpellAbilityId())
-        local integer castAbilId = abilId
         local integer abilLvl
         local location spelLLoc = GetSpellTargetLoc()
         local boolean isDummySpell = abilId != originalAbilId
-        local integer lvl = 0
         local boolean abilityChanneled = false
+        local integer i 
         //call BJDebugMsg("cx: " + R2S(GetUnitX(caster)) + " cy: " + R2S(GetUnitY(caster)) + " tx: " + R2S(targetX) + " ty: " + R2S(targetY))
 
         if not ToggleSpell(caster, abilId) then
@@ -331,13 +330,13 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         endif
                     endif
 
-                    set lvl = GetUnitAbilityLevel(caster, CHAOS_MAGIC_ABILITY_ID)
-                    if lvl > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
-                        call CastRandomSpell(caster, abilId, target, spelLLoc, false, lvl)
+                    set i = GetUnitAbilityLevel(caster, CHAOS_MAGIC_ABILITY_ID)
+                    if i > 0 and BlzGetAbilityCooldown(abilId,GetUnitAbilityLevel(caster,abilId ) - 1) > 0 then
+                        call CastRandomSpell(caster, abilId, target, spelLLoc, false, i)
                     endif
 
                     if GetUnitAbilityLevel(caster, 'A099') > 0 and (target != null or IsAbilityManifoldable(abilId)) and (not IsCurrentlyManifolding(caster)) then
-                        call ManifoldStaff(caster, target, abilId, GetUnitAbilityLevel(caster, abilId))
+                        call ManifoldStaff(caster, target, abilId, abilLvl)
                     endif
 
                     if GetUnitAbilityLevel(caster, SPELLBANE_TOKEN_BUFF_ID) > 0 then
@@ -345,11 +344,11 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     endif
 
                     if GetUnitAbilityLevel(caster, 'B02Z') > 0 then
-                        call ArcaneAbsorptionGauntletsActivate(caster, castAbilId, target)
+                        call ArcaneAbsorptionGauntletsActivate(caster, abilId, target)
                     endif
 
-                    if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID then
-                        call ActivateXesilManaCostNegation(caster, castAbilId, abilLvl)
+                    if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID and IsAbilityCasteable(abilId, true) then
+                        call ActivateXesilManaCostNegation(caster, abilId, abilLvl)
                     endif
 
                     call SetCooldown(caster, abilId, false) 

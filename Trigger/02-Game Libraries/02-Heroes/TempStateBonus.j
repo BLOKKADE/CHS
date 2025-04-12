@@ -12,7 +12,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         constant integer BONUS_LUCK                     = 5
         constant integer BONUS_RUNEPOW                  = 6
         constant integer BONUS_SUMMONPOW                = 7
-        constant integer BONUS_PVP                 = 8
+        constant integer BONUS_PVP                      = 8
         constant integer BONUS_PHYSPOW                  = 9
         constant integer BONUS_MISSCHANCE               = 10
         constant integer BONUS_DAMAGE                   = 11
@@ -26,6 +26,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         constant integer BONUS_MANAREGEN                = 19
         constant integer BONUS_ATTACKSPEED              = 20
         constant integer BONUS_NEGATIVEHPREGEN          = 21
+        constant integer BONUS_GLORYREGEN               = 22
         */
         HashTable TempBonusTable
     endglobals

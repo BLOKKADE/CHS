@@ -377,7 +377,6 @@ library IdLibrary initializer init
         
         // Dummy Abilities
         constant integer STUN_ABILITY_ID                                = 'A0C2'
-        constant integer CARBEE_SPIKED_CARAP_ABILITY_ID                 = 'A0CD'
         constant integer ERUPTION_IMMUNE_ABILITY_ID                     = 'A0D9'
         constant integer DEATH_AND_DECAY_DUMMY_ABILITY_ID               = 'A0E2'
         constant integer FOG_DUMMY_ABILITY_ID                           = 'A0E3'

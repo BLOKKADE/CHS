@@ -121,6 +121,7 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		set CustomStateValue[7] = AgiInfo(u)
 		set CustomStateValue[8] = IntInfo(u)
 		set CustomStateValue[9] = DmgInfo(u)
+		//set CustomStateValue[10] = "\n|cffb0e74aBase Attack cooldown:|r " + R2SW(GetUnitBaseAttackCooldown(u), 1, 2)
 	endfunction
 
 	function UpdateTextRelaese takes unit u returns nothing
@@ -206,10 +207,12 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 				call UpdateTooltipText(SelectedUnit[localpid])
 				set VisibleFrame = true
 				set ToolTipA = DataLabel[currentFrame] + BlzFrameGetText(TextUI[currentFrame]) + "\n------------------------------\n" + DataDesc[currentFrame]
-				if currentFrame == 3 then
-					set ToolTipA = ToolTipA + CustomStateValue[2] + "%%|r."
-				elseif currentFrame == 1 then
+				if currentFrame == 1 then
 					set ToolTipA = ToolTipA + CustomStateValue[9]
+				/*elseif currentFrame == 2 then
+					set ToolTipA = ToolTipA + CustomStateValue[10]*/
+				elseif currentFrame == 3 then
+					set ToolTipA = ToolTipA + CustomStateValue[2] + "%%|r."
 				elseif currentFrame == 6 then
 					set ToolTipA = ToolTipA + CustomStateValue[6]
 				elseif currentFrame == 7 then

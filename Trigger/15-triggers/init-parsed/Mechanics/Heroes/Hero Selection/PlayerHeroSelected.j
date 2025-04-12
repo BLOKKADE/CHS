@@ -123,7 +123,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call BlzUnitHideAbility(hero, SEARING_ARROWS_ABILITY_ID, true)
         call BlzUnitHideAbility(hero, 'A03H', true)    
     
-        call FunctionStartUnit(hero) 
+        call SaveUnitBaseValues(hero) 
         call BlzSetHeroProperName(hero, GetPlayerNameNoTag(GetPlayerName(p)))
         call ConditionalTriggerExecute(SpacebarCameraTrigger)
         call ResetToGameCameraForPlayer(p, 0)

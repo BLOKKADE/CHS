@@ -149,10 +149,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
             endif
         endif
 
-        /*if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
-            call MysteriousTalentUpdateDesc(u)
-        endif*/
-
         if abilId == MEGA_SPEED_ABILITY_ID then     
             if LoadReal(HT, GetHandleId(u), 1) == 0 then 
                 call SaveReal(HT, GetHandleId(u), 1, BlzGetUnitAttackCooldown(u, 0))
@@ -193,17 +189,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         if abilId == ABSOLUTE_DARK_ABILITY_ID then
             call UnitRemoveAbility(u, 'A0DH')
         endif
-
-        /*if abilId == MEGA_SPEED_ABILITY_ID then
-            if LoadReal(HT, GetHandleId(u), 1) != 0 then
-                //   call BlzSetUnitAttackCooldown(u,LoadReal(HT, GetHandleId(u), 1) , 0) 
-            endif
-        endif*/
     endfunction
 
-    function FunctionStartUnit takes unit U returns nothing
-        call SaveReal(HT, GetHandleId(U), -1001, BlzGetUnitAttackCooldown(U, 0))
-        call SaveInteger(HT, GetHandleId(U), -1000, BlzGetUnitIntegerField(U, UNIT_IF_PRIMARY_ATTRIBUTE))
+    function SaveUnitBaseValues takes unit u returns nothing
+        call SaveReal(HT, GetHandleId(u), -1001, BlzGetUnitAttackCooldown(u, 0))
     endfunction
 
     function SellItemsOnGround takes nothing returns nothing

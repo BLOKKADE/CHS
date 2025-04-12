@@ -1,6 +1,5 @@
 library CustomState initializer init requires TimerUtils
     globals
-        hashtable HT_unitstate = InitHashtable()
         HashTable CustomUnitState
 
         constant integer BONUS_MAGICPOW                 = 1
@@ -13,6 +12,7 @@ library CustomState initializer init requires TimerUtils
         constant integer BONUS_PVP                      = 8
         constant integer BONUS_PHYSPOW                  = 9
         constant integer BONUS_MISSCHANCE               = 10
+        
         //11-20 are in NewBonus.j
         /*
         DO NOT USE WITH the UNITCUSTOMSTATE functions
@@ -45,19 +45,6 @@ library CustomState initializer init requires TimerUtils
     function AddUnitCustomState takes unit u, integer stat, real value returns nothing
         set CustomUnitState[GetHandleId(u)].real[stat] = GetUnitCustomState(u, stat) + value
     endfunction
-
-    //Absolute count bonus 100-149
-    function SetUnitAbsoluteBonusCount takes unit u,integer id, integer i returns nothing
-        call SaveInteger(HT_unitstate,GetHandleId(u),100+id,i)
-    endfunction
-    
-    function GetUnitAbsoluteBonusCount takes unit u, integer id returns integer
-        return LoadInteger(HT_unitstate,GetHandleId(u),100+id)
-     endfunction
-
-     function AddUnitAbsoluteBonusCount takes unit u, integer id, integer i returns nothing
-         call SaveInteger(HT_unitstate,GetHandleId(u),100+id,LoadInteger(HT_unitstate,GetHandleId(u),100+id)+ i)
-     endfunction
 
     function ResetUnitCustomState takes unit u returns nothing
         call CustomUnitState.remove(GetHandleId(u))

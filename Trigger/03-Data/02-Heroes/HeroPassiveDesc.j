@@ -192,7 +192,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroMountainKing.blp" )
-        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Seismic Surge: When using an active ability or item the Hero creates an earthquake, dealing |cffff00ffmagical damage|r and slowing nearby enemies each second. For every charge it does +10 damage, slows by +3%,  and lasts +0.25 seconds longer. Charges accumulate at a rate of 1 per second and upon receiving [|cff00ffffCrit|r] damage. When used at 20 charges the Hero become immune to magic for 3 seconds.")
+        call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Seismic Surge: When using an activate ability or item the Hero creates an earthquake, dealing |cffff00ffmagical damage|r and slowing nearby enemies each second. For every charge it does +10 damage, slows by +3%,  and lasts +0.25 seconds longer. Charges accumulate at a rate of 1 per second and upon receiving [|cff00ffffCrit|r] damage. When used at 20 charges the Hero become immune to magic for 3 seconds.")
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Seismic Surge: +10 damage per charge." )
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )

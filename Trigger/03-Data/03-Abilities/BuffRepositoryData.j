@@ -76,6 +76,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(THUNDER_CLAP_BUFF_ID, THUNDER_CLAP_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // unused?
         call SetupBuffInfo1(WHIRLWIND_BUFF_ID, WHIRLWIND_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //unused?
 
+        call SetupBuffInfo1('B023', 'A0A7', BUFFTYPE_NEGATIVE, false) //unused?
         call SetupBuffInfo1(DISEASE_BUFF_ID, PLAGUE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(DEATH_AND_DECAY_BUFF_ID, DEATH_AND_DECAY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(ENSNARE_GENERAL_BUFF_ID, ENSNARE_ABILITY_ID, BUFFTYPE_NEGATIVE, true)

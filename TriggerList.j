@@ -28,6 +28,7 @@
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\01-Generic\SelectedUnits.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\01-Generic\StructRecycleModule.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\02-Heroes\1-CustomState.j"
+//! import "C:\CHS\CHS/Trigger\02-Game Libraries\02-Heroes\AbsoluteBonusState.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\02-Heroes\LevelUpStats.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\02-Heroes\TempElementBonus.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\02-Heroes\TempStateBonus.j"

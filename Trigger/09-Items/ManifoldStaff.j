@@ -20,10 +20,6 @@ library ManifoldStaff initializer init requires RandomShit, AbilityData, DummyOr
         local real y = GetUnitY(caster)
         local integer orderType = GetAbilityOrderType(abilId)
 
-        if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID then
-            set mana = 0
-        endif
-
         if orderType == Order_Target or IsAbilityManifoldable(abilId) then
             set CurrrentlyManifolding.boolean[GetHandleId(caster)] = true
             
