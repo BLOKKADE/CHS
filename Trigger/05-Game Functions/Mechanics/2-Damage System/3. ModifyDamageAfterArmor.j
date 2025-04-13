@@ -454,13 +454,14 @@ scope ModifyDamageAfterArmor initializer init
 
         //Skeleton Brute
         if DamageTargetTypeId == SKELETON_BRUTE_UNIT_ID then
-            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0BA') == 0 and Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) * 0.2 and GetUnitAbilityLevel(DamageTarget, 'A0BB') == 0 then
-                call SkeletonBrute(DamageTarget)
-            endif
-
-            //Invul
+            //Invul dmg negation
             if GetUnitAbilityLevel(DamageTarget, 'A0BB') > 0 then
                 set Damage.index.amount = 0
+            endif
+
+            //make invul
+            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0BA') == 0 and Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) * 0.2 and GetUnitAbilityLevel(DamageTarget, 'A0BB') == 0 then
+                call SkeletonBrute(DamageTarget)
             endif
         endif
 
