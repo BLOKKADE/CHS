@@ -64,6 +64,7 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         local integer abilId = 0
         local integer i = 1
         local integer elementCount = 0
+        local integer temp
 
         //Null Void Orb active effect
         if GetUnitAbilityLevel(u, NULL_VOID_ORB_BUFF_ID) > 0 then
@@ -87,7 +88,10 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
 
         //Ancient Element
         if GetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, GetElementAbsolute(elementId)) > 0 then
-            set elementCount = elementCount + 2
+            set temp = GetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID)
+            if temp >= 11 then
+                set elementCount = elementCount + R2I((temp - 1) / 10)
+            endif
         endif
 
         //Hero element

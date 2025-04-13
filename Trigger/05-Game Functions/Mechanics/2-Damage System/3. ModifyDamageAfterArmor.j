@@ -439,6 +439,11 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Parasite Summon
+        if DamageSourceAbility == PARASITE_ABILITY_ID and T32_Tick > ParasiteLimit[DamageSourcePid].integer[DamageTargetId] and GetRandomInt(1,100) <= 20 * DamageSourceLuck then
+            call SummonParasite(DamageSourcePid, DamageTarget)
+        endif
+
         //Holy Chain Mail
         if UnitHasItemType(DamageTarget,'I07U') then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
