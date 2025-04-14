@@ -101,8 +101,8 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
         // Framehandles for all columns for each player to easily be referenced to update them
         private framehandle array CachedPlayerAbilityLevelFramehandles
-        private framehandle array CachedPlayerAbilityLevelParentFramehandles
         private framehandle array CachedPlayerFramehandles
+        private framehandle array CachedPlayerStorageIndicatorFramehandles
         private framehandle array CachedPlayerIndicatorParentFramehandles
         private framehandle array CachedPlayerIndicatorFramehandles
 
@@ -143,16 +143,10 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             set value = value + offset + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_ITEMS_START_INDEX + 3)) * ICON_SPACING)
         endif
 
-        // Top storage item
-        if (CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX) then
-            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
-            set value = value + offset + ((CurrentColumnIndex - PLAYER_STORAGE_ITEMS_START_INDEX) * ICON_WIDTH) + ((CurrentColumnIndex - PLAYER_STORAGE_ITEMS_START_INDEX) * ABILITY_ICON_SPACING)
-        endif
-
-        // Bottom storage item
-        if (CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX + 1) then
-            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 4) + (ICON_SPACING * 2) // Item and buffer offset
-            set value = value + offset + ((CurrentColumnIndex - (PLAYER_STORAGE_ITEMS_START_INDEX + 1)) * ICON_WIDTH) + ((CurrentColumnIndex - (PLAYER_STORAGE_ITEMS_START_INDEX + 1)) * ICON_SPACING)
+        // Top/bottom storage item
+        if (CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX or CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX + 1) then
+            set offset = PLAYER_DUELS_WIDTH + (ICON_WIDTH * 3) + (ICON_SPACING * 4)
+            set value = value + offset
         endif
 
         // Top 10 row abilities
@@ -234,6 +228,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
     private function CreateIcon takes string iconPath, integer playerId returns nothing
         local framehandle buttonFrameHandle
         local framehandle buttonBackdropFrameHandle
+        local framehandle buttonStorageIndicatorFrameHandle = null
         local integer buttonHandleId
         local integer backdropHandleId
 
@@ -252,6 +247,17 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_TOPLEFT, GetTopLeftX(), GetTopLeftY()) 
             call BlzFrameSetAbsPoint(buttonFrameHandle, FRAMEPOINT_BOTTOMRIGHT, GetTopLeftX() + ICON_WIDTH, GetTopLeftY() - ICON_WIDTH) 
 
+            // Storage indicator
+            if (CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX or CurrentColumnIndex == PLAYER_STORAGE_ITEMS_START_INDEX + 1) then
+                set buttonStorageIndicatorFrameHandle = BlzCreateFrameByType("SPRITE", "StorageItemIndicator", ScoreboardFrameHandle, "", 0)
+                call BlzFrameSetPoint(buttonStorageIndicatorFrameHandle, FRAMEPOINT_BOTTOMLEFT, buttonFrameHandle, FRAMEPOINT_BOTTOMLEFT, -0.001, 0.001)
+                call BlzFrameSetModel(buttonStorageIndicatorFrameHandle, "war3mapImported\\inner_fire_and_smoke_sprite.mdx", 0)
+                call BlzFrameSetScale(buttonStorageIndicatorFrameHandle, 0.26)
+                call BlzFrameSetEnable(buttonStorageIndicatorFrameHandle, false)
+
+                set CachedPlayerStorageIndicatorFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = buttonStorageIndicatorFrameHandle
+            endif
+
             // Save the handle of this button to look it up later for mouse events
             call SaveInteger(IconEventHandles, buttonHandleId, 1, playerId)
             call SaveInteger(IconEventHandles, buttonHandleId, 2, CurrentColumnIndex)
@@ -264,21 +270,31 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             // Retrieve the cached framehandle
             set buttonFrameHandle = CachedPlayerParentFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
             set buttonBackdropFrameHandle = CachedPlayerFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
+            set buttonStorageIndicatorFrameHandle = CachedPlayerStorageIndicatorFramehandles[(playerId * CACHING_BUFFER) + CurrentColumnIndex]
         endif
-        
+
         // Hide the icon if the path is null
         if (iconPath == null) then
             call BlzFrameSetVisible(buttonFrameHandle, false)
+
+            if (buttonStorageIndicatorFrameHandle != null) then
+                call BlzFrameSetVisible(buttonStorageIndicatorFrameHandle, false)
+            endif
         else
             // Apply the icon
             call BlzFrameSetVisible(buttonFrameHandle, true)
             call BlzFrameSetTexture(buttonBackdropFrameHandle, iconPath, 0, true) 
             call BlzFrameSetAllPoints(buttonBackdropFrameHandle, buttonFrameHandle) 
+
+            if (buttonStorageIndicatorFrameHandle != null) then
+                call BlzFrameSetVisible(buttonStorageIndicatorFrameHandle, true)
+            endif
         endif
 
         // Cleanup
         set buttonFrameHandle = null
         set buttonBackdropFrameHandle = null
+        set buttonStorageIndicatorFrameHandle = null
     endfunction
 
     private function CreateText takes string value, integer playerId returns nothing
@@ -404,7 +420,6 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         local integer playerId = GetPlayerId(currentPlayer)
         local unit playerHero = PlayerHeroes[playerId]
         local integer currentAbility
-        //local framehandle abilityLevelParentFrameHandle
         local framehandle abilityLevelFrameHandle
         local integer abilityLevel = 0
 
@@ -477,7 +492,6 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Cleanup
         set playerHero = null
         set abilityLevelFrameHandle = null
-        //set abilityLevelParentFrameHandle = null
     endfunction
 
     private function AddPlayerToScoreboard takes nothing returns nothing
@@ -727,6 +741,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set creditsTextFrameHandle = null
         set closeButtonFrameHandle = null
         set closeIconButtonFrameHandle = null
+        set notesTextFrameHandle = null
     endfunction
 
     private function GetPluralLife takes integer value, string singular, string plural returns string
