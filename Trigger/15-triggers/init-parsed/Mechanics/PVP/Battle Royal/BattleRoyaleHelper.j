@@ -4,6 +4,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
         // Track player's lives during the BR
         integer array PlayerBRDeaths
         integer MaxBRDeathCount = 3
+        integer ShadeCount = 0
 
         // Temp global variables
         private integer forceIndex = 0
@@ -297,7 +298,8 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
         set CurrentPlayerHeroPlacement = 0
         set MaxBRDeathCount = 3
         set WaitingForBattleRoyal = false
-
+        set ShadeCount = 0
+        
         call EventHelpers_FireEventForAllPlayers(EVENT_FUN_BR_ROUND_START, 0, RoundNumber, true)
 
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())

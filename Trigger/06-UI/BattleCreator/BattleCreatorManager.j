@@ -252,6 +252,11 @@ library BattleCreatorManager initializer init requires HeroPassiveDesc, HeroRefr
         local integer brPlayerForceIndex = 0
         local integer aliveForces = 0
 
+        // Don't do anything if there are any shades alive
+        if (ShadeCount > 0) then
+            return false
+        endif
+
         loop
             exitwhen brPlayerForceIndex == BRTeamCount
 

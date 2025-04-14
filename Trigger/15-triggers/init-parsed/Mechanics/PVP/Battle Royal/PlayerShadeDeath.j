@@ -10,6 +10,8 @@ library PlayerShadeDeath initializer init requires IdLibrary, GameInit, CustomGa
         local unit playerHero = PlayerHeroes[GetPlayerId(deadPlayer)]
         local location respawnLocation = GetUnitLoc(deadShade)
 
+        set ShadeCount = ShadeCount - 1
+
         // Respawn the hero
         call ReviveHeroLoc(playerHero, respawnLocation, true)
         call SelectUnitForPlayerSingle(playerHero, deadPlayer)

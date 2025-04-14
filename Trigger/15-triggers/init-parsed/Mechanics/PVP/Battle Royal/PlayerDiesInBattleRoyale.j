@@ -78,6 +78,9 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 call SelectUnitForPlayerSingle(shadeUnit, deadPlayer)
                 call CustomGameEvent_FireEvent(EVENT_PLAYER_ROUND_COMPLETE, EventInfo.createAll(deadPlayer, 0, RoundNumber, true))
 
+                // Track how many shades there are to prevent 
+                set ShadeCount = ShadeCount + 1
+
                 // Cleanup
                 set shadeUnit = null
                 set deadHero = null
