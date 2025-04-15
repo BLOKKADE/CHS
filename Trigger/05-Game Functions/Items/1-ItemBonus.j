@@ -437,6 +437,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		//Speed Blade
 		elseif itemId == SPEED_BLADE_ITEM_ID then
 			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1000 * diff, 0 )
+			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
+			call AddUnitBonus(u, BONUS_MOVEMENT_SPEED, 100 * diff)
 
 		//Bloody Axe
 		elseif itemId == 'I078' then

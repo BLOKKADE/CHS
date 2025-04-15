@@ -29,9 +29,11 @@ library CustomState initializer init requires TimerUtils
         */
         constant integer BONUS_NEGATIVEHPREGEN          = 21
         constant integer BONUS_GLORYREGEN               = 22
-
+        /*
+        constant integer BONUS_MOVEMENT_SPEED          = 23
+        */
         //amount of custom stats
-        constant integer STAT_BONUS_COUNT               = 22
+        constant integer STAT_BONUS_COUNT               = 23
     endglobals
 
     function SetUnitCustomState takes unit u, integer stat, real value returns nothing

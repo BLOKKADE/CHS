@@ -64,7 +64,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
 
         private method updateState takes nothing returns nothing
             //call BJDebugMsg("state: " + I2S(this.state) +", bonus: " + R2S(this.bonus))
-            if state < 11 or state == 21 then
+            if state < 11 or state == 21 or state == 23 then
                 call AddUnitCustomState(this.source, this.state, this.bonus)
             else
                 if state < 18 then
