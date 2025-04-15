@@ -27,6 +27,8 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
             set i = i + 1
             exitwhen i == NOSpells
         endloop
+
+        call RemoveItemFromStock(udg_Draft_DraftBuildings[playerNumber], NON_LUCRATIVE_TOME_ITEM_ID)
     endfunction
 
     function AddDraftSpellToStore takes integer PlayerNumber, integer ChosenSpell, integer i returns nothing
@@ -55,6 +57,10 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
             set i = i + 1
             // call DisplayTextToForce(GetPlayersAll(), ("loop: " + I2S(i) ) )
         endloop
+
+        if not NonLucrativeTomeUsed[timerData.playerNumber] then
+            call AddItemToStock(udg_Draft_DraftBuildings[timerData.playerNumber], NON_LUCRATIVE_TOME_ITEM_ID, 1, 1)
+        endif
 
         call timerData.destroy()
         call ReleaseTimer(t)

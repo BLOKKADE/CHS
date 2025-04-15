@@ -97,8 +97,6 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
                 call GenerateDraftSpells(pid, udg_Draft_NODraftSpells) 
             endif
 
-            call RemoveItemFromStock(udg_Draft_DraftBuildings[pid], NON_LUCRATIVE_TOME_ITEM_ID)
-
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", u, "origin"))
         else
             call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,"The |cfff76863Reroll|r can only be used once per game.")
