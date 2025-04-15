@@ -23,6 +23,11 @@ scope AfterDamage initializer init
             call SetUnitState(DamageSource, UNIT_STATE_LIFE, GetUnitState(DamageSource, UNIT_STATE_LIFE) + Damage.index.damage)
         endif
 
+        //Gnoll Warden
+        if DamageTargetTypeId == GNOLL_WARDEN_UNIT_ID and Damage.index.damage > 0 then
+            call ActivateGnollWardenPassive(DamageTarget, Damage.index.damage)
+        endif
+
         if DamageIsCrit and Damage.index.damage >= 1 then
             if IsPhysDamage() then
                 call CreateTextTagTimerColor( I2S(R2I(Damage.index.damage)) + "!", 1, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 50, 1, 177, 0, 0)

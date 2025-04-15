@@ -36,7 +36,6 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B028', 'A0CT', 0, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01E', 'A08C', DIVINE_BUBBLE_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2(ERUPTION_IMMUNE_BUFF_ID, ERUPTION_IMMUNE_ABILITY_ID, ERUPTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
-        call SetupBuffInfo2('B01K', 'A091', CRYPT_LORD_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B02V', DRUNKEN_HAZE_IGNITE_BUFF_ID, DRUNKEN_HAZE_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B01D', 'A08B', LAST_BREATHS_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B02C', 'A086', MARTIAL_THEFT_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)

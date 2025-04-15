@@ -89,7 +89,7 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
             exitwhen p == null
             if UnitHasItemType(p, 'I06I') then
                 call SetUnitState(p, UNIT_STATE_LIFE, GetUnitState(p, UNIT_STATE_LIFE) + healAmount)
-                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", p, "chest"))
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", p, "origin"))
             endif
             set i = i + 1
         endloop

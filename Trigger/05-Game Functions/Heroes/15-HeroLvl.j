@@ -227,10 +227,18 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, (2.5 + (0.025 * heroLevel)))
         elseif uid == BANSHEE_UNIT_ID then
 
-        elseif uid == CRYPT_LORD_UNIT_ID then      
-            set CryptLordLocustCount.integer[hid] = ((heroLevel - ModuloInteger(heroLevel, 10)) / 10)
-            call SetBonus(u, 0, 60 * heroLevel)
-            call SetBonus(u, 1, 1 + CryptLordLocustCount[hid])
+        elseif uid == GNOLL_WARDEN_UNIT_ID then
+            // restored
+            call SetBonus(u, 0, 0.01 + (0.0001 * heroLevel))
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_HP, 0.01 + (0.0001 * heroLevel))
+
+            //interval
+            call SetBonus(u, 1, 1.0 - ((heroLevel - ModuloInteger(heroLevel, 20)) / 20) * 0.025)
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_INTERVAL, 1.0 - ((heroLevel - ModuloInteger(heroLevel, 20)) / 20) * 0.025)
+
+            //limit
+            call SetBonus(u, 2, 10 + ((heroLevel - ModuloInteger(heroLevel, 40)) / 40))
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_LIMIT, 10 + ((heroLevel - ModuloInteger(heroLevel, 40)) / 40))
         elseif uid == SEER_UNIT_ID then
 
         elseif uid == SATYR_TRICKSTER_UNIT_ID then

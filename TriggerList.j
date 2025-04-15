@@ -201,6 +201,7 @@
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\DarkHunter.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\DoomGuard.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Dreadlord.j"
+//! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\GnollWarden.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Gnome.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Letinant.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Murloc.j"

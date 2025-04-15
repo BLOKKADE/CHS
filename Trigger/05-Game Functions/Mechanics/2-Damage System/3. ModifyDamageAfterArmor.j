@@ -113,12 +113,6 @@ scope ModifyDamageAfterArmor initializer init
             set vampCount = vampCount + 1
         endif
 
-        //Crypt lord Locust
-        if DamageSourceTypeId == CRYPT_LORD_LOCUST_UNIT_ID then
-            set vampAmount = vampAmount + Damage.index.amount
-            set vampCount = vampCount + 1
-        endif
-
         //Dreadlord Passive
         if GetUnitTypeId(DamageSourceHero) == DEADLORD_UNIT_ID then
             set r2 = Damage.index.amount * (0.02 * I2R(GetHeroLevel(DamageSourceHero)) )
@@ -415,7 +409,7 @@ scope ModifyDamageAfterArmor initializer init
 
         if vampCount > 0 and Damage.index.amount > 0 then
             if not IsFxOnCooldownSet(DamageSourceId, 0, 1) then
-                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "origin"))
             endif
             call Vamp(DamageSource, DamageTarget, vampAmount)
         endif
