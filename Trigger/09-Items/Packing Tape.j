@@ -55,6 +55,8 @@ library PackingTape initializer init requires PlayerSummonGroups, SummonInfo, Re
 
             call GetSummonStatFunction(GetUnitTypeId(target)).evaluate(target, totalLevel)
 
+            call BlzSetUnitAttackCooldown(target, RMaxBJ(0.3, BlzGetUnitAttackCooldown(target, 0)), 0)
+
             call BlzSetUnitName(target,GetUnitName(target)+ ": |cff00d9fflevel " + I2S(totalLevel) + "|r")
             call SetWidgetLife(target, BlzGetUnitMaxHP(target))
         endif
