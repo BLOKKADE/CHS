@@ -32,7 +32,7 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
 
         //Flimsy Token
         if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
-            set r2 = r2 + 0.6
+            set r2 = r2 + 0.4
         endif
 
         //Lightning Shield
