@@ -10,18 +10,18 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
 
         //Mega Speed and Glory Attack Cd
         if gloryAttackCdBonus != 0 then
-            set r2 = RMaxBJ(0.40, r1 - gloryAttackCdBonus)
+            set r2 = RMaxBJ(0.60, r1 - gloryAttackCdBonus)
         endif
 
         //Mega Speed
-        if i1 != 0 and r2 > 0.32 then
+        if i1 != 0 and r2 > 0.5 then
             set r2 = r2 - MegaSpeedBonus(u, i1, r2)
         endif
 
         //Speed Blade active: is overriden if already lower than 0.6 from mega speed/default
         if GetUnitAbilityLevel(u, SPEED_BLADE_BUFF_ID) > 0 then
-            if r2 >= 0.6 then
-                set r2 = 0.6
+            if r2 > 0.7 then
+                set r2 = 0.7
             else
                 call RemoveUnitBuff(u, SPEED_BLADE_BUFF_ID)
             endif

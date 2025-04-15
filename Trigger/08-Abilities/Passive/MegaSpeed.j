@@ -5,7 +5,7 @@ library MegaSpeed initializer init requires Table
     endglobals
 
     function MegaSpeedBonus takes unit u, integer lvl, real baseSpeed returns real
-        local real limit = baseSpeed - 0.32
+        local real limit = baseSpeed - 0.50
         local integer hid = GetHandleId(u)
 
         if T32_Tick - MegaSpeedLastAttack[hid] > 6 * 32 then

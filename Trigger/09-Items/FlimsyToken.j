@@ -30,7 +30,7 @@ library FlimsyToken initializer init requires TempAbilSystem
             local thistype this = thistype.setup()
 
             set this.source = source
-            set this.reduction = 0.6
+            set this.reduction = 0.4
             call BlzSetUnitAttackCooldown(source, BlzGetUnitAttackCooldown(source, 0) + this.reduction, 0)
 
             set this.endTick = T32_Tick + R2I(5 * 32)

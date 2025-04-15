@@ -99,18 +99,18 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                     call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
-                else
-                    set ctrl = false
                 endif
+                set ctrl = false
+
                 //Intelligence level bonus
             elseif itemTypeId == INTELLIGENCE_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
                 if GetHeroXP(u) >= 20000  then
                     call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 1)
                     call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
-                else
-                    set ctrl = false
                 endif
+                set ctrl = false
+
                 //Strength level bonus
             elseif itemTypeId  == STRENGTH_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
                 if GetHeroXP(u) >= 20000  then
@@ -118,9 +118,8 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
 
                     call RemoveItem(It)
-                else
-                    set ctrl = false
                 endif
+                set ctrl = false
 
                 //Glory armor
             elseif itemTypeId  == GLORY_ARMOR_TOME_ITEM_ID then
@@ -149,8 +148,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 if BuyGloryItem(pid, itemTypeId) then
                     set GloryRegenLevel[GetHandleId(u)] = GloryRegenLevel[GetHandleId(u)] + 1
                     call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 50)
-                    
-                    
+
                     set gloryBonus = gloryBonus + 50 
                 else
                     set ctrl = false
@@ -228,7 +226,6 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif itemTypeId  == GLORY_HIT_POINTS_TOME_ITEM_ID then
                 if BuyGloryItem(pid, itemTypeId) then
                     call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 300)
-                    
                     
                     set gloryBonus = gloryBonus + 300
                 else
@@ -313,15 +310,13 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif itemTypeId  == GLORY_MOVESPEED_TOME_ITEM_ID then
                 if LoadBoolean(HT, GetHandleId(u), GLORY_MOVESPEED_TOME_ITEM_ID) then
                     call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432You cannot buy more than one |cffdf9432" + GetObjectName(itemTypeId) + "|r")
-                    set ctrl = false
                 elseif BuyGloryItem(pid, itemTypeId) then
                     call BlzSetUnitRealField(u, UNIT_RF_SPEED, 522)
                     set gloryBonus = gloryBonus + 522
                     call SaveBoolean(HT, GetHandleId(u), GLORY_MOVESPEED_TOME_ITEM_ID, true)
-                else
-                    set ctrl = false
                 endif
-            
+                set ctrl = false
+
                 //Income all
             elseif itemTypeId  == INCOME_DEFAULT_TOME_ITEM_ID then   
                 set Income[pid] = Income[pid] + 90
@@ -366,8 +361,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call UnitAddItemById(u,EXPERIENCE_50000_TOME_ITEM_ID)
                 else
                     call PlayerAddGold(GetOwningPlayer(u),8000)  
-                    set ctrl = false
                 endif
+                set ctrl = false
+
                 //Manual of health
             elseif itemTypeId == 'manh' then 
                 call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 50)
