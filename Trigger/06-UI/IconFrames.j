@@ -241,8 +241,11 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 
 			// Player stats
 			elseif NumButton == 8 then
-				set description = "You now have an item stock! Store extra items you can't carry in there, and swap them in during the Battle Royale.|n|n|cffd0ff00Ctrl+Q|r: Swaps items in slot 1.|n|cff00ffffCtrl+W|r: Swaps items in slot 2.|r"
-
+				if ItemStockEnabled then
+					set description = "You now have an item stock! Store extra items you can't carry in there, and swap them in during the Battle Royale.|n|n|cffd0ff00Ctrl+Q|r: Swaps items in slot 1.|n|cff00ffffCtrl+W|r: Swaps items in slot 2.|r"
+				else
+					set description = "When the Battle Royale preperation starts you can store extra items in your item stock, and swap them in during the Battle Royale.|n|n|cffd0ff00Ctrl+Q|r: Swaps items in slot 1.|n|cff00ffffCtrl+W|r: Swaps items in slot 2.|r"
+				endif
 				if GetLocalPlayer() == p then
 					call BlzFrameSetText(TooltipTitleFrame, "|cffd0ff00Storage Box|r")
 					call BlzFrameSetText(TooltipTextFrame, description)

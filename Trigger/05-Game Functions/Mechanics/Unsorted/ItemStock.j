@@ -115,7 +115,6 @@ library ItemStock initializer init requires Table
 
     function SetUpItemStocks takes force players returns nothing
         set ItemStockEnabled = true
-        call BJDebugMsg("Item stock enabled")
         call ForForce(players, function CreateItemStock)
         call UpdateItemStockIcon()
     endfunction

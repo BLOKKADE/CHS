@@ -27,8 +27,6 @@ library GnollWarden initializer init requires FxCooldown, HideEffects
 
         private method heal takes nothing returns nothing
             call SetWidgetLife(this.source, GetWidgetLife(this.source) + amount)
-            call BJDebugMsg("Gnoll Warden Heal: " + R2S(this.amount))
-
             if not IsFxOnCooldownSet(GetHandleId(this.source), GNOLL_WARDEN_UNIT_ID, 1) then
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", this.source, "origin"))
             endif
