@@ -20,6 +20,6 @@ library FrostArmor requires RuneInit, AbilityCooldown, DummyOrder, GetRandomUnit
             exitwhen i > 5
         endloop
 
-        call AbilStartCD(caster, FROST_ARMOR_ABILITY_ID, 15)
+        call AbilStartCD(caster, FROST_ARMOR_ABILITY_ID, 8)
     endfunction
 endlibrary
