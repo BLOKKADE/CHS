@@ -40,6 +40,7 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
         if (BRLivesMode == 2) then
             // Increment the player deaths
             set PlayerBRDeaths[deadPlayerId] = PlayerBRDeaths[deadPlayerId] + 1
+            call UpdateLivesForPlayer(deadPlayer, IMaxBJ(MaxBRDeathCount - PlayerBRDeaths[deadPlayerId], 0), true)
 
             // Don't revive the hero if they died too many times
             if (PlayerBRDeaths[deadPlayerId] > MaxBRDeathCount) then
@@ -52,7 +53,6 @@ library PlayerDiesInBattleRoyale initializer init requires BattleRoyaleHelper, S
                 call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
 
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|cffffcc00" + GetPlayerNameColour(deadPlayer) + " has no lives left and will not respawn.|r")
-
                 // Set the status of their death in the BR
                 call StopRectLeaveDetection(GetHandleId(deadHero))
                 call UpdateScoreboardPlayerDies(deadPlayer, RoundNumber)
