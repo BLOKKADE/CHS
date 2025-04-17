@@ -249,7 +249,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set gloryBonus = BlzGetUnitAttackCooldown(u, 0) - ModifyAttackCooldown(u, GetHandleId(u))
                 else
                     if LoadReal(HT, GetHandleId(u), - 1001) - (LoadReal(HT, GetHandleId(u), - 1001) * GloryAttackCdBonus.real[GetHandleId(u)]) <= 0.40 then
-                        call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432Glory Attack Cooldown cannot go lower than 0.40.|r")
+                        call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432Glory Attack Cooldown cannot go lower than 0.60.|r")
                     endif
                     set ctrl = false
                 endif  
