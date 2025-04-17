@@ -586,6 +586,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         set GloryRegenLevel = Table.create()
         set GloryAttackCdLevel = Table.create()
         set GloryAttackCdBonus = Table.create()
+        set GloryPvpBonus = Table.create()
     endfunction
 
 endlibrary
