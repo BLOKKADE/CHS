@@ -185,7 +185,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     private function TestMode takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer())
         call AdjustPlayerStateBJ(99999999, GetTriggerPlayer(), PLAYER_STATE_RESOURCE_GOLD)
-        set Glory[pid] = Glory[pid] + 2147483647
+        set Glory[pid] = Glory[pid] + 10000000
         call ResourseRefresh(GetTriggerPlayer())
         call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Added Max |cfffaf61cGold|r and |cff8bfdfdGlory|r")
     endfunction
