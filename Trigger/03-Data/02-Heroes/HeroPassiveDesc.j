@@ -236,7 +236,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(MEDIVH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +1.5 magic power." )
         
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )
-        call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's current hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it. Target's become immune for 0.35 seconds after being hit. ")
+        call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's current hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it. Targets become immune for 0.35 seconds after being hit. ")
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Cannibal Frenzy: +0.025% attack damage." )
 
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp" )
