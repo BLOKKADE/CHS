@@ -247,9 +247,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Finger of Death
-        set i1 = GetUnitAbilityLevel(DamageSource, FINGER_OF_DEATH_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == FINGER_OF_DEATH_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSource, true) * (0.5 * i1)
+        if DamageSourceAbility == FINGER_OF_DEATH_ABILITY_ID then
+            set r1 = GetHeroInt(DamageSource, true) * (0.5 * DamageSourceAbilityLevel)
             if Damage.index.damage < r1 then
                 set Damage.index.damage = r1
             endif
@@ -258,8 +257,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Starfall
-        set i1 = GetUnitAbilityLevel(DamageSource, STARFALL_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == STARFALL_ABILITY_ID then
+        if DamageSourceAbility == STARFALL_ABILITY_ID then
             if GetUnitAbilityLevel(DamageTarget, STARFALL_BUFF_ABILITY_ID) == 1 then
                 set StarfallTable.real[DamageTargetId] = StarfallTable.real[DamageTargetId] + 0.05
                 set Damage.index.damage = Damage.index.damage * (1 + StarfallTable.real[DamageTargetId])
@@ -299,9 +297,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Crushing Wave
-        set i1 = GetUnitAbilityLevel(DamageSource, CRUSHING_WAVE_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
-            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * i1))))
+        if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
+            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * DamageSourceAbilityLevel))))
         endif
 
         //Demon Hunter
@@ -337,9 +334,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Acid Spray
-        set i1 = GetUnitAbilityLevel(DamageSource, ACID_SPRAY_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSource, true) * (1.5 + (0.15 * i1))
+        if DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
+            set r1 = GetHeroInt(DamageSourceHero, true) * (1.5 + (0.15 * DamageSourceAbilityLevel))
             if Damage.index.damage < r1 then
                 set Damage.index.damage = r1
             endif
@@ -404,9 +400,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         // Carrion Swarm
-        set i1 = GetUnitAbilityLevel(DamageSource, CARRION_SWARM_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
-            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.0462 + (0.0038 * i1))
+        if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
+            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.0462 + (0.0038 * DamageSourceAbilityLevel))
         endif
 
         //Frost Circlet

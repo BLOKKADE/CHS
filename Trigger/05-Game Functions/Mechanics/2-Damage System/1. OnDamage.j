@@ -49,7 +49,6 @@ scope OnDamage initializer init
     endfunction
 
     private function OnDamage takes nothing returns nothing
-
         set DamageSource = Damage.index.sourceUnit
         set DamageTarget = Damage.index.targetUnit
 
@@ -119,6 +118,8 @@ scope OnDamage initializer init
         else
             set DamageSourceAbility = Damage.index.abilitySource
         endif
+
+        set DamageSourceAbilityLevel = GetUnitAbilityLevel(DamageSource, DamageSourceAbility)
 
         /*
         //check if onhit is set

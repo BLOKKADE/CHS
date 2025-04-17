@@ -18,6 +18,7 @@ globals
     unit DamageTargetHero = null
 
     integer DamageSourceAbility = 0
+    integer DamageSourceAbilityLevel = 0
 
     // Damage source stats
     real DamageSourceMagicPower = 0
