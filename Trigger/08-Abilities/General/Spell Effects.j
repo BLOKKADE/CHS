@@ -230,12 +230,12 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     endif
 
                     if GetUnitAbilityLevel(caster, INNER_FIRE_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(caster, INNER_FIRE_ABILITY_ID) == 0 then
-                        call CastInnerFireOnSpellCast(caster, abilLvl)
+                        call CastInnerFireOnSpellCast(caster, GetUnitAbilityLevel(caster, INNER_FIRE_ABILITY_ID))
                     endif
 
                     if GetUnitAbilityLevel(caster, FROST_ARMOR_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(caster, FROST_ARMOR_ABILITY_ID) == 0 then
                         if IsSpellElement(caster, abilId, Element_Water) or IsSpellElement(caster, abilId, Element_Cold) then
-                            call CastFrostArmorOnSpellCast(caster, abilLvl)
+                            call CastFrostArmorOnSpellCast(caster, GetUnitAbilityLevel(caster, FROST_ARMOR_ABILITY_ID))
                         endif
                     endif
 
