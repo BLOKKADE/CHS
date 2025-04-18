@@ -75,15 +75,15 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         if (PlayerDiedInRound[pid]) then
             set PlayerDiedInRound[pid] = false
             if ModeNoDeath then
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300died!|r, but it's immortal mode anyway. 😩")
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300has died!|r")
             else
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffff7300has died and lost a life!|r |cffbe5ffd" + I2S(Lives[pid]) + " remaining.|r")
             endif
         else
             if (roundClearXpBonus == 0) then
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r")
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00has survived the level!|r")
             else
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00survived the level!|r "+ color +"(+" + I2S(roundClearXpBonus) + " exp)|r")
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00has survived the level!|r "+ color +"(+" + I2S(roundClearXpBonus) + " exp)|r")
                 call AddHeroXPSwapped(roundClearXpBonus, PlayerHeroes[pid], true)
             endif
         endif

@@ -64,14 +64,8 @@ library PlayerHeroDeath initializer init requires RandomShit, DebugCommands, Ach
         
         //immortal mode
         if ModeNoDeath == true and BrStarted == false and GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT then
-            call ReviveHero(currentUnit, GetLocationX(RectMidArenaCenter) + GetRandomReal(-300, 300), GetLocationY(RectMidArenaCenter) + GetRandomReal(-300, 300), true)
-            call AchievementsFrame_TryToSummonPet(ps.getPetIndex(), currentPlayer, false)
+            call TimerStart(NewTimerEx(currentPlayerId), 1, false, function EnableDeathTrigger)
             set PlayerDiedInRound[currentPlayerId] = true
-
-            call FixAbominationPassive(currentUnit)
-            if not CamMoveDisabled[currentPlayerId] then
-                call PanCameraToForPlayer(currentPlayer, GetUnitX(currentUnit), GetUnitY(currentUnit))
-            endif
 
             call GroupEnumUnitsInRect(ENUM_GROUP, PlayerArenaRects[currentPlayerId], Condition(function RemoveUnitsInArena))
             
