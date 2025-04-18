@@ -9,7 +9,7 @@ library DisableAbilities initializer init requires RandomShit, DummySpell
             return
         endif
 
-        if CheckIfCastAllowed(u) or ((p != Player(8) and p != Player(11))  and CurrentlyFighting[GetPlayerId(p)] == false) then
+        if CheckIfCastAllowed(u) or ((p != Player(8) and p != Player(11)) and CurrentlyFighting[GetPlayerId(p)] == false) then
             call IssueImmediateOrder(u, "stop")
             //call BJDebugMsg(GetUnitName(u) +  "disable abilities stop")
         endif
