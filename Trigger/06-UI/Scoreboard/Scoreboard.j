@@ -38,6 +38,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant real PLAYER_DUELS_WIDTH                        = 0.043
 
         // Colors
+        private constant string ABILITY_LEVEL_COLOR                     = "|cfffff8b9"	
         private constant string BR_WINNER_STATUS_COLOR                  = "|cfffcff4a"	
         private constant string BR_LIVES_COLOR                          = "|cffff3e25"	
         private constant string FELL_IN_BR_STATUS_COLOR                 = "|cffff9925"	
@@ -58,8 +59,8 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         private constant string PLAYER_STATS_COLOR                      = "|cffd0ff00"
         private constant string PVP_LOSSES_COLOR                        = "|cffdd2c00"
         private constant string PVP_WINS_COLOR                          = "|cffbfff81"
+        private constant string STORAGE_ITEM_COLOR                      = "|cffec20ff"	
         private constant string SURVIVED_UNTIL_STATUS_COLOR             = "|cffdf50e4"	
-        private constant string ABILITY_LEVEL_COLOR                     = "|cfffff8b9"	
 
         private constant string COLOR_END_TAG                           = "|r"
         private constant string SLASH                                   = "|cff858585/|r"
@@ -333,7 +334,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set playerNameTextFrameHandle = null
     endfunction
 
-    private function UpdatePlayerItem takes item currentItem, integer itemIndex, integer playerId returns nothing
+    private function UpdatePlayerItem takes item currentItem, integer itemIndex, integer playerId, boolean isStorageItem returns nothing
         local integer currentItemTypeId
 
         if (currentItem != null) then
@@ -348,7 +349,12 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
                 // Cache the tooltip information about the item
                 set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = GetItemName(currentItem)
-                set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0)
+
+                if (isStorageItem) then
+                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0) + "|n|n" + STORAGE_ITEM_COLOR + "This item is in storage!" + COLOR_END_TAG
+                else
+                    set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = BlzGetAbilityExtendedTooltip(currentItemTypeId, 0)
+                endif
             endif
         else
             // Hide the icon if something was there
@@ -376,7 +382,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
                 set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
 
-                call UpdatePlayerItem(currentItem, itemSlotIndex, playerId)
+                call UpdatePlayerItem(currentItem, itemSlotIndex, playerId, false)
 
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
@@ -387,23 +393,23 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             // Storage unit actually exists
             if (storageUnit != null) then
                 // Storage item 1
-                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 0), itemSlotIndex, playerId)
+                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 0), itemSlotIndex, playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
 
                 // Storage item 2
-                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 1), itemSlotIndex, playerId)
+                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 1), itemSlotIndex, playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
             // Storage unit doesn't exist
             else
                 // Storage item 1
-                call UpdatePlayerItem(null, itemSlotIndex, playerId)
+                call UpdatePlayerItem(null), itemSlotIndex, playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
 
                 // Storage item 2
-                call UpdatePlayerItem(null, itemSlotIndex, playerId)
+                call UpdatePlayerItem(null, itemSlotIndex, playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
             endif
