@@ -219,8 +219,6 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 else
                     set ctrl = false
                 endif
-                
-                set p = null // Clean up
 
                 //glory hit points
             elseif itemTypeId  == GLORY_HIT_POINTS_TOME_ITEM_ID then
