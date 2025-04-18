@@ -2,6 +2,7 @@ library ItemStock initializer init requires Table
 
     globals
         Table ItemStock
+        Table ItemSwapCooldown
 
         constant string ItemStockDisabledIcon = "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRiderlessHorse.blp"
         constant string ItemStockEnabledIcon = "ReplaceableTextures\\CommandButtons\\BTNRiderlessHorse.blp"
@@ -23,6 +24,21 @@ library ItemStock initializer init requires Table
 
         if (not ItemStockEnabled) or sheep == null or hero == null then
             call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|cffff0000Item stock is disabled.|r")
+
+            set sheep = null
+            set hero = null
+            set heroItem = null
+            set sheepItem = null
+            return
+        endif
+
+        if T32_Tick < ItemSwapCooldown.integer[pid] then
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|cffff0000Item swap is on cooldown: " + R2S((ItemSwapCooldown.integer[pid] - T32_Tick) / 32) + " seconds left|r")
+
+            set sheep = null
+            set hero = null
+            set heroItem = null
+            set sheepItem = null
             return
         endif
 
@@ -55,6 +71,8 @@ library ItemStock initializer init requires Table
             else
                 call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|ccffdde31Added|r |ccf31effd" + sheepItemName + "|r |ccffdde31to your hero|r")
             endif
+
+            set ItemSwapCooldown.integer[pid] = T32_Tick + (32 * 30)
         else
             call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|ccffdde31No items to swap|r")
         endif
@@ -100,10 +118,6 @@ library ItemStock initializer init requires Table
         call ItemStock.remove(pid)
     endfunction
 
-    public function UpdateItemStockIcon takes nothing returns nothing
-		call BlzFrameSetTexture(ButtonId[8], "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRiderlessHorse.blp", 0, true)
-	endfunction
-
     function CreateItemStock takes nothing returns nothing
         local integer pid = GetPlayerId(GetEnumPlayer())
 
@@ -116,7 +130,7 @@ library ItemStock initializer init requires Table
     function SetUpItemStocks takes force players returns nothing
         set ItemStockEnabled = true
         call ForForce(players, function CreateItemStock)
-        call UpdateItemStockIcon()
+        call BlzFrameSetTexture(ButtonId[8], "ReplaceableTextures\\CommandButtons\\BTNRiderlessHorse.blp", 0, true)
     endfunction
 
     function GetItemStock takes integer pid returns unit
@@ -125,6 +139,7 @@ library ItemStock initializer init requires Table
 
     private function init takes nothing returns nothing
         set ItemStock = Table.create()
+        set ItemSwapCooldown = Table.create()
     endfunction
 
 endlibrary
