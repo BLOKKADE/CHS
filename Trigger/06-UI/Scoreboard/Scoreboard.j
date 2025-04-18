@@ -412,7 +412,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
                 call UpdatePlayerItem(null, playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
-                set Flip = true
+            //    set Flip = true
             endif
         endif
 
