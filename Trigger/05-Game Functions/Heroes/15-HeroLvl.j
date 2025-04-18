@@ -229,7 +229,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
 
         elseif uid == GNOLL_WARDEN_UNIT_ID then
             // restored
-            call SetBonus(u, 0, 0.01 + (0.0001 * heroLevel))
+            call SetBonus(u, 0, 1 + (0.01 * heroLevel))
             call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_HP, 0.01 + (0.0001 * heroLevel))
 
             //interval
