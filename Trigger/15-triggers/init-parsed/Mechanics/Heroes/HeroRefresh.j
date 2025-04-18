@@ -14,14 +14,18 @@ library HeroRefresh initializer init requires RandomShit, NewBonus, CustomState
             call RemoveHeroAbilities(u)
 
             call ResetUnitCustomState(u)
-            
-            loop
-                call RemoveUnitBonus(u, i)
-                call RemoveUnitBonusReal(u, i)
 
-                set i = i + 1
-                exitwhen i > 20
-            endloop
+            call RemoveUnitBonus(u, BONUS_DAMAGE)
+            call RemoveUnitBonus(u, BONUS_ARMOR)
+            call RemoveUnitBonus(u, BONUS_AGILITY)
+            call RemoveUnitBonus(u, BONUS_STRENGTH)
+            call RemoveUnitBonus(u, BONUS_INTELLIGENCE)
+            call RemoveUnitBonus(u, BONUS_HEALTH)
+            call RemoveUnitBonus(u, BONUS_MANA)
+            call RemoveUnitBonusReal(u, BONUS_HEALTH_REGEN)
+            call RemoveUnitBonusReal(u, BONUS_MANA_REGEN)
+            call RemoveUnitBonusReal(u, BONUS_ATTACK_SPEED)
+            call RemoveUnitBonus(u, BONUS_MOVEMENT_SPEED)
         endif
 
         call UnitRemoveAbility(u, REINCARNATION_ABILITY_ID)
