@@ -21,7 +21,7 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula
                 set udg_NextDamageAbilitySource = LIGHTNING_SHIELD_ABILITY_ID
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\LightningShield\\LightningShieldBuff.mdl", p, "chest"))
                 call Damage.applyMagic(this.source, p, GetSpellValue(20, 10, this.level), false, DAMAGE_TYPE_MAGIC)
-                call TempAbil.create(p, LIGHTNING_SHIELD_ABILITY_ID, 5)
+                call TempAbil.create(p, LIGHTNING_SHIELD_DUMMY_ABILITY_ID, 5)
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
         endmethod
