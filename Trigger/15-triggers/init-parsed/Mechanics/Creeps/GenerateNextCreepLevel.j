@@ -529,10 +529,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff78729eBlock|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_BLOCK) - blockBonus)) + " + |cff78729e" + I2S(R2I(blockBonus)) + "|r|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bc7f1Magic power|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_MAGICPOW) - magicPowerBonus)) + " + |cff9bc7f1" + I2S(R2I(magicPowerBonus)) + "|r|n"
                             set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bf1a9Magic protection|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_MAGICRES) - magicDefBonus)) + " + |cff9bf1a9" + I2S(R2I(magicDefBonus)) + "|r|n"
-                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_EVASION) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r"
+                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff1cc9bEvasion|r: " + I2S(R2I(GetUnitCustomState(creep, BONUS_EVASION) - evasionBonus)) + " + |cfff1cc9b" + I2S(R2I(evasionBonus)) + "|r |n"
                         endif
 
-                        set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bf1a9Movespeed|r: " + I2S(RoundCreepMoveSpeed) + "|n"
+                        set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bf1a9Movespeed|r: " + I2S(RoundCreepMoveSpeed)
                         //call BJDebugMsg("e")
                         set s = s + RoundAbilities
 
