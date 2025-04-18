@@ -334,15 +334,15 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         set playerNameTextFrameHandle = null
     endfunction
 
-    private function UpdatePlayerItem takes item currentItem, integer itemIndex, integer playerId, boolean isStorageItem returns nothing
+    private function UpdatePlayerItem takes item currentItem, integer playerId, boolean isStorageItem returns nothing
         local integer currentItemTypeId
 
         if (currentItem != null) then
             set currentItemTypeId = GetItemTypeId(currentItem)
 
             // Only update the data if it changed
-            if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemIndex] != currentItemTypeId) then
-                set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemIndex] = currentItemTypeId
+            if (CachedPlayerItems[(playerId * CACHING_BUFFER) + CurrentColumnIndex] != currentItemTypeId) then
+                set CachedPlayerItems[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = currentItemTypeId
 
                 // Display the icon
                 call CreateIcon(BlzGetItemIconPath(currentItem), playerId)
@@ -358,14 +358,14 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             endif
         else
             // Hide the icon if something was there
-            if (CachedPlayerItems[(playerId * CACHING_BUFFER) + itemIndex] != -1) then
+            if (CachedPlayerItems[(playerId * CACHING_BUFFER) + CurrentColumnIndex] != -1) then
                 call CreateIcon(null, playerId)
             endif
 
             // Wipe the tooltip information and itemId
             set CachedPlayerTooltipNames[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
             set CachedPlayerTooltipDescriptions[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = ""
-            set CachedPlayerItems[(playerId * CACHING_BUFFER) + itemIndex] = -1
+            set CachedPlayerItems[(playerId * CACHING_BUFFER) + CurrentColumnIndex] = -1
         endif
     endfunction
 
@@ -382,7 +382,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
                 set currentItem = UnitItemInSlot(playerHero, itemSlotIndex)
 
-                call UpdatePlayerItem(currentItem, itemSlotIndex, playerId, false)
+                call UpdatePlayerItem(currentItem, playerId, false)
 
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
@@ -393,25 +393,26 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             // Storage unit actually exists
             if (storageUnit != null) then
                 // Storage item 1
-                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 0), itemSlotIndex, playerId, true)
+                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 0), playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
 
                 // Storage item 2
-                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 1), itemSlotIndex, playerId, true)
+                call UpdatePlayerItem(UnitItemInSlot(storageUnit, 1), playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
             // Storage unit doesn't exist
             else
                 // Storage item 1
-                call UpdatePlayerItem(null), itemSlotIndex, playerId, true)
+                call UpdatePlayerItem(null, playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
 
                 // Storage item 2
-                call UpdatePlayerItem(null, itemSlotIndex, playerId, true)
+                call UpdatePlayerItem(null, playerId, true)
                 set CurrentColumnIndex = CurrentColumnIndex + 1
                 set itemSlotIndex = itemSlotIndex + 1
+                set Flip = true
             endif
         endif
 
