@@ -175,6 +175,9 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(GHOUL_UNIT_ID, 0, "|cffe7544aAttack damage bonus|r: ,0,%%")
 
+        call SetBonusStr(CRYPT_LORD_UNIT_ID, 0, "|cffe7544aLocust damage|r: ,0,")
+        call SetBonusStr(CRYPT_LORD_UNIT_ID, 1, "|cffd6e049Locust count|r: ,0,")
+
         call SetBonusStr(GNOLL_WARDEN_UNIT_ID, 0, "|cffe7544aRestored damage|r: ,0,%%")
         call SetBonusStr(GNOLL_WARDEN_UNIT_ID, 1, "|cffd6e049Heal interval|r: ,0,")
         call SetBonusStr(GNOLL_WARDEN_UNIT_ID, 2, "|cff4daed4Limit|r: ,0,")

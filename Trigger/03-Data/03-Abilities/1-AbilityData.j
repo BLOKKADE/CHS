@@ -1336,6 +1336,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(TAUREN_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(MEDIVH_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(CENTAUR_ARCHER_UNIT_ID, Element_Blood, 1)
+        call SetObjectElement(CRYPT_LORD_UNIT_ID, Element_Dark, 1)
+        call SetObjectElement(CRYPT_LORD_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(GNOLL_WARDEN_UNIT_ID, Element_Wild, 1)
         call SetObjectElement(MORTAR_TEAM_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(WOLF_RIDER_UNIT_ID, Element_Wind, 1)

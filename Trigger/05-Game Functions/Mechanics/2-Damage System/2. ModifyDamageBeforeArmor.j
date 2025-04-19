@@ -174,6 +174,10 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        if DamageSourceAbility == CRYPT_LORD_UNIT_ID then
+            set Damage.index.damage = 60 * GetHeroLevel(DamageSourceHero)
+        endif
+
         if Damage.index.damage <= 0 then
             set Damage.index.damage = 0
             return
@@ -719,6 +723,11 @@ scope ModifyDamageBeforeArmor initializer init
                 set Damage.index.damage =   Damage.index.damage*(DamageSourceMagicPower + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)/ 100 )
                 //call BJDebugMsg("src: " + GetUnitName(DamageSource) + "dmg: " + R2S(Damage.index.damage) + "magic pow: " + R2S((DamageSourceMagicPower + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)/ 100 )))
             endif   
+        endif
+
+        //Gnoll Warden
+        if DamageTargetTypeId == GNOLL_WARDEN_UNIT_ID and Damage.index.damage > 0 then
+            call ActivateGnollWardenPassive(DamageTarget, Damage.index.damage)
         endif
 
         //Block

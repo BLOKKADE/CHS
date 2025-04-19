@@ -13,7 +13,7 @@ scope OnDamage initializer init
                 return
             endif
 
-            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID or DamageSourceAbility == ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID then
+            if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID or DamageSourceAbility == ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID or DamageSourceAbility == CRYPT_LORD_UNIT_ID then
                 set Damage.index.damageType = DAMAGE_TYPE_NORMAL
             endif
 
@@ -113,8 +113,13 @@ scope OnDamage initializer init
                 set DamageSourceId = GetDummyId(DamageSource)
                 set DamageSourceMagicPower = DamageSourceMagicPower + (GetUnitCustomState(DamageSource, BONUS_MAGICPOW) / 100)
             endif
+
+            if DamageSourceTypeId == CRYPT_LORD_LOCUST_UNIT_ID then
+                set DamageSourceAbility = CRYPT_LORD_UNIT_ID
+            else
             //call BJDebugMsg("get das: " + GetObjectName(DummyAbilitySource[DamageSourceId]))
-            set DamageSourceAbility = DummyAbilitySource[DamageSourceId]
+                set DamageSourceAbility = DummyAbilitySource[DamageSourceId]
+            endif
         else
             set DamageSourceAbility = Damage.index.abilitySource
         endif
@@ -157,7 +162,7 @@ scope OnDamage initializer init
         set DamageIsSuddenDeath = DamageSourceTypeId == SUDDEN_DEATH_UNIT_ID
 
         //modified damage source after this, so can't detect dummy units, those need to go ^^^
-        if DamageSourceTypeId == PRIEST_1_UNIT_ID or DamageSourceTypeId == SUDDEN_DEATH_UNIT_ID or DamageSourceTypeId == 'n01L' then
+        if DamageSourceTypeId == PRIEST_1_UNIT_ID or DamageSourceTypeId == SUDDEN_DEATH_UNIT_ID or DamageSourceTypeId == 'n01L' or DamageSourceTypeId == CRYPT_LORD_LOCUST_UNIT_ID then
             set DamageSource = DamageSourceHero
             set DamageSourceTypeId = GetUnitTypeId(DamageSource)
             set DamageSourceId = GetHandleId(DamageSource)

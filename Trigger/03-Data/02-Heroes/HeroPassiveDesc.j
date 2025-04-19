@@ -242,6 +242,10 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp" )
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 40% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
         
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroCryptLord.blp" )
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Locust Swarm: Once every 10 seconds the Hero spawns 1 Locust at its current location that flies around attacking nearby enemies once every second, dealing 60 |cffff8080physical damage|r and healing the hero for the damage dealt. Lasts 10 seconds.|n|nDamage dealt by the Locusts count as the Hero's damage. Locusts are not considered summons. [|cff96ffffStable|r][|cffff9696Lifesteal|r]")
+        call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Locust Swarm: +60 attack damage. (|cff68eef3Every 10 levels|r) +1 Locust spawned." )
+
         call InitHeroDesc(GNOLL_WARDEN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGnollWarden.blp" )
         call InitHeroDesc(GNOLL_WARDEN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Forest Salve: When the Hero takes damage, it restores hit points equal to 1.0% of the damage taken by the Hero every second for 3 seconds. When the Hero has 10 salves active, it goes on cooldown for 1 second. [|cff96ffffStable|r]")
         call InitHeroDesc(GNOLL_WARDEN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Forest Salve: +0.01% healing amount. (|cff68eef3Every 20 levels|r) -0.025 time between healing intervals. (|cff68eef3Every 40 levels|r) Maximum applied salves increased by 1.")

@@ -26,6 +26,7 @@ library IdLibrary initializer init
         constant integer SUDDEN_DEATH_UNIT_ID                           = 'n00V'
         constant integer SUDDEN_DEATH_ABILITY_ID                        = 'A0CU'
         constant integer SHADE_BR_RESPAWN_UNIT_ID                       = 'u009'
+        constant integer CRYPT_LORD_PASSIVE_UNIT_ID                     = 'h00H'
 
         constant integer DRAFT_BUY_UNIT_ID                              = 'h00C'
         constant integer DRAFT_UPGRADE_UNIT_ID                          = 'h00D'
@@ -83,6 +84,7 @@ library IdLibrary initializer init
         constant integer PARASITE_1_UNIT_ID                             = 'ncfs'
         constant integer PHOENIX_1_UNIT_ID                              = 'h009'
         constant integer POCKET_FACTORY_1_UNIT_ID                       = 'n010'
+        constant integer CRYPT_LORD_LOCUST_UNIT_ID                      = 'u008'
         
         constant integer SKELETON_BATTLEMASTER_1_UNIT_ID                = 'n015'
         constant integer SKELETON_MAGE_1_UNIT_ID                        = 'uskm'
@@ -128,6 +130,7 @@ library IdLibrary initializer init
         constant integer GNOME_MASTER_UNIT_ID                           = 'H019'
         constant integer GREEDY_GOBLIN_UNIT_ID                          = 'N02P'
         constant integer GNOLL_WARDEN_UNIT_ID                           = 'H01J'
+        constant integer CRYPT_LORD_UNIT_ID                             = 'U00A'
         constant integer HUNTRESS_UNIT_ID                               = 'N00R'
         constant integer LICH_UNIT_ID                                   = 'H018'
         constant integer LIEUTENANT_UNIT_ID                             = 'E000'
@@ -1175,6 +1178,7 @@ library IdLibrary initializer init
         call SUMMONS.add(FEARLESS_DEFENDER_CAPTAIN_UNIT_ID)
         call SUMMONS.add(BONE_ARMOR_SKELETON_UNIT_ID)
         call SUMMONS.add(FAERIE_DRAGON_UNIT_ID)
+        call SUMMONS.add(CRYPT_LORD_LOCUST_UNIT_ID)
 
         // Dummy units
         set DUMMIES = StaticIdGroup.create()
@@ -1186,6 +1190,7 @@ library IdLibrary initializer init
         call DUMMIES.add(DRAFT_UPGRADE_UNIT_ID)
         call DUMMIES.add(SUDDEN_DEATH_UNIT_ID)
         call DUMMIES.add(SHADE_BR_RESPAWN_UNIT_ID)
+        call DUMMIES.add(CRYPT_LORD_PASSIVE_UNIT_ID)
 
         // Raise Dead Units
         set SKELLIESCAPTAINS = StaticIdGroup.create()
