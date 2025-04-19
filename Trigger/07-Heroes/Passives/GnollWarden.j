@@ -52,6 +52,8 @@ library GnollWarden initializer init requires FxCooldown, HideEffects
             set this.nextTick = T32_Tick + R2I(GetGnollWardenPassiveInfo(this.source, GNOLL_WARDEN_PASSIVE_INTERVAL) * 32)
             set this.endTick = T32_Tick + GNOLL_WARDEN_PASSIVE_DURATION * 32
 
+            call CreateTextTagTimerColor("+" + R2S(this.amount) + "|r", 1, GetUnitX(this.source) , GetUnitY(this.source), 50 , 1, 50, 255, 50)
+
             call SetGnollWardenPassive(this.source, GNOLL_WARDEN_PASSIVE_CURRENT, GetGnollWardenPassiveInfo(this.source, GNOLL_WARDEN_PASSIVE_CURRENT) + 1)
 
             call this.startPeriodic()
