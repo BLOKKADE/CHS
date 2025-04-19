@@ -77,6 +77,8 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call StartScoreboardUpdate() // Start the automatic updating of the scoreboard
         call UpdateRewardsPrimaryStatIcon() // Update the primary stat icon for each player
 
+        call SetupHeroCamera_DisableHeroSelectionForcedCamera()
+
         call PlaySoundBJ(udg_sound11)
         call DisplayTextToForce(GetPlayersAll(), "|c000070C0Get Ready!|r")
         call TriggerSleepAction(0.00)
