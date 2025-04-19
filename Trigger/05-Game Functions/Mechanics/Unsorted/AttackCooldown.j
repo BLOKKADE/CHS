@@ -36,7 +36,7 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
         endif
 
         //Lightning Shield
-        if GetUnitAbilityLevel(u, LIGHTNING_SHIELD_BUFF_ID) > 0 then
+        if GetUnitAbilityLevel(u, LIGHTNING_SHIELD_DUMMY_ABILITY_ID) > 0 then
             set r2 = r2 + 0.2
         endif
 

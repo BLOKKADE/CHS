@@ -50,6 +50,7 @@
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\03-Abilities\Reincarnation.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\03-Abilities\SpellFormula.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\03-Abilities\TempAbilSystem.j"
+//! import "C:\CHS\CHS/Trigger\02-Game Libraries\03-Abilities\TempAttackCd.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\03-Abilities\ToggleAbility.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\04-Items\EndOfRoundItem.j"
 //! import "C:\CHS\CHS/Trigger\02-Game Libraries\04-Items\ShopIndex.j"
