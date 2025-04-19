@@ -32,8 +32,8 @@ library ItemStock initializer init requires Table
             return
         endif
 
-        if T32_Tick < ItemSwapCooldown.integer[pid] then
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|cffff0000Item swap is on cooldown: " + R2S((ItemSwapCooldown.integer[pid] - T32_Tick) / 32) + " seconds left|r")
+        if BrStarted and T32_Tick < ItemSwapCooldown.integer[pid] then
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|cffff0000Item swap is on cooldown: |r" + R2S((ItemSwapCooldown.integer[pid] - T32_Tick) / 32) + "s")
 
             set sheep = null
             set hero = null
