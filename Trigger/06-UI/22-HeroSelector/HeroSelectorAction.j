@@ -216,7 +216,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[48] = WOLF_RIDER_UNIT_ID
         set HeroSelectorUnitCode[49] = MURLOC_WARRIOR_UNIT_ID
         set HeroSelectorUnitCode[50] = YETI_UNIT_ID
-        set HeroSelectorUnitCode[51] = GNOLL_WARDEN_UNIT_ID
+        //set HeroSelectorUnitCode[51] = GNOLL_WARDEN_UNIT_ID
 
         set index = 1
         //add from index 1 all random only heroes
@@ -281,7 +281,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(GHOUL_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(BANSHEE_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(CRYPT_LORD_UNIT_ID, categoryStr)
-        call HeroSelectorAddUnitCategory(GNOLL_WARDEN_UNIT_ID, categoryInt)
+        //call HeroSelectorAddUnitCategory(GNOLL_WARDEN_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(SEER_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(FALLEN_RANGER_UNIT_ID, categoryAgi)
         call HeroSelectorAddUnitCategory(WAR_GOLEM_UNIT_ID, categoryStr)
