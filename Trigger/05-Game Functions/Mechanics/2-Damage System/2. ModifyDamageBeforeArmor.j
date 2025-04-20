@@ -275,7 +275,7 @@ scope ModifyDamageBeforeArmor initializer init
         call SetCritDamage()
 
         //Yeti cold based crit negation
-        if DamageTargetTypeId == YETI_UNIT_ID and DamageIsCrit and GetRandomReal(0, 1) < 0.08 * GetUnitElementCount(DamageTarget, Element_Cold) then
+        if DamageTargetTypeId == YETI_UNIT_ID and DamageIsCrit and GetRandomInt(1, 100) < (8 * GetUnitElementCount(DamageTarget, Element_Cold)) * DamageTargetLuck then
             set Damage.index.damage = 0
             return
         endif

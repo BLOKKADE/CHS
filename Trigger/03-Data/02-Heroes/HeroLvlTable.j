@@ -164,7 +164,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(TROLL_BERSERKER_UNIT_ID, 0, "|cffe7544aAttack cooldown reduction bonus|r: ,0,%%")
 
-        call SetBonusStr(YETI_UNIT_ID, 0, "|cffe7544aStrength bonus|r: ,0,")
+        call SetBonusStr(YETI_UNIT_ID, 0, "|cffe7544aStrength bonus|r: ,0,%")
 
         call SetBonusStr(SATYR_TRICKSTER_UNIT_ID, 0, "|cffe7544aEvasion bonus|r: ,0,")
         call SetBonusStr(SATYR_TRICKSTER_UNIT_ID, 1, "|cffd6e049Counter damage|r: ,0,")

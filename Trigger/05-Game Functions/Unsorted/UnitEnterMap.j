@@ -244,6 +244,16 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set TrollBerserkerBonus.real[hid] = 0.99
         endif
 
+        //crypt Lord
+        if GetUnitTypeId(u) == CRYPT_LORD_UNIT_ID and realUnit then
+            set CryptLordLocustCount.integer[hid] = 1
+        endif
+
+        //Yeti
+        if GetUnitTypeId(u) == YETI_UNIT_ID and realUnit then
+            set YetiStrengthBonus.integer[hid] = 10
+        endif
+
         //Sorcerer
         if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
             call CreateSpellList(u, SORCERER_UNIT_ID, SpellListFilter.SorcerSpellListFilter)

@@ -220,7 +220,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             set TrollBerserkerBonus.real[hid] = Pow(0.995, heroLevel)
             call SetBonus(u, 0, heroLevel * 0.5)
         elseif uid == YETI_UNIT_ID then
-            call SetBonus(u, 0, heroLevel * 20)
+            set YetiStrengthBonus.integer[hid] = 10 + ((heroLevel - ModuloInteger(heroLevel, 10)) / 10)
+            call SetBonus(u, 0, YetiStrengthBonus.integer[hid])
         elseif uid == MURLOC_WARRIOR_UNIT_ID then
             call SetBonus(u, 0, (heroLevel / 10) + 1)
         elseif uid == GHOUL_UNIT_ID then

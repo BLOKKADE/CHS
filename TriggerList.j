@@ -221,6 +221,7 @@
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Witch Doctor.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\WolfRider.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Xesil.j"
+//! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Yeti.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Followers\FaerieDragonDies.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Followers\WispActions.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Secrets\PandaSkin.j"
