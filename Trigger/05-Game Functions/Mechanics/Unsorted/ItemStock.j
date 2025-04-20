@@ -3,6 +3,7 @@ library ItemStock initializer init requires Table
     globals
         Table ItemStock
         Table ItemSwapCooldown
+        HashTable ItemCooldown
 
         constant string ItemStockDisabledIcon = "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRiderlessHorse.blp"
         constant string ItemStockEnabledIcon = "ReplaceableTextures\\CommandButtons\\BTNRiderlessHorse.blp"
@@ -10,78 +11,112 @@ library ItemStock initializer init requires Table
         boolean ItemStockEnabled = false
     endglobals
 
-    function SwapItem takes integer pid, integer slot returns nothing
+    function MoveItemStockToPlayerArena takes integer pid returns nothing
         local unit sheep = ItemStock.unit[pid]
-        local unit hero = PlayerHeroes[pid]
-        local item heroItem = UnitItemInSlot(hero, slot)
-        local item sheepItem = UnitItemInSlot(sheep, slot)
-        local integer heroItemCharges = GetItemCharges(heroItem)
-        local integer sheepItemCharges = GetItemCharges(sheepItem)
-        local integer heroItemTypeId = GetItemTypeId(heroItem)
-        local integer sheepItemTypeId = GetItemTypeId(sheepItem)
-        local string heroItemName = ""
-        local string sheepItemName = ""
 
-        if (not ItemStockEnabled) or sheep == null or hero == null then
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|cffff0000Item stock is disabled.|r")
-
-            set sheep = null
-            set hero = null
-            set heroItem = null
-            set sheepItem = null
-            return
+        if sheep != null then
+            call SetUnitX(sheep, GetRectCenterX(PlayerArenaRects[pid]))
+            call SetUnitY(sheep, GetRectCenterY(PlayerArenaRects[pid]))
         endif
 
-        if BrStarted and T32_Tick < ItemSwapCooldown.integer[pid] then
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|cffff0000Item swap is on cooldown: |r" + R2S((ItemSwapCooldown.integer[pid] - T32_Tick) / 32) + "s")
-
-            set sheep = null
-            set hero = null
-            set heroItem = null
-            set sheepItem = null
-            return
-        endif
-
-        call RemoveItem(heroItem)
-        call RemoveItem(sheepItem)
-
-        if heroItemTypeId != 0 then
-            call UnitAddItemToSlotById(sheep, heroItemTypeId, slot)
-            if heroItemCharges > 0 then
-                call SetItemCharges(UnitItemInSlot(sheep, slot), heroItemCharges)
-            endif
-
-            set heroItemName = GetItemName(UnitItemInSlot(sheep, slot))
-        endif
-
-        if sheepItemTypeId != 0 then
-            call UnitAddItemToSlotById(hero, sheepItemTypeId, slot)
-            if sheepItemCharges > 0 then
-                call SetItemCharges(UnitItemInSlot(hero, slot), sheepItemCharges)
-            endif
-
-            set sheepItemName = GetItemName(UnitItemInSlot(hero, slot))
-        endif
-
-        if heroItemTypeId != 0 or sheepItemTypeId != 0 then
-            if heroItemTypeId != 0 and sheepItemTypeId != 0 then
-                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|ccffdde31Swapped|r |ccf31fd6e" + heroItemName + " |ccffdde31with|r |ccf31effd" + sheepItemName)
-            elseif heroItemTypeId != 0 then
-                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|ccffdde31Added|r |ccf31fd6e" + heroItemName + "|r |ccffdde31to your storage|r")
-            else
-                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|ccffdde31Added|r |ccf31effd" + sheepItemName + "|r |ccffdde31to your hero|r")
-            endif
-
-            set ItemSwapCooldown.integer[pid] = T32_Tick + (32 * 30)
-        else
-            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|ccffdde31No items to swap|r")
-        endif
-
-        set hero = null
         set sheep = null
-        set heroItem = null
-        set sheepItem = null
     endfunction
+
+        private function ValidateSwapConditions takes integer pid, unit sheep, unit hero returns boolean
+            if (not ItemStockEnabled) or sheep == null or hero == null then
+                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|cffff0000Item stock is disabled.|r")
+                return false
+            endif
+
+            if BrStarted and T32_Tick < ItemSwapCooldown.integer[pid] then
+                call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, "|cffff0000Item swap is on cooldown: |r" + R2S((ItemSwapCooldown.integer[pid] - T32_Tick) / 32) + "s")
+                return false
+            endif
+
+            return true
+        endfunction
+
+        private function SwapItemsBetweenUnits takes unit source, unit target, integer slot returns string
+            local item sourceItem = UnitItemInSlot(source, slot)
+            local item targetItem = UnitItemInSlot(target, slot)
+            local integer sourceItemCharges = GetItemCharges(sourceItem)
+            local integer targetItemCharges = GetItemCharges(targetItem)
+            local integer sourceItemTypeId = GetItemTypeId(sourceItem)
+            local integer targetItemTypeId = GetItemTypeId(targetItem)
+            local real sourceItemCooldown = BlzGetUnitAbilityCooldownRemaining(source, GetItemTypeAbilityId(sourceItemTypeId))
+            local real targetItemCooldown = BlzGetUnitAbilityCooldownRemaining(target, GetItemTypeAbilityId(targetItemTypeId))
+            local string sourceItemName = ""
+            local string targetItemName = ""
+
+            call RemoveItem(sourceItem)
+            call RemoveItem(targetItem)
+
+            if sourceItemTypeId != 0 then
+                call UnitAddItemToSlotById(target, sourceItemTypeId, slot)
+                if sourceItemCharges > 0 then
+                    call SetItemCharges(UnitItemInSlot(target, slot), sourceItemCharges)
+                endif
+
+                if sourceItemCooldown > 0 then
+                    call BlzStartUnitAbilityCooldown(target, GetItemTypeAbilityId(sourceItemTypeId), sourceItemCooldown)
+                endif
+
+                set sourceItemName = GetItemName(UnitItemInSlot(target, slot))
+            endif
+
+            if targetItemTypeId != 0 then
+                call UnitAddItemToSlotById(source, targetItemTypeId, slot)
+                if targetItemCharges > 0 then
+                    call SetItemCharges(UnitItemInSlot(source, slot), targetItemCharges)
+                endif
+
+                if targetItemCooldown > 0 then
+                    call BlzStartUnitAbilityCooldown(source, GetItemTypeAbilityId(targetItemTypeId), targetItemCooldown)
+                endif
+
+                set targetItemName = GetItemName(UnitItemInSlot(source, slot))
+            endif
+
+            set sourceItem = null
+            set targetItem = null
+
+            if sourceItemTypeId != 0 or targetItemTypeId != 0 then
+                if sourceItemTypeId != 0 and targetItemTypeId != 0 then
+                    return "|ccffdde31Swapped|r |ccf31fd6e" + sourceItemName + " |ccffdde31with|r |ccf31effd" + targetItemName
+                elseif sourceItemTypeId != 0 then
+                    return "|ccffdde31Added|r |ccf31fd6e" + sourceItemName + "|r |ccffdde31to your storage|r"
+                else
+                    return "|ccffdde31Added|r |ccf31effd" + targetItemName + "|r |ccffdde31to your hero|r"
+                endif
+            endif
+
+            return "|ccffdde31No items to swap|r"
+        endfunction
+
+        function SwapItem takes integer pid, integer slot returns nothing
+            local unit sheep = ItemStock.unit[pid]
+            local unit hero = PlayerHeroes[pid]
+            local string message = ""
+
+            if not ValidateSwapConditions(pid, sheep, hero) then
+                set sheep = null
+                set hero = null
+                return
+            endif
+
+            call SetItemAbility(UnitItemInSlot(hero, slot))
+            call SetItemAbility(UnitItemInSlot(sheep, slot))
+
+            set message = SwapItemsBetweenUnits(hero, sheep, slot)
+            call DisplayTimedTextToPlayer(Player(pid), 0, 0, 5, message)
+
+            if message != "|ccffdde31No items to swap|r" then
+                set ItemSwapCooldown.integer[pid] = T32_Tick + (32 * 30)
+            endif
+
+            set hero = null
+            set sheep = null
+        endfunction
 
     private function SetSkinForPlayer takes player p returns nothing
         local PlayerStats ps = PlayerStats.forPlayer(p)

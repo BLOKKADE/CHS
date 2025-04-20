@@ -170,6 +170,8 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
         // Update the UI
         call UpdateLivesForPlayer(currentPlayer, MaxBRDeathCount, true)
 
+        call MoveItemStockToPlayerArena(playerId)
+
         // Save items
         call SaveItemsForPlayer(currentPlayer)
 

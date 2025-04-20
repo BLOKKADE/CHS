@@ -15,6 +15,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		local integer diff = 0
 		local integer uniqueDiff = 0
 		local boolean realUnit = IsUnitIllusion(u) == false
+
+		call SetItemAbility(it)
 		
 		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) or (not IsHeroUnitId(GetUnitTypeId(u)))) then
 			return

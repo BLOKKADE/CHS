@@ -292,6 +292,10 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         
         set u = null
     endfunction
+
+    function ActivateItemStock takes Args args returns nothing
+        call SetUpItemStocks(PlayersWithHero)
+    endfunction
     
     function AllowSinglePlayerCommands takes nothing returns nothing
         local trigger trg = CreateTrigger()
@@ -340,6 +344,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.CpuPower).name("cpupw").handles("cpupw").help("cpupw", "Gives CPU players stats, levels and some abilities")
             call Command.create(CommandHandler.SetRoundNumber).name("srn").handles("srn").help("srn <value>", "Set round number to <value>.")
             call Command.create(CommandHandler.TestMode).name("test").handles("test").help("test", "Gives you max glory and gold")
+            call Command.create(CommandHandler.ActivateItemStock).name("is").handles("is").help("is", "Activates item stock.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
 
