@@ -1,9 +1,11 @@
 General
 - Summer Terrain
-- Damage text now shows ability levels.
+- Creeps hit points, armor and magic protection is roughly increased by 50%.
+- Damage text now shows ability levels. (doesn't always work correctly yet sadly)
 - Possibly fixed lives not always being increased on rounds 16 and 32.
 - Fixed lifesteal FX showing up above the hero instead of on the hero.
 - Battle Royale can no longer end if there are shades alive.
+- Battle Royale shades now have maximum movement speed.
 - Creeps now have their movement speed displayed in the next round tooltip.
 - When a player leaves, their hero now has some of their stats reset to 0.
 - When your hero dies in immortal mode, you no longer get a round clear bonus.
@@ -13,19 +15,22 @@ General
 - Absolute Acorn and Stat per level tomes can no longer be shift-bought.
 - Modified visuals and/or damage instances of Cyclone, Rain of Fire, and Stampede to reduce lag.
 - Whole bunch of items, abilities, and passives now state correctly they are affected by an item or affect items.
+- Picking up another player's dropped item now shows the correct owner.
 
 Mechanics
+- Item Storage added for Battle Royale: You can now buy 2 extra items and swap them in or out during Battle Royale.
+    ^ This is a temporary feature, might be removed later, gotta see what kind of impact it has
+- It is now again possible to cast spells in the first 5 seconds of a round.
+- For the first 4 rounds the amount of creeps is now equal to the round number (to speed up the slow start)
 - Mana Regeneration: Now regenerates 0.195 instead of 0.065 per intelligence point.
 - PvP Bonus stat now correctly states that it also damages and reduces damage from enemy summons.
 - Summons now have an attack cooldown limit of 0.4, or 0.3 when Packing Tape is used.
 - Added a Reroll option to the Draft shop and removed Non-Lucrative Tome.
-- Item Storage added for Battle Royale: You can now buy 2 extra items and swap them in or out during Battle Royale.
 
 Heroes
 - Seer Passive: Is now affected by luck, attacks work on Banished units, and has its description rewritten.
 - Wolfrider: Now shows Thrall portrait instead of Death Knight (thanks Blizzard).
-- Crypt Lord: DELETED.
-- Gnoll Warden: Added.
+- Crypt Lord: Locust damage now counts as an attack by the Hero.
 - Skeleton Brute Passive: Now doesn't negate the 20% damage, only the next damage taken.
 - Blademaster Passive: No longer activates on itself.
 - Time Wizard/Xesil Passive: Multicast and manifold cost mana again.
@@ -38,6 +43,7 @@ Heroes
 - Demon Hunter Passive: When triggered by magic damage, targets become immune for 0.7 seconds.
 - Blood Mage Passive: Intelligence required for bonus magic power is now lowered by 3 for every 30 levels.
 - Pitlord Passive: Clarified passive deals magic damage.
+- Yeti Passive: Now affected by luck and gains +1% strength bonus for [Cold] every 10 levels
 
 Abilities
 - Cyclone: Now deals damage every 0.33 seconds but at level 30 deals 450 damage + hero level * 29 instead of 300 + hero level * 17.
@@ -51,7 +57,8 @@ Abilities
 - Ancient Element: Instead of +2 flat to elements, you now get +1 every 10 levels (starting at 0).
 - Stampede: Changed the number of thunder lizards per second at level 30 from 13 to 7 and increased damage from 5600 to 9330. Fixed a bug where it would be cut off after 10 seconds when cast through Chaos Magic or Multicast.
 - Incinerate: Now lasts 8 seconds instead of 5.
-- Liquid Fire: Damage increased; at level 30: 2400 damage + 10 * physical power + 10 * magic power.
+- Liquid Fire: Damage increased; at level 30: 2400 damage + 10 * physical power + 10 * magic power. Instance limit is now 40.
+- Envenomed Weapons: Instance limit is now 40.
 - Summon Spirit Wolves: Now has no collision, lowered evasion but increased magic protection.
 - Summon Bear: Now casts Blink Strike upon summoning.
 - Summon Mountain Giant: Gains 5 physical power per level.
@@ -59,13 +66,15 @@ Abilities
 - Summon Phoenix: Gains [Wild] tag.
 - Summon Hawks: Gains [Wind] tag.
 - Summon Beetles: Fixed Spiked Carapace damage return.
+- Finger of Death: Now damages based on x% of intelligence or its flat damage, depending on which is higher (1500% of intelligence level 30)
 - Cluster Rockets: Damage increased from 3495 to 4660, interval changed from 0.20 to 0.33.
-- Summon Infernal: Armor increased from 5 to 20 per level. Now gains 300 block and 10 magic protection per level.
+- Summon Infernal: Armor increased from 5 to 20 per level. Now gains 300 block, 10 magic protection and 3 physical power per level.
 - Vampirism: Changed bonus lifesteal from 2% to 5% per [Blood] count.
 - Crushing Wave, Acid Spray, and Carrion Swarm secondary effects now work properly when cast by Chaos Magic, Mystical Armor, or Chaos Rune.
 - Rain of Fire: Modified visuals to reduce lag, states the number of waves, now always has 10 waves.
 - Summon abilities: Clarified tooltips, also shows the max number of summons.
 - Inner Fire: Shop tooltip improvement.
+- Thunder Force: No longer works on invulnerable units
 - Mega Speed: Lowers attack cooldown to 0.50 instead of 0.32, now costs 900 instead of 1050 gold.
 - Cutting: Is now unpurgeable.
 - Shadow Step/Shadow Dance: Hopefully fixed a bug where you could teleport outside of the arena with them.
