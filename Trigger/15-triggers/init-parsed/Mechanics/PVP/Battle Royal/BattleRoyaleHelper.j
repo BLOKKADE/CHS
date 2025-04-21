@@ -584,7 +584,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
 
         set WaitingForBattleRoyal = true
         
-        call SetUpItemStocks(GetPlayersAll())
+        call SetUpItemStocks(GetValidPlayerForce())
         
         call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function FinalizeBattleRoyaleSetup)
     endfunction
