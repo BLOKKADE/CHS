@@ -161,7 +161,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 				endif
 			elseif NumButton == 8 then
 
-				if GetLocalPlayer() == p then
+				if ItemStockEnabled and GetLocalPlayer() == p then
 					call SelectUnitSingle(GetItemStock(pid))
 				endif
 			endif

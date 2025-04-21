@@ -150,8 +150,10 @@ library ItemStock initializer init requires Table
     endfunction
 
     function KillItemStock takes integer pid returns nothing
-        call RemoveUnit(ItemStock.unit[pid])
-        call ItemStock.remove(pid)
+        if ItemStockEnabled then
+            call RemoveUnit(ItemStock.unit[pid])
+            call ItemStock.remove(pid)
+        endif
     endfunction
 
     function CreateItemStock takes nothing returns nothing
