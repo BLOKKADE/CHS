@@ -39,8 +39,8 @@ library DummySpellCasts requires DummyOrder
         call dummy.target(u2).activate()
     endfunction
 
-    function DummyInstantCast1 takes unit u1, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield REALF returns nothing
-        local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), 9)
+    function DummyInstantCast1 takes unit u1, real x, real y,integer idsp, string ordstr, real life_1, abilityreallevelfield REALF, real duration returns nothing
+        local DummyOrder dummy = DummyOrder.create(u1, x, y, GetUnitFacing(u1), duration)
         call dummy.addActiveAbility(idsp, 1, OrderId(ordstr))
         if REALF != null then
             call dummy.setAbilityRealField(idsp, REALF, life_1)

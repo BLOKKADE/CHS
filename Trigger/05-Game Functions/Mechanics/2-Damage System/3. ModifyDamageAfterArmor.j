@@ -184,8 +184,8 @@ scope ModifyDamageAfterArmor initializer init
         
         //Combustion
         if GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSourceHero,COMBUSTION_ABILITY_ID,0.3)
-            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero   ,COMBUSTION_ABILITY_ID)
+            call AbilStartCD(DamageSourceHero, COMBUSTION_ABILITY_ID, 0.3)
+            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", DamageTarget, "chest"))
         endif
 
