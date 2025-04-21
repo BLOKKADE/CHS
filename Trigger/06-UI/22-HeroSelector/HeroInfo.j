@@ -170,8 +170,9 @@ library HeroInfo initializer init_function requires GetObjectElement, HeroPassiv
         local string heroData
         local ability abi
         local integer abiIndex
-        local string descriptionTemp = ""
+        local string descriptionTemp
         local string description = ""
+        local string heroNamePrefix
 
         if DetectUnitSkills then
             set dummyUnit = CreateUnit(Player(GetPlayerNeutralPassive()), unitCode, 0, 0, 0)
@@ -180,26 +181,25 @@ library HeroInfo initializer init_function requires GetObjectElement, HeroPassiv
         // Reset the global Buttons Index
         set ButtonCurrentIndex = 0
     
-    
+        set heroNamePrefix = DescHeroNamePrefix + GetObjectName(unitCode) + DescHeroNameSufix
+
+        set descriptionTemp = GetObjectElementsAsString(null, unitCode, false)
+        if descriptionTemp != "" then
+            set description = description + descriptionTemp + "|n"
+        endif
+
+        set descriptionTemp = GetHeroPassiveDescription(unitCode, HeroPassive_Desc)
+        if descriptionTemp != "" and descriptionTemp != null then
+            set description = description + descriptionTemp + "|n"
+        endif
+
+        set descriptionTemp = GetHeroPassiveDescription(unitCode, HeroPassive_Lvlup)
+        if descriptionTemp != "" and descriptionTemp != null then
+            set description = description + descriptionTemp
+        endif
+
         if GetLocalPlayer() == p then
-            call BlzFrameSetText(TextDisplay, DescHeroNamePrefix + GetObjectName(unitCode) + DescHeroNameSufix)
-
-            set descriptionTemp = GetObjectElementsAsString(null, unitCode, false)
-            if descriptionTemp != "" then
-                set description = description + descriptionTemp + "|n"
-            endif
-
-            set descriptionTemp = GetHeroPassiveDescription(unitCode, HeroPassive_Desc)
-            if descriptionTemp != "" and descriptionTemp != null then
-                set description = description + descriptionTemp + "|n"
-            endif
-
-            set descriptionTemp = GetHeroPassiveDescription(unitCode, HeroPassive_Lvlup)
-            if descriptionTemp != "" and descriptionTemp != null then
-                set description = description + descriptionTemp
-            endif
-
-            
+            call BlzFrameSetText(TextDisplay, heroNamePrefix)
             call BlzFrameAddText(TextDisplay, description)
     
             /*if HaveSavedString(HeroSelector_Hash, 0, unitCode) then

@@ -574,6 +574,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         local real tooltipWidth = 0.29 // Default used by almost everything
         local string tooltipDescription
         local string tooltipName
+        local real tooltipSize
 
         if (BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK) then
             if (GetLocalPlayer() == triggerPlayer) then	
@@ -585,8 +586,9 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             if (handleId == CloseHandleId) then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetVisible(ScoreboardFrameHandle, false) 
-                    call PlayerStats.forPlayer(triggerPlayer).setHasScoreboardOpen(false)
                 endif
+
+                call PlayerStats.forPlayer(triggerPlayer).setHasScoreboardOpen(false)
 
             // Toggle selected player's hero if it exists and is alive
             elseif (columnIndex == PLAYER_HERO_INDEX and (not PlayerLeftGame[playerId]) and PlayerHeroes[playerId] != null and UnitAlive(PlayerHeroes[playerId])) then
@@ -617,11 +619,13 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
 
             // Show the tooltip information if valid
             if (tooltipName != "") then
+                set tooltipSize = GetTooltipSize(tooltipDescription)
+
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetText(ScoreboardTooltipTitleFrame, tooltipName)
                     call BlzFrameSetText(ScoreboardTooltipTextFrame, tooltipDescription)
                     call BlzFrameSetPoint(ScoreboardTooltipFrame, FRAMEPOINT_TOP, currentFrameHandle, FRAMEPOINT_BOTTOM, 0, 0)
-                    call BlzFrameSetSize(ScoreboardTooltipFrame, tooltipWidth, GetTooltipSize(tooltipDescription))
+                    call BlzFrameSetSize(ScoreboardTooltipFrame, tooltipWidth, tooltipSize)
                     call BlzFrameSetVisible(ScoreboardTooltipFrame, true)
                 endif
             endif

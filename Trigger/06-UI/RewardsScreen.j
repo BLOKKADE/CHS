@@ -125,10 +125,14 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
 
     // Add additional reward points to a player
     public function RewardPoints takes integer playerId, integer points returns nothing
+        local string pointsMessage
+
         set PlayerRewardPoints[playerId] = PlayerRewardPoints[playerId] + points
 
+        set pointsMessage = AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[playerId])
+
         if (GetLocalPlayer() == Player(playerId)) then	
-            call BlzFrameSetText(AvailablePointsFrame, AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[playerId])) 
+            call BlzFrameSetText(AvailablePointsFrame, pointsMessage) 
         endif
     endfunction
 
@@ -246,9 +250,11 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         local real tooltipWidth = 0.32
         local string tooltipDescription
         local string tooltipName
+        local real tooltipSize
         local integer playerRewardIndex = 0
         local integer rewardCount = 0
         local integer primaryStat
+        local string pointsMessage
 
         if (BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK) then
             if (GetLocalPlayer() == triggerPlayer) then	
@@ -260,9 +266,9 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
             if (handleId == CloseHandleId) then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetVisible(RewardsFrameHandle, false) 
-                    call PlayerStats.forPlayer(triggerPlayer).setHasRewardsOpen(false)
                 endif
 
+                call PlayerStats.forPlayer(triggerPlayer).setHasRewardsOpen(false)
             // Reset
             elseif (handleId == ResetHandleId) then
                 loop
@@ -280,17 +286,21 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
             
                 set PlayerRewardPoints[triggerPlayerId] = PlayerRewardPoints[triggerPlayerId] + rewardCount
 
+                set pointsMessage = AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[triggerPlayerId])
+
                 if (GetLocalPlayer() == triggerPlayer) then	
-                    call BlzFrameSetText(AvailablePointsFrame, AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[triggerPlayerId])) 
+                    call BlzFrameSetText(AvailablePointsFrame, pointsMessage) 
                 endif
             // Select reward
             elseif (PlayerRewardPoints[triggerPlayerId] > 0) then
                 set PlayerRewardPoints[triggerPlayerId] = PlayerRewardPoints[triggerPlayerId] - 1
                 set PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex] = PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex] + 1
 
+                set pointsMessage = AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[triggerPlayerId])
+
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetText(RewardSelectionCountFramehandles[rewardIndex], I2S(PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])) 
-                    call BlzFrameSetText(AvailablePointsFrame, AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[triggerPlayerId])) 
+                    call BlzFrameSetText(AvailablePointsFrame, pointsMessage) 
 
                     if (PlayerRewardSelection[(REWARD_BUFFER * triggerPlayerId) + rewardIndex] >= 10) then
                         call BlzFrameSetSize(RewardSelectionCountParentFramehandles[rewardIndex], 0.03, 0.02)
@@ -340,11 +350,13 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
                 set tooltipDescription = tooltipDescription + "|n|nTotal bonus accumulated: " + R2S(PlayerTotalRewardValues[(REWARD_BUFFER * triggerPlayerId) + rewardIndex])
             endif
 
+            set tooltipSize = GetTooltipSize(tooltipDescription)
+
             if (GetLocalPlayer() == triggerPlayer) then	
                 call BlzFrameSetText(RewardsTooltipTitleFrame, tooltipName)
                 call BlzFrameSetText(RewardsTooltipTextFrame, tooltipDescription)
                 call BlzFrameSetPoint(RewardsTooltipFrame, FRAMEPOINT_TOP, currentFrameHandle, FRAMEPOINT_BOTTOM, 0, 0)
-                call BlzFrameSetSize(RewardsTooltipFrame, tooltipWidth, GetTooltipSize(tooltipDescription))
+                call BlzFrameSetSize(RewardsTooltipFrame, tooltipWidth, tooltipSize)
                 call BlzFrameSetVisible(RewardsTooltipFrame, true)
             endif
 
@@ -556,6 +568,7 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         local integer pid = GetPlayerId(eventInfo.p)
         local unit playerHero
         local real rewardValue
+        local string pointsMessage
 
         // Don't do anything if this was the BR or the player is defeated
         if (IsFunBRRound or BrStarted or IsPlayerInForce(eventInfo.p, DefeatedPlayers) or (GameModeShort == true and RoundNumber == 25) or RoundNumber == 50) then
@@ -583,12 +596,15 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
                 endif
             endif
 
+            set pointsMessage = AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[pid])
+
             // Show the rewards screen
             if (GetLocalPlayer() == Player(pid)) then	
-                call BlzFrameSetText(AvailablePointsFrame, AVAILABLE_POINTS_COLOR + "Available Points: " + COLOR_END_TAG + I2S(PlayerRewardPoints[pid])) 
+                call BlzFrameSetText(AvailablePointsFrame, pointsMessage) 
                 call BlzFrameSetVisible(RewardsFrameHandle, true) 
-                call PlayerStats.forPlayer(Player(pid)).setHasRewardsOpen(true)
             endif
+
+            call PlayerStats.forPlayer(Player(pid)).setHasRewardsOpen(true)
 
             // Show the rewards icon
             call BlzFrameSetVisible(ButtonParentId[6], true)
