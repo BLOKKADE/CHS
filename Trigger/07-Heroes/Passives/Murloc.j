@@ -4,9 +4,9 @@ library Murloc initializer init requires CustomGameEvent
         local integer i1 = LoadInteger(HT, hid, 54021)
 
         if i1 != 0 then 
-            call SetHeroStr(eventInfo.hero, GetHeroStr(eventInfo.hero, false) - i1, false)
-            call SetHeroAgi(eventInfo.hero, GetHeroAgi(eventInfo.hero, false) - i1, false)
-            call SetHeroInt(eventInfo.hero, GetHeroInt(eventInfo.hero, false) - i1, false)
+            call AddUnitBonus(eventInfo.hero, BONUS_STRENGTH, 0 - i1)
+            call AddUnitBonus(eventInfo.hero, BONUS_AGILITY, 0 - i1)
+            call AddUnitBonus(eventInfo.hero, BONUS_INTELLIGENCE, 0 - i1)
             call SaveInteger(HT, hid, 54021, 0)
         endif
     endfunction

@@ -37,9 +37,9 @@ scope AttackController initializer init
         if GetUnitTypeId(attacker) == MURLOC_WARRIOR_UNIT_ID then
             set i1 = 1 + GetHeroLevel(attacker)/ 10 
             call SaveInteger(HT, GetHandleId(attacker),54021, i1 + LoadInteger(HT, GetHandleId(attacker),54021))
-            call SetHeroStr(attacker, GetHeroStr(attacker, false) + i1, false)
-            call SetHeroAgi(attacker, GetHeroAgi(attacker, false) + i1, false)
-            call SetHeroInt(attacker, GetHeroInt(attacker, false) + i1, false)
+            call AddUnitBonus(attacker, BONUS_STRENGTH, i1)
+            call AddUnitBonus(attacker, BONUS_AGILITY, i1)
+            call AddUnitBonus(attacker, BONUS_INTELLIGENCE, i1)
         endif
 
         //Huntress

@@ -289,7 +289,7 @@ scope LongPeriodCheck initializer init
             set i2 = LoadInteger(HT, hid,ABSOLUTE_WATER_ABILITY_ID)
             if i1 >= 1 or i2 != 0 then
                 set i1 = R2I(i1 * GetUnitElementCount(u, Element_Water)/* * (1+ GetUnitAbsoluteEffective(u, Element_Water))*/)
-                call SetHeroInt(u, GetHeroInt(u, false) + (10 * (i1 -i2)), false)
+                call AddUnitBonus(u, BONUS_INTELLIGENCE, 10 * (i1 - i2))
                 call BlzSetUnitMaxMana(u, BlzGetUnitMaxMana(u) +(30 * (i1 -i2)))
 
                 call SaveInteger(HT, hid,ABSOLUTE_WATER_ABILITY_ID,i1)
@@ -301,7 +301,7 @@ scope LongPeriodCheck initializer init
             if i1 >= 1 or i2 != 0 then
                 set i1 = R2I(i1 * GetUnitElementCount(u, Element_Wind)/* * (1+ GetUnitAbsoluteEffective(u, Element_Wind))*/)
                 call AddUnitCustomState(u , BONUS_EVASION,   0.25 * I2R(i1 - i2) )
-                call SetHeroAgi(u,GetHeroAgi(u, false)+ 10 *(i1 - i2), false    )
+                call AddUnitBonus(u, BONUS_AGILITY, 10 * (i1 - i2))
                 call SaveInteger(HT, hid,ABSOLUTE_WIND_ABILITY_ID,i1)	
             endif
 
@@ -319,7 +319,7 @@ scope LongPeriodCheck initializer init
             set i2 = LoadInteger(HT, hid,ABSOLUTE_BLOOD_ABILITY_ID)
             if i1 >= 1 or i2 != 0 then
                 set i1 = R2I(i1 * GetUnitElementCount(u, Element_Blood)/* * (1+ GetUnitAbsoluteEffective(u, Element_Blood))*/)
-                call SetHeroStr(u,GetHeroStr(u, false)+ 10 *(i1 - i2), false    )
+                call AddUnitBonus(u, BONUS_STRENGTH, 10 * (i1 - i2))
                 call SaveInteger(HT, hid,ABSOLUTE_BLOOD_ABILITY_ID,i1)	
             endif
 

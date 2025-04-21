@@ -77,9 +77,9 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 			//Staff of Lightning
 		elseif itemId == 'I05C' then
-			call SetHeroStr(u, GetHeroStr(u, false) + (200 * uniqueDiff), false)
-			call SetHeroAgi(u, GetHeroAgi(u, false) + (200 * uniqueDiff), false)
-			call SetHeroInt(u, GetHeroInt(u, false) + (200 * uniqueDiff), false)
+			call AddUnitBonus(u, BONUS_STRENGTH, 200 * uniqueDiff)
+			call AddUnitBonus(u, BONUS_AGILITY, 200 * uniqueDiff)
+			call AddUnitBonus(u, BONUS_INTELLIGENCE, 200 * uniqueDiff)
 		
 			//Robe of the ARchmage
 		elseif itemId == 'I05B' then
@@ -143,7 +143,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
 			call AddStatLevelBonus(u, BONUS_AGILITY, 15 *diff)
-			call SetHeroAgi(u, GetHeroAgi(u, false) + (15 *diff)* GetHeroLevel(u), false)
+			call AddUnitBonus(u, BONUS_AGILITY, (15 * diff) * GetHeroLevel(u))
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('uagp'), BlzGetUnitRealField(u,ConvertUnitRealField('uagp')) + 15*diff )
 			
 			//Ancient Axe
@@ -152,7 +152,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, 900 * diff)
 			call AddStatLevelBonus(u, BONUS_STRENGTH, 15 *diff)
-			call SetHeroStr(u, GetHeroStr(u, false) + (15 *diff)* GetHeroLevel(u), false)
+			call AddUnitBonus(u, BONUS_STRENGTH, (15 * diff) * GetHeroLevel(u))
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('ustp'), BlzGetUnitRealField(u,ConvertUnitRealField('ustp')) + 15*diff )
 
 			//Dried Mushroom
@@ -292,7 +292,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 20 * diff)
 			call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 15 *diff)
-			call SetHeroInt(u, GetHeroInt(u, false) + (15 *diff)* GetHeroLevel(u), false)
+			call AddUnitBonus(u, BONUS_INTELLIGENCE, (15 * diff) * GetHeroLevel(u))
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('uinp'), BlzGetUnitRealField(u,ConvertUnitRealField('uinp')) + 15*diff )
 		
 			//Archmage Staff

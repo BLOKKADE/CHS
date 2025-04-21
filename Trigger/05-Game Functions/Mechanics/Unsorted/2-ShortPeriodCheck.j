@@ -210,7 +210,7 @@ scope ShortPeriodCheck initializer init
                 //Yeti
             elseif unitTypeId == YETI_UNIT_ID then
                 set i1 = LoadInteger(DataUnitHT, hid, YETI_UNIT_ID)
-                set i2 = R2I((GetHeroStr(u, true) - i1) * ((YetiStrengthBonus.integer[hid] * 0.01) * GetUnitElementCount(u, Element_Cold)))
+                set i2 = R2I((GetHeroStr(u, false) - i1) * ((YetiStrengthBonus.integer[hid] * 0.01) * GetUnitElementCount(u, Element_Cold)))
                 if i1 != i2 then
                     call SetHeroStr(u, GetHeroStr(u, false) - i1 + i2, false)
                     call SaveInteger(DataUnitHT, hid, YETI_UNIT_ID, i2)
