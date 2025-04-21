@@ -177,8 +177,11 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
         // Cleanup
         set qTrigger = null
         set wTrigger = null
+        set eTrigger = null
+        set rTrigger = null
         set tTrigger = null
         set bTrigger = null
+        set numTrigger = null
         set shiftDownTrigger = null
         set shiftReleaseTrigger = null
         set scoreboardToggleViewTrigger = null

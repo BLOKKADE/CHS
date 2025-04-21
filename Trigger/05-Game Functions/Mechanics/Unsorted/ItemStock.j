@@ -125,6 +125,7 @@ library ItemStock initializer init requires Table
         local real scaling = psn.getScaling() * 1.5
 
         if psn == 0 then
+            set sheep = null
             return
         endif
         

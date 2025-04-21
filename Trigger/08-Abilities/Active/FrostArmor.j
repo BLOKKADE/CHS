@@ -10,16 +10,17 @@ library FrostArmor requires RuneInit, AbilityCooldown, DummyOrder, GetRandomUnit
         loop
             set target = RUH.GetRandomUnit(true)
 
-            if target == null then
+            if target == null or i > 5 then
                 exitwhen true
             endif
 
             call CastSpell(caster, target, FROST_ARMOR_ABILITY_ID, lvl, Order_Target, 0, 0).activate()
 
             set i = i + 1
-            exitwhen i > 5
         endloop
 
         call AbilStartCD(caster, FROST_ARMOR_ABILITY_ID, 8)
+
+        set target = null
     endfunction
 endlibrary
