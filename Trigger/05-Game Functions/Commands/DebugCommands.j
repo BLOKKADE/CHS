@@ -182,6 +182,14 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
+    private function TestMode takes Args args returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+        call AdjustPlayerStateBJ(99999999, GetTriggerPlayer(), PLAYER_STATE_RESOURCE_GOLD)
+        set Glory[pid] = Glory[pid] + 10000000
+        call ResourseRefresh(GetTriggerPlayer())
+        call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Added Max |cfffaf61cGold|r and |cff8bfdfdGlory|r")
+    endfunction
+
     private function StartNextRound takes Args args returns nothing
         local integer pid = GetPlayerId(GetTriggerPlayer()) 
         call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "|cffffcc00Attempting to start next round...|r")
@@ -284,6 +292,10 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         
         set u = null
     endfunction
+
+    function ActivateItemStock takes Args args returns nothing
+        call SetUpItemStocks(PlayersWithHero)
+    endfunction
     
     function AllowSinglePlayerCommands takes nothing returns nothing
         local trigger trg = CreateTrigger()
@@ -331,6 +343,8 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.SetCreepEnrage).name("tce").handles("tce").help("tce", "toggle creep enrage.")
             call Command.create(CommandHandler.CpuPower).name("cpupw").handles("cpupw").help("cpupw", "Gives CPU players stats, levels and some abilities")
             call Command.create(CommandHandler.SetRoundNumber).name("srn").handles("srn").help("srn <value>", "Set round number to <value>.")
+            call Command.create(CommandHandler.TestMode).name("test").handles("test").help("test", "Gives you max glory and gold")
+            call Command.create(CommandHandler.ActivateItemStock).name("is").handles("is").help("is", "Activates item stock.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif
 

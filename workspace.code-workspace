@@ -57,6 +57,10 @@
 			{
 				"filePath": "Trigger\\05-Game Functions\\Unsorted\\5-Functions.j",
 				"group": "Default"
+			},
+			{
+				"filePath": "Trigger\\03-Data\\03-Abilities\\BuffRepositoryData.j",
+				"group": "Default"
 			}
 		],
 		"search.exclude": {

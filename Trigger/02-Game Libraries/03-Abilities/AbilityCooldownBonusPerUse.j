@@ -3,15 +3,19 @@ library AbilityCooldownBonusPerUse initializer init requires Table
         HashTable AbilityCdBonus
     endglobals
 
-    function GetAbilityCooldownBonus takes ability abil returns real
-        return AbilityCdBonus[RoundNumber].real[GetHandleId(abil)]
+    function ResetAbilityCooldownBonus takes integer hid, integer abilId returns nothing
+        set AbilityCdBonus[hid].real[abilId] = 0
     endfunction
 
-    function SetAbilityCooldownBonus takes ability abil, real bonus returns nothing
-        set AbilityCdBonus[RoundNumber].real[GetHandleId(abil)] = AbilityCdBonus[RoundNumber].real[GetHandleId(abil)] + bonus
+    function GetAbilityCooldownBonus takes integer hid, integer abilId returns real
+        return AbilityCdBonus[hid].real[abilId]
+    endfunction
+
+    function SetAbilityCooldownBonus takes integer hid, integer abilId, real bonus returns nothing
+        set AbilityCdBonus[hid].real[abilId] = AbilityCdBonus[hid].real[abilId] + bonus
     endfunction
 
     private function init takes nothing returns nothing
-        set AbilityCdBonus = Table.create()
+        set AbilityCdBonus = HashTable.create()
     endfunction
 endlibrary

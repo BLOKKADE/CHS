@@ -1,4 +1,4 @@
-library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin, ItemAbilityCooldown
+library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit, LevelUpStats, Utility, PandaSkin, ItemAbilityCooldown, ArenaMasterBonus
 	globals
 		hashtable HTi = InitHashtable()
 		HashTable UniqueItemCount
@@ -15,6 +15,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		local integer diff = 0
 		local integer uniqueDiff = 0
 		local boolean realUnit = IsUnitIllusion(u) == false
+
+		call SetItemAbility(it)
 		
 		if ((GetItemType(it) == ITEM_TYPE_POWERUP or GetItemType(it) == ITEM_TYPE_CAMPAIGN) or (not IsHeroUnitId(GetUnitTypeId(u)))) then
 			return
@@ -164,29 +166,17 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			
 			//Ring of Musculature
 		elseif itemId == 'I071' then
-			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddStatLevelBonus(u, BONUS_STRENGTH, 4 *diff)
-			else
-				call AddStatLevelBonus(u, BONUS_STRENGTH, 2 *diff)
-			endif
+			call AddStatLevelBonus(u, BONUS_STRENGTH, 2 * ArenaMasterMultiplier(u) *diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Ring of the Bookworm
 		elseif itemId == 'I072' then
-			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 4 *diff)
-			else
-				call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 2 *diff)
-			endif
+			call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 2 * ArenaMasterMultiplier(u) *diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Trainers Ring
 		elseif itemId == 'I073' then
-			if GetUnitTypeId(u) == ARENA_MASTER_UNIT_ID then
-				call AddStatLevelBonus(u, BONUS_AGILITY, 4 *diff)
-			else
-				call AddStatLevelBonus(u, BONUS_AGILITY, 2 *diff)
-			endif
+			call AddStatLevelBonus(u, BONUS_AGILITY, 2 * ArenaMasterMultiplier(u)*diff)
 			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Arena Ring
@@ -195,11 +185,14 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 				call RegisterEndOfRoundItem(pid, it)
 			endif
 
+			//Terrestrial Glaive
 		elseif itemId == 'I0D1' then
 			if ev == EVENT_ITEM_PICKUP then
 				call CreateSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, SpellListFilter.TerrestrialGlaiveFilter)
 			endif
-			call AddUnitCustomState(u, BONUS_PHYSPOW, 30 * uniqueDiff)
+			call AddUnitCustomState(u, BONUS_MAGICPOW, 30 * uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Earth, uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Wind, uniqueDiff)
 
 			//Gladiator Helmet
 		elseif itemId == 'I07A' then
@@ -366,23 +359,23 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_RUNEPOW, 100 * uniqueDiff)
 			
 			if itemId == FIRE_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Fire, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Fire, 2 * uniqueDiff)
 			elseif itemId == POISON_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Poison, 2 * uniqueDiff)
 			elseif itemId == ARCANE_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Arcane, 2 * uniqueDiff)
 			elseif itemId == WILD_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Wild, 2 * uniqueDiff)
 			elseif itemId == LIGHT_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Light, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Light, 2 * uniqueDiff)
 			elseif itemId == DARK_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Dark, 2 * uniqueDiff)
 			elseif itemId == WIND_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Wind, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Wind, 1 * uniqueDiff)
 			elseif itemId == WATER_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Water, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u, Element_Water, 2 * uniqueDiff)
 			elseif itemId == EARTH_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Earth, uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Earth, 2 * uniqueDiff)
 			endif
 		
 			//Blaze Staff
@@ -446,6 +439,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		//Speed Blade
 		elseif itemId == SPEED_BLADE_ITEM_ID then
 			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1000 * diff, 0 )
+			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
+			call AddUnitBonus(u, BONUS_MOVEMENT_SPEED, 100 * diff)
 
 		//Bloody Axe
 		elseif itemId == 'I078' then

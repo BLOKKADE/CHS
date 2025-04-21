@@ -41,10 +41,16 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call DisplayTimedTextToPlayer(p, 0, 0, 1, "|cffc300ffLevel " + I2S(heroLevel) + "|r: |cffffcc00+" + I2S((8 * (levelsGained) * 30) + (heroLevel + 20) * (levelsGained)) + " gold|r")
         endif
 
-        if ModuloInteger(heroLevel, 25) == 0 then
-            call AdjustPlayerStateBJ(heroLevel * 30, p, PLAYER_STATE_RESOURCE_GOLD) 
-            call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(heroLevel * 30) + " bonus gold|r for reaching |cffbda546level " + I2S(heroLevel) + "!|r")
-        endif
+        set i = prevLevel + 1
+        loop
+            if ModuloInteger(i, 25) == 0 then
+            call AdjustPlayerStateBJ(i * 30, p, PLAYER_STATE_RESOURCE_GOLD) 
+            call DisplayTimedTextToPlayer(p, 0, 0, 10, "|cff1eff00+" + I2S(i * 30) + " bonus gold|r for reaching |cffbda546level " + I2S(i) + "!|r")
+            endif
+
+            set i = i + 1
+            exitwhen i > heroLevel
+        endloop
 
         call ResourseRefresh(p) 
 
@@ -69,25 +75,16 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             endloop
 
         elseif uid == BLOOD_MAGE_UNIT_ID then  
-            call UpdateBonus(u, 0, (levelsGained * 7))
-            call SetHeroInt(u, GetHeroInt(u, false)+ (7 * levelsGained), false) 
+            call SetBonus(u, 0, 60 - (3 * R2I((heroLevel - ModuloInteger(heroLevel, 30)) / 30)))
             //call BlzSetUnitMaxMana(u,  BlzGetUnitMaxMana(u) + (levelsGained * 250))
             
         elseif uid == MORTAR_TEAM_UNIT_ID then  
             call AddUnitCustomState(u, BONUS_PHYSPOW, levelsGained * 1.5)
             call SetBonus(u, 0, 1.5 * heroLevel)
         elseif uid == NAGA_SIREN_UNIT_ID then  
-            set i = prevLevel + 1
-            loop
-                if ModuloInteger(i, 50) == 0 then
-                    set NagaSirenBonus[hid] = NagaSirenBonus[hid] + 1
-                endif
-
-                set i = i + 1
-                exitwhen i >= heroLevel + 1
-            endloop
+            set NagaSirenBonus.integer[hid] = 1 + ((heroLevel - ModuloInteger(heroLevel, 50)) / 50)
             call SetBonus(u, 0, 10 + (heroLevel * 0.1))   
-            call SetBonus(u, 1, NagaSirenBonus[hid])
+            call SetBonus(u, 1, NagaSirenBonus.integer[hid])
         elseif uid == DEMON_HUNTER_UNIT_ID then 
             call SetBonus(u, 0, heroLevel * 20)
         elseif uid == DEADLORD_UNIT_ID then   
@@ -111,32 +108,14 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, heroLevel * 0.5)
             call SetBonus(u, 1, heroLevel * 40)
             call SetBonus(u, 2, heroLevel * 20)
-            call SetBonus(u, 3, 1 + (heroLevel - ModuloInteger(heroLevel, 75) / 75))
+            call SetBonus(u, 3, 1 + ((heroLevel - ModuloInteger(heroLevel, 75)) / 75))
             call PitlordLevelup(u, heroLevel)
         elseif uid == THUNDER_WITCH_UNIT_ID then      
-            set i = prevLevel + 1
-            loop
-                if ModuloInteger(i, 30) == 0 then
-                    set ThunderBoltTargets[hid] = ThunderBoltTargets[hid] + 1
-                endif
-    
-                set i = i + 1
-                exitwhen i >= heroLevel + 1
-            endloop
-
+            set ThunderBoltTargets.integer[hid] = ((heroLevel - ModuloInteger(heroLevel, 30)) / 30)
             call SetBonus(u, 0, heroLevel * 30)
             call SetBonus(u, 1, ThunderBoltTargets[hid] + 1)
         elseif uid == SORCERER_UNIT_ID then      
-            set i = prevLevel + 1
-            loop
-                if ModuloInteger(i, 35) == 0 then
-                    set SorcererAmount[hid] = SorcererAmount[hid] + 1
-                endif
-    
-                set i = i + 1
-                exitwhen i >= heroLevel + 1
-            endloop
-
+            set SorcererAmount.integer[hid] = ((heroLevel - ModuloInteger(heroLevel, 35)) / 35)
             call SetBonus(u, 0, RMaxBJ(50 - heroLevel * 0.2, 15))
             call SetBonus(u, 1, SorcererAmount[hid])
         elseif uid == WOLF_RIDER_UNIT_ID then       
@@ -203,6 +182,9 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, heroLevel * 2)
         elseif uid == DARK_HUNTER_UNIT_ID then         
             call SetBonus(u, 0, heroLevel * 50)
+            set DarkHunterStun.real[hid] =  0.20 + (R2I((heroLevel - ModuloInteger(heroLevel, 8)) / 8) * 0.01)
+            call SetBonus(u, 1, DarkHunterStun.real[hid])
+            call SetBonus(u, 2, DarkHunterStun.real[hid] + 0.40)
             set prevLevel = heroLevel     
         elseif uid == DOOM_GUARD_UNIT_ID then     
             call SetBonus(u, 0, heroLevel * 25)
@@ -238,7 +220,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             set TrollBerserkerBonus.real[hid] = Pow(0.995, heroLevel)
             call SetBonus(u, 0, heroLevel * 0.5)
         elseif uid == YETI_UNIT_ID then
-            call SetBonus(u, 0, heroLevel * 20)
+            set YetiStrengthBonus.integer[hid] = 10 + ((heroLevel - ModuloInteger(heroLevel, 10)) / 10)
+            call SetBonus(u, 0, YetiStrengthBonus.integer[hid])
         elseif uid == MURLOC_WARRIOR_UNIT_ID then
             call SetBonus(u, 0, (heroLevel / 10) + 1)
         elseif uid == GHOUL_UNIT_ID then
@@ -246,18 +229,22 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == BANSHEE_UNIT_ID then
 
         elseif uid == CRYPT_LORD_UNIT_ID then      
-            set i = prevLevel + 1
-            loop
-                if ModuloInteger(i, 10) == 0 then
-                    set CryptLordLocustCount[hid] = CryptLordLocustCount[hid] + 1
-                endif
-    
-                set i = i + 1
-                exitwhen i >= heroLevel + 1
-            endloop
-
+            set CryptLordLocustCount.integer[hid] = ((heroLevel - ModuloInteger(heroLevel, 10)) / 10)
             call SetBonus(u, 0, 60 * heroLevel)
             call SetBonus(u, 1, 1 + CryptLordLocustCount[hid])
+
+        elseif uid == GNOLL_WARDEN_UNIT_ID then
+            // restored
+            call SetBonus(u, 0, 1 + (0.01 * heroLevel))
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_HP, 0.01 + (0.0001 * heroLevel))
+
+            //interval
+            call SetBonus(u, 1, 1.0 - ((heroLevel - ModuloInteger(heroLevel, 20)) / 20) * 0.025)
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_INTERVAL, 1.0 - ((heroLevel - ModuloInteger(heroLevel, 20)) / 20) * 0.025)
+
+            //limit
+            call SetBonus(u, 2, 10 + ((heroLevel - ModuloInteger(heroLevel, 40)) / 40))
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_LIMIT, 10 + ((heroLevel - ModuloInteger(heroLevel, 40)) / 40))
         elseif uid == SEER_UNIT_ID then
 
         elseif uid == SATYR_TRICKSTER_UNIT_ID then

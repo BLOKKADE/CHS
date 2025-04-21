@@ -1,4 +1,4 @@
-library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, PlayerHeroSelected, HeroRefresh, BattleCreatorManager
+library PlayerLeavesGame initializer init requires ItemStock, RandomShit, Scoreboard, PlayerHeroSelected, HeroRefresh, BattleCreatorManager
 
     private function PlayerLeavesGameActions takes nothing returns nothing
         local player leaverPlayer = GetTriggerPlayer()
@@ -64,6 +64,7 @@ library PlayerLeavesGame initializer init requires RandomShit, Scoreboard, Playe
 
             call SetUnitInvulnerable(eventInfo.hero, false)
             call KillUnit(eventInfo.hero)
+            call KillItemStock(GetPlayerId(eventInfo.p))
         endif
     endfunction
 

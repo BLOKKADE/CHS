@@ -4,6 +4,17 @@ library ItemAbilityCooldown initializer init requires Table, T32
         Table ItemAbilId
     endglobals
 
+    function GetItemTypeAbilityId takes integer itemTypeId returns integer
+        return ItemAbilId.integer[itemTypeId]
+    endfunction
+
+    function SetItemAbility takes item it returns nothing
+        local integer itemId = GetItemTypeId(it)
+        if itemId != 0 and GetItemTypeAbilityId(itemId) == 0 then
+            set ItemAbilId.integer[itemId] = BlzGetAbilityId(BlzGetItemAbilityByIndex(it, 0))
+        endif
+    endfunction
+
     function GetItemAbilCooldown takes item it returns real
         return ((ItemAbilCds.integer[GetHandleId(it)] - T32_Tick) / 32.)
     endfunction
@@ -13,17 +24,17 @@ library ItemAbilityCooldown initializer init requires Table, T32
     endfunction
 
     function StartItemAbilCooldown takes unit u, item it returns nothing
-        call BlzStartUnitAbilityCooldown(u, ItemAbilId.integer[GetItemTypeId(it)], GetItemAbilCooldown(it))
+        call BlzStartUnitAbilityCooldown(u, GetItemTypeAbilityId(GetItemTypeId(it)), GetItemAbilCooldown(it))
     endfunction
 
     function SetItemAbilCooldown takes unit u, item it returns nothing
         local integer itemId = GetItemTypeId(it)
 
-        if ItemAbilId.integer[itemId] == 0 then
-            set ItemAbilId.integer[itemId] = BlzGetAbilityId(BlzGetItemAbilityByIndex(it, 0))
+        if GetItemTypeAbilityId(itemId) == 0 then
+            call SetItemAbility(it)
         endif
 
-        set ItemAbilCds.integer[GetHandleId(it)] = T32_Tick + R2I(BlzGetUnitAbilityCooldownRemaining(u, ItemAbilId.integer[itemId]) * 32)
+        set ItemAbilCds.integer[GetHandleId(it)] = T32_Tick + R2I(BlzGetUnitAbilityCooldownRemaining(u, GetItemTypeAbilityId(itemId)) * 32)
     endfunction
 
     private function init takes nothing returns nothing

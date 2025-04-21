@@ -111,7 +111,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
                 set this.abilSet = true
 
                 if IsSpellDot(abilityId) then
-                    set this.endTick = T32_Tick + R2I(BlzGetAbilityRealLevelField(BlzGetUnitAbility(this.dummy, abilityId), ABILITY_RLF_DURATION_NORMAL, level - 1) * 32)
+                    set this.endTick = T32_Tick + R2I(BlzGetAbilityRealLevelField(BlzGetUnitAbility(this.dummy, abilityId), GetDotSpellField(abilityId), level - 1) * 32)
                     set this.noEarlyStop = true
                 endif
             endif

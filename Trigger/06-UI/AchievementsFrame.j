@@ -33,7 +33,7 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
 
         // Mapping between the achievement index and it's hat/pet
         private string array HatIndexes
-        private PetSpecification array PetIndexes
+        public PetSpecification array PetIndexes
         private constant integer PetSwapInterval = 30
 
         // Very temporary variables because interfaces suck in vjass
@@ -135,6 +135,8 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
 
             // Tell the pet to follow the hero
             call IssueTargetOrder(ps.getPet(), "move", PlayerHeroes[heroPlayerId])
+            
+            call SetItemStockSkin(p)
         else
             // Player removed the pet
             call ps.setPet(null)

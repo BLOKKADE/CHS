@@ -88,6 +88,7 @@ library NewBonus
         constant integer BONUS_HEALTH_REGEN            = 18
         constant integer BONUS_MANA_REGEN              = 19
         constant integer BONUS_ATTACK_SPEED            = 20
+        constant integer BONUS_MOVEMENT_SPEED          = 23
     
         //The abilities codes for each bonus
         //When pasting the abilities over to your map
@@ -100,6 +101,7 @@ library NewBonus
         private constant integer HEALTHREGEN_ABILITY      = 'A01C'
         private constant integer MANAREGEN_ABILITY        = 'A01G'
         private constant integer ATTACKSPEED_ABILITY      = ATTACK_SPEED_BONUS_ABILITY_ID
+        private constant integer MOVEMENT_SPEED_ABILITY   = 'A0F2'
     
         //The abilities fields that are modified. For the sake of readability
         private constant abilityintegerlevelfield DAMAGE_FIELD           = ABILITY_ILF_ATTACK_BONUS
@@ -112,6 +114,7 @@ library NewBonus
         private constant abilityreallevelfield    HEALTHREGEN_FIELD      = ABILITY_RLF_AMOUNT_OF_HIT_POINTS_REGENERATED
         private constant abilityreallevelfield    MANAREGEN_FIELD        = ABILITY_RLF_AMOUNT_REGENERATED
         private constant abilityreallevelfield    ATTACKSPEED_FIELD      = ABILITY_RLF_ATTACK_SPEED_INCREASE_ISX1
+        private constant abilityintegerlevelfield    MOVEMENT_SPEED_FIELD   = ABILITY_ILF_MOVEMENT_SPEED_BONUS
     endglobals
     
     struct NewBonus
@@ -162,6 +165,8 @@ library NewBonus
                 return BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(u, STATS_ABILITY), STRENGTH_FIELD, 0)
             elseif bonus_type == BONUS_INTELLIGENCE then
                 return BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(u, STATS_ABILITY), INTELLIGENCE_FIELD, 0)
+            elseif bonus_type == BONUS_MOVEMENT_SPEED then
+                return BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(u, MOVEMENT_SPEED_ABILITY), MOVEMENT_SPEED_FIELD, 0)
             else
                 call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "I: Invalid Bonus Type: " + I2S(bonus_type))
             endif
@@ -192,6 +197,8 @@ library NewBonus
                 return SetUnitAbilityBonusI(u, STATS_ABILITY, STRENGTH_FIELD, amount)
             elseif bonus_type == BONUS_INTELLIGENCE then
                 return SetUnitAbilityBonusI(u, STATS_ABILITY, INTELLIGENCE_FIELD, amount)
+            elseif bonus_type == BONUS_MOVEMENT_SPEED then
+                return SetUnitAbilityBonusI(u, MOVEMENT_SPEED_ABILITY, MOVEMENT_SPEED_FIELD, amount)
             else
                 call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "I: Invalid Bonus Type: " + I2S(bonus_type))
             endif

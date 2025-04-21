@@ -1,9 +1,10 @@
-library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh, BRLivesFrame
+library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, StartFunction, UnitFilteringUtility, ScoreboardManager, BattleCreatorManager, EventHelpers, HeroRefresh, BRLivesFrame
 
     globals
         // Track player's lives during the BR
         integer array PlayerBRDeaths
         integer MaxBRDeathCount = 3
+        integer ShadeCount = 0
 
         // Temp global variables
         private integer forceIndex = 0
@@ -28,7 +29,7 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         integer BattleRoyalFunWaitTime = 30
         integer BattleRoyalWaitTime = 120
         integer BattleRoyalReviewWaitTime = 30
-        integer FunBattleRoyalPrepTime = 30
+        integer FunBattleRoyalPrepTime = 120
         timer BattleRoyalTimer
         timerdialog BattleRoyalTimerDialog
         timer BattleRoyalRemoveLifeTimer
@@ -58,71 +59,82 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         set currentUnit = null
     endfunction
 
+    private function SaveItem takes integer arrayNumber, item currentItem returns nothing
+        if (currentItem != null) then
+            set PreBRItemIds[arrayNumber] = GetItemTypeId(currentItem)
+            set PreBRItemCharges[arrayNumber] = GetItemCharges(currentItem)
+            call SetItemPawnable(currentItem, false)
+        else
+            set PreBRItemIds[arrayNumber] = -1
+            set PreBRItemCharges[arrayNumber] = -1
+        endif
+    endfunction
+
+    private function RestoreSavedItem takes integer arrayNumber, unit currentUnit, integer playerId returns nothing
+        local item currentItem
+        // Make sure there is an actual item
+        if (PreBRItemIds[arrayNumber] != -1) then
+            set currentItem = UnitAddItemByIdSwapped(PreBRItemIds[arrayNumber], currentUnit)
+            call SetItemUserData(currentItem, playerId + 1)
+
+            if PreBRItemCharges[arrayNumber] > 1 then
+                call SetItemCharges(currentItem, PreBRItemCharges[arrayNumber])
+            endif
+
+            call SetItemPawnable(currentItem, true)
+        endif
+    endfunction
+
     private function SaveItemsForPlayer takes player currentPlayer returns nothing
         local integer playerId = GetPlayerId(currentPlayer)
         local unit currentUnit = PlayerHeroes[playerId]
         local integer itemSlotIndex = 0
-        local item currentItem
 
         if (GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT) then
             // Save the items and item charges for the player before the BR starts. Make items unpawnable as well
             loop
-                set currentItem = UnitItemInSlot(currentUnit, itemSlotIndex)
-
-                if (currentItem != null) then
-                    // Save all item information in a single array with the playerId as the offset
-                    set PreBRItemIds[(6 * playerId) + itemSlotIndex] = GetItemTypeId(currentItem)
-                    set PreBRItemCharges[(6 * playerId) + itemSlotIndex] = GetItemCharges(currentItem)
-                    call SetItemPawnable(currentItem, false)
-
-                    // Cleanup
-                    set currentItem = null
-                else
-                    set PreBRItemIds[(6 * playerId) + itemSlotIndex] = -1
-                    set PreBRItemCharges[(6 * playerId) + itemSlotIndex] = -1
-                endif
+                // Save all item information in a single array with the playerId as the offset
+                call SaveItem((8 * playerId) + itemSlotIndex, UnitItemInSlot(currentUnit, itemSlotIndex))
 
                 set itemSlotIndex = itemSlotIndex + 1
                 exitwhen itemSlotIndex == 6
             endloop
+
+            // Save the items in the item stock as well
+            set currentUnit = GetItemStock(playerId)
+            call SaveItem((8 * playerId) + 6, UnitItemInSlot(currentUnit, 0))
+            call SaveItem((8 * playerId) + 7, UnitItemInSlot(currentUnit, 1))
         endif
 
         // Cleanup
         set currentUnit = null
-        set currentItem = null
     endfunction
 
     private function ResetItemsForPlayer takes player currentPlayer returns nothing
         local integer playerId = GetPlayerId(currentPlayer)
         local unit currentUnit = PlayerHeroes[playerId]
         local integer itemSlotIndex = 0
-        local item currentItem
 
         if (GetPlayerSlotState(currentPlayer) != PLAYER_SLOT_STATE_LEFT) then
             // Restore all items
             loop
                 call RemoveItem(UnitItemInSlot(currentUnit, itemSlotIndex))
 
-                // Make sure there is an actual item
-                if (PreBRItemIds[(6 * playerId) + itemSlotIndex] != -1) then
-                    set currentItem = UnitAddItemByIdSwapped(PreBRItemIds[(6 * playerId) + itemSlotIndex], currentUnit)
-                    call SetItemUserData(currentItem, playerId + 1)
-
-                    if PreBRItemCharges[(6 * playerId) + itemSlotIndex] > 1 then
-                        call SetItemCharges(currentItem, PreBRItemCharges[(6 * playerId) + itemSlotIndex])
-                    endif
-
-                    call SetItemPawnable(currentItem, true)
-                endif
+                call RestoreSavedItem((8 * playerId) + itemSlotIndex, currentUnit, playerId)
 
                 set itemSlotIndex = itemSlotIndex + 1
                 exitwhen itemSlotIndex == 6
             endloop
+
+            // Restore the items in the item stock as well
+            call RemoveItem(UnitItemInSlot(GetItemStock(playerId), 0))
+            call RemoveItem(UnitItemInSlot(GetItemStock(playerId), 1))
+            call RestoreSavedItem((8 * playerId) + 6, GetItemStock(playerId), playerId)
+            call RestoreSavedItem((8 * playerId) + 7, GetItemStock(playerId), playerId)
         endif
 
         // Cleanup
         set currentUnit = null
-        set currentItem = null
     endfunction
 
     private function PlacePlayerHeroInCenterArena takes nothing returns nothing
@@ -157,6 +169,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
 
         // Update the UI
         call UpdateLivesForPlayer(currentPlayer, MaxBRDeathCount, true)
+
+        call MoveItemStockToPlayerArena(playerId)
 
         // Save items
         call SaveItemsForPlayer(currentPlayer)
@@ -297,7 +311,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         set CurrentPlayerHeroPlacement = 0
         set MaxBRDeathCount = 3
         set WaitingForBattleRoyal = false
-
+        set ShadeCount = 0
+        
         call EventHelpers_FireEventForAllPlayers(EVENT_FUN_BR_ROUND_START, 0, RoundNumber, true)
 
         call DestroyTimerDialogBJ(GetLastCreatedTimerDialogBJ())
@@ -568,6 +583,8 @@ library BattleRoyaleHelper initializer init requires RandomShit, StartFunction, 
         call TimerDialogDisplay(BattleRoyalTimerDialog, true)
 
         set WaitingForBattleRoyal = true
+        
+        call SetUpItemStocks(GetPlayersAll())
         
         call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function FinalizeBattleRoyaleSetup)
     endfunction

@@ -52,11 +52,15 @@ library CritDamage requires RandomShit, Vampirism, Gnome
 
         //Centuar Archer passive
         if DamageSourceTypeId == CENTAUR_ARCHER_UNIT_ID and Damage.index.isAttack then
-            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08T') <= 0 then
-                call AbilStartCD(DamageSource, 'A08T', 2)
-                call ElemFuncStart(DamageSource,CENTAUR_ARCHER_UNIT_ID)
+            if CheckUnitHitCooldown(DamageTargetId, 'A08T', 2) then
+                if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08T') == 0 then
+                    call AbilStartCD(DamageSource, 'A08T', 2)
+                    call ElemFuncStart(DamageSource,CENTAUR_ARCHER_UNIT_ID)
+                endif
                 set critDmg = critDmg + (BlzGetUnitMaxHP(DamageTarget) * 0.06) + (Dmg * (1 + (0.05 * GetHeroLevel(DamageSource))))
-                call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", DamageTarget, "chest"))
+                if not IsFxOnCooldownSet(DamageTargetId, HERO_FORCE_ABILITY_ID, 1) then
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl", DamageTarget, "chest"))
+                endif
             endif
         endif
 

@@ -12,6 +12,12 @@ scope AfterDamage initializer init
             set ColdWindDamageIncreased.boolean[DamageSourceId] = true
         endif
 
+        //Finger of Death
+        if DamageSourceAbility == FINGER_OF_DEATH_ABILITY_ID and Damage.index.damage <= FingerOfDeathTable.real[DamageTargetId] then
+            call BlzStartUnitAbilityCooldown(DamageSource, GetDummySpell(DamageSource, FINGER_OF_DEATH_ABILITY_ID), BlzGetUnitAbilityCooldownRemaining(DamageSource, GetDummySpell(DamageSource, FINGER_OF_DEATH_ABILITY_ID)) * 0.5)
+            call BlzStartUnitAbilityCooldown(DamageSource, FINGER_OF_DEATH_ABILITY_ID, BlzGetUnitAbilityCooldownRemaining(DamageSource, FINGER_OF_DEATH_ABILITY_ID) * 0.5)
+        endif
+
         //Carrion Swarm heal
         if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
             call SetUnitState(DamageSource, UNIT_STATE_LIFE, GetUnitState(DamageSource, UNIT_STATE_LIFE) + Damage.index.damage)

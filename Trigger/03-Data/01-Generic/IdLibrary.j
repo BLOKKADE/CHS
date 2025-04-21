@@ -129,7 +129,8 @@ library IdLibrary initializer init
         constant integer GHOUL_UNIT_ID                                  = 'H01H'
         constant integer GNOME_MASTER_UNIT_ID                           = 'H019'
         constant integer GREEDY_GOBLIN_UNIT_ID                          = 'N02P'
-        constant integer CRYPT_LORD_UNIT_ID                             = 'H01J'
+        constant integer GNOLL_WARDEN_UNIT_ID                           = 'H01J'
+        constant integer CRYPT_LORD_UNIT_ID                             = 'U00A'
         constant integer HUNTRESS_UNIT_ID                               = 'N00R'
         constant integer LICH_UNIT_ID                                   = 'H018'
         constant integer LIEUTENANT_UNIT_ID                             = 'E000'
@@ -377,7 +378,6 @@ library IdLibrary initializer init
         
         // Dummy Abilities
         constant integer STUN_ABILITY_ID                                = 'A0C2'
-        constant integer CARBEE_SPIKED_CARAP_ABILITY_ID                 = 'A0CD'
         constant integer ERUPTION_IMMUNE_ABILITY_ID                     = 'A0D9'
         constant integer DEATH_AND_DECAY_DUMMY_ABILITY_ID               = 'A0E2'
         constant integer FOG_DUMMY_ABILITY_ID                           = 'A0E3'
@@ -385,6 +385,9 @@ library IdLibrary initializer init
         constant integer ENERGY_BOMBARDMENT_DUMMY_ABILITY_ID            = 'A0DP'
         constant integer CHAIN_LIGHTNING_DUMMY_ABILITY_ID               = 'A0ES'
         constant integer CURSE_OF_DEMONS_DUMMY_ABILITY_ID               = 'A043' 
+        constant integer STARFALL_DUMMY_ABILITY_ID                      = 'A0F0'
+        constant integer BLADE_STORM_DUMMY_ABILITY_ID                   = 'A090'
+        constant integer LIGHTNING_SHIELD_DUMMY_ABILITY_ID              = 'A0F1'
         
         // Creep Abilities
         constant integer FAERIE_FIRE_CREEP_ABILITY_ID                   = 'A016'
@@ -845,6 +848,7 @@ library IdLibrary initializer init
         constant integer ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID            = 'B030'
         constant integer ANCIENT_BLOOD_BUFF_ABILITY_ID                  = 'A0CI'
         constant integer CUTTING_BUFF_ABILITY_ID                        = 'A0ET'
+        constant integer STARFALL_BUFF_ABILITY_ID                       = 'A0F0'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 

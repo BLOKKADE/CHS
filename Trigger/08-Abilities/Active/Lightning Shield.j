@@ -1,4 +1,4 @@
-library LightningShield requires UnitHelpers, RandomShit, SpellFormula
+library LightningShield requires UnitHelpers, RandomShit, SpellFormula, TempAttackCd
     struct LightningShieldStruct extends array
         unit source
         unit target
@@ -21,6 +21,10 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula
                 set udg_NextDamageAbilitySource = LIGHTNING_SHIELD_ABILITY_ID
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\LightningShield\\LightningShieldBuff.mdl", p, "chest"))
                 call Damage.applyMagic(this.source, p, GetSpellValue(20, 10, this.level), false, DAMAGE_TYPE_MAGIC)
+                call TempAbil.create(p, LIGHTNING_SHIELD_DUMMY_ABILITY_ID, 5)
+                if not IsUnitType(p, UNIT_TYPE_HERO) then // for creeps and summons
+                    call AttackCdStruct.createUnique(p, 0.2, 5, LIGHTNING_SHIELD_DUMMY_ABILITY_ID)
+                endif
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
         endmethod

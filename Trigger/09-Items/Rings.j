@@ -16,6 +16,6 @@ library Rings initializer init requires Table, CustomGameEvent, UnitItems, Custo
     private function init takes nothing returns nothing
         set RingTable = Table.create()
         call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_START, CustomEvent.RingBlockLoss)
-        call CustomGameEvent_RegisterEventCode(EVENT_GAME_ROUND_END, CustomEvent.RingBlockReset)
+        call CustomGameEvent_RegisterEventCode(EVENT_PLAYER_ROUND_COMPLETE, CustomEvent.RingBlockReset)
     endfunction 
 endlibrary

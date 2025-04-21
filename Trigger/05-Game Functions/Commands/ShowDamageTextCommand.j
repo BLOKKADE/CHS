@@ -52,7 +52,7 @@ library ToggleDmgTxt initializer init requires DamageEngineHelpers, GetPlayerNam
 
         //if damage source was an ability
         if DamageSourceAbility != 0 then
-            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + " " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
+            set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + GetObjectName(DamageSourceAbility) + " lvl: " + I2S(DamageSourceAbilityLevel) + " " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )
         //if damage source is an attack or unknown ability
         else
             set output = (GetPlayerNameColour(GetOwningPlayer(DamageSource)) + ": " + aType + dmgType + colour + R2S(Damage.index.damage) + "|r dmg" )

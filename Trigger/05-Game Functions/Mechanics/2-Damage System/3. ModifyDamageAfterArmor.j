@@ -92,7 +92,7 @@ scope ModifyDamageAfterArmor initializer init
         //Vampirism
         set r1 = GetUnitAbilityLevel(DamageSource,VAMPIRISM_ABILITY_ID)
         if r1 > 0 then
-            set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.02 )
+            set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.05 )
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
@@ -114,7 +114,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Crypt lord Locust
-        if DamageSourceTypeId == CRYPT_LORD_LOCUST_UNIT_ID then
+        if DamageSourceAbility == CRYPT_LORD_UNIT_ID then
             set vampAmount = vampAmount + Damage.index.amount
             set vampCount = vampCount + 1
         endif
@@ -127,7 +127,7 @@ scope ModifyDamageAfterArmor initializer init
         endif	
 
         //Ghoul Passive
-        if DamageSourceTypeId == GHOUL_UNIT_ID and Damage.index.isAttack then
+        if DamageSourceTypeId == GHOUL_UNIT_ID and Damage.index.isAttack and CheckUnitHitCooldown(DamageTargetId, GHOUL_UNIT_ID, 0.35) then
             //call BJDebugMsg(GetUnitName(DamageSource) + " Damage.index.isAttack " + GetUnitName(DamageTarget) + ": " + I2S(DamageTargetId))
             set i = GetHeroLevel(DamageSource)
             //set r2 = BlzGetUnitMaxHP(DamageTarget) * (0.025 + (0.00025 * i))
@@ -155,16 +155,16 @@ scope ModifyDamageAfterArmor initializer init
         
         //Magic Necklace of Absorption
         if GetUnitAbilityLevel(DamageTarget  ,'B00R') >= 1 and IsMagicDamage() then
-            call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.75 )
+            call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.50 )
         endif
 
         //Bloody Axe
         if IsPhysDamage() and IsHeroUnitId(DamageTargetTypeId) == false then
             set i = GetUnitItemTypeCount( DamageSource,'I078') 
             if i > 0 then
-                set r2 = Damage.index.amount * (0.25 * I2R(i))
-                set vampAmount = vampAmount + r2
-                set vampCount = vampCount + 1  
+            set r2 = Damage.index.amount * (0.25 * I2R(i))
+            set vampAmount = vampAmount + r2
+            set vampCount = vampCount + 1  
             endif
         endif
 
@@ -224,7 +224,7 @@ scope ModifyDamageAfterArmor initializer init
         endif 
 
         //Blademaster
-        if DamageSourceTypeId == BLADE_MASTER_UNIT_ID and BladestormReady(DamageSource) and Damage.index.isAttack then
+        if DamageSourceTypeId == BLADE_MASTER_UNIT_ID and DamageSourceAbility != BLADE_STORM_DUMMY_ABILITY_ID and BladestormReady(DamageSource) and Damage.index.isAttack then
             call BladestormDamage(DamageSource, Damage.index.amount , IsMagicDamage())
         endif
 
@@ -382,12 +382,12 @@ scope ModifyDamageAfterArmor initializer init
             endif
 
             //Spiked Carapaces
-            set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID) + GetUnitAbilityLevel(DamageTarget, CARBEE_SPIKED_CARAP_ABILITY_ID) 
+            set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID)
             if i > 0 and Damage.index.isAttack then
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = SPIKED_CARAPACE_ABILITY_ID
                 //set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
-                set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID)))
+                set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * i)
                 //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
                 call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
             endif  
@@ -405,14 +405,17 @@ scope ModifyDamageAfterArmor initializer init
 
             //Dark Hunter Bash
             if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
-                //call BJDebugMsg("src: " + GetUnitName(DamageSource) + " doh: " + I2S(DamageIsOnHit) + " dmg: " + R2S(Damage.index.damage))
-                call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", 50 * GetHeroLevel(DamageSource), ABILITY_RLF_DAMAGE_HTB1 )
+                set r1 = GetHeroLevel(DamageSource) * 50
+                set r2 = DarkHunterStun.real[DamageSourceId]
+                if CheckUnitHitCooldown(DamageTargetId, DARK_HUNTER_UNIT_ID, r2 + 0.4) then
+                    call ApplyDarkHunterStun(DamageSource, DamageTarget, r1, r2)
+                endif
             endif
         endif
 
         if vampCount > 0 and Damage.index.amount > 0 then
             if not IsFxOnCooldownSet(DamageSourceId, 0, 1) then
-                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "chest"))
+                call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "origin"))
             endif
             call Vamp(DamageSource, DamageTarget, vampAmount)
         endif
@@ -436,6 +439,11 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Parasite Summon
+        if DamageSourceAbility == PARASITE_ABILITY_ID and T32_Tick > ParasiteLimit[DamageSourcePid].integer[DamageTargetId] and GetRandomInt(1,100) <= 20 * DamageSourceLuck then
+            call SummonParasite(DamageSourcePid, DamageTarget)
+        endif
+
         //Holy Chain Mail
         if UnitHasItemType(DamageTarget,'I07U') then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
@@ -451,13 +459,14 @@ scope ModifyDamageAfterArmor initializer init
 
         //Skeleton Brute
         if DamageTargetTypeId == SKELETON_BRUTE_UNIT_ID then
-            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0BA') == 0 and Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) * 0.2 and GetUnitAbilityLevel(DamageTarget, 'A0BB') == 0 then
-                call SkeletonBrute(DamageTarget)
-            endif
-
-            //Invul
+            //Invul dmg negation
             if GetUnitAbilityLevel(DamageTarget, 'A0BB') > 0 then
                 set Damage.index.amount = 0
+            endif
+
+            //make invul
+            if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0BA') == 0 and Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) * 0.2 and GetUnitAbilityLevel(DamageTarget, 'A0BB') == 0 then
+                call SkeletonBrute(DamageTarget)
             endif
         endif
 

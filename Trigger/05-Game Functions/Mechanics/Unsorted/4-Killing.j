@@ -73,7 +73,7 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
             set i = GetUnitItemTypeCount(killingHero, 'I079') 
             if i > 0 and killer != null then
                 call Vamp(killingHero, target, BlzGetUnitMaxHP(killingHero)* 0.1 * I2R(i))
-                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", killingHero, "chest"))      
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", killingHero, "origin"))      
             endif
 
             //Amulet of the Night

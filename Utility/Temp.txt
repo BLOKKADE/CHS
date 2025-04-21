@@ -1,0 +1,115 @@
+General
+- Summer Terrain
+- Creeps hit points, armor and magic protection is roughly increased by 50%.
+- Damage text now shows ability levels. (doesn't always work correctly yet sadly)
+- Possibly fixed lives not always being increased on rounds 16 and 32.
+- Fixed lifesteal FX showing up above the hero instead of on the hero.
+- Battle Royale can no longer end if there are shades alive.
+- Battle Royale shades now have maximum movement speed.
+- Creeps now have their movement speed displayed in the next round tooltip.
+- When a player leaves, their hero now has some of their stats reset to 0.
+- When your hero dies in immortal mode, you no longer get a round clear bonus.
+- Fun Battle Royale: Now gives 2 minutes of prep time.
+- When teleporting the hero back to the center, the teleport locations are now slightly randomized.
+- When a creep is selected, the top-left icons should now properly display their ability levels.
+- Absolute Acorn and Stat per level tomes can no longer be shift-bought.
+- Modified visuals and/or damage instances of Cyclone, Rain of Fire, and Stampede to reduce lag.
+- Whole bunch of items, abilities, and passives now state correctly they are affected by an item or affect items.
+- Picking up another player's dropped item now shows the correct owner.
+
+Mechanics
+- Item Storage added for Battle Royale: You can now buy 2 extra items and swap them in or out during Battle Royale.
+    ^ This is a temporary feature, might be removed later, gotta see what kind of impact it has
+- It is now again possible to cast spells in the first 5 seconds of a round.
+- For the first 4 rounds the amount of creeps is now equal to the round number (to speed up the slow start)
+- Mana Regeneration: Now regenerates 0.195 instead of 0.065 per intelligence point.
+- PvP Bonus stat now correctly states that it also damages and reduces damage from enemy summons.
+- Summons now have an attack cooldown limit of 0.4, or 0.3 when Packing Tape is used.
+- Added a Reroll option to the Draft shop and removed Non-Lucrative Tome.
+
+Heroes
+- Seer Passive: Is now affected by luck, attacks work on Banished units, and has its description rewritten.
+- Wolfrider: Now shows Thrall portrait instead of Death Knight (thanks Blizzard).
+- Crypt Lord: Locust damage now counts as an attack by the Hero.
+- Skeleton Brute Passive: Now doesn't negate the 20% damage, only the next damage taken.
+- Blademaster Passive: No longer activates on itself.
+- Time Wizard/Xesil Passive: Multicast and manifold cost mana again.
+- Ogre Mage Passive: Multicast chance reduced from 2% per level to 1.2% per level.
+- Ghoul Passive: Enemies hit by the passive now become immune to it for 0.35 seconds.
+- Centaur Archer Passive: Cooldown is now per target instead of general.
+- Cold Knight Passive: Targets hit now become immune for 0.50 seconds.
+- Dark Hunter Passive: Stun now lasts 0.01 seconds longer per level, and targets become immune for 0.4 seconds with +0.01 per level.
+- Ursa Passive: Now lasts 2 seconds.
+- Demon Hunter Passive: When triggered by magic damage, targets become immune for 0.7 seconds.
+- Blood Mage Passive: Intelligence required for bonus magic power is now lowered by 3 for every 30 levels.
+- Pitlord Passive: Clarified passive deals magic damage.
+- Yeti Passive: Now affected by luck and gains +1% strength bonus for [Cold] every 10 levels
+
+Abilities
+- Cyclone: Now deals damage every 0.33 seconds but at level 30 deals 450 damage + hero level * 29 instead of 300 + hero level * 17.
+- Multicast: Removed the 3x, 4x, and 5x multicast chance.
+- Frost Armor: Is now automatically cast on up to 5 nearby allies every time the hero casts a [Cold] or [Water] spell.
+- Immolation: Now activates [Fire] once every second, no mana cost to activate/deactivate
+- Finger of Death: If the damage dealt is reduced by 75% or more by the target, then the ability's cooldown is halved.
+- Starfall: Now deals 5% bonus damage for every consecutive hit.
+- Lightning Shield: Damaged enemies now temporarily have their attack cooldown increased by 0.2.
+- Parasite: Now has a 20% chance to summon a minion once every 10 seconds and gains [Wild] tag.
+- Ancient Element: Instead of +2 flat to elements, you now get +1 every 10 levels (starting at 0).
+- Stampede: Changed the number of thunder lizards per second at level 30 from 13 to 7 and increased damage from 5600 to 9330. Fixed a bug where it would be cut off after 10 seconds when cast through Chaos Magic or Multicast.
+- Incinerate: Now lasts 8 seconds instead of 5.
+- Liquid Fire: Damage increased; at level 30: 2400 damage + 10 * physical power + 10 * magic power. Instance limit is now 40.
+- Envenomed Weapons: Instance limit is now 40.
+- Summon Spirit Wolves: Now has no collision, lowered evasion but increased magic protection.
+- Summon Bear: Now casts Blink Strike upon summoning.
+- Summon Mountain Giant: Gains 5 physical power per level.
+- Summon Serpent Ward: Removed the 0.1 magic power/level. Unit now shows abilities.
+- Summon Phoenix: Gains [Wild] tag.
+- Summon Hawks: Gains [Wind] tag.
+- Summon Beetles: Fixed Spiked Carapace damage return.
+- Finger of Death: Now damages based on x% of intelligence or its flat damage, depending on which is higher (1500% of intelligence level 30)
+- Cluster Rockets: Damage increased from 3495 to 4660, interval changed from 0.20 to 0.33.
+- Summon Infernal: Armor increased from 5 to 20 per level. Now gains 300 block, 10 magic protection and 3 physical power per level.
+- Vampirism: Changed bonus lifesteal from 2% to 5% per [Blood] count.
+- Crushing Wave, Acid Spray, and Carrion Swarm secondary effects now work properly when cast by Chaos Magic, Mystical Armor, or Chaos Rune.
+- Rain of Fire: Modified visuals to reduce lag, states the number of waves, now always has 10 waves.
+- Summon abilities: Clarified tooltips, also shows the max number of summons.
+- Inner Fire: Shop tooltip improvement.
+- Thunder Force: No longer works on invulnerable units
+- Mega Speed: Lowers attack cooldown to 0.50 instead of 0.32, now costs 900 instead of 1050 gold.
+- Cutting: Is now unpurgeable.
+- Shadow Step/Shadow Dance: Hopefully fixed a bug where you could teleport outside of the arena with them.
+- Fast Magic: Now correctly states item cooldowns are also affected.
+- Berserk: Shop tooltip shows correct level-up bonuses.
+- Arcane Strike: Removed obsolete wording.
+- Inner Fire: Shop tooltip update.
+
+Items
+- Speed Blade: Active sets attack cooldown to 0.7 instead of 0.6, now also gives 20 evasion and 100 movement speed.
+- Flimsy Token: Nerfed from 0.6 to 0.4 attack cooldown increase.
+- Book of Necromancy: Changed cooldown from 50 to 24.
+- Magic Necklace: Changed magic damage to mana conversion to 50%, updated buff icon.
+- Cloak of Sorrow: Changed gold cost from 14,000 to 12,500. Now shows range (900).
+- Strong Chest Mail: Changed gold cost from 35,000 to 27,000.
+- Unusual Wooden Shield: Changed gold cost from 990 to 775.
+- Urn of Memories: Changed gold cost from 31,000 to 18,000.
+- Shadow Blade: Changed gold cost from 90,000 to 70,000.
+- Adduxor's Legendary Blade: Changed gold cost from 1000 to 750.
+- Mysterious Runestone: Changed gold cost from 16,000 to 26,000.
+- Orb of the Elements: Changed gold cost from 50,000 to 65,000.
+- Reaver's Axe: Changed gold cost from 4500 to 4200.
+- Scroll of Power: Changed gold cost from 10,000 to 8,500.
+- Terrestrial Glaive: Now has [Earth] and [Wind]. Damage is no longer converted to physical. Changed +30 physical power to +30 magic power.
+- All elemental runes: Changed gold cost to 15,000.
+- Arcane Runestone: Increased [Arcane] count to 2.
+- Earth Runestone: Increased [Earth] count to 2. Removed 20,000 HP and replaced it with 150 strength and 75 armor.
+- Water Runestone: Increased [Water] count to 2. Changed mana bonus from 10,000 to 15,000.
+- Light Runestone: Increased [Light] count to 2.
+- Fire Runestone: Increased [Fire] count to 2. Reduced cooldown from 3 to 1.5 seconds.
+- Dark Runestone: Increased [Dark] count to 2.
+- Glory Attack Speed: Limited to 0.60 instead of 0.40.
+- Glory PvP Bonus: Upgrades from the shop now cost 1300 glory and give 1% PvP bonus. You can buy a maximum of 50 of these upgrades.
+- Glory Movespeed: You cannot buy more than one upgrade anymore.
+
+Runes
+- Wind Rune: Changed stun duration to 2.5 seconds against heroes and 4 seconds for creeps.
+- Dark Rune: Can now be purged/cleansed.

@@ -1,4 +1,4 @@
-library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaRing, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomGameEvent, HeroAbilityTable, SellItems
+library Functions initializer init requires ExtradimensionalCooperation, Sorcerer, EnergyBombardment, SpiritTauren, Immolation, EndOfRoundItem, ArenaMasterBonus, Glory, MysteriousTalent, SearingArrows, PandaSkin, CustomGameEvent, HeroAbilityTable, SellItems
     globals 
         integer RectPid
         integer array Lives
@@ -149,10 +149,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
             endif
         endif
 
-        /*if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
-            call MysteriousTalentUpdateDesc(u)
-        endif*/
-
         if abilId == MEGA_SPEED_ABILITY_ID then     
             if LoadReal(HT, GetHandleId(u), 1) == 0 then 
                 call SaveReal(HT, GetHandleId(u), 1, BlzGetUnitAttackCooldown(u, 0))
@@ -193,17 +189,10 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         if abilId == ABSOLUTE_DARK_ABILITY_ID then
             call UnitRemoveAbility(u, 'A0DH')
         endif
-
-        /*if abilId == MEGA_SPEED_ABILITY_ID then
-            if LoadReal(HT, GetHandleId(u), 1) != 0 then
-                //   call BlzSetUnitAttackCooldown(u,LoadReal(HT, GetHandleId(u), 1) , 0) 
-            endif
-        endif*/
     endfunction
 
-    function FunctionStartUnit takes unit U returns nothing
-        call SaveReal(HT, GetHandleId(U), -1001, BlzGetUnitAttackCooldown(U, 0))
-        call SaveInteger(HT, GetHandleId(U), -1000, BlzGetUnitIntegerField(U, UNIT_IF_PRIMARY_ATTRIBUTE))
+    function SaveUnitBaseValues takes unit u returns nothing
+        call SaveReal(HT, GetHandleId(u), -1001, BlzGetUnitAttackCooldown(u, 0))
     endfunction
 
     function SellItemsOnGround takes nothing returns nothing
@@ -245,12 +234,6 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         call AdjustPlayerStateBJ(Income[pid], p, PLAYER_STATE_RESOURCE_GOLD)
         call DisplayTextToPlayer(p, 0, 0, "|cffffee00Gold Income|r: +" + I2S(Income[pid])  + " + (|cffffee00Bonus|r: +" + I2S(LumberGained[pid]) + ") - |cff7af0f8Glory|r: +" + I2S(R2I((GetPlayerGloryBonus(pid)))))
 
-        if (RoundNumber == 16 or RoundNumber == 32) then
-            set Lives[pid] = Lives[pid] + 1
-            call UpdateLivesForPlayer(p, Lives[pid], false)
-            call DisplayTextToPlayer(p, 0, 0, "|cff85ff3eRound|r: " + I2S(RoundNumber) + "|r: |cffecff3e+1 life|r for you being you.")
-        endif
-
         if IncomeMode < 2 and Income[pid] == 0 then 
             call DisplayTextToPlayer(p, 0, 0, "You can increase your income in Power Ups Shop II")       
         endif
@@ -270,4 +253,16 @@ library Functions requires ExtradimensionalCooperation, Sorcerer, EnergyBombardm
         set p = null
     endfunction
 
+    function OnRoundEnd takes EventInfo ev returns nothing
+        local integer pid = GetPlayerId(ev.p)
+        if ev.roundNumber == 16 or ev.roundNumber == 32 then
+            set Lives[pid] = Lives[pid] + 1
+            call UpdateLivesForPlayer(ev.p, Lives[pid], false)
+            call DisplayTextToPlayer(ev.p, 0, 0, "|cff85ff3eRound|r: " + I2S(ev.roundNumber) + "|r: |cffecff3e+1 life|r for you being you.")
+        endif
+    endfunction
+
+    private function init takes nothing returns nothing
+        call CustomGameEvent_RegisterEventCode(EVENT_PLAYER_ROUND_COMPLETE, CustomEvent.OnRoundEnd)
+    endfunction
 endlibrary

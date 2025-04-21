@@ -174,7 +174,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        if DamageSourceTypeId == CRYPT_LORD_LOCUST_UNIT_ID then
+        if DamageSourceAbility == CRYPT_LORD_UNIT_ID then
             set Damage.index.damage = 60 * GetHeroLevel(DamageSourceHero)
         endif
 
@@ -251,19 +251,31 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Finger of Death
-        set i1 = GetUnitAbilityLevel(DamageSource, FINGER_OF_DEATH_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == FINGER_OF_DEATH_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSource, true) * (0.5 * i1)
+        if DamageSourceAbility == FINGER_OF_DEATH_ABILITY_ID then
+            set r1 = GetHeroInt(DamageSource, true) * (0.5 * DamageSourceAbilityLevel)
             if Damage.index.damage < r1 then
                 set Damage.index.damage = r1
             endif
+
+            set FingerOfDeathTable.real[DamageTargetId] = Damage.index.damage * 0.25
+        endif
+
+        //Starfall
+        if DamageSourceAbility == STARFALL_ABILITY_ID then
+            if GetUnitAbilityLevel(DamageTarget, STARFALL_BUFF_ABILITY_ID) == 1 then
+                set StarfallTable.real[DamageTargetId] = StarfallTable.real[DamageTargetId] + 0.05
+                set Damage.index.damage = Damage.index.damage * (1 + StarfallTable.real[DamageTargetId])
+            else
+                set StarfallTable.real[DamageTargetId] = 0
+            endif
+            call TempAbil.create(DamageTarget, STARFALL_BUFF_ABILITY_ID, 3)
         endif
 
         //Crits
         call SetCritDamage()
 
         //Yeti cold based crit negation
-        if DamageTargetTypeId == YETI_UNIT_ID and DamageIsCrit and GetRandomReal(0, 1) < 0.08 * GetUnitElementCount(DamageTarget, Element_Cold) then
+        if DamageTargetTypeId == YETI_UNIT_ID and DamageIsCrit and GetRandomInt(1, 100) < (8 * GetUnitElementCount(DamageTarget, Element_Cold)) * DamageTargetLuck then
             set Damage.index.damage = 0
             return
         endif
@@ -272,9 +284,11 @@ scope ModifyDamageBeforeArmor initializer init
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
         if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 and Damage.index.isAttack then
             set Damage.index.damage = Damage.index.damage + 50 * i1
-            call SetUnitX(DamageSource, GetWidgetX(DamageTarget) - 65 * CosBJ(GetUnitFacing(DamageTarget)))
-            call SetUnitY(DamageSource, GetWidgetY(DamageTarget) - 65 * SinBJ(GetUnitFacing(DamageTarget))) 
-            call BlzSetUnitFacingEx( DamageSource, GetUnitFacing(DamageTarget))
+            if IsTerrainWalkable(GetWidgetX(DamageTarget) - 65 * CosBJ(GetUnitFacing(DamageTarget) + 180), GetWidgetY(DamageTarget) - 65 * SinBJ(GetUnitFacing(DamageTarget) + 180)) then
+                call SetUnitX(DamageSource, TerrainPathability_X)
+                call SetUnitY(DamageSource, TerrainPathability_Y)
+                call BlzSetUnitFacingEx(DamageSource, Atan2(GetUnitY(DamageTarget) - GetUnitY(DamageSource), GetUnitX(DamageTarget) - GetUnitX(DamageSource)) * bj_RADTODEG)
+            endif
         endif
     
         //Backstab
@@ -287,13 +301,12 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Crushing Wave
-        set i1 = GetUnitAbilityLevel(DamageSource, CRUSHING_WAVE_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
-            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * i1))))
+        if DamageSourceAbility == CRUSHING_WAVE_ABILITY_ID then
+            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.05 + (0.005 * DamageSourceAbilityLevel))))
         endif
 
         //Demon Hunter
-        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID then
+        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID and (IsMagicDamage() and CheckUnitHitCooldown(DamageTargetId, DEMON_HUNTER_UNIT_ID, 0.7) or IsPhysDamage()) then
             set r1 = RMinBJ(GetHeroLevel(DamageSource) * 20, GetUnitState(DamageTarget, UNIT_STATE_MANA))
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - r1)
             call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) + r1)
@@ -325,9 +338,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Acid Spray
-        set i1 = GetUnitAbilityLevel(DamageSource, ACID_SPRAY_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSource, true) * (1.5 + (0.15 * i1))
+        if DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
+            set r1 = GetHeroInt(DamageSourceHero, true) * (1.5 + (0.15 * DamageSourceAbilityLevel))
             if Damage.index.damage < r1 then
                 set Damage.index.damage = r1
             endif
@@ -392,9 +404,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         // Carrion Swarm
-        set i1 = GetUnitAbilityLevel(DamageSource, CARRION_SWARM_ABILITY_ID)
-        if i1 > 0 and DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
-            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.0462 + (0.0038 * i1))
+        if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
+            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.0462 + (0.0038 * DamageSourceAbilityLevel))
         endif
 
         //Frost Circlet
@@ -474,8 +485,8 @@ scope ModifyDamageBeforeArmor initializer init
         //Ursa Warrior
         if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)
-            call TempAbil.create(DamageTarget, 'A08O', 3)
-            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 3, 0, true, BLEED_BUFF_ID, URSA_WARRIOR_UNIT_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 150, 1).start()
+            call TempAbil.create(DamageTarget, 'A08O', 2)
+            call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 2, 0, true, BLEED_BUFF_ID, URSA_WARRIOR_UNIT_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 40, 1).start()
         endif
 
         //Pvp Bonus
@@ -660,7 +671,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call SaveInteger(HT,DamageTargetId,- 300002,i1 * 100)
                 call SaveUnitHandle(HT,DamageTargetId,- 300003, DamageSourceHero)
                 call SaveInteger(HT,DamageTargetId,- 300004,T32_Tick)
-                call TempAbil.create(DamageTarget, 'A06L', 5)
+                call TempAbil.create(DamageTarget, 'A06L', 8)
 
                 if Damage.index.damage > 0 then
                     set Damage.index.damage = Damage.index.damage+ r1
@@ -712,6 +723,11 @@ scope ModifyDamageBeforeArmor initializer init
                 set Damage.index.damage =   Damage.index.damage*(DamageSourceMagicPower + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)/ 100 )
                 //call BJDebugMsg("src: " + GetUnitName(DamageSource) + "dmg: " + R2S(Damage.index.damage) + "magic pow: " + R2S((DamageSourceMagicPower + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)/ 100 )))
             endif   
+        endif
+
+        //Gnoll Warden
+        if DamageTargetTypeId == GNOLL_WARDEN_UNIT_ID and Damage.index.damage > 0 then
+            call ActivateGnollWardenPassive(DamageTarget, Damage.index.damage)
         endif
 
         //Block
@@ -781,7 +797,7 @@ scope ModifyDamageBeforeArmor initializer init
 
                 call TempAbil.create(DamageTarget, 'A06R', 3)
                 //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitCustomState(DamageSource, BONUS_MAGICPOW)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 40 * i1 + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)* 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 150, 1).start()
+                call PeriodicDamage.create(DamageSource, DamageTarget, 80 * i1 + GetUnitCustomState(DamageSource, BONUS_MAGICPOW)* 10 + GetUnitCustomState(DamageSource, BONUS_PHYSPOW) * 10, true, 1., 3, 0, false, LIQUID_FIRE_CUSTOM_BUFF_ID, LIQUID_FIRE_ABILITY_ID).addLimit(LIQUID_FIRE_ABILITY_ID, 40, 1).start()
             endif
 
             //Envenomed Weapons heroes
@@ -790,7 +806,7 @@ scope ModifyDamageBeforeArmor initializer init
 
                 call TempAbil.create(DamageTarget, 'A06P', 8)
                 //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 20, 1).start()
+                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
             endif
 
             //Quillbeasts
@@ -798,7 +814,7 @@ scope ModifyDamageBeforeArmor initializer init
                 set i1 = GetUnitAbilityLevel(DamageSource, 'A0BF') + PoisonRuneBonus[DamageSourcePid]
                 if (IsPhysDamage() or PoisonRuneBonus[DamageSourcePid] > 0) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
                     call TempAbil.create(DamageTarget, 'A06P', 8)
-                    call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 150, 1).start()
+                    call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
                 endif
             endif
         endif

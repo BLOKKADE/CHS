@@ -12,7 +12,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         constant integer BONUS_LUCK                     = 5
         constant integer BONUS_RUNEPOW                  = 6
         constant integer BONUS_SUMMONPOW                = 7
-        constant integer BONUS_PVP                 = 8
+        constant integer BONUS_PVP                      = 8
         constant integer BONUS_PHYSPOW                  = 9
         constant integer BONUS_MISSCHANCE               = 10
         constant integer BONUS_DAMAGE                   = 11
@@ -26,6 +26,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         constant integer BONUS_MANAREGEN                = 19
         constant integer BONUS_ATTACKSPEED              = 20
         constant integer BONUS_NEGATIVEHPREGEN          = 21
+        constant integer BONUS_GLORYREGEN               = 22
         */
         HashTable TempBonusTable
     endglobals
@@ -61,21 +62,21 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
             endif
         endmethod  
 
-        private method updateState takes nothing returns nothing
+        private method updateState takes real value returns nothing
             //call BJDebugMsg("state: " + I2S(this.state) +", bonus: " + R2S(this.bonus))
-            if state < 11 or state == 21 then
-                call AddUnitCustomState(this.source, this.state, this.bonus)
+            if state < 11 or state == 21 or state == 23 then
+                call AddUnitCustomState(this.source, this.state, value)
             else
                 if state < 18 then
-                    call AddUnitBonus(this.source, this.state, R2I(this.bonus))
+                    call AddUnitBonus(this.source, this.state, R2I(value))
                 else
-                    call AddUnitBonusReal(this.source, this.state, this.bonus)
+                    call AddUnitBonusReal(this.source, this.state, value)
                 endif
             endif
         endmethod
 
         method activate takes nothing returns thistype
-            call this.updateState()
+            call this.updateState(this.bonus)
             set this.endTick = T32_Tick + R2I(this.duration * 32)
             call this.startPeriodic()
             //call BJDebugMsg("activate tb")
@@ -121,7 +122,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
         method destroy takes nothing returns nothing
             set this.bonus = 0 - this.bonus
             call this.stopPeriodic()
-            call this.updateState()
+            call this.updateState(this.bonus)
             set TempBonusTable[this.sourceId][this.abilId][this.state] = 0
             set this.source = null
             set this.p = null

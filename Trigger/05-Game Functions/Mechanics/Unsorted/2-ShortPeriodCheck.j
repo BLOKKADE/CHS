@@ -26,9 +26,9 @@ scope ShortPeriodCheck initializer init
 
                 //Crypt Lord
                 if unitTypeId == CRYPT_LORD_UNIT_ID then
-                    if BlzGetUnitAbilityCooldownRemaining(u, 'A0EM') == 0 then
+                    if BlzGetUnitAbilityCooldownRemaining(u, 'A0F3') == 0 then
                         call ElemFuncStart(u, CRYPT_LORD_UNIT_ID)
-                        call BlzStartUnitAbilityCooldown(u, 'A0EM', 10)
+                        call BlzStartUnitAbilityCooldown(u, 'A0F3', 10)
                         call SpawnLocustSwarm(u)
                     endif
                 endif
@@ -155,8 +155,9 @@ scope ShortPeriodCheck initializer init
 
             //Blood Elf Mage
             if unitTypeId == BLOOD_MAGE_UNIT_ID then
+                set r1 = 60 - (3 * R2I((GetHeroLevel(u) - ModuloInteger(GetHeroLevel(u), 30)) / 30))
                 set i1 = GetHeroInt(u, true)
-                set i1 = R2I((i1 - ModuloInteger(i1, 60)) / 60)
+                set i1 = R2I((i1 - ModuloInteger(i1, R2I(r1))) / r1)
                 set i2 = LoadInteger(DataUnitHT, hid, 542)
                 if i1 != i2 then
                     call AddUnitCustomState(u, BONUS_MAGICPOW, 0 - i2)
@@ -208,10 +209,12 @@ scope ShortPeriodCheck initializer init
 
                 //Yeti
             elseif unitTypeId == YETI_UNIT_ID then
-                set i1 = LoadInteger(DataUnitHT, hid,542)
-                set i2 = R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold))) - i1)
-                call SetHeroStr(u, GetHeroStr(u,false) + i2, false)
-                call SaveInteger(DataUnitHT, hid,542, R2I((20 * GetHeroLevel(u)) * (1 + (0.1 * GetUnitElementCount(u, Element_Cold)))))
+                set i1 = LoadInteger(DataUnitHT, hid, YETI_UNIT_ID)
+                set i2 = R2I((GetHeroStr(u, true) - i1) * ((YetiStrengthBonus.integer[hid] * 0.01) * GetUnitElementCount(u, Element_Cold)))
+                if i1 != i2 then
+                    call SetHeroStr(u, GetHeroStr(u, false) - i1 + i2, false)
+                    call SaveInteger(DataUnitHT, hid, YETI_UNIT_ID, i2)
+                endif
             elseif unitTypeId == WOLF_RIDER_UNIT_ID then
                 call WolfRiderStatBonus(u, hid)
             

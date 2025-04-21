@@ -9,7 +9,7 @@ library ItemOwnership initializer init requires Table, GetPlayerNames
 
         // Check if the item is owned by another player
         if (itemUserData != 0 and itemUserData != playerId) then
-            call DisplayTimedTextToPlayer(owningPlayer, 0, 0, 10, "You don't own this item. It belongs to " + GetPlayerNameColour(Player(itemUserData)))
+            call DisplayTimedTextToPlayer(owningPlayer, 0, 0, 10, "You don't own this item. It belongs to " + GetPlayerNameColour(Player(itemUserData - 1)))
             call UnitRemoveItem(triggeredUnit, pickedItem)
         else
             // Not owned by anyone, save it to the player

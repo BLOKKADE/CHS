@@ -50,10 +50,6 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         set p = null
     endfunction
 
-    private function CreateFlyingSheep takes nothing returns nothing
-        //call CreateUnit(GetEnumPlayer(), FLYING_SHEEP_UNIT_ID, 0, 0, 0)
-    endfunction
-    
     private function HideScoreboardForPlayer takes nothing returns nothing
         call PlayerStats.forPlayer(GetEnumPlayer()).setHasScoreboardOpen(false)
     endfunction
@@ -69,7 +65,6 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call CreateShops()
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
-        call ForForce(GetPlayersAll(), function CreateFlyingSheep)
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
 
         call TriggerExecute(StartLevelTrigger)
@@ -81,6 +76,8 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
         call StartScoreboardUpdate() // Start the automatic updating of the scoreboard
         call UpdateRewardsPrimaryStatIcon() // Update the primary stat icon for each player
+
+        call SetupHeroCamera_DisableHeroSelectionForcedCamera()
 
         call PlaySoundBJ(udg_sound11)
         call DisplayTextToForce(GetPlayersAll(), "|c000070C0Get Ready!|r")
@@ -128,7 +125,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         call BlzUnitHideAbility(hero, SEARING_ARROWS_ABILITY_ID, true)
         call BlzUnitHideAbility(hero, 'A03H', true)    
     
-        call FunctionStartUnit(hero) 
+        call SaveUnitBaseValues(hero) 
         call BlzSetHeroProperName(hero, GetPlayerNameNoTag(GetPlayerName(p)))
         call ConditionalTriggerExecute(SpacebarCameraTrigger)
         call ResetToGameCameraForPlayer(p, 0)

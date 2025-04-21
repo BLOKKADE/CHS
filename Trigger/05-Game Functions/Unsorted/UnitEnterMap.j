@@ -47,7 +47,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Mortar Team
         if GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_PHYSPOW, 2 * GetHeroLevel(hero))  
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 1.5 * GetHeroLevel(hero))  
         endif
 
         //Druid of the Claw
@@ -70,14 +70,16 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
             call GetSummonStatFunction(summonTypeId).evaluate(u, totalLevel)
 
+            call BlzSetUnitAttackCooldown(u, RMaxBJ(0.4, BlzGetUnitAttackCooldown(u, 0)), 0)
+
             set SummonLevel[GetHandleId(u)] = totalLevel
             call BlzSetUnitName(u,GetUnitName(u)+ ": level " + I2S(totalLevel))
             call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
          //Wild Defense
-         set i2 = GetUnitAbilityLevel(hero, WILD_DEFENSE_ABILITY_ID)
-         if i2 > 0 then
+        set i2 = GetUnitAbilityLevel(hero, WILD_DEFENSE_ABILITY_ID)
+        if i2 > 0 then
             call AddUnitCustomState(u, BONUS_MAGICRES,3 * i2)
             call AddUnitCustomState(u, BONUS_EVASION,0.5 * i2)
             call AddUnitCustomState(u, BONUS_BLOCK, 10 * i2)
@@ -242,9 +244,27 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set TrollBerserkerBonus.real[hid] = 0.99
         endif
 
+        //crypt Lord
+        if GetUnitTypeId(u) == CRYPT_LORD_UNIT_ID and realUnit then
+            set CryptLordLocustCount.integer[hid] = 1
+        endif
+
+        //Yeti
+        if GetUnitTypeId(u) == YETI_UNIT_ID and realUnit then
+            set YetiStrengthBonus.integer[hid] = 10
+        endif
+
+        //Sorcerer
         if GetUnitTypeId(u) == SORCERER_UNIT_ID and realUnit then
             call CreateSpellList(u, SORCERER_UNIT_ID, SpellListFilter.SorcerSpellListFilter)
             set SorcererAmount[hid] = 1
+        endif
+
+        //Gnoll Warden
+        if GetUnitTypeId(u) == GNOLL_WARDEN_UNIT_ID and realUnit then
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_HP, 0.01)
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_INTERVAL, 1.0)
+            call SetGnollWardenPassive(u, GNOLL_WARDEN_PASSIVE_LIMIT, 10)
         endif
 
         //Set base luck

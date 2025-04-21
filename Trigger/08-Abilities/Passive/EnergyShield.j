@@ -1,6 +1,6 @@
 library EnergyShield initializer init requires RandomShit, CustomGameEvent
 
-    private function checkShield takes nothing returns nothing endfunction
+    private function checkShield takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local unit u = LoadUnitHandle(HT, GetHandleId(t), 1)
         local effect e = LoadEffectHandle(HT, GetHandleId(t), 2)
