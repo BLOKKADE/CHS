@@ -1456,10 +1456,14 @@ library HeroSelector initializer init_function requires optional FrameLoader, Ga
             call HeroSelectorDoRandom(p)
         else
             set unitCode = HeroSelectorRollOption(p, false, PlayerSelectedButtonIndex[playerIndex], PlayerSelectedCategory[playerIndex], false)
-            if unitCode > 0 and GetLocalPlayer() == p then
+
+            if unitCode > 0 then
                 set unitCodeIndex = LoadInteger(Hash, unitCode, 0)
                 set buttonIndex = HeroButtonIndex[unitCodeIndex]
-                call BlzFrameClick(HeroButtonFrame[buttonIndex])
+
+                if GetLocalPlayer() == p then
+                    call BlzFrameClick(HeroButtonFrame[buttonIndex])
+                endif
             endif
         endif
         set p = null
