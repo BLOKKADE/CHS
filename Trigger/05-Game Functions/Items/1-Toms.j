@@ -241,12 +241,12 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //glory attack cooldown
             elseif itemTypeId  == GLORY_ATTACKCD_TOME_ITEM_ID then
-                if LoadReal(HT, GetHandleId(u), - 1001) - (LoadReal(HT, GetHandleId(u), - 1001) * GloryAttackCdBonus.real[GetHandleId(u)]) > 0.40 and BuyGloryItem(pid, itemTypeId) then
+                if LoadReal(HT, GetHandleId(u), - 1001) - (LoadReal(HT, GetHandleId(u), - 1001) * GloryAttackCdBonus.real[GetHandleId(u)]) > 0.60 and BuyGloryItem(pid, itemTypeId) then
                     set GloryAttackCdLevel.integer[GetHandleId(u)] = GloryAttackCdLevel.integer[GetHandleId(u)] + 1
                     set GloryAttackCdBonus.real[GetHandleId(u)] = 1 - Pow(0.94, GloryAttackCdLevel.integer[GetHandleId(u)])
                     set gloryBonus = BlzGetUnitAttackCooldown(u, 0) - ModifyAttackCooldown(u, GetHandleId(u))
                 else
-                    if LoadReal(HT, GetHandleId(u), - 1001) - (LoadReal(HT, GetHandleId(u), - 1001) * GloryAttackCdBonus.real[GetHandleId(u)]) <= 0.40 then
+                    if LoadReal(HT, GetHandleId(u), - 1001) - (LoadReal(HT, GetHandleId(u), - 1001) * GloryAttackCdBonus.real[GetHandleId(u)]) <= 0.60 then
                         call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432Glory Attack Cooldown cannot go lower than 0.60.|r")
                     endif
                     set ctrl = false

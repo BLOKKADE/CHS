@@ -58,7 +58,7 @@ scope ShortPeriodCheck initializer init
                 //Power of Ice
                 if GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID) >= 1 then
                     if CheckProc(u, 610) then
-                        call DummyInstantCast1(u, GetUnitX(u), GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1'))
+                        call DummyInstantCast1(u, GetUnitX(u), GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1'), 4)
                     endif
                 endif
                 
@@ -210,7 +210,7 @@ scope ShortPeriodCheck initializer init
                 //Yeti
             elseif unitTypeId == YETI_UNIT_ID then
                 set i1 = LoadInteger(DataUnitHT, hid, YETI_UNIT_ID)
-                set i2 = R2I((GetHeroStr(u, true) - i1) * ((YetiStrengthBonus.integer[hid] * 0.01) * GetUnitElementCount(u, Element_Cold)))
+                set i2 = R2I((GetHeroStr(u, false) - i1) * ((YetiStrengthBonus.integer[hid] * 0.01) * GetUnitElementCount(u, Element_Cold)))
                 if i1 != i2 then
                     call SetHeroStr(u, GetHeroStr(u, false) - i1 + i2, false)
                     call SaveInteger(DataUnitHT, hid, YETI_UNIT_ID, i2)

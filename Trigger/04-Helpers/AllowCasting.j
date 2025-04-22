@@ -4,46 +4,12 @@ library AllowCasting
         boolean array CurrentlyFighting
     endglobals
 
-    private function CheckUnitGroup takes unit u returns boolean
-        if(not(IsUnitInGroup(u,DuelingHeroes)!=true)) then
-            return false
-        endif
-        if(not(IsPlayerInForce(GetOwningPlayer(u),RoundPlayersCompleted)==true)) then
-            return false
-        endif
-        return true
+    private function IsUnitRestricted takes unit u returns boolean
+        return IsUnitInGroup(u, DuelWinnerDisabled) or RectContainsUnit(RectMidArena, u)
     endfunction
-    
-    private function CheckUnit takes unit u returns boolean
-        if (IsUnitInGroup(u, DuelWinnerDisabled)==true) then
-            return true
-        endif
-        if((RectContainsUnit(RectMidArena,u)==true)) then
-            return true
-        endif
-        if(CheckUnitGroup(u)) then
-            return true
-        endif
-        return false
-    endfunction
-    
-    function CheckIfCastAllowed takes unit u returns boolean
-        if(not(BrStarted==false)) then
-            return false
-        endif
-        if(not(ElimPvpStarted==false)) then
-            return false
-        endif
-        if(not CheckUnit(u)) then
-            return false
-        endif
-        if(not(GetUnitTypeId(u)!=SUDDEN_DEATH_UNIT_ID)) then
-            return false
-        endif
-        if (not(GetUnitTypeId(u)!=PRIEST_1_UNIT_ID)) then
-            return false
-        endif	
-        return true
+
+    function IsCastingAllowed takes unit u returns boolean
+        return BrStarted or not IsUnitRestricted(u) or GetUnitTypeId(u) == SUDDEN_DEATH_UNIT_ID or GetUnitTypeId(u) == PRIEST_1_UNIT_ID or (IsUnitInGroup(u, DuelingHeroes) and IsPlayerInForce(GetOwningPlayer(u), RoundPlayersCompleted))
     endfunction
 
     function SetCurrentlyFighting takes player p, boolean b returns nothing

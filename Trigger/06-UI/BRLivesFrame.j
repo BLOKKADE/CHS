@@ -29,11 +29,13 @@ library BRLivesFrame initializer init requires PlayerTracking, Utility
     endfunction
 
     function UpdateLivesForPlayer takes player p, integer lives, boolean isBr returns nothing
+        local string livesText = I2S(lives)
+
         if (GetLocalPlayer() == p) then
             if (isBr) then
-                call BlzFrameSetText(BRLivesTextFrameHandle, BR_LIVES_TITLE_TEXT + ": " + I2S(lives))
+                call BlzFrameSetText(BRLivesTextFrameHandle, BR_LIVES_TITLE_TEXT + ": " + livesText)
             else
-                call BlzFrameSetText(BRLivesTextFrameHandle, LIVES_TITLE_TEXT + ": " + I2S(lives))
+                call BlzFrameSetText(BRLivesTextFrameHandle, LIVES_TITLE_TEXT + ": " + livesText)
             endif
         endif
     endfunction

@@ -166,6 +166,7 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         local integer i = 0
         local Requirements hr
         local PlayerStats ps = PlayerStats.forPlayer(p)
+        local string iconPath
 
         loop
             exitwhen i > TotalAchievementCount
@@ -173,12 +174,16 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
 
             if hr != 0 then
                 if hr.checkRequirements(ps) then
+                    set iconPath = GetIconPath(AchievementIconPaths.string[i])
+
                     if GetLocalPlayer() == p then
-                        call BlzFrameSetTexture(AchievementButtonBackdropFrames.framehandle[i], GetIconPath(AchievementIconPaths.string[i]), 0, true)
+                        call BlzFrameSetTexture(AchievementButtonBackdropFrames.framehandle[i], iconPath, 0, true)
                     endif
                 else
+                    set iconPath = GetDisabledIconPath(AchievementIconPaths.string[i])
+
                     if GetLocalPlayer() == p then
-                        call BlzFrameSetTexture(AchievementButtonBackdropFrames.framehandle[i], GetDisabledIconPath(AchievementIconPaths.string[i]), 0, true)
+                        call BlzFrameSetTexture(AchievementButtonBackdropFrames.framehandle[i], iconPath, 0, true)
                     endif
                 endif
             endif
@@ -193,6 +198,7 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
         local PlayerStats ps = PlayerStats.forPlayer(GetTriggerPlayer())
         local Requirements hr = Requirements.forIndex(index)
         local string requirementDescription
+        local real tooltipSize
 
         if BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK then
             if GetLocalPlayer() == GetTriggerPlayer() then
@@ -209,11 +215,12 @@ library AchievementsFrame initializer init requires TooltipFrame, PlayerTracking
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER then
             set requirementDescription = hr.getRequirementDescription(ps)
+            set tooltipSize = GetTooltipSize(requirementDescription)
 
             // We are hijacking the tooltip window that we use for almost everything else in the game from IconFrames
             if GetLocalPlayer() == GetTriggerPlayer() then	
                 call BlzFrameSetText(TooltipTitleFrame, requirementDescription)
-                call BlzFrameSetSize(TooltipFrame, 0.29, GetTooltipSize(requirementDescription))
+                call BlzFrameSetSize(TooltipFrame, 0.29, tooltipSize)
                 call BlzFrameSetVisible(TooltipFrame, true)
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then

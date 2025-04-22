@@ -47,11 +47,11 @@ library Multicast requires T32, RandomShit, AbilityChannel
             local DummyOrder dummy = DummyOrder.create(this.caster, GetUnitX(this.caster), GetUnitY(this.caster), GetUnitFacing(this.caster), 9)
             call dummy.addActiveAbility(this.abilId, this.abilLevel, this.abilOrder)
 
-            if this.orderType == 0 then
+            if this.orderType == Order_Instant then // 3
                 call dummy.instant()
-            elseif this.orderType == 1 then
+            elseif this.orderType == Order_Target then
                 call dummy.target(this.target)
-            else
+            elseif this.orderType == Order_Point then
                 call dummy.point(this.x, this.y)
             endif
 
@@ -64,7 +64,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
         endmethod
 
         private method checkSpell takes nothing returns boolean
-            if this.orderType == 1 and this.mono then
+            if this.orderType == Order_Target and this.mono then
                 //call BJDebugMsg("new trgt: " + GetUnitName(this.target) + " count: " + I2S(this.count))
                 if not GetNewTarget(GetAbilityRealField(this.caster, this.abilId, this.abilLevel, ABILITY_RLF_CAST_RANGE)) then
                     //call BJDebugMsg("end")
@@ -125,7 +125,6 @@ library Multicast requires T32, RandomShit, AbilityChannel
             set this.y = y
             
             set this.count = count
-            set this.orderType = orderType
 
             set this.endTick = T32_Tick + MulticastInterval
             call this.startPeriodic()

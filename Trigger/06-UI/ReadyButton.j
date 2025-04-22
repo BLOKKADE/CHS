@@ -73,7 +73,8 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     endfunction
 
     function ReadyButtonVisibility takes boolean disable, integer pid, boolean isReady returns nothing
-        local string tex = ""
+        local string tex
+        local string iconPath
 
         if (IsPlayerInForce(Player(pid), DefeatedPlayers)) then
             set disable = true
@@ -86,14 +87,18 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
         if disable then
             set ReadyButtonDisabled[pid] = true
+            set iconPath = GetDisabledIconPath(tex)
+
             if GetLocalPlayer() == Player(pid) then
-                call BlzFrameSetTexture(ButtonId[5], GetDisabledIconPath(tex), 0, true)
+                call BlzFrameSetTexture(ButtonId[5], iconPath, 0, true)
                 call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])
             endif
         else
             set ReadyButtonDisabled[pid] = false
+            set iconPath = GetIconPath(tex)
+
             if GetLocalPlayer() == Player(pid) then
-                call BlzFrameSetTexture(ButtonId[5], GetIconPath(tex), 0, true)
+                call BlzFrameSetTexture(ButtonId[5], iconPath, 0, true)
                 call BlzFrameSetVisible(ButtonIndicatorParentId[5], PlayerIsAlwaysReady[pid])
             endif
         endif
@@ -164,6 +169,7 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
     function PlayerReadies takes player p, boolean isEndRound returns nothing
         local integer pid = GetPlayerId(p)
         local PlayerStats ps = PlayerStats.forPlayer(p)
+        local string message
 
         if (IsPlayerInForce(p, DefeatedPlayers)) then
             set PlayerIsAlwaysReady[pid] = false
@@ -191,7 +197,9 @@ library ReadyButton initializer init requires PlayerTracking, AllPlayersComplete
 
             //only show text to everyone once
             if not PlayerHasReadied[pid] then
-                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, GetPlayerNameColour(p) + " is ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")
+                set message = GetPlayerNameColour(p) + " is ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r"
+
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, message)
             else
                 if ps.isReady() then
                     call DisplayTimedTextToPlayer(p, 0, 0, 10, GetPlayerNameColour(p) + " is ready. |c00fcff3b" + I2S(ReadyPlayerCount()) + "|r/|c000bff03" + I2S(PlayerCount) + "|r")

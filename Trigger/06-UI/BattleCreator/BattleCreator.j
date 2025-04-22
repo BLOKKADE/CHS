@@ -248,6 +248,7 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         local real tooltipWidth = 0.32
         local string tooltipDescription
         local string tooltipName
+        local real tooltipSize
         local boolean change = false
 
         if (BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK) then
@@ -259,8 +260,9 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
             if (handleId == CloseHandleId) then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetVisible(BattleCreatorFrameHandle, false) 
-                    call PlayerStats.forPlayer(triggerPlayer).setHasBattleCreatorOpen(false)
                 endif
+
+                call PlayerStats.forPlayer(triggerPlayer).setHasBattleCreatorOpen(false)
             elseif (IsPlayerInForce(triggerPlayer, BRRandomTeam)) then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetText(BRMessageTextFrameHandle, BR_MESSAGE_COLOR + "You must unselect from the Random Teams Vote first!" + BR_COLOR_END_TAG)
@@ -283,12 +285,13 @@ library BattleCreator initializer init requires PlayerTracking, Utility, BattleC
         elseif (BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_ENTER) then
             set tooltipName = BRHandleTitles.string[handleId]
             set tooltipDescription = BRHandleDescriptions.string[handleId]
+            set tooltipSize = GetTooltipSize(tooltipDescription)
 
             if (GetLocalPlayer() == triggerPlayer) then	
                 call BlzFrameSetText(BattleCreatorTooltipTitleFrame, tooltipName)
                 call BlzFrameSetText(BattleCreatorTooltipTextFrame, tooltipDescription)
                 call BlzFrameSetPoint(BattleCreatorTooltipFrame, FRAMEPOINT_TOP, currentFrameHandle, FRAMEPOINT_BOTTOM, 0, 0)
-                call BlzFrameSetSize(BattleCreatorTooltipFrame, tooltipWidth, GetTooltipSize(tooltipDescription))
+                call BlzFrameSetSize(BattleCreatorTooltipFrame, tooltipWidth, tooltipSize)
                 call BlzFrameSetVisible(BattleCreatorTooltipFrame, true)
             endif
 

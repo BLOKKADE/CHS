@@ -184,13 +184,14 @@ library VotingScreen initializer init requires IconFrames, VotingResults
     endfunction
 
     private function VotingMouseEventActions takes nothing returns nothing
-        local integer buttonType = GetButtonType(GetHandleId(BlzGetTriggerFrame()))
-		local integer index = GetIndex(buttonType, GetHandleId(BlzGetTriggerFrame()))
+        local framehandle frame = BlzGetTriggerFrame()
+        local integer buttonType = GetButtonType(GetHandleId(frame))
+		local integer index = GetIndex(buttonType, GetHandleId(frame))
         local PlayerVotes pv = PlayerVotes(GetPlayerId(GetTriggerPlayer()) + 1)
 
         if BlzGetTriggerFrameEvent() == FRAMEEVENT_CONTROL_CLICK then
             // Count how many people have actually voted. Can end the voting early if everyone votes
-            if SubmitHandleId == GetHandleId(BlzGetTriggerFrame()) then
+            if SubmitHandleId == GetHandleId(frame) then
                 if GetLocalPlayer() == GetTriggerPlayer() then
                     call BlzFrameSetVisible(MainVotingFrameHandle, false)
                 endif
@@ -204,11 +205,13 @@ library VotingScreen initializer init requires IconFrames, VotingResults
                     call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 5, "Please wait for other players to vote")
                 endif
 
+                set frame = null
+
                 return
             endif
 
             if GetLocalPlayer() == GetTriggerPlayer() then
-                call ReplaceSelectedButton(buttonType, index, BlzGetTriggerFrame())
+                call ReplaceSelectedButton(buttonType, index, frame)
             endif
 
             call SetButtonVote(pv, buttonType, index)
@@ -223,10 +226,12 @@ library VotingScreen initializer init requires IconFrames, VotingResults
                 call BlzFrameSetText(VoteDescriptionTextDisplay, "")
             endif
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_CHECKBOX_CHECKED then
-            call SetCheckboxVote(pv, 2, GetHandleId(BlzGetTriggerFrame()))
+            call SetCheckboxVote(pv, 2, GetHandleId(frame))
         elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_CHECKBOX_UNCHECKED then
-            call SetCheckboxVote(pv, 1, GetHandleId(BlzGetTriggerFrame()))
+            call SetCheckboxVote(pv, 1, GetHandleId(frame))
         endif
+
+        set frame = null
     endfunction
 
     // Functions to get X,Y coordinates for a button

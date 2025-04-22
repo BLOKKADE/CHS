@@ -184,8 +184,8 @@ scope ModifyDamageAfterArmor initializer init
         
         //Combustion
         if GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSourceHero,COMBUSTION_ABILITY_ID,0.3)
-            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero   ,COMBUSTION_ABILITY_ID)
+            call AbilStartCD(DamageSourceHero, COMBUSTION_ABILITY_ID, 0.3)
+            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", DamageTarget, "chest"))
         endif
 
@@ -474,9 +474,9 @@ scope ModifyDamageAfterArmor initializer init
         if DamageTargetTypeId == MURLOC_WARRIOR_UNIT_ID and GetHeroStr(DamageTarget, true) < 2147483647 then
             set i1 = 1 + GetHeroLevel(DamageTarget)/ 10 
             call SaveInteger(HT,DamageTargetId,54021,i1 + LoadInteger(HT,DamageTargetId,54021))
-            call SetHeroStr(DamageTarget,GetHeroStr(DamageTarget,false)+ i1,false)
-            call SetHeroAgi(DamageTarget,GetHeroAgi(DamageTarget,false)+ i1,false)
-            call SetHeroInt(DamageTarget,GetHeroInt(DamageTarget,false)+ i1,false)
+            call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i1)
+            call AddUnitBonus(DamageTarget, BONUS_AGILITY, i1)
+            call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i1)
         endif
 
         //Decaying Scythe

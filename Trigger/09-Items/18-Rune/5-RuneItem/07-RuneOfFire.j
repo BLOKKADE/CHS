@@ -8,9 +8,7 @@ library FireRune requires RandomShit
         local unit u = GLOB_RUNE_U
         local real power = GLOB_RUNE_POWER 
 
-
-
-        call DummyInstantCast1(u,GetUnitX(u),GetUnitY(u),'A02V',"fanofknives",  R2I(RuneOfFire_base_dmg * power), ConvertAbilityRealLevelField('Ocl1') )
+        call DummyInstantCast1(u,GetUnitX(u),GetUnitY(u),'A02V',"fanofknives",  R2I(RuneOfFire_base_dmg * power), ConvertAbilityRealLevelField('Ocl1'), 4)
 
         set u = null
         return false

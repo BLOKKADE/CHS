@@ -79,14 +79,17 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         local player p = HeroSelectorEventPlayer
         local integer playerIndex = GetPlayerId(p)
         local integer unitCode = HeroSelectorEventUnitCode
+        local playercolor playersColor = GetPlayerColor(p)
+
         call HeroInfoButtonSelected(p, unitCode)
 
         if (GetLocalPlayer() == p) then
             call BlzSetUnitSkin(PreviewUnit, unitCode)
-            call SetUnitColor(PreviewUnit, GetPlayerColor(p))
+            call SetUnitColor(PreviewUnit, playersColor)
         endif
 
         set p = null
+        set playersColor = null
     endfunction
 
     function HeroSelectorRepick takes unit u returns nothing

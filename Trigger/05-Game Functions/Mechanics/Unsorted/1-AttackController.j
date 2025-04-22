@@ -37,16 +37,16 @@ scope AttackController initializer init
         if GetUnitTypeId(attacker) == MURLOC_WARRIOR_UNIT_ID then
             set i1 = 1 + GetHeroLevel(attacker)/ 10 
             call SaveInteger(HT, GetHandleId(attacker),54021, i1 + LoadInteger(HT, GetHandleId(attacker),54021))
-            call SetHeroStr(attacker, GetHeroStr(attacker, false) + i1, false)
-            call SetHeroAgi(attacker, GetHeroAgi(attacker, false) + i1, false)
-            call SetHeroInt(attacker, GetHeroInt(attacker, false) + i1, false)
+            call AddUnitBonus(attacker, BONUS_STRENGTH, i1)
+            call AddUnitBonus(attacker, BONUS_AGILITY, i1)
+            call AddUnitBonus(attacker, BONUS_INTELLIGENCE, i1)
         endif
 
         //Huntress
         if GetUnitTypeId(attacker) == HUNTRESS_UNIT_ID then
             if BlzGetUnitAbilityCooldownRemaining(attacker, 'A0DW') == 0 then
                 call ElemFuncStart(attacker, HUNTRESS_UNIT_ID)
-                call DummyInstantCast1(attacker, GetUnitX(attacker), GetUnitY(attacker), 'A035', "fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.245 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1'))
+                call DummyInstantCast1(attacker, GetUnitX(attacker), GetUnitY(attacker), 'A035', "fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.245 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1'), 4)
                 call AbilStartCD(attacker, 'A0DW', 1)
             endif
         endif
@@ -94,9 +94,11 @@ scope AttackController initializer init
         endif
 
         //Fire Force
-        set i1 = GetUnitAbilityLevel(target,FIRE_FORCE_ABILITY_ID)
-        if i1 > 0 and (GetRandomReal(1, 100)<= 25 * targetLuck) then
-            call DummyInstantCast1(target, GetUnitX(target), GetUnitY(target), 'A0C0', "fanofknives", GetHeroStr(target,true) * (0.62 + (0.08 * i1)), ConvertAbilityRealLevelField('Ocl1'))
+        set i1 = GetUnitAbilityLevel(target, FIRE_FORCE_ABILITY_ID)
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, FIRE_FORCE_ABILITY_ID) == 0 and (GetRandomReal(1, 100) <= 25 * targetLuck) then
+            call BlzStartUnitAbilityCooldown(target, FIRE_FORCE_ABILITY_ID, 0.3)
+            call BlzStartUnitAbilityCooldown(target, GetDummySpell(target, FIRE_FORCE_ABILITY_ID), 0.3)
+            call DummyInstantCast1(target, GetUnitX(target), GetUnitY(target), 'A0C0', "fanofknives", GetHeroStr(target,true) * (0.62 + (0.08 * i1)), ConvertAbilityRealLevelField('Ocl1'), 4)
         endif
 
         // Cleanup
