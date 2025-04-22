@@ -351,7 +351,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 
 		elseif BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_LEAVE then
 			if GetLocalPlayer() == p then	
-				call BlzFrameSetText(TooltipTextFrame, description)
+				call BlzFrameSetText(TooltipTextFrame, "")
 				call BlzFrameSetVisible(TooltipFrame, false)
 			endif
 		endif
