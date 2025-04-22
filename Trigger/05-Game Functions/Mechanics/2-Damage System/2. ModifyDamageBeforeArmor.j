@@ -306,7 +306,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Demon Hunter
-        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID and (IsMagicDamage() and CheckUnitHitCooldown(DamageTargetId, DEMON_HUNTER_UNIT_ID, 0.7) or IsPhysDamage()) then
+        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID and ((IsMagicDamage() and CheckUnitHitCooldown(DamageTargetId, DEMON_HUNTER_UNIT_ID, 0.7)) or IsPhysDamage()) then
             set r1 = RMinBJ(GetHeroLevel(DamageSource) * 20, GetUnitState(DamageTarget, UNIT_STATE_MANA))
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - r1)
             call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) + r1)
