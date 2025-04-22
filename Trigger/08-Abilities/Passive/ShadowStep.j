@@ -11,7 +11,7 @@ library ShadowStep initializer init requires AbilityCooldown, CustomGameEvent
         local real y = GetUnitY(u2) - 65 * SinBJ(GetUnitFacing(u1) + 180)
         local integer lvl = GetUnitAbilityLevel(u1, SHADOW_STEP_ABILITY_ID)
 
-        if lvl > 0 and (not CheckIfCastAllowed(u1)) and IsUnitEnemy(u2, GetOwningPlayer(u1)) and IsTerrainWalkable(x, y) then
+        if lvl > 0 and IsCastingAllowed(u1) and IsUnitEnemy(u2, GetOwningPlayer(u1)) and IsTerrainWalkable(x, y) then
             set dist =  CalculateDistance(GetUnitX(u1), GetUnitX(u2), GetUnitY(u1), GetUnitY(u2))
 
             if GetWidgetLife(u2) > 0.025 and u2 != null and dist <= 900 and dist >= 125 and (BlzGetUnitAbilityCooldownRemaining(u1, SHADOW_STEP_ABILITY_ID) <= 0 or UnitHasForm(u1, FORM_SHADOW)) then

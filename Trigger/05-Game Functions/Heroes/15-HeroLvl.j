@@ -213,7 +213,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == OGRE_WARRIOR_UNIT_ID then
             call SetBonus(u, 0, heroLevel * 60)
         elseif uid == OGRE_MAGE_UNIT_ID then
-            call SetBonus(u, 0, 15 + (heroLevel * 2))
+            call SetBonus(u, 0, 15 + (heroLevel * 1.2))
         elseif uid == SEER_UNIT_ID then
             call SetBonus(u, 0, 20 + (heroLevel * 0.33))
         elseif uid == TROLL_BERSERKER_UNIT_ID then
