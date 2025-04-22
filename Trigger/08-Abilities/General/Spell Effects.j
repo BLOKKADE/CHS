@@ -208,7 +208,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                     call DruidicFocusPhyspowerbonus(hero)
                 endif
             
-                if GetUnitTypeId(caster) != PRIEST_1_UNIT_ID and (not CheckIfCastAllowed(caster)) then
+                if GetUnitTypeId(caster) != PRIEST_1_UNIT_ID and IsCastingAllowed(caster) then
                     //call BJDebugMsg("caster: " + GetUnitName(caster))
                     call ElementStartAbility(caster, abilId)
 
