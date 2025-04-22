@@ -31970,7 +31970,7 @@
         },
         {
           "Key": "utub",
-          "Value": "[|cffd2d2d2Light|r]|nA holy light that can heal the Hero, a friendly living unit or deal half in |cffff00ffmagic damage|r to an enemy unit.|n|nWhen cast on a friendly unit one random negative buff is purged from it.|n|n|cffffff00Ability level bonus|r|nHeal/damage amount|n|n|cffff00ffHeal at level 30|r: 46600|n|cffd45e3aRange at level 30|r: 700|n|cffd49696Cooldown at level 30|r: 5 seconds|n"
+          "Value": "[|cffd2d2d2Light|r]|nA holy light that can heal the Hero, a friendly living unit or deal half in |cffff00ffmagic damage|r to an enemy unit.|n|nWhen cast on a friendly unit one random negative buff is purged from it.|n|n|cffffff00Ability level bonus|r|nHeal/damage amount|n|n|cffff00ffHeal at level 30|r: 35000|n|cffd45e3aRange at level 30|r: 700|n|cffd49696Cooldown at level 30|r: 8 seconds|n"
         },
         {
           "Key": "ides",
@@ -32656,7 +32656,7 @@
         },
         {
           "Key": "utub",
-          "Value": "When dealing |cffff8080physical damage|r, there is a chance to deal bonus |cffff00ffmagic damage|r based on the Hero's strength, as well as stun the target for 0.2 seconds.|n|n|cffffff00Ability level bonus|r|nBash chance, damage bonus|n|n|cff80ff80Chance at level 30|r: 30%|n|cffff00ffDamage at level 30|r: 3000 + 125% strength|n|n[|cff80ff80Luck|r]"
+          "Value": "When dealing |cffff8080physical damage|r, there is a chance to deal bonus |cffff00ffmagic damage|r based on the Hero's strength, as well as stun the target for 0.2 seconds.|n|n|cffffff00Ability level bonus|r|nBash chance, damage bonus|n|n|cff80ff80Chance at level 30|r: 30%|n|cffff00ffDamage at level 30|r: 3000 + 125% strength|n|n[|cffd45e29onhit|r][|cff80ff80Luck|r]"
         },
         {
           "Key": "ides",
@@ -39238,7 +39238,7 @@
         },
         {
           "Key": "utub",
-          "Value": "[|cffd45e19Earth|r]|nWhen dealing |cffff8080physical damage|r, gives the Hero a 20% chance to deal |cffff00ffmagic damage|r to enemies in a small area around the enemy.|n|n|cffc0c0c0Damage increases from hero block|r|r|n|n|cffffff00Ability level bonus|r|nDamage bonus|n|n|cffff00ffDamage at level 30|r: 3000 + 50% of the hero's block|n|cffd45e3aArea of effect at level 30|r: 300|n|n[|cff80ff80Luck|r][|cffd45e29onhit|r]"
+          "Value": "[|cffd45e19Earth|r]|nWhen dealing |cffff8080physical damage|r, gives the Hero a 20% chance to deal |cffff00ffmagic damage|r to enemies in a small area around the enemy.|n|n|cffc0c0c0Damage increases from hero block|r|r|n|n|cffffff00Ability level bonus|r|nDamage bonus|n|n|cffff00ffDamage at level 30|r: 3000 + 50% of the hero's block|n|cffd45e3aArea of effect at level 30|r: 300|n|n[|cffd45e29onhit|r][|cff80ff80Luck|r]"
         },
         {
           "Key": "ides",
@@ -50324,7 +50324,7 @@
         },
         {
           "Key": "utub",
-          "Value": "[|cffff0000Fire|r]|nEvery time the Hero is attacked it has a chance to deal |cffff00ffmagic damage|r to all nearby enemy units based on its strength.|n|n|cffffff00Ability level bonus|r|nStrength damage multiplier|n|n|cffff00ffDamage at level 30|r: 300% of the Hero's strength|n|n[|cff80ff80Luck|r]"
+          "Value": "[|cffff0000Fire|r]|nEvery time the Hero is attacked it has a chance to deal |cffff00ffmagic damage|r to all nearby enemy units based on its strength.|n|n|cffffff00Ability level bonus|r|nStrength damage multiplier|n|n|cffff00ffDamage at level 30|r: 302% of the Hero's strength|n|n[|cff80ff80Luck|r][|cff96ffffStable|r]"
         },
         {
           "Key": "ides",
@@ -53458,7 +53458,7 @@
         },
         {
           "Key": "utub",
-          "Value": "When the Hero deals |cffff8080physical damage|r, it has a 15% chance to deal |cffff00ffmagic damage|r to enemy units in a small area around the target.|n|n|cffc0c0c0Damage increases from the hero's primary stat|r|n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff00ffDamage at level 30|r: 12000 + 50% of the hero's primary stat|n|n[|cffd45e29onhit|r]"
+          "Value": "When the Hero deals |cffff8080physical damage|r, it has a 15% chance to deal |cffff00ffmagic damage|r to enemy units in a small area around the target.|n|n|cffc0c0c0Damage increases from the hero's primary stat|r|n|n|cffffff00Ability level bonus|r|nDamage|n|n|cffff00ffDamage at level 30|r: 12000 + 50% of the hero's primary stat|n|n[|cffd45e29onhit|r][|cff80ff80Luck|r]"
         },
         {
           "Key": "iclr",
@@ -58972,7 +58972,7 @@
         },
         {
           "Key": "utub",
-          "Value": "|cffff8080Effects|r|n* +10 magic power.|n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* Deals <A05L,DataA1> |cffff00ffmagic damage|r to <A05L,DataC1> nearby enemy creeps when used.|n|n|cffffff00Cooldown: |r<A05L,Cool1> seconds"
+          "Value": "|cffff8080Effects|r|n* +10 magic power.|n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* Deals <A05L,DataA1> |cffff00ffmagic damage|r to 10 nearby enemy creeps when used.|n|n|cffffff00Cooldown: |r<A05L,Cool1> seconds"
         },
         {
           "Key": "iico",
@@ -69402,7 +69402,7 @@
         },
         {
           "Key": "utub",
-          "Value": "[|cff6f2583Arcane|r]|nWhenever the Hero attacks an enemy it deals bonus |cffff8080physical|r attack damage to random nearby enemies. Cannot hit the same enemy multiple times in one attack.|n|n|cffc0c0c0Cannot be used in combination with Cleaving Attack or Multishot.|r|n|n|cffffff00Ability level bonus|r|nEnemies hit|n|n|cffff00ffMax targets at level 30|r: 10|n"
+          "Value": "[|cff6f2583Arcane|r]|nWhenever the Hero attacks an enemy it deals bonus |cffff8080physical|r attack damage to random nearby enemies. Cannot hit the same enemy multiple times in one attack.|n|n|cffffff00Ability level bonus|r|nEnemies hit|n|n|cffff00ffMax targets at level 30|r: 10|n"
         },
         {
           "Key": "ides",
