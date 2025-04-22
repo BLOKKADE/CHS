@@ -5,11 +5,11 @@ library AllowCasting
     endglobals
 
     private function IsUnitRestricted takes unit u returns boolean
-        return IsUnitInGroup(u, DuelWinnerDisabled) or RectContainsUnit(RectMidArena, u) or (IsUnitInGroup(u, DuelingHeroes) and IsPlayerInForce(GetOwningPlayer(u), RoundPlayersCompleted))
+        return IsUnitInGroup(u, DuelWinnerDisabled) or RectContainsUnit(RectMidArena, u)
     endfunction
 
     function IsCastingAllowed takes unit u returns boolean
-        return BrStarted or ElimPvpStarted or not IsUnitRestricted(u) or GetUnitTypeId(u) == SUDDEN_DEATH_UNIT_ID or GetUnitTypeId(u) == PRIEST_1_UNIT_ID
+        return BrStarted or not IsUnitRestricted(u) or GetUnitTypeId(u) == SUDDEN_DEATH_UNIT_ID or GetUnitTypeId(u) == PRIEST_1_UNIT_ID or (IsUnitInGroup(u, DuelingHeroes) and IsPlayerInForce(GetOwningPlayer(u), RoundPlayersCompleted))
     endfunction
 
     function SetCurrentlyFighting takes player p, boolean b returns nothing
