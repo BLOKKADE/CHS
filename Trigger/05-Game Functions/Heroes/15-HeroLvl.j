@@ -111,11 +111,11 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 3, 1 + ((heroLevel - ModuloInteger(heroLevel, 75)) / 75))
             call PitlordLevelup(u, heroLevel)
         elseif uid == THUNDER_WITCH_UNIT_ID then      
-            set ThunderBoltTargets.integer[hid] = ((heroLevel - ModuloInteger(heroLevel, 30)) / 30)
+            set ThunderBoltTargets.integer[hid] = 1 + ((heroLevel - ModuloInteger(heroLevel, 30)) / 30)
             call SetBonus(u, 0, heroLevel * 30)
             call SetBonus(u, 1, ThunderBoltTargets[hid] + 1)
         elseif uid == SORCERER_UNIT_ID then      
-            set SorcererAmount.integer[hid] = ((heroLevel - ModuloInteger(heroLevel, 35)) / 35)
+            set SorcererAmount.integer[hid] = 1 + ((heroLevel - ModuloInteger(heroLevel, 35)) / 35)
             call SetBonus(u, 0, RMaxBJ(50 - heroLevel * 0.2, 15))
             call SetBonus(u, 1, SorcererAmount[hid])
         elseif uid == WOLF_RIDER_UNIT_ID then       
@@ -229,7 +229,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == BANSHEE_UNIT_ID then
 
         elseif uid == CRYPT_LORD_UNIT_ID then      
-            set CryptLordLocustCount.integer[hid] = ((heroLevel - ModuloInteger(heroLevel, 10)) / 10)
+            set CryptLordLocustCount.integer[hid] = 1 + ((heroLevel - ModuloInteger(heroLevel, 10)) / 10)
             call SetBonus(u, 0, 60 * heroLevel)
             call SetBonus(u, 1, 1 + CryptLordLocustCount[hid])
 
