@@ -142,7 +142,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
 			call AddUnitCustomState(u, BONUS_PVP, 5 * diff)
 			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
-			call AddStatLevelBonus(u, BONUS_AGILITY, 15 *diff)
+			call AddStatLevelBonus(u, BONUS_AGILITY, 15 * diff)
 			call AddUnitBonus(u, BONUS_AGILITY, (15 * diff) * GetHeroLevel(u))
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('uagp'), BlzGetUnitRealField(u,ConvertUnitRealField('uagp')) + 15*diff )
 			
