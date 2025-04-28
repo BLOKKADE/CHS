@@ -671,6 +671,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.5.2", false) // cooldown fixes
         call AddGameVersion("CHS v2.5.3", false) // draft reincarnation fix
         call AddGameVersion("CHS v2.5.4", false) // attack d nerf, lots of things
+        call AddGameVersion("CHS v2.5.7", false) // sorted shops, some tooptips
     endfunction
 
     private function init takes nothing returns nothing

@@ -117,8 +117,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(THUNDER_WITCH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Thunder Bolt: +30 damage. (|cff68eef3Every 30 levels|r) +1 target." )
                 
         call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNThrall.blp" )
-        call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 6 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 35% of its highest stat when they drop lower.")
-        call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained." )
+        call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 8 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 35% of its highest stat when they drop lower.")
+        call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained. +0.01s time limit." )
                 
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bladestorm: Every 9 attacks it creates a Bladestorm, dealing 35 + 50% of its attack damage to nearby enemies as |cffff8080physical damage|r.")
@@ -221,7 +221,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNWendigo.blp" )
         call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Yeti Strength: Gains +10% base strength and an 8% chance to negate [|cff00ffffCrit|r] damage for every [|cff8080ffCold|r] it has. [|cff80ff80Luck|r]")
-        call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Yeti Strength: (|cff68eef3Every 10 levels|r) +1% strength bonus from  [|cff8080ffCold|r]." )
+        call InitHeroDesc(YETI_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Yeti Strength: (|cff68eef3Every 10 levels|r) +0.5% strength bonus from  [|cff8080ffCold|r]." )
         
         call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSatyr.blp" )
         call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Trickshot: When the Satyr evades an attack it it has a 50% chance to counterattack, dealing 50% of its attack damage in |cffff8080physical damage|r back to the attacker.[|cff80ff80Luck|r][|cffd45e29onhit|r]")

@@ -70,6 +70,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			else
 				call SaveInteger(HTi, hid, itemId,0)
 			endif 
+
+			//Holy Chain Mail
+		elseif itemId == 'I07U' then
+			call AddUnitAbsoluteBonusCount(u,Element_Light, uniqueDiff)
 		
 			//Staff of Absolute Magic
 		elseif itemId == 'I05E' then
