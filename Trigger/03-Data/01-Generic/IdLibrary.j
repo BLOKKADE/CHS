@@ -52,15 +52,15 @@ library IdLibrary initializer init
         constant integer PASSIVE_SPELLS_VI_UNIT_ID                      = 'n032'
         constant integer PASSIVE_SPELLS_VII_UNIT_ID                     = 'n01E'
 
-        constant integer ITEM_SHOP_I_UNIT_ID                            = 'n00Z'//basic items
-        constant integer ITEM_SHOP_II_UNIT_ID                           = 'n01D'//offensive 1
-        constant integer ITEM_SHOP_III_UNIT_ID                          = 'n02I'//offensive 2
-        constant integer ITEM_SHOP_IV_UNIT_ID                           = 'n02J'//magic items
-        constant integer ITEM_SHOP_V_UNIT_ID                            = 'n02Q'//summoner shop
-        constant integer ITEM_SHOP_VI_UNIT_ID                           = 'n02Y'//defensive 1
-        constant integer ITEM_SHOP_VII_UNIT_ID                          = 'n01P'//defensive 2
-        constant integer ITEM_SHOP_VIII_UNIT_ID                         = 'n03A'//defensive 3
-        constant integer ITEM_SHOP_IX_UNIT_ID                           = 'n0BB'//miscellaneous items
+        constant integer BASIC_ITEMS_SHOP_UNIT_ID                       = 'n00Z'
+        constant integer OFFENSIVE_ITEMS_1_SHOP_UNIT_ID                 = 'n01D'
+        constant integer OFFENSIVE_ITEMS_2_SHOP_UNIT_ID                 = 'n02I'
+        constant integer MAGIC_ITEMS_SHOP_UNIT_ID                       = 'n02J'
+        constant integer SUMMONER_ITEMS_SHOP_UNIT_ID                    = 'n02Q'
+        constant integer DEFENSIVE_ITEMS_1_SHOP_UNIT_ID                 = 'n02Y'
+        constant integer DEFENSIVE_ITEMS_2_SHOP_UNIT_ID                 = 'n01P'
+        constant integer DEFENSIVE_ITEMS_3_SHOP_UNIT_ID                 = 'n03A'
+        constant integer MISC_ITEMS_SHOP_UNIT_ID                        = 'n0BB'
 
         constant integer RUNESTONE_SHOP_UNIT_ID                         = 'n02Z'
         constant integer ELEMENTAL_ITEM_SHOP_UNIT_ID                    = 'n030'
