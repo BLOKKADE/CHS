@@ -188044,7 +188044,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I04C,pghe,pgma,vamp,I0BH,I020,I021,I04G,I023,I04D,I01Q,I01P"
+          "Value": "pghe,pgma,vamp,I0BH,I020,I021,I04G,I023,I04D,I01Q,I01P"
         },
         {
           "Key": "uabi",
@@ -192972,7 +192972,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I03O,I03T,I04A,I015,I03P,I03R,I04B,I016,I01D,I043,I01C,I01E"
+          "Value": "I015,I01C,I04A,I01E,I061,I06H,I07T,I066"
         },
         {
           "Key": "uabi",
@@ -192984,7 +192984,7 @@
         },
         {
           "Key": "unam",
-          "Value": "Item Shop II"
+          "Value": "Offensive 1"
         },
         {
           "Key": "umdl",
@@ -197438,7 +197438,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I04P,I04O,I04N,I04J,I04Q,I04S,I076,I04T,I04U,I04V,I04W,I052"
+          "Value": "I0BE,I06B,I082,I04P,I064,I0D1,I07I,I0CN"
         },
         {
           "Key": "uabi",
@@ -197450,11 +197450,11 @@
         },
         {
           "Key": "unam",
-          "Value": "Item Shop III"
+          "Value": "Offensive 2"
         },
         {
           "Key": "umdl",
-          "Value": "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
+          "Value": "Units\\Creeps\\HeroTinkerFactory\\HeroTinkerFactory.mdl"
         },
         {
           "Key": "uico",
@@ -197463,10 +197463,6 @@
         {
           "Key": "usnd",
           "Value": "SpawningGrounds"
-        },
-        {
-          "Key": "usca",
-          "Value": "1.5"
         },
         {
           "Key": "uani",
@@ -197479,6 +197475,10 @@
         {
           "Key": "uubs",
           "Value": "UMED"
+        },
+        {
+          "Key": "usca",
+          "Value": "1.12"
         },
         {
           "Key": "uacq",
@@ -198852,7 +198852,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I059,I07O,I05B,I05C,I05D,I05E,I05F,I05G,I05L,I060,I061"
+          "Value": "I03R,I03O,I04S,I03P,I080,I086,I05E,I06I,I05B,I05C,I06E,I07V"
         },
         {
           "Key": "uabi",
@@ -198864,11 +198864,11 @@
         },
         {
           "Key": "unam",
-          "Value": "Item Shop IV"
+          "Value": "Magic Items"
         },
         {
           "Key": "umdl",
-          "Value": "Units\\Creeps\\HeroTinkerFactory\\HeroTinkerFactory.mdl"
+          "Value": "buildings\\other\\NerubianZiggurat\\NerubianZiggurat.mdl"
         },
         {
           "Key": "uico",
@@ -198888,7 +198888,7 @@
         },
         {
           "Key": "usca",
-          "Value": "1.12"
+          "Value": "1.5"
         },
         {
           "Key": "uacq",
@@ -201944,7 +201944,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I064,I065,I066,I06B,I06E,I06H,I06I,I06K,I07I,I07K,I07M,I07P"
+          "Value": "I07O,I07K,I0C2,I0BY"
         },
         {
           "Key": "uabi",
@@ -201956,7 +201956,7 @@
         },
         {
           "Key": "unam",
-          "Value": "Item Shop V"
+          "Value": "Summoner Shop"
         },
         {
           "Key": "umdl",
@@ -203930,7 +203930,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I0D2,I06O,I06N,I06M,I06Q,I06P,I06R,I06S,I06T,I06U,I0CU"
+          "Value": "I06O,I06N,I06M,I06Q,I06R,I06S,I06T,I06P,I06U,I0CU,I0D2"
         },
         {
           "Key": "uabi",
@@ -204092,7 +204092,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I0AA,I0AB,I0AG,I0A7,I0A8,I0A9,I0A6,I0A5,I0A4,I06W,I06Z,I070"
+          "Value": "I06Z,I0A4,I0A7,I0AG,I070,I0A6,I0A8,I0AB,I06W,I0A5,I0A9,I0AA"
         },
         {
           "Key": "uabi",
@@ -204254,7 +204254,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I071,I072,I073,I075,I077,I04R,I078,I079,I07B,I0AF,I07E,I07F"
+          "Value": "I071,I073,I072,I04R,I0AF,I077,I07B,I04V"
         },
         {
           "Key": "uabi",
@@ -204266,7 +204266,7 @@
         },
         {
           "Key": "unam",
-          "Value": "PVE Shop I"
+          "Value": "PVE Shop 1"
         },
         {
           "Key": "umdl",
@@ -204770,7 +204770,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I05G,I07A,I06J,I0BN,I05A,I0A0,I07G,I05U"
+          "Value": "I07A,I07G,I06J,I05A,I0A0,I0BN,I05U,I05G"
         },
         {
           "Key": "uabi",
@@ -204782,7 +204782,7 @@
         },
         {
           "Key": "unam",
-          "Value": "PVE Shop II"
+          "Value": "PVE Shop 2"
         },
         {
           "Key": "umdl",
@@ -206910,7 +206910,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I080,I07U,I07V,I07W,I07T,I07Y,I082,I083,I084,I086,I091,I092"
+          "Value": "I016,I01D,I03T,I076,I04U,I04C,I04B,I04W"
         },
         {
           "Key": "uabi",
@@ -206922,11 +206922,11 @@
         },
         {
           "Key": "unam",
-          "Value": "Item Shop VI"
+          "Value": "Defensive 1"
         },
         {
           "Key": "umdl",
-          "Value": "buildings\\human\\HumanShipyard\\HumanShipyard.mdl"
+          "Value": "buildings\\nightelf\\AltarOfElders\\AltarOfElders.mdl"
         },
         {
           "Key": "uico",
@@ -207446,7 +207446,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I0B7,I0B5,I095,I0B8,I0B6,I08L,I08M,I08N,I08P,I08Q,I08R,I08S"
+          "Value": "I08L,I0B7,I0B5,I08R,I08P,I095,I0B8,I08Q,I0B6,I08S,I08N,I08M"
         },
         {
           "Key": "uabi",
@@ -207612,7 +207612,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I0BU,I0BO,I0BP,I0B9,I0AM,I0AK,I0AL,I08X,I08Y,I08Z,I090,I0CQ"
+          "Value": "I0AM,I0B9,I0AL,I0AK,I08Y,I08X,I0BO,I090,I08Z,I0BP,I0CQ,I0BU"
         },
         {
           "Key": "uabi",
@@ -209664,7 +209664,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I09X,I09U,I09W,I09V,I09Y,I09T,I0CF"
+          "Value": "I09W,I09X,I09U,I09V,I09Y,I0CF,I09T"
         },
         {
           "Key": "uabi",
@@ -212372,7 +212372,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "IBBB"
+          "Value": "I05D,I07P,I092,I07M,I07W,I0BF,I091,I060,I07U,I0BD,I0BV,I07Y"
         },
         {
           "Key": "uabi",
@@ -212384,7 +212384,7 @@
         },
         {
           "Key": "unam",
-          "Value": "Item Shop VIII"
+          "Value": "Defensive 3"
         },
         {
           "Key": "umdl",
@@ -215110,7 +215110,7 @@
       "Fields": [
         {
           "Key": "usei",
-          "Value": "I0D1,I0BX,I0C2,I0BZ,I0BY,I0BW,I0BV,I0BF,I0BE,I0BD,I0BQ,I0CN"
+          "Value": "I04O,I04Q,I052,I065,I06K,I059,I084,I05F,I04N"
         },
         {
           "Key": "uabi",
@@ -215122,7 +215122,7 @@
         },
         {
           "Key": "unam",
-          "Value": "Item Shop VII"
+          "Value": "Defensive 2"
         },
         {
           "Key": "umdl",
@@ -217025,6 +217025,168 @@
         {
           "Key": "ulpz",
           "Value": "130"
+        }
+      ]
+    },
+    {
+      "Code": "n0BB",
+      "OriginalCode": "ngme",
+      "Fields": [
+        {
+          "Key": "usei",
+          "Value": "I043,I04T,I04J,I083,I05L,I0BW,I0BQ,I0BZ,I0BX"
+        },
+        {
+          "Key": "uabi",
+          "Value": "Ane2,Avul,Apit"
+        },
+        {
+          "Key": "upat",
+          "Value": ""
+        },
+        {
+          "Key": "unam",
+          "Value": "Miscellaneous Items"
+        },
+        {
+          "Key": "umdl",
+          "Value": "buildings\\nightelf\\ChimaeraRoost\\ChimaeraRoost.mdl"
+        },
+        {
+          "Key": "uico",
+          "Value": "ReplaceableTextures\\CommandButtons\\BTNBlacksmith.blp"
+        },
+        {
+          "Key": "usnd",
+          "Value": "SpawningGrounds"
+        },
+        {
+          "Key": "uani",
+          "Value": "stand,work"
+        },
+        {
+          "Key": "ushb",
+          "Value": " "
+        },
+        {
+          "Key": "uubs",
+          "Value": ""
+        },
+        {
+          "Key": "uclr",
+          "Value": "125"
+        },
+        {
+          "Key": "uclg",
+          "Value": "125"
+        },
+        {
+          "Key": "uclb",
+          "Value": "200"
+        },
+        {
+          "Key": "uacq",
+          "Value": "500"
+        },
+        {
+          "Key": "ucbs",
+          "Value": "0.51"
+        },
+        {
+          "Key": "ua1t",
+          "Value": "normal"
+        },
+        {
+          "Key": "ua1f",
+          "Value": " - "
+        },
+        {
+          "Key": "ua1h",
+          "Value": " - "
+        },
+        {
+          "Key": "ua1q",
+          "Value": " - "
+        },
+        {
+          "Key": "utc1",
+          "Value": "1"
+        },
+        {
+          "Key": "ua2t",
+          "Value": "normal"
+        },
+        {
+          "Key": "utc2",
+          "Value": "1"
+        },
+        {
+          "Key": "utip",
+          "Value": "Build Goblin Merchant"
+        },
+        {
+          "Key": "ides",
+          "Value": "Sells various magic items."
+        },
+        {
+          "Key": "uept",
+          "Value": "4"
+        },
+        {
+          "Key": "uabs",
+          "Value": "Aneu,Avul,Apit"
+        },
+        {
+          "Key": "ifil",
+          "Value": "buildings\\other\\Merchant\\Merchant"
+        },
+        {
+          "Key": "uble",
+          "Value": "0.15"
+        },
+        {
+          "Key": "isca",
+          "Value": "4.5"
+        },
+        {
+          "Key": "uscb",
+          "Value": "1"
+        },
+        {
+          "Key": "uerd",
+          "Value": "50"
+        },
+        {
+          "Key": "uwal",
+          "Value": "200"
+        },
+        {
+          "Key": "urun",
+          "Value": "200"
+        },
+        {
+          "Key": "iarm",
+          "Value": "Wood"
+        },
+        {
+          "Key": "ushr",
+          "Value": "1"
+        },
+        {
+          "Key": "uimz",
+          "Value": "120"
+        },
+        {
+          "Key": "uwu1",
+          "Value": "1"
+        },
+        {
+          "Key": "uwu2",
+          "Value": "1"
+        },
+        {
+          "Key": "ulpz",
+          "Value": "60"
         }
       ]
     }
