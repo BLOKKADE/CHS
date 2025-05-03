@@ -140,7 +140,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 3 levels|r) Increases the level of all summons by 1." )
             
         call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBansheeRanger.blp" )
-        call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fear Aura: Reduces the armor of nearby enemies. ")
+        call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fear Aura: Reduces the armor of nearby enemies. 700 range. ")
         call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Fear Aura: +3 armor reduction." )
         
         call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )
