@@ -50,8 +50,10 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		set s = s + "|cff9b67faMovespeed|r: " + R2SW(GetUnitMoveSpeed(u), 1, 1) + "\n"
 		set s = s + "|cffda4ae7Rune Power|r: " + R2SW((100 + GetUnitCustomState(u, BONUS_RUNEPOW) + GetHeroLevel(u)) / 100, 1, 2) + "\n"
 		set s = s + "|cff5ce74aLuck|r: +" + R2SW(((GetUnitCustomState(u, BONUS_LUCK) - 1) * 100), 1, 1) + "%%\n"
-		set s = s + "|cff6ac8ffAbsolute Slots|r: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1)
-
+		set s = s + "|cff6ac8ffAbsolute Slots|r: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "\n"
+		set s = s + "|cff6dc287Summon Attk Bonus|r: " + I2S(SummonDamage[pid] * 20) + " (" + I2S(SummonDamage[pid]) + " upgrades)\n"
+		set s = s + "|cff6dc287Summon Armor Bonus|r: " + I2S(SummonArmor[pid] * 2) + " (" + I2S(SummonArmor[pid]) + " upgrades)\n"
+		set s = s + "|cff6dc287Summon HP Bonus|r: " + I2S(SummonHitPoints[pid] * 200) + " (" + I2S(SummonHitPoints[pid]) + " upgrades)\n"
 		return s
 	endfunction
 
