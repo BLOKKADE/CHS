@@ -846,7 +846,7 @@ scope ModifyDamageBeforeArmor initializer init
             if GetRandomReal(1,100)  <= i1 * 8 * DamageSourceLuck then
                 if GetUnitState(DamageTarget,UNIT_STATE_MANA) >= 750 then
                     set RandomSpellLoc = Location(GetUnitX(DamageSource), GetUnitY(DamageSource))
-                    call CastRandomSpell(DamageTarget, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 20))
+                    call CastRandomSpell(DamageTarget, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 30))
                     call RemoveLocation(RandomSpellLoc)
                     set RandomSpellLoc = null
                     call SetUnitState(DamageTarget,UNIT_STATE_MANA,GetUnitState(DamageTarget,UNIT_STATE_MANA)- 750 )

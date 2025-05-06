@@ -144,28 +144,28 @@ scope LongPeriodCheck initializer init
             //Panda Relic
             if GetUnitAbilityLevel(u ,'B00S') >= 1 then
                 //agi
-                set i1 = R2I(GetHeroAgi(u, false) * 0.35)
                 set i2 = LoadInteger(HT, hid, 1001)
+                set i1 = R2I((GetHeroAgi(u, true) - i2) * 0.35)
 
-                if i1 != i2 then
+                if i1 != 0 then
                     call SaveInteger(HT, hid, 1001, i1)
                     call AddUnitBonus(u, BONUS_AGILITY, i1 - i2)
                 endif
 
                 //str
-                set i1 = R2I(GetHeroStr(u, false) * 0.35)
                 set i2 = LoadInteger(HT, hid, 1002)
+                set i1 = R2I((GetHeroStr(u, true) - i2) * 0.35)
 
-                if i1 != i2 then
+                if i1 != 0 then
                     call SaveInteger(HT, hid, 1002, i1)
                     call AddUnitBonus(u, BONUS_STRENGTH, i1 - i2)
                 endif
 
                 //int
-                set i1 = R2I(GetHeroInt(u, false) * 0.35)
                 set i2 = LoadInteger(HT, hid, 1003)
+                set i1 = R2I((GetHeroInt(u, true) - i2) * 0.35)
 
-                if i1 != i2 then
+                if i1 != 0 then
                     call SaveInteger(HT, hid, 1003, i1)
                     call AddUnitBonus(u, BONUS_INTELLIGENCE, i1 - i2)
                 endif

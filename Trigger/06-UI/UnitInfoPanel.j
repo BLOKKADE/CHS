@@ -139,9 +139,9 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 		call BlzFrameSetText(TextUI[11], R2SW(GetUnitCustomState(u, BONUS_EVASION), 1, 1))
 
 		if IsHeroUnitId(GetUnitTypeId(u)) then
-			call BlzFrameSetText(TextUI[6], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroStrengthValue", 6)))
-			call BlzFrameSetText(TextUI[7], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroAgilityValue", 6)))
-			call BlzFrameSetText(TextUI[8], BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroIntellectValue", 6)))
+			call BlzFrameSetText(TextUI[6], I2S(GetHeroStr(u, true)))
+			call BlzFrameSetText(TextUI[7], I2S(GetHeroAgi(u, true)))
+			call BlzFrameSetText(TextUI[8], I2S(GetHeroInt(u, true)))
 
 			call PrimaryAttributeText(u, GetHeroPrimaryStat(u))
 
@@ -206,7 +206,16 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 			if BlzFrameIsVisible(ToolTipUI[currentFrame]) then
 				call UpdateTooltipText(SelectedUnit[localpid])
 				set VisibleFrame = true
-				set ToolTipA = DataLabel[currentFrame] + BlzFrameGetText(TextUI[currentFrame]) + "\n------------------------------\n" + DataDesc[currentFrame]
+				if currentFrame == 6  then
+					set ToolTipA = DataLabel[currentFrame] + BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroStrengthValue", 6))
+				elseif currentFrame == 7 then
+					set ToolTipA = DataLabel[currentFrame] + BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroAgilityValue", 6))
+				elseif currentFrame == 8 then
+					set ToolTipA = DataLabel[currentFrame] + BlzFrameGetText(BlzGetFrameByName("InfoPanelIconHeroIntellectValue", 6))
+				else
+					set ToolTipA = DataLabel[currentFrame] + BlzFrameGetText(TextUI[currentFrame])
+				endif
+				set ToolTipA = ToolTipA + "\n------------------------------\n" + DataDesc[currentFrame]
 				if currentFrame == 1 then
 					set ToolTipA = ToolTipA + CustomStateValue[9]
 				/*elseif currentFrame == 2 then
