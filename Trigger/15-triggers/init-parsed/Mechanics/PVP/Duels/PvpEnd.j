@@ -1,4 +1,4 @@
-library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers
+library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers, Glory
 
     globals
         boolean PvpRoundEndWait = false
@@ -257,6 +257,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         local boolean startNonSimultaneousOddDuel
         local player randomOddDuelPlayer
         local DuelGame oddDuelGame
+        local integer gloryReward
 
         // Check if we should do an odd duel
         set startSimultaneousOddDuel = SimultaneousDuelMode == 2 and OddPlayer != -1 and OddPlayerDuelStarted == false
@@ -310,11 +311,20 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
 
             set PvpGoldWinAmount = DuelGoldReward[RoundNumber]
             
+            // Calculate the glory reward based on the game mode
+            if GameModeShort == true then
+                set gloryReward = 4000 + ((RoundNumber / 5) - 1) * 2000
+            else
+                set gloryReward = 3000 + ((RoundNumber / 5) - 1) * 1000
+            endif
+
             // Show a fancy effect on the winners and give them their reward
             call ForGroup(DuelWinners, function ShowWinningSpecialEffect)
             call PlaySoundBJ(udg_sound07)
             call ConditionalTriggerExecute(DuelWinnerRewardsTrigger)
-            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + I2S(PvpGoldWinAmount) + " gold|r")
+
+            // Display the rewards message with both gold and glory
+            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffd700The PvP battles are over and all winners receive:|r |cffffea00" + I2S(PvpGoldWinAmount) + " gold|r and |cffea00ff" + I2S(gloryReward) + " glory|r")
 
             // Removes all duel game structs
             call DuelGame.cleanupDuels()
