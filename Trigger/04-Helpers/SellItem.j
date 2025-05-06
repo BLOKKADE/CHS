@@ -4,7 +4,7 @@ library SellItems requires DummyRecycler, GloryItemCosts, BattleRoyaleHelper
             local unit u = CreateUnit(Player(pid), SELL_ITEM_DUMMY, GetItemX(it), GetItemY(it), 0)
 
             call UnitAddItem(u, it)
-            set success = UnitDropItemTarget(u, it, GetShopById(ITEM_SHOP_I_UNIT_ID))
+            set success = UnitDropItemTarget(u, it, GetShopById(BASIC_ITEMS_SHOP_UNIT_ID))
             call UnitApplyTimedLife(u, 'BTLF' , 20)
             
             set u = null
@@ -40,7 +40,7 @@ library SellItems requires DummyRecycler, GloryItemCosts, BattleRoyaleHelper
                 set tempItem = UnitAddItemById(u, GetItemTypeId(itemToSell))
                 call SetItemCharges(tempItem, GetItemCharges(itemToSell))
                 call RemoveItem(itemToSell)
-                call UnitDropItemTarget(u, tempItem, GetShopById(ITEM_SHOP_I_UNIT_ID))
+                call UnitDropItemTarget(u, tempItem, GetShopById(BASIC_ITEMS_SHOP_UNIT_ID))
 
                 // Glory returns should happen automatically
                     
