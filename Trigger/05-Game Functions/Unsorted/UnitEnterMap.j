@@ -188,7 +188,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Mortar Team
         if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_MAGICRES, 15)
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 15)
         endif
 
         //Pit Lord
