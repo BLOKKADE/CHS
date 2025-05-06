@@ -261,6 +261,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if GetUnitTypeId(caster) == GNOME_MASTER_UNIT_ID then
                         call CastGnomePassive(caster)
+                        call ElemFuncStart(caster, GNOME_MASTER_UNIT_ID)
                     endif
 
                     if abilId == ACTIVATE_AVATAR_ABILITY_ID then
