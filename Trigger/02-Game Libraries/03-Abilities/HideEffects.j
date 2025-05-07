@@ -1,4 +1,4 @@
-library HideEffects requires T32
+library HideEffects requires T32, Alloc
 
     //Hides the effect if a player has disabled fx with -de
     function AddLocalizedSpecialEffect takes string modelName, real x, real y returns effect
@@ -19,6 +19,8 @@ library HideEffects requires T32
     endfunction
 
     struct TempFx extends array
+        implement Alloc
+
         effect fx
         boolean skipDeath
         integer endTick
@@ -28,13 +30,15 @@ library HideEffects requires T32
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
+
+        implement T32x
 
         static method create takes effect fx, boolean skipDeath, real duration returns thistype
             local thistype this
 
             if fx != null then
-                set this = thistype.setup()
+                set this = thistype.allocate()
                 set this.fx = fx
                 set this.skipDeath = skipDeath
                 set this.endTick = T32_Tick + R2I(duration * 32)
@@ -62,10 +66,7 @@ library HideEffects requires T32
 
             call DestroyEffect(this.fx)
             set this.fx = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement Recycle
-        implement T32x
     endstruct
 endlibrary

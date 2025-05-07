@@ -5,6 +5,8 @@ library EnergyBombardment requires Utility, AbilityCooldown
     endfunction
 
     struct EnergyBombardmentStruct extends array
+        implement Alloc
+        
         unit source
         integer level
         real dmgMult
@@ -51,8 +53,10 @@ library EnergyBombardment requires Utility, AbilityCooldown
             endif
         endmethod 
 
+        implement T32x
+
         static method create takes unit source returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             set this.source = source
             set this.tick = 0
             set this.level = 0
@@ -66,11 +70,8 @@ library EnergyBombardment requires Utility, AbilityCooldown
         method destroy takes nothing returns nothing
             set this.source = null
             set this.p = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     function LearnEnergyBombardment takes unit caster returns nothing

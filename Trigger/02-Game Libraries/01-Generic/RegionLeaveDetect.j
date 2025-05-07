@@ -19,6 +19,8 @@ library RegionLeaveDetect initializer init requires KnockbackHelper
     endfunction
 
     struct RectLeaveDetection extends array
+        implement Alloc
+        
         unit u
         integer hid
         rect r
@@ -40,10 +42,12 @@ library RegionLeaveDetect initializer init requires KnockbackHelper
                 set this.lastValidY = GetUnitY(this.u)
             endif
         endmethod
+
+        implement T32x
         
         //Make sure this is only created once hero is in position
         static method create takes unit u, rect r returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.u = u
             set this.r = r
@@ -66,11 +70,8 @@ library RegionLeaveDetect initializer init requires KnockbackHelper
             set this.u = null
             set this.r = null
 
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     private function init takes nothing returns nothing

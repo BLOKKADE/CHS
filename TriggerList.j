@@ -1,3 +1,4 @@
+//! import "C:\CHS\CHS/Trigger\0-Debug\Debug.j"
 //! import "C:\CHS\CHS/Trigger\01-External Libraries\4-NewTable.j"
 //! import "C:\CHS\CHS/Trigger\01-External Libraries\Alloc.j"
 //! import "C:\CHS\CHS/Trigger\01-External Libraries\Ascii.j"

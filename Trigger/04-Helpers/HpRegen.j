@@ -1,4 +1,4 @@
-library HpRegen requires NewBonus
+library HpRegen requires NewBonus, CustomState
     //see CustomState.j for negativehpregenfunctions
     function GetUnitPositiveHpRegen takes unit u returns real
         return GetUnitBonusReal(u, BONUS_HEALTH_REGEN)

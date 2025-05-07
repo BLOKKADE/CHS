@@ -8,6 +8,8 @@ library TempAbilSystem initializer init requires BuffLevel
     endfunction
 
     struct TempAbil extends array
+        implement Alloc
+
         unit source
         boolean stop
         integer endTick
@@ -20,12 +22,14 @@ library TempAbilSystem initializer init requires BuffLevel
             endif
         endmethod
 
+        implement T32x
+
         static method create takes unit source, integer abilId, real duration returns thistype
             local thistype this 
             local TempAbil tempAbil = GetUnitTempAbilityStruct(source, abilId)
 
             if tempAbil == 0 then
-                set this = thistype.setup()
+                set this = thistype.allocate()
 
                 set this.abilId = abilId
                 set this.stop = false
@@ -53,11 +57,8 @@ library TempAbilSystem initializer init requires BuffLevel
             set UnitTempAbilities[GetHandleId(this.source)].integer[this.abilId] = 0
             set this.source = null
             set this.stop = true
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement Recycle
-        implement T32x
     endstruct
 
     private function init takes nothing returns nothing

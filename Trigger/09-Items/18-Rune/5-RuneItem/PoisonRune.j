@@ -5,6 +5,8 @@ library PoisonRune initializer init requires RandomShit
     endglobals
 
     struct PoisonRuneDuration extends array
+        implement Alloc
+
         integer pid
         integer level
         integer endTick
@@ -15,9 +17,11 @@ library PoisonRune initializer init requires RandomShit
                 call this.destroy()
             endif
         endmethod  
+
+        implement T32x
     
         static method create takes integer pid, integer level returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.pid = pid
             set this.level = level
@@ -29,11 +33,8 @@ library PoisonRune initializer init requires RandomShit
         
         method destroy takes nothing returns nothing
             set PoisonRuneBonus[this.pid] = PoisonRuneBonus[this.pid] - this.level
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function PoisonRune takes nothing returns boolean

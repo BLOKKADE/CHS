@@ -1,3 +1,4 @@
+static if DEBUG then
 library Ascii /* v1.1.0.0         TheDamian/Nestharus
     ************************************************************************************
     *
@@ -27,7 +28,9 @@ library Ascii /* v1.1.0.0         TheDamian/Nestharus
                     if (c[h[z]] != p) then
                         if (c[y[z]] != p) then
                             if (c[83] != p) then
-                                debug call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"ASCII ERROR: INVALID CHARACTER: " + p)
+                                static if DEBUG then
+                                    call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"ASCII ERROR: INVALID CHARACTER: " + p)
+                                endif
                                 return 0
                             endif
                             return 83
@@ -502,3 +505,4 @@ library Ascii /* v1.1.0.0         TheDamian/Nestharus
             implement Init
         endstruct
     endlibrary
+endif

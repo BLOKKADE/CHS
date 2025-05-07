@@ -36,14 +36,19 @@ library StaticQueue /* v1.0.0.2
     ************************************************************************************/
         module StaticQueue
             private static thistype nodeCount = 0
-            debug private boolean isNode
+
+        static if DEBUG then
+            private boolean isNode
+        endif
             
             private static thistype last = 0
             
             private thistype _next
             method operator next takes nothing returns thistype
-                debug call ThrowError(this == 0,        "StaticQueue", "next", "thistype", this, "Attempted To Go Out Of Bounds.")
-                debug call ThrowError(not isNode,       "StaticQueue", "next", "thistype", this, "Attempted To Read Invalid Node.")
+                static if DEBUG then
+                    call ThrowError(this == 0,        "StaticQueue", "next", "thistype", this, "Attempted To Go Out Of Bounds.")
+                    call ThrowError(not isNode,       "StaticQueue", "next", "thistype", this, "Attempted To Read Invalid Node.")
+                endif
                 return _next
             endmethod
             
@@ -57,8 +62,9 @@ library StaticQueue /* v1.0.0.2
                 local thistype this = thistype(0)._next
                 
                 if (0 == this) then
-                    debug call ThrowError(nodeCount == 8191, "StaticQueue", "allocateNode", "thistype", 0, "Overflow.")
-                    
+                    static if DEBUG then
+                        call ThrowError(nodeCount == 8191, "StaticQueue", "allocateNode", "thistype", 0, "Overflow.")
+                    endif
                     set this = nodeCount + 1
                     set nodeCount = this
                 else
@@ -71,7 +77,9 @@ library StaticQueue /* v1.0.0.2
             static method enqueue takes nothing returns thistype
                 local thistype node = allocateNode()
                 
-                debug set node.isNode = true
+                static if DEBUG then
+                    set node.isNode = true
+                endif
                 
                 if (first == 0) then
                     set first = node
@@ -87,24 +95,25 @@ library StaticQueue /* v1.0.0.2
             static method pop takes nothing returns nothing
                 local thistype node = first
                 
-                debug call ThrowError(node == 0,            "StaticQueue", "pop", "thistype", 0, "Attempted To Pop Empty Queue.")
-                
-                debug set node.isNode = false
+                static if DEBUG then
+                    call ThrowError(node == 0,            "StaticQueue", "pop", "thistype", 0, "Attempted To Pop Empty Queue.")
+                    set node.isNode = false
+                endif
                 
                 set first = node._next
                 set node._next = thistype(0)._next
                 set thistype(0)._next = node
             endmethod
             static method clear takes nothing returns nothing
-                debug local thistype node = first
+            static if DEBUG then
+                local thistype node = first
                 
-                static if DEBUG_MODE then
                     loop
                         exitwhen node == 0
                         set node.isNode = false
                         set node = node._next
                     endloop
-                endif
+            endif
                 
                 if (first == 0) then
                     return
@@ -116,7 +125,7 @@ library StaticQueue /* v1.0.0.2
                 set first = 0
             endmethod
             
-            static if DEBUG_MODE then
+            static if DEBUG then
                 static method calculateMemoryUsage takes nothing returns integer
                     local thistype start = 1
                     local thistype end = nodeCount

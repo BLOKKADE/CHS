@@ -30,17 +30,23 @@ library BigNum
     struct BigNum_l
         integer leaf
         BigNum_l next
-        debug static integer nalloc = 0
+    static if DEBUG then
+        static integer nalloc = 0
+    endif
         
         static method create takes nothing returns BigNum_l
             local BigNum_l bl = BigNum_l.allocate()
             set bl.next = 0
             set bl.leaf = 0
-            debug set BigNum_l.nalloc = BigNum_l.nalloc + 1
+        static if DEBUG then
+            set BigNum_l.nalloc = BigNum_l.nalloc + 1
+        endif
             return bl
         endmethod
         method onDestroy takes nothing returns nothing
-            debug set BigNum_l.nalloc = BigNum_l.nalloc - 1
+        static if DEBUG then
+            set BigNum_l.nalloc = BigNum_l.nalloc - 1
+        endif
         endmethod
         
         //true:  want destroy
@@ -201,11 +207,15 @@ library BigNum
         set b1 = BigNum.create(37)
         call b1.AddSmall(17)
         call b1.MulSmall(19)
-        debug if BigNum_l.nalloc < 1 then
-        debug     return false
-        debug endif
+    static if DEBUG then
+        if BigNum_l.nalloc < 1 then
+            return false
+        endif
+    endif
         call b1.destroy()
-        debug set b = BigNum_l.nalloc == 0
+    static if DEBUG then
+        set b = BigNum_l.nalloc == 0
+    endif
         return b
     endfunction
     

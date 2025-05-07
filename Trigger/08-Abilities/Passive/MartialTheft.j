@@ -9,6 +9,8 @@ library MartialTheft initializer init requires NewBonus, Utility
     endfunction
 
     struct MartialTheftStruct extends array
+        implement Alloc
+        
         unit source
         unit target
         integer bonus
@@ -23,6 +25,8 @@ library MartialTheft initializer init requires NewBonus, Utility
             endif
         endmethod 
 
+        implement T32x
+
         method resetBonus takes unit target, integer amount returns nothing
             call AddUnitBonus(this.target, BONUS_DAMAGE, this.bonus)
             call AddUnitBonus(this.source, BONUS_DAMAGE, R2I(amount - this.bonus))
@@ -32,7 +36,7 @@ library MartialTheft initializer init requires NewBonus, Utility
         endmethod
     
         static method create takes unit source, unit target, integer amount returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
             set this.enabled = true
@@ -53,11 +57,8 @@ library MartialTheft initializer init requires NewBonus, Utility
             set this.source = null
             set this.target = null
             //call BJDebugMsg("ba end")
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastMartialTheft takes unit caster, unit target, integer level returns nothing

@@ -9,6 +9,8 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
     endfunction
 
     struct HeroBuffStruct extends array
+        implement Alloc
+        
         unit source
         integer endTick
         integer startTick
@@ -22,6 +24,8 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
                 call this.destroy()
             endif
         endmethod  
+
+        implement T32x
 
         method resetBonus takes nothing returns nothing
             call AddUnitCustomState(this.source, BONUS_MAGICPOW, 0 - (this.bonus1))
@@ -46,7 +50,7 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
         endmethod
     
         static method create takes unit source, integer abilLevel, integer heroLevel, real chronusLevel, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
             call this.setBonus(false, abilLevel, duration, heroLevel)
@@ -61,11 +65,8 @@ library HeroBuff initializer init requires BuffLevel, RandomShit, TimeManipulati
             call this.resetBonus()
             set HbStruct[GetHandleId(this.source)] = 0
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function HeroBuffCast takes unit u, integer abilLevel, integer heroLevel, real chronusLevel, real duration returns nothing

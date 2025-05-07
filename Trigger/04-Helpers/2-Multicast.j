@@ -5,6 +5,8 @@ library Multicast requires T32, RandomShit, AbilityChannel
     endglobals
 
     struct Multicast extends array
+        implement Alloc
+
         unit target
         unit caster
         unit hero
@@ -102,8 +104,10 @@ library Multicast requires T32, RandomShit, AbilityChannel
             endif
         endmethod  
 
+        implement T32x
+
         static method create takes unit caster, unit target, integer abilId, integer abilLvl, integer abilOrder, integer orderType, real x, real y, integer count returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.caster = caster
             set this.target = target
@@ -141,10 +145,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 //call BJDebugMsg("release group" + I2S(GetHandleId(this.caston)))
                 set this.caston = null
             endif
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 endlibrary

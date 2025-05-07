@@ -8,7 +8,7 @@
 //*                                                                            *
 //******************************************************************************
 
-library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, UnitItems
+library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, UnitItems, TimerUtils
     globals
         //*********************************************************
         //* These are the configuration constants for the system
@@ -143,8 +143,10 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
                     set n.KBEffect = AddLocalizedSpecialEffectTarget(EFFECT_PATH_GROUND, n.Target, EFFECT_ATTACH_POINT)
                 elseif n.FXMode == 2 then
                     set n.KBEffect = AddLocalizedSpecialEffectTarget(EFFECT_PATH_WATER, n.Target, EFFECT_ATTACH_POINT)
-                debug else
-                    debug call BJDebugMsg(SCOPE_PREFIX+" Error (On Create): Unknown Terrain Type")
+                else
+                    static if DEBUG then
+                    call BJDebugMsg(SCOPE_PREFIX+" Error (On Create): Unknown Terrain Type")
+                    endif
                 endif
             endif
             
@@ -216,8 +218,10 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
                     elseif n.FXMode == 2 and mode == 1 then
                         call DestroyEffect(n.KBEffect)
                         set n.KBEffect = AddLocalizedSpecialEffectTarget(EFFECT_PATH_WATER, n.Target, EFFECT_ATTACH_POINT)
-                    debug elseif n.FXMode == 0 then
-                        debug call BJDebugMsg(SCOPE_PREFIX+" Error (In Update): Unknown Terrain Type")
+                    elseif n.FXMode == 0 then
+                        static if DEBUG then
+                            call BJDebugMsg(SCOPE_PREFIX+" Error (In Update): Unknown Terrain Type")
+                        endif
                     endif
                 endif
                 
@@ -281,7 +285,9 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
         
         //* Protect users from themselves
         if decrement <= 0. or startspeed <= 0. or targ == null then
-            debug call BJDebugMsg(SCOPE_PREFIX+" Error (On Call): Invalid Starting Conditions")
+            static if DEBUG then
+                call BJDebugMsg(SCOPE_PREFIX+" Error (On Call): Invalid Starting Conditions")
+            endif
             set b = false
         else
             //* Can't chain if you don't knockback adjacent units
@@ -312,4 +318,4 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
         set DesBoolexpr = Condition(function KillDests_Check)
         set AdjBoolexpr = Condition(function KnockAdj_Check)
     endfunction
-    endlibrary
+endlibrary

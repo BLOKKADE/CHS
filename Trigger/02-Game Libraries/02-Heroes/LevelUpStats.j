@@ -1,4 +1,4 @@
-library LevelUpStats initializer init requires Table
+library LevelUpStats initializer init requires Table, CustomState, NewBonus
     globals
         HashTable LevelStatBonus
     endglobals

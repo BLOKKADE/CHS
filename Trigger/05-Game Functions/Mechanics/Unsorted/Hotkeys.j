@@ -15,6 +15,8 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
     endfunction
 
     struct HoldShiftStruct extends array
+        implement Alloc
+
         integer pid
         integer endTick
 
@@ -29,8 +31,10 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
             endif
         endmethod 
 
+        implement T32x
+
         static method create takes integer pid returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             set this.pid = pid
 
             set this.endTick = T32_Tick + 12
@@ -43,11 +47,8 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
                 set HoldShift[this.pid] = false
             endif
             set HoldShiftStructTable[this.pid] = 0
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     globals

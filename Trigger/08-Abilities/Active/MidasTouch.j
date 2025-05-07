@@ -12,6 +12,8 @@ library MidasTouch initializer init requires DummyOrder, RandomShit
     endfunction
     
     struct MidasTouch extends array
+        implement Alloc
+        
         unit target
         boolean stop
         integer bonus
@@ -45,8 +47,10 @@ library MidasTouch initializer init requires DummyOrder, RandomShit
             endif
         endmethod  
 
+        implement T32x
+
         static method create takes unit target, integer bonus, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.target = target
             set this.bonus = bonus
@@ -74,11 +78,8 @@ library MidasTouch initializer init requires DummyOrder, RandomShit
             set MidasTouchGold[GetHandleId(this.target)] = 0
             call this.updateStats(true)
             set this.target = null  
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastMidasTouch takes unit caster, unit target, integer level returns nothing
