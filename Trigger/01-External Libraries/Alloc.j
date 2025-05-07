@@ -44,14 +44,13 @@ library Alloc /* v1.1.0 https://www.hiveworkshop.com/threads/324937/
         private key stack
     endglobals
 
+    static if DEBUG then
         private function AssertError takes boolean condition, string methodName, string structName, integer node, string message returns nothing
-            static if DEBUG_MODE then
-                static if LIBRARY_ErrorMessage then
-                    call ThrowError(condition, SCOPE_PREFIX, methodName, structName, node, message)
-                else
-                    if condition then
-                        call BJDebugMsg("[Library: " + SCOPE_PREFIX + "] [Struct: " + structName + "] [Method: " + methodName + "] [Instance: " + I2S(node) + "] : |cffff0000" + message + "|r")
-                    endif
+            static if LIBRARY_ErrorMessage then
+                call ThrowError(condition, SCOPE_PREFIX, methodName, structName, node, message)
+            else
+                if condition then
+                    call BJDebugMsg("[Library: " + SCOPE_PREFIX + "] [Struct: " + structName + "] [Method: " + methodName + "] [Instance: " + I2S(node) + "] : |cffff0000" + message + "|r")
                 endif
             endif
         endfunction
@@ -59,6 +58,7 @@ library Alloc /* v1.1.0 https://www.hiveworkshop.com/threads/324937/
         public function IsAllocated takes integer typeId, integer node returns boolean
             return node > 0 and Table(stack)[typeId*JASS_MAX_ARRAY_SIZE + node] == 0
         endfunction
+    endif
 
     public function Allocate takes integer typeId returns integer
         local integer offset = typeId*JASS_MAX_ARRAY_SIZE

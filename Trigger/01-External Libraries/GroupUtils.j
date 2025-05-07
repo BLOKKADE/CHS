@@ -120,13 +120,13 @@ library GroupUtils initializer Init requires optional xebasic
         static if LESS_SAFETY then
             if g == null then
                 static if DEBUG then
-                call BJDebugMsg(SCOPE_PREFIX+"Error: Null groups cannot be released")
+                    call BJDebugMsg(SCOPE_PREFIX+"Error: Null groups cannot be released")
                 endif
                 return false
                 elseif Count == 8191 then
-                static if DEBUG then
-                    call BJDebugMsg(SCOPE_PREFIX+"Error: Max groups achieved, destroying group")
-                endif
+                    static if DEBUG then
+                        call BJDebugMsg(SCOPE_PREFIX+"Error: Max groups achieved, destroying group")
+                    endif
                 call DestroyGroup(g)
                 return false
             endif

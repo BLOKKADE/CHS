@@ -265,10 +265,10 @@ library ListT requires Table, Alloc
     
                 call deleteNode(node)
                 set count = count - 1
-        static if DEBUG then
             else
-                call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::pop failed for instance "+I2S(this)+". List is empty.")
-        endif
+                static if DEBUG then
+                    call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::pop failed for instance "+I2S(this)+". List is empty.")
+                endif
             endif
             return this
         endmethod
@@ -288,10 +288,10 @@ library ListT requires Table, Alloc
     
                 call deleteNode(node)
                 set count = count - 1
-        static if DEBUG then
             else
+                static if DEBUG then
                 call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::shift failed for instance "+I2S(this)+". List is empty.")
-        endif
+                endif
             endif
             return this
         endmethod
@@ -331,10 +331,10 @@ library ListT requires Table, Alloc
                     set count = count - 1
                 endif
                 return true
-        static if DEBUG then
             else
-                call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::erase failed for instance "+I2S(this)+". Attempted to remove invalid node "+I2S(node)+".")
-        endif
+                static if DEBUG then
+                    call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::erase failed for instance "+I2S(this)+". Attempted to remove invalid node "+I2S(node)+".")
+                endif
             endif
             return false
         endmethod

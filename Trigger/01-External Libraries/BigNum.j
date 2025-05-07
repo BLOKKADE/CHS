@@ -43,11 +43,11 @@ library BigNum
         endif
             return bl
         endmethod
-        method onDestroy takes nothing returns nothing
         static if DEBUG then
+        method onDestroy takes nothing returns nothing
             set BigNum_l.nalloc = BigNum_l.nalloc - 1
-        endif
         endmethod
+    endif
         
         //true:  want destroy
         method Clean takes nothing returns boolean

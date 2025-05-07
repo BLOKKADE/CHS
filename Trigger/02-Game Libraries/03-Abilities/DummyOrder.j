@@ -207,13 +207,16 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         endmethod
         
         method destroy takes nothing returns nothing
+            local AbilityModifiers abilMods = GetUnitAbilMods(this.dummy)
             call UnitRemoveAbility(this.dummy, this.abil)
 
             
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             ///set DummyInfo[GetUnitId(this.dummy)].boolean[2] = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[3] = false
-            call GetUnitAbilMods(this.dummy).destroy()
+            if abilMods != 0 then
+                call abilMods.destroy()
+            endif
             call BlzSetUnitFacingEx(this.dummy, 0)
             call ResetUnitCustomState(this.dummy)
             call RecycleDummy(this.dummy) 

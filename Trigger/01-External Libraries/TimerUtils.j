@@ -204,10 +204,10 @@ library TimerUtilsEx requires optional Table
             set tN = tN + 1
             
         //Tried to pass a bad timer.
-    static if DEBUG then
         else
-            call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, "[TimerUtils]Error: Tried to release non-active timer!")
-    endif
+            static if DEBUG then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, "[TimerUtils]Error: Tried to release non-active timer!")
+            endif
         endif
         
         
