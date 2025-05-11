@@ -508,10 +508,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         endif
                         //call BJDebugMsg("c")
                         if RoundCreepTypeId == 'n01H' or RoundCreepTypeId == 'n00W' then
-                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bddf1Damage Type|r: magic |n"
-                            set s = s + "|cff9bddf1Magic Damage|r: "
+                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cff9bddf1Damage Type|r: Magic |n"
+                            set s = s + "|cffff00ffMagic Damage|r: "
                         else
-                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff167daDamage Type|r: physical |n"
+                            set RoundCreepInfo[playerId] = RoundCreepInfo[playerId] + "|cfff167daDamage Type|r: Physical |n"
                         endif
                         //call BJDebugMsg("d")
                         set creepDamage = BlzGetUnitBaseDamage(creep, 0) + BlzGetUnitDiceNumber(creep, 0) + BlzGetAbilityIntegerLevelField(BlzGetUnitAbility(creep, 'A000'), ABILITY_ILF_ATTACK_BONUS, (R2I(RoundCreepPower) / 2) - 1) + damageBonus
