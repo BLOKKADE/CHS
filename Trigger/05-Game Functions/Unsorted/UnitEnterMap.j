@@ -47,8 +47,61 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Mortar Team
         if GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_PHYSPOW, 1.5 * GetHeroLevel(hero))  
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 15)
+            if GetHeroLevel(hero) > 1 then
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 1.5 * (GetHeroLevel(hero) - 1))
+            endif
         endif
+
+        //Seer
+        //if GetUnitTypeId(hero) == SEER_UNIT_ID then
+
+           // if GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID) > 0 then
+           // call UnitAddAbility(u, DESTRUCTION_ABILITY_ID)
+           // call SetUnitAbilityLevel(u, DESTRUCTION_ABILITY_ID, GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID))
+           // endif
+
+          //  if GetUnitAbilityLevel(hero, PULVERIZE_ABILITY_ID) > 0 then
+          //  call UnitAddAbility(u, PULVERIZE_ABILITY_ID)
+          //  call SetUnitAbilityLevel(u, PULVERIZE_ABILITY_ID, GetUnitAbilityLevel(hero, PULVERIZE_ABILITY_ID))
+         //   endif
+
+          //  if GetUnitAbilityLevel(hero, ENVENOMED_WEAPONS_ABILITY_ID) > 0 then
+          //  call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
+         //   call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, GetUnitAbilityLevel(hero, ENVENOMED_WEAPONS_ABILITY_ID))
+         //   endif
+
+         //   if GetUnitAbilityLevel(hero, INCINERATE_ABILITY_ID) > 0 then
+         //   call UnitAddAbility(u, INCINERATE_ABILITY_ID)
+         //   call SetUnitAbilityLevel(u, INCINERATE_ABILITY_ID, GetUnitAbilityLevel(hero, INCINERATE_ABILITY_ID))
+         //   endif
+
+         //   if GetUnitAbilityLevel(hero, BASH_ABILITY_ID) > 0 then
+         //   call UnitAddAbility(u, BASH_ABILITY_ID)
+         //   call SetUnitAbilityLevel(u, BASH_ABILITY_ID, GetUnitAbilityLevel(hero, BASH_ABILITY_ID))
+         //   endif
+
+         //   if GetUnitAbilityLevel(hero, LIQUID_FIRE_ABILITY_ID) > 0 then
+         //   call UnitAddAbility(u, LIQUID_FIRE_ABILITY_ID)
+         //   call SetUnitAbilityLevel(u, LIQUID_FIRE_ABILITY_ID, GetUnitAbilityLevel(hero, LIQUID_FIRE_ABILITY_ID))
+         //   endif
+
+        //    if GetUnitAbilityLevel(hero, CRITICAL_STRIKE_ABILITY_ID) > 0 then
+         //   call UnitAddAbility(u, CRITICAL_STRIKE_ABILITY_ID)
+         //   call SetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID, GetUnitAbilityLevel(hero, CRITICAL_STRIKE_ABILITY_ID))
+         //   endif
+
+         //   if GetUnitAbilityLevel(hero, DRUNKEN_MASTER_ABILITY_ID) > 0 then
+        //    call UnitAddAbility(u, DRUNKEN_MASTER_ABILITY_ID)
+         //   call SetUnitAbilityLevel(u, DRUNKEN_MASTER_ABILITY_ID, GetUnitAbilityLevel(hero, DRUNKEN_MASTER_ABILITY_ID))
+         //   endif
+
+         //   if GetUnitAbilityLevel(hero, CRUELTY_ABILITY_ID) > 0 then
+         //   call UnitAddAbility(u, CRUELTY_ABILITY_ID)
+         //   call SetUnitAbilityLevel(u, CRUELTY_ABILITY_ID, GetUnitAbilityLevel(hero, CRUELTY_ABILITY_ID))
+         //   endif
+
+        //endif
 
         //Druid of the Claw
         if GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
@@ -62,7 +115,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call AddUnitBonus(u, BONUS_DAMAGE, R2I((GetUnitDamage(hero, 0) * r1)))
             call AddUnitBonus(u, BONUS_ARMOR, R2I((BlzGetUnitArmor(hero) * r1)))
         endif
-
+        
         call AddUnitCustomState(u, BONUS_PVP, GetUnitCustomState(hero, BONUS_PVP))
 
         if SUMMONS.contains(summonTypeId) then
