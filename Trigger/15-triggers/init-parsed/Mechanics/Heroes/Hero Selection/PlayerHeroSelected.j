@@ -31,19 +31,19 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         endif
         
  // call SetShopIndex(CreateUnit(p, SUMMON_BUFFS_SHOP_UNIT_ID, -868, -1152, 270.00))
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_I_UNIT_ID, -620 - 256, -1152, 270.00))//basic items
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_II_UNIT_ID, -256, -1152, 270.00))//offensive 1
+            call SetShopIndex(CreateUnit(p, BASIC_ITEMS_SHOP_UNIT_ID, -620 - 256, -1152, 270.00))//basic items
+            call SetShopIndex(CreateUnit(p, OFFENSIVE_ITEMS_1_SHOP_UNIT_ID, -256, -1152, 270.00))//offensive 1
             call SetShopIndex(CreateUnit(p, PVE_SHOP_I_UNIT_ID, -620, -1152, 270.00))//pve shop 1
             call SetShopIndex(CreateUnit(p, PVE_SHOP_II_UNIT_ID, -620, -1152 - 256, 270.00))//pve shop 2
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_III_UNIT_ID, 0, -1152, 270.00))//offensive 2
+            call SetShopIndex(CreateUnit(p, OFFENSIVE_ITEMS_2_SHOP_UNIT_ID, 0, -1152, 270.00))//offensive 2
             call SetShopIndex(CreateUnit(p, RUNESTONE_SHOP_UNIT_ID, 620, -1152, 270.00)) //runestone shop
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_IV_UNIT_ID, 256, -1152, 270.00)) //magic items
+            call SetShopIndex(CreateUnit(p, MAGIC_ITEMS_SHOP_UNIT_ID, 256, -1152, 270.00)) //magic items
             call SetShopIndex(CreateUnit(p, ELEMENTAL_ITEM_SHOP_UNIT_ID, 620, -1152 - 256, 270.00))//elemental items 
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_V_UNIT_ID, 868, -1152, 270.00)) //summoner shop
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_VI_UNIT_ID, -256, -1152 - 256, 270.00)) //defensive 1 
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_VII_UNIT_ID, 0, -1152 - 256, 270.00)) //defensive 2
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_VIII_UNIT_ID, 256, -1152 - 256, 270.00)) //defensive 3
-            call SetShopIndex(CreateUnit(p, ITEM_SHOP_IX_UNIT_ID, 868, -1152 - 256, 270.00)) //miscellaneous items
+            call SetShopIndex(CreateUnit(p, SUMMONER_ITEMS_SHOP_UNIT_ID, 868, -1152, 270.00)) //summoner shop
+            call SetShopIndex(CreateUnit(p, DEFENSIVE_ITEMS_1_SHOP_UNIT_ID, -256, -1152 - 256, 270.00)) //defensive 1 
+            call SetShopIndex(CreateUnit(p, DEFENSIVE_ITEMS_2_SHOP_UNIT_ID, 0, -1152 - 256, 270.00)) //defensive 2
+            call SetShopIndex(CreateUnit(p, DEFENSIVE_ITEMS_3_SHOP_UNIT_ID, 256, -1152 - 256, 270.00)) //defensive 3
+            call SetShopIndex(CreateUnit(p, MISC_ITEMS_SHOP_UNIT_ID, 868, -1152 - 256, 270.00)) //miscellaneous items
 
         set ShopsCreated = true
 

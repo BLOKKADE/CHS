@@ -1,5 +1,7 @@
 library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
     struct DndStruct extends array
+        implement Alloc
+
         unit source
         integer level
         integer pid
@@ -38,6 +40,8 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
             endif
         endmethod 
 
+        implement T32x
+
         private method createDummy takes real duration returns nothing
             local DummyOrder dummy = DummyOrder.create(this.source, this.x, this.y, 0, duration)
             call dummy.addActiveAbility(DEATH_AND_DECAY_DUMMY_ABILITY_ID, 1, 852221)
@@ -46,7 +50,7 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
         endmethod
 
         static method create takes unit source, real x, real y, integer level returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
            // call BJDebugMsg("sl start")
             set this.source = source
             set this.endTick = T32_Tick + (25 * 32)
@@ -64,11 +68,8 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
         method destroy takes nothing returns nothing
             set this.source = null
             //call BJDebugMsg("sl end")
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastDeathAndDecay takes unit caster, real x, real y, integer level returns nothing

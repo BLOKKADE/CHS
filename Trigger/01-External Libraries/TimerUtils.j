@@ -1,272 +1,221 @@
-library TimerUtils initializer init
-    //*********************************************************************
-    //* TimerUtils (red+blue+orange flavors for 1.24b+) 2.0
-    //* ----------
-    //*
-    //*  To implement it , create a custom text trigger called TimerUtils
-    //* and paste the contents of this script there.
-    //*
-    //*  To copy from a map to another, copy the trigger holding this
-    //* library to your map.
-    //*
-    //* (requires vJass)   More scripts: htt://www.wc3c.net
-    //*
-    //* For your timer needs:
-    //*  * Attaching
-    //*  * Recycling (with double-free protection)
-    //*
-    //* set t=NewTimer()      : Get a timer (alternative to CreateTimer)
-    //* set t=NewTimerEx(x)   : Get a timer (alternative to CreateTimer), call
-    //*                            Initialize timer data as x, instead of 0.
-    //*
-    //* ReleaseTimer(t)       : Relese a timer (alt to DestroyTimer)
-    //* SetTimerData(t,2)     : Attach value 2 to timer
-    //* GetTimerData(t)       : Get the timer's value.
-    //*                         You can assume a timer's value is 0
-    //*                         after NewTimer.
-    //*
-    //* Multi-flavor:
-    //*    Set USE_HASH_TABLE to true if you don't want to complicate your life.
-    //*
-    //* If you like speed and giberish try learning about the other flavors.
-    //*
-    //********************************************************************
-    
-    //================================================================
+library TimerUtilsEx requires optional Table
+    /*************************************************
+    *
+    *   TimerUtilsEx
+    *   v2.1.0.2
+    *   By Vexorian, Bribe & Magtheridon96
+    *
+    *   Original version by Vexorian.
+    *
+    *   Flavors:
+    *       Hashtable:
+    *           - RAM:              Minimal
+    *           - TimerData:        Slow
+    *
+    *       Array:
+    *           - RAM:              Maximal
+    *           - TimerData:        Fast
+    *
+    *   All the functions have O(1) complexity.
+    *   The Array version is the fastest, but the hashtable
+    *   version is the safest. The Array version is still
+    *   quite safe though, and I would recommend using it.
+    *   The system is much slower in debug mode.
+    *
+    *   Optional Requirement:
+    *       - Table by Bribe
+    *           - hiveworkshop.com/forums/showthread.php?t=188084
+    *
+    *   API:
+    *   ----
+    *       - function NewTimer takes nothing returns timer
+    *           - Returns a new timer from the stack.
+    *       - function NewTimerEx takes integer i returns timer
+    *           - Returns a new timer from the stack and attaches a value to it.
+    *       - function ReleaseTimer takes timer t returns integer
+    *           - Throws a timer back into the stack. Also returns timer data.
+    *       - function SetTimerData takes timer t, integer value returns nothing
+    *           - Attaches a value to a timer.
+    *       - function GetTimerData takes timer t returns integer
+    *           - Returns the attached value.
+    *
+    *************************************************/
+    // Configuration
     globals
-        //How to tweak timer utils:
-        // USE_HASH_TABLE = true  (new blue)
-        //  * SAFEST
-        //  * SLOWEST (though hash tables are kind of fast)
-        //
-        // USE_HASH_TABLE = false, USE_FLEXIBLE_OFFSET = true  (orange)
-        //  * kinda safe (except there is a limit in the number of timers)
-        //  * ALMOST FAST
-        //
-        // USE_HASH_TABLE = false, USE_FLEXIBLE_OFFSET = false (red)
-        //  * THE FASTEST (though is only  faster than the previous method
-        //                  after using the optimizer on the map)
-        //  * THE LEAST SAFE ( you may have to tweak OFSSET manually for it to
-        //                     work)
-        //
-        private constant boolean USE_HASH_TABLE = true
-        private constant boolean USE_FLEXIBLE_OFFSET = false
-    
-        private constant integer OFFSET = 0x100000
-        private integer VOFFSET = OFFSET
-                  
-        //Timers to preload at map init:
+        // Use hashtable, or fast array?
+        private constant boolean USE_HASH = false
+        // Max Number of Timers Held in Stack
         private constant integer QUANTITY = 256
-            
-        //Changing this  to something big will allow you to keep recycling
-        // timers even when there are already AN INCREDIBLE AMOUNT of timers in
-        // the stack. But it will make things far slower so that's probably a bad idea...
-        private constant integer ARRAY_SIZE = 8190
-    
     endglobals
-    //==================================================================================================
+    
     globals
-        private integer array data[ARRAY_SIZE]
-        private hashtable ht
-        private integer counter = 0
+        private timer array tT
+        private integer tN = 0
     endglobals
-        
-        
     
-    //It is dependent on jasshelper's recent inlining optimization in order to perform correctly.
-    function SetTimerData takes timer t, integer value returns nothing
-        static if(USE_HASH_TABLE) then
-            // new blue
-            call SaveInteger(ht,0,GetHandleId(t), value)
+    private module Init
+        private static method onInit takes nothing returns nothing
+            static if not USE_HASH then
+                local integer i = QUANTITY
+                loop
+                    set i = i - 1
+                    set tT[i] = CreateTimer()
+                    exitwhen i == 0
+                endloop
                 
-        elseif (USE_FLEXIBLE_OFFSET) then
-            // orange
-            static if (DEBUG_MODE) then
-                if(GetHandleId(t)- VOFFSET < 0) then
-                    call BJDebugMsg("SetTimerData: Wrong handle id, only use SetTimerData on timers created by NewTimer")
-                endif
+                set tN = QUANTITY
+            elseif LIBRARY_Table then
+                set tb = Table.create()
             endif
-            set data[GetHandleId(t)- VOFFSET]= value
+        endmethod
+    endmodule
+    
+    // JassHelper doesn't support static ifs for globals.
+    private struct Data extends array
+        static if not USE_HASH then
+            static integer array data
+        endif
+        static if LIBRARY_Table then
+            static Table tb = 0
         else
-            // new red
-            static if (DEBUG_MODE) then
-                if(GetHandleId(t)- OFFSET < 0) then
-                    call BJDebugMsg("SetTimerData: Wrong handle id, only use SetTimerData on timers created by NewTimer")
-                endif
+            static hashtable ht = InitHashtable()
+        endif
+        implement Init
+    endstruct
+    
+    // Double free protection
+    private function ValidTimer takes integer i returns boolean
+        static if LIBRARY_Table then
+            return Data.tb.boolean[-i]
+        else
+            return LoadBoolean(Data.ht, i, 1)
+        endif
+    endfunction
+    
+    private function Get takes integer id returns integer
+        static if DEBUG then
+            if not ValidTimer(id) then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, "[TimerUtils]Error: Tried to get data from invalid timer.")
             endif
-            set data[GetHandleId(t)- OFFSET]= value
-        endif        
+        endif
+        static if USE_HASH then
+            static if LIBRARY_Table then
+                return Data.tb[id]
+            else
+                return LoadInteger(Data.ht, id, 0)
+            endif
+        else
+            return Data.data[id - 0x100000]
+        endif
+    endfunction
+    
+    private function Set takes integer id, integer data returns nothing
+        static if DEBUG then
+            if not ValidTimer(id) then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, "[TimerUtils]Error: Tried to attach data to invalid timer.")
+            endif
+        endif
+        static if USE_HASH then
+            static if LIBRARY_Table then
+                set Data.tb[id] = data
+            else
+                call SaveInteger(Data.ht, id, 0, data)
+            endif
+        else
+            set Data.data[id - 0x100000] = data
+        endif
+    endfunction
+    
+    function SetTimerData takes timer t, integer data returns nothing
+        call Set(GetHandleId(t), data)
     endfunction
     
     function GetTimerData takes timer t returns integer
-        static if(USE_HASH_TABLE) then
-            // new blue
-            return LoadInteger(ht,0,GetHandleId(t) )
-                
-        elseif (USE_FLEXIBLE_OFFSET) then
-            // orange
-            static if (DEBUG_MODE) then
-                if(GetHandleId(t)- VOFFSET < 0) then
-                    call BJDebugMsg("SetTimerData: Wrong handle id, only use SetTimerData on timers created by NewTimer")
-                endif
-            endif
-            return data[GetHandleId(t)- VOFFSET]
-        else
-            // new red
-            static if (DEBUG_MODE) then
-                if(GetHandleId(t)- OFFSET < 0) then
-                    call BJDebugMsg("SetTimerData: Wrong handle id, only use SetTimerData on timers created by NewTimer")
-                endif
-            endif
-            return data[GetHandleId(t)- OFFSET]
-        endif        
+        return Get(GetHandleId(t))
     endfunction
     
-    //==========================================================================================
-    globals
-        private timer array tT[ARRAY_SIZE]
-        private integer tN = 0
-        private constant integer HELD = 0x28829022
-        //use a totally random number here, the more improbable someone uses it, the better.
-            
-        private boolean didinit = false
-    endglobals
-    private keyword init
-    
-    //==========================================================================================
-    // I needed to decide between duplicating code ignoring the "Once and only once" rule
-    // and using the ugly textmacros. I guess textmacros won.
-    //
-    //! textmacro TIMERUTIS_PRIVATE_NewTimerCommon takes VALUE
-        // On second thought, no.
-    //! endtextmacro
-    
-    function NewTimerEx takes integer value returns timer
-        if (tN==0) then
-            if (not didinit) then 
-                //This extra if shouldn't represent a major performance drawback
-                //because QUANTITY rule is not supposed to be broken every day. 
-                call init.evaluate()
-                set tN = tN - 1
+    function NewTimerEx takes integer data returns timer
+        local integer id
+        if tN == 0 then
+            static if USE_HASH then
+                set tT[0] = CreateTimer()
             else
-                //If this happens then the QUANTITY rule has already been broken, try to fix the
-                // issue, else fail.
-                debug call BJDebugMsg("NewTimer: Warning, Exceeding TimerUtils_QUANTITY, make sure all timers are getting recycled correctly")
-                set tT[0]= CreateTimer()
-                static if( not USE_HASH_TABLE) then
-                    debug call BJDebugMsg("In case of errors, please increase it accordingly, or set TimerUtils_USE_HASH_TABLE to true")
-                    static if( USE_FLEXIBLE_OFFSET) then
-                        if (GetHandleId(tT[0])- VOFFSET < 0) or (GetHandleId(tT[0])- VOFFSET >= ARRAY_SIZE) then
-                            //all right, couldn't fix it
-                            call BJDebugMsg("NewTimer: Unable to allocate a timer, you should probably set TimerUtils_USE_HASH_TABLE to true or fix timer leaks.")
-                            return null
-                        endif
-                    else
-                        if (GetHandleId(tT[0])- OFFSET < 0) or (GetHandleId(tT[0])- OFFSET >= ARRAY_SIZE) then
-                            //all right, couldn't fix it
-                            call BJDebugMsg("NewTimer: Unable to allocate a timer, you should probably set TimerUtils_USE_HASH_TABLE to true or fix timer leaks.")
-                            return null
-                        endif
-                    endif
+                static if DEBUG then
+                    call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, "[TimerUtils]Error: No Timers In The Stack! You must increase 'QUANTITY'")
                 endif
+                return null
             endif
         else
             set tN = tN - 1
         endif
-        call SetTimerData(tT[tN],value)
+        set id = GetHandleId(tT[tN])
+        static if LIBRARY_Table then
+            set Data.tb.boolean[-id] = true
+        else
+            call SaveBoolean(Data.ht, id, 1, true)
+        endif
+        call Set(id, data)
         return tT[tN]
     endfunction
-        
+    
     function NewTimer takes nothing returns timer
         return NewTimerEx(0)
     endfunction
     
-    
-    //==========================================================================================
-    function ReleaseTimer takes timer t returns nothing
-        if(t==null) then
-            debug call BJDebugMsg("Warning: attempt to release a null timer")
-            return
-        endif
-        if (tN==ARRAY_SIZE) then
-            debug call BJDebugMsg("Warning: Timer stack is full, destroying timer!!")
-    
-            //stack is full, the map already has much more troubles than the chance of bug
-            call DestroyTimer(t)
-        else
-            call PauseTimer(t)
-            if(GetTimerData(t)==HELD) then
-                debug call BJDebugMsg("Warning: ReleaseTimer: Double free!")
-                return
+    function ReleaseTimer takes timer t returns integer
+        local integer id = GetHandleId(t)
+        local integer data = 0
+        
+        // Pause the timer just in case.
+        call PauseTimer(t)
+        
+        // Make sure the timer is valid.
+        if ValidTimer(id) then
+            // Get the timer's data.
+            set data = Get(id)
+            
+            // Unmark handle id as a valid timer.
+            static if LIBRARY_Table then
+                call Data.tb.boolean.remove(-id)
+            else
+                call RemoveSavedBoolean(Data.ht, id, 1)
             endif
-            call SetTimerData(t,HELD)
-            set tT[tN]= t
-            set tN = tN + 1
-        endif    
-    endfunction
-    
-    private function init takes nothing returns nothing
-        local integer i = 0
-        local integer o =- 1
-        local boolean oops = false
-        if ( didinit ) then
-            return
-        else
-            set didinit = true
-        endif
-         
-        static if( USE_HASH_TABLE ) then
-            set ht = InitHashtable()
-            loop
-                exitwhen(i==QUANTITY)
-                set tT[i]= CreateTimer()
-                call SetTimerData(tT[i], HELD)
-                set i = i + 1
-            endloop
-            set tN = QUANTITY
-        else
-            loop
-                set i = 0
-                loop
-                    exitwhen (i==QUANTITY)
-                    set tT[i] = CreateTimer()
-                    if(i==0) then
-                        set VOFFSET = GetHandleId(tT[i])
-                        static if(USE_FLEXIBLE_OFFSET) then
-                            set o = VOFFSET
-                        else
-                            set o = OFFSET
-                        endif
-                    endif
-                    if (GetHandleId(tT[i])- o >= ARRAY_SIZE) then
-                        exitwhen true
-                    endif
-                    if (GetHandleId(tT[i])- o >= 0)  then
-                        set i = i + 1
-                    endif
-                endloop
-                set tN = i
-                exitwhen(tN == QUANTITY)
-                set oops = true
-                exitwhen not USE_FLEXIBLE_OFFSET
-                debug call BJDebugMsg("TimerUtils_init: Failed a initialization attempt, will try again")               
-            endloop
+            
+            //If it's not run in USE_HASH mode, this next block is useless.
+            static if USE_HASH then
+            
+                //At least clear hash memory while it's in the recycle stack.
+                static if LIBRARY_Table then
+                    call Data.tb.remove(id)
+                else
+                    call RemoveSavedInteger(Data.ht, id, 0)
+                endif
                 
-            if(oops) then
-                static if ( USE_FLEXIBLE_OFFSET) then
-                    debug call BJDebugMsg("The problem has been fixed.")
-                    //If this message doesn't appear then there is so much
-                    //handle id fragmentation that it was impossible to preload
-                    //so many timers and the thread crashed! Therefore this
-                    //debug message is useful.
-                elseif(DEBUG_MODE) then
-                    call BJDebugMsg("There were problems and the new timer limit is " + I2S(i))
-                    call BJDebugMsg("This is a rare ocurrence, if the timer limit is too low:")
-                    call BJDebugMsg("a) Change USE_FLEXIBLE_OFFSET to true (reduces performance a little)")
-                    call BJDebugMsg("b) or try changing OFFSET to " + I2S(VOFFSET) )
+                // If the recycle limit is reached
+                if tN == QUANTITY then
+                    // then we destroy the timer.
+                    call DestroyTimer(t)
+                    return data
                 endif
             endif
+            
+            //Recycle the timer.
+            set tT[tN] = t
+            set tN = tN + 1
+            
+        //Tried to pass a bad timer.
+        else
+            static if DEBUG then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, "[TimerUtils]Error: Tried to release non-active timer!")
+            endif
         endif
-    
+        
+        
+        //Return Timer Data.
+        return data
     endfunction
+
+endlibrary
+
+library TimerUtils requires TimerUtilsEx
 endlibrary

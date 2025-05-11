@@ -1,4 +1,4 @@
-library TempAttackCd initializer init
+library TempAttackCd initializer init requires Alloc
     globals
         HashTable AttackCdTargets
     endglobals
@@ -8,6 +8,8 @@ library TempAttackCd initializer init
     endfunction
     
     struct AttackCdStruct extends array
+        implement Alloc
+
         unit source
         real reduction
         integer endTick
@@ -23,10 +25,12 @@ library TempAttackCd initializer init
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
-    
+        endmethod
+
+        implement T32x
+
         static method create takes unit source, real reduction, real duration, integer buffLink returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.source = source
             set this.reduction = reduction
@@ -60,11 +64,8 @@ library TempAttackCd initializer init
                 set AttackCdTargets[GetHandleId(this.source)].integer[this.buffLink] = 0
             endif
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     private function init takes nothing returns nothing

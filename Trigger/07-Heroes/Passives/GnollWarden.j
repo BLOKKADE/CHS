@@ -19,6 +19,8 @@ library GnollWarden initializer init requires FxCooldown, HideEffects
     endfunction
 
     struct GnollWardenStruct extends array
+        implement Alloc
+        
         unit source
         integer pid
         real amount
@@ -42,9 +44,11 @@ library GnollWarden initializer init requires FxCooldown, HideEffects
                 call this.destroy()
             endif
         endmethod 
+
+        implement T32x
     
         static method create takes unit source, real fullDamage returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
             set this.pid = GetPlayerId(GetOwningPlayer(source))
@@ -63,11 +67,8 @@ library GnollWarden initializer init requires FxCooldown, HideEffects
         method destroy takes nothing returns nothing
             call SetGnollWardenPassive(this.source, GNOLL_WARDEN_PASSIVE_CURRENT, GetGnollWardenPassiveInfo(this.source, GNOLL_WARDEN_PASSIVE_CURRENT) - 1)
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function ActivateGnollWardenPassive takes unit source, real damage returns nothing

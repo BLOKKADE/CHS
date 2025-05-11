@@ -19,7 +19,7 @@ library DummyRecycler /*
 //      because retrieving Dummy units does not cause that event to run.
 
 
-    */ requires TimerUtils /*
+    */ requires TimerUtils/*
         nothing
         
     */ optional Table/*
@@ -156,10 +156,6 @@ library DummyRecycler /*
     //Every time a new dummy unit is retrieved, it will apply this resets
     //If it is redundant/you dont need it, remove it.
     //! textmacro DUMMY_UNIT_RESET
-        //call SetUnitScale(bj_lastCreatedUnit, 1, 0, 0)
-        //call SetUnitVertexColor(bj_lastCreatedUnit, 255, 255, 255, 255)
-        //call SetUnitAnimationByIndex(bj_lastCreatedUnit, 90)
-        //call ShowDummy(bj_lastCreatedUnit, true)
     //! endtextmacro
 // =============================================================== //
 // ==================== END CONFIGURATION ======================== //
@@ -370,7 +366,6 @@ library DummyRecycler /*
             endif
         else
             set bj_lastCreatedUnit = CreateUnit(OWNER, DUMMY_ID, x, y, facing)
-            //call BJDebugMsg("create dummy")
             call PauseUnit(bj_lastCreatedUnit, true)
             call SetUnitFlyHeight(bj_lastCreatedUnit, z, 0)
             if dummyCount < MAX_DUMMY_COUNT then
@@ -387,7 +382,6 @@ library DummyRecycler /*
             endif
             set dummyCount = dummyCount + 1
         endif
-        //call BJDebugMsg("dummy count: " + I2S(dummyCount))
 
         return bj_lastCreatedUnit
     endfunction
@@ -451,10 +445,12 @@ library DummyRecycler /*
                 set upper = count[head]
             endif
         elseif this == 0 then
-            //call BJDebugMsg("remove unit")
             call RemoveUnit(u)
-        debug elseif next[this] != -1 then
-            debug call BJDebugMsg("|cffffcc00[DummyRecycler]:|r Attempted to recycle a pending/free Dummy Unit.")
+    
+        elseif next[this] != -1 then
+            static if DEBUG then
+                call BJDebugMsg("|cffffcc00[DummyRecycler]:|r Attempted to recycle a pending/free Dummy Unit.")
+            endif
         endif
         
     endfunction

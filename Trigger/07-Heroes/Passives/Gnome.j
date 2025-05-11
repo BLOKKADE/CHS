@@ -17,6 +17,8 @@ library Gnome initializer init requires AbilityCooldown, TempAbilSystem
     endfunction
 
     struct GnomeStruct extends array
+        implement Alloc
+        
         unit source
         integer charges
         integer nexttick
@@ -43,9 +45,11 @@ library Gnome initializer init requires AbilityCooldown, TempAbilSystem
                 call this.destroy()
             endif
         endmethod 
+
+        implement T32x
     
         static method create takes unit source, integer charges returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.source = source
             set this.charges = charges
@@ -64,11 +68,8 @@ library Gnome initializer init requires AbilityCooldown, TempAbilSystem
         
         method destroy takes nothing returns nothing
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastGnomePassive takes unit u returns nothing

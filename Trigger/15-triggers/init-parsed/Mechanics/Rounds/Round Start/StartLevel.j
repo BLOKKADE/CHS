@@ -100,6 +100,9 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
             call DisplayTextToForce(GetPlayersAll(), GameDescription)
             call DisplayTextToForce(GetPlayersAll(), "|c00F08000Level " + I2S(RoundNumber)+ "|r")
             call ConditionalTriggerExecute(EnterShopModeTrigger)
+            if DEBUG then
+                call BJDebugMsg("|c0051ee5eDEBUG MODE IS ENABLED!!!\nTURN THIS OFF BEFORE RELEASE|r") 
+            endif
         endif
 
         call ForceClear(RoundPlayersCompleted)

@@ -11,7 +11,7 @@ library ErrorMessage /* v1.0.1.4
     *   debug function ThrowWarning takes boolean expression, string libraryName, string functionName, string objectName, integer objectInstance, string description returns nothing
     *
     ************************************************************************************/
-        static if DEBUG_MODE then
+        static if DEBUG then
             private struct Fields extends array
                 static constant string COLOR_RED = "|cffff0000"
                 static constant string COLOR_YELLOW = "|cffffff00"

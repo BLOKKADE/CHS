@@ -9,6 +9,8 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
     endfunction
 
     struct ArcaneAbsorptionGauntlets extends array
+        implement Alloc
+        
         unit target
         integer abilId
         boolean stop
@@ -36,8 +38,10 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
             endif
         endmethod
 
+        implement T32x
+
         static method create takes unit target, integer abilId, integer bonus, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             local integer level = GetUnitAbilityLevel(target, abilId) - 1
 
             set this.target = target
@@ -70,11 +74,8 @@ library ArcaneAbsorptionGauntlets initializer init requires TempAbilSystem, Dumm
         method destroy takes nothing returns nothing
             set AAGStruct[GetHandleId(this.target)] = 0
             set this.target = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     private function Heal takes unit u, real healAmount returns nothing

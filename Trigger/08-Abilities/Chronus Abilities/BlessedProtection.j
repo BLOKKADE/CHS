@@ -1,20 +1,22 @@
 library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
     struct BlessedProtectionStruct extends array
+        implement Alloc
+
         unit source
         effect fx
         integer endTick
-    
-        
-    
+
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
+
+        implement T32x
     
         static method create takes unit source, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
             set this.fx = AddLocalizedSpecialEffectTarget("Soul Armor Divine_opt.mdx", this.source, "head")
@@ -36,10 +38,7 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
             call DestroyEffect(this.fx)
             set this.fx = null
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 endlibrary

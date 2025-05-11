@@ -8,6 +8,8 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
     endfunction
 
     struct LastBreath extends array
+        implement Alloc
+        
         unit source
         unit killer
         integer endTick
@@ -38,9 +40,11 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
                 call SetUnitState(source, UNIT_STATE_LIFE, 1)
             endif
         endmethod  
+
+        implement T32x
     
         static method create takes unit source, unit killer, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             local ability abil = BlzGetUnitAbility(source, LAST_BREATHS_ABILITY_ID)
             set this.source = source
             set this.killer = killer
@@ -61,11 +65,8 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
             set this.p = null
             //call BJDebugMsg("db end")
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function ActivateLastBreath takes unit u, unit killer, integer level returns nothing

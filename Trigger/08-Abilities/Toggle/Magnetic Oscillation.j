@@ -9,6 +9,8 @@ library MagnetOscillation initializer init requires ToggleAbility
     endfunction
 
     struct MagnetOscStruct extends array
+        implement Alloc
+        
         unit source
         boolean enabled
 
@@ -25,7 +27,7 @@ library MagnetOscillation initializer init requires ToggleAbility
         endmethod
 
         static method create takes unit source returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             //call BJDebugMsg("sl start")
             set this.source = source
             
@@ -35,10 +37,8 @@ library MagnetOscillation initializer init requires ToggleAbility
         
         method destroy takes nothing returns nothing
             call this.disable()
-            call this.recycle()
+            call this.deallocate()
         endmethod
-        
-        implement Recycle
     endstruct
 
     function ToggleMagnetOsc takes unit caster returns nothing

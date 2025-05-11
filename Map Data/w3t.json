@@ -1541,10 +1541,6 @@
           "Value": "|cff80ff80Abilities|r|n* Restores 200 mana when used.|n|n|cffd49696Cooldown|r: 5 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Charged"
         },
@@ -2127,10 +2123,6 @@
           "Value": "|cff80ff80Abilities|r|n* Adds <AIpv,DataA1> bonus damage and a 100% life-stealing attack to the Hero for <AIpv,Dur1> seconds.|n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffd49696Cooldown|r: 20 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Purchasable"
         },
@@ -2235,14 +2227,6 @@
         {
           "Key": "uhot",
           "Value": "F"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "utub",
@@ -2459,14 +2443,6 @@
         {
           "Key": "igol",
           "Value": "20"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "utip",
@@ -31060,7 +31036,7 @@
         },
         {
           "Key": "unam",
-          "Value": "Summon Feral Spirits"
+          "Value": "Summon Spirit Wolves"
         },
         {
           "Key": "iico",
@@ -31068,7 +31044,7 @@
         },
         {
           "Key": "utip",
-          "Value": "Purchase Summon Feral Spirits"
+          "Value": "Purchase Summon Spirit Wolves"
         },
         {
           "Key": "utub",
@@ -34060,7 +34036,7 @@
         },
         {
           "Key": "utub",
-          "Value": "[|cffc0c0c0Wind|r]|n|cffffcc00Active effect|r|nCalls forth a bolt of lightning that bounces from enemy to enemy, dealing |cffff00ffmagic damage|r.|n|n|cffffcc00Passive effect|r|nWhenever the Hero casts a spell it also casts two small Chain Lightnings dealing |cffff00ffmagic damage|r based on the Hero's intelligence. |n|n|cffffff00Ability level bonus|r|nDamage, number of targets|n|n|cffff00ffDamage at level 30|r: 4312 (active) / 0.5x Int (passive)|n|cff80ff80Extra targets at level 30|r: 16 (active) / 1 (passive)|n|cffd45e3aRange at level 30|r: 700 (active) / 600 (passive)|n|cffd49696Cooldown at level 30|r: 9s (active) / 0s (passive)|n"
+          "Value": "[|cffc0c0c0Wind|r]|n|cffffcc00Active effect|r|nCalls forth a bolt of lightning that bounces from enemy to enemy, dealing |cffff00ffmagic damage|r.|n|n|cffffcc00Passive effect|r|nWhenever the Hero casts an active spell it also casts two small Chain Lightnings dealing |cffff00ffmagic damage|r based on the Hero's intelligence. |n|n|cffffff00Ability level bonus|r|nDamage, number of targets|n|n|cffff00ffDamage at level 30|r: 4312 (active) / 0.5x Int (passive)|n|cff80ff80Extra targets at level 30|r: 16 (active) / 1 (passive)|n|cffd45e3aRange at level 30|r: 700 (active) / 600 (passive)|n|cffd49696Cooldown at level 30|r: 9s (active) / 0s (passive)|n"
         },
         {
           "Key": "ides",
@@ -34267,10 +34243,6 @@
           "Value": "|cffff8080Effects|r|n* +<AIti,DataA1> attack damage."
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -34373,10 +34345,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNHammer.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -34461,10 +34429,6 @@
         {
           "Key": "utip",
           "Value": "Purchase Aduxxor's Legendary Blade"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "utub",
@@ -34581,14 +34545,6 @@
           "Value": "|cffff8080Effects|r|n* +20 armor.|n|n|cff80ff80Abilities|r|n* Increases the armor of nearby units by 50 for 8 seconds when used."
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -34677,10 +34633,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyArmor.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -34785,14 +34737,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNSteelArmor.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "S"
         },
@@ -34893,14 +34837,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNHumanArmorUpOne.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -35111,14 +35047,6 @@
           "Value": "C"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icid",
           "Value": "AIva"
         },
@@ -35211,10 +35139,6 @@
         {
           "Key": "uhot",
           "Value": "Z"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -35329,14 +35253,6 @@
         {
           "Key": "ides",
           "Value": "[|cffff8c00Artifact|r]|n|cffff8080Effects|r|n* +100% attack speed.|n* +120 attack damage.|n* 150 |cffff00ffmagic damage|r to nearby enemy ground units per second."
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icid",
@@ -36647,14 +36563,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTN3M3.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icid",
           "Value": "AIat"
         },
@@ -36759,14 +36667,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNCloak.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "icid",
@@ -37651,10 +37551,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNGreaterInvisibility.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "ilev",
           "Value": "3"
         },
@@ -37783,14 +37679,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "ilev",
@@ -38031,14 +37919,6 @@
         {
           "Key": "uhot",
           "Value": "F"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "ilev",
@@ -43304,11 +43184,7 @@
         },
         {
           "Key": "utub",
-          "Value": "|cffff8080Effects|r|n* +24 intelligence.|n|n[|cffff8c00Unique|r]|n* Any spell or item with a cooldown hais a 25% chance of getting reset when used.|n|n|cffc0c0c0Cooldowns of spells or items with the|r [|cff96ffffStable|r] |cffc0c0c0tag cannot be reset.|r |n|n[|cff80ff80Luck|r]"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
+          "Value": "|cffff8080Effects|r|n* +24 intelligence.|n|n[|cffff8c00Unique|r]|n* Any spell or item with a cooldown has a 25% chance of getting reset when used.|n|n|cffc0c0c0Cooldowns of spells or items with the|r [|cff96ffffStable|r] |cffc0c0c0tag cannot be reset.|r |n|n[|cff80ff80Luck|r]"
         },
         {
           "Key": "icid",
@@ -43605,14 +43481,6 @@
           "Value": "S"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Artifact"
         },
@@ -43725,10 +43593,6 @@
         {
           "Key": "uhot",
           "Value": "W"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -44663,14 +44527,6 @@
         {
           "Key": "uhot",
           "Value": "X"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -46989,10 +46845,6 @@
           "Value": "E"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -47103,14 +46955,6 @@
           "Value": "D"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNRoyal Armor.blp"
         },
@@ -47183,14 +47027,6 @@
         {
           "Key": "uhot",
           "Value": "V"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -47309,10 +47145,6 @@
         {
           "Key": "uhot",
           "Value": "Z"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "ilev",
@@ -47635,14 +47467,6 @@
         {
           "Key": "uhot",
           "Value": "D"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -47985,14 +47809,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNSnazzyScroll.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -48399,10 +48215,6 @@
           "Value": "E"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "ipri",
           "Value": "200"
         },
@@ -48491,10 +48303,6 @@
         {
           "Key": "uhot",
           "Value": "W"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "ilev",
@@ -48737,10 +48545,6 @@
           "Value": "R"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "idro",
           "Value": "1"
         },
@@ -48825,10 +48629,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +<A01M,DataA1> armor.|n* +10 bonus gold for every kill."
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "uhot",
@@ -48941,14 +48741,6 @@
           "Value": "|cffff8080Effects|r|n* +5 armor.|n* +350 mana.|n* Regenerates 1% of the Hero's maximum mana per second."
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "uhot",
           "Value": "C"
         },
@@ -49059,10 +48851,6 @@
           "Value": "|cffff8080Effects|r|n* +30 armor.|n* The Hero gains back 25% of all damage dealt as hit points.|n* Reduces all damage dealt by the hero and its summons by 25%."
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "uhot",
           "Value": "Z"
         },
@@ -49167,14 +48955,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +1000 hit points.|n* Reduces all damage taken by 33%. |n* Reduces all damage dealt by 33%."
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -49287,14 +49067,6 @@
           "Value": "|cffff8080Effects|r|n* +150 attack damage.|n* +30 armor.|n|n|cff80ff80Abilities|r|n* When used deals 1000 |cffff00ffmagic damage|r to nearby enemies in a large area, stunning them for 0.01 seconds.|n|n|cffffff00Cooldown:|r 60 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "F"
         },
@@ -49399,14 +49171,6 @@
         {
           "Key": "ides",
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +25 armor aura.|n* +Gives the Hero and nearby allied units a 14% chance to completely avoid damage.|n|n[|cff80ff80Luck|r]"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "uhot",
@@ -50015,10 +49779,6 @@
         {
           "Key": "ides",
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +Increases the Hero's armor by 100%."
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -50837,10 +50597,6 @@
           "Value": "|cffff8080Effects|r|n* +150 armor. |n|n[|cffff8c00Unique|r]|n* When the Hero kills an enemy through |cffff8080physical damage|r it gains 20% bonus gold."
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "W"
         },
@@ -50945,10 +50701,6 @@
         {
           "Key": "ides",
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +65 magic power.|n* Increases the magic power of the Hero by 1 for every 900 mana the enemy is missing.|n* Increases the armor of the Hero by 1 for every 300 mana its missing."
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "uhot",
@@ -51069,10 +50821,6 @@
           "Value": "A"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Permanent"
         },
@@ -51171,16 +50919,8 @@
           "Value": "|cffff8080Effects|r|n* +Increases the Hero's hit points by 100%."
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "S"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -51283,14 +51023,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +300 intelligence. |n|n[|cffff8c00Unique|r]|n* +50 magic power.|n* The Hero and its summons gain back 33% of all magical damage dealt by them as hit points.|n|n[|cffff9696Lifesteal|r]"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "uhot",
@@ -51397,14 +51129,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +20.000 mana.|n|n[|cffff8c00Unique|r]|n* Restores 10 mana per second.|n* Heals every second, up to 10% of the Hero's current mana reserve, converting mana to health."
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -51519,10 +51243,6 @@
         {
           "Key": "ides",
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +75 magic protection.|n|n* When the Hero kills an enemy using magic damage it gains 20% bonus experience from the kill.|n* Every time the Hero takes magic damage it gains mana equal to 75% of the damage.|r"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "uhot",
@@ -52131,16 +51851,8 @@
           "Value": "|cffff8080Effects|r|n* +5000 hit points and mana.|n|n[|cffff8c00Unique|r]|n* +35% bonus strength, agility and intelligence."
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "uhot",
           "Value": "X"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -53049,10 +52761,6 @@
           "Value": "|cffff8080Effects|r|n* +10.000 hit points. |n* Gives bonus experience equal to twice the Hero's level for every creep you kill. |n|n|cffc0c0c0When Pillage is learned the experience bonus is only 50% effective.|r |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used it activates all spells of the Hero that are normally activated at the start of a round.|n|n|cffffff00Cooldown:|r Once every round."
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "uhot",
           "Value": "C"
         },
@@ -53649,14 +53357,6 @@
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +1 [|cff000000Dark|r] spell count.|n* Negates |cffff8080physical damage|r taken by the Hero once every second.|n* Negates |cffff00ffmagic damage|r taken by the Hero once every 3 seconds.|n* Clears buffs from the Hero when it takes damage once every 10 seconds."
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "uhot",
           "Value": "V"
         },
@@ -53757,10 +53457,6 @@
         {
           "Key": "ides",
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +The Hero deals 2.6 times physical damage for 3 attacks every 12 seconds."
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -54187,10 +53883,6 @@
           "Value": "|cffff8080Effects|r|n* +25 Magic Protection. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used, the Hero becomes ethereal and cannot take |cffff8080physical damage|r for 6 seconds. |n|n|cffffff00Cooldown:|r 30 seconds.|n[|cff96ffffStable|r][|cffc880ffUnpurgeable|r]"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "W"
         },
@@ -54287,10 +53979,6 @@
         {
           "Key": "uhot",
           "Value": "E"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -54803,14 +54491,6 @@
           "Value": "|cffff8080Effects|r|n* +1000 base attack damage.|n* +250 agility.|n* +20 evasion.|n|n[|cffff8c00Unique|r]|n* +20% base attack cooldown. |n* Truestrike: When an enemy evades an attack, 10% of the damage still hits it. This damage ignores block.|n|cffc0c0c0Different sources of Truestrike do not stack.|r|n|n|cff80ff80Abilities|r|n* When activated, sets the Hero's base attack cooldown to 0.70 for 8 seconds.|n|n|cffc0c0c0Does not work if base attack cooldown is already lower than 0.70.|n|cffc0c0c0Cannot be multicast.|r|r|n|n|cffd49696Cooldown|r: 40 seconds|r"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "uhot",
           "Value": "V"
         },
@@ -55110,19 +54790,11 @@
         },
         {
           "Key": "utub",
-          "Value": "|cffff8080Effects|r|n* +35,000 hit points.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* When the Hero takes damage, there is an 8% chance that a random level 1-20 spell will be cast on either the attacker or the Hero. Costs 750 mana."
+          "Value": "|cffff8080Effects|r|n* +35,000 hit points.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* When the Hero takes damage, there is an 8% chance that a random level 1-30 spell will be cast on either the attacker or the Hero. Costs 750 mana."
         },
         {
           "Key": "ides",
-          "Value": "|cffff8080Effects|r|n* +35,000 hit points.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* When the Hero takes damage, there is an 8% chance that a random level 1-20 spell will be cast on either the attacker or the Hero. Costs 750 mana."
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
+          "Value": "|cffff8080Effects|r|n* +35,000 hit points.|n|n[|cffff8c00Unique|r]|n|cff80ff80Passive Abilities|r|n* When the Hero takes damage, there is an 8% chance that a random level 1-30 spell will be cast on either the attacker or the Hero. Costs 750 mana."
         },
         {
           "Key": "uhot",
@@ -55459,10 +55131,6 @@
           "Value": "R"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "ipri",
           "Value": "117"
         },
@@ -55559,10 +55227,6 @@
         {
           "Key": "uhot",
           "Value": "A"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -55679,10 +55343,6 @@
           "Value": "|cffff8080Effects|r|n* +75 intelligence.|n* At the beginning of every round all units summoned by the Hero permanently gain 20 bonus attack damage, 2 bonus armor and 200 bonus hit points. |n|n|cff80ff80Abilities|r|n* Summons 10 skeletons when used.|n|n|cffffff00Cooldown:|r 50 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "uhot",
           "Value": "E"
         },
@@ -55779,10 +55439,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +3000 hit points.|n|n[|cffff8c00Unique|r]|n* When the Hero has 50 or less + level armor, it takes 50% less damage.|n|n|cff80ff80Abilities|r|n* When the Hero is damaged by an enemy outside of the range, it becomes immune to damage for a short period of time.|n|n|cffd45e3aRange|r: 300 + attack range|n|cffff5e44Duration|r: 4 seconds |n|cffd49696Cooldown|r: 18 seconds|r"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "uhot",
@@ -55997,10 +55653,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNScrollOfRegenerationGreen.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -56121,10 +55773,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -56371,14 +56019,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNAnkh.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -56499,10 +56139,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNMagicImmunity.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icla",
@@ -56627,10 +56263,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -56751,14 +56383,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNSacrificialDagger.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -56883,14 +56507,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNManaStone.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -57011,10 +56627,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -57143,14 +56755,6 @@
           "Value": "|cffff8080Effects|r|n* +200 intelligence. |n* +5 pvp bonus. |n* +40 magic power.|n* Increases the intelligence of the Hero by 15 for each level it has. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* Damages a random nearby enemy (hero priority), dealing 300% of the Hero's intelligence in |cffff00ffmagic damage|r and reducing their magic resistance by 30% for 5 seconds.|n|cffc0c0c0Magic resistance percentage increases by 20% for every Ancient Staff carried.|r|n|n|cffd45e3aRange|r: 900|n|cffff5e44Duration|r: 5 seconds |n|cffd49696Cooldown|r: 30 seconds|r"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "ipri",
           "Value": "117"
         },
@@ -57255,10 +56859,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNFireCrackerMaul.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -57391,14 +56991,6 @@
           "Value": "|cffff8080Effects|r|n* +200 agility. |n* +5 pvp bonus.|n* +20 evasion.|n* Increases the agility of the Hero by 15 for each level it has. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* Deals 50% of the Hero's agility in |cffff00ffmagic damage|r per second to a random nearby enemy (herio priority) for a short period of time when used.|n|cffc0c0c0Damage per second increases by 50% for every Ancient Dagger carried.|r|n|n|cffd45e3aRange|r: 800|n|cffff5e44Duration|r: 10 seconds |n|cffd49696Cooldown|r: 30 seconds|r"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "ipri",
           "Value": "117"
         },
@@ -57507,14 +57099,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +200 strength. |n* +5 pvp bonus. |n* +900 block.|n* Increases the strength of the Hero by 15 for each level it has. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* Deals 400% of the Hero's strength in |cffff00ffmagic damage|r to nearby enemies and stuns them for 2 seconds.|n|cffc0c0c0Cooldown lowers by 30% for every Ancient Axe carried.|r |n|n|cffd45e3aArea of effect|r: 600|n|cffff5e44Duration|r: 2 seconds |n|cffd49696Cooldown|r: 30 seconds|r"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "ipri",
@@ -57749,10 +57333,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNDagger.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -57981,10 +57561,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Jewelry_Ring_05.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -58085,10 +57661,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Jewelry_Ring_08.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -58319,10 +57891,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Axe_05.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -58425,14 +57993,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Chest_Chain_03.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -58504,7 +58064,7 @@
         },
         {
           "Key": "igol",
-          "Value": "775"
+          "Value": "800"
         },
         {
           "Key": "isto",
@@ -58533,14 +58093,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNCR_Plaited_Wooden_B_Shield.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -58645,14 +58197,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Axe_11.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -58755,14 +58299,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Jewelry_Necklace_02.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -58863,10 +58399,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Helmet_09.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -58977,14 +58509,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Jewelry_Necklace_03.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -59325,14 +58849,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Jewelry_Necklace_11.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -59441,14 +58957,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNCR_War_Steel_B_Shield.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icla",
@@ -59643,14 +59151,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNBlackArmor.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -59751,14 +59251,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Mace_01.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -59965,14 +59457,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNbookAzyr.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -60167,14 +59651,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Chest_Plate15.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -60377,10 +59853,6 @@
           "Value": "Purchase Bone Armor"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "utub",
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +1 [|cff000000Dark|r] spell count.|n* +60 armor.|n* +Nearby allied units gain +75% attack speed and +50% movement speed. |n* Summons 4 Guardian Skeletons when off cooldown.|n* For every Skeleton Guardian that's alive, damage taken by the Hero is reduced by 8%.|n|n|cffc0c0c0Cannot have more than 12 Guardian Skeletons alive at once.|r|n|n|cffffff00Cooldown:|r 120 seconds"
         },
@@ -60489,14 +59961,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Chest_Chain_13.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -60895,14 +60359,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNInv_fishingpole_03.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -60998,15 +60454,11 @@
         },
         {
           "Key": "utub",
-          "Value": "|cffff8080Effects|r|n* +60.000 hit points.|n|n[|cffff8c00Unique|r]|n* The maximum damage taken by the Hero at once can not be higher than 20% of its total hit points or mana, whichever is higher."
+          "Value": "|cffff8080Effects|r|n* +60.000 hit points.|n|n[|cffff8c00Unique|r]|n* +1 [|cffd2d2d2Light|r] Spell Count.|n* The maximum damage taken by the Hero at once cannot be higher than 20% of its total hit points or mana, whichever is higher."
         },
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Chest_Chain_06.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -61109,14 +60561,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNInv_wand_05.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -61223,14 +60667,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNSpell_holy_avengersshield.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -61394,11 +60830,11 @@
       "Fields": [
         {
           "Key": "iabi",
-          "Value": "A06B,A069,A06G"
+          "Value": "A06B,A06G"
         },
         {
           "Key": "igol",
-          "Value": "87990"
+          "Value": "81990"
         },
         {
           "Key": "isto",
@@ -61422,23 +60858,15 @@
         },
         {
           "Key": "ides",
-          "Value": "|cffff8080Effects|r|n* +20.000 hit points.|n* +20.000 mana.|n* +150 armor.|n* +750 block.|n* +60 magic protection.|n* +30 evasion.|n|n|cffc0c0c0Does not work if the Hero carries more than 2 Universal Chain Mails.|r"
+          "Value": "|cffff8080Effects|r|n* +20.000 hit points.|n* +150 armor.|n* +750 block.|n* +60 magic protection.|n* +30 evasion.|n|n|cffc0c0c0Does not work if the Hero carries more than 2 Universal Chain Mails.|r"
         },
         {
           "Key": "utub",
-          "Value": "|cffff8080Effects|r|n* +20.000 hit points.|n* +20.000 mana.|n* +150 armor.|n* +750 block.|n* +60 magic protection.|n* +30 evasion.|n|n|cffc0c0c0Does not work if the Hero carries more than 2 Universal Chain Mails.|r"
+          "Value": "|cffff8080Effects|r|n* +20.000 hit points.|n* +150 armor.|n* +750 block.|n* +60 magic protection.|n* +30 evasion.|n|n|cffc0c0c0Does not work if the Hero carries more than 2 Universal Chain Mails.|r"
         },
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Chest_Chain_17.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icla",
@@ -61833,10 +61261,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Cape_09.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -61939,14 +61363,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Jewelry_Necklace_06.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -62047,14 +61463,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Chest_Leather_03.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -62259,10 +61667,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNWindfury_Totem_Staff.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icla",
@@ -63971,10 +63375,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTN_StoneTablet_Warlock_01.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -64081,14 +63481,6 @@
           "Value": "|cffff8080Effects|r|n* +5000 hitpoints. |n* +2500 mana. |n|n[|cffff8c00Unique|r]|n* Creates and applies 3 random runes to the hero. Costs 1000 mana. |n|n|cffffff00Cooldown:|r 20 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "D"
         },
@@ -64189,14 +63581,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +10.000 hitpoints. |n* +10.000 mana. |n|n[|cffff8c00Unique|r]|n* +0.75 rune power. |n* Creates a rune on the ground every 10 seconds."
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -64419,10 +63803,6 @@
           "Value": "|cffff8080Effects|r|n* +100% rune power. |n|n[|cffff8c00Unique|r]|n* When using a [|cffff0000Fire|r] spell a Fire rune is automatically used.|n|n|cffffff00Cooldown:|r 3 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "uhot",
           "Value": "E"
         },
@@ -64627,10 +64007,6 @@
           "Value": "|cffff8080Effects|r|n* +20.000 hitpoints.|n* +100% rune power. |n|n[|cffff8c00Unique|r]|n* When using an [|cff965e19Earth|r] spell an Earth rune is automatically used. Costs 1000 mana.|n|n|cffffff00Cooldown:|r 8 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "uhot",
           "Value": "R"
         },
@@ -64731,10 +64107,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +100% rune power.|n* Increases the Hero's movement speed to its maximum. |n|n[|cffff8c00Unique|r]|n* When using a [|cffc0c0c0Wind|r] spell a Wind rune is automatically used. Costs 500 mana.|n|n|cffffff00Cooldown:|r 12 seconds"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -65329,10 +64701,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNFrostJade.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -65437,10 +64805,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNTessen.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -65549,10 +64913,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNHolyHelm.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -65655,10 +65015,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNCaptainHelmet.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -65759,10 +65115,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Cape_13.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -66256,7 +65608,7 @@
         },
         {
           "Key": "utub",
-          "Value": "[|cff000000Dark|r]|nReduces armor, block, and magic protection to nearby enemies for every [|cff000000Dark|r] spell it has.|n|nAfter casting a [|cff000000Dark|r] spell, the Hero reduces the current hitpoints of nearby enemies.|n|n|cffffff00Ability level bonus|r|nBlock, armor, and magic protection reduction increased.|n|n|cffff85ffBlock reduction per |r[|cff000000Dark|r] |cffff85ffspell at level 30|r: 150|n|cffff85ffArmor reduction per |r[|cff000000Dark|r] |cffff85ffspell at level 30|r: 30|n|cffff85ffMagic Protection reduction per |r[|cff000000Dark|r] |cffff85ffspell at level 30|r: 6|n|n"
+          "Value": "[|cff000000Dark|r]|nReduces armor, block, and magic protection of nearby enemies for every [|cff000000Dark|r] spell it has.|n|nAfter casting a [|cff000000Dark|r] spell, the Hero steals <A07Q,Cast1>% of nearby enemies' remaining hit points. Half as effective versus creeps and summons.|n|n|cffffff00Ability level bonus|r|nBlock, armor, and magic protection reduction increased.|n|n|cffff85ffBlock reduction per |r[|cff000000Dark|r] |cffff85ffspell at level 30|r: 150|n|cffff85ffArmor reduction per |r[|cff000000Dark|r] |cffff85ffspell at level 30|r: 30|n|cffff85ffMagic Protection reduction per |r[|cff000000Dark|r] |cffff85ffspell at level 30|r: 6|n|n"
         },
         {
           "Key": "ides",
@@ -68649,14 +68001,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNPathfinder 02.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -68779,10 +68123,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNSapphire Amulet.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -68903,10 +68243,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_DevotionAura.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -69153,10 +68489,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNEmerald Amulet.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -69277,14 +68609,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNSunHomeAmulet.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -69515,14 +68839,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNAdvancedMageStaff.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -69623,14 +68939,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNToken of Intelligence.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "icid",
@@ -69735,10 +69043,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNToken of Strength.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icid",
           "Value": "AIat"
         },
@@ -69837,14 +69141,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNToken of Agility.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -69941,10 +69237,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNToken of Strength.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -70081,10 +69373,6 @@
           "Value": "1"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -70209,14 +69497,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNToken of Agility.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -70345,10 +69625,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNLugubriousMask.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -70473,14 +69749,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNHellishMastery.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -70609,14 +69877,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNSummonForestDemon.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -70741,14 +70001,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNRunestone Breastplate.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -70877,14 +70129,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Pants_01.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -71011,14 +70255,6 @@
           "Value": "|cffff8080Effects|r|n* +30.000 hit points. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When used reduces the Hero's current hit points by 10% of its maximum but deals |cffff00ffmagic damage|r equal to 8% of its maximum to nearby enemies.|n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffd45e3aArea of effect|r: 600|n|cffd49696Cooldown|r: 10 seconds|r"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "icla",
           "Value": "Permanent"
         },
@@ -71127,14 +70363,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +40 evasion. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When activated the Hero can evade all damage using its evasion stat, not just attacks.|n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffff5e44Duration|r: 15 seconds |n|cffd49696Cooldown|r: 30 seconds|r"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icla",
@@ -71247,14 +70475,6 @@
           "Value": "|cffff8080Effects|r|n* +35 magic power. |n|n[|cffff8c00Unique|r]|n|cff80ff80Abilities|r|n* When activated the Hero's armor is increased by 3 times its magic power and its magic resistance is increased by 50% of its magic power.|n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffff5e44Duration|r: 10 seconds |n|cffd49696Cooldown|r: 18 seconds|r"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "icla",
           "Value": "Permanent"
         },
@@ -71365,10 +70585,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNInv_jewelry_ring_28.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -71469,10 +70685,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNBackstab.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icla",
@@ -71601,10 +70813,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNRunestone Breastplate.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -71711,10 +70919,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNBackstab.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icid",
           "Value": "AIat"
         },
@@ -71817,10 +71021,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Pants_01.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "icid",
           "Value": "AIat"
         },
@@ -71921,10 +71121,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +20.000 hit points. |n* +400 all stats.|n|n[|cffff8c00Unique|r]|n* Enemies that damage the Hero gain 60% less health from [|cffff8080Lifesteal|r] items and abilities.|n|n|cff80ff80Abilities|r|n* Disables the [|cffff8080Lifesteal|r] abilities and items of the Hero and all nearby enemies for 10 seconds. |n|n|cffd45e3aArea of effect|r: 1000|n|cffffff00Cooldown:|r 15 seconds"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -72033,14 +71229,6 @@
           "Value": "|cffff8080Effects|r|n* +150 armor.|n* +40 magic protection.|n* 10% chance to completely ignore incoming damage. |n|n[|cffff8c00Unique|r]|n* Nearby enemies lose 2 of each element they possess.|n|n|cff80ff80Abilities|r|n*Reduces [element] tags to 0 for the Hero and nearby enemies for 10 seconds.|n|n|cffd45e3aArea of effect|r: <A09L,Area1>  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "S"
         },
@@ -72137,14 +71325,6 @@
         {
           "Key": "ides",
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +1 [|cffd2d2d2Light|r] spell count|n* +1 [|cff000000Dark|r] spell count.|n* All [|cff000000Dark|r] spells also become [|cffd2d2d2Light|r].|n* All [|cffd2d2d2Light|r] spells also become [|cff000000Dark|r]."
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -74249,10 +73429,6 @@
           "Value": "Z"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "idro",
           "Value": "1"
         },
@@ -74351,16 +73527,8 @@
           "Value": "|cffff8080Effects|r|n* +100% rune power.|n* Increases the Hero's movement speed to its maximum. |n|n[|cffff8c00Unique|r]|n* When using a [|cffc0c0c0Wind|r] spell a Wind rune is automatically used. Costs 500 mana.|n|n|cffffff00Cooldown:|r 12 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "X"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "idro",
@@ -74461,16 +73629,8 @@
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +100 rune power.|n* The Hero's Summons take 30% less damage. |n* When using a [|cff008000Wild|r] spell a Wild Rune is automatically used. Costs 500 mana.|n|n|cff64ff64Wild Rune|r|nIncreases a random summon upgrade (attack, armor or hp) by 1 + 1 for every 150 Rune Power.|n|n|cffffff00Cooldown:|r 10 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "uhot",
           "Value": "F"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "idro",
@@ -74571,16 +73731,8 @@
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +100 rune power.|n* Increases the Hero's movement speed to its maximum. |n* When using an [|cff6f2583Arcane|r] spell a Magic Rune is automatically used. Costs 1000 mana.|n|n|cff64ff64Magic Rune|r|nReduces the cooldown of the Hero's spells that are currently on cooldown by 10 * Rune Power. |n|n|cffffff00Cooldown:|r 30 seconds|n[|cff96ffffStable|r]"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "uhot",
           "Value": "V"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "idro",
@@ -74681,16 +73833,8 @@
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +1 rune power.|n* +2 [|cff3bc739Poison|r] count.|n* When using a [|cff3bc739Poison|r] spell a Poison Rune is automatically used. Costs 1000 mana.|n|n|cff64ff64Poison Rune|r|nGives the Hero 1 level of Envenomed Weapons (can go over 30) for every 0.20 Rune Power it has and makes its Envenomed Weapons apply on [|cff50e74ePoison|r] spell damage dealt as well as |cffff8080physical damage|r dealt.|n|n|cffffff00Duration:|r 10 seconds|n|cffffff00Cooldown:|r 15 seconds"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "uhot",
           "Value": "C"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "idro",
@@ -74785,14 +73929,6 @@
         {
           "Key": "ides",
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +3 [|cff800000Blood|r] spell count. |n* Increases the attack damage of the Hero by 2% of its maximum hit points."
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -75281,10 +74417,6 @@
           "Value": "Purchase Titanium Spike"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "utub",
           "Value": "|cffff8080Effects|r|n* +1000 base attack damage.|n|n[|cffff8c00Unique|r]|n* Physical damage dealt ignores 30% of the target's armor.|n* Immunity to Titanium Spike's physical damage armor penetration."
         },
@@ -75387,10 +74519,6 @@
           "Value": "Purchase Contract Of The Living"
         },
         {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "utub",
           "Value": "|cffff8080Effects|r|n* +100 armor. |n* +30 magic protection |n|n[|cffff8c00Unique|r]|n* When the Hero's hit points go below 50% of its maximum hit points it heals back to 100% and can't deal or take damage for the next 5 seconds.|n|nCooldown increases by 5 seconds for every use, resets at the end of every round|n|n|cffffff00Cooldown:|r 90 seconds|n[|cff96ffffStable|r]"
         },
@@ -75491,14 +74619,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNHumanArmorUpOne.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -75609,10 +74729,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNAnkh.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icla",
@@ -76231,10 +75347,6 @@
           "Value": "Purchase Arcane Infused Sword"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "utub",
           "Value": "|cffff8080Effects|r|n* At the beginning of every round the hero gains 5% bonus attack damage for every nearby enemy creep.|n|n[|cffff8c00Unique|r]|n* When the Hero attacks an enemy unit it deals 100%|cffff8080 physical|r attack damage to 3 nearby enemies. Cannot hit the same enemy multiple times.|n|n* Truestrike. When an enemy evades an attack 10% of the damage dealt still hits it, this damage ignores block.|n|cffc0c0c0Different sources of truestrike do not stack.|r|n|cffc0c0c0Does not work when Arcane Assault is learned.|r"
         },
@@ -76245,10 +75357,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheMoon.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -76343,10 +75451,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNFlamingScimitar3.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "uhot",
@@ -76455,14 +75559,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNColdFire Ring.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "X"
         },
@@ -76565,14 +75661,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNJewel of Darkness.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "V"
         },
@@ -76669,14 +75757,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNHoly Crest.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -76779,14 +75859,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNWalkers of Darkness.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -76903,14 +75975,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNDeathcap.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "S"
         },
@@ -77003,14 +76067,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNDecay.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
         },
         {
           "Key": "uhot",
@@ -77119,10 +76175,6 @@
           "Value": "E"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -77219,10 +76271,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNNatureTouchGrow.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -77335,10 +76383,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNRunestone.BLP"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -77439,14 +76483,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNHumanCaptureFlag.blp"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -77553,14 +76589,6 @@
         {
           "Key": "ides",
           "Value": "|cffff8080Effects|r|n* +0.5 rune power. |n* +10 to all stats for every 0.1 rune power. |n|n[|cffff8c00Unique|r]|n* Runestones ignore cooldown every second activation.|n|n|cff80ff80Abilities|r|n* Activates all nearby runes created by the Hero or its items. Each initial rune used has a 10% chance to generate and activate a random new rune with the same rune power. |n|n|cffc0c0c0Cannot be multicast.|r|n|n|cffd45e3aArea of Effect|r: 500  |n|cffffff00Cooldown:|r 30 seconds|n|n[|cff80ff80Luck|r]"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "1"
         },
         {
           "Key": "uhot",
@@ -77787,10 +76815,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Chest_Plate16.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -77897,16 +76921,8 @@
           "Value": "|cffff8080Effects|r|n* +20.000 hit points |n|n[|cffff8c00Unique|r]|n* Enemies damaging the Hero gain 30% less health from [|cffff8080Lifesteal|r] items and abilities.|n|n|cff80ff80Abilities|r|n*Disables any health gain from [|cffff8080Lifesteal|r] abilities and items of nearby enemies for 7 seconds.  |n|n|cffd45e3aArea of effect|r: 600|n|cffffff00Cooldown:|r 30 seconds"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
           "Key": "uhot",
           "Value": "F"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "idro",
@@ -79527,10 +78543,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNDice.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -80301,14 +79313,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNLeatherArmor02.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -80415,14 +79419,6 @@
           "Value": "|cffff8080Effects|r|n* +1500 base attack damage.|n* +6000 attack damage.|n* +20 evasion.|n|n[|cffff8c00Unique|r]|n|r* While in |cffc0c0c0shadow form|r, the hero can also dodge spell damage.|n|n|cff80ff80Abilities|r|n* The hero instantly enters |cffc0c0c0shadow form|r for a short duration.|n|n|cffc0c0c0Cannot be multicast.|r|n|cffff5e44|nDuration|r: 3 seconds.|n|cffd49696Cooldown|r: 20 seconds.|r"
         },
         {
-          "Key": "ubpy",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "uhot",
           "Value": "C"
         },
@@ -80521,14 +79517,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNManaGem.blp"
         },
         {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "icla",
           "Value": "Miscellaneous"
         },
@@ -80621,14 +79609,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNINV_Sword_25.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -80733,16 +79713,8 @@
           "Value": "* +2 Element Count to [|cffff0000Fire|r] [|cff0000ffWater|r] [|cff808080Wind|r] and [|cffd45e19Earth|r].|n\r\n* Absolute [|cffff0000Fire|r], [|cff0000ffWater|r], [|cff808080Wind|r] and [|cffd45e19Earth|r] have all their effects increased by 10%"
         },
         {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "uhot",
           "Value": "V"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "idro",
@@ -81117,14 +80089,6 @@
           "Value": "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
-        },
-        {
           "Key": "icla",
           "Value": "PowerUp"
         },
@@ -81365,14 +80329,6 @@
           "Value": "V"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
-        },
-        {
           "Key": "icla",
           "Value": "Permanent"
         },
@@ -81477,14 +80433,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNGlove.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "2"
-        },
-        {
-          "Key": "ubpy",
-          "Value": "2"
         },
         {
           "Key": "icla",
@@ -82061,10 +81009,6 @@
           "Value": "[|cffff8c00Unique|r]|n|cffff8080Effects|r|n* +When one of the Hero's summons dies the Hero is healed by 10% of its own maximum hit points. |n|n|cff80ff80Abilities|r|n* When cast on a summon, 3 random nearby summons of the same type from the same player are killed, their total levels are added onto the targeted summon's levels, improving its stats and abilities, and fully healing it.|n|n|cffff0000Cannot be cast on Faerie Dragons.|r|n|n|cffd49696Cooldown|r: 30 seconds|r"
         },
         {
-          "Key": "ubpy",
-          "Value": "2"
-        },
-        {
           "Key": "uhot",
           "Value": "Z"
         },
@@ -82173,10 +81117,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNDeathcap.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "1"
         },
         {
           "Key": "icla",
@@ -82425,10 +81365,6 @@
         {
           "Key": "iico",
           "Value": "ReplaceableTextures\\CommandButtons\\BTNHolyHelmf.blp"
-        },
-        {
-          "Key": "ubpx",
-          "Value": "3"
         },
         {
           "Key": "icla",

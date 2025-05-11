@@ -36,6 +36,8 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
     endfunction
 
     struct TempBonus extends array
+        implement Alloc
+
         unit source
         real bonus
         player p
@@ -61,6 +63,8 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
             call this.destroy()
             endif
         endmethod  
+
+        implement T32x
 
         private method updateState takes real value returns nothing
             //call BJDebugMsg("state: " + I2S(this.state) +", bonus: " + R2S(this.bonus))
@@ -100,7 +104,7 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
 
         // 0 duration = end of round
         static method create takes unit source, integer state, real bonus, real duration, integer abilSource returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.buffLink = false
             set this.buffId = 0
@@ -128,11 +132,8 @@ library TempStateBonus initializer init requires CustomState, NewBonus, Utility
             set this.p = null
             set this.enabled = false
             set this.bonus = 0
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement Recycle
-        implement T32x
     endstruct
 
     //0 duration = end of round
