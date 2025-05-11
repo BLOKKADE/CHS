@@ -1,7 +1,7 @@
 library InitializePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults, PvpHelper
 
     globals
-        real pvpWaitDuration = 25
+        real pvpWaitDuration = 35
         timer PvpWaitTimer
         timerdialog PvpWaitTimerDialog
         boolean WaitingForPvp = false
@@ -50,7 +50,7 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
         call TimerDialogSetTitle(PvpWaitTimerDialog, "PvP Battle...")
         call TimerDialogDisplay(PvpWaitTimerDialog, true)
         call TimerStart(PvpWaitTimer, pvpWaitDuration, false, function StartPvp)
-        call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cff9dff00You can freely use items during PvP. They will be restored when finished.|r\n|cffff5050You will lose any items bought during the duel.|r")
+        call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cff9dff00You can freely use and drop items during PvP. They will be restored when finished.|r\n|cffff5050You will lose any items bought during the duel.|r")
 
         if (OddPlayer != -1) then
             call DisplayTimedTextToForce(GetPlayersAll(), pvpWaitDuration, "|cffffcc00There is an odd number of players. The odd player|r " + GetUnitNamePlayerColour(PlayerHeroes[GetPlayerId(Player(OddPlayer))]) + " |cffffcc00will duel the loser of the first finished duel.|r")

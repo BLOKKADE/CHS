@@ -27,7 +27,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
         integer FunBattleRoyaleEndTime = 0
 
         integer BattleRoyalFunWaitTime = 30
-        integer BattleRoyalWaitTime = 120
+        integer BattleRoyalWaitTime = 180
         integer BattleRoyalReviewWaitTime = 30
         integer FunBattleRoyalPrepTime = 120
         timer BattleRoyalTimer
