@@ -7,5 +7,6 @@ library Hawk requires CustomState, SpellFormula
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (7 / (12.1 + I2R(totalLevel / 2))), 0)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 800)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICRES, 1 * totalLevel)
     endfunction
 endlibrary

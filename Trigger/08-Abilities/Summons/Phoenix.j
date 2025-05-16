@@ -7,6 +7,7 @@ library Phoenix requires CustomState, SpellFormula
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (7 / (12.1 + (totalLevel / 2))), 0)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + GetSpellValue(0, 50, abilityLevel) + (summonLevel * 1000))
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICRES, 1.5 * totalLevel)
         /*call UnitAddAbility(u, 'A06I')
         call SetUnitAbilityLevel(u, 'A06I', IMinBJ(R2I(totalLevel / 3), 60))*/
 
@@ -18,5 +19,6 @@ library Phoenix requires CustomState, SpellFormula
 
         call UnitAddAbility(u, REINCARNATION_ABILITY_ID)
         call SetUnitAbilityLevel(u, REINCARNATION_ABILITY_ID, abilityLevel)
+        call UnitApplyTimedLife(u, 'BTLF', 60.00)
     endfunction
 endlibrary

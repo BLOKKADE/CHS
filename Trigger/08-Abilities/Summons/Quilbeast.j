@@ -10,6 +10,7 @@ library Quilbeast requires CustomState, SpellFormula
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 600)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
         call AddUnitCustomState(u, BONUS_BLOCK, 30 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICRES, 1.5 * totalLevel)
 
         call UnitAddAbility(u, 'A0BF')
         call SetUnitAbilityLevel(u, 'A0BF', IMinBJ(R2I(totalLevel / 3), 60))
