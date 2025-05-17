@@ -274,8 +274,8 @@ library Knockback initializer Init needs TerrainPathability, GroupUtils, Table, 
         local boolean b  = true
         
         if override == false then
-            if BlzIsUnitInvulnerable(targ) or GetUnitAbilityLevel(targ, ENTANGLING_ROOTS_BUFF_ID) > 0 or GetUnitAbilityLevel(targ, HARDENED_SKIN_ABILITY_ID) > 0 or UnitHasItemType(targ, 'I090') or UnitHasItemType(targ, 'I0CV') then
-                return false
+            if BlzIsUnitInvulnerable(targ) or GetUnitAbilityLevel(targ, ENTANGLING_ROOTS_BUFF_ID) > 0 or GetUnitAbilityLevel(targ, HARDENED_SKIN_ABILITY_ID) > 0 or UnitHasItemType(targ, 'I090') or UnitHasItemType(targ, 'I0CV') or (GetUnitTypeId(targ) == STOMP_UNIT_ID and GetHeroLevel(targ) > 150) then
+            return false
             endif
         endif
         

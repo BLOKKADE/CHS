@@ -103,6 +103,10 @@ scope LongPeriodCheck initializer init
         local real r3 = 0
         local integer i1 = 0
         local integer i2 = 0
+        local integer originalBaseDamage = LoadInteger(HT, hid, STOMP_UNIT_ID + 2) // Stored original base damage
+        local integer newDamageBonus = 0
+        local integer newHPBonus = 0
+        local real wildFactor = I2R(GetUnitAbilityLevel(u, ABSOLUTE_WILD_ABILITY_ID) * GetUnitElementCount(u, Element_Wild)) * 0.01 // 1% per level per element
         
         if UnitAlive(u) then
 
@@ -355,6 +359,38 @@ scope LongPeriodCheck initializer init
                 call SaveInteger(HT, hid, DEVOTION_AURA_ABILITY_ID, i1)
             endif
 
+            // Wild Defense (only for STOMP_UNIT_ID)
+            if GetUnitTypeId(u) == STOMP_UNIT_ID then
+                set i2 = GetUnitAbilityLevel(u, WILD_DEFENSE_ABILITY_ID)
+                set i1 = LoadInteger(HT, hid, WILD_DEFENSE_ABILITY_ID) // Previously applied level
+                
+                if i2 != i1 then
+                    // Remove previously applied stats if any
+                    if i1 > 0 then
+                        call AddUnitCustomState(u, BONUS_MAGICRES, -3 * i1)
+                        call AddUnitCustomState(u, BONUS_EVASION, -0.5 * i1)
+                        call AddUnitCustomState(u, BONUS_BLOCK, -10 * i1)
+                    endif
+                    
+                    // Apply new stats if ability level is greater than 0
+                    if i2 > 0 then
+                        call AddUnitCustomState(u, BONUS_MAGICRES, 3 * i2)
+                        call AddUnitCustomState(u, BONUS_EVASION, 0.5 * i2)
+                        call AddUnitCustomState(u, BONUS_BLOCK, 10 * i2)
+                        
+                        call UnitAddAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID)
+                        call BlzUnitHideAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID, true) // Hide the ability from the command card
+                        call SetUnitAbilityLevel(u, WILD_DEFENSE_SUMMON_ABILITY_ID, i2)
+                    elseif i1 > 0 then
+                        // Remove the hidden ability if the new level is 0
+                        call UnitRemoveAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID)
+                    endif
+                    
+                    // Save the new level
+                    call SaveInteger(HT, hid, WILD_DEFENSE_ABILITY_ID, i2)
+                endif
+            endif
+
             //strength hp regen
             set i1 = GetHeroStr(u, true)
             set i2 = GetHeroSavedStrength(u)
@@ -370,6 +406,46 @@ scope LongPeriodCheck initializer init
                 set i1 = R2I (i1 * GetUnitElementCount(u, Element_Wild)/* * (1+ GetUnitAbsoluteEffective(u, Element_Wild))*/)
                 call AddUnitCustomState(u , BONUS_SUMMONPOW,   1 * I2R(i1 - i2) )	
                 call SaveInteger(HT, hid,ABSOLUTE_WILD_ABILITY_ID,i1)	
+            endif
+
+            // Check for STOMP_UNIT_ID and apply bonus
+            if GetUnitTypeId(u) == STOMP_UNIT_ID then
+                set i1 = LoadInteger(HT, hid, STOMP_UNIT_ID) // Stored damage bonus
+                set i2 = LoadInteger(HT, hid, STOMP_UNIT_ID + 1) // Stored HP bonus
+                
+                // Initialize original base damage if not set
+                if originalBaseDamage == 0 then
+                    set originalBaseDamage = BlzGetUnitBaseDamage(u, 0)
+                    call SaveInteger(HT, hid, STOMP_UNIT_ID + 2, originalBaseDamage)
+                endif
+                
+                // Calculate new bonuses
+                if wildFactor > 0 then
+                    set newDamageBonus = R2I(I2R(BlzGetUnitBaseDamage(u, 0) - i1) * wildFactor) // Scale only the base damage without previous bonus
+                    set newHPBonus = R2I(I2R(originalBaseDamage) * wildFactor) // Exclude item bonuses
+                endif
+                
+                // Apply bonuses only if they have changed
+                if newDamageBonus != i1 then
+                    if i1 != 0 then
+                        call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) - i1, 0)
+                    endif
+                    if newDamageBonus != 0 then
+                        call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + newDamageBonus, 0)
+                    endif
+                    call SaveInteger(HT, hid, STOMP_UNIT_ID, newDamageBonus)
+                endif
+                
+                if newHPBonus != i2 then
+                    if i2 != 0 then
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) - i2)
+                    endif
+                    if newHPBonus != 0 then
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + newHPBonus)
+                        call SetWidgetLife(u, BlzGetUnitMaxHP(u))
+                    endif
+                    call SaveInteger(HT, hid, STOMP_UNIT_ID + 1, newHPBonus)
+                endif
             endif
 
             //Mana Bonus

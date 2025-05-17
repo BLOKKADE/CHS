@@ -148,11 +148,11 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
-        //Wild Runestone
-        if UnitHasItemType(DamageTargetHero, WILD_RUNESTONE_ITEM_ID) and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
+        // Wild Runestone damage reduction
+        if UnitHasItemType(DamageTargetHero, WILD_RUNESTONE_ITEM_ID) and (IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false or GetUnitTypeId(DamageTarget) == STOMP_UNIT_ID) then
             set Damage.index.amount = Damage.index.amount * 0.7
         endif
-        
+
         //Magic Necklace of Absorption
         if GetUnitAbilityLevel(DamageTarget  ,'B00R') >= 1 and IsMagicDamage() then
             call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.50 )

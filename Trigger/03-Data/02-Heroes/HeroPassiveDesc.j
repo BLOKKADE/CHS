@@ -204,7 +204,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(CENTAUR_ARCHER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Horsepower: +5% damage." )
 
         call InitHeroDesc(OGRE_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOgre.blp" )
-        call InitHeroDesc(OGRE_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ogre Stomp: Once every 6 seconds when the Hero deals [|cffd45e19Earth|r] or |cffff8080physical damage|r it damages nearby enemies for 100% of its strength in |cffff00ffmagic damage|r and stuns and reduces their block by 20% for 1 second. Cooldown is reduced by 0.5 seconds for every unit hit.")
+        call InitHeroDesc(OGRE_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ogre Stomp: Once every 6 seconds when the Hero deals [|cffd45e19Earth|r] or |cffff8080physical damage|r it damages nearby enemies for 100% of its strength in |cffff00ffmagic damage|r and stuns and reduces their block by 20% for 1 second. Cooldown is reduced by 0.5 seconds for every unit hit. Can choose from 6 spells per roll in Draft Mode.")
         call InitHeroDesc(OGRE_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Ogre Stomp: +60 damage" )
 
         call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )
@@ -257,6 +257,10 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Passionate Student: All Rings in PVE Shop I are twice as effective.")
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +200 glory." )
+
+        call InitHeroDesc(STOMP_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCorruptedTreeOfLife.blp" )
+        call InitHeroDesc(STOMP_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Strength of the Forest: The Hero counts as a [|cff9e5d07Summon|r]. Takes Double damage from [Fire] and cannot buy Stat-Per-level Upgrades.")
+        call InitHeroDesc(STOMP_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bonus mana: +50. (|cff68eef3Every 40 levels|r) Gains +1 [wild] element or 100 movement speed. At level 150, gain immunity to pushing/pulling effects.")
     endfunction
 
     private function init takes nothing returns nothing

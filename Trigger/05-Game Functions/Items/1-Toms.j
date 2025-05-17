@@ -94,17 +94,20 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         loop
             //Agility level bonus
             if itemTypeId == AGILITY_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
-                if GetHeroXP(u) >= 20000  then
+                if GetUnitTypeId(u) == STOMP_UNIT_ID then
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432This unit cannot buy this item.|r")
+                elseif GetHeroXP(u) >= 20000 then
                     call AddStatLevelBonus(u, BONUS_AGILITY, 1)
-
-                    call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
+                    call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
                 endif
                 set ctrl = false
 
                 //Intelligence level bonus
             elseif itemTypeId == INTELLIGENCE_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
-                if GetHeroXP(u) >= 20000  then
+                if GetUnitTypeId(u) == STOMP_UNIT_ID then
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432This unit cannot buy this item.|r")
+                elseif GetHeroXP(u) >= 20000 then
                     call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 1)
                     call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
@@ -113,10 +116,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Strength level bonus
             elseif itemTypeId  == STRENGTH_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
-                if GetHeroXP(u) >= 20000  then
+                if GetUnitTypeId(u) == STOMP_UNIT_ID then
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432This unit cannot buy this item.|r")
+                elseif GetHeroXP(u) >= 20000 then
                     call AddStatLevelBonus(u, BONUS_STRENGTH, 1)
-                    call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
-
+                    call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
                 endif
                 set ctrl = false
@@ -365,7 +369,10 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 //Manual of health
             elseif itemTypeId == 'manh' then 
                 call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + 50)
-                //Tome of Power
+                if u != null and GetOwningPlayer(u) != null then
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, GetUnitName(u) + " now has " + I2S(BlzGetUnitMaxHP(u)) + " maximum hitpoints.")
+                endif
+    
             elseif itemTypeId == TOME_OF_POWER_2000_ITEM_ID then 
                 call AddHeroXP(u, 2000, false)
                 set expTome = true

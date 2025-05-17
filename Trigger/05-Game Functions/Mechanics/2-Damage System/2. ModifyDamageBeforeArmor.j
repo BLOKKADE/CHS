@@ -41,7 +41,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Conquerors Bamboo Stick
-        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and IsUnitType(DamageSource, UNIT_TYPE_HERO) == false and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
+        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and (IsUnitType(DamageSource, UNIT_TYPE_HERO) == false or DamageSourceTypeId == STOMP_UNIT_ID) and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
             //call BJDebugMsg("conq bamboo stick immune")
             set Damage.index.damage = 0
             return
@@ -132,7 +132,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Strong Chestmail
-        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO)) then
+        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO) or DamageSourceTypeId == STOMP_UNIT_ID) then
             set Damage.index.damage = StrongChestMailDamage(DamageTargetId, Damage.index.damage)
         endif
 
@@ -422,6 +422,11 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        // Newborn Fire Weakness
+        if DamageTargetTypeId == STOMP_UNIT_ID and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
+            set Damage.index.amount = Damage.index.amount * 2
+        endif
+
         //Hero's Hammer
         set i1 = GetUnitItemTypeCount( DamageSource,'I064' )
         if i1 > 0 and IsPhysDamage() then 
@@ -658,7 +663,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif	
         endif
 
-        if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) and (not IsOnHitDamage()) and DamageSourceAbility != INCINERATE_ABILITY_ID then
+        if IsPhysDamage() or (IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or DamageSourceTypeId == SKELETON_WARMAGE_1_UNIT_ID) and (not IsOnHitDamage()) and DamageSourceAbility != INCINERATE_ABILITY_ID then
             //Incinerate
             set i1 = GetUnitAbilityLevel(DamageSource,INCINERATE_ABILITY_ID) + GetUnitAbilityLevel(DamageSource, 'A0C8')
             if i1 > 0 then
@@ -793,7 +798,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Liquid Fire
             set i1 = GetUnitAbilityLevel(DamageSource,LIQUID_FIRE_ABILITY_ID)
-            if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, LIQUID_FIRE_ABILITY_ID) == 0 then
+            if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or (DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or DamageSourceTypeId == SKELETON_WARMAGE_1_UNIT_ID) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, LIQUID_FIRE_ABILITY_ID) == 0 then
 
                 call TempAbil.create(DamageTarget, 'A06R', 3)
                 //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitCustomState(DamageSource, BONUS_MAGICPOW)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
@@ -802,7 +807,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Envenomed Weapons heroes
             set i1 = GetUnitAbilityLevel(DamageSource,ENVENOMED_WEAPONS_ABILITY_ID) + PoisonRuneBonus[DamageSourcePid]
-            if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or (PoisonRuneBonus[DamageSourcePid] > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison)) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
+            if (IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or (PoisonRuneBonus[DamageSourcePid] > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison)) or DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or DamageSourceTypeId == SKELETON_WARMAGE_1_UNIT_ID) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
 
                 call TempAbil.create(DamageTarget, 'A06P', 8)
                 //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)

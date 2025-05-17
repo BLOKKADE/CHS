@@ -163,6 +163,7 @@ library IdLibrary initializer init
         constant integer WOLF_RIDER_UNIT_ID                             = 'U000'
         constant integer MURLOC_WARRIOR_UNIT_ID                         = 'H01F'
         constant integer YETI_UNIT_ID                                   = 'O00B'
+        constant integer STOMP_UNIT_ID                                  = 'BB1S'
         // --- Unit IDs ---
 
         // --- Ability IDs ---
@@ -268,6 +269,7 @@ library IdLibrary initializer init
         constant integer FROST_ARMOR_ABILITY_ID                         = 'AUfu'
         constant integer FROST_BOLT_ABILITY_ID                          = 'A07X'
         constant integer FROST_NOVA_ABILITY_ID                          = 'AUfn'
+        constant integer GHOST_VISIBLE_ABILITY_ID                       = 'Aeth'
         constant integer HARDENED_SKIN_ABILITY_ID                       = 'Assk'
         constant integer HEALING_WARD_ABILITY_ID                        = 'Ahwd'
         constant integer HEALING_WAVE_ABILITY_ID                        = 'AOhw'
@@ -629,10 +631,12 @@ library IdLibrary initializer init
         constant integer ERUPTION_ITEM_ID                               = 'I039'
 
         // --- Shop Item IDs ---
-        constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'                                                                                              
+        constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2' 
+        constant integer ADUXXOR_ITEM_ID                                = 'I015'                                                                                             
         constant integer ARCANE_INFUSED_SWORD_ITEM_ID                   = 'I0BN'                                                                                              
         constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'                                                                                              
-        constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'                                                                                              
+        constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD' 
+        constant integer BONE_ARMOR_ITEM_ID                             = 'I07O'                                                                                             
         constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BE'
         constant integer ABSOLUTE_ACORN_TOME_ITEM_ID                    = 'I09D'
         constant integer AGILITY_LEVEL_BONUS_TOME_ITEM_ID               = 'I05H'

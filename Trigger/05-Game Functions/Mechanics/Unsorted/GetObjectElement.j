@@ -113,6 +113,11 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
             set elementCount = elementCount + R2I(GetHeroLevel(u) / 10)
         endif
 
+         //Stomp passive
+        if GetUnitTypeId(u) == STOMP_UNIT_ID and (elementId == Element_Wild) then
+            set elementCount = elementCount + R2I(GetHeroLevel(u) / 45)
+        endif
+
         //Goblet of Blood
         if elementId == Element_Blood and UnitHasItemType(u, 'I0B9') then
             set elementCount = elementCount + 3

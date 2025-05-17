@@ -1,4 +1,4 @@
-library WildRune requires RandomShit
+library WildRune requires RandomShit Stomp
     function WildRune takes nothing returns boolean
         local player p = GetOwningPlayer(GLOB_RUNE_U)
         local real power = GLOB_RUNE_POWER * 100
@@ -22,6 +22,9 @@ library WildRune requires RandomShit
             set levels = levels - 1
             exitwhen levels <= 0
         endloop
+
+        call AddStompStats(GLOB_RUNE_U)
+
         set p = null
         return false
     endfunction
