@@ -53,7 +53,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             endif
         endif
 
-        //Seer
+        //Seer summon buffs possibly for when summon limit is introduced
         //if GetUnitTypeId(hero) == SEER_UNIT_ID then
 
            // if GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID) > 0 then
@@ -151,12 +151,12 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         if SummonDamage[pid] > 0 then
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
-
+        
         //wild
-        if wild != 1 then      
-            call BlzSetUnitBaseDamage(u,R2I(I2R(BlzGetUnitBaseDamage(u,0))* wild),0)  
-            call BlzSetUnitMaxHP(u,R2I(I2R(BlzGetUnitMaxHP(u))* wild))
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
+        if wild != 1 and not (summonTypeId == 'u006' or summonTypeId == 'u007' or summonTypeId == 'o00D' or summonTypeId == 'u005' or summonTypeId == 'n039') then
+        call BlzSetUnitBaseDamage(u, R2I(I2R(BlzGetUnitBaseDamage(u, 0)) * wild), 0)
+        call BlzSetUnitMaxHP(u, R2I(I2R(BlzGetUnitMaxHP(u)) * wild))
+        call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
         //Trueshot Aura
