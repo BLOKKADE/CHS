@@ -111,12 +111,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I04N' then
 			call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (1500 * diff ))
 
-			//Staff of the archmage of water
+			//Hydromancer's Staff
 		elseif itemId == 'I08Y' then
 			call AddUnitBonusReal(u, BONUS_MANA_REGEN, (500 * diff ))
 			call AddUnitAbsoluteBonusCount(u,Element_Water, uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
-
+			
 			//Sword of Bloodthirst
 		elseif itemId == SWORD_OF_BLOODTHRIST_ITEM_ID then
 			call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + 300 * diff)
@@ -273,6 +273,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I076' then
 			call AddUnitCustomState(u, BONUS_EVASION, 10 * diff)
 			call AddUnitCustomState(u, BONUS_MAGICRES, 10 * diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Light, diff)
 		
 			//Unusual Wooden Shield
 		elseif itemId == 'I077' then
