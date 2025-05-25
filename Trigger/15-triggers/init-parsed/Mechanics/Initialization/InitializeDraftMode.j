@@ -2,7 +2,7 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit
 
     // NO = Number of
     globals
-        integer udg_Draft_NODraftSpells = 0
+        integer array udg_Draft_NODraftSpells
         player udg_Draft_TempPlayer = null
         unit array udg_Draft_DraftBuildings
         unit array udg_Draft_UpgradeBuildings
@@ -53,11 +53,11 @@ library InitializeDraftMode requires DraftModeFunctions, RandomShit
         local integer abilityIndex = 1
         local unit hero = FindPlayerHero(GetEnumPlayer()) // Find the player's hero
 
-        // Set udg_Draft_NODraftSpells based on hero type
+        // Set udg_Draft_NODraftSpells[playerId] based on hero type
         if hero != null and GetUnitTypeId(hero) == OGRE_WARRIOR_UNIT_ID then
-            set udg_Draft_NODraftSpells = 6
+            set udg_Draft_NODraftSpells[playerId] = 6
         else
-            set udg_Draft_NODraftSpells = 5
+            set udg_Draft_NODraftSpells[playerId] = 5
         endif
         // NOSpells should be >= 4, otherwise the code in the function GenerateInitialDraftSpells might need to be changed so that all 4 added spells get removed properly.
 
