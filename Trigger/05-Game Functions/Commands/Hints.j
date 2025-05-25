@@ -38,7 +38,7 @@ library Hints initializer init
         set Hints[9]= "Creeps are |cff45ec53stronger|r when they are fewer in number. Be sure to have both |cff45c5ecsingle target|r and |cffe9ec45area|r damage."
         set Hints[10]= "Press the |cffe9ec45space bar|r to |cff45ec53center the screen|r on your hero."
       //  set Hints[11]= "|cff45c5ecAll|r abilities deal |cffff00ffmagic damage|r unless mentioned otherwise."
-        set Hints[12]= "|cffca45eccWraith|r and |cffca45ecSludge Minion|r creeps deal |cffff00ffmagic damage|r. Be sure to protect yourself against them!"
+        set Hints[12]= "|cffca45ecWraith|r and |cffca45ecSludge Minion|r creeps deal |cffff00ffmagic damage|r. Be sure to protect yourself against them!"
         set Hints[13]= "The |cff45ec53Rings|r in |cff45c5ecPVE Shop 1|r are very useful early game. Be sure to check them out."
         set Hints[14]= "|cffff00ffThorns/Reflection/Wizardbane|r wave incoming? Look into |cff45ec53magic immunity|r! For example, the |cff45c5ecAnti-Magic Flag|r item."
       //  set Hints[15]= "We have a |cffecb745wiki|r containing lists and descriptions of all |cff45ec53heroes|r, |cffec6645abilities|r, and |cff45c5ecitems|r. Go to |cffca45ecchs-wiki.com|r."
