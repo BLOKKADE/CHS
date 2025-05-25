@@ -10,7 +10,7 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
 
         //Mega Speed and Glory Attack Cd
         if gloryAttackCdBonus != 0 then
-            set r2 = RMaxBJ(0.60, r1 - gloryAttackCdBonus)
+            set r2 = RMaxBJ(r1 - gloryAttackCdBonus, 0.50)
         endif
 
         //Mega Speed
@@ -18,10 +18,10 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
             set r2 = r2 - MegaSpeedBonus(u, i1, r2)
         endif
 
-        //Speed Blade active: is overriden if already lower than 0.6 from mega speed/default
+        //Speed Blade active: is overridden if already lower than 0.6 from mega speed/default
         if GetUnitAbilityLevel(u, SPEED_BLADE_BUFF_ID) > 0 then
-            if r2 > 0.7 then
-                set r2 = 0.7
+            if r2 > 0.65 then
+                set r2 = 0.65
             else
                 call RemoveUnitBuff(u, SPEED_BLADE_BUFF_ID)
             endif
@@ -32,7 +32,7 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
 
         //Flimsy Token
         if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
-            set r2 = r2 + 0.4
+            set r2 = r2 + 0.3
         endif
 
         //Lightning Shield
