@@ -63,9 +63,10 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Conq Bamboo passive
-        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_ABILITY_ID) > 0 and DamageSourcePid != 8 then
+        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_ABILITY_ID) > 0 and DamageSourceTypeId == STOMP_TREE_UNIT_ID or DamageSourcePid != 8 then
             set Damage.index.damage = Damage.index.damage * 0.7
         endif
+
 
         //Blokkades Shield damage reduction
         if GetUnitAbilityLevel(DamageTarget, BLOKKADE_SHIELD_ABIL_ID) > 0 then
@@ -149,7 +150,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         // Wild Runestone damage reduction
-        if UnitHasItemType(DamageTargetHero, WILD_RUNESTONE_ITEM_ID) and (IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false or GetUnitTypeId(DamageTarget) == STOMP_UNIT_ID) then
+        if UnitHasItemType(DamageTargetHero, WILD_RUNESTONE_ITEM_ID) and (IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false or GetUnitTypeId(DamageTarget) == STOMP_TREE_UNIT_ID) then
             set Damage.index.amount = Damage.index.amount * 0.7
         endif
 

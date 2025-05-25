@@ -163,7 +163,7 @@ library IdLibrary initializer init
         constant integer WOLF_RIDER_UNIT_ID                             = 'U000'
         constant integer MURLOC_WARRIOR_UNIT_ID                         = 'H01F'
         constant integer YETI_UNIT_ID                                   = 'O00B'
-        constant integer STOMP_UNIT_ID                                  = 'BB1S'
+        constant integer STOMP_TREE_UNIT_ID                             = 'BBHH'
         // --- Unit IDs ---
 
         // --- Ability IDs ---
@@ -430,6 +430,8 @@ library IdLibrary initializer init
         constant integer DRUIDIC_FOCUS_ABILITY_ID                       = 'A0CE'
         constant integer DRUIDIC_FOCUS_ROOTS_ABILITY_ID                 = 'A0CF'
         constant integer BANNER_OF_MANY_DUMMY_ABILITY_ID                = 'A0CG'
+        constant integer BANNER_OF_MANY_DUMMY_BUFF_ICON_ID              = 'ZZBB'
+        constant integer BANNER_OF_MANY_DAMAGE_ABILITY_ID               = '2BBU'
         constant integer SPEED_BLADE_BUFF_ID                            = 'B02I'
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
         constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
@@ -737,6 +739,7 @@ library IdLibrary initializer init
         constant integer SWORD_OF_BLOODTHRIST_TOME_ITEM_ID              = 'I0AG'
         constant integer STRENGTH_LEVEL_BONUS_TOME_ITEM_ID              = 'I05J'
         constant integer SHADOW_BLADE_ITEM_ID                           = 'I0CN'
+        constant integer SHADOW_BOOTS_ITEM_ID                           = 'BBSB'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
@@ -922,6 +925,8 @@ library IdLibrary initializer init
         constant integer RUNE_MASTERY_ABILITY_ID                        = 'A09O'
         constant integer CONQ_BAMBOO_STICK_ABILITY_ID                   = 'A0CM'
         constant integer SHADOW_BLADE_ABIL_ID                           = 'A0D2'
+        constant integer SHADOW_BOOTS_ABIL_ID                           = 'BBZB'
+        constant integer SHADOW_BOOTS_SLOW_RESIST_ABIL_ID               = 'BB03'
         constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
 
         // --- Buff IDs ---

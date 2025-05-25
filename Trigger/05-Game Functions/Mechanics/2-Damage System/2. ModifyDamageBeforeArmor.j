@@ -41,7 +41,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Conquerors Bamboo Stick
-        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and (IsUnitType(DamageSource, UNIT_TYPE_HERO) == false or DamageSourceTypeId == STOMP_UNIT_ID) and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
+        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and IsUnitType(DamageSource, UNIT_TYPE_HERO) == false and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
             //call BJDebugMsg("conq bamboo stick immune")
             set Damage.index.damage = 0
             return
@@ -132,7 +132,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Strong Chestmail
-        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO) or DamageSourceTypeId == STOMP_UNIT_ID) then
+        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO) or DamageSourceTypeId == STOMP_TREE_UNIT_ID) then
             set Damage.index.damage = StrongChestMailDamage(DamageTargetId, Damage.index.damage)
         endif
 
@@ -422,8 +422,8 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        // Newborn Fire Weakness
-        if DamageTargetTypeId == STOMP_UNIT_ID and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
+        // Stomp Fire Weakness
+        if DamageTargetTypeId == STOMP_TREE_UNIT_ID and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
             set Damage.index.amount = Damage.index.amount * 2
         endif
 
@@ -636,8 +636,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Conquerors Bamboo Stick
-        if GetUnitAbilityLevel(DamageSource, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageTargetPid != 11 and BambooImmuneActive(DamageSourceId, GetHandleId(DamageTargetHero)) and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
-            //call BJDebugMsg("conq bamboo stick dmg bonus")
+        if GetUnitAbilityLevel(DamageSource, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageTargetPid != 11 and BambooImmuneActive(DamageSourceId, GetHandleId(DamageTargetHero)) and (IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false or GetUnitTypeId(DamageTarget) == STOMP_TREE_UNIT_ID) then
+        //call BJDebugMsg("conq bamboo stick dmg bonus")
             set Damage.index.damage = Damage.index.damage * 2
             return
         endif

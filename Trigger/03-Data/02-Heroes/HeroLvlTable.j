@@ -186,8 +186,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(SEER_UNIT_ID, 0, "|cffe7544aChance|r: ,0,%%")
 
-        call SetBonusStr(STOMP_UNIT_ID, 0, "|cffe7544aWild bonus|r: ,0,")
-        call SetBonusStr(STOMP_UNIT_ID, 1, "|cffe7544aMana Bonus|r: ,0,")
+        call SetBonusStr(STOMP_TREE_UNIT_ID, 0, "|cffe7544aWild bonus|r: ,0,")
     endfunction
 
     private function init takes nothing returns nothing

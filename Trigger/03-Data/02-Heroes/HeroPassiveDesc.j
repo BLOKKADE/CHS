@@ -137,7 +137,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(TINKER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gains 55 * hero level experience." )
         
         call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBeastMaster.blp" )
-        call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 3 levels|r) Increases the level of all summons by 1." )
+        call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 4 levels|r) Increases the level of all summons by 1." )
             
         call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBansheeRanger.blp" )
         call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fear Aura: Reduces the armor of nearby enemies. 700 range. ")
@@ -258,9 +258,9 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Passionate Student: All positive effects of ring items are doubled.")
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +200 glory." )
 
-        call InitHeroDesc(STOMP_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCorruptedTreeOfLife.blp" )
-        call InitHeroDesc(STOMP_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Strength of the Forest: The Hero counts as a [|cff9e5d07Summon|r]. Takes Double damage from [Fire] and cannot buy Stat-Per-level Upgrades.")
-        call InitHeroDesc(STOMP_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Bonus mana: +50. (|cff68eef3Every 40 levels|r) Gains +1 [wild] element or 100 movement speed. At level 150, gain immunity to pushing/pulling effects.")
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCorruptedTreeOfLife.blp" )
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Receive double damage from [|cffff0000Fire|r] and cannot buy Stat-Per-level Upgrades.")
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities at levels 125, 150, and 175.")
     endfunction
 
     private function init takes nothing returns nothing

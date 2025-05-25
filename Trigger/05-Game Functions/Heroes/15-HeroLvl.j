@@ -64,36 +64,32 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == DRUID_OF_THE_CLAY_UNIT_ID then
             call SetBonus(u, 0, 1 * heroLevel)
 
-        elseif uid == STOMP_UNIT_ID then  
+        elseif uid == STOMP_TREE_UNIT_ID then  
             set i = prevLevel + 1
             loop
-                if ModuloInteger(i, 40) == 0 then
-                    if GetRandomInt(0, 2) == 0 then
-                        // Add 1 wild element
-                        call UpdateBonus(u, 0, 1)
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, (GetFullElementText(5) + " |cffffcc00bonus acquired"))
-                    elseif GetRandomInt(0, 2) == 1 then
-                        // Add 100 bonus movement speed
-                        call AddUnitBonus(u, BONUS_MOVEMENT_SPEED, 100)
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cffffff00Movement speed bonus acquired!|r")
-                    else
-                        // Add 1% max HP regen (stacks)
-                        call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, GetUnitState(u, UNIT_STATE_MAX_LIFE) * 0.01)
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ffff1% Max HP regeneration bonus acquired!|r")
-                    endif
+                exitwhen i > heroLevel
+
+                if ModuloInteger(i, 65) == 0 then
+                    // Add 1 wild element
+                    call UpdateBonus(u, 0, 1)
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, GetFullElementText(5) + " |cffffcc00bonus acquired|r")
+                endif
+
+                if i == 125 then
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ffffFriendlies can walk through your summons now!|r") 
                 endif
 
                 if i == 150 then
-                call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff00Pulling/Pushing resistance obtained!|r")
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff00+Pulling/Pushing Immunity!|r")
+                endif
+
+                if i == 175 then
+                    call UnitAddAbility(u, 'BBUA')
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ffff+1% Max HP regeneration bonus!|r")   
                 endif
 
                 set i = i + 1
-                exitwhen i >= heroLevel + 1
             endloop
-
-        call AddUnitBonus(u, BONUS_MANA, 50)
-        call UpdateBonus(u, 1, 50 * levelsGained)
-        call AddUnitBonusReal(u, BONUS_MANA_REGEN, 0.5 * levelsGained)
 
         elseif uid == MAULER_UNIT_ID then  
             set i = prevLevel + 1
@@ -192,7 +188,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call UpdateBonus(u, 0, 200 * levelsGained)   
             call ResourseRefresh(GetOwningPlayer(u)) 
         elseif uid == BEAST_MASTER_UNIT_ID then                  
-            call SetBonus(u, 0, R2I(heroLevel / 3))   
+            call SetBonus(u, 0, R2I(heroLevel / 4))   
         elseif uid == FALLEN_RANGER_UNIT_ID then                          
             call SetUnitAbilityLevel(u, 'A031', 2)
             call BlzSetAbilityRealLevelField(BlzGetUnitAbility(u, 'A031'),ABILITY_RLF_ARMOR_BONUS_HAD1, 0, 0 - (heroLevel * 3))         

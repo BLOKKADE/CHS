@@ -9,7 +9,7 @@ library Stomp requires RandomShit
     function AddStompStats takes unit u returns nothing
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         
-        if GetUnitTypeId(u) == STOMP_UNIT_ID then
+        if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
             if SummonHitPoints[pid] > AppliedSummonHitPoints[pid] then
                 call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + (SummonHitPoints[pid] - AppliedSummonHitPoints[pid]) * 200)
                 call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))

@@ -19,9 +19,9 @@ library Purge requires RandomShit
         local timer t = GetExpiredTimer()
         local unit source = LoadUnitHandle(HT,GetHandleId(t),1)
         local unit target = LoadUnitHandle(HT,GetHandleId(t),2)
-        if IsUnitType(target, UNIT_TYPE_HERO) != true or IsUnitIllusion(target) then
+        if (IsUnitType(target, UNIT_TYPE_HERO) != true or IsUnitIllusion(target)) or GetUnitTypeId(target) == STOMP_TREE_UNIT_ID then
             set udg_NextDamageAbilitySource = PURGE_ABILITY_ID
-            call Damage.apply(source, target, BlzGetUnitMaxHP(target) * 0.75, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+            call Damage.apply(source, target, BlzGetUnitMaxHP(target) * 0.50, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
         endif
         call RemoveUnitBuffs(target, BUFFTYPE_POSITIVE, false)
         call FlushChildHashtable(HT,GetHandleId(t))

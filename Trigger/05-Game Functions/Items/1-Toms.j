@@ -94,7 +94,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
         loop
             //Agility level bonus
             if itemTypeId == AGILITY_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
-                if GetUnitTypeId(u) == STOMP_UNIT_ID then
+                if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
                     call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432This unit cannot buy this item.|r")
                 elseif GetHeroXP(u) >= 20000 then
                     call AddStatLevelBonus(u, BONUS_AGILITY, 1)
@@ -105,7 +105,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Intelligence level bonus
             elseif itemTypeId == INTELLIGENCE_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
-                if GetUnitTypeId(u) == STOMP_UNIT_ID then
+                if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
                     call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432This unit cannot buy this item.|r")
                 elseif GetHeroXP(u) >= 20000 then
                     call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 1)
@@ -116,7 +116,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Strength level bonus
             elseif itemTypeId  == STRENGTH_LEVEL_BONUS_TOME_ITEM_ID and (not maxLevel) then
-                if GetUnitTypeId(u) == STOMP_UNIT_ID then
+                if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
                     call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432This unit cannot buy this item.|r")
                 elseif GetHeroXP(u) >= 20000 then
                     call AddStatLevelBonus(u, BONUS_STRENGTH, 1)

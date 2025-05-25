@@ -42,7 +42,18 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Beastmaster
         if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
-            set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.3)
+            set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.25)
+        endif
+
+        //Stomp ethereal summons
+        if GetUnitTypeId(hero) == STOMP_TREE_UNIT_ID and GetHeroLevel(hero) >= 125 then
+            call UnitAddAbility(u, 'Aeth')    
+        endif
+
+        //Skeleton Brute summon colouring
+        if GetUnitTypeId(hero) == SKELETON_BRUTE_UNIT_ID then  
+            call SetUnitVertexColor(u, 100, 100, 100, 255)
+            call AddSpecialEffectTarget("Abilities\\Spells\\Undead\\AnimateDead\\AnimateDeadTarget.mdl", u, "origin")
         endif
 
         //Mortar Team
@@ -151,7 +162,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         if SummonDamage[pid] > 0 then
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
-        
+
         //wild
         if wild != 1 and not (summonTypeId == 'u006' or summonTypeId == 'u007' or summonTypeId == 'o00D' or summonTypeId == 'u005' or summonTypeId == 'n039') then
         call BlzSetUnitBaseDamage(u, R2I(I2R(BlzGetUnitBaseDamage(u, 0)) * wild), 0)
@@ -186,7 +197,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         //Banner of Many
         if UnitHasItemType(hero, BANNER_OF_MANY_ITEM_ID) then
 
-            if GetUnitAbilityLevel(u, ENDURANCE_AURA_ABILITY_ID) == 0 then
+            if GetUnitAbilityLevel(hero, ENDURANCE_AURA_ABILITY_ID) == 0 then
                 call AddUnitBonusReal(u, BONUS_ATTACK_SPEED, 1.5)
             endif
 
@@ -194,7 +205,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
                 call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * 1.5))
             endif
 
-            call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_ABILITY_ID)
+            call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_BUFF_ICON_ID)
         endif
         
         set u = null
@@ -217,6 +228,19 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid], false), false)
             call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid], false), false)
             call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid], false), false)
+        endif
+
+        //Deadlord
+        if GetUnitTypeId(u) == DEADLORD_UNIT_ID then
+            call UnitAddAbility(u, ABSOLUTE_BLOOD_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_BLOOD_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_BLOOD_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_BLOOD_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
         endif
 
         //Rock Golem
