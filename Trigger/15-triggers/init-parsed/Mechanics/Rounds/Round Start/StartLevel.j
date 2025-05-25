@@ -48,6 +48,7 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         call SetCurrentlyFighting(currentPlayer, true)
 
         // Cleanup
+        set SuddenDeathEnabled = false
         set currentPlayer = null
         set playerHero = null
         set playerArena = null
