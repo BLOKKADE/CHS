@@ -169,6 +169,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASTomePowerPoison.BLP", "Poison", false)   //32768
 
         //read GUI, when the variable exist
+
         set HeroSelectorUnitCode[1] = ABOMINATION_UNIT_ID
         set HeroSelectorUnitCode[2] = ARENA_MASTER_UNIT_ID
         set HeroSelectorUnitCode[3] = AVATAR_SPIRIT_UNIT_ID
@@ -178,49 +179,50 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[7] = BLOOD_MAGE_UNIT_ID
         set HeroSelectorUnitCode[8] = CENTAUR_ARCHER_UNIT_ID
         set HeroSelectorUnitCode[9] = COLD_KNIGHT_UNIT_ID
-        set HeroSelectorUnitCode[10] = DARK_HUNTER_UNIT_ID
-        set HeroSelectorUnitCode[11] = DEMON_HUNTER_UNIT_ID
-        set HeroSelectorUnitCode[12] = DOOM_GUARD_UNIT_ID
-        set HeroSelectorUnitCode[13] = DEADLORD_UNIT_ID
-        set HeroSelectorUnitCode[14] = DRUID_OF_THE_CLAY_UNIT_ID
-        set HeroSelectorUnitCode[15] = FALLEN_RANGER_UNIT_ID
-        set HeroSelectorUnitCode[16] = GHOUL_UNIT_ID
-        set HeroSelectorUnitCode[17] = GNOME_MASTER_UNIT_ID
-        set HeroSelectorUnitCode[18] = GREEDY_GOBLIN_UNIT_ID
-        set HeroSelectorUnitCode[19] = CRYPT_LORD_UNIT_ID
+        set HeroSelectorUnitCode[10] = CRYPT_LORD_UNIT_ID
+        set HeroSelectorUnitCode[11] = DARK_HUNTER_UNIT_ID
+        set HeroSelectorUnitCode[12] = DEADLORD_UNIT_ID
+        set HeroSelectorUnitCode[13] = DEMON_HUNTER_UNIT_ID
+        set HeroSelectorUnitCode[14] = DOOM_GUARD_UNIT_ID
+        set HeroSelectorUnitCode[15] = DRUID_OF_THE_CLAY_UNIT_ID
+        set HeroSelectorUnitCode[16] = FALLEN_RANGER_UNIT_ID
+        set HeroSelectorUnitCode[17] = GHOUL_UNIT_ID
+        set HeroSelectorUnitCode[18] = GNOME_MASTER_UNIT_ID
+        set HeroSelectorUnitCode[19] = GREEDY_GOBLIN_UNIT_ID
         set HeroSelectorUnitCode[20] = HUNTRESS_UNIT_ID
         set HeroSelectorUnitCode[21] = LICH_UNIT_ID
         set HeroSelectorUnitCode[22] = LIEUTENANT_UNIT_ID
         set HeroSelectorUnitCode[23] = MAULER_UNIT_ID
         set HeroSelectorUnitCode[24] = MEDIVH_UNIT_ID
         set HeroSelectorUnitCode[25] = MORTAR_TEAM_UNIT_ID
-        set HeroSelectorUnitCode[26] = MYSTIC_UNIT_ID
-        set HeroSelectorUnitCode[27] = NAGA_SIREN_UNIT_ID
-        set HeroSelectorUnitCode[28] = OGRE_MAGE_UNIT_ID
-        set HeroSelectorUnitCode[29] = OGRE_WARRIOR_UNIT_ID
-        set HeroSelectorUnitCode[30] = ORC_CHAMPION_UNIT_ID
-        set HeroSelectorUnitCode[31] = PIT_LORD_UNIT_ID
-        set HeroSelectorUnitCode[32] = PYROMANCER_UNIT_ID
-        set HeroSelectorUnitCode[33] = RANGER_UNIT_ID
-        set HeroSelectorUnitCode[34] = ROCK_GOLEM_UNIT_ID
-        set HeroSelectorUnitCode[35] = SATYR_TRICKSTER_UNIT_ID
-        set HeroSelectorUnitCode[36] = SEER_UNIT_ID
-        set HeroSelectorUnitCode[37] = SKELETON_BRUTE_UNIT_ID
-        set HeroSelectorUnitCode[38] = SORCERER_UNIT_ID
-        set HeroSelectorUnitCode[39] = TAUREN_UNIT_ID
-        set HeroSelectorUnitCode[40] = THUNDER_WITCH_UNIT_ID
-        set HeroSelectorUnitCode[41] = TIME_WARRIOR_UNIT_ID
-        set HeroSelectorUnitCode[42] = TINKER_UNIT_ID
-        set HeroSelectorUnitCode[43] = TROLL_BERSERKER_UNIT_ID
-        set HeroSelectorUnitCode[44] = TROLL_HEADHUNTER_UNIT_ID
-        set HeroSelectorUnitCode[45] = URSA_WARRIOR_UNIT_ID
-        set HeroSelectorUnitCode[46] = WAR_GOLEM_UNIT_ID
-        set HeroSelectorUnitCode[47] = WITCH_DOCTOR_UNIT_ID
-        set HeroSelectorUnitCode[48] = WOLF_RIDER_UNIT_ID
-        set HeroSelectorUnitCode[49] = MURLOC_WARRIOR_UNIT_ID
-        set HeroSelectorUnitCode[50] = YETI_UNIT_ID
-        //set HeroSelectorUnitCode[51] = GNOLL_WARDEN_UNIT_ID
-        set HeroSelectorUnitCode[51] = STOMP_UNIT_ID
+        set HeroSelectorUnitCode[26] = MURLOC_WARRIOR_UNIT_ID
+        set HeroSelectorUnitCode[27] = MYSTIC_UNIT_ID
+        set HeroSelectorUnitCode[28] = NAGA_SIREN_UNIT_ID
+        set HeroSelectorUnitCode[29] = OGRE_MAGE_UNIT_ID
+        set HeroSelectorUnitCode[30] = OGRE_WARRIOR_UNIT_ID
+        set HeroSelectorUnitCode[31] = ORC_CHAMPION_UNIT_ID
+        set HeroSelectorUnitCode[32] = PIT_LORD_UNIT_ID
+        set HeroSelectorUnitCode[33] = PYROMANCER_UNIT_ID
+        set HeroSelectorUnitCode[34] = RANGER_UNIT_ID
+        set HeroSelectorUnitCode[35] = ROCK_GOLEM_UNIT_ID
+        set HeroSelectorUnitCode[36] = SATYR_TRICKSTER_UNIT_ID
+        set HeroSelectorUnitCode[37] = SEER_UNIT_ID
+        set HeroSelectorUnitCode[38] = SKELETON_BRUTE_UNIT_ID
+        set HeroSelectorUnitCode[39] = SORCERER_UNIT_ID
+        set HeroSelectorUnitCode[40] = STOMP_TREE_UNIT_ID
+        set HeroSelectorUnitCode[41] = TAUREN_UNIT_ID
+        set HeroSelectorUnitCode[42] = THUNDER_WITCH_UNIT_ID
+        set HeroSelectorUnitCode[43] = TIME_WARRIOR_UNIT_ID
+        set HeroSelectorUnitCode[44] = TINKER_UNIT_ID
+        set HeroSelectorUnitCode[45] = TROLL_BERSERKER_UNIT_ID
+        set HeroSelectorUnitCode[46] = TROLL_HEADHUNTER_UNIT_ID
+        set HeroSelectorUnitCode[47] = URSA_WARRIOR_UNIT_ID
+        set HeroSelectorUnitCode[48] = WAR_GOLEM_UNIT_ID
+        set HeroSelectorUnitCode[49] = WITCH_DOCTOR_UNIT_ID
+        set HeroSelectorUnitCode[50] = WOLF_RIDER_UNIT_ID
+        set HeroSelectorUnitCode[51] = YETI_UNIT_ID
+
+        //set HeroSelectorUnitCode[52] = GNOLL_WARDEN_UNIT_ID
 
         set index = 1
         //add from index 1 all random only heroes
@@ -285,7 +287,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(GHOUL_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(BANSHEE_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(CRYPT_LORD_UNIT_ID, categoryStr)
-        call HeroSelectorAddUnitCategory(STOMP_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(STOMP_TREE_UNIT_ID, categoryStr)
         //call HeroSelectorAddUnitCategory(GNOLL_WARDEN_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(SEER_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(FALLEN_RANGER_UNIT_ID, categoryAgi)

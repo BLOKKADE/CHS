@@ -44,5 +44,6 @@ library StableSpells initializer init
         set StableSpells.boolean[BLESSED_PROTECTIO_ABILITY_ID] = true
         set StableSpells.boolean[RAPID_RECOVERY_ABILITY_ID] = true
         set StableSpells.boolean[DEMONS_CURSE_ABILITY_ID] = true
+        set StableSpells.boolean[ACTIVATE_AVATAR_ABILITY_ID] = true
     endfunction
 endlibrary

@@ -1,4 +1,4 @@
-library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, HeroForm, Parasite, ContemporaryRunes
+library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, ShadowBootsHeroForm, HeroForm, Parasite, ContemporaryRunes
 
     function AbilityChannel takes unit caster, unit hero, unit target, real x, real y, integer abilId, integer lvl returns boolean
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
@@ -120,8 +120,12 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             call PotionHeal(0, 600)
 
         //ShadowBlade
-        elseif abilId == SHADOW_BLADE_ABIL_ID then
+        elseif abilId == 'SBBB' then
             call ShadowBlade(hero)
+
+        //Shadow Boots
+        elseif abilId == 'BBGB' then
+            call ShadowBoots(hero)
 
         //Reset Time
         elseif abilId == RESET_TIME_ABILITY_ID then

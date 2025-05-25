@@ -305,9 +305,9 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
             call ConditionalTriggerExecute(EndGameTrigger)
 
             // udg_integer41 has some random math done on it and assigned to UnknownInteger01 which alters gold of players?
-            call TriggerSleepAction(2.00)
+            call TriggerSleepAction(0.50)
             set udg_integer41 = udg_integer41 + 1 // Some variable used for calculating rewards
-            call TriggerSleepAction(1.00)
+            call TriggerSleepAction(0.50)
 
             set PvpGoldWinAmount = DuelGoldReward[RoundNumber]
             

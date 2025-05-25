@@ -38,7 +38,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		set diff = itemCount - prevCount
 		set uniqueDiff = IMinBJ(itemCount, 1) - UniqueItemCount[hid].integer[itemId]
 		set UniqueItemCount[hid].integer[itemId] = IMinBJ(itemCount, 1)
-
+	
 		/*if pid == 0 and GetUnitTypeId(u) != SELL_ITEM_DUMMY then
 			if ev == EVENT_ITEM_DROP then
 				call BJDebugMsg("it: " + GetObjectName(itemId) + ", u: " + GetUnitName(u) + ", item drop" + ", hid: " + I2S(hid))
@@ -273,7 +273,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I076' then
 			call AddUnitCustomState(u, BONUS_EVASION, 10 * diff)
 			call AddUnitCustomState(u, BONUS_MAGICRES, 10 * diff)
-			call AddUnitAbsoluteBonusCount(u,Element_Light, diff)
 		
 			//Unusual Wooden Shield
 		elseif itemId == 'I077' then
@@ -491,7 +490,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 				call UnitRemoveAbility(u, DRUIDIC_FOCUS_ABILITY_ID)
 			elseif GetUnitAbilityLevel(u, DRUIDIC_FOCUS_ABILITY_ID) == 0 then
 				call UnitAddAbility(u, DRUIDIC_FOCUS_ABILITY_ID)
-			endif
+			endif     
 
 			// Dark Shield
 		elseif itemId == 'I060' then
