@@ -318,8 +318,6 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
 
         // This must be the last operation here. This will randomize the str/agi/int heroes that will be used to assign to players
         call RandomizeHeroArrays()
-
-        return
     endfunction
 
     private function Init takes nothing returns nothing
