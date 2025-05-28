@@ -54,7 +54,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Medal of Honor
         if UnitHasItemType(DamageTargetHero, 'I04U') or UnitHasItemType(DamageSourceHero, 'I04U') then
-            set Damage.index.amount = Damage.index.amount * 0.66
+            set Damage.index.amount = Damage.index.amount * 0.67
         endif
 
         //Decaying Scythe

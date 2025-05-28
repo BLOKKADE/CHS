@@ -530,7 +530,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Blessed Protection
         set i1 = GetUnitAbilityLevel(DamageTarget, 'A0AF')
         if i1 > 0 then
-            set Damage.index.damage =   Damage.index.damage / 10
+            set Damage.index.damage =   Damage.index.damage / 4
         endif
         
         //Mega Speed
