@@ -74,6 +74,7 @@ scope ShortPeriodCheck initializer init
                         
                     set s3 = ReplaceText("2000",s2,s)
                     set s3 = ReplaceText(",0000,", R2S(  LoadReal(HT, hid, -93000)), s3)
+                    set s3 = ReplaceText(",xddd,", R2S(LoadReal(HT, hid, -93002)), s3)
 
                     if GetLocalPlayer() == GetOwningPlayer(u) then
                         call BlzSetAbilityExtendedTooltip(ABSOLUTE_BLOOD_ABILITY_ID, s3, i1 - 1 ) 
