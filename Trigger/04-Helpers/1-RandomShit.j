@@ -19,6 +19,12 @@ library RandomShit requires AbilityData, SpellbaneToken, StableSpells, IdLibrary
         call BlzSetUnitMaxHP(u, amount)  
         call SetUnitLifePercentBJ(u, percent)
     endfunction
+    
+    function SetUnitMaxMana takes unit u, integer amount returns nothing
+        local real percent = GetUnitManaPercent(u)
+        call BlzSetUnitMaxMana(u, amount)  
+        call SetUnitManaPercentBJ(u, percent)
+    endfunction
 
     function SetUnitProcHp takes unit u, real bonus returns nothing
         local real BonusOldHp = LoadReal(HT,GetHandleId(u),- 412446)
