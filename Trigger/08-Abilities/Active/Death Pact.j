@@ -1,34 +1,19 @@
-library DeathPact
+library DeathPact requires UnitHelpers
     function CastDeathPact takes unit caster, unit target, integer level returns nothing
-        local real bonus = (0.05 * level) * GetUnitState(target, UNIT_STATE_LIFE)
-        local real targetHP = GetUnitState(target, UNIT_STATE_LIFE)
-        local group g = CreateGroup()
         local unit u = null 
-        local player casterOwner = GetOwningPlayer(caster) 
-        local real aoe = 250.0
-            if (not IsHeroUnitId(GetUnitTypeId(target))) and GetUnitState(caster, UNIT_STATE_LIFE) <= GetUnitState(caster, UNIT_STATE_MAX_LIFE) then
-        // Enumerate units within 350 radius of the target
-                call GroupEnumUnitsInRange(g, GetUnitX(target), GetUnitY(target), aoe, null)
-                loop
-                    set u = FirstOfGroup(g)
-                    exitwhen u == null
-                    call GroupRemoveUnit(g, u)
-        // Damage enemy units that are alive, not magic-immune, and not the caster or target
-                    if IsUnitEnemy(u, casterOwner) and IsUnitAliveBJ(u) and not IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) and GetHandleId(u) != GetHandleId(caster) and GetHandleId(u) != GetHandleId(target) then
-                        call UnitDamageTarget(caster, u, targetHP * 0.1, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, null)
-                    endif
-                endloop
-        // Apply the original Death Pact effect
-                call SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + bonus)
-                call KillUnit(target)
-            endif
-    // Clean up
-        call DestroyGroup(g)
-        set g = null
-        set u = null
-        set casterOwner = null
+        if (not IsHeroUnitId(GetUnitTypeId(target))) and GetUnitState(caster, UNIT_STATE_LIFE) <= GetUnitState(caster, UNIT_STATE_MAX_LIFE) then
+            call GroupClear(ENUM_GROUP)
+            // Enumerate units within 350 radius of the target
+            call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(target), GetUnitY(target), 250, GetOwningPlayer(caster) , false, Target_Enemy)
+            loop
+                set u = FirstOfGroup(ENUM_GROUP)
+                exitwhen u == null
+                call UnitDamageTarget(caster, u, GetUnitState(target, UNIT_STATE_LIFE) * 0.1, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, null)
+                call GroupRemoveUnit(ENUM_GROUP, u)
+            endloop
+            // Apply the original Death Pact effect
+            call SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + (0.05 * level) * GetUnitState(target, UNIT_STATE_LIFE))
+            call KillUnit(target)
+        endif
     endfunction
 endlibrary
-
-
-

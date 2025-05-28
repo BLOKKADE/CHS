@@ -60,7 +60,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         if GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
             call AddUnitCustomState(u, BONUS_PHYSPOW, 15)
             if GetHeroLevel(hero) > 1 then
-            call AddUnitCustomState(u, BONUS_PHYSPOW, 1.5 * (GetHeroLevel(hero) - 1))
+                call AddUnitCustomState(u, BONUS_PHYSPOW, 1.5 * (GetHeroLevel(hero) - 1))
             endif
         endif
 
