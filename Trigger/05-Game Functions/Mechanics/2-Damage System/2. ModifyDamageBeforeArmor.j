@@ -247,6 +247,9 @@ scope ModifyDamageBeforeArmor initializer init
         //Sword of Bloodthirst
         set i1 = GetUnitItemTypeCount(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
         if i1 > 0 and IsPhysDamage() then
+            if Damage.index.isAttack then
+                call ActivateSwordOfBloodthirst(DamageTarget)
+            endif
             set Damage.index.damage = Damage.index.damage + 900 * i1
         endif
 
@@ -745,7 +748,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
 
             //Sword of Bloodthirst
-            if UnitHasItemType(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) then
+            if UnitHasItemType(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) and GetUnitCustomState(DamageTarget, BONUS_BLOCK) > 0 then
                 set blockDamage = blockDamage * 0.7
             endif
 

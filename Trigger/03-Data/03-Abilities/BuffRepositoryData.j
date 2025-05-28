@@ -113,6 +113,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1('A03V', TEMPORARY_INVISIBILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
         call SetupBuffInfo1('Bcrs', CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
 
+        call SetupBuffInfo2('B038', SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID, 0, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2('B035', CUTTING_BUFF_ABILITY_ID, CUTTING_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2(INCINERATE_CUSTOM_BUFF_ID, 'A06L', INCINERATE_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2(POISON_NON_STACKING_CUSTOM_BUFF_ID, 'A06P', ENVENOMED_WEAPONS_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)

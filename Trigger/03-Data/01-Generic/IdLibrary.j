@@ -857,6 +857,7 @@ library IdLibrary initializer init
         constant integer ANCIENT_BLOOD_BUFF_ABILITY_ID                  = 'A0CI'
         constant integer CUTTING_BUFF_ABILITY_ID                        = 'A0ET'
         constant integer STARFALL_BUFF_ABILITY_ID                       = 'A0F0'
+        constant integer SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID              = 'A02U'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 
