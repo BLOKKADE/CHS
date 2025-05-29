@@ -1,4 +1,4 @@
 globals
     // SET TO FALSE FOR RELEASE
-    constant boolean DEBUG = true
+    constant boolean DEBUG = false
 endglobals
