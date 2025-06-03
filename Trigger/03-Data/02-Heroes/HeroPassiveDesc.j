@@ -93,7 +93,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Feedback: +20 mana drained." )
         
         call InitHeroDesc(DEADLORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNTichondrius.blp" )
-        call InitHeroDesc(DEADLORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Vampire: Lifesteal on all damage dealt by the Hero and its summons. Killing an enemy restores 10% of its maximum hit points. [|cffff9696Lifesteal|r]")
+        call InitHeroDesc(DEADLORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Vampire: Starts with Absolute Blood. Lifesteal on all damage dealt by the Hero and its summons. Killing an enemy restores 10% of its maximum hit points. [|cffff9696Lifesteal|r]")
         call InitHeroDesc(DEADLORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Vampire: +0.5% lifesteal" )
         
         call InitHeroDesc(PYROMANCER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNChaosSpaceOrc.blp" )
@@ -180,7 +180,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Hellfire: +25 damage per second." )
                     
         call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRockGolem.blp" )
-        call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Stone Edge: When the Golem is damaged it deals 50% of its block in |cffff8080physical damage|r to nearby enemy units within 400 range. 1 second cooldown. [|cff96ffffStable|r]")
+        call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Stone Edge: Starts with Absolute Earth. When the Golem is damaged it deals 50% of its block in |cffff8080physical damage|r to nearby enemy units within 400 range. 1 second cooldown. [|cff96ffffStable|r]")
         call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Stone Edge: +1% block damage. +1% block." )
         
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )
