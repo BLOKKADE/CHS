@@ -76,16 +76,15 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
                 endif
 
                 if i == 125 then
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cffffcc00Friendlies can walk through your summons now!|r") 
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+Your|r [|cff9e5d07Summons|r]|cff00ff4c can walk through eachother!|r") 
                 endif
 
                 if i == 150 then
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cffffcc00+Pulling/Pushing Immunity!|r")
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+Pulling/Pushing Immunity!|r")
                 endif
 
                 if i == 175 then
-                    call UnitAddAbility(u, 'BBUA')
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cffffcc00+1% Max HP regeneration bonus!|r")   
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+1% Max HP regeneration bonus!|r")   
                 endif
 
                 set i = i + 1

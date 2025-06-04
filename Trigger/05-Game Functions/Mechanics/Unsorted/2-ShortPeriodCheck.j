@@ -185,7 +185,15 @@ scope ShortPeriodCheck initializer init
                     //call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
                     call SaveInteger(DataUnitHT, hid, 542, i1)
                 endif
-                
+
+                //Stomp regen
+            elseif unitTypeId == STOMP_TREE_UNIT_ID and GetHeroLevel(u) >= 175 then
+                set i1 = R2I(BlzGetUnitMaxHP(u) * 0.01)
+                set i2 = LoadInteger(DataUnitHT, hid, 542)
+                if i1 != i2 then
+                    call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - i2 + i1)
+                    call SaveInteger(DataUnitHT, hid, 542, i1)
+                endif
                 //War Golem
             elseif unitTypeId == WAR_GOLEM_UNIT_ID then
                 set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))
