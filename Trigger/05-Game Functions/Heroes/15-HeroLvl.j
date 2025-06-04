@@ -76,7 +76,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
                 endif
 
                 if i == 125 then
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+Your|r [|cff9e5d07Summons|r]|cff00ff4c can walk through eachother!|r") 
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+Your|r [|cff9e5d07Summon|r]|cff00ff4c units can walk through each other!|r") 
                 endif
 
                 if i == 150 then
