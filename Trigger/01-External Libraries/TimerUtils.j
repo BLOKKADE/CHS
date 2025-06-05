@@ -148,6 +148,9 @@ library TimerUtilsEx requires optional Table
         else
             set tN = tN - 1
         endif
+        static if DEBUG then
+            call BJDebugMsg("NewTimerEx: " + I2S(tN) + " timers left in the stack.")
+        endif
         set id = GetHandleId(tT[tN])
         static if LIBRARY_Table then
             set Data.tb.boolean[-id] = true

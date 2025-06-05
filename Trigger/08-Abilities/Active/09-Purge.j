@@ -26,6 +26,7 @@ library Purge requires RandomShit
         call RemoveUnitBuffs(target, BUFFTYPE_POSITIVE, false)
         call FlushChildHashtable(HT,GetHandleId(t))
         
+        call ReleaseTimer(t)
         set t = null
         set source = null
         set target = null

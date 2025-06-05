@@ -14,7 +14,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
             endif
 
             set NextRound[RoundNumber + 1] = false
-            call DestroyTimer(RoundWaitTimer)
+            call ReleaseTimer(RoundWaitTimer)
             call DestroyTimerDialog(RoundWaitTimerDialog)
 
             set RoundWaitTimer = null

@@ -18,6 +18,8 @@ library StoneProtection requires DummyOrder, AbilityCooldown, DummyOrder
         set td.source = null
         set td.target = null
         call td.destroy()
+
+        call ReleaseTimer(t)
         set t = null
     endfunction
     

@@ -50,7 +50,7 @@ library EnergyShield initializer init requires RandomShit, CustomGameEvent
             set t = LoadTimerHandle(HT, GetHandleId(eventInfo.hero), ENERGY_SHIELD_ABILITY_ID)
             call DestroyEffect(LoadEffectHandle(HT, GetHandleId(t), 2))
             call FlushChildHashtable(HT,GetHandleId(t))
-            call DestroyTimer(t)
+            call ReleaseTimer(t)
         endif
 
         set t = null
