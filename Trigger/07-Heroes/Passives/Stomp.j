@@ -11,8 +11,7 @@ library Stomp requires RandomShit
         
         if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
             if SummonHitPoints[pid] > AppliedSummonHitPoints[pid] then
-                call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + (SummonHitPoints[pid] - AppliedSummonHitPoints[pid]) * 200)
-                call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
+                call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + (SummonHitPoints[pid] - AppliedSummonHitPoints[pid]) * 200)
                 set AppliedSummonHitPoints[pid] = SummonHitPoints[pid]
             endif
 
