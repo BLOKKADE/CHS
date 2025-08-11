@@ -184,7 +184,6 @@ library CritDamage requires RandomShit, Vampirism, Gnome
                 if T32_Tick - MithrilHelmetCooldown[DamageTargetId] > 32 then
                     set MithrilHelmetCooldown[DamageTargetId] = T32_Tick
                 else
-                    set Dmg = 0
                     set critDmg = 0
                 endif
             endif

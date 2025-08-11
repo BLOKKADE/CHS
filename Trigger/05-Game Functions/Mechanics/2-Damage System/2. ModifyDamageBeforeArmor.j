@@ -813,8 +813,11 @@ scope ModifyDamageBeforeArmor initializer init
             if (IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or (PoisonRuneBonus[DamageSourcePid] > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison)) or DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or DamageSourceTypeId == SKELETON_WARMAGE_1_UNIT_ID) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
 
                 call TempAbil.create(DamageTarget, 'A06P', 8)
-                //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                if GetUnitAbilityLevel(DamageTarget, 'B00N') >= 1 then
+                    call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 0.5, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                else
+                    call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                endif
             endif
 
             //Quillbeasts

@@ -121,7 +121,7 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         call AddRune('I08C',function RuneOfPower, "Power Rune", Power_Rune_Id, 5)
         call AddRune('I08H',function RuneOfEarth, "Earth Rune", Earth_Rune_Id, 8)
         call AddRune('I08I',function RuneOfStorm, "Water Rune", Water_Rune_Id, 6) 
-        call AddRune('I08O',function RuneOfWinds, "Wind Rune", Wind_Rune_Id, 12)   
+        call AddRune('I08O',function RuneOfWinds, "Wind Rune", Wind_Rune_Id, 15)   
         call AddRune('I0AY',function BloodRune, "Blood Rune", Blood_Rune_Id, 10)
         //call AddRune('I0AZ',function SpiritRune, "Spirit Rune")
         call AddRune('I0AV',function DarkRune, "Dark Rune", Dark_Rune_Id, 12)

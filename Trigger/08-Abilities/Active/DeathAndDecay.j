@@ -13,18 +13,21 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
         private method damage takes nothing returns nothing
             local unit p
             local integer i = 0
+            local real dmg
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, this.x, this.y, 300, Player(this.pid), false, Target_Any)
-            //call BJDebugMsg("sldmg")
-            //call BJDebugMsg("dmg: " + I2S(GetSpellValue(50, 10, this.level)) + " grp: " + I2S(BlzGroupGetSize(ENUM_GROUP)))
             loop
-                set p = BlzGroupUnitAt(ENUM_GROUP, i)
-                exitwhen p == null
-                if p != null then
-                    set udg_NextDamageAbilitySource = DEATH_AND_DECAY_ABILITY_ID
-                    call Damage.applyMagic(this.source, p, BlzGetUnitMaxHP(p) * (0.01 * this.level), false, DAMAGE_TYPE_MAGIC)
+            set p = BlzGroupUnitAt(ENUM_GROUP, i)
+            exitwhen p == null
+            if p != null then
+                set udg_NextDamageAbilitySource = DEATH_AND_DECAY_ABILITY_ID
+                set dmg = BlzGetUnitMaxHP(p) * (0.01 * this.level)
+                if GetUnitAbilityLevel(p, 'B00N') >= 1 then
+                set dmg = dmg * 0.5
                 endif
-                set i = i + 1
+                call Damage.applyMagic(this.source, p, dmg, false, DAMAGE_TYPE_MAGIC)
+            endif
+            set i = i + 1
             endloop
         endmethod
     

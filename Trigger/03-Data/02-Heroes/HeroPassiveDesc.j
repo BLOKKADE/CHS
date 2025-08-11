@@ -61,7 +61,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(LIEUTENANT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +5 to two random stats. (|cff68eef3Every 10 levels|r) Battlemaster: +1 bonus to each stat on level up." )
 
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp" )
-        call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Disease Cloud: Deals |cffff00ffmagic damage|r to nearby enemies every second. ")
+        call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Disease Cloud: Deals |cffff00ffmagic damage|r to nearby enemies every second. Summons start with Envenomed Weapons (level based on 0.2* hero level, capped at L30).")
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Disease Cloud: +40 damage." )
         
         call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheClaw.blp" )
@@ -180,7 +180,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Hellfire: +25 damage per second." )
                     
         call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRockGolem.blp" )
-        call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Stone Edge: Starts with Absolute Earth. When the Golem is damaged it deals 50% of its block in |cffff8080physical damage|r to nearby enemy units within 400 range. 1 second cooldown. [|cff96ffffStable|r]")
+        call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Stone Edge: Starts with Absolute Earth. When the Golem is damaged it deals 50% of its block in |cffff8080physical damage|r to nearby enemy units within 400 range. 1 second cooldown. [|cff96ffffStable|r]. Summoned units gain block equal to the Hero's amount.")
         call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Stone Edge: +1% block damage. +1% block." )
         
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )

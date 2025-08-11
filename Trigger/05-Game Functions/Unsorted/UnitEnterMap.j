@@ -64,6 +64,18 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             endif
         endif
 
+        //Abomination
+        if GetUnitTypeId(hero) == ABOMINATION_UNIT_ID then
+            call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
+            call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, R2I(GetHeroLevel(hero) * 0.2))
+        endif
+
+        //Rock Golem
+        if GetUnitTypeId(hero) == ROCK_GOLEM_UNIT_ID then
+            call AddUnitCustomState(u, BONUS_BLOCK, GetUnitCustomState(hero, BONUS_BLOCK))
+            call SetUnitVertexColor(u, 150, 120, 100, 255) // Slightly grey/brown tint
+        endif
+
         //Seer summon buffs possibly for when summon limit is introduced
         //if GetUnitTypeId(hero) == SEER_UNIT_ID then
 

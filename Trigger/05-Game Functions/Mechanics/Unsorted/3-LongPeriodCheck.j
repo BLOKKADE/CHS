@@ -8,10 +8,11 @@ scope LongPeriodCheck initializer init
             call CastChronusSpells(u, hid, false)
 
             //Mysterious Talent
-            set i = GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID)
-            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 then
+            set i = GetUnitAbilityLevel(u, MYSTERIOUS_TALENT_ABILITY_ID)
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 and GetUnitState(u, UNIT_STATE_MANA) >= 1500 then
                 call MysteriousTalentActivate(u)
-                call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - i) 
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1500)
+                call AbilStartCD(u, MYSTERIOUS_TALENT_ABILITY_ID, 45 - i)
             endif
 
             //Sorcerer Passive (uses same spell as thunderwitch for now (A08P), not sure if it matters, easy to change)
@@ -22,15 +23,17 @@ scope LongPeriodCheck initializer init
             endif
 
             //Holy Shield
-            if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 then
+            if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 and GetUnitState(u, UNIT_STATE_MANA) >= 1500 then
                 call UseSpellsHolyShield(u)
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1500)
                 call AbilStartCD(u,'A066', 10) 
             endif
 
             //Ancient Runes
             set i = GetUnitAbilityLevel(u, ANCIENT_RUNES_ABILITY_ID)
-            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,ANCIENT_RUNES_ABILITY_ID) <= 0.001 then
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_RUNES_ABILITY_ID) <= 0.001 and GetUnitState(u, UNIT_STATE_MANA) >= 1500 then
                 call ActivateAncientRunes(u, i)
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1500)
             endif
 
             //Ancient Element
@@ -152,6 +155,18 @@ scope LongPeriodCheck initializer init
                 call SaveReal(HT, hid, 11,0)
             endif
 
+            //Heart of a Hero
+            if GetUnitAbilityLevel(u ,'B00N') >= 1 then
+                //str
+                set i2 = LoadInteger(HT, hid, 1004)
+                set i1 = R2I((GetHeroStr(u, true) - i2) * 0.25)
+
+                if i1 != 0 then
+                    call SaveInteger(HT, hid, 1004, i1)
+                    call AddUnitBonus(u, BONUS_STRENGTH, i1 - i2)
+                endif
+            endif
+
             //Panda Relic
             if GetUnitAbilityLevel(u ,'B00S') >= 1 then
                 //agi
@@ -181,7 +196,7 @@ scope LongPeriodCheck initializer init
                     call AddUnitBonus(u, BONUS_INTELLIGENCE, i1 - i2)
                 endif
 
-            elseif (LoadInteger(HT, hid, 1001) != 0) or (LoadInteger(HT, hid, 1002) != 0) or (LoadInteger(HT, hid, 1003) != 0) then
+            elseif (LoadInteger(HT, hid, 1001) != 0) or (LoadInteger(HT, hid, 1002) != 0) or (LoadInteger(HT, hid, 1003) != 0) or (LoadInteger(HT, hid, 1004) != 0) then
                 call AddUnitBonus(u, BONUS_AGILITY, 0 - LoadInteger(HT, hid, 1001))
                 call SaveInteger(HT, hid, 1001,0)
 
@@ -189,7 +204,10 @@ scope LongPeriodCheck initializer init
                 call SaveInteger(HT, hid, 1002,0)
 
                 call AddUnitBonus(u, BONUS_INTELLIGENCE, 0 - LoadInteger(HT, hid, 1003))
-                call SaveInteger(HT, hid, 1003,0)		
+                call SaveInteger(HT, hid, 1003,0)	
+                
+                call AddUnitBonus(u, BONUS_STRENGTH, 0 - LoadInteger(HT, hid, 1004))
+                call SaveInteger(HT, hid, 1004,0)
             endif
 
             //Relic of Magic

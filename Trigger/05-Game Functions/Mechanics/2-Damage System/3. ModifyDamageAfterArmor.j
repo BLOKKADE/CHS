@@ -86,7 +86,7 @@ scope ModifyDamageAfterArmor initializer init
             //damage reduction
             if T32_Tick - BlokShieldDmgReductionTick[DamageTargetId] < 64 then
                 //call BJDebugMsg("bs dmg red")
-                set Damage.index.amount = Damage.index.amount * 0.2
+                set Damage.index.amount = Damage.index.amount * 0.35
             endif
         endif
 
@@ -192,9 +192,9 @@ scope ModifyDamageAfterArmor initializer init
 
         //Devastating Blow
         if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,5)
+            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
             set r1 = BlzGetUnitMaxHP(DamageTarget)
-            set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.08)
+            set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.15)
             set udg_NextDamageAbilitySource = DEVASTATING_BLOW_ABILITY_ID
             call Damage.applyMagic(DamageSource, DamageTarget, r2, false, DAMAGE_TYPE_MAGIC)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
@@ -208,12 +208,17 @@ scope ModifyDamageAfterArmor initializer init
         endif
         
         //Heavy Mace
-        set i = GetUnitItemTypeCount( DamageSource,'I07I') 
+        set i = GetUnitItemTypeCount(DamageSource, 'I07I')
         if i > 0 then
-            set r1 =  (GetWidgetLife(DamageTarget)/ 100)* 1.5 * I2R(i)  
-            set vampAmount = vampAmount + r1
-            set Damage.index.amount = Damage.index.amount + r1
+            set r1 = (GetWidgetLife(DamageTarget) / 100) * 1.5 * I2R(i)
+            // Check for B00N ability on DamageTarget
+            if GetUnitAbilityLevel(DamageTarget, 'B00N') >= 1 then
+            set Damage.index.amount = Damage.index.amount * 0.5
+            set r1 = r1 * 0.5
+            endif
             set vampCount = vampCount + 1
+            set Damage.index.amount = Damage.index.amount + r1
+            set vampAmount = vampAmount + r1
         endif
         
         //Cutting
