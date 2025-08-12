@@ -36,7 +36,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         set abilId = GetDummySpell(u, CHEATER_MAGIC_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u, CHEATER_MAGIC_ABILITY_ID)    
         if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
-            call CheaterMagicStruct.create(u, (2.75 + (0.25 * abilLevel) + (0.03 * herolevel))  * chronusBonus)
+            call CheaterMagicStruct.create(u, (2.75 + (0.25 * abilLevel) + (0.03 * heroLevel))  * chronusBonus)
             call AbilStartCD(u, CHEATER_MAGIC_ABILITY_ID, 120)
         endif
             
