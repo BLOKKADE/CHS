@@ -381,6 +381,30 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        //Chain Lightning
+        set i1 = GetUnitAbilityLevel(DamageSource,CHAIN_LIGHTNING_ABILITY_ID)
+        if i1 > 0 and Damage.index.isAttack then
+            // Track attacks per unit using a hashtable
+            set i2 = LoadInteger(HT, GetHandleId(DamageSource), -90001)
+            set i2 = i2 + 1
+            if i2 >= 5 then
+            call DummyTargetCast2(DamageSource, DamageTarget, GetUnitX(DamageSource), GetUnitY(DamageSource), CHAIN_LIGHTNING_ABILITY_ID, "chainlightning", 150 * i1, 150 * i1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1)
+            call BlzSetUnitAbilityCooldown(DamageSource, CHAIN_LIGHTNING_ABILITY_ID, 0, 0) // Reset cooldown so it doesn't trigger
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\LightningBolt\\LightningBoltMissile.mdl", DamageTarget, "chest"))
+            set i2 = 0
+            endif
+            call SaveInteger(HT, GetHandleId(DamageSource), -90001, i2)
+        endif
+
+        //Fan of Knives
+        set i1 = GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID)
+        if i1 > 0 and Damage.index.isAttack then
+            if GetRandomReal(1, 100) <= 20 then
+            call DummyTargetCast2(DamageSource, DamageTarget, GetUnitX(DamageSource), GetUnitY(DamageSource), FAN_OF_KNIVES_ABILITY_ID, "fanofknives", 100 * i1, 100 * i1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1)
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\NightElf\\FanOfKnives\\FanOfKnivesTarget.mdl", DamageTarget, "chest"))
+            endif
+        endif
+
         //Cutting
         set i1 = GetUnitAbilityLevel(DamageSource,CUTTING_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack then

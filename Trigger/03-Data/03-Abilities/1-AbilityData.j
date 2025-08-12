@@ -302,6 +302,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //8 - Fan of Knives 
         call SaveAbilData(FAN_OF_KNIVES_ABILITY_ID, FAN_OF_KNIVES_ITEM_ID, false, 0, 0, true, Order_Instant, "fanofknives")
+        call SetLastObjectElement(Element_Wind, 1)
 
         //9 - Feral Spirit 
         call SaveAbilData(FERAL_SPIRIT_ABILITY_ID, FERAL_SPIRIT_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")

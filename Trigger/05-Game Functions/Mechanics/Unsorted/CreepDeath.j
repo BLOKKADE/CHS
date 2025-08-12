@@ -74,6 +74,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         set itemCount = GetUnitItemTypeCount(killingHero, 'I04R')
         if itemCount > 0 then
             set goldBounty = goldBounty + ((10 * ArenaMasterMultiplier(killingHero)) * itemCount)
+            set goldBounty = goldBounty + (itemCount * (RoundNumber / 2) * ArenaMasterMultiplier(killingHero))
         endif
 
         //Urn of Memories
