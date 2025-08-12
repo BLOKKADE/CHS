@@ -78,8 +78,8 @@ library GameInit initializer init requires GroupUtils
         integer SpawnedHeroCount = 0
         integer SuddenDeathTick = 0
         integer udg_integer41 = 0
-        integer udg_integer59 = 0
-        integer udg_integer61 = 0
+        integer BaseCreepBounty = 0
+        integer BountyDivisionOffset = 0
         integer udg_integer63 = 0
         integer UnknownInteger01 = 0
         integer TryLearnRandomAbilityAttempts = 0

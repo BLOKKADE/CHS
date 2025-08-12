@@ -98,9 +98,9 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[pid], Condition(function IsAliveCreepUnitFilter))
 
         if (CountUnitsInGroup(playerArenaCreeps) == 0) then
-            set goldBounty = goldBounty + udg_integer59 + udg_integer61
+            set goldBounty = goldBounty + BaseCreepBounty + BountyDivisionOffset
         else
-            set goldBounty = goldBounty + udg_integer59
+            set goldBounty = goldBounty + BaseCreepBounty
         endif
 
         //call BJDebugMsg("cd xp bonus pre: " + I2S(expBounty))

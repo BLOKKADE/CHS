@@ -111,13 +111,15 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         set RoundFinishedCount = 0
         call ConditionalTriggerExecute(UpdateItemsTrigger)
         call ForForce(GetPlayersAll(), function UpdateRoundNumberForPlayer)
+        
 
+        // BountyDivisionOffset compensates for gold lost from integer division, ensuring full rewards
         if (ElimModeEnabled == true or GameModeShort == true) then
-            set udg_integer59 = (200 * RoundNumber) / RoundCreepNumber
-            set udg_integer61 = (200 * RoundNumber) - (udg_integer59 * RoundCreepNumber)
+            set BaseCreepBounty = (200 * RoundNumber) / RoundCreepNumber
+            set BountyDivisionOffset = (200 * RoundNumber) - (BaseCreepBounty * RoundCreepNumber)
         else
-            set udg_integer59 = (80 * RoundNumber) / RoundCreepNumber
-            set udg_integer61 = (80 * RoundNumber) - (udg_integer59 * RoundCreepNumber)
+            set BaseCreepBounty = (80 * RoundNumber) / RoundCreepNumber
+            set BountyDivisionOffset = (80 * RoundNumber) - (BaseCreepBounty * RoundCreepNumber)
         endif
 
         set validPlayerForce = GetPlayersMatching(Condition(function IsValidPlayer))
