@@ -191,10 +191,20 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Devastating Blow
-        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 then
+        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') == 0 then
             call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.15)
+            set udg_NextDamageAbilitySource = DEVASTATING_BLOW_ABILITY_ID
+            call Damage.applyMagic(DamageSource, DamageTarget, r2, false, DAMAGE_TYPE_MAGIC)
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
+        endif
+
+        //Devastating Blow reduced by Heart of a Hero
+        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') > 0 then
+            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
+            set r1 = BlzGetUnitMaxHP(DamageTarget)
+            set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.075)
             set udg_NextDamageAbilitySource = DEVASTATING_BLOW_ABILITY_ID
             call Damage.applyMagic(DamageSource, DamageTarget, r2, false, DAMAGE_TYPE_MAGIC)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
