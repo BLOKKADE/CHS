@@ -478,6 +478,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false)
 
         // Reset the dead hero count
         set CurrentDeadHeroCount = 0
@@ -595,6 +596,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false)
 
         set BattleRoyalTimer = CreateTimer()
         set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)

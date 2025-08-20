@@ -133,6 +133,7 @@ library EndGame initializer init requires RandomShit, SaveCommand, Scoreboard, B
         call TriggerSleepAction(3.00)
         call ForForce(GetPlayersAll(), function ShowScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, true)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, true)
 
         set BattleRoyalTimer = CreateTimer()
         set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)

@@ -121,6 +121,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
             set HoldTab[GetPlayerId(GetTriggerPlayer())] = true
             call PlayerStats.forPlayer(GetTriggerPlayer()).setHasScoreboardOpen(true)
             call BlzFrameSetVisible(ScoreboardFrameHandle, true) 
+            call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, true) 
         endif
     endfunction
 
@@ -129,6 +130,7 @@ library ConversionHotkeys initializer init requires Table, SellItems, PlayerHero
             set HoldTab[GetPlayerId(GetTriggerPlayer())] = false
             call PlayerStats.forPlayer(GetTriggerPlayer()).setHasScoreboardOpen(false)
             call BlzFrameSetVisible(ScoreboardFrameHandle, false) 
+            call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false) 
         endif
     endfunction
 

@@ -34,6 +34,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 		framehandle MainAchievementFrameHandle // Hat/Pet main frame
 		framehandle MainVotingFrameHandle // Voting main frame
 		framehandle ScoreboardFrameHandle // Scoreboard main frame
+		framehandle ScoreboardDarkerFrameHandle // Scoreboard darker main frame
 		framehandle RewardsFrameHandle // Rewards main frame
         framehandle BattleCreatorFrameHandle // Battle creator main frame
 
@@ -128,6 +129,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 
 				if GetLocalPlayer() == p then
 					call BlzFrameSetVisible(ScoreboardFrameHandle, toggleBool)
+					call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, toggleBool)
 				endif
 			
 			// Battle creator button
