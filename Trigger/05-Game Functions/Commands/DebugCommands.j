@@ -344,6 +344,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.CpuPower).name("cpupw").handles("cpupw").help("cpupw", "Gives CPU players stats, levels and some abilities")
             call Command.create(CommandHandler.SetRoundNumber).name("srn").handles("srn").help("srn <value>", "Set round number to <value>.")
             call Command.create(CommandHandler.TestMode).name("test").handles("test").help("test", "Gives you max glory and gold")
+            call Command.create(CommandHandler.TestMode).name("t").handles("t").help("t", "Gives you max glory and gold")
             call Command.create(CommandHandler.ActivateItemStock).name("is").handles("is").help("is", "Activates item stock.")
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
         endif

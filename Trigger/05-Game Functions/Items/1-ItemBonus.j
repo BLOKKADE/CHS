@@ -116,6 +116,11 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitBonusReal(u, BONUS_MANA_REGEN, (500 * diff ))
 			call AddUnitAbsoluteBonusCount(u,Element_Water, uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
+
+			//Moonstone
+		elseif itemId == 'I03O' then
+			call AddUnitBonusReal(u, BONUS_MANA_REGEN, (300 * uniqueDiff ))
+			call AddUnitCustomState(u, BONUS_MAGICPOW, 25 * diff)
 			
 			//Sword of Bloodthirst
 		elseif itemId == SWORD_OF_BLOODTHRIST_ITEM_ID then
@@ -268,6 +273,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_BLOCK, 500 * uniqueDiff)
 			call AddUnitCustomState(u, BONUS_EVASION, 30 * uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Light, uniqueDiff)
+
+			//Wildborne Sigil
+		elseif itemId == 'WBSG' then
+			call AddUnitAbsoluteBonusCount(u,Element_Wild, diff)
 		
 			//Light Armor
 		elseif itemId == 'I076' then
@@ -305,8 +314,15 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
 
 			//Wizards Gemstone
-		elseif itemId == 'I0BQ' then
+		//elseif itemId == 'I0BQ' then
+			//call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
+
+		//Wizard's Battlestone
+		elseif itemId == 'I0BX' then
 			call AddUnitAbsoluteBonusCount(u,Element_Arcane, uniqueDiff)
+			call AddUnitCustomState(u, BONUS_BLOCK, 650 * diff)
+			call AddUnitBonus(u, BONUS_ARMOR, 145 * diff)
+			call AddUnitCustomState(u, BONUS_RUNEPOW, 100 * uniqueDiff)
 
 			//Book of Creatures
 		elseif itemId == 'I07K' then
@@ -359,7 +375,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitBonus(u, BONUS_HEALTH, 10000 * uniqueDiff)
 
 			//Runestones
-		elseif itemId == FIRE_RUNESTONE_ITEM_ID or itemId == POISON_RUNESTONE_ITEM_ID or itemId == ARCANE_RUNESTONE_ITEM_ID or itemId == WILD_RUNESTONE_ITEM_ID or itemId == LIGHT_RUNESTONE_ITEM_ID or itemId == DARK_RUNESTONE_ITEM_ID or itemId == WIND_RUNESTONE_ITEM_ID or itemId == EARTH_RUNESTONE_ITEM_ID or itemId == WATER_RUNESTONE_ITEM_ID or itemId == 'I0BX' then
+		elseif itemId == FIRE_RUNESTONE_ITEM_ID or itemId == POISON_RUNESTONE_ITEM_ID or itemId == ARCANE_RUNESTONE_ITEM_ID or itemId == WILD_RUNESTONE_ITEM_ID or itemId == LIGHT_RUNESTONE_ITEM_ID or itemId == DARK_RUNESTONE_ITEM_ID or itemId == WIND_RUNESTONE_ITEM_ID or itemId == EARTH_RUNESTONE_ITEM_ID or itemId == WATER_RUNESTONE_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_RUNEPOW, 100 * uniqueDiff)
 			
 			if itemId == FIRE_RUNESTONE_ITEM_ID then
@@ -424,6 +440,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitBonus(u, BONUS_DAMAGE, 150 * diff)
 			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 
+			//Storm Horn
+		elseif itemId == HEART_OF_DARKNESS_ITEM_ID then
+			call AddUnitAbsoluteBonusCount(u,Element_Wind, 1 * uniqueDiff)
+
 		//Hammer of the Gods
 		elseif itemId == 'I066' then
 			call AddUnitBonus(u, BONUS_DAMAGE, 10000 * diff)
@@ -434,7 +454,11 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 		//Titanium Spike
 		elseif itemId == TITANIUM_SPIKE_ITEM_ID then
-			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (1000 * diff), 0)
+			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (2000 * diff), 0)
+
+		//Adamantium Armor
+		elseif itemId == 'I07M' then
+			call AddUnitBonus(u, BONUS_STRENGTH, 1750 * uniqueDiff)
 
 		//Heavy Mace
 		elseif itemId == 'I07I' then

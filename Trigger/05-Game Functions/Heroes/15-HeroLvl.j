@@ -66,6 +66,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
 
         elseif uid == STOMP_TREE_UNIT_ID then  
             set i = prevLevel + 1
+            call SetBonus(u, 1, 50 + 50 * (heroLevel / 175.0))
             loop
                 exitwhen i > heroLevel
 
@@ -84,7 +85,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
                 endif
 
                 if i == 175 then
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+1% Max HP regeneration bonus!|r")   
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+1.33% Max HP heal per second!|r")   
                 endif
 
                 set i = i + 1

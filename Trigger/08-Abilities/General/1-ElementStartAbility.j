@@ -128,7 +128,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Dark
         if GetUnitAbilityLevel(u,ABSOLUTE_DARK_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Dark) then
-            call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), 8, 500, false)
+            call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), 6, 500, false)
         endif
 
         if GetUnitAbilityLevel(u, ABSOLUTE_COLD_ABILITY_ID) > 0 and IsSpellElement(u, id, Element_Cold) then

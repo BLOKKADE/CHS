@@ -49,7 +49,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Storm Horn
         if GetUnitAbilityLevel(DamageTarget ,'B00B') >= 1 then
-            if GetRandomReal(1,100) <= 14 * DamageTargetLuck then
+            if GetRandomReal(1,100) <= 19 * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, 'B00B', 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
@@ -811,6 +811,11 @@ scope ModifyDamageBeforeArmor initializer init
             //call BJDebugMsg("ts armor pierce: " + R2S(Damage.index.armorPierced))
         endif
 
+         //Adamantium Armor self-damage negation
+        if UnitHasItemType(DamageSource, 'I07M') and DamageSource == DamageTarget then
+            set Damage.index.damage = 0
+        endif
+
         //Wisdom Chestplate
         if IsMagicDamage() and UnitHasItemType(DamageTarget, WISDOM_CHESTPLATE_ITEM_ID) then 
             call ActivateWisdomChestplate(DamageTarget, Damage.index.damage)
@@ -849,7 +854,11 @@ scope ModifyDamageBeforeArmor initializer init
                 set i1 = GetUnitAbilityLevel(DamageSource, 'A0BF') + PoisonRuneBonus[DamageSourcePid]
                 if (IsPhysDamage() or PoisonRuneBonus[DamageSourcePid] > 0) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
                     call TempAbil.create(DamageTarget, 'A06P', 8)
-                    call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                    if GetUnitAbilityLevel(DamageTarget, 'B00N') >= 1 then
+                        call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 0.5, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                    else
+                        call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                    endif
                 endif
             endif
         endif

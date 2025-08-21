@@ -320,9 +320,18 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call ActivateScepterOfConfusion(caster)
                     endif
 
+                    //if IsAbilityCasteable(abilId, false) then
+                       // Wizard's Gemstone
+                        //if UnitHasItemType(caster, 'I0BQ') then
+                            //if BlzGetUnitAbilityCooldownRemaining(caster, 'A0CS') == 0 then
+                                //call ActivateStatRune(caster)
+                                //call AbilStartCD(caster, 'A0CS', 5) 
+                            //endif
+                        //endif
+
                     if IsAbilityCasteable(abilId, false) then
-                        //Wizard's Gemstone
-                        if UnitHasItemType(caster, 'I0BQ') then
+                        //Wizard's Battlestone
+                        if UnitHasItemType(caster, 'I0BX') then
                             if BlzGetUnitAbilityCooldownRemaining(caster, 'A0CS') == 0 then
                                 call ActivateStatRune(caster)
                                 call AbilStartCD(caster, 'A0CS', 5) 

@@ -586,6 +586,7 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
             if (handleId == CloseHandleId) then
                 if (GetLocalPlayer() == triggerPlayer) then	
                     call BlzFrameSetVisible(ScoreboardFrameHandle, false) 
+                    call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false)
                 endif
 
                 call PlayerStats.forPlayer(triggerPlayer).setHasScoreboardOpen(false)
@@ -686,6 +687,8 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         // Set the frame for the backdrop of the entire scoreboard
         call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X, MAIN_FRAME_TOP_LEFT_Y) 
         call BlzFrameSetAbsPoint(ScoreboardFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX, mainFrameBottomRightY) 
+        call BlzFrameSetAbsPoint(ScoreboardDarkerFrameHandle, FRAMEPOINT_TOPLEFT, MAIN_FRAME_TOP_LEFT_X, MAIN_FRAME_TOP_LEFT_Y) 
+        call BlzFrameSetAbsPoint(ScoreboardDarkerFrameHandle, FRAMEPOINT_BOTTOMRIGHT, mainFrameBottomRightX, mainFrameBottomRightY) 
 
         // Create the scoreboard title
         set titleFrameHandle = BlzCreateFrameByType("GLUETEXTBUTTON", "ScoreboardTitle", ScoreboardFrameHandle, "ScriptDialogButton", 0) 
@@ -1019,6 +1022,10 @@ library Scoreboard initializer init requires PlayerTracking, HeroAbilityTable, I
         call TriggerAddAction(IconEventTrigger, function ScoreboardMouseEventActions)
 
         // Create the main frame. All elements use this frame as the parent
+        set ScoreboardDarkerFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
+        call BlzFrameSetLevel(ScoreboardDarkerFrameHandle, 1)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false) 
+
         set ScoreboardFrameHandle = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0) 
         call BlzFrameSetLevel(ScoreboardFrameHandle, 1)
         call BlzFrameSetVisible(ScoreboardFrameHandle, false) 
