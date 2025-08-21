@@ -67,6 +67,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false)
 
         call TriggerExecute(StartLevelTrigger)
     endfunction
@@ -97,6 +98,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         // Show the scoreboard to everyone, hide it after some time, then start the game
         call ForForce(GetPlayersAll(), function ShowScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, true)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, true)
 
         set GameStartTimer = CreateTimer()
         set GameStartTimerDialog = CreateTimerDialog(GameStartTimer)
