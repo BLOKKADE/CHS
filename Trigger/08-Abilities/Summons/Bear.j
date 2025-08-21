@@ -13,7 +13,7 @@ library Bear requires CustomState, SpellFormula
 
         call UnitAddAbility(u, BASH_ABILITY_ID)
         call SetUnitAbilityLevel(u, BASH_ABILITY_ID, IMinBJ(R2I(totalLevel / 3), 30))
-
+        
         call UnitAddAbility(u, CUTTING_ABILITY_ID)
         call SetUnitAbilityLevel(u, CUTTING_ABILITY_ID, abilityLevel)
         call IssueImmediateOrderById(u, 852185) 

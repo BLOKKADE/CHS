@@ -7,24 +7,32 @@ library Stomp requires RandomShit
     endglobals
 
     function AddStompStats takes unit u returns nothing
-        local integer pid = GetPlayerId(GetOwningPlayer(u))
-        
-        if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
-            if SummonHitPoints[pid] > AppliedSummonHitPoints[pid] then
-                call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + (SummonHitPoints[pid] - AppliedSummonHitPoints[pid]) * 200)
-                set AppliedSummonHitPoints[pid] = SummonHitPoints[pid]
-            endif
+    local integer pid   = GetPlayerId(GetOwningPlayer(u))
+    local unit    hero  = PlayerHeroes[pid]
+    local real     lvl  = GetHeroLevel(hero)
+    local real  factor  = 0.5 + (0.5 * (lvl / 175.0))
 
-            if SummonArmor[pid] > AppliedSummonArmor[pid] then
-                call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] - AppliedSummonArmor[pid]) * 2)
-                set AppliedSummonArmor[pid] = SummonArmor[pid]
-            endif
-
-            if SummonDamage[pid] > AppliedSummonDamage[pid] then
-                call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * (SummonDamage[pid] - AppliedSummonDamage[pid])), 0)
-                set AppliedSummonDamage[pid] = SummonDamage[pid]
-            endif
+    if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
+        // Hit Points
+        if SummonHitPoints[pid] > AppliedSummonHitPoints[pid] then
+            call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) + R2I((SummonHitPoints[pid] - AppliedSummonHitPoints[pid]) * 200 * factor))
+            set AppliedSummonHitPoints[pid] = SummonHitPoints[pid]
         endif
-    endfunction
 
+        // Armor
+        if SummonArmor[pid] > AppliedSummonArmor[pid] then
+            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] - AppliedSummonArmor[pid]) * 2 * factor)
+            set AppliedSummonArmor[pid] = SummonArmor[pid]
+        endif
+
+        // Damage
+        if SummonDamage[pid] > AppliedSummonDamage[pid] then
+            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + R2I(20 * (SummonDamage[pid] - AppliedSummonDamage[pid]) * factor), 0)
+            set AppliedSummonDamage[pid] = SummonDamage[pid]
+        endif
+    endif
+
+    set hero = null
+    endfunction
+    
 endlibrary

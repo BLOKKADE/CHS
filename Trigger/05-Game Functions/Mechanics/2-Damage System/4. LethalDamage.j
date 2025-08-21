@@ -47,7 +47,7 @@ scope LethalDamage initializer init
             set ChestOfGreedBonus.boolean[GetHandleId(DamageTarget)] = true
         endif
 
-        //Battle Runestone
+        //Wizard's Battlestone
         if UnitHasItemType(DamageSourceHero, 'I0BX') then
             call CheckBattleRunestoneCount(DamageSourceHero, GetHandleId(DamageSourceHero))
         endif

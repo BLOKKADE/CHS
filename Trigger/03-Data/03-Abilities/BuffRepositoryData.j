@@ -19,7 +19,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, SPEED_BLADE_ABIL_ID, BUFFTYPE_POSITIVE, false)
         //anti magic flag
         call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true)
-
+        call SetupBuffInfo1(TOTEM_BEAST_BUFF_ID, TOTEM_BEAST_ABIL_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1('BOwk', WIND_WALK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
 
@@ -74,7 +74,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(DISEASE_CLOUD_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) // unused
         call SetupBuffInfo1(THUNDER_CLAP_BUFF_ID, THUNDER_CLAP_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // unused?
         call SetupBuffInfo1(WHIRLWIND_BUFF_ID, WHIRLWIND_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //unused?
-
+        call SetupBuffInfo1(MANIFOLD_SILENCE_BUFF_ID, MANIFOLD_SILENCE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) 
         call SetupBuffInfo1('B023', 'A0A7', BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(DISEASE_BUFF_ID, PLAGUE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(DEATH_AND_DECAY_BUFF_ID, DEATH_AND_DECAY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
@@ -125,6 +125,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2(VIGOUR_TOKEN_BUFF_ID, 'A09A', 0, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02P', FAN_OF_KNIVES_BUFF_ID, FAN_OF_KNIVES_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02T', DARK_SEAL_BUFF_ID, DARK_SEAL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('SSBB', SPIRIT_SHACKLE_BUFF_ID, SPIRIT_SHACKLE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02S', DESTR_OF_BLOCK_BUFF_ID, DESTRUCTION_BLOCK_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)

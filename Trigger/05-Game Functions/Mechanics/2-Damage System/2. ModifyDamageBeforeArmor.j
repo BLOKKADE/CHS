@@ -49,7 +49,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Storm Horn
         if GetUnitAbilityLevel(DamageTarget ,'B00B') >= 1 then
-            if GetRandomReal(1,100) <= 14 * DamageTargetLuck then
+            if GetRandomReal(1,100) <= 19 * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, 'B00B', 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
@@ -809,6 +809,11 @@ scope ModifyDamageBeforeArmor initializer init
         if GetUnitAbilityLevel(DamageSource, TITANIUM_SPIKE_ABIL_ID) > 0 and GetUnitAbilityLevel(DamageTarget, TITANIUM_SPIKE_IMMUN_ABIL_ID) == 0 and IsPhysDamage() then
             set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.3)
             //call BJDebugMsg("ts armor pierce: " + R2S(Damage.index.armorPierced))
+        endif
+
+         //Adamantium Armor self-damage negation
+        if UnitHasItemType(DamageSource, 'I07M') and DamageSource == DamageTarget then
+            set Damage.index.damage = 0
         endif
 
         //Wisdom Chestplate

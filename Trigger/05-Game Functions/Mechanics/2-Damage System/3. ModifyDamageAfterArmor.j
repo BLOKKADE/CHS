@@ -15,6 +15,7 @@ scope ModifyDamageAfterArmor initializer init
 
         local integer vampCount = 0
         local real vampAmount = 0
+        local real armorBonus = GetUnitEffectiveArmor(DamageTarget)
 
         if Damage.index.amount == 0 then
             return
@@ -98,8 +99,7 @@ scope ModifyDamageAfterArmor initializer init
             set vampCount = vampCount + 1
         endif
 
-         //Bloodlust
-         
+         //Bloodlust       
          if GetUnitAbilityLevel(DamageSource, 'Bblo') != 0 then
             //does not work in team duels if you cast bloodlust on an other players units
              set r2 = Damage.index.amount * (0.0069 + (0.0031 * GetUnitAbilityLevel(PlayerHeroes[DamageSourcePid], BLOODLUST_ABILITY_ID)))
@@ -169,6 +169,17 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        // Titanium Spike – pierce armor + bonus damage (bonus only on attacks)
+        if GetUnitAbilityLevel(DamageSource, TITANIUM_SPIKE_ABIL_ID) > 0 and GetUnitAbilityLevel(DamageTarget, TITANIUM_SPIKE_IMMUN_ABIL_ID) == 0 then
+            // bonus damage = target armor, but only if this is an attack
+            if Damage.index.isAttack then
+                set Damage.index.damage = Damage.index.damage + armorBonus
+
+                // Debug message to show how much damage is added
+                //call BJDebugMsg("Titanium Spike bonus damage: " + R2S(armorBonus))
+            endif
+        endif
+
         //Staff of Absolute Magic
         if GetUnitAbilityLevel(DamageSourceHero  ,'B00O') >= 1 and IsMagicDamage() then
             set r2 = Damage.index.amount * 0.33 
@@ -178,7 +189,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Heavy Blow
         if GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSourceHero,HEAVY_BLOW_ABILITY_ID,0.3)
+            call AbilStartCD(DamageSourceHero,HEAVY_BLOW_ABILITY_ID,0.5)
             set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\Devour\\DevourEffectArt.mdl", DamageTarget, "chest"))
         endif
@@ -515,7 +526,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Flimsy Token
-        if UnitHasItemType(DamageTarget, FLIMSY_TOKEN_ITEM_ID) and GetUnitAbilityLevel(DamageSource, FLIMSY_TOKEN_BUFF_ID) == 0 then
+        if UnitHasItemType(DamageTarget, FLIMSY_TOKEN_ITEM_ID) and GetUnitAbilityLevel(DamageSource, FLIMSY_TOKEN_BUFF_ID) == 0 and Damage.index.isAttack then
             call FlimsyToken(DamageTarget, DamageSource)
         endif
 
@@ -535,7 +546,7 @@ scope ModifyDamageAfterArmor initializer init
         //Finishing Blow
         set i1 = GetUnitAbilityLevel(DamageSourceHero, FINISHING_BLOW_ABILITY_ID)
         if Damage.index.amount > 0 and i1 > 0 then
-            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= (i1 * 0.7) then
+            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= (i1 * 0.5) then
                 set Damage.index.amount = 9999999
                 if not IsFxOnCooldownSet(DamageTargetId, FINISHING_BLOW_ABILITY_ID, 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))

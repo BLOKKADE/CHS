@@ -1132,7 +1132,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(MARTIAL_THEFT_ABILITY_ID, MARTIAL_THEFT_ITEM_ID, false, 0, 0, false, Order_None, null)
         //call SetLastObjectElement(Element_Energy, 1)
 
-        //188 - Destrution Block 
+        //188 - Destruction Block 
         call SaveAbilData(DESTRUCTION_BLOCK_ABILITY_ID, DESTRUCTION_BLOCK_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
         call SetLastObjectElement(Element_Dark, 1)
 
@@ -1164,21 +1164,26 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(ARCANE_STRIKE_ABILITY_ID, ARCANE_STRIKE_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
-         //196 - Eruption
-         call SaveAbilData(ERUPTION_ABILITY_ID, ERUPTION_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
-         call SetLastObjectElement(Element_Fire, 1)
-         call SetLastObjectElement(Element_Earth, 1)
+        //196 - Eruption
+        call SaveAbilData(ERUPTION_ABILITY_ID, ERUPTION_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
+        call SetLastObjectElement(Element_Fire, 1)
+        call SetLastObjectElement(Element_Earth, 1)
 
-         //197 - Wild Defense
-         call SaveAbilData(WILD_DEFENSE_ABILITY_ID, WILD_DEFENSE_ITEM_ID, false, 0, 0, false, Order_None, null)
-         call SetLastObjectElement(Element_Wild, 2)
+        //197 - Wild Defense
+        call SaveAbilData(WILD_DEFENSE_ABILITY_ID, WILD_DEFENSE_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Wild, 2)
 
-         //198 - Contemporary Runes
-         call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "burrow")
-         call SetLastObjectElement(Element_Arcane, 1)
+        //198 - Contemporary Runes
+        call SaveAbilData(CONTEMPORARY_RUNES_ABILITY_ID, CONTEMPORARY_RUNES_ITEM_ID, false, Target_Enemy, 0, true, Order_Instant, "burrow")
+        call SetLastObjectElement(Element_Arcane, 1)
 
-         //199 - Energy Bombardment
-         call SaveAbilData(ENERGY_BOMBARDMENT_ABILITY_ID, ENERGY_BOMBARDMENT_ITEM_ID, false, Target_Enemy, 0, false, Order_None, null)
+        //199 - Energy Bombardment
+        call SaveAbilData(ENERGY_BOMBARDMENT_ABILITY_ID, ENERGY_BOMBARDMENT_ITEM_ID, false, Target_Enemy, 0, false, Order_None, null)
+
+        //200 - Spirit Shackle
+        call SaveAbilData(SPIRIT_SHACKLE_ABILITY_ID, SPIRIT_SHACKLE_ITEM_ID, false, 0, 1, true, Order_Target, "shadowstrike")
+        call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Arcane, 1)
     endfunction
 
     function InitItemAbilities takes nothing returns nothing
@@ -1220,6 +1225,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         // Heart of Darkness
         call SaveItemAbilityData(HEART_OF_DARKNESS_ABIL_ID, HEART_OF_DARKNESS_ITEM_ID, Target_Enemy, 0, Order_Instant, "stomp")
+        call SetLastObjectElement(Element_Dark, 1)
 
         // Mysterious Runestone
         call SaveItemAbilityData(MYSTERIOUS_RUNESTONE_ABIL_ID, MYSTERIOUS_RUNESTONE_ITEM_ID, Target_Any, 0, Order_Instant, "spiritwolf")

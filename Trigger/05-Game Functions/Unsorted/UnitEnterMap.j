@@ -1,4 +1,4 @@
-library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo, LearnAbsolute, PackingTape
+library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo, LearnAbsolute, PackingTape, LimitedSummon
 
     globals
         Table SummonLevel
@@ -50,6 +50,12 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call UnitAddAbility(u, 'Aeth')    
         endif
 
+        //Polar Bear skin
+        if GetUnitTypeId(hero) == YETI_UNIT_ID or GetUnitTypeId(hero) == LICH_UNIT_ID or GetUnitTypeId(hero) == COLD_KNIGHT_UNIT_ID and summonTypeId == BEAR_1_UNIT_ID then
+                call BlzSetUnitSkin(u, 'PBBB')
+                call BlzSetUnitName(u, "Polar Bear")
+        endif
+
         //Skeleton Brute summon colouring
         if GetUnitTypeId(hero) == SKELETON_BRUTE_UNIT_ID then  
             call SetUnitVertexColor(u, 100, 100, 100, 255)
@@ -77,54 +83,59 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         endif
 
         //Seer summon buffs possibly for when summon limit is introduced
-        //if GetUnitTypeId(hero) == SEER_UNIT_ID then
+        if GetUnitTypeId(hero) == SEER_UNIT_ID then
 
-           // if GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID) > 0 then
-           // call UnitAddAbility(u, DESTRUCTION_ABILITY_ID)
-           // call SetUnitAbilityLevel(u, DESTRUCTION_ABILITY_ID, GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID))
-           // endif
+            if GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, DESTRUCTION_ABILITY_ID)
+            call SetUnitAbilityLevel(u, DESTRUCTION_ABILITY_ID, GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID))
+            endif
 
-          //  if GetUnitAbilityLevel(hero, PULVERIZE_ABILITY_ID) > 0 then
-          //  call UnitAddAbility(u, PULVERIZE_ABILITY_ID)
-          //  call SetUnitAbilityLevel(u, PULVERIZE_ABILITY_ID, GetUnitAbilityLevel(hero, PULVERIZE_ABILITY_ID))
-         //   endif
+            if GetUnitAbilityLevel(hero, PULVERIZE_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, PULVERIZE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, PULVERIZE_ABILITY_ID, GetUnitAbilityLevel(hero, PULVERIZE_ABILITY_ID))
+            endif
 
-          //  if GetUnitAbilityLevel(hero, ENVENOMED_WEAPONS_ABILITY_ID) > 0 then
-          //  call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
-         //   call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, GetUnitAbilityLevel(hero, ENVENOMED_WEAPONS_ABILITY_ID))
-         //   endif
+            if GetUnitAbilityLevel(hero, ENVENOMED_WEAPONS_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
+            call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, GetUnitAbilityLevel(hero, ENVENOMED_WEAPONS_ABILITY_ID))
+            endif
 
-         //   if GetUnitAbilityLevel(hero, INCINERATE_ABILITY_ID) > 0 then
-         //   call UnitAddAbility(u, INCINERATE_ABILITY_ID)
-         //   call SetUnitAbilityLevel(u, INCINERATE_ABILITY_ID, GetUnitAbilityLevel(hero, INCINERATE_ABILITY_ID))
-         //   endif
+            if GetUnitAbilityLevel(hero, INCINERATE_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, INCINERATE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, INCINERATE_ABILITY_ID, GetUnitAbilityLevel(hero, INCINERATE_ABILITY_ID))
+            endif
 
-         //   if GetUnitAbilityLevel(hero, BASH_ABILITY_ID) > 0 then
-         //   call UnitAddAbility(u, BASH_ABILITY_ID)
-         //   call SetUnitAbilityLevel(u, BASH_ABILITY_ID, GetUnitAbilityLevel(hero, BASH_ABILITY_ID))
-         //   endif
+            if GetUnitAbilityLevel(hero, BASH_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, BASH_ABILITY_ID)
+            call SetUnitAbilityLevel(u, BASH_ABILITY_ID, GetUnitAbilityLevel(hero, BASH_ABILITY_ID))
+            endif
 
-         //   if GetUnitAbilityLevel(hero, LIQUID_FIRE_ABILITY_ID) > 0 then
-         //   call UnitAddAbility(u, LIQUID_FIRE_ABILITY_ID)
-         //   call SetUnitAbilityLevel(u, LIQUID_FIRE_ABILITY_ID, GetUnitAbilityLevel(hero, LIQUID_FIRE_ABILITY_ID))
-         //   endif
+            if GetUnitAbilityLevel(hero, LIQUID_FIRE_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, LIQUID_FIRE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, LIQUID_FIRE_ABILITY_ID, GetUnitAbilityLevel(hero, LIQUID_FIRE_ABILITY_ID))
+            endif
 
-        //    if GetUnitAbilityLevel(hero, CRITICAL_STRIKE_ABILITY_ID) > 0 then
-         //   call UnitAddAbility(u, CRITICAL_STRIKE_ABILITY_ID)
-         //   call SetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID, GetUnitAbilityLevel(hero, CRITICAL_STRIKE_ABILITY_ID))
-         //   endif
+            if GetUnitAbilityLevel(hero, MAGIC_CRITICAL_HIT_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, MAGIC_CRITICAL_HIT_ABILITY_ID)
+            call SetUnitAbilityLevel(u, MAGIC_CRITICAL_HIT_ABILITY_ID, GetUnitAbilityLevel(hero, MAGIC_CRITICAL_HIT_ABILITY_ID))
+            endif
 
-         //   if GetUnitAbilityLevel(hero, DRUNKEN_MASTER_ABILITY_ID) > 0 then
-        //    call UnitAddAbility(u, DRUNKEN_MASTER_ABILITY_ID)
-         //   call SetUnitAbilityLevel(u, DRUNKEN_MASTER_ABILITY_ID, GetUnitAbilityLevel(hero, DRUNKEN_MASTER_ABILITY_ID))
-         //   endif
+            if GetUnitAbilityLevel(hero, CRITICAL_STRIKE_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, CRITICAL_STRIKE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID, GetUnitAbilityLevel(hero, CRITICAL_STRIKE_ABILITY_ID))
+            endif
 
-         //   if GetUnitAbilityLevel(hero, CRUELTY_ABILITY_ID) > 0 then
-         //   call UnitAddAbility(u, CRUELTY_ABILITY_ID)
-         //   call SetUnitAbilityLevel(u, CRUELTY_ABILITY_ID, GetUnitAbilityLevel(hero, CRUELTY_ABILITY_ID))
-         //   endif
+            if GetUnitAbilityLevel(hero, DRUNKEN_MASTER_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, DRUNKEN_MASTER_ABILITY_ID)
+            call SetUnitAbilityLevel(u, DRUNKEN_MASTER_ABILITY_ID, GetUnitAbilityLevel(hero, DRUNKEN_MASTER_ABILITY_ID))
+            endif
 
-        //endif
+            if GetUnitAbilityLevel(hero, CRUELTY_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, CRUELTY_ABILITY_ID)
+            call SetUnitAbilityLevel(u, CRUELTY_ABILITY_ID, GetUnitAbilityLevel(hero, CRUELTY_ABILITY_ID))
+            endif
+
+        endif
 
         //Druid of the Claw
         if GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
@@ -145,11 +156,15 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(summonTypeId)) + UpgradeU
 
             call GetSummonStatFunction(summonTypeId).evaluate(u, totalLevel)
-
-            call BlzSetUnitAttackCooldown(u, RMaxBJ(0.4, BlzGetUnitAttackCooldown(u, 0)), 0)
+            // Summon attack cooldown limit
+            if summonTypeId == 'e001' then //faerie dragon exception
+                call BlzSetUnitAttackCooldown(u, RMaxBJ(0.35, BlzGetUnitAttackCooldown(u, 0)), 0)
+            else
+                call BlzSetUnitAttackCooldown(u, RMaxBJ(0.4, BlzGetUnitAttackCooldown(u, 0)), 0)
+            endif
 
             set SummonLevel[GetHandleId(u)] = totalLevel
-            call BlzSetUnitName(u,GetUnitName(u)+ ": level " + I2S(totalLevel))
+            call BlzSetUnitName(u, GetUnitName(u) + ": level " + I2S(totalLevel))
             call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
@@ -219,6 +234,163 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
             call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_BUFF_ICON_ID)
         endif
+
+        //Summon Limit
+        if GetUnitTypeId(hero) == DOOM_GUARD_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == PYROMANCER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == PIT_LORD_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == WITCH_DOCTOR_UNIT_ID then
+            set limit = 12
+        elseif GetUnitTypeId(hero) == LICH_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == NAGA_SIREN_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == BLOOD_MAGE_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == SORCERER_UNIT_ID then
+            set limit = 16
+        elseif GetUnitTypeId(hero) == THUNDER_WITCH_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == TROLL_BERSERKER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == SATYR_TRICKSTER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == BLADE_MASTER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == OGRE_WARRIOR_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == ROCK_GOLEM_UNIT_ID then
+            set limit = 16
+        elseif GetUnitTypeId(hero) == GNOME_MASTER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == ARENA_MASTER_UNIT_ID then
+            set limit = 18
+        elseif GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
+            set limit = 10
+        elseif GetUnitTypeId(hero) == MYSTIC_UNIT_ID then
+            set limit = 16
+        elseif GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
+            set limit = 10
+        elseif GetUnitTypeId(hero) == SEER_UNIT_ID then
+            set limit = 3
+        elseif GetUnitTypeId(hero) == MURLOC_WARRIOR_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == SKELETON_BRUTE_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == FALLEN_RANGER_UNIT_ID then
+            set limit = 16
+        elseif GetUnitTypeId(hero) == AVATAR_SPIRIT_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == DARK_HUNTER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == ABOMINATION_UNIT_ID then
+            set limit = 16
+        elseif GetUnitTypeId(hero) == DEADLORD_UNIT_ID then
+            set limit = 16
+        elseif GetUnitTypeId(hero) == TROLL_HEADHUNTER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == MAULER_UNIT_ID then
+            set limit = 16
+        elseif GetUnitTypeId(hero) == LIEUTENANT_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == YETI_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == COLD_KNIGHT_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == RANGER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == WAR_GOLEM_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == ORC_CHAMPION_UNIT_ID then
+            set limit = 18
+        elseif GetUnitTypeId(hero) == GHOUL_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == URSA_WARRIOR_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == OGRE_MAGE_UNIT_ID then
+            set limit = 14
+        elseif GetUnitTypeId(hero) == DEMON_HUNTER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == TIME_WARRIOR_UNIT_ID then
+            set limit = 14
+        elseif GetUnitTypeId(hero) == BANSHEE_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == HUNTRESS_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == TAUREN_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == MEDIVH_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == CENTAUR_ARCHER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == CRYPT_LORD_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == GNOLL_WARDEN_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
+            set limit = 14
+        elseif GetUnitTypeId(hero) == WOLF_RIDER_UNIT_ID then
+            set limit = 20
+        elseif GetUnitTypeId(hero) == STOMP_TREE_UNIT_ID then
+            set limit = 10
+        elseif GetUnitTypeId(hero) == GREEDY_GOBLIN_UNIT_ID then
+            set limit = 14
+        elseif GetUnitTypeId(hero) == TINKER_UNIT_ID then
+            set limit = 18
+        else
+            // fallback (if not one of the defined heroes)
+            set limit = 20
+        endif
+
+        // increase limit if hero has Totem of the Beast
+        if UnitHasItemType(hero, 'BBCW') then
+            set limit = limit + 4
+        endif
+
+        //increase limit if hero has Hero Buff
+        if UnitHasBuffBJ(hero, 'B00T') then
+            set limit = limit +10
+        endif
+
+        //Storm Horn summon limit increase
+        if UnitHasBuffBJ(hero, 'B00B') then
+            set limit = limit +4
+        endif
+
+        // Bloodbound Horn summon limit increase
+        if UnitHasItemType(hero, 'HBBH') then
+            // Add flat +2
+            set limit = limit + 2
+            
+            // Add 10% summon limit for every 5% missing HP
+            set limit = R2I(limit * (1.0 + 0.10 * ((1.0 - (GetUnitState(hero, UNIT_STATE_LIFE) / GetUnitState(hero, UNIT_STATE_MAX_LIFE))) / 0.05)))
+        endif
+
+        // WildBorne Sigil summon limit increase
+        if UnitHasItemType(hero, WILDBORNE_SIGIL_ITEM_ID) then
+            set limit = R2I(limit * 1.50)
+        endif
+
+        // decrease limit if hero has Fear Aura
+        if UnitHasBuffBJ(hero, 'B00C') then
+            set limit = R2I(limit * 0.70)
+        endif
+
+        // Spirit Shackle buff overrides everything
+        if UnitHasBuffBJ(hero, SPIRIT_SHACKLE_BUFF_ID) then
+            set limit = 5
+        endif
+
+        if summonTypeId == FAERIE_DRAGON_UNIT_ID then 
+            set limit = 1888
+            call LimitedSummon(hero, u, 2, limit) 
+        else 
+            call LimitedSummon(hero, u, 1, limit) 
+        endif  
+
         
         set u = null
         set hero = null

@@ -88,7 +88,7 @@ scope ShortPeriodCheck initializer init
                         call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
                         call SetWidgetLife(u, GetWidgetLife(u) + 2500 * i1)
                         call TempFx.target("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
-                        call RemoveUnitBuffs(u, BUFFTYPE_NEGATIVE, false)
+                        call RemoveFirstUnitBuff(u, 1, BUFFTYPE_NEGATIVE)
                     endif
                 endif
             endif
@@ -126,14 +126,14 @@ scope ShortPeriodCheck initializer init
                 endif
             endif
 
-            //Titanium Armor
-            set i1 = GetUnitAbilityLevel(u, 'A05T')
-            set i2 = LoadInteger(HT, hid,'A05T')
+            //Adamantium Armor
+            set i1 = GetUnitAbilityLevel(u, 'A032')
+            set i2 = LoadInteger(HT, hid,'A032')
             if i1 > 0 or i2 != 0 then
-                set i1 = R2I(GetHeroStr(u, true) * 0.15) * i1
+                set i1 = R2I(GetHeroStr(u, true) * 0.25) * i1
                 if i1 != i2 then
                     call AddUnitCustomState(u, BONUS_BLOCK, i1 - i2)
-                    call SaveInteger(HT, hid, 'A05T', i1)	
+                    call SaveInteger(HT, hid, 'A032', i1)	
                 endif
             endif
 
@@ -186,14 +186,26 @@ scope ShortPeriodCheck initializer init
                     call SaveInteger(DataUnitHT, hid, 542, i1)
                 endif
 
-                //Stomp regen
+                //Stomp HP regen
+            //elseif unitTypeId == STOMP_TREE_UNIT_ID and GetHeroLevel(u) >= 175 then
+                //set i1 = R2I(BlzGetUnitMaxHP(u) * 0.01)
+                //set i2 = LoadInteger(DataUnitHT, hid, 542)
+                //if i1 != i2 then
+                    //call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - i2 + i1)
+                    //call SaveInteger(DataUnitHT, hid, 542, i1)
+                //endif
+
+                //Stomp Heal
             elseif unitTypeId == STOMP_TREE_UNIT_ID and GetHeroLevel(u) >= 175 then
-                set i1 = R2I(BlzGetUnitMaxHP(u) * 0.01)
-                set i2 = LoadInteger(DataUnitHT, hid, 542)
-                if i1 != i2 then
-                    call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - i2 + i1)
-                    call SaveInteger(DataUnitHT, hid, 542, i1)
+                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.0133)
+                   if i1 < 1 then
+                        set i1 = 1 // Ensure at least 1 HP is healed
+                   endif
+                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
+                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
                 endif
+
                 //War Golem
             elseif unitTypeId == WAR_GOLEM_UNIT_ID then
                 set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))

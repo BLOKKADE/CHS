@@ -3,6 +3,8 @@ scope LongPeriodCheck initializer init
     private function OnCooldownEnd takes unit u returns nothing
         local integer i
         local integer hid = GetHandleId(u)
+        local real cd    
+
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
 
             call CastChronusSpells(u, hid, false)
@@ -27,6 +29,19 @@ scope LongPeriodCheck initializer init
                 call UseSpellsHolyShield(u)
                 call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1500)
                 call AbilStartCD(u,'A066', 10) 
+            endif
+
+            // Storm Horn
+            if GetUnitAbilityLevel(u,'SHBB') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'SHBB') <= 0.001 and ( GetUnitState(u, UNIT_STATE_MANA) / BlzGetUnitMaxMana(u) ) < 0.90 then
+                // base cooldown
+                set cd = 10.0
+                // halve cooldown if below 50% hit points
+                if ( GetWidgetLife(u) / BlzGetUnitMaxHP(u) ) < 0.50 then
+                    set cd = cd * 0.5
+                endif
+
+                call UseSpellsStormHorn(u)
+                call AbilStartCD(u,'SHBB', cd)
             endif
 
             //Ancient Runes

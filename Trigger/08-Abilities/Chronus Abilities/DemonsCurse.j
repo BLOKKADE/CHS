@@ -7,7 +7,7 @@ library DemonsCurse requires DummySpell, AbilityCooldown, RandomShit
         call ElemFuncStart(u, DEMONS_CURSE_ABILITY_ID)
         call AbilStartCD(u, DEMONS_CURSE_ABILITY_ID, 120)
 
-        //full damage
+        //quarter damage
         set dummy = DummyOrder.create(u, GetUnitX(u), GetUnitY(u), GetUnitFacing(u), 6)
         call dummy.addActiveAbility(CURSE_OF_DEMONS_DUMMY_ABILITY_ID, 1, 852588)
         call dummy.setAbilityIntegerField(CURSE_OF_DEMONS_DUMMY_ABILITY_ID, ABILITY_ILF_DEFENSE_INCREASE_ROA2, R2I(reduction * 0.25))
