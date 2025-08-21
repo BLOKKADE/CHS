@@ -375,6 +375,7 @@
 //! import "C:\CHS\CHS/Trigger\09-Items\ScepterOfConfusion.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\Scroll Of Transformation.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\Shadow blade.j"
+//! import "C:\CHS\CHS/Trigger\09-Items\BulwarkoftheGrove.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\Shadow Boots.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\ShiningRunestone.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\SpellbaneToken.j"

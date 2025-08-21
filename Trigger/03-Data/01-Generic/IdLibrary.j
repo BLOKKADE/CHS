@@ -278,6 +278,7 @@ library IdLibrary initializer init
         constant integer HERO_BUFF_ABILITY_ID                           = 'A03Q'
         constant integer HOLY_ENLIGHTENMENT_ABILITY_ID                  = 'A04K'
         constant integer HOLY_LIGHT_ABILITY_ID                          = 'A01W'
+        constant integer GUARDIAN_SPIRIT_ABILITY_ID                     = 'GSBB'
         constant integer HOWL_OF_TERROR_ABILITY_ID                      = 'ANht'
         constant integer ICE_FORCE_ABILITY_ID                           = 'A053'
         constant integer ICY_BREATH_ABILITY_ID                          = 'A046'
@@ -549,6 +550,7 @@ library IdLibrary initializer init
         constant integer HERO_BUFF_ITEM_ID                              = 'I05N'
         constant integer HOLY_ENLIGHTENMENT_ITEM_ID                     = 'I06C'
         constant integer HOLY_LIGHT_ITEM_ID                             = 'I00D'
+        constant integer GUARDIAN_SPIRIT_ITEM_ID                        = 'GSPR'
         constant integer HOWL_OF_TERROR_ITEM_ID                         = 'I040'
         constant integer ICE_FORCE_ITEM_ID                              = 'I06L'
         constant integer ICY_BREATH_ITEM_ID                             = 'I05Z'
@@ -745,6 +747,7 @@ library IdLibrary initializer init
         constant integer STRENGTH_LEVEL_BONUS_TOME_ITEM_ID              = 'I05J'
         constant integer SHADOW_BLADE_ITEM_ID                           = 'I0CN'
         constant integer SHADOW_BOOTS_ITEM_ID                           = 'BBSB'
+        constant integer BULWARK_ITEM_ID                                = 'BGBB'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
@@ -865,6 +868,7 @@ library IdLibrary initializer init
         constant integer STARFALL_BUFF_ABILITY_ID                       = 'A0F0'
         constant integer SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID              = 'A02U'
         constant integer SPIRIT_SHACKLE_BUFF_ID                         = 'SSBB'
+        constant integer GUARDIAN_SPIRIT_BUFF_ID                        = 'BBGS'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 
@@ -921,6 +925,7 @@ library IdLibrary initializer init
         constant integer ANCIENT_AXE_ABIL_ID                            = 'A096'
         constant integer ANCIENT_DAGGER_ABIL_ID                         = 'A097'
         constant integer ANCIENT_STAFF_ABIL_ID                          = 'A094'
+        constant integer BULWARK_ABIL_ID                                = 'BBBG'
 
         constant integer SENSATUS_SHIELD_OF_HONOR_ABIL_ID               = 'AIdb'
         constant integer THE_DIVINE_SOURCE_ABIL_ID                      = 'A01D'

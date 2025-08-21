@@ -1184,6 +1184,10 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(SPIRIT_SHACKLE_ABILITY_ID, SPIRIT_SHACKLE_ITEM_ID, false, 0, 1, true, Order_Target, "shadowstrike")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Arcane, 1)
+
+        //14 - Guardian Spirit
+        call SaveAbilData(GUARDIAN_SPIRIT_ABILITY_ID, GUARDIAN_SPIRIT_ITEM_ID, false, Target_Any, 0, true, Order_Target, "rejuvination")
+        call SetLastObjectElement(Element_Light, 1)
     endfunction
 
     function InitItemAbilities takes nothing returns nothing
@@ -1207,6 +1211,9 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         // Mask of Elusion
         call SaveItemAbilityData(MASK_OF_ELUSION_ABIL_ID, MASK_OF_ELUSION_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
+
+        // Bulwark of the Grove
+        call SaveItemAbilityData(BULWARK_ABIL_ID, BULWARK_ITEM_ID, Target_Enemy, 1, Order_Instant, "attackonce")
 
         // Mask of Protection
         call SaveItemAbilityData(MASK_OF_PROTECTION_ABIL_ID, MASK_OF_PROTECTION_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")

@@ -126,6 +126,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Shadow Boots
         elseif abilId == 'BBGB' then
             call ShadowBoots(hero)
+            
+        //Bulwark of the Grove
+        elseif abilId == BULWARK_ABIL_ID then          
+            call BulwarkBumRush(target)
 
         //Reset Time
         elseif abilId == RESET_TIME_ABILITY_ID then

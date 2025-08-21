@@ -350,18 +350,23 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set limit = limit + 4
         endif
 
+        //Mountain Giant Summon limit increase
+        if GetUnitAbilityLevel(hero, MOUNTAIN_GIANT_ABILITY_ID) > 0 then
+            set limit = limit + 5
+        endif
+
         //increase limit if hero has Hero Buff
         if UnitHasBuffBJ(hero, 'B00T') then
-            set limit = limit +10
+            set limit = limit + 10
         endif
 
         //Storm Horn summon limit increase
         if UnitHasBuffBJ(hero, 'B00B') then
-            set limit = limit +4
+            set limit = limit + 4
         endif
 
-        // Bloodbound Horn summon limit increase
-        if UnitHasItemType(hero, 'HBBH') then
+        // Bulwark of the Grove summon limit increase
+        if UnitHasItemType(hero, 'BGBB') then
             // Add flat +2
             set limit = limit + 2
             

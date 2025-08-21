@@ -277,6 +277,11 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Wildborne Sigil
 		elseif itemId == 'WBSG' then
 			call AddUnitAbsoluteBonusCount(u,Element_Wild, diff)
+
+			//Bulwark of the Grove
+		elseif itemId == 'BGBB' then
+			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u,Element_Wild, uniqueDiff)
 		
 			//Light Armor
 		elseif itemId == 'I076' then

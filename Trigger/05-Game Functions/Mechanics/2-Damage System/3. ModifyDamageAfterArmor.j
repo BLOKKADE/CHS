@@ -484,6 +484,19 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Guardian Spirit
+        if GetUnitAbilityLevel(DamageTarget, GUARDIAN_SPIRIT_BUFF_ID) > 0 then   
+            if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
+                if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget)/ 5 then
+                    set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 5
+                endif
+            else
+                if Damage.index.amount > BlzGetUnitMaxMana(DamageTarget)/ 5 then
+                    set Damage.index.amount = BlzGetUnitMaxMana(DamageTarget) / 5
+                endif
+            endif
+        endif
+
         //Skeleton Brute
         if DamageTargetTypeId == SKELETON_BRUTE_UNIT_ID then
             //Invul dmg negation
