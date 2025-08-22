@@ -25,7 +25,7 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula, TempAtta
                 call Damage.applyMagic(this.source, p, GetSpellValue(20, 10, this.level), false, DAMAGE_TYPE_MAGIC)
                 call TempAbil.create(p, LIGHTNING_SHIELD_DUMMY_ABILITY_ID, 5)
                 if not IsUnitType(p, UNIT_TYPE_HERO) then // for creeps and summons
-                    call AttackCdStruct.createUnique(p, 0.2, 5, LIGHTNING_SHIELD_DUMMY_ABILITY_ID)
+                    call AttackCdStruct.createUnique(p, 0.2, 5, LIGHTNING_SHIELD_DUMMY_ABILITY_ID, false)
                 endif
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
