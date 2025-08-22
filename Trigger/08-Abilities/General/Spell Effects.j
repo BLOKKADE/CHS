@@ -36,6 +36,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == MANA_STARVATIO_ABILITY_ID then
             call CastManaStarvation(hero, target, lvl)
 
+        //Mountain Giant Taunt
+        elseif abilId == MOUNTAIN_GIANT_TAUNT_ABILITY_ID then
+            call OnTauntCast(caster)  
+
         elseif abilId == PACKING_TAPE_ABILITY_ID then
             call CastPackingTape(hero, target)
 
@@ -62,6 +66,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(hero, target, lvl)
+       
+        //thunderclap
+        //elseif abilId == THUNDER_CLAP_ABILITY_ID then
+            //call CastThunderClap(hero)
 
         //Dark Seal
         elseif abilId == DARK_SEAL_ABILITY_ID then
@@ -125,7 +133,11 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
 
         //Shadow Boots
         elseif abilId == 'BBGB' then
-            call ShadowBoots(hero)
+            call ShadowBoots(hero)   
+            
+        //Manifold staff cd
+        elseif abilId == 'BBB9' then
+            call AbilStartCD(caster, 'MSCD', 14)
             
         //Bulwark of the Grove
         elseif abilId == BULWARK_ABIL_ID then          
@@ -170,6 +182,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Eruption
         elseif abilId == ERUPTION_ABILITY_ID then
             call CastEruption(caster, x, y, lvl)
+
+        //Dispel Magic
+        elseif abilId == DISPEL_MAGIC_ABILITY_ID then
+            call DispelMagicEffect(caster, x, y, lvl)
 
         //Divine Source
         elseif abilId == THE_DIVINE_SOURCE_ABIL_ID then
