@@ -194,6 +194,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 				call RegisterEndOfRoundItem(pid, it)
 			endif
 
+			//Manifold staff
+		elseif itemId == 'I0A0' then
+			call AddUnitBonus(u, BONUS_MANA, 10000 * diff)
+			
 			//Terrestrial Glaive
 		elseif itemId == 'I0D1' then
 			if ev == EVENT_ITEM_PICKUP then
