@@ -197,7 +197,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Manifold staff
 		elseif itemId == 'I0A0' then
 			call AddUnitBonus(u, BONUS_MANA, 10000 * diff)
-			
+
 			//Terrestrial Glaive
 		elseif itemId == 'I0D1' then
 			if ev == EVENT_ITEM_PICKUP then
@@ -282,7 +282,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'WBSG' then
 			call AddUnitAbsoluteBonusCount(u,Element_Wild, diff)
 
-			//Bulwark of the Grove
+			//Beastmaster's Bulwark
 		elseif itemId == 'BGBB' then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Wild, uniqueDiff)

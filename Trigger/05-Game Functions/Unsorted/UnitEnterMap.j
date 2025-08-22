@@ -365,7 +365,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set limit = limit + 4
         endif
 
-        // Bulwark of the Grove summon limit increase
+        // Beastmaster's Bulwark summon limit increase
         if UnitHasItemType(hero, 'BGBB') then
             // Add flat +2
             set limit = limit + 2

@@ -139,7 +139,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == 'BBB9' then
             call AbilStartCD(caster, 'MSCD', 14)
             
-        //Bulwark of the Grove
+        //Beastmaster's Bulwark
         elseif abilId == BULWARK_ABIL_ID then          
             call BulwarkBumRush(target)
 

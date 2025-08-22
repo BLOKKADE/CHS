@@ -1217,7 +1217,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         // Mask of Elusion
         call SaveItemAbilityData(MASK_OF_ELUSION_ABIL_ID, MASK_OF_ELUSION_ITEM_ID, Target_Ally, 1, Order_Instant, "roar")
 
-        // Bulwark of the Grove
+        // Beastmaster's Bulwark
         call SaveItemAbilityData(BULWARK_ABIL_ID, BULWARK_ITEM_ID, Target_Enemy, 1, Order_Instant, "attackonce")
 
         // Mask of Protection

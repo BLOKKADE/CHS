@@ -639,7 +639,7 @@ library IdLibrary initializer init
         constant integer WIZARDBANE_AURA_ITEM_ID                        = 'I09M'
         constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
         constant integer ERUPTION_ITEM_ID                               = 'I039'
-        constant integer DISPEL_MAGIC_ITEM_ID                           = 'BBDM'    
+        constant integer DISPEL_MAGIC_ITEM_ID                           = 'BBDM' 
 
         // --- Shop Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2' 
@@ -751,6 +751,7 @@ library IdLibrary initializer init
         constant integer SHADOW_BOOTS_ITEM_ID                           = 'BBSB'
         constant integer BULWARK_ITEM_ID                                = 'BGBB'
         constant integer WILDBORNE_SIGIL_ITEM_ID                        = 'WBSG'
+        constant integer MANIFOLD_STAFF_ITEM_ID                         = 'I0A0'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
