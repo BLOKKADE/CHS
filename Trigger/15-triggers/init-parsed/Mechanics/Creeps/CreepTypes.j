@@ -1,5 +1,17 @@
 library CreepTypes initializer init requires RandomShit
 
+    function IsCreepUnitType takes integer unitId returns boolean
+        local integer i = 1
+        loop
+            exitwhen i > MaxCreepUnitTypes
+            if unitId == CreepUnitTypeIds[i] then
+                return true
+            endif
+            set i = i + 1
+        endloop
+        return false
+    endfunction
+
     private function CreepTypesActions takes nothing returns nothing
         set CreepUnitTypeIds[1] = 'n000' //Murloc Tiderunner
         set CreepUnitTypeIds[2] = 'n002' //Acolyte
