@@ -351,7 +351,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         endif
 
         //Mountain Giant Summon limit increase
-        if GetUnitAbilityLevel(hero, MOUNTAIN_GIANT_ABILITY_ID) > 0 then
+        if GetUnitAbilityLevel(hero, SUMMON_MOUNTAIN_GIANT_ABILITY_ID) > 0 then
             set limit = limit + 5
         endif
 
