@@ -380,6 +380,8 @@ library IdLibrary initializer init
         constant integer CONTEMPORARY_RUNES_ABILITY_ID                  = 'A0DN'
         constant integer ENERGY_BOMBARDMENT_ABILITY_ID                  = 'A0DQ'
         constant integer COLD_KNIGHT_PASSIVE_ABILITY_ID                 = 'A0DR'
+        constant integer DISPEL_MAGIC_ABILITY_ID                        = 'DMBB'
+        constant integer MOUNTAIN_GIANT_TAUNT_ABILITY_ID                = 'A06H' 
         
         // Dummy Abilities
         constant integer STUN_ABILITY_ID                                = 'A0C2'
@@ -637,7 +639,7 @@ library IdLibrary initializer init
         constant integer WIZARDBANE_AURA_ITEM_ID                        = 'I09M'
         constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
         constant integer ERUPTION_ITEM_ID                               = 'I039'
-        constant integer WILDBORNE_SIGIL_ITEM_ID                        = 'WBSG'
+        constant integer DISPEL_MAGIC_ITEM_ID                           = 'BBDM'    
 
         // --- Shop Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2' 
@@ -748,6 +750,7 @@ library IdLibrary initializer init
         constant integer SHADOW_BLADE_ITEM_ID                           = 'I0CN'
         constant integer SHADOW_BOOTS_ITEM_ID                           = 'BBSB'
         constant integer BULWARK_ITEM_ID                                = 'BGBB'
+        constant integer WILDBORNE_SIGIL_ITEM_ID                        = 'WBSG'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
