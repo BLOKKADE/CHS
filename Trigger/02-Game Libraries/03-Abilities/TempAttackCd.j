@@ -11,12 +11,18 @@ library TempAttackCd initializer init requires Alloc
         implement Alloc
 
         unit source
-        real reduction
+        real originalCd // Store original cooldown
+        real adjustment // Can be additive (reduction) or multiplicative (multiplier)
+        boolean isMultiplicative // Flag to switch between modes
         integer endTick
         integer buffLink
 
         private method disable takes nothing returns nothing
-            call BlzSetUnitAttackCooldown(this.source, BlzGetUnitAttackCooldown(this.source, 0) - this.reduction, 0)
+            if this.isMultiplicative then
+                call BlzSetUnitAttackCooldown(this.source, this.originalCd, 0) // Revert to original for multiplicative
+            else
+                call BlzSetUnitAttackCooldown(this.source, BlzGetUnitAttackCooldown(this.source, 0) - this.adjustment, 0) // Revert additive
+            endif
         endmethod
     
         private method periodic takes nothing returns nothing
@@ -29,31 +35,42 @@ library TempAttackCd initializer init requires Alloc
 
         implement T32x
 
-        static method create takes unit source, real reduction, real duration, integer buffLink returns thistype
+        static method create takes unit source, real adjustment, real duration, integer buffLink, boolean isMultiplicative returns thistype
             local thistype this = thistype.allocate()
 
             set this.source = source
-            set this.reduction = reduction
+            set this.originalCd = BlzGetUnitAttackCooldown(source, 0) // Store original cooldown
+            set this.adjustment = adjustment
+            set this.isMultiplicative = isMultiplicative
 
             if buffLink != 0 then
                 set this.buffLink = buffLink
                 set AttackCdTargets[GetHandleId(this.source)].integer[buffLink] = this
             endif
-            call BlzSetUnitAttackCooldown(source, BlzGetUnitAttackCooldown(source, 0) + this.reduction, 0)
+            if this.isMultiplicative then
+                call BlzSetUnitAttackCooldown(source, this.originalCd * this.adjustment, 0) // Apply multiplicative (e.g., 0.5 halves)
+            else
+                call BlzSetUnitAttackCooldown(source, this.originalCd + this.adjustment, 0) // Apply additive (e.g., 0.5 increases)
+            endif
 
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this
         endmethod
 
-        static method createUnique takes unit source, real reduction, real duration, integer buffLink returns thistype
+        static method createUnique takes unit source, real adjustment, real duration, integer buffLink, boolean isMultiplicative returns thistype
             local integer hid = GetHandleId(source)
             local thistype this = GetUniqueAttackCdStruct(hid, buffLink)
 
             if this == 0 then
-                set this = AttackCdStruct.create(source, reduction, duration, buffLink)
+                set this = AttackCdStruct.create(source, adjustment, duration, buffLink, isMultiplicative)
             else
                 set this.endTick = T32_Tick + R2I(duration * 32)
+                if this.isMultiplicative then
+                    call BlzSetUnitAttackCooldown(source, this.originalCd * this.adjustment, 0)
+                else
+                    call BlzSetUnitAttackCooldown(source, this.originalCd + this.adjustment, 0)
+                endif
             endif
 
             return this

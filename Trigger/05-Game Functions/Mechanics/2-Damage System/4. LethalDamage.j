@@ -38,12 +38,12 @@ scope LethalDamage initializer init
         endif
 
         //Magic Necklace
-        if UnitHasItemType(DamageSourceHero, 'I05G') and IsMagicDamage() then
+        if UnitHasItemType(DamageSourceHero, 'I05G') and not UnitHasItemType(DamageSourceHero, 'I05A') then
             set MagicNecklaceBonus.boolean[GetHandleId(DamageTarget)] = true
         endif
 
         //Chest of Greed
-        if UnitHasItemType(DamageSourceHero, 'I05A') and IsPhysDamage() then
+        if UnitHasItemType(DamageSourceHero, 'I05A') and not UnitHasItemType(DamageSourceHero, 'I05G') then
             set ChestOfGreedBonus.boolean[GetHandleId(DamageTarget)] = true
         endif
 
