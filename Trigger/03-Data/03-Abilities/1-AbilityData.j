@@ -125,7 +125,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
             return AbilityData[abilId].boolean[4]
         else
             //call BJDebugMsg("nap " + GetObjectName(abilId) + " casteable: " + B2S(AbilityData[abilId].boolean[4] and not AbilityData[abilId].boolean[8]))
-            return AbilityData[abilId].boolean[4] and not AbilityData[abilId].boolean[8]
+            return AbilityData[abilId].boolean[4] and not AbilityData[abilId].boolean[8] 
         endif
     endfunction
 
@@ -831,6 +831,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //126 - Death Pact 
         call SaveAbilData(DEATH_PACT_ABILITY_ID, DEATH_PACT_ITEM_ID, false, 0, 1, false, Order_Target, "deathpact")
         call SetLastObjectElement(Element_Dark, 2)
+        call SetLastAbilityManifoldable()
         call SetLastAbilityNotReplaceable()
 
         //127 - Big Bad Voodoo 
@@ -1185,9 +1186,13 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Arcane, 1)
 
-        //14 - Guardian Spirit
+        //201 - Guardian Spirit
         call SaveAbilData(GUARDIAN_SPIRIT_ABILITY_ID, GUARDIAN_SPIRIT_ITEM_ID, false, Target_Any, 0, true, Order_Target, "rejuvination")
         call SetLastObjectElement(Element_Light, 1)
+
+        //201 - Dispel Magic
+        call SaveAbilData(DISPEL_MAGIC_ABILITY_ID, DISPEL_MAGIC_ITEM_ID, false, 0, 0, true, Order_Point, "dispel")
+        call SetLastObjectElement(Element_Arcane, 1)
     endfunction
 
     function InitItemAbilities takes nothing returns nothing
