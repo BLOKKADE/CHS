@@ -278,7 +278,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(SATYR_TRICKSTER_UNIT_ID, HeroPassive_SummonLimit, "20")
 
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )
-        call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy or takes damage, lasts until the end of the fight. (Max 2 billion)")
+        call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fish Hook: If his str/agi/int stats are even, he increases all stats by 1 every time the Hero attacks an enemy or takes damage. He gains 1.5* of each stat if two are equally the highest and 3* of a single stat if it is highest. Lasts until the end of the fight. (Max 2 billion)")
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Fish Hook: +1 stat per attack." )
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_SummonLimit, "20")
 
@@ -320,6 +320,11 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive double damage from [|cffff0000Fire|r] and cannot buy Stat-Per-level Upgrades.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.3% more stats from new summon upgrades. (|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_SummonLimit, "10")
+
+        call InitHeroDesc(TYRAN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroTaurenChieftain.blp" )
+        call InitHeroDesc(TYRAN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Passionate Student: All positive effects of ring items are doubled.")
+        call InitHeroDesc(TYRAN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +200 glory." )
+        call InitHeroDesc(TYRAN_UNIT_ID, HeroPassive_SummonLimit, "18")
     endfunction
 
     private function init takes nothing returns nothing
