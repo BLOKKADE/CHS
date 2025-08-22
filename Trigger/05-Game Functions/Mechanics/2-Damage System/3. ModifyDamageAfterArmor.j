@@ -17,6 +17,13 @@ scope ModifyDamageAfterArmor initializer init
         local real vampAmount = 0
         local real armorBonus = GetUnitEffectiveArmor(DamageTarget)
 
+        local integer i3 = 1 + GetHeroLevel(DamageTarget) / 10
+        local integer DamageTargetId = GetHandleId(DamageTarget)
+        local integer baseStr = GetHeroStatBJ(bj_HEROSTAT_STR, DamageTarget, true)
+        local integer baseAgi = GetHeroStatBJ(bj_HEROSTAT_AGI, DamageTarget, true)
+        local integer baseInt = GetHeroStatBJ(bj_HEROSTAT_INT, DamageTarget, true)
+        local integer bonus = R2I(i3 * 1.5)
+
         if Damage.index.amount == 0 then
             return
         endif
@@ -512,12 +519,41 @@ scope ModifyDamageAfterArmor initializer init
 
         //Murloc Warrior
         if DamageTargetTypeId == MURLOC_WARRIOR_UNIT_ID and GetHeroStr(DamageTarget, true) < 2147483647 then
-            set i1 = 1 + GetHeroLevel(DamageTarget)/ 10 
-            call SaveInteger(HT,DamageTargetId,54021,i1 + LoadInteger(HT,DamageTargetId,54021))
-            call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i1)
-            call AddUnitBonus(DamageTarget, BONUS_AGILITY, i1)
-            call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i1)
+
+            if baseStr > baseAgi and baseStr > baseInt then
+                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i3 * 3)
+                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + i3 * 3)
+            elseif baseAgi > baseStr and baseAgi > baseInt then
+                call AddUnitBonus(DamageTarget, BONUS_AGILITY, i3 * 3)
+                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + i3 * 3)
+            elseif baseInt > baseStr and baseInt > baseAgi then
+                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i3 * 3)
+                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + i3 * 3)
+            elseif baseStr == baseAgi and baseStr > baseInt then
+                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, bonus)
+                call AddUnitBonus(DamageTarget, BONUS_AGILITY, bonus)
+                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + bonus)
+                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + bonus)
+            elseif baseStr == baseInt and baseStr > baseAgi then
+                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, bonus)
+                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, bonus)
+                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + bonus)
+                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + bonus)
+            elseif baseAgi == baseInt and baseAgi > baseStr then
+                call AddUnitBonus(DamageTarget, BONUS_AGILITY, bonus)
+                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, bonus)
+                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + bonus)
+                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + bonus)
+            elseif baseStr == baseAgi and baseStr == baseInt then
+                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i3)
+                call AddUnitBonus(DamageTarget, BONUS_AGILITY, i3)
+                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i3)
+                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + i3)
+                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + i3)
+                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + i3)
+            endif
         endif
+
 
         //Decaying Scythe
         if GetUnitAbilityLevel(DamageSource, DECAYING_SCYTHE_ABILITY_ID) > 0 and T32_Tick - DecayingScytheTick[DamageTargetId] > 192 then
