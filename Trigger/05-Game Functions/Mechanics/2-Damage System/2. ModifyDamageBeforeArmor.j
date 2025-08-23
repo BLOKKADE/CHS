@@ -396,15 +396,6 @@ scope ModifyDamageBeforeArmor initializer init
             call SaveInteger(HT, GetHandleId(DamageSource), -90001, i2)
         endif
 
-        //Fan of Knives
-        set i1 = GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID)
-        if i1 > 0 and Damage.index.isAttack then
-            if GetRandomReal(1, 100) <= 20 then
-            call DummyTargetCast2(DamageSource, DamageTarget, GetUnitX(DamageSource), GetUnitY(DamageSource), FAN_OF_KNIVES_ABILITY_ID, "fanofknives", 100 * i1, 100 * i1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1)
-            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\NightElf\\FanOfKnives\\FanOfKnivesTarget.mdl", DamageTarget, "chest"))
-            endif
-        endif
-
         //Cutting
         set i1 = GetUnitAbilityLevel(DamageSource,CUTTING_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack then
@@ -580,10 +571,19 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Fan of Knives
+        set i1 = GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID)
+        if i1 > 0 and Damage.index.isAttack then
+            if GetRandomReal(1, 100) <= 20 * DamageSourceLuck then
+            call DummyTargetCast2(DamageSource, DamageTarget, GetUnitX(DamageSource), GetUnitY(DamageSource), FAN_OF_KNIVES_ABILITY_ID, "fanofknives", 100 * i1, 100 * i1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1)
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\NightElf\\FanOfKnives\\FanOfKnivesTarget.mdl", DamageTarget, "chest"))
+            endif
+        endif
+
         if DamageSourceAbility == FAN_OF_KNIVES_ABILITY_ID then
             set Damage.index.damage = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.damage, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
         endif
 
+        //Staff of Lightning
         if GetUnitAbilityLevel(DamageSource, 'A09T') != 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A09T') == 0 then
             call CastStaffOfLightning(DamageSource, DamageTarget)
         endif

@@ -491,15 +491,15 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
-        //Guardian Spirit
+        //Guardian Spirit 15% max hp/mana dmg cap
         if GetUnitAbilityLevel(DamageTarget, GUARDIAN_SPIRIT_BUFF_ID) > 0 then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
-                if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget)/ 5 then
-                    set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 5
+                if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) / 6.666666 then
+                    set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 6.666666
                 endif
             else
-                if Damage.index.amount > BlzGetUnitMaxMana(DamageTarget)/ 5 then
-                    set Damage.index.amount = BlzGetUnitMaxMana(DamageTarget) / 5
+                if Damage.index.amount > BlzGetUnitMaxMana(DamageTarget) / 6.666666 then
+                    set Damage.index.amount = BlzGetUnitMaxMana(DamageTarget) / 6.666666
                 endif
             endif
         endif

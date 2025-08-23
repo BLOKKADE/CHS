@@ -181,7 +181,7 @@ library IdLibrary initializer init
         constant integer ACID_BOMB_ABILITY_ID                           = 'ANab'
         constant integer ACID_SPRAY_ABILITY_ID                          = 'ANhs'
         constant integer ACTIVATE_AVATAR_ABILITY_ID                     = 'A0AE'
-        constant integer HERO_FORCE_ABILITY_ID                           = 'A02T'
+        constant integer HERO_FORCE_ABILITY_ID                          = 'A02T'
         constant integer ANCIENT_BLOOD_ABILITY_ID                       = 'A0CH'
         constant integer ANCIENT_ELEMENT_ABILITY_ID                     = 'A07T'
         constant integer ANCIENT_RUNES_ABILITY_ID                       = 'A06Z'
@@ -424,7 +424,7 @@ library IdLibrary initializer init
         constant integer BLOKKADE_SHIELD_ABIL_ID                        = 'A01X'
         constant integer TITANIUM_SPIKE_ABIL_ID                         = 'A01Y'
         constant integer TITANIUM_SPIKE_IMMUN_ABIL_ID                   = 'A032'
-        constant integer TOTEM_BEAST_ABIL_ID                            = 'BBF4'
+        constant integer SAVAGE_TOTEM_ABIL_ID                           = 'BBF4'
         constant integer FROST_CIRCLET_ABILITY_ID                       = 'A0C3'
         constant integer DECAYING_SCYTHE_ABILITY_ID                     = 'A0C4'
         constant integer DECAYING_SCYTHE_DUMMY_ABILITY_ID               = 'A0C5'
@@ -752,6 +752,7 @@ library IdLibrary initializer init
         constant integer BULWARK_ITEM_ID                                = 'BGBB'
         constant integer WILDBORNE_SIGIL_ITEM_ID                        = 'WBSG'
         constant integer MANIFOLD_STAFF_ITEM_ID                         = 'I0A0'
+        constant integer SAVAGE_TOTEM_ITEM_ID                           = 'BBCW'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
@@ -821,7 +822,7 @@ library IdLibrary initializer init
         constant integer LIQUID_FIRE_BUFF_ID                            = 'Bliq' // Almost vanilla. Has custom target
         constant integer LIQUID_FIRE_CUSTOM_BUFF_ID                     = 'B016' // Custom
         constant integer LUCKY_PANTS_BUFF_ID                            = 'B01S'
-        constant integer TOTEM_BEAST_BUFF_ID                            = '39BB'
+        constant integer SAVAGE_TOTEM_BUFF_ID                           = '39BB'
         constant integer MANA_STARVATION_BUFF_ID                        = 'B01Z'
         constant integer MANA_STARVATION_NERF_BUFF_ID                   = 'B01X'
         constant integer MIDAS_TOUCH_BUFF_ID                            = 'B021'
@@ -873,6 +874,9 @@ library IdLibrary initializer init
         constant integer SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID              = 'A02U'
         constant integer SPIRIT_SHACKLE_BUFF_ID                         = 'SSBB'
         constant integer GUARDIAN_SPIRIT_BUFF_ID                        = 'BBGS'
+        constant integer HERO_BUFF_BUFF_ID                              = 'B00T'
+        constant integer STORMHORN_BUFF_ID                              = 'B00B'
+        constant integer FEAR_AURA2_BUFF_ID                             = 'B00C' //regular fear aura ability buff
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 

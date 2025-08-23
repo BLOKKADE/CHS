@@ -19,7 +19,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, SPEED_BLADE_ABIL_ID, BUFFTYPE_POSITIVE, false)
         //anti magic flag
         call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true)
-        call SetupBuffInfo1(TOTEM_BEAST_BUFF_ID, TOTEM_BEAST_ABIL_ID, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1(SAVAGE_TOTEM_BUFF_ID, SAVAGE_TOTEM_ABIL_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1('BOwk', WIND_WALK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
 

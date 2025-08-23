@@ -49,8 +49,11 @@ library StormHorn initializer init requires RandomShit, AbilityData, CastSpellOn
         set StormHornS[6] = WHIRLWIND_ABILITY_ID
         set StormHornS[7] = THUNDER_CLAP_ABILITY_ID
         set StormHornS[8] = STORM_BOLT_ABILITY_ID
+        set StormHornS[9] = RANDOM_SPELL_ABILITY_ID
+        set StormHornS[10] = FOG_ABILITY_ID
+        set StormHornS[11] = MONSOON_ABILITY_ID
 
-        set CountStormHornS = 8
+        set CountStormHornS = 11
     endfunction
 
     function UseSpellsStormHorn takes unit caster returns nothing
@@ -73,7 +76,7 @@ library StormHorn initializer init requires RandomShit, AbilityData, CastSpellOn
         
         if learnedCount > 0 then
             set randomIndex = GetRandomInt(0, learnedCount - 1)
-            if learnedSpells[randomIndex] == 1 or learnedSpells[randomIndex] == 2 or learnedSpells[randomIndex] == 5 or learnedSpells[randomIndex] == 8 then
+            if learnedSpells[randomIndex] == 1 or learnedSpells[randomIndex] == 2 or learnedSpells[randomIndex] == 5 or learnedSpells[randomIndex] == 8 or learnedSpells[randomIndex] == 9 or learnedSpells[randomIndex] == 10 or learnedSpells[randomIndex] == 11 then
                 set target = GetNearestUnitInRange(caster, 600.0)
                 if target != null then
                     set targetX = GetUnitX(target)

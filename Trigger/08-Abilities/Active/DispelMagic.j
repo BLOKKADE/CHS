@@ -16,9 +16,9 @@ library DispelMagic initializer InitDispelMagic requires UnitHelpers
             call GroupRemoveUnit(g, u)
 
             if IsUnitAlly(u, owner) then
-                call RemoveUnitBuffs(u, BUFFTYPE_NEGATIVE, false)
+                call RemoveFirstUnitBuff(u, 1, BUFFTYPE_NEGATIVE)
             elseif IsUnitEnemy(u, owner) then
-                call RemoveUnitBuffs(u, BUFFTYPE_POSITIVE, false)
+                call RemoveFirstUnitBuff(u, 1, BUFFTYPE_POSITIVE)
 
                 if IsUnitIllusion(u) then
                     set damage = GetWidgetLife(u) * 0.5

@@ -345,42 +345,41 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set limit = 20
         endif
 
-        // increase limit if hero has Totem of the Beast
-        if UnitHasItemType(hero, 'BBCW') then
+        // Savage Totem
+        if UnitHasItemType(hero, SAVAGE_TOTEM_ITEM_ID) then
             set limit = limit + 4
         endif
 
-        //Mountain Giant Summon limit increase
+        //Mountain Giant
         if GetUnitAbilityLevel(hero, SUMMON_MOUNTAIN_GIANT_ABILITY_ID) > 0 then
             set limit = limit + 5
         endif
 
-        //increase limit if hero has Hero Buff
-        if UnitHasBuffBJ(hero, 'B00T') then
+        //Hero Buff
+        if UnitHasBuffBJ(hero, HERO_BUFF_BUFF_ID) then
             set limit = limit + 10
         endif
 
-        //Storm Horn summon limit increase
-        if UnitHasBuffBJ(hero, 'B00B') then
+        //Storm Horn 
+        if UnitHasBuffBJ(hero, STORMHORN_BUFF_ID) then
             set limit = limit + 4
         endif
 
-        // Beastmaster's Bulwark summon limit increase
-        if UnitHasItemType(hero, 'BGBB') then
-            // Add flat +2
+        // Beastmaster's Bulwark
+        if UnitHasItemType(hero, BULWARK_ITEM_ID) then
             set limit = limit + 2
             
             // Add 10% summon limit for every 5% missing HP
             set limit = R2I(limit * (1.0 + 0.10 * ((1.0 - (GetUnitState(hero, UNIT_STATE_LIFE) / GetUnitState(hero, UNIT_STATE_MAX_LIFE))) / 0.05)))
         endif
 
-        // WildBorne Sigil summon limit increase
+        // WildBorne Sigil
         if UnitHasItemType(hero, WILDBORNE_SIGIL_ITEM_ID) then
             set limit = R2I(limit * 1.50)
         endif
 
-        // decrease limit if hero has Fear Aura
-        if UnitHasBuffBJ(hero, 'B00C') then
+        // Fear Aura
+        if UnitHasBuffBJ(hero, FEAR_AURA2_BUFF_ID) then
             set limit = R2I(limit * 0.70)
         endif
 
@@ -389,6 +388,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set limit = 5
         endif
 
+        //faerie dragon exception
         if summonTypeId == FAERIE_DRAGON_UNIT_ID then 
             set limit = 1888
             call LimitedSummon(hero, u, 2, limit) 
