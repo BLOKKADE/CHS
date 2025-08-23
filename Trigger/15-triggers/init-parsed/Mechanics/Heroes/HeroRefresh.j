@@ -15,7 +15,7 @@ library HeroRefresh initializer init requires RandomShit, NewBonus, CustomState
 
             call RemoveHeroAbilities(u)
 
-            call RemoveUnitBuffs(u, BUFFTYPE_BOTH, false)
+            call RemoveUnitBuffs(u, BUFFTYPE_BOTH, true)
 
             call ResetUnitCustomState(u)
 
@@ -34,7 +34,7 @@ library HeroRefresh initializer init requires RandomShit, NewBonus, CustomState
 
             if IsUnitAliveBJ(u) then
                 call RemoveHeroAbilities(u)
-                call RemoveUnitBuffs(u, BUFFTYPE_BOTH, false)
+                call RemoveUnitBuffs(u, BUFFTYPE_BOTH, true)
 
                 call SetHeroStr(u, 10, true)
                 call SetHeroAgi(u, 10, true)
