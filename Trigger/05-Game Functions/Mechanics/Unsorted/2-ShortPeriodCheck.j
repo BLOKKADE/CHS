@@ -85,7 +85,7 @@ scope ShortPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u,DIVINE_GIFT_ABILITY_ID)
                 if i1 > 0 then
                     if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
-                        call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
+                        call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 12)
                         call SetWidgetLife(u, GetWidgetLife(u) + 2500 * i1)
                         call TempFx.target("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
                         call RemoveFirstUnitBuff(u, 1, BUFFTYPE_NEGATIVE)
