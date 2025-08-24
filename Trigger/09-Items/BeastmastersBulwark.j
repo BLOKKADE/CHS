@@ -1,4 +1,4 @@
-library BulwarkOfTheGrove
+library BeastmastersBulwark
 
 function BulwarkBumRush takes unit target returns nothing
     local unit caster = GetTriggerUnit() // Assumes this is called within a trigger context
