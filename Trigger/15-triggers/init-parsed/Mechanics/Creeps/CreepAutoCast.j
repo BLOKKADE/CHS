@@ -102,7 +102,7 @@ library CreepAutoCast initializer init requires RandomShit
     
             // Mana burn
             if (GetUnitAbilityLevel(creep, MANA_BURN_CREEP_ABILITY_ID) > 0) then
-                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                set RoundCreepAbilCastChance = GetRandomInt(1, 3)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
                         call SetUnitAbilityLevel(creep, MANA_BURN_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
@@ -121,7 +121,7 @@ library CreepAutoCast initializer init requires RandomShit
 
             // Blink
             if (GetUnitAbilityLevel(creep, 'A01A') > 0) then
-                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                set RoundCreepAbilCastChance = GetRandomInt(1, 4)
                 if (RoundCreepAbilCastChance == 1) then
                     // Blink to random unit with an offset
                     set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function BlinkUnitFilter))
@@ -139,7 +139,7 @@ library CreepAutoCast initializer init requires RandomShit
 
             // Shockwave
             if (GetUnitAbilityLevel(creep, SHOCKWAVE_CREEP_ABILITY_ID) > 0) then
-                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                set RoundCreepAbilCastChance = GetRandomInt(1, 4)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
                         call SetUnitAbilityLevel(creep, SHOCKWAVE_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
@@ -161,7 +161,7 @@ library CreepAutoCast initializer init requires RandomShit
 
             // Hurl boulder
             if (GetUnitAbilityLevel(creep, HURL_BOULDER_CREEP_ABILITY_ID) > 0) then
-                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                set RoundCreepAbilCastChance = GetRandomInt(1, 4)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
                         call SetUnitAbilityLevel(creep, HURL_BOULDER_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
@@ -178,6 +178,27 @@ library CreepAutoCast initializer init requires RandomShit
                     call DestroyGroup(tempGroup)
                 endif
             endif
+
+            // Shadow Strike
+            if (GetUnitAbilityLevel(creep, SHADOW_STRIKE_CREEP_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 2)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, SHADOW_STRIKE_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
+                    else
+                        call SetUnitAbilityLevel(creep, SHADOW_STRIKE_CREEP_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                    endif
+
+                    // Shadow Strike to random unit
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function HurlBoulderUnitFilter))
+
+                    call IssueTargetOrder(creep, "shadowstrike", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
 
             // Rejuvination
             if (GetUnitAbilityLevel(creep, REJUVENATION_CREEP_ABILITY_ID) > 0) then

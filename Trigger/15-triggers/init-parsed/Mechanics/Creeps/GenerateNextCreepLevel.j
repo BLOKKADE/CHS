@@ -9,7 +9,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         integer RoundCreepChanceLastBreath = 0
         integer FireshieldChance = 0
         integer RoundCreepChanceCorrosiveSkin = 0 
-        integer RoundCreepChanceFastMagic = 0
+        integer RoundCreepChanceShadowStrike = 0
         integer RoundCreepChanceImmortalAura = 0
         boolean wizardbaneDebug = false
         HashTable PlayerRoundCreeps
@@ -155,9 +155,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call AddRoundAbility(CORROSIVE_SKIN_ABILITY_ID)
         endif
 
-        if RoundCreepChanceFastMagic == 1 then
-            set s = ConcatAbility(s, "Fast Magic")
-            call AddRoundAbility(FAST_MAGIC_ABILITY_ID)
+        if RoundCreepChanceShadowStrike == 1 then
+            set s = ConcatAbility(s, "Shadow Strike")
+            call AddRoundAbility(SHADOW_STRIKE_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChanceImmortalAura == 1 then
@@ -219,9 +219,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call SetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
     
-        if RoundCreepChanceFastMagic == 1 then
-            call UnitAddAbility(u, FAST_MAGIC_ABILITY_ID)
-            call SetUnitAbilityLevel(u, FAST_MAGIC_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+        if RoundCreepChanceShadowStrike == 1 then
+            call UnitAddAbility(u, SHADOW_STRIKE_CREEP_ABILITY_ID)
+            call SetUnitAbilityLevel(u, SHADOW_STRIKE_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
 
         if RoundCreepChanceImmortalAura == 1 then
@@ -342,8 +342,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set FireshieldChance = GetRandomInt(1, newAbilChance)
             set RoundCreepChanceCorrosiveSkin = GetRandomInt(1, newAbilChance)
         endif
-        if RoundNumber >= 35 then
-            set RoundCreepChanceFastMagic = GetRandomInt(1, newAbilChance + 6)
+        
+        if RoundNumber >= 15 and GetRandomInt(1, 9) == 1 then
+            set RoundCreepChanceShadowStrike = 1
         endif
     
         if RoundNumber == 28 or RoundNumber == 38 or RoundNumber == 48 then
