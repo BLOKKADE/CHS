@@ -342,9 +342,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set FireshieldChance = GetRandomInt(1, newAbilChance)
             set RoundCreepChanceCorrosiveSkin = GetRandomInt(1, newAbilChance)
         endif
-        
-        if RoundNumber >= 15 and GetRandomInt(1, 9) == 1 then
-            set RoundCreepChanceShadowStrike = 1
+
+        if RoundNumber >= 1 then
+            set RoundCreepChanceShadowStrike = GetRandomInt(1, newAbilChance + 6)
         endif
     
         if RoundNumber == 28 or RoundNumber == 38 or RoundNumber == 48 then
