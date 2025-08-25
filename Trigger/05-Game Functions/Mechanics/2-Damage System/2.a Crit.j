@@ -19,6 +19,10 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             set baseCritAmount = baseCritAmount + 0.02 * I2R(GetHeroLevel(DamageSource))
             if GetRandomReal(0,100) <= 15 * DamageSourceLuck + baseCritChance then
                 set critDmg = critDmg + Dmg * 0.1
+                if GetUnitAbilityLevel(DamageSource, ABSOLUTE_WIND_ABILITY_ID) > 0 then
+                    call TempBonus.create(DamageSource, BONUS_AGILITY,25 /** (1 + GetUnitAbsoluteEffective(u,Element_Wind))*/,9, ABSOLUTE_WIND_ABILITY_ID).activate()
+                    call TempBonus.create(DamageSource, BONUS_EVASION,5 /** (1 + GetUnitAbsoluteEffective(u,Element_Wind))*/,9, ABSOLUTE_WIND_ABILITY_ID).activate()
+                endif
             endif
         endif 
 

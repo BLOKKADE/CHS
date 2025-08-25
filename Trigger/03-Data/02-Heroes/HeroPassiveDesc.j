@@ -203,7 +203,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_SummonLimit, "12")
 
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )
-        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus damage. [|cff80ff80Luck|r][|cff00ffffCrit|r]")
+        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus damage. |cffc0c0c0This [|cff00ffffCrit|r] can activate Absolute Wind.|r [|cff80ff80Luck|r][|cff00ffffCrit|r]")
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2% base damage to all critical hits.")
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_SummonLimit, "20")
 
@@ -320,6 +320,11 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive double damage from [|cffff0000Fire|r] and cannot buy Stat-Per-level Upgrades.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.3% more stats from new summon upgrades. (|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_SummonLimit, "10")
+
+        //call InitHeroDesc(NYX_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBanditMage.blp" )
+        //call InitHeroDesc(NYX_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Unsanctioned Attunement: The Hero ignores [Element] requirements when using items and abilities. Every 5 seconds, the hero can trigger an absolute ability without meeting the [Element] requirement. |cffc0c0c0Does not go on cooldown if you do meet [Element] requirement. Items and abilities use or are affected by all elements, but this does not increase the hero's element count. |r[|cff96ffffStable|r]")
+        //call InitHeroDesc(NYX_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Reduces the cooldown of Absolute activations by 0.0211s.")
+        //call InitHeroDesc(NYX_UNIT_ID, HeroPassive_SummonLimit, "10")
     endfunction
 
     private function init takes nothing returns nothing
