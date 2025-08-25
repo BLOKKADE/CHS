@@ -403,6 +403,7 @@ library IdLibrary initializer init
         constant integer REJUVENATION_CREEP_ABILITY_ID                  = 'A00X'
         constant integer SHOCKWAVE_CREEP_ABILITY_ID                     = 'A00U'
         constant integer THUNDER_CLAP_CREEP_ABILITY_ID                  = 'A01B'
+        constant integer SHADOW_STRIKE_CREEP_ABILITY_ID                 = 'ACss'
 
         // Active Spell Dummy Abilities
 
