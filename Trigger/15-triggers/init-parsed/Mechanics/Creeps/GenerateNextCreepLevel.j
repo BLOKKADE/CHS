@@ -360,7 +360,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceCorrosiveSkin = GetRandomInt(1, newAbilChance)
         endif
 
-        if RoundNumber >= 1 then
+        if RoundNumber >= 10 then
             set RoundCreepChanceShadowStrike = GetRandomInt(1, newAbilChance + 6)
         endif
     
@@ -371,16 +371,14 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
     
         if RoundNumber < 5 then
-            set RoundCreepNumber = RoundNumber
-            if RoundCreepChanceLastBreath == 1 then
-                set RoundCreepNumber = GetRandomInt(2,5)
-            else
-                set RoundCreepNumber = GetRandomInt(2,25)
-            endif
+            set RoundCreepNumber = RoundNumber   
+        elseif RoundCreepChanceLastBreath == 1 then
+            set RoundCreepNumber = GetRandomInt(2,5)
+        else
+            set RoundCreepNumber = GetRandomInt(2,25)
         endif
 
-        if RoundNumber > 1 then
-            // First: check for Last Breath override
+        if RoundNumber >= 45 then
             if RoundCreepChanceLastBreath == 1 then
                 set RoundCreepNumber = GetRandomInt(2, 5)
             else
@@ -395,6 +393,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             endif
         endif
 
+        if RoundNumber == 46 then 
+            call SetUpItemStocks(GetValidPlayerForce())
+        endif
     
         if RoundNumber > 0 then
             call CheckUnitAbilities()
