@@ -15,6 +15,23 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         HashTable PlayerRoundCreeps
     endglobals
 
+    function GetRemainingPlayerCount takes nothing returns integer
+        local integer i = 0
+        local integer count = 0
+        local player p
+
+        loop
+            exitwhen i >= bj_MAX_PLAYERS // usually 12
+            set p = Player(i)
+            if GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and GetPlayerController(p) == MAP_CONTROL_USER then
+                set count = count + 1
+            endif
+            set i = i + 1
+        endloop
+
+        return count
+    endfunction
+
     private function GenerateNextCreepLevelConditions takes nothing returns boolean
         return IsTriggerEnabled(GetTriggeringTrigger()) == true
     endfunction
@@ -354,14 +371,30 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
     
         if RoundNumber < 5 then
-            set RoundCreepNumber = RoundNumber + 1
-        else
+            set RoundCreepNumber = RoundNumber
             if RoundCreepChanceLastBreath == 1 then
                 set RoundCreepNumber = GetRandomInt(2,5)
             else
                 set RoundCreepNumber = GetRandomInt(2,25)
             endif
         endif
+
+        if RoundNumber > 1 then
+            // First: check for Last Breath override
+            if RoundCreepChanceLastBreath == 1 then
+                set RoundCreepNumber = GetRandomInt(2, 5)
+            else
+                // Otherwise, scale based on player count
+                if GetRemainingPlayerCount() >= 6 then
+                    set RoundCreepNumber = GetRandomInt(2, 5)
+                elseif GetRemainingPlayerCount() == 4 or GetRemainingPlayerCount() == 5 then
+                    set RoundCreepNumber = GetRandomInt(2, 10)
+                elseif GetRemainingPlayerCount() <= 3 then
+                    set RoundCreepNumber = GetRandomInt(2, 25)
+                endif
+            endif
+        endif
+
     
         if RoundNumber > 0 then
             call CheckUnitAbilities()
