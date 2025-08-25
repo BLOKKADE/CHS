@@ -221,6 +221,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[49] = WITCH_DOCTOR_UNIT_ID
         set HeroSelectorUnitCode[50] = WOLF_RIDER_UNIT_ID
         set HeroSelectorUnitCode[51] = YETI_UNIT_ID
+        //set HeroSelectorUnitCode[52] = NYX_UNIT_ID
 
         //set HeroSelectorUnitCode[52] = GNOLL_WARDEN_UNIT_ID
 
@@ -287,7 +288,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(GHOUL_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(BANSHEE_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(CRYPT_LORD_UNIT_ID, categoryStr)
-        call HeroSelectorAddUnitCategory(STOMP_TREE_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(STOMP_TREE_UNIT_ID, categoryInt)
         //call HeroSelectorAddUnitCategory(GNOLL_WARDEN_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(SEER_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(FALLEN_RANGER_UNIT_ID, categoryAgi)
@@ -303,6 +304,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(COLD_KNIGHT_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(GREEDY_GOBLIN_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(TAUREN_UNIT_ID, categoryInt)
+       // call HeroSelectorAddUnitCategory(NYX_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(THUNDER_WITCH_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(DEADLORD_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(AVATAR_SPIRIT_UNIT_ID, categoryAgi)

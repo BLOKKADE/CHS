@@ -357,7 +357,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Hero Buff
         if UnitHasBuffBJ(hero, HERO_BUFF_BUFF_ID) then
-            set limit = limit + 10
+            set limit = limit + 12
         endif
 
         //Storm Horn 
