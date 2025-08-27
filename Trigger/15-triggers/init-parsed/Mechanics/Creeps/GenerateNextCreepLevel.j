@@ -392,10 +392,13 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 endif
             endif
         endif
-
-        if RoundNumber == 46 then 
+        
+        //item buddy arrival
+        if RoundNumber == 46 then
             call SetUpItemStocks(GetValidPlayerForce())
+            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00Item Buddy has arrived!|r You can use it to swap items during the Battle Royale using Shift + Q and Shift + W")
         endif
+
     
         if RoundNumber > 0 then
             call CheckUnitAbilities()

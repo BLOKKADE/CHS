@@ -275,7 +275,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         elseif GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
             set limit = 10
         elseif GetUnitTypeId(hero) == SEER_UNIT_ID then
-            set limit = 3
+            set limit = 10
         elseif GetUnitTypeId(hero) == MURLOC_WARRIOR_UNIT_ID then
             set limit = 20
         elseif GetUnitTypeId(hero) == SKELETON_BRUTE_UNIT_ID then
