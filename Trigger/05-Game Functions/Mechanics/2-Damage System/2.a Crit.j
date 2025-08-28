@@ -167,7 +167,7 @@ library CritDamage requires RandomShit, Vampirism, Gnome
 
         //Shadow Chain Mail
         if UnitHasItemType(DamageTarget,'I084') then
-            if GetRandomReal(0,100) <= 50 + LuckyTriggerBonusChance(DamageTarget) * DamageTargetLuck then
+            if GetRandomReal(0,100) <= (50 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
                 set critDmg = 0
             endif
             set critHalved = true

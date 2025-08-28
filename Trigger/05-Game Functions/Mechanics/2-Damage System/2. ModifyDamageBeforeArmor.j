@@ -49,7 +49,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Storm Horn
         if GetUnitAbilityLevel(DamageTarget ,'B00B') >= 1 then
-            if GetRandomReal(1,100) <= 19 + LuckyTriggerBonusChance(DamageTarget) * DamageTargetLuck then
+            if GetRandomReal(1,100) <= (19 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, 'B00B', 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
@@ -71,7 +71,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Null Void Orb
         if UnitHasItemType(DamageTarget, NULL_VOID_ORB_ITEM_ID) then
-            if GetRandomInt(1,100) <= 10 + LuckyTriggerBonusChance(DamageTarget) * DamageTargetLuck then
+            if GetRandomInt(1,100) <= (10 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, NULL_VOID_ORB_ITEM_ID, 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
@@ -399,7 +399,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Cutting
         set i1 = GetUnitAbilityLevel(DamageSource,CUTTING_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack then
-            if GetRandomReal(1,100) < 20 + LuckyTriggerBonusChance(DamageSource) * DamageSourceLuck then
+            if GetRandomReal(1,100) < (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
             set Damage.index.damage = Damage.index.damage+ (i1 * 100) * (1 + 0.02 * GetHeroLevel(DamageSource))
             set DamageIsCutting = true
             endif
@@ -573,7 +573,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Fan of Knives
         set i1 = GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack then
-            if GetRandomReal(1, 100) <= 20 + LuckyTriggerBonusChance(DamageTarget) * DamageSourceLuck then
+            if GetRandomReal(1, 100) <= (20 + LuckyTriggerBonusChance(DamageTarget)) * DamageSourceLuck then
             call DummyTargetCast2(DamageSource, DamageTarget, GetUnitX(DamageSource), GetUnitY(DamageSource), FAN_OF_KNIVES_ABILITY_ID, "fanofknives", 100 * i1, 100 * i1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1)
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\NightElf\\FanOfKnives\\FanOfKnivesTarget.mdl", DamageTarget, "chest"))
             endif
@@ -639,7 +639,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Cold Arrow
         set i1 = GetUnitAbilityLevel(DamageTarget, COLD_ARROWS_STACKING_BUFF_ID)
-        if i1 > 0 and GetRandomInt(1, 100) < 20 + LuckyTriggerBonusChance(DamageTarget) * DamageSourceLuck then
+        if i1 > 0 and GetRandomInt(1, 100) < (20 + LuckyTriggerBonusChance(DamageTarget)) * DamageSourceLuck then
             set Damage.index.damage = Damage.index.damage * 2
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\FrostArmor\\FrostArmorDamage.mdl", DamageTarget, "chest"))
         endif
@@ -887,7 +887,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Mystical armor
         set i1 = GetUnitItemTypeCount( DamageTarget,'I06E' )
         if i1 > 0  then
-            if GetRandomReal(1,100)  <= i1 * 8 + LuckyTriggerBonusChance(DamageTarget) * DamageSourceLuck then
+            if GetRandomReal(1,100)  <= i1 * (8 + LuckyTriggerBonusChance(DamageTarget)) * DamageSourceLuck then
                 if GetUnitState(DamageTarget,UNIT_STATE_MANA) >= 750 then
                     set RandomSpellLoc = Location(GetUnitX(DamageSource), GetUnitY(DamageSource))
                     call CastRandomSpell(DamageTarget, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 30))

@@ -57,7 +57,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         else
             //Pillage
             if (IsUnitIllusionBJ(dyingUnit) != true) and (GetUnitTypeId(dyingUnit) != 'n00T') and (GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID, killingHero)> 0) and  (IsUnitEnemy(dyingUnit, GetOwningPlayer(killingHero))) then
-                if GetRandomReal(0,100) <= 65 + LuckyTriggerBonusChance(killingHero) * luck then
+                if GetRandomReal(0,100) <= (65 + LuckyTriggerBonusChance(killingHero)) * luck then
                     set pillageBonus = (((GetUnitAbilityLevelSwapped(PILLAGE_ABILITY_ID, killingHero) * 18) * 70) / (70 + remBon + GetUnitAbilityLevelSwapped(LEARNABILITY_ABILITY_ID, killingHero)))
                     call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl", GetUnitX(dyingUnit), GetUnitY(dyingUnit)))
                     set goldBounty = goldBounty + pillageBonus

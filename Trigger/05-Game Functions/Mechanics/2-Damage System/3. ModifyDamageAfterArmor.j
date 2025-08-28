@@ -284,7 +284,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Lich
         //call BJDebugMsg("dmg source ability:" + GetObjectName(DamageSourceAbility))
-        if DamageSourceTypeId == LICH_UNIT_ID and DamageSourceAbility != 'A03J' and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < 25 + LuckyTriggerBonusChance(DamageSource) * DamageSourceLuck then
+        if DamageSourceTypeId == LICH_UNIT_ID and DamageSourceAbility != 'A03J' and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < (25 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
             call ElemFuncStart(DamageSource,LICH_UNIT_ID)
             call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
@@ -335,21 +335,21 @@ scope ModifyDamageAfterArmor initializer init
                 if not IsOnHitDamage() then
                     //Pulverize
                     set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
-                    if i > 0 and GetRandomReal(0, 100) <= 20 + LuckyTriggerBonusChance(DamageSource) * DamageSourceLuck then
+                    if i > 0 and GetRandomReal(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
                         call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
                         call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID, true, false)
                     endif
 
                     //Destruction
                     set i = GetUnitAbilityLevel(DamageSource, DESTRUCTION_ABILITY_ID) 
-                    if i > 0 and GetRandomReal(0, 100) <= 15 + LuckyTriggerBonusChance(DamageSource) * DamageSourceLuck then
+                    if i > 0 and GetRandomReal(0, 100) <= (15 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
                         call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
                         call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID, true, false)
                     endif
                     
                     //Bash
                     set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)  
-                    if i > 0 and GetRandomReal(0, 100) <= I2R(i) + LuckyTriggerBonusChance(DamageSource) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+                    if i > 0 and GetRandomReal(0, 100) <= (I2R(i) + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                         call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
                     endif
                 endif
@@ -427,7 +427,7 @@ scope ModifyDamageAfterArmor initializer init
             endif  
 
             //Volcanic Armor
-            if UnitHasItemType(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 + LuckyTriggerBonusChance(DamageTarget) * DamageTargetLuck then
+            if UnitHasItemType(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= (15 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
                 call ActivateVolcanicArmor(DamageSource, DamageTarget)
             endif
 
@@ -438,7 +438,7 @@ scope ModifyDamageAfterArmor initializer init
             endif
 
             //Dark Hunter Bash
-            if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and IsUnitIllusion(DamageSource) == false and GetRandomInt(0, 100) <= 20 + LuckyTriggerBonusChance(DamageSource) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+            if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and IsUnitIllusion(DamageSource) == false and GetRandomInt(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                 set r1 = GetHeroLevel(DamageSource) * 50
                 set r2 = DarkHunterStun.real[DamageSourceId]
                 if CheckUnitHitCooldown(DamageTargetId, DARK_HUNTER_UNIT_ID, r2 + 0.4) then
@@ -474,7 +474,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Parasite Summon
-        if DamageSourceAbility == PARASITE_ABILITY_ID and T32_Tick > ParasiteLimit[DamageSourcePid].integer[DamageTargetId] and GetRandomInt(1,100) <= 20 + LuckyTriggerBonusChance(DamageSource) * DamageSourceLuck then
+        if DamageSourceAbility == PARASITE_ABILITY_ID and T32_Tick > ParasiteLimit[DamageSourcePid].integer[DamageTargetId] and GetRandomInt(1,100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
             call SummonParasite(DamageSourcePid, DamageTarget)
         endif
 

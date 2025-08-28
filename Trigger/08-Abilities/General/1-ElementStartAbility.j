@@ -156,7 +156,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Stone Helmet
         if UnitHasItemType(u,'I090') and IsSpellElement(u,id,Element_Earth) then   
-            if GetRandomReal(0,100) <= 30 + LuckyTriggerBonusChance(u) * luck then 
+            if GetRandomReal(0,100) <= (30 + LuckyTriggerBonusChance(u)) * luck then 
                 set U = CreateUnit( GetOwningPlayer(u),'h01M',GetUnitX(u)+ 40 * CosBJ(- 30 + GetUnitFacing(u)),GetUnitY(u)+ 40 * SinBJ(- 30 + GetUnitFacing(u)),GetUnitFacing(u) )
                 call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 3000 + GetHeroLevel(u)*(2500 + 50 * GetHeroLevel(u)))
                 call AddUnitCustomState(U, BONUS_BLOCK,100 + 50 * GetHeroLevel(u) )

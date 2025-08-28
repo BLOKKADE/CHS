@@ -24,7 +24,7 @@ library RuneMaster initializer init requires CustomState, RuneInit
             set dx = GetItemX(it) - GetUnitX(RuneMasterCaster)
             set dy = GetItemY(it) - GetUnitY(RuneMasterCaster)
 
-            if GetRandomInt(1, 100) < 10 + LuckyTriggerBonusChance(RuneMasterCaster) * luck then
+            if GetRandomInt(1, 100) < (10 + LuckyTriggerBonusChance(RuneMasterCaster)) * luck then
                 call UnitAddItem(RuneMasterCaster, CreateRandomRune(GetRunePower(it) - GetUnitCustomState(RuneMasterCaster, BONUS_RUNEPOW) - GetHeroLevel(RuneMasterCaster), GetUnitX(RuneMasterCaster), GetUnitY(RuneMasterCaster), RuneMasterCaster))
             endif
             //call BJDebugMsg("rune")
