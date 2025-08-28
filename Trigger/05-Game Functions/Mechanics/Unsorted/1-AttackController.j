@@ -119,7 +119,7 @@ scope AttackController initializer init
 
         //Corrosive Skin
         set i1 = GetUnitAbilityLevel(target, CORROSIVE_SKIN_ABILITY_ID)
-        if i1 > 0 and GetRandomReal(0, 100) <= 35 * targetLuck then
+        if i1 > 0 and GetRandomReal(0, 100) <= 35 + LuckyTriggerBonusChance(target) * targetLuck then
             call DummyOrder.create(target, GetUnitX(target), GetUnitY(target), GetUnitFacing(target), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * i1)).target(attacker).activate()
             if GetUnitAbilityLevel(target, ABSOLUTE_POISON_ABILITY_ID) > 0 and GetUnitAbilityLevel(target, NULL_VOID_ORB_BUFF_ID) == 0 then
                 call PoisonSpellCast(target, attacker)
@@ -142,7 +142,7 @@ scope AttackController initializer init
 
         //Fire Force
         set i1 = GetUnitAbilityLevel(target, FIRE_FORCE_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, FIRE_FORCE_ABILITY_ID) == 0 and (GetRandomReal(1, 100) <= 25 * targetLuck) then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, FIRE_FORCE_ABILITY_ID) == 0 and (GetRandomReal(1, 100) <= 25 + LuckyTriggerBonusChance(target) * targetLuck) then
             call BlzStartUnitAbilityCooldown(target, FIRE_FORCE_ABILITY_ID, 0.3)
             call BlzStartUnitAbilityCooldown(target, GetDummySpell(target, FIRE_FORCE_ABILITY_ID), 0.3)
             call DummyInstantCast1(target, GetUnitX(target), GetUnitY(target), 'A0C0', "fanofknives", GetHeroStr(target,true) * (0.62 + (0.08 * i1)), ConvertAbilityRealLevelField('Ocl1'), 4)

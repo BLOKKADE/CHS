@@ -382,6 +382,7 @@ library IdLibrary initializer init
         constant integer COLD_KNIGHT_PASSIVE_ABILITY_ID                 = 'A0DR'
         constant integer DISPEL_MAGIC_ABILITY_ID                        = 'DMBB'
         constant integer MOUNTAIN_GIANT_TAUNT_ABILITY_ID                = 'A06H' 
+        constant integer LUCKY_TRIGGER_ABILITY_ID                       = 'LTBB'
         
         // Dummy Abilities
         constant integer STUN_ABILITY_ID                                = 'A0C2'
@@ -641,6 +642,7 @@ library IdLibrary initializer init
         constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
         constant integer ERUPTION_ITEM_ID                               = 'I039'
         constant integer DISPEL_MAGIC_ITEM_ID                           = 'BBDM' 
+        constant integer LUCKY_TRIGGER_ITEM_ID                          = 'BBLT' 
 
         // --- Shop Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2' 

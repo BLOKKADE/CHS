@@ -1190,9 +1190,12 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(GUARDIAN_SPIRIT_ABILITY_ID, GUARDIAN_SPIRIT_ITEM_ID, false, Target_Any, 0, true, Order_Target, "rejuvination")
         call SetLastObjectElement(Element_Light, 1)
 
-        //201 - Dispel Magic
+        //202 - Dispel Magic
         call SaveAbilData(DISPEL_MAGIC_ABILITY_ID, DISPEL_MAGIC_ITEM_ID, false, 0, 0, true, Order_Point, "dispel")
         call SetLastObjectElement(Element_Arcane, 1)
+
+        //203 - Lucky Trigger 
+        call SaveAbilData(LUCKY_TRIGGER_ABILITY_ID, LUCKY_TRIGGER_ITEM_ID, false, 0, 0, false, Order_None, null)
     endfunction
 
     function InitItemAbilities takes nothing returns nothing

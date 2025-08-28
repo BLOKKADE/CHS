@@ -290,6 +290,7 @@
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Passive\07-Martial Retribution.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Passive\11-Last Breath.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Passive\Ancient Blood.j"
+//! import "C:\CHS\CHS/Trigger\08-Abilities\Passive\LuckyTrigger.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Passive\Ancient Element.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Passive\Ancient Runes.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Passive\Arcane Assault.j"

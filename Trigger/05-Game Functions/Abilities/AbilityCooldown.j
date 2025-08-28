@@ -115,19 +115,19 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
             set ResCD = ResCD * 0.85
         endif
         
-        //Xesil
+        //Xesil hero (setting chance)
         if (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID) then
-            set xesilChance = 20 + (0.1 * GetHeroLevel(u))
+            set xesilChance = 20  + (0.1 * GetHeroLevel(u))
         endif
 
-        //Xesil's Legacy
-        if IsSpellResettable(id) and ((GetUnitTypeId(u) != TIME_WARRIOR_UNIT_ID and UnitHasItemType(u,'I03P') and GetRandomReal(0, 100) <= 25 * luck) or (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0, 100) <= RMinBJ(xesilChance * luck, 90))) then
+        //Xesil's Legacy + Xesil hero passive execution
+        if IsSpellResettable(id) and ((GetUnitTypeId(u) != TIME_WARRIOR_UNIT_ID and UnitHasItemType(u,'I03P') and GetRandomReal(0, 100) <= 25 + LuckyTriggerBonusChance(u) * luck) or (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0, 100) <= RMinBJ(xesilChance + LuckyTriggerBonusChance(u) * luck, 90))) then
             set ResCD = 0.001
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin"))     
         endif 
         
         //Staff of Water
-        if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0, 100) <= RMinBJ(40 * luck, 90) then
+        if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0, 100) <= RMinBJ(40 + LuckyTriggerBonusChance(u) * luck, 90) then
             set ResCD = 0.001
         endif
 

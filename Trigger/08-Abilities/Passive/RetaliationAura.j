@@ -6,7 +6,7 @@ library RetaliationAura initializer init requires AbilityData, CastSpellOnTarget
     endglobals
 
     private function RetaliationSourceFilter takes nothing returns boolean
-        return IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(RetaliationUnit)) and GetUnitAbilityLevel(GetFilterUnit(), RETALIATION_AUR_ABILITY_ID) > 0 and GetRandomInt(1,100) < 40* GetUnitCustomState(GetFilterUnit(), BONUS_LUCK) and DistanceBetweenUnits(GetFilterUnit(), RetaliationUnit) < 580 + (20 * GetUnitAbilityLevel(GetFilterUnit(), RETALIATION_AUR_ABILITY_ID))
+        return IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(RetaliationUnit)) and GetUnitAbilityLevel(GetFilterUnit(), RETALIATION_AUR_ABILITY_ID) > 0 and GetRandomInt(1,100) < 40 + LuckyTriggerBonusChance(RetaliationUnit) * GetUnitCustomState(GetFilterUnit(), BONUS_LUCK) and DistanceBetweenUnits(GetFilterUnit(), RetaliationUnit) < 580 + (20 * GetUnitAbilityLevel(GetFilterUnit(), RETALIATION_AUR_ABILITY_ID))
     endfunction
 
     function CastRetaliation takes unit source, unit target, integer abilId, integer abilLevel returns nothing

@@ -13,18 +13,10 @@ library CritDamage requires RandomShit, Vampirism, Gnome
         local real lifesteal = 0
         local boolean critHalved = false
 
-        //Ranger passive
-        set i = GetUnitAbilityLevel(DamageSource,'A033') //HeroPassive
-        if i > 0 then
-            set baseCritAmount = baseCritAmount + 0.02 * I2R(GetHeroLevel(DamageSource))
-            if GetRandomReal(0,100) <= 15 * DamageSourceLuck + baseCritChance then
-                set critDmg = critDmg + Dmg * 0.1
-                if GetUnitAbilityLevel(DamageSource, ABSOLUTE_WIND_ABILITY_ID) > 0 then
-                    call TempBonus.create(DamageSource, BONUS_AGILITY,25 /** (1 + GetUnitAbsoluteEffective(u,Element_Wind))*/,9, ABSOLUTE_WIND_ABILITY_ID).activate()
-                    call TempBonus.create(DamageSource, BONUS_EVASION,5 /** (1 + GetUnitAbsoluteEffective(u,Element_Wind))*/,9, ABSOLUTE_WIND_ABILITY_ID).activate()
-                endif
-            endif
-        endif 
+        //Lucky Trigger
+        if GetUnitAbilityLevel(DamageSource, LUCKY_TRIGGER_ABILITY_ID) > 0 then
+            set baseCritChance = baseCritChance + LuckyTriggerBonusChance(DamageSource)
+        endif
 
         //Wanderers Cape
         if UnitHasItemType(DamageSource,'I082') then
@@ -33,16 +25,30 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             set lifesteal = 0.15
         endif
 
+        //Ranger passive
+        set i = GetUnitAbilityLevel(DamageSource,'A033') //HeroPassive
+        if i > 0 then
+            set baseCritAmount = baseCritAmount + 0.02 * I2R(GetHeroLevel(DamageSource))
+            if GetRandomReal(0,100) <= 15 + baseCritChance * DamageSourceLuck then
+                set critDmg = critDmg + Dmg * 0.1
+                if GetUnitAbilityLevel(DamageSource, ABSOLUTE_WIND_ABILITY_ID) > 0 then
+                    call TempBonus.create(DamageSource, BONUS_AGILITY,25 /** (1 + GetUnitAbsoluteEffective(u,Element_Wind))*/,9, ABSOLUTE_WIND_ABILITY_ID).activate()
+                    call TempBonus.create(DamageSource, BONUS_EVASION,5 /** (1 + GetUnitAbsoluteEffective(u,Element_Wind))*/,9, ABSOLUTE_WIND_ABILITY_ID).activate()
+                endif
+            endif
+        endif 
+
         //Aura of Vulnerability
         if GetUnitAbilityLevel(DamageTarget ,'B00E') > 0 then
-            if GetRandomReal(0,100) <= 15 * DamageSourceLuck + baseCritChance then
+            if GetRandomReal(0,100) <= 15 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + (Dmg * (0.5 + (0.05 * GetUnitAbilityLevel(DamageSourceHero, AURA_OF_VULNERABILITY_ABILITY_ID))))
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\Darksummoning\\DarkSummonTarget.mdl", DamageTarget, "chest"))
             endif
         endif
 
+        //Power of Water
         set i = GetUnitAbilityLevel(DamageSource, POWER_OF_WATER_ABILITY_ID) //Power of water
-        if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+        if i > 0 and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then
             set critDmg = critDmg + 50*i + ((BlzGetUnitMaxMana(DamageSource)*i * 0.4)/100 )
             if not IsFxOnCooldownSet(DamageTargetId, POWER_OF_WATER_ABILITY_ID, 1) then
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile.mdl", DamageTarget, "chest"))
@@ -99,7 +105,7 @@ library CritDamage requires RandomShit, Vampirism, Gnome
 
             //Creep Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,'ACct') //Critical Strike 
-            if i > 0 and GetRandomReal(0,100) <= 10 * DamageSourceLuck + baseCritChance then
+            if i > 0 and GetRandomReal(0,100) <= 10 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + Dmg
             endif
 
@@ -111,31 +117,31 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             
             //Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,CRITICAL_STRIKE_ABILITY_ID) //Critical Strike 
-            if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+            if i > 0 and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + Dmg *(0.9 + 0.1 * I2R(i))
             endif
             
             //Drunken Master
             set i = GetUnitAbilityLevel(DamageSource,DRUNKEN_MASTER_ABILITY_ID) //Drink
-            if i > 0 and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
+            if i > 0 and GetRandomReal(0,100) <= 30 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + ((i * 100) * (1 + 0.02 * GetHeroLevel(DamageSource)))
             endif
             
             //Frostmourne
             set i = GetUnitAbilityLevel(DamageSource,'A02C') //Frostmorn
-            if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+            if i > 0 and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + Dmg * 2
             endif    
             
             //Battle Axe
             set i = GetUnitAbilityLevel(DamageSource,'A05D')
-            if i > 0 and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+            if i > 0 and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + Dmg * 2
             endif   
             
             //Aduxxor Legendary Blade
             set i = GetUnitAbilityLevel(DamageSource,'AIcs')
-            if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+            if i > 0 and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + Dmg
             endif
 
@@ -154,14 +160,14 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             
             //Magic Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,MAGIC_CRITICAL_HIT_ABILITY_ID)
-            if i > 0 and GetRandomReal(0,100) <= 20 * DamageSourceLuck + baseCritChance then
+            if i > 0 and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + Dmg *(0.5 + 0.08 * I2R(i))
             endif
         endif
 
         //Shadow Chain Mail
         if UnitHasItemType(DamageTarget,'I084') then
-            if GetRandomReal(0,100) <= 50 * DamageSourceLuck then
+            if GetRandomReal(0,100) <= 50 + LuckyTriggerBonusChance(DamageTarget) * DamageTargetLuck then
                 set critDmg = 0
             endif
             set critHalved = true
