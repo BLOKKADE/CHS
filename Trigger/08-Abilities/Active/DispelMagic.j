@@ -7,6 +7,17 @@ library DispelMagic initializer InitDispelMagic requires UnitHelpers
         local unit u
         local player owner = GetOwningPlayer(caster)
         local real damage
+        local effect fx
+        local sound s
+
+        // 🎇 Play visual effect at target location
+        set fx = AddSpecialEffect("Abilities\\Spells\\Human\\DispelMagic\\DispelMagicTarget.mdl", x, y)
+        call DestroyEffect(fx)
+
+        // 🔊 Play sound effect for caster's player
+        set s = CreateSound("Sound\\Spells\\DispelMagic.wav", false, false, false, 10, 10, "")
+        call SetSoundVolume(s, 127)
+        call StartSound(s)
 
         call GroupEnumUnitsInRange(g, x, y, aoe, null)
 
@@ -30,7 +41,6 @@ library DispelMagic initializer InitDispelMagic requires UnitHelpers
         call DestroyGroup(g)
     endfunction
 
-
     // Optional initializer if you want to hook this into a spell cast system
     private function InitDispelMagic takes nothing returns nothing
         // Example: register with your custom spell system
@@ -38,4 +48,3 @@ library DispelMagic initializer InitDispelMagic requires UnitHelpers
     endfunction
 
 endlibrary
-

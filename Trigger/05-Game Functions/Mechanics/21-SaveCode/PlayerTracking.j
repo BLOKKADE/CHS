@@ -675,6 +675,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.5.8", false) // added stomp, new item, loads of skill changes
         call AddGameVersion("CHS v2.5.9", false) // timer bugfixes
         call AddGameVersion("CHS v2.6.0", false) // summon limit, murlock change, heart of hero change, etc
+        call AddGameVersion("CHS v2.6.3", false) // added lucky trigger, some bugfixes
     endfunction
 
     private function init takes nothing returns nothing
