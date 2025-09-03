@@ -120,7 +120,7 @@ scope AttackController initializer init
         //Corrosive Skin
         set i1 = GetUnitAbilityLevel(target, CORROSIVE_SKIN_ABILITY_ID)
         if i1 > 0 and GetRandomReal(0, 100) <= (35 + LuckyTriggerBonusChance(target)) * targetLuck then
-            call DummyOrder.create(target, GetUnitX(target), GetUnitY(target), GetUnitFacing(target), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * i1)).target(attacker).activate()
+            call DummyOrder.create(target, GetUnitX(target), GetUnitY(target), GetUnitFacing(target), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (110 * i1)).target(attacker).activate()
             if GetUnitAbilityLevel(target, ABSOLUTE_POISON_ABILITY_ID) > 0 and GetUnitAbilityLevel(target, NULL_VOID_ORB_BUFF_ID) == 0 then
                 call PoisonSpellCast(target, attacker)
             endif
