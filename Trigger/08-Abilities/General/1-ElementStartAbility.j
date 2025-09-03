@@ -47,9 +47,9 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Wind Runestone
         if UnitHasItemType(u,WIND_RUNESTONE_ITEM_ID) and IsSpellElement(u,id,Element_Wind) then            
-            if BlzGetUnitAbilityCooldownRemaining(u,WIND_RUNESTONE_ABIL_ID) <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 500 then
+            if BlzGetUnitAbilityCooldownRemaining(u,WIND_RUNESTONE_ABIL_ID) <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,Element_Wind)  )
-                call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 500)
+                call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 2000)
                 call AbilStartCD(u,WIND_RUNESTONE_ABIL_ID,GetRuneCooldown(Element_Wind) ) 
             endif
         endif
