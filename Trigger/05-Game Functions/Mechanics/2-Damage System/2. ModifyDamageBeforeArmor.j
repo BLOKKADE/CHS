@@ -40,6 +40,12 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
+        //Phase Shift
+        if UnitHasBuffBJ(Damage.target, 'Bpsh') then
+            set Damage.index.damage = 0
+            return
+        endif
+
         //Conquerors Bamboo Stick
         if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and IsUnitType(DamageSource, UNIT_TYPE_HERO) == false and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
             //call BJDebugMsg("conq bamboo stick immune")
@@ -255,11 +261,8 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Finger of Death
         if DamageSourceAbility == FINGER_OF_DEATH_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSource, true) * (0.5 * DamageSourceAbilityLevel)
-            if Damage.index.damage < r1 then
-                set Damage.index.damage = r1
-            endif
-
+            set r1 = GetHeroInt(DamageSource, true) * (0.1 * DamageSourceAbilityLevel)
+            set Damage.index.damage = Damage.index.damage + r1 
             set FingerOfDeathTable.real[DamageTargetId] = Damage.index.damage * 0.25
         endif
 
@@ -322,6 +325,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Blizzard
         if DamageSourceAbility == BLIZZARD_ABILITY_ID then
             call UnitRemoveAbility(DamageTarget, 'BHbz')
+            set Damage.index.damage = Damage.index.damage * (1 + ((GetUnitElementCount(DamageSource, Element_Water) + GetUnitElementCount(DamageSource, Element_Cold)) * 0.25))
         endif
 
         //Flame Strike
@@ -337,15 +341,38 @@ scope ModifyDamageBeforeArmor initializer init
         //Monsoon
         set i1 = GetUnitAbilityLevel(DamageSource, MONSOON_ABILITY_ID)
         if i1 > 0 and DamageSourceAbility == MONSOON_ABILITY_ID then
-            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.03)))
+            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.06)))
         endif
 
         //Acid Spray
         if DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSourceHero, true) * (1.5 + (0.15 * DamageSourceAbilityLevel))
-            if Damage.index.damage < r1 then
-                set Damage.index.damage = r1
-            endif
+            set r1 = GetHeroInt(DamageSourceHero, true) * (0.05 * DamageSourceAbilityLevel)
+            set Damage.index.damage = Damage.index.damage + r1
+        endif
+
+        //Entangling Roots
+        if DamageSourceAbility == ENTAGLING_ROOTS_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * GetUnitElementCount(DamageSource, Element_Wild)
+        endif
+
+        //Stampede
+        if DamageSourceAbility == STAMPEDE_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Wild) * 0.25))
+        endif
+
+        //Icy Breath
+        if DamageSourceAbility == ICY_BREATH_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Cold) * 0.333))
+        endif
+
+        //Frost Nova
+        if DamageSourceAbility == FROST_NOVA_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Cold) * 0.5))
+        endif
+
+        //Forked Lightning
+        if DamageSourceAbility == FORKED_LIGHTNING_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Wind) * 0.25))
         endif
 
         //Pyromancer fire attack

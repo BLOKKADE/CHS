@@ -307,7 +307,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(GNOLL_WARDEN_UNIT_ID, HeroPassive_SummonLimit, "20")
 
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDranaiMage.blp" )
-        call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Magical Insight: The Hero's attacks deal |cffff00ffmagic damage|r. When dealing |cffff00ffmagic damage|r, there is a 20% chance to trigger [|cff00ffffCrit|r] or [|cffd45e29onhit|r] effects that normally activate on |cffff8080physical damage|r.[|cff80ff80Luck|r]" )
+        call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Magical Insight: The Hero's attacks deal |cffff00ffmagic damage|r. When dealing |cffff00ffmagic damage|r, there is a 20% chance to trigger [|cff00ffffCrit|r] or [|cffd45e29onhit|r] effects that normally activate on |cffff8080physical damage|r. Summons gain the Hero's [|cff00ffffCrit|r] and [|cffd45e29onhit|r] non-aura abilities. [|cff80ff80Luck|r]" )
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Magical Insight: +0.33% chance." )
         call InitHeroDesc(SEER_UNIT_ID, HeroPassive_SummonLimit, "10")
 
