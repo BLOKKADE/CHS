@@ -396,7 +396,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call LimitedSummon(hero, u, 1, limit) 
         endif  
 
-        
+        set limit = 0
         set u = null
         set hero = null
     endfunction
