@@ -17,13 +17,13 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             if target != null then
                 //call BJDebugMsg("target")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(hero, abilId, target, RandomSpellLoc, true, lvl)
+                call CastRandomSpell(caster, abilId, target, RandomSpellLoc, true, lvl)
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             elseif x != 0.00 and y != 0.00 then
                 //call BJDebugMsg("point")
                 set RandomSpellLoc = Location(x, y)
-                call CastRandomSpell(hero, abilId, null, RandomSpellLoc, true, lvl)
+                call CastRandomSpell(caster, abilId, null, RandomSpellLoc, true, lvl)
                 call RemoveLocation(RandomSpellLoc)
                 set RandomSpellLoc = null
             endif
