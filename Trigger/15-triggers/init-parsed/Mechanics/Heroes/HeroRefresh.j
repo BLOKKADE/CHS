@@ -10,12 +10,13 @@ library HeroRefresh initializer init requires RandomShit, NewBonus, CustomState
             call RemoveItem(UnitItemInSlot(u, 3))
             call RemoveItem(UnitItemInSlot(u, 4))
             call RemoveItem(UnitItemInSlot(u, 5))
+            call TriggerSleepAction(2.00)
     
-
-
             call RemoveHeroAbilities(u)
+            call TriggerSleepAction(1.00)
 
             call RemoveUnitBuffs(u, BUFFTYPE_BOTH, true)
+            call TriggerSleepAction(1.00)
 
             call ResetUnitCustomState(u)
 
