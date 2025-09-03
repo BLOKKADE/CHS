@@ -36,8 +36,10 @@ scope ModifyDamageAfterArmor initializer init
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
         //Fishing Rod
-        if UnitHasItemType(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, ENTANGLING_ROOTS_BUFF_ID) == 0 then
-            call FishingRod(DamageSource, DamageTarget)
+        if UnitHasItemType(DamageSource, 'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, ENTANGLING_ROOTS_BUFF_ID) == 0 then
+            if GetUnitAbilityLevel(DamageTarget, HARDENED_SKIN_ABILITY_ID) == 0 and not (UnitHasItemType(DamageTarget, 'I0CV') or UnitHasItemType(DamageTarget, 'I090')) then
+                call FishingRod(DamageSource, DamageTarget)
+            endif
         endif
 
         /*//Aura of Vulnerability
