@@ -138,7 +138,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Strong Chestmail
-        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO) or DamageSourceTypeId == STOMP_TREE_UNIT_ID) then
+        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO) or DamageSourceTypeId == STOMP_TREE_UNIT_ID) and GetUnitAbilityLevel(DamageSource, 'I0BB') == 0 then
             set Damage.index.damage = StrongChestMailDamage(DamageTargetId, Damage.index.damage)
         endif
 
@@ -246,7 +246,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Energy Shield
         set i1 = GetUnitAbilityLevel(DamageTargetHero, ENERGY_SHIELD_ABILITY_ID)
         set r1 = CalculateDistance(GetUnitX(DamageTargetHero), GetWidgetX(DamageSource), GetUnitY(DamageTargetHero), GetWidgetY(DamageSource))
-        if i1 > 0 and GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 0 and r1 >= 300 then
+        if i1 > 0 and GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 0 and GetUnitAbilityLevel(DamageSource, 'I0BB') == 0 and r1 >= 300 then
             set Damage.index.damage = Damage.index.damage * Pow((1 - (0.05 + (i1 * 0.01))),  r1 / 300)
         endif
 
@@ -564,7 +564,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Ice Force
         set i1 = GetUnitAbilityLevel(DamageTarget,ICE_FORCE_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_FORCE_ABILITY_ID) <= 0 then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_FORCE_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageSource, 'I0BB') == 0 then
             set r1 = 500. / (500. + GetHeroInt(DamageTarget, true))
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
             set Damage.index.damage = Damage.index.damage * r1
@@ -574,7 +574,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Blessed Protection
         set i1 = GetUnitAbilityLevel(DamageTarget, 'A0AF')
-        if i1 > 0 then
+        if i1 > 0 and GetUnitAbilityLevel(DamageSource, 'I0BB') == 0 then
             set Damage.index.damage = Damage.index.damage * 0.25
         endif
         

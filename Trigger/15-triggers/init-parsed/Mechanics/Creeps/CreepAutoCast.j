@@ -53,6 +53,16 @@ library CreepAutoCast initializer init requires RandomShit
         
         return isValidUnit
     endfunction
+
+    private function BloodlustUnitFilter takes nothing returns boolean
+        local unit filterUnit = GetFilterUnit()
+        local boolean isValidUnit = (UnitAlive(filterUnit) == true) and (IsUnitType(filterUnit, UNIT_TYPE_MAGIC_IMMUNE) != true) and (IsUnitAlly(filterUnit, GetOwningPlayer(GetEnumUnit())) == true)
+        
+        // Cleanup
+        set filterUnit = null
+        
+        return isValidUnit
+    endfunction
     
     private function SlowUnitFilter takes nothing returns boolean
         local unit filterUnit = GetFilterUnit()
@@ -199,6 +209,25 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Random Spell
+            if (GetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 3)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID, RoundNumber * 1)
+                    else
+                        call SetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID, RoundNumber * 1)
+                    endif
+
+                    // Random Spell to random unit
+                    set tempGroup = GetUnitsInRangeOfLocMatching(400.00, creepLocation, Condition(function SlowUnitFilter))
+
+                    call IssueTargetOrder(creep, "slow", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
 
             // Rejuvination
             if (GetUnitAbilityLevel(creep, REJUVENATION_CREEP_ABILITY_ID) > 0) then
@@ -213,6 +242,45 @@ library CreepAutoCast initializer init requires RandomShit
                     // Cast rejuvination on ally creep
                     set tempGroup = GetUnitsInRangeOfLocMatching(400.00, creepLocation, Condition(function RejuvinationUnitFilter))
                     call IssueTargetOrder(creep, "rejuvination", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Bloodlust
+            if (GetUnitAbilityLevel(creep, BLOODLUST_CREEP_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 1)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, BLOODLUST_CREEP_ABILITY_ID, (RoundNumber * 1))
+                    else
+                        call SetUnitAbilityLevel(creep, BLOODLUST_CREEP_ABILITY_ID, (RoundNumber * 1))
+                    endif
+
+                    // Cast Bloodlust on ally creep
+                    set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function BloodlustUnitFilter))
+                    call IssueTargetOrder(creep, "bloodlust", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Divine Shield
+            if (GetUnitAbilityLevel(creep, 'ACds') > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, 'ACds', (RoundNumber * 1))
+                    else
+                        call SetUnitAbilityLevel(creep, 'ACds', (RoundNumber * 1))
+                    endif
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+
+                    if (CountUnitsInGroup(tempGroup) > 1) then
+                        call IssueImmediateOrder(creep, "divineshield")
+                    endif
 
                     // Cleanup
                     call DestroyGroup(tempGroup)

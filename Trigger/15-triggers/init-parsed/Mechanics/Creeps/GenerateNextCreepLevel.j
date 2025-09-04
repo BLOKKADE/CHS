@@ -7,10 +7,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         integer RoundCreepChanceSlowAura = 0
         integer RoundCreepChancePulverize = 0 
         integer RoundCreepChanceLastBreath = 0
-        integer FireshieldChance = 0
+        integer RoundCreepChanceBloodlust = 0
+        integer RoundCreepChanceUnlimitedAgony = 0
         integer RoundCreepChanceCorrosiveSkin = 0 
-        integer RoundCreepChanceShadowStrike = 0
         integer RoundCreepChanceImmortalAura = 0
+        integer RoundCreepChanceDivineShield = 0
+        integer RoundCreepChanceDivineBubble = 0
         boolean wizardbaneDebug = false
         HashTable PlayerRoundCreeps
     endglobals
@@ -63,7 +65,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
     private function CheckUnitAbilities takes nothing returns nothing
         local string s = ""
     
-        if RoundCreepChanceBash == 1 then
+        if RoundCreepChanceBash == 1 and RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' then
             set s = ConcatAbility(s, "Bash")
             call AddRoundAbility('ACbh')
         endif
@@ -77,10 +79,25 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set s = ConcatAbility(s, "Rejuvenation")
             call AddRoundAbility(REJUVENATION_CREEP_ABILITY_ID)
         endif
+
+        if RoundCreepChanceDivineShield == 1 then
+            set s = ConcatAbility(s, "Divine Shield")
+            call AddRoundAbility('ACds')
+        endif
+
+        if RoundCreepChanceDivineBubble == 1 then
+            set s = ConcatAbility(s, "Divine Bubble")
+            call AddRoundAbility(DIVINE_BUBBLE_ABILITY_ID)
+        endif
     
         if RoundCreepChanceBigBadV == 1 then
             set s = ConcatAbility(s, "Big Bad Voodoo")
             call AddRoundAbility('A018')
+        endif
+
+        if RoundCreepChanceBackStab == 1 then
+            set s = ConcatAbility(s, "Backstab")
+            call AddRoundAbility(BACKSTAB_ABILITY_ID)
         endif
     
         if RoundCreepChanceBlink == 1 then
@@ -88,7 +105,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call AddRoundAbility('A01A')
         endif
     
-        if RoundCreepChanceCritStrike == 1 then
+        if RoundCreepChanceCritStrike == 1 and RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' then
             set s = ConcatAbility(s, "Critical Strike")
             call AddRoundAbility(CRITICAL_STRIKE_ABILITY_ID)
         endif
@@ -122,7 +139,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call AddRoundAbility('A013')
         endif
     
-        if RoundCreepChanceCleave == 1 then
+        if RoundCreepChanceCleave == 1 and RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' or RoundCreepTypeId != 'n01p' or RoundCreepTypeId != 'n01g' or RoundCreepTypeId != 'n01t' or RoundCreepTypeId != 'n01F' or RoundCreepTypeId != 'n01A' or RoundCreepTypeId != 'n006' then
             set s = ConcatAbility(s, "Cleave")
             call AddRoundAbility('ACce')
         endif
@@ -147,7 +164,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call AddRoundAbility(WIZARDBANE_AURA_ABILITY_ID)
         endif
     
-        if RoundCreepChanceDrunkMaster == 1 then
+        if RoundCreepChanceDrunkMaster == 1 and RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' then
             set s = ConcatAbility(s, "Drunken Master")
             call AddRoundAbility(DRUNKEN_MASTER_ABILITY_ID)
         endif
@@ -157,7 +174,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call AddRoundAbility(SLOW_AURA_ABILITY_ID)
         endif
     
-        if RoundCreepChancePulverize == 1 then
+        if RoundCreepChancePulverize == 1 and RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' then
             set s = ConcatAbility(s, "Pulverize")
             call AddRoundAbility(PULVERIZE_ABILITY_ID)
         endif
@@ -175,6 +192,21 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if RoundCreepChanceShadowStrike == 1 then
             set s = ConcatAbility(s, "Shadow Strike")
             call AddRoundAbility(SHADOW_STRIKE_CREEP_ABILITY_ID)
+        endif
+
+        if RoundCreepChanceRandomSpell == 1 then
+            set s = ConcatAbility(s, "Random Spell")
+            call AddRoundAbility(RANDOM_SPELL_ABILITY_ID)
+        endif
+
+        if RoundCreepChanceBloodlust == 1 then
+            set s = ConcatAbility(s, "Bloodlust")
+            call AddRoundAbility(BLOODLUST_CREEP_ABILITY_ID)
+        endif
+
+        if RoundCreepChanceUnlimitedAgony == 1 then
+            set s = ConcatAbility(s, "Unlimited Agony")
+            call AddRoundAbility('A0AQ')
         endif
 
         if RoundCreepChanceImmortalAura == 1 then
@@ -199,7 +231,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call SetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.2), 30))
         endif
     
-        if RoundCreepChanceDrunkMaster == 1 then
+        if RoundCreepChanceDrunkMaster == 1 and RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' then
             call UnitAddAbility(u, DRUNKEN_MASTER_ABILITY_ID)
             call FuncEditParam(DRUNKEN_MASTER_ABILITY_ID,u)
             call SetUnitAbilityLevel(u, DRUNKEN_MASTER_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.3), 30))
@@ -219,8 +251,18 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call UnitAddAbility(u, SLOW_AURA_ABILITY_ID)
             call SetUnitAbilityLevel(u, SLOW_AURA_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.75), 30))
         endif
+
+        if RoundCreepChanceDivineShield == 1 then
+            call UnitAddAbility(u, 'ACds')
+            call SetUnitAbilityLevel(u, 'ACds', IMinBJ(R2I(RoundNumber * 1), 30))
+        endif
+
+        if RoundCreepChanceDivineBubble == 1 then
+            call UnitAddAbility(u, DIVINE_BUBBLE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, DIVINE_BUBBLE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 1), 30))
+        endif
     
-        if RoundCreepChancePulverize == 1 then
+        if RoundCreepChancePulverize == 1 and RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' then
             call UnitAddAbility(u, PULVERIZE_ABILITY_ID)
             call SetUnitAbilityLevel(u, PULVERIZE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
@@ -236,9 +278,29 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call SetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
     
+        if RoundCreepChanceBackStab == 1 then
+            call UnitAddAbility(u, BACKSTAB_ABILITY_ID)
+            call SetUnitAbilityLevel(u, BACKSTAB_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+        endif
+
         if RoundCreepChanceShadowStrike == 1 then
             call UnitAddAbility(u, SHADOW_STRIKE_CREEP_ABILITY_ID)
             call SetUnitAbilityLevel(u, SHADOW_STRIKE_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+        endif
+
+        if RoundCreepChanceRandomSpell == 1 then
+            call UnitAddAbility(u, RANDOM_SPELL_ABILITY_ID)
+            call SetUnitAbilityLevel(u, RANDOM_SPELL_ABILITY_ID, IMinBJ(R2I(RoundNumber * 1.34), 30))
+        endif
+
+        if RoundCreepChanceBloodlust == 1 then
+            call UnitAddAbility(u, BLOODLUST_CREEP_ABILITY_ID)
+            call SetUnitAbilityLevel(u, BLOODLUST_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 2), 30))
+        endif
+
+        if RoundCreepChanceUnlimitedAgony == 1 then
+            call UnitAddAbility(u, 'A0AQ')
+            call SetUnitAbilityLevel(u, 'A0AQ', IMinBJ(R2I(RoundNumber * 2), 30))
         endif
 
         if RoundCreepChanceImmortalAura == 1 then
@@ -291,24 +353,28 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if RoundNumber > 40 then
             set oldAbilChance = 15
         endif
+
+        if RoundNumber > 5 and RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' then
+            set RoundCreepChanceBash = GetRandomInt(1, 20) //Bash creep chance
+        endif
+
         if RoundNumber > 5 then
-            set RoundCreepChanceBash = GetRandomInt(1, 20)
-            set RoundCreepChanceHurlBoulder = GetRandomInt(1, 20)
-            set RoundCreepChanceRejuv = GetRandomInt(1, 20)
-            set RoundCreepChanceSlow = GetRandomInt(1, oldAbilChance)
-            set RoundCreepChanceSlowAura = GetRandomInt(1, newAbilChance)
-            set RoundCreepChanceImmortalAura = GetRandomInt(1, newAbilChance)
+            set RoundCreepChanceHurlBoulder = GetRandomInt(1, 20) //hurl Boulder creep chance
+            set RoundCreepChanceRejuv = GetRandomInt(1, 20) //Rejuvenation creep chance
+            set RoundCreepChanceSlow = GetRandomInt(1, oldAbilChance) //Slow creep chance
+            set RoundCreepChanceSlowAura = GetRandomInt(1, newAbilChance) //Slow Aura creep chance
+            set RoundCreepChanceImmortalAura = GetRandomInt(1, newAbilChance) //Immortality Aura creep chance
         endif
 
         if ((RoundNumber + 1) > 1) then
-            set RoundCreepChanceBigBadV = GetRandomInt(1, oldAbilChance)
-            set RoundCreepChanceBlink = GetRandomInt(1, oldAbilChance)
+            set RoundCreepChanceBigBadV = GetRandomInt(1, oldAbilChance) //Big Bad Voodoo creep chance
+            set RoundCreepChanceBlink = GetRandomInt(1, oldAbilChance) //Blink creep chance
 
             if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
-                set RoundCreepChanceCritStrike = GetRandomInt(1, oldAbilChance)
-                set RoundCreepChanceShockwave = GetRandomInt(1, oldAbilChance)
+                set RoundCreepChanceCritStrike = GetRandomInt(1, oldAbilChance) //Critical Strike creep chance
+                set RoundCreepChanceShockwave = GetRandomInt(1, oldAbilChance) //Shockwave creep chance
                 if RoundNumber > 5 then
-                    set RoundCreepChanceThunderClap = GetRandomInt(1, oldAbilChance)    
+                    set RoundCreepChanceThunderClap = GetRandomInt(1, oldAbilChance) //Thunderclap creep chance 
                 endif
             else
                 set RoundCreepChanceCritStrike = 0
@@ -316,11 +382,14 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 set RoundCreepChanceThunderClap = 0
             endif
 
-            set RoundCreepChanceEvasion = GetRandomInt(1, oldAbilChance)
-            set RoundCreepChanceFaerieFire = GetRandomInt(1, oldAbilChance)
-            set RoundCreepChanceLifesteal = GetRandomInt(1, oldAbilChance)
-            set RoundCreepChanceManaBurn = GetRandomInt(1, oldAbilChance)
-            set RoundCreepChanceCleave = GetRandomInt(1, oldAbilChance)
+            set RoundCreepChanceEvasion = GetRandomInt(1, oldAbilChance) //Evasion creep chance
+            set RoundCreepChanceFaerieFire = GetRandomInt(1, oldAbilChance) //Faerie Fire creep chance
+            set RoundCreepChanceLifesteal = GetRandomInt(1, oldAbilChance) //Lifesteal creep chance
+            set RoundCreepChanceManaBurn = GetRandomInt(1, oldAbilChance) //Mana Burn creep chance
+
+            if RoundCreepTypeId != 'n01H' or RoundCreepTypeId != 'n00W' or RoundCreepTypeId != 'n01p' or RoundCreepTypeId != 'n01g' or RoundCreepTypeId != 'n01t' or RoundCreepTypeId != 'n01F' or RoundCreepTypeId != 'n01A' or RoundCreepTypeId != 'n006' then
+                set RoundCreepChanceCleave = GetRandomInt(1, oldAbilChance) //Cleave creep chance
+            endif
             set RoundCreepChanceThorns = 0
             set RoundCreepChanceReflectAura = 0
 
@@ -353,36 +422,71 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundNumber > 10 then
             if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
-                set RoundCreepChanceDrunkMaster = GetRandomInt(1, oldAbilChance)
-                set RoundCreepChancePulverize = GetRandomInt(1, newAbilChance)
+                set RoundCreepChanceDrunkMaster = GetRandomInt(1, oldAbilChance) //Drunken Master creep chance
+                set RoundCreepChancePulverize = GetRandomInt(1, newAbilChance) //Pulverize creep chance
             endif
-            set FireshieldChance = GetRandomInt(1, newAbilChance)
-            set RoundCreepChanceCorrosiveSkin = GetRandomInt(1, newAbilChance)
+            set RoundCreepChanceCorrosiveSkin = GetRandomInt(1, newAbilChance) //Corrosive Skin creep chance
+        endif
+        
+        if RoundNumber >= 14 then
+            set RoundCreepChanceBackStab = GetRandomInt(1, 15) //Backstab creep chance
         endif
 
-        if RoundNumber >= 10 then
-            set RoundCreepChanceShadowStrike = GetRandomInt(1, newAbilChance + 6)
+        if RoundNumber >= 14 then
+            set RoundCreepChanceDivineShield = GetRandomInt(1, 15)  //Divine Shield creep chance
+        endif
+
+        if RoundNumber >= 14 then
+            set RoundCreepChanceDivineBubble = 15  //Divine Bubble creep chance
+        endif
+
+        if RoundNumber == 49 then
+            set RoundCreepChanceUnlimitedAgony = 1 //Unlimited Agony creeps
+        endif
+
+        if RoundNumber >= 10 and RoundCreepChanceDivineShield == 0 and RoundCreepChanceDivineBubble == 0 then
+            set RoundCreepChanceBloodlust = GetRandomInt(1, 15) //Bloodlust creep chance
+        endif
+
+        if RoundNumber >= 14 then
+            set RoundCreepChanceShadowStrike = GetRandomInt(1, 15) //Shadow Strike creep chance
+        endif
+
+        if RoundNumber >= 14 then
+            set RoundCreepChanceRandomSpell = 15 //Random Spell creep chance
         endif
     
         if RoundNumber == 28 or RoundNumber == 38 or RoundNumber == 48 then
-            set RoundCreepChanceLastBreath = 1
-        else  
+            set RoundCreepChanceLastBreath = GetRandomInt(1, 2) //Last Breaths creep chance
+        elseif RoundNumber > 20 then
+            set RoundCreepChanceLastBreath = GetRandomInt(1, 50)
+        else
             set RoundCreepChanceLastBreath = 2
         endif
     
         if RoundNumber < 5 then
-            set RoundCreepNumber = RoundNumber + 1   
+            set RoundCreepNumber = RoundNumber + 1   //creep count R1-5
         elseif RoundCreepChanceLastBreath == 1 then
-            set RoundCreepNumber = GetRandomInt(2,5)
+            set RoundCreepNumber = GetRandomInt(2,5) //creep count with last breaths
+        elseif GetRemainingPlayerCount() == 6 then
+            set RoundCreepNumber = GetRandomInt(2,27) //creep count with 6 players
+        elseif GetRemainingPlayerCount() == 5 then
+            set RoundCreepNumber = GetRandomInt(2,29) //creep count with 5 players
+        elseif GetRemainingPlayerCount() == 4 then
+            set RoundCreepNumber = GetRandomInt(2,31) //creep count if 4 players
+        elseif GetRemainingPlayerCount() == 3 then
+            set RoundCreepNumber = GetRandomInt(2,35) //creep count with 3 players
+        elseif GetRemainingPlayerCount() == 2 then
+            set RoundCreepNumber = GetRandomInt(2,40) //creep count with 2 players
         else
-            set RoundCreepNumber = GetRandomInt(2,25)
+            set RoundCreepNumber = GetRandomInt(2,25) //creep count for everyone
         endif
 
         if RoundNumber >= 45 then
             if RoundCreepChanceLastBreath == 1 then
                 set RoundCreepNumber = GetRandomInt(2, 5)
             else
-                // Otherwise, scale based on player count
+                // R45+ anti lag creep reduction
                 if GetRemainingPlayerCount() >= 6 then
                     set RoundCreepNumber = GetRandomInt(2, 5)
                 elseif GetRemainingPlayerCount() == 4 or GetRemainingPlayerCount() == 5 then
@@ -392,13 +496,13 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 endif
             endif
         endif
-        
+    
         //item buddy arrival
         if RoundNumber == 46 then
             call SetUpItemStocks(GetValidPlayerForce())
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00Item Buddy has arrived!|r You can use it to swap items during the Battle Royale using Shift + Q and Shift + W")
+            call PlaySoundBJ(udg_sound26)
         endif
-
     
         if RoundNumber > 0 then
             call CheckUnitAbilities()
@@ -453,7 +557,13 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     if wizardbaneDebug then
                         call SetUnitCustomState(creep, BONUS_MAGICPOW, 5000)
                     endif
-    
+
+                    //Add mana
+                    if RoundCreepChanceRandomSpell == 1 then
+                        call BlzSetUnitMaxMana(creep, BlzGetUnitMaxMana(creep) + R2I(200.0 * RoundNumber))
+                        call SetUnitState(creep, UNIT_STATE_MANA, BlzGetUnitMaxMana(creep))
+                    endif
+
                     if RoundNumber < 3 then
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) - 3, 0)
                         call SetUnitCustomState(creep, BONUS_MAGICRES, magicDefBonus + (0.8 * (RoundNumber)))

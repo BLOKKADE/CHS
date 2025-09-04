@@ -66,10 +66,6 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(hero, target, lvl)
-       
-        //thunderclap
-        //elseif abilId == THUNDER_CLAP_ABILITY_ID then
-            //call CastThunderClap(hero)
 
         //Dark Seal
         elseif abilId == DARK_SEAL_ABILITY_ID then
