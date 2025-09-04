@@ -194,10 +194,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call AddRoundAbility(SHADOW_STRIKE_CREEP_ABILITY_ID)
         endif
 
-        if RoundCreepChanceRandomSpell == 1 then
+        /*if RoundCreepChanceRandomSpell == 1 then
             set s = ConcatAbility(s, "Random Spell")
             call AddRoundAbility(RANDOM_SPELL_ABILITY_ID)
-        endif
+        endif*/
 
         if RoundCreepChanceBloodlust == 1 then
             set s = ConcatAbility(s, "Bloodlust")
@@ -288,10 +288,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call SetUnitAbilityLevel(u, SHADOW_STRIKE_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
 
-        if RoundCreepChanceRandomSpell == 1 then
+       /* if RoundCreepChanceRandomSpell == 1 then
             call UnitAddAbility(u, RANDOM_SPELL_ABILITY_ID)
             call SetUnitAbilityLevel(u, RANDOM_SPELL_ABILITY_ID, IMinBJ(R2I(RoundNumber * 1.34), 30))
-        endif
+        endif*/
 
         if RoundCreepChanceBloodlust == 1 then
             call UnitAddAbility(u, BLOODLUST_CREEP_ABILITY_ID)
@@ -452,9 +452,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceShadowStrike = GetRandomInt(1, 15) //Shadow Strike creep chance
         endif
 
-        if RoundNumber >= 14 then
+        /*if RoundNumber >= 14 then
             set RoundCreepChanceRandomSpell = 15 //Random Spell creep chance
-        endif
+        endif*/
     
         if RoundNumber == 28 or RoundNumber == 38 or RoundNumber == 48 then
             set RoundCreepChanceLastBreath = GetRandomInt(1, 2) //Last Breaths creep chance
@@ -559,10 +559,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     endif
 
                     //Add mana
-                    if RoundCreepChanceRandomSpell == 1 then
+                    /*if RoundCreepChanceRandomSpell == 1 then
                         call BlzSetUnitMaxMana(creep, BlzGetUnitMaxMana(creep) + R2I(200.0 * RoundNumber))
                         call SetUnitState(creep, UNIT_STATE_MANA, BlzGetUnitMaxMana(creep))
-                    endif
+                    endif*/
 
                     if RoundNumber < 3 then
                         call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) - 3, 0)

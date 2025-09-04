@@ -69,7 +69,7 @@ library GameInit initializer init requires GroupUtils
         integer RoundCreepChanceThorns = 0
         integer RoundCreepChanceThunderClap = 0
         integer RoundCreepChanceBackStab = 0
-        integer RoundCreepChanceRandomSpell = 0
+        //integer RoundCreepChanceRandomSpell = 0
         integer RoundCreepChanceShadowStrike = 0
         integer RoundCreepMaxAttackSpeed = 0
         integer RoundCreepMoveSpeed = 0

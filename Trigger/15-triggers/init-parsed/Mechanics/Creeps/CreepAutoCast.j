@@ -210,7 +210,7 @@ library CreepAutoCast initializer init requires RandomShit
             endif
 
             // Random Spell
-            if (GetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID) > 0) then
+            /*if (GetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 3)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
@@ -227,7 +227,7 @@ library CreepAutoCast initializer init requires RandomShit
                     // Cleanup
                     call DestroyGroup(tempGroup)
                 endif
-            endif
+            endif*/
 
             // Rejuvination
             if (GetUnitAbilityLevel(creep, REJUVENATION_CREEP_ABILITY_ID) > 0) then
