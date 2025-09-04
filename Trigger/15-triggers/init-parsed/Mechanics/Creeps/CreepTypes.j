@@ -34,15 +34,15 @@ library CreepTypes initializer init requires RandomShit
         set CreepUnitTypeIds[19] = 'n01J' //Orc Warlock
         set CreepUnitTypeIds[20] = 'n01I' //Satyr
         set CreepUnitTypeIds[21] = 'n01G' //Succubus
-        set CreepUnitTypeIds[22] = 'n00W' //Wraith
-        set CreepUnitTypeIds[23] = 'n01H' //Sludge minion
+        set CreepUnitTypeIds[22] = 'n01S' //Sasquatch
+        set CreepUnitTypeIds[23] = 'n01t' //Bandit Spear Thrower
         set CreepUnitTypeIds[24] = 'n01z' //Furbolg
         set CreepUnitTypeIds[25] = 'n01p' //Centaur Impaler
         set CreepUnitTypeIds[26] = 'n01x' //Dark Troll Berserker
         set CreepUnitTypeIds[27] = 'n01g' //Gnoll Warden
         set CreepUnitTypeIds[28] = 'n01r' //Tuskar
-        set CreepUnitTypeIds[29] = 'n01S' //Sasquatch
-        set CreepUnitTypeIds[30] = 'n01t' //Bandit Spear Thrower
+        set CreepUnitTypeIds[29] = 'n00W' //Wraith
+        set CreepUnitTypeIds[30] = 'n01H' //Sludge minion
         
         set MaxCreepUnitTypes = 30
     endfunction

@@ -119,7 +119,7 @@ library GameInit initializer init requires GroupUtils
         sound udg_sound23 = null
         sound udg_sound24 = null
         sound udg_sound25 = null
-        sound udg_sound26 = null
+        sound itembuddyarrivalsound = null
         string array RoundCreepInfo
         string RoundAbilities = ""
         string RoundCreepTitle
@@ -295,9 +295,9 @@ library GameInit initializer init requires GroupUtils
         set udg_sound25 = CreateSound("Sound\\Interface\\QuestLog.wav", false, false, false, 10, 10, "")
         call SetSoundParamsFromLabel(udg_sound25, "QuestUpdate")
         call SetSoundDuration(udg_sound25, 2275)
-        set udg_sound26 = CreateSound("Sound\\Time\\DayBreakRooster.wav", false, false, false, 10, 10, "")
-        call SetSoundParamsFromLabel(udg_sound26, "DayBreakRooster")
-        call SetSoundDuration(udg_sound26, 3796)
+        set itembuddyarrivalsound = CreateSound("Sound\\Time\\DayBreakRooster.wav", false, false, false, 10, 10, "")
+        call SetSoundParamsFromLabel(itembuddyarrivalsound, "DayBreakRooster")
+        call SetSoundDuration(itembuddyarrivalsound, 3796)
     endfunction
 
     private function StartGame takes nothing returns nothing
