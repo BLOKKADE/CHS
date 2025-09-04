@@ -43,6 +43,7 @@ library IdLibrary initializer init
         constant integer ACTIVE_SPELLS_IV_UNIT_ID                       = 'n00Y'
         constant integer ACTIVE_SPELLS_V_UNIT_ID                        = 'n02O'
         constant integer ACTIVE_SPELLS_VI_UNIT_ID                       = 'n033'
+        constant integer ACTIVE_SPELLS_VII_UNIT_ID                      = 'n069'
 
         constant integer PASSIVE_SPELLS_I_UNIT_ID                       = 'n001'
         constant integer PASSIVE_SPELLS_II_UNIT_ID                      = 'n012'
@@ -405,6 +406,7 @@ library IdLibrary initializer init
         constant integer SHOCKWAVE_CREEP_ABILITY_ID                     = 'A00U'
         constant integer THUNDER_CLAP_CREEP_ABILITY_ID                  = 'A01B'
         constant integer SHADOW_STRIKE_CREEP_ABILITY_ID                 = 'ACss'
+        constant integer BLOODLUST_CREEP_ABILITY_ID                     = 'BLCA'
 
         // Active Spell Dummy Abilities
 
