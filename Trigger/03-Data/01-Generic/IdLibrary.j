@@ -384,6 +384,7 @@ library IdLibrary initializer init
         constant integer DISPEL_MAGIC_ABILITY_ID                        = 'DMBB'
         constant integer MOUNTAIN_GIANT_TAUNT_ABILITY_ID                = 'A06H' 
         constant integer LUCKY_TRIGGER_ABILITY_ID                       = 'LTBB'
+        constant integer OVERLOAD_ABILITY_ID                            = 'BBAO'
         
         // Dummy Abilities
         constant integer STUN_ABILITY_ID                                = 'A0C2'
@@ -583,6 +584,7 @@ library IdLibrary initializer init
         constant integer MULTICAST_ITEM_ID                              = 'I068'
         constant integer MYSTERIOUS_TALENT_ITEM_ID                      = 'I07R'
         constant integer NECROMANCERS_ARMY_ITEM_ID                      = 'I02Q'
+        constant integer OVERLOAD_ITEM_ID                               = 'OLBB'
         constant integer PARASITE_ITEM_ID                               = 'I02U'
         constant integer PHASE_SHIFT_ITEM_ID                            = 'I03U'
         constant integer PHOENIX_ITEM_ID                                = 'I032'

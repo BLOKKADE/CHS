@@ -1196,6 +1196,10 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //203 - Lucky Trigger 
         call SaveAbilData(LUCKY_TRIGGER_ABILITY_ID, LUCKY_TRIGGER_ITEM_ID, false, 0, 0, false, Order_None, null)
+
+        //204 - Overload
+        call SaveAbilData(OVERLOAD_ABILITY_ID, OVERLOAD_ITEM_ID, true, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Arcane, 1)
     endfunction
 
     function InitItemAbilities takes nothing returns nothing

@@ -365,7 +365,9 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call CastRandomSpell(caster, abilId, target, spelLLoc, false, i)
                     endif
 
-                    if GetUnitAbilityLevel(caster, 'A099') > 0 and (target != null or IsAbilityManifoldable(abilId)) and (not IsCurrentlyManifolding(caster)) then
+                    if GetUnitAbilityLevel(caster, OVERLOAD_ABILITY_ID) > 0 and (target != null or IsAbilityManifoldable(abilId)) and (not IsCurrentlyManifolding(caster)) then
+                        call Overload(caster, target, abilId, abilLvl)
+                    elseif GetUnitAbilityLevel(caster, 'A099') > 0 and (target != null or IsAbilityManifoldable(abilId)) and (not IsCurrentlyManifolding(caster)) then
                         call ManifoldStaff(caster, target, abilId, abilLvl)
                     endif
 
