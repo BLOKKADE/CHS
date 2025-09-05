@@ -41,7 +41,6 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
         local real ResCD = 1
         local real timeBonus = 0
         local integer hid = GetHandleId(u)
-        local texttag tt = CreateTextTag()
 
         //Get the cooldown of an ability if it was set by code somewhere else (mostly used for active abilities)
         if GetUnitAbilityNewCooldown(u, id) != 0 then
@@ -57,16 +56,7 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
         // Dousing Hex
         if GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 then
             call DousingHexActivated(u)
-
-            // Create floating text: "+15s Cooldown"
-            call SetTextTagText(tt, "+15s Cooldown", 0.023) // Font size
-            call SetTextTagPosUnit(tt, u, 0.0)
-            call SetTextTagColor(tt, 255, 0, 0, 255) // Red color
-            call SetTextTagVelocity(tt, 0.0, 0.04)
-            call SetTextTagFadepoint(tt, 1.5)
-            call SetTextTagLifespan(tt, 2.0)
-            call SetTextTagPermanent(tt, false)
-
+            call ShowFloatingText(u, id)
             return time + 15.0
         endif
 
