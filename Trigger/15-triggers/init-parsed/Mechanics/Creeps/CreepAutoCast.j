@@ -147,6 +147,59 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Healing Wave
+            if (GetUnitAbilityLevel(creep, HEALING_WAVE_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 2)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, HEALING_WAVE_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
+                    else
+                        call SetUnitAbilityLevel(creep, HEALING_WAVE_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                    endif
+
+                    // Cast healing wave on ally creep
+                    set tempGroup = GetUnitsInRangeOfLocMatching(400.00, creepLocation, Condition(function RejuvinationUnitFilter))
+                    call IssueTargetOrder(creep, "healingwave", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Rain of Fire
+            if (GetUnitAbilityLevel(creep, RAIN_OF_FIRE_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 4)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
+                    set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
+
+                    call IssuePointOrderLoc(creep, "rainoffire", offsetLocation)
+                    
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                    call RemoveLocation(randomUnitLocation)
+                    call RemoveLocation(offsetLocation)
+                endif
+            endif
+
+            // Blizzard
+            if (GetUnitAbilityLevel(creep, BLIZZARD_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 6)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
+                    set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
+
+                    call IssuePointOrderLoc(creep, "blizzard", offsetLocation)
+                    
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                    call RemoveLocation(randomUnitLocation)
+                    call RemoveLocation(offsetLocation)
+                endif
+            endif
+
             // Shockwave
             if (GetUnitAbilityLevel(creep, SHOCKWAVE_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 4)
@@ -209,6 +262,84 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Entangling Roots
+            if (GetUnitAbilityLevel(creep, ENTAGLING_ROOTS_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 2)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, ENTAGLING_ROOTS_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
+                    else
+                        call SetUnitAbilityLevel(creep, ENTAGLING_ROOTS_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                    endif
+
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function HurlBoulderUnitFilter))
+
+                    call IssueTargetOrder(creep, "entanglingroots", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Frost Nova
+            if (GetUnitAbilityLevel(creep, FROST_NOVA_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 2)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, FROST_NOVA_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
+                    else
+                        call SetUnitAbilityLevel(creep, FROST_NOVA_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                    endif
+
+                    // Frost Nova to random unit
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function HurlBoulderUnitFilter))
+
+                    call IssueTargetOrder(creep, "frostnova", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Storm Bolt
+            if (GetUnitAbilityLevel(creep, STORM_BOLT_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 2)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, STORM_BOLT_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
+                    else
+                        call SetUnitAbilityLevel(creep, STORM_BOLT_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                    endif
+
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function HurlBoulderUnitFilter))
+
+                    call IssueTargetOrder(creep, "thunderbolt", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Ensnare
+            if (GetUnitAbilityLevel(creep, ENSNARE_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, ENSNARE_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
+                    else
+                        call SetUnitAbilityLevel(creep, ENSNARE_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                    endif
+
+                    // Shadow Strike to random unit
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function HurlBoulderUnitFilter))
+
+                    call IssueTargetOrder(creep, "ensnare", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
             // Random Spell
             /*if (GetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 3)
@@ -216,7 +347,7 @@ library CreepAutoCast initializer init requires RandomShit
                     if (GameModeShort == true) then
                         call SetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID, RoundNumber * 1)
                     else
-                        call SetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID, RoundNumber * 1)
+                        call SetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID, RoundNumber * 2)
                     endif
 
                     // Random Spell to random unit
@@ -253,7 +384,7 @@ library CreepAutoCast initializer init requires RandomShit
                 set RoundCreepAbilCastChance = GetRandomInt(1, 1)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, BLOODLUST_CREEP_ABILITY_ID, (RoundNumber * 1))
+                        call SetUnitAbilityLevel(creep, BLOODLUST_CREEP_ABILITY_ID, (RoundNumber * 2))
                     else
                         call SetUnitAbilityLevel(creep, BLOODLUST_CREEP_ABILITY_ID, (RoundNumber * 1))
                     endif
@@ -267,12 +398,50 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Guardian Spirit
+            if (GetUnitAbilityLevel(creep, GUARDIAN_SPIRIT_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 1)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, GUARDIAN_SPIRIT_ABILITY_ID, (RoundNumber * 2))
+                    else
+                        call SetUnitAbilityLevel(creep, GUARDIAN_SPIRIT_ABILITY_ID, (RoundNumber * 1))
+                    endif
+
+                    // Cast Bloodlust on ally creep
+                    set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function BloodlustUnitFilter))
+                    call IssueTargetOrder(creep, "rejuvination", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Anti-Magic Shell
+            if (GetUnitAbilityLevel(creep, ANTI_MAGIC_SHEL_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 2)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, ANTI_MAGIC_SHEL_ABILITY_ID, (RoundNumber * 2))
+                    else
+                        call SetUnitAbilityLevel(creep, ANTI_MAGIC_SHEL_ABILITY_ID, (RoundNumber * 1))
+                    endif
+
+                    // Cast Bloodlust on ally creep
+                    set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function BloodlustUnitFilter))
+                    call IssueTargetOrder(creep, "antimagicshell", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
             // Divine Shield
             if (GetUnitAbilityLevel(creep, 'ACds') > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, 'ACds', (RoundNumber * 1))
+                        call SetUnitAbilityLevel(creep, 'ACds', (RoundNumber * 2))
                     else
                         call SetUnitAbilityLevel(creep, 'ACds', (RoundNumber * 1))
                     endif
@@ -280,6 +449,26 @@ library CreepAutoCast initializer init requires RandomShit
 
                     if (CountUnitsInGroup(tempGroup) > 1) then
                         call IssueImmediateOrder(creep, "divineshield")
+                    endif
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Avatar
+            if (GetUnitAbilityLevel(creep, ACTIVATE_AVATAR_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, ACTIVATE_AVATAR_ABILITY_ID, (RoundNumber * 2))
+                    else
+                        call SetUnitAbilityLevel(creep, ACTIVATE_AVATAR_ABILITY_ID, (RoundNumber * 1))
+                    endif
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+
+                    if (CountUnitsInGroup(tempGroup) > 1) then
+                        call IssueImmediateOrder(creep, "avatar")
                     endif
 
                     // Cleanup
