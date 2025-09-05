@@ -320,8 +320,6 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local trigger trg = CreateTrigger()
         local integer i = 0
         local integer pc = 0
-        local string playerName = GetPlayerName(Player(0))
-        local integer pid = GetPlayerId(GetTriggerPlayer())
 
         set DummyGroup = NewGroup()
 
@@ -332,7 +330,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             set i = i + 1
             exitwhen i == 8
         endloop
-                
+
         if pc == 1 then
             set DebugModeEnabled = true
 
@@ -354,13 +352,12 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
 
             // Give 10 million gold to specific player names
-            if playerName == "WorldEdit" then
+            if GetPlayerName(Player(0)) == "WorldEdit" then
                 call SetPlayerState(Player(0), PLAYER_STATE_RESOURCE_GOLD, 99999999)
-                set Glory[pid] = Glory[pid] + 9999999
+                set Glory[GetPlayerId(GetTriggerPlayer())] = Glory[GetPlayerId(GetTriggerPlayer())] + 9999999
                 call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "Singleplayer mode detected. You have been granted 9,999,999 gold and glory!")
             endif
         endif
-
 
         call Command.create(CommandHandler.RandomDebugCommand).name("debug").handles("debug").help("debug", "enables debug msgs.")
 
@@ -370,5 +367,6 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     private function init takes nothing returns nothing
         call TimerStart(CreateTimer(), 3, false, function SetupDebugCommands)
     endfunction
+
 
 endlibrary

@@ -79,7 +79,6 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
     function TauntWave takes unit caster, integer wave returns nothing
         local group g = CreateGroup()
         local unit u
-        local integer rawcode
 
         call GroupEnumUnitsInRange(g, GetUnitX(caster), GetUnitY(caster), TAUNT_RADIUS, null)
 
@@ -89,8 +88,7 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
             call GroupRemoveUnit(g, u)
 
             if IsUnitAliveBJ(u) and IsUnitEnemy(u, GetOwningPlayer(caster)) then
-                set rawcode = GetUnitTypeId(u)
-                if rawcode != 'u009' then
+                if GetUnitTypeId(u) != SHADE_BR_RESPAWN_UNIT_ID then
                     call StartForcedTaunt(caster, u, wave)
                 endif
             endif

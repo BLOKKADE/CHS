@@ -2,12 +2,7 @@ library StormRune requires RandomShit
 
     function ShouldSkipDisplacement takes unit target returns boolean
         // Check for Hardened Skin ability
-        if GetUnitAbilityLevel(target, HARDENED_SKIN_ABILITY_ID) > 0 then
-            return true
-        endif
-
-        // Check for specific items
-        if UnitHasItemType(target, 'I0CV') or UnitHasItemType(target, 'I090') then
+        if GetUnitAbilityLevel(target, HARDENED_SKIN_ABILITY_ID) > 0 or UnitHasItemType(target, 'I0CV') or UnitHasItemType(target, 'I090') or GetUnitTypeId(target) == SHADE_BR_RESPAWN_UNIT_ID then
             return true
         endif
 
