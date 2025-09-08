@@ -110,6 +110,12 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemType(killingHero, 'I05A') then
             set goldBounty = R2I(goldBounty * CgBonus)
         endif
+
+        // Round 50 bonus: +150% (total 250%) gold and experience
+        if RoundNumber == 49 then
+            set goldBounty = R2I(goldBounty * 2.5)
+            set expBounty = R2I(expBounty * 2.5)
+        endif
         
         call BountyText(killingHero, dyingUnit, goldBounty)
         call SetPlayerState(owner, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(owner, PLAYER_STATE_RESOURCE_GOLD) + goldBounty)
