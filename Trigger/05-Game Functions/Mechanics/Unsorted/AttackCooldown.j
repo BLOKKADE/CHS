@@ -52,7 +52,7 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
 
         //Berserk Attack CD
         if GetUnitAbilityLevel(u, BERSERK_BUFF_ID) > 0 then
-                set r2 = r2 * 0.5
+            set r2 = r2 * 0.5
         endif
 
         if r2 != BlzGetUnitAttackCooldown(u, 0) then
