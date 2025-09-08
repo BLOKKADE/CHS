@@ -50,8 +50,7 @@ scope ShortPeriodCheck initializer init
                     call CastAbsoluteDark(u)
                 endif
 
-                //Vigour token
-                if GetUnitAbilityLevel(u, 'A09A') > 0 then
+                if UnitHasItemType(u, 'I0A2') then
                     call VigourTokenHpLoss(u)
                 endif
 
