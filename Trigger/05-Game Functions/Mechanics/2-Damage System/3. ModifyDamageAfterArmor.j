@@ -481,7 +481,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Holy Chain Mail
-        if UnitHasItemType(DamageTarget,'I07U') and GetUnitAbilityLevel(DamageSource, 'A0AQ') == 0 then   
+        if UnitHasItemType(DamageTarget,'I07U') and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
                 if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget)/ 5 then
                     set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 5
@@ -494,14 +494,14 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Guardian Spirit 15% max hp/mana dmg cap
-        if GetUnitAbilityLevel(DamageTarget, GUARDIAN_SPIRIT_BUFF_ID) > 0 and GetUnitAbilityLevel(DamageSource, 'A0AQ') == 0 then   
+        if GetUnitAbilityLevel(DamageTarget, GUARDIAN_SPIRIT_BUFF_ID) > 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
-                if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) / 6.666666 then
-                    set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 6.666666
+                if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) / 6.6666667 then
+                    set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 6.6666667
                 endif
             else
-                if Damage.index.amount > BlzGetUnitMaxMana(DamageTarget) / 6.666666 then
-                    set Damage.index.amount = BlzGetUnitMaxMana(DamageTarget) / 6.666666
+                if Damage.index.amount > BlzGetUnitMaxMana(DamageTarget) / 6.6666667 then
+                    set Damage.index.amount = BlzGetUnitMaxMana(DamageTarget) / 6.6666667
                 endif
             endif
         endif
