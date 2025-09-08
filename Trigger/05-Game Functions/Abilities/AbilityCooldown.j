@@ -96,7 +96,7 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
 
             //Cheater Magic
             if GetUnitAbilityLevel(u, 'A08G') > 0 and IsSpellResettable(id) then
-                set ResCD = ResCD * (1 - (0.005 * GetUnitAbilityLevel(u, CHEATER_MAGIC_ABILITY_ID)))
+                set ResCD = ResCD * (1 - (0.01 * GetUnitAbilityLevel(u, CHEATER_MAGIC_ABILITY_ID)))
             endif
         endif
             
