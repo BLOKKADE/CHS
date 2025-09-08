@@ -47,11 +47,12 @@ library IdLibrary initializer init
 
         constant integer PASSIVE_SPELLS_I_UNIT_ID                       = 'n001'
         constant integer PASSIVE_SPELLS_II_UNIT_ID                      = 'n012'
-        constant integer PASSIVE_SPELLS_III_UNIT_ID                     = 'n00S'
+        constant integer PASSIVE_SPELLS_III_UNIT_ID                     = 'n02X'
         constant integer PASSIVE_SPELLS_IV_UNIT_ID                      = 'n02N'
-        constant integer PASSIVE_SPELLS_V_UNIT_ID                       = 'n02X'
+        constant integer PASSIVE_SPELLS_V_UNIT_ID                       = 'n00S'
         constant integer PASSIVE_SPELLS_VI_UNIT_ID                      = 'n032'
         constant integer PASSIVE_SPELLS_VII_UNIT_ID                     = 'n01E'
+        constant integer PASSIVE_SPELLS_VIII_UNIT_ID                    = 'n01U'
 
         constant integer BASIC_ITEMS_SHOP_UNIT_ID                       = 'n00Z'
         constant integer OFFENSIVE_ITEMS_1_SHOP_UNIT_ID                 = 'n01D'
@@ -408,6 +409,23 @@ library IdLibrary initializer init
         constant integer THUNDER_CLAP_CREEP_ABILITY_ID                  = 'A01B'
         constant integer SHADOW_STRIKE_CREEP_ABILITY_ID                 = 'ACss'
         constant integer BLOODLUST_CREEP_ABILITY_ID                     = 'BLCA'
+        constant integer CRIPPLE_CREEP_ABILITY_ID                       = 'CRCR'
+        constant integer SLEEP_CREEP_ABILITY_ID                         = 'SLCR'
+        constant integer HEX_CREEP_ABILITY_ID                           = 'HECR'
+        constant integer DEATHCOIL_CREEP_ABILITY_ID                     = 'DCCR'
+        constant integer FIREBOLT_CREEP_ABILITY_ID                      = 'FBCR'
+        constant integer FEEDBACK_CREEP_ABILITY_ID                      = 'FECR'
+        constant integer FINGEROFPAIN_CREEP_ABILITY_ID                  = 'FPCR'
+        constant integer DEGENWARD_CREEP_ABILITY_ID                     = 'DWCR'
+        constant integer AERIALSHACKLES_CREEP_ABILITY_ID                = 'ASCR'
+        constant integer SPELL_IMMUNITY_CREEP_ABILITY_ID                = 'ACmi'
+        constant integer DIVINE_SHIELD_CREEP_ABILITY_ID                 = 'ACds'
+        constant integer BIGBADVOODOO_CREEP_ABILITY_ID                  = 'A018'
+        constant integer BLINK_CREEP_ABILITY_ID                         = 'A01A'
+        constant integer LIFESTEAL_CREEP_ABILITY_ID                     = 'SCva'
+        constant integer SLOW_CREEP_ABILITY_ID                          = 'A013'
+        constant integer CLEAVE_CREEP_ABILITY_ID                        = 'ACce'
+        constant integer FROSTBOLT_CREEP_ABILITY_ID                     = 'BFBB'
 
         // Active Spell Dummy Abilities
 
