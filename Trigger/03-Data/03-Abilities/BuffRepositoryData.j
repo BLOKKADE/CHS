@@ -1,8 +1,12 @@
 library BuffRepositoryData initializer init requires BuffRepository
     private function SetupPositiveBuffs takes nothing returns nothing
+        //unpurgeable buffs
         call SetupBuffInfo1(INVULNERABLE_BUFF_ID, 0, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1(ANTI_MAGIC_SHELL_BUFF_ID, ANTI_MAGIC_SHEL_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
+        call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
+        call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true) //anti magic flag
+        //purgeable buffs
         call SetupBuffInfo1(BATTLE_ROAR_BUFF_ID, BATTLE_ROAR_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(BERSERK_BUFF_ID, BERSERK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(FROST_ARMOR_BUFF_ID, FROST_ARMOR_ABILITY_ID, BUFFTYPE_POSITIVE, false)
@@ -13,14 +17,13 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(HERO_BUFF_ID, HERO_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(EXTRADIMENSIONAL_COOPERATION_BUFF_ID, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('Bblo', BLOODLUST_ABILITY_ID, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1('BBGS', GUARDIAN_SPIRIT_ABILITY_ID, BUFFTYPE_POSITIVE, false)
 
         call SetupBuffInfo1(SCROLL_OF_PROTECTION_BUFF_ID, 0, BUFFTYPE_POSITIVE, false) // unused?
         call SetupBuffInfo1(SENSATUS_SHIELD_OF_HONOR_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, SPEED_BLADE_ABIL_ID, BUFFTYPE_POSITIVE, false)
-        //anti magic flag
-        call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true)
+        
         call SetupBuffInfo1(SAVAGE_TOTEM_BUFF_ID, SAVAGE_TOTEM_ABIL_ID, BUFFTYPE_POSITIVE, false)
-        call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1('BOwk', WIND_WALK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
 
         call SetupBuffInfo2(LUCKY_PANTS_BUFF_ID, 'A09H', 0, BUFFTYPE_POSITIVE, false, true)
@@ -112,6 +115,12 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(MIDAS_TOUCH_BUFF_ID, MIDAS_TOUCH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1('A03V', TEMPORARY_INVISIBILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
         call SetupBuffInfo1('Bcrs', CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+
+        call SetupBuffInfo1('BOhx', 0, BUFFTYPE_NEGATIVE, false) //creepwaves hex
+        call SetupBuffInfo1('BUsl', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep
+        call SetupBuffInfo1('BUsp', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep pause
+        call SetupBuffInfo1('BUst', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep stun
+        call SetupBuffInfo1('Bcri', 0, BUFFTYPE_NEGATIVE, false) //creepwaves cripple
 
         call SetupBuffInfo2('B038', SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID, 0, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2('B035', CUTTING_BUFF_ABILITY_ID, CUTTING_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
