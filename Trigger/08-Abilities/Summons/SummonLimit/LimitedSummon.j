@@ -71,7 +71,7 @@ library LimitedSummon
       return null
    endfunction
    
-   function LimitedSummon takes unit summoner, unit summon, integer limitGroup, integer limit returns boolean
+   function LimitedSummon takes unit summoner, unit summon, integer limitGroup, integer summonlimit returns boolean
       local integer indexEnter
       local integer countOld = 0
       local integer indexLoop = 0
@@ -104,7 +104,7 @@ library LimitedSummon
           if not IsUnitType(dataSummon[indexLoop], UNIT_TYPE_DEAD) and GetUnitTypeId(dataSummon[indexLoop]) != 0 then
               if dataGroup[indexLoop] == limitGroup and dataSummoner[indexLoop] == summoner then
                   set countOld = countOld + 1
-                  if countOld > limit then //limit was excedd?
+                  if countOld > summonlimit then //limit was excedd?
                       set desummonedSomthing = true
                       if displayDesummonArt then
                           call DestroyEffect(AddSpecialEffect(desummonArt, GetUnitX(dataSummon[indexLoop]), GetUnitY(dataSummon[indexLoop])))
@@ -124,7 +124,7 @@ library LimitedSummon
       return desummonedSomthing
    endfunction
    
-   function LimitedSummonEx takes integer limitGroup, integer limit returns boolean
+   function LimitedSummonEx takes integer limitGroup, integer summonlimit returns boolean
       return LimitedSummon(GetSummoningUnit(), GetSummonedUnit(), limitGroup, limit)
    endfunction
    

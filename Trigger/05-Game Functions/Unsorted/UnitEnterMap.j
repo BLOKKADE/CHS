@@ -25,6 +25,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         local integer UpgradeU = 15 * GetUnitItemTypeCount(hero,'I07K')
         local real wild = 1 + GetUnitCustomState(hero, BONUS_SUMMONPOW)/ 100
         local real r1
+        local integer summonlimit = 0
 
         //Prevent super summons?
         call ResetUnitCustomState(u)
@@ -237,166 +238,166 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Summon Limit
         if GetUnitTypeId(hero) == DOOM_GUARD_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == PYROMANCER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == PIT_LORD_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == WITCH_DOCTOR_UNIT_ID then
-            set limit = 12
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == LICH_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == NAGA_SIREN_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == BLOOD_MAGE_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == SORCERER_UNIT_ID then
-            set limit = 16
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == THUNDER_WITCH_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == TROLL_BERSERKER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == SATYR_TRICKSTER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == BLADE_MASTER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == OGRE_WARRIOR_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == ROCK_GOLEM_UNIT_ID then
-            set limit = 16
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == GNOME_MASTER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == ARENA_MASTER_UNIT_ID then
-            set limit = 18
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
-            set limit = 10
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == MYSTIC_UNIT_ID then
-            set limit = 16
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
-            set limit = 10
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == SEER_UNIT_ID then
-            set limit = 10
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == MURLOC_WARRIOR_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == SKELETON_BRUTE_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == FALLEN_RANGER_UNIT_ID then
-            set limit = 16
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == AVATAR_SPIRIT_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == DARK_HUNTER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == ABOMINATION_UNIT_ID then
-            set limit = 16
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == DEADLORD_UNIT_ID then
-            set limit = 16
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == TROLL_HEADHUNTER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == MAULER_UNIT_ID then
-            set limit = 16
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == LIEUTENANT_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == YETI_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == COLD_KNIGHT_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == RANGER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == WAR_GOLEM_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == ORC_CHAMPION_UNIT_ID then
-            set limit = 18
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == GHOUL_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == URSA_WARRIOR_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == OGRE_MAGE_UNIT_ID then
-            set limit = 14
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == DEMON_HUNTER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == TIME_WARRIOR_UNIT_ID then
-            set limit = 14
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == BANSHEE_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == HUNTRESS_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == TAUREN_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == MEDIVH_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == CENTAUR_ARCHER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == CRYPT_LORD_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == GNOLL_WARDEN_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
-            set limit = 14
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == WOLF_RIDER_UNIT_ID then
-            set limit = 20
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == STOMP_TREE_UNIT_ID then
-            set limit = 10
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == GREEDY_GOBLIN_UNIT_ID then
-            set limit = 14
+            set summonlimit = 24
         elseif GetUnitTypeId(hero) == TINKER_UNIT_ID then
-            set limit = 18
+            set summonlimit = 24
         else
             // fallback (if not one of the defined heroes)
-            set limit = 20
+            set summonlimit = 24
         endif
 
         // Savage Totem
         if UnitHasItemType(hero, SAVAGE_TOTEM_ITEM_ID) then
-            set limit = limit + 4
+            set summonlimit = summonlimit + 4
         endif
 
         //Mountain Giant
         if GetUnitAbilityLevel(hero, SUMMON_MOUNTAIN_GIANT_ABILITY_ID) > 0 then
-            set limit = limit + 5
+            set summonlimit = summonlimit + 5
         endif
 
         //Hero Buff
         if UnitHasBuffBJ(hero, HERO_BUFF_BUFF_ID) then
-            set limit = limit + 12
+            set summonlimit = summonlimit + 12
         endif
 
         //Storm Horn 
         if UnitHasBuffBJ(hero, STORMHORN_BUFF_ID) then
-            set limit = limit + 4
+            set summonlimit = summonlimit + 4
         endif
 
         // Beastmaster's Bulwark
         if UnitHasItemType(hero, BULWARK_ITEM_ID) then
-            set limit = limit + 2
+            set summonlimit = summonlimit + 2
             
             // Add 10% summon limit for every 5% missing HP
-            set limit = R2I(limit * (1.0 + 0.10 * ((1.0 - (GetUnitState(hero, UNIT_STATE_LIFE) / GetUnitState(hero, UNIT_STATE_MAX_LIFE))) / 0.05)))
+            set summonlimit = R2I(summonlimit * (1.0 + 0.10 * ((1.0 - (GetUnitState(hero, UNIT_STATE_LIFE) / GetUnitState(hero, UNIT_STATE_MAX_LIFE))) / 0.05)))
         endif
 
         // WildBorne Sigil
         if UnitHasItemType(hero, WILDBORNE_SIGIL_ITEM_ID) then
-            set limit = R2I(limit * 1.50)
+            set summonlimit = R2I(summonlimit * 1.50)
         endif
 
         // Fear Aura
         if UnitHasBuffBJ(hero, FEAR_AURA2_BUFF_ID) then
-            set limit = R2I(limit * 0.70)
+            set summonlimit = R2I(summonlimit * 0.70)
         endif
 
         // Spirit Shackle buff overrides everything
         if UnitHasBuffBJ(hero, SPIRIT_SHACKLE_BUFF_ID) then
-            set limit = 5
+            set summonlimit = 5
         endif
 
         //faerie dragon exception
         if summonTypeId == FAERIE_DRAGON_UNIT_ID then 
-            set limit = 1888
-            call LimitedSummon(hero, u, 2, limit) 
+            set summonlimit = 1888
+            call LimitedSummon(hero, u, 2, summonlimit) 
         else 
-            call LimitedSummon(hero, u, 1, limit) 
+            call LimitedSummon(hero, u, 1, summonlimit)
+            call DisplayTimedTextToPlayer(GetOwningPlayer(hero), 0, 0, 5.00, "Current Summon Limit: " + I2S(summonlimit))
         endif  
 
-        set limit = 0
         set u = null
         set hero = null
     endfunction
