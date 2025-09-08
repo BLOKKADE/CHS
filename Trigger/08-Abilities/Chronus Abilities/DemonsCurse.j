@@ -31,7 +31,12 @@ function CastDemonsCurse takes unit u, real chronusBonus, integer abilLevel, int
     local real damageFactor
 
     call ElemFuncStart(u, DEMONS_CURSE_ABILITY_ID)
-    call AbilStartCD(u, DEMONS_CURSE_ABILITY_ID, 120)
+    
+    if UnitHasItemType(u, 'TSBB') then
+        call AbilStartCD(u, DEMONS_CURSE_ABILITY_ID, 60)
+    else
+        call AbilStartCD(u, DEMONS_CURSE_ABILITY_ID, 120)
+    endif
 
     loop
         exitwhen i >= 3
