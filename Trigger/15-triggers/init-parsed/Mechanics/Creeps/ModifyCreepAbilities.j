@@ -21,12 +21,12 @@ library ModifyCreepAbilities initializer init requires RandomShit
 
         // Cleave
         if (RoundCreepChanceCleave == 1) then
-            call UnitAddAbility(creep, 'ACce')
+            call UnitAddAbility(creep, CLEAVE_CREEP_ABILITY_ID)
         endif
 
         // Lifesteal
         if (RoundCreepChanceLifesteal == 1) then
-            call UnitAddAbility(creep, 'SCva')
+            call UnitAddAbility(creep, LIFESTEAL_CREEP_ABILITY_ID )
         endif
 
         // Thorns
@@ -58,12 +58,12 @@ library ModifyCreepAbilities initializer init requires RandomShit
 
         // Slow
         if (RoundCreepChanceSlow != 1) then
-            call UnitRemoveAbility(creep, 'A013')
+            call UnitRemoveAbility(creep, SLOW_CREEP_ABILITY_ID)
         endif
 
-        // Big bad v?
+        // Big bad voodoo
         if (RoundCreepChanceBigBadV != 1) then
-            call UnitRemoveAbility(creep, 'A018')
+            call UnitRemoveAbility(creep, BIGBADVOODOO_CREEP_ABILITY_ID)
         endif
 
         // Faerie fire
@@ -73,7 +73,7 @@ library ModifyCreepAbilities initializer init requires RandomShit
 
         // Blink
         if (RoundCreepChanceBlink != 1) then
-            call UnitRemoveAbility(creep, 'A01A')
+            call UnitRemoveAbility(creep, BLINK_CREEP_ABILITY_ID)
         endif
 
         // Thunder clap
