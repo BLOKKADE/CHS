@@ -10,49 +10,29 @@ library HeroRefresh initializer init requires RandomShit, NewBonus, CustomState
             call RemoveItem(UnitItemInSlot(u, 3))
             call RemoveItem(UnitItemInSlot(u, 4))
             call RemoveItem(UnitItemInSlot(u, 5))
-            call TriggerSleepAction(2.00)
-    
             call RemoveHeroAbilities(u)
-            call TriggerSleepAction(1.00)
-
-            call RemoveUnitBuffs(u, BUFFTYPE_BOTH, true)
-            call TriggerSleepAction(1.00)
-
             call ResetUnitCustomState(u)
-
             call RemoveUnitBonus(u, BONUS_DAMAGE)
             call RemoveUnitBonus(u, BONUS_ARMOR)
             call RemoveUnitBonus(u, BONUS_AGILITY)
-            call RemoveUnitBonus(u, BONUS_STRENGTH)
             call RemoveUnitBonus(u, BONUS_INTELLIGENCE)
-            call RemoveUnitBonus(u, BONUS_HEALTH)
             call RemoveUnitBonus(u, BONUS_MANA)
-            call RemoveUnitBonusReal(u, BONUS_HEALTH_REGEN)
-            call RemoveUnitBonusReal(u, BONUS_MANA_REGEN)
             call RemoveUnitBonusReal(u, BONUS_ATTACK_SPEED)
             call RemoveUnitBonus(u, BONUS_MOVEMENT_SPEED)
-            call TriggerSleepAction(10.00)
-
-            if IsUnitAliveBJ(u) then
-                call RemoveHeroAbilities(u)
-                call RemoveUnitBuffs(u, BUFFTYPE_BOTH, true)
-
-                call SetHeroStr(u, 10, true)
-                call SetHeroAgi(u, 10, true)
-                call SetHeroInt(u, 10, true)
-                call BlzSetUnitMaxHP(u, 10)
-                call BlzSetUnitBaseDamage(u, 1, 0)
-                call BlzSetUnitArmor(u, 1)
-
-
-                call SetUnitCustomState(u, BONUS_MAGICPOW, 1)
-                call SetUnitCustomState(u, BONUS_MAGICRES, 1)
-                call SetUnitCustomState(u, BONUS_EVASION, 1)
-                call SetUnitCustomState(u, BONUS_BLOCK, 1)
-                call SetUnitCustomState(u, BONUS_PVP, 1)
-                call SetUnitBonusReal(u, BONUS_HEALTH_REGEN, 1)
-                call SetUnitBonusReal(u, BONUS_MANA_REGEN, 1)
-            endif
+            call SetUnitCustomState(u, BONUS_MAGICPOW, 1)
+            call SetUnitCustomState(u, BONUS_MAGICRES, 1)
+            call SetUnitCustomState(u, BONUS_EVASION, 1)
+            call SetUnitCustomState(u, BONUS_BLOCK, 1)
+            call SetUnitCustomState(u, BONUS_PVP, 1)
+            call SetUnitBonusReal(u, BONUS_HEALTH_REGEN, 1)
+            call SetUnitBonusReal(u, BONUS_MANA_REGEN, 1)
+            call SetHeroAgi(u, 10, true)
+            call SetHeroInt(u, 10, true)
+            call SetHeroStr(u, 10, true)
+            call BlzSetUnitBaseDamage(u, 1, 0)
+            call BlzSetUnitArmor(u, 1)
+            call UnitAddAbility(u, 'BRBB')
+            call UnitAddAbility(u, 'HRBB')
         endif
 
         call UnitRemoveAbility(u, REINCARNATION_ABILITY_ID)

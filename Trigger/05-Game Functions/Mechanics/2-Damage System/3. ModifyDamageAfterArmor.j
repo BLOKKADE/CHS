@@ -605,6 +605,15 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Leaver hero instakill
+            set i1 = GetUnitAbilityLevel(DamageTarget, 'HRBB')
+        if Damage.index.amount > 0 and i1 > 0 then
+                set Damage.index.amount = 9999999999
+                if not IsFxOnCooldownSet(DamageTargetId, FINISHING_BLOW_ABILITY_ID, 1) then
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
+                endif
+        endif
+
         //Contract of the Living
         if IsContractLivingAvailable(DamageTarget, Damage.index.amount) then
             call ActivateContractLiving(DamageTarget)
