@@ -170,18 +170,6 @@ scope LongPeriodCheck initializer init
                 call SaveReal(HT, hid, 11,0)
             endif
 
-            //Heart of a Hero
-            if GetUnitAbilityLevel(u ,'B00N') >= 1 then
-                //str
-                set i2 = LoadInteger(HT, hid, 1004)
-                set i1 = R2I((GetHeroStr(u, true) - i2) * 0.25)
-
-                if i1 != 0 then
-                    call SaveInteger(HT, hid, 1004, i1)
-                    call AddUnitBonus(u, BONUS_STRENGTH, i1 - i2)
-                endif
-            endif
-
             //Panda Relic
             if GetUnitAbilityLevel(u ,'B00S') >= 1 then
                 //agi
