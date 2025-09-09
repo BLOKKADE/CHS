@@ -443,6 +443,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I064' then
 			call AddUnitCustomState(u, BONUS_PHYSPOW, 60 * uniqueDiff)
 			call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + 400 * uniqueDiff)
+
+		    //Heart of a Hero
+        elseif itemId == 'I05D' then
+            call AddUnitBonus(u, BONUS_STRENGTH, 1350 * uniqueDiff)
 		
 			//Heart of Darkness
 		elseif itemId == HEART_OF_DARKNESS_ITEM_ID then
