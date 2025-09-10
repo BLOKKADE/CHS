@@ -163,6 +163,11 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitBonus(u, BONUS_STRENGTH, (15 * diff) * GetHeroLevel(u))
 			//call BlzSetUnitRealField(u,ConvertUnitRealField('ustp'), BlzGetUnitRealField(u,ConvertUnitRealField('ustp')) + 15*diff )
 
+			//heart of a hero
+		elseif itemId == HEART_OF_A_HERO_ITEM_ID then
+			call AddStatLevelBonus(u, BONUS_STRENGTH, 10 *diff)
+			call AddUnitBonus(u, BONUS_STRENGTH, (10 * diff) * GetHeroLevel(u))
+
 			//Dried Mushroom
 		elseif itemId == DRIED_MUSHROOM_ITEM_ID then
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
@@ -443,10 +448,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I064' then
 			call AddUnitCustomState(u, BONUS_PHYSPOW, 60 * uniqueDiff)
 			call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + 400 * uniqueDiff)
-
-		    //Heart of a Hero
-        elseif itemId == 'I05D' then
-            call AddUnitBonus(u, BONUS_STRENGTH, 1350 * uniqueDiff)
 		
 			//Heart of Darkness
 		elseif itemId == HEART_OF_DARKNESS_ITEM_ID then
@@ -454,7 +455,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 
 			//Storm Horn
-		elseif itemId == HEART_OF_DARKNESS_ITEM_ID then
+		elseif itemId == 'I04W' then
 			call AddUnitAbsoluteBonusCount(u,Element_Wind, 1 * uniqueDiff)
 
 		//Hammer of the Gods
