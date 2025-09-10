@@ -396,6 +396,26 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Polymorph
+            if (GetUnitAbilityLevel(creep, POLYMORPH_CREEP_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 8)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, POLYMORPH_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
+                    else
+                        call SetUnitAbilityLevel(creep, POLYMORPH_CREEP_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                    endif
+
+                    // Hurl boulder to random unit
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function HurlBoulderUnitFilter))
+
+                    call IssueTargetOrder(creep, "polymorph", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
             // Shadow Strike
             if (GetUnitAbilityLevel(creep, SHADOW_STRIKE_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 2)
@@ -513,12 +533,12 @@ library CreepAutoCast initializer init requires RandomShit
 
             // Frost Nova
             if (GetUnitAbilityLevel(creep, FROST_NOVA_ABILITY_ID) > 0) then
-                set RoundCreepAbilCastChance = GetRandomInt(1, 2)
+                set RoundCreepAbilCastChance = GetRandomInt(1, 6)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, FROST_NOVA_ABILITY_ID, R2I(RoundNumber * 1.2))
+                        call SetUnitAbilityLevel(creep, FROST_NOVA_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevel(creep, FROST_NOVA_ABILITY_ID, R2I(RoundNumber * 0.6))
+                        call SetUnitAbilityLevel(creep, FROST_NOVA_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
                     endif
 
                     // Frost Nova to random unit
@@ -635,9 +655,9 @@ library CreepAutoCast initializer init requires RandomShit
                 set RoundCreepAbilCastChance = GetRandomInt(1, 6)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, HOLY_LIGHT_ABILITY_ID, R2I(RoundNumber * 0.8))
+                        call SetUnitAbilityLevel(creep, HOLY_LIGHT_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
                     else
-                        call SetUnitAbilityLevel(creep, HOLY_LIGHT_ABILITY_ID, R2I(RoundNumber * 0.4))
+                        call SetUnitAbilityLevel(creep, HOLY_LIGHT_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
                     endif
 
                     // holy light to random unit
@@ -887,6 +907,25 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Unholy Frenzy
+            if (GetUnitAbilityLevel(creep, UNHOLYFRENZY_CREEP_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 1)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, UNHOLYFRENZY_CREEP_ABILITY_ID, R2I(RoundNumber * 1.2))
+                    else
+                        call SetUnitAbilityLevel(creep, UNHOLYFRENZY_CREEP_ABILITY_ID, R2I(RoundNumber * 0.6))
+                    endif
+
+                    // Cast Bloodlust on ally creep
+                    set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function BloodlustUnitFilter))
+                    call IssueTargetOrder(creep, "unholyfrenzy", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
             // Inner Fire
             if (GetUnitAbilityLevel(creep, INNER_FIRE_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 1)
@@ -983,18 +1022,38 @@ library CreepAutoCast initializer init requires RandomShit
             endif
 
             // Divine Shield
-            if (GetUnitAbilityLevel(creep, 'ACds') > 0) then
+            if (GetUnitAbilityLevel(creep, DIVINE_SHIELD_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, 'ACds', R2I(RoundNumber * 1.2))
+                        call SetUnitAbilityLevel(creep, DIVINE_SHIELD_CREEP_ABILITY_ID, R2I(RoundNumber * 1.2))
                     else
-                        call SetUnitAbilityLevel(creep, 'ACds', R2I(RoundNumber * 0.6))
+                        call SetUnitAbilityLevel(creep, DIVINE_SHIELD_CREEP_ABILITY_ID, R2I(RoundNumber * 0.6))
                     endif
                     set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
 
                     if (CountUnitsInGroup(tempGroup) > 1) then
                         call IssueImmediateOrder(creep, "divineshield")
+                    endif
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Frenzy
+            if (GetUnitAbilityLevel(creep, FRENZY_CREEP_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 1)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, FRENZY_CREEP_ABILITY_ID, R2I(RoundNumber * 1.2))
+                    else
+                        call SetUnitAbilityLevel(creep, FRENZY_CREEP_ABILITY_ID, R2I(RoundNumber * 0.6))
+                    endif
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+
+                    if (CountUnitsInGroup(tempGroup) > 1) then
+                        call IssueImmediateOrder(creep, "frenzy")
                     endif
 
                     // Cleanup

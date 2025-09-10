@@ -62,6 +62,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         integer RoundCreepChanceHardenedSkin = 0
         integer RoundCreepChanceIcyBreath = 0
         integer RoundCreepChanceFrostBolt = 0
+        integer RoundCreepChancePolymorph = 0
+        integer RoundCreepChanceFrenzy = 0
+        integer RoundCreepChanceUnholyFrenzy = 0
 
 //tested and not working yet:
         integer RoundCreepChanceBattleRoar = 0
@@ -199,6 +202,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         set RoundCreepChanceCleave = 0
         set RoundCreepChanceThorns = 0
         set RoundCreepChanceShadowStrike = 0
+        set RoundCreepChancePolymorph = 0
+        set RoundCreepChanceFrenzy = 0
+        set RoundCreepChanceUnholyFrenzy = 0
     endfunction
     
     private function AddRoundAbility takes integer abilityId returns nothing
@@ -452,6 +458,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call AddRoundAbility(ICY_BREATH_ABILITY_ID)
         endif
 
+        if RoundCreepChanceFrenzy == 1 then
+            set s = ConcatAbility(s, "Frenzy")
+            call AddRoundAbility(FRENZY_CREEP_ABILITY_ID)
+        endif
+
         if RoundCreepChanceFrostArmor == 1 then
             set s = ConcatAbility(s, "Frost Armor")
             call AddRoundAbility(FROST_ARMOR_ABILITY_ID)
@@ -540,6 +551,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if RoundCreepChanceManaBurn == 1 then
             set s = ConcatAbility(s, "Mana Burn")
             call AddRoundAbility(MANA_BURN_CREEP_ABILITY_ID)
+        endif
+
+        if RoundCreepChancePolymorph == 1 then
+            set s = ConcatAbility(s, "Polymorph")
+            call AddRoundAbility(POLYMORPH_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChancePulverize == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
@@ -645,6 +661,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if RoundCreepChanceTranquility == 1 then
             set s = ConcatAbility(s, "Tranquility")
             call AddRoundAbility(TRANQUILITY_ABILITY_ID)
+        endif
+
+        if RoundCreepChanceUnholyFrenzy == 1 then
+            set s = ConcatAbility(s, "Unholy Aura")
+            call AddRoundAbility(UNHOLYFRENZY_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChanceUnlimitedAgony == 1 then
@@ -866,6 +887,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call SetUnitAbilityLevel(u, FORKED_LIGHTNING_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
 
+        if RoundCreepChanceFrenzy == 1 then
+            call UnitAddAbility(u, FRENZY_CREEP_ABILITY_ID)
+            call SetUnitAbilityLevel(u, FRENZY_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+        endif
+
         if RoundCreepChanceFrostBolt == 1 then
             call UnitAddAbility(u, FROSTBOLT_CREEP_ABILITY_ID)
             call SetUnitAbilityLevel(u, FROSTBOLT_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
@@ -883,7 +909,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundCreepChanceFrostNova == 1 then
             call UnitAddAbility(u, FROST_NOVA_ABILITY_ID)
-            call SetUnitAbilityLevel(u, FROST_NOVA_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+            call SetUnitAbilityLevel(u, FROST_NOVA_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.3), 30))
         endif
 
         if RoundCreepChanceGuardianSpirit == 1 then
@@ -956,6 +982,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if RoundCreepChanceLiquidFire == 1 then
             call UnitAddAbility(u, LIQUID_FIRE_ABILITY_ID)
             call SetUnitAbilityLevel(u, LIQUID_FIRE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
+        endif
+
+        if RoundCreepChancePolymorph == 1 then
+            call UnitAddAbility(u, POLYMORPH_CREEP_ABILITY_ID)
+            call SetUnitAbilityLevel(u, POLYMORPH_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
 
         if RoundCreepChancePurge == 1 then
@@ -1036,6 +1067,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if RoundCreepChanceTranquility == 1 then
             call UnitAddAbility(u, TRANQUILITY_ABILITY_ID)
             call SetUnitAbilityLevel(u, TRANQUILITY_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+        endif
+
+        if RoundCreepChanceUnholyFrenzy == 1 then
+            call UnitAddAbility(u, UNHOLYFRENZY_CREEP_ABILITY_ID)
+            call SetUnitAbilityLevel(u, UNHOLYFRENZY_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
         endif
 
         if RoundCreepChanceUnlimitedAgony == 1 then
@@ -1179,7 +1215,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 set RoundCreepChancePulverize = GetRandomInt(1, newAbilChance) //Pulverize creep chance
             endif
             set RoundCreepChanceCorrosiveSkin = GetRandomInt(1, newAbilChance) //Corrosive Skin creep chance
-            set RoundCreepChanceFrostNova = GetRandomInt(1, 15) //Frost Nova creep chance
         endif
 
         if RoundNumber >= 34 then
@@ -1191,6 +1226,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 set RoundCreepChanceCutting = GetRandomInt(1, 20) //Cutting chance
                 set RoundCreepChanceDestruction = GetRandomInt(1, 20) //Destruction chance
                 set RoundCreepChanceEnvenomedWeapons = GetRandomInt(1, 20) //Envenomed Weapons chance
+                set RoundCreepChanceFrostNova = GetRandomInt(1, 15) //Frost Nova creep chance
             endif
         endif
 
@@ -1199,7 +1235,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceBackStab = GetRandomInt(1, 15) //Backstab creep chance
             set RoundCreepChanceDivineShield = GetRandomInt(1, 15)  //Divine Shield creep chance
             set RoundCreepChanceBloodlust = GetRandomInt(1, 15) //Bloodlust creep chance
-            set RoundCreepChanceEnsnare = GetRandomInt(1, 15) //Ensnare creep chance
+            set RoundCreepChanceEnsnare = GetRandomInt(1, 80) //Ensnare creep chance
             set RoundCreepChanceStoneProt = GetRandomInt(1, 50) //Stone Protection creep chance
             set RoundCreepChanceShadowStrike = GetRandomInt(1, 15) //Shadow Strike creep chance
             set RoundCreepChanceGuardianSpirit = GetRandomInt(1, 10) //Guardian Spirit creep chance
@@ -1234,6 +1270,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceFastMagic = GetRandomInt(1, 25) //Fast Magic chance        
             set RoundCreepChanceForkedLightning = GetRandomInt(1, 80) //Forked Lightning chance
             set RoundCreepChanceFrostBolt = GetRandomInt(1, 80) //Frost bolt chance
+            set RoundCreepChancePolymorph = GetRandomInt(1, 80) //Polymorph chance
+            set RoundCreepChanceFrenzy = GetRandomInt(1, 50) //Frenzy chance
+            set RoundCreepChanceUnholyFrenzy = GetRandomInt(1, 50) //Unholy frenzy chance
             set RoundCreepChanceIcyBreath = GetRandomInt(1, 80) //icy breath chance
             set RoundCreepChanceSoulBurn = GetRandomInt(1, 35) //Soul Burn chance
             set RoundCreepChanceColdWind = GetRandomInt(1, 80) //Cold Wind chance
@@ -1255,12 +1294,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 set RoundCreepChanceRainOfFire = GetRandomInt(1, 30) //Rain of Fire creep chance
                 set RoundCreepChanceDivineBubble = GetRandomInt(1, 15)  //Divine Bubble creep chance
             endif
-        endif
-
-        if RoundCreepChanceRainOfFire == 1 then
-            set RoundCreepChanceEnsnare = 1
-        else
-            set RoundCreepChanceEnsnare = 2
         endif
     
         if RoundNumber == 28 or RoundNumber == 38 or RoundNumber == 48 then

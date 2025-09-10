@@ -426,6 +426,9 @@ library IdLibrary initializer init
         constant integer SLOW_CREEP_ABILITY_ID                          = 'A013'
         constant integer CLEAVE_CREEP_ABILITY_ID                        = 'ACce'
         constant integer FROSTBOLT_CREEP_ABILITY_ID                     = 'BFBB'
+        constant integer FRENZY_CREEP_ABILITY_ID                        = 'A0F4'
+        constant integer UNHOLYFRENZY_CREEP_ABILITY_ID                  = 'A0F5'
+        constant integer POLYMORPH_CREEP_ABILITY_ID                     = 'A0F6'
 
         // Active Spell Dummy Abilities
 
@@ -778,6 +781,7 @@ library IdLibrary initializer init
         constant integer WILDBORNE_SIGIL_ITEM_ID                        = 'WBSG'
         constant integer MANIFOLD_STAFF_ITEM_ID                         = 'I0A0'
         constant integer SAVAGE_TOTEM_ITEM_ID                           = 'BBCW'
+        constant integer HEART_OF_A_HERO_ITEM_ID                        = 'I05D'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
