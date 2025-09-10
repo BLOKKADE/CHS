@@ -395,7 +395,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call LimitedSummon(hero, u, 2, summonlimit) 
         else 
             call LimitedSummon(hero, u, 1, summonlimit)
-            call DisplayTimedTextToPlayer(GetOwningPlayer(hero), 0, 0, 5.00, "Current Summon Limit: " + I2S(summonlimit))
+            //call DisplayTimedTextToPlayer(GetOwningPlayer(hero), 0, 0, 5.00, "Current Summon Limit: " + I2S(summonlimit))
         endif  
 
         set u = null
