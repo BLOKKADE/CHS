@@ -20,7 +20,7 @@ library EnergyBombardment requires Utility, AbilityCooldown
             set this.level = GetUnitAbilityLevel(this.source, ENERGY_BOMBARDMENT_ABILITY_ID)
             set dmgMult = 0.25 + (0.025 * this.level)
             set this.currentAcd = BlzGetUnitAttackCooldown(this.source, 0)
-            set this.cd = this.currentAcd * (4.4 - (0.08 * this.level))
+            set this.cd = this.currentAcd * (3.4 - (0.08 * this.level))
         endmethod
         
         private method damage takes nothing returns nothing

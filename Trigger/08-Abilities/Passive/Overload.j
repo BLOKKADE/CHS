@@ -5,7 +5,7 @@ function Overload takes unit caster, unit target, integer abilId, integer lvl re
     local unit p = null
     local real range = BlzGetAbilityRealLevelField(BlzGetUnitAbility(caster, abilId), ABILITY_RLF_CAST_RANGE, lvl - 1)
     local integer overloadLevel = GetUnitAbilityLevel(caster, OVERLOAD_ABILITY_ID)
-    local integer limit = overloadLevel * 14 / 29 + 1
+    local integer limit = overloadLevel * 7 / 30 + 1
     local real manaFactor = 1.0 - 0.67 * (overloadLevel - 1) / 29.0 // scales from 1.0 to ~0.33
     local boolean ally = false
     local player owner = GetOwningPlayer(caster)
