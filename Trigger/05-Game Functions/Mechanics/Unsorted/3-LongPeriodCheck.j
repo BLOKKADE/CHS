@@ -3,17 +3,19 @@ scope LongPeriodCheck initializer init
     private function OnCooldownEnd takes unit u returns nothing
         local integer i
         local integer hid = GetHandleId(u)
-        local real cd    
+        local real cd   
+        local real manaCost = 0.0
 
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
 
             call CastChronusSpells(u, hid, false)
 
-            //Mysterious Talent
+            // Mysterious Talent
             set i = GetUnitAbilityLevel(u, MYSTERIOUS_TALENT_ABILITY_ID)
-            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 and GetUnitState(u, UNIT_STATE_MANA) >= 1500 then
+            set manaCost = i * 50.0
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 and GetUnitState(u, UNIT_STATE_MANA) >= manaCost then
                 call MysteriousTalentActivate(u)
-                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1500)
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - manaCost)
                 call AbilStartCD(u, MYSTERIOUS_TALENT_ABILITY_ID, 45 - i)
             endif
 
