@@ -149,7 +149,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 1, SorcererAmount[hid])
         elseif uid == WOLF_RIDER_UNIT_ID then       
             call SetBonus(u, 1, 10 + heroLevel)
-            call SetBonus(u, 2, 8 + (0.01 * heroLevel))
+            call SetBonus(u, 2, 8 + (0.02 * heroLevel))
         elseif uid == BLADE_MASTER_UNIT_ID then          
             set i = prevLevel + 1
             loop

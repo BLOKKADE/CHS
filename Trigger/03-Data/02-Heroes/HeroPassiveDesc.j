@@ -140,7 +140,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNThrall.blp" )
         call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Speed Freak: Whenever the Hero finishes a round within 8 seconds it permanently gains 10 bonus agility. The Hero's lowest stats are automatically boosted to 35% of its highest stat when they drop lower.")
-        call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained. +0.01s time limit." )
+        call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Speed Freak: +1 bonus agility gained. +0.02s time limit." )
         call InitHeroDesc(WOLF_RIDER_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(BLADE_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp" )
