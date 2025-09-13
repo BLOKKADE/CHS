@@ -1305,6 +1305,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundNumber >= 49 then //Boss round
+            call PlaySoundBJ(rescuesound)
             call ResetRoundCreepChances()
             if GetRemainingPlayerCount() <= 4 then 
                 set RoundSkillGroupRoll = GetRandomInt(4, 6)
@@ -1561,11 +1562,15 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
                         call BlzSetUnitBaseDamage(creep, R2I(BlzGetUnitBaseDamage(creep, 0) * 0.5), 0)
                     endif
-    
+
                     //call BJDebugMsg("rci: " + I2S(playerId))
                     if RoundCreepInfo[playerId] == "" then
                         //call BJDebugMsg("a")
-                        set RoundCreepTitle = "|cffdd9bf1" + I2S(RoundCreepNumber) + " |r|cff77d2fc" + GetObjectName(RoundCreepTypeId) + "|r"
+                        if (RoundNumber > 49) then
+                            set RoundCreepTitle = "|cffff0000Boss Round|r (+150% gold/xp|r): |cffdd9bf1" + I2S(RoundCreepNumber) + " |r|cff77d2fc" + GetObjectName(RoundCreepTypeId) + "|r"
+                        else
+                            set RoundCreepTitle = "|cffdd9bf1" + I2S(RoundCreepNumber) + " |r|cff77d2fc" + GetObjectName(RoundCreepTypeId) + "|r"
+                        endif
                         set s = RoundCreepTitle + ": "
                         set RoundCreepInfo[playerId] = "|cfff19b9bHit points|r: " + I2S(BlzGetUnitMaxHP(creep)) + "|n"
                         //call BJDebugMsg("b")
@@ -1606,7 +1611,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         set s = s + RoundAbilities
 
                         if (RoundNumber > 1) then
-                            call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 20, "Next: " + s)
+                            call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 20, "Next Round [|cffFFD700" + I2S(RoundNumber)+"|r] : " + s)
                         endif
                         //call BJDebugMsg("f")
                     endif
