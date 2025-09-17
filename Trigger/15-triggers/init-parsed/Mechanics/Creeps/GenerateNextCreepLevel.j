@@ -849,7 +849,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundCreepChanceEnvenomedWeapons == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
             call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
-            call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
+            call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.1), 30))
         endif
 
         if RoundCreepChanceFastMagic == 1 then
@@ -996,7 +996,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundCreepChancePulverize == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
             call UnitAddAbility(u, PULVERIZE_ABILITY_ID)
-            call SetUnitAbilityLevel(u, PULVERIZE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
+            call SetUnitAbilityLevel(u, PULVERIZE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.3), 30))
         endif
 
         if RoundCreepChanceRainOfFire == 1 then
@@ -1219,27 +1219,27 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundNumber >= 34 then
             if RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
-                set RoundCreepChanceLiquidFire = GetRandomInt(1, 20) //Liquid Fire chance
+                //set RoundCreepChanceLiquidFire = GetRandomInt(1, 20) //Liquid Fire chance
                 set RoundCreepChanceIncinerate = GetRandomInt(1, 20) //Incinerate chance
                 set RoundCreepChanceFearAura = GetRandomInt(1, 20) //Fear Aura chance
                 set RoundCreepChanceCruelty = GetRandomInt(1, 20) //Cruelty chance
-                set RoundCreepChanceCutting = GetRandomInt(1, 20) //Cutting chance
+                set RoundCreepChanceCutting = GetRandomInt(1, 15) //Cutting chance
                 set RoundCreepChanceDestruction = GetRandomInt(1, 20) //Destruction chance
-                set RoundCreepChanceEnvenomedWeapons = GetRandomInt(1, 20) //Envenomed Weapons chance
+                set RoundCreepChanceEnvenomedWeapons = GetRandomInt(1, 180) //Envenomed Weapons chance
                 set RoundCreepChanceFrostNova = GetRandomInt(1, 15) //Frost Nova creep chance
             endif
         endif
 
         if RoundNumber >= 14 then
-            set RoundCreepChanceAntiMagicShell = GetRandomInt(1, 15) //Anti magic shell creep chance
+            set RoundCreepChanceAntiMagicShell = GetRandomInt(1, 25) //Anti magic shell creep chance
             set RoundCreepChanceBackStab = GetRandomInt(1, 15) //Backstab creep chance
-            set RoundCreepChanceDivineShield = GetRandomInt(1, 15)  //Divine Shield creep chance
+            set RoundCreepChanceDivineShield = GetRandomInt(1, 180)  //Divine Shield creep chance
             set RoundCreepChanceBloodlust = GetRandomInt(1, 15) //Bloodlust creep chance
             set RoundCreepChanceEnsnare = GetRandomInt(1, 80) //Ensnare creep chance
             set RoundCreepChanceStoneProt = GetRandomInt(1, 50) //Stone Protection creep chance
             set RoundCreepChanceShadowStrike = GetRandomInt(1, 15) //Shadow Strike creep chance
             set RoundCreepChanceGuardianSpirit = GetRandomInt(1, 10) //Guardian Spirit creep chance
-            set RoundCreepChanceAvatar = GetRandomInt(1, 15) //Avatar creep chance
+            set RoundCreepChanceAvatar = GetRandomInt(1, 180) //Avatar creep chance
             set RoundCreepChanceHealingWave = GetRandomInt(1, 15) //Healing Wave creep chance
             set RoundCreepChanceIceForce = GetRandomInt(1, 15) //Ice Force creep chance
             set RoundCreepChanceEntanglingRoots = GetRandomInt(1, 40) //Entangling Roots creep chance
@@ -1248,7 +1248,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceAncientTeaching = GetRandomInt(1, 15) //Ancient Teaching creep chance
             set RoundCreepChanceHex = GetRandomInt(1, 80) //Hex chance
             set RoundCreepChanceFirebolt = GetRandomInt(1, 80) //Firebolt chance
-            set RoundCreepChanceSilence = GetRandomInt(1, 80) //Silence chance
+            set RoundCreepChanceSilence = GetRandomInt(1, 50) //Silence chance
             set RoundCreepChanceAerialShackles = GetRandomInt(1, 80) //Aerial Shackles chance
             //set RoundCreepChanceBanish = GetRandomInt(1, 80) //Banish chance
             set RoundCreepChanceHolyLight = GetRandomInt(1, 35) //Holy Light chance
@@ -1258,25 +1258,25 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceCripple = GetRandomInt(1, 35) //Cripple chance
             set RoundCreepChanceFrostArmor = GetRandomInt(1, 35) //Frost Armor chance
             set RoundCreepChanceImpale = GetRandomInt(1, 80) //Impale chance
-            set RoundCreepChanceSleep = GetRandomInt(1, 80) //Sleep chance
+            set RoundCreepChanceSleep = GetRandomInt(1, 800) //Sleep chance
             set RoundCreepChanceCurse = GetRandomInt(1, 80) //Curse chance
             //set RoundCreepChanceSpellImmunity = GetRandomInt(1, 15) //Spell Immunity chance
             set RoundCreepChanceReincarnation = GetRandomInt(1, 80) //Reincarnation chance
             //set RoundCreepChanceDevastatingBlow = GetRandomInt(1, 15) //Devastating Blow chance
             set RoundCreepChanceDeathCoil = GetRandomInt(1, 35) //Death Coil chance
             set RoundCreepChanceFingerOfPain = GetRandomInt(1, 80) //Finger of Pain chance
-            set RoundCreepChanceHowlOfTerror = GetRandomInt(1, 80) //Howl of Terror chance
-            set RoundCreepChanceEnergyShield = GetRandomInt(1, 80) //Energy Shield chance
+            set RoundCreepChanceHowlOfTerror = GetRandomInt(1, 35) //Howl of Terror chance
+            set RoundCreepChanceEnergyShield = GetRandomInt(1, 35) //Energy Shield chance
             set RoundCreepChanceFastMagic = GetRandomInt(1, 25) //Fast Magic chance        
             set RoundCreepChanceForkedLightning = GetRandomInt(1, 80) //Forked Lightning chance
             set RoundCreepChanceFrostBolt = GetRandomInt(1, 80) //Frost bolt chance
             set RoundCreepChancePolymorph = GetRandomInt(1, 80) //Polymorph chance
-            set RoundCreepChanceFrenzy = GetRandomInt(1, 50) //Frenzy chance
-            set RoundCreepChanceUnholyFrenzy = GetRandomInt(1, 50) //Unholy frenzy chance
-            set RoundCreepChanceIcyBreath = GetRandomInt(1, 80) //icy breath chance
+            set RoundCreepChanceFrenzy = GetRandomInt(1, 15) //Frenzy chance
+            set RoundCreepChanceUnholyFrenzy = GetRandomInt(1, 25) //Unholy frenzy chance
+            set RoundCreepChanceIcyBreath = GetRandomInt(1, 35) //icy breath chance
             set RoundCreepChanceSoulBurn = GetRandomInt(1, 35) //Soul Burn chance
-            set RoundCreepChanceColdWind = GetRandomInt(1, 80) //Cold Wind chance
-            set RoundCreepChanceHardenedSkin = GetRandomInt(1, 50) //Hardened Skin chance*/
+            set RoundCreepChanceColdWind = GetRandomInt(1, 25) //Cold Wind chance
+            set RoundCreepChanceHardenedSkin = GetRandomInt(1, 25) //Hardened Skin chance*/
 //dees isnt workkin yet:
             /*set RoundCreepChanceBattleRoar = GetRandomInt(1, 15) //Battle Roar chance
             set RoundCreepChanceFeedback = GetRandomInt(1, 15) //Feedback chance
@@ -1311,7 +1311,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 set RoundSkillGroupRoll = GetRandomInt(4, 6)
                 if RoundSkillGroupRoll == 4 then
                     set RoundCreepTypeId = CreepUnitTypeIds[30]//burning archer
-                    set RoundCreepChanceLiquidFire = 1
+                    //set RoundCreepChanceLiquidFire = 1
                     set RoundCreepChanceIncinerate = 1
                     set RoundCreepChanceCutting = 1
                     set RoundCreepChanceDestruction = 1
@@ -1611,7 +1611,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         set s = s + RoundAbilities
 
                         if (RoundNumber > 1) then
-                            call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 20, "Next Round [|cffFFD700" + I2S(RoundNumber)+"|r] : " + s)
+                            call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 20, "Round " + I2S(RoundNumber)+" : " + s)
                         endif
                         //call BJDebugMsg("f")
                     endif

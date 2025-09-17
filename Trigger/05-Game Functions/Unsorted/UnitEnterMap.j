@@ -389,12 +389,15 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set summonlimit = 5
         endif
 
-        //faerie dragon exception
-        if summonTypeId == FAERIE_DRAGON_UNIT_ID then 
+        //summon limit
+        if summonTypeId == FAERIE_DRAGON_UNIT_ID then //faerie dragon exception
+            set summonlimit = 1888
+            call LimitedSummon(hero, u, 2, summonlimit) 
+        elseif summonTypeId == POCKET_FACTORY_1_UNIT_ID then //pocket factory exception
             set summonlimit = 1888
             call LimitedSummon(hero, u, 2, summonlimit) 
         else 
-            call LimitedSummon(hero, u, 1, summonlimit)
+            call LimitedSummon(hero, u, 1, summonlimit) //kill summons over the limit
             //call DisplayTimedTextToPlayer(GetOwningPlayer(hero), 0, 0, 5.00, "Current Summon Limit: " + I2S(summonlimit))
         endif  
 

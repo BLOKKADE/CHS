@@ -205,6 +205,17 @@ scope ShortPeriodCheck initializer init
                    //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
                 endif
 
+                //Grass of immortality heal
+            elseif unitTypeId == 'I04N' then
+                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.015)
+                   if i1 < 1 then
+                        set i1 = 1 // Ensure at least 1 HP is healed
+                   endif
+                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
+                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
+                endif
+
                 //War Golem
             elseif unitTypeId == WAR_GOLEM_UNIT_ID then
                 set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))

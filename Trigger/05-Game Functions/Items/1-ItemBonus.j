@@ -109,7 +109,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 			//Grass of Immortality
 		elseif itemId == 'I04N' then
-			call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (1500 * diff ))
+			call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, (1000 * uniqueDiff))
 
 			//Hydromancer's Staff
 		elseif itemId == 'I08Y' then

@@ -130,7 +130,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         if (not IsUnitInGroup(playerHero, DuelWinners)) then
             call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
         endif
-
+        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true) // To remove buffs like ancient blood
         call SetUnitInvulnerable(playerHero, true)
 
         call DuelEndedPlayerActions(currentPlayer, playerHero)
@@ -153,7 +153,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         endif
 
         call GroupAddUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities
-
+        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true) //to remove buffs like ancient blood 
         call SetUnitInvulnerable(playerHero, true)
 
         call DuelEndedPlayerActions(currentPlayer, playerHero)
@@ -174,7 +174,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         if (not IsPlayerInForce(currentPlayer, DuelLosers)) then
             call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
         endif
-
+        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true) //to remove buffs like ancient blood
         call DuelEndedPlayerActions(currentPlayer, playerHero)
 
         // Cleanup
