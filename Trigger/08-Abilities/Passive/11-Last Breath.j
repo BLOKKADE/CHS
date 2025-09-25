@@ -77,6 +77,7 @@ library LastBreath initializer init requires AbilityCooldownBonusPerUse, Ability
         else
             set GetLastBreath(hid).endTick = T32_Tick + R2I(32 * (0.8 + (0.2 * level)))
         endif
+        call CreateTextTagTimerColor("Last Breaths!", 0.8, GetUnitX(u), GetUnitY(u), 80, 2, 255, 255, 255)
     endfunction
 
     private function init takes nothing returns nothing

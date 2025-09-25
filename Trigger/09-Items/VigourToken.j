@@ -12,6 +12,7 @@ library VigourToken requires UnitHelpers, ToggleDmgTxt
             if GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(p, UNIT_STATE_LIFE) then
                 call ShowLoggingText(false, ShowOtherDamageText(u, p, GetUnitState(p, UNIT_STATE_LIFE) * 0.1, "Vigour Token"))
                 call SetUnitState(p, UNIT_STATE_LIFE, GetUnitState(p, UNIT_STATE_LIFE) - (GetUnitState(p, UNIT_STATE_LIFE) * 0.1))
+                call CreateTextTagTimerColor("Vigour Token life loss!", 0.8, GetUnitX(p), GetUnitY(p), 80, 1, 255, 0, 0)
             endif
             call GroupRemoveUnit(ENUM_GROUP, p)
         endloop

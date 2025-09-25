@@ -66,14 +66,17 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(hero, target, lvl)
+            call CreateTextTagTimerColor("Dousing Hex!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)
 
         //Dark Seal
         elseif abilId == DARK_SEAL_ABILITY_ID then
             call CastDarkSeal(target, lvl)
+            call CreateTextTagTimerColor("Dark Seal!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)
 
         //Destruction of Block
         elseif abilId == DESTRUCTION_BLOCK_ABILITY_ID then
             call CastDestrOfBlock(target, lvl)
+            call CreateTextTagTimerColor("Destruction of Block!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)
 
         //Inner Fire
         elseif abilId == INNER_FIRE_ABILITY_ID then
@@ -186,11 +189,60 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Divine Source
         elseif abilId == THE_DIVINE_SOURCE_ABIL_ID then
             call UseDivineSource(hero)
+            call CreateTextTagTimerColor("Divine Source!", 0.8, GetUnitX(hero), GetUnitY(hero), 80, 2, 255, 255, 255)
 
         // Death and Decay
         elseif abilId == DEATH_AND_DECAY_ABILITY_ID then
             call CastDeathAndDecay(hero, x, y, lvl)
-        
+
+        // Spirit Shackle
+        elseif abilId == SPIRIT_SHACKLE_ABILITY_ID then
+            call CreateTextTagTimerColor("Spirit Shackle!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        // Banish
+        elseif abilId == BANISH_ABILITY_ID then
+            call CreateTextTagTimerColor("Banished!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        // Unholy Frenzy
+        elseif abilId == UNHOLY_FRENZY_ABILITY_ID then
+            call CreateTextTagTimerColor("Unholy Frenzy!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        // Soul Burn
+        elseif abilId == SOUL_BURN_ABILITY_ID then
+            call CreateTextTagTimerColor("Soul Burn!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        // Entangling Roots
+        elseif abilId == ENTAGLING_ROOTS_ABILITY_ID then
+            call CreateTextTagTimerColor("Entangling Roots!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        // Dousing Hex
+        elseif abilId == DOUSING_HE_ABILITY_ID then
+            call CreateTextTagTimerColor("Dousing Hex!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        // Curse
+        elseif abilId == CURSE_ABILITY_ID then
+            call CreateTextTagTimerColor("Curse!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        // Mana Starvation
+        elseif abilId == 'A09N' then
+            call CreateTextTagTimerColor("Mana Starvation!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        // Null Void Orb Ability 
+        elseif abilId == NULL_VOID_ORB_ABIL_ID then
+            call CreateTextTagTimerColor("Null Void Orb!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
+
+        // Bloodstone Ability 
+        elseif abilId == BLOOD_STONE_ABIL_ID then
+            call CreateTextTagTimerColor("Bloodstone!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
+
+        //Faerie Fire
+        elseif abilId == FAERIE_FIRE_ABILITY_ID then
+            call CreateTextTagTimerColor("Faerie Fire!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        //Parasite
+        elseif abilId == PARASITE_ABILITY_ID then
+            call CreateTextTagTimerColor("Parasite!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
         else
             return false
         endif
@@ -290,10 +342,12 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if abilId == SHADOW_STRIKE_ABILITY_ID then
                         call UnitAddTimeForm(caster,FORM_SHADOW, 1)
-                    endif
+                        call CreateTextTagTimerColor("Shadow Strike!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)
+                    endif                
 
                     if abilId == URN_ABIL_ID then
                         call Urn(caster)
+                        call CreateTextTagTimerColor("Urn of Memories!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
                     endif   
 
                     /*if abilId == MYSTERIOUS_TALENT_ABILITY_ID then
@@ -314,6 +368,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if abilId == MASK_OF_PROTECTION_ABIL_ID then
                         call MaskOfProtectionCast(caster)
+                        call CreateTextTagTimerColor("Mask of Protection!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
                     endif
         
                     if abilId == MASK_OF_VITALITY_ABIL_ID then
@@ -322,10 +377,12 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if abilId == ANTI_MAGIC_FLAG_ABIL_ID then
                         call ActivateAntiMagicFlag(caster)
+                        call CreateTextTagTimerColor("Anti-Magic Flag!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
                     endif
 
                     if abilId == CONQ_BAMBOO_STICK_ABILITY_ID then
                         call CastConqBambooStick(caster)
+                        call CreateTextTagTimerColor("Conqueror's Bamboo Stick!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
                     endif
 
                     if UnitHasItemType(caster, 'I03O') then

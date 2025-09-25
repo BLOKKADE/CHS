@@ -70,6 +70,7 @@ function CastDemonsCurse takes unit u, real chronusBonus, integer abilLevel, int
             call GroupRemoveUnit(g, target)
             if IsUnitEnemy(target, GetOwningPlayer(u)) and IsUnitAliveBJ(target) then
                 call DestroyEffectAfterDelay(AddSpecialEffectTarget("war3mapImported\\VioletPulse.mdx", target, "origin"), 8.0 + (0.09 * heroLevel))
+                call CreateTextTagTimerColor("Demon's Curse!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)  
             endif
         endloop
 
