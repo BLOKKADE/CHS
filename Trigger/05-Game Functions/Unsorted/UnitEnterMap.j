@@ -495,7 +495,14 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Witch Doctor
         if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID and realUnit then
-            call AddHeroMaxAbsoluteAbility(u)
+            call UnitAddAbility(u, ABSOLUTE_WATER_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_WATER_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID, u)
+            endif
             call SetBonus(u, 0, 1)
         endif
 
