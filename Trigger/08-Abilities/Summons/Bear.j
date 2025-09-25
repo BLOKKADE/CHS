@@ -7,7 +7,7 @@ library Bear requires CustomState, SpellFormula
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + (totalLevel / 2))), 0)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 20 * totalLevel)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + GetSpellValue(0, 60, abilityLevel) + (summonLevel * 1100))
-        call AddUnitCustomState(u, BONUS_MAGICRES, 1.5 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICRES, 0.75 * totalLevel)
         call UnitAddAbility(u, 'A06I')
         call SetUnitAbilityLevel(u, 'A06I', IMinBJ(R2I(totalLevel / 3), 60))
 
