@@ -100,7 +100,7 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource,CRUELTY_ABILITY_ID) == 0 then
                 set critDmg = critDmg + (Dmg * (1 + (0.2 * i)))
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", DamageTarget, "chest"))
-                call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 4.5)
+                call AbilStartCD(DamageSource,CRUELTY_ABILITY_ID, 5)
             endif
 
             //Creep Critical Strike
