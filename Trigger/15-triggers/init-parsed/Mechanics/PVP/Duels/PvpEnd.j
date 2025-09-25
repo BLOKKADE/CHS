@@ -277,7 +277,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
 
             call oddDuelGame.setupNextPvpBattleTimer()
             call DisplayNemesisNames()
-            call TriggerSleepAction(5.00)
+            call TriggerSleepAction(15.00)
 
             // Play the horn noise for everyone if it is a non-simultaneous duel
             if (startNonSimultaneousOddDuel) then

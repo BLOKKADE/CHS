@@ -19,7 +19,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         private DuelGame TempDuelGame // Temporary global variable for DisplayNemesisNames
 
         private integer DuelPrepareDuration = 10
-        private integer NextPvpBattleDuration = 5
+        private integer NextPvpBattleDuration = 15
 
         DuelGame CurrentDuelGame // Used to reference the current duel for betting purposes. Doesn't work properly for simultaneous duels.
         IntegerList DuelGameList // The list of duels that doesn't get emptied as we get duels
