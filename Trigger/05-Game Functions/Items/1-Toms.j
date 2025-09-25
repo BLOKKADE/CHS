@@ -359,7 +359,9 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
 
                 //Absolute Acorn
             elseif itemTypeId == ABSOLUTE_ACORN_TOME_ITEM_ID then
-                if GetHeroXP(u) >= 100000 and AddHeroMaxAbsoluteAbility(u) then
+                if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432This unit cannot buy this item.|r")
+                elseif GetHeroXP(u) >= 100000 and AddHeroMaxAbsoluteAbility(u) then
                     call UnitAddItemById(u,EXPERIENCE_50000_TOME_ITEM_ID)
                 else
                     call PlayerAddGold(GetOwningPlayer(u),8000)  

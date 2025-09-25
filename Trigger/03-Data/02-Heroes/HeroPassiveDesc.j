@@ -198,8 +198,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOrcWarlockRed.blp" )
-        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with a bonus absolute slot.")
-        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 25 levels|r) Gets a bonus Absolute slot. (max 10)" ) 
+        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with Absolute Water.")
+        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 25 levels|r) Gets a random bonus Absolute ability (max 10). |cffc0c0c0Cannot purchase Absolute Acorns." ) 
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )
@@ -223,7 +223,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp" )
-        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Deep Freeze: Every 10 seconds, the Hero freezes nearby enemies. For every [|cff8080ffCold|r] the Hero has, the freeze deals 30 |cffff00ffmagic damage|r and freezes enemies for 0.15 seconds. |n|nAfter activating a [|cff8080ffCold|r] spell, enemy heroes' spells are put on cooldown for 0.2 seconds, this has a 0.5 second cooldown per unit.")
+        call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Deep Freeze: Every 10 seconds, the Hero freezes nearby enemies within 750 range. For every [|cff8080ffCold|r] the Hero has, the freeze deals 30 |cffff00ffmagic damage|r and freezes enemies for 0.15 seconds. |n|nAfter activating a [|cff8080ffCold|r] spell, enemy heroes' spells are put on cooldown for 0.2 seconds, this has a 0.5 second cooldown per unit.")
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Deep Freeze: +30 damage per [|cff8080ffCold|r], +0.01 stun duration" )
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_SummonLimit, "24")
 
