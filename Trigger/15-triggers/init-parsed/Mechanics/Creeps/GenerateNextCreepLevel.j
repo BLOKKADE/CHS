@@ -225,7 +225,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         local string s = ""
     
         if RoundCreepChanceAerialShackles == 1 then
-            set s = ConcatAbility(s, "Aerial Shackles")
+            set s = ConcatAbility(s, "|cffff00ffAerial Shackles")
             call AddRoundAbility(AERIALSHACKLES_CREEP_ABILITY_ID)
         endif
 
@@ -260,7 +260,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceBash == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
-            set s = ConcatAbility(s, "Bash")
+            set s = ConcatAbility(s, "|cffff00ffBash")
             call AddRoundAbility('ACbh')
         endif
 
@@ -275,7 +275,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceBlizzard == 1 then
-            set s = ConcatAbility(s, "Blizzard")
+            set s = ConcatAbility(s, "|cffff00ffBlizzard")
             call AddRoundAbility(BLIZZARD_ABILITY_ID)
         endif
 
@@ -290,17 +290,17 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceCarrionSwarm == 1 then
-            set s = ConcatAbility(s, "Carrion Swarm")
+            set s = ConcatAbility(s, "|cffff00ffCarrion Swarm")
             call AddRoundAbility(CARRION_SWARM_ABILITY_ID)
         endif
 
         if RoundCreepChanceChainLightning == 1 then
-            set s = ConcatAbility(s, "Chain Lightning")
+            set s = ConcatAbility(s, "|cffff00ffChain Lightning")
             call AddRoundAbility(CHAIN_LIGHTNING_ABILITY_ID)
         endif
 
         if RoundCreepChanceCleave == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' and RoundCreepTypeId != 'n01p' and RoundCreepTypeId != 'n01g' and RoundCreepTypeId != 'n01t' and RoundCreepTypeId != 'n01F' and RoundCreepTypeId != 'n01A' and RoundCreepTypeId != 'n006' then
-            set s = ConcatAbility(s, "Cleave")
+            set s = ConcatAbility(s, "|cffff00ffCleave")
             call AddRoundAbility(CLEAVE_CREEP_ABILITY_ID)
         endif
 
@@ -310,7 +310,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceCorrosiveSkin == 1 then
-            set s = ConcatAbility(s, "Corrosive Skin")
+            set s = ConcatAbility(s, "|cffff00ffCorrosive Skin")
             call AddRoundAbility(CORROSIVE_SKIN_ABILITY_ID)
         endif
 
@@ -345,27 +345,27 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceCyclone == 1 then
-            set s = ConcatAbility(s, "Cyclone")
+            set s = ConcatAbility(s, "|cffff00ffCyclone")
             call AddRoundAbility(CYCLONE_ABILITY_ID)
         endif
 
         if RoundCreepChanceDeathAndDecay == 1 then
-            set s = ConcatAbility(s, "Death and Decay")
+            set s = ConcatAbility(s, "|cffff00ffDeath and Decay")
             call AddRoundAbility(DEATH_AND_DECAY_ABILITY_ID)
         endif
 
         if RoundCreepChanceDeathCoil == 1 then
-            set s = ConcatAbility(s, "Death Coil")
+            set s = ConcatAbility(s, "|cffff00ffDeath Coil")
             call AddRoundAbility(DEATHCOIL_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChanceDestruction == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
-            set s = ConcatAbility(s, "Destruction")
+            set s = ConcatAbility(s, "|cffff00ffDestruction")
             call AddRoundAbility(DESTRUCTION_ABILITY_ID)
         endif
 
         if RoundCreepChanceDevastatingBlow == 1 then
-            set s = ConcatAbility(s, "Devastating Blow")
+            set s = ConcatAbility(s, "|cffff00ffDevastating Blow")
             call AddRoundAbility(DEVASTATING_BLOW_ABILITY_ID)
         endif
 
@@ -395,12 +395,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceEntanglingRoots == 1 then
-            set s = ConcatAbility(s, "Entangling Roots")
+            set s = ConcatAbility(s, "|cffff00ffEntangling Roots")
             call AddRoundAbility(ENTAGLING_ROOTS_ABILITY_ID)
         endif
 
         if RoundCreepChanceEnvenomedWeapons == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
-            set s = ConcatAbility(s, "Envenomed Weapons")
+            set s = ConcatAbility(s, "|cffff00ffEnvenomed Weapons")
             call AddRoundAbility(ENVENOMED_WEAPONS_ABILITY_ID)
         endif
 
@@ -429,32 +429,32 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceFingerOfDeath == 1 then
-            set s = ConcatAbility(s, "Finger of Death")
+            set s = ConcatAbility(s, "|cffff00ffFinger of Death")
             call AddRoundAbility(FINGER_OF_DEATH_ABILITY_ID)
         endif
 
         if RoundCreepChanceFingerOfPain == 1 then
-            set s = ConcatAbility(s, "Finger of Pain")
+            set s = ConcatAbility(s, "|cffff00ffFinger of Pain")
             call AddRoundAbility(FINGEROFPAIN_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChanceFirebolt == 1 then
-            set s = ConcatAbility(s, "Firebolt")
+            set s = ConcatAbility(s, "|cffff00ffFirebolt")
             call AddRoundAbility(FIREBOLT_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChanceForkedLightning == 1 then
-            set s = ConcatAbility(s, "Forked Lightning")
+            set s = ConcatAbility(s, "|cffff00ffForked Lightning")
             call AddRoundAbility(FORKED_LIGHTNING_ABILITY_ID)
         endif
 
         if RoundCreepChanceFrostBolt == 1 then
-            set s = ConcatAbility(s, "Frost Bolt")
+            set s = ConcatAbility(s, "|cffff00ffFrost Bolt")
             call AddRoundAbility(FROSTBOLT_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChanceIcyBreath == 1 then
-            set s = ConcatAbility(s, "Icy Breath")
+            set s = ConcatAbility(s, "|cffff00ffIcy Breath")
             call AddRoundAbility(ICY_BREATH_ABILITY_ID)
         endif
 
@@ -469,7 +469,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceFrostNova == 1 then
-            set s = ConcatAbility(s, "Frost Nova")
+            set s = ConcatAbility(s, "|cffff00ffFrost Nova")
             call AddRoundAbility(FROST_NOVA_ABILITY_ID)
         endif
 
@@ -494,7 +494,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceHolyLight == 1 then
-            set s = ConcatAbility(s, "Holy Light")
+            set s = ConcatAbility(s, "|cffff00ffHoly Light")
             call AddRoundAbility(HOLY_LIGHT_ABILITY_ID)
         endif
 
@@ -504,7 +504,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceHurlBoulder == 1 then
-            set s = ConcatAbility(s, "Hurl Boulder")
+            set s = ConcatAbility(s, "|cffff00ffHurl Boulder")
             call AddRoundAbility(HURL_BOULDER_CREEP_ABILITY_ID)
         endif
 
@@ -514,7 +514,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceImpale == 1 then
-            set s = ConcatAbility(s, "Impale")
+            set s = ConcatAbility(s, "|cffff00ffImpale")
             call AddRoundAbility(IMPALE_ABILITY_ID)
         endif
 
@@ -539,17 +539,17 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceLightningShield == 1 then
-            set s = ConcatAbility(s, "Lightning Shield")
+            set s = ConcatAbility(s, "|cffff00ffLightning Shield")
             call AddRoundAbility(LIGHTNING_SHIELD_ABILITY_ID)
         endif
 
         if RoundCreepChanceLiquidFire == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
-            set s = ConcatAbility(s, "Liquid Fire")
+            set s = ConcatAbility(s, "|cffff00ffLiquid Fire")
             call AddRoundAbility(LIQUID_FIRE_ABILITY_ID)
         endif
 
         if RoundCreepChanceManaBurn == 1 then
-            set s = ConcatAbility(s, "Mana Burn")
+            set s = ConcatAbility(s, "|cffff00ffMana Burn")
             call AddRoundAbility(MANA_BURN_CREEP_ABILITY_ID)
         endif
 
@@ -559,7 +559,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChancePulverize == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' then
-            set s = ConcatAbility(s, "Pulverize")
+            set s = ConcatAbility(s, "|cffff00ffPulverize")
             call AddRoundAbility(PULVERIZE_ABILITY_ID)
         endif
 
@@ -569,7 +569,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceRainOfFire == 1 then
-            set s = ConcatAbility(s, "Rain of Fire")
+            set s = ConcatAbility(s, "|cffff00ffRain of Fire")
             call AddRoundAbility(RAIN_OF_FIRE_ABILITY_ID)
         endif
 
@@ -579,7 +579,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif*/
 
         if RoundCreepChanceReflectAura == 1 then
-            set s = ConcatAbility(s, "Reflection Aura")
+            set s = ConcatAbility(s, "|cffff00ffReflection Aura")
             call AddRoundAbility(REFLECTION_AUR_ABILITY_ID)
         endif
 
@@ -594,12 +594,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceShadowStrike == 1 then
-            set s = ConcatAbility(s, "Shadow Strike")
+            set s = ConcatAbility(s, "|cffff00ffShadow Strike")
             call AddRoundAbility(SHADOW_STRIKE_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChanceShockwave == 1 then
-            set s = ConcatAbility(s, "Shockwave")
+            set s = ConcatAbility(s, "|cffff00ffShockwave")
             call AddRoundAbility(SHOCKWAVE_CREEP_ABILITY_ID)
         endif
 
@@ -624,7 +624,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceSoulBurn == 1 then
-            set s = ConcatAbility(s, "Soul Burn")
+            set s = ConcatAbility(s, "|cffff00ffThorns Aura|r")
             call AddRoundAbility(SOUL_BURN_ABILITY_ID)
         endif
 
@@ -639,22 +639,22 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceStoneProt == 1 then
-            set s = ConcatAbility(s, "Stone Protection")
+            set s = ConcatAbility(s, "|cffff00ffStone Protection")
             call AddRoundAbility(STONE_PROTECTION_ABILITY_ID)
         endif
 
         if RoundCreepChanceStormBolt == 1 then
-            set s = ConcatAbility(s, "Storm Bolt")
+            set s = ConcatAbility(s, "|cffff00ffStorm Bolt")
             call AddRoundAbility(STORM_BOLT_ABILITY_ID)
         endif
 
         if RoundCreepChanceThorns == 1 then
-            set s = ConcatAbility(s, "Thorns Aura")
+            set s = ConcatAbility(s, "|cffff00ffThorns Aura")
             call AddRoundAbility(THORNS_AURA_ABILITY_ID)
         endif
 
         if RoundCreepChanceThunderClap == 1 then
-            set s = ConcatAbility(s, "Thunder Clap")
+            set s = ConcatAbility(s, "|cffff00ffThunder Clap")
             call AddRoundAbility(THUNDER_CLAP_CREEP_ABILITY_ID)
         endif
 
@@ -664,7 +664,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceUnholyFrenzy == 1 then
-            set s = ConcatAbility(s, "Unholy Aura")
+            set s = ConcatAbility(s, "Unholy Frenzy")
             call AddRoundAbility(UNHOLYFRENZY_CREEP_ABILITY_ID)
         endif
 
@@ -674,12 +674,12 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceWarStomp == 1 then
-            set s = ConcatAbility(s, "War Stomp")
+            set s = ConcatAbility(s, "|cffff00ffWar Stomp")
             call AddRoundAbility(WAR_STOMP_ABILITY_ID)
         endif
 
         if RoundCreepChanceWizardbane == 1 then
-            set s = ConcatAbility(s, "Wizardbane Aura")
+            set s = ConcatAbility(s, "|cffff00ffWizardbane Aura")
             call AddRoundAbility(WIZARDBANE_AURA_ABILITY_ID)
         endif
     
@@ -919,8 +919,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundCreepChanceHardenedSkin == 1 then
             call UnitAddAbility(u, HARDENED_SKIN_ABILITY_ID)
-            call SetUnitAbilityLevel(u, HARDENED_SKIN_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
-            call AddUnitCustomState(u, BONUS_BLOCK, (RoundNumber * 0.6) * 50)	// have to manually add bc the ability doesnt normally gibs
+            call SetUnitAbilityLevel(u, HARDENED_SKIN_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.3), 30))
+            call AddUnitCustomState(u, BONUS_BLOCK, (RoundNumber * 0.3) * 50)	// have to manually add bc the ability doesnt normally gibs
         endif
 
         if RoundCreepChanceHealingWave == 1 then
@@ -1231,7 +1231,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundNumber >= 14 then
-            set RoundCreepChanceAntiMagicShell = GetRandomInt(1, 25) //Anti magic shell creep chance
+            set RoundCreepChanceAntiMagicShell = GetRandomInt(1, 35) //Anti magic shell creep chance
             set RoundCreepChanceBackStab = GetRandomInt(1, 15) //Backstab creep chance
             set RoundCreepChanceDivineShield = GetRandomInt(1, 180)  //Divine Shield creep chance
             set RoundCreepChanceBloodlust = GetRandomInt(1, 15) //Bloodlust creep chance
@@ -1240,15 +1240,15 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceShadowStrike = GetRandomInt(1, 15) //Shadow Strike creep chance
             set RoundCreepChanceGuardianSpirit = GetRandomInt(1, 10) //Guardian Spirit creep chance
             set RoundCreepChanceAvatar = GetRandomInt(1, 180) //Avatar creep chance
-            set RoundCreepChanceHealingWave = GetRandomInt(1, 15) //Healing Wave creep chance
+            set RoundCreepChanceHealingWave = GetRandomInt(1, 25) //Healing Wave creep chance
             set RoundCreepChanceIceForce = GetRandomInt(1, 15) //Ice Force creep chance
-            set RoundCreepChanceEntanglingRoots = GetRandomInt(1, 40) //Entangling Roots creep chance
+            set RoundCreepChanceEntanglingRoots = GetRandomInt(1, 180) //Entangling Roots creep chance
             set RoundCreepChanceStormBolt = GetRandomInt(1, 40) //Storm Bolt creep chance
             //set RoundCreepChanceFingerOfDeath = GetRandomInt(1, 15) //Finger of Death chance
             set RoundCreepChanceAncientTeaching = GetRandomInt(1, 15) //Ancient Teaching creep chance
             set RoundCreepChanceHex = GetRandomInt(1, 80) //Hex chance
             set RoundCreepChanceFirebolt = GetRandomInt(1, 80) //Firebolt chance
-            set RoundCreepChanceSilence = GetRandomInt(1, 50) //Silence chance
+            set RoundCreepChanceSilence = GetRandomInt(1, 35) //Silence chance
             set RoundCreepChanceAerialShackles = GetRandomInt(1, 80) //Aerial Shackles chance
             //set RoundCreepChanceBanish = GetRandomInt(1, 80) //Banish chance
             set RoundCreepChanceHolyLight = GetRandomInt(1, 35) //Holy Light chance

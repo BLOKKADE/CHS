@@ -438,7 +438,7 @@ library CreepAutoCast initializer init requires RandomShit
 
             // Entangling Roots
             if (GetUnitAbilityLevel(creep, ENTAGLING_ROOTS_ABILITY_ID) > 0) then
-                set RoundCreepAbilCastChance = GetRandomInt(1, 9)
+                set RoundCreepAbilCastChance = GetRandomInt(1, 1)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
                         call SetUnitAbilityLevel(creep, ENTAGLING_ROOTS_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
