@@ -56,7 +56,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
         local unit u = GetTriggerUnit()
 
         if IsUnitType(u, UNIT_TYPE_HERO) then
-            if ItemId == 'I09R' then
+            if ItemId == 'I09R' and GetUnitTypeId(u) != WITCH_DOCTOR_UNIT_ID then
                 //call BJDebugMsg("aalu unlearn")
                 set counter = LoadInteger(HT, GetHandleId(u), 941561) 
                 if counter > 0 then
@@ -76,7 +76,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
                     else
                         call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)
                         call ResourseRefresh(GetOwningPlayer(u))
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "|cffffe600Failed to learn|r: maximum abilities reached")
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "|cffffe600Failed to learn|r: maximum ability level reached")
                     endif
                     
                 else
@@ -88,10 +88,13 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
                             call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "You can |cff9dff00find the Absolute ability|r when you hover over the icon on the |cff00e1fftop left of your screen|r below the Info (F9) button.")
                         endif
                     elseif counter > GetHeroMaxAbsoluteAbility(u) then
-                        //call BJDebugMsg("aalu acorn")
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "Buy an |cffbbff00Absolute Acorn|r at the |cffffd900Power Ups Shop II|r to purchase more Absolute abilities. (|cffff1100Max: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)" ) 
-                        call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)
-                        call ResourseRefresh(GetOwningPlayer(u))
+                        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
+                            call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "The |cffbbff00Witch Doctor|r can only gain more Absolute abilities through his passive leveling trait.")
+                        else
+                            call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "Buy an |cffbbff00Absolute Acorn|r at the |cffffd900Power Ups Shop II|r to purchase more Absolute abilities. (|cffff1100Max: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)")
+                            call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)
+                            call ResourseRefresh(GetOwningPlayer(u))
+                        endif
 
                     else
                         call DisplayTimedTextToPlayer(GetOwningPlayer(u),0,0,2, "You have reached the maximum amount of 10 absolute abilities" ) 

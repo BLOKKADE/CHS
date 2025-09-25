@@ -357,10 +357,20 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     set ctrl = false
                 endif
 
+                //Tome of Uncertainty
+            elseif itemTypeId == 'I09R' then
+                if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "The |cffbbff00Witch Doctor|r can cannot buy this item.")
+                    call PlayerAddGold(GetOwningPlayer(u),20)  
+                else
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "Unlearned an Absolute Ability")
+                endif
+                set ctrl = false  
+
                 //Absolute Acorn
             elseif itemTypeId == ABSOLUTE_ACORN_TOME_ITEM_ID then
                 if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
-                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "|cffdf9432This unit cannot buy this item.|r")
+                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "The |cffbbff00Witch Doctor|r can cannot buy this item.")
                 elseif GetHeroXP(u) >= 100000 and AddHeroMaxAbsoluteAbility(u) then
                     call UnitAddItemById(u,EXPERIENCE_50000_TOME_ITEM_ID)
                 else
