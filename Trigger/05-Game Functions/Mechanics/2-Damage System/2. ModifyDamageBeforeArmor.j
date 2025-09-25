@@ -46,6 +46,12 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
+        //Howl of Terror
+        if UnitHasBuffBJ(Damage.target, HOWL_OF_TERROR_BUFF_ID) and Damage.index.damageType == DAMAGE_TYPE_MAGIC then
+            set Damage.index.damage = Damage.index.damage * 1.5
+            return
+        endif
+
         //Conquerors Bamboo Stick
         if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and IsUnitType(DamageSource, UNIT_TYPE_HERO) == false and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
             //call BJDebugMsg("conq bamboo stick immune")
@@ -93,6 +99,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call AbilStartCD(DamageTarget, 'A0CP', 10)
                 set Damage.index.damage = 0
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                call CreateTextTagTimerColor("Runic Bracer Cleanse!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 255, 255, 255)
                 return
             endif
 
@@ -102,6 +109,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call AbilStartCD(DamageTarget, 'A08S', 10)
                 call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)  
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
+                call CreateTextTagTimerColor("Dark Shield Cleanse!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 255, 255, 255)
             endif 
             if IsPhysDamage() then
                 if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08R') <= 0 then
@@ -352,7 +360,17 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Entangling Roots
         if DamageSourceAbility == ENTAGLING_ROOTS_ABILITY_ID then
-            set Damage.index.damage = Damage.index.damage * GetUnitElementCount(DamageSource, Element_Wild)
+            set Damage.index.damage = Damage.index.damage * (1 + ((GetUnitElementCount(DamageSource, Element_Earth) + GetUnitElementCount(DamageSource, Element_Wild)) * 1))
+        endif
+
+        //Earthquake
+        if DamageSourceAbility == EARTHQUAKE_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Earth) * 0.20))
+        endif
+
+        //War Stomp
+        if DamageSourceAbility == WAR_STOMP_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Earth) * 0.20))
         endif
 
         //Stampede
@@ -368,6 +386,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Frost Nova
         if DamageSourceAbility == FROST_NOVA_ABILITY_ID then
             set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Cold) * 0.5))
+            call CreateTextTagTimerColor("Frost Nova Slow!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)  
         endif
 
         //Forked Lightning
@@ -443,6 +462,7 @@ scope ModifyDamageBeforeArmor initializer init
             call ActivateAncientBlood(DamageTarget, i1)
         endif
 
+        //Shockwave
         if DamageSourceAbility == SHOCKWAVE_ABILITY_ID then
             call UpdateShockwaveDamageBonus(DamageSourceId, DamageTargetId)
             set Damage.index.damage = Damage.index.damage * GetShockwaveDamageBonus(DamageSourceId, DamageTargetId)
@@ -608,6 +628,16 @@ scope ModifyDamageBeforeArmor initializer init
 
         if DamageSourceAbility == FAN_OF_KNIVES_ABILITY_ID then
             set Damage.index.damage = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.damage, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
+        endif
+
+        //Thunderclap text tag
+        if DamageSourceAbility == THUNDER_CLAP_ABILITY_ID then
+            call CreateTextTagTimerColor("Thunder Clap Slow!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)  
+        endif
+
+        //Earthquake text tag
+        if DamageSourceAbility == 'A07M' then
+            call CreateTextTagTimerColor("Earthquake Slow!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)  
         endif
 
         //Staff of Lightning
@@ -838,8 +868,8 @@ scope ModifyDamageBeforeArmor initializer init
             //call BJDebugMsg("ts armor pierce: " + R2S(Damage.index.armorPierced))
         endif
 
-         //Adamantium Armor self-damage negation
-        if UnitHasItemType(DamageSource, 'I07M') and DamageSource == DamageTarget then
+         //Adamantium Armor/hardened skin self-damage negation
+        if UnitHasItemType(DamageSource, 'I07M') or GetUnitAbilityLevel(DamageSource, HARDENED_SKIN_ABILITY_ID) > 0 and DamageSource == DamageTarget then
             set Damage.index.damage = 0
         endif
 
@@ -900,6 +930,7 @@ scope ModifyDamageBeforeArmor initializer init
             if BlzGetUnitAbilityCooldownRemaining(DamageTarget,FROSTBITE_OF_THE_SOUL_ABILITY_ID) <= 0 then
                 call AbilStartCD(DamageTarget,FROSTBITE_OF_THE_SOUL_ABILITY_ID, 9)
                 call AddCooldowns(DamageSource,0.95 + I2R(i1)* 0.05)
+                call CreateTextTagTimerColor("Frostbite" + R2S(0.95 + I2R(i1) * 0.05) + "s longer CD!", 0.8, GetUnitX(DamageSource), GetUnitY(DamageSource), 80, 2, 255, 0, 0)
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = FROSTBITE_OF_THE_SOUL_ABILITY_ID
                 call Damage.applyMagic(DamageTarget, DamageSource, 200 * i1, false, DAMAGE_TYPE_MAGIC)
