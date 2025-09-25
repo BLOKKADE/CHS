@@ -36,7 +36,7 @@ scope ShortPeriodCheck initializer init
                 //Fire Shield
                 set i1 = GetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID)
                 if i1 > 0 then
-                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 300, false, FIRE_SHIELD_ABILITY_ID, true, false)
+                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 100 * GetUnitElementCount(u, Element_Fire), false, FIRE_SHIELD_ABILITY_ID, true, false)
                 endif
 
                 //Absolute Arcane Drain
