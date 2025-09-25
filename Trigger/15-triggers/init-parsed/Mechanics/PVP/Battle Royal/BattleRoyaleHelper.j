@@ -18,15 +18,15 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
         integer array PreBRItemCharges
 
         // Timer properties
-        integer BattleRoyalRemoveLifeLowTime = 120
-        integer BattleRoyalRemoveLifeHighTime = 140
+        integer BattleRoyalRemoveLifeLowTime = 240
+        integer BattleRoyalRemoveLifeHighTime = 280
 
         integer BattleRoyaleStartTime = 0
         integer BattleRoyaleEndTime = 0
         integer FunBattleRoyaleStartTime = 0
         integer FunBattleRoyaleEndTime = 0
 
-        integer BattleRoyalFunWaitTime = 30
+        integer BattleRoyalFunWaitTime = 45
         integer BattleRoyalWaitTime = 180
         integer BattleRoyalReviewWaitTime = 30
         integer FunBattleRoyalPrepTime = 120
