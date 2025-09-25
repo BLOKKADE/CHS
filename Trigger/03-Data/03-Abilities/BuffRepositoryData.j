@@ -96,7 +96,8 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(BREATH_OF_FIRE_BUFF_ID, BREATH_OF_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(RAIN_OF_FIRE_BUFF_ID, RAIN_OF_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(STUNNED_BUFF_ID, STUN_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // used by: heart of darkness, hammer of the gods, dark hunter passive, and frost bolt
-        call SetupBuffInfo1(PARASITE_MINION_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(PARASITE_MINION_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite minion creation
+        call SetupBuffInfo1(PARASITE_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite damage
         call SetupBuffInfo1(STUNNED_PAUSE_BUFF_ID, HURL_BOULDER_CREEP_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(COLD_ARROWS_STACKING_BUFF_ID, COLD_ARROWS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(THE_CURSE_OF_DEMONS_BUFF_ID, DEMONS_CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
