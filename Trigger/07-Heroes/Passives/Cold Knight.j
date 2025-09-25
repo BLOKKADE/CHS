@@ -35,7 +35,7 @@ library ColdKnight requires DummyOrder, AbilityCooldown, UnitHelpers, DivineBubb
 
         call AbilStartCD(u, COLD_KNIGHT_PASSIVE_ABILITY_ID, 10)
         call GroupClear(ENUM_GROUP)
-        call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 600, Condition(function ColdKnightEffect))
+        call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 750, Condition(function ColdKnightEffect))
         return false
     endfunction
 
@@ -54,7 +54,7 @@ library ColdKnight requires DummyOrder, AbilityCooldown, UnitHelpers, DivineBubb
         set GLOB_ABSOLUTE_COLD_U = u
         
         call GroupClear(ENUM_GROUP)
-        call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 500, Condition(function ColdKnightCdEffect))
+        call GroupEnumUnitsInArea(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 750, Condition(function ColdKnightCdEffect))
 
         return false
     endfunction
