@@ -296,7 +296,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundCreepChanceChainLightning == 1 then
             set s = ConcatAbility(s, "|cffff00ffChain Lightning")
-            call AddRoundAbility(CHAIN_LIGHTNING_ABILITY_ID)
+            call AddRoundAbility(CHAINLIGHTNING_CREEP_ABILITY_ID)
         endif
 
         if RoundCreepChanceCleave == 1 and RoundCreepTypeId != 'n01H' and RoundCreepTypeId != 'n00W' and RoundCreepTypeId != 'n01p' and RoundCreepTypeId != 'n01g' and RoundCreepTypeId != 'n01t' and RoundCreepTypeId != 'n01F' and RoundCreepTypeId != 'n01A' and RoundCreepTypeId != 'n006' then
@@ -748,8 +748,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
 
         if RoundCreepChanceChainLightning == 1 then
-            call UnitAddAbility(u, CHAIN_LIGHTNING_ABILITY_ID)
-            call SetUnitAbilityLevel(u, CHAIN_LIGHTNING_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
+            call UnitAddAbility(u, CHAINLIGHTNING_CREEP_ABILITY_ID)
+            call SetUnitAbilityLevel(u, CHAINLIGHTNING_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
 
         if RoundCreepChanceColdWind == 1 then

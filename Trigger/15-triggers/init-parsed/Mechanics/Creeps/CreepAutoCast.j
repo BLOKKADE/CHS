@@ -611,13 +611,13 @@ library CreepAutoCast initializer init requires RandomShit
             endif
 
             // Chain Lightning
-            if (GetUnitAbilityLevel(creep, CHAIN_LIGHTNING_ABILITY_ID) > 0) then
+            if (GetUnitAbilityLevel(creep, CHAINLIGHTNING_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, CHAIN_LIGHTNING_ABILITY_ID, R2I(RoundNumber * 0.8))
+                        call SetUnitAbilityLevel(creep, CHAINLIGHTNING_CREEP_ABILITY_ID, R2I(RoundNumber * 0.8))
                     else
-                        call SetUnitAbilityLevel(creep, CHAIN_LIGHTNING_ABILITY_ID, R2I(RoundNumber * 0.4))
+                        call SetUnitAbilityLevel(creep, CHAINLIGHTNING_CREEP_ABILITY_ID, R2I(RoundNumber * 0.4))
                     endif
 
                     // Chain Lightning to random unit
