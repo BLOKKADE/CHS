@@ -74,7 +74,7 @@ library Functions initializer init requires ExtradimensionalCooperation, Sorcere
         if abilId == LUCKY_TRIGGER_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT, hid, abilId) 
-            call AddUnitCustomState(u, BONUS_LUCK, 0.0075 * I2R(i1 - i2))	
+            call AddUnitCustomState(u, BONUS_LUCK, 0.005 * I2R(i1 - i2))	
             call SaveInteger(HT, hid, abilId, i1)
         endif 
 
