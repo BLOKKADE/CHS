@@ -21,12 +21,12 @@ library MartialRetribution initializer init requires AreaDamage, HideEffects, Ab
     endfunction
 
     function MartialRetributionCheck takes unit source, integer handleId, integer lvl returns nothing
-        local real max = (300 * lvl) * (1 + 0.02 * GetHeroLevel(source))
+        local real max = (500 * lvl) * (1 + 0.02 * GetHeroLevel(source))
         
         if MartialRetributionStorage.real[handleId] >= max then
             set MartialRetributionStorage.real[handleId] = max
             call MartialRetributionDamage(source, handleId, max)
-            call AbilStartCD(source, MARTIAL_RETRIBUTION_ABILITY_ID, 2)
+            call AbilStartCD(source, MARTIAL_RETRIBUTION_ABILITY_ID, 0.5)
         endif
     endfunction
 
