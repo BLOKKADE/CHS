@@ -52,9 +52,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         endif
 
         //Polar Bear skin
-        if GetUnitTypeId(hero) == YETI_UNIT_ID or GetUnitTypeId(hero) == LICH_UNIT_ID or GetUnitTypeId(hero) == COLD_KNIGHT_UNIT_ID and summonTypeId == BEAR_1_UNIT_ID then
-                call BlzSetUnitSkin(u, 'PBBB')
-                call BlzSetUnitName(u, "Polar Bear")
+        if summonTypeId == BEAR_1_UNIT_ID then
+            call BlzSetUnitSkin(u, 'PBBB')
+            call BlzSetUnitName(u, "Polar Bear")
         endif
 
         //Skeleton Brute summon colouring
@@ -495,15 +495,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Witch Doctor
         if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID and realUnit then
-            call UnitAddAbility(u, ABSOLUTE_WATER_ABILITY_ID)
-            call BlzUnitDisableAbility(u,ABSOLUTE_WATER_ABILITY_ID,false,true)
-
-            if realUnit then
-                call SaveInteger(HT, hid, 941561, 1)
-                call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID, u, 1)
-                call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID, u)
-            endif
-            call SetBonus(u, 0, 1)
+            call WitchDoctorLevelup(u, 0, 1)
         endif
 
         //Blademaster
