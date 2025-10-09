@@ -320,7 +320,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Demon Hunter
-        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID and ((IsMagicDamage() and CheckUnitHitCooldown(DamageTargetId, DEMON_HUNTER_UNIT_ID, 0.7)) or IsPhysDamage()) then
+        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID and ((IsMagicDamage() and CheckUnitHitCooldown(DamageTargetId, DEMON_HUNTER_UNIT_ID, 0.35)) or IsPhysDamage()) then
             set r1 = RMinBJ(GetHeroLevel(DamageSource) * 20, GetUnitState(DamageTarget, UNIT_STATE_MANA))
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - r1)
             call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) + r1)
@@ -397,6 +397,12 @@ scope ModifyDamageBeforeArmor initializer init
         //Pyromancer fire attack
         if DamageSourceTypeId == PYROMANCER_UNIT_ID and Damage.index.isAttack and DamageSourceAbility != PYROMANCER_UNIT_ID then
             set DamageSourceAbility = PYROMANCER_UNIT_ID 
+        endif
+
+        //Lich frozen auto attack
+        if Damage.index.isAttack and DamageSourceTypeId == LICH_UNIT_ID and DamageSourceAbility != 'A03J' and GetRandomInt(1, 100) < (25 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
+            call ElemFuncStart(DamageSource,LICH_UNIT_ID)
+            call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
 
         //Searing Arrows
