@@ -59,7 +59,7 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
         endif
 
         if IsUnitType(target, UNIT_TYPE_HERO) then
-            set duration = 4.0
+            set duration = 3.0
         else
             set duration = 6.0
         endif
