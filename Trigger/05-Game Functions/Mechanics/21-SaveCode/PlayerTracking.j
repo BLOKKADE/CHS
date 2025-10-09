@@ -679,6 +679,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.6.4", false) // increased damage of many weak spells, creep improvements, etc
         call AddGameVersion("CHS v2.6.5", false) // bugfixes, creep balance, changes to grass and pocket factory
         call AddGameVersion("CHS v2.6.6", false) // bugfixes, halved summon magic resistance, floating text upgrade etc
+        call AddGameVersion("CHS v2.7.0", true) // Stat per level items etc.
     endfunction
 
     private function init takes nothing returns nothing
