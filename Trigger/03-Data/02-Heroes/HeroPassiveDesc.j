@@ -104,7 +104,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_SummonLimit, "24")
             
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp" )
-        call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Feedback: Every time the Hero damages an enemy, it drains their mana and increases its own mana. When Feedback is triggered by |cffff00ffmagic damage|r, the target unit becomes immune for 0.7 second.")
+        call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Feedback: Every time the Hero damages an enemy, it drains their mana and increases its own mana. When Feedback is triggered by |cffff00ffmagic damage|r, the target unit becomes immune for 0.35 second.")
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Feedback: +20 mana drained." )
         call InitHeroDesc(DEMON_HUNTER_UNIT_ID, HeroPassive_SummonLimit, "24")
         
@@ -187,7 +187,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mysterious Sorcery: 0.2 seconds cooldown reduction. (|cff68eef3Every 35 levels|r) +1 spell." )
         call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_SummonLimit, "24")
 
-        call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp" )
+        call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNPolarFurbolgElder.blp" )
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bleed: Every time it attacks it causes enemies to bleed for 2 seconds, dealing 30% of its attack in |cffff8080physical damage|r per second. Stacks up to 20 times.")
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +10 attack damage." )
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_SummonLimit, "24")
@@ -198,8 +198,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOrcWarlockRed.blp" )
-        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with Absolute Water.")
-        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute Spells for. (|cff68f386Every 25 levels|r) Gets a random bonus Absolute ability (max 10). |cffc0c0c0Cannot purchase Absolute Acorns or unlearn Absolute abilities." ) 
+        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with a random Absolute ability.")
+        call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute abilities for. (|cff68f386Every 25 levels|r) Gets a random bonus Absolute ability (max 10). |cffc0c0c0Cannot purchase Absolute Acorns or unlearn Absolute abilities." ) 
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )
@@ -228,7 +228,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(COLD_KNIGHT_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroLich.blp" )
-        call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals [|cff00f7ffWater|r], [|cff8080ffCold|r], or [|cff000000Dark|r] damage it has a 25% chance to use Flash Freeze on the enemy, dealing |cffff00ffmagical damage|r in an area around the target based on 100% of its intelligence. [|cff80ff80Luck|r]")
+        call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Flash Freeze: When the Hero deals [|cff00f7ffWater|r], [|cff8080ffCold|r], or [|cff000000Dark|r] damage it has a 25% chance to use Flash Freeze on the enemy, dealing |cffff00ffmagical damage|r in an area around the target based on 100% of its intelligence. [|cff80ff80Luck|r]. Auto attacks count as dealing [|cff8080ffCold|r] damage.")
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Flash Freeze: +1% of intelligence damage." ) 
         call InitHeroDesc(LICH_UNIT_ID, HeroPassive_SummonLimit, "24")
 
@@ -292,8 +292,9 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Cannibal Frenzy: +0.025% attack damage." )
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_SummonLimit, "24")
 
-        call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp" )
-        call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Banshee's Curse: The Hero's mana is increased by 40% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
+        call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhost.blp" )
+        call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Banshee's Curse: 5% of damage dealt is converted into mana. The Hero's mana is increased by 40% of its maximum hit points. When the Hero takes damage its mana is reduced instead of its hit points. When it reaches 0 mana it dies." )
+        call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.2% damage to mana conversion." )
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_SummonLimit, "24")
         
         call InitHeroDesc(CRYPT_LORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroCryptLord.blp" )
@@ -317,7 +318,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCorruptedTreeOfLife.blp" )
-        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive double damage from [|cffff0000Fire|r] and cannot buy Stat-Per-level Upgrades.")
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive double damage from [|cffff0000Fire|r] and cannot buy stat-per-level Manuscripts.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.3% more stats from new summon upgrades. (|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_SummonLimit, "24")
 

@@ -116,6 +116,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 1, NagaSirenBonus.integer[hid])
         elseif uid == DEMON_HUNTER_UNIT_ID then 
             call SetBonus(u, 0, heroLevel * 20)
+        elseif uid == BANSHEE_UNIT_ID then 
+            call SetBonus(u, 0, 5 + (heroLevel * 0.2))
         elseif uid == DEADLORD_UNIT_ID then   
             call SetBonus(u, 0, heroLevel * 0.5)
         elseif uid == PYROMANCER_UNIT_ID then   
@@ -255,8 +257,6 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, (heroLevel / 10) + 1)
         elseif uid == GHOUL_UNIT_ID then
             call SetBonus(u, 0, (2.5 + (0.025 * heroLevel)))
-        elseif uid == BANSHEE_UNIT_ID then
-
         elseif uid == CRYPT_LORD_UNIT_ID then      
             set CryptLordLocustCount.integer[hid] = 1 + ((heroLevel - ModuloInteger(heroLevel, 10)) / 10)
             call SetBonus(u, 0, 60 * heroLevel)

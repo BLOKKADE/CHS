@@ -352,7 +352,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
 
             // Give 10 million gold to specific player names
-            if GetPlayerName(Player(0)) == "WorldEdit" then
+            if GetPlayerName(Player(0)) == "Sneed" then
                 call SetPlayerState(Player(0), PLAYER_STATE_RESOURCE_GOLD, 99999999)
                 set Glory[GetPlayerId(GetTriggerPlayer())] = Glory[GetPlayerId(GetTriggerPlayer())] + 9999999
                 call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "Singleplayer mode detected. You have been granted 9,999,999 gold and glory!")
