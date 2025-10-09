@@ -24,6 +24,10 @@ scope ModifyDamageAfterArmor initializer init
         local integer baseInt = GetHeroStatBJ(bj_HEROSTAT_INT, DamageTarget, true)
         local integer bonus = R2I(i3 * 1.5)
 
+        local real manaGain
+        local real currentMana
+        local real maxMana
+
         if Damage.index.amount == 0 then
             return
         endif
@@ -103,7 +107,7 @@ scope ModifyDamageAfterArmor initializer init
         //Vampirism
         set r1 = GetUnitAbilityLevel(DamageSource,VAMPIRISM_ABILITY_ID)
         if r1 > 0 then
-            set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.05 )
+            set r2 = Damage.index.amount * (0.05 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.075 )
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
@@ -456,15 +460,35 @@ scope ModifyDamageAfterArmor initializer init
             call Vamp(DamageSource, DamageTarget, vampAmount)
         endif
         
-        //Banshee passive
+        // Banshee passive: Mana burn when damaged
         if DamageTargetTypeId == BANSHEE_UNIT_ID then
-            if Damage.index.amount >= GetUnitState(DamageTarget,UNIT_STATE_MANA) then
-                call SetUnitState(DamageTarget,UNIT_STATE_MANA,0)
-                set Damage.index.amount = GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) + 1
+            if Damage.index.amount >= GetUnitState(DamageTarget, UNIT_STATE_MANA) then
+                call SetUnitState(DamageTarget, UNIT_STATE_MANA, 0)
+                set Damage.index.amount = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) + 1
             else
-                call SetUnitState(DamageTarget,UNIT_STATE_MANA,GetUnitState(DamageTarget,UNIT_STATE_MANA) - Damage.index.amount)     
+                call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - Damage.index.amount)
                 set Damage.index.amount = 0
-            endif 
+            endif
+        endif
+
+        // Banshee passive: Mana gain when dealing damage
+        if DamageSourceTypeId == BANSHEE_UNIT_ID then
+            set Damage.index.amount = RMaxBJ(Damage.index.amount, 0) // ensure non-negative
+            set bj_lastCreatedUnit = DamageSource // reuse safely if needed
+
+            // Calculate mana gain: 5% base + 0.2% per hero level
+            set manaGain = Damage.index.amount * (0.05 + 0.002 * GetHeroLevel(DamageSource))
+            set currentMana = GetUnitState(DamageSource, UNIT_STATE_MANA)
+            set maxMana = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA)
+
+            // Apply mana gain, capped at max mana
+            call SetUnitState(DamageSource, UNIT_STATE_MANA, RMinBJ(currentMana + manaGain, maxMana))
+            call BJDebugMsg("Banshee mana gained: " + R2S(manaGain))
+
+            // Visual effect with 0.5s cooldown
+            if not IsFxOnCooldownSet(GetHandleId(DamageSource), 'A0F9', 0.5) then
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "origin"))
+            endif
         endif
 
         //War Golem
