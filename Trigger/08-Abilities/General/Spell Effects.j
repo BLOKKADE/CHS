@@ -1,6 +1,10 @@
 library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, ShadowBootsHeroForm, HeroForm, Parasite, ContemporaryRunes
 
     function AbilityChannel takes unit caster, unit hero, unit target, real x, real y, integer abilId, integer lvl returns boolean
+        local real maxHP = GetUnitState(caster, UNIT_STATE_MAX_LIFE)
+        local real currentHP = GetUnitState(caster, UNIT_STATE_LIFE)
+        local real hpLoss = maxHP * 0.35
+        
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
 
         //Mysterious Runestone
@@ -10,6 +14,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Scroll of Transformation
         elseif abilId == SCROLL_OF_TRANSFORMATION_ABIL_ID then
             call CastScrollOfTransformation(hero)
+            call CreateTextTagTimerColor("Scroll of Transformation!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
 
         //Random Spell
         elseif abilId == RANDOM_SPELL_ABILITY_ID then
@@ -34,18 +39,23 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
 
         //Mana Starvation
         elseif abilId == MANA_STARVATIO_ABILITY_ID then
+            call CreateTextTagTimerColor("Mana Starvation!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
             call CastManaStarvation(hero, target, lvl)
 
         //Mountain Giant Taunt
         elseif abilId == MOUNTAIN_GIANT_TAUNT_ABILITY_ID then
             call OnTauntCast(caster)  
+            call CreateTextTagTimerColor("Taunt!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
 
+        //Packing Tape
         elseif abilId == PACKING_TAPE_ABILITY_ID then
             call CastPackingTape(hero, target)
+            call CreateTextTagTimerColor("Packing Tape!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
 
-            //Midas Touch
+        //Midas Touch
         elseif abilId == MIDAS_TOUCH_ABILITY_ID and SuddenDeathEnabled == false and (not IsUnitType(target, UNIT_TYPE_HERO)) then
             call CastMidasTouch(hero, target, lvl)
+            call CreateTextTagTimerColor("Midas Touch!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
         //Holy Light
         elseif abilId == HOLY_LIGHT_ABILITY_ID then
@@ -53,6 +63,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
 
         //Parasite
         elseif abilId == PARASITE_ABILITY_ID then
+            call CreateTextTagTimerColor("Parasite!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
             call CastParasite(caster, target, lvl)
 
         //Lightning Shield
@@ -66,17 +77,17 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         //Dousing Hex
         elseif abilId == DOUSING_HE_ABILITY_ID then
             call CastDousingHex(hero, target, lvl)
-            call CreateTextTagTimerColor("Dousing Hex!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)
+            call CreateTextTagTimerColor("Dousing Hex!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
         //Dark Seal
         elseif abilId == DARK_SEAL_ABILITY_ID then
             call CastDarkSeal(target, lvl)
-            call CreateTextTagTimerColor("Dark Seal!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)
+            call CreateTextTagTimerColor("Dark Seal!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
         //Destruction of Block
         elseif abilId == DESTRUCTION_BLOCK_ABILITY_ID then
             call CastDestrOfBlock(target, lvl)
-            call CreateTextTagTimerColor("Destruction of Block!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)
+            call CreateTextTagTimerColor("Destruction of Block!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
         //Inner Fire
         elseif abilId == INNER_FIRE_ABILITY_ID then
@@ -195,9 +206,9 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == DEATH_AND_DECAY_ABILITY_ID then
             call CastDeathAndDecay(hero, x, y, lvl)
 
-        // Spirit Shackle
-        elseif abilId == SPIRIT_SHACKLE_ABILITY_ID then
-            call CreateTextTagTimerColor("Spirit Shackle!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+        // Spirit Shackle (if you try to add a text tag here, it will cancel the ability's effect)
+        //elseif abilId == SPIRIT_SHACKLE_ABILITY_ID then
+            //call CreateTextTagTimerColor("Spirit Shackle!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
         // Banish
         elseif abilId == BANISH_ABILITY_ID then
@@ -207,25 +218,17 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == UNHOLY_FRENZY_ABILITY_ID then
             call CreateTextTagTimerColor("Unholy Frenzy!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
-        // Soul Burn
-        elseif abilId == SOUL_BURN_ABILITY_ID then
-            call CreateTextTagTimerColor("Soul Burn!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+        // Soul Burn (if you try to add a text tag here, it will cancel the ability's effect)
+        //elseif abilId == SOUL_BURN_ABILITY_ID then
+            //call CreateTextTagTimerColor("Soul Burn!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
-        // Entangling Roots
-        elseif abilId == ENTAGLING_ROOTS_ABILITY_ID then
-            call CreateTextTagTimerColor("Entangling Roots!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
-
-        // Dousing Hex
-        elseif abilId == DOUSING_HE_ABILITY_ID then
-            call CreateTextTagTimerColor("Dousing Hex!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+        // Entangling Roots (if you try to add a text tag here, it will cancel the ability's effect)
+        //elseif abilId == ENTAGLING_ROOTS_ABILITY_ID then
+            //call CreateTextTagTimerColor("Entangling Roots!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
         // Curse
         elseif abilId == CURSE_ABILITY_ID then
             call CreateTextTagTimerColor("Curse!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
-
-        // Mana Starvation
-        elseif abilId == 'A09N' then
-            call CreateTextTagTimerColor("Mana Starvation!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
         // Null Void Orb Ability 
         elseif abilId == NULL_VOID_ORB_ABIL_ID then
@@ -234,14 +237,11 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         // Bloodstone Ability 
         elseif abilId == BLOOD_STONE_ABIL_ID then
             call CreateTextTagTimerColor("Bloodstone!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
+            call SetUnitState(caster, UNIT_STATE_LIFE, RMaxBJ(currentHP - hpLoss, 1.0)) // Ensure unit doesn't die
 
         //Faerie Fire
         elseif abilId == FAERIE_FIRE_ABILITY_ID then
             call CreateTextTagTimerColor("Faerie Fire!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
-
-        //Parasite
-        elseif abilId == PARASITE_ABILITY_ID then
-            call CreateTextTagTimerColor("Parasite!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
         else
             return false
