@@ -28,6 +28,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         local boolean pillage = false
         local player owner = GetOwningPlayer(killingHero)     
         local integer pid = GetPlayerId(owner)
+        local item It = GetManipulatedItem()
         local real luck = GetUnitCustomState(killingHero, BONUS_LUCK)
         local integer itemCount = 0
         local group playerArenaCreeps
@@ -75,6 +76,36 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         if itemCount > 0 then
             set goldBounty = goldBounty + ((10 * ArenaMasterMultiplier(killingHero)) * itemCount)
             set goldBounty = goldBounty + (itemCount * (RoundNumber / 2) * ArenaMasterMultiplier(killingHero))
+        endif
+
+        //Agility level bonus
+        if UnitHasItemType(killingHero, AGILITY_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(killingHero) != STOMP_TREE_UNIT_ID and not UnitHasItemType(killingHero, STRENGTH_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(killingHero, INTELLIGENCE_MANUSCRIPT_ITEM_ID) then
+            if GetHeroXP(killingHero) >= 20000 then
+                call AddStatLevelBonus(killingHero, BONUS_AGILITY, 1)
+                call UnitAddItemById(killingHero, EXPERIENCE_20000_TOME_ITEM_ID)
+                call RemoveItem(It)
+                call DisplayTextToPlayer(GetOwningPlayer(killingHero), 0, 0, "|cffffffffYour agility per level has been increased by 1!|r")
+            endif
+        endif
+
+        //Strength level bonus
+        if UnitHasItemType(killingHero, STRENGTH_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(killingHero) != STOMP_TREE_UNIT_ID and not UnitHasItemType(killingHero, AGILITY_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(killingHero, INTELLIGENCE_MANUSCRIPT_ITEM_ID) then
+            if GetHeroXP(killingHero) >= 20000 then
+                call AddStatLevelBonus(killingHero, BONUS_STRENGTH, 1)
+                call UnitAddItemById(killingHero, EXPERIENCE_20000_TOME_ITEM_ID)
+                call RemoveItem(It)
+                call DisplayTextToPlayer(GetOwningPlayer(killingHero), 0, 0, "|cffffffffYour strength per level has been increased by 1!|r")
+            endif
+        endif
+
+        //Intelligence level bonus
+        if UnitHasItemType(killingHero, INTELLIGENCE_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(killingHero) != STOMP_TREE_UNIT_ID and not UnitHasItemType(killingHero, STRENGTH_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(killingHero, AGILITY_MANUSCRIPT_ITEM_ID) then
+            if GetHeroXP(killingHero) >= 20000 then
+                call AddStatLevelBonus(killingHero, BONUS_INTELLIGENCE, 1)
+                call UnitAddItemById(killingHero, EXPERIENCE_20000_TOME_ITEM_ID)
+                call RemoveItem(It)
+                call DisplayTextToPlayer(GetOwningPlayer(killingHero), 0, 0, "|cffffffffYour intelligence per level has been increased by 1!|r")
+            endif
         endif
 
         //Urn of Memories

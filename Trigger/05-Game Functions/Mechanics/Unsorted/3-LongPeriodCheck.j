@@ -117,6 +117,7 @@ scope LongPeriodCheck initializer init
     private function OnPeriod takes nothing returns nothing
         local unit u = GetEnumUnit()
         local integer hid = GetHandleId(u)
+        local item It = GetManipulatedItem()
         local real hpBonus = 0
         local real r1 = 0
         local real r2 = 0
@@ -157,6 +158,36 @@ scope LongPeriodCheck initializer init
                 call AddUnitBonus(u, BONUS_AGILITY, 0 - i1)
                 call AddUnitBonus(u, BONUS_INTELLIGENCE, 0 - i1)
                 call SaveInteger(HT, hid, RUNE_MASTERY_ABILITY_ID, 0)
+            endif
+
+            //Agility level bonus
+            if UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) then
+                if GetHeroXP(u) >= 20000 then
+                    call AddStatLevelBonus(u, BONUS_AGILITY, 1)
+                    call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                    call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour agility per level has been increased by 1!|r")
+                endif
+            endif
+
+            //Strength level bonus
+            if UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) then
+                if GetHeroXP(u) >= 20000 then
+                    call AddStatLevelBonus(u, BONUS_STRENGTH, 1)
+                    call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                    call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour strength per level has been increased by 1!|r")
+                endif
+            endif
+
+            //Intelligence level bonus
+            if UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) then
+                if GetHeroXP(u) >= 20000 then
+                    call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 1)
+                    call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                    call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour intelligence per level has been increased by 1!|r")
+                endif
             endif
 
             //Double Armor
@@ -549,7 +580,6 @@ scope LongPeriodCheck initializer init
                     call UnitRemoveAbility(u, BANNER_OF_MANY_DUMMY_BUFF_ICON_ID)
                 endif
             endif
-
 
             //hp regen
             set r1 = GetUnitTotalHpRegen(u) * 0.1

@@ -429,6 +429,7 @@ library IdLibrary initializer init
         constant integer FRENZY_CREEP_ABILITY_ID                        = 'A0F4'
         constant integer UNHOLYFRENZY_CREEP_ABILITY_ID                  = 'A0F5'
         constant integer POLYMORPH_CREEP_ABILITY_ID                     = 'A0F6'
+        constant integer CHAINLIGHTNING_CREEP_ABILITY_ID                = 'A0FA'
 
         // Active Spell Dummy Abilities
 
@@ -782,6 +783,9 @@ library IdLibrary initializer init
         constant integer MANIFOLD_STAFF_ITEM_ID                         = 'I0A0'
         constant integer SAVAGE_TOTEM_ITEM_ID                           = 'BBCW'
         constant integer HEART_OF_A_HERO_ITEM_ID                        = 'I05D'
+        constant integer AGILITY_MANUSCRIPT_ITEM_ID                     = 'I0CX'
+        constant integer STRENGTH_MANUSCRIPT_ITEM_ID                    = 'I0CW'
+        constant integer INTELLIGENCE_MANUSCRIPT_ITEM_ID                = 'I0CY'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
