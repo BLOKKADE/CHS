@@ -5,6 +5,8 @@ library AncientBlood initializer init requires BuffLevel, CustomState, Utility
     endglobals
 
     struct AncientBloodStruct extends array
+        implement Alloc
+        
         unit source
         integer hid
         integer bonus
@@ -16,10 +18,12 @@ library AncientBlood initializer init requires BuffLevel, CustomState, Utility
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
+
+        implement T32x
     
         static method create takes unit source returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             set this.primary = GetHeroPrimaryStat(source)
 
             set this.source = source
@@ -60,11 +64,8 @@ library AncientBlood initializer init requires BuffLevel, CustomState, Utility
                 call AddUnitBonus(this.source, BONUS_INTELLIGENCE, 0 - this.bonus)
             endif
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function ActivateAncientBlood takes unit target, integer level returns nothing

@@ -12,6 +12,8 @@ library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, 
     endfunction
 
     struct DivineBubbleStruct extends array
+        implement Alloc
+        
         unit source
         effect fx
         integer endTick
@@ -23,10 +25,12 @@ library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, 
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
+
+        implement T32x
     
         static method create takes unit source, real duration, integer abilId returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             set this.source = source
             set this.fx = AddLocalizedSpecialEffectTarget( "RighteousGuard.mdx" , this.source , "origin" )
             call UnitAddAbility(this.source, 'A08C')
@@ -47,11 +51,8 @@ library DivineBubble initializer init requires T32, AbilityCooldown, UnitItems, 
             set this.source = null
             //call BJDebugMsg("db end")
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     private function init takes nothing returns nothing

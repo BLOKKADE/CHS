@@ -88,14 +88,6 @@ library GroupUtils initializer Init requires optional xebasic
         private hashtable     H      = InitHashtable()
     endglobals
     
-    private function HookDestroyGroup takes group g returns nothing
-        if g == ENUM_GROUP then
-            //call BJDebugMsg(SCOPE_PREFIX+"Warning: ENUM_GROUP destroyed")
-        endif
-    endfunction
-    
-    debug hook DestroyGroup HookDestroyGroup
-    
     private function AddEx takes nothing returns nothing
         if Flag then
             call GroupClear(Refr)
@@ -127,25 +119,37 @@ library GroupUtils initializer Init requires optional xebasic
         local integer id = GetHandleId(g)
         static if LESS_SAFETY then
             if g == null then
-                debug call BJDebugMsg(SCOPE_PREFIX+"Error: Null groups cannot be released")
+                static if DEBUG then
+                    call BJDebugMsg(SCOPE_PREFIX+"Error: Null groups cannot be released")
+                endif
                 return false
-            elseif Count == 8191 then
-                debug call BJDebugMsg(SCOPE_PREFIX+"Error: Max groups achieved, destroying group")
+                elseif Count == 8191 then
+                    static if DEBUG then
+                        call BJDebugMsg(SCOPE_PREFIX+"Error: Max groups achieved, destroying group")
+                    endif
                 call DestroyGroup(g)
                 return false
             endif
         else
             if g == null then
-                debug call BJDebugMsg(SCOPE_PREFIX+"Error: Null groups cannot be released")
+                static if DEBUG then
+                    call BJDebugMsg(SCOPE_PREFIX+"Error: Null groups cannot be released")
+                endif
                 return false
             elseif not HaveSavedInteger(ht, 0, id) then
-                debug call BJDebugMsg(SCOPE_PREFIX+"Error: Group not part of stack")
+                static if DEBUG then
+                    call BJDebugMsg(SCOPE_PREFIX+"Error: Group not part of stack")
+                endif
                 return false
             elseif LoadInteger(ht, 0, id) == 2 then
-                debug call BJDebugMsg(SCOPE_PREFIX+"Error: Groups cannot be multiply released")
+                static if DEBUG then
+                    call BJDebugMsg(SCOPE_PREFIX+"Error: Groups cannot be multiply released")
+                endif
                 return false
             elseif Count == 8191 then
-                debug call BJDebugMsg(SCOPE_PREFIX+"Error: Max groups achieved, destroying group")
+                static if DEBUG then
+                    call BJDebugMsg(SCOPE_PREFIX+"Error: Max groups achieved, destroying group")
+                endif
                 call DestroyGroup(g)
                 return false
             endif

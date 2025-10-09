@@ -71,6 +71,8 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
     endfunction
 
     struct DuelGame extends array
+        implement Alloc
+
         force team1
         force team2
         boolean isDuelOver
@@ -306,6 +308,8 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             endif
         endmethod 
 
+        implement T32x
+
         method startCountdown takes integer duration returns nothing
             set this.startTick = T32_Tick
             set this.nextTick = T32_Tick + 32
@@ -314,7 +318,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         endmethod
 
         static method create takes force team1, force team2, integer arenaIndex returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.team1 = team1
             set this.team2 = team2
@@ -337,11 +341,8 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
             call this.cleanupPrepareDialog()
             call this.cleanupNextPvpBattleDialog()
 
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     private function ResetUsedArenas takes nothing returns nothing

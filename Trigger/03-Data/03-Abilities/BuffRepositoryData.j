@@ -1,8 +1,12 @@
 library BuffRepositoryData initializer init requires BuffRepository
     private function SetupPositiveBuffs takes nothing returns nothing
+        //unpurgeable buffs
         call SetupBuffInfo1(INVULNERABLE_BUFF_ID, 0, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1(ANTI_MAGIC_SHELL_BUFF_ID, ANTI_MAGIC_SHEL_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
+        call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
+        call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true) //anti magic flag
+        //purgeable buffs
         call SetupBuffInfo1(BATTLE_ROAR_BUFF_ID, BATTLE_ROAR_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(BERSERK_BUFF_ID, BERSERK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(FROST_ARMOR_BUFF_ID, FROST_ARMOR_ABILITY_ID, BUFFTYPE_POSITIVE, false)
@@ -13,14 +17,13 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(HERO_BUFF_ID, HERO_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(EXTRADIMENSIONAL_COOPERATION_BUFF_ID, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('Bblo', BLOODLUST_ABILITY_ID, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1('BBGS', GUARDIAN_SPIRIT_ABILITY_ID, BUFFTYPE_POSITIVE, false)
 
         call SetupBuffInfo1(SCROLL_OF_PROTECTION_BUFF_ID, 0, BUFFTYPE_POSITIVE, false) // unused?
         call SetupBuffInfo1(SENSATUS_SHIELD_OF_HONOR_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, SPEED_BLADE_ABIL_ID, BUFFTYPE_POSITIVE, false)
-        //anti magic flag
-        call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true)
-
-        call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
+        
+        call SetupBuffInfo1(SAVAGE_TOTEM_BUFF_ID, SAVAGE_TOTEM_ABIL_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('BOwk', WIND_WALK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
 
         call SetupBuffInfo2(LUCKY_PANTS_BUFF_ID, 'A09H', 0, BUFFTYPE_POSITIVE, false, true)
@@ -74,7 +77,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(DISEASE_CLOUD_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) // unused
         call SetupBuffInfo1(THUNDER_CLAP_BUFF_ID, THUNDER_CLAP_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // unused?
         call SetupBuffInfo1(WHIRLWIND_BUFF_ID, WHIRLWIND_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //unused?
-
+        call SetupBuffInfo1(MANIFOLD_SILENCE_BUFF_ID, MANIFOLD_SILENCE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) 
         call SetupBuffInfo1('B023', 'A0A7', BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(DISEASE_BUFF_ID, PLAGUE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(DEATH_AND_DECAY_BUFF_ID, DEATH_AND_DECAY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
@@ -93,7 +96,8 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(BREATH_OF_FIRE_BUFF_ID, BREATH_OF_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(RAIN_OF_FIRE_BUFF_ID, RAIN_OF_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(STUNNED_BUFF_ID, STUN_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // used by: heart of darkness, hammer of the gods, dark hunter passive, and frost bolt
-        call SetupBuffInfo1(PARASITE_MINION_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(PARASITE_MINION_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite minion creation
+        call SetupBuffInfo1(PARASITE_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite damage
         call SetupBuffInfo1(STUNNED_PAUSE_BUFF_ID, HURL_BOULDER_CREEP_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(COLD_ARROWS_STACKING_BUFF_ID, COLD_ARROWS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(THE_CURSE_OF_DEMONS_BUFF_ID, DEMONS_CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
@@ -113,6 +117,13 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1('A03V', TEMPORARY_INVISIBILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
         call SetupBuffInfo1('Bcrs', CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
 
+        call SetupBuffInfo1('BOhx', 0, BUFFTYPE_NEGATIVE, false) //creepwaves hex
+        call SetupBuffInfo1('BUsl', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep
+        call SetupBuffInfo1('BUsp', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep pause
+        call SetupBuffInfo1('BUst', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep stun
+        call SetupBuffInfo1('Bcri', 0, BUFFTYPE_NEGATIVE, false) //creepwaves cripple
+
+        call SetupBuffInfo2('B038', SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID, 0, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2('B035', CUTTING_BUFF_ABILITY_ID, CUTTING_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2(INCINERATE_CUSTOM_BUFF_ID, 'A06L', INCINERATE_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
         call SetupBuffInfo2(POISON_NON_STACKING_CUSTOM_BUFF_ID, 'A06P', ENVENOMED_WEAPONS_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
@@ -124,6 +135,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2(VIGOUR_TOKEN_BUFF_ID, 'A09A', 0, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02P', FAN_OF_KNIVES_BUFF_ID, FAN_OF_KNIVES_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02T', DARK_SEAL_BUFF_ID, DARK_SEAL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('SSBB', SPIRIT_SHACKLE_BUFF_ID, SPIRIT_SHACKLE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02S', DESTR_OF_BLOCK_BUFF_ID, DESTRUCTION_BLOCK_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)

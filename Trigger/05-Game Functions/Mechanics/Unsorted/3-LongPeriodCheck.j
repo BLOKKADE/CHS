@@ -3,15 +3,20 @@ scope LongPeriodCheck initializer init
     private function OnCooldownEnd takes unit u returns nothing
         local integer i
         local integer hid = GetHandleId(u)
+        local real cd   
+        local real manaCost = 0.0
+
         if HasPlayerFinishedLevel(u ,GetOwningPlayer(u)) == false then
 
             call CastChronusSpells(u, hid, false)
 
-            //Mysterious Talent
-            set i = GetUnitAbilityLevel(u,MYSTERIOUS_TALENT_ABILITY_ID)
-            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 then
+            // Mysterious Talent
+            set i = GetUnitAbilityLevel(u, MYSTERIOUS_TALENT_ABILITY_ID)
+            set manaCost = i * 50.0
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, MYSTERIOUS_TALENT_ABILITY_ID) <= 0.001 and GetUnitState(u, UNIT_STATE_MANA) >= manaCost then
                 call MysteriousTalentActivate(u)
-                call AbilStartCD(u,MYSTERIOUS_TALENT_ABILITY_ID,45 - i) 
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - manaCost)
+                call AbilStartCD(u, MYSTERIOUS_TALENT_ABILITY_ID, 45 - i)
             endif
 
             //Sorcerer Passive (uses same spell as thunderwitch for now (A08P), not sure if it matters, easy to change)
@@ -22,15 +27,30 @@ scope LongPeriodCheck initializer init
             endif
 
             //Holy Shield
-            if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 then
+            if GetUnitAbilityLevel(u,'A066') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'A066') <= 0.001 and GetWidgetLife(u)/ I2R(BlzGetUnitMaxHP(u)) < 0.75 and GetUnitState(u, UNIT_STATE_MANA) >= 1500 then
                 call UseSpellsHolyShield(u)
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1500)
                 call AbilStartCD(u,'A066', 10) 
+            endif
+
+            // Storm Horn
+            if GetUnitAbilityLevel(u,'SHBB') > 0 and BlzGetUnitAbilityCooldownRemaining(u,'SHBB') <= 0.001 and ( GetUnitState(u, UNIT_STATE_MANA) / BlzGetUnitMaxMana(u) ) < 0.90 then
+                // base cooldown
+                set cd = 10.0
+                // halve cooldown if below 50% hit points
+                if ( GetWidgetLife(u) / BlzGetUnitMaxHP(u) ) < 0.50 then
+                    set cd = cd * 0.5
+                endif
+
+                call UseSpellsStormHorn(u)
+                call AbilStartCD(u,'SHBB', cd)
             endif
 
             //Ancient Runes
             set i = GetUnitAbilityLevel(u, ANCIENT_RUNES_ABILITY_ID)
-            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,ANCIENT_RUNES_ABILITY_ID) <= 0.001 then
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, ANCIENT_RUNES_ABILITY_ID) <= 0.001 and GetUnitState(u, UNIT_STATE_MANA) >= 1500 then
                 call ActivateAncientRunes(u, i)
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 1500)
             endif
 
             //Ancient Element
@@ -97,12 +117,24 @@ scope LongPeriodCheck initializer init
     private function OnPeriod takes nothing returns nothing
         local unit u = GetEnumUnit()
         local integer hid = GetHandleId(u)
+        local item It = GetManipulatedItem()
         local real hpBonus = 0
         local real r1 = 0
         local real r2 = 0
         local real r3 = 0
         local integer i1 = 0
         local integer i2 = 0
+        local integer originalBaseDamage = LoadInteger(HT, hid, STOMP_TREE_UNIT_ID + 2) // Stored original base damage
+        local integer newDamageBonus = 0
+        local real wildFactor = I2R(GetUnitAbilityLevel(u, ABSOLUTE_WILD_ABILITY_ID) * GetUnitElementCount(u, Element_Wild)) * 0.01 // 1% per level per element
+        local integer currentBonus = 0
+        local boolean hasItem = UnitHasItemType(u, BANNER_OF_MANY_ITEM_ID)
+        local integer storedBonus = LoadInteger(HT, hid, STOMP_TREE_UNIT_ID + 103)
+        local integer calculatedBonus = R2I(BlzGetUnitBaseDamage(u, 0) * 1.5)
+        local boolean hasTrueshot = GetUnitAbilityLevel(u, TRUESHOT_AURA_ABILITY_ID) > 0
+        local boolean hasCommand = GetUnitAbilityLevel(u, COMMAND_AURA_ABILITY_ID) > 0
+        local boolean hasEndurance = GetUnitAbilityLevel(u, ENDURANCE_AURA_ABILITY_ID) > 0
+        local boolean hasSpeedAbility = LoadInteger(HT, hid, STOMP_TREE_UNIT_ID + 104) == 1
         
         if UnitAlive(u) then
 
@@ -126,6 +158,36 @@ scope LongPeriodCheck initializer init
                 call AddUnitBonus(u, BONUS_AGILITY, 0 - i1)
                 call AddUnitBonus(u, BONUS_INTELLIGENCE, 0 - i1)
                 call SaveInteger(HT, hid, RUNE_MASTERY_ABILITY_ID, 0)
+            endif
+
+            //Agility level bonus
+            if UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) then
+                if GetHeroXP(u) >= 20000 then
+                    call AddStatLevelBonus(u, BONUS_AGILITY, 1)
+                    call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                    call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour agility per level has been increased by 1!|r")
+                endif
+            endif
+
+            //Strength level bonus
+            if UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) then
+                if GetHeroXP(u) >= 20000 then
+                    call AddStatLevelBonus(u, BONUS_STRENGTH, 1)
+                    call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                    call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour strength per level has been increased by 1!|r")
+                endif
+            endif
+
+            //Intelligence level bonus
+            if UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) then
+                if GetHeroXP(u) >= 20000 then
+                    call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 1)
+                    call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                    call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour intelligence per level has been increased by 1!|r")
+                endif
             endif
 
             //Double Armor
@@ -170,7 +232,7 @@ scope LongPeriodCheck initializer init
                     call AddUnitBonus(u, BONUS_INTELLIGENCE, i1 - i2)
                 endif
 
-            elseif (LoadInteger(HT, hid, 1001) != 0) or (LoadInteger(HT, hid, 1002) != 0) or (LoadInteger(HT, hid, 1003) != 0) then
+            elseif (LoadInteger(HT, hid, 1001) != 0) or (LoadInteger(HT, hid, 1002) != 0) or (LoadInteger(HT, hid, 1003) != 0) or (LoadInteger(HT, hid, 1004) != 0) then
                 call AddUnitBonus(u, BONUS_AGILITY, 0 - LoadInteger(HT, hid, 1001))
                 call SaveInteger(HT, hid, 1001,0)
 
@@ -178,7 +240,10 @@ scope LongPeriodCheck initializer init
                 call SaveInteger(HT, hid, 1002,0)
 
                 call AddUnitBonus(u, BONUS_INTELLIGENCE, 0 - LoadInteger(HT, hid, 1003))
-                call SaveInteger(HT, hid, 1003,0)		
+                call SaveInteger(HT, hid, 1003,0)	
+                
+                call AddUnitBonus(u, BONUS_STRENGTH, 0 - LoadInteger(HT, hid, 1004))
+                call SaveInteger(HT, hid, 1004,0)
             endif
 
             //Relic of Magic
@@ -209,6 +274,15 @@ scope LongPeriodCheck initializer init
             if i1 >= 1  then
                 set i1 = i1 * GetUnitElementCount(u, Element_Light)
                 set hpBonus = hpBonus + 0.005 * I2R(i1)
+            endif
+
+            //Absolute Wild Stomp Hitpoints bonus
+            if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
+                set i1 = GetUnitAbilityLevel(u ,ABSOLUTE_WILD_ABILITY_ID)
+                if i1 >= 1  then
+                set i1 = i1 * GetUnitElementCount(u, Element_Wild)
+                set hpBonus = hpBonus + 0.01 * I2R(i1)
+                endif
             endif
 
             //Divine Gift
@@ -355,6 +429,38 @@ scope LongPeriodCheck initializer init
                 call SaveInteger(HT, hid, DEVOTION_AURA_ABILITY_ID, i1)
             endif
 
+            // Wild Defense (only for STOMP_TREE_UNIT_ID)
+            if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
+                set i2 = GetUnitAbilityLevel(u, WILD_DEFENSE_ABILITY_ID)
+                set i1 = LoadInteger(HT, hid, WILD_DEFENSE_ABILITY_ID) // Previously applied level
+                
+                if i2 != i1 then
+                    // Remove previously applied stats if any
+                    if i1 > 0 then
+                        call AddUnitCustomState(u, BONUS_MAGICRES, -3 * i1)
+                        call AddUnitCustomState(u, BONUS_EVASION, -0.5 * i1)
+                        call AddUnitCustomState(u, BONUS_BLOCK, -10 * i1)
+                    endif
+                    
+                    // Apply new stats if ability level is greater than 0
+                    if i2 > 0 then
+                        call AddUnitCustomState(u, BONUS_MAGICRES, 3 * i2)
+                        call AddUnitCustomState(u, BONUS_EVASION, 0.5 * i2)
+                        call AddUnitCustomState(u, BONUS_BLOCK, 10 * i2)
+                        
+                        call UnitAddAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID)
+                        call BlzUnitHideAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID, true) // Hide the ability from the command card
+                        call SetUnitAbilityLevel(u, WILD_DEFENSE_SUMMON_ABILITY_ID, i2)
+                    elseif i1 > 0 then
+                        // Remove the hidden ability if the new level is 0
+                        call UnitRemoveAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID)
+                    endif
+                    
+                    // Save the new level
+                    call SaveInteger(HT, hid, WILD_DEFENSE_ABILITY_ID, i2)
+                endif
+            endif
+
             //strength hp regen
             set i1 = GetHeroStr(u, true)
             set i2 = GetHeroSavedStrength(u)
@@ -370,6 +476,33 @@ scope LongPeriodCheck initializer init
                 set i1 = R2I (i1 * GetUnitElementCount(u, Element_Wild)/* * (1+ GetUnitAbsoluteEffective(u, Element_Wild))*/)
                 call AddUnitCustomState(u , BONUS_SUMMONPOW,   1 * I2R(i1 - i2) )	
                 call SaveInteger(HT, hid,ABSOLUTE_WILD_ABILITY_ID,i1)	
+            endif
+
+            // Absolute Wild Stomp damage bonus
+            if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
+                set i1 = LoadInteger(HT, hid, STOMP_TREE_UNIT_ID) 
+                
+                // Initialize original base damage if not set
+                if originalBaseDamage == 0 then
+                    set originalBaseDamage = BlzGetUnitBaseDamage(u, 0)
+                    call SaveInteger(HT, hid, STOMP_TREE_UNIT_ID + 2, originalBaseDamage)
+                endif
+                
+                // Calculate new bonuses
+                if wildFactor > 0 then
+                    set newDamageBonus = R2I(I2R(BlzGetUnitBaseDamage(u, 0) - i1) * wildFactor)
+                endif
+                
+                // Apply bonuses only if they have changed
+                if newDamageBonus != i1 then
+                    if i1 != 0 then
+                        call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) - i1, 0)
+                    endif
+                    if newDamageBonus != 0 then
+                        call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + newDamageBonus, 0)
+                    endif
+                    call SaveInteger(HT, hid, STOMP_TREE_UNIT_ID, newDamageBonus)
+                endif
             endif
 
             //Mana Bonus
@@ -403,6 +536,48 @@ scope LongPeriodCheck initializer init
                 if i1 != i2 then
                     call AddUnitBonus(u, BONUS_DAMAGE, 0 - i2 + i1)
                     call SaveInteger(HT, hid, NAGA_SIREN_UNIT_ID, i1)
+                endif
+            endif
+
+            // Stomp Banner of Many damage bonus via ability
+            if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
+                if hasItem and not hasTrueshot and not hasCommand then
+                    // Apply bonus ability if not already present
+                    if storedBonus == 0 then
+                        call UnitAddAbility(u, BANNER_OF_MANY_DAMAGE_ABILITY_ID)
+                        call SaveInteger(HT, hid, STOMP_TREE_UNIT_ID + 103, 1)
+                    endif
+                else
+                    // Remove bonus ability if previously added
+                    if storedBonus != 0 then
+                        call UnitRemoveAbility(u, BANNER_OF_MANY_DAMAGE_ABILITY_ID)
+                        call SaveInteger(HT, hid, STOMP_TREE_UNIT_ID + 103, 0)
+                    endif
+                endif
+            endif
+
+            
+            //stomp banner of many movespeed attackspeed ability
+            if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
+                if hasItem and not hasEndurance then
+                    if not hasSpeedAbility then
+                        call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_ABILITY_ID)
+                        call SaveInteger(HT, hid, STOMP_TREE_UNIT_ID + 104, 1)
+                    endif
+                else
+                    if hasSpeedAbility then
+                        call UnitRemoveAbility(u, BANNER_OF_MANY_DUMMY_ABILITY_ID)
+                        call SaveInteger(HT, hid, STOMP_TREE_UNIT_ID + 104, 0)
+                    endif
+                endif
+            endif
+
+            //stomp banner of many buff icon
+            if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
+                if hasItem then
+                    call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_BUFF_ICON_ID)
+                else
+                    call UnitRemoveAbility(u, BANNER_OF_MANY_DUMMY_BUFF_ICON_ID)
                 endif
             endif
 

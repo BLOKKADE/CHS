@@ -9,6 +9,8 @@ library MaskOfProtection initializer init requires CustomState
     endfunction
 
     struct MaskOfProtection extends array
+        implement Alloc
+        
         unit source
         real armorBonus
         real magicResBonus
@@ -26,9 +28,11 @@ library MaskOfProtection initializer init requires CustomState
                 call this.destroy()
             endif
         endmethod  
+
+        implement T32x
     
         static method create takes unit source returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             local real magicpower = GetUnitCustomState(source, BONUS_MAGICPOW)
 
             set this.source = source
@@ -46,11 +50,8 @@ library MaskOfProtection initializer init requires CustomState
         method destroy takes nothing returns nothing
             set MopStruct[GetHandleId(this.source)] = 0
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function MaskOfProtectionCast takes unit u returns nothing

@@ -40,6 +40,18 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
+        //Phase Shift
+        if UnitHasBuffBJ(Damage.target, 'Bpsh') then
+            set Damage.index.damage = 0
+            return
+        endif
+
+        //Howl of Terror
+        if UnitHasBuffBJ(Damage.target, HOWL_OF_TERROR_BUFF_ID) and Damage.index.damageType == DAMAGE_TYPE_MAGIC then
+            set Damage.index.damage = Damage.index.damage * 1.5
+            return
+        endif
+
         //Conquerors Bamboo Stick
         if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageSourcePid != 11 and IsUnitType(DamageSource, UNIT_TYPE_HERO) == false and IsUnitType(DamageTarget, UNIT_TYPE_HERO) and BambooImmuneActive(DamageTargetId, GetHandleId(DamageSourceHero)) then
             //call BJDebugMsg("conq bamboo stick immune")
@@ -49,7 +61,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Storm Horn
         if GetUnitAbilityLevel(DamageTarget ,'B00B') >= 1 then
-            if GetRandomReal(1,100) <= 14 * DamageTargetLuck then
+            if GetRandomReal(1,100) <= (19 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, 'B00B', 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", DamageTarget, "chest"))
@@ -71,7 +83,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Null Void Orb
         if UnitHasItemType(DamageTarget, NULL_VOID_ORB_ITEM_ID) then
-            if GetRandomInt(1,100) <= 10 * DamageTargetLuck then
+            if GetRandomInt(1,100) <= (10 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
                 set Damage.index.damage = 0
                 if not IsFxOnCooldownSet(DamageTargetId, NULL_VOID_ORB_ITEM_ID, 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIlm\\AIlmTarget.mdl", DamageTarget, "chest"))
@@ -87,6 +99,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call AbilStartCD(DamageTarget, 'A0CP', 10)
                 set Damage.index.damage = 0
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl", DamageTarget, "chest")) 
+                call CreateTextTagTimerColor("Runic Bracer Cleanse!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 255, 255, 255)
                 return
             endif
 
@@ -96,6 +109,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call AbilStartCD(DamageTarget, 'A08S', 10)
                 call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)  
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIta\\CrystalBallCaster.mdl", DamageTarget, "chest")) 
+                call CreateTextTagTimerColor("Dark Shield Cleanse!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 255, 255, 255)
             endif 
             if IsPhysDamage() then
                 if BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A08R') <= 0 then
@@ -132,7 +146,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Strong Chestmail
-        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO)) then
+        if UnitHasItemType(DamageTarget, 'I07P') and (not IsUnitType(DamageSource, UNIT_TYPE_HERO) or DamageSourceTypeId == STOMP_TREE_UNIT_ID) and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then
             set Damage.index.damage = StrongChestMailDamage(DamageTargetId, Damage.index.damage)
         endif
 
@@ -240,23 +254,23 @@ scope ModifyDamageBeforeArmor initializer init
         //Energy Shield
         set i1 = GetUnitAbilityLevel(DamageTargetHero, ENERGY_SHIELD_ABILITY_ID)
         set r1 = CalculateDistance(GetUnitX(DamageTargetHero), GetWidgetX(DamageSource), GetUnitY(DamageTargetHero), GetWidgetY(DamageSource))
-        if i1 > 0 and GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 0 and r1 >= 300 then
+        if i1 > 0 and GetUnitAbilityLevel(DamageTarget, ENERGY_SHIELD_BUFF_ID) > 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 and r1 >= 300 then
             set Damage.index.damage = Damage.index.damage * Pow((1 - (0.05 + (i1 * 0.01))),  r1 / 300)
         endif
 
         //Sword of Bloodthirst
         set i1 = GetUnitItemTypeCount(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
         if i1 > 0 and IsPhysDamage() then
+            if Damage.index.isAttack then
+                call ActivateSwordOfBloodthirst(DamageTarget)
+            endif
             set Damage.index.damage = Damage.index.damage + 900 * i1
         endif
 
         //Finger of Death
         if DamageSourceAbility == FINGER_OF_DEATH_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSource, true) * (0.5 * DamageSourceAbilityLevel)
-            if Damage.index.damage < r1 then
-                set Damage.index.damage = r1
-            endif
-
+            set r1 = GetHeroInt(DamageSource, true) * (0.1 * DamageSourceAbilityLevel)
+            set Damage.index.damage = Damage.index.damage + r1 
             set FingerOfDeathTable.real[DamageTargetId] = Damage.index.damage * 0.25
         endif
 
@@ -275,7 +289,7 @@ scope ModifyDamageBeforeArmor initializer init
         call SetCritDamage()
 
         //Yeti cold based crit negation
-        if DamageTargetTypeId == YETI_UNIT_ID and DamageIsCrit and GetRandomInt(1, 100) < (8 * GetUnitElementCount(DamageTarget, Element_Cold)) * DamageTargetLuck then
+        if DamageTargetTypeId == YETI_UNIT_ID and DamageIsCrit and GetRandomInt(1, 100) < (8 * GetUnitElementCount(DamageTarget, Element_Cold) + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
             set Damage.index.damage = 0
             return
         endif
@@ -306,7 +320,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Demon Hunter
-        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID and ((IsMagicDamage() and CheckUnitHitCooldown(DamageTargetId, DEMON_HUNTER_UNIT_ID, 0.7)) or IsPhysDamage()) then
+        if GetUnitTypeId(DamageSource) == DEMON_HUNTER_UNIT_ID and ((IsMagicDamage() and CheckUnitHitCooldown(DamageTargetId, DEMON_HUNTER_UNIT_ID, 0.35)) or IsPhysDamage()) then
             set r1 = RMinBJ(GetHeroLevel(DamageSource) * 20, GetUnitState(DamageTarget, UNIT_STATE_MANA))
             call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - r1)
             call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) + r1)
@@ -319,6 +333,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Blizzard
         if DamageSourceAbility == BLIZZARD_ABILITY_ID then
             call UnitRemoveAbility(DamageTarget, 'BHbz')
+            set Damage.index.damage = Damage.index.damage * (1 + ((GetUnitElementCount(DamageSource, Element_Water) + GetUnitElementCount(DamageSource, Element_Cold)) * 0.25))
         endif
 
         //Flame Strike
@@ -334,20 +349,60 @@ scope ModifyDamageBeforeArmor initializer init
         //Monsoon
         set i1 = GetUnitAbilityLevel(DamageSource, MONSOON_ABILITY_ID)
         if i1 > 0 and DamageSourceAbility == MONSOON_ABILITY_ID then
-            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.03)))
+            call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - (GetUnitState(DamageTarget, UNIT_STATE_MAX_MANA) * (0.06)))
         endif
 
         //Acid Spray
         if DamageSourceAbility == ACID_SPRAY_ABILITY_ID then
-            set r1 = GetHeroInt(DamageSourceHero, true) * (1.5 + (0.15 * DamageSourceAbilityLevel))
-            if Damage.index.damage < r1 then
-                set Damage.index.damage = r1
-            endif
+            set r1 = GetHeroInt(DamageSourceHero, true) * (0.05 * DamageSourceAbilityLevel)
+            set Damage.index.damage = Damage.index.damage + r1
+        endif
+
+        //Entangling Roots
+        if DamageSourceAbility == ENTAGLING_ROOTS_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + ((GetUnitElementCount(DamageSource, Element_Earth) + GetUnitElementCount(DamageSource, Element_Wild)) * 1))
+        endif
+
+        //Earthquake
+        if DamageSourceAbility == EARTHQUAKE_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Earth) * 0.20))
+        endif
+
+        //War Stomp
+        if DamageSourceAbility == WAR_STOMP_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Earth) * 0.20))
+        endif
+
+        //Stampede
+        if DamageSourceAbility == STAMPEDE_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Wild) * 0.25))
+        endif
+
+        //Icy Breath
+        if DamageSourceAbility == ICY_BREATH_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Cold) * 0.333))
+        endif
+
+        //Frost Nova
+        if DamageSourceAbility == FROST_NOVA_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Cold) * 0.5))
+            call CreateTextTagTimerColor("Frost Nova Slow!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)  
+        endif
+
+        //Forked Lightning
+        if DamageSourceAbility == FORKED_LIGHTNING_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Wind) * 0.25))
         endif
 
         //Pyromancer fire attack
         if DamageSourceTypeId == PYROMANCER_UNIT_ID and Damage.index.isAttack and DamageSourceAbility != PYROMANCER_UNIT_ID then
             set DamageSourceAbility = PYROMANCER_UNIT_ID 
+        endif
+
+        //Lich frozen auto attack
+        if Damage.index.isAttack and DamageSourceTypeId == LICH_UNIT_ID and DamageSourceAbility != 'A03J' and GetRandomInt(1, 100) < (25 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
+            call ElemFuncStart(DamageSource,LICH_UNIT_ID)
+            call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
 
         //Searing Arrows
@@ -378,10 +433,25 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        //Chain Lightning
+        set i1 = GetUnitAbilityLevel(DamageSource,CHAIN_LIGHTNING_ABILITY_ID)
+        if i1 > 0 and Damage.index.isAttack then
+            // Track attacks per unit using a hashtable
+            set i2 = LoadInteger(HT, GetHandleId(DamageSource), -90001)
+            set i2 = i2 + 1
+            if i2 >= 5 then
+            call DummyTargetCast2(DamageSource, DamageTarget, GetUnitX(DamageSource), GetUnitY(DamageSource), CHAIN_LIGHTNING_ABILITY_ID, "chainlightning", 150 * i1, 150 * i1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1)
+            call BlzSetUnitAbilityCooldown(DamageSource, CHAIN_LIGHTNING_ABILITY_ID, 0, 0) // Reset cooldown so it doesn't trigger
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\LightningBolt\\LightningBoltMissile.mdl", DamageTarget, "chest"))
+            set i2 = 0
+            endif
+            call SaveInteger(HT, GetHandleId(DamageSource), -90001, i2)
+        endif
+
         //Cutting
         set i1 = GetUnitAbilityLevel(DamageSource,CUTTING_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack then
-            if GetRandomReal(1,100) < 20 * DamageSourceLuck then
+            if GetRandomReal(1,100) < (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
             set Damage.index.damage = Damage.index.damage+ (i1 * 100) * (1 + 0.02 * GetHeroLevel(DamageSource))
             set DamageIsCutting = true
             endif
@@ -398,6 +468,7 @@ scope ModifyDamageBeforeArmor initializer init
             call ActivateAncientBlood(DamageTarget, i1)
         endif
 
+        //Shockwave
         if DamageSourceAbility == SHOCKWAVE_ABILITY_ID then
             call UpdateShockwaveDamageBonus(DamageSourceId, DamageTargetId)
             set Damage.index.damage = Damage.index.damage * GetShockwaveDamageBonus(DamageSourceId, DamageTargetId)
@@ -405,7 +476,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         // Carrion Swarm
         if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
-            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.0462 + (0.0038 * DamageSourceAbilityLevel))
+            set Damage.index.damage = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) * (0.048 + (0.0044 * DamageSourceAbilityLevel))
         endif
 
         //Frost Circlet
@@ -420,6 +491,11 @@ scope ModifyDamageBeforeArmor initializer init
             if IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) then
                 set ElementHitTick[DamageTargetId].integer[Element_Cold] = T32_Tick
             endif
+        endif
+
+        // Stomp Fire Weakness
+        if DamageTargetTypeId == STOMP_TREE_UNIT_ID and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
+            set Damage.index.amount = Damage.index.amount * 2
         endif
 
         //Hero's Hammer
@@ -514,7 +590,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Ice Force
         set i1 = GetUnitAbilityLevel(DamageTarget,ICE_FORCE_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_FORCE_ABILITY_ID) <= 0 then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_FORCE_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then
             set r1 = 500. / (500. + GetHeroInt(DamageTarget, true))
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
             set Damage.index.damage = Damage.index.damage * r1
@@ -524,8 +600,8 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Blessed Protection
         set i1 = GetUnitAbilityLevel(DamageTarget, 'A0AF')
-        if i1 > 0 then
-            set Damage.index.damage =   Damage.index.damage / 10
+        if i1 > 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then
+            set Damage.index.damage = Damage.index.damage * 0.25
         endif
         
         //Mega Speed
@@ -548,10 +624,29 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Fan of Knives
+        set i1 = GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID)
+        if i1 > 0 and Damage.index.isAttack then
+            if GetRandomReal(1, 100) <= (20 + LuckyTriggerBonusChance(DamageTarget)) * DamageSourceLuck then
+            call DummyTargetCast2(DamageSource, DamageTarget, GetUnitX(DamageSource), GetUnitY(DamageSource), FAN_OF_KNIVES_ABILITY_ID, "fanofknives", 100 * i1, 100 * i1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1)
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\NightElf\\FanOfKnives\\FanOfKnivesTarget.mdl", DamageTarget, "chest"))
+            endif
+        endif
+
         if DamageSourceAbility == FAN_OF_KNIVES_ABILITY_ID then
             set Damage.index.damage = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.damage, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
         endif
 
+        //Thunderclap text tag
+        if DamageSourceAbility == THUNDER_CLAP_ABILITY_ID then
+            call CreateTextTagTimerColor("Thunder Clap Slow!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)  
+        endif
+
+        //Earthquake text tag
+        if DamageSourceAbility == 'A07M' then
+            call CreateTextTagTimerColor("Earthquake Slow!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)  
+        endif
+
+        //Staff of Lightning
         if GetUnitAbilityLevel(DamageSource, 'A09T') != 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A09T') == 0 then
             call CastStaffOfLightning(DamageSource, DamageTarget)
         endif
@@ -607,7 +702,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Cold Arrow
         set i1 = GetUnitAbilityLevel(DamageTarget, COLD_ARROWS_STACKING_BUFF_ID)
-        if i1 > 0 and GetRandomInt(1, 100) < 20 * DamageSourceLuck then
+        if i1 > 0 and GetRandomInt(1, 100) < (20 + LuckyTriggerBonusChance(DamageTarget)) * DamageSourceLuck then
             set Damage.index.damage = Damage.index.damage * 2
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\FrostArmor\\FrostArmorDamage.mdl", DamageTarget, "chest"))
         endif
@@ -631,8 +726,8 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Conquerors Bamboo Stick
-        if GetUnitAbilityLevel(DamageSource, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageTargetPid != 11 and BambooImmuneActive(DamageSourceId, GetHandleId(DamageTargetHero)) and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
-            //call BJDebugMsg("conq bamboo stick dmg bonus")
+        if GetUnitAbilityLevel(DamageSource, CONQ_BAMBOO_STICK_BUFF_ID) > 0 and DamageTargetPid != 11 and BambooImmuneActive(DamageSourceId, GetHandleId(DamageTargetHero)) and (IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false or GetUnitTypeId(DamageTarget) == STOMP_TREE_UNIT_ID) then
+        //call BJDebugMsg("conq bamboo stick dmg bonus")
             set Damage.index.damage = Damage.index.damage * 2
             return
         endif
@@ -658,7 +753,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif	
         endif
 
-        if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) and (not IsOnHitDamage()) and DamageSourceAbility != INCINERATE_ABILITY_ID then
+        if IsPhysDamage() or (IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or DamageSourceTypeId == SKELETON_WARMAGE_1_UNIT_ID) and (not IsOnHitDamage()) and DamageSourceAbility != INCINERATE_ABILITY_ID then
             //Incinerate
             set i1 = GetUnitAbilityLevel(DamageSource,INCINERATE_ABILITY_ID) + GetUnitAbilityLevel(DamageSource, 'A0C8')
             if i1 > 0 then
@@ -740,7 +835,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
 
             //Sword of Bloodthirst
-            if UnitHasItemType(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) then
+            if UnitHasItemType(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID) and GetUnitCustomState(DamageTarget, BONUS_BLOCK) > 0 then
                 set blockDamage = blockDamage * 0.7
             endif
 
@@ -779,6 +874,11 @@ scope ModifyDamageBeforeArmor initializer init
             //call BJDebugMsg("ts armor pierce: " + R2S(Damage.index.armorPierced))
         endif
 
+         //Adamantium Armor/hardened skin self-damage negation
+        if UnitHasItemType(DamageSource, 'I07M') or GetUnitAbilityLevel(DamageSource, HARDENED_SKIN_ABILITY_ID) > 0 and DamageSource == DamageTarget then
+            set Damage.index.damage = 0
+        endif
+
         //Wisdom Chestplate
         if IsMagicDamage() and UnitHasItemType(DamageTarget, WISDOM_CHESTPLATE_ITEM_ID) then 
             call ActivateWisdomChestplate(DamageTarget, Damage.index.damage)
@@ -793,7 +893,7 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Liquid Fire
             set i1 = GetUnitAbilityLevel(DamageSource,LIQUID_FIRE_ABILITY_ID)
-            if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, LIQUID_FIRE_ABILITY_ID) == 0 then
+            if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or (DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or DamageSourceTypeId == SKELETON_WARMAGE_1_UNIT_ID) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, LIQUID_FIRE_ABILITY_ID) == 0 then
 
                 call TempAbil.create(DamageTarget, 'A06R', 3)
                 //call PerodicDmg(DamageSource,DamageTarget,40*i1 +  GetUnitCustomState(DamageSource, BONUS_MAGICPOW)*5,0,1,3.01,LIQUID_FIRE_CUSTOM_BUFF_ID,Bfirst)
@@ -802,11 +902,14 @@ scope ModifyDamageBeforeArmor initializer init
 
             //Envenomed Weapons heroes
             set i1 = GetUnitAbilityLevel(DamageSource,ENVENOMED_WEAPONS_ABILITY_ID) + PoisonRuneBonus[DamageSourcePid]
-            if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or (PoisonRuneBonus[DamageSourcePid] > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison)) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
+            if (IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) or (PoisonRuneBonus[DamageSourcePid] > 0 and IsSpellElement(DamageSource, DamageSourceAbility, Element_Poison)) or DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or DamageSourceTypeId == SKELETON_WARMAGE_1_UNIT_ID) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
 
                 call TempAbil.create(DamageTarget, 'A06P', 8)
-                //call PerodicDmg(DamageSource,DamageTarget,10*i1,0.5,1,8.01,POISON_NON_STACKING_CUSTOM_BUFF_ID,Bfirst)
-                call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                if GetUnitAbilityLevel(DamageTarget, 'B00N') >= 1 then
+                    call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 0.5, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                else
+                    call PeriodicDamage.create(DamageSource, DamageTarget, 30 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                endif
             endif
 
             //Quillbeasts
@@ -814,7 +917,11 @@ scope ModifyDamageBeforeArmor initializer init
                 set i1 = GetUnitAbilityLevel(DamageSource, 'A0BF') + PoisonRuneBonus[DamageSourcePid]
                 if (IsPhysDamage() or PoisonRuneBonus[DamageSourcePid] > 0) and i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, ENVENOMED_WEAPONS_ABILITY_ID) == 0 then
                     call TempAbil.create(DamageTarget, 'A06P', 8)
-                    call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                    if GetUnitAbilityLevel(DamageTarget, 'B00N') >= 1 then
+                        call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 0.5, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                    else
+                        call PeriodicDamage.create(DamageSource, DamageTarget, 20 * i1, true, 1., 8, 1, false, POISON_NON_STACKING_CUSTOM_BUFF_ID, ENVENOMED_WEAPONS_ABILITY_ID).addLimit(ENVENOMED_WEAPONS_ABILITY_ID, 40, 1).start()
+                    endif
                 endif
             endif
         endif
@@ -829,6 +936,7 @@ scope ModifyDamageBeforeArmor initializer init
             if BlzGetUnitAbilityCooldownRemaining(DamageTarget,FROSTBITE_OF_THE_SOUL_ABILITY_ID) <= 0 then
                 call AbilStartCD(DamageTarget,FROSTBITE_OF_THE_SOUL_ABILITY_ID, 9)
                 call AddCooldowns(DamageSource,0.95 + I2R(i1)* 0.05)
+                call CreateTextTagTimerColor("Frostbite" + R2S(0.95 + I2R(i1) * 0.05) + "s longer CD!", 0.8, GetUnitX(DamageSource), GetUnitY(DamageSource), 80, 2, 255, 0, 0)
                 set udg_NextDamageType = DamageType_Onhit
                 set udg_NextDamageAbilitySource = FROSTBITE_OF_THE_SOUL_ABILITY_ID
                 call Damage.applyMagic(DamageTarget, DamageSource, 200 * i1, false, DAMAGE_TYPE_MAGIC)
@@ -843,7 +951,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Mystical armor
         set i1 = GetUnitItemTypeCount( DamageTarget,'I06E' )
         if i1 > 0  then
-            if GetRandomReal(1,100)  <= i1 * 8 * DamageSourceLuck then
+            if GetRandomReal(1,100)  <= i1 * (8 + LuckyTriggerBonusChance(DamageTarget)) * DamageSourceLuck then
                 if GetUnitState(DamageTarget,UNIT_STATE_MANA) >= 750 then
                     set RandomSpellLoc = Location(GetUnitX(DamageSource), GetUnitY(DamageSource))
                     call CastRandomSpell(DamageTarget, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 30))

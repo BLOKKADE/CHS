@@ -1,5 +1,7 @@
 library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
     struct ManaStarvationStruct extends array
+        implement Alloc
+        
         integer sourceId
         unit source
         unit target
@@ -34,10 +36,12 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
+
+        implement T32x
     
         static method create takes unit source, unit target, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.tick = 0
             set this.source = source
@@ -55,11 +59,8 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
         method destroy takes nothing returns nothing
             set this.target = null
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastManaStarvation takes unit caster, unit target, integer level returns nothing

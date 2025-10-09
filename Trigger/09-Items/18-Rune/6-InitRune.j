@@ -1,4 +1,4 @@
-library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthRune, AttackRune, PowerRune
+library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthRune, AttackRune, PowerRune, IllusionRune, CreationRune, WizardRune, HealingRune, PoisonRune, ColdRune, BloodRune, DarkRune, LightRune, WildRune, MightRune
     globals
         Table RuneIndex
         integer array Runes
@@ -26,7 +26,16 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         integer Life_Rune_Id = 15
         integer Healing_Rune_Id = 16
         integer Might_Rune_Id = 17 // not an element
+        //integer Creation_Rune_Id = 18
+        //integer Illusion_Rune_Id = 19
+        //integer Wizard_Rune_Id = 20
+        //integer Mana_Rune_Id = 21
+        //integer Elemental_Rune = 22
+        //integer Mind_Rune = 23
+        //integer Wisdom_Rune = 24
+        //integer Mystic_Rune = 25
         integer RuneCount = 17
+
     endglobals
 
     function GetRuneCooldown takes integer runeId returns real
@@ -121,7 +130,7 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         call AddRune('I08C',function RuneOfPower, "Power Rune", Power_Rune_Id, 5)
         call AddRune('I08H',function RuneOfEarth, "Earth Rune", Earth_Rune_Id, 8)
         call AddRune('I08I',function RuneOfStorm, "Water Rune", Water_Rune_Id, 6) 
-        call AddRune('I08O',function RuneOfWinds, "Wind Rune", Wind_Rune_Id, 12)   
+        call AddRune('I08O',function RuneOfWinds, "Wind Rune", Wind_Rune_Id, 15)   
         call AddRune('I0AY',function BloodRune, "Blood Rune", Blood_Rune_Id, 10)
         //call AddRune('I0AZ',function SpiritRune, "Spirit Rune")
         call AddRune('I0AV',function DarkRune, "Dark Rune", Dark_Rune_Id, 12)
@@ -129,5 +138,13 @@ library RuneInit initializer init requires ChaosRune, WindRune, LifeRune, EarthR
         call AddRune('I0AX',function PoisonRune, "Poison Rune", Poison_Rune_Id, 15)
         call AddRune('I0AU',function WildRune, "Wild Rune", Wild_Rune_Id, 10)
         call AddRune('I0C3',function MightRune, "Might Rune", Might_Rune_Id, 5)
+        //call AddRune('NHH6',function CreationRune, "Creation Rune", Creation_Rune_Id, 10)
+        //call AddRune('NHH7',function IllusionRune, "Illusion Rune", Illusion_Rune_Id, 10)
+        //call AddRune('NHH8',function WizardRune, "Wizard Rune", Wizard_Rune_Id, 10)
+        //call AddRune('NHH8',function ManaRune, "Mana Rune", Mana_Rune_Id, 10)
+        //call AddRune('NHH8',function ElementalRune, "Elemental Rune", Elemental_Rune_Id, 10)
+        //call AddRune('NHH8',function MindRune, "Mind Rune", Mind_Rune_Id, 10)
+        //call AddRune('BBSH',function WisdomRune, "Wisdom Rune", Wisdom_Rune_Id, 10)
+        //call AddRune('PSBB',function MysticRune, "Mystic Rune", Mystic_Rune_Id, 10)
     endfunction
 endlibrary

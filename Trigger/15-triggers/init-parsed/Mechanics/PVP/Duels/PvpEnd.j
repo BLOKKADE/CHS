@@ -1,4 +1,4 @@
-library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers
+library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers, Glory
 
     globals
         boolean PvpRoundEndWait = false
@@ -130,7 +130,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         if (not IsUnitInGroup(playerHero, DuelWinners)) then
             call GroupAddUnit(DuelWinners, playerHero) // Collection of all winners
         endif
-
+        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true) // To remove buffs like ancient blood
         call SetUnitInvulnerable(playerHero, true)
 
         call DuelEndedPlayerActions(currentPlayer, playerHero)
@@ -153,7 +153,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         endif
 
         call GroupAddUnit(DuelWinnerDisabled, playerHero) // Used to prevent heroes from casting abilities
-
+        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true) //to remove buffs like ancient blood 
         call SetUnitInvulnerable(playerHero, true)
 
         call DuelEndedPlayerActions(currentPlayer, playerHero)
@@ -174,7 +174,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         if (not IsPlayerInForce(currentPlayer, DuelLosers)) then
             call ForceAddPlayer(DuelLosers, currentPlayer) // Collection of all losers
         endif
-
+        call RemoveUnitBuffs(playerHero, BUFFTYPE_BOTH, true) //to remove buffs like ancient blood
         call DuelEndedPlayerActions(currentPlayer, playerHero)
 
         // Cleanup
@@ -257,6 +257,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         local boolean startNonSimultaneousOddDuel
         local player randomOddDuelPlayer
         local DuelGame oddDuelGame
+        local integer gloryReward
 
         // Check if we should do an odd duel
         set startSimultaneousOddDuel = SimultaneousDuelMode == 2 and OddPlayer != -1 and OddPlayerDuelStarted == false
@@ -272,7 +273,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
             call AfterDuelCleanupActions(duelGame)
 
             // Go to the next pvp battle for the odd player
-            call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "|cffff0000Odd player amount detected. Starting duel for the odd player out!|r")
+            call DisplayTimedTextToForce(GetPlayersAll(), 1.00, "|cffff0000Odd player amount detected. Starting duel for the odd player out!|r")
 
             call oddDuelGame.setupNextPvpBattleTimer()
             call DisplayNemesisNames()
@@ -304,17 +305,26 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
             call ConditionalTriggerExecute(EndGameTrigger)
 
             // udg_integer41 has some random math done on it and assigned to UnknownInteger01 which alters gold of players?
-            call TriggerSleepAction(2.00)
+            call TriggerSleepAction(0.50)
             set udg_integer41 = udg_integer41 + 1 // Some variable used for calculating rewards
-            call TriggerSleepAction(1.00)
+            call TriggerSleepAction(0.50)
 
             set PvpGoldWinAmount = DuelGoldReward[RoundNumber]
             
+            // Calculate the glory reward based on the game mode
+            if GameModeShort == true then
+                set gloryReward = 4000 + ((RoundNumber / 5) - 1) * 2000
+            else
+                set gloryReward = 3000 + ((RoundNumber / 5) - 1) * 1000
+            endif
+
             // Show a fancy effect on the winners and give them their reward
             call ForGroup(DuelWinners, function ShowWinningSpecialEffect)
             call PlaySoundBJ(udg_sound07)
             call ConditionalTriggerExecute(DuelWinnerRewardsTrigger)
-            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00The PvP battles are over and all winners receive:|r |cff3bc739" + I2S(PvpGoldWinAmount) + " gold|r")
+
+            // Display the rewards message with both gold and glory
+            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffd700The PvP battles are over and all winners receive:|r |cffffea00" + I2S(PvpGoldWinAmount) + " gold|r and |cffea00ff" + I2S(gloryReward) + " glory|r")
 
             // Removes all duel game structs
             call DuelGame.cleanupDuels()

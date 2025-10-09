@@ -61,7 +61,7 @@ library Evasion requires CustomState, RandomShit, LuckyPants, UnitHelpers, HeroF
             endif
 
             //Trickster
-            if DamageTargetTypeId == SATYR_TRICKSTER_UNIT_ID and GetRandomReal(0,100) <= 50 * GetUnitCustomState(DamageTarget, BONUS_LUCK) then
+            if DamageTargetTypeId == SATYR_TRICKSTER_UNIT_ID and GetRandomReal(0,100) <= (50 + LuckyTriggerBonusChance(DamageTarget)) * GetUnitCustomState(DamageTarget, BONUS_LUCK) then
                 //set TypeDmg_b = 2
                 //set DamageIsAttack = true
                 //set GLOB_typeDmg = 2

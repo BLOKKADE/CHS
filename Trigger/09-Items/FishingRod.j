@@ -8,6 +8,8 @@ library FishingRod initializer init requires TempAbilSystem
     endfunction
 
     struct FishingRodStruct extends array
+        implement Alloc
+
         unit source
         unit target
         integer hookEndTick
@@ -32,9 +34,11 @@ library FishingRod initializer init requires TempAbilSystem
                 call this.destroy()
             endif
         endmethod  
+
+        implement T32x
     
         static method create takes unit source, unit target returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.source = source
             set this.target = target
@@ -49,11 +53,8 @@ library FishingRod initializer init requires TempAbilSystem
             set HookedTargets[GetHandleId(this.target)] = 0
             set this.source = null
             set this.target = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function FishingRod takes unit source, unit target returns nothing

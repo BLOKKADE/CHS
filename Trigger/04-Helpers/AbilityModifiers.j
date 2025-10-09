@@ -19,8 +19,10 @@ library AbilityMOdifiers initializer init requires TimerUtils
     endfunction
 
     struct AbilityModifiers extends array
-        unit source
+        implement Alloc
 
+        unit source
+        
         real RetaliationAuraBonus
 
         static method copy takes unit source, unit target returns thistype
@@ -41,7 +43,7 @@ library AbilityMOdifiers initializer init requires TimerUtils
         endmethod
     
         static method create takes unit source returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
             set UnitAbilityMod[GetHandleId(source)] = this
@@ -61,10 +63,8 @@ library AbilityMOdifiers initializer init requires TimerUtils
             call this.reset()
             set this.source = null
             set UnitAbilityMod[GetHandleId(source)] = 0
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement Recycle
     endstruct
 
     private function init takes nothing returns nothing

@@ -16,6 +16,7 @@ library ContractLiving initializer init requires TempAbilSystem, RandomShit, Abi
         call AbilStartCD(u, CONTRACT_LIVING_ABIL_ID, 90 + GetAbilityCooldownBonus(hid, CONTRACT_LIVING_ABIL_ID))
         call SetAbilityCooldownBonus(hid, CONTRACT_LIVING_ABIL_ID, 5)
         call TempAbil.create(u, CONTRACT_LIVING_BUFF_ID, 5)
+        call CreateTextTagTimerColor("Contract of the Living!", 0.8, GetUnitX(u), GetUnitY(u), 80, 1.5, 255, 255, 255)
     endfunction
 
     function OnRoundStart takes EventInfo eventInfo returns nothing

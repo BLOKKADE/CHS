@@ -8,6 +8,7 @@ library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHe
     endfunction
 
     struct ImmolationStruct extends array
+        implement Alloc
         unit source
         integer level
         real area
@@ -63,8 +64,10 @@ library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHe
             endif
         endmethod 
 
+        implement T32x
+
         static method create takes unit source returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             //call BJDebugMsg("sl start")
             set this.source = source
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
@@ -75,11 +78,8 @@ library Immolation initializer init requires ToggleAbility, SpellFormula, UnitHe
         
         method destroy takes nothing returns nothing
             call this.disable()
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     function ToggleImmolation takes unit caster returns nothing

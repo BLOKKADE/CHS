@@ -53,11 +53,11 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
             set cd = cd * 1.3
         endif
 
-        //Dousing Hex
+        // Dousing Hex
         if GetUnitAbilityLevel(u, DOUSING_HEX_BUFF_ID) > 0 then
             call DousingHexActivated(u)
-            //call BJDebugMsg("cd bonus: " + R2S(DousingHexCooldown.real[GetHandleId(u)]))
-            return time
+            call ShowFloatingText(u, id)
+            return time + 15.0
         endif
 
         //Absolute Arcane
@@ -96,7 +96,7 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
 
             //Cheater Magic
             if GetUnitAbilityLevel(u, 'A08G') > 0 and IsSpellResettable(id) then
-                set ResCD = ResCD * (1 - (0.005 * GetUnitAbilityLevel(u, CHEATER_MAGIC_ABILITY_ID)))
+                set ResCD = ResCD * (1 - (0.01 * GetUnitAbilityLevel(u, CHEATER_MAGIC_ABILITY_ID)))
             endif
         endif
             
@@ -112,22 +112,27 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
 
         //Frost Circlet
         if IsObjectElement(id, Element_Cold) and GetUnitAbilityLevel(u, FROST_CIRCLET_ABILITY_ID) > 0 then
-            set ResCD = ResCD * 0.85
-        endif
-        
-        //Xesil
-        if (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID) then
-            set xesilChance = 20 + (0.1 * GetHeroLevel(u))
+            set ResCD = ResCD * 0.75
         endif
 
-        //Xesil's Legacy
-        if IsSpellResettable(id) and ((GetUnitTypeId(u) != TIME_WARRIOR_UNIT_ID and UnitHasItemType(u,'I03P') and GetRandomReal(0, 100) <= 25 * luck) or (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0, 100) <= RMinBJ(xesilChance * luck, 90))) then
+        //Fire Runestone
+        if IsObjectElement(id, Element_Fire) and UnitHasItemType(u,'I08P') then
+            set ResCD = ResCD * 0.75
+        endif
+        
+        //Xesil hero (setting chance)
+        if (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID) then
+            set xesilChance = 20  + (0.1 * GetHeroLevel(u))
+        endif
+
+        //Xesil's Legacy + Xesil hero passive execution
+        if IsSpellResettable(id) and ((GetUnitTypeId(u) != TIME_WARRIOR_UNIT_ID and UnitHasItemType(u,'I03P') and GetRandomReal(0, 100) <= (25 + LuckyTriggerBonusChance(u)) * luck) or (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID and GetRandomReal(0, 100) <= RMinBJ((xesilChance + LuckyTriggerBonusChance(u)) * luck, 90))) then
             set ResCD = 0.001
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",u,"origin"))     
         endif 
         
         //Staff of Water
-        if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0, 100) <= RMinBJ(40 * luck, 90) then
+        if UnitHasItemType(u,'I08Y') and IsObjectElement(id, Element_Water) and IsSpellResettable(id) and GetRandomReal(0, 100) <= RMinBJ((40 + LuckyTriggerBonusChance(u)) * luck, 90) then
             set ResCD = 0.001
         endif
 

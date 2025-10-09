@@ -1,5 +1,7 @@
 library Fog requires NewBonus, Utility, UnitHelpers
     struct Fog extends array
+        implement Alloc
+        
         unit source
         real x
         real y
@@ -60,6 +62,8 @@ library Fog requires NewBonus, Utility, UnitHelpers
             endif
         endmethod 
 
+        implement T32x
+
         private method createDummy takes real duration returns nothing
             local DummyOrder dummy = DummyOrder.create(this.source, this.x, this.y, 0, duration)
             call dummy.addActiveAbility(FOG_DUMMY_ABILITY_ID, 1, 852473)
@@ -68,7 +72,7 @@ library Fog requires NewBonus, Utility, UnitHelpers
         endmethod
 
         static method create takes unit source, real x, real y, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
             set this.endTick = T32_Tick + R2I(duration * 32)
@@ -87,11 +91,8 @@ library Fog requires NewBonus, Utility, UnitHelpers
             call ReleaseGroup(this.trappedUnits)
             set this.source = null
             set this.trappedUnits = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastFog takes unit caster, real targetX, real targetY, integer level returns nothing

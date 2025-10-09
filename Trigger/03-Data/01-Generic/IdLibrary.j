@@ -43,14 +43,16 @@ library IdLibrary initializer init
         constant integer ACTIVE_SPELLS_IV_UNIT_ID                       = 'n00Y'
         constant integer ACTIVE_SPELLS_V_UNIT_ID                        = 'n02O'
         constant integer ACTIVE_SPELLS_VI_UNIT_ID                       = 'n033'
+        constant integer ACTIVE_SPELLS_VII_UNIT_ID                      = 'n069'
 
         constant integer PASSIVE_SPELLS_I_UNIT_ID                       = 'n001'
         constant integer PASSIVE_SPELLS_II_UNIT_ID                      = 'n012'
-        constant integer PASSIVE_SPELLS_III_UNIT_ID                     = 'n00S'
+        constant integer PASSIVE_SPELLS_III_UNIT_ID                     = 'n02X'
         constant integer PASSIVE_SPELLS_IV_UNIT_ID                      = 'n02N'
-        constant integer PASSIVE_SPELLS_V_UNIT_ID                       = 'n02X'
+        constant integer PASSIVE_SPELLS_V_UNIT_ID                       = 'n00S'
         constant integer PASSIVE_SPELLS_VI_UNIT_ID                      = 'n032'
         constant integer PASSIVE_SPELLS_VII_UNIT_ID                     = 'n01E'
+        constant integer PASSIVE_SPELLS_VIII_UNIT_ID                    = 'n01U'
 
         constant integer BASIC_ITEMS_SHOP_UNIT_ID                       = 'n00Z'
         constant integer OFFENSIVE_ITEMS_1_SHOP_UNIT_ID                 = 'n01D'
@@ -163,6 +165,7 @@ library IdLibrary initializer init
         constant integer WOLF_RIDER_UNIT_ID                             = 'U000'
         constant integer MURLOC_WARRIOR_UNIT_ID                         = 'H01F'
         constant integer YETI_UNIT_ID                                   = 'O00B'
+        constant integer STOMP_TREE_UNIT_ID                             = 'BBHH'
         // --- Unit IDs ---
 
         // --- Ability IDs ---
@@ -180,7 +183,7 @@ library IdLibrary initializer init
         constant integer ACID_BOMB_ABILITY_ID                           = 'ANab'
         constant integer ACID_SPRAY_ABILITY_ID                          = 'ANhs'
         constant integer ACTIVATE_AVATAR_ABILITY_ID                     = 'A0AE'
-        constant integer HERO_FORCE_ABILITY_ID                           = 'A02T'
+        constant integer HERO_FORCE_ABILITY_ID                          = 'A02T'
         constant integer ANCIENT_BLOOD_ABILITY_ID                       = 'A0CH'
         constant integer ANCIENT_ELEMENT_ABILITY_ID                     = 'A07T'
         constant integer ANCIENT_RUNES_ABILITY_ID                       = 'A06Z'
@@ -228,6 +231,7 @@ library IdLibrary initializer init
         constant integer CYCLONE_ABILITY_ID                             = 'A05X'
         constant integer DAMAGE_BONUS_ABILITY_ID                        = 'A0A8'
         constant integer DARK_SEAL_ABILITY_ID                           = 'A09K'
+        constant integer SPIRIT_SHACKLE_ABILITY_ID                      = 'DHBB'
         constant integer DEATH_AND_DECAY_ABILITY_ID                     = 'AUdd'
         constant integer DEATH_PACT_ABILITY_ID                          = 'A00M'
         constant integer DEMOLISH_ABILITY_ID                            = 'ANde'
@@ -268,6 +272,7 @@ library IdLibrary initializer init
         constant integer FROST_ARMOR_ABILITY_ID                         = 'AUfu'
         constant integer FROST_BOLT_ABILITY_ID                          = 'A07X'
         constant integer FROST_NOVA_ABILITY_ID                          = 'AUfn'
+        constant integer GHOST_VISIBLE_ABILITY_ID                       = 'Aeth'
         constant integer HARDENED_SKIN_ABILITY_ID                       = 'Assk'
         constant integer HEALING_WARD_ABILITY_ID                        = 'Ahwd'
         constant integer HEALING_WAVE_ABILITY_ID                        = 'AOhw'
@@ -275,6 +280,7 @@ library IdLibrary initializer init
         constant integer HERO_BUFF_ABILITY_ID                           = 'A03Q'
         constant integer HOLY_ENLIGHTENMENT_ABILITY_ID                  = 'A04K'
         constant integer HOLY_LIGHT_ABILITY_ID                          = 'A01W'
+        constant integer GUARDIAN_SPIRIT_ABILITY_ID                     = 'GSBB'
         constant integer HOWL_OF_TERROR_ABILITY_ID                      = 'ANht'
         constant integer ICE_FORCE_ABILITY_ID                           = 'A053'
         constant integer ICY_BREATH_ABILITY_ID                          = 'A046'
@@ -376,6 +382,10 @@ library IdLibrary initializer init
         constant integer CONTEMPORARY_RUNES_ABILITY_ID                  = 'A0DN'
         constant integer ENERGY_BOMBARDMENT_ABILITY_ID                  = 'A0DQ'
         constant integer COLD_KNIGHT_PASSIVE_ABILITY_ID                 = 'A0DR'
+        constant integer DISPEL_MAGIC_ABILITY_ID                        = 'DMBB'
+        constant integer MOUNTAIN_GIANT_TAUNT_ABILITY_ID                = 'A06H' 
+        constant integer LUCKY_TRIGGER_ABILITY_ID                       = 'LTBB'
+        constant integer OVERLOAD_ABILITY_ID                            = 'BBAO'
         
         // Dummy Abilities
         constant integer STUN_ABILITY_ID                                = 'A0C2'
@@ -397,6 +407,29 @@ library IdLibrary initializer init
         constant integer REJUVENATION_CREEP_ABILITY_ID                  = 'A00X'
         constant integer SHOCKWAVE_CREEP_ABILITY_ID                     = 'A00U'
         constant integer THUNDER_CLAP_CREEP_ABILITY_ID                  = 'A01B'
+        constant integer SHADOW_STRIKE_CREEP_ABILITY_ID                 = 'ACss'
+        constant integer BLOODLUST_CREEP_ABILITY_ID                     = 'BLCA'
+        constant integer CRIPPLE_CREEP_ABILITY_ID                       = 'CRCR'
+        constant integer SLEEP_CREEP_ABILITY_ID                         = 'SLCR'
+        constant integer HEX_CREEP_ABILITY_ID                           = 'HECR'
+        constant integer DEATHCOIL_CREEP_ABILITY_ID                     = 'DCCR'
+        constant integer FIREBOLT_CREEP_ABILITY_ID                      = 'FBCR'
+        constant integer FEEDBACK_CREEP_ABILITY_ID                      = 'FECR'
+        constant integer FINGEROFPAIN_CREEP_ABILITY_ID                  = 'FPCR'
+        constant integer DEGENWARD_CREEP_ABILITY_ID                     = 'DWCR'
+        constant integer AERIALSHACKLES_CREEP_ABILITY_ID                = 'ASCR'
+        constant integer SPELL_IMMUNITY_CREEP_ABILITY_ID                = 'ACmi'
+        constant integer DIVINE_SHIELD_CREEP_ABILITY_ID                 = 'ACds'
+        constant integer BIGBADVOODOO_CREEP_ABILITY_ID                  = 'A018'
+        constant integer BLINK_CREEP_ABILITY_ID                         = 'A01A'
+        constant integer LIFESTEAL_CREEP_ABILITY_ID                     = 'SCva'
+        constant integer SLOW_CREEP_ABILITY_ID                          = 'A013'
+        constant integer CLEAVE_CREEP_ABILITY_ID                        = 'ACce'
+        constant integer FROSTBOLT_CREEP_ABILITY_ID                     = 'BFBB'
+        constant integer FRENZY_CREEP_ABILITY_ID                        = 'A0F4'
+        constant integer UNHOLYFRENZY_CREEP_ABILITY_ID                  = 'A0F5'
+        constant integer POLYMORPH_CREEP_ABILITY_ID                     = 'A0F6'
+        constant integer CHAINLIGHTNING_CREEP_ABILITY_ID                = 'A0FA'
 
         // Active Spell Dummy Abilities
 
@@ -418,7 +451,7 @@ library IdLibrary initializer init
         constant integer BLOKKADE_SHIELD_ABIL_ID                        = 'A01X'
         constant integer TITANIUM_SPIKE_ABIL_ID                         = 'A01Y'
         constant integer TITANIUM_SPIKE_IMMUN_ABIL_ID                   = 'A032'
-
+        constant integer SAVAGE_TOTEM_ABIL_ID                           = 'BBF4'
         constant integer FROST_CIRCLET_ABILITY_ID                       = 'A0C3'
         constant integer DECAYING_SCYTHE_ABILITY_ID                     = 'A0C4'
         constant integer DECAYING_SCYTHE_DUMMY_ABILITY_ID               = 'A0C5'
@@ -428,12 +461,16 @@ library IdLibrary initializer init
         constant integer DRUIDIC_FOCUS_ABILITY_ID                       = 'A0CE'
         constant integer DRUIDIC_FOCUS_ROOTS_ABILITY_ID                 = 'A0CF'
         constant integer BANNER_OF_MANY_DUMMY_ABILITY_ID                = 'A0CG'
+        constant integer BANNER_OF_MANY_DUMMY_BUFF_ICON_ID              = 'ZZBB'
+        constant integer BANNER_OF_MANY_DAMAGE_ABILITY_ID               = '2BBU'
         constant integer SPEED_BLADE_BUFF_ID                            = 'B02I'
         constant integer CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID            = 'S000'
         constant integer TERRESTRIAL_GLAIVE_ABILITY_ID                  = 'A0DJ'
         constant integer ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID         = 'A0DY'
         constant integer LIGHT_MAGIC_SHIELD_ABILITY_ID                  = 'A0E1'
         constant integer LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID             = 'A0E0'
+        constant integer MANIFOLD_SILENCE_ABILITY_ID                    = 'BBB9'
+        constant integer MANIFOLD_SILENCE_BUFF_ID                       = '66BB'
 
         // --- Item IDs ---
         constant integer MARTIAL_THEFT_ITEM_ID                          = 'I0BL'
@@ -496,6 +533,7 @@ library IdLibrary initializer init
         constant integer CUTTING_ITEM_ID                                = 'I09I'
         constant integer CYCLONE_ITEM_ID                                = 'I07Q'
         constant integer DARK_SEAL_ITEM_ID                              = 'I0CH'
+        constant integer SPIRIT_SHACKLE_ITEM_ID                         = 'BBDP'
         constant integer DESTRUCTION_BLOCK_ITEM_ID                      = 'I0CG'
         constant integer DEATH_AND_DECAY_ITEM_ID                        = 'I02E'
         constant integer DEATH_PACT_ITEM_ID                             = 'I01V'
@@ -541,6 +579,7 @@ library IdLibrary initializer init
         constant integer HERO_BUFF_ITEM_ID                              = 'I05N'
         constant integer HOLY_ENLIGHTENMENT_ITEM_ID                     = 'I06C'
         constant integer HOLY_LIGHT_ITEM_ID                             = 'I00D'
+        constant integer GUARDIAN_SPIRIT_ITEM_ID                        = 'GSPR'
         constant integer HOWL_OF_TERROR_ITEM_ID                         = 'I040'
         constant integer ICE_FORCE_ITEM_ID                              = 'I06L'
         constant integer ICY_BREATH_ITEM_ID                             = 'I05Z'
@@ -567,6 +606,7 @@ library IdLibrary initializer init
         constant integer MULTICAST_ITEM_ID                              = 'I068'
         constant integer MYSTERIOUS_TALENT_ITEM_ID                      = 'I07R'
         constant integer NECROMANCERS_ARMY_ITEM_ID                      = 'I02Q'
+        constant integer OVERLOAD_ITEM_ID                               = 'OLBB'
         constant integer PARASITE_ITEM_ID                               = 'I02U'
         constant integer PHASE_SHIFT_ITEM_ID                            = 'I03U'
         constant integer PHOENIX_ITEM_ID                                = 'I032'
@@ -627,12 +667,16 @@ library IdLibrary initializer init
         constant integer WIZARDBANE_AURA_ITEM_ID                        = 'I09M'
         constant integer CRUSHING_WAVE_ITEM_ID                          = 'I0BI'
         constant integer ERUPTION_ITEM_ID                               = 'I039'
+        constant integer DISPEL_MAGIC_ITEM_ID                           = 'BBDM' 
+        constant integer LUCKY_TRIGGER_ITEM_ID                          = 'BBLT' 
 
         // --- Shop Item IDs ---
-        constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2'                                                                                              
+        constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2' 
+        constant integer ADUXXOR_ITEM_ID                                = 'I015'                                                                                             
         constant integer ARCANE_INFUSED_SWORD_ITEM_ID                   = 'I0BN'                                                                                              
         constant integer CONTRACT_LIVING_ITEM_ID                        = 'I0BF'                                                                                              
-        constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD'                                                                                              
+        constant integer BLOKKADE_SHIELD_ITEM_ID                        = 'I0BD' 
+        constant integer BONE_ARMOR_ITEM_ID                             = 'I07O'                                                                                             
         constant integer TITANIUM_SPIKE_ITEM_ID                         = 'I0BE'
         constant integer ABSOLUTE_ACORN_TOME_ITEM_ID                    = 'I09D'
         constant integer AGILITY_LEVEL_BONUS_TOME_ITEM_ID               = 'I05H'
@@ -733,6 +777,15 @@ library IdLibrary initializer init
         constant integer SWORD_OF_BLOODTHRIST_TOME_ITEM_ID              = 'I0AG'
         constant integer STRENGTH_LEVEL_BONUS_TOME_ITEM_ID              = 'I05J'
         constant integer SHADOW_BLADE_ITEM_ID                           = 'I0CN'
+        constant integer SHADOW_BOOTS_ITEM_ID                           = 'BBSB'
+        constant integer BULWARK_ITEM_ID                                = 'BGBB'
+        constant integer WILDBORNE_SIGIL_ITEM_ID                        = 'WBSG'
+        constant integer MANIFOLD_STAFF_ITEM_ID                         = 'I0A0'
+        constant integer SAVAGE_TOTEM_ITEM_ID                           = 'BBCW'
+        constant integer HEART_OF_A_HERO_ITEM_ID                        = 'I05D'
+        constant integer AGILITY_MANUSCRIPT_ITEM_ID                     = 'I0CX'
+        constant integer STRENGTH_MANUSCRIPT_ITEM_ID                    = 'I0CW'
+        constant integer INTELLIGENCE_MANUSCRIPT_ITEM_ID                = 'I0CY'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
@@ -802,6 +855,7 @@ library IdLibrary initializer init
         constant integer LIQUID_FIRE_BUFF_ID                            = 'Bliq' // Almost vanilla. Has custom target
         constant integer LIQUID_FIRE_CUSTOM_BUFF_ID                     = 'B016' // Custom
         constant integer LUCKY_PANTS_BUFF_ID                            = 'B01S'
+        constant integer SAVAGE_TOTEM_BUFF_ID                           = '39BB'
         constant integer MANA_STARVATION_BUFF_ID                        = 'B01Z'
         constant integer MANA_STARVATION_NERF_BUFF_ID                   = 'B01X'
         constant integer MIDAS_TOUCH_BUFF_ID                            = 'B021'
@@ -850,6 +904,12 @@ library IdLibrary initializer init
         constant integer ANCIENT_BLOOD_BUFF_ABILITY_ID                  = 'A0CI'
         constant integer CUTTING_BUFF_ABILITY_ID                        = 'A0ET'
         constant integer STARFALL_BUFF_ABILITY_ID                       = 'A0F0'
+        constant integer SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID              = 'A02U'
+        constant integer SPIRIT_SHACKLE_BUFF_ID                         = 'SSBB'
+        constant integer GUARDIAN_SPIRIT_BUFF_ID                        = 'BBGS'
+        constant integer HERO_BUFF_BUFF_ID                              = 'B00T'
+        constant integer STORMHORN_BUFF_ID                              = 'B00B'
+        constant integer FEAR_AURA2_BUFF_ID                             = 'B00C' //regular fear aura ability buff
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 
@@ -906,6 +966,7 @@ library IdLibrary initializer init
         constant integer ANCIENT_AXE_ABIL_ID                            = 'A096'
         constant integer ANCIENT_DAGGER_ABIL_ID                         = 'A097'
         constant integer ANCIENT_STAFF_ABIL_ID                          = 'A094'
+        constant integer BULWARK_ABIL_ID                                = 'BBBG'
 
         constant integer SENSATUS_SHIELD_OF_HONOR_ABIL_ID               = 'AIdb'
         constant integer THE_DIVINE_SOURCE_ABIL_ID                      = 'A01D'
@@ -918,6 +979,8 @@ library IdLibrary initializer init
         constant integer RUNE_MASTERY_ABILITY_ID                        = 'A09O'
         constant integer CONQ_BAMBOO_STICK_ABILITY_ID                   = 'A0CM'
         constant integer SHADOW_BLADE_ABIL_ID                           = 'A0D2'
+        constant integer SHADOW_BOOTS_ABIL_ID                           = 'BBZB'
+        constant integer SHADOW_BOOTS_SLOW_RESIST_ABIL_ID               = 'BB03'
         constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
 
         // --- Buff IDs ---

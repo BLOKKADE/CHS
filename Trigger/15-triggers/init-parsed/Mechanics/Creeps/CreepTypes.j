@@ -1,31 +1,59 @@
 library CreepTypes initializer init requires RandomShit
 
+    function IsCreepUnitType takes integer unitId returns boolean
+        local integer i = 1
+        loop
+            exitwhen i > MaxCreepUnitTypes
+            if unitId == CreepUnitTypeIds[i] then
+                return true
+            endif
+            set i = i + 1
+        endloop
+        return false
+    endfunction
+
     private function CreepTypesActions takes nothing returns nothing
-        set CreepUnitTypeIds[1] = 'n000'
-        set CreepUnitTypeIds[2] = 'n002'
-        set CreepUnitTypeIds[3] = 'n008'
-        set CreepUnitTypeIds[4] = 'n009'
-        set CreepUnitTypeIds[5] = 'n006'
-        set CreepUnitTypeIds[6] = 'n00G'
-        set CreepUnitTypeIds[7] = 'n00F'
-        set CreepUnitTypeIds[8] = 'n00H'
-        set CreepUnitTypeIds[9] = 'n00N'
-        set CreepUnitTypeIds[10] = 'n007'
-        set CreepUnitTypeIds[11] = 'n00X'
-        set CreepUnitTypeIds[12] = 'n019'
-        set CreepUnitTypeIds[13] = 'n01B'
-        set CreepUnitTypeIds[14] = 'n01C'
-        set CreepUnitTypeIds[15] = 'n01A'
-        set CreepUnitTypeIds[16] = 'n018'
-        set CreepUnitTypeIds[17] = 'n01F'
-        set CreepUnitTypeIds[18] = 'n01K'
-        set CreepUnitTypeIds[19] = 'n01J'
-        set CreepUnitTypeIds[20] = 'n01I'
-        set CreepUnitTypeIds[21] = 'n01G'
-        set CreepUnitTypeIds[22] = 'n00W'
-        set CreepUnitTypeIds[23] = 'n01H'
+        set CreepUnitTypeIds[1] = 'n000' //Murloc Tiderunner
+        set CreepUnitTypeIds[2] = 'n002' //Acolyte
+        set CreepUnitTypeIds[3] = 'n008' //Bandit
+        set CreepUnitTypeIds[4] = 'n009' //Centaur
+        set CreepUnitTypeIds[5] = 'n006' //Dryad
+        set CreepUnitTypeIds[6] = 'n00G' //Ogre
+        set CreepUnitTypeIds[7] = 'n00F' //Treant
+        set CreepUnitTypeIds[8] = 'n00H' //Quilboar
+        set CreepUnitTypeIds[9] = 'n00N' //Forest Troll
+        set CreepUnitTypeIds[10] = 'n007' //Ghoul
+        set CreepUnitTypeIds[11] = 'n00X' //Gnoll
+        set CreepUnitTypeIds[12] = 'n019' //Kobold
+        set CreepUnitTypeIds[13] = 'n01B' //Militia
+        set CreepUnitTypeIds[14] = 'n01C' //Pandaren
+        set CreepUnitTypeIds[15] = 'n01A' //Skeleton Archer
+        set CreepUnitTypeIds[16] = 'n018' //Spider Crab
+        set CreepUnitTypeIds[17] = 'n01F' //Harpy
+        set CreepUnitTypeIds[18] = 'n01K' //Night Elf Warrior
+        set CreepUnitTypeIds[19] = 'n01J' //Orc Warlock
+        set CreepUnitTypeIds[20] = 'n01I' //Satyr
+        set CreepUnitTypeIds[21] = 'n01G' //Succubus
+        set CreepUnitTypeIds[22] = 'n01S' //Sasquatch
+        set CreepUnitTypeIds[23] = 'n01t' //Bandit Spear Thrower
+        set CreepUnitTypeIds[24] = 'n01z' //Furbolg
+        set CreepUnitTypeIds[25] = 'n01p' //Centaur Impaler
+        set CreepUnitTypeIds[26] = 'n01x' //Dark Troll Berserker
+        set CreepUnitTypeIds[27] = 'n01g' //Gnoll Warden
+        set CreepUnitTypeIds[28] = 'n01r' //Tuskar
+//boss creeps:
+        set CreepUnitTypeIds[29] = 'n01V' //Magnataur
+        set CreepUnitTypeIds[30] = 'n01W' //Burning Archer
+        set CreepUnitTypeIds[31] = 'n01Y' //Holy Defender
+        set CreepUnitTypeIds[32] = 'n020' //Dragon Turtle
+        set CreepUnitTypeIds[33] = 'n021' //Chaos Warlord
+        set CreepUnitTypeIds[34] = 'n022' //Thunder Lizard
+
+//magic creeps:
+        set CreepUnitTypeIds[35] = 'n00W' //Wraith
+        set CreepUnitTypeIds[36] = 'n01H' //Sludge minion
         
-        set MaxCreepUnitTypes = 23
+        set MaxCreepUnitTypes = 30
     endfunction
 
     private function init takes nothing returns nothing

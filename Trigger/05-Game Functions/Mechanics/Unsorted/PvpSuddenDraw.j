@@ -5,6 +5,8 @@ library PvpSuddenDraw /*initializer init*/ requires TimerUtils, PvpEnd
     endglobals
 
     struct SuddenDraw extends array
+        implement Alloc
+        
         private static SuddenDraw temp
         private integer endTick
 
@@ -41,6 +43,8 @@ library PvpSuddenDraw /*initializer init*/ requires TimerUtils, PvpEnd
             endif
         endmethod 
 
+        implement T32x
+
         private method setupTimer takes nothing returns nothing
             set suddenDeathTimer = NewTimer()
             call TimerStart(this.suddenDeathTimer, Duration, false, null)
@@ -65,7 +69,7 @@ library PvpSuddenDraw /*initializer init*/ requires TimerUtils, PvpEnd
         endmethod
 
         static method create takes DuelGame duelGame returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             set this.duelGame = duelGame
             
             return this
@@ -78,10 +82,7 @@ library PvpSuddenDraw /*initializer init*/ requires TimerUtils, PvpEnd
             call TimerDialogDisplay(this.timerDialog, false)
             call DestroyTimerDialog(this.timerDialog)
             set this.timerDialog = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 endlibrary

@@ -1,20 +1,22 @@
 library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
     struct GruntsGruntStruct extends array
+        implement Alloc
+
         unit source
         integer bonus
         integer endTick
-    
-        
-    
+
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
+
+        implement T32x
     
         static method create takes unit source, real chronus returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             local real duration
             
             set this.source = source
@@ -41,10 +43,7 @@ library GruntsGrunt requires BuffLevel, RandomShit, TimeManipulation
                 call UnitRemoveAbility(this.source, 'B01K')
             endif
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 endlibrary

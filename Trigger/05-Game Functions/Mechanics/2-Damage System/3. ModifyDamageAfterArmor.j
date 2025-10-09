@@ -15,6 +15,18 @@ scope ModifyDamageAfterArmor initializer init
 
         local integer vampCount = 0
         local real vampAmount = 0
+        local real armorBonus = GetUnitEffectiveArmor(DamageTarget)
+
+        local integer i3 = 1 + GetHeroLevel(DamageTarget) / 10
+        local integer DamageTargetId = GetHandleId(DamageTarget)
+        local integer baseStr = GetHeroStatBJ(bj_HEROSTAT_STR, DamageTarget, true)
+        local integer baseAgi = GetHeroStatBJ(bj_HEROSTAT_AGI, DamageTarget, true)
+        local integer baseInt = GetHeroStatBJ(bj_HEROSTAT_INT, DamageTarget, true)
+        local integer bonus = R2I(i3 * 1.5)
+
+        local real manaGain
+        local real currentMana
+        local real maxMana
 
         if Damage.index.amount == 0 then
             return
@@ -28,8 +40,10 @@ scope ModifyDamageAfterArmor initializer init
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
         //Fishing Rod
-        if UnitHasItemType(DamageSource,'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, ENTANGLING_ROOTS_BUFF_ID) == 0 then
-            call FishingRod(DamageSource, DamageTarget)
+        if UnitHasItemType(DamageSource, 'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, ENTANGLING_ROOTS_BUFF_ID) == 0 then
+            if GetUnitAbilityLevel(DamageTarget, HARDENED_SKIN_ABILITY_ID) == 0 and not (UnitHasItemType(DamageTarget, 'I0CV') or UnitHasItemType(DamageTarget, 'I090')) then
+                call FishingRod(DamageSource, DamageTarget)
+            endif
         endif
 
         /*//Aura of Vulnerability
@@ -54,7 +68,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Medal of Honor
         if UnitHasItemType(DamageTargetHero, 'I04U') or UnitHasItemType(DamageSourceHero, 'I04U') then
-            set Damage.index.amount = Damage.index.amount * 0.66
+            set Damage.index.amount = Damage.index.amount * 0.67
         endif
 
         //Decaying Scythe
@@ -63,9 +77,10 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Conq Bamboo passive
-        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_ABILITY_ID) > 0 and DamageSourcePid != 8 then
+        if GetUnitAbilityLevel(DamageTarget, CONQ_BAMBOO_STICK_ABILITY_ID) > 0 and DamageSourceTypeId == STOMP_TREE_UNIT_ID or DamageSourcePid != 8 then
             set Damage.index.damage = Damage.index.damage * 0.7
         endif
+
 
         //Blokkades Shield damage reduction
         if GetUnitAbilityLevel(DamageTarget, BLOKKADE_SHIELD_ABIL_ID) > 0 then
@@ -85,20 +100,19 @@ scope ModifyDamageAfterArmor initializer init
             //damage reduction
             if T32_Tick - BlokShieldDmgReductionTick[DamageTargetId] < 64 then
                 //call BJDebugMsg("bs dmg red")
-                set Damage.index.amount = Damage.index.amount * 0.2
+                set Damage.index.amount = Damage.index.amount * 0.35
             endif
         endif
 
         //Vampirism
         set r1 = GetUnitAbilityLevel(DamageSource,VAMPIRISM_ABILITY_ID)
         if r1 > 0 then
-            set r2 = Damage.index.amount * (0.005 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.05 )
+            set r2 = Damage.index.amount * (0.05 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.075 )
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
 
-         //Bloodlust
-         
+         //Bloodlust       
          if GetUnitAbilityLevel(DamageSource, 'Bblo') != 0 then
             //does not work in team duels if you cast bloodlust on an other players units
              set r2 = Damage.index.amount * (0.0069 + (0.0031 * GetUnitAbilityLevel(PlayerHeroes[DamageSourcePid], BLOODLUST_ABILITY_ID)))
@@ -148,11 +162,11 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
-        //Wild Runestone
-        if UnitHasItemType(DamageTargetHero, WILD_RUNESTONE_ITEM_ID) and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
+        // Wild Runestone damage reduction
+        if UnitHasItemType(DamageTargetHero, WILD_RUNESTONE_ITEM_ID) and (IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false or GetUnitTypeId(DamageTarget) == STOMP_TREE_UNIT_ID) then
             set Damage.index.amount = Damage.index.amount * 0.7
         endif
-        
+
         //Magic Necklace of Absorption
         if GetUnitAbilityLevel(DamageTarget  ,'B00R') >= 1 and IsMagicDamage() then
             call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.50 )
@@ -168,6 +182,17 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        // Titanium Spike – pierce armor + bonus damage (bonus only on attacks)
+        if GetUnitAbilityLevel(DamageSource, TITANIUM_SPIKE_ABIL_ID) > 0 and GetUnitAbilityLevel(DamageTarget, TITANIUM_SPIKE_IMMUN_ABIL_ID) == 0 then
+            // bonus damage = target armor, but only if this is an attack
+            if Damage.index.isAttack then
+                set Damage.index.damage = Damage.index.damage + armorBonus
+
+                // Debug message to show how much damage is added
+                //call BJDebugMsg("Titanium Spike bonus damage: " + R2S(armorBonus))
+            endif
+        endif
+
         //Staff of Absolute Magic
         if GetUnitAbilityLevel(DamageSourceHero  ,'B00O') >= 1 and IsMagicDamage() then
             set r2 = Damage.index.amount * 0.33 
@@ -177,8 +202,8 @@ scope ModifyDamageAfterArmor initializer init
 
         //Heavy Blow
         if GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSourceHero,HEAVY_BLOW_ABILITY_ID,0.3)
-            set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID)
+            call AbilStartCD(DamageSourceHero,HEAVY_BLOW_ABILITY_ID,0.5)
+            set Damage.index.amount = Damage.index.amount + 40 * GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID) * GetUnitElementCount(DamageSource, Element_Light)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\Devour\\DevourEffectArt.mdl", DamageTarget, "chest"))
         endif
         
@@ -190,10 +215,20 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Devastating Blow
-        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,5)
+        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') == 0 then
+            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
             set r1 = BlzGetUnitMaxHP(DamageTarget)
-            set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.08)
+            set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.15)
+            set udg_NextDamageAbilitySource = DEVASTATING_BLOW_ABILITY_ID
+            call Damage.applyMagic(DamageSource, DamageTarget, r2, false, DAMAGE_TYPE_MAGIC)
+            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
+        endif
+
+        //Devastating Blow reduced by Heart of a Hero
+        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') > 0 then
+            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
+            set r1 = BlzGetUnitMaxHP(DamageTarget)
+            set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.075)
             set udg_NextDamageAbilitySource = DEVASTATING_BLOW_ABILITY_ID
             call Damage.applyMagic(DamageSource, DamageTarget, r2, false, DAMAGE_TYPE_MAGIC)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
@@ -207,12 +242,17 @@ scope ModifyDamageAfterArmor initializer init
         endif
         
         //Heavy Mace
-        set i = GetUnitItemTypeCount( DamageSource,'I07I') 
+        set i = GetUnitItemTypeCount(DamageSource, 'I07I')
         if i > 0 then
-            set r1 =  (GetWidgetLife(DamageTarget)/ 100)* 1.5 * I2R(i)  
-            set vampAmount = vampAmount + r1
-            set Damage.index.amount = Damage.index.amount + r1
+            set r1 = (GetWidgetLife(DamageTarget) / 100) * 1.5 * I2R(i)
+            // Check for B00N ability on DamageTarget
+            if GetUnitAbilityLevel(DamageTarget, 'B00N') >= 1 then
+            set Damage.index.amount = Damage.index.amount * 0.5
+            set r1 = r1 * 0.5
+            endif
             set vampCount = vampCount + 1
+            set Damage.index.amount = Damage.index.amount + r1
+            set vampAmount = vampAmount + r1
         endif
         
         //Cutting
@@ -250,7 +290,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Lich
         //call BJDebugMsg("dmg source ability:" + GetObjectName(DamageSourceAbility))
-        if DamageSourceTypeId == LICH_UNIT_ID and DamageSourceAbility != 'A03J' and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < 25 * DamageSourceLuck then
+        if DamageSourceTypeId == LICH_UNIT_ID and DamageSourceAbility != 'A03J' and (IsSpellElement(DamageSource, DamageSourceAbility, Element_Cold) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Dark) or IsSpellElement(DamageSource, DamageSourceAbility, Element_Water)) and GetRandomInt(1, 100) < (25 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
             call ElemFuncStart(DamageSource,LICH_UNIT_ID)
             call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
@@ -301,21 +341,21 @@ scope ModifyDamageAfterArmor initializer init
                 if not IsOnHitDamage() then
                     //Pulverize
                     set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
-                    if i > 0 and GetRandomReal(0, 100) <= 20 * DamageSourceLuck then
+                    if i > 0 and GetRandomReal(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
                         call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
                         call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID, true, false)
                     endif
 
                     //Destruction
                     set i = GetUnitAbilityLevel(DamageSource, DESTRUCTION_ABILITY_ID) 
-                    if i > 0 and GetRandomReal(0, 100) <= 15 * DamageSourceLuck then
+                    if i > 0 and GetRandomReal(0, 100) <= (15 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
                         call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
                         call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID, true, false)
                     endif
                     
                     //Bash
                     set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)  
-                    if i > 0 and GetRandomReal(0, 100) <= I2R(i) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+                    if i > 0 and GetRandomReal(0, 100) <= (I2R(i) + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                         call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
                     endif
                 endif
@@ -393,7 +433,7 @@ scope ModifyDamageAfterArmor initializer init
             endif  
 
             //Volcanic Armor
-            if UnitHasItemType(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= 15 *  DamageTargetLuck then
+            if UnitHasItemType(DamageTarget, 'I03T') and GetUnitAbilityLevel(DamageSource, STUNNED_BUFF_ID) == 0 and GetRandomInt(1,100) <= (15 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
                 call ActivateVolcanicArmor(DamageSource, DamageTarget)
             endif
 
@@ -404,7 +444,7 @@ scope ModifyDamageAfterArmor initializer init
             endif
 
             //Dark Hunter Bash
-            if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and GetRandomInt(0, 100) <= 20 * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+            if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and IsUnitIllusion(DamageSource) == false and GetRandomInt(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                 set r1 = GetHeroLevel(DamageSource) * 50
                 set r2 = DarkHunterStun.real[DamageSourceId]
                 if CheckUnitHitCooldown(DamageTargetId, DARK_HUNTER_UNIT_ID, r2 + 0.4) then
@@ -420,15 +460,35 @@ scope ModifyDamageAfterArmor initializer init
             call Vamp(DamageSource, DamageTarget, vampAmount)
         endif
         
-        //Banshee passive
+        // Banshee passive: Mana burn when damaged
         if DamageTargetTypeId == BANSHEE_UNIT_ID then
-            if Damage.index.amount >= GetUnitState(DamageTarget,UNIT_STATE_MANA) then
-                call SetUnitState(DamageTarget,UNIT_STATE_MANA,0)
-                set Damage.index.amount = GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) + 1
+            if Damage.index.amount >= GetUnitState(DamageTarget, UNIT_STATE_MANA) then
+                call SetUnitState(DamageTarget, UNIT_STATE_MANA, 0)
+                set Damage.index.amount = GetUnitState(DamageTarget, UNIT_STATE_MAX_LIFE) + 1
             else
-                call SetUnitState(DamageTarget,UNIT_STATE_MANA,GetUnitState(DamageTarget,UNIT_STATE_MANA) - Damage.index.amount)     
+                call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) - Damage.index.amount)
                 set Damage.index.amount = 0
-            endif 
+            endif
+        endif
+
+        // Banshee passive: Mana gain when dealing damage
+        if DamageSourceTypeId == BANSHEE_UNIT_ID then
+            set Damage.index.amount = RMaxBJ(Damage.index.amount, 0) // ensure non-negative
+            set bj_lastCreatedUnit = DamageSource // reuse safely if needed
+
+            // Calculate mana gain: 5% base + 0.2% per hero level
+            set manaGain = Damage.index.amount * (0.05 + 0.002 * GetHeroLevel(DamageSource))
+            set currentMana = GetUnitState(DamageSource, UNIT_STATE_MANA)
+            set maxMana = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA)
+
+            // Apply mana gain, capped at max mana
+            call SetUnitState(DamageSource, UNIT_STATE_MANA, RMinBJ(currentMana + manaGain, maxMana))
+            call BJDebugMsg("Banshee mana gained: " + R2S(manaGain))
+
+            // Visual effect with 0.5s cooldown
+            if not IsFxOnCooldownSet(GetHandleId(DamageSource), 'A0F9', 0.5) then
+            call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageSource, "origin"))
+            endif
         endif
 
         //War Golem
@@ -440,12 +500,12 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Parasite Summon
-        if DamageSourceAbility == PARASITE_ABILITY_ID and T32_Tick > ParasiteLimit[DamageSourcePid].integer[DamageTargetId] and GetRandomInt(1,100) <= 20 * DamageSourceLuck then
+        if DamageSourceAbility == PARASITE_ABILITY_ID and T32_Tick > ParasiteLimit[DamageSourcePid].integer[DamageTargetId] and GetRandomInt(1,100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
             call SummonParasite(DamageSourcePid, DamageTarget)
         endif
 
         //Holy Chain Mail
-        if UnitHasItemType(DamageTarget,'I07U') then   
+        if UnitHasItemType(DamageTarget,'I07U') and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
                 if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget)/ 5 then
                     set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 5
@@ -453,6 +513,19 @@ scope ModifyDamageAfterArmor initializer init
             else
                 if Damage.index.amount > BlzGetUnitMaxMana(DamageTarget)/ 5 then
                     set Damage.index.amount = BlzGetUnitMaxMana(DamageTarget) / 5
+                endif
+            endif
+        endif
+
+        //Guardian Spirit 15% max hp/mana dmg cap
+        if GetUnitAbilityLevel(DamageTarget, GUARDIAN_SPIRIT_BUFF_ID) > 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then   
+            if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
+                if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget) / 6.6666667 then
+                    set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 6.6666667
+                endif
+            else
+                if Damage.index.amount > BlzGetUnitMaxMana(DamageTarget) / 6.6666667 then
+                    set Damage.index.amount = BlzGetUnitMaxMana(DamageTarget) / 6.6666667
                 endif
             endif
         endif
@@ -472,12 +545,41 @@ scope ModifyDamageAfterArmor initializer init
 
         //Murloc Warrior
         if DamageTargetTypeId == MURLOC_WARRIOR_UNIT_ID and GetHeroStr(DamageTarget, true) < 2147483647 then
-            set i1 = 1 + GetHeroLevel(DamageTarget)/ 10 
-            call SaveInteger(HT,DamageTargetId,54021,i1 + LoadInteger(HT,DamageTargetId,54021))
-            call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i1)
-            call AddUnitBonus(DamageTarget, BONUS_AGILITY, i1)
-            call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i1)
+
+            if baseStr > baseAgi and baseStr > baseInt then
+                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i3 * 3)
+                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + i3 * 3)
+            elseif baseAgi > baseStr and baseAgi > baseInt then
+                call AddUnitBonus(DamageTarget, BONUS_AGILITY, i3 * 3)
+                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + i3 * 3)
+            elseif baseInt > baseStr and baseInt > baseAgi then
+                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i3 * 3)
+                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + i3 * 3)
+            elseif baseStr == baseAgi and baseStr > baseInt then
+                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, bonus)
+                call AddUnitBonus(DamageTarget, BONUS_AGILITY, bonus)
+                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + bonus)
+                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + bonus)
+            elseif baseStr == baseInt and baseStr > baseAgi then
+                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, bonus)
+                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, bonus)
+                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + bonus)
+                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + bonus)
+            elseif baseAgi == baseInt and baseAgi > baseStr then
+                call AddUnitBonus(DamageTarget, BONUS_AGILITY, bonus)
+                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, bonus)
+                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + bonus)
+                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + bonus)
+            elseif baseStr == baseAgi and baseStr == baseInt then
+                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i3)
+                call AddUnitBonus(DamageTarget, BONUS_AGILITY, i3)
+                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i3)
+                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + i3)
+                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + i3)
+                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + i3)
+            endif
         endif
+
 
         //Decaying Scythe
         if GetUnitAbilityLevel(DamageSource, DECAYING_SCYTHE_ABILITY_ID) > 0 and T32_Tick - DecayingScytheTick[DamageTargetId] > 192 then
@@ -499,7 +601,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Flimsy Token
-        if UnitHasItemType(DamageTarget, FLIMSY_TOKEN_ITEM_ID) and GetUnitAbilityLevel(DamageSource, FLIMSY_TOKEN_BUFF_ID) == 0 then
+        if UnitHasItemType(DamageTarget, FLIMSY_TOKEN_ITEM_ID) and GetUnitAbilityLevel(DamageSource, FLIMSY_TOKEN_BUFF_ID) == 0 and Damage.index.isAttack then
             call FlimsyToken(DamageTarget, DamageSource)
         endif
 
@@ -519,12 +621,21 @@ scope ModifyDamageAfterArmor initializer init
         //Finishing Blow
         set i1 = GetUnitAbilityLevel(DamageSourceHero, FINISHING_BLOW_ABILITY_ID)
         if Damage.index.amount > 0 and i1 > 0 then
-            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= (i1 * 0.7) then
+            if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= (i1 * 0.5) then
                 set Damage.index.amount = 9999999
                 if not IsFxOnCooldownSet(DamageTargetId, FINISHING_BLOW_ABILITY_ID, 1) then
                     call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
                 endif
             endif
+        endif
+
+        //Leaver hero instakill
+            set i1 = GetUnitAbilityLevel(DamageTarget, 'HRBB')
+        if Damage.index.amount > 0 and i1 > 0 then
+                set Damage.index.amount = 9999999
+                if not IsFxOnCooldownSet(DamageTargetId, FINISHING_BLOW_ABILITY_ID, 1) then
+                    call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
+                endif
         endif
 
         //Contract of the Living

@@ -1,5 +1,7 @@
 library TempInvis requires BuffLevel, RandomShit, TimeManipulation
     struct TempInvisStruct extends array
+        implement Alloc
+        
         unit source
         integer endTick
     
@@ -9,9 +11,11 @@ library TempInvis requires BuffLevel, RandomShit, TimeManipulation
                 call this.destroy()
             endif
         endmethod  
+
+        implement T32x
     
         static method create takes unit source, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
 
@@ -28,10 +32,7 @@ library TempInvis requires BuffLevel, RandomShit, TimeManipulation
         method destroy takes nothing returns nothing
             call RemoveLeveledBuffs(this.source, 'A03V')
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 endlibrary

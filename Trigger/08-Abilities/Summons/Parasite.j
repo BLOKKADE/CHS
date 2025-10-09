@@ -7,7 +7,7 @@ library SummonParasite requires CustomState, SpellFormula
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u,0) * (8 / (8.9 + (totalLevel / 2))), 0)
         call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + 5 * totalLevel)
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + totalLevel * 500)
-        call AddUnitCustomState(u, BONUS_MAGICRES,5 * totalLevel)
+        call AddUnitCustomState(u, BONUS_MAGICRES,2.5 * totalLevel)
         call AddUnitCustomState(u, BONUS_EVASION,5 * totalLevel)
 
         /*call UnitAddAbility(u, 'A06I')

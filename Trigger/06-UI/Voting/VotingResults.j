@@ -214,11 +214,11 @@ library VotingResults initializer init
         endif
 
         if (HeroBanningMode == 1) then
-            set GameDescription = GameDescription + "Hero Banning Off, "
-            set ScoreboardGameDescription = ScoreboardGameDescription + "Hero Banning Off|n"
+            set GameDescription = GameDescription + "Hero Ban Off, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Hero Ban Off|n"
         elseif (HeroBanningMode == 2) then
-            set GameDescription = GameDescription + "Hero Banning On, "
-            set ScoreboardGameDescription = ScoreboardGameDescription + "Hero Banning On|n"
+            set GameDescription = GameDescription + "Hero Ban On, "
+            set ScoreboardGameDescription = ScoreboardGameDescription + "Hero Ban On|n"
         endif
 
         if (SimultaneousDuelMode == 1) then
@@ -433,7 +433,14 @@ library VotingResults initializer init
             set i = i + 1
             exitwhen i > 2
         endloop
+
+        // Get the vote result and flip its meaning
         set ImmortalMode = GetCheckboxVoteFromAnyDuplicates()
+        if ImmortalMode == 1 then
+            set ImmortalMode = 2
+        elseif ImmortalMode == 2 then
+            set ImmortalMode = 1
+        endif
 
         // Pvp betting vote counting
         set i = 1
@@ -444,14 +451,21 @@ library VotingResults initializer init
         endloop
         set PvpBettingMode = GetCheckboxVoteFromAnyDuplicates()
 
-        // Hero banning vote counting
+        // Hero ban vote counting
         set i = 1
         loop
             set CategoryVotes[i] = heroBanningModeCounts[i]
             set i = i + 1
             exitwhen i > 2
         endloop
+
+        // Get the vote result and flip its meaning
         set HeroBanningMode = GetCheckboxVoteFromAnyDuplicates()
+        if HeroBanningMode == 1 then
+            set HeroBanningMode = 2
+        elseif HeroBanningMode == 2 then
+            set HeroBanningMode = 1
+        endif
 
         // Simultaneous duel vote counting
         set i = 1

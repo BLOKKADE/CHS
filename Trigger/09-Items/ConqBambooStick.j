@@ -19,6 +19,8 @@ library ConqBambooStick initializer init requires CustomState, Utility
     endfunction
 
     struct ConqBambStickS extends array
+        implement Alloc
+        
         unit source
         integer hid
         integer tick
@@ -100,9 +102,11 @@ library ConqBambooStick initializer init requires CustomState, Utility
                 call this.destroy()
             endif
         endmethod  
+
+        implement T32x
     
         static method create takes unit source returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             set this.source = source
             set this.hid = GetHandleId(this.source)
             set this.tick = 0
@@ -120,11 +124,8 @@ library ConqBambooStick initializer init requires CustomState, Utility
             call this.reset()
             call UnitRemoveAbility(this.source, CONQ_BAMBOO_STICK_SUMMON_ABILITY_ID)
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastConqBambooStick takes unit u returns nothing

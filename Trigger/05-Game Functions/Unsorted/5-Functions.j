@@ -71,6 +71,13 @@ library Functions initializer init requires ExtradimensionalCooperation, Sorcere
             call SaveInteger(HT, hid, abilId, i1)
         endif 
 
+        if abilId == LUCKY_TRIGGER_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u, abilId)
+            set i2 = LoadInteger(HT, hid, abilId) 
+            call AddUnitCustomState(u, BONUS_LUCK, 0.005 * I2R(i1 - i2))	
+            call SaveInteger(HT, hid, abilId, i1)
+        endif 
+
         if abilId == DEMOLISH_ABILITY_ID then
             set i1 = GetUnitAbilityLevel(u, abilId)
             set i2 = LoadInteger(HT, hid, abilId) 
@@ -220,7 +227,7 @@ library Functions initializer init requires ExtradimensionalCooperation, Sorcere
         endif
 
         //Wolf Rider - Thrall
-        if GetUnitTypeId(u) == WOLF_RIDER_UNIT_ID and (T32_Tick - RoundTimer[pid]) / 32 < 8 + (0.01 * GetHeroLevel(u)) then
+        if GetUnitTypeId(u) == WOLF_RIDER_UNIT_ID and (T32_Tick - RoundTimer[pid]) / 32 < 8 + (0.02 * GetHeroLevel(u)) then
             set i1 = R2I(10 + (GetHeroLevel(u) * 1))
             set SpeedFreakBonus[GetHandleId(u)].integer[4] = SpeedFreakBonus[GetHandleId(u)].integer[4] + i1
             call SetBonus(u, 0, SpeedFreakBonus[GetHandleId(u)].integer[4])

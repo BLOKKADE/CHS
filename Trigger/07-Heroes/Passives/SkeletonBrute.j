@@ -1,6 +1,8 @@
 library SkeletonBrute requires AbilityCooldown
 
     struct SkeletonBruteStruct extends array
+        implement Alloc
+        
         unit source
         integer endTick
         effect fx
@@ -11,9 +13,11 @@ library SkeletonBrute requires AbilityCooldown
                 call this.destroy()
             endif
         endmethod 
+
+        implement T32x
     
         static method create takes unit source returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             //call BJDebugMsg("sl start")
             set this.source = source
             set this.endTick = T32_Tick + R2I((1 + (0.01 * GetHeroLevel(this.source))) * 32)
@@ -31,11 +35,8 @@ library SkeletonBrute requires AbilityCooldown
             set this.source = null
             //call BJDebugMsg("sl end")
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function SkeletonBrute takes unit u returns nothing

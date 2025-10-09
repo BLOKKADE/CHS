@@ -2,6 +2,7 @@ library Vampirism requires UnitItems, DivineBubble
     function Vamp takes unit source, unit target, real amount returns nothing
         local real V1 = 0
         local real V2 = 0
+        local real V3 = 0
         local integer i1 = 0
         
         //Bloodstone passive
@@ -25,6 +26,7 @@ library Vampirism requires UnitItems, DivineBubble
         
             set V1 = LoadReal(HT,GetHandleId(source),- 93000)
             set V2 = LoadReal(HT,GetHandleId(source),- 93001)
+            set V3 = LoadReal(HT,GetHandleId(source),- 93002)
             
             if V2 == 0 then
                 set V2 = 50
@@ -37,10 +39,12 @@ library Vampirism requires UnitItems, DivineBubble
                 set V1 = V1 - V2 
                 set V2 = V2 + 1
                 call BlzSetUnitMaxHP(source,BlzGetUnitMaxHP(source)+ 4)
+                set V3 = V3 + 4
             endloop
             
             call SaveReal(HT,GetHandleId(source),- 93000,V1)
             call SaveReal(HT,GetHandleId(source),- 93001,V2) 
+            call SaveReal(HT,GetHandleId(source),- 93002,V3)
         endif
 
         call ShowLifestealText(source, target, amount)

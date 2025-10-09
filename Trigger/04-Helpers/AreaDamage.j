@@ -42,6 +42,7 @@ library AreaDamage requires DamageEngine, UnitHelpers
             set i = i + 1
         endloop
 
+        call ReleaseTimer(t)
         set t = null
         set data.source = null
         call data.destroy()

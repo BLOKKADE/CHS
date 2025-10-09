@@ -12,7 +12,7 @@ library ManifoldStaff initializer init requires RandomShit, AbilityData, DummyOr
         local integer i = 0
         local unit p = null
         local real range = BlzGetAbilityRealLevelField(BlzGetUnitAbility(caster, abilId), ABILITY_RLF_CAST_RANGE, lvl - 1)
-        local integer limit = 10
+        local integer limit = 5
         local boolean ally = false
         local player owner = GetOwningPlayer(caster)
         local real mana = BlzGetAbilityManaCost(abilId, lvl - 1) * 0.6

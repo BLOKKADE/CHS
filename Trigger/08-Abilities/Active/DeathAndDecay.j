@@ -1,5 +1,7 @@
 library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
     struct DndStruct extends array
+        implement Alloc
+
         unit source
         integer level
         integer pid
@@ -11,18 +13,21 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
         private method damage takes nothing returns nothing
             local unit p
             local integer i = 0
+            local real dmg
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, this.x, this.y, 300, Player(this.pid), false, Target_Any)
-            //call BJDebugMsg("sldmg")
-            //call BJDebugMsg("dmg: " + I2S(GetSpellValue(50, 10, this.level)) + " grp: " + I2S(BlzGroupGetSize(ENUM_GROUP)))
             loop
-                set p = BlzGroupUnitAt(ENUM_GROUP, i)
-                exitwhen p == null
-                if p != null then
-                    set udg_NextDamageAbilitySource = DEATH_AND_DECAY_ABILITY_ID
-                    call Damage.applyMagic(this.source, p, BlzGetUnitMaxHP(p) * (0.01 * this.level), false, DAMAGE_TYPE_MAGIC)
+            set p = BlzGroupUnitAt(ENUM_GROUP, i)
+            exitwhen p == null
+            if p != null then
+                set udg_NextDamageAbilitySource = DEATH_AND_DECAY_ABILITY_ID
+                set dmg = BlzGetUnitMaxHP(p) * (0.01 * this.level)
+                if GetUnitAbilityLevel(p, 'B00N') >= 1 then
+                set dmg = dmg * 0.5
                 endif
-                set i = i + 1
+                call Damage.applyMagic(this.source, p, dmg, false, DAMAGE_TYPE_MAGIC)
+            endif
+            set i = i + 1
             endloop
         endmethod
     
@@ -38,6 +43,8 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
             endif
         endmethod 
 
+        implement T32x
+
         private method createDummy takes real duration returns nothing
             local DummyOrder dummy = DummyOrder.create(this.source, this.x, this.y, 0, duration)
             call dummy.addActiveAbility(DEATH_AND_DECAY_DUMMY_ABILITY_ID, 1, 852221)
@@ -46,7 +53,7 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
         endmethod
 
         static method create takes unit source, real x, real y, integer level returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
            // call BJDebugMsg("sl start")
             set this.source = source
             set this.endTick = T32_Tick + (25 * 32)
@@ -64,11 +71,8 @@ library DeathAndDecay requires UnitHelpers, RandomShit, SpellFormula
         method destroy takes nothing returns nothing
             set this.source = null
             //call BJDebugMsg("sl end")
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastDeathAndDecay takes unit caster, real x, real y, integer level returns nothing

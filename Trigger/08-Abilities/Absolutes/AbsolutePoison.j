@@ -13,6 +13,8 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
     endfunction
 
     struct AbsolutePoisonStruct extends array
+        implement Alloc
+        
         unit target
         unit source
         integer startTick
@@ -107,8 +109,10 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             endif
         endmethod 
 
+        implement T32x
+
         static method create takes unit source, unit target returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             set this.target = target
             set this.source = source
             set this.reduction = 0
@@ -128,11 +132,8 @@ library AbsolutePoison initializer init requires CustomState, Table, EditAbility
             //call BlzSetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE, BlzGetUnitRealField(this.target, UNIT_RF_HIT_POINTS_REGENERATION_RATE) + this.reduction)
             set this.target = null
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function UpdateAbilityField takes unit u, integer abilId, abilityreallevelfield arlf, integer level, real bonus returns nothing

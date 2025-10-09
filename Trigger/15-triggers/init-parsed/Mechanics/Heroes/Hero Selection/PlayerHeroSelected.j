@@ -16,18 +16,20 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_III_UNIT_ID, -372, 707, 270.00))
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_II_UNIT_ID, -620, 707, 270.00))
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_VI_UNIT_ID, -620, 707 + 248, 270.00))
+            call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_VII_UNIT_ID, -372, 955, 270.00))
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_I_UNIT_ID, -868, 707, 270.00))
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_V_UNIT_ID, -868, 707 + 248, 270.00))  	 	 
             call SetShopIndex(CreateUnit(p, CHRONUS_SPELLS_UNIT_ID, -1116, 707, 270.00))
             call SetShopIndex(CreateUnit(p, AUTOCAST_TOGGLE_SPELLS_UNIT_ID, 124, 707, 270.00))
-            call SetShopIndex(CreateUnit(p, SUMMON_SPELLS_UNIT_ID, 372, 707, 270.00))
-            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_I_UNIT_ID, 620, 707, 270.00)) 
-            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_II_UNIT_ID, 868, 707, 270.00))
-            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_III_UNIT_ID, 1116, 707, 270.00))
-            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_IV_UNIT_ID, 1116, 707 + 248, 270.00))
-            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_V_UNIT_ID, 868, 707 + 248, 270.00))
-            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VI_UNIT_ID, 620, 707 + 248, 270.00))
-            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VII_UNIT_ID, 372, 707 + 248, 270.00))
+            call SetShopIndex(CreateUnit(p, SUMMON_SPELLS_UNIT_ID, -1116, 707 + 248, 270.00))
+            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_I_UNIT_ID, 372, 707, 270.00)) 
+            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_II_UNIT_ID, 620, 707, 270.00))
+            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_III_UNIT_ID, 868, 707, 270.00))
+            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_IV_UNIT_ID, 1116, 707, 270.00))
+            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_V_UNIT_ID, 1116, 707 + 248, 270.00))
+            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VI_UNIT_ID, 868, 707 + 248, 270.00))
+            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VII_UNIT_ID, 620, 707 + 248, 270.00))
+            call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VIII_UNIT_ID, 372, 707 + 248, 270.00))
         endif
         
  // call SetShopIndex(CreateUnit(p, SUMMON_BUFFS_SHOP_UNIT_ID, -868, -1152, 270.00))
@@ -67,6 +69,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false)
 
         call TriggerExecute(StartLevelTrigger)
     endfunction
@@ -97,6 +100,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         // Show the scoreboard to everyone, hide it after some time, then start the game
         call ForForce(GetPlayersAll(), function ShowScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, true)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, true)
 
         set GameStartTimer = CreateTimer()
         set GameStartTimerDialog = CreateTimerDialog(GameStartTimer)

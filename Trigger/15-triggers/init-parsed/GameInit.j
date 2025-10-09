@@ -68,6 +68,9 @@ library GameInit initializer init requires GroupUtils
         integer RoundCreepChanceSlow = 0
         integer RoundCreepChanceThorns = 0
         integer RoundCreepChanceThunderClap = 0
+        integer RoundCreepChanceBackStab = 0
+        //integer RoundCreepChanceRandomSpell = 0
+        integer RoundCreepChanceShadowStrike = 0
         integer RoundCreepMaxAttackSpeed = 0
         integer RoundCreepMoveSpeed = 0
         integer RoundCreepNumber = 0
@@ -78,8 +81,8 @@ library GameInit initializer init requires GroupUtils
         integer SpawnedHeroCount = 0
         integer SuddenDeathTick = 0
         integer udg_integer41 = 0
-        integer udg_integer59 = 0
-        integer udg_integer61 = 0
+        integer BaseCreepBounty = 0
+        integer BountyDivisionOffset = 0
         integer udg_integer63 = 0
         integer UnknownInteger01 = 0
         integer TryLearnRandomAbilityAttempts = 0
@@ -116,6 +119,8 @@ library GameInit initializer init requires GroupUtils
         sound udg_sound23 = null
         sound udg_sound24 = null
         sound udg_sound25 = null
+        sound itembuddyarrivalsound = null
+        sound rescuesound = null
         string array RoundCreepInfo
         string RoundAbilities = ""
         string RoundCreepTitle
@@ -291,6 +296,12 @@ library GameInit initializer init requires GroupUtils
         set udg_sound25 = CreateSound("Sound\\Interface\\QuestLog.wav", false, false, false, 10, 10, "")
         call SetSoundParamsFromLabel(udg_sound25, "QuestUpdate")
         call SetSoundDuration(udg_sound25, 2275)
+        set itembuddyarrivalsound = CreateSound("Sound\\Time\\DayBreakRooster.wav", false, false, false, 10, 10, "")
+        call SetSoundParamsFromLabel(itembuddyarrivalsound, "DayBreakRooster")
+        call SetSoundDuration(itembuddyarrivalsound, 3796)
+        set rescuesound = CreateSound("Sound\\Interface\\Rescue.wav", false, false, false, 10, 10, "")
+        call SetSoundParamsFromLabel(rescuesound, "DayBreakRooster")
+        call SetSoundDuration(rescuesound, 3796)
     endfunction
 
     private function StartGame takes nothing returns nothing

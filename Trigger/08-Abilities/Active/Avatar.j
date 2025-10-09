@@ -9,6 +9,8 @@ library Avatar initializer init requires NewBonus, RandomShit, RemoveBuffDelay
     endfunction
 
     struct AvatarStruct extends array
+        implement Alloc
+        
         unit source
         integer endTick
         integer level
@@ -23,6 +25,8 @@ library Avatar initializer init requires NewBonus, RandomShit, RemoveBuffDelay
                 call this.destroy()
             endif
         endmethod 
+
+        implement T32x
 
         method removeBonuses takes nothing returns nothing
             call UnitRemoveAbility(this.source, 'A0AD')
@@ -46,7 +50,7 @@ library Avatar initializer init requires NewBonus, RandomShit, RemoveBuffDelay
         endmethod
     
         static method create takes unit source, integer level returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             call RemoveBuffsDelayed(source, 1, 0.2)
             set this.source = source
             set this.level = level
@@ -68,11 +72,8 @@ library Avatar initializer init requires NewBonus, RandomShit, RemoveBuffDelay
             set this.source = null
             //call BJDebugMsg("db end")
             //call BJDebugMsg("ms end: " + I2S(this.bonus))
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastAvatar takes unit caster, integer level returns nothing

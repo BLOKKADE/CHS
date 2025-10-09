@@ -48,6 +48,7 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         call SetCurrentlyFighting(currentPlayer, true)
 
         // Cleanup
+        set SuddenDeathEnabled = false
         set currentPlayer = null
         set playerHero = null
         set playerArena = null
@@ -100,6 +101,9 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
             call DisplayTextToForce(GetPlayersAll(), GameDescription)
             call DisplayTextToForce(GetPlayersAll(), "|c00F08000Level " + I2S(RoundNumber)+ "|r")
             call ConditionalTriggerExecute(EnterShopModeTrigger)
+            if DEBUG then
+                call BJDebugMsg("|c0051ee5eDEBUG MODE IS ENABLED!!!\nTURN THIS OFF BEFORE RELEASE|r") 
+            endif
         endif
 
         call ForceClear(RoundPlayersCompleted)
@@ -107,13 +111,15 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         set RoundFinishedCount = 0
         call ConditionalTriggerExecute(UpdateItemsTrigger)
         call ForForce(GetPlayersAll(), function UpdateRoundNumberForPlayer)
+        
 
+        // BountyDivisionOffset compensates for gold lost from integer division, ensuring full rewards
         if (ElimModeEnabled == true or GameModeShort == true) then
-            set udg_integer59 = (200 * RoundNumber) / RoundCreepNumber
-            set udg_integer61 = (200 * RoundNumber) - (udg_integer59 * RoundCreepNumber)
+            set BaseCreepBounty = (200 * RoundNumber) / RoundCreepNumber
+            set BountyDivisionOffset = (200 * RoundNumber) - (BaseCreepBounty * RoundCreepNumber)
         else
-            set udg_integer59 = (80 * RoundNumber) / RoundCreepNumber
-            set udg_integer61 = (80 * RoundNumber) - (udg_integer59 * RoundCreepNumber)
+            set BaseCreepBounty = (80 * RoundNumber) / RoundCreepNumber
+            set BountyDivisionOffset = (80 * RoundNumber) - (BaseCreepBounty * RoundCreepNumber)
         endif
 
         set validPlayerForce = GetPlayersMatching(Condition(function IsValidPlayer))

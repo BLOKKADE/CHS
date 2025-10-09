@@ -5,6 +5,8 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
     endglobals
 
     struct PeriodicDamage extends array
+        implement Alloc
+
         real dmg
         unit target
         unit caster
@@ -52,6 +54,8 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
                 call this.destroy()
             endif
         endmethod  
+        
+        implement T32x
 
         method addFx takes string fx, string attachPoint returns thistype
             set this.fx = fx
@@ -82,7 +86,7 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
         endmethod
 
         static method create takes unit caster, unit target, real intervalDmg, boolean magic, real interval, real duration, real lifeDamage, boolean allowRecursion, integer buffId, integer abilId returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.abilId = abilId
             set this.limitAbilId = 0
@@ -112,11 +116,8 @@ library PeriodicDamage initializer init requires DivineBubble, DamageEngine, Hid
             set this.caster = null
             set this.target = null
 
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     private function init takes nothing returns nothing

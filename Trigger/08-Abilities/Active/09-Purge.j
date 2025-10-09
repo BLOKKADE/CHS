@@ -1,55 +1,91 @@
-library Purge requires RandomShit
-    function PurgeTimer takes nothing returns nothing
-        local timer t = GetExpiredTimer()
-        local real duration = LoadReal(HT, GetHandleId(t), 1) - 1
-        local unit target = LoadUnitHandle(HT,GetHandleId(t),2)
-        if duration <= 0 then
-            call ReleaseTimer(t)
-            call FlushChildHashtable(HT,GetHandleId(t))
-        else
-            call CreateTextTagTimer(I2S(R2I(duration)) , 1 , GetUnitX(target) , GetUnitY(target) , 50 , 1)
-            call SaveReal(HT, GetHandleId(t), 1, duration)
-        endif
-        
-        set t = null
-        set target = null
-    endfunction
+library Purge requires RandomShit, TimerUtils
 
-    function PurgeCast takes nothing returns nothing
-        local timer t = GetExpiredTimer()
-        local unit source = LoadUnitHandle(HT,GetHandleId(t),1)
-        local unit target = LoadUnitHandle(HT,GetHandleId(t),2)
-        if IsUnitType(target, UNIT_TYPE_HERO) != true or IsUnitIllusion(target) then
-            set udg_NextDamageAbilitySource = PURGE_ABILITY_ID
-            call Damage.apply(source, target, BlzGetUnitMaxHP(target) * 0.75, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+
+
+    struct SpeedReset
+        unit u
+        real originalSpeed
+
+        static method onExpire takes nothing returns nothing
+            local timer t = GetExpiredTimer()
+            local SpeedReset this = GetTimerData(t)
+
+            if IsUnitAliveBJ(this.u) then
+                call SetUnitMoveSpeed(this.u, RMaxBJ(100.0, RMinBJ(this.originalSpeed, 522.0)))
+            endif
+
+            call ReleaseTimer(t)
+            call this.destroy()
+        endmethod
+
+        static method apply takes unit u, real newSpeed returns nothing
+            local SpeedReset this = SpeedReset.create()
+            local timer t = NewTimer()
+
+            set this.u = u
+            set this.originalSpeed = GetUnitMoveSpeed(u) // Store BEFORE changing
+
+            call SetUnitMoveSpeed(u, RMaxBJ(100.0, RMinBJ(newSpeed, 522.0)))
+            call SetTimerData(t, this)
+            call TimerStart(t, 5.0, false, function SpeedReset.onExpire)
+        endmethod
+    endstruct
+
+    function PurgeSingle takes unit source, unit target, integer lvl returns nothing
+        local player owner = GetOwningPlayer(source)
+        local boolean isAlly = IsPlayerAlly(GetOwningPlayer(target), owner)
+        local integer targetId = GetUnitTypeId(target)
+        local real dmg = BlzGetUnitMaxHP(target) * 0.50
+        local real currentSpeed = GetUnitMoveSpeed(target)
+
+        if GetUnitAbilityLevel(target, 'B00N') >= 1 then
+            set dmg = dmg * 0.5
         endif
-        call RemoveUnitBuffs(target, BUFFTYPE_POSITIVE, false)
-        call FlushChildHashtable(HT,GetHandleId(t))
-        
-        set t = null
-        set source = null
-        set target = null
+
+        if not isAlly and not IsCreepUnitType(targetId) and (IsUnitIllusion(target) or not IsUnitType(target, UNIT_TYPE_HERO) or targetId == STOMP_TREE_UNIT_ID) then
+            set udg_NextDamageAbilitySource = PURGE_ABILITY_ID
+            call Damage.apply(source, target, dmg, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+        endif
+
+        if isAlly then
+            call RemoveUnitBuffs(target, BUFFTYPE_NEGATIVE, false)
+            call SpeedReset.apply(target, currentSpeed + 1000.0)
+        else
+            call RemoveUnitBuffs(target, BUFFTYPE_POSITIVE, false)
+            call SpeedReset.apply(target, currentSpeed * 0.5)
+        endif
+
+        call TempFx.target("Abilities\\Spells\\Items\\AIlb\\AIlbTarget.mdl", target, "overhead", 1.0, false)
     endfunction
 
     function Purge takes unit source, unit target, integer lvl returns nothing
-        local timer t = NewTimer()
-        local real delay = 4.2 - (0.14 * lvl)
-        call SaveUnitHandle(HT,GetHandleId(t),1,source)
-        call SaveUnitHandle(HT,GetHandleId(t),2,target)
-        call TimerStart(t, delay, false, function PurgeCast)    
-        
-        if delay > 0 then
-            call TempFx.target("Abilities\\Spells\\Items\\AIlb\\AIlbTarget.mdl", target, "overhead", delay, false)
+        local integer i = 0
+        local group g
+        local unit u
+        local boolean targetIsAlly = IsPlayerAlly(GetOwningPlayer(target), GetOwningPlayer(source))
+
+        if UnitHasItemOfTypeBJ(source, 'I0A0') then
+            set g = CreateGroup()
+            call GroupEnumUnitsInRange(g, GetUnitX(source), GetUnitY(source), 700.0, null)
+
+            loop
+                set u = FirstOfGroup(g)
+                exitwhen u == null or i >= 10
+                call GroupRemoveUnit(g, u)
+
+                if IsUnitAliveBJ(u) and IsPlayerAlly(GetOwningPlayer(u), GetOwningPlayer(source)) == targetIsAlly then
+                    call PurgeSingle(source, u, lvl)
+                    set i = i + 1
+                endif
+            endloop
+
+            call DestroyGroup(g)
+        else
+            call PurgeSingle(source, target, lvl)
         endif
-        
-        if delay > 1 then
-            set t = NewTimer()
-            call SaveReal(HT, GetHandleId(t), 1, delay)
-            call SaveUnitHandle(HT,GetHandleId(t),2,target)
-            call CreateTextTagTimer(I2S(R2I(delay)) , 1 , GetUnitX(target) , GetUnitY(target) , 50 , 1)
-            call TimerStart(t, 1, true, function PurgeTimer)
-        endif
-        
-        set t = null
+
+        set g = null
+        set u = null
     endfunction
+
 endlibrary

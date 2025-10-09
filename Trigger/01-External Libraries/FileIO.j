@@ -88,15 +88,17 @@ library FileIO
                 set this.filename = filename
                 set this.buffer = null
                 
-                debug if (this >= JASS_MAX_ARRAY_SIZE) then
-                debug   call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0, 120, "FileIO(" + filename + ") WARNING: Maximum instance limit " + I2S(JASS_MAX_ARRAY_SIZE) + " reached.")
-                debug endif
+            static if DEBUG then
+                if (this >= JASS_MAX_ARRAY_SIZE) then
+                    call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0, 120, "FileIO(" + filename + ") WARNING: Maximum instance limit " + I2S(JASS_MAX_ARRAY_SIZE) + " reached.")
+                endif
+            endif
                 
                 return this
             endmethod
             
             // This is used to detect invalid characters which aren't supported in preload files.
-            static if (DEBUG_MODE) then
+            static if DEBUG then
                 private static method validateInput takes string contents returns string
                     local integer i = 0
                     local integer l = StringLength(contents)
@@ -122,10 +124,12 @@ library FileIO
                 local integer lev = 0
                 local string prefix = "-" // this is used to signify an empty string vs a null one
                 local string chunk
-                debug if (.validateInput(contents) != null) then
-                debug   call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0, 120, "FileIO(" + filename + ") ERROR: Invalid character |cffffcc00" + .validateInput(contents) + "|r")
-                debug   return this
-                debug endif
+            static if DEBUG then
+                if (.validateInput(contents) != null) then
+                  call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0, 120, "FileIO(" + filename + ") ERROR: Invalid character |cffffcc00" + .validateInput(contents) + "|r")
+                  return this
+                endif
+            endif
                 
                 set this.buffer = null
                 
@@ -140,9 +144,11 @@ library FileIO
                 loop
                     exitwhen i >= len
                     
-                    debug if (c >= .AbilityCount) then
-                    debug call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0, 120, "FileIO(" + filename + ") ERROR: String exceeds max length (" + I2S(.AbilityCount * .PreloadLimit) + ").|r")
-                    debug endif
+                static if DEBUG then
+                    if (c >= .AbilityCount) then
+                        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0, 120, "FileIO(" + filename + ") ERROR: String exceeds max length (" + I2S(.AbilityCount * .PreloadLimit) + ").|r")
+                    endif
+                endif
                     
                     set lev = 0
                     static if (BACKWARDS_COMPATABILITY) then
@@ -312,7 +318,7 @@ library FileIO
                 
                 // Backwards compatability check
                 static if (BACKWARDS_COMPATABILITY) then
-                    static if (DEBUG_MODE) then
+                    static if (DEBUG) then
                         set originalTooltip = BlzGetAbilityTooltip(File.AbilityList[0], 1)
                         call BlzSetAbilityTooltip(File.AbilityList[0], SCOPE_PREFIX, 1)
                         if (BlzGetAbilityTooltip(File.AbilityList[0], 1) == originalTooltip) then

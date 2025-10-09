@@ -1,19 +1,21 @@
 library CheaterMagic requires BuffLevel, RandomShit, TimeManipulation
     struct CheaterMagicStruct extends array
+        implement Alloc
+
         unit source
         integer endTick
-    
-        
-    
+
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or HasPlayerFinishedLevel(this.source, GetOwningPlayer(this.source)) or not UnitAlive(this.source) then
                 call this.stopPeriodic()
                 call this.destroy()
             endif
-        endmethod  
+        endmethod
+
+        implement T32x
     
         static method create takes unit source, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
 
@@ -33,10 +35,7 @@ library CheaterMagic requires BuffLevel, RandomShit, TimeManipulation
                 call UnitRemoveAbility(this.source, CHEATER_MAGIC_BUFF_ID)
             endif
             set this.source = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 endlibrary

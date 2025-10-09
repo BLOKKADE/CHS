@@ -47,9 +47,9 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Wind Runestone
         if UnitHasItemType(u,WIND_RUNESTONE_ITEM_ID) and IsSpellElement(u,id,Element_Wind) then            
-            if BlzGetUnitAbilityCooldownRemaining(u,WIND_RUNESTONE_ABIL_ID) <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 500 then
+            if BlzGetUnitAbilityCooldownRemaining(u,WIND_RUNESTONE_ABIL_ID) <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 2000 then
                 call UnitAddItem(u,CreateRune(null, 0,0,0,u,Element_Wind)  )
-                call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 500)
+                call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 2000)
                 call AbilStartCD(u,WIND_RUNESTONE_ABIL_ID,GetRuneCooldown(Element_Wind) ) 
             endif
         endif
@@ -128,7 +128,9 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Dark
         if GetUnitAbilityLevel(u,ABSOLUTE_DARK_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Dark) then
-            call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), 8, 500, false)
+            call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), 2, 200, false)
+            call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), 2, 450, false)
+            call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), 2, 700, false)
         endif
 
         if GetUnitAbilityLevel(u, ABSOLUTE_COLD_ABILITY_ID) > 0 and IsSpellElement(u, id, Element_Cold) then
@@ -156,7 +158,7 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Stone Helmet
         if UnitHasItemType(u,'I090') and IsSpellElement(u,id,Element_Earth) then   
-            if GetRandomReal(0,100) <= 30 * luck then 
+            if GetRandomReal(0,100) <= (30 + LuckyTriggerBonusChance(u)) * luck then 
                 set U = CreateUnit( GetOwningPlayer(u),'h01M',GetUnitX(u)+ 40 * CosBJ(- 30 + GetUnitFacing(u)),GetUnitY(u)+ 40 * SinBJ(- 30 + GetUnitFacing(u)),GetUnitFacing(u) )
                 call BlzSetUnitMaxHP(U, BlzGetUnitMaxHP(U)- 3000 + GetHeroLevel(u)*(2500 + 50 * GetHeroLevel(u)))
                 call AddUnitCustomState(U, BONUS_BLOCK,100 + 50 * GetHeroLevel(u) )

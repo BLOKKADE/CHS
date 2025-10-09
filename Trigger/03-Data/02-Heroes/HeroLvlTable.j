@@ -59,6 +59,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(MAULER_UNIT_ID, 0, "|cffe7544aLight bonus|r: ,0,")
 
+        call SetBonusStr(BANSHEE_UNIT_ID, 0, "|cffe7544aDamage to mana conversion|r: ,0,%")
+
         call SetBonusStr(BLOOD_MAGE_UNIT_ID, 0, "|cffe7544aIntelligence needed for 1 magic power|r: ,0,")
 
         call SetBonusStr(MORTAR_TEAM_UNIT_ID, 0, "|cffe7544aDamage bonus|r: ,0,%%")
@@ -100,7 +102,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(BLADE_MASTER_UNIT_ID, 0, "|cffe7544aDamage|r: ,0,")
         call SetBonusStr(BLADE_MASTER_UNIT_ID, 1, "|cffd6e049Area of effect|r: ,0,")
-        call SetBonusStr(BLADE_MASTER_UNIT_ID, 2, "|cff4daed4Armor ignored|r: ,0,%")
+        //call SetBonusStr(BLADE_MASTER_UNIT_ID, 2, "|cff4daed4Armor ignored|r: ,0,%")
         call SetBonusStr(BLADE_MASTER_UNIT_ID, 3, "|cff51d44dAttacks required|r: ,0,")
 
         call SetBonusStr(ORC_CHAMPION_UNIT_ID, 0, "|cffe7544aArmor bonus|r: ,0,")
@@ -128,7 +130,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(WAR_GOLEM_UNIT_ID, 0, "|cffe7544aHit point bonus|r: ,0,%%")
 
-        call SetBonusStr(WITCH_DOCTOR_UNIT_ID, 0, "|cffe7544aAbsolute slot bonus|r: ,0,")
+        call SetBonusStr(WITCH_DOCTOR_UNIT_ID, 0, "|cffe7544aAbsolute slots|r: ,0,")
 
         call SetBonusStr(RANGER_UNIT_ID, 0, "|cffe7544aBase Crit bonus|r: ,0,%%")
 
@@ -185,6 +187,9 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
         call SetBonusStr(ARENA_MASTER_UNIT_ID, 0, "|cffe7544aTotal glory gained|r: ,0,")
 
         call SetBonusStr(SEER_UNIT_ID, 0, "|cffe7544aChance|r: ,0,%%")
+
+        call SetBonusStr(STOMP_TREE_UNIT_ID, 0, "|cffe7544aWild bonus|r: ,0,")
+        call SetBonusStr(STOMP_TREE_UNIT_ID, 1, "|cffd1e32fSummon Upgrade gains|r: ,0,%")
     endfunction
 
     private function init takes nothing returns nothing

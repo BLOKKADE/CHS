@@ -16,17 +16,18 @@ library StableSpells initializer init
         set StableSpells.boolean[LAST_BREATHS_ABILITY_ID] = true
         set StableSpells.boolean[ARCANE_STRIKE_ABILITY_ID] = true
         set StableSpells.boolean[ARCANE_RUNESTONE_ABIL_ID] = true
-        set StableSpells.boolean['A08P'] = true
+        set StableSpells.boolean['A08P'] = true //thunder witch cooldown
         set StableSpells.boolean[RESET_TIME_ABILITY_ID] = true
         set StableSpells.boolean[ANCIENT_TEACHING_ABILITY_ID] = true
         set StableSpells.boolean[URN_ABIL_ID] = true
-        set StableSpells.boolean['A0AH'] = true
+        set StableSpells.boolean['A0AH'] = true //rock golem cooldown
         set StableSpells.boolean[SAND_OF_TIME_ABILITY_ID] = true
         set StableSpells.boolean[TIME_MANIPULATION_ABILITY_ID] = true
         set StableSpells.boolean[LIQUID_FIRE_ABILITY_ID] = true
         set StableSpells.boolean[ENVENOMED_WEAPONS_ABILITY_ID] = true
-        set StableSpells.boolean['A0B6'] = true
-        set StableSpells.boolean['A0BA'] = true
+        set StableSpells.boolean['A0B6'] = true //pyromancer cooldown
+        set StableSpells.boolean['A0DV'] = true //dried mushroom
+        set StableSpells.boolean['A0BA'] = true //skeleton brute
         set StableSpells.boolean[CONTRACT_LIVING_ABIL_ID] = true
         set StableSpells.boolean[REINCARNATION_ABILITY_ID] = true
         set StableSpells.boolean[ANCIENT_RUNES_ABILITY_ID] = true
@@ -43,6 +44,10 @@ library StableSpells initializer init
         set StableSpells.boolean[CHEATER_MAGIC_ABILITY_ID] = true
         set StableSpells.boolean[BLESSED_PROTECTIO_ABILITY_ID] = true
         set StableSpells.boolean[RAPID_RECOVERY_ABILITY_ID] = true
+        set StableSpells.boolean[MYSTERIOUS_RUNESTONE_ABIL_ID] = true
         set StableSpells.boolean[DEMONS_CURSE_ABILITY_ID] = true
+        set StableSpells.boolean[ACTIVATE_AVATAR_ABILITY_ID] = true
+        set StableSpells.boolean[DOUSING_HE_ABILITY_ID] = true
+        set StableSpells.boolean[PHASE_SHIFT_ABILITY_ID] = true
     endfunction
 endlibrary

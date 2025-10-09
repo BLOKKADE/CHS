@@ -1,4 +1,4 @@
-library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor, SpiritTauren, Letinant, MartialRetribution
+library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor, SpiritTauren, Letinant, MartialRetribution, NewBonus
     
     globals
         integer array LastLvlHero
@@ -28,6 +28,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         local integer levelsGained = heroLevel - prevLevel
         local integer hid = GetHandleId(u)
         local integer i = 0
+        local integer randBonus = GetRandomInt(0, 2)
 
         if u == null then
             set u = null
@@ -62,6 +63,34 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, 40 * (heroLevel))
         elseif uid == DRUID_OF_THE_CLAY_UNIT_ID then
             call SetBonus(u, 0, 1 * heroLevel)
+
+        elseif uid == STOMP_TREE_UNIT_ID then  
+            set i = prevLevel + 1
+            call SetBonus(u, 1, 50 + 50 * (heroLevel / 175.0))
+            loop
+                exitwhen i > heroLevel
+
+                if ModuloInteger(i, 65) == 0 then
+                    // Add 1 wild element
+                    call UpdateBonus(u, 0, 1)
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, GetFullElementText(5) + " |cffffcc00bonus acquired|r")
+                endif
+
+                if i == 125 then
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+Your|r [|cff9e5d07Summon|r]|cff00ff4c units can walk through each other!|r") 
+                endif
+
+                if i == 150 then
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+Pulling/Pushing Immunity!|r")
+                endif
+
+                if i == 175 then
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, "|cff00ff4c+1.33% Max HP heal per second!|r")   
+                endif
+
+                set i = i + 1
+            endloop
+
         elseif uid == MAULER_UNIT_ID then  
             set i = prevLevel + 1
             loop
@@ -87,6 +116,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 1, NagaSirenBonus.integer[hid])
         elseif uid == DEMON_HUNTER_UNIT_ID then 
             call SetBonus(u, 0, heroLevel * 20)
+        elseif uid == BANSHEE_UNIT_ID then 
+            call SetBonus(u, 0, 5 + (heroLevel * 0.2))
         elseif uid == DEADLORD_UNIT_ID then   
             call SetBonus(u, 0, heroLevel * 0.5)
         elseif uid == PYROMANCER_UNIT_ID then   
@@ -120,13 +151,13 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 1, SorcererAmount[hid])
         elseif uid == WOLF_RIDER_UNIT_ID then       
             call SetBonus(u, 1, 10 + heroLevel)
-            call SetBonus(u, 2, 8 + (0.01 * heroLevel))
+            call SetBonus(u, 2, 8 + (0.02 * heroLevel))
         elseif uid == BLADE_MASTER_UNIT_ID then          
             set i = prevLevel + 1
             loop
                 if ModuloInteger(i, 20) == 0 and BladestormAttackLimit.integer[hid] > 1 then
                     set BladestormAttackLimit[hid] = BladestormAttackLimit[hid] - 1
-                    set BladestormArmorPierceBonus[hid] = BladestormArmorPierceBonus[hid] + 2
+                    //set BladestormArmorPierceBonus[hid] = BladestormArmorPierceBonus[hid] + 2
                 endif
     
                 set i = i + 1
@@ -135,7 +166,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
 
             call SetBonus(u, 0, 35 * heroLevel)
             call SetBonus(u, 1, 297 + 3 * heroLevel)
-            call SetBonus(u, 2, 30 + BladestormArmorPierceBonus[hid])
+            //call SetBonus(u, 2, 30 + BladestormArmorPierceBonus[hid])
             call SetBonus(u, 3, BladestormAttackLimit[hid])
         elseif uid == ORC_CHAMPION_UNIT_ID then   
             call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 5 * levelsGained)
@@ -159,7 +190,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call UpdateBonus(u, 0, 200 * levelsGained)   
             call ResourseRefresh(GetOwningPlayer(u)) 
         elseif uid == BEAST_MASTER_UNIT_ID then                  
-            call SetBonus(u, 0, R2I(heroLevel / 3))   
+            call SetBonus(u, 0, R2I(heroLevel / 4))   
         elseif uid == FALLEN_RANGER_UNIT_ID then                          
             call SetUnitAbilityLevel(u, 'A031', 2)
             call BlzSetAbilityRealLevelField(BlzGetUnitAbility(u, 'A031'),ABILITY_RLF_ARMOR_BONUS_HAD1, 0, 0 - (heroLevel * 3))         
@@ -226,8 +257,6 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, (heroLevel / 10) + 1)
         elseif uid == GHOUL_UNIT_ID then
             call SetBonus(u, 0, (2.5 + (0.025 * heroLevel)))
-        elseif uid == BANSHEE_UNIT_ID then
-
         elseif uid == CRYPT_LORD_UNIT_ID then      
             set CryptLordLocustCount.integer[hid] = 1 + ((heroLevel - ModuloInteger(heroLevel, 10)) / 10)
             call SetBonus(u, 0, 60 * heroLevel)
@@ -255,7 +284,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call AddUnitCustomState(u, BONUS_MAGICPOW, 1.5 * levelsGained)
             call UpdateBonus(u, 0, 1.5 * levelsGained)   
         endif
-        
+
         call UpdateAbilityDescriptionLevelup(u, p, GetHeroLevel(u))
         set LastLvlHero[pid] = heroLevel  
 

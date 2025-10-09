@@ -6,7 +6,7 @@ library FixUnit initializer init
         endif
 
         if GetUnitTypeId(GetTriggerUnit()) == URSA_WARRIOR_UNIT_ID then
-            call BlzSetUnitSkin(GetTriggerUnit(), 'nfrl')
+            call BlzSetUnitSkin(GetTriggerUnit(), 'nfpl')
         endif
     endfunction
 

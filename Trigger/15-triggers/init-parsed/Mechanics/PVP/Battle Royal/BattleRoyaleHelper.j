@@ -18,16 +18,16 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
         integer array PreBRItemCharges
 
         // Timer properties
-        integer BattleRoyalRemoveLifeLowTime = 120
-        integer BattleRoyalRemoveLifeHighTime = 140
+        integer BattleRoyalRemoveLifeLowTime = 240
+        integer BattleRoyalRemoveLifeHighTime = 280
 
         integer BattleRoyaleStartTime = 0
         integer BattleRoyaleEndTime = 0
         integer FunBattleRoyaleStartTime = 0
         integer FunBattleRoyaleEndTime = 0
 
-        integer BattleRoyalFunWaitTime = 30
-        integer BattleRoyalWaitTime = 120
+        integer BattleRoyalFunWaitTime = 45
+        integer BattleRoyalWaitTime = 180
         integer BattleRoyalReviewWaitTime = 30
         integer FunBattleRoyalPrepTime = 120
         timer BattleRoyalTimer
@@ -478,6 +478,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false)
 
         // Reset the dead hero count
         set CurrentDeadHeroCount = 0
@@ -584,7 +585,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
 
         set WaitingForBattleRoyal = true
         
-        call SetUpItemStocks(GetValidPlayerForce())
+        
         
         call TimerStart(BattleRoyalTimer, BattleRoyalWaitTime, false, function FinalizeBattleRoyaleSetup)
     endfunction
@@ -595,6 +596,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
 
         call ForForce(GetPlayersAll(), function HideScoreboardForPlayer) 
         call BlzFrameSetVisible(ScoreboardFrameHandle, false)
+        call BlzFrameSetVisible(ScoreboardDarkerFrameHandle, false)
 
         set BattleRoyalTimer = CreateTimer()
         set BattleRoyalTimerDialog = CreateTimerDialog(BattleRoyalTimer)

@@ -1,12 +1,12 @@
 library AbsoluteArcane requires CustomState, DivineBubble
     
     struct AbsoluteArcaneStruct extends array
+        implement Alloc
+        
         unit source
         unit target
         integer endTick
         real bonus
-    
-        
     
         private method periodic takes nothing returns nothing
             if T32_Tick > this.endTick or IsUnitDivineBubbled(this.target) or IsUnitSpellTargetCheck(this.target, GetOwningPlayer(this.source)) == false or GetUnitAbilityLevel(this.source, NULL_VOID_ORB_BUFF_ID) > 0  then
@@ -15,8 +15,10 @@ library AbsoluteArcane requires CustomState, DivineBubble
             endif
         endmethod 
 
+        implement T32x
+
         static method create takes unit source, unit target returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             set this.source = source
             set this.target = target
             if IsUnitType(this.target, UNIT_TYPE_HERO) then
@@ -41,11 +43,8 @@ library AbsoluteArcane requires CustomState, DivineBubble
             call AddUnitCustomState(this.target, BONUS_MAGICPOW, this.bonus)
             set this.source = null
             set this.target = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-    
-        implement T32x
-        implement Recycle
     endstruct
 
     function AbsoluteArcaneDrain takes unit caster returns nothing

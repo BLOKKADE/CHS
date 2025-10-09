@@ -17,7 +17,6 @@ library TerrestrialGlaive initializer init requires Table, AbilityData, StableSp
         local integer abilId = 0
         local DummyOrder dummy
         local integer level = 0
-        local AbilityModifiers abilMods = 0
 
         loop
             set abilId = node.data

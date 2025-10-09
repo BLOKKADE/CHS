@@ -12,6 +12,7 @@ library ExtradimensionalCooperation initializer init requires DamageEngine, Hide
     endfunction
 
     struct ExtraDimensionalCoop extends array
+        implement Alloc
 
         real dmg
         real newX
@@ -73,8 +74,10 @@ library ExtradimensionalCooperation initializer init requires DamageEngine, Hide
             endif
         endmethod  
 
+        implement T32x
+
         static method create takes unit caster, unit target, real damage, boolean attack, boolean magic returns ExtraDimensionalCoop
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
 
             set this.dmg = damage
             set this.target = target
@@ -100,11 +103,8 @@ library ExtradimensionalCooperation initializer init requires DamageEngine, Hide
             set this.caster = null
             set this.ssdummy = null
             set this.target = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastExtradimensionalCoop takes unit caster, unit target, real damage, boolean attack, boolean magic returns nothing

@@ -7,6 +7,13 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
         return (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or (UnitHasItemType(caster, 'I08X') and IsSpellElement(caster, abilId, Element_Fire)) or GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) > 0) and IsAbilityMulticastable(abilId)
     endfunction
 
+    function MinReal takes real a, real b returns real
+        if a < b then
+            return a
+        endif
+        return b
+    endfunction
+
     function MultiBonusCast takes unit caster, unit target, integer abilId, integer abilOrder, location spellLoc returns nothing
         local real targetX = 0
         local real targetY = 0
@@ -15,6 +22,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
         local real multicastLvl = GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID)
         local real luck = GetUnitCustomState(caster, BONUS_LUCK)
         local real ogreMageChance
+        local real chance
 
         // Determine target coordinates and order type
         if target != null then
@@ -40,10 +48,20 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
 
         // Cheater Magic bonus
         if GetUnitAbilityLevel(caster, CHEATER_MAGIC_BUFF_ID) > 0 then
-            set amount = 1
-            if GetRandomInt(1, 100) < 2 * GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) then
-                set amount = 2
-            endif
+            set amount = 1 // First cast is guaranteed
+
+            // Base chance for second cast
+            set chance = 80.0
+
+            // Apply LuckyTrigger and raw luck multiplier
+            set chance = chance * MinReal(1.0 + LuckyTriggerBonusChance(caster) / 100.0, 2.0)
+            set chance = chance * luck // Direct multiplier from external luck value
+
+            loop
+                exitwhen GetRandomInt(1, 100) > chance
+                set amount = amount + 1
+                set chance = chance * 0.8 // Reduce chance by 20% of current
+            endloop
         endif
 
         // Blaze Staff bonus
@@ -53,16 +71,16 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
 
         // Multicast chances
         if multicastLvl > 0 then
-            if GetRandomReal(0, 100) <= (8.75 + 0.25 * multicastLvl) * luck then
+            if GetRandomReal(0, 100) <= ((8.75 + LuckyTriggerBonusChance(caster)) + (0.25 * multicastLvl)) * luck then
                 set amount = amount + 2
-            elseif GetRandomReal(0, 100) <= (13.6 + 0.4 * multicastLvl) * luck then
+            elseif GetRandomReal(0, 100) <= ((13.6 + LuckyTriggerBonusChance(caster)) + (0.4 * multicastLvl)) * luck then
                 set amount = amount + 1
             endif
         endif
 
         // Ogre Mage multicast chances
         if GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID then
-            set ogreMageChance = 15. + (GetHeroLevel(caster) * 1.2)
+            set ogreMageChance = 15. + (GetHeroLevel(caster) * 1.2) + LuckyTriggerBonusChance(caster)
             loop
                 exitwhen ogreMageChance < 100
                 set amount = amount + 1

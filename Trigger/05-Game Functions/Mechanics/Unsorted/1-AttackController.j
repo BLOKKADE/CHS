@@ -19,6 +19,14 @@ scope AttackController initializer init
         local unit attacker = GetAttacker()
         local unit attackerHero = PlayerHeroes[GetPlayerId(GetOwningPlayer(attacker))]
         local real targetLuck = GetUnitCustomState(target, BONUS_LUCK)
+        local integer i3 = 1 + GetHeroLevel(attacker) / 10
+        local integer attackerId = GetHandleId(attacker)
+        local integer baseStr = GetHeroStatBJ(bj_HEROSTAT_STR, attacker, true)
+        local integer baseAgi = GetHeroStatBJ(bj_HEROSTAT_AGI, attacker, true)
+        local integer baseInt = GetHeroStatBJ(bj_HEROSTAT_INT, attacker, true)
+        local integer currentStr = GetHeroStr(attacker, true)
+        local real scaleFactor = 1.0 + (currentStr / 30000.0) * 3.0
+        local integer bonus = R2I(i3 * 1.5)
         
         if IsUnitEnemy(target, GetOwningPlayer(attacker)) == false then
 
@@ -33,14 +41,53 @@ scope AttackController initializer init
             return
         endif
 
-        //Murloc
+        // Murloc Warrior bonus logic
         if GetUnitTypeId(attacker) == MURLOC_WARRIOR_UNIT_ID then
-            set i1 = 1 + GetHeroLevel(attacker)/ 10 
-            call SaveInteger(HT, GetHandleId(attacker),54021, i1 + LoadInteger(HT, GetHandleId(attacker),54021))
-            call AddUnitBonus(attacker, BONUS_STRENGTH, i1)
-            call AddUnitBonus(attacker, BONUS_AGILITY, i1)
-            call AddUnitBonus(attacker, BONUS_INTELLIGENCE, i1)
+
+            // Track bonuses separately
+            if baseStr > baseAgi and baseStr > baseInt then
+                call AddUnitBonus(attacker, BONUS_STRENGTH, i3 * 3)
+                call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + i3 * 3)
+            elseif baseAgi > baseStr and baseAgi > baseInt then
+                call AddUnitBonus(attacker, BONUS_AGILITY, i3 * 3)
+                call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + i3 * 3)
+            elseif baseInt > baseStr and baseInt > baseAgi then
+                call AddUnitBonus(attacker, BONUS_INTELLIGENCE, i3 * 3)
+                call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + i3 * 3)
+            elseif baseStr == baseAgi and baseStr > baseInt then
+                call AddUnitBonus(attacker, BONUS_STRENGTH, bonus)
+                call AddUnitBonus(attacker, BONUS_AGILITY, bonus)
+                call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + bonus)
+                call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + bonus)
+            elseif baseStr == baseInt and baseStr > baseAgi then
+                call AddUnitBonus(attacker, BONUS_STRENGTH, bonus)
+                call AddUnitBonus(attacker, BONUS_INTELLIGENCE, bonus)
+                call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + bonus)
+                call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + bonus)
+            elseif baseAgi == baseInt and baseAgi > baseStr then
+                call AddUnitBonus(attacker, BONUS_AGILITY, bonus)
+                call AddUnitBonus(attacker, BONUS_INTELLIGENCE, bonus)
+                call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + bonus)
+                call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + bonus)
+            elseif baseStr == baseAgi and baseStr == baseInt then
+                call AddUnitBonus(attacker, BONUS_STRENGTH, i3)
+                call AddUnitBonus(attacker, BONUS_AGILITY, i3)
+                call AddUnitBonus(attacker, BONUS_INTELLIGENCE, i3)
+                call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + i3)
+                call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + i3)
+                call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + i3)
+            endif
+
+            // Dynamic scaling based on bonus Strength
+            if scaleFactor > 4.0 then
+                set scaleFactor = 4.0
+            endif
+
+            call SetUnitScale(attacker, scaleFactor, scaleFactor, scaleFactor)
         endif
+
+
+
 
         //Huntress
         if GetUnitTypeId(attacker) == HUNTRESS_UNIT_ID then
@@ -72,8 +119,8 @@ scope AttackController initializer init
 
         //Corrosive Skin
         set i1 = GetUnitAbilityLevel(target, CORROSIVE_SKIN_ABILITY_ID)
-        if i1 > 0 and GetRandomReal(0, 100) <= 35 * targetLuck then
-            call DummyOrder.create(target, GetUnitX(target), GetUnitY(target), GetUnitFacing(target), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (80 * i1)).target(attacker).activate()
+        if i1 > 0 and GetRandomReal(0, 100) <= (35 + LuckyTriggerBonusChance(target)) * targetLuck then
+            call DummyOrder.create(target, GetUnitX(target), GetUnitY(target), GetUnitFacing(target), 4).addActiveAbility('A00R', 1, 852231).setAbilityRealField('A00R', ABILITY_RLF_DAMAGE_HTB1, (110 * i1)).target(attacker).activate()
             if GetUnitAbilityLevel(target, ABSOLUTE_POISON_ABILITY_ID) > 0 and GetUnitAbilityLevel(target, NULL_VOID_ORB_BUFF_ID) == 0 then
                 call PoisonSpellCast(target, attacker)
             endif
@@ -95,7 +142,7 @@ scope AttackController initializer init
 
         //Fire Force
         set i1 = GetUnitAbilityLevel(target, FIRE_FORCE_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, FIRE_FORCE_ABILITY_ID) == 0 and (GetRandomReal(1, 100) <= 25 * targetLuck) then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, FIRE_FORCE_ABILITY_ID) == 0 and (GetRandomReal(1, 100) <= (25 + LuckyTriggerBonusChance(target)) * targetLuck) then
             call BlzStartUnitAbilityCooldown(target, FIRE_FORCE_ABILITY_ID, 0.3)
             call BlzStartUnitAbilityCooldown(target, GetDummySpell(target, FIRE_FORCE_ABILITY_ID), 0.3)
             call DummyInstantCast1(target, GetUnitX(target), GetUnitY(target), 'A0C0', "fanofknives", GetHeroStr(target,true) * (0.62 + (0.08 * i1)), ConvertAbilityRealLevelField('Ocl1'), 4)

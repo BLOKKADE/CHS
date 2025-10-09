@@ -1,5 +1,7 @@
 library LightningShield requires UnitHelpers, RandomShit, SpellFormula, TempAttackCd
     struct LightningShieldStruct extends array
+        implement Alloc
+        
         unit source
         unit target
         integer level
@@ -23,7 +25,7 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula, TempAtta
                 call Damage.applyMagic(this.source, p, GetSpellValue(20, 10, this.level), false, DAMAGE_TYPE_MAGIC)
                 call TempAbil.create(p, LIGHTNING_SHIELD_DUMMY_ABILITY_ID, 5)
                 if not IsUnitType(p, UNIT_TYPE_HERO) then // for creeps and summons
-                    call AttackCdStruct.createUnique(p, 0.2, 5, LIGHTNING_SHIELD_DUMMY_ABILITY_ID)
+                    call AttackCdStruct.createUnique(p, 0.2, 5, LIGHTNING_SHIELD_DUMMY_ABILITY_ID, false)
                 endif
                 call GroupRemoveUnit(ENUM_GROUP, p)
             endloop
@@ -41,8 +43,10 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula, TempAtta
             endif
         endmethod 
 
+        implement T32x
+
         static method create takes unit source, unit target, integer level returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             //call BJDebugMsg("sl start")
             set this.source = source
             set this.target = target
@@ -61,11 +65,8 @@ library LightningShield requires UnitHelpers, RandomShit, SpellFormula, TempAtta
             set this.target = null
             call DestroyEffect(this.fx)
             set this.fx = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-
-        implement T32x
-        implement Recycle
     endstruct
 
     function CastLightningShield takes unit caster, unit target, integer level returns nothing

@@ -169,6 +169,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddCategory("ReplaceableTextures\\PassiveButtons\\PASTomePowerPoison.BLP", "Poison", false)   //32768
 
         //read GUI, when the variable exist
+
         set HeroSelectorUnitCode[1] = ABOMINATION_UNIT_ID
         set HeroSelectorUnitCode[2] = ARENA_MASTER_UNIT_ID
         set HeroSelectorUnitCode[3] = AVATAR_SPIRIT_UNIT_ID
@@ -178,48 +179,51 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[7] = BLOOD_MAGE_UNIT_ID
         set HeroSelectorUnitCode[8] = CENTAUR_ARCHER_UNIT_ID
         set HeroSelectorUnitCode[9] = COLD_KNIGHT_UNIT_ID
-        set HeroSelectorUnitCode[10] = DARK_HUNTER_UNIT_ID
-        set HeroSelectorUnitCode[11] = DEMON_HUNTER_UNIT_ID
-        set HeroSelectorUnitCode[12] = DOOM_GUARD_UNIT_ID
-        set HeroSelectorUnitCode[13] = DEADLORD_UNIT_ID
-        set HeroSelectorUnitCode[14] = DRUID_OF_THE_CLAY_UNIT_ID
-        set HeroSelectorUnitCode[15] = FALLEN_RANGER_UNIT_ID
-        set HeroSelectorUnitCode[16] = GHOUL_UNIT_ID
-        set HeroSelectorUnitCode[17] = GNOME_MASTER_UNIT_ID
-        set HeroSelectorUnitCode[18] = GREEDY_GOBLIN_UNIT_ID
-        set HeroSelectorUnitCode[19] = CRYPT_LORD_UNIT_ID
+        set HeroSelectorUnitCode[10] = CRYPT_LORD_UNIT_ID
+        set HeroSelectorUnitCode[11] = DARK_HUNTER_UNIT_ID
+        set HeroSelectorUnitCode[12] = DEADLORD_UNIT_ID
+        set HeroSelectorUnitCode[13] = DEMON_HUNTER_UNIT_ID
+        set HeroSelectorUnitCode[14] = DOOM_GUARD_UNIT_ID
+        set HeroSelectorUnitCode[15] = DRUID_OF_THE_CLAY_UNIT_ID
+        set HeroSelectorUnitCode[16] = FALLEN_RANGER_UNIT_ID
+        set HeroSelectorUnitCode[17] = GHOUL_UNIT_ID
+        set HeroSelectorUnitCode[18] = GNOME_MASTER_UNIT_ID
+        set HeroSelectorUnitCode[19] = GREEDY_GOBLIN_UNIT_ID
         set HeroSelectorUnitCode[20] = HUNTRESS_UNIT_ID
         set HeroSelectorUnitCode[21] = LICH_UNIT_ID
         set HeroSelectorUnitCode[22] = LIEUTENANT_UNIT_ID
         set HeroSelectorUnitCode[23] = MAULER_UNIT_ID
         set HeroSelectorUnitCode[24] = MEDIVH_UNIT_ID
         set HeroSelectorUnitCode[25] = MORTAR_TEAM_UNIT_ID
-        set HeroSelectorUnitCode[26] = MYSTIC_UNIT_ID
-        set HeroSelectorUnitCode[27] = NAGA_SIREN_UNIT_ID
-        set HeroSelectorUnitCode[28] = OGRE_MAGE_UNIT_ID
-        set HeroSelectorUnitCode[29] = OGRE_WARRIOR_UNIT_ID
-        set HeroSelectorUnitCode[30] = ORC_CHAMPION_UNIT_ID
-        set HeroSelectorUnitCode[31] = PIT_LORD_UNIT_ID
-        set HeroSelectorUnitCode[32] = PYROMANCER_UNIT_ID
-        set HeroSelectorUnitCode[33] = RANGER_UNIT_ID
-        set HeroSelectorUnitCode[34] = ROCK_GOLEM_UNIT_ID
-        set HeroSelectorUnitCode[35] = SATYR_TRICKSTER_UNIT_ID
-        set HeroSelectorUnitCode[36] = SEER_UNIT_ID
-        set HeroSelectorUnitCode[37] = SKELETON_BRUTE_UNIT_ID
-        set HeroSelectorUnitCode[38] = SORCERER_UNIT_ID
-        set HeroSelectorUnitCode[39] = TAUREN_UNIT_ID
-        set HeroSelectorUnitCode[40] = THUNDER_WITCH_UNIT_ID
-        set HeroSelectorUnitCode[41] = TIME_WARRIOR_UNIT_ID
-        set HeroSelectorUnitCode[42] = TINKER_UNIT_ID
-        set HeroSelectorUnitCode[43] = TROLL_BERSERKER_UNIT_ID
-        set HeroSelectorUnitCode[44] = TROLL_HEADHUNTER_UNIT_ID
-        set HeroSelectorUnitCode[45] = URSA_WARRIOR_UNIT_ID
-        set HeroSelectorUnitCode[46] = WAR_GOLEM_UNIT_ID
-        set HeroSelectorUnitCode[47] = WITCH_DOCTOR_UNIT_ID
-        set HeroSelectorUnitCode[48] = WOLF_RIDER_UNIT_ID
-        set HeroSelectorUnitCode[49] = MURLOC_WARRIOR_UNIT_ID
-        set HeroSelectorUnitCode[50] = YETI_UNIT_ID
-        //set HeroSelectorUnitCode[51] = GNOLL_WARDEN_UNIT_ID
+        set HeroSelectorUnitCode[26] = MURLOC_WARRIOR_UNIT_ID
+        set HeroSelectorUnitCode[27] = MYSTIC_UNIT_ID
+        set HeroSelectorUnitCode[28] = NAGA_SIREN_UNIT_ID
+        set HeroSelectorUnitCode[29] = OGRE_MAGE_UNIT_ID
+        set HeroSelectorUnitCode[30] = OGRE_WARRIOR_UNIT_ID
+        set HeroSelectorUnitCode[31] = ORC_CHAMPION_UNIT_ID
+        set HeroSelectorUnitCode[32] = PIT_LORD_UNIT_ID
+        set HeroSelectorUnitCode[33] = PYROMANCER_UNIT_ID
+        set HeroSelectorUnitCode[34] = RANGER_UNIT_ID
+        set HeroSelectorUnitCode[35] = ROCK_GOLEM_UNIT_ID
+        set HeroSelectorUnitCode[36] = SATYR_TRICKSTER_UNIT_ID
+        set HeroSelectorUnitCode[37] = SEER_UNIT_ID
+        set HeroSelectorUnitCode[38] = SKELETON_BRUTE_UNIT_ID
+        set HeroSelectorUnitCode[39] = SORCERER_UNIT_ID
+        set HeroSelectorUnitCode[40] = STOMP_TREE_UNIT_ID
+        set HeroSelectorUnitCode[41] = TAUREN_UNIT_ID
+        set HeroSelectorUnitCode[42] = THUNDER_WITCH_UNIT_ID
+        set HeroSelectorUnitCode[43] = TIME_WARRIOR_UNIT_ID
+        set HeroSelectorUnitCode[44] = TINKER_UNIT_ID
+        set HeroSelectorUnitCode[45] = TROLL_BERSERKER_UNIT_ID
+        set HeroSelectorUnitCode[46] = TROLL_HEADHUNTER_UNIT_ID
+        set HeroSelectorUnitCode[47] = URSA_WARRIOR_UNIT_ID
+        set HeroSelectorUnitCode[48] = WAR_GOLEM_UNIT_ID
+        set HeroSelectorUnitCode[49] = WITCH_DOCTOR_UNIT_ID
+        set HeroSelectorUnitCode[50] = WOLF_RIDER_UNIT_ID
+        set HeroSelectorUnitCode[51] = YETI_UNIT_ID
+        //set HeroSelectorUnitCode[52] = NYX_UNIT_ID
+
+        //set HeroSelectorUnitCode[52] = GNOLL_WARDEN_UNIT_ID
 
         set index = 1
         //add from index 1 all random only heroes
@@ -284,6 +288,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(GHOUL_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(BANSHEE_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(CRYPT_LORD_UNIT_ID, categoryStr)
+        call HeroSelectorAddUnitCategory(STOMP_TREE_UNIT_ID, categoryInt)
         //call HeroSelectorAddUnitCategory(GNOLL_WARDEN_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(SEER_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(FALLEN_RANGER_UNIT_ID, categoryAgi)
@@ -299,6 +304,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(COLD_KNIGHT_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(GREEDY_GOBLIN_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(TAUREN_UNIT_ID, categoryInt)
+       // call HeroSelectorAddUnitCategory(NYX_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(THUNDER_WITCH_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(DEADLORD_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(AVATAR_SPIRIT_UNIT_ID, categoryAgi)
@@ -314,75 +320,6 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
 
         // This must be the last operation here. This will randomize the str/agi/int heroes that will be used to assign to players
         call RandomizeHeroArrays()
-
-        return
-        //adding further units when using the GUI Array does not make much sense, except you would add rows.
-
-        call HeroSelectorAddUnit('Hgam', true) //antonidas is an only random Hero that can only be randomed by team 0 (for users 1).
-        call HeroSelectorAddUnit('Eevi', true) //evil Illidan is an only random Hero that can only be randomed by team 1 (for users 2).
-        
-        //Adds requirments
-        //when you have a ban phase it might be better to add the requirments after the ban phase is over, otherwise one can only ban own options.
-        //human only work for human, as nightelf only for Nightelf
-        call HeroSelectorSetUnitReqRace('Hpal', RACE_HUMAN)
-        call HeroSelectorSetUnitReqTechLevel('Hpal', 'hfoo', categoryStr)
-        call HeroSelectorSetUnitReqRace('Hamg', RACE_HUMAN)
-        call HeroSelectorSetUnitReqRace('Hblm', RACE_HUMAN)
-        call HeroSelectorSetUnitReqRace('Hmkg', RACE_HUMAN)
-        //call HeroSelectorSetUnitReqRace('Ofar', RACE_ORC)
-        //call HeroSelectorSetUnitReqRace('Oshd', RACE_ORC)
-        //call HeroSelectorSetUnitReqRace('Otch', RACE_ORC)
-        //call HeroSelectorSetUnitReqRace('Obla', RACE_ORC)
-        call HeroSelectorSetUnitReqRace('Emoo', RACE_NIGHTELF)
-        call HeroSelectorSetUnitReqRace('Edem', RACE_NIGHTELF)
-        call HeroSelectorSetUnitReqRace('Ekee', RACE_NIGHTELF)
-        call HeroSelectorSetUnitReqRace('Ewar', RACE_NIGHTELF)
-        //call HeroSelectorSetUnitReqRace('Udea', RACE_UNDEAD)
-        //call HeroSelectorSetUnitReqRace('Ulic', RACE_UNDEAD)
-        //call HeroSelectorSetUnitReqRace('Udre', RACE_UNDEAD)
-        //call HeroSelectorSetUnitReqRace('Ucrl', RACE_UNDEAD)
-        
-        call HeroSelectorAddUnitCategory('Hpal', categoryStr)
-        call HeroSelectorAddUnitCategory('Hamg', categoryInt)
-        call HeroSelectorAddUnitCategory('Hblm', categoryInt)
-        call HeroSelectorAddUnitCategory('Hmkg', categoryStr)
-        call HeroSelectorAddUnitCategory('Ofar', categoryInt)
-        call HeroSelectorAddUnitCategory('Oshd', categoryAgi)
-        call HeroSelectorAddUnitCategory('Otch', categoryStr)
-        call HeroSelectorAddUnitCategory('Obla', categoryAgi)
-        call HeroSelectorAddUnitCategory('Emoo', categoryAgi)
-        call HeroSelectorAddUnitCategory('Edem', categoryAgi)
-        call HeroSelectorAddUnitCategory('Ekee', categoryInt)
-        call HeroSelectorAddUnitCategory('Ewar', categoryAgi)
-        call HeroSelectorAddUnitCategory('Udea', categoryStr)
-        call HeroSelectorAddUnitCategory('Ulic', categoryInt)
-        call HeroSelectorAddUnitCategory('Udre', categoryStr)
-        call HeroSelectorAddUnitCategory('Ucrl', categoryStr)
-
-        call HeroSelectorSetUnitCategory('Hgam', categoryInt + categoryRanged)
-        call HeroSelectorSetUnitCategory('Eevi', categoryAgi + categoryMelee)
-
-        
-        //call HeroSelectorAddUnit('Hpal', false) //add paladin as selectable Hero
-        //call HeroSelectorAddUnit('Hamg', false)
-        //call HeroSelectorAddUnit('Hblm', false)
-        //call HeroSelectorAddUnit('Hmkg', false)
-        //call HeroSelectorAddUnit('Obla', true) //this unit can only be randomed
-        //call HeroSelectorAddUnit('Ofar', false)
-        //call HeroSelectorAddUnit('Otch', true) //this unit can only be randomed
-        //call HeroSelectorAddUnit(0,false) //this is an empty box. It still takes a slot.
-        //call HeroSelectorAddUnit(0,false) //this is an empty box. It still takes a slot.
-        //call HeroSelectorAddUnit('Oshd', false)
-        //call HeroSelectorAddUnit('Edem', false)
-        //call HeroSelectorAddUnit(0,false) //this is an empty box. It still takes a slot.
-        //call HeroSelectorAddUnit(0,false) //this is an empty box. It still takes a slot.
-        //call HeroSelectorAddUnit('Ekee', false)
-        //call HeroSelectorAddUnit('Emoo', false)
-        //call HeroSelectorAddUnit('Ewar', true)
-        //call HeroSelectorAddUnit('Udea', false)
-        //call HeroSelectorAddUnit('Ulic', false)
-        //call HeroSelectorAddUnit('Udre', false)
-        //call HeroSelectorAddUnit('Ucrl', true)
     endfunction
 
     private function Init takes nothing returns nothing

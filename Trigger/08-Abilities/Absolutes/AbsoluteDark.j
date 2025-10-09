@@ -77,16 +77,35 @@ library AbsoluteDark initializer init requires RandomShit, UnitHelpers
 
     function CastAbsoluteDark takes unit u returns nothing
         local unit target = null
-        local real bonus = I2R(GetUnitAbilityLevel(u, ABSOLUTE_DARK_ABILITY_ID) * GetUnitElementCount(u, Element_Dark))/* * (1 + GetUnitAbsoluteEffective(u, Element_Dark))*/
-        
+        local real baseBonus = I2R(GetUnitAbilityLevel(u, ABSOLUTE_DARK_ABILITY_ID) * GetUnitElementCount(u, Element_Dark))
+        local real casterX = GetUnitX(u)
+        local real casterY = GetUnitY(u)
+        local real distance
+        local real scale
+        local real adjustedBonus
+
         call GroupClear(ENUM_GROUP)
-        call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 600, GetOwningPlayer(u), false, Target_Enemy)
-        
+        call EnumTargettableUnitsInRange(ENUM_GROUP, casterX, casterY, 600, GetOwningPlayer(u), false, Target_Enemy)
+
         loop
             set target = FirstOfGroup(ENUM_GROUP)
             exitwhen target == null
 
-            call SetupAbsDarkBonus(u, target, bonus)
+            set distance = SquareRoot((GetUnitX(target) - casterX) * (GetUnitX(target) - casterX) + (GetUnitY(target) - casterY) * (GetUnitY(target) - casterY))
+
+            // Determine scaling factor based on distance
+            if distance <= 200 then
+                set scale = 1.0 // full effect
+            elseif distance <= 450 then
+                set scale = 0.67 // 33% reduction
+            elseif distance <= 700 then
+                set scale = 0.33 // same reduction
+            else
+                set scale = 0.0 // beyond max range, no effect
+            endif
+
+            set adjustedBonus = baseBonus * scale
+            call SetupAbsDarkBonus(u, target, adjustedBonus)
 
             call GroupRemoveUnit(ENUM_GROUP, target)
         endloop

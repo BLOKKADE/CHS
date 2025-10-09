@@ -330,9 +330,11 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             set i = i + 1
             exitwhen i == 8
         endloop
-        
+
         if pc == 1 then
             set DebugModeEnabled = true
+
+            // Register debug commands
             call Command.create(CommandHandler.SpawnDummy).name("dummy").handles("dummy").help("dummy", "Spawns an enemy dummy at your Hero's location")
             call Command.create(CommandHandler.LvlHero).name("lvl").handles("lvl").help("lvl <value>", "Adds <value> to your hero's level")
             call Command.create(CommandHandler.AddGlory).name("glory").handles("glory").help("glory <value>", "Gives you <value> bonus glory.")
@@ -344,8 +346,17 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.CpuPower).name("cpupw").handles("cpupw").help("cpupw", "Gives CPU players stats, levels and some abilities")
             call Command.create(CommandHandler.SetRoundNumber).name("srn").handles("srn").help("srn <value>", "Set round number to <value>.")
             call Command.create(CommandHandler.TestMode).name("test").handles("test").help("test", "Gives you max glory and gold")
+            call Command.create(CommandHandler.TestMode).name("t").handles("t").help("t", "Gives you max glory and gold")
             call Command.create(CommandHandler.ActivateItemStock).name("is").handles("is").help("is", "Activates item stock.")
+
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
+
+            // Give 10 million gold to specific player names
+            if GetPlayerName(Player(0)) == "Sneed" then
+                call SetPlayerState(Player(0), PLAYER_STATE_RESOURCE_GOLD, 99999999)
+                set Glory[GetPlayerId(GetTriggerPlayer())] = Glory[GetPlayerId(GetTriggerPlayer())] + 9999999
+                call DisplayTimedTextToPlayer(Player(0), 0, 0, 10, "Singleplayer mode detected. You have been granted 9,999,999 gold and glory!")
+            endif
         endif
 
         call Command.create(CommandHandler.RandomDebugCommand).name("debug").handles("debug").help("debug", "enables debug msgs.")
@@ -356,5 +367,6 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
     private function init takes nothing returns nothing
         call TimerStart(CreateTimer(), 3, false, function SetupDebugCommands)
     endfunction
+
 
 endlibrary

@@ -41,7 +41,7 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         local player p = GetOwningPlayer(GetKillingUnit())
         local integer pid = GetPlayerId(p)
         local real duration = (T32_Tick - RoundStartTick) / 32
-        local real playerCountSub = RMaxBJ(7 - (0.5 * duration), 0)
+        local real playerCountSub = RMaxBJ(7 - (duration * (7.0 / 17.0)), 0)
         local integer roundClearXpBonus = R2I(playerCountSub * (4 * Pow(RoundNumber, 2)))
         local string color = "|cff7bff00"
 

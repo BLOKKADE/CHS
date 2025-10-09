@@ -265,8 +265,10 @@ library ListT requires Table, Alloc
     
                 call deleteNode(node)
                 set count = count - 1
-            debug else
-                debug call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::pop failed for instance "+I2S(this)+". List is empty.")
+            else
+                static if DEBUG then
+                    call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::pop failed for instance "+I2S(this)+". List is empty.")
+                endif
             endif
             return this
         endmethod
@@ -286,8 +288,10 @@ library ListT requires Table, Alloc
     
                 call deleteNode(node)
                 set count = count - 1
-            debug else
-                debug call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::shift failed for instance "+I2S(this)+". List is empty.")
+            else
+                static if DEBUG then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::shift failed for instance "+I2S(this)+". List is empty.")
+                endif
             endif
             return this
         endmethod
@@ -327,14 +331,18 @@ library ListT requires Table, Alloc
                     set count = count - 1
                 endif
                 return true
-            debug else
-                debug call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::erase failed for instance "+I2S(this)+". Attempted to remove invalid node "+I2S(node)+".")
+            else
+                static if DEBUG then
+                    call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"$NAME$::erase failed for instance "+I2S(this)+". Attempted to remove invalid node "+I2S(node)+".")
+                endif
             endif
             return false
         endmethod
     
         method remove takes $NAME$Item node returns boolean
-            debug call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"Method $NAME$::remove is obsolete, use $NAME$::erase instead.")
+            static if DEBUG then
+                call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,60,"Method $NAME$::remove is obsolete, use $NAME$::erase instead.")
+            endif
             return erase(node)
         endmethod
     

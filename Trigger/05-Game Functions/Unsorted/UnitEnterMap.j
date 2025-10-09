@@ -1,4 +1,4 @@
-library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo, LearnAbsolute, PackingTape
+library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo, LearnAbsolute, PackingTape, LimitedSummon
 
     globals
         Table SummonLevel
@@ -25,6 +25,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         local integer UpgradeU = 15 * GetUnitItemTypeCount(hero,'I07K')
         local real wild = 1 + GetUnitCustomState(hero, BONUS_SUMMONPOW)/ 100
         local real r1
+        local integer summonlimit = 0
 
         //Prevent super summons?
         call ResetUnitCustomState(u)
@@ -42,12 +43,99 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Beastmaster
         if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
-            set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.3)
+            set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.25)
+        endif
+
+        //Stomp ethereal summons
+        if GetUnitTypeId(hero) == STOMP_TREE_UNIT_ID and GetHeroLevel(hero) >= 125 then
+            call UnitAddAbility(u, 'Aeth')    
+        endif
+
+        //Polar Bear skin
+        if summonTypeId == BEAR_1_UNIT_ID then
+            call BlzSetUnitSkin(u, 'PBBB')
+            call BlzSetUnitName(u, "Polar Bear")
+        endif
+
+        //Skeleton Brute summon colouring
+        if GetUnitTypeId(hero) == SKELETON_BRUTE_UNIT_ID then  
+            call SetUnitVertexColor(u, 100, 100, 100, 255)
+            call AddSpecialEffectTarget("Abilities\\Spells\\Undead\\AnimateDead\\AnimateDeadTarget.mdl", u, "origin")
         endif
 
         //Mortar Team
         if GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_PHYSPOW, 1.5 * GetHeroLevel(hero))  
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 15)
+            if GetHeroLevel(hero) > 1 then
+                call AddUnitCustomState(u, BONUS_PHYSPOW, 1.5 * (GetHeroLevel(hero) - 1))
+            endif
+        endif
+
+        //Abomination
+        if GetUnitTypeId(hero) == ABOMINATION_UNIT_ID then
+            call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
+            call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, R2I(GetHeroLevel(hero) * 0.2))
+        endif
+
+        //Rock Golem
+        if GetUnitTypeId(hero) == ROCK_GOLEM_UNIT_ID then
+            call AddUnitCustomState(u, BONUS_BLOCK, GetUnitCustomState(hero, BONUS_BLOCK))
+            call SetUnitVertexColor(u, 150, 120, 100, 255) // Slightly grey/brown tint
+        endif
+
+        //Seer summon buffs possibly for when summon limit is introduced
+        if GetUnitTypeId(hero) == SEER_UNIT_ID then
+
+            if GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, DESTRUCTION_ABILITY_ID)
+            call SetUnitAbilityLevel(u, DESTRUCTION_ABILITY_ID, GetUnitAbilityLevel(hero, DESTRUCTION_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, PULVERIZE_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, PULVERIZE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, PULVERIZE_ABILITY_ID, GetUnitAbilityLevel(hero, PULVERIZE_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, ENVENOMED_WEAPONS_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, ENVENOMED_WEAPONS_ABILITY_ID)
+            call SetUnitAbilityLevel(u, ENVENOMED_WEAPONS_ABILITY_ID, GetUnitAbilityLevel(hero, ENVENOMED_WEAPONS_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, INCINERATE_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, INCINERATE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, INCINERATE_ABILITY_ID, GetUnitAbilityLevel(hero, INCINERATE_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, BASH_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, BASH_ABILITY_ID)
+            call SetUnitAbilityLevel(u, BASH_ABILITY_ID, GetUnitAbilityLevel(hero, BASH_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, LIQUID_FIRE_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, LIQUID_FIRE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, LIQUID_FIRE_ABILITY_ID, GetUnitAbilityLevel(hero, LIQUID_FIRE_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, MAGIC_CRITICAL_HIT_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, MAGIC_CRITICAL_HIT_ABILITY_ID)
+            call SetUnitAbilityLevel(u, MAGIC_CRITICAL_HIT_ABILITY_ID, GetUnitAbilityLevel(hero, MAGIC_CRITICAL_HIT_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, CRITICAL_STRIKE_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, CRITICAL_STRIKE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, CRITICAL_STRIKE_ABILITY_ID, GetUnitAbilityLevel(hero, CRITICAL_STRIKE_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, DRUNKEN_MASTER_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, DRUNKEN_MASTER_ABILITY_ID)
+            call SetUnitAbilityLevel(u, DRUNKEN_MASTER_ABILITY_ID, GetUnitAbilityLevel(hero, DRUNKEN_MASTER_ABILITY_ID))
+            endif
+
+            if GetUnitAbilityLevel(hero, CRUELTY_ABILITY_ID) > 0 then
+            call UnitAddAbility(u, CRUELTY_ABILITY_ID)
+            call SetUnitAbilityLevel(u, CRUELTY_ABILITY_ID, GetUnitAbilityLevel(hero, CRUELTY_ABILITY_ID))
+            endif
+
         endif
 
         //Druid of the Claw
@@ -62,18 +150,22 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call AddUnitBonus(u, BONUS_DAMAGE, R2I((GetUnitDamage(hero, 0) * r1)))
             call AddUnitBonus(u, BONUS_ARMOR, R2I((BlzGetUnitArmor(hero) * r1)))
         endif
-
+        
         call AddUnitCustomState(u, BONUS_PVP, GetUnitCustomState(hero, BONUS_PVP))
 
         if SUMMONS.contains(summonTypeId) then
             set totalLevel = GetUnitAbilityLevel(hero, GetSummonSpell(summonTypeId)) + UpgradeU
 
             call GetSummonStatFunction(summonTypeId).evaluate(u, totalLevel)
-
-            call BlzSetUnitAttackCooldown(u, RMaxBJ(0.4, BlzGetUnitAttackCooldown(u, 0)), 0)
+            // Summon attack cooldown limit
+            if summonTypeId == 'e001' then //faerie dragon exception
+                call BlzSetUnitAttackCooldown(u, RMaxBJ(0.35, BlzGetUnitAttackCooldown(u, 0)), 0)
+            else
+                call BlzSetUnitAttackCooldown(u, RMaxBJ(0.4, BlzGetUnitAttackCooldown(u, 0)), 0)
+            endif
 
             set SummonLevel[GetHandleId(u)] = totalLevel
-            call BlzSetUnitName(u,GetUnitName(u)+ ": level " + I2S(totalLevel))
+            call BlzSetUnitName(u, GetUnitName(u) + ": level " + I2S(totalLevel))
             call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
@@ -100,10 +192,10 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         endif
 
         //wild
-        if wild != 1 then      
-            call BlzSetUnitBaseDamage(u,R2I(I2R(BlzGetUnitBaseDamage(u,0))* wild),0)  
-            call BlzSetUnitMaxHP(u,R2I(I2R(BlzGetUnitMaxHP(u))* wild))
-            call SetWidgetLife(u,BlzGetUnitMaxHP(u))
+        if wild != 1 and not (summonTypeId == 'u006' or summonTypeId == 'u007' or summonTypeId == 'o00D' or summonTypeId == 'u005' or summonTypeId == 'n039') then
+        call BlzSetUnitBaseDamage(u, R2I(I2R(BlzGetUnitBaseDamage(u, 0)) * wild), 0)
+        call BlzSetUnitMaxHP(u, R2I(I2R(BlzGetUnitMaxHP(u)) * wild))
+        call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
         //Trueshot Aura
@@ -133,7 +225,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         //Banner of Many
         if UnitHasItemType(hero, BANNER_OF_MANY_ITEM_ID) then
 
-            if GetUnitAbilityLevel(u, ENDURANCE_AURA_ABILITY_ID) == 0 then
+            if GetUnitAbilityLevel(hero, ENDURANCE_AURA_ABILITY_ID) == 0 then
                 call AddUnitBonusReal(u, BONUS_ATTACK_SPEED, 1.5)
             endif
 
@@ -141,9 +233,174 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
                 call AddUnitBonus(u, BONUS_DAMAGE, R2I(BlzGetUnitBaseDamage(u, 0) * 1.5))
             endif
 
-            call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_ABILITY_ID)
+            call UnitAddAbility(u, BANNER_OF_MANY_DUMMY_BUFF_ICON_ID)
         endif
-        
+
+        //Summon Limit
+        if GetUnitTypeId(hero) == DOOM_GUARD_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == PYROMANCER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == PIT_LORD_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == WITCH_DOCTOR_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == LICH_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == NAGA_SIREN_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == BLOOD_MAGE_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == SORCERER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == THUNDER_WITCH_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == TROLL_BERSERKER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == SATYR_TRICKSTER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == BLADE_MASTER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == OGRE_WARRIOR_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == ROCK_GOLEM_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == GNOME_MASTER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == ARENA_MASTER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == MYSTIC_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == SEER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == MURLOC_WARRIOR_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == SKELETON_BRUTE_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == FALLEN_RANGER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == AVATAR_SPIRIT_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == DARK_HUNTER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == ABOMINATION_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == DEADLORD_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == TROLL_HEADHUNTER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == MAULER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == LIEUTENANT_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == YETI_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == COLD_KNIGHT_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == RANGER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == WAR_GOLEM_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == ORC_CHAMPION_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == GHOUL_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == URSA_WARRIOR_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == OGRE_MAGE_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == DEMON_HUNTER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == TIME_WARRIOR_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == BANSHEE_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == HUNTRESS_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == TAUREN_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == MEDIVH_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == CENTAUR_ARCHER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == CRYPT_LORD_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == GNOLL_WARDEN_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == MORTAR_TEAM_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == WOLF_RIDER_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == STOMP_TREE_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == GREEDY_GOBLIN_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == TINKER_UNIT_ID then
+            set summonlimit = 24
+        else
+            // fallback (if not one of the defined heroes)
+            set summonlimit = 24
+        endif
+
+        // Savage Totem
+        if UnitHasItemType(hero, SAVAGE_TOTEM_ITEM_ID) then
+            set summonlimit = summonlimit + 4
+        endif
+
+        //Mountain Giant
+        if GetUnitAbilityLevel(hero, SUMMON_MOUNTAIN_GIANT_ABILITY_ID) > 0 then
+            set summonlimit = summonlimit + 5
+        endif
+
+        //Hero Buff
+        if UnitHasBuffBJ(hero, HERO_BUFF_BUFF_ID) then
+            set summonlimit = summonlimit + 12
+        endif
+
+        //Storm Horn 
+        if UnitHasBuffBJ(hero, STORMHORN_BUFF_ID) then
+            set summonlimit = summonlimit + 4
+        endif
+
+        // Beastmaster's Bulwark
+        if UnitHasItemType(hero, BULWARK_ITEM_ID) then
+            set summonlimit = summonlimit + 2
+            
+            // Add 10% summon limit for every 5% missing HP
+            set summonlimit = R2I(summonlimit * (1.0 + 0.10 * ((1.0 - (GetUnitState(hero, UNIT_STATE_LIFE) / GetUnitState(hero, UNIT_STATE_MAX_LIFE))) / 0.05)))
+        endif
+
+        // WildBorne Sigil
+        if UnitHasItemType(hero, WILDBORNE_SIGIL_ITEM_ID) then
+            set summonlimit = R2I(summonlimit * 1.50)
+        endif
+
+        // Fear Aura
+        if UnitHasBuffBJ(hero, FEAR_AURA2_BUFF_ID) then
+            set summonlimit = R2I(summonlimit * 0.70)
+        endif
+
+        // Spirit Shackle buff overrides everything
+        if UnitHasBuffBJ(hero, SPIRIT_SHACKLE_BUFF_ID) then
+            set summonlimit = 5
+        endif
+
+        //summon limit
+        if summonTypeId == FAERIE_DRAGON_UNIT_ID then //faerie dragon exception
+            set summonlimit = 1888
+            call LimitedSummon(hero, u, 2, summonlimit) 
+        elseif summonTypeId == POCKET_FACTORY_1_UNIT_ID then //pocket factory exception
+            set summonlimit = 1888
+            call LimitedSummon(hero, u, 2, summonlimit) 
+        else 
+            call LimitedSummon(hero, u, 1, summonlimit) //kill summons over the limit
+            //call DisplayTimedTextToPlayer(GetOwningPlayer(hero), 0, 0, 5.00, "Current Summon Limit: " + I2S(summonlimit))
+        endif  
+
         set u = null
         set hero = null
     endfunction
@@ -164,6 +421,19 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid], false), false)
             call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid], false), false)
             call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid], false), false)
+        endif
+
+        //Deadlord
+        if GetUnitTypeId(u) == DEADLORD_UNIT_ID then
+            call UnitAddAbility(u, ABSOLUTE_BLOOD_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_BLOOD_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_BLOOD_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_BLOOD_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
         endif
 
         //Rock Golem
@@ -188,7 +458,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Mortar Team
         if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
-            call AddUnitCustomState(u, BONUS_MAGICRES, 15)
+            call AddUnitCustomState(u, BONUS_PHYSPOW, 15)
         endif
 
         //Pit Lord
@@ -225,8 +495,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         //Witch Doctor
         if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID and realUnit then
-            call AddHeroMaxAbsoluteAbility(u)
-            call SetBonus(u, 0, 1)
+            call WitchDoctorLevelup(u, 0, 1)
         endif
 
         //Blademaster

@@ -94,7 +94,7 @@ library NonLucrativeTome requires Functions, RandomShit, SpellsLearned, DraftOnB
             endif
 
             if AbilityMode == 2 then
-                call GenerateDraftSpells(pid, udg_Draft_NODraftSpells) 
+                call GenerateDraftSpells(pid, udg_Draft_NODraftSpells[pid]) 
             endif
 
             call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", u, "origin"))

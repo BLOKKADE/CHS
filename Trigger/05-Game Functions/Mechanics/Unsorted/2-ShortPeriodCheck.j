@@ -36,7 +36,7 @@ scope ShortPeriodCheck initializer init
                 //Fire Shield
                 set i1 = GetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID)
                 if i1 > 0 then
-                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 300, false, FIRE_SHIELD_ABILITY_ID, true, false)
+                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 100 * GetUnitElementCount(u, Element_Fire), false, FIRE_SHIELD_ABILITY_ID, true, false)
                 endif
 
                 //Absolute Arcane Drain
@@ -50,8 +50,7 @@ scope ShortPeriodCheck initializer init
                     call CastAbsoluteDark(u)
                 endif
 
-                //Vigour token
-                if GetUnitAbilityLevel(u, 'A09A') > 0 then
+                if UnitHasItemType(u, 'I0A2') then
                     call VigourTokenHpLoss(u)
                 endif
 
@@ -74,6 +73,7 @@ scope ShortPeriodCheck initializer init
                         
                     set s3 = ReplaceText("2000",s2,s)
                     set s3 = ReplaceText(",0000,", R2S(  LoadReal(HT, hid, -93000)), s3)
+                    set s3 = ReplaceText(",xddd,", R2S(LoadReal(HT, hid, -93002)), s3)
 
                     if GetLocalPlayer() == GetOwningPlayer(u) then
                         call BlzSetAbilityExtendedTooltip(ABSOLUTE_BLOOD_ABILITY_ID, s3, i1 - 1 ) 
@@ -84,10 +84,10 @@ scope ShortPeriodCheck initializer init
                 set i1 = GetUnitAbilityLevel(u,DIVINE_GIFT_ABILITY_ID)
                 if i1 > 0 then
                     if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
-                        call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 8)
+                        call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 12)
                         call SetWidgetLife(u, GetWidgetLife(u) + 2500 * i1)
                         call TempFx.target("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
-                        call RemoveUnitBuffs(u, BUFFTYPE_NEGATIVE, false)
+                        call RemoveFirstUnitBuff(u, 1, BUFFTYPE_NEGATIVE)
                     endif
                 endif
             endif
@@ -125,14 +125,14 @@ scope ShortPeriodCheck initializer init
                 endif
             endif
 
-            //Titanium Armor
-            set i1 = GetUnitAbilityLevel(u, 'A05T')
-            set i2 = LoadInteger(HT, hid,'A05T')
+            //Adamantium Armor
+            set i1 = GetUnitAbilityLevel(u, 'A032')
+            set i2 = LoadInteger(HT, hid,'A032')
             if i1 > 0 or i2 != 0 then
-                set i1 = R2I(GetHeroStr(u, true) * 0.15) * i1
+                set i1 = R2I(GetHeroStr(u, true) * 0.20) * i1
                 if i1 != i2 then
                     call AddUnitCustomState(u, BONUS_BLOCK, i1 - i2)
-                    call SaveInteger(HT, hid, 'A05T', i1)	
+                    call SaveInteger(HT, hid, 'A032', i1)	
                 endif
             endif
 
@@ -184,7 +184,38 @@ scope ShortPeriodCheck initializer init
                     //call BlzSetUnitRealField(u,ConvertUnitRealField('uhpr'),(BlzGetUnitRealField(u,ConvertUnitRealField('uhpr')) - i2) + i1)
                     call SaveInteger(DataUnitHT, hid, 542, i1)
                 endif
-                
+
+                //Stomp HP regen
+            //elseif unitTypeId == STOMP_TREE_UNIT_ID and GetHeroLevel(u) >= 175 then
+                //set i1 = R2I(BlzGetUnitMaxHP(u) * 0.01)
+                //set i2 = LoadInteger(DataUnitHT, hid, 542)
+                //if i1 != i2 then
+                    //call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 0 - i2 + i1)
+                    //call SaveInteger(DataUnitHT, hid, 542, i1)
+                //endif
+
+                //Stomp Heal
+            elseif unitTypeId == STOMP_TREE_UNIT_ID and GetHeroLevel(u) >= 175 then
+                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.0133)
+                   if i1 < 1 then
+                        set i1 = 1 // Ensure at least 1 HP is healed
+                   endif
+                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
+                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
+                endif
+
+                //Grass of immortality heal
+            elseif unitTypeId == 'I04N' then
+                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.015)
+                   if i1 < 1 then
+                        set i1 = 1 // Ensure at least 1 HP is healed
+                   endif
+                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
+                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
+                endif
+
                 //War Golem
             elseif unitTypeId == WAR_GOLEM_UNIT_ID then
                 set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))

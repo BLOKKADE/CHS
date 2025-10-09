@@ -16,6 +16,8 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
     endfunction
 
     struct DummyOrder extends array
+        implement Alloc
+        
         unit dummy
         unit source
         integer pid
@@ -144,7 +146,6 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             endif
         endmethod
         implement T32x
-        implement Recycle
 
         method activate takes nothing returns boolean
             local trigger trg = CreateTrigger()
@@ -175,7 +176,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         */
         
         static method create takes unit source, real x, real y, real facing, real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             local player p = GetOwningPlayer(source)
 
             set this.dummy = GetRecycledDummyAnyAngle(x, y, 0.) 
@@ -206,13 +207,16 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
         endmethod
         
         method destroy takes nothing returns nothing
+            local AbilityModifiers abilMods = GetUnitAbilMods(this.dummy)
             call UnitRemoveAbility(this.dummy, this.abil)
 
             
             //set DummyInfo[GetUnitId(this.dummy)].boolean[1] = false
             ///set DummyInfo[GetUnitId(this.dummy)].boolean[2] = false
             //set DummyInfo[GetUnitId(this.dummy)].boolean[3] = false
-            call GetUnitAbilMods(this.dummy).destroy()
+            if abilMods != 0 then
+                call abilMods.destroy()
+            endif
             call BlzSetUnitFacingEx(this.dummy, 0)
             call ResetUnitCustomState(this.dummy)
             call RecycleDummy(this.dummy) 
@@ -221,7 +225,7 @@ library DummyOrder initializer Init requires TimerUtils, EditAbilityInfo, DummyR
             set this.dummy = null
             set this.source = null
             set this.targetUnit = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
     endstruct
 

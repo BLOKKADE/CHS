@@ -99,9 +99,9 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         call AddItemToStock(udg_Draft_DraftBuildings[pid], NON_LUCRATIVE_TOME_ITEM_ID, 1, 1)
 
         if IncomeMode == 3 then
-            call GenerateDraftSpells(pid, udg_Draft_NODraftSpells)
+            call GenerateDraftSpells(pid, udg_Draft_NODraftSpells[pid])
         else
-            call GenerateInitialDraftSpells(pid, udg_Draft_NODraftSpells)
+            call GenerateInitialDraftSpells(pid, udg_Draft_NODraftSpells[pid])
         endif
 
         call DisableEconomicSpells(pid)
@@ -145,7 +145,8 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
 
     // Takes id for ability Draft Mode Rules
     function SetDraftModeRules takes integer DraftRules returns nothing
-        call BlzSetAbilityExtendedTooltip(DraftRules, "You get to choose between " + I2S(udg_Draft_NODraftSpells) + " spells each time.|nDraft spells refresh each time you buy one.|nEach spell only shows up once per game per player.", 0)
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+        call BlzSetAbilityExtendedTooltip(DraftRules, "You get to choose between " + I2S(udg_Draft_NODraftSpells[pid]) + " spells each time.|nDraft spells refresh each time you buy one.|nEach spell only shows up once per game per player.", 0)
     endfunction
     
 endlibrary

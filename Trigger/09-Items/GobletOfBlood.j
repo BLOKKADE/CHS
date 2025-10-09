@@ -44,6 +44,8 @@
                 call this.destroy()
             endif
         endmethod  
+
+        implement T32x
     
         static method create takes unit source returns thistype
             local thistype this
@@ -74,8 +76,6 @@
             set recycleNext = recycle
             set recycle = this
         endmethod
-    
-        implement T32x
     endstruct
 
     function CastGobletOfBlood takes unit u returns nothing

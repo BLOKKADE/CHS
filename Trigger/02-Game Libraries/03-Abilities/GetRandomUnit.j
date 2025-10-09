@@ -7,6 +7,8 @@ library GetRandomUnit initializer init requires UnitHelpers
     function interface RandomUnitFilter takes RandomUnitHelper ruh, unit u returns boolean
 
     struct RandomUnitHelperFilterInfo extends array
+        implement Alloc
+
         unit source
         real x
         real y
@@ -14,19 +16,7 @@ library GetRandomUnit initializer init requires UnitHelpers
         real range
 
         static method create takes unit source, real x, real y, player p, real range returns thistype
-            local thistype this = thistype.setup()
-            
-            set this.source = source
-            set this.x = x
-            set this.y = y
-            set this.p = p
-            set this.range = range
-
-            return this
-        endmethod
-
-        static method create2 takes nothing returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             set this.source = source
             set this.x = x
@@ -40,13 +30,13 @@ library GetRandomUnit initializer init requires UnitHelpers
         method destroy takes nothing returns nothing
             set this.source = null
             set this.p = null
-            call this.recycle()
+            call this.deallocate()
         endmethod
-        
-        implement Recycle
     endstruct
 
     struct RandomUnitHelper extends array
+        implement Alloc
+        
         group RandomUnitHelperGroup
         group exclusionGroup
         group heroGroup
@@ -151,7 +141,6 @@ library GetRandomUnit initializer init requires UnitHelpers
             endif
         endmethod
         implement T32x
-        implement Recycle
 
         //destroy all groups used for the struct
         method destroyGroups takes nothing returns nothing
@@ -178,7 +167,9 @@ library GetRandomUnit initializer init requires UnitHelpers
             set this.heroPriority = false
             set this.RandomUnitHelperGroup = NewGroup()
             set this.filter = 0
-            call this.filterInfo.destroy()
+            if this.filterInfo != 0 then
+                call this.filterInfo.destroy()
+            endif
             set this.filterInfo = 0
             return this
         endmethod
@@ -186,7 +177,7 @@ library GetRandomUnit initializer init requires UnitHelpers
         //create RandomUnitHelper, duration can be used to temporarily store the data if callbacks are needed
         // duration = 0 = infinite
         static method create takes real duration returns thistype
-            local thistype this = thistype.setup()
+            local thistype this = thistype.allocate()
             
             call this.reset()
 
@@ -200,7 +191,7 @@ library GetRandomUnit initializer init requires UnitHelpers
         method destroy takes nothing returns nothing
             call this.reset()
             //call BJDebugMsg("dummy destroyed")
-            call this.recycle()
+            call this.deallocate()
         endmethod
     endstruct
 

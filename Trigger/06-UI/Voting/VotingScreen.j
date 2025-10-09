@@ -78,7 +78,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         elseif (buttonType == 4) then
             return LoadInteger(IncomeButtonEventHandles, handleId, 1) // Income               
         elseif (buttonType == 5 or buttonType == 6 or buttonType == 7 or buttonType == 8 or buttonType == 9 or buttonType == 10 or buttonType == 11 or buttonType == 12) then
-            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero banning, Disable Simultaneous duels, Team duels, Double timers, Disable BR Lives, Disable Unique Heroes
+            return LoadInteger(CheckboxEventHandles, handleId, 1) // Immortal, PVP betting, Hero ban, Disable Simultaneous duels, Team duels, Double timers, Disable BR Lives, Disable Unique Heroes
         endif
 
         return 0
@@ -99,7 +99,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         elseif (handleId == PvpBettingHandleId) then
             return 6 // PVP betting 
         elseif (handleId == HeroBanningHandleId) then
-            return 7 // Hero banning
+            return 7 // Hero ban
         elseif (handleId == DisableSimultaneousDuelHandleId) then
             return 8 // Disable Simultaneous Duels
         elseif (handleId == TeamDuelHandleId) then
@@ -168,7 +168,7 @@ library VotingScreen initializer init requires IconFrames, VotingResults
             call pv.setImmortalVote(value)
         elseif (handleId == PvpBettingHandleId) then // PVP betting
             call pv.setPvpBettingVote(value)
-        elseif (handleId == HeroBanningHandleId) then // Hero Banning
+        elseif (handleId == HeroBanningHandleId) then // Hero Ban
             call pv.setHeroBanningVote(value)
         elseif (handleId == DisableSimultaneousDuelHandleId) then // Disable Simultaneous Duels
             call pv.setDisableSimultaneousDuelVote(value)
@@ -505,9 +505,9 @@ library VotingScreen initializer init requires IconFrames, VotingResults
         call CreateIncomeButton("Disabled", "Players can not buy creep upgrades or upgrade their end of round income in any way. Creeps gain no bonus power.", false)
 
         call CreateVotingButtonCategory("|cffD26EFAOther Options|r")
-        set ImmortalHandleId = CreateVotingCheckbox("Immortal Mode", "Unlimited lives with immortal mode. Otherwise, you are given a few lives. Once you lose them all, you lose the game.", false)
+        set ImmortalHandleId = CreateVotingCheckbox("Disable Immortal Mode", "Disables unlimited lives. You are given a few lives. Once you lose them all, you lose the game.", false)
         set PvpBettingHandleId = CreateVotingCheckbox("PVP Betting", "Enable bets during PVP matches. |n|nCannot be enabled with Simultaneous Duels.", false)
-        set HeroBanningHandleId = CreateVotingCheckbox("Hero Banning", "Every player can ban a hero. |n|nApplies to every Hero selection mode.", false)
+        set HeroBanningHandleId = CreateVotingCheckbox("Disable Hero Ban", "Disables ability for every player to ban a hero. |n|nApplies to every Hero selection mode.", false)
         call GoToNextRow()
         set DisableSimultaneousDuelHandleId = CreateVotingCheckbox("Disable Simultaneous Duels", "PVP duels will run simultaneously instead of one by one. |n|nGames will run faster, but you won't be able to watch every duel. |n|nDisabling this will allow PVP betting.", true)
         set TeamDuelHandleId = CreateVotingCheckbox("Team Duels", "There is a chance that a PVP duel will be a 2v2 or 3v3 PVP duel (If there are enough people). |n|nWill only happen if there are 4 or 8 players in the game.", false)
