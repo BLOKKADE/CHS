@@ -1,4 +1,4 @@
-library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers, Glory
+library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath, AchievementsFrame, UnitFilteringUtility, GameInit, PvpHelper, VotingResults, PlayerHeroDeath, CustomGameEvent, EventHelpers, Glory, PlayerTimerModification
 
     globals
         boolean PvpRoundEndWait = false
@@ -345,7 +345,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
             set PvpRoundEndTimerDialog = CreateTimerDialog(PvpRoundEndTimer)
             call TimerDialogSetTitle(PvpRoundEndTimerDialog, "Next Level...")
             call TimerDialogDisplay(PvpRoundEndTimerDialog, true)
-            call TimerStart(PvpRoundEndTimer, RoundTime, false, function PvpStartNextRound)
+            call TimerStart(PvpRoundEndTimer, GetRoundWaitTime(), false, function PvpStartNextRound)
 
                 // Start the next normal level
         // Check if all single pvp rounds are over

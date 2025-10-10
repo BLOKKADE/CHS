@@ -200,7 +200,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         local integer pn = S2I(args[1])
         if pn > 1 then
             set RoundTime = pn
-            set pvpWaitDuration = pn
+            set PvpWaitDuration = pn
             call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Time between rounds set to: " + I2S(pn))
         endif
     endfunction

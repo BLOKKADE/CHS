@@ -1,8 +1,7 @@
-library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCreepBonus, VotingResults
+library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCreepBonus, VotingResults, PlayerTimerModification
 
     globals
         integer BattleRoyalRound = 50
-        real RoundTime = 20
         timer RoundWaitTimer
         timerdialog RoundWaitTimerDialog
     endglobals
@@ -106,7 +105,7 @@ library AllPlayersCompletedRound initializer init requires RandomShit, EconomyCr
 
             set NextRound[RoundNumber + 1] = true
             
-            call TimerStart(RoundWaitTimer, RoundTime, false, function StartNextRound)
+            call TimerStart(RoundWaitTimer, GetRoundWaitTime(), false, function StartNextRound)
         endif
     endfunction
 

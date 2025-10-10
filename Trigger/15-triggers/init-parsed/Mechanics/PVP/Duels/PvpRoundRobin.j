@@ -1,4 +1,4 @@
-library PvpRoundRobin requires ListT, ForceHelper, VotingResults
+library PvpRoundRobin requires ListT, ForceHelper, VotingResults, PlayerTimerModification
     /*
         Round robin style tournament for more info see: https://en.wikipedia.org/wiki/Round-robin_tournament#Circle_method
         PlayerList = list of player ids that is moved around round robin style
@@ -32,6 +32,7 @@ library PvpRoundRobin requires ListT, ForceHelper, VotingResults
         local DuelGame currentDuelGame
         local string team1ForceString
         local string team2ForceString
+        local real pvpWaitDuration = GetPvpRoundWaitTime()
 
         loop
             exitwhen node == 0

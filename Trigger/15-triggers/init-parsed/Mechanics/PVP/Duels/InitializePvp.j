@@ -1,7 +1,6 @@
-library InitializePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults, PvpHelper
+library InitializePvp initializer init requires RandomShit, PvpRoundRobin, VotingResults, PvpHelper, PlayerTimerModification
 
     globals
-        real pvpWaitDuration = 35
         timer PvpWaitTimer
         timerdialog PvpWaitTimerDialog
         boolean WaitingForPvp = false
@@ -37,12 +36,16 @@ library InitializePvp initializer init requires RandomShit, PvpRoundRobin, Votin
     endfunction
 
     private function InitializePvpActions takes nothing returns nothing
+        local real pvpWaitDuration
+
         call TriggerSleepAction(2.00)
         
         // Setup the fights
         call ResetPvpState()
         call UpdatePlayerCount()
         call MoveRoundRobin()
+        
+        set pvpWaitDuration = GetPvpRoundWaitTime()
         
         // Message about the fights
         set PvpWaitTimer = CreateTimer()

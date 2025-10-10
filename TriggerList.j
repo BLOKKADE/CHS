@@ -477,6 +477,7 @@
 //! import "C:\CHS\CHS/Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\PvpHelper.j"
 //! import "C:\CHS\CHS/Trigger\15-triggers\init-parsed\Mechanics\PVP\Duels\PvpRoundRobin.j"
 //! import "C:\CHS\CHS/Trigger\15-triggers\init-parsed\Mechanics\Rounds\General\PlayerAntiStuck.j"
+//! import "C:\CHS\CHS/Trigger\15-triggers\init-parsed\Mechanics\Rounds\General\PlayerTimerModification.j"
 //! import "C:\CHS\CHS/Trigger\15-triggers\init-parsed\Mechanics\Rounds\General\SuddenDeathCreepTimer.j"
 //! import "C:\CHS\CHS/Trigger\15-triggers\init-parsed\Mechanics\Rounds\Round End\AllPlayersCompletedRound.j"
 //! import "C:\CHS\CHS/Trigger\15-triggers\init-parsed\Mechanics\Rounds\Round End\BonusExp.j"

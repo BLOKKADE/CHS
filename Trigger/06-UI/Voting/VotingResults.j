@@ -246,7 +246,7 @@ library VotingResults initializer init
 
             set RoundTime = RoundTime * 2
             set BattleRoyalWaitTime = BattleRoyalWaitTime * 2
-            set pvpWaitDuration = pvpWaitDuration * 2
+            set PvpWaitDuration = PvpWaitDuration * 2
         endif
 
         if (BRLivesMode == 1) then
