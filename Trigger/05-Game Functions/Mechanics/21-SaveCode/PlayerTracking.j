@@ -645,41 +645,41 @@ library PlayerTracking initializer init requires GameInit, Table
 
     private function SetupMapVersionLookups takes nothing returns nothing
         // The array index should match the version input to GameVersion.Create(). index == version for GetMapVersionName()
-        call AddGameVersion("Invalid Map Version", false) // Placeholder for default map version
-        call AddGameVersion("CHS_v1.9.30-beta1", false) // The first game version that supports save codes
-        call AddGameVersion("CHS v2.0.2", true) // First version to reset seasonal stats. Had major balancing changes
+        call AddGameVersion("Invalid Map Version", false) // 0 - Placeholder for default map version
+        call AddGameVersion("CHS_v1.9.30-beta1", false) // 1 - The first game version that supports save codes
+        call AddGameVersion("CHS v2.0.2", true) // 2 - First version to reset seasonal stats. Had major balancing changes
         // CHS v2.0.3 is missing because we didn't have the GameVersion framework yet. Would have caused a seasonal stat reset otherwise
-        call AddGameVersion("CHS v2.1.1", false) // First version with new GameVersion struct
-        call AddGameVersion("CHS v2.1.2", false) // Scoreboard desync fix version
-        call AddGameVersion("CHS v2.2.0", false) // Scoreboard desync fix version
-        call AddGameVersion("CHS v2.2.1", false) // Bunch of small fixes in this one
-        call AddGameVersion("CHS v2.2.2", false) // Removed gold and other stuff :)
-        call AddGameVersion("CHS v2.2.3", false) // Bugfixes
-        call AddGameVersion("CHS v2.3.0", true) // New save system, new map terrain
-        call AddGameVersion("CHS v2.3.1", false) // ankh and reincarnation bugfixes
-        call AddGameVersion("CHS v2.3.2", false) // ankh and reincarnation bugfixes
-        call AddGameVersion("CHS v2.3.3", true) // Reset season fix
-        call AddGameVersion("CHS v2.3.4", true) // Draft random fix
-        call AddGameVersion("CHS v2.3.5", false) // Ban/Draft fix
-        call AddGameVersion("CHS v2.3.6", false) // Another Ban/Draft fix
-        call AddGameVersion("CHS v2.4.0", false) // Draws, fixes, live ui
-        call AddGameVersion("CHS v2.4.1", true) // Draws, fixes, live ui
-        call AddGameVersion("CHS v2.4.2", true) // bugfixes
-        call AddGameVersion("CHS v2.4.3", true) // player leave bugfix?
-        call AddGameVersion("CHS v2.5.0", true) // items, skills, hp/str change
-        call AddGameVersion("CHS v2.5.1", false) // seer, items, skills
-        call AddGameVersion("CHS v2.5.2", false) // cooldown fixes
-        call AddGameVersion("CHS v2.5.3", false) // draft reincarnation fix
-        call AddGameVersion("CHS v2.5.4", false) // attack d nerf, lots of things
-        call AddGameVersion("CHS v2.5.7", false) // sorted shops, some tooptips
-        call AddGameVersion("CHS v2.5.8", false) // added stomp, new item, loads of skill changes
-        call AddGameVersion("CHS v2.5.9", false) // timer bugfixes
-        call AddGameVersion("CHS v2.6.0", false) // summon limit, murlock change, heart of hero change, etc
-        call AddGameVersion("CHS v2.6.3", false) // added lucky trigger, some bugfixes
-        call AddGameVersion("CHS v2.6.4", false) // increased damage of many weak spells, creep improvements, etc
-        call AddGameVersion("CHS v2.6.5", false) // bugfixes, creep balance, changes to grass and pocket factory
-        call AddGameVersion("CHS v2.6.6", false) // bugfixes, halved summon magic resistance, floating text upgrade etc
-        call AddGameVersion("CHS v2.7.0", true) // Stat per level items etc.
+        call AddGameVersion("CHS v2.1.1", false) // 3 - First version with new GameVersion struct
+        call AddGameVersion("CHS v2.1.2", false) // 4 - Scoreboard desync fix version
+        call AddGameVersion("CHS v2.2.0", false) // 5 - Scoreboard desync fix version
+        call AddGameVersion("CHS v2.2.1", false) // 6 - Bunch of small fixes in this one
+        call AddGameVersion("CHS v2.2.2", false) // 7 - Removed gold and other stuff :)
+        call AddGameVersion("CHS v2.2.3", false) // 8 - Bugfixes
+        call AddGameVersion("CHS v2.3.0", true) // 9 - New save system, new map terrain
+        call AddGameVersion("CHS v2.3.1", false) // 10 - ankh and reincarnation bugfixes
+        call AddGameVersion("CHS v2.3.2", false) // 11 - ankh and reincarnation bugfixes
+        call AddGameVersion("CHS v2.3.3", true) // 12 - Reset season fix
+        call AddGameVersion("CHS v2.3.4", true) // 13 - Draft random fix
+        call AddGameVersion("CHS v2.3.5", false) // 14 - Ban/Draft fix
+        call AddGameVersion("CHS v2.3.6", false) // 15 - Another Ban/Draft fix
+        call AddGameVersion("CHS v2.4.0", false) // 16 - Draws, fixes, live ui
+        call AddGameVersion("CHS v2.4.1", true) // 17 - Draws, fixes, live ui
+        call AddGameVersion("CHS v2.4.2", true) // 18 - bugfixes
+        call AddGameVersion("CHS v2.4.3", true) // 19 - player leave bugfix?
+        call AddGameVersion("CHS v2.5.0", true) // 20 - items, skills, hp/str change
+        call AddGameVersion("CHS v2.5.1", false) // 21 - seer, items, skills
+        call AddGameVersion("CHS v2.5.2", false) // 22 - cooldown fixes
+        call AddGameVersion("CHS v2.5.3", false) // 23 - draft reincarnation fix
+        call AddGameVersion("CHS v2.5.4", false) // 24 - attack d nerf, lots of things
+        call AddGameVersion("CHS v2.5.7", false) // 25 - sorted shops, some tooptips
+        call AddGameVersion("CHS v2.5.8", false) // 26 - added stomp, new item, loads of skill changes
+        call AddGameVersion("CHS v2.5.9", false) // 27 - timer bugfixes
+        call AddGameVersion("CHS v2.6.0", false) // 28 - summon limit, murlock change, heart of hero change, etc
+        call AddGameVersion("CHS v2.6.3", false) // 29 - added lucky trigger, some bugfixes
+        call AddGameVersion("CHS v2.6.4", false) // 30 - increased damage of many weak spells, creep improvements, etc
+        call AddGameVersion("CHS v2.6.5", false) // 31 - bugfixes, creep balance, changes to grass and pocket factory
+        call AddGameVersion("CHS v2.6.6", false) // 32 - bugfixes, halved summon magic resistance, floating text upgrade etc
+        call AddGameVersion("CHS v2.7.0", true) // 33 - Stat per level items etc.
     endfunction
 
     private function init takes nothing returns nothing
