@@ -218,9 +218,9 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[46] = TROLL_HEADHUNTER_UNIT_ID
         set HeroSelectorUnitCode[47] = URSA_WARRIOR_UNIT_ID
         set HeroSelectorUnitCode[48] = WAR_GOLEM_UNIT_ID
-        set HeroSelectorUnitCode[49] = WITCH_DOCTOR_UNIT_ID
-        set HeroSelectorUnitCode[50] = WOLF_RIDER_UNIT_ID
-        set HeroSelectorUnitCode[51] = YETI_UNIT_ID
+        //set HeroSelectorUnitCode[49] = WITCH_DOCTOR_UNIT_ID
+        set HeroSelectorUnitCode[49] = WOLF_RIDER_UNIT_ID
+        set HeroSelectorUnitCode[50] = YETI_UNIT_ID
         //set HeroSelectorUnitCode[52] = NYX_UNIT_ID
 
         //set HeroSelectorUnitCode[52] = GNOLL_WARDEN_UNIT_ID

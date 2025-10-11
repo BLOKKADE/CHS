@@ -171,6 +171,7 @@ scope ModifyDamageBeforeArmor initializer init
                 else
                     set i1 = 0
                 endif
+
                 if UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) and GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) == 0 then
                     if IsUnitDivineBubbled(DamageTarget) then
                         set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + (32 * i1)
@@ -179,14 +180,14 @@ scope ModifyDamageBeforeArmor initializer init
                     endif
                 else
                     if IsUnitDivineBubbled(DamageTarget) then
-                        set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + (32 * (6 + i1))
+                        set GetDivineBubbleStruct(DamageTargetId).endTick = T32_Tick + R2I(32 * (2.0 + (4.0 / 29.0) * (GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) - 1) + i1))
                     else
-                        //call BJDebugMsg("db: " + I2S(3 + i1))
-                        call DivineBubbleStruct.create(DamageTarget, 6 + i1, DIVINE_BUBBLE_ABILITY_ID)
+                        call DivineBubbleStruct.create(DamageTarget, 2.0 + (4.0 / 29.0) * (GetUnitAbilityLevel(DamageTarget, DIVINE_BUBBLE_ABILITY_ID) - 1) + i1, DIVINE_BUBBLE_ABILITY_ID)
                     endif
                 endif
             endif
         endif
+
 
         if DamageSourceAbility == CRYPT_LORD_UNIT_ID then
             set Damage.index.damage = 60 * GetHeroLevel(DamageSourceHero)
@@ -953,7 +954,7 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0  then
             if GetRandomReal(1,100)  <= i1 * (8 + LuckyTriggerBonusChance(DamageTarget)) * DamageSourceLuck then
                 if GetUnitState(DamageTarget,UNIT_STATE_MANA) >= 750 then
-                    set RandomSpellLoc = Location(GetUnitX(DamageSource), GetUnitY(DamageSource))
+                    set RandomSpellLoc = GetSpellTargetLoc()
                     call CastRandomSpell(DamageTarget, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 30))
                     call RemoveLocation(RandomSpellLoc)
                     set RandomSpellLoc = null

@@ -412,7 +412,7 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         endif
                         
                         //multicast
-                        if CanMulticast(caster, abilId) then
+                        if CanMulticast(caster, abilId) and IsSpellResettable(abilId) then
                             call MultiBonusCast(caster, target, abilId, GetAbilityOrder(abilId), spelLLoc)
                         endif
                     endif

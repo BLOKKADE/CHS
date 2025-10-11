@@ -198,6 +198,13 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
+        //Unholy Aura
+        set i2 = GetUnitAbilityLevel(hero, UNHOLY_AURA_ABILITY_ID)
+        if i2 > 0 then
+            call AddUnitBonusReal(u, BONUS_MOVEMENT_SPEED, 0.03 + ((0.90 - 0.03) / 29) * (i2 - 1))
+            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 10 + 80 * (i2 - 1))
+        endif
+
         //Trueshot Aura
         set i2 = GetUnitAbilityLevel(hero, TRUESHOT_AURA_ABILITY_ID)
         if i2 > 0 then

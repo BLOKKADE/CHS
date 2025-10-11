@@ -90,6 +90,7 @@ library LearnAbsolute initializer init requires SpellsLearned, Functions, Absolu
                     elseif counter > GetHeroMaxAbsoluteAbility(u) then
                         if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
                             call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "The |cffbbff00Witch Doctor|r can only gain more Absolute abilities through his passive leveling trait.")
+                            call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)
                         else
                             call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 2, "Buy an |cffbbff00Absolute Acorn|r at the |cffffd900Power Ups Shop II|r to purchase more Absolute abilities. (|cffff1100Max: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "|r)")
                             call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(u), PLAYER_STATE_RESOURCE_GOLD)

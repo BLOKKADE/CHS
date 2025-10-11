@@ -483,7 +483,7 @@ scope ModifyDamageAfterArmor initializer init
 
             // Apply mana gain, capped at max mana
             call SetUnitState(DamageSource, UNIT_STATE_MANA, RMinBJ(currentMana + manaGain, maxMana))
-            call BJDebugMsg("Banshee mana gained: " + R2S(manaGain))
+            //call BJDebugMsg("Banshee mana gained: " + R2S(manaGain))
 
             // Visual effect with 0.5s cooldown
             if not IsFxOnCooldownSet(GetHandleId(DamageSource), 'A0F9', 0.5) then

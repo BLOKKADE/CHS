@@ -18,7 +18,7 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
     endfunction
 
     function WitchDoctorLevelup takes unit u, integer prevLevel, integer heroLevel returns nothing
-        local integer i = prevLevel
+        local integer i = prevLevel + 1
         local integer j
         local integer poolSize = 11
         local integer index
@@ -106,7 +106,6 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
         // Normal level-up logic
         loop
             if ModuloInteger(i, 25) == 0 then
-                call AddHeroMaxAbsoluteAbility(u)
                 call UpdateBonus(u, 0, 1)
 
                 // Try to assign a unique ability
@@ -134,6 +133,8 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
                         set abilityId = a8
                     elseif index == 9 then
                         set abilityId = a9
+                    elseif index == 10 then
+                        set abilityId = a10
                     endif
 
                     if GetUnitAbilityLevel(u, abilityId) == 0 then
@@ -144,7 +145,6 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
                         // Custom UI integration
                         call UpdateHeroSpellList(abilityId, u, 1)
                         call SaveInteger(HT, GetHandleId(u), abilityId, 1)
-                        call AddHeroMaxAbsoluteAbility(u)
 
                         set found = true
                     endif
@@ -166,10 +166,9 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
             endif
 
             set i = i + 1
-            exitwhen i >= heroLevel
+            exitwhen i > heroLevel
         endloop
     endfunction
-
 
     private function init takes nothing returns nothing
         set WitchDoctorAbsoluteLevel = HashTable.create()

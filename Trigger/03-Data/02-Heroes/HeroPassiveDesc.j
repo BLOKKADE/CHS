@@ -258,7 +258,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOgreMagi.blp" )
-        call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ogre's Luck: Whenever the Hero casts an ability it has a 15% chance to cast it again at 50% mana cost. [|cff80ff80Luck|r] ")
+        call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ogre's Luck: Whenever the Hero uses an ability or item it has a 15% chance to cast it again at 50% mana cost. [|cff80ff80Luck|r] |cffc0c0c0Cannot multicast spells or items with the [|cff96ffffStable|r|cffc0c0c0] or [|cffffff00Plain|r|cffc0c0c0] tags.|r")
         call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Ogre's Luck: +1.2% chance." )
         call InitHeroDesc(OGRE_MAGE_UNIT_ID, HeroPassive_SummonLimit, "24")
 
