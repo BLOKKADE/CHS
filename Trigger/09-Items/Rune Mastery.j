@@ -3,6 +3,7 @@ library RuneMaster initializer init requires CustomState, RuneInit
         rect rectRune = null
         unit RuneMasterCaster
         HashTable RuneMasteryCdReduction
+        integer RuneMasterUsedCount = 0 // NEW: Counter for used runes
     endglobals
 
     function ToggleRunestoneRuneMasteryCd takes unit u, integer abilId returns nothing
@@ -12,14 +13,18 @@ library RuneMaster initializer init requires CustomState, RuneInit
     function IsRunestoneRuneMasteryCdResettable takes unit u, integer abilId returns boolean
         return RuneMasteryCdReduction[GetHandleId(u)].boolean[abilId]
     endfunction
-    
+
     private function UseRunes takes nothing returns nothing
         local item it = GetFilterItem()
         local real dx
         local real dy
         local real luck = GetUnitCustomState(RuneMasterCaster, BONUS_LUCK)
 
-        //call BJDebugMsg("rune id: " + I2S(RuneIndex[GetHandleId(it)]))
+        // Stop if we've already used 10 runes
+        if RuneMasterUsedCount >= 10 then
+            return
+        endif
+
         if GetItemType(it) == ITEM_TYPE_POWERUP and RuneIndex[GetHandleId(it)] == GetPlayerId(GetOwningPlayer(RuneMasterCaster)) then
             set dx = GetItemX(it) - GetUnitX(RuneMasterCaster)
             set dy = GetItemY(it) - GetUnitY(RuneMasterCaster)
@@ -27,10 +32,10 @@ library RuneMaster initializer init requires CustomState, RuneInit
             if GetRandomInt(1, 100) < (10 + LuckyTriggerBonusChance(RuneMasterCaster)) * luck then
                 call UnitAddItem(RuneMasterCaster, CreateRandomRune(GetRunePower(it) - GetUnitCustomState(RuneMasterCaster, BONUS_RUNEPOW) - GetHeroLevel(RuneMasterCaster), GetUnitX(RuneMasterCaster), GetUnitY(RuneMasterCaster), RuneMasterCaster))
             endif
-            //call BJDebugMsg("rune")
+
             if SquareRoot(dx * dx + dy * dy) < 500 then
-                //call BJDebugMsg("use")
                 call UnitAddItem(RuneMasterCaster, it)
+                set RuneMasterUsedCount = RuneMasterUsedCount + 1 // Increment rune usage
             endif
         endif
 
@@ -38,15 +43,10 @@ library RuneMaster initializer init requires CustomState, RuneInit
     endfunction
 
     function CastRuneMaster takes unit caster returns nothing
-        //call BJDebugMsg("rune master 1")
         set RuneMasterCaster = caster
+        set RuneMasterUsedCount = 0 // Reset counter before casting
         call MoveRectTo(rectRune, GetUnitX(caster), GetUnitY(caster))
-        //call CreateUnit(Player(0), 'hfoo', GetRectMaxX(rectRune), GetRectMaxY(rectRune), 0)
-        //call CreateUnit(Player(0), 'hfoo', GetRectMaxX(rectRune), GetRectMinY(rectRune), 0)
-        //call CreateUnit(Player(0), 'hfoo', GetRectMinX(rectRune), GetRectMaxY(rectRune), 0)
-        //call CreateUnit(Player(0), 'hfoo', GetRectMinX(rectRune), GetRectMinY(rectRune), 0)
         call EnumItemsInRect(rectRune, null, function UseRunes)
-        //call BJDebugMsg("rune master 2")
     endfunction
 
     private function init takes nothing returns nothing

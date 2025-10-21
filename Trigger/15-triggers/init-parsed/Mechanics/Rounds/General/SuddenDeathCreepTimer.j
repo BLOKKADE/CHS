@@ -60,7 +60,7 @@ library SuddenDeathCreepTimer initializer init requires RandomShit
         set SuddenDeathTick = SuddenDeathTick + 1
 
         if (CreepEnrageEnabled) then
-            if (SuddenDeathTick == 120 or SuddenDeathTick == 180 or SuddenDeathTick == 240 or SuddenDeathTick == 300) then
+            if (SuddenDeathTick == 120 or SuddenDeathTick == 180 or SuddenDeathTick == 240) then
                 call UpdateSuddenDeathTimer()
             endif
 
@@ -68,10 +68,10 @@ library SuddenDeathCreepTimer initializer init requires RandomShit
                 set creepUnits = GetUnitsInRectOfPlayer(GetPlayableMapRect(), Player(11))
                 call ForGroup(creepUnits, function BuffCreepUnit)
 
-                if (SuddenDeathTick >= 240) then
+                if (SuddenDeathTick >= 180) then
                     call ForGroup(creepUnits, function FurtherBuffCreepUnit)
 
-                    if (SuddenDeathTick >= 300) then
+                    if (SuddenDeathTick >= 240) then
                         set playersNotDoneWithRound = GetPlayersMatching(Condition(function PlayerNotDoneWithRoundFilter))
                         call ForForce(playersNotDoneWithRound, function DamagePlayerHero)
 

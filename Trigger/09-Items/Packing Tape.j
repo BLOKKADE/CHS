@@ -57,6 +57,12 @@ library PackingTape initializer init requires PlayerSummonGroups, SummonInfo, Re
 
             call BlzSetUnitAttackCooldown(target, RMaxBJ(0.3, BlzGetUnitAttackCooldown(target, 0)), 0)
 
+            call SetUnitScale(target, 1.3, 1.3, 1.3)
+
+            call SetUnitVertexColor(target, 180, 255, 180, 255)
+
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", target, "overhead"))
+
             call BlzSetUnitName(target,GetUnitName(target)+ ": |cff00d9fflevel " + I2S(totalLevel) + "|r")
             call SetWidgetLife(target, BlzGetUnitMaxHP(target))
         endif

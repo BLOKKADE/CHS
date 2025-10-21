@@ -1244,13 +1244,13 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceIceForce = GetRandomInt(1, 15) //Ice Force creep chance
             set RoundCreepChanceEntanglingRoots = GetRandomInt(1, 180) //Entangling Roots creep chance
             set RoundCreepChanceStormBolt = GetRandomInt(1, 40) //Storm Bolt creep chance
-            //set RoundCreepChanceFingerOfDeath = GetRandomInt(1, 15) //Finger of Death chance
+            set RoundCreepChanceFingerOfDeath = GetRandomInt(1, 10000) //Finger of Death chance
             set RoundCreepChanceAncientTeaching = GetRandomInt(1, 15) //Ancient Teaching creep chance
-            set RoundCreepChanceHex = GetRandomInt(1, 80) //Hex chance
+            //set RoundCreepChanceHex = GetRandomInt(1, 80) //Hex chance <- apparently stops xp gain and certain items so disabled for now
             set RoundCreepChanceFirebolt = GetRandomInt(1, 80) //Firebolt chance
             set RoundCreepChanceSilence = GetRandomInt(1, 35) //Silence chance
             set RoundCreepChanceAerialShackles = GetRandomInt(1, 80) //Aerial Shackles chance
-            //set RoundCreepChanceBanish = GetRandomInt(1, 80) //Banish chance
+            set RoundCreepChanceBanish = GetRandomInt(1, 3000) //Banish chance
             set RoundCreepChanceHolyLight = GetRandomInt(1, 35) //Holy Light chance
             set RoundCreepChanceTranquility = GetRandomInt(1, 80) //Tranquility chance
             set RoundCreepChanceChainLightning = GetRandomInt(1, 80) //Chain Lightning chance
@@ -1260,9 +1260,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceImpale = GetRandomInt(1, 80) //Impale chance
             set RoundCreepChanceSleep = GetRandomInt(1, 800) //Sleep chance
             set RoundCreepChanceCurse = GetRandomInt(1, 80) //Curse chance
-            //set RoundCreepChanceSpellImmunity = GetRandomInt(1, 15) //Spell Immunity chance
+            set RoundCreepChanceSpellImmunity = GetRandomInt(1, 10000) //Spell Immunity chance
             set RoundCreepChanceReincarnation = GetRandomInt(1, 80) //Reincarnation chance
-            //set RoundCreepChanceDevastatingBlow = GetRandomInt(1, 15) //Devastating Blow chance
+            set RoundCreepChanceDevastatingBlow = GetRandomInt(1, 10000) //Devastating Blow chance
             set RoundCreepChanceDeathCoil = GetRandomInt(1, 35) //Death Coil chance
             set RoundCreepChanceFingerOfPain = GetRandomInt(1, 80) //Finger of Pain chance
             set RoundCreepChanceHowlOfTerror = GetRandomInt(1, 35) //Howl of Terror chance
@@ -1270,7 +1270,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceFastMagic = GetRandomInt(1, 25) //Fast Magic chance        
             set RoundCreepChanceForkedLightning = GetRandomInt(1, 80) //Forked Lightning chance
             set RoundCreepChanceFrostBolt = GetRandomInt(1, 80) //Frost bolt chance
-            set RoundCreepChancePolymorph = GetRandomInt(1, 80) //Polymorph chance
+            //set RoundCreepChancePolymorph = GetRandomInt(1, 80) //Polymorph chance <- apparently stops xp gain and certain items so disabled for now
             set RoundCreepChanceFrenzy = GetRandomInt(1, 15) //Frenzy chance
             set RoundCreepChanceUnholyFrenzy = GetRandomInt(1, 25) //Unholy frenzy chance
             set RoundCreepChanceIcyBreath = GetRandomInt(1, 35) //icy breath chance

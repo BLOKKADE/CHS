@@ -28,7 +28,6 @@ library HeroRefresh initializer init requires RandomShit, NewBonus, CustomState
             call SetUnitBonusReal(u, BONUS_MANA_REGEN, 1)
             call SetHeroAgi(u, 10, true)
             call SetHeroInt(u, 10, true)
-            call SetHeroStr(u, 10, true)
             call BlzSetUnitBaseDamage(u, 1, 0)
             call BlzSetUnitArmor(u, 1)
             call UnitAddAbility(u, 'BRBB')

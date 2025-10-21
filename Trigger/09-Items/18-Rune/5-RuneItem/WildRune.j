@@ -1,32 +1,34 @@
-library WildRune requires RandomShit Stomp
+globals
+    hashtable udg_Hashtable = InitHashtable()
+endglobals
+
+library WildRune requires RandomShit
+
+    function WildRune_RemoveAbility takes nothing returns nothing
+        local timer t = GetExpiredTimer()
+        local integer id = GetHandleId(t)
+        local unit u = LoadUnitHandle(udg_Hashtable, id, 0)
+
+        call UnitRemoveAbility(u, 'WRBB')
+        call FlushChildHashtable(udg_Hashtable, id)
+        call DestroyTimer(t)
+
+        set u = null
+        set t = null
+    endfunction
+
     function WildRune takes nothing returns boolean
-        local player p = GetOwningPlayer(GLOB_RUNE_U)
-        local real power = GLOB_RUNE_POWER * 100
-        local integer levels = R2I(power / 100) + 1
-        local integer r
-        local integer pid = GetPlayerId(p)
-        
-        loop
-            set r = GetRandomInt(0,2)
-            if SuddenDeathEnabled == false then
-                if r == 0 then
-                    set SummonDamage[pid] = SummonDamage[pid] + 1
-                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon Attack Bonus - [|cffffcc00Level " + I2S(SummonDamage[pid]) + "|r] - (|cff89ff52+" + I2S(SummonDamage[pid] * 20) + ")|r")
-                elseif r == 1 then
-                    set SummonArmor[pid] = SummonArmor[pid] + 1
-                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon Armor Bonus - [|cffffcc00Level " + I2S(SummonArmor[pid]) + "|r] - (|cff89ff52+" + I2S(SummonArmor[pid] * 2) + ")|r")
-                else
-                    set SummonHitPoints[pid] = SummonHitPoints[pid] + 1
-                    call DisplayTimedTextToPlayer(p, 0, 0, 2, "Summon HP Bonus - [|cffffcc00Level " + I2S(SummonHitPoints[pid]) + "|r] - (|cff89ff52+" + I2S(SummonHitPoints[pid] * 200) + ")|r")
-                endif
-            endif
-            set levels = levels - 1
-            exitwhen levels <= 0
-        endloop
+        local unit u = GLOB_RUNE_U
+        local timer t = CreateTimer()
+        local integer id = GetHandleId(t)
 
-        call AddStompStats(GLOB_RUNE_U)
+        call UnitAddAbility(u, 'WRBB')
+        call UnitMakeAbilityPermanent(u, false, 'WRBB')
 
-        set p = null
+        call SaveUnitHandle(udg_Hashtable, id, 0, u)
+        call TimerStart(t, 5.0, false, function WildRune_RemoveAbility)
+
         return false
     endfunction
+
 endlibrary
