@@ -56,4 +56,29 @@ library RemoveBuffs requires BuffRepository
             set i = i + 1
         endloop
     endfunction
+
+    function RemoveUnitBuffsAndHeal takes unit u, integer buffType, boolean removeUnpurgeable returns integer
+        local integer abilId
+        local integer i = 0
+        local integer removed = 0
+
+        loop
+            set abilId = BlzGetAbilityId(BlzGetUnitAbilityByIndex(u, i))
+            exitwhen abilId == 0
+
+            if IsBuff(abilId) and (GetBuffType(abilId) == buffType or buffType == 0) and (removeUnpurgeable or IsBuffPurgeable(abilId)) then
+                if RemoveBuffAssociatedAbility(abilId) then
+                    call UnitRemoveAbility(u, GetBuffAssociatedAbility(abilId))
+                endif
+
+                call UnitRemoveAbility(u, abilId)
+                set removed = removed + 1
+            endif
+
+            set i = i + 1
+        endloop
+
+        return removed
+    endfunction
+
 endlibrary

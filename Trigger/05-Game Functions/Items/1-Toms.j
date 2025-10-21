@@ -416,6 +416,11 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
             elseif itemTypeId == TOME_OF_STRENGTH_5_ITEM_ID then 
                 call SetHeroStr(u, GetHeroStr(u, false) + 5, true)
                 //Tome of experience
+            elseif itemTypeId == TOME_OF_KNOWLEDGE_5_ITEM_ID then 
+                call SetHeroStr(u, GetHeroStr(u, false) + 5, true)
+                call SetHeroInt(u, GetHeroInt(u, false) + 5, true)
+                call SetHeroAgi(u, GetHeroAgi(u, false) + 5, true)
+                //Tome of experience
             elseif itemTypeId == TOME_OF_EXPERIENCE_100_ITEM_ID then
                 call AddHeroXP(u, 100, false)
                 set expTome = true

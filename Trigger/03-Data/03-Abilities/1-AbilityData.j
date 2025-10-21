@@ -639,6 +639,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //77 - Summon Bear 
         call SaveAbilData(SUMMON_BEAR_ABILITY_ID, SUMMON_BEAR_ITEM_ID, false, 0, 0, false, Order_Instant, "summongrizzly")
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Blood, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //78 - Summon Quilbeast 
@@ -1198,7 +1199,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(LUCKY_TRIGGER_ABILITY_ID, LUCKY_TRIGGER_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //204 - Overload
-        call SaveAbilData(OVERLOAD_ABILITY_ID, OVERLOAD_ITEM_ID, true, 0, 0, false, Order_None, null)
+        call SaveAbilData(OVERLOAD_ABILITY_ID, OVERLOAD_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
     endfunction
 
@@ -1323,6 +1324,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(BEAST_MASTER_UNIT_ID, Element_Wild, 1)
         call SetObjectElement(MYSTIC_UNIT_ID, Element_Wild, 1)
         call SetObjectElement(DRUID_OF_THE_CLAY_UNIT_ID, Element_Wild, 1)
+        call SetObjectElement(DRUID_OF_THE_CLAY_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(SEER_UNIT_ID, Element_Arcane, 2)
         call SetObjectElement(MURLOC_WARRIOR_UNIT_ID, Element_Blood, 1)
         /*

@@ -67,7 +67,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == STOMP_TREE_UNIT_ID then  
             set i = prevLevel + 1
             call SetBonus(u, 1, 50 + 50 * (heroLevel / 175.0))
-            loop
+            /*loop
                 exitwhen i > heroLevel
 
                 if ModuloInteger(i, 65) == 0 then
@@ -89,7 +89,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
                 endif
 
                 set i = i + 1
-            endloop
+            endloop*/
 
         elseif uid == MAULER_UNIT_ID then  
             set i = prevLevel + 1
@@ -169,10 +169,10 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             //call SetBonus(u, 2, 30 + BladestormArmorPierceBonus[hid])
             call SetBonus(u, 3, BladestormAttackLimit[hid])
         elseif uid == ORC_CHAMPION_UNIT_ID then   
-            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 5 * levelsGained)
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (2 * levelsGained))
-            call UpdateBonus(u, 0, 2 * levelsGained)   
-            call UpdateBonus(u, 1, 5 * levelsGained)
+            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 15 * levelsGained)
+            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (3 * levelsGained))
+            call UpdateBonus(u, 0, 3 * levelsGained)   
+            call UpdateBonus(u, 1, 15 * levelsGained)
             call SetBonus(u, 2 , 10 + (heroLevel * 0.5)) 
         elseif uid == TROLL_HEADHUNTER_UNIT_ID then   
             call SetBonus(u, 0, 40 + 1.5 * heroLevel)

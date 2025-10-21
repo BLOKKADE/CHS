@@ -46,9 +46,14 @@ scope ModifyDamageBeforeArmor initializer init
             return
         endif
 
+        //Bulwark retaliation
+        if UnitHasItemType(DamageTarget, BULWARK_ITEM_ID) and Damage.index.isAttack then
+            call HandleBulwarkRetaliation(GetTriggerUnit(), GetEventDamageSource())
+        endif
+
         //Howl of Terror
         if UnitHasBuffBJ(Damage.target, HOWL_OF_TERROR_BUFF_ID) and Damage.index.damageType == DAMAGE_TYPE_MAGIC then
-            set Damage.index.damage = Damage.index.damage * 1.5
+            set Damage.index.damage = Damage.index.damage * 1.4
             return
         endif
 
@@ -143,6 +148,13 @@ scope ModifyDamageBeforeArmor initializer init
         if GetUnitAbilityLevel(DamageTarget, LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID) > 0 then
             set Damage.index.damage = 0
             return
+        endif
+
+        //Savage Totem
+        if UnitHasItemType(DamageTarget, SAVAGE_TOTEM_ITEM_ID) and Damage.index.isSpell then
+            if GetRandomReal(1, 100) <= (25 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
+            set Damage.index.damage = 0
+            endif
         endif
 
         //Strong Chestmail
@@ -361,7 +373,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Entangling Roots
         if DamageSourceAbility == ENTAGLING_ROOTS_ABILITY_ID then
-            set Damage.index.damage = Damage.index.damage * (1 + ((GetUnitElementCount(DamageSource, Element_Earth) + GetUnitElementCount(DamageSource, Element_Wild)) * 1))
+            set Damage.index.damage = Damage.index.damage * ((GetUnitElementCount(DamageSource, Element_Earth) + GetUnitElementCount(DamageSource, Element_Wild)) * 1)
         endif
 
         //Earthquake
@@ -393,6 +405,11 @@ scope ModifyDamageBeforeArmor initializer init
         //Forked Lightning
         if DamageSourceAbility == FORKED_LIGHTNING_ABILITY_ID then
             set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Wind) * 0.25))
+        endif
+
+        //Corrosive Skin
+        if DamageSourceAbility == 'A00R' then
+            set Damage.index.damage = Damage.index.damage * (1 + (GetHeroLevel(DamageSource)* 0.05))
         endif
 
         //Pyromancer fire attack

@@ -209,7 +209,8 @@ scope ModifyDamageAfterArmor initializer init
         
         //Combustion
         if GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 then
-            call AbilStartCD(DamageSourceHero, COMBUSTION_ABILITY_ID, 0.3)
+            set r1 = 1.0 - 0.7 * (I2R(GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID)) / 30.0)
+            call AbilStartCD(DamageSourceHero, COMBUSTION_ABILITY_ID, r1)
             set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", DamageTarget, "chest"))
         endif
@@ -343,7 +344,7 @@ scope ModifyDamageAfterArmor initializer init
                     set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
                     if i > 0 and GetRandomReal(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
                         call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
-                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 100 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID, true, false)
+                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 200 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID, true, false)
                     endif
 
                     //Destruction

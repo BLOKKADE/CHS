@@ -4,6 +4,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		HashTable UniqueItemCount
 		private integer EVENT_ITEM_PICKUP = 0
 		private integer EVENT_ITEM_DROP = 1
+		hashtable bulwarkTable = InitHashtable()
+		hashtable elementTable = InitHashtable()
 	endglobals
 
 	function SetupItem takes unit u, item it, integer ev returns nothing
@@ -89,6 +91,11 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'I05B' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 30 * uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Water, uniqueDiff)
+
+			//Savage Totem
+		elseif itemId == SAVAGE_TOTEM_ITEM_ID then
+			call AddUnitAbsoluteBonusCount(u,Element_Wild, uniqueDiff)
+			call AddUnitBonus(u, BONUS_HEALTH, 25000 * uniqueDiff)
 		
 			//Runic Bracer
 		elseif itemId == 'I04C' then
@@ -124,6 +131,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Sword of Bloodthirst
 		elseif itemId == SWORD_OF_BLOODTHRIST_ITEM_ID then
 			call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + 300 * diff)
+			call AddUnitAbsoluteBonusCount(u,Element_Blood, uniqueDiff)
 
 			//Wisdom Chestplate
 		elseif itemId == WISDOM_CHESTPLATE_ITEM_ID then
@@ -286,11 +294,6 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		elseif itemId == 'WBSG' then
 			call AddUnitAbsoluteBonusCount(u,Element_Wild, diff)
 
-			//Beastmaster's Bulwark
-		elseif itemId == 'BGBB' then
-			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
-			call AddUnitAbsoluteBonusCount(u,Element_Wild, uniqueDiff)
-		
 			//Light Armor
 		elseif itemId == 'I076' then
 			call AddUnitAbsoluteBonusCount(u,Element_Light, diff)
@@ -483,6 +486,11 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1000 * diff, 0 )
 			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
 			call AddUnitBonus(u, BONUS_MOVEMENT_SPEED, 100 * diff)
+
+		//Blessed Striders
+		elseif itemId == BLESSED_STRIDERS_ITEM_ID then
+			call AddUnitAbsoluteBonusCount(u,Element_Light, diff)
+			call AddUnitBonus(u, BONUS_MOVEMENT_SPEED, 300 * diff)
 
 		//Bloody Axe
 		elseif itemId == 'I078' then

@@ -6,6 +6,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
         call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true) //anti magic flag
+        call SetupBuffInfo1(HERO_BUFF_ID, HERO_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         //purgeable buffs
         call SetupBuffInfo1(BATTLE_ROAR_BUFF_ID, BATTLE_ROAR_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(BERSERK_BUFF_ID, BERSERK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
@@ -14,7 +15,6 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(LIGHTNING_SHIELD_BUFF_ID, LIGHTNING_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(REJUVENATION_BUFF_ID, REJUVENATION_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(SPIRIT_LINK_BUFF_ID, SPIRIT_LINK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
-        call SetupBuffInfo1(HERO_BUFF_ID, HERO_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(EXTRADIMENSIONAL_COOPERATION_BUFF_ID, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('Bblo', BLOODLUST_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('BBGS', GUARDIAN_SPIRIT_ABILITY_ID, BUFFTYPE_POSITIVE, false)
@@ -29,7 +29,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2(LUCKY_PANTS_BUFF_ID, 'A09H', 0, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2(MANA_STARVATION_BUFF_ID, 'A09R', MANA_STARVATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2(WISDOM_CHESTPLATE_BUFF_ID, 'A09S', 0, BUFFTYPE_POSITIVE, false, true)
-        call SetupBuffInfo2(CHEATER_MAGIC_BUFF_ID, 'A08G', CHEATER_MAGIC_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
+        call SetupBuffInfo2(CHEATER_MAGIC_BUFF_ID, 'A08G', CHEATER_MAGIC_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B02H', ANCIENT_BLOOD_BUFF_ABILITY_ID, ANCIENT_BLOOD_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B02B', CONTRACT_LIVING_BUFF_ID, 0, BUFFTYPE_BOTH, false, true)
         call SetupBuffInfo2('B025', 'A0AF', BLESSED_PROTECTIO_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
@@ -40,7 +40,6 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B01E', 'A08C', DIVINE_BUBBLE_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2(ERUPTION_IMMUNE_BUFF_ID, ERUPTION_IMMUNE_ABILITY_ID, ERUPTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B02V', DRUNKEN_HAZE_IGNITE_BUFF_ID, DRUNKEN_HAZE_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
-        call SetupBuffInfo2('B01D', 'A08B', LAST_BREATHS_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B02C', 'A086', MARTIAL_THEFT_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B029', 'A0BB', SKELETON_BRUTE_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01M', 'A092', YETI_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
@@ -143,6 +142,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B036', STARFALL_BUFF_ABILITY_ID, STARFALL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B037', LIGHTNING_SHIELD_DUMMY_ABILITY_ID, LIGHTNING_SHIELD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B01D', 'A08B', LAST_BREATHS_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
 
         call SetupBuffInfo1('B00C', AURA_OF_FEAR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(FEAR_AURA_BUFF_ID, 'A031', BUFFTYPE_NEGATIVE, false)

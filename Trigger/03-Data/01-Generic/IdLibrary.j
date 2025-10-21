@@ -798,11 +798,13 @@ library IdLibrary initializer init
         constant integer TOME_OF_STRENGTH_5_ITEM_ID                     = 'tst2'
         constant integer TOME_OF_STRENGTH_10_ITEM_ID                    = 'I03I'
         constant integer TOME_OF_STRENGTH_ITEM_ID                       = 'tstr'
+        constant integer TOME_OF_KNOWLEDGE_5_ITEM_ID                    = 'I0DC'
 
         // --- Buff IDs ---
         constant integer DARK_SEAL_BUFF_ID                              = 'A0DE'
         constant integer DESTR_OF_BLOCK_BUFF_ID                         = 'A0DF'
         constant integer FAN_OF_KNIVES_BUFF_ID                          = 'A0DB'
+        constant integer TIME_STONE_ITEM_BUFF_ID                        = 'B03A'
         constant integer CONQ_BAMBOO_STICK_BUFF_ID                      = 'B02J'
         constant integer CONTRACT_LIVING_BUFF_ID                        = 'A059'
         constant integer ACID_BOMB_BUFF_ID                              = 'BNab'
@@ -940,6 +942,7 @@ library IdLibrary initializer init
 
         constant integer SENSATUS_SHIELD_OF_HONOR_ITEM_ID               = 'I016'
         constant integer THE_DIVINE_SOURCE_ITEM_ID                      = 'I043'
+        constant integer BLESSED_STRIDERS_ITEM_ID                       = 'I0DB'
         constant integer URN_ITEM_ID                                    = 'I05U'
         constant integer ANTI_MAGIC_FLAG_ITEM_ID                        = 'I04Q'
         constant integer BLOOD_STONE_ITEM_ID                            = 'I0AK'
@@ -970,6 +973,7 @@ library IdLibrary initializer init
 
         constant integer SENSATUS_SHIELD_OF_HONOR_ABIL_ID               = 'AIdb'
         constant integer THE_DIVINE_SOURCE_ABIL_ID                      = 'A01D'
+        constant integer BLESSED_STRIDERS_ABIL_ID                       = 'A0FE'
         constant integer URN_ABIL_ID                                    = 'A044'
         constant integer ANTI_MAGIC_FLAG_ABIL_ID                        = 'A085'
         constant integer BLOOD_STONE_ABIL_ID                            = 'A0AR'
@@ -982,6 +986,7 @@ library IdLibrary initializer init
         constant integer SHADOW_BOOTS_ABIL_ID                           = 'BBZB'
         constant integer SHADOW_BOOTS_SLOW_RESIST_ABIL_ID               = 'BB03'
         constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
+        constant integer TIME_STONE_ITEM_ID                             = 'TSBB'
 
         // --- Buff IDs ---
 

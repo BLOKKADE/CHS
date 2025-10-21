@@ -23,7 +23,7 @@ scope LongPeriodCheck initializer init
             if GetUnitTypeId(u) == SORCERER_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(u, 'A08P') == 0 and FilterListNotEmpty(u, SORCERER_UNIT_ID) and CheckProc(u, 600) then
                 call SorcererPassive(u, hid)
                 call ElemFuncStart(u, SORCERER_UNIT_ID)
-                call AbilStartCD(u, 'A08P', RMaxBJ(15, 50 - I2R(GetHeroLevel(u) / 5)))
+                call AbilStartCD(u, 'A08P', RMaxBJ(24, 50 - I2R(GetHeroLevel(u) / 5)))
             endif
 
             //Holy Shield

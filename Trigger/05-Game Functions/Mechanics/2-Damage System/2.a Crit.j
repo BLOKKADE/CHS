@@ -38,6 +38,14 @@ library CritDamage requires RandomShit, Vampirism, Gnome
             endif
         endif 
 
+        //Ranger summon crit
+        set i = GetUnitAbilityLevel(DamageSource,'A0FD')
+        if i > 0 then
+            if GetRandomReal(0,100) <= 15 + baseCritChance * DamageSourceLuck then
+            set critDmg = critDmg + Dmg * (0.1 + 0.01 * I2R(i))
+            endif
+        endif 
+
         //Aura of Vulnerability
         if GetUnitAbilityLevel(DamageTarget ,'B00E') > 0 then
             if GetRandomReal(0,100) <= 15 + baseCritChance * DamageSourceLuck then

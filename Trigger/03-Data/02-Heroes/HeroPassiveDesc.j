@@ -150,7 +150,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp" )
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Valiant Strike: All damage dealt by the Hero and its summons have 10% of the Hero's strength added to it.[|cffd45e29onhit|r]")
-        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Valiant Strike: +0.5% damage from strength. +2 armor and +5 hit point regeneration." )
+        call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Valiant Strike: +0.5% damage from strength. +3 armor and +15 hit point regeneration." )
         call InitHeroDesc(ORC_CHAMPION_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(TROLL_HEADHUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeadHunterBerserker.blp" )
@@ -183,7 +183,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNJaina.blp" )
-        call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mysterious Sorcery: Once every 50 seconds automatically cast 1 of your active spells at a random target in a 600 AOE. |cffc0c0c0Cannot cast abilities with the|r [|cffffff00plain|r] |cffc0c0c0or |r |n[|cff96ffffStable|r] |cffc0c0c0tag.|r |cffc0c0c0Can cast the same spell multiple times. Max 15 seconds cooldown from leveling. |r[|cff96ffffStable|r]")
+        call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Mysterious Sorcery: Once every 50 seconds automatically cast 1 of your active spells at a random target in a 600 AOE. |cffc0c0c0Cannot cast abilities with the|r [|cffffff00plain|r] |cffc0c0c0or |r |n[|cff96ffffStable|r] |cffc0c0c0tag.|r |cffc0c0c0Can cast the same spell multiple times. Max 24 seconds cooldown from leveling. |r[|cff96ffffStable|r]")
         call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Mysterious Sorcery: 0.2 seconds cooldown reduction. (|cff68eef3Every 35 levels|r) +1 spell." )
         call InitHeroDesc(SORCERER_UNIT_ID, HeroPassive_SummonLimit, "24")
 
@@ -203,8 +203,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )
-        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus damage. |cffc0c0c0This [|cff00ffffCrit|r] can activate Absolute Wind.|r [|cff80ff80Luck|r][|cff00ffffCrit|r]")
-        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2% base damage to all critical hits.")
+        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus damage. |cffc0c0c0This [|cff00ffffCrit|r] can activate Absolute Wind|r [|cff80ff80Luck|r][|cff00ffffCrit|r]. Summoned units gain 15% chance to deal 10% bonus damage.[|cff80ff80Luck|r][|cff00ffffCrit|r]")
+        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2% base damage to critical hits of the Hero and +1% base damage to critical hits of its summons.")
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(DARK_HUNTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNUnbroken.blp" )
@@ -319,7 +319,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCorruptedTreeOfLife.blp" )
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive double damage from [|cffff0000Fire|r] and cannot buy stat-per-level Manuscripts.")
-        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.3% more stats from new summon upgrades. (|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.3% more stats from new summon upgrades.") //(|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         //call InitHeroDesc(NYX_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBanditMage.blp" )

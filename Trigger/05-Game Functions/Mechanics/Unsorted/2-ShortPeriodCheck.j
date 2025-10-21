@@ -1,5 +1,33 @@
 scope ShortPeriodCheck initializer init
 
+    function GetUnitElementCountRaw takes unit u, integer elementId returns integer
+        return LoadInteger(elementTable, GetHandleId(u), elementId)
+    endfunction
+
+    function SetUnitElementCountRaw takes unit u, integer elementId, integer value returns nothing
+        call SaveInteger(elementTable, GetHandleId(u), elementId, value)
+    endfunction
+
+    function StoreBulwarkBonus takes unit u, integer elementId, integer bonus returns nothing
+        call SaveInteger(bulwarkTable, GetHandleId(u), 0, elementId)
+        call SaveInteger(bulwarkTable, GetHandleId(u), 1, bonus)
+    endfunction
+
+    function GetStoredBulwarkTarget takes unit u returns integer
+        return LoadInteger(bulwarkTable, GetHandleId(u), 0)
+    endfunction
+
+    function GetStoredBulwarkBonus takes unit u returns integer
+        return LoadInteger(bulwarkTable, GetHandleId(u), 1)
+    endfunction
+
+    function IAbs takes integer i returns integer
+        if i < 0 then
+            return -i
+        endif
+        return i
+    endfunction
+
     private function OnPeriod takes nothing returns nothing
         local integer i1 = 0
         local integer i2 = 0
@@ -11,6 +39,12 @@ scope ShortPeriodCheck initializer init
         local real r1 = 0
         local real r2 = 0
         local integer unitTypeId = GetUnitTypeId(u)
+        local integer wild = GetUnitElementCount(u, Element_Wild)
+        local integer blood = GetUnitElementCount(u, Element_Blood)
+        local integer bonus = 0
+        local integer lowerElement = -1
+        local integer prevBonus = GetStoredBulwarkBonus(u)
+        local integer prevTarget = GetStoredBulwarkTarget(u)
 
         if UnitAlive(u) then
             if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
@@ -36,7 +70,7 @@ scope ShortPeriodCheck initializer init
                 //Fire Shield
                 set i1 = GetUnitAbilityLevel(u, FIRE_SHIELD_ABILITY_ID)
                 if i1 > 0 then
-                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 100 * GetUnitElementCount(u, Element_Fire), false, FIRE_SHIELD_ABILITY_ID, true, false)
+                    call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * i1, 300 + (75 * GetUnitElementCount(u, Element_Fire)), false, FIRE_SHIELD_ABILITY_ID, true, false)
                 endif
 
                 //Absolute Arcane Drain
@@ -153,6 +187,37 @@ scope ShortPeriodCheck initializer init
                 call SetUnitManaPercentBJ(u, GetUnitManaPercent(u) + 1)
             endif
 
+            // Bulwark
+            if prevBonus > 0 and prevTarget != -1 then
+                call AddUnitAbsoluteBonusCount(u, prevTarget, -prevBonus)
+            endif
+
+            if UnitHasItemType(u, BULWARK_ITEM_ID) then
+                // Recalculate Wild and Blood after removing bonus
+                set wild = GetUnitElementCount(u, Element_Wild)
+                set blood = GetUnitElementCount(u, Element_Blood)
+
+                // Determine which element is lower and by how much
+                if wild < blood then
+                    set bonus = blood - wild
+                    set lowerElement = Element_Wild
+                elseif blood < wild then
+                    set bonus = wild - blood
+                    set lowerElement = Element_Blood
+                endif
+
+                // Apply new bonus
+                if lowerElement != -1 and bonus > 0 then
+                    call AddUnitAbsoluteBonusCount(u, lowerElement, bonus)
+                    call StoreBulwarkBonus(u, lowerElement, bonus)
+                else
+                    call StoreBulwarkBonus(u, -1, 0)
+                endif
+            else
+                // No Bulwark equipped — clear stored bonus
+                call StoreBulwarkBonus(u, -1, 0)
+            endif
+
             //Blood Elf Mage
             if unitTypeId == BLOOD_MAGE_UNIT_ID then
                 set r1 = 60 - (3 * R2I((GetHeroLevel(u) - ModuloInteger(GetHeroLevel(u), 30)) / 30))
@@ -208,7 +273,7 @@ scope ShortPeriodCheck initializer init
                 //Grass of immortality heal
             elseif unitTypeId == 'I04N' then
                 if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
-                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.015)
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.025)
                    if i1 < 1 then
                         set i1 = 1 // Ensure at least 1 HP is healed
                    endif
@@ -257,8 +322,8 @@ scope ShortPeriodCheck initializer init
                     call AddUnitCustomState(u, BONUS_BLOCK, 0 - i1)
                     call AddUnitCustomState(u, BONUS_BLOCK, i2)
                     call SaveInteger(DataUnitHT, hid, 542, i2)
-                endif
-            
+                endif       
+                
                 //Dark Avatar
             elseif unitTypeId == AVATAR_SPIRIT_UNIT_ID then
                 call SetAvatarMode(u, GetHeroLevel(u))
