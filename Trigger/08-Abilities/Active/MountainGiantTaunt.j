@@ -1,11 +1,11 @@
 library ForcedTauntSystem initializer InitForcedTauntSystem
 
     globals
-        constant real TAUNT_INTERVAL = 0.25
-        constant real TAUNT_RADIUS = 500.0
+        constant real TAUNT_INTERVAL = 0.167 // ~6 times per second
+        constant real TAUNT_RADIUS = 400.0
         constant integer MAX_TAUNTS = 100
-        constant integer MAX_WAVES = 4
-        constant real WAVE_INTERVAL = 10.0
+        constant integer MAX_WAVES = 5
+        constant real WAVE_INTERVAL = 8.2
 
         unit array tauntTarget
         unit array tauntGiant
@@ -13,6 +13,11 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
         integer array tauntMaxTicks
         integer array tauntWave
         timer array tauntTimer
+        integer array tauntOrigR
+        integer array tauntOrigG
+        integer array tauntOrigB
+        integer array tauntColorPhase
+        effect array tauntGlow
         integer tauntCount = 0
 
         hashtable TauntTable = InitHashtable()
@@ -21,6 +26,7 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
     function TauntTick takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local integer i = 0
+        local integer colorIndex
 
         loop
             exitwhen i >= tauntCount
@@ -30,6 +36,12 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
                     call PauseTimer(t)
                     call DestroyTimer(t)
 
+                    // Reset color
+                    call SetUnitVertexColor(tauntTarget[i], tauntOrigR[i], tauntOrigG[i], tauntOrigB[i], 255)
+
+                    // Remove glow effect
+                    call DestroyEffect(tauntGlow[i])
+
                     // Shift remaining taunts down
                     set tauntTarget[i] = tauntTarget[tauntCount - 1]
                     set tauntGiant[i] = tauntGiant[tauntCount - 1]
@@ -37,9 +49,25 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
                     set tauntMaxTicks[i] = tauntMaxTicks[tauntCount - 1]
                     set tauntWave[i] = tauntWave[tauntCount - 1]
                     set tauntTimer[i] = tauntTimer[tauntCount - 1]
+                    set tauntOrigR[i] = tauntOrigR[tauntCount - 1]
+                    set tauntOrigG[i] = tauntOrigG[tauntCount - 1]
+                    set tauntOrigB[i] = tauntOrigB[tauntCount - 1]
+                    set tauntColorPhase[i] = tauntColorPhase[tauntCount - 1]
+                    set tauntGlow[i] = tauntGlow[tauntCount - 1]
                     set tauntCount = tauntCount - 1
                     return
                 endif
+
+                // Cycle between red, yellow, and orange
+                set colorIndex = ModuloInteger(tauntColorPhase[i], 3)
+                if colorIndex == 0 then
+                    call SetUnitVertexColor(tauntTarget[i], 255, 0, 0, 255) // Red
+                elseif colorIndex == 1 then
+                    call SetUnitVertexColor(tauntTarget[i], 255, 255, 0, 255) // Yellow
+                else
+                    call SetUnitVertexColor(tauntTarget[i], 255, 165, 0, 255) // Orange
+                endif
+                set tauntColorPhase[i] = tauntColorPhase[i] + 1
 
                 call IssueTargetOrder(tauntTarget[i], "attack", tauntGiant[i])
                 set tauntTicks[i] = tauntTicks[i] + 1
@@ -53,6 +81,7 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
     function StartForcedTaunt takes unit giant, unit target, integer wave returns nothing
         local real duration = 0.0
         local integer ticks
+        local sound shout = CreateSound("Sound\\Units\\Human\\HeroMountainKing\\MountainKingReady1.wav", false, false, false, 10, 10, "")
 
         if tauntCount >= MAX_TAUNTS then
             return
@@ -72,6 +101,21 @@ library ForcedTauntSystem initializer InitForcedTauntSystem
         set tauntMaxTicks[tauntCount] = ticks
         set tauntWave[tauntCount] = wave
         set tauntTimer[tauntCount] = CreateTimer()
+
+        // Store original color (assumes default white)
+        set tauntOrigR[tauntCount] = 255
+        set tauntOrigG[tauntCount] = 255
+        set tauntOrigB[tauntCount] = 255
+
+        // Start color phase at 0
+        set tauntColorPhase[tauntCount] = 0
+
+        // Add Holy Bolt glow effect
+        set tauntGlow[tauntCount] = AddSpecialEffectTarget("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl", target, "origin")
+
+        // Play shout sound
+        call StartSound(shout)
+
         call TimerStart(tauntTimer[tauntCount], TAUNT_INTERVAL, true, function TauntTick)
         set tauntCount = tauntCount + 1
     endfunction

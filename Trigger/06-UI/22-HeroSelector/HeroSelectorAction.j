@@ -310,7 +310,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(AVATAR_SPIRIT_UNIT_ID, categoryAgi)
         call HeroSelectorAddUnitCategory(DEMON_HUNTER_UNIT_ID, categoryAgi)
         call HeroSelectorAddUnitCategory(PYROMANCER_UNIT_ID, categoryAgi)
-        call HeroSelectorAddUnitCategory(WITCH_DOCTOR_UNIT_ID, categoryInt)
+        //call HeroSelectorAddUnitCategory(WITCH_DOCTOR_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(PIT_LORD_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(MYSTIC_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(TROLL_BERSERKER_UNIT_ID, categoryAgi)

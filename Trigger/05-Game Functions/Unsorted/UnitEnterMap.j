@@ -26,6 +26,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         local real wild = 1 + GetUnitCustomState(hero, BONUS_SUMMONPOW)/ 100
         local real r1
         local integer summonlimit = 0
+        local real power = GLOB_RUNE_POWER
 
         //Prevent super summons?
         call ResetUnitCustomState(u)
@@ -41,9 +42,20 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         //register summons
         call RegisterPlayerSummon(hero, u)
 
+        //Wild Rune
+        if GetUnitAbilityLevel(hero, 'WRBB') > 0 then
+            set UpgradeU = UpgradeU + R2I(GLOB_RUNE_POWER * 4.0) // Adjust multiplier as needed
+        endif
+
         //Beastmaster
         if GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
             set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.25)
+        endif
+
+        //Ranger critical strike summons
+        if GetUnitTypeId(hero) == RANGER_UNIT_ID then
+            call UnitAddAbility(u, 'A0FD')
+            call SetUnitAbilityLevel(u, 'A0FD', R2I(GetHeroLevel(hero) * 1))
         endif
 
         //Stomp ethereal summons
@@ -355,7 +367,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         // Savage Totem
         if UnitHasItemType(hero, SAVAGE_TOTEM_ITEM_ID) then
-            set summonlimit = summonlimit + 4
+            set summonlimit = summonlimit + 8
         endif
 
         //Mountain Giant
@@ -373,14 +385,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set summonlimit = summonlimit + 4
         endif
 
-        // Beastmaster's Bulwark
-        if UnitHasItemType(hero, BULWARK_ITEM_ID) then
-            set summonlimit = summonlimit + 2
-            
-            // Add 10% summon limit for every 5% missing HP
-            set summonlimit = R2I(summonlimit * (1.0 + 0.10 * ((1.0 - (GetUnitState(hero, UNIT_STATE_LIFE) / GetUnitState(hero, UNIT_STATE_MAX_LIFE))) / 0.05)))
-        endif
-
         // WildBorne Sigil
         if UnitHasItemType(hero, WILDBORNE_SIGIL_ITEM_ID) then
             set summonlimit = R2I(summonlimit * 1.50)
@@ -393,7 +397,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         // Spirit Shackle buff overrides everything
         if UnitHasBuffBJ(hero, SPIRIT_SHACKLE_BUFF_ID) then
-            set summonlimit = 5
+            set summonlimit = 0
         endif
 
         //summon limit

@@ -6,7 +6,7 @@ library DeathPact requires UnitHelpers
         local real totalLife = 0.0
         local real damage = 0.0
 
-        if UnitHasItemOfTypeBJ(caster, 'I0A0') then
+        if UnitHasItemOfTypeBJ(caster, 'I0A0') or GetUnitAbilityLevel(caster, OVERLOAD_ABILITY_ID) > 0 then
             // Sacrifice up to 10 allied non-hero units within 500 range
             call GroupClear(ENUM_GROUP)
             call EnumTargettableUnitsInRange(ENUM_GROUP, GetUnitX(caster), GetUnitY(caster), 500.0, GetOwningPlayer(caster), true, Target_Ally)

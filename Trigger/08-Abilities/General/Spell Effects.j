@@ -1,9 +1,6 @@
-library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, ShadowBootsHeroForm, HeroForm, Parasite, ContemporaryRunes
+library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, ShadowBootsHeroForm, HeroForm, Parasite, ContemporaryRunes, BloodstoneHeal
 
     function AbilityChannel takes unit caster, unit hero, unit target, real x, real y, integer abilId, integer lvl returns boolean
-        local real maxHP = GetUnitState(caster, UNIT_STATE_MAX_LIFE)
-        local real currentHP = GetUnitState(caster, UNIT_STATE_LIFE)
-        local real hpLoss = maxHP * 0.35
         
         //call BJDebugMsg("ac" + GetUnitName(caster) + " : " + GetObjectName(abilId) + " : " + GetUnitName(target) + " x: " + R2S(x) + " y: " + R2S(y))
 
@@ -88,6 +85,10 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         elseif abilId == DESTRUCTION_BLOCK_ABILITY_ID then
             call CastDestrOfBlock(target, lvl)
             call CreateTextTagTimerColor("Destruction of Block!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        //Bloodlust
+        elseif abilId == BLOODLUST_ABILITY_ID then
+            call CastBloodlust(hero, target, lvl)
 
         //Inner Fire
         elseif abilId == INNER_FIRE_ABILITY_ID then
@@ -202,6 +203,11 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
             call UseDivineSource(hero)
             call CreateTextTagTimerColor("Divine Source!", 0.8, GetUnitX(hero), GetUnitY(hero), 80, 2, 255, 255, 255)
 
+        //Blessed Striders
+        elseif abilId == BLESSED_STRIDERS_ABIL_ID then
+            call UseBlessedStriders(hero)
+            call CreateTextTagTimerColor("Blessed Striders!", 0.8, GetUnitX(hero), GetUnitY(hero), 80, 2, 255, 255, 255)
+
         // Death and Decay
         elseif abilId == DEATH_AND_DECAY_ABILITY_ID then
             call CastDeathAndDecay(hero, x, y, lvl)
@@ -237,7 +243,7 @@ library AbilityChannel requires RandomShit,ShadowBladeItem, AncientAxe, AncientD
         // Bloodstone Ability 
         elseif abilId == BLOOD_STONE_ABIL_ID then
             call CreateTextTagTimerColor("Bloodstone!", 0.8, GetUnitX(caster), GetUnitY(caster), 80, 2, 255, 255, 255)
-            call SetUnitState(caster, UNIT_STATE_LIFE, RMaxBJ(currentHP - hpLoss, 1.0)) // Ensure unit doesn't die
+            call StartBloodstoneHeal(caster, GetUnitState(caster, UNIT_STATE_MAX_LIFE) * 0.35)
 
         //Faerie Fire
         elseif abilId == FAERIE_FIRE_ABILITY_ID then
@@ -303,6 +309,10 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
 
                     if GetUnitAbilityLevel(caster, INNER_FIRE_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(caster, INNER_FIRE_ABILITY_ID) == 0 then
                         call CastInnerFireOnSpellCast(caster, GetUnitAbilityLevel(caster, INNER_FIRE_ABILITY_ID))
+                    endif
+
+                    if GetUnitAbilityLevel(caster, BLOODLUST_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(caster, BLOODLUST_ABILITY_ID) == 0 then
+                        call CastBloodlustOnSpellCast(caster, GetUnitAbilityLevel(caster, BLOODLUST_ABILITY_ID))
                     endif
 
                     if GetUnitAbilityLevel(caster, FROST_ARMOR_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(caster, FROST_ARMOR_ABILITY_ID) == 0 then
