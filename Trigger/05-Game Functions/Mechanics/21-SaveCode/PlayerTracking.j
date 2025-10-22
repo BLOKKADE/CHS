@@ -680,8 +680,9 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.6.5", false) // 31 - bugfixes, creep balance, changes to grass and pocket factory
         call AddGameVersion("CHS v2.6.6", false) // 32 - bugfixes, halved summon magic resistance, floating text upgrade etc
         call AddGameVersion("CHS v2.7.0", true) // 33 - Stat per level items etc.
-        call AddGameVersion("CHS v2.7.1", false) // 33 - Manuscripts etc.
-        call AddGameVersion("CHS v2.7.2", false) // 33 - Wildrune and Guide fix. Blessed striders and some visual fx and loads more
+        call AddGameVersion("CHS v2.7.1", false) // 34 - Manuscripts etc.
+        call AddGameVersion("CHS v2.7.2", false) // 35 - Wildrune and Guide fix. Blessed striders and some visual fx and loads more
+        call AddGameVersion("CHS v2.7.3", false) // 36 - Some bugfixes and added rejuvenation bonus heal
     endfunction
 
     private function init takes nothing returns nothing
