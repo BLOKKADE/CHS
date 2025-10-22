@@ -114,9 +114,9 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         endif
 
          //Stomp passive
-        if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID and (elementId == Element_Wild) then
+        /*if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID and (elementId == Element_Wild) then
             set elementCount = elementCount + R2I(GetHeroLevel(u) / 65)
-        endif
+        endif*/
 
         //Goblet of Blood
         if elementId == Element_Blood and UnitHasItemType(u, 'I0B9') then

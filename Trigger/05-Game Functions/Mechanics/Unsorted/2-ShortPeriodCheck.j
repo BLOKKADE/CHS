@@ -260,7 +260,7 @@ scope ShortPeriodCheck initializer init
                 //endif
 
                 //Stomp Heal
-            elseif unitTypeId == STOMP_TREE_UNIT_ID and GetHeroLevel(u) >= 175 then
+            /*elseif unitTypeId == STOMP_TREE_UNIT_ID and GetHeroLevel(u) >= 175 then
                 if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.0133)
                    if i1 < 1 then
@@ -268,12 +268,23 @@ scope ShortPeriodCheck initializer init
                    endif
                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
                    //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
-                endif
+                endif*/
 
                 //Grass of immortality heal
             elseif unitTypeId == 'I04N' then
                 if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.025)
+                   if i1 < 1 then
+                        set i1 = 1 // Ensure at least 1 HP is healed
+                   endif
+                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
+                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
+                endif
+
+                //Rejuvenation heal
+            elseif UnitHasBuffBJ(u, REJUVENATION_BUFF_ID) then
+                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.035)
                    if i1 < 1 then
                         set i1 = 1 // Ensure at least 1 HP is healed
                    endif

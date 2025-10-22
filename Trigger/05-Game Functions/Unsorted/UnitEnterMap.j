@@ -59,9 +59,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         endif
 
         //Stomp ethereal summons
-        if GetUnitTypeId(hero) == STOMP_TREE_UNIT_ID and GetHeroLevel(hero) >= 125 then
+        /*if GetUnitTypeId(hero) == STOMP_TREE_UNIT_ID and GetHeroLevel(hero) >= 125 then
             call UnitAddAbility(u, 'Aeth')    
-        endif
+        endif*/
 
         //Polar Bear skin
         if summonTypeId == BEAR_1_UNIT_ID then

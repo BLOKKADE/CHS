@@ -182,17 +182,6 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
-        // Titanium Spike – pierce armor + bonus damage (bonus only on attacks)
-        if GetUnitAbilityLevel(DamageSource, TITANIUM_SPIKE_ABIL_ID) > 0 and GetUnitAbilityLevel(DamageTarget, TITANIUM_SPIKE_IMMUN_ABIL_ID) == 0 then
-            // bonus damage = target armor, but only if this is an attack
-            if Damage.index.isAttack then
-                set Damage.index.damage = Damage.index.damage + armorBonus
-
-                // Debug message to show how much damage is added
-                //call BJDebugMsg("Titanium Spike bonus damage: " + R2S(armorBonus))
-            endif
-        endif
-
         //Staff of Absolute Magic
         if GetUnitAbilityLevel(DamageSourceHero  ,'B00O') >= 1 and IsMagicDamage() then
             set r2 = Damage.index.amount * 0.33 
