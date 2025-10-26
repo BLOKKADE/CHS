@@ -203,7 +203,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSylvanusWindrunner.blp" )
-        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus damage. |cffc0c0c0This [|cff00ffffCrit|r] can activate Absolute Wind|r [|cff80ff80Luck|r][|cff00ffffCrit|r]. Summoned units gain 15% chance to deal 10% bonus damage.[|cff80ff80Luck|r][|cff00ffffCrit|r]")
+        call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Ranger Crit: 15% chance to deal 10% bonus damage. |cffc0c0c0This|r [|cff00ffffCrit|r] can activate Absolute Wind|r [|cff80ff80Luck|r][|cff00ffffCrit|r]. Summoned units gain 15% chance to deal 10% bonus damage.[|cff80ff80Luck|r][|cff00ffffCrit|r]")
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +2% base damage to critical hits of the Hero and +1% base damage to critical hits of its summons.")
         call InitHeroDesc(RANGER_UNIT_ID, HeroPassive_SummonLimit, "24")
 

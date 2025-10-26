@@ -362,7 +362,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Dark, 1)
 
         //21 - Vampirism 
-        call SaveAbilData(VAMPIRISM_ABILITY_ID, VAMPIRISM_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SaveAbilData(VAMPIRIC_AURA_ABILITY_ID, VAMPIRISM_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //22 - War Stomp 
@@ -381,8 +381,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //26 - Entangling Roots 
         call SaveAbilData(ENTAGLING_ROOTS_ABILITY_ID, ENTANGLING_ROOTS_ITEM_ID, false, Target_Enemy, 1, true, Order_Target, "entanglingroots")
-        call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Earth, 1)
 
         //27 - Summon Water Elemental 
         call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID, SUMMON_WATER_ELEMENTAL_ITEM_ID, false, 0, 0, false, Order_Instant, "waterelemental")
