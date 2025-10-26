@@ -210,11 +210,16 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
+        //Vampirism
+        //if GetUnitAbilityLevel(hero, VAMPIRIC_AURA_ABILITY_ID) > 0 then
+            //call UnitAddAbility(u, VAMPIRIC_AURA_ABILITY_ID)
+            //call SetUnitAbilityLevel(u, VAMPIRIC_AURA_ABILITY_ID, GetUnitAbilityLevel(hero, VAMPIRIC_AURA_ABILITY_ID))
+        //endif
+
         //Unholy Aura
         set i2 = GetUnitAbilityLevel(hero, UNHOLY_AURA_ABILITY_ID)
         if i2 > 0 then
-            call AddUnitBonusReal(u, BONUS_MOVEMENT_SPEED, 0.03 + ((0.90 - 0.03) / 29) * (i2 - 1))
-            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 10 + 80 * (i2 - 1))
+            call AddUnitBonusReal(u, BONUS_HEALTH_REGEN, 10.0 + 80.0 * I2R(i2 - 1))
         endif
 
         //Trueshot Aura
@@ -460,6 +465,12 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
                 call FuncEditParam(ABSOLUTE_EARTH_ABILITY_ID, u)
                 call AddHeroMaxAbsoluteAbility(u)
             endif
+        endif
+
+        //Abomination dark arrow cooldown ability
+        if GetUnitTypeId(u) == ABOMINATION_UNIT_ID then
+            call UnitAddAbility(u, 'A0FL')
+            call SetUnitAbilityLevel(u, 'A0FL', 1)
         endif
 
         //Medivh

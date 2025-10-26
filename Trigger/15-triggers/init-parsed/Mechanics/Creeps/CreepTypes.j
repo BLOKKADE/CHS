@@ -48,10 +48,11 @@ library CreepTypes initializer init requires RandomShit
         set CreepUnitTypeIds[32] = 'n020' //Dragon Turtle
         set CreepUnitTypeIds[33] = 'n021' //Chaos Warlord
         set CreepUnitTypeIds[34] = 'n022' //Thunder Lizard
+        set CreepUnitTypeIds[35] = 'n025' //Black Dragon
 
 //magic creeps:
-        set CreepUnitTypeIds[35] = 'n00W' //Wraith
-        set CreepUnitTypeIds[36] = 'n01H' //Sludge minion
+        set CreepUnitTypeIds[36] = 'n00W' //Wraith
+        set CreepUnitTypeIds[37] = 'n01H' //Sludge minion
         
         set MaxCreepUnitTypes = 30
     endfunction

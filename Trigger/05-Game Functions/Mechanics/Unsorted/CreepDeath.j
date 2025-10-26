@@ -144,8 +144,10 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
 
         // Round 50 bonus: +150% (total 250%) gold and experience
         if RoundNumber == 49 then
-            set goldBounty = R2I(goldBounty * 2.5)
-            set expBounty = R2I(expBounty * 2.5)
+            set goldBounty = R2I(goldBounty * 5)
+            set expBounty = R2I(expBounty * 5)
+        elseif RoundNumber < 49 then
+            set goldBounty = R2I(goldBounty * 1.25) // +25% gold
         endif
         
         call BountyText(killingHero, dyingUnit, goldBounty)

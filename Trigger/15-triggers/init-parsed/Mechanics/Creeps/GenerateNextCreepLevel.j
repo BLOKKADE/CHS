@@ -1343,7 +1343,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     set RoundCreepChanceUnlimitedAgony = 1
                 endif
             else 
-                set RoundSkillGroupRoll = GetRandomInt(7, 9)
+                set RoundSkillGroupRoll = GetRandomInt(7, 11)
                 if RoundSkillGroupRoll == 7 then
                     set RoundCreepTypeId = CreepUnitTypeIds[32] //Dragon turtle
                     set RoundCreepChanceThorns = 1
@@ -1372,6 +1372,14 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     set RoundCreepChanceHowlOfTerror = 1
                     set RoundCreepChanceBackStab = 1
                     set RoundCreepChanceUnlimitedAgony = 1
+                elseif RoundSkillGroupRoll == 10 then
+                    set RoundCreepTypeId = CreepUnitTypeIds[35] //Black Dragon
+                    set RoundCreepChanceHowlOfTerror = GetRandomInt(1, 35) //Howl of Terror chance
+                    set RoundCreepChanceFingerOfDeath = GetRandomInt(1, 10000) //Finger of Death chance
+                elseif RoundSkillGroupRoll == 11 then
+                    set RoundCreepTypeId = CreepUnitTypeIds[35] //Stomp
+                    set RoundCreepChanceHowlOfTerror = GetRandomInt(1, 35) //Howl of Terror chance
+                    set RoundCreepChanceFingerOfDeath = GetRandomInt(1, 10000) //Finger of Death chance
                 endif
             endif
         endif
@@ -1410,9 +1418,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
     
         //item buddy arrival
-        if RoundNumber == 46 then
+        if RoundNumber == 5 then
             call SetUpItemStocks(GetValidPlayerForce())
-            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00Item Buddy has arrived!|r You can use it to swap items during the Battle Royale using Shift + Q and Shift + W")
+            call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00Item Buddy has arrived!|r You can use it to swap items using Shift + Q and Shift + W")
             call PlaySoundBJ(itembuddyarrivalsound)
         endif
     

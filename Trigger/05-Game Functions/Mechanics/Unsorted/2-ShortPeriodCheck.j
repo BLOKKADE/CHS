@@ -148,11 +148,21 @@ scope ShortPeriodCheck initializer init
                 endif
             endif
 
+            // Bloodfeast (item-based)
+            if UnitHasItemType(u, 'I0DE') then
+                set r1 = LoadReal(HT, hid, 'I0DE')
+                set r2 = BlzGetUnitBaseDamage(u, 0) * 2 
+                if r1 != r2 then
+                    call AddUnitBonus(u, BONUS_DAMAGE, R2I(r2 - r1))
+                    call SaveReal(HT, hid, 'I0DE', r2)
+                endif
+            endif
+
             //Frostmourne
             set i1 = GetUnitAbilityLevel(u, 'A02C')
             set r1 = LoadReal(HT, hid,'A02C')
             if i1 > 0 or r1 != 0 then
-                set r2 = (BlzGetUnitBaseDamage(u, 0) * (3.5 * i1))
+                set r2 = (BlzGetUnitBaseDamage(u, 0) * (1.5 * i1))
                 if r1 != r2 then
                     call AddUnitBonus(u, BONUS_DAMAGE, R2I(r2 - r1))
                     call SaveReal(HT, hid, 'A02C', r2)	
@@ -271,7 +281,7 @@ scope ShortPeriodCheck initializer init
                 endif*/
 
                 //Grass of immortality heal
-            elseif unitTypeId == 'I04N' then
+            elseif UnitHasItemType(u, 'I04N') then
                 if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
                    set i1 = R2I(BlzGetUnitMaxHP(u) * 0.025)
                    if i1 < 1 then
@@ -310,8 +320,16 @@ scope ShortPeriodCheck initializer init
                 //Abomination
             elseif unitTypeId == ABOMINATION_UNIT_ID then
                 if CheckProc(u, 350) then
-                    call ElemFuncStart(u,ABOMINATION_UNIT_ID)
+                    call ElemFuncStart(u, ABOMINATION_UNIT_ID)
                     call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * GetHeroLevel(u), 350, false, ABOMINATION_UNIT_ID, true, false)
+                endif
+
+                if GetUnitAbilityLevel(u, BLACK_ARROW_PASSIVE_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, 'A0FL') > 0 then
+                    if BlzGetUnitAbilityCooldownRemaining(u, 'A0FL') <= 0 then
+                        call CastBlackArrow(u, u, GetUnitAbilityLevel(u, BLACK_ARROW_PASSIVE_ABILITY_ID))
+                        call CastBlackArrow(u, u, GetUnitAbilityLevel(u, BLACK_ARROW_PASSIVE_ABILITY_ID))
+                        call AbilStartCD(u, 'A0FL', 9.00)
+                    endif
                 endif
 
                 //Yeti

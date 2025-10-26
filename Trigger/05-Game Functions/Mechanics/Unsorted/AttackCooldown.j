@@ -40,9 +40,9 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
             set r2 = r2 + 0.2
         endif
 
-        //Speed Blade passive
-        if UnitHasItemType(u,SPEED_BLADE_ITEM_ID) then
-            set r2 = r2 * 0.8
+        //Unholy Frenzy
+        if UnitHasItemType(u, UNHOLY_FRENZY_BUFF_ID) then
+            set r2 = r2 * 0.3
         endif
 
         //Troll passive
@@ -51,8 +51,18 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
         endif
 
         //Berserk Attack CD
+        if GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID) > 0 then
+            set r2 = r2 * 0.5
+        endif
+
+        //Berserk Attack CD
         if GetUnitAbilityLevel(u, BERSERK_BUFF_ID) > 0 then
             set r2 = r2 * 0.5
+        endif
+
+        // Thunder Clap debuff effect on heroes
+        if GetUnitAbilityLevel(u, 'BHtc') > 0 then
+            set r2 = r2 * 2
         endif
 
         if r2 != BlzGetUnitAttackCooldown(u, 0) then

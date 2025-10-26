@@ -83,9 +83,13 @@ scope LongPeriodCheck initializer init
             set i = GetUnitAbilityLevel(u, DRAIN_AURA_ABILITY_ID)
             if i > 0 or UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) then
                 if UnitHasItemType(u, DARK_RUNESTONE_ITEM_ID) then
-                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i * 0.01) + 0.1, 500, true)
+                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), ((i * 0.01) + 0.15) / 3, 200, true)
+                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), ((i * 0.01) + 0.15) / 3, 400, true)
+                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), ((i * 0.01) + 0.15) / 3, 600, true)
                 else
-                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i * 0.01), 500, true)
+                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i * 0.01) / 3, 200, true)
+                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i * 0.01) / 3, 400, true)
+                    call ActivateDrainAura(u, GetUnitX(u), GetUnitY(u), (i * 0.01) / 3, 600, true)
                 endif
             endif
 
