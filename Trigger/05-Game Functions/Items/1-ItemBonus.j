@@ -368,6 +368,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitAbsoluteBonusCount(u,Element_Cold, uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 
+			//Bloodfeast
+		elseif itemId == 'I0DE' then
+			call AddUnitAbsoluteBonusCount(u, Element_Blood, 2 * uniqueDiff)
+
 			//Good Luck Charm
 		elseif itemId == 'I083' then
 			call AddUnitCustomState(u, BONUS_LUCK, 0.15 * diff)

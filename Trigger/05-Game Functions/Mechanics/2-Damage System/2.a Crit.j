@@ -1,4 +1,4 @@
-library CritDamage requires RandomShit, Vampirism, Gnome
+library CritDamage requires RandomShit, Vampirism, Gnome, RemoveBuffs
 
     function SetCritDamage takes nothing returns nothing
         local boolean magicDmgType = IsMagicDamage()
@@ -135,12 +135,17 @@ library CritDamage requires RandomShit, Vampirism, Gnome
                 set critDmg = critDmg + ((i * 100) * (1 + 0.02 * GetHeroLevel(DamageSource)))
             endif
             
-            //Frostmourne
-            set i = GetUnitAbilityLevel(DamageSource,'A02C') //Frostmorn
-            if i > 0 and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then
+            // Frostmourne crit + buff removal
+            set i = GetUnitAbilityLevel(DamageSource, 'A02C') // Frostmourne
+            if i > 0 and GetRandomReal(0, 100) <= 25 + baseCritChance * DamageSourceLuck then
                 set critDmg = critDmg + Dmg * 2
-            endif    
-            
+                if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A0FN') == 0 then
+                    call RemoveBuffsAroundHero(DamageSource, 600.0, BUFFTYPE_POSITIVE, 1, false)
+                    call CreateTextTagTimerColor("Frostmourne!", 0.8, GetUnitX(DamageSource), GetUnitY(DamageSource), 80, 2, 255, 255, 255)
+                    call AbilStartCD(DamageSource, 'A0FN', 10)
+                endif
+            endif
+
             //Battle Axe
             set i = GetUnitAbilityLevel(DamageSource,'A05D')
             if i > 0 and IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then

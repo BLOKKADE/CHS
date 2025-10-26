@@ -66,19 +66,43 @@ library RemoveBuffs requires BuffRepository
             set abilId = BlzGetAbilityId(BlzGetUnitAbilityByIndex(u, i))
             exitwhen abilId == 0
 
-            if IsBuff(abilId) and (GetBuffType(abilId) == buffType or buffType == 0) and (removeUnpurgeable or IsBuffPurgeable(abilId)) then
-                if RemoveBuffAssociatedAbility(abilId) then
-                    call UnitRemoveAbility(u, GetBuffAssociatedAbility(abilId))
-                endif
+            // Skip excluded buffs
+            if abilId != SLOW_AURA_BUFF_ID and abilId != FEAR_AURA_BUFF_ID and abilId != 'B00C' and abilId != 'B00E' and abilId != 'B006' then
+                if IsBuff(abilId) and (GetBuffType(abilId) == buffType or buffType == 0) and (removeUnpurgeable or IsBuffPurgeable(abilId)) then
+                    if RemoveBuffAssociatedAbility(abilId) then
+                        call UnitRemoveAbility(u, GetBuffAssociatedAbility(abilId))
+                    endif
 
-                call UnitRemoveAbility(u, abilId)
-                set removed = removed + 1
+                    call UnitRemoveAbility(u, abilId)
+                    set removed = removed + 1
+                endif
             endif
 
             set i = i + 1
         endloop
 
         return removed
+    endfunction
+
+    function RemoveBuffsAroundHero takes unit hero, real aoe, integer buffType, integer amountPerUnit, boolean removeUnpurgeable returns nothing
+        local group g = CreateGroup()
+        local unit u
+        local integer i
+
+        // Pick all units in range
+        call GroupEnumUnitsInRange(g, GetUnitX(hero), GetUnitY(hero), aoe, null)
+
+        loop
+            set u = FirstOfGroup(g)
+            exitwhen u == null
+
+            // Remove specified number of buffs from each unit
+            call RemoveFirstUnitBuff(u, amountPerUnit, buffType)
+
+            call GroupRemoveUnit(g, u)
+        endloop
+
+        call DestroyGroup(g)
     endfunction
 
 endlibrary

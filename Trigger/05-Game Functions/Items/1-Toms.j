@@ -100,6 +100,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call AddStatLevelBonus(u, BONUS_AGILITY, 1)
                     call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour agility per level has been increased by 1!|r")
                 endif
                 set ctrl = false
 
@@ -111,6 +112,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 1)
                     call UnitAddItemById(u,EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour intelligence per level has been increased by 1!|r")
                 endif
                 set ctrl = false
 
@@ -122,6 +124,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                     call AddStatLevelBonus(u, BONUS_STRENGTH, 1)
                     call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
                     call RemoveItem(It)
+                    call DisplayTextToPlayer(GetOwningPlayer(u), 0, 0, "|cffffffffYour strength per level has been increased by 1!|r")
                 endif
                 set ctrl = false
 

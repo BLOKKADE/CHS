@@ -386,6 +386,13 @@ scope ModifyDamageBeforeArmor initializer init
             set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Earth) * 0.20))
         endif
 
+        //Thunder Clap
+        if DamageSourceAbility == THUNDER_CLAP_ABILITY_ID then
+            if IsUnitType(DamageTarget, UNIT_TYPE_HERO) == false then
+                call AttackCdStruct.createDoubleCooldown(DamageTarget, 2.75 + 0.25 * I2R(GetUnitAbilityLevel(DamageSource, THUNDER_CLAP_ABILITY_ID) - 1), 'BHtc')
+            endif
+        endif
+
         //Stampede
         if DamageSourceAbility == STAMPEDE_ABILITY_ID then
             set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Wild) * 0.25))

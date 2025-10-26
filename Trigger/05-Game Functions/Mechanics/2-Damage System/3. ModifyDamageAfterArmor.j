@@ -105,9 +105,9 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Vampirism
-        set r1 = GetUnitAbilityLevel(DamageSource,VAMPIRISM_ABILITY_ID)
+        set r1 = GetUnitAbilityLevel(DamageSource,'BUav')
         if r1 > 0 then
-            set r2 = Damage.index.amount * (0.05 + 0.005 * r1 + GetUnitElementCount(DamageSource, Element_Blood)* 0.075 )
+            set r2 = Damage.index.amount * (0.05 + 0.005 * r1 + GetUnitElementCount(DamageSourceHero, Element_Blood)* 0.075 )
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
         endif
@@ -169,7 +169,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Magic Necklace of Absorption
         if GetUnitAbilityLevel(DamageTarget  ,'B00R') >= 1 and IsMagicDamage() then
-            call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.50 )
+            call SetUnitState(DamageTarget,UNIT_STATE_MANA,   GetUnitState( DamageTarget  , UNIT_STATE_MANA  )  + Damage.index.amount * 0.35 )
         endif
 
         //Bloody Axe
@@ -224,9 +224,16 @@ scope ModifyDamageAfterArmor initializer init
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", DamageTarget, "chest"))
         endif
         
-        //Frostmourne
-        if GetUnitAbilityLevel(DamageSourceHero ,'A02C') >= 1 then
+        //Bloodfeast regular lifesteal
+        if UnitHasItemType(DamageSourceHero, 'I0DE') then
             set r2 = (Damage.index.amount / 4)	
+            set vampAmount = vampAmount + r2
+            set vampCount = vampCount + 1 
+        endif
+
+        //Bloodfeast active lifesteal
+        if UnitHasBuffBJ(DamageSource, 'B03C') then
+            set r2 = (Damage.index.amount * 1.25)	
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1 
         endif
