@@ -1,13 +1,7 @@
 library BuffRepositoryData initializer init requires BuffRepository
     private function SetupPositiveBuffs takes nothing returns nothing
-        //unpurgeable buffs
-        call SetupBuffInfo1(INVULNERABLE_BUFF_ID, 0, BUFFTYPE_POSITIVE, true)
-        call SetupBuffInfo1(ANTI_MAGIC_SHELL_BUFF_ID, ANTI_MAGIC_SHEL_ABILITY_ID, BUFFTYPE_POSITIVE, true)
-        call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
-        call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
-        call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true) //anti magic flag
-        call SetupBuffInfo1(HERO_BUFF_ID, HERO_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true)
-        //purgeable buffs
+
+        //Regular Abilities
         call SetupBuffInfo1(BATTLE_ROAR_BUFF_ID, BATTLE_ROAR_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(BERSERK_BUFF_ID, BERSERK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(FROST_ARMOR_BUFF_ID, FROST_ARMOR_ABILITY_ID, BUFFTYPE_POSITIVE, false)
@@ -18,37 +12,61 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(EXTRADIMENSIONAL_COOPERATION_BUFF_ID, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('Bblo', BLOODLUST_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('BBGS', GUARDIAN_SPIRIT_ABILITY_ID, BUFFTYPE_POSITIVE, false)
-
-        call SetupBuffInfo1(SCROLL_OF_PROTECTION_BUFF_ID, 0, BUFFTYPE_POSITIVE, false) // unused?
-        call SetupBuffInfo1(SENSATUS_SHIELD_OF_HONOR_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
-        call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, SPEED_BLADE_ABIL_ID, BUFFTYPE_POSITIVE, false)
-        
-        call SetupBuffInfo1(SAVAGE_TOTEM_BUFF_ID, SAVAGE_TOTEM_ABIL_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('BOwk', WIND_WALK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1(INVULNERABLE_BUFF_ID, 0, BUFFTYPE_POSITIVE, true)
+        call SetupBuffInfo1(ANTI_MAGIC_SHELL_BUFF_ID, ANTI_MAGIC_SHEL_ABILITY_ID, BUFFTYPE_POSITIVE, true)
+        call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
+        call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
 
-        call SetupBuffInfo2(LUCKY_PANTS_BUFF_ID, 'A09H', 0, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2(MANA_STARVATION_BUFF_ID, 'A09R', MANA_STARVATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
-        call SetupBuffInfo2(WISDOM_CHESTPLATE_BUFF_ID, 'A09S', 0, BUFFTYPE_POSITIVE, false, true)
-        call SetupBuffInfo2(CHEATER_MAGIC_BUFF_ID, 'A08G', CHEATER_MAGIC_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B02H', ANCIENT_BLOOD_BUFF_ABILITY_ID, ANCIENT_BLOOD_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
-        call SetupBuffInfo2('B02B', CONTRACT_LIVING_BUFF_ID, 0, BUFFTYPE_BOTH, false, true)
-        call SetupBuffInfo2('B025', 'A0AF', BLESSED_PROTECTIO_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01F', 'A08D', REACTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
-        call SetupBuffInfo2('B031', LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
-        //scroll of transformation
-        call SetupBuffInfo2('B028', 'A0CT', 0, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01E', 'A08C', DIVINE_BUBBLE_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2(ERUPTION_IMMUNE_BUFF_ID, ERUPTION_IMMUNE_ABILITY_ID, ERUPTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B02V', DRUNKEN_HAZE_IGNITE_BUFF_ID, DRUNKEN_HAZE_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B02C', 'A086', MARTIAL_THEFT_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
-        call SetupBuffInfo2('B029', 'A0BB', SKELETON_BRUTE_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
-        call SetupBuffInfo2('B01M', 'A092', YETI_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
+        call SetupBuffInfo2('B01D', 'A08B', LAST_BREATHS_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
 
+        //Chronus
+        call SetupBuffInfo1(HERO_BUFF_ID, HERO_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true)
+
+        call SetupBuffInfo2('B025', 'A0AF', BLESSED_PROTECTIO_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
+        call SetupBuffInfo2(CHEATER_MAGIC_BUFF_ID, 'A08G', CHEATER_MAGIC_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
+
+        //Creepwaves 
+        call SetupBuffInfo1(UNHOLY_FRENZY_BUFF_ID, UNHOLYFRENZY_CREEP_ABILITY_ID, BUFFTYPE_POSITIVE, false)//unholy frenzy creepwaves (counts as pos and neg))
+        call SetupBuffInfo1('Bfzy', FRENZY_CREEP_ABILITY_ID, BUFFTYPE_POSITIVE, false)//frenzy creepwaves
+        call SetupBuffInfo1('B03C', 'A0FO', BUFFTYPE_POSITIVE, false)//bloodfeast lifesteal buff
+
+        //Items
+        call SetupBuffInfo1('B01A', ANTI_MAGIC_FLAG_ABIL_ID, BUFFTYPE_POSITIVE, true) //anti magic flag
+        call SetupBuffInfo1(SCROLL_OF_PROTECTION_BUFF_ID, 0, BUFFTYPE_POSITIVE, false) // unused?
+        call SetupBuffInfo1(SENSATUS_SHIELD_OF_HONOR_BUFF_ID, 0, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1(SPEED_BLADE_BUFF_ID, SPEED_BLADE_ABIL_ID, BUFFTYPE_POSITIVE, false)    
+        call SetupBuffInfo1(SAVAGE_TOTEM_BUFF_ID, SAVAGE_TOTEM_ABIL_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(DRIED_MUSHROOM_DUMMY_BUFF_ID, DRIED_MUSHROOM_ABILITY_ID, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo2(WISDOM_CHESTPLATE_BUFF_ID, 'A09S', 0, BUFFTYPE_POSITIVE, false, true)
+        call SetupBuffInfo2(LUCKY_PANTS_BUFF_ID, 'A09H', 0, BUFFTYPE_POSITIVE, false, true)
+
+        call SetupBuffInfo2('B02B', CONTRACT_LIVING_BUFF_ID, 0, BUFFTYPE_BOTH, false, true)
+        call SetupBuffInfo2('B028', 'A0CT', 0, BUFFTYPE_POSITIVE, true, true) //scroll of transformation
+        call SetupBuffInfo2('B031', LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, LIGHT_MAGIC_SHIELD_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
+
+        //Heroes
+        call SetupBuffInfo2('B01M', 'A092', YETI_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
+        call SetupBuffInfo2('B029', 'A0BB', SKELETON_BRUTE_UNIT_ID, BUFFTYPE_POSITIVE, true, true)
+
     endfunction
 
-    //Remove all negative buffs from unit u
     private function SetupNegativeBuffs takes nothing returns nothing
+
+        //Creepwaves + some unused
+        call SetupBuffInfo1('BOhx', 0, BUFFTYPE_NEGATIVE, false) //creepwaves hex
+        call SetupBuffInfo1('BUsl', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep
+        call SetupBuffInfo1('BUsp', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep pause
+        call SetupBuffInfo1('BUst', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep stun
+        call SetupBuffInfo1('Bcri', 0, BUFFTYPE_NEGATIVE, false) //creepwaves cripple
+        call SetupBuffInfo1(UNHOLY_FRENZY_BUFF_ID, UNHOLYFRENZY_CREEP_ABILITY_ID, BUFFTYPE_NEGATIVE, false)//(counts as pos and neg))
         call SetupBuffInfo1(POLYMORPH_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) //unused?
         call SetupBuffInfo1(SLOW_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) //unused?
         call SetupBuffInfo1(BURNING_OIL_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) //unused?
@@ -74,82 +92,83 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(INCINERATE_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) //unused?
         call SetupBuffInfo1(STUNNED_CUSTOM_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) //unused?
         call SetupBuffInfo1(DISEASE_CLOUD_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) // unused
-        call SetupBuffInfo1(THUNDER_CLAP_BUFF_ID, THUNDER_CLAP_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // unused?
-        call SetupBuffInfo1(WHIRLWIND_BUFF_ID, WHIRLWIND_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //unused?
-        call SetupBuffInfo1(MANIFOLD_SILENCE_BUFF_ID, MANIFOLD_SILENCE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) 
-        call SetupBuffInfo1('B023', 'A0A7', BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(DISEASE_BUFF_ID, PLAGUE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(DEATH_AND_DECAY_BUFF_ID, DEATH_AND_DECAY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(ENSNARE_GENERAL_BUFF_ID, ENSNARE_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
-        call SetupBuffInfo1(ENSNARE_AIR_BUFF_ID, ENSNARE_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
-        call SetupBuffInfo1(ENSNARE_GROUND_BUFF_ID, ENSNARE_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
-        call SetupBuffInfo1(BLIZZARD_BUFF_ID, BLIZZARD_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(FLAME_STRIKE_BUFF_ID, FLAME_STRIKE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(BANISH_BUFF_ID, BANISH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(CLOUD_BUFF_ID, FOG_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(FAERIE_FIRE_BUFF_ID, FAERIE_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // also used by creeps change?
-        call SetupBuffInfo1(ENTANGLING_ROOTS_BUFF_ID, ENTAGLING_ROOTS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(SHADOW_STRIKE_BUFF_ID, SHADOW_STRIKE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(DRUNKEN_HAZE_BUFF_ID, DRUNKEN_HAZE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(HOWL_OF_TERROR_BUFF_ID, HOWL_OF_TERROR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(BREATH_OF_FIRE_BUFF_ID, BREATH_OF_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(RAIN_OF_FIRE_BUFF_ID, RAIN_OF_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(STUNNED_BUFF_ID, STUN_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // used by: heart of darkness, hammer of the gods, dark hunter passive, and frost bolt
-        call SetupBuffInfo1(PARASITE_MINION_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite minion creation
-        call SetupBuffInfo1(PARASITE_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite damage
-        call SetupBuffInfo1(STUNNED_PAUSE_BUFF_ID, HURL_BOULDER_CREEP_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(COLD_ARROWS_STACKING_BUFF_ID, COLD_ARROWS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(THE_CURSE_OF_DEMONS_BUFF_ID, DEMONS_CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(FEAR_AURA_BUFF_ID, AURA_OF_FEAR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(THUNDER_CLAP_BUFF_ID, THUNDER_CLAP_ABILITY_ID, BUFFTYPE_NEGATIVE, false) 
+        call SetupBuffInfo1(WHIRLWIND_BUFF_ID, WHIRLWIND_ABILITY_ID, BUFFTYPE_NEGATIVE, false) 
+
+        //Auras
         call SetupBuffInfo1(SLOW_AURA_BUFF_ID, SLOW_AURA_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(IMMOBILITY_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) // wind rune
-        call SetupBuffInfo1(SOUL_BURN_BUFF_ID, SOUL_BURN_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(ACID_BOMB_BUFF_ID, ACID_BOMB_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(BREATH_OF_FROST_BUFF_ID, ICY_BREATH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(UNHOLY_FRENZY_BUFF_ID, UNHOLY_FRENZY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(NULL_VOID_ORB_BUFF_ID, NULL_VOID_ORB_ABIL_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(BLOODSTONE_BUFF_ID, BLOOD_STONE_ABIL_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID, ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        
-        call SetupBuffInfo1(MANA_STARVATION_NERF_BUFF_ID, MANA_STARVATIO_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1(MIDAS_TOUCH_BUFF_ID, MIDAS_TOUCH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        call SetupBuffInfo1('A03V', TEMPORARY_INVISIBILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
-        call SetupBuffInfo1('Bcrs', CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-
-        call SetupBuffInfo1('BOhx', 0, BUFFTYPE_NEGATIVE, false) //creepwaves hex
-        call SetupBuffInfo1('BUsl', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep
-        call SetupBuffInfo1('BUsp', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep pause
-        call SetupBuffInfo1('BUst', 0, BUFFTYPE_NEGATIVE, false) //creepwaves sleep stun
-        call SetupBuffInfo1('Bcri', 0, BUFFTYPE_NEGATIVE, false) //creepwaves cripple
-
-        call SetupBuffInfo2('B038', SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID, 0, BUFFTYPE_NEGATIVE, true, true)
-        call SetupBuffInfo2('B035', CUTTING_BUFF_ABILITY_ID, CUTTING_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
-        call SetupBuffInfo2(INCINERATE_CUSTOM_BUFF_ID, 'A06L', INCINERATE_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
-        call SetupBuffInfo2(POISON_NON_STACKING_CUSTOM_BUFF_ID, 'A06P', ENVENOMED_WEAPONS_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2(LIQUID_FIRE_CUSTOM_BUFF_ID, 'A06R', LIQUID_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2(BLEED_BUFF_ID, 'A08O', URSA_WARRIOR_UNIT_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2(ANCIENT_KNIFE_OF_THE_GODS_BUFF_ID, 'A095', 0, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2(FLIMSY_TOKEN_BUFF_ID, 'A09B', 0, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2(SPELLBANE_TOKEN_BUFF_ID, 'A09C', 0, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2(VIGOUR_TOKEN_BUFF_ID, 'A09A', 0, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B02P', FAN_OF_KNIVES_BUFF_ID, FAN_OF_KNIVES_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B02T', DARK_SEAL_BUFF_ID, DARK_SEAL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('SSBB', SPIRIT_SHACKLE_BUFF_ID, SPIRIT_SHACKLE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B02S', DESTR_OF_BLOCK_BUFF_ID, DESTRUCTION_BLOCK_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B036', STARFALL_BUFF_ABILITY_ID, STARFALL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B037', LIGHTNING_SHIELD_DUMMY_ABILITY_ID, LIGHTNING_SHIELD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
-        call SetupBuffInfo2('B01D', 'A08B', LAST_BREATHS_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
-
+        call SetupBuffInfo1(FEAR_AURA_BUFF_ID, AURA_OF_FEAR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1('B00C', AURA_OF_FEAR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(FEAR_AURA_BUFF_ID, 'A031', BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1('B00E', AURA_OF_VULNERABILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1('B006', DRAIN_AURA_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
-        //fishing rod
-        call SetupBuffInfo2('B02U', 'A0DI', 0, BUFFTYPE_NEGATIVE, false, true)
+
+        //Regular Abilities
+        call SetupBuffInfo1('Bcrs', CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(ACID_BOMB_BUFF_ID, ACID_BOMB_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(BANISH_BUFF_ID, BANISH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(BLIZZARD_BUFF_ID, BLIZZARD_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(BREATH_OF_FIRE_BUFF_ID, BREATH_OF_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(BREATH_OF_FROST_BUFF_ID, ICY_BREATH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(CLOUD_BUFF_ID, FOG_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(COLD_ARROWS_STACKING_BUFF_ID, COLD_ARROWS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(DEATH_AND_DECAY_BUFF_ID, DEATH_AND_DECAY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(DISEASE_BUFF_ID, PLAGUE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(DRUNKEN_HAZE_BUFF_ID, DRUNKEN_HAZE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(ENTANGLING_ROOTS_BUFF_ID, ENTAGLING_ROOTS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(ENSNARE_AIR_BUFF_ID, ENSNARE_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
+        call SetupBuffInfo1(ENSNARE_GENERAL_BUFF_ID, ENSNARE_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
+        call SetupBuffInfo1(ENSNARE_GROUND_BUFF_ID, ENSNARE_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
+        call SetupBuffInfo1(FAERIE_FIRE_BUFF_ID, FAERIE_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // also used by creeps change?
+        call SetupBuffInfo1(FLAME_STRIKE_BUFF_ID, FLAME_STRIKE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(HOWL_OF_TERROR_BUFF_ID, HOWL_OF_TERROR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(IMMOBILITY_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) // wind rune
+        call SetupBuffInfo1(MANA_STARVATION_NERF_BUFF_ID, MANA_STARVATIO_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(MIDAS_TOUCH_BUFF_ID, MIDAS_TOUCH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(PARASITE_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite damage
+        call SetupBuffInfo1(PARASITE_MINION_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite minion creation
+        call SetupBuffInfo1(RAIN_OF_FIRE_BUFF_ID, RAIN_OF_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(SHADOW_STRIKE_BUFF_ID, SHADOW_STRIKE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(SOUL_BURN_BUFF_ID, SOUL_BURN_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(STUNNED_PAUSE_BUFF_ID, HURL_BOULDER_CREEP_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(UNHOLY_FRENZY_BUFF_ID, UNHOLY_FRENZY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+
+        call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B02P', FAN_OF_KNIVES_BUFF_ID, FAN_OF_KNIVES_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B02S', DESTR_OF_BLOCK_BUFF_ID, DESTRUCTION_BLOCK_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B02T', DARK_SEAL_BUFF_ID, DARK_SEAL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B02X', 'A0DS', ABSOLUTE_COLD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B036', STARFALL_BUFF_ABILITY_ID, STARFALL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B01D', 'A08B', LAST_BREATHS_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B037', LIGHTNING_SHIELD_DUMMY_ABILITY_ID, LIGHTNING_SHIELD_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('SSBB', SPIRIT_SHACKLE_BUFF_ID, SPIRIT_SHACKLE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2(INCINERATE_CUSTOM_BUFF_ID, 'A06L', INCINERATE_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
+        call SetupBuffInfo2(LIQUID_FIRE_CUSTOM_BUFF_ID, 'A06R', LIQUID_FIRE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2(POISON_NON_STACKING_CUSTOM_BUFF_ID, 'A06P', ENVENOMED_WEAPONS_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+
+        //Items
+        call SetupBuffInfo1(NULL_VOID_ORB_BUFF_ID, NULL_VOID_ORB_ABIL_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(BLOODSTONE_BUFF_ID, BLOOD_STONE_ABIL_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(ARCANE_ABSORPTION_GAUNTLETS_BUFF_ID, ARCANE_ABSORPTION_GAUNTLETS_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(MANIFOLD_SILENCE_BUFF_ID, MANIFOLD_SILENCE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) 
+        call SetupBuffInfo1(STUNNED_BUFF_ID, STUN_ABILITY_ID, BUFFTYPE_NEGATIVE, false) // used by: heart of darkness, hammer of the gods, dark hunter passive, and frost bolt
+        call SetupBuffInfo1('B023', 'A0A7', BUFFTYPE_NEGATIVE, false)//Dark Rune
+
+        call SetupBuffInfo2(ANCIENT_KNIFE_OF_THE_GODS_BUFF_ID, 'A095', 0, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2(FLIMSY_TOKEN_BUFF_ID, 'A09B', 0, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2(SPELLBANE_TOKEN_BUFF_ID, 'A09C', 0, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2(VIGOUR_TOKEN_BUFF_ID, 'A09A', 0, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B038', SWORD_OF_BLOODTHRIST_BUFF_ABIL_ID, 0, BUFFTYPE_NEGATIVE, true, true)
+        call SetupBuffInfo2('B035', CUTTING_BUFF_ABILITY_ID, CUTTING_ABILITY_ID, BUFFTYPE_NEGATIVE, true, true)
+        call SetupBuffInfo2('B02U', 'A0DI', 0, BUFFTYPE_NEGATIVE, false, true)//fishing rod
+
+        //Chronus
+        call SetupBuffInfo1('A03V', TEMPORARY_INVISIBILITY_ABILITY_ID, BUFFTYPE_NEGATIVE, true)
+        call SetupBuffInfo1(THE_CURSE_OF_DEMONS_BUFF_ID, DEMONS_CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+
+        //Heroes
+        call SetupBuffInfo2(BLEED_BUFF_ID, 'A08O', URSA_WARRIOR_UNIT_ID, BUFFTYPE_NEGATIVE, false, true)
+ 
     endfunction
 
     private function init takes nothing returns nothing
