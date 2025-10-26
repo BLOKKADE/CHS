@@ -96,8 +96,10 @@ library RemoveBuffs requires BuffRepository
             set u = FirstOfGroup(g)
             exitwhen u == null
 
-            // Remove specified number of buffs from each unit
-            call RemoveFirstUnitBuff(u, amountPerUnit, buffType)
+            // Only affect enemies, and exclude the hero itself
+            if u != hero and IsUnitEnemy(u, GetOwningPlayer(hero)) then
+                call RemoveFirstUnitBuff(u, amountPerUnit, buffType)
+            endif
 
             call GroupRemoveUnit(g, u)
         endloop

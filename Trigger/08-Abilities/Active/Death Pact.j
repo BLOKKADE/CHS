@@ -1,10 +1,11 @@
-library DeathPact requires UnitHelpers
+library DeathPact requires UnitHelpers, BlackArrow
 
     function CastDeathPact takes unit caster, unit target, integer level returns nothing
         local unit u = null
         local integer count = 0
         local real totalLife = 0.0
         local real damage = 0.0
+        local integer blackArrowLevel = GetUnitAbilityLevel(caster, BLACK_ARROW_PASSIVE_ABILITY_ID)
 
         if UnitHasItemOfTypeBJ(caster, 'I0A0') or GetUnitAbilityLevel(caster, OVERLOAD_ABILITY_ID) > 0 then
             // Sacrifice up to 10 allied non-hero units within 500 range
@@ -17,6 +18,9 @@ library DeathPact requires UnitHelpers
 
                 if not IsHeroUnitId(GetUnitTypeId(u)) then
                     set totalLife = totalLife + GetUnitState(u, UNIT_STATE_LIFE)
+                    if blackArrowLevel > 0 then
+                        call CastBlackArrow(caster, u, blackArrowLevel)
+                    endif
                     call KillUnit(u)
                     set count = count + 1
                 endif
@@ -52,9 +56,11 @@ library DeathPact requires UnitHelpers
             endloop
 
             call SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + (0.05 * level) * GetUnitState(target, UNIT_STATE_LIFE))
+            if blackArrowLevel > 0 then
+                call CastBlackArrow(caster, target, blackArrowLevel)
+            endif
             call KillUnit(target)
         endif
     endfunction
 
 endlibrary
-

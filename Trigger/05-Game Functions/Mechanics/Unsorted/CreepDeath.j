@@ -142,12 +142,37 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
             set goldBounty = R2I(goldBounty * CgBonus)
         endif
 
-        // Round 50 bonus: +150% (total 250%) gold and experience
-        if RoundNumber == 49 then
-            set goldBounty = R2I(goldBounty * 5)
-            set expBounty = R2I(expBounty * 5)
-        elseif RoundNumber < 49 then
-            set goldBounty = R2I(goldBounty * 1.25) // +25% gold
+        // Round 50 bonus gold and experience
+        if RoundNumber == 50 then
+            set goldBounty = R2I(goldBounty * 3)
+            set expBounty = R2I(expBounty * 3)
+        endif
+
+        // Gradual bonus for low creep count (added to existing bounty)
+        if RoundCreepNumber == 2 then
+            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 2.5)
+            set expBounty = expBounty + R2I(I2R(expBounty) * 2.5)
+        elseif RoundCreepNumber == 3 then
+            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 2.3)
+            set expBounty = expBounty + R2I(I2R(expBounty) * 2.3)
+        elseif RoundCreepNumber == 4 then
+            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 2.1)
+            set expBounty = expBounty + R2I(I2R(expBounty) * 2.1)
+        elseif RoundCreepNumber == 5 then
+            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.9)
+            set expBounty = expBounty + R2I(I2R(expBounty) * 1.9)
+        elseif RoundCreepNumber == 6 then
+            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.8)
+            set expBounty = expBounty + R2I(I2R(expBounty) * 1.8)
+        elseif RoundCreepNumber == 7 then
+            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.7)
+            set expBounty = expBounty + R2I(I2R(expBounty) * 1.7)
+        elseif RoundCreepNumber == 8 then
+            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.6)
+            set expBounty = expBounty + R2I(I2R(expBounty) * 1.6)
+        elseif RoundCreepNumber == 9 then
+            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.5)
+            set expBounty = expBounty + R2I(I2R(expBounty) * 1.5)
         endif
         
         call BountyText(killingHero, dyingUnit, goldBounty)

@@ -51,7 +51,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             set amount = 1 // First cast is guaranteed
 
             // Base chance for second cast
-            set chance = 70.0
+            set chance = 60.0
 
             // Apply LuckyTrigger and raw luck multiplier
             set chance = chance * MinReal(1.0 + LuckyTriggerBonusChance(caster) / 100.0, 2.0)
@@ -60,7 +60,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             loop
                 exitwhen GetRandomInt(1, 100) > chance
                 set amount = amount + 1
-                set chance = chance * 0.7 // Reduce chance by 30% of current
+                set chance = chance * 0.6 // Reduce chance by 30% of current
             endloop
         endif
 
