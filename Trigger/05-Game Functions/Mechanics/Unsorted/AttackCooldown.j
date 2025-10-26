@@ -40,19 +40,14 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
             set r2 = r2 + 0.2
         endif
 
-        //Unholy Frenzy
-        if UnitHasItemType(u, UNHOLY_FRENZY_BUFF_ID) then
-            set r2 = r2 * 0.3
+        //Speed Blade passive
+        if UnitHasItemType(u,SPEED_BLADE_ITEM_ID) then
+            set r2 = r2 * 0.8
         endif
 
         //Troll passive
         if GetUnitTypeId(u) == TROLL_BERSERKER_UNIT_ID then
             set r2 = r2 * TrollBerserkerBonus.real[hid]
-        endif
-
-        //Berserk Attack CD
-        if GetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID) > 0 then
-            set r2 = r2 * 0.5
         endif
 
         //Berserk Attack CD
