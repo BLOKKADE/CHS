@@ -313,7 +313,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
             
             // Calculate the glory reward based on the game mode
             if GameModeShort == true then
-                set gloryReward = 4000 + ((RoundNumber / 5) - 1) * 2000
+                set gloryReward = 6000 + ((RoundNumber / 5) - 1) * 2000
             else
                 set gloryReward = 3000 + ((RoundNumber / 5) - 1) * 1000
             endif

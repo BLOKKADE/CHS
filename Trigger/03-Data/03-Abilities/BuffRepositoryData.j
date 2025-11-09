@@ -133,7 +133,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(STUNNED_PAUSE_BUFF_ID, HURL_BOULDER_CREEP_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(UNHOLY_FRENZY_BUFF_ID, UNHOLY_FRENZY_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
 
-        call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HE_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
+        call SetupBuffInfo2('B01Y', DOUSING_HEX_BUFF_ID, DOUSING_HEX_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02P', FAN_OF_KNIVES_BUFF_ID, FAN_OF_KNIVES_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02S', DESTR_OF_BLOCK_BUFF_ID, DESTRUCTION_BLOCK_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)
         call SetupBuffInfo2('B02T', DARK_SEAL_BUFF_ID, DARK_SEAL_ABILITY_ID, BUFFTYPE_NEGATIVE, false, true)

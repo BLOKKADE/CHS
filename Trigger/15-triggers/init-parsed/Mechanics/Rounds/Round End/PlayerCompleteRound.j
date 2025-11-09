@@ -45,6 +45,10 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         local integer roundClearXpBonus = R2I(playerCountSub * (4 * Pow(RoundNumber, 2)))
         local string color = "|cff7bff00"
 
+        if GameModeShort == true then
+            set roundClearXpBonus = roundClearXpBonus * 3
+        endif
+
         if (GetUnitTypeId(PlayerHeroes[pid]) == TINKER_UNIT_ID) then
             set roundClearXpBonus = roundClearXpBonus * 2
         endif

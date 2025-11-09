@@ -72,7 +72,7 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, An
             call CastPlague(caster, x, y, lvl)
 
         //Dousing Hex
-        elseif abilId == DOUSING_HE_ABILITY_ID then
+        elseif abilId == DOUSING_HEX_ABILITY_ID then
             call CastDousingHex(hero, target, lvl)
             call CreateTextTagTimerColor("Dousing Hex!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 

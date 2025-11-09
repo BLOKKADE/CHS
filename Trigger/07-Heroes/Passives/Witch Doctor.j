@@ -1,7 +1,8 @@
 library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTable, CustomState, AbsoluteLimit
+
     globals
         HashTable WitchDoctorAbsoluteLevel
-        integer AbilityPool[11]
+        HashTable WitchDoctorAssignedElements
     endglobals
 
     function GetWitchDoctorAbsoluteLevel takes unit u, integer elementId returns integer
@@ -10,9 +11,9 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
 
     function AddWitchDoctorAbsoluteLevel takes unit u, integer elementId returns nothing
         set WitchDoctorAbsoluteLevel[GetHandleId(u)].integer[elementId] = WitchDoctorAbsoluteLevel[GetHandleId(u)].integer[elementId] + 1
-        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10,(GetFullElementText(elementId) + " |cffffcc00bonus acquired"))
+        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, GetFullElementText(elementId) + " |cffffcc00bonus acquired")
     endfunction
-    
+
     function WitchDoctorHasAbsolute takes unit u, integer elementId returns boolean
         return GetUnitAbilityLevel(u, GetElementAbsolute(elementId)) > 0
     endfunction
@@ -27,7 +28,7 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
         local integer attempts
         local integer elementId
 
-        // Simulated ability pool using locals
+        // Simulated ability pool
         local integer a0 = ABSOLUTE_ARCANE_ABILITY_ID
         local integer a1 = ABSOLUTE_BLOOD_ABILITY_ID
         local integer a2 = ABSOLUTE_COLD_ABILITY_ID 
@@ -40,75 +41,11 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
         local integer a9 = ABSOLUTE_WIND_ABILITY_ID
         local integer a10 = ABSOLUTE_WATER_ABILITY_ID
 
-        // Special case: entering map at level 1
-        if prevLevel == 0 and heroLevel == 1 then
-            set found = false
-            set attempts = 0
-            loop
-                set index = ModuloInteger(GetRandomInt(0, 1000000), poolSize)
-                if index == 0 then
-                    set abilityId = a0
-                elseif index == 1 then
-                    set abilityId = a1
-                elseif index == 2 then
-                    set abilityId = a2
-                elseif index == 3 then
-                    set abilityId = a3
-                elseif index == 4 then
-                    set abilityId = a4
-                elseif index == 5 then
-                    set abilityId = a5
-                elseif index == 6 then
-                    set abilityId = a6
-                elseif index == 7 then
-                    set abilityId = a7
-                elseif index == 8 then
-                    set abilityId = a8
-                elseif index == 9 then
-                    set abilityId = a9
-                elseif index == 10 then
-                    set abilityId = a10
-                endif
-
-                if GetUnitAbilityLevel(u, abilityId) == 0 then
-                    call UnitAddAbility(u, abilityId)
-                    call SetUnitAbilityLevel(u, abilityId, 1)
-                    call BlzUnitDisableAbility(u, abilityId, false, true)
-
-                    // Custom UI integration
-                    call UpdateHeroSpellList(abilityId, u, 1)
-                    call SaveInteger(HT, GetHandleId(u), abilityId, 1)
-
-                    // Find elementId from abilityId
-                    set elementId = 1
-                    loop
-                        exitwhen elementId > 10
-                        if GetElementAbsolute(elementId) == abilityId then
-                            exitwhen true
-                        endif
-                        set elementId = elementId + 1
-                    endloop
-
-                    if elementId <= 10 then
-                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, GetFullElementText(elementId) + " |cffffcc00granted at level 1|r")
-                    endif
-
-                    set found = true
-                endif
-
-                set attempts = attempts + 1
-                exitwhen found or attempts > 50
-            endloop
-
-            return
-        endif
-
         // Normal level-up logic
         loop
             if ModuloInteger(i, 25) == 0 then
                 call UpdateBonus(u, 0, 1)
 
-                // Try to assign a unique ability
                 set found = false
                 set attempts = 0
                 loop
@@ -137,14 +74,25 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
                         set abilityId = a10
                     endif
 
-                    if GetUnitAbilityLevel(u, abilityId) == 0 then
+                    set elementId = 1
+                    loop
+                        exitwhen elementId > 10
+                        if GetElementAbsolute(elementId) == abilityId then
+                            exitwhen true
+                        endif
+                        set elementId = elementId + 1
+                    endloop
+
+                    if GetUnitAbilityLevel(u, abilityId) == 0 and WitchDoctorAssignedElements[GetHandleId(u)].boolean[elementId] == false then
                         call UnitAddAbility(u, abilityId)
                         call SetUnitAbilityLevel(u, abilityId, 1)
                         call BlzUnitDisableAbility(u, abilityId, false, true)
-
-                        // Custom UI integration
                         call UpdateHeroSpellList(abilityId, u, 1)
                         call SaveInteger(HT, GetHandleId(u), abilityId, 1)
+                        set WitchDoctorAssignedElements[GetHandleId(u)].boolean[elementId] = true
+
+                        // Notify player of learned element
+                        call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, GetFullElementText(elementId) + " absolute ability |cffffcc00acquired.|r")
 
                         set found = true
                     endif
@@ -172,5 +120,7 @@ library WitchDoctor initializer init requires Table, AbsoluteElements, HeroLvlTa
 
     private function init takes nothing returns nothing
         set WitchDoctorAbsoluteLevel = HashTable.create()
+        set WitchDoctorAssignedElements = HashTable.create()
     endfunction
+
 endlibrary

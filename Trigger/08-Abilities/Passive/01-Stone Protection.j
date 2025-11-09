@@ -29,6 +29,8 @@ library StoneProtection requires DummyOrder, AbilityCooldown, DummyOrder
         local DummyOrder dummy
         local timer t = null
         local timerData td
+        local real heroCD = 12.0 - (lvl / 30.0) * 3.0
+        local real nonHeroCD = 1.2 - (lvl / 30.0) * 0.3
 
         if BlzGetUnitAbilityCooldownRemaining(source,STONE_PROTECTION_ABILITY_ID) <= 0.001 and IsUnitEnemy(target, GetOwningPlayer(source)) then    
 
@@ -57,10 +59,11 @@ library StoneProtection requires DummyOrder, AbilityCooldown, DummyOrder
 
         if success then
             if IsHeroUnitId(GetUnitTypeId(target)) then
-                call AbilStartCD(source,STONE_PROTECTION_ABILITY_ID,9)
+                call AbilStartCD(source, STONE_PROTECTION_ABILITY_ID, heroCD)
             else
-                call AbilStartCD(source,STONE_PROTECTION_ABILITY_ID,0.9)
+                call AbilStartCD(source, STONE_PROTECTION_ABILITY_ID, nonHeroCD)
             endif
         endif
     endfunction
+
 endlibrary

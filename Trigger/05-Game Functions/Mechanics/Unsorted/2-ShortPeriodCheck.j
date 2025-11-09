@@ -283,7 +283,7 @@ scope ShortPeriodCheck initializer init
                 //Grass of immortality heal
             elseif UnitHasItemType(u, 'I04N') then
                 if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
-                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.025)
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.02)
                    if i1 < 1 then
                         set i1 = 1 // Ensure at least 1 HP is healed
                    endif

@@ -421,11 +421,41 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         set hero = null
     endfunction
 
+    function ChooseRandomAbility takes nothing returns integer
+        local integer r = GetRandomInt(0, 10)
+        if r == 0 then
+            return ABSOLUTE_COLD_ABILITY_ID
+        elseif r == 1 then
+            return ABSOLUTE_FIRE_ABILITY_ID
+        elseif r == 2 then
+            return ABSOLUTE_EARTH_ABILITY_ID
+        elseif r == 3 then
+            return ABSOLUTE_WIND_ABILITY_ID
+        elseif r == 4 then
+            return ABSOLUTE_ARCANE_ABILITY_ID
+        elseif r == 5 then
+            return ABSOLUTE_BLOOD_ABILITY_ID
+        elseif r == 6 then
+            return ABSOLUTE_DARK_ABILITY_ID
+        elseif r == 7 then
+            return ABSOLUTE_LIGHT_ABILITY_ID
+        elseif r == 8 then
+            return ABSOLUTE_POISON_ABILITY_ID
+        elseif r == 9 then
+            return ABSOLUTE_WILD_ABILITY_ID
+        else
+            return ABSOLUTE_WATER_ABILITY_ID
+        endif
+    endfunction
+
+
     private function UnitEnterMapActions takes nothing returns nothing
         local unit u = GetTriggerUnit()
         local integer pid = GetPlayerId(GetOwningPlayer(u))
         local boolean realUnit = IsUnitIllusion(u) == false
         local integer hid = GetHandleId(u)
+        local integer abilityId = ChooseRandomAbility()
+        local integer i
 
         //Summons
         if (not IsUnitExcluded(u)) and GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_PASSIVE) and GetOwningPlayer(u) != Player(11) then
@@ -516,8 +546,37 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         endif
 
         //Witch Doctor
-        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID and realUnit then
-            call WitchDoctorLevelup(u, 0, 1)
+        if GetUnitTypeId(u) == WITCH_DOCTOR_UNIT_ID then
+            set abilityId = ChooseRandomAbility()
+
+            call UpdateBonus(u, 0, 1)
+
+            call UnitAddAbility(u, abilityId)
+            call BlzUnitDisableAbility(u, abilityId, false, true)
+
+            if realUnit then
+                // Consume the slot (do NOT increment beyond 1)
+                call SaveInteger(HT, hid, 941561, 1)
+
+                // Register ability in UI
+                call UpdateHeroSpellList(abilityId, u, 1)
+                call FuncEditParam(abilityId, u)
+
+                // Find elementId and sync with WitchDoctorAssignedElements
+                set i = 1
+                loop
+                    exitwhen i > 10
+                    if GetElementAbsolute(i) == abilityId then
+                        exitwhen true
+                    endif
+                    set i = i + 1
+                endloop
+
+                if i <= 10 then
+                    set WitchDoctorAssignedElements[hid].boolean[i] = true
+                    call DisplayTimedTextToPlayer(GetOwningPlayer(u), 0, 0, 10, GetFullElementText(i) + " absolute ability |cffffcc00acquired.|r")
+                endif
+            endif
         endif
 
         //Blademaster

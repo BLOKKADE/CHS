@@ -73,9 +73,12 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         
         //Golden Ring
         set itemCount = GetUnitItemTypeCount(killingHero, 'I04R')
-        if itemCount > 0 then
+        if GameModeShort == false and itemCount > 0 then
             set goldBounty = goldBounty + ((10 * ArenaMasterMultiplier(killingHero)) * itemCount)
             set goldBounty = goldBounty + (itemCount * (RoundNumber) * ArenaMasterMultiplier(killingHero))
+        else
+            set goldBounty = goldBounty + ((20 * ArenaMasterMultiplier(killingHero)) * itemCount)
+            set goldBounty = goldBounty + (itemCount * (RoundNumber) * ArenaMasterMultiplier(killingHero) * 2)
         endif
 
         //Agility level bonus
@@ -173,6 +176,11 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         elseif RoundCreepNumber == 9 then
             set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.5)
             set expBounty = expBounty + R2I(I2R(expBounty) * 1.5)
+        endif
+
+        if GameModeShort == true then
+            set goldBounty = goldBounty * 3
+            set expBounty = expBounty * 4
         endif
         
         call BountyText(killingHero, dyingUnit, goldBounty)

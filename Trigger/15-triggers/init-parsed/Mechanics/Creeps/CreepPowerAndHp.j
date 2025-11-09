@@ -7,77 +7,261 @@ library CreepPowerAndHp initializer init requires RandomShit
 
         // Short game settings
         if (GameModeShort == true) then
-            // Creep power
-            if (RoundNumber <= 5) then
-                set RoundCreepPower = I2R(RoundNumber * 1) / (I2R(RoundCreepNumber) / 2.00)
-                if (RoundCreepNumber == 1) then
-                    set RoundCreepPower = RoundCreepPower / 1.50
+                // Creep power
+                if (RoundNumber == 1) then
+                    set RoundCreepPower = (1.00) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 2) then
+                    set RoundCreepPower = (2.0 * 1.3) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 3) then
+                    set RoundCreepPower = (3.0 * 1.5) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 4) then
+                    set RoundCreepPower = (4.0 * 1.8) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 5) then
+                    set RoundCreepPower = (5.0 * 2.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 6) then
+                    set RoundCreepPower = (6.0 * 3.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 7) then
+                    set RoundCreepPower = (7.0 * 5.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 8) then
+                    set RoundCreepPower = (8.0 * 7.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 9) then
+                    set RoundCreepPower = (9.0 * 9.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 10) then
+                    set RoundCreepPower = (10.0 * 10.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 11) then
+                    set RoundCreepPower = (11.0 * 11.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 12) then
+                    set RoundCreepPower = (12.0 * 12.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 13) then
+                    set RoundCreepPower = (13.0 * 13.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 14) then
+                    set RoundCreepPower = (14.0 * 14.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 15) then
+                    set RoundCreepPower = (15.0 * 15.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 16) then
+                    set RoundCreepPower = (16.0 * 16.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 17) then
+                    set RoundCreepPower = (17.0 * 17.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 18) then
+                    set RoundCreepPower = (18.0 * 18.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 19) then
+                    set RoundCreepPower = (19.0 * 19.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 20) then
+                    set RoundCreepPower = (20.0 * 20.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 21) then
+                    set RoundCreepPower = (21.0 * 21.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 22) then
+                    set RoundCreepPower = (22.0 * 22.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 23) then
+                    set RoundCreepPower = (23.0 * 23.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 24) then
+                    set RoundCreepPower = (24.0 * 24.0) / (I2R(RoundCreepNumber) / 2.00)
+                elseif (RoundNumber == 25) then
+                    set RoundCreepPower = (25.0 * 25.0) / (I2R(RoundCreepNumber) / 2.00)
+                else
+                    set RoundCreepPower = I2R((RoundNumber * RoundNumber) / 2) / (I2R(RoundCreepNumber) / 2.00)
                 endif
-            elseif (RoundNumber <= 10) then
-                set RoundCreepPower = (I2R(RoundNumber) * 1.25) / (I2R(RoundCreepNumber) / 2.00)
-                if (RoundCreepNumber == 1) then
-                    set RoundCreepPower = RoundCreepPower / 1.50
-                endif
-            elseif (RoundNumber <= 15) then
-                set RoundCreepPower = (I2R(RoundNumber) * 1.75) / (I2R(RoundCreepNumber) / 2.00)
-                if (RoundCreepNumber == 1) then
-                    set RoundCreepPower = RoundCreepPower / 1.50
-                endif
-            elseif (RoundNumber <= 20) then
-                set RoundCreepPower = (I2R(RoundNumber) * 2.50) / (I2R(RoundCreepNumber) / 2.00)
-                if (RoundCreepNumber == 1) then
-                    set RoundCreepPower = RoundCreepPower / 1.50
-                endif
-            elseif (RoundNumber <= 25) then
-                set RoundCreepPower = I2R((RoundNumber * 4)) / (I2R(RoundCreepNumber) / 2.00)
-                if (RoundCreepNumber == 1) then
-                    set RoundCreepPower = RoundCreepPower / 1.50
-                endif
-            else
-                set RoundCreepPower = I2R(((RoundNumber * RoundNumber) / 2)) / (I2R(RoundCreepNumber) / 2.00)
-            endif
 
-            // Buff creep HP
-            if (RoundNumber > 1 and RoundNumber <= 10) then
-                set hpBuffIndex = 1
-                set hpBuffEndIndex = R2I(RoundCreepPower)
-                loop
-                    exitwhen hpBuffIndex > hpBuffEndIndex
-                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
-                    if (RoundNumber >= 4) then
-                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
-                    endif
-                    if (RoundNumber >= 8) then
-                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
-                    endif
-                    set hpBuffIndex = hpBuffIndex + 1
-                endloop
-            elseif (RoundNumber > 10 and RoundNumber <= 20) then
-                set hpBuffIndex = 1
-                set hpBuffEndIndex = R2I(RoundCreepPower) / 4
-                loop
-                    exitwhen hpBuffIndex > hpBuffEndIndex
-                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 600)
-                    set hpBuffIndex = hpBuffIndex + 1
-                endloop
-            elseif (RoundNumber > 20 and RoundNumber <= 25) then
-                set hpBuffIndex = 1
-                set hpBuffEndIndex = R2I(RoundCreepPower) / 8
-                loop
-                    exitwhen hpBuffIndex > hpBuffEndIndex
-                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
-                    set hpBuffIndex = hpBuffIndex + 1
-                endloop
-            elseif (RoundNumber > 25) then
-                set hpBuffIndex = 1
-                set hpBuffEndIndex = R2I(RoundCreepPower) / 8
-                loop
-                    exitwhen hpBuffIndex > hpBuffEndIndex
-                    call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
-                    set hpBuffIndex = hpBuffIndex + 1
-                endloop
-            endif
+                // Solo creep adjustment
+                if (RoundCreepNumber == 1) then
+                    set RoundCreepPower = RoundCreepPower / 1.50
+                endif
 
+                // Buff creep HP
+                if (RoundNumber == 2) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 50)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 3) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 100)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 4) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 200)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 5) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 300)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 6) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 400)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 7) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 550)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 8) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 650)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 9) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 800)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 10) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower)
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 11) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1200)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 12) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1400)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 13) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 1600)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 14) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 2000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 15) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 3000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 16) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 4000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 17) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 4500)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 18) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 5000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 19) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 6000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 20) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 4
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 7000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 21) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 8
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 7500)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 22) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 8
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 8000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 23) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 8
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 10000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                elseif (RoundNumber == 24) then
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 8
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 15000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                else
+                    set hpBuffIndex = 1
+                    set hpBuffEndIndex = R2I(RoundCreepPower) / 8
+                    loop
+                        exitwhen hpBuffIndex > hpBuffEndIndex
+                        call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + 20000)
+                        set hpBuffIndex = hpBuffIndex + 1
+                    endloop
+                endif
+                
         // Long game settings
         else
             // Creep power

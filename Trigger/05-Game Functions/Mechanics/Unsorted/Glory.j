@@ -34,15 +34,21 @@ library Glory initializer initLState
 
     function GetPlayerGloryBonus takes integer pid returns real
         local real gloryBonus = 0
+        local real multiplier = 1.0
 
-        //Arena Ring
-        set gloryBonus = gloryBonus + ((ArenaMasterMultiplier(PlayerHeroes[pid]) * 100) * GetValidEndOfRoundItems(PlayerHeroes[pid], 'I0AF'))
+        // Check if short game mode is active
+        if GameModeShort == true then
+            set multiplier = 2.0
+        endif
 
-        //Default bonus
+        // Arena Ring bonus
+        set gloryBonus = gloryBonus + ((ArenaMasterMultiplier(PlayerHeroes[pid]) * 100) * GetValidEndOfRoundItems(PlayerHeroes[pid], 'I0AF') * multiplier)
+
+        // Default bonus
         set gloryBonus = gloryBonus + 200
 
-        //Round bonus (Arena Master)
-        set gloryBonus = gloryBonus + GloryRoundBonus[pid]
+        // Round bonus (Arena Master)
+        set gloryBonus = gloryBonus + (GloryRoundBonus[pid] * multiplier)
 
         return gloryBonus
     endfunction

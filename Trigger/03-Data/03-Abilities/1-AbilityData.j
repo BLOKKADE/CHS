@@ -638,8 +638,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //77 - Summon Bear 
         call SaveAbilData(SUMMON_BEAR_ABILITY_ID, SUMMON_BEAR_ITEM_ID, false, 0, 0, false, Order_Instant, "summongrizzly")
-        call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Blood, 1)
+        call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //78 - Summon Quilbeast 
@@ -945,7 +945,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(MEGA_LUCK_ABILITY_ID, MEGA_LUCK_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //149 - Dousing Hex
-        call SaveAbilData(DOUSING_HE_ABILITY_ID, DOUSING_HE_ITEM_ID, false, 0, 1, true, Order_Target, "ancestralspirittarget")
+        call SaveAbilData(DOUSING_HEX_ABILITY_ID, DOUSING_HEX_ITEM_ID, false, 0, 1, true, Order_Target, "ancestralspirittarget")
         call SetLastObjectElement(Element_Water, 1)
 
         //150 - Ancient Runes 

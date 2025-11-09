@@ -683,6 +683,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.7.1", false) // 34 - Manuscripts etc.
         call AddGameVersion("CHS v2.7.2", false) // 35 - Wildrune and Guide fix. Blessed striders and some visual fx and loads more
         call AddGameVersion("CHS v2.7.3", false) // 36 - Some bugfixes and added rejuvenation bonus heal
+        call AddGameVersion("CHS v2.7.4b", false) // 37 - 25 round mode changes and other stuff. called 2.7.4b to avoid confusion with 2.7.4 testing version
     endfunction
 
     private function init takes nothing returns nothing

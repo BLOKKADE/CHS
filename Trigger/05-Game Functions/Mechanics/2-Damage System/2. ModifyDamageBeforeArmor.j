@@ -430,6 +430,19 @@ scope ModifyDamageBeforeArmor initializer init
             call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
 
+        //Chaos Axe
+        if Damage.index.isAttack and UnitHasItemType(DamageSource, 'CABB') then
+            if GetRandomReal(1,100)  <= 15 + (8 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
+                if GetUnitState(DamageSource,UNIT_STATE_MANA) >= 750 then
+                    set RandomSpellLoc = GetSpellTargetLoc()
+                    call CastRandomSpell(DamageSource, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 30))
+                    call RemoveLocation(RandomSpellLoc)
+                    set RandomSpellLoc = null
+                    call SetUnitState(DamageSource,UNIT_STATE_MANA,GetUnitState(DamageSource,UNIT_STATE_MANA)- 750 )
+                endif
+            endif
+        endif
+
         //Searing Arrows
         set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)
         if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
@@ -893,6 +906,12 @@ scope ModifyDamageBeforeArmor initializer init
             //call BJDebugMsg("d armor pierce: " + R2S(Damage.index.armorPierced))
         endif
 
+        //Demolish creeps
+        set i1 = GetUnitAbilityLevel(DamageSourceHero, DEMOLISH_CREEP_ABILITY_ID)
+        if i1 > 0 and IsPhysDamage() then
+            set Damage.index.armorPierced = Damage.index.armorPierced + GetUnitEffectiveArmor(DamageTarget) * (0.05 + (0.005 * i1))
+        endif
+
         //Titanium Spike
         if GetUnitAbilityLevel(DamageSource, TITANIUM_SPIKE_ABIL_ID) > 0 and GetUnitAbilityLevel(DamageTarget, TITANIUM_SPIKE_IMMUN_ABIL_ID) == 0 and IsPhysDamage() then
             set Damage.index.armorPierced = Damage.index.armorPierced + (GetUnitEffectiveArmor(DamageTarget) * 0.3)
@@ -976,7 +995,7 @@ scope ModifyDamageBeforeArmor initializer init
         //Mystical armor
         set i1 = GetUnitItemTypeCount( DamageTarget,'I06E' )
         if i1 > 0  then
-            if GetRandomReal(1,100)  <= i1 * (8 + LuckyTriggerBonusChance(DamageTarget)) * DamageSourceLuck then
+            if GetRandomReal(1,100)  <= i1 * (8 + LuckyTriggerBonusChance(DamageTarget)) * DamageTargetLuck then
                 if GetUnitState(DamageTarget,UNIT_STATE_MANA) >= 750 then
                     set RandomSpellLoc = GetSpellTargetLoc()
                     call CastRandomSpell(DamageTarget, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 30))

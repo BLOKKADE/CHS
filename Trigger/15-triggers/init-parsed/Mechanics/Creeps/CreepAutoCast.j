@@ -270,7 +270,7 @@ library CreepAutoCast initializer init requires RandomShit
 
             // Shockwave
             if (GetUnitAbilityLevel(creep, SHOCKWAVE_CREEP_ABILITY_ID) > 0) then
-                set RoundCreepAbilCastChance = GetRandomInt(1, 4)
+                set RoundCreepAbilCastChance = GetRandomInt(1, 10)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
                         call SetUnitAbilityLevel(creep, SHOCKWAVE_CREEP_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
@@ -1041,6 +1041,26 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Blink Strike
+            if (GetUnitAbilityLevel(creep, BLINK_STRIKE_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, BLINK_STRIKE_ABILITY_ID, R2I(RoundNumber * 1.2))
+                    else
+                        call SetUnitAbilityLevel(creep, BLINK_STRIKE_ABILITY_ID, R2I(RoundNumber * 0.6))
+                    endif
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+
+                    if (CountUnitsInGroup(tempGroup) > 1) then
+                        call IssueImmediateOrder(creep, "acolyteharvest")
+                    endif
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
             // Frenzy
             if (GetUnitAbilityLevel(creep, FRENZY_CREEP_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 1)
@@ -1109,6 +1129,20 @@ library CreepAutoCast initializer init requires RandomShit
                     set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function SlowUnitFilter))
 
                     call IssueTargetOrder(creep, "slow", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Dousing Hex
+            if (GetUnitAbilityLevel(creep, DOUSING_HEX_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    // Cast slow on a random unit
+                    set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function SlowUnitFilter))
+
+                    call IssueTargetOrder(creep, "ancestralspirittarget", GroupPickRandomUnit(tempGroup))
 
                     // Cleanup
                     call DestroyGroup(tempGroup)

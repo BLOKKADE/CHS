@@ -130,7 +130,7 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         call SetBonusStr(WAR_GOLEM_UNIT_ID, 0, "|cffe7544aHit point bonus|r: ,0,%%")
 
-        call SetBonusStr(WITCH_DOCTOR_UNIT_ID, 0, "|cffe7544aAbsolute slots|r: ,0,")
+        call SetBonusStr(WITCH_DOCTOR_UNIT_ID, 0, "|cffe7544aAbsolute Abilities|r: ,0,")
 
         call SetBonusStr(RANGER_UNIT_ID, 0, "|cffe7544aBase Crit bonus|r: ,0,%%")
 

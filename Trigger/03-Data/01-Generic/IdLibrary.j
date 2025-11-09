@@ -243,7 +243,7 @@ library IdLibrary initializer init
         constant integer DIVINE_BUBBLE_ABILITY_ID                       = 'A07S'
         constant integer DIVINE_GIFT_ABILITY_ID                         = 'A082'
         constant integer DIVINE_SHIELD_ABILITY_ID                       = 'AHds'
-        constant integer DOUSING_HE_ABILITY_ID                          = 'A09I'
+        constant integer DOUSING_HEX_ABILITY_ID                          = 'A09I'
         constant integer DRAIN_AURA_ABILITY_ID                          = 'A023'
         constant integer DRUNKEN_HAZE_ABILITY_ID                        = 'ANdh'
         constant integer DRUNKEN_MASTER_ABILITY_ID                      = 'Acdb'
@@ -430,6 +430,7 @@ library IdLibrary initializer init
         constant integer UNHOLYFRENZY_CREEP_ABILITY_ID                  = 'A0F5'
         constant integer POLYMORPH_CREEP_ABILITY_ID                     = 'A0F6'
         constant integer CHAINLIGHTNING_CREEP_ABILITY_ID                = 'A0FA'
+        constant integer DEMOLISH_CREEP_ABILITY_ID                      = 'A0FQ'
 
         // Active Spell Dummy Abilities
 
@@ -545,7 +546,7 @@ library IdLibrary initializer init
         constant integer DIVINE_BUBBLE_ITEM_ID                          = 'I09A'
         constant integer DIVINE_GIFT_ITEM_ID                            = 'I09J'
         constant integer DIVINE_SHIELD_ITEM_ID                          = 'I011'
-        constant integer DOUSING_HE_ITEM_ID                             = 'I0AN'
+        constant integer DOUSING_HEX_ITEM_ID                             = 'I0AN'
         constant integer DRAIN_AURA_ITEM_ID                             = 'I04H'
         constant integer DRUNKEN_HAZE_ITEM_ID                           = 'I01S'
         constant integer DRUNKEN_MASTER_ITEM_ID                         = 'I05W'

@@ -1,12 +1,15 @@
 scope LethalDamage initializer init
 
     globals
+        hashtable ReincarnationTable = InitHashtable()
         trigger TrgLethalDamage
     endglobals
 
     private function LethalDamage takes nothing returns nothing
         local integer i = 0
         local boolean negated = false
+        local integer reincCount = LoadInteger(ReincarnationTable, GetHandleId(DamageTarget), StringHash("ReincCount"))
+        local real hpPercent = 1.0 - (0.1 * reincCount)
 
         //Skeleton Battlemaster (Black Arrow)
         set i = GetUnitAbilityLevel(DamageTargetHero, BLACK_ARROW_PASSIVE_ABILITY_ID)
@@ -28,12 +31,24 @@ scope LethalDamage initializer init
             return
         endif
 
-        //Reincarnation
+        // Reincarnation
         if GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, REINCARNATION_ABILITY_ID) == 0 and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 then
             set udg_LethalDamageHP = 1
+
+            if hpPercent < 0.1 then
+                set hpPercent = 0.1 // Minimum 10% HP
+            endif
+
+            // Start cooldowns
             call BlzStartUnitAbilityCooldown(DamageTarget, REINCARNATION_ABILITY_ID, 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
             call BlzStartUnitAbilityCooldown(DamageTarget, GetDummySpell(DamageTarget, REINCARNATION_ABILITY_ID), 244 - (4 * GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID)))
-            call Reincarnate.start(DamageTarget, 2, BlzGetUnitMaxHP(DamageTarget))
+
+            // Start reincarnation with reduced HP
+            call Reincarnate.start(DamageTarget, 2, R2I(BlzGetUnitMaxHP(DamageTarget) * hpPercent))
+
+            // Increment and save reincarnation count
+            call SaveInteger(ReincarnationTable, GetHandleId(DamageTarget), StringHash("ReincCount"), reincCount + 1)
+
             return
         endif
 

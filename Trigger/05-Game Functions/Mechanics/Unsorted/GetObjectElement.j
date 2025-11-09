@@ -90,7 +90,7 @@ library GetObjectElement requires AbilityData, WitchDoctor, UnitItems, CustomSta
         if GetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID) > 0 and GetUnitAbilityLevel(u, GetElementAbsolute(elementId)) > 0 then
             set temp = GetUnitAbilityLevel(u, ANCIENT_ELEMENT_ABILITY_ID)
             if temp >= 11 then
-                set elementCount = elementCount + R2I((temp - 1) / 10)
+                set elementCount = elementCount + 1 + R2I((temp - 10) / 20)
             endif
         endif
 

@@ -580,19 +580,32 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         // Give points if this was a pvp round
         if (eventInfo.isPvp or (PlayerCount == 1 and ModuloInteger(RoundNumber, 5) == 0)) then
             // First pvp round, give initial reward points
-            if (RoundNumber == 5) then
+            if (RoundNumber == 5) and GameModeShort == false then
                 // Greedy goblin gets an additional initial reward point
                 if (GetUnitTypeId(playerHero) == GREEDY_GOBLIN_UNIT_ID) then
                     set PlayerRewardPoints[pid] = 3
                 else
                     set PlayerRewardPoints[pid] = 2
                 endif
-            else
+            elseif GameModeShort == false then
                 // Greedy goblin gets an additional reward point
                 if (GetUnitTypeId(playerHero) == GREEDY_GOBLIN_UNIT_ID) then
                     set PlayerRewardPoints[pid] = PlayerRewardPoints[pid] + 2
                 else
                     set PlayerRewardPoints[pid] = PlayerRewardPoints[pid] + 1
+                endif
+            elseif (RoundNumber == 5) then
+                if (GetUnitTypeId(playerHero) == GREEDY_GOBLIN_UNIT_ID) then
+                    set PlayerRewardPoints[pid] = 6
+                else
+                    set PlayerRewardPoints[pid] = 5
+                endif
+            else
+                // Greedy goblin gets an additional reward point
+                if (GetUnitTypeId(playerHero) == GREEDY_GOBLIN_UNIT_ID) then
+                    set PlayerRewardPoints[pid] = PlayerRewardPoints[pid] + 6
+                else
+                    set PlayerRewardPoints[pid] = PlayerRewardPoints[pid] + 5
                 endif
             endif
 

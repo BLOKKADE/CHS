@@ -333,31 +333,35 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         if IsNotOnHitOrIsDivineBubbleOnHit() and Damage.index.amount > 0 then
-            if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) then
 
-                if not IsOnHitDamage() then
-                    //Pulverize
-                    set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
-                    if i > 0 and GetRandomReal(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
-                        call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
-                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 200 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT,i - 1), true, PULVERIZE_ABILITY_ID, true, false)
-                    endif
-
-                    //Destruction
-                    set i = GetUnitAbilityLevel(DamageSource, DESTRUCTION_ABILITY_ID) 
-                    if i > 0 and GetRandomReal(0, 100) <= (15 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
-                        call DestroyEffect(AddLocalizedSpecialEffect(  "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" , GetUnitX(DamageTarget),GetUnitY(DamageTarget) ))
-                        call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true)/2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource,DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID, true, false)
-                    endif
-                    
-                    //Bash
-                    set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)  
-                    if i > 0 and GetRandomReal(0, 100) <= (I2R(i) + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
-                        call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero,true) * 1.25, ABILITY_RLF_DAMAGE_HTB1 )
-                    endif
+            // Pulverize
+            if not IsOnHitDamage() and (IsPhysDamage() or IsSpellElement(DamageSource, DamageSourceAbility, Element_Earth) or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource)) then
+                set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
+                if i > 0 and GetRandomReal(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
+                    call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
+                    call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 200 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK) / 2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource, PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, PULVERIZE_ABILITY_ID, true, false)
                 endif
+            endif
 
-                //Thorns
+            // Destruction
+            if not IsOnHitDamage() and (IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource)) then
+                set i = GetUnitAbilityLevel(DamageSource, DESTRUCTION_ABILITY_ID)
+                if i > 0 and GetRandomReal(0, 100) <= (15 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
+                    call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
+                    call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true) / 2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource, DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID, true, false)
+                endif
+            endif
+
+            // Bash
+            if not IsOnHitDamage() and (IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource)) then
+                set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)
+                if i > 0 and GetRandomReal(0, 100) <= (I2R(i) + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+                    call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero, true) * 1.25, ABILITY_RLF_DAMAGE_HTB1)
+                endif
+            endif
+
+            //Thorns
+            if not IsOnHitDamage() and (IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource)) then 
                 if (GetUnitAbilityLevel(DamageTarget, 'B01C') > 0 and IsUnitType(DamageSource, UNIT_TYPE_MELEE_ATTACKER)) then
                     
                     set r1 = 1 - (0.01 * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) + GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID)))
@@ -375,8 +379,10 @@ scope ModifyDamageAfterArmor initializer init
                         call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                     endif
                 endif
+            endif
 
-                //Reflection
+            //Reflection
+            if not IsOnHitDamage() and (IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource)) then 
                 if (GetUnitAbilityLevel(DamageTarget, 'B01O') > 0 and IsUnitType(DamageSource, UNIT_TYPE_RANGED_ATTACKER)) then
                     set r1 = 1 - (0.01 * (GetUnitAbilityLevel(DamageTargetHero, WIZARDBANE_AURA_ABILITY_ID) + GetUnitAbilityLevel(DamageTargetHero, THORNS_AURA_ABILITY_ID)))
                     //call BJDebugMsg("ref: r1:" + R2S(r1) + " ttl: " + R2S((Damage.index.amount * (GetUnitAbilityLevel(DamageTargetHero, REFLECTION_AUR_ABILITY_ID) * 0.01)) * r1))
