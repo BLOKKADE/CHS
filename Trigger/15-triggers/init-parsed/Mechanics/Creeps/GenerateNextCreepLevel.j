@@ -1295,7 +1295,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceShadowStrike = GetRandomInt(1, 15) //Shadow Strike creep chance
             set RoundCreepChanceGuardianSpirit = GetRandomInt(1, 10) //Guardian Spirit creep chance
             set RoundCreepChanceAvatar = GetRandomInt(1, 180) //Avatar creep chance
-            set RoundCreepChanceHealingWave = GetRandomInt(1, 25) //Healing Wave creep chance
+            //set RoundCreepChanceHealingWave = GetRandomInt(1, 25) //Healing Wave creep chance <- disabled for now as it makes creeps too tanky
             set RoundCreepChanceIceForce = GetRandomInt(1, 15) //Ice Force creep chance
             set RoundCreepChanceEntanglingRoots = GetRandomInt(1, 180) //Entangling Roots creep chance
             set RoundCreepChanceStormBolt = GetRandomInt(1, 40) //Storm Bolt creep chance

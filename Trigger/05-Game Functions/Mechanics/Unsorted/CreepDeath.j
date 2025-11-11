@@ -178,7 +178,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
             set expBounty = expBounty + R2I(I2R(expBounty) * 1.5)
         endif
 
-        if GameModeShort == true then
+        if GameModeShort == true and RoundNumber >= 6 then
             set goldBounty = goldBounty * 3
             set expBounty = expBounty * 4
         endif

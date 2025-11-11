@@ -7,9 +7,13 @@ scope ModifyDamageBeforeArmor initializer init
     private function ModifyDamageBeforeArmor takes nothing returns nothing
         local real blockDamage = 0
         local real r1 = 0
+        local real r2 = 0
         local integer i1 = 0
         local integer i2 = 0
         local integer i = 0
+        local group g = CreateGroup()
+        local unit u
+        local real aoe = 300.0
 
          //Extradimensional Cooperation
          if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not IsOnHitDamage()) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
@@ -443,31 +447,75 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        //Searing Arrows
+        // Searing Arrows
         set i1 = GetUnitAbilityLevel(DamageSource, SEARING_ARROWS_ABILITY_ID)
-        if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
+        if i1 > 0 and Damage.index.isAttack then
             set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.08
-            if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
-                set DamageSourceAbility = SEARING_ARROWS_ABILITY_ID
-                //call BJDebugMsg("sa: " + I2S(GetSpellValue(60, 30, i1)))
-                call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
-                set Damage.index.damage = Damage.index.damage + GetSpellValue(60, 30, i1)
+
+            if IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) then
+                if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
+                    set DamageSourceAbility = SEARING_ARROWS_ABILITY_ID
+                    call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
+                    set Damage.index.damage = Damage.index.damage + GetSpellValue(60, 30, i1) + r1
+                else
+                    call ToggleSearingArrows(DamageSource)
+                endif
             else
-                call ToggleSearingArrows(DamageSource)
+                // Searing Arrows is disabled — fire single shot every 5 seconds
+                if BlzGetUnitAbilityCooldownRemaining(DamageSource, SEARING_ARROWS_ABILITY_ID) <= 0 then
+                    // Store attack damage before nullifying it
+                    set DamageSourceAbility = SEARING_ARROWS_ABILITY_ID
+                    set r2 = Damage.index.damage
+
+                    // Cancel default attack damage
+                    set Damage.index.damage = 0.0
+
+                    call GroupEnumUnitsInRange(g, GetUnitX(DamageTarget), GetUnitY(DamageTarget), aoe, null)
+                    loop
+                        set u = FirstOfGroup(g)
+                        exitwhen u == null
+                        call GroupRemoveUnit(g, u)
+
+                        if u != DamageSource and IsUnitAliveBJ(u) then
+                            // Apply ability damage + stored attack damage as magic
+                            call UnitDamageTarget(DamageSource, u, GetSpellValue(60, 30, i1) + r2, true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+                        endif
+                    endloop
+
+                    call DestroyGroup(g)
+                    call AbilStartCD(DamageSource, SEARING_ARROWS_ABILITY_ID, 5)
+                endif
             endif
         endif
 
-        //Cold Arrows
+        // Cold Arrows
         set i1 = GetUnitAbilityLevel(DamageSource, COLD_ARROWS_ABILITY_ID)
-        if i1 > 0 and Damage.index.isAttack and IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID) then
+        if i1 > 0 and Damage.index.isAttack then
             set r1 = GetUnitState(DamageSource, UNIT_STATE_MAX_MANA) * 0.04
-            if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
-                set DamageSourceAbility = COLD_ARROWS_ABILITY_ID
-                call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
-                set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
-                call DummyOrder.create(DamageSource, GetUnitX(DamageSource), GetUnitY(DamageSource), GetUnitFacing(DamageSource), 4).addActiveAbility('A04X', 1, 852662).setAbilityRealField('A04X', ABILITY_RLF_DURATION_NORMAL, 2.8 + (0.2 * i1)).target(DamageTarget).activate()
+
+            if IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID) then
+                // Ability is enabled — check mana
+                if GetUnitState(DamageSource, UNIT_STATE_MANA) > r1 then
+                    set DamageSourceAbility = COLD_ARROWS_ABILITY_ID
+                    call SetUnitState(DamageSource, UNIT_STATE_MANA, GetUnitState(DamageSource, UNIT_STATE_MANA) - r1)
+                    set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
+
+                    call DummyOrder.create(DamageSource, GetUnitX(DamageSource), GetUnitY(DamageSource), GetUnitFacing(DamageSource), 3).addActiveAbility('A04X', 1, 852662).setAbilityRealField('A04X', ABILITY_RLF_DURATION_NORMAL, 3.0).target(DamageTarget).activate()
+                else
+                    // Not enough mana — disable Cold Arrows
+                    call ToggleColdArrows(DamageSource)
+                endif
             else
-                call ToggleColdArrows(DamageSource)
+                // Cold Arrows is disabled — fire fallback shot every 5 seconds
+                if BlzGetUnitAbilityCooldownRemaining(DamageSource, COLD_ARROWS_ABILITY_ID) <= 0 then
+                    set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
+
+                    set Damage.index.damageType = DAMAGE_TYPE_MAGIC
+
+                    call DummyOrder.create(DamageSource, GetUnitX(DamageSource), GetUnitY(DamageSource), GetUnitFacing(DamageSource), 3).addActiveAbility('A04X', 1, 852662).setAbilityRealField('A04X', ABILITY_RLF_DURATION_NORMAL, 3.0).target(DamageTarget).activate()
+
+                    call AbilStartCD(DamageSource, COLD_ARROWS_ABILITY_ID, 6)
+                endif
             endif
         endif
 
@@ -533,7 +581,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         // Stomp Fire Weakness
         if DamageTargetTypeId == STOMP_TREE_UNIT_ID and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
-            set Damage.index.amount = Damage.index.amount * 2
+            set Damage.index.amount = Damage.index.amount * 3
         endif
 
         //Hero's Hammer

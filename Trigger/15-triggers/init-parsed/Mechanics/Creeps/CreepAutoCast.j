@@ -460,9 +460,9 @@ library CreepAutoCast initializer init requires RandomShit
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
                     if (GameModeShort == true) then
-                        call SetUnitAbilityLevel(creep, FINGER_OF_DEATH_ABILITY_ID, ((RoundNumber * 4) / RoundCreepNumber))
+                        call SetUnitAbilityLevel(creep, FINGER_OF_DEATH_ABILITY_ID, 30)
                     else
-                        call SetUnitAbilityLevel(creep, FINGER_OF_DEATH_ABILITY_ID, (((RoundNumber * 4) / RoundCreepNumber) / 2))
+                        call SetUnitAbilityLevel(creep, FINGER_OF_DEATH_ABILITY_ID, 30)
                     endif
 
                     set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function HurlBoulderUnitFilter))

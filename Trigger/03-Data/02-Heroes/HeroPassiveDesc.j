@@ -318,7 +318,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCorruptedTreeOfLife.blp" )
-        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive double damage from [|cffff0000Fire|r] and cannot buy stat-per-level Manuscripts.")
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive triple damage from [|cffff0000Fire|r] and cannot buy stat-per-level Tomes and Manuscripts.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.3% more stats from new summon upgrades.") //(|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_SummonLimit, "24")
 

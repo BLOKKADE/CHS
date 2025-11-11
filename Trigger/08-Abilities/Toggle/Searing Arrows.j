@@ -55,6 +55,6 @@ library SearingArrows initializer init requires ToggleAbility
 
     private function init takes nothing returns nothing
         set SearingArrowsTable = Table.create()
-        call SetupToggleAbility(SEARING_ARROWS_ABILITY_ID, "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheMoon.blp")
+        call SetupToggleAbility(SEARING_ARROWS_ABILITY_ID, "ReplaceableTextures\\CommandButtons\\BTNsearingarrowsrapidfire.blp")
     endfunction
 endlibrary

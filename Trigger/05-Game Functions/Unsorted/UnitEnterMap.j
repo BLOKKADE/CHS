@@ -393,6 +393,12 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         // WildBorne Sigil
         if UnitHasItemType(hero, WILDBORNE_SIGIL_ITEM_ID) then
             set summonlimit = R2I(summonlimit * 1.50)
+            if BlzGetUnitAbilityCooldownRemaining(hero, 'A0FS') <= 0 then
+                call UnitAddAbility(u, TRUE_SIGHT_ABILITY_ID)
+                call SetUnitAbilityLevel(u, TRUE_SIGHT_ABILITY_ID, 1)
+                // Start cooldown
+                call AbilStartCD(hero, 'A0FS', 15)
+            endif
         endif
 
         // Fear Aura

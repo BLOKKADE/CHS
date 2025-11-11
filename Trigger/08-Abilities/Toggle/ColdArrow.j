@@ -55,6 +55,6 @@ library ColdArrows initializer init requires ToggleAbility
 
     private function init takes nothing returns nothing
         set ColdArrowsTable = Table.create()
-        call SetupToggleAbility(COLD_ARROWS_ABILITY_ID, "ReplaceableTextures\\CommandButtons\\BTNMoonArrow.blp")
+        call SetupToggleAbility(COLD_ARROWS_ABILITY_ID, "ReplaceableTextures\\CommandButtons\\BTNcoldarrowsrapidfire.blp")
     endfunction
 endlibrary
