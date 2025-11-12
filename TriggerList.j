@@ -222,6 +222,7 @@
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\TrollBerserker.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\UrsaWarrior.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Witch Doctor.j"
+//! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Warlock.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\WolfRider.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Xesil.j"
 //! import "C:\CHS\CHS/Trigger\07-Heroes\Passives\Yeti.j"

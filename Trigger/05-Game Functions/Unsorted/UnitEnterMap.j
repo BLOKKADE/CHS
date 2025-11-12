@@ -27,6 +27,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         local real r1
         local integer summonlimit = 0
         local real power = GLOB_RUNE_POWER
+        local real currentMS = GetUnitMoveSpeed(u)
 
         //Prevent super summons?
         call ResetUnitCustomState(u)
@@ -181,6 +182,12 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call SetWidgetLife(u, BlzGetUnitMaxHP(u))
         endif
 
+        // Warlock Illusion Attack Cooldown Sync
+        if (IsUnitIllusion(u) and GetUnitTypeId(u) == WARLOCK_UNIT_ID) then
+            // Copy the hero’s current attack cooldown (weapon index 0 = primary attack)
+            call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(hero, 0), 0)
+        endif
+
          //Wild Defense
         set i2 = GetUnitAbilityLevel(hero, WILD_DEFENSE_ABILITY_ID)
         if i2 > 0 then
@@ -251,6 +258,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
             if GetUnitAbilityLevel(hero, ENDURANCE_AURA_ABILITY_ID) == 0 then
                 call AddUnitBonusReal(u, BONUS_ATTACK_SPEED, 1.5)
+                call SetUnitMoveSpeed(u, currentMS * 1.5)
             endif
 
             if GetUnitAbilityLevel(hero, TRUESHOT_AURA_ABILITY_ID) == 0 and GetUnitAbilityLevel(hero, COMMAND_AURA_ABILITY_ID) == 0 then
@@ -328,6 +336,8 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         elseif GetUnitTypeId(hero) == RANGER_UNIT_ID then
             set summonlimit = 24
         elseif GetUnitTypeId(hero) == WAR_GOLEM_UNIT_ID then
+            set summonlimit = 24
+        elseif GetUnitTypeId(hero) == WARLOCK_UNIT_ID then
             set summonlimit = 24
         elseif GetUnitTypeId(hero) == ORC_CHAMPION_UNIT_ID then
             set summonlimit = 24
@@ -418,6 +428,9 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         elseif summonTypeId == POCKET_FACTORY_1_UNIT_ID then //pocket factory exception
             set summonlimit = 1888
             call LimitedSummon(hero, u, 2, summonlimit) 
+        elseif (IsUnitIllusion(u) and GetUnitTypeId(u) == WARLOCK_UNIT_ID) then //illusion limit Warlock
+            set summonlimit = 3 + R2I(GetHeroLevel(hero) / 20)
+            call LimitedSummon(hero, u, 3, summonlimit) 
         else 
             call LimitedSummon(hero, u, 1, summonlimit) //kill summons over the limit
             //call DisplayTimedTextToPlayer(GetOwningPlayer(hero), 0, 0, 5.00, "Current Summon Limit: " + I2S(summonlimit))
@@ -473,6 +486,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call SetHeroStr(u, GetHeroStr(PlayerHeroes[pid], false), false)
             call SetHeroAgi(u, GetHeroAgi(PlayerHeroes[pid], false), false)
             call SetHeroInt(u, GetHeroInt(PlayerHeroes[pid], false), false)
+            call UnitAddAbility(u, GHOST_VISIBLE_ABILITY_ID) 
         endif
 
         //Deadlord

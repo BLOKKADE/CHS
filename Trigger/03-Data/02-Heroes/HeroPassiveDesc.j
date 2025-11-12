@@ -197,6 +197,11 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Construct: +1% bonus hit points from strength." )
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_SummonLimit, "24")
 
+        call InitHeroDesc(WARLOCK_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNEredarWarlockPurple.blp" )
+        call InitHeroDesc(WARLOCK_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Bloodmirror: When attacking, has a 5% chance to create an illusion that lasts 10 seconds (limit of 3 illusions). Cannot miss with attacks and spells. |cffc0c0c0Not affected by [|cff80ff80Luck|r|cffc0c0c0]. Illusions deal 100% damage, have the same attack cooldown as the Hero, and take 400% damage.")
+        call InitHeroDesc(WARLOCK_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 20 levels|r) + 1 illusion limit" )
+        call InitHeroDesc(WARLOCK_UNIT_ID, HeroPassive_SummonLimit, "24")
+
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNOrcWarlockRed.blp" )
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Absolute Magic: Starts with a random Absolute ability.")
         call InitHeroDesc(WITCH_DOCTOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 30 levels|r) Absolute Magic: Gets a free point towards all elements he has Absolute abilities for. (|cff68f386Every 25 levels|r) Gets a random bonus Absolute ability (max 10). |cffc0c0c0Cannot purchase Absolute Acorns or unlearn Absolute abilities." ) 

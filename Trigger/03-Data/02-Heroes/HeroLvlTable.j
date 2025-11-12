@@ -190,6 +190,8 @@ library HeroLvlTable initializer init requires Table, ReplaceTextLib
 
         //call SetBonusStr(STOMP_TREE_UNIT_ID, 0, "|cffe7544aWild bonus|r: ,0,")
         call SetBonusStr(STOMP_TREE_UNIT_ID, 1, "|cffd1e32fSummon Upgrade gains|r: ,0,%")
+
+        call SetBonusStr(WARLOCK_UNIT_ID, 0, "|cffd1e32fIllusion limit|r: ,0,")
     endfunction
 
     private function init takes nothing returns nothing

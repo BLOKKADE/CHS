@@ -58,9 +58,12 @@ library Killing initializer init requires AllowCasting, HideEffects, AreaDamage,
                 set fx = null
             endif
 
-            //Packing Tape
+            // Packing Tape
             if UnitHasItemType(targetHero, PACKING_TAPE_ITEM_ID) and GetSummonSpell(GetUnitTypeId(target)) != 0 and RegisteredSummon.boolean[targetId] then
-                call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + GetUnitState(target, UNIT_STATE_MAX_LIFE) * 0.1) 
+                // Prevent HP gain if the target is an illusion of Warlock
+                if not (IsUnitIllusion(target) and GetUnitTypeId(target) == WARLOCK_UNIT_ID) then
+                    call SetUnitState(targetHero, UNIT_STATE_LIFE, GetUnitState(targetHero, UNIT_STATE_LIFE) + GetUnitState(target, UNIT_STATE_MAX_LIFE) * 0.1)
+                endif
             endif
             
             //Necromancer's Army

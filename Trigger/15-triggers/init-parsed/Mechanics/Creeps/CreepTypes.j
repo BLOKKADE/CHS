@@ -41,19 +41,18 @@ library CreepTypes initializer init requires RandomShit
         set CreepUnitTypeIds[26] = 'n01x' //Dark Troll Berserker
         set CreepUnitTypeIds[27] = 'n01g' //Gnoll Warden
         set CreepUnitTypeIds[28] = 'n01r' //Tuskar
+        //magic creeps:
+        set CreepUnitTypeIds[29] = 'n00W' //Wraith
+        set CreepUnitTypeIds[30] = 'n01H' //Sludge minion
 //boss creeps:
-        set CreepUnitTypeIds[29] = 'n01V' //Magnataur
-        set CreepUnitTypeIds[30] = 'n01W' //Burning Archer
-        set CreepUnitTypeIds[31] = 'n01Y' //Holy Defender
-        set CreepUnitTypeIds[32] = 'n020' //Dragon Turtle
-        set CreepUnitTypeIds[33] = 'n021' //Chaos Warlord
-        set CreepUnitTypeIds[34] = 'n022' //Thunder Lizard
-        set CreepUnitTypeIds[35] = 'n025' //Black Dragon
-        set CreepUnitTypeIds[36] = 'n026' //Green Dragon
-
-//magic creeps:
-        set CreepUnitTypeIds[37] = 'n00W' //Wraith
-        set CreepUnitTypeIds[38] = 'n01H' //Sludge minion
+        set CreepUnitTypeIds[31] = 'n01V' //Magnataur
+        set CreepUnitTypeIds[32] = 'n01W' //Burning Archer
+        set CreepUnitTypeIds[33] = 'n01Y' //Holy Defender
+        set CreepUnitTypeIds[34] = 'n020' //Dragon Turtle
+        set CreepUnitTypeIds[35] = 'n021' //Chaos Warlord
+        set CreepUnitTypeIds[36] = 'n022' //Thunder Lizard
+        set CreepUnitTypeIds[37] = 'n025' //Black Dragon
+        set CreepUnitTypeIds[38] = 'n026' //Green Dragon
         
         set MaxCreepUnitTypes = 30
     endfunction

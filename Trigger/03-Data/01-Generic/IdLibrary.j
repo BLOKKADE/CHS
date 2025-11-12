@@ -166,6 +166,7 @@ library IdLibrary initializer init
         constant integer MURLOC_WARRIOR_UNIT_ID                         = 'H01F'
         constant integer YETI_UNIT_ID                                   = 'O00B'
         constant integer STOMP_TREE_UNIT_ID                             = 'BBHH'
+        constant integer WARLOCK_UNIT_ID                                = 'N027'
         // --- Unit IDs ---
 
         // --- Ability IDs ---

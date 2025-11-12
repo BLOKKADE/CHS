@@ -201,7 +201,9 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         elseif uid == SKELETON_BRUTE_UNIT_ID then   
             call SetBonus(u, 0, 1 + (heroLevel * 0.01))   
             call SetBonus(u, 1, 2 + (heroLevel * 0.05))   
-            call SetBonus(u, 2, 50 + heroLevel)   
+            call SetBonus(u, 2, 50 + heroLevel) 
+        elseif uid == WARLOCK_UNIT_ID then   
+            call SetBonus(u, 0, 3 + (heroLevel / 20))   
         elseif uid == URSA_WARRIOR_UNIT_ID then     
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (10 * levelsGained) , 0)  
             call UpdateBonus(u, 0, 10 * levelsGained)  
