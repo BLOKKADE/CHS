@@ -1,13 +1,22 @@
 library Murloc initializer init requires CustomGameEvent
 
     private function ResetMurlocStats takes EventInfo eventInfo returns nothing
-    local unit hero = eventInfo.hero
-    local integer hid = GetHandleId(hero)
-    local integer strBonus = LoadInteger(HT, hid, 54021)
-    local integer agiBonus = LoadInteger(HT, hid, 54022)
-    local integer intBonus = LoadInteger(HT, hid, 54023)
+        local unit hero = eventInfo.hero
+        local integer hid = GetHandleId(hero)
+        local integer strBonus
+        local integer agiBonus
+        local integer intBonus
 
-        // Reset scale factor to default FIRST
+        // Only apply to Murloc unit type
+        if GetUnitTypeId(hero) != MURLOC_WARRIOR_UNIT_ID then
+            return
+        endif
+
+        set strBonus = LoadInteger(HT, hid, 54021)
+        set agiBonus = LoadInteger(HT, hid, 54022)
+        set intBonus = LoadInteger(HT, hid, 54023)
+
+        // Reset scale factor to default FIRST (disabled for now)
         call SetUnitScale(hero, 1.0, 1.0, 1.0)
 
         // Remove bonuses if any were applied
