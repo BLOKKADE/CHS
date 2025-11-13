@@ -13,7 +13,7 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
         local real x = GetUnitX(damageSource)
         local real y = GetUnitY(damageSource)
 
-        call ElemFuncStart(damageSource, ARCANE_ASSAUL_ABILITY_ID)
+        call ElemFuncStart(damageSource, ARCANE_ASSAULT_ABILITY_ID)
         if GetUnitAbilityLevel(damageSource, CLEAVING_ATTACK_ABILITY_ID) > 0 or GetUnitAbilityLevel(damageSource, MULTISHOT_ABILITY_ID) > 0 then
             set p = null
             return
@@ -48,14 +48,14 @@ library ArcaneAssault requires MathRound, CastSpellOnTarget, RandomShit
                 set targets = targets - 1
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
-                set udg_NextDamageAbilitySource = ARCANE_ASSAUL_ABILITY_ID
+                set udg_NextDamageAbilitySource = ARCANE_ASSAULT_ABILITY_ID
                 set udg_NextDamageIsAttack = true
                 call Damage.applyPhys(damageSource, target, damage, true, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 //call BJDebugMsg("full aa" + I2S(GetHandleId(target)) + " targets: " + I2S(targets))
             elseif damageBonus != 0 then
                 //set GLOB_typeDmg = 2
                 //set DamageIsAttack = true
-                set udg_NextDamageAbilitySource = ARCANE_ASSAUL_ABILITY_ID
+                set udg_NextDamageAbilitySource = ARCANE_ASSAULT_ABILITY_ID
                 set udg_NextDamageIsAttack = true
                 call Damage.applyPhys(damageSource, target, damage * damageBonus, true, IsUnitType(damageSource, UNIT_TYPE_RANGED_ATTACKER), ATTACK_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
                 //call BJDebugMsg("db aa" + I2S(GetHandleId(target)) + " dmg: " + R2S(damage * damageBonus) + " targets: " + I2S(targets))

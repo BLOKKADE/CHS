@@ -50,7 +50,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         endif
 
         if IncomeMode == 3 then
-            if RoundNumber > 5 then
+            if (RoundNumber > 5 or GameModeShort == true) then
                 set goldBounty = goldBounty + (IMinBJ(RoundNumber - 5, 10) * 19)
                 //call BJDebugMsg("auto eco: " + I2S((IMinBJ(RoundNumber - 5, 10) * 19)))
                 set expBounty = expBounty + IMinBJ(RoundNumber - 5, 10) * 45
@@ -145,12 +145,6 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
             set goldBounty = R2I(goldBounty * CgBonus)
         endif
 
-        // Round 50 bonus gold and experience
-        if RoundNumber == 50 then
-            set goldBounty = R2I(goldBounty * 3)
-            set expBounty = R2I(expBounty * 3)
-        endif
-
         // Gradual bonus for low creep count (added to existing bounty)
         if RoundCreepNumber == 2 then
             set goldBounty = goldBounty + R2I(I2R(goldBounty) * 2.5)
@@ -178,8 +172,15 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
             set expBounty = expBounty + R2I(I2R(expBounty) * 1.5)
         endif
 
-        if GameModeShort == true and RoundNumber >= 6 then
-            set goldBounty = goldBounty * 3
+        // Bonus gold and experience for boss rounds
+        if ((RoundNumber == 50) or (GameModeShort == true and RoundNumber == 25)) then
+            set goldBounty = R2I(goldBounty * 3)
+            set expBounty = R2I(expBounty * 3)
+        endif
+
+        //Gold bounty for short mode after round 5
+        if GameModeShort == true and RoundNumber >= 5 then
+            //set goldBounty = goldBounty * 3
             set expBounty = expBounty * 4
         endif
         

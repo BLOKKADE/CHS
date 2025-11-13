@@ -173,6 +173,28 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         endif
     endfunction
 
+    private function MaxStats takes Args args returns nothing
+        local integer pid = GetPlayerId(GetTriggerPlayer())
+        local unit hero = PlayerHeroes[pid] 
+
+        // Attack speed
+        call BlzSetUnitAttackCooldown(hero, 0.5, 0)
+
+        // Stats
+        call SetHeroStr(hero, 500000, true)
+        call SetHeroAgi(hero, 500000, true)
+        call SetHeroInt(hero, 500000, true)
+        call SetUnitCustomState(hero, BONUS_MAGICPOW, 100000)
+        call SetUnitCustomState(hero, BONUS_PHYSPOW, 100000)
+
+        // Abilities
+        call UnitAddAbility(hero, FIRE_FORCE_ABILITY_ID)
+        call SetUnitAbilityLevel(hero, FIRE_FORCE_ABILITY_ID, 30)
+
+        call UnitAddAbility(hero, ARCANE_ASSAULT_ABILITY_ID)
+        call SetUnitAbilityLevel(hero, ARCANE_ASSAULT_ABILITY_ID, 30)
+    endfunction
+
     private function AddGlory takes Args args returns nothing
         local integer pn = S2I(args[1])
         local integer pid = GetPlayerId(GetTriggerPlayer())
@@ -252,7 +274,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             set u = PlayerHeroes[pid]
             if GetPlayerController(Player(pid)) == MAP_CONTROL_COMPUTER and u != null then
                 call SetHeroLevel(u, GetHeroLevel(u) + 200, true)
-                call UnitAddAbility(u, ARCANE_ASSAUL_ABILITY_ID)
+                call UnitAddAbility(u, ARCANE_ASSAULT_ABILITY_ID)
                 call UnitAddAbility(u, LAST_BREATHS_ABILITY_ID)
                 call UnitAddAbility(u, TRUESHOT_AURA_ABILITY_ID)
                 call UnitAddAbility(u, ICE_FORCE_ABILITY_ID)
@@ -265,7 +287,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
                 call SetUnitAbilityLevel(u, CORROSIVE_SKIN_ABILITY_ID, 30)
                 call SetUnitAbilityLevel(u, UNHOLY_AURA_ABILITY_ID, 30)
                 call SetUnitAbilityLevel(u, DIVINE_BUBBLE_ABILITY_ID, 30)
-                call SetUnitAbilityLevel(u, ARCANE_ASSAUL_ABILITY_ID, 30)
+                call SetUnitAbilityLevel(u, ARCANE_ASSAULT_ABILITY_ID, 30)
                 call SetUnitAbilityLevel(u, LAST_BREATHS_ABILITY_ID, 30)
                 call SetUnitAbilityLevel(u, TRUESHOT_AURA_ABILITY_ID, 30)
                 call SetUnitAbilityLevel(u, ICE_FORCE_ABILITY_ID, 30)
@@ -348,6 +370,7 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
             call Command.create(CommandHandler.TestMode).name("test").handles("test").help("test", "Gives you max glory and gold")
             call Command.create(CommandHandler.TestMode).name("t").handles("t").help("t", "Gives you max glory and gold")
             call Command.create(CommandHandler.ActivateItemStock).name("is").handles("is").help("is", "Activates item stock.")
+            call Command.create(CommandHandler.MaxStats).name("max").handles("max").help("max", "Maximizes Attack speed and adds a lot of stats and arcane assault and fire force ability.")
 
             call DisplayTimedTextToPlayer(Player(0), 0, 0, 60, "Debug commands have been enabled")
 

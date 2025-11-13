@@ -1047,7 +1047,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(REFLECTION_AUR_ABILITY_ID, REFLECTION_AUR_ITEM_ID, false, 0, 0, false, Order_None, null)
 
         //167 - Arcane Assault
-        call SaveAbilData(ARCANE_ASSAUL_ABILITY_ID, ARCANE_ASSAUL_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SaveAbilData(ARCANE_ASSAULT_ABILITY_ID, ARCANE_ASSAULT_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //168 - Absolute Fire

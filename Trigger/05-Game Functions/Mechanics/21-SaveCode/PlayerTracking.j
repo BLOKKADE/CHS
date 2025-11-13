@@ -686,6 +686,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.7.4b", false) // 37 - 25 round mode changes and other stuff. called 2.7.4b to avoid confusion with 2.7.4 testing version
         call AddGameVersion("CHS v2.7.5", false) // 38 - Cold/Searing arrows changes. Wildbourne sigil change, small changes to 25 rounds etc.
         call AddGameVersion("CHS v2.7.6", false) // 39 - Warlock hero added, fixed hero scaling bug, adjustments to 25 rounds etc
+        call AddGameVersion("CHS v2.7.7", false) // 40 - More adjustments to 25 rounds, powerful creep abilities limited to 3 creeps, banner of many modification
     endfunction
 
     private function init takes nothing returns nothing
