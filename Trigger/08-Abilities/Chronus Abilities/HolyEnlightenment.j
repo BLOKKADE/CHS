@@ -10,12 +10,7 @@ library HolyEnlightenment initializer init requires RandomShit
             call ElemFuncStart(eventInfo.hero,HOLY_ENLIGHTENMENT_ABILITY_ID)
             set BonusExp = 50 *(heroLevel + 3) * (heroLevel + 4) - 110  
             set currentExp = GetHeroXP(eventInfo.hero)
-
-            if GetUnitAbilityLevel(eventInfo.hero, PILLAGE_ABILITY_ID) > 0 then   
-                call AddHeroXP(eventInfo.hero, R2I((BonusExp - currentExp) * (abilLevel * 1.5)) / 200, true) 
-            else
-                call AddHeroXP(eventInfo.hero, R2I((BonusExp - currentExp) * (abilLevel * 1.5)) / 100, true) 
-            endif
+            call AddHeroXP(eventInfo.hero, R2I((BonusExp - currentExp) * (abilLevel * 1.5)) / 100, true) 
         endif
     endfunction
 

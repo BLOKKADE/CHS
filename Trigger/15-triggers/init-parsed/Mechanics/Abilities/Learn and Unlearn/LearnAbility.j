@@ -95,21 +95,21 @@ library LearnAbility initializer init requires RandomShit, Functions, CustomGame
             return
         endif
 
-        // Economy abiliy logic
+        // Economy ability logic
         if (EconomicModeAbility(BoughtAbility)) then
             if (ARLearningAbil == true) then
                 call ConditionalTriggerExecute(LearnRandomAbilityTrigger)
                 return
-            else
-                call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
+            //else
+                //call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "|cffbbff00Failed to learn|r")
                 
-                if (AbilityMode == 1) then
-                    call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_GOLD)
-                    call ResourseRefresh(GetOwningPlayer(BuyingUnit))
-                    call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "[|cffffc896Economic|r] spells are |cffff0000unavailable in Economy mode|r: instead you get bonus gold and experience by default.")
-                endif
+                //if (AbilityMode == 1) then
+                    //call AdjustPlayerStateBJ(BlzGetItemIntegerField(GetManipulatedItem(), ConvertItemIntegerField('iclr')) * 30, GetOwningPlayer(BuyingUnit), PLAYER_STATE_RESOURCE_GOLD)
+                    //call ResourseRefresh(GetOwningPlayer(BuyingUnit))
+                    //call DisplayTimedTextToPlayer(GetOwningPlayer(BuyingUnit), 0, 0, 2.0, "[|cffffc896Economic|r] spells are |cffff0000unavailable in Economy mode|r: instead you get bonus gold and experience by default.")
+                //endif
 
-                return
+                //return
             endif
         endif
 

@@ -14,7 +14,7 @@ library BonusExp initializer init requires RandomShit
         set bonus = bonus + GetLearnabilityBonus(GetEnumUnit()) + GetMagicNecklaceBonus(GetEnumUnit(), GetTriggerUnit())
         //call BJDebugMsg("be xp bonus post: " + R2S(bonus))
 
-        call AddHeroXP(GetEnumUnit(), R2I(((RoundCreepPower) * 55) * bonus), true)
+        //call AddHeroXP(GetEnumUnit(), R2I(((RoundCreepPower) * 55) * bonus), true)
     endfunction
 
     private function LongGameModeActions takes nothing returns nothing
@@ -23,7 +23,7 @@ library BonusExp initializer init requires RandomShit
         set bonus = bonus + GetLearnabilityBonus(GetEnumUnit()) + GetMagicNecklaceBonus(GetEnumUnit(), GetTriggerUnit())
         //call BJDebugMsg("be xp bonus post: " + R2S(bonus))
 
-        call AddHeroXP(GetEnumUnit(), R2I(((RoundCreepPower) * 35) * bonus), true)
+        //call AddHeroXP(GetEnumUnit(), R2I(((RoundCreepPower) * 35) * bonus), true)
     endfunction
 
     private function BonusExpActions takes nothing returns nothing

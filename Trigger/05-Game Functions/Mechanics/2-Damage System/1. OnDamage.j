@@ -23,7 +23,7 @@ scope OnDamage initializer init
                     set StaffOfPowerCritNegate = true
                 endif
                 set Damage.index.damageType = DAMAGE_TYPE_MAGIC
-            elseif DamageSourceTypeId == 'n00W' or DamageSourceTypeId == 'n01H' or DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or (Damage.index.isAttack and (IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) or IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID))) then
+            elseif DamageSourceTypeId == SLUDGE_MINION_CREEP_UNIT_ID or DamageSourceTypeId == DRAENEI_MAGE_CREEP_UNIT_ID or DamageSourceTypeId == WIND_SERPENT_CREEP_UNIT_ID or DamageSourceTypeId == WRAITH_CREEP_UNIT_ID or DamageSourceTypeId == SERPENT_WARD_1_UNIT_ID or (Damage.index.isAttack and (IsAbilityEnabled(DamageSource, SEARING_ARROWS_ABILITY_ID) or IsAbilityEnabled(DamageSource, COLD_ARROWS_ABILITY_ID))) then
                 set Damage.index.damageType = DAMAGE_TYPE_MAGIC
             endif
 

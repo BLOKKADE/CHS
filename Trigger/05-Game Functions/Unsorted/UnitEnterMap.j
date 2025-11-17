@@ -413,7 +413,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
 
         // Fear Aura
         if UnitHasBuffBJ(hero, FEAR_AURA2_BUFF_ID) then
-            set summonlimit = R2I(summonlimit * 0.70)
+            set summonlimit = R2I(summonlimit * 0.50)
         endif
 
         // Spirit Shackle buff overrides everything

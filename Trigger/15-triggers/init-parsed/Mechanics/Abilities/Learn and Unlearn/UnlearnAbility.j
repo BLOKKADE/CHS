@@ -1,5 +1,10 @@
 library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLearned, CustomGameEvent
 
+    // helper to check protected abilities
+    private function IsUnlearnableAbility takes integer abilId returns boolean
+        return abilId == PILLAGE_ABILITY_ID or abilId == LEARNABILITY_ABILITY_ID or abilId == HOLY_ENLIGHTENMENT_ABILITY_ID
+    endfunction
+
     private function UnlearnAbilityConditions takes nothing returns boolean
         return GetItemTypeId(GetManipulatedItem()) == 'I00P'
     endfunction
@@ -15,21 +20,28 @@ library UnlearnAbility initializer init requires RandomShit, Functions, SpellsLe
             set spellCount = GetHeroSpellListCount(currentUnit, 0)
 
             if (spellCount > 0) then
-                set HeroAbilityCount[currentPlayerId] = HeroAbilityCount[currentPlayerId] - 1
                 set PlayerLastLearnedSpell[currentPlayerId] = GetLastLearnedSpell(currentUnit, SpellList_Normal, true)
-                call SetHeroSpellPosition(currentUnit, spellCount, 0)
-                call SetHeroSpellListCount(currentUnit, spellCount - 1, 0) 
-    
-                call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffbbff00Removed |r" + BlzGetAbilityTooltip(PlayerLastLearnedSpell[currentPlayerId], GetUnitAbilityLevel(currentUnit, PlayerLastLearnedSpell[currentPlayerId]) - 1))
-                call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", currentUnit, "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl"))
-                call UnitRemoveAbility(currentUnit, PlayerLastLearnedSpell[currentPlayerId])
-                call FunResetAbility(PlayerLastLearnedSpell[currentPlayerId], currentUnit)
-                call RemoveDummyspell(currentUnit, PlayerLastLearnedSpell[currentPlayerId])
-                call CustomGameEvent_FireEvent(EVENT_UNLEARN_ABILITY, EventInfo.create(currentPlayer, PlayerLastLearnedSpell[currentPlayerId], RoundNumber))
+                set lastLearned = PlayerLastLearnedSpell[currentPlayerId]
 
-                if (AbilityMode == 1) then
-                    call RemoveItemFromUpgradeShop(currentPlayerId, GetItemFromAbility(PlayerLastLearnedSpell[currentPlayerId]))
-                    call RefreshUpgradeShop(currentPlayerId, currentUnit)
+                // block if protected
+                if IsUnlearnableAbility(lastLearned) then
+                    call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffffcc00This ability cannot be unlearned!")
+                else
+                    set HeroAbilityCount[currentPlayerId] = HeroAbilityCount[currentPlayerId] - 1
+                    call SetHeroSpellPosition(currentUnit, spellCount, 0)
+                    call SetHeroSpellListCount(currentUnit, spellCount - 1, 0) 
+    
+                    call DisplayTimedTextToPlayer(currentPlayer, 0, 0, 10, "|cffbbff00Removed |r" + BlzGetAbilityTooltip(lastLearned, GetUnitAbilityLevel(currentUnit, lastLearned) - 1))
+                    call DestroyEffect(AddSpecialEffectTargetUnitBJ("origin", currentUnit, "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl"))
+                    call UnitRemoveAbility(currentUnit, lastLearned)
+                    call FunResetAbility(lastLearned, currentUnit)
+                    call RemoveDummyspell(currentUnit, lastLearned)
+                    call CustomGameEvent_FireEvent(EVENT_UNLEARN_ABILITY, EventInfo.create(currentPlayer, lastLearned, RoundNumber))
+
+                    if (AbilityMode == 1) then
+                        call RemoveItemFromUpgradeShop(currentPlayerId, GetItemFromAbility(lastLearned))
+                        call RefreshUpgradeShop(currentPlayerId, currentUnit)
+                    endif
                 endif
             endif
     

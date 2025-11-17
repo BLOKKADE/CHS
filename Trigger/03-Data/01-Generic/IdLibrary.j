@@ -167,6 +167,68 @@ library IdLibrary initializer init
         constant integer YETI_UNIT_ID                                   = 'O00B'
         constant integer STOMP_TREE_UNIT_ID                             = 'BBHH'
         constant integer WARLOCK_UNIT_ID                                = 'N027'
+
+        //Creepwave IDs
+        //spellcaster creeps:
+        constant integer SUCCUBUS_CREEP_UNIT_ID                         = 'n01G'
+        constant integer GNOLL_WARDEN_CREEP_UNIT_ID                     = 'n01g'
+        constant integer ORC_WARLOCK_CREEP_UNIT_ID                      = 'n01J'
+        constant integer OGRE_MAGI_CREEP_UNIT_ID                        = 'n028'
+        constant integer BANDIT_MAGE_CREEP_UNIT_ID                      = 'n02A'
+        constant integer DEMONESS_CREEP_UNIT_ID                         = 'n02B'
+        constant integer VOID_WALKER_CREEP_UNIT_ID                      = 'n02C'
+        constant integer SHAMAN_CREEP_UNIT_ID                           = 'n02D'
+        constant integer CHAOS_WARLOCK_2_CREEP_UNIT_ID                  = 'n02E'
+        constant integer SASQUATCH_SHAMAN_CREEP_UNIT_ID                 = 'n02F'
+        constant integer WATCHER_CREEP_UNIT_ID                          = 'n02G'
+        constant integer HARPY_WITCH_CREEP_UNIT_ID                      = 'n03E'
+
+        //melee auto attacker creeps:
+        constant integer MURLOC_TIDERUNNER_CREEP_UNIT_ID                = 'n000'
+        constant integer ACOLYTE_CREEP_UNIT_ID                          = 'n002'
+        constant integer BANDIT_CREEP_UNIT_ID                           = 'n008'
+        constant integer CENTAUR_CREEP_UNIT_ID                          = 'n009'
+        constant integer OGRE_CREEP_UNIT_ID                             = 'n00G'
+        constant integer TREANT_CREEP_UNIT_ID                           = 'n00F'
+        constant integer QUILBOAR_CREEP_UNIT_ID                         = 'n00H'
+        constant integer FOREST_TROLL_CREEP_UNIT_ID                     = 'n00N'
+        constant integer GHOUL_CREEP_UNIT_ID                            = 'n007'
+        constant integer GNOLL_CREEP_UNIT_ID                            = 'n00X'
+        constant integer KOBOLD_CREEP_UNIT_ID                           = 'n019'
+        constant integer MILITIA_CREEP_UNIT_ID                          = 'n01B'
+        constant integer PANDAREN_CREEP_UNIT_ID                         = 'n01C'
+        constant integer SPIDER_CRAB_CREEP_UNIT_ID                      = 'n018'
+        constant integer NIGHT_ELF_WARRIOR_CREEP_UNIT_ID                = 'n01K'
+        constant integer SATYR_CREEP_UNIT_ID                            = 'n01I'
+        constant integer SASQUATCH_CREEP_UNIT_ID                        = 'n01S'
+        constant integer FURBOLG_CREEP_UNIT_ID                          = 'n01z'
+        constant integer DARK_TROLL_BERSERKER_CREEP_UNIT_ID             = 'n01x'
+        constant integer TUSKAR_CREEP_UNIT_ID                           = 'n01r'
+
+        //ranged auto attacker creeps:
+        constant integer HARPY_CREEP_UNIT_ID                            = 'n01F'
+        constant integer DRYAD_CREEP_UNIT_ID                            = 'n006'
+        constant integer BANDIT_SPEAR_THROWER_CREEP_UNIT_ID             = 'n01t'
+        constant integer CENTAUR_IMPALER_CREEP_UNIT_ID                  = 'n01p'
+        constant integer SKELETON_ARCHER_CREEP_UNIT_ID                  = 'n01A'
+
+        //magic creeps:
+        constant integer DRAENEI_MAGE_CREEP_UNIT_ID                     = 'n03C'
+        constant integer SLUDGE_MINION_CREEP_UNIT_ID                    = 'n01H'
+        constant integer WIND_SERPENT_CREEP_UNIT_ID                     = 'n03B'
+        constant integer WRAITH_CREEP_UNIT_ID                           = 'n00W'
+
+        //boss creeps:
+        constant integer MAGNATAUR_CREEP_UNIT_ID                        = 'n01V'
+        constant integer BURNING_ARCHER_CREEP_UNIT_ID                   = 'n01W'
+        constant integer HOLY_DEFENDER_CREEP_UNIT_ID                    = 'n01Y'
+        constant integer DRAGON_TURTLE_CREEP_UNIT_ID                    = 'n020'
+        constant integer CHAOS_WARLORD_CREEP_UNIT_ID                    = 'n021'
+        constant integer THUNDER_LIZARD_CREEP_UNIT_ID                   = 'n022'
+        constant integer BLACK_DRAGON_CREEP_UNIT_ID                     = 'n025'
+        constant integer GREEN_DRAGON_CREEP_UNIT_ID                     = 'n026'
+        constant integer OGRE_LORD_CREEP_UNIT_ID                        = 'n029'
+        constant integer HARPY_QUEEN_CREEP_UNIT_ID                      = 'n03D'
         // --- Unit IDs ---
 
         // --- Ability IDs ---
@@ -449,7 +511,6 @@ library IdLibrary initializer init
         constant integer ACTIVE_SPELL_DUMMY_9                           = 'A0BL'
 
         // --- Item Ability IDs ---
-
         constant integer CONTRACT_LIVING_ABIL_ID                        = 'A02P'
         constant integer BLOKKADE_SHIELD_ABIL_ID                        = 'A01X'
         constant integer TITANIUM_SPIKE_ABIL_ID                         = 'A01Y'
@@ -639,6 +700,7 @@ library IdLibrary initializer init
         constant integer SOUL_BURN_ITEM_ID                              = 'I062'
         constant integer SPIKED_CARAPACE_ITEM_ID                        = 'I00O'
         constant integer SPIRIT_LINK_ITEM_ID                            = 'I035'
+        constant integer STAFF_OF_POWER_ITEM_ID                         = 'I080'
         constant integer STAMPEDE_ITEM_ID                               = 'I026'
         constant integer STARFALL_ITEM_ID                               = 'I01Y'
         constant integer STASIS_TRAP_ITEM_ID                            = 'I044'
@@ -789,6 +851,7 @@ library IdLibrary initializer init
         constant integer AGILITY_MANUSCRIPT_ITEM_ID                     = 'I0CX'
         constant integer STRENGTH_MANUSCRIPT_ITEM_ID                    = 'I0CW'
         constant integer INTELLIGENCE_MANUSCRIPT_ITEM_ID                = 'I0CY'
+        constant integer PRETTY_BRIGHT_GEM_ITEM_ID                      = 'I0AM'
 
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'

@@ -4,11 +4,7 @@ library Learnability initializer init requires Table
     endglobals
 
     function GetLearnabilityBonus takes unit u returns real
-        if GetUnitAbilityLevel(u, PILLAGE_ABILITY_ID) == 0 and GetUnitAbilityLevel(u, MIDAS_TOUCH_ABILITY_ID) == 0 then
-            return LearnabilityBonus.real[GetHandleId(u)]
-        else
-            return 0.
-        endif
+        return LearnabilityBonus.real[GetHandleId(u)]
     endfunction
 
     private function init takes nothing returns nothing

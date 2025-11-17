@@ -183,6 +183,23 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Stampede
+            if (GetUnitAbilityLevel(creep, STAMPEDE_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 2)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
+                    set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
+
+                    call IssuePointOrderLoc(creep, "stampede", offsetLocation)
+                    
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                    call RemoveLocation(randomUnitLocation)
+                    call RemoveLocation(offsetLocation)
+                endif
+            endif
+
             // Blizzard
             if (GetUnitAbilityLevel(creep, BLIZZARD_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 6)
@@ -1094,6 +1111,26 @@ library CreepAutoCast initializer init requires RandomShit
 
                     if (CountUnitsInGroup(tempGroup) > 1) then
                         call IssueImmediateOrder(creep, "avatar")
+                    endif
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Mirror Image
+            if (GetUnitAbilityLevel(creep, MIRROR_IMAGE_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, MIRROR_IMAGE_ABILITY_ID, R2I(RoundNumber * 1.2))
+                    else
+                        call SetUnitAbilityLevel(creep, MIRROR_IMAGE_ABILITY_ID, R2I(RoundNumber * 0.6))
+                    endif
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+
+                    if (CountUnitsInGroup(tempGroup) > 1) then
+                        call IssueImmediateOrder(creep, "mirrorimage")
                     endif
 
                     // Cleanup

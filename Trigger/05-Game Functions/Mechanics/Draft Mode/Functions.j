@@ -85,10 +85,10 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         if (NOSpells - 4 > 0 ) then
             call GenerateDraftSpells(PlayerNumber, NOSpells - 4) // Generate Draft Spells uses indices i : 0 =< i < 2nd argument
         endif
-        call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[1], NOSpells - 4) // Learnability
-        call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[2], NOSpells - 3) // Transmute
-        call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[3], NOSpells - 2) // Pillage
-        call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[4], NOSpells - 1) // Holy Enlightenment
+        //call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[1], NOSpells - 4) // Learnability
+        //call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[2], NOSpells - 3) // Transmute
+        //call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[3], NOSpells - 2) // Pillage
+        //call AddDraftSpellToStore(PlayerNumber, EconomicSpellIndex.integer[4], NOSpells - 1) // Holy Enlightenment
     endfunction
 
     function CreateDraftBuildingsLoop takes nothing returns nothing

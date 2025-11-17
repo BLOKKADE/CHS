@@ -13,48 +13,70 @@ library CreepTypes initializer init requires RandomShit
     endfunction
 
     private function CreepTypesActions takes nothing returns nothing
-        set CreepUnitTypeIds[1] = 'n000' //Murloc Tiderunner
-        set CreepUnitTypeIds[2] = 'n002' //Acolyte
-        set CreepUnitTypeIds[3] = 'n008' //Bandit
-        set CreepUnitTypeIds[4] = 'n009' //Centaur
-        set CreepUnitTypeIds[5] = 'n006' //Dryad
-        set CreepUnitTypeIds[6] = 'n00G' //Ogre
-        set CreepUnitTypeIds[7] = 'n00F' //Treant
-        set CreepUnitTypeIds[8] = 'n00H' //Quilboar
-        set CreepUnitTypeIds[9] = 'n00N' //Forest Troll
-        set CreepUnitTypeIds[10] = 'n007' //Ghoul
-        set CreepUnitTypeIds[11] = 'n00X' //Gnoll
-        set CreepUnitTypeIds[12] = 'n019' //Kobold
-        set CreepUnitTypeIds[13] = 'n01B' //Militia
-        set CreepUnitTypeIds[14] = 'n01C' //Pandaren
-        set CreepUnitTypeIds[15] = 'n01A' //Skeleton Archer
-        set CreepUnitTypeIds[16] = 'n018' //Spider Crab
-        set CreepUnitTypeIds[17] = 'n01F' //Harpy
-        set CreepUnitTypeIds[18] = 'n01K' //Night Elf Warrior
-        set CreepUnitTypeIds[19] = 'n01J' //Orc Warlock
-        set CreepUnitTypeIds[20] = 'n01I' //Satyr
-        set CreepUnitTypeIds[21] = 'n01G' //Succubus
-        set CreepUnitTypeIds[22] = 'n01S' //Sasquatch
-        set CreepUnitTypeIds[23] = 'n01t' //Bandit Spear Thrower
-        set CreepUnitTypeIds[24] = 'n01z' //Furbolg
-        set CreepUnitTypeIds[25] = 'n01p' //Centaur Impaler
-        set CreepUnitTypeIds[26] = 'n01x' //Dark Troll Berserker
-        set CreepUnitTypeIds[27] = 'n01g' //Gnoll Warden
-        set CreepUnitTypeIds[28] = 'n01r' //Tuskar
+
+        //spellcaster creeps:
+        set CreepUnitTypeIds[1]  = SUCCUBUS_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[2]  = GNOLL_WARDEN_CREEP_UNIT_ID          //ranged
+        set CreepUnitTypeIds[3]  = ORC_WARLOCK_CREEP_UNIT_ID          
+        set CreepUnitTypeIds[4]  = OGRE_MAGI_CREEP_UNIT_ID             
+        set CreepUnitTypeIds[5]  = BANDIT_MAGE_CREEP_UNIT_ID           //ranged
+        set CreepUnitTypeIds[6]  = DEMONESS_CREEP_UNIT_ID              //ranged
+        set CreepUnitTypeIds[7]  = VOID_WALKER_CREEP_UNIT_ID           //ranged
+        set CreepUnitTypeIds[8]  = SHAMAN_CREEP_UNIT_ID                //ranged
+        set CreepUnitTypeIds[9]  = CHAOS_WARLOCK_2_CREEP_UNIT_ID       //ranged
+        set CreepUnitTypeIds[10] = SASQUATCH_SHAMAN_CREEP_UNIT_ID 
+        set CreepUnitTypeIds[11] = WATCHER_CREEP_UNIT_ID        
+        set CreepUnitTypeIds[12] = HARPY_WITCH_CREEP_UNIT_ID           //ranged
+
+        //melee auto attacker creeps:
+        set CreepUnitTypeIds[13] = MURLOC_TIDERUNNER_CREEP_UNIT_ID  
+        set CreepUnitTypeIds[14] = ACOLYTE_CREEP_UNIT_ID          
+        set CreepUnitTypeIds[15] = BANDIT_CREEP_UNIT_ID          
+        set CreepUnitTypeIds[16] = CENTAUR_CREEP_UNIT_ID          
+        set CreepUnitTypeIds[17] = OGRE_CREEP_UNIT_ID          
+        set CreepUnitTypeIds[18] = TREANT_CREEP_UNIT_ID          
+        set CreepUnitTypeIds[19] = QUILBOAR_CREEP_UNIT_ID       
+        set CreepUnitTypeIds[20] = FOREST_TROLL_CREEP_UNIT_ID      
+        set CreepUnitTypeIds[21] = GHOUL_CREEP_UNIT_ID            
+        set CreepUnitTypeIds[22] = GNOLL_CREEP_UNIT_ID         
+        set CreepUnitTypeIds[23] = KOBOLD_CREEP_UNIT_ID          
+        set CreepUnitTypeIds[24] = MILITIA_CREEP_UNIT_ID       
+        set CreepUnitTypeIds[25] = PANDAREN_CREEP_UNIT_ID        
+        set CreepUnitTypeIds[26] = SPIDER_CRAB_CREEP_UNIT_ID        
+        set CreepUnitTypeIds[27] = NIGHT_ELF_WARRIOR_CREEP_UNIT_ID    
+        set CreepUnitTypeIds[28] = SATYR_CREEP_UNIT_ID              
+        set CreepUnitTypeIds[29] = SASQUATCH_CREEP_UNIT_ID         
+        set CreepUnitTypeIds[30] = FURBOLG_CREEP_UNIT_ID             
+        set CreepUnitTypeIds[31] = DARK_TROLL_BERSERKER_CREEP_UNIT_ID  
+        set CreepUnitTypeIds[32] = TUSKAR_CREEP_UNIT_ID            
+
+        //ranged auto attacker creeps:
+        set CreepUnitTypeIds[33] = HARPY_CREEP_UNIT_ID                  //ranged
+        set CreepUnitTypeIds[34] = DRYAD_CREEP_UNIT_ID                  //ranged
+        set CreepUnitTypeIds[35] = BANDIT_SPEAR_THROWER_CREEP_UNIT_ID   //ranged
+        set CreepUnitTypeIds[36] = CENTAUR_IMPALER_CREEP_UNIT_ID        //ranged
+        set CreepUnitTypeIds[37] = SKELETON_ARCHER_CREEP_UNIT_ID        //ranged
+
         //magic creeps:
-        set CreepUnitTypeIds[29] = 'n00W' //Wraith
-        set CreepUnitTypeIds[30] = 'n01H' //Sludge minion
-//boss creeps:
-        set CreepUnitTypeIds[31] = 'n01V' //Magnataur
-        set CreepUnitTypeIds[32] = 'n01W' //Burning Archer
-        set CreepUnitTypeIds[33] = 'n01Y' //Holy Defender
-        set CreepUnitTypeIds[34] = 'n020' //Dragon Turtle
-        set CreepUnitTypeIds[35] = 'n021' //Chaos Warlord
-        set CreepUnitTypeIds[36] = 'n022' //Thunder Lizard
-        set CreepUnitTypeIds[37] = 'n025' //Black Dragon
-        set CreepUnitTypeIds[38] = 'n026' //Green Dragon
+        set CreepUnitTypeIds[38] = DRAENEI_MAGE_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[39] = SLUDGE_MINION_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[40] = WIND_SERPENT_CREEP_UNIT_ID           //ranged
+        set CreepUnitTypeIds[41] = WRAITH_CREEP_UNIT_ID                 //ranged
+
+        //boss creeps:
+        set CreepUnitTypeIds[42] = MAGNATAUR_CREEP_UNIT_ID   
+        set CreepUnitTypeIds[43] = BURNING_ARCHER_CREEP_UNIT_ID         //ranged
+        set CreepUnitTypeIds[44] = HOLY_DEFENDER_CREEP_UNIT_ID   
+        set CreepUnitTypeIds[45] = DRAGON_TURTLE_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[46] = CHAOS_WARLORD_CREEP_UNIT_ID    
+        set CreepUnitTypeIds[47] = THUNDER_LIZARD_CREEP_UNIT_ID         //ranged
+        set CreepUnitTypeIds[48] = BLACK_DRAGON_CREEP_UNIT_ID           //ranged 
+        set CreepUnitTypeIds[49] = GREEN_DRAGON_CREEP_UNIT_ID           //ranged
+        set CreepUnitTypeIds[50] = OGRE_LORD_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[51] = HARPY_QUEEN_CREEP_UNIT_ID            //ranged
+        set CreepUnitTypeIds[52] = STOMP_TREE_UNIT_ID 
         
-        set MaxCreepUnitTypes = 30
+        set MaxCreepUnitTypes = 41
     endfunction
 
     private function init takes nothing returns nothing

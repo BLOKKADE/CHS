@@ -124,7 +124,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(TAUREN_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )
-        call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons a Faerie Dragon to aid it in battle. The Faerie Dragon can be targeted but can not be damaged.")
+        call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons a Faerie Dragon to aid it in battle [|cff80ffffChronus|r]. |cffc0c0c0The Faerie Dragon can be targeted but cannot be damaged.|r")
         call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: Bonus attack speed. (|cff68eef3Every 3 levels|r) increases Faerie Dragon damage." )
         call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_SummonLimit, "24")
 
@@ -243,7 +243,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(GNOME_MASTER_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroAlchemist.blp" )
-        call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. Gets an extra point for the end of round reward shop every 5 rounds. |cffc0c0c01% less effective for each level of Pillage. Pillage and Learnability are 22% less effective.|r")
+        call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Greed: Gains 25 bonus gold and experience whenever it kills a unit. Gets an extra point for the end of round reward shop every 5 rounds.")
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Greed: +3 bonus gold and +4 experience" ) 
         call InitHeroDesc(GREEDY_GOBLIN_UNIT_ID, HeroPassive_SummonLimit, "24")
 
