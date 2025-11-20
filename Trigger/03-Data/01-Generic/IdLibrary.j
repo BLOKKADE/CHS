@@ -84,7 +84,7 @@ library IdLibrary initializer init
         constant integer CARRION_BEETLE_1_UNIT_ID                       = 'u001'
         constant integer CLOCKWORK_GOBLIN_1_UNIT_ID                     = 'n011'
         constant integer MOUNTAIN_GIANT_1_UNIT_ID                       = 'e00N'
-        constant integer PARASITE_1_UNIT_ID                             = 'ncfs'
+        constant integer PARASITE_1_UNIT_ID                             = 'n03F'
         constant integer PHOENIX_1_UNIT_ID                              = 'h009'
         constant integer POCKET_FACTORY_1_UNIT_ID                       = 'n010'
         constant integer CRYPT_LORD_LOCUST_UNIT_ID                      = 'u008'
@@ -211,6 +211,7 @@ library IdLibrary initializer init
         constant integer BANDIT_SPEAR_THROWER_CREEP_UNIT_ID             = 'n01t'
         constant integer CENTAUR_IMPALER_CREEP_UNIT_ID                  = 'n01p'
         constant integer SKELETON_ARCHER_CREEP_UNIT_ID                  = 'n01A'
+        constant integer FOREST_SPIDER_CREEP_UNIT_ID                    = 'n03G'
 
         //magic creeps:
         constant integer DRAENEI_MAGE_CREEP_UNIT_ID                     = 'n03C'
@@ -268,6 +269,7 @@ library IdLibrary initializer init
         constant integer BLACK_ARROW_PASSIVE_ABILITY_ID                 = 'A0AW'
         constant integer BLESSED_PROTECTIO_ABILITY_ID                   = 'A045'
         constant integer CRUSHING_WAVE_ABILITY_ID                       = 'A04Z'
+        constant integer CHARM_ABILITY_ID                               = 'A0FV'
         constant integer BLINK_ABILITY_ID                               = 'AEbl'
         constant integer BLINK_STRIKE_ABILITY_ID                        = 'A08J'
         constant integer BLIZZARD_ABILITY_ID                            = 'AHbz'
@@ -401,6 +403,7 @@ library IdLibrary initializer init
         constant integer SHOCKWAVE_ABILITY_ID                           = 'AOsh'
         constant integer SILENCE_ABILITY_ID                             = 'ANsi'
         constant integer SLOW_AURA_ABILITY_ID                           = 'AOr2'
+        constant integer SLOW_POISON_ABILITY_ID                         = 'Aspo'
         constant integer SOUL_BURN_ABILITY_ID                           = 'ANso'
         constant integer SPIKED_CARAPACE_ABILITY_ID                     = 'A0CC'
         constant integer SPIRIT_LINK_ABILITY_ID                         = 'A0B7'

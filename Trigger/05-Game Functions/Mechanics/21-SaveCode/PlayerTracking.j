@@ -688,6 +688,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.7.6", false) // 39 - Warlock hero added, fixed hero scaling bug, adjustments to 25 rounds etc
         call AddGameVersion("CHS v2.7.7", false) // 40 - More adjustments to 25 rounds, powerful creep abilities limited to 3 creeps, banner of many modification
         call AddGameVersion("CHS v2.7.8", false) // 41 - Some big creepwave changes/balances to 25 and 50 rounds, ability changes and reintroduced eco abilities
+        call AddGameVersion("CHS v2.8.0", false) // 42 - bugfixes, creep wave upgrades, doombuff
     endfunction
 
     private function init takes nothing returns nothing

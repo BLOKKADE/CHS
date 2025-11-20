@@ -305,7 +305,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         call HeroSelectorAddUnitCategory(COLD_KNIGHT_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(GREEDY_GOBLIN_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(TAUREN_UNIT_ID, categoryInt)
-       // call HeroSelectorAddUnitCategory(NYX_UNIT_ID, categoryInt)
+        call HeroSelectorAddUnitCategory(WARLOCK_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(THUNDER_WITCH_UNIT_ID, categoryInt)
         call HeroSelectorAddUnitCategory(DEADLORD_UNIT_ID, categoryStr)
         call HeroSelectorAddUnitCategory(AVATAR_SPIRIT_UNIT_ID, categoryAgi)

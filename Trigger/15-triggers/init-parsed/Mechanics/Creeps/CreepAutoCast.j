@@ -170,7 +170,7 @@ library CreepAutoCast initializer init requires RandomShit
             if (GetUnitAbilityLevel(creep, RAIN_OF_FIRE_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 4)
                 if (RoundCreepAbilCastChance == 1) then
-                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function BlinkUnitFilter))
                     set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
                     set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
 
@@ -183,11 +183,28 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Acid Spray
+            if (GetUnitAbilityLevel(creep, ACID_SPRAY_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 4)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(400.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
+                    set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
+
+                    call IssuePointOrderLoc(creep, "channel", offsetLocation)
+                    
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                    call RemoveLocation(randomUnitLocation)
+                    call RemoveLocation(offsetLocation)
+                endif
+            endif
+
             // Stampede
             if (GetUnitAbilityLevel(creep, STAMPEDE_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 2)
                 if (RoundCreepAbilCastChance == 1) then
-                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set tempGroup = GetUnitsInRangeOfLocMatching(400.00, creepLocation, Condition(function BlinkUnitFilter))
                     set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
                     set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
 
@@ -204,7 +221,7 @@ library CreepAutoCast initializer init requires RandomShit
             if (GetUnitAbilityLevel(creep, BLIZZARD_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 6)
                 if (RoundCreepAbilCastChance == 1) then
-                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set tempGroup = GetUnitsInRangeOfLocMatching(400.00, creepLocation, Condition(function BlinkUnitFilter))
                     set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
                     set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
 
@@ -847,6 +864,26 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Charm
+            if (GetUnitAbilityLevel(creep, CHARM_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, CHARM_ABILITY_ID, R2I(RoundNumber * 1.2))
+                    else
+                        call SetUnitAbilityLevel(creep, CHARM_ABILITY_ID, R2I(RoundNumber * 0.6))
+                    endif
+
+                    // Charm random unit
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function HurlBoulderUnitFilter))
+
+                    call IssueTargetOrder(creep, "charm", GroupPickRandomUnit(tempGroup))
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
             // Random Spell
             /*if (GetUnitAbilityLevel(creep, RANDOM_SPELL_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 3)
@@ -1281,6 +1318,28 @@ library CreepAutoCast initializer init requires RandomShit
 
                     if (CountUnitsInGroup(tempGroup) >= 1) then
                         call IssueImmediateOrder(creep, "howlofterror")
+                    endif
+
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Whirlwind
+            if (GetUnitAbilityLevel(creep, WHIRLWIND_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    if (GameModeShort == true) then
+                        call SetUnitAbilityLevel(creep, WHIRLWIND_ABILITY_ID, R2I(RoundNumber * 1.2))
+                    else
+                        call SetUnitAbilityLevel(creep, WHIRLWIND_ABILITY_ID, R2I(RoundNumber * 0.6))
+                    endif
+
+                    // Cast howl of terror if there is a unit nearby
+                    set tempGroup = GetUnitsInRangeOfLocMatching(250.00, creepLocation, Condition(function ThunderClapUnitFilter))
+
+                    if (CountUnitsInGroup(tempGroup) >= 1) then
+                        call IssueImmediateOrder(creep, "creepthunderclap")
                     endif
 
                     // Cleanup

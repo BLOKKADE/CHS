@@ -135,7 +135,7 @@ library GameInit initializer init requires GroupUtils
         trigger CreepAutoCastTrigger = null
         trigger CreepDiesTrigger = null
         trigger CreepPeriodicAttackTrigger = null
-        //trigger CreepPowerAndHpTrigger = null
+        trigger CreepPowerAndHpTrigger = null
         trigger CreepTypesTrigger = null
         trigger DeathDialogLeaveTrigger = null
         trigger DialogInitializationTrigger = null

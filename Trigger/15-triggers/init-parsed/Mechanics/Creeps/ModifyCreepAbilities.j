@@ -14,11 +14,6 @@ library ModifyCreepAbilities initializer init requires RandomShit
             call UnitAddAbility(creep, CRITICAL_STRIKE_ABILITY_ID)
         endif
 
-        // Evasion
-        if (RoundCreepChanceEvasion == 1) then
-            call AddUnitCustomState(creep, BONUS_EVASION, 20)
-        endif
-
         // Cleave
         if (RoundCreepChanceCleave == 1) then
             call UnitAddAbility(creep, CLEAVE_CREEP_ABILITY_ID)

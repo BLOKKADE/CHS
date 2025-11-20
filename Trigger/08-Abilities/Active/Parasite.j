@@ -6,8 +6,8 @@ library Parasite initializer init requires PeriodicDamage, DummyOrder
 
     function SummonParasite takes integer pid, unit target returns nothing
         local unit summon
-        local real angle = GetUnitFacing(target) + 180.0 // Directly behind
-        local real distance = 40.0 // How far behind
+        local real angle = GetUnitFacing(target) + 180.0 
+        local real distance = 40.0 
         local real x = GetUnitX(target) + distance * CosBJ(angle)
         local real y = GetUnitY(target) + distance * SinBJ(angle)
 
