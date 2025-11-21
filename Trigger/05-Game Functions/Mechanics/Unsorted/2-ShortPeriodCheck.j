@@ -148,13 +148,14 @@ scope ShortPeriodCheck initializer init
                 endif
             endif
 
-            // Bloodfeast (item-based)
-            if UnitHasItemType(u, 'I0DE') then
-                set r1 = LoadReal(HT, hid, 'I0DE')
-                set r2 = BlzGetUnitBaseDamage(u, 0) * 2 
+            // Bloodfeast
+            set i1 = GetUnitAbilityLevel(u, 'A0FO')
+            set r1 = LoadReal(HT, hid, 'A0FO')
+            if i1 > 0 or r1 != 0 then
+                set r2 = BlzGetUnitBaseDamage(u, 0) * (2 * i1)
                 if r1 != r2 then
                     call AddUnitBonus(u, BONUS_DAMAGE, R2I(r2 - r1))
-                    call SaveReal(HT, hid, 'I0DE', r2)
+                    call SaveReal(HT, hid, 'A0FO', r2)
                 endif
             endif
 

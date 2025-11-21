@@ -484,8 +484,8 @@ library VotingScreen initializer init requires IconFrames, VotingResults
 
         // The order this is created in, is the order the buttons appear in the row(s)
         call CreateVotingButtonCategory("|cffD26EFARounds|r")
-        call CreateRoundButton("50 rounds", "The game lasts 50 rounds with 10 rounds of PvP and a battle royale at the end. |n|nLasts around 60 minutes on average.", true)
-        call CreateRoundButton("25 rounds", "The game lasts 25 rounds with 5 rounds of PvP and a battle royale at the end. |n|nLasts around 30 minutes on average.", false)
+        call CreateRoundButton("50 rounds", "The game lasts 50 rounds with 10 rounds of PvP and a battle royale at the end. |n|nLasts around 60 minutes on average.", false)
+        call CreateRoundButton("25 rounds", "The game lasts 25 rounds with 5 rounds of PvP and a battle royale at the end. |n|nLasts around 30 minutes on average.", true)
 
         call CreateVotingButtonCategory("|cffD26EFAAbilities|r")
         call CreateAbilityButton("Pick", "Every player can choose their abilities to learn from any of the ability shops.", false)

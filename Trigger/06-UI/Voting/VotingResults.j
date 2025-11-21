@@ -34,7 +34,7 @@ library VotingResults initializer init
     endglobals
 
     struct PlayerVotes
-        private integer RoundVote = 1 // 25 rounds
+        private integer RoundVote = 2 // 25 rounds
         private integer AbilityVote = 3 // Draft
         private integer HeroVote = 3 // Draft
         private integer IncomeVote = 1 // Individual

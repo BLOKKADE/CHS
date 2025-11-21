@@ -186,10 +186,18 @@ library DebugCommands initializer init requires CustomState, RandomShit, Functio
         call SetHeroInt(hero, 500000, true)
         call SetUnitCustomState(hero, BONUS_MAGICPOW, 100000)
         call SetUnitCustomState(hero, BONUS_PHYSPOW, 100000)
+        call SetUnitCustomState(hero, BONUS_MAGICRES, 1000000)
+        call SetUnitCustomState(hero, BONUS_ARMOR, 100000)
 
         // Abilities
         call UnitAddAbility(hero, FIRE_FORCE_ABILITY_ID)
         call SetUnitAbilityLevel(hero, FIRE_FORCE_ABILITY_ID, 30)
+
+        call UnitAddAbility(hero, REINCARNATION_ABILITY_ID)
+        call SetUnitAbilityLevel(hero, REINCARNATION_ABILITY_ID, 30)
+
+        call UnitAddAbility(hero, LAST_BREATHS_ABILITY_ID)
+        call SetUnitAbilityLevel(hero, LAST_BREATHS_ABILITY_ID, 30)
 
         call UnitAddAbility(hero, ARCANE_ASSAULT_ABILITY_ID)
         call SetUnitAbilityLevel(hero, ARCANE_ASSAULT_ABILITY_ID, 30)
