@@ -27,19 +27,15 @@ library Multicast requires T32, RandomShit, AbilityChannel
             if this.caston == null then
                 set this.caston = NewGroup()
                 call GroupAddUnit(this.caston, this.target)
-               // call BJDebugMsg("create group: " + I2S(GetHandleId(this.caston)))
             endif
             
             call RUH.reset().excludeGroup(this.caston)
-
             call RUH.EnumUnits(GetUnitX(this.caster), GetUnitY(this.caster), range, GetAbilityTargetType(this.abilId), GetOwningPlayer(this.caster))
 
             set this.target = RUH.GetRandomUnit(false)
             if this.target == null then
-                //call BJDebugMsg("no valid enemy")
                 return false
             else
-                //call BJDebugMsg("valid enemy: " + GetUnitName(this.target) + ": " + I2S(GetHandleId(this.target)))
                 call GroupAddUnit(this.caston, this.target)
                 return true
             endif
@@ -49,7 +45,7 @@ library Multicast requires T32, RandomShit, AbilityChannel
             local DummyOrder dummy = DummyOrder.create(this.caster, GetUnitX(this.caster), GetUnitY(this.caster), GetUnitFacing(this.caster), 9)
             call dummy.addActiveAbility(this.abilId, this.abilLevel, this.abilOrder)
 
-            if this.orderType == Order_Instant then // 3
+            if this.orderType == Order_Instant then
                 call dummy.instant()
             elseif this.orderType == Order_Target then
                 call dummy.target(this.target)
@@ -57,21 +53,20 @@ library Multicast requires T32, RandomShit, AbilityChannel
                 call dummy.point(this.x, this.y)
             endif
 
-            //call BJDebugMsg("cast")
             if dummy.activate() then
                 call SetUnitState(this.caster, UNIT_STATE_MANA, GetUnitState(this.caster, UNIT_STATE_MANA) - this.manaCost)
-            else
-                //call BJDebugMsg("fail")
             endif
         endmethod
 
         private method checkSpell takes nothing returns boolean
             if this.orderType == Order_Target and this.mono then
-                //call BJDebugMsg("new trgt: " + GetUnitName(this.target) + " count: " + I2S(this.count))
                 if not GetNewTarget(GetAbilityRealField(this.caster, this.abilId, this.abilLevel, ABILITY_RLF_CAST_RANGE)) then
-                    //call BJDebugMsg("end")
                     return false
                 endif
+            endif
+
+            if this.hero == null then
+                set this.hero = this.caster
             endif
 
             if not AbilityChannel(this.caster, this.hero, this.target, this.x, this.y, this.abilId, this.abilLevel) then
@@ -91,7 +86,6 @@ library Multicast requires T32, RandomShit, AbilityChannel
                     set this.count = this.count - 1
                     set this.endTick = T32_Tick + MulticastInterval
                 else
-                    //call BJDebugMsg("stop")
                     call this.stopPeriodic()
                     call this.destroy()
                     return
@@ -108,10 +102,17 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
         static method create takes unit caster, unit target, integer abilId, integer abilLvl, integer abilOrder, integer orderType, real x, real y, integer count returns thistype
             local thistype this = thistype.allocate()
+            local integer pid = GetPlayerId(GetOwningPlayer(caster))
 
             set this.caster = caster
             set this.target = target
-            set this.hero = PlayerHeroes[GetPlayerId(GetOwningPlayer(this.caster))]
+
+            if PlayerHeroes[pid] != null then
+                set this.hero = PlayerHeroes[pid]
+            else
+                set this.hero = caster
+            endif
+
             set this.caston = null
             set this.abilId = abilId
             set this.abilLevel = abilLvl
@@ -127,7 +128,6 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
             set this.x = x
             set this.y = y
-            
             set this.count = count
 
             set this.endTick = T32_Tick + MulticastInterval
@@ -142,7 +142,6 @@ library Multicast requires T32, RandomShit, AbilityChannel
 
             if this.caston != null then
                 call ReleaseGroup(this.caston)
-                //call BJDebugMsg("release group" + I2S(GetHandleId(this.caston)))
                 set this.caston = null
             endif
             call this.deallocate()

@@ -546,6 +546,19 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             endif
         endif
 
+        //Doom Guard
+        if GetUnitTypeId(u) == DOOM_GUARD_UNIT_ID then
+            call UnitAddAbility(u, ABSOLUTE_FIRE_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_FIRE_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_FIRE_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+        endif
+
         //Naga Siren
         if GetUnitTypeId(u) == NAGA_SIREN_UNIT_ID then
             call UnitAddAbility(u, ABSOLUTE_WATER_ABILITY_ID)

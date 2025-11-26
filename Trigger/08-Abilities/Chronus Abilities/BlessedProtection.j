@@ -24,7 +24,7 @@ library BlessedProtection requires BuffLevel, RandomShit, TimeManipulation
             if GetBuffLevel(this.source, 'A0AF') == 1 then
                 call UnitAddAbility(this.source, 'A0AF')
             endif
-            call ElemFuncStart(this.source,BLESSED_PROTECTIO_ABILITY_ID)
+            call ElemFuncStart(this.source,BLESSED_PROTECTION_ABILITY_ID)
             set this.endTick = T32_Tick + R2I(duration * 32)
             call this.startPeriodic()
             return this

@@ -29,7 +29,7 @@ library TerrestrialGlaive initializer init requires Table, AbilityData, StableSp
         set dummy = CastSpellAuto(caster, target, abilId, level, GetUnitX(target), GetUnitY(target), 600)
 
         call dummy.activate()
-        call AbilStartCD(caster, TERRESTRIAL_GLAIVE_ABILITY_ID, BlzGetAbilityCooldown(abilId, level - 1))
+        call AbilStartCD(caster, TERRESTRIAL_GLAIVE_ABILITY_ID, RMinBJ(BlzGetAbilityCooldown(abilId, level - 1) * 0.5, 10.0))
     endfunction
 
     private function init takes nothing returns nothing

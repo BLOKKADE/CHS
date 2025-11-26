@@ -285,6 +285,23 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
+            // Fog
+            if (GetUnitAbilityLevel(creep, FOG_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 4)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(300.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
+                    set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
+
+                    call IssuePointOrderLoc(creep, "cloudoffog", offsetLocation)
+                    
+                    // Cleanup
+                    call DestroyGroup(tempGroup)
+                    call RemoveLocation(randomUnitLocation)
+                    call RemoveLocation(offsetLocation)
+                endif
+            endif
+
             // Silence
             if (GetUnitAbilityLevel(creep, SILENCE_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 4)
@@ -624,7 +641,7 @@ library CreepAutoCast initializer init requires RandomShit
                 endif
             endif
 
-            // Purge
+  /*          // Purge
             if (GetUnitAbilityLevel(creep, PURGE_ABILITY_ID) > 0) then
                 set RoundCreepAbilCastChance = GetRandomInt(1, 5)
                 if (RoundCreepAbilCastChance == 1) then
@@ -642,7 +659,7 @@ library CreepAutoCast initializer init requires RandomShit
                     // Cleanup
                     call DestroyGroup(tempGroup)
                 endif
-            endif
+            endif  */
 
             // Chain Lightning
             if (GetUnitAbilityLevel(creep, CHAINLIGHTNING_CREEP_ABILITY_ID) > 0) then
@@ -1235,6 +1252,162 @@ library CreepAutoCast initializer init requires RandomShit
                     endif
 
                     // Cleanup
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Bear
+            if (GetUnitAbilityLevel(creep, SUMMON_BEAR_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "summongrizzly")
+                    endif
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Carrion Beetles
+            if (GetUnitAbilityLevel(creep, SUMMON_CARRION_BEETLES_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "summonquillbeast")
+                    endif
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Feral Spirit
+            if (GetUnitAbilityLevel(creep, SUMMON_FERAL_SPIRIT_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "summonquillbeast")
+                    endif
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Hawk
+            if (GetUnitAbilityLevel(creep, SUMMON_HAWK_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "summonwareagle")
+                    endif
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Inferno
+            if (GetUnitAbilityLevel(creep, SUMMON_INFERNO_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
+                    set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-100.00, 100.00), GetRandomReal(-100.00, 100.00))
+
+                    call IssuePointOrderLoc(creep, "inferno", offsetLocation)
+                    
+                    call DestroyGroup(tempGroup)
+                    call RemoveLocation(randomUnitLocation)
+                    call RemoveLocation(offsetLocation)
+                endif
+            endif
+
+            // Summon Lava Spawn
+            if (GetUnitAbilityLevel(creep, SUMMON_LAVA_SPAWN_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "summonquillbeast")
+                    endif
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Mountain Giant
+            if (GetUnitAbilityLevel(creep, SUMMON_MOUNTAIN_GIANT_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "spiritofvengeance")
+                    endif
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Phoenix
+            if (GetUnitAbilityLevel(creep, SUMMON_PHOENIX_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "phoenix")
+                    endif
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Pocket Factory
+            if (GetUnitAbilityLevel(creep, SUMMON_POCKET_FACTORY_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
+                    set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-400.00, 400.00), GetRandomReal(-400.00, 400.00))
+
+                    call IssuePointOrderLoc(creep, "summonfactory", offsetLocation)
+                    
+                    call DestroyGroup(tempGroup)
+                    call RemoveLocation(randomUnitLocation)
+                    call RemoveLocation(offsetLocation)
+                endif
+            endif
+
+            // Summon Serpent Ward
+            if (GetUnitAbilityLevel(creep, SUMMON_SERPENT_WARD_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(600.00, creepLocation, Condition(function BlinkUnitFilter))
+                    set randomUnitLocation = GetUnitLoc(GroupPickRandomUnit(tempGroup))
+                    set offsetLocation = OffsetLocation(randomUnitLocation, GetRandomReal(-200.00, 200.00), GetRandomReal(-200.00, 200.00))
+
+                    call IssuePointOrderLoc(creep, "ward", offsetLocation)
+                    
+                    call DestroyGroup(tempGroup)
+                    call RemoveLocation(randomUnitLocation)
+                    call RemoveLocation(offsetLocation)
+                endif
+            endif
+
+            // Summon Quilbeast
+            if (GetUnitAbilityLevel(creep, SUMMON_QUILBEAST_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "summonquillbeast")
+                    endif
+                    call DestroyGroup(tempGroup)
+                endif
+            endif
+
+            // Summon Water Elemental
+            if (GetUnitAbilityLevel(creep, SUMMON_WATER_ELEMENTAL_ABILITY_ID) > 0) then
+                set RoundCreepAbilCastChance = GetRandomInt(1, 5)
+                if (RoundCreepAbilCastChance == 1) then
+                    set tempGroup = GetUnitsInRangeOfLocMatching(800.00, creepLocation, Condition(function VoodooUnitFilter))
+                    if (CountUnitsInGroup(tempGroup) > 0) then
+                        call IssueImmediateOrder(creep, "waterelemental")
+                    endif
                     call DestroyGroup(tempGroup)
                 endif
             endif

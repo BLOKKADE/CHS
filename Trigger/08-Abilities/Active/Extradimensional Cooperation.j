@@ -59,7 +59,7 @@ library ExtradimensionalCooperation initializer init requires DamageEngine, Hide
         private method periodic takes nothing returns nothing
 
             if T32_Tick > this.endTick then
-                set udg_NextDamageAbilitySource = EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID
+                set udg_NextDamageAbilitySource = EXTRADIMENSIONAL_COOPERATION_ABILITY_ID
                 if magic then
                     call Damage.applyMagic(this.caster, this.target, this.dmg, this.attack, DAMAGE_TYPE_MAGIC)
                 else

@@ -1,33 +1,5 @@
 scope ShortPeriodCheck initializer init
 
-    function GetUnitElementCountRaw takes unit u, integer elementId returns integer
-        return LoadInteger(elementTable, GetHandleId(u), elementId)
-    endfunction
-
-    function SetUnitElementCountRaw takes unit u, integer elementId, integer value returns nothing
-        call SaveInteger(elementTable, GetHandleId(u), elementId, value)
-    endfunction
-
-    function StoreBulwarkBonus takes unit u, integer elementId, integer bonus returns nothing
-        call SaveInteger(bulwarkTable, GetHandleId(u), 0, elementId)
-        call SaveInteger(bulwarkTable, GetHandleId(u), 1, bonus)
-    endfunction
-
-    function GetStoredBulwarkTarget takes unit u returns integer
-        return LoadInteger(bulwarkTable, GetHandleId(u), 0)
-    endfunction
-
-    function GetStoredBulwarkBonus takes unit u returns integer
-        return LoadInteger(bulwarkTable, GetHandleId(u), 1)
-    endfunction
-
-    function IAbs takes integer i returns integer
-        if i < 0 then
-            return -i
-        endif
-        return i
-    endfunction
-
     private function OnPeriod takes nothing returns nothing
         local integer i1 = 0
         local integer i2 = 0
@@ -79,11 +51,13 @@ scope ShortPeriodCheck initializer init
                     call AbsoluteArcaneDrain(u)
                 endif
 
+                //Absolute Dark Drain
                 set i1 = GetUnitAbilityLevel(u, ABSOLUTE_DARK_ABILITY_ID)
                 if i1 > 0 then
                     call CastAbsoluteDark(u)
                 endif
 
+                //Vigour Token
                 if UnitHasItemType(u, 'I0A2') then
                     call VigourTokenHpLoss(u)
                 endif
@@ -193,12 +167,43 @@ scope ShortPeriodCheck initializer init
                 endif
             endif
 
+            // Celestial Signet
+            if UnitHasItemType(u, CELESTIAL_SIGNET_ITEM_ID) then
+                call ApplyElementBonuses(u)
+            else
+                call RemoveElementBonuses(u)
+            endif
+
             //Gemstone
             if GetUnitAbilityLevel(u, 'A02G') > 0 then
                 call SetUnitManaPercentBJ(u, GetUnitManaPercent(u) + 1)
             endif
 
-            // Bulwark
+            //Grass of immortality heal
+            if UnitHasItemType(u, 'I04N') then
+                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.02)
+                   if i1 < 1 then
+                        set i1 = 1 // Ensure at least 1 HP is healed
+                   endif
+                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
+                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
+                endif
+            endif
+
+            //Rejuvenation heal
+            if UnitHasBuffBJ(u, REJUVENATION_BUFF_ID) then
+                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
+                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.035)
+                   if i1 < 1 then
+                        set i1 = 1 // Ensure at least 1 HP is healed
+                   endif
+                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
+                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
+                endif
+            endif
+
+            // Beastmaster's Bulwark
             if prevBonus > 0 and prevTarget != -1 then
                 call AddUnitAbsoluteBonusCount(u, prevTarget, -prevBonus)
             endif
@@ -281,31 +286,9 @@ scope ShortPeriodCheck initializer init
                    //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
                 endif*/
 
-                //Grass of immortality heal
-            elseif UnitHasItemType(u, 'I04N') then
-                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
-                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.02)
-                   if i1 < 1 then
-                        set i1 = 1 // Ensure at least 1 HP is healed
-                   endif
-                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
-                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
-                endif
-
-                //Rejuvenation heal
-            elseif UnitHasBuffBJ(u, REJUVENATION_BUFF_ID) then
-                if GetUnitState(u, UNIT_STATE_LIFE) > 0 then
-                   set i1 = R2I(BlzGetUnitMaxHP(u) * 0.035)
-                   if i1 < 1 then
-                        set i1 = 1 // Ensure at least 1 HP is healed
-                   endif
-                   call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
-                   //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
-                endif
-
                 //War Golem
             elseif unitTypeId == WAR_GOLEM_UNIT_ID then
-                set i1 = R2I((GetHeroStr(u, true) * 26) * (0.49 + (0.01 * GetHeroLevel(u))))
+                set i1 = R2I((GetHeroStr(u, true) * 16) * (0.49 + (0.01 * GetHeroLevel(u))))
                 set i2 = LoadInteger(DataUnitHT, hid, 542)
                 if i1 != i2 then
                     call SetUnitMaxHp(u, BlzGetUnitMaxHP(u) - i2 + i1)

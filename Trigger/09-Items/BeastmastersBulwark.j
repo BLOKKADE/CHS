@@ -4,6 +4,27 @@ endglobals
 
 library BeastmastersBulwark requires GetObjectElement
 
+    function GetUnitElementCountRaw takes unit u, integer elementId returns integer
+        return LoadInteger(elementTable, GetHandleId(u), elementId)
+    endfunction
+
+    function SetUnitElementCountRaw takes unit u, integer elementId, integer value returns nothing
+        call SaveInteger(elementTable, GetHandleId(u), elementId, value)
+    endfunction
+
+    function StoreBulwarkBonus takes unit u, integer elementId, integer bonus returns nothing
+        call SaveInteger(bulwarkTable, GetHandleId(u), 0, elementId)
+        call SaveInteger(bulwarkTable, GetHandleId(u), 1, bonus)
+    endfunction
+
+    function GetStoredBulwarkTarget takes unit u returns integer
+        return LoadInteger(bulwarkTable, GetHandleId(u), 0)
+    endfunction
+
+    function GetStoredBulwarkBonus takes unit u returns integer
+        return LoadInteger(bulwarkTable, GetHandleId(u), 1)
+    endfunction
+
     function HandleBulwarkRetaliation takes unit target, unit source returns nothing
         local integer slot = 0
         local item it = null

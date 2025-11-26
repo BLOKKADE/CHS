@@ -1,8 +1,6 @@
 library Purge requires RandomShit, TimerUtils
 
-
-
-    struct SpeedReset
+    /*struct SpeedReset
         unit u
         real originalSpeed
 
@@ -86,6 +84,6 @@ library Purge requires RandomShit, TimerUtils
 
         set g = null
         set u = null
-    endfunction
+    endfunction*/
 
 endlibrary

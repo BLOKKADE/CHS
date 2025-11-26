@@ -9,7 +9,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(LIGHTNING_SHIELD_BUFF_ID, LIGHTNING_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(REJUVENATION_BUFF_ID, REJUVENATION_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1(SPIRIT_LINK_BUFF_ID, SPIRIT_LINK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
-        call SetupBuffInfo1(EXTRADIMENSIONAL_COOPERATION_BUFF_ID, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false)
+        call SetupBuffInfo1(EXTRADIMENSIONAL_COOPERATION_BUFF_ID, EXTRADIMENSIONAL_COOPERATION_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('Bblo', BLOODLUST_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('BBGS', GUARDIAN_SPIRIT_ABILITY_ID, BUFFTYPE_POSITIVE, false)
         call SetupBuffInfo1('BOwk', WIND_WALK_ABILITY_ID, BUFFTYPE_POSITIVE, false)
@@ -18,7 +18,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
         call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
 
-        call SetupBuffInfo2(MANA_STARVATION_BUFF_ID, 'A09R', MANA_STARVATIO_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
+        call SetupBuffInfo2(MANA_STARVATION_BUFF_ID, 'A09R', MANA_STARVATION_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B02H', ANCIENT_BLOOD_BUFF_ABILITY_ID, ANCIENT_BLOOD_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B01F', 'A08D', REACTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2('B01E', 'A08C', DIVINE_BUBBLE_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
@@ -30,7 +30,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         //Chronus
         call SetupBuffInfo1(HERO_BUFF_ID, HERO_BUFF_ABILITY_ID, BUFFTYPE_POSITIVE, true)
 
-        call SetupBuffInfo2('B025', 'A0AF', BLESSED_PROTECTIO_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
+        call SetupBuffInfo2('B025', 'A0AF', BLESSED_PROTECTION_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
         call SetupBuffInfo2(CHEATER_MAGIC_BUFF_ID, 'A08G', CHEATER_MAGIC_ABILITY_ID, BUFFTYPE_POSITIVE, true, true)
 
         //Creepwaves 
@@ -123,7 +123,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(FLAME_STRIKE_BUFF_ID, FLAME_STRIKE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(HOWL_OF_TERROR_BUFF_ID, HOWL_OF_TERROR_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(IMMOBILITY_BUFF_ID, 0, BUFFTYPE_NEGATIVE, false) // wind rune
-        call SetupBuffInfo1(MANA_STARVATION_NERF_BUFF_ID, MANA_STARVATIO_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(MANA_STARVATION_NERF_BUFF_ID, MANA_STARVATION_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(MIDAS_TOUCH_BUFF_ID, MIDAS_TOUCH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(PARASITE_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite damage
         call SetupBuffInfo1(PARASITE_MINION_BUFF_ID, PARASITE_ABILITY_ID, BUFFTYPE_NEGATIVE, false) //parasite minion creation

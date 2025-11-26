@@ -21,7 +21,7 @@ library RoboGoblinSkin initializer init
                 set roboGoblinCounter = roboGoblinCounter + 1
             endif
 
-            if GetUnitAbilityLevel(u, POCKET_FACTORY_ABILITY_ID) > 0 then
+            if GetUnitAbilityLevel(u, SUMMON_POCKET_FACTORY_ABILITY_ID) > 0 then
                 set roboGoblinCounter = roboGoblinCounter + 1
             endif
 

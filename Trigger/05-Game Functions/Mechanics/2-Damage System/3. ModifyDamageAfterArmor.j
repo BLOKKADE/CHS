@@ -497,8 +497,15 @@ scope ModifyDamageAfterArmor initializer init
         //War Golem
         if DamageTargetTypeId == WAR_GOLEM_UNIT_ID then
             set r1 = BlzGetUnitMaxHP(DamageTarget)
-            if r1 > 100000 and Damage.index.amount > r1 * 0.1 then
-                set Damage.index.amount = r1 * 0.1
+            set r2 = 1500 * Pow(r1, 0.28)
+
+            // Clamp minimum cap at 50,000
+            if r2 < 50000 then
+                set r2 = 50000
+            endif
+
+            if Damage.index.amount > r2 then
+                set Damage.index.amount = r2
             endif
         endif
 

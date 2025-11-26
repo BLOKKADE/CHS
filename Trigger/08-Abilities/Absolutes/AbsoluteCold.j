@@ -21,7 +21,7 @@ library AbsoluteCold initializer init requires UnitHelpers, TempAbilSystem, Dumm
                 set lvl = GetUnitAbilityLevel(p, 'A0DS')
                 if lvl < 5 then
                     if lvl == 0 then
-                        call TempAbil.create(p, 'A0DS', 20)
+                        call TempAbil.create(p, 'A0DS', 7)
                     else
                         call SetUnitAbilityLevel(p, 'A0DS', lvl + 1)
                     endif

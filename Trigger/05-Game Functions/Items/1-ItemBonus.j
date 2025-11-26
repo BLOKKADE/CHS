@@ -215,9 +215,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			if ev == EVENT_ITEM_PICKUP then
 				call CreateSpellList(u, TERRESTRIAL_GLAIVE_ABILITY_ID, SpellListFilter.TerrestrialGlaiveFilter)
 			endif
-			call AddUnitCustomState(u, BONUS_MAGICPOW, 30 * uniqueDiff)
-			call AddUnitAbsoluteBonusCount(u,Element_Earth, uniqueDiff)
-			call AddUnitAbsoluteBonusCount(u,Element_Wind, uniqueDiff)
+			call AddUnitCustomState(u, BONUS_BLOCK, 1200 * diff)
+			call AddUnitCustomState(u, BONUS_EVASION, 35 * diff)
 
 			//Gladiator Helmet
 		elseif itemId == 'I07A' then
@@ -400,7 +399,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_RUNEPOW, 100 * uniqueDiff)
 			
 			if itemId == FIRE_RUNESTONE_ITEM_ID then
-				call AddUnitAbsoluteBonusCount(u,Element_Fire, 2 * uniqueDiff)
+				call AddUnitAbsoluteBonusCount(u,Element_Fire, 1 * uniqueDiff)
 			elseif itemId == POISON_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Poison, 2 * uniqueDiff)
 			elseif itemId == ARCANE_RUNESTONE_ITEM_ID then

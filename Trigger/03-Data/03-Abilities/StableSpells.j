@@ -42,7 +42,7 @@ library StableSpells initializer init
         set StableSpells.boolean[TEMPORARY_INVISIBILITY_ABILITY_ID] = true
         set StableSpells.boolean[TEMPORARY_POWER_ABILITY_ID] = true
         set StableSpells.boolean[CHEATER_MAGIC_ABILITY_ID] = true
-        set StableSpells.boolean[BLESSED_PROTECTIO_ABILITY_ID] = true
+        set StableSpells.boolean[BLESSED_PROTECTION_ABILITY_ID] = true
         set StableSpells.boolean[RAPID_RECOVERY_ABILITY_ID] = true
         set StableSpells.boolean[MYSTERIOUS_RUNESTONE_ABIL_ID] = true
         set StableSpells.boolean[DEMONS_CURSE_ABILITY_ID] = true

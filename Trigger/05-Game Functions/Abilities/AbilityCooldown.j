@@ -114,11 +114,6 @@ library AbilityCooldown requires HeroAbilityTable, DummySpell, GetObjectElement,
         if IsObjectElement(id, Element_Cold) and GetUnitAbilityLevel(u, FROST_CIRCLET_ABILITY_ID) > 0 then
             set ResCD = ResCD * 0.75
         endif
-
-        //Fire Runestone
-        if IsObjectElement(id, Element_Fire) and UnitHasItemType(u,'I08P') then
-            set ResCD = ResCD * 0.75
-        endif
         
         //Xesil hero (setting chance)
         if (GetUnitTypeId(u) == TIME_WARRIOR_UNIT_ID) then

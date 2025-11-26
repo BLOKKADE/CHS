@@ -64,17 +64,21 @@ library CreepTypes initializer init requires RandomShit
         set CreepUnitTypeIds[41] = WIND_SERPENT_CREEP_UNIT_ID           //ranged
         set CreepUnitTypeIds[42] = WRAITH_CREEP_UNIT_ID                 //ranged
 
+        //mini bosses
+        set CreepUnitTypeIds[43] = OGRE_LORD_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[44] = HARPY_QUEEN_CREEP_UNIT_ID            //ranged
+        set CreepUnitTypeIds[45] = ARCHMAGE_CREEP_UNIT_ID               //ranged magic
+
+
         //boss creeps:
-        set CreepUnitTypeIds[43] = MAGNATAUR_CREEP_UNIT_ID   
-        set CreepUnitTypeIds[44] = BURNING_ARCHER_CREEP_UNIT_ID         //ranged
+        set CreepUnitTypeIds[46] = MAGNATAUR_CREEP_UNIT_ID   
+        set CreepUnitTypeIds[47] = BURNING_ARCHER_CREEP_UNIT_ID         //ranged
         set CreepUnitTypeIds[45] = HOLY_DEFENDER_CREEP_UNIT_ID   
         set CreepUnitTypeIds[46] = DRAGON_TURTLE_CREEP_UNIT_ID     
         set CreepUnitTypeIds[47] = CHAOS_WARLORD_CREEP_UNIT_ID    
         set CreepUnitTypeIds[48] = THUNDER_LIZARD_CREEP_UNIT_ID         //ranged
         set CreepUnitTypeIds[49] = BLACK_DRAGON_CREEP_UNIT_ID           //ranged 
         set CreepUnitTypeIds[50] = GREEN_DRAGON_CREEP_UNIT_ID           //ranged
-        set CreepUnitTypeIds[51] = OGRE_LORD_CREEP_UNIT_ID     
-        set CreepUnitTypeIds[52] = HARPY_QUEEN_CREEP_UNIT_ID            //ranged
         
         set MaxCreepUnitTypes = 42
     endfunction

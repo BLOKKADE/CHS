@@ -26,7 +26,7 @@ library ManaStarvation requires DummyOrder, T32, UnitHelpers, NewBonus
             if this.tick > 32 then
                 set this.tick = 0
                 if this.damageAmount > 0 then
-                    set udg_NextDamageAbilitySource = MANA_STARVATIO_ABILITY_ID
+                    set udg_NextDamageAbilitySource = MANA_STARVATION_ABILITY_ID
                     call Damage.applyMagic(this.source, this.target, this.damageAmount, false, DAMAGE_TYPE_MAGIC)
                     set this.damageAmount = 0
                 endif

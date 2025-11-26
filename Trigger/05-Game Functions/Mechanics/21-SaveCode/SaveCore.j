@@ -129,7 +129,7 @@ library SaveCore initializer init
         set SaveAbilityType[20] = FLAME_STRIKE_ABILITY_ID
         set SaveAbilityType[21] = BANISH_ABILITY_ID
         set SaveAbilityType[22] = 'AHdr'
-        set SaveAbilityType[23] = PHEONIX_ABILITY_ID
+        set SaveAbilityType[23] = SUMMON_PHOENIX_ABILITY_ID
         set SaveAbilityType[24] = SHOCKWAVE_ABILITY_ID
         set SaveAbilityTypeMax = 199*/
         // Note: Changing max values can cause a code wipe

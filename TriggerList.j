@@ -353,6 +353,7 @@
 //! import "C:\CHS\CHS/Trigger\09-Items\BlokkadesShield.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\BoneArmor.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\BookOfNecromancy.j"
+//! import "C:\CHS\CHS/Trigger\09-Items\CelestialSignet.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\ChestOfGreed.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\ConqBambooStick.j"
 //! import "C:\CHS\CHS/Trigger\09-Items\ContractOfTheLiving.j"

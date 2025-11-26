@@ -222,7 +222,7 @@ library Functions initializer init requires ExtradimensionalCooperation, Sorcere
         call EnumItemsInRectBJ(PlayerArenaRects[pid], function SellItemsOnGround)
 
         //Extra-dimensional Cooperation
-        if GetUnitAbilityLevel(u, EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID) > 0 then
+        if GetUnitAbilityLevel(u, EXTRADIMENSIONAL_COOPERATION_ABILITY_ID) > 0 then
             call ResetExtraDimensional(u)
         endif
 

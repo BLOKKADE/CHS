@@ -16,7 +16,7 @@ scope ModifyDamageBeforeArmor initializer init
         local real aoe = 300.0
 
          //Extradimensional Cooperation
-         if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not IsOnHitDamage()) and DamageSourceAbility != EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
+         if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not IsOnHitDamage()) and DamageSourceAbility != EXTRADIMENSIONAL_COOPERATION_ABILITY_ID then
             call CastExtradimensionalCoop(DamageSource, DamageTarget, Damage.index.damage, Damage.index.isAttack, IsMagicDamage())
         endif
 
@@ -351,6 +351,11 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        //Fire Runestone immolation
+        if DamageSourceAbility == 'A0FW' then
+            set Damage.index.damage = Damage.index.damage * (1 * ((GetUnitElementCount(DamageSource, Element_Fire))))
+        endif
+
         //Blizzard
         if DamageSourceAbility == BLIZZARD_ABILITY_ID then
             call UnitRemoveAbility(DamageTarget, 'BHbz')
@@ -438,15 +443,15 @@ scope ModifyDamageBeforeArmor initializer init
             call DummyTargetCast2 (DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A03J',"frostnova", GetHeroInt(DamageSource, true) + (GetHeroLevel(DamageSource)* 60), GetHeroInt(DamageSource, true) * (1 + (0.01 * GetHeroLevel(DamageSource))), ABILITY_RLF_AREA_OF_EFFECT_DAMAGE,ABILITY_RLF_SPECIFIC_TARGET_DAMAGE_UFN2)
         endif
 
-        //Chaos Axe
-        if Damage.index.isAttack and UnitHasItemType(DamageSource, 'CABB') then
-            if GetRandomReal(1,100)  <= 15 + (8 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
-                if GetUnitState(DamageSource,UNIT_STATE_MANA) >= 750 then
+        // Chaos Axe
+        if Damage.index.isAttack and UnitHasItemType(DamageSource, CHAOS_AXE_ITEM_ID) then
+            if GetRandomReal(1,100) <= (10 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
+                if GetUnitState(DamageSource, UNIT_STATE_MANA) >= 500 + GetUnitState(DamageSource, UNIT_STATE_MANA) * 0.07 then
                     set RandomSpellLoc = GetSpellTargetLoc()
                     call CastRandomSpell(DamageSource, 0, DamageSource, RandomSpellLoc, true, GetRandomInt(1, 30))
                     call RemoveLocation(RandomSpellLoc)
                     set RandomSpellLoc = null
-                    call SetUnitState(DamageSource,UNIT_STATE_MANA,GetUnitState(DamageSource,UNIT_STATE_MANA)- 750 )
+                    call SetUnitState(DamageSource, UNIT_STATE_MANA, RMaxBJ(0.0, GetUnitState(DamageSource, UNIT_STATE_MANA) - (500.0 + GetUnitState(DamageSource, UNIT_STATE_MANA) * 0.07)))
                 endif
             endif
         endif
@@ -480,7 +485,7 @@ scope ModifyDamageBeforeArmor initializer init
                         exitwhen u == null
                         call GroupRemoveUnit(g, u)
 
-                        if u != DamageSource and IsUnitAliveBJ(u) then
+                        if u != DamageSource and IsUnitAliveBJ(u) and IsUnitEnemy(u, GetOwningPlayer(DamageSource)) then
                             // Apply ability damage + stored attack damage as magic
                             call UnitDamageTarget(DamageSource, u, GetSpellValue(60, 30, i1) + r2, true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
                         endif
@@ -722,6 +727,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        //Fan of knives
         if DamageSourceAbility == FAN_OF_KNIVES_ABILITY_ID then
             set Damage.index.damage = FanOfKnivesDamageBonus(DamageSource, DamageTarget, Damage.index.damage, GetUnitAbilityLevel(DamageSource, FAN_OF_KNIVES_ABILITY_ID))
         endif
@@ -959,7 +965,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Demolish creeps
-        set i1 = GetUnitAbilityLevel(DamageSourceHero, DEMOLISH_CREEP_ABILITY_ID)
+        set i1 = GetUnitAbilityLevel(DamageSource, DEMOLISH_CREEP_ABILITY_ID)
         if i1 > 0 and IsPhysDamage() then
             set Damage.index.armorPierced = Damage.index.armorPierced + GetUnitEffectiveArmor(DamageTarget) * (0.05 + (0.005 * i1))
         endif
@@ -970,7 +976,7 @@ scope ModifyDamageBeforeArmor initializer init
             //call BJDebugMsg("ts armor pierce: " + R2S(Damage.index.armorPierced))
         endif
 
-         //Adamantium Armor/hardened skin self-damage negation
+        //Adamantium Armor/hardened skin self-damage negation
         if UnitHasItemType(DamageSource, 'I07M') or GetUnitAbilityLevel(DamageSource, HARDENED_SKIN_ABILITY_ID) > 0 and DamageSource == DamageTarget then
             set Damage.index.damage = 0
         endif
@@ -1040,6 +1046,7 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif 
 
+        //Terrestrial glaive
         if Damage.index.isAttack and GetUnitAbilityLevel(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) != 0 and FilterListNotEmpty(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) and BlzGetUnitAbilityCooldownRemaining(DamageSource, TERRESTRIAL_GLAIVE_ABILITY_ID) == 0 then
             call CastTerrestrialGlaive(DamageSource, DamageTarget)
         endif
@@ -1062,10 +1069,10 @@ scope ModifyDamageBeforeArmor initializer init
         if IsMagicDamage() and GetUnitCustomState(DamageTarget, BONUS_MAGICRES) > 0 then 
 
             //Fatal Flaw
-            set i1 = GetUnitAbilityLevel(DamageSource,FATAL_FLA_ABILITY_ID)
-            if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, FATAL_FLA_ABILITY_ID) == 0 then
+            set i1 = GetUnitAbilityLevel(DamageSource,FATAL_FLAW_ABILITY_ID)
+            if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSource, FATAL_FLAW_ABILITY_ID) == 0 then
                 set DamageTargetMagicRes = DamageTargetMagicRes * (1 - (0.025 * i1))
-                call AbilStartCD(DamageSource, FATAL_FLA_ABILITY_ID, 3)
+                call AbilStartCD(DamageSource, FATAL_FLAW_ABILITY_ID, 3)
             endif
 
             //call BJDebugMsg("magic dmg pre prot: " + R2S(Damage.index.damage))

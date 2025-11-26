@@ -193,7 +193,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(URSA_WARRIOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNFleshGolem.blp" )
-        call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Construct: Receives 50% bonus hit points from its strength stat. When it has more than 100.000 hit points it cannot take more than 10% of its maximum hit points in damage in one hit.")
+        call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Construct: Receives 50% bonus hit points from its strength stat. Damage per hit received is capped - 50k at 50k HP and scales to 333k at 10M HP.")
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Construct: +1% bonus hit points from strength." )
         call InitHeroDesc(WAR_GOLEM_UNIT_ID, HeroPassive_SummonLimit, "24")
 
@@ -258,7 +258,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(OGRE_WARRIOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhostOfKelThuzad.blp" )
-        call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Xesil's Legacy: Active spells still require mana but do not reduce it when cast. 20% chance to reset the cooldown of an ability/item when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|cffc0c0c0Reset chance can not go over 90%.")
+        call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Xesil's Legacy: 20% chance to reset the cooldown of an ability/item when cast. |cffc0c0c0Overrides the item of the same name. Does not reset the cooldown of spells with the|r [|cff96ffffStable|r] |cffc0c0c0tag.|r|n|cffc0c0c0Reset chance can not go over 90%.")
         call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Xesil's Legacy: +0.1% chance. +100 mana, +1 mana regeneration." )
         call InitHeroDesc(TIME_WARRIOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 

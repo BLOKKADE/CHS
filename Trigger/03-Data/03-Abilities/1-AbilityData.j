@@ -305,7 +305,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Wind, 1)
 
         //9 - Feral Spirit 
-        call SaveAbilData(FERAL_SPIRIT_ABILITY_ID, FERAL_SPIRIT_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
+        call SaveAbilData(SUMMON_FERAL_SPIRIT_ABILITY_ID, FERAL_SPIRIT_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -338,7 +338,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityManifoldable()
 
         //16 - Serpent Ward 
-        call SaveAbilData(SERPANT_WARD_ABILITY_ID, SERPANT_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
+        call SaveAbilData(SUMMON_SERPENT_WARD_ABILITY_ID, SERPENT_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -510,7 +510,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Cold, 1)
 
         //51 - Inferno 
-        call SaveAbilData(INFERNO_ABILITY_ID, INFERNO_ITEM_ID, false, 0, 0, false, Order_Point, "dreadlordinferno")
+        call SaveAbilData(SUMMON_INFERNO_ABILITY_ID, INFERNO_ITEM_ID, false, 0, 0, false, Order_Point, "dreadlordinferno")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Dark, 1)
@@ -556,7 +556,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityNotReplaceable()
 
         //60 - Pocket Factory 
-        call SaveAbilData(POCKET_FACTORY_ABILITY_ID, POCKET_FACTORY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "summonfactory")
+        call SaveAbilData(SUMMON_POCKET_FACTORY_ABILITY_ID, POCKET_FACTORY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "summonfactory")
         call SetLastObjectElement(Element_Summon, 1)
 
         //61 - Pulverize 
@@ -569,7 +569,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Poison, 1)
 
         //63 - Carrion Beetles 
-        call SaveAbilData(CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
+        call SaveAbilData(SUMMON_CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -649,7 +649,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Summon, 1)
 
         //79 - Phoenix 
-        call SaveAbilData(PHEONIX_ABILITY_ID, PHOENIX_ITEM_ID, false, 0, 0, false, Order_Instant, "summonphoenix")
+        call SaveAbilData(SUMMON_PHOENIX_ABILITY_ID, PHOENIX_ITEM_ID, false, 0, 0, false, Order_Instant, "summonphoenix")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -793,7 +793,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Dark, 1)
 
         //116 - Blessed Protection
-        call SaveAbilData(BLESSED_PROTECTIO_ABILITY_ID, BLESSED_PROTECTIO_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SaveAbilData(BLESSED_PROTECTION_ABILITY_ID, BLESSED_PROTECTION_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Light, 1)
 
         //117 - Reincarnation 
@@ -1026,11 +1026,11 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(MARTIAL_RETRIBUTION_ABILITY_ID, MARTIAL_RETRIBUTION_ITEM_ID, false, 0, 0, false, Order_None, null)
         //call SetLastObjectElement(Element_Energy, 1)
 
-        //163 - Purge 
+/*        //163 - Purge 
         call SaveAbilData(PURGE_ABILITY_ID, PURGE_ITEM_ID, false, 0, 1, true, Order_Target, "purge")
         //call SetLastObjectElement(Element_Spirit, 1)
         call SetLastObjectElement(Element_Dark, 1)
-        call SetLastAbilityNotReplaceable()
+        call SetLastAbilityNotReplaceable()  */
 
         //164 - Blink Strike 
         //call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
@@ -1038,7 +1038,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //call SetLastObjectElement(Element_Arcane, 1)
 
         //165 - Extradimensional Co-operation
-        call SaveAbilData(EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID, EXTRADIMENSIONAL_CO_OPERATIO_ITEM_ID, false, 0, 0, true, Order_Instant, "absorb")
+        call SaveAbilData(EXTRADIMENSIONAL_COOPERATION_ABILITY_ID, EXTRADIMENSIONAL_COOPERATION_ITEM_ID, false, 0, 0, true, Order_Instant, "absorb")
         call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Time, 1)
         //call SetLastObjectElement(Element_Spirit, 1)
@@ -1096,13 +1096,13 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Poison, 1)
 
         //179 - Mana Starvation
-        call SaveAbilData(MANA_STARVATIO_ABILITY_ID, MANA_STARVATIO_ITEM_ID, false, 0, 0, true, Order_Target, "ancestralspirit")
+        call SaveAbilData(MANA_STARVATION_ABILITY_ID, MANA_STARVATION_ITEM_ID, false, 0, 0, true, Order_Target, "ancestralspirit")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastAbilityNotReplaceable()
 
         //180 - Fatal Flaw
-        call SaveAbilData(FATAL_FLA_ABILITY_ID, FATAL_FLA_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SaveAbilData(FATAL_FLAW_ABILITY_ID, FATAL_FLAW_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
 
         //181 - Retaliation Aura

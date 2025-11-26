@@ -35,7 +35,7 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, An
             call CastContemporaryRunes(hero, lvl)
 
         //Mana Starvation
-        elseif abilId == MANA_STARVATIO_ABILITY_ID then
+        elseif abilId == MANA_STARVATION_ABILITY_ID then
             call CreateTextTagTimerColor("Mana Starvation!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
             call CastManaStarvation(hero, target, lvl)
 
@@ -175,7 +175,7 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, An
             call CastWhirlwind(hero, x, y, lvl)
 
         //Extra dimensional cooperation
-        elseif abilId == EXTRADIMENSIONAL_CO_OPERATIO_ABILITY_ID then
+        elseif abilId == EXTRADIMENSIONAL_COOPERATION_ABILITY_ID then
             call ExtradimensionalCooperation(hero, abilId, lvl)
 
         //Frost Bolt
@@ -186,9 +186,9 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, An
         elseif abilId == SAND_OF_TIME_ABILITY_ID then
             call CastSandOfTime(hero,1.75 + 0.25 * lvl)
 
-        //Purge wait
+      /*  //Purge wait
         elseif abilId == PURGE_ABILITY_ID then
-            call Purge(hero, target, lvl)
+            call Purge(hero, target, lvl)  */
 
         //Eruption
         elseif abilId == ERUPTION_ABILITY_ID then
@@ -446,9 +446,9 @@ library SpellEffects initializer init requires MultiBonusCast, ChaosMagic, Urn, 
                         call ArcaneAbsorptionGauntletsActivate(caster, abilId, target)
                     endif
 
-                    if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID and IsAbilityCasteable(abilId, true) then
-                        call ActivateXesilManaCostNegation(caster, abilId, abilLvl)
-                    endif
+                    //if GetUnitTypeId(caster) == TIME_WARRIOR_UNIT_ID and IsAbilityCasteable(abilId, true) then
+                        //call ActivateXesilManaCostNegation(caster, abilId, abilLvl)
+                    //endif
 
                     call SetCooldown(caster, abilId, false) 
                 endif

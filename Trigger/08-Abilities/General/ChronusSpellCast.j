@@ -57,14 +57,14 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         endif
             
         //Blessed Protection
-        set abilId = GetDummySpell(u, BLESSED_PROTECTIO_ABILITY_ID)
-        set abilLevel = GetUnitAbilityLevel(u, BLESSED_PROTECTIO_ABILITY_ID)    
+        set abilId = GetDummySpell(u, BLESSED_PROTECTION_ABILITY_ID)
+        set abilLevel = GetUnitAbilityLevel(u, BLESSED_PROTECTION_ABILITY_ID)    
         if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
             call BlessedProtectionStruct.create(u, (2.70 + (0.3 * abilLevel)) * chronusBonus)
             if UnitHasItemType(u, 'TSBB') then
-                call AbilStartCD(u, BLESSED_PROTECTIO_ABILITY_ID, 60)
+                call AbilStartCD(u, BLESSED_PROTECTION_ABILITY_ID, 60)
             else
-                call AbilStartCD(u, BLESSED_PROTECTIO_ABILITY_ID, 120)
+                call AbilStartCD(u, BLESSED_PROTECTION_ABILITY_ID, 120)
             endif
         endif
 
