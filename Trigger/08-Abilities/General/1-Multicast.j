@@ -4,7 +4,7 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
     endfunction
 
     function CanMulticast takes unit caster, integer abilId returns boolean
-        return (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or (UnitHasItemType(caster, 'I08X') and IsSpellElement(caster, abilId, Element_Fire)) or GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) > 0) and IsAbilityMulticastable(abilId)
+        return (GetUnitAbilityLevel(caster, MULTICAST_ABILITY_ID) > 0 or GetUnitAbilityLevel(caster, LIFE_DRAIN_ABILITY_ID) > 0 or GetUnitTypeId(caster) == OGRE_MAGE_UNIT_ID or (UnitHasItemType(caster, 'I08X') and IsSpellElement(caster, abilId, Element_Fire)) or GetUnitAbilityLevel(caster, CHEATER_MAGIC_ABILITY_ID) > 0) and IsAbilityMulticastable(abilId)
     endfunction
 
     function MinReal takes real a, real b returns real
@@ -46,9 +46,14 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             return
         endif
 
+        //Life drain
+        if GetUnitAbilityLevel(caster, LIFE_DRAIN_ABILITY_ID) > 0 then
+            set amount = amount + 1
+        endif
+
         // Cheater Magic bonus
         if GetUnitAbilityLevel(caster, CHEATER_MAGIC_BUFF_ID) > 0 then
-            set amount = 1 // First cast is guaranteed
+            set amount = amount + 1 
 
             // Base chance for second cast
             set chance = 60.0

@@ -141,7 +141,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         // Starting items
         call UnitAddItemByIdSwapped(ANKH_ITEM_ID, hero)
         call UnitAddItemByIdSwapped(POTION_OF_GREATER_HEALING_ITEM_ID, hero)
-        call UnitAddItemByIdSwapped('I04R', hero)
+        call UnitAddItemByIdSwapped(GOLDEN_RING_ITEM_ID, hero)
 
         // Move hero and camera to arena
         call PanCameraToTimedLocForPlayer(p, PlayerArenaRectCenters[playerId], 0)

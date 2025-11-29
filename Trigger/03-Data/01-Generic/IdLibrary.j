@@ -504,7 +504,6 @@ library IdLibrary initializer init
         constant integer DEMOLISH_CREEP_ABILITY_ID                      = 'A0FQ'
 
         // Active Spell Dummy Abilities
-
         StaticIdGroup ACTIVE_SPELL_DUMMY_ABILITIES
         constant integer ACTIVE_SPELL_DUMMY_0                           = 'A0BJ'
         constant integer ACTIVE_SPELL_DUMMY_1                           = 'A0BO'
@@ -651,6 +650,7 @@ library IdLibrary initializer init
         constant integer HOLY_ENLIGHTENMENT_ITEM_ID                     = 'I06C'
         constant integer HOLY_LIGHT_ITEM_ID                             = 'I00D'
         constant integer GUARDIAN_SPIRIT_ITEM_ID                        = 'GSPR'
+        constant integer GOLDEN_RING_ITEM_ID                            = 'I04R'
         constant integer HOWL_OF_TERROR_ITEM_ID                         = 'I040'
         constant integer ICE_FORCE_ITEM_ID                              = 'I06L'
         constant integer ICY_BREATH_ITEM_ID                             = 'I05Z'
@@ -836,6 +836,7 @@ library IdLibrary initializer init
         constant integer WILD_RUNESTONE_ITEM_ID                         = 'I0B6'
         constant integer SHINING_RUNESTONE_ITEM_ID                      = 'I08L'
         constant integer MYSTERIOUS_RUNESTONE_ITEM_ID                   = 'I08M'
+        constant integer RAPIER_OF_THE_GODS_ITEM_ID                     = 'I01E'
         constant integer RUNESTONE_OF_CREATION_ITEM_ID                  = 'I08N'
         constant integer FIRE_RUNESTONE_ITEM_ID                         = 'I08P'
         constant integer WATER_RUNESTONE_ITEM_ID                        = 'I08Q'
@@ -1046,6 +1047,7 @@ library IdLibrary initializer init
         constant integer ANCIENT_DAGGER_ABIL_ID                         = 'A097'
         constant integer ANCIENT_STAFF_ABIL_ID                          = 'A094'
         constant integer BULWARK_ABIL_ID                                = 'BBBG'
+        constant integer FIRE_RUNESTONE_IMMOLATION_ABIL_ID              = 'A0FW'
 
         constant integer SENSATUS_SHIELD_OF_HONOR_ABIL_ID               = 'AIdb'
         constant integer THE_DIVINE_SOURCE_ABIL_ID                      = 'A01D'

@@ -194,7 +194,7 @@ library PvpEnd initializer init requires RandomShit, PlayerTracking, CreepDeath,
         
         // Midas Touch
         if deadUnitMidasTouch != 0 then
-            call CreepDeath_BountyText(playerHero, deadUnit, deadUnitMidasTouch.bonus)
+            call CreepDeath_BountyText(playerHero, deadUnit, deadUnitMidasTouch.bonus, 0)
             
             if ChestOfGreedBonus.boolean[GetHandleId(deadUnit)] then
                 set bonus = CgBonus

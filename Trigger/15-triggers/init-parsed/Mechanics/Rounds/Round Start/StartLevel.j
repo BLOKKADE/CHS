@@ -114,13 +114,13 @@ library StartLevel initializer init requires RandomShit, StartFunction, SellItem
         
 
         // BountyDivisionOffset compensates for gold lost from integer division, ensuring full rewards
-        if (ElimModeEnabled == true or GameModeShort == true) then
-            set BaseCreepBounty = (200 * RoundNumber) / RoundCreepNumber
-            set BountyDivisionOffset = (200 * RoundNumber) - (BaseCreepBounty * RoundCreepNumber)
-        else
-            set BaseCreepBounty = (80 * RoundNumber) / RoundCreepNumber
-            set BountyDivisionOffset = (80 * RoundNumber) - (BaseCreepBounty * RoundCreepNumber)
-        endif
+        //if (ElimModeEnabled == true or GameModeShort == true) then
+            //set BaseCreepBounty = (200 * RoundNumber) / RoundCreepNumber
+            //set BountyDivisionOffset = (200 * RoundNumber) - (BaseCreepBounty * RoundCreepNumber)
+        //else
+            //set BaseCreepBounty = (80 * RoundNumber) / RoundCreepNumber
+            //set BountyDivisionOffset = (80 * RoundNumber) - (BaseCreepBounty * RoundCreepNumber)
+        //endif
 
         set validPlayerForce = GetPlayersMatching(Condition(function IsValidPlayer))
 

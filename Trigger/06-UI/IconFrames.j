@@ -186,7 +186,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 				if GetLocalPlayer() == p then
 					call BlzFrameSetText(TooltipTitleFrame, "|cfffce177Next level|r: " + RoundCreepTitle)
 					call BlzFrameSetText(TooltipTextFrame, RoundCreepInfo[pid] + "|n|n|cfffce177Abilities|r: " + RoundAbilities)
-					call BlzFrameSetSize(TooltipFrame, 0.29, 0.16 + tooltipSize)
+					call BlzFrameSetSize(TooltipFrame, 0.29, 0.17 + tooltipSize)
 					call BlzFrameSetVisible(TooltipFrame, true)
 				endif
 

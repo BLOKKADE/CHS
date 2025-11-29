@@ -14,7 +14,7 @@ library EconomyCreepBonus
                 if GameModeShort == true then
                     set Income[i] = RoundNumber * 1000               
                 else
-                    set Income[i] = (RoundNumber - 9) * 70
+                    set Income[i] = (RoundNumber - 9) * 219
                 endif
 
                 //if GameModeShort == true then

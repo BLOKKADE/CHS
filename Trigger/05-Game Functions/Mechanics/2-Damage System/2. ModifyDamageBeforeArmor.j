@@ -351,11 +351,6 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
-        //Fire Runestone immolation
-        if DamageSourceAbility == 'A0FW' then
-            set Damage.index.damage = Damage.index.damage * (1 * ((GetUnitElementCount(DamageSource, Element_Fire))))
-        endif
-
         //Blizzard
         if DamageSourceAbility == BLIZZARD_ABILITY_ID then
             call UnitRemoveAbility(DamageTarget, 'BHbz')
@@ -414,6 +409,11 @@ scope ModifyDamageBeforeArmor initializer init
         //Icy Breath
         if DamageSourceAbility == ICY_BREATH_ABILITY_ID then
             set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Cold) * 0.333))
+        endif
+
+        //Breath of Fire
+        if DamageSourceAbility == BREATH_OF_FIRE_ABILITY_ID then
+            set Damage.index.damage = Damage.index.damage * (GetUnitElementCount(DamageSource, Element_Fire))
         endif
 
         //Frost Nova

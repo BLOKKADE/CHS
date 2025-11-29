@@ -1,17 +1,22 @@
 library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMasterBonus
 
-    public function BountyText takes unit source, unit u, integer goldBounty returns nothing
+    public function BountyText takes unit source, unit u, integer goldBounty, integer expBounty returns nothing
         local texttag floatingtext
+        local string displayText
+
         if GetLocalPlayer() == GetOwningPlayer(source) and IsUnitVisible(u, GetLocalPlayer()) then
+            set displayText = "|cFFFFDC00+" + I2S(R2I(goldBounty)) + " gold|r   |cFF64C8FF+" + I2S(R2I(expBounty)) + " xp|r"
+
             set floatingtext = CreateTextTag()
-            call SetTextTagText(floatingtext,"+"+I2S(R2I(goldBounty)), 0.023)
-            call SetTextTagPos(floatingtext,GetUnitX(u)-21.0,GetUnitY(u),0.0)
-            call SetTextTagColor(floatingtext,255,220,0,255)
-            call SetTextTagVelocity(floatingtext,0.0,0.04)
-            call SetTextTagFadepoint(floatingtext,1)
-            call SetTextTagLifespan(floatingtext,2)
-            call SetTextTagPermanent(floatingtext,false)
+            call SetTextTagText(floatingtext, displayText, 0.020) 
+            call SetTextTagPos(floatingtext, GetUnitX(u), GetUnitY(u), 0.0) 
+            call SetTextTagColor(floatingtext, 255, 255, 255, 255) 
+            call SetTextTagVelocity(floatingtext, 0.0, 0.04)
+            call SetTextTagFadepoint(floatingtext, 1)
+            call SetTextTagLifespan(floatingtext, 2)
+            call SetTextTagPermanent(floatingtext, false)
         endif
+
         set floatingtext = null
     endfunction
 
@@ -32,18 +37,20 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         local integer itemCount = 0
         local group playerArenaCreeps
 
-        //Creep upgrade xp bonus
-        set expBounty = expBounty + BonusNeutral + BonusNeutralPlayer[pid] 
-
+        //Creep base xp
+        if GameModeShort == false then
+            set expBounty = R2I(10.0 * Pow(I2R(RoundNumber), 1.35))
+        else
+            set expBounty = RoundNumber * 42
+        endif
+        
+        //Creep base gold
+        set goldBounty = RoundNumber * 11
+        
         //Midas Touch
         if GetMidasTouch(GetHandleId(dyingUnit)) != 0 then
             set goldBounty = goldBounty + GetMidasTouch(GetHandleId(dyingUnit)).bonus
             set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
-        endif
-
-        if (RoundNumber > 5 or GameModeShort == true) then
-            set goldBounty = goldBounty + (IMinBJ(IMaxBJ(RoundNumber - 5, 0), 10) * 19)
-            set expBounty  = expBounty  + (IMinBJ(IMaxBJ(RoundNumber - 5, 0), 10) * 45)
         endif
         
         //Pillage
@@ -65,7 +72,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         endif
         
         //Golden Ring
-        set itemCount = GetUnitItemTypeCount(killingHero, 'I04R')
+        set itemCount = GetUnitItemTypeCount(killingHero, GOLDEN_RING_ITEM_ID)
         if GameModeShort == false and itemCount > 0 then
             set goldBounty = goldBounty + ((10 * ArenaMasterMultiplier(killingHero)) * itemCount)
             set goldBounty = goldBounty + (itemCount * (RoundNumber) * ArenaMasterMultiplier(killingHero))
@@ -130,11 +137,11 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         //Creep bounty
         set playerArenaCreeps = GetUnitsInRectMatching(PlayerArenaRects[pid], Condition(function IsAliveCreepUnitFilter))
 
-        if (CountUnitsInGroup(playerArenaCreeps) == 0) then
-            set goldBounty = goldBounty + BaseCreepBounty + BountyDivisionOffset
-        else
-            set goldBounty = goldBounty + BaseCreepBounty
-        endif
+        //if (CountUnitsInGroup(playerArenaCreeps) == 0) then
+           // set goldBounty = goldBounty + BaseCreepBounty + BountyDivisionOffset
+        //else
+            //set goldBounty = goldBounty + BaseCreepBounty
+        //endif
 
         //call BJDebugMsg("cd xp bonus pre: " + I2S(expBounty))
         set expBounty = R2I(expBounty * (1 + (GetMagicNecklaceBonus(killingHero, dyingUnit) + GetLearnabilityBonus(killingHero))))
@@ -144,31 +151,16 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
             set goldBounty = R2I(goldBounty * CgBonus)
         endif
 
-        // Gradual bonus for low creep count (added to existing bounty)
-        if RoundCreepNumber == 2 then
-            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 2.5)
-            set expBounty = expBounty + R2I(I2R(expBounty) * 2.5)
-        elseif RoundCreepNumber == 3 then
-            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 2.3)
-            set expBounty = expBounty + R2I(I2R(expBounty) * 2.3)
-        elseif RoundCreepNumber == 4 then
-            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 2.1)
-            set expBounty = expBounty + R2I(I2R(expBounty) * 2.1)
-        elseif RoundCreepNumber == 5 then
-            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.9)
-            set expBounty = expBounty + R2I(I2R(expBounty) * 1.9)
-        elseif RoundCreepNumber == 6 then
-            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.8)
-            set expBounty = expBounty + R2I(I2R(expBounty) * 1.8)
-        elseif RoundCreepNumber == 7 then
-            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.7)
-            set expBounty = expBounty + R2I(I2R(expBounty) * 1.7)
-        elseif RoundCreepNumber == 8 then
-            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.6)
-            set expBounty = expBounty + R2I(I2R(expBounty) * 1.6)
-        elseif RoundCreepNumber == 9 then
-            set goldBounty = goldBounty + R2I(I2R(goldBounty) * 1.5)
-            set expBounty = expBounty + R2I(I2R(expBounty) * 1.5)
+        // Creep bounty so total wave reward equals 25 creeps 
+        if RoundCreepNumber > 0 then
+            set goldBounty = R2I(I2R(goldBounty) * (25.0 / I2R(RoundCreepNumber)))
+            set expBounty  = R2I(I2R(expBounty)  * (25.0 / I2R(RoundCreepNumber)))
+        endif
+
+        //Short mode bounty after round 5 to match 50 round mode output
+        if GameModeShort == true and RoundNumber >= 5 then
+            set goldBounty = R2I(I2R(goldBounty) * 1.7)
+            set expBounty = expBounty * 4
         endif
 
         // Bonus gold and experience for boss rounds
@@ -176,14 +168,8 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
             set goldBounty = R2I(goldBounty * 3)
             set expBounty = R2I(expBounty * 3)
         endif
-
-        //Gold bounty after round 5
-        if GameModeShort == true and RoundNumber >= 5 then
-            //set goldBounty = goldBounty * 3
-            set expBounty = expBounty * 4
-        endif
         
-        call BountyText(killingHero, dyingUnit, goldBounty)
+        call BountyText(killingHero, dyingUnit, goldBounty, expBounty)
         call SetPlayerState(owner, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(owner, PLAYER_STATE_RESOURCE_GOLD) + goldBounty)
         call AddHeroXP(killingHero, expBounty, true)
         call ResourseRefresh(owner)
@@ -200,7 +186,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         local real bonus = 1
 
         set GetMidasTouch(GetHandleId(dyingUnit)).stop = true
-        call CreepDeath_BountyText(killingHero, dyingUnit, GetMidasTouch(GetHandleId(dyingUnit)).bonus)
+        call CreepDeath_BountyText(killingHero, dyingUnit, GetMidasTouch(GetHandleId(dyingUnit)).bonus, 0)
         
         if ChestOfGreedBonus.boolean[GetHandleId(dyingUnit)] and UnitHasItemType(killingHero, 'I05A') then
             set bonus = CgBonus

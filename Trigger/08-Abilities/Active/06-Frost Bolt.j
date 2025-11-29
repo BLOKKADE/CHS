@@ -10,9 +10,7 @@ library FrostBolt requires RandomShit
         local timer t = GetExpiredTimer()
         local unit u1 = LoadUnitHandle(HT,GetHandleId(t),3)
         local unit u2 = LoadUnitHandle(HT,GetHandleId(t),4)    
-        local integer count = LoadInteger(HT,GetHandleId(t),1)
-        
-        
+        local integer count = LoadInteger(HT,GetHandleId(t),1)  
         
         if count == 0 then
             call FlushChildHashtable(HT,GetHandleId(t))
@@ -22,10 +20,6 @@ library FrostBolt requires RandomShit
             call DummyTargetCast1Timer51(u1,u2,LoadReal(HT,GetHandleId(t),2))   
             call SaveInteger(HT,GetHandleId(t),1,count)
         endif
-
-
-        
-        
 
         set t = null
         set u1 = null
