@@ -104,7 +104,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1('B006', DRAIN_AURA_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
 
         //Regular Abilities
-        call SetupBuffInfo1('Bcrs', CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
+        call SetupBuffInfo1(CURSE_BUFF_ID, CURSE_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(ACID_BOMB_BUFF_ID, ACID_BOMB_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(BANISH_BUFF_ID, BANISH_ABILITY_ID, BUFFTYPE_NEGATIVE, false)
         call SetupBuffInfo1(BLIZZARD_BUFF_ID, BLIZZARD_ABILITY_ID, BUFFTYPE_NEGATIVE, false)

@@ -692,6 +692,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.8.1", false) // 43 - creep wave fixes
         call AddGameVersion("CHS v2.8.2", false) // 44 - creeps, celestial signet item, hero fixes etc
         call AddGameVersion("CHS v2.8.3", false) // 45 - creepwave power fixes, rescaled creepwaves xp/gold to always be same, pve arena size increase etc.
+        call AddGameVersion("CHS v2.8.4", false) // 46 - gold/xp to nextround, balances, moonsteel dagger, etc
     endfunction
 
     private function init takes nothing returns nothing

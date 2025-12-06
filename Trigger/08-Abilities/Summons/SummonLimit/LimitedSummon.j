@@ -22,7 +22,7 @@ library LimitedSummon
       //function LimitedSummonGetOldest takes unit summoner, integer limitGroup returns unit
           //Returns the oldest living unit beeing summoned by summoner using limitGroup
    //=======
-   globals
+globals
       private integer countReuse = 0
       private integer countData = 0
       private integer array reuse
@@ -32,9 +32,9 @@ library LimitedSummon
       private integer array noteNext
       private integer array notePrev
     
-      public string desummonArt = "Abilities\\Spells\\NightElf\\ForceOfNature\\EntanglementBirthTarget.mdl" //Displayed below Units beeing Desummoned cause of Limit Exceeded.
+      public string desummonArt = "Abilities\\Spells\\NightElf\\ForceOfNature\\EntanglementBirthTarget.mdl" //Displayed below Units being Desummoned cause of Limit Exceeded.
       public boolean displayDesummonArt = true
-      public group desummoned = CreateGroup() //Contains units beeing desummoned
+      public group desummoned = CreateGroup() //Contains units being desummoned
    
    endglobals
    
@@ -46,7 +46,7 @@ library LimitedSummon
       set dataSummon[index] = null
       set dataSummoner[index] = null
    
-      //make index reuseable
+      //make index reusable
       set reuse[countReuse] = index
       set countReuse = countReuse + 1
    endfunction
@@ -104,14 +104,18 @@ library LimitedSummon
           if not IsUnitType(dataSummon[indexLoop], UNIT_TYPE_DEAD) and GetUnitTypeId(dataSummon[indexLoop]) != 0 then
               if dataGroup[indexLoop] == limitGroup and dataSummoner[indexLoop] == summoner then
                   set countOld = countOld + 1
-                  if countOld > summonlimit then //limit was excedd?
+                  if countOld > summonlimit then //limit was exceeded?
                       set desummonedSomthing = true
                       if displayDesummonArt then
                           call DestroyEffect(AddSpecialEffect(desummonArt, GetUnitX(dataSummon[indexLoop]), GetUnitY(dataSummon[indexLoop])))
                       endif
                       call GroupAddUnit(desummoned, dataSummon[indexLoop])
+                      
+                      // --- TWEAK: reassign to Neutral Passive before killing/removing ---
+                      call SetUnitOwner(dataSummon[indexLoop], Player(PLAYER_NEUTRAL_PASSIVE), false)
                       call KillUnit(dataSummon[indexLoop])
-                  
+                      // alternatively: call RemoveUnit(dataSummon[indexLoop]) for silent removal
+                      
                       call Remove(indexLoop)
                       set indexLoop = noteNext[indexLoop]
                   endif
@@ -125,7 +129,6 @@ library LimitedSummon
    endfunction
    
    function LimitedSummonEx takes integer limitGroup, integer summonlimit returns boolean
-      return LimitedSummon(GetSummoningUnit(), GetSummonedUnit(), limitGroup, limit)
+      return LimitedSummon(GetSummoningUnit(), GetSummonedUnit(), limitGroup, summonlimit)
    endfunction
-   
-   endlibrary
+endlibrary

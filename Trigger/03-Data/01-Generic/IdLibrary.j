@@ -502,6 +502,7 @@ library IdLibrary initializer init
         constant integer POLYMORPH_CREEP_ABILITY_ID                     = 'A0F6'
         constant integer CHAINLIGHTNING_CREEP_ABILITY_ID                = 'A0FA'
         constant integer DEMOLISH_CREEP_ABILITY_ID                      = 'A0FQ'
+        constant integer DEVOTIONAURA_CREEP_ABILITY_ID                  = 'A0FZ'
 
         // Active Spell Dummy Abilities
         StaticIdGroup ACTIVE_SPELL_DUMMY_ABILITIES
@@ -798,6 +799,7 @@ library IdLibrary initializer init
         constant integer GLORY_PVP_BONUS_TOME_ITEM_ID                   = 'I06S'
         constant integer GLORY_STRENGTH_TOME_ITEM_ID                    = 'I09W'
         constant integer HEALING_WARD_ITEM_ID                           = 'I033'
+        constant integer HEAVY_MACE_ITEM_ID                             = 'I07I'
         constant integer INCOME_DEFAULT_TOME_ITEM_ID                    = 'I074'
         constant integer INCOME_INDIVIDUAL_TOME_ITEM_ID                 = 'I09O'
         constant integer ANTAGONIZE_CREEPS_ITEM_ID                      = 'I0D5'
@@ -863,7 +865,7 @@ library IdLibrary initializer init
         constant integer CHAOS_AXE_ITEM_ID                              = 'CABB'
         constant integer CELESTIAL_SIGNET_ITEM_ID                       = 'CSBB'
 
-
+        // Tomes
         constant integer TOME_OF_AGILITY_5_ITEM_ID                      = 'tdx2'
         constant integer TOME_OF_AGILITY_10_ITEM_ID                     = 'I03H'
         constant integer TOME_OF_AGILITY_ITEM_ID                        = 'tdex'
@@ -904,6 +906,7 @@ library IdLibrary initializer init
         constant integer COLD_ARROWS_STACKING_BUFF_ID                   = 'B02A'
         constant integer CORROSIZE_BREATH_BUFF_ID                       = 'Bcor'
         constant integer CRIPPLE_BUFF_ID                                = 'Bcri'
+        constant integer CURSE_BUFF_ID                                  = 'Bcrs'
         constant integer DEATH_AND_DECAY_BUFF_ID                        = 'BUdd'
         constant integer DISEASE_BUFF_ID                                = 'Bapl'
         constant integer DISEASE_CLOUD_BUFF_ID                          = 'Bplg'
@@ -1065,6 +1068,7 @@ library IdLibrary initializer init
         constant integer SHADOW_BOOTS_SLOW_RESIST_ABIL_ID               = 'BB03'
         constant integer DRIED_MUSHROOM_ABILITY_ID                      = 'A0DV'
         constant integer TIME_STONE_ITEM_ID                             = 'TSBB'
+        constant integer MOONSTEEL_DAGGER_ITEM_ID                       = 'BBDD'
 
         // --- Buff IDs ---
 

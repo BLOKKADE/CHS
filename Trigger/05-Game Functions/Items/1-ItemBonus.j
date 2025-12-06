@@ -444,7 +444,12 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Mithril Helmet
 		elseif itemId == 'I091' then
 			call AddUnitCustomState(u, BONUS_MAGICRES, 50 * uniqueDiff)
-		
+
+		// Moonsteel Dagger
+		elseif itemId == MOONSTEEL_DAGGER_ITEM_ID then
+			call AddUnitBonus(u, BONUS_MANA, 2500 * diff)
+			call SetHeroStat(u, GetHeroPrimaryStat(u), GetHeroStatBJ(GetHeroPrimaryStat(u), u, false) + 75 * diff)
+			
 			//anti-magic Cape
 		elseif itemId == 'I092' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW,0 - 25 * uniqueDiff)
@@ -481,7 +486,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitBonus(u, BONUS_STRENGTH, 1750 * uniqueDiff)
 
 		//Heavy Mace
-		elseif itemId == 'I07I' then
+		elseif itemId == HEAVY_MACE_ITEM_ID then
 			call AddUnitBonus(u, BONUS_DAMAGE, 350 * diff)
 
 		//Speed Blade

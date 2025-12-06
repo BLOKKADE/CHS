@@ -39,13 +39,20 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
 
         //Creep base xp
         if GameModeShort == false then
-            set expBounty = R2I(10.0 * Pow(I2R(RoundNumber), 1.35))
+            set expBounty = R2I(10.0 * Pow(I2R(RoundNumber), 1.35) * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0))
         else
             set expBounty = RoundNumber * 42
         endif
         
         //Creep base gold
-        set goldBounty = RoundNumber * 11
+        //set goldBounty = RoundNumber * 11
+        if GameModeShort == false then
+        // Multiplier goes from 0.6 at Round 1 to 1.4 at Round 50
+            set goldBounty = R2I(RoundNumber * 11 * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0))
+        else
+        // Multiplier goes from 0.6 at Round 1 to 1.4 at Round 25, normalized to keep total equal
+            set goldBounty = R2I(RoundNumber * 11 * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 24.0)) * (2145.0 / 2431.0))
+        endif    
         
         //Midas Touch
         if GetMidasTouch(GetHandleId(dyingUnit)) != 0 then
@@ -74,10 +81,10 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         //Golden Ring
         set itemCount = GetUnitItemTypeCount(killingHero, GOLDEN_RING_ITEM_ID)
         if GameModeShort == false and itemCount > 0 then
-            set goldBounty = goldBounty + ((10 * ArenaMasterMultiplier(killingHero)) * itemCount)
+            set goldBounty = goldBounty + ((5 * ArenaMasterMultiplier(killingHero)) * itemCount)
             set goldBounty = goldBounty + (itemCount * (RoundNumber) * ArenaMasterMultiplier(killingHero))
         else
-            set goldBounty = goldBounty + ((20 * ArenaMasterMultiplier(killingHero)) * itemCount)
+            set goldBounty = goldBounty + ((10 * ArenaMasterMultiplier(killingHero)) * itemCount)
             set goldBounty = goldBounty + (itemCount * (RoundNumber) * ArenaMasterMultiplier(killingHero) * 2)
         endif
 
@@ -121,9 +128,9 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         set itemCount = GetUnitItemTypeCount(killingHero, URN_ITEM_ID)
         if itemCount > 0 then
             if pillageBonus == 0 then
-                set expBounty = expBounty + ((2 * GetHeroLevel(killingHero)) * itemCount)
-            else
                 set expBounty = expBounty + ((GetHeroLevel(killingHero)) * itemCount)
+            else
+                set expBounty = expBounty + R2I((0.5 * GetHeroLevel(killingHero)) * itemCount)
             endif
         endif
 

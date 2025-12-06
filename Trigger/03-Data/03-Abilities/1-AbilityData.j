@@ -38,6 +38,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         integer Target_Enemy = 0
         integer Target_Ally = 1
         integer Target_Any = 2
+        hashtable BonusTable = InitHashtable()
     endglobals
 
     //Gets the total amount of abilities in the map

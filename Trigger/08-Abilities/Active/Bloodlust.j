@@ -40,7 +40,7 @@ library Bloodlust requires RuneInit, AbilityCooldown, DummyOrder, GetRandomUnit,
     function CastBloodlustOnSpellCast takes unit caster, integer lvl returns nothing
         set bloodlustCaster = caster
         set bloodlustLevel = lvl
-        call TimerStart(CreateTimer(), 0.50, false, function BloodlustDelayedCast)
+        call TimerStart(CreateTimer(), 1.00, false, function BloodlustDelayedCast)
     endfunction
 
 endlibrary

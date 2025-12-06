@@ -958,7 +958,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Demolish
-        set i1 = GetUnitAbilityLevel(DamageSourceHero, DEMOLISH_ABILITY_ID)
+        set i1 = GetUnitAbilityLevel(DamageSource, DEMOLISH_ABILITY_ID)
         if i1 > 0 and IsPhysDamage() then
             set Damage.index.armorPierced = Damage.index.armorPierced + GetUnitEffectiveArmor(DamageTarget) * (0.05 + (0.005 * i1))
             //call BJDebugMsg("d armor pierce: " + R2S(Damage.index.armorPierced))

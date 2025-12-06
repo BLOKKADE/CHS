@@ -239,7 +239,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
         
         //Heavy Mace
-        set i = GetUnitItemTypeCount(DamageSource, 'I07I')
+        set i = GetUnitItemTypeCount(DamageSource, HEAVY_MACE_ITEM_ID)
         if i > 0 then
             set r1 = (GetWidgetLife(DamageTarget) / 100) * 1.5 * I2R(i)
             // Check for B00N ability on DamageTarget

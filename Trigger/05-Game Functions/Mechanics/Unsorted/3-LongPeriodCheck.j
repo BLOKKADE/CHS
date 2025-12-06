@@ -425,11 +425,14 @@ scope LongPeriodCheck initializer init
                 call SaveInteger(HT, hid, BRILLIANCE_AURA_ABILITY_ID, i1)
             endif
 
-            //Devotion Aura
+            // Devotion Aura
             set i1 = GetUnitAbilityLevel(u, DEVOTION_AURA_ABILITY_ID)
             set i2 = LoadInteger(HT, hid, DEVOTION_AURA_ABILITY_ID)
-            if i1 > 0 and i2 != i1 then
+
+            if i1 != i2 then
+                // Adjust by the difference (can be positive or negative)
                 call AddUnitCustomState(u, BONUS_MAGICRES, (i1 - i2))
+                // Save the new level
                 call SaveInteger(HT, hid, DEVOTION_AURA_ABILITY_ID, i1)
             endif
 

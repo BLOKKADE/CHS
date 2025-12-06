@@ -37,7 +37,7 @@ library InnerFire requires RuneInit, AbilityCooldown, DummyOrder, GetRandomUnit,
         local timer t = CreateTimer()
         call SaveUnitHandle(udg_Hashtable, GetHandleId(t), 0, caster)
         call SaveInteger(udg_Hashtable, GetHandleId(t), 1, lvl)
-        call TimerStart(t, 0.50, false, function CastInnerFireDelayed)
+        call TimerStart(t, 1.00, false, function CastInnerFireDelayed)
     endfunction
 
 endlibrary
