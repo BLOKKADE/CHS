@@ -39,7 +39,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
 
         //Creep base xp
         if GameModeShort == false then
-            set expBounty = R2I(10.0 * Pow(I2R(RoundNumber), 1.35) * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0))
+            set expBounty = R2I(10.0 * Pow(I2R(RoundNumber), 1.35) * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0) * 1.3)
         else
             set expBounty = RoundNumber * 42
         endif

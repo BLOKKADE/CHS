@@ -66,6 +66,11 @@ scope ModifyDamageAfterArmor initializer init
             set Damage.index.amount = Damage.index.amount * 0.5
         endif
 
+        //Moonsteel Dagger
+        if UnitHasItemType(DamageTarget, MOONSTEEL_DAGGER_ITEM_ID) and IsUnitType(GetEventDamageSource(), UNIT_TYPE_HERO) then
+            set Damage.index.amount = Damage.index.amount * 1.5
+        endif
+
         //Medal of Honor
         if UnitHasItemType(DamageTargetHero, 'I04U') or UnitHasItemType(DamageSourceHero, 'I04U') then
             set Damage.index.amount = Damage.index.amount * 0.67

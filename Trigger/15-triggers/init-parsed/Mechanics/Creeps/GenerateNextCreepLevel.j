@@ -2400,57 +2400,57 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         //Ranged physical attack abilities
         if (GameModeShort == true and RoundNumber >= 15) or (GameModeShort == false and RoundNumber >= 34) then
             if IsRangedCreep(RoundCreepTypeId) then
-                set RoundCreepChanceMultishot           = GetRandomInt(1, 80)
+                set RoundCreepChanceMultishot           = GetRandomInt(1, 160)
             endif
         endif
 
         //Caster abilities - late game
         if (GameModeShort == true and RoundNumber >= 15) or (GameModeShort == false and RoundNumber >= 34) then
             if IsSpellcasterCreep(RoundCreepTypeId) then
-                set RoundCreepChanceFrostNova           = GetRandomInt(1, 15) 
+                set RoundCreepChanceFrostNova           = GetRandomInt(1, 30) 
             endif
         endif
 
         //Caster abilities - early game
         if (GameModeShort == true and RoundNumber >= 8 and RoundNumber <= 15) or (GameModeShort == false and RoundNumber >= 15 and RoundNumber <= 37) then
             if IsSpellcasterCreep(RoundCreepTypeId) then
-                set RoundCreepChanceDousingHex          = GetRandomInt(1, 25) 
-                set RoundCreepChanceShadowStrike        = GetRandomInt(1, 15) 
-                set RoundCreepChanceFingerOfDeath       = GetRandomInt(1, 10000) 
-                set RoundCreepChanceChainLightning      = GetRandomInt(1, 80) 
-                set RoundCreepChanceCurse               = GetRandomInt(1, 80)      
-                set RoundCreepChanceDeathCoil           = GetRandomInt(1, 35) 
-                set RoundCreepChanceFingerOfPain        = GetRandomInt(1, 80) 
-                set RoundCreepChanceCripple             = GetRandomInt(1, 35) 
-                set RoundCreepChanceSilence             = GetRandomInt(1, 35) 
-                set RoundCreepChanceHowlOfTerror        = GetRandomInt(1, 35) 
-                set RoundCreepChanceForkedLightning     = GetRandomInt(1, 80) 
-                set RoundCreepChanceIcyBreath           = GetRandomInt(1, 35) 
-                set RoundCreepChanceSoulBurn            = GetRandomInt(1, 35) 
-                set RoundCreepChanceBlizzard            = GetRandomInt(1, 20) 
-                set RoundCreepChanceRainOfFire          = GetRandomInt(1, 30) 
-                set RoundCreepChanceWhirlWind           = GetRandomInt(1, 50)
+                set RoundCreepChanceDousingHex          = GetRandomInt(1, 50) 
+                set RoundCreepChanceShadowStrike        = GetRandomInt(1, 30) 
+                set RoundCreepChanceFingerOfDeath       = GetRandomInt(1, 20000) 
+                set RoundCreepChanceChainLightning      = GetRandomInt(1, 160) 
+                set RoundCreepChanceCurse               = GetRandomInt(1, 160)      
+                set RoundCreepChanceDeathCoil           = GetRandomInt(1, 70) 
+                set RoundCreepChanceFingerOfPain        = GetRandomInt(1, 160) 
+                set RoundCreepChanceCripple             = GetRandomInt(1, 70) 
+                set RoundCreepChanceSilence             = GetRandomInt(1, 70) 
+                set RoundCreepChanceHowlOfTerror        = GetRandomInt(1, 70) 
+                set RoundCreepChanceForkedLightning     = GetRandomInt(1, 160) 
+                set RoundCreepChanceIcyBreath           = GetRandomInt(1, 70) 
+                set RoundCreepChanceSoulBurn            = GetRandomInt(1, 70) 
+                set RoundCreepChanceBlizzard            = GetRandomInt(1, 40) 
+                set RoundCreepChanceRainOfFire          = GetRandomInt(1, 60) 
+                set RoundCreepChanceWhirlWind           = GetRandomInt(1, 100)
             endif
         endif
 
         //Caster abilities for everyone - late game
         if (GameModeShort == true and RoundNumber >15) or (GameModeShort == false and RoundNumber >37) then
-                set RoundCreepChanceDousingHex          = GetRandomInt(1, 25) 
-                set RoundCreepChanceShadowStrike        = GetRandomInt(1, 15) 
-                set RoundCreepChanceFingerOfDeath       = GetRandomInt(1, 10000) 
-                set RoundCreepChanceChainLightning      = GetRandomInt(1, 80) 
-                set RoundCreepChanceCurse               = GetRandomInt(1, 80)      
-                set RoundCreepChanceDeathCoil           = GetRandomInt(1, 35) 
-                set RoundCreepChanceFingerOfPain        = GetRandomInt(1, 80) 
-                set RoundCreepChanceCripple             = GetRandomInt(1, 35) 
-                set RoundCreepChanceSilence             = GetRandomInt(1, 35) 
-                set RoundCreepChanceHowlOfTerror        = GetRandomInt(1, 35) 
-                set RoundCreepChanceForkedLightning     = GetRandomInt(1, 80) 
-                set RoundCreepChanceIcyBreath           = GetRandomInt(1, 35) 
-                set RoundCreepChanceSoulBurn            = GetRandomInt(1, 35) 
-                set RoundCreepChanceBlizzard            = GetRandomInt(1, 20) 
-                set RoundCreepChanceRainOfFire          = GetRandomInt(1, 30) 
-                set RoundCreepChanceAcidSpray           = GetRandomInt(1, 2000) 
+                set RoundCreepChanceDousingHex          = GetRandomInt(1, 50) 
+                set RoundCreepChanceShadowStrike        = GetRandomInt(1, 30) 
+                set RoundCreepChanceFingerOfDeath       = GetRandomInt(1, 20000) 
+                set RoundCreepChanceChainLightning      = GetRandomInt(1, 160) 
+                set RoundCreepChanceCurse               = GetRandomInt(1, 160)      
+                set RoundCreepChanceDeathCoil           = GetRandomInt(1, 70) 
+                set RoundCreepChanceFingerOfPain        = GetRandomInt(1, 160) 
+                set RoundCreepChanceCripple             = GetRandomInt(1, 70) 
+                set RoundCreepChanceSilence             = GetRandomInt(1, 70) 
+                set RoundCreepChanceHowlOfTerror        = GetRandomInt(1, 70) 
+                set RoundCreepChanceForkedLightning     = GetRandomInt(1, 160) 
+                set RoundCreepChanceIcyBreath           = GetRandomInt(1, 70) 
+                set RoundCreepChanceSoulBurn            = GetRandomInt(1, 70) 
+                set RoundCreepChanceBlizzard            = GetRandomInt(1, 40) 
+                set RoundCreepChanceRainOfFire          = GetRandomInt(1, 40) 
+                set RoundCreepChanceAcidSpray           = GetRandomInt(1, 4000) 
         endif
 
         //Physical attacker abilities very early game
@@ -2458,97 +2458,97 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             if (GameModeShort == true and RoundNumber >= 5) or (GameModeShort == false and RoundNumber >= 10) then
                 set RoundCreepChanceDrunkMaster         = GetRandomInt(1, oldAbilChance) 
                 set RoundCreepChancePulverize           = GetRandomInt(1, newAbilChance) 
-                set RoundCreepChanceHeavyBlow           = GetRandomInt(1, 45) 
+                set RoundCreepChanceHeavyBlow           = GetRandomInt(1, 90) 
             endif
         endif
 
         //Physical attacker abilities early game
         if IsRangedCreep(RoundCreepTypeId) or IsMeleeCreep(RoundCreepTypeId) then
             if (GameModeShort == true and RoundNumber >= 8) or (GameModeShort == false and RoundNumber >= 15) then
-                set RoundCreepChanceArcaneAssault       = GetRandomInt(1, 120) 
-                set RoundCreepChanceBackStab            = GetRandomInt(1, 15) 
-                set RoundCreepChanceBloodlust           = GetRandomInt(1, 15) 
-                set RoundCreepChanceBlinkStrike         = GetRandomInt(1, 35) 
+                set RoundCreepChanceArcaneAssault       = GetRandomInt(1, 240) 
+                set RoundCreepChanceBackStab            = GetRandomInt(1, 30) 
+                set RoundCreepChanceBloodlust           = GetRandomInt(1, 30) 
+                set RoundCreepChanceBlinkStrike         = GetRandomInt(1, 70) 
                 set RoundCreepChanceDevastatingBlow     = GetRandomInt(1, 10000) 
-                set RoundCreepChanceColdWind            = GetRandomInt(1, 25) 
-                set RoundCreepChanceFrenzy              = GetRandomInt(1, 15) 
-                set RoundCreepChanceUnholyFrenzy        = GetRandomInt(1, 25) 
-                set RoundCreepChanceDemolish            = GetRandomInt(1, 25) 
-                set RoundCreepChanceIncinerate          = GetRandomInt(1, 20) 
-                set RoundCreepChanceCruelty             = GetRandomInt(1, 20) 
-                set RoundCreepChanceCutting             = GetRandomInt(1, 15) 
-                set RoundCreepChanceEnvenomedWeapons    = GetRandomInt(1, 65) 
-                set RoundCreepChanceSlowPoison          = GetRandomInt(1, 100) 
+                set RoundCreepChanceColdWind            = GetRandomInt(1, 50) 
+                set RoundCreepChanceFrenzy              = GetRandomInt(1, 30) 
+                set RoundCreepChanceUnholyFrenzy        = GetRandomInt(1, 50) 
+                set RoundCreepChanceDemolish            = GetRandomInt(1, 50) 
+                set RoundCreepChanceIncinerate          = GetRandomInt(1, 40) 
+                set RoundCreepChanceCruelty             = GetRandomInt(1, 40) 
+                set RoundCreepChanceCutting             = GetRandomInt(1, 30) 
+                set RoundCreepChanceEnvenomedWeapons    = GetRandomInt(1, 130) 
+                set RoundCreepChanceSlowPoison          = GetRandomInt(1, 200) 
             endif
         endif
 
         //Physical attacker abilities lategame
         if IsRangedCreep(RoundCreepTypeId) or IsMeleeCreep(RoundCreepTypeId) then
             if (GameModeShort == true and RoundNumber >= 15) or (GameModeShort == false and RoundNumber >= 34) then
-                set RoundCreepChanceLiquidFire          = GetRandomInt(1, 80) 
-                set RoundCreepChanceFearAura            = GetRandomInt(1, 20) 
-                set RoundCreepChanceDestruction         = GetRandomInt(1, 20) 
-                set RoundCreepChanceTrueShotAura        = GetRandomInt(1, 40) 
-                set RoundCreepChanceEnduranceAura       = GetRandomInt(1, 40) 
-                set RoundCreepChanceColdArrows          = GetRandomInt(1, 150) 
-                set RoundCreepChanceSearingArrows       = GetRandomInt(1, 150) 
+                set RoundCreepChanceLiquidFire          = GetRandomInt(1, 160) 
+                set RoundCreepChanceFearAura            = GetRandomInt(1, 40) 
+                set RoundCreepChanceDestruction         = GetRandomInt(1, 40) 
+                set RoundCreepChanceTrueShotAura        = GetRandomInt(1, 80) 
+                set RoundCreepChanceEnduranceAura       = GetRandomInt(1, 80) 
+                set RoundCreepChanceColdArrows          = GetRandomInt(1, 3000) 
+                set RoundCreepChanceSearingArrows       = GetRandomInt(1, 3000) 
             endif
         endif
 
         //Magic attacker and caster abilities
         if IsMagicCreep(RoundCreepTypeId) or IsSpellcasterCreep(RoundCreepTypeId) then
-            set RoundCreepChanceBrillianceAura          = GetRandomInt(1, 25)
-            set RoundCreepChanceBanish                  = GetRandomInt(1, 3000) 
+            set RoundCreepChanceBrillianceAura          = GetRandomInt(1, 50)
+            set RoundCreepChanceBanish                  = GetRandomInt(1, 6000) 
         endif
 
         //Neutral and universal abilities
         if (GameModeShort == true and RoundNumber >= 8) or (GameModeShort == false and RoundNumber >= 15) then
             //Neutral
             set RoundCreepChanceMirrorImage             = GetRandomInt(1, 8000)
-            set RoundCreepChanceUnholyAura              = GetRandomInt(1, 50)
-            set RoundCreepChanceVampiricAura            = GetRandomInt(1, 50)
-            set RoundCreepChanceVulnerabilityAura       = GetRandomInt(1, 50)
-            set RoundCreepChanceCharm                   = GetRandomInt(1, 1000)
-            set RoundCreepChanceFinishingBlow           = GetRandomInt(1, 25) 
+            set RoundCreepChanceUnholyAura              = GetRandomInt(1, 100)
+            set RoundCreepChanceVampiricAura            = GetRandomInt(1, 100)
+            set RoundCreepChanceVulnerabilityAura       = GetRandomInt(1, 100)
+            set RoundCreepChanceCharm                   = GetRandomInt(1, 40)
+            set RoundCreepChanceFinishingBlow           = GetRandomInt(1, 50) 
 
             //Return damage abilities
-            set RoundCreepChanceSpikedCarapace          = GetRandomInt(1, 65) 
+            set RoundCreepChanceSpikedCarapace          = GetRandomInt(1, 130) 
             set RoundCreepChanceCorrosiveSkin           = GetRandomInt(1, newAbilChance) 
             //set RoundCreepChanceFireForce = 1 //works but regular creeps don't have a str stat
 
             //Stun abilities
-            set RoundCreepChanceEnsnare                 = GetRandomInt(1, 120) 
-            set RoundCreepChanceEntanglingRoots         = GetRandomInt(1, 180) 
-            set RoundCreepChanceStormBolt               = GetRandomInt(1, 80) 
-            set RoundCreepChanceFirebolt                = GetRandomInt(1, 160) 
-            set RoundCreepChanceAerialShackles          = GetRandomInt(1, 160) 
-            set RoundCreepChanceWarStomp                = GetRandomInt(1, 160) 
-            set RoundCreepChanceImpale                  = GetRandomInt(1, 160) 
-            set RoundCreepChanceSleep                   = GetRandomInt(1, 800) 
+            set RoundCreepChanceEnsnare                 = GetRandomInt(1, 240) 
+            set RoundCreepChanceEntanglingRoots         = GetRandomInt(1, 360) 
+            set RoundCreepChanceStormBolt               = GetRandomInt(1, 160) 
+            set RoundCreepChanceFirebolt                = GetRandomInt(1, 320) 
+            set RoundCreepChanceAerialShackles          = GetRandomInt(1, 320) 
+            set RoundCreepChanceWarStomp                = GetRandomInt(1, 320) 
+            set RoundCreepChanceImpale                  = GetRandomInt(1, 320) 
+            set RoundCreepChanceSleep                   = GetRandomInt(1, 1600) 
             set RoundCreepChanceHex                     = GetRandomInt(1, 1800) 
-            set RoundCreepChanceFrostBolt               = GetRandomInt(1, 120)
+            set RoundCreepChanceFrostBolt               = GetRandomInt(1, 240)
             set RoundCreepChancePolymorph               = GetRandomInt(1, 1800)
 
             //Defensive Abilities
-            set RoundCreepChanceFireShield              = GetRandomInt(1, 45) 
-            set RoundCreepChanceAntiMagicShell          = GetRandomInt(1, 35) 
-            set RoundCreepChanceDivineShield            = GetRandomInt(1, 180)  
-            set RoundCreepChanceStoneProt               = GetRandomInt(1, 50) 
+            set RoundCreepChanceFireShield              = GetRandomInt(1, 90) 
+            set RoundCreepChanceAntiMagicShell          = GetRandomInt(1, 70) 
+            set RoundCreepChanceDivineShield            = GetRandomInt(1, 360)  
+            set RoundCreepChanceStoneProt               = GetRandomInt(1, 100) 
             set RoundCreepChanceGuardianSpirit          = GetRandomInt(1, 10) 
-            set RoundCreepChanceAvatar                  = GetRandomInt(1, 180) 
-            set RoundCreepChanceHealingWave             = GetRandomInt(1, 25) 
-            set RoundCreepChanceIceForce                = GetRandomInt(1, 15) 
-            set RoundCreepChanceHolyLight               = GetRandomInt(1, 35) 
-            set RoundCreepChanceTranquility             = GetRandomInt(1, 80) 
-            set RoundCreepChanceFrostArmor              = GetRandomInt(1, 35) 
-            set RoundCreepChanceSpellImmunity           = GetRandomInt(1, 10000) 
-            set RoundCreepChanceReincarnation           = GetRandomInt(1, 80) 
-            set RoundCreepChanceEnergyShield            = GetRandomInt(1, 35) 
-            set RoundCreepChanceHardenedSkin            = GetRandomInt(1, 25) 
-            set RoundCreepChanceDivineBubble            = GetRandomInt(1, 15) 
-            set RoundCreepChanceReaction                = GetRandomInt(1, 50)  
-            set RoundCreepChanceDevotionAura            = GetRandomInt(1, 25) 
-            set RoundCreepChanceMagneticOscillation     = GetRandomInt(1, 500) 
+            set RoundCreepChanceAvatar                  = GetRandomInt(1, 360) 
+            set RoundCreepChanceHealingWave             = GetRandomInt(1, 50) 
+            set RoundCreepChanceIceForce                = GetRandomInt(1, 30) 
+            set RoundCreepChanceHolyLight               = GetRandomInt(1, 70) 
+            set RoundCreepChanceTranquility             = GetRandomInt(1, 160) 
+            set RoundCreepChanceFrostArmor              = GetRandomInt(1, 70) 
+            set RoundCreepChanceSpellImmunity           = GetRandomInt(1, 20000) 
+            set RoundCreepChanceReincarnation           = GetRandomInt(1, 160) 
+            set RoundCreepChanceEnergyShield            = GetRandomInt(1, 70) 
+            set RoundCreepChanceHardenedSkin            = GetRandomInt(1, 50) 
+            set RoundCreepChanceDivineBubble            = GetRandomInt(1, 30) 
+            set RoundCreepChanceReaction                = GetRandomInt(1, 100)  
+            set RoundCreepChanceDevotionAura            = GetRandomInt(1, 50) 
+            set RoundCreepChanceMagneticOscillation     = GetRandomInt(1, 1000) 
 
             //Chaos magic works in principle, but had one round that froze until an invisible dummy could be killed with fire shield
             //set RoundCreepChanceChaosMagic          = GetRandomInt(1, 35) 
@@ -2645,9 +2645,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
     
         //Last Breaths Chance with anti-lag measure
         if (RoundNumber == 28 or RoundNumber == 38 or RoundNumber == 48) and GetRemainingPlayerCount() < 5 then
-            set RoundCreepChanceLastBreath              = GetRandomInt(1, 2)
+            set RoundCreepChanceLastBreath              = GetRandomInt(1, 3)
         elseif RoundNumber > 20 and GetRemainingPlayerCount() < 5 then
-            set RoundCreepChanceLastBreath              = GetRandomInt(1, 50)
+            set RoundCreepChanceLastBreath              = GetRandomInt(1, 250)
         else
             set RoundCreepChanceLastBreath = 2
         endif
@@ -3019,7 +3019,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
                 //gold xp calculation for nextround tab. This must reflect the amounts given in CreepDeath.j
                 if GameModeShort == false then
-                    set xpcount = R2I(10.0 * Pow(I2R(RoundNumber), 1.35) * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0))
+                    set xpcount = R2I(10.0 * Pow(I2R(RoundNumber), 1.35) * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0) * 1.3)
+
                     set goldcount = R2I(RoundNumber * 11 * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0))
                 else
                     set xpcount = RoundNumber * 42
@@ -3089,10 +3090,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call BlzSetUnitAttackCooldown(creep, 0.5, 0)
                     endif 
 
-                    if RoundCreepTypeId == DRAENEI_MAGE_CREEP_UNIT_ID and RoundNumber > 30 then
-                        call UnitAddItemToSlotById(creep, HEAVY_MACE_ITEM_ID, 0)
-                        call AddUnitBonus(creep, BONUS_DAMAGE, 350)
-                    endif
+                    //if RoundCreepTypeId == DRAENEI_MAGE_CREEP_UNIT_ID and RoundNumber > 30 then
+                        //call UnitAddItemToSlotById(creep, HEAVY_MACE_ITEM_ID, 0)
+                        //call AddUnitBonus(creep, BONUS_DAMAGE, 350)
+                    //endif
 
                     //if RoundCreepTypeId == SUCCUBUS_CREEP_UNIT_ID then
                         //call ResetRoundCreepChances()
@@ -3685,8 +3686,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
                         call SetUnitState(creep, UNIT_STATE_MANA, R2I(BlzGetUnitMaxHP(creep) * 0.5))
                     elseif (GameModeShort == false and RoundNumber == 40) then
-                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 117)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(33000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 17)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(30000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(22500.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call SetUnitCustomState(creep, BONUS_MAGICRES, RoundNumber * 4) 
@@ -3696,7 +3697,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitState(creep, UNIT_STATE_MANA, R2I(BlzGetUnitMaxHP(creep) * 0.5))
                     elseif (GameModeShort == false and RoundNumber == 41) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 18)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(37000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(32000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(25000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3706,7 +3707,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 42) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 19)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(40000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(34000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(27500.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3716,7 +3717,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 43) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 20)
-                        call BlzSetUnitBaseDamage(creep,BlzGetUnitBaseDamage(creep, 0) + R2I(45000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep,BlzGetUnitBaseDamage(creep, 0) + R2I(36000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(30000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3726,7 +3727,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 44) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 21)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(50000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(38000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(40000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3736,7 +3737,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 45) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 22)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(55000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(40000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(50000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3746,7 +3747,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 46) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 23)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(60000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(42000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(75000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3756,7 +3757,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 47) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 24)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(65000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(45000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(80000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3766,7 +3767,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 48) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 25)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(70000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(50000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(90000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3776,7 +3777,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 49) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 30)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(80000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(60000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(120000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))
@@ -3786,7 +3787,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call SetUnitCustomState(creep, BONUS_BLOCK, (RoundNumber * 10))
                     elseif (GameModeShort == false and RoundNumber == 50) then
                         call BlzSetUnitArmor(creep, BlzGetUnitArmor(creep) + RoundNumber * 36)
-                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(110000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
+                        call BlzSetUnitBaseDamage(creep, BlzGetUnitBaseDamage(creep, 0) + R2I(75000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleDamage)),0)
                         call BlzSetUnitMaxHP(creep, BlzGetUnitMaxHP(creep) + R2I(150000.0 * Pow(25.0 / I2R(RoundCreepNumber), CreepScaleHitpoints)))
                         call SetWidgetLife(creep, BlzGetUnitMaxHP(creep))
                         call BlzSetUnitMaxMana(creep, R2I(BlzGetUnitMaxHP(creep) * 0.5))

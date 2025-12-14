@@ -46,8 +46,8 @@ library MultiBonusCast requires RandomShit, AbilityData, CustomState
             return
         endif
 
-        //Life drain
-        if GetUnitAbilityLevel(caster, LIFE_DRAIN_ABILITY_ID) > 0 then
+        // Multicast Bonus - Life Drain
+        if GetSpellAbilityId() == LIFE_DRAIN_ABILITY_ID then
             set amount = amount + 1
         endif
 

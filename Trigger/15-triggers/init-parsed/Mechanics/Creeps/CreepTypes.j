@@ -59,7 +59,7 @@ library CreepTypes initializer init requires RandomShit
         set CreepUnitTypeIds[38] = FOREST_SPIDER_CREEP_UNIT_ID          //ranged
 
         //magic creeps:
-        set CreepUnitTypeIds[39] = DRAENEI_MAGE_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[39] = DRAENEI_MAGE_CREEP_UNIT_ID           //ranged
         set CreepUnitTypeIds[40] = SLUDGE_MINION_CREEP_UNIT_ID     
         set CreepUnitTypeIds[41] = WIND_SERPENT_CREEP_UNIT_ID           //ranged
         set CreepUnitTypeIds[42] = WRAITH_CREEP_UNIT_ID                 //ranged

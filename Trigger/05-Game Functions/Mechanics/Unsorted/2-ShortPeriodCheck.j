@@ -169,50 +169,15 @@ scope ShortPeriodCheck initializer init
 
             //Moonsteel Dagger
             if UnitHasItemType(u, MOONSTEEL_DAGGER_ITEM_ID) then
-                // --- Magic Power bonus (unchanged integer tracking) ---
                 if LoadInteger(BonusTable, GetHandleId(u), 1) != IMaxBJ(0, 200 - (GetHeroLevel(u) * 3)) then
                     call AddUnitCustomState(u, BONUS_MAGICPOW, IMaxBJ(0, 200 - (GetHeroLevel(u) * 3)) - LoadInteger(BonusTable, GetHandleId(u), 1))
                     call SaveInteger(BonusTable, GetHandleId(u), 1, IMaxBJ(0, 200 - (GetHeroLevel(u) * 3)))
                 endif
-
-                // --- PVP reduction: remove old delta, then apply new clamped delta ---
-                // 1) Undo any previously stored reduction from this item
-                if LoadReal(BonusTable, GetHandleId(u), 2) != 0.0 then
-                    call AddUnitCustomState(u, BONUS_PVP, LoadReal(BonusTable, GetHandleId(u), 2))
-                    call SaveReal(BonusTable, GetHandleId(u), 2, 0.0)
-                endif
-
-                // 2) Cache a stable baseline once (to avoid multiple reads after changes)
-                call SaveReal(BonusTable, GetHandleId(u), 3, GetUnitCustomState(u, BONUS_PVP))
-
-                // 3) Apply a reduction of up to 25, but never below 0
-                if LoadReal(BonusTable, GetHandleId(u), 3) >= 25.0 then
-                    call AddUnitCustomState(u, BONUS_PVP, -25.0)
-                    call SaveReal(BonusTable, GetHandleId(u), 2, 25.0) // store this item's delta
-                elseif LoadReal(BonusTable, GetHandleId(u), 3) > 0.0 then
-                    // reduce only what's available (clamp to zero)
-                    call AddUnitCustomState(u, BONUS_PVP, -LoadReal(BonusTable, GetHandleId(u), 3))
-                    call SaveReal(BonusTable, GetHandleId(u), 2, LoadReal(BonusTable, GetHandleId(u), 3))
-                endif
-
-                // optional: clear baseline cache
-                call SaveReal(BonusTable, GetHandleId(u), 3, 0.0)
-
             else
-                // --- Remove Magic Power bonus if item lost ---
                 if LoadInteger(BonusTable, GetHandleId(u), 1) != 0 then
                     call AddUnitCustomState(u, BONUS_MAGICPOW, -LoadInteger(BonusTable, GetHandleId(u), 1))
                     call SaveInteger(BonusTable, GetHandleId(u), 1, 0)
                 endif
-
-                // --- Remove only the reduction applied by this item ---
-                if LoadReal(BonusTable, GetHandleId(u), 2) != 0.0 then
-                    call AddUnitCustomState(u, BONUS_PVP, LoadReal(BonusTable, GetHandleId(u), 2))
-                    call SaveReal(BonusTable, GetHandleId(u), 2, 0.0)
-                endif
-
-                // ensure baseline cache is clean
-                call SaveReal(BonusTable, GetHandleId(u), 3, 0.0)
             endif
 
             // Celestial Signet
