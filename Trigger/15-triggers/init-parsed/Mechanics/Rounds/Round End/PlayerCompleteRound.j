@@ -1,5 +1,76 @@
 library PlayerCompleteRound initializer init requires RandomShit, CustomGameEvent
 
+    // --- Helpers -------------------------------------------------------------
+
+    // Convert XP thresholds into stat bonuses via manuscript items.
+    // Handles multiple thresholds sequentially without forcing unwanted level-ups.
+    function ProcessManuscriptThresholds takes unit u returns nothing
+        local player owner = GetOwningPlayer(u)
+        local integer xp
+        local boolean processed
+
+        loop
+            set xp = GetHeroXP(u)
+            exitwhen xp < 20000
+
+            set processed = false
+
+            // Agility level bonus
+            if UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) then
+                call AddStatLevelBonus(u, BONUS_AGILITY, 1)
+                call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                call DisplayTextToPlayer(owner, 0, 0, "|cffffffffYour agility per level has been increased by 1!|r")
+                // subtract 20,000 XP to prevent leveling
+                call SetHeroXP(u, xp - 20000, false)
+                set processed = true
+            endif
+
+            // Strength level bonus
+            if not processed and UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) then
+                call AddStatLevelBonus(u, BONUS_STRENGTH, 1)
+                call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                call DisplayTextToPlayer(owner, 0, 0, "|cffffffffYour strength per level has been increased by 1!|r")
+                call SetHeroXP(u, xp - 20000, false)
+                set processed = true
+            endif
+
+            // Intelligence level bonus
+            if not processed and UnitHasItemType(u, INTELLIGENCE_MANUSCRIPT_ITEM_ID) and GetUnitTypeId(u) != STOMP_TREE_UNIT_ID and not UnitHasItemType(u, STRENGTH_MANUSCRIPT_ITEM_ID) and not UnitHasItemType(u, AGILITY_MANUSCRIPT_ITEM_ID) then
+                call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 1)
+                call UnitAddItemById(u, EXPERIENCE_20000_TOME_ITEM_ID)
+                call DisplayTextToPlayer(owner, 0, 0, "|cffffffffYour intelligence per level has been increased by 1!|r")
+                call SetHeroXP(u, xp - 20000, false)
+                set processed = true
+            endif
+
+            // If nothing matched (no valid manuscript or conflicting items), stop.
+            if not processed then
+                exitwhen true
+            endif
+        endloop
+
+        set owner = null
+    endfunction
+
+    // Add XP in chunks of up to 20,000 and process manuscript thresholds after each chunk.
+    function AddHeroXPChunked takes unit u, integer totalXP returns nothing
+        local integer remaining = totalXP
+        local integer chunk
+
+        loop
+            exitwhen remaining <= 0
+
+            set chunk = IMinBJ(remaining, 20000)
+            call AddHeroXPSwapped(chunk, u, true)
+            set remaining = remaining - chunk
+
+            // Immediately convert if threshold(s) reached
+            call ProcessManuscriptThresholds(u)
+        endloop
+    endfunction
+
+    // --- Original round-end flow -------------------------------------------
+
     function EndroundForCreeps takes EventInfo eventInfo returns nothing
         if not eventInfo.isPvp then
             //destroy round creep groups to prevent leaks
@@ -21,7 +92,6 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         if ((killingUnit == null) or (GetOwningPlayer(GetTriggerUnit()) != Player(11)) or (GetOwningPlayer(killingUnit) == Player(11))) then
             // Cleanup
             set killingUnit = null
-
             return false
         endif
 
@@ -64,7 +134,6 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
         endif
 
         set BettingPlayerCount = PlayerCount / 2
-
         if (BettingPlayerCount > 3) then
             set BettingPlayerCount = 3
         endif
@@ -87,8 +156,9 @@ library PlayerCompleteRound initializer init requires RandomShit, CustomGameEven
             if (roundClearXpBonus == 0) then
                 call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00has survived the level!|r")
             else
-                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00has survived the level!|r "+ color +"(+" + I2S(roundClearXpBonus) + " exp)|r")
-                call AddHeroXPSwapped(roundClearXpBonus, PlayerHeroes[pid], true)
+                call DisplayTimedTextToForce(GetPlayersAll(), 5.00, GetPlayerNameColour(p) + " |cffffcc00has survived the level!|r " + color + "(+" + I2S(roundClearXpBonus) + " exp)|r")
+                // CHANGED: give XP in chunks and convert 20,000 XP thresholds instantly
+                call AddHeroXPChunked(PlayerHeroes[pid], roundClearXpBonus)
             endif
         endif
 

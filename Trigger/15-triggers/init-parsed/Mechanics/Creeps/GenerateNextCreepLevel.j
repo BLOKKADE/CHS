@@ -2962,7 +2962,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         endif
     
         //item buddy arrival
-        if RoundNumber == 5 then
+        if RoundNumber == 45 then
             call SetUpItemStocks(GetValidPlayerForce())
             call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "|cffffcc00Item Buddy has arrived!|r You can use it to swap items using Shift + Q and Shift + W")
             call PlaySoundBJ(itembuddyarrivalsound)
