@@ -89,20 +89,6 @@ library CritDamage requires RandomShit, Vampirism, Gnome, RemoveBuffs
 
         if IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource) then
 
-            //Trident of Pain
-            if UnitHasItemType(DamageSource, 'I061')  then
-                if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
-                    call AbilStartCD(DamageSource, 'A08X', 7)
-                    set critDmg = critDmg + Dmg
-                elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Y') <= 0 then
-                    call AbilStartCD(DamageSource, 'A08Y', 7)
-                    set critDmg = critDmg + Dmg
-                elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Z') <= 0 then
-                    call AbilStartCD(DamageSource, 'A08Z', 7)
-                    set critDmg = critDmg + Dmg
-                endif
-            endif
-
             //Cruelty
             set i = GetUnitAbilityLevel(DamageSourceHero,CRUELTY_ABILITY_ID)
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,CRUELTY_ABILITY_ID) == 0 then
@@ -142,7 +128,7 @@ library CritDamage requires RandomShit, Vampirism, Gnome, RemoveBuffs
                 if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A0FN') == 0 then
                     call RemoveBuffsAroundHero(DamageSource, 600.0, BUFFTYPE_POSITIVE, 1, false)
                     call CreateTextTagTimerColor("Frostmourne!", 0.8, GetUnitX(DamageSource), GetUnitY(DamageSource), 80, 2, 255, 255, 255)
-                    call AbilStartCD(DamageSource, 'A0FN', 10)
+                    call AbilStartCD(DamageSource, 'A0FN', 2)
                 endif
             endif
 
@@ -170,6 +156,12 @@ library CritDamage requires RandomShit, Vampirism, Gnome, RemoveBuffs
             if UnitHasItemType(DamageSource,'I086') and GetRandomReal(0,100) <= 30 * DamageSourceLuck + baseCritChance then
                 set critDmg = critDmg + Dmg
             endif
+
+            //Aduxxor Legendary Blade
+            set i = GetUnitAbilityLevel(DamageSource,'AIcs')
+            if i > 0 and GetRandomReal(0,100) <= 20 + baseCritChance * DamageSourceLuck then
+                set critDmg = critDmg + Dmg
+            endif
             
             //Magic Critical Strike
             set i = GetUnitAbilityLevel(DamageSource,MAGIC_CRITICAL_HIT_ABILITY_ID)
@@ -194,6 +186,11 @@ library CritDamage requires RandomShit, Vampirism, Gnome, RemoveBuffs
         //Medivh
         if DamageSourceTypeId == MEDIVH_UNIT_ID or GetUnitTypeId(DamageSourceHero) == MORTAR_TEAM_UNIT_ID then
             set critDmg = 0
+        endif
+
+        //Scepter of Confusion
+        if UnitHasItemType(DamageTarget,'I03R') and critDmg != 0 then
+            call ActivateScepterOfConfusion(DamageTarget)
         endif
         
         if critDmg != 0 then

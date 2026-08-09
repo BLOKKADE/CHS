@@ -83,14 +83,21 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 		
 			//Staff of Lightning
 		elseif itemId == 'I05C' then
-			call AddUnitBonus(u, BONUS_STRENGTH, 200 * diff)
-			call AddUnitBonus(u, BONUS_AGILITY, 200 * diff)
-			call AddUnitBonus(u, BONUS_INTELLIGENCE, 200 * diff)
+			call AddUnitBonus(u, BONUS_STRENGTH, 200 * uniqueDiff)
+			call AddUnitBonus(u, BONUS_AGILITY, 200 * uniqueDiff)
+			call AddUnitBonus(u, BONUS_INTELLIGENCE, 200 * uniqueDiff)
+			call AddUnitCustomState(u, BONUS_MAGICPOW, 20 * uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u, Element_Wind, 2 * uniqueDiff)
+			call AddUnitBonus(u, BONUS_MOVEMENT_SPEED, 522 * uniqueDiff)
 		
 			//Robe of the ARchmage
 		elseif itemId == 'I05B' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 30 * uniqueDiff)
 			call AddUnitAbsoluteBonusCount(u,Element_Water, uniqueDiff)
+
+			//Shadow Boots
+		elseif itemId == 'BBGB' then
+			call AddUnitAbsoluteBonusCount(u,Element_Dark, uniqueDiff)
 
 			//Savage Totem
 		elseif itemId == SAVAGE_TOTEM_ITEM_ID then
@@ -218,7 +225,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_BLOCK, 1200 * diff)
 			call AddUnitCustomState(u, BONUS_EVASION, 35 * diff)
 
-			//Gladiator Helmet
+		//Gladiator Helmet
 		elseif itemId == 'I07A' then
 			if itemCount > 0 then
 				if GetUnitAbilityLevel(u,'A05K') == 0 then
@@ -245,9 +252,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitAbsoluteBonusCount(u,Element_Poison, 2*uniqueDiff)
 
 		elseif itemId == SHADOW_BLADE_ITEM_ID then
-			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 1500*diff, 0 )
-			call AddUnitBonus(u, BONUS_DAMAGE, 6000 * diff)
-			call AddUnitCustomState(u, BONUS_EVASION, 20 * diff)
+			call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u,0) + 3000*uniqueDiff, 0 )
+			call AddUnitBonus(u, BONUS_DAMAGE, 7500 * uniqueDiff)
+			call AddUnitCustomState(u, BONUS_EVASION, 20 * uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u, Element_Dark, uniqueDiff)
 
 			//Magic Amulet
 		elseif itemId == MAGIC_AMULET_ITEM_ID then
@@ -280,6 +288,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Snowww's wand
 		elseif itemId == 'I07V' then
 			call AddUnitCustomState(u, BONUS_MAGICPOW, 60 * uniqueDiff)
+			call AddUnitAbsoluteBonusCount(u, Element_Arcane, uniqueDiff)
+
+			//Scepter of confusion
+		elseif itemId == 'I03R' then
 			call AddUnitAbsoluteBonusCount(u, Element_Arcane, uniqueDiff)
 			
 			//Holy Shield
@@ -314,7 +326,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitCustomState(u, BONUS_BLOCK, 750 * diff)
 			call AddUnitCustomState(u, BONUS_EVASION, 30 * diff)
 			call AddUnitCustomState(u, BONUS_MAGICRES, 60 * diff)
-		
+
 			//Ancient Staff
 		elseif itemId == ANCIENT_STAFF_ITEM_ID then
 			//set PvpBonus[pid] = PvpBonus[pid] + 5*diff
@@ -414,8 +426,10 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 				call AddUnitAbsoluteBonusCount(u,Element_Wind, 1 * uniqueDiff)
 			elseif itemId == WATER_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u, Element_Water, 2 * uniqueDiff)
+				call AddUnitBonus(u, BONUS_MANA, 300 * uniqueDiff * GetHeroLevel(u))
 			elseif itemId == EARTH_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Earth, 2 * uniqueDiff)
+				call AddUnitBonus(u, BONUS_ARMOR, 1 * uniqueDiff * GetHeroLevel(u))
 			endif
 		
 			//Blaze Staff
@@ -471,7 +485,7 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 
 		//Hammer of the Gods
 		elseif itemId == 'I066' then
-			call AddUnitBonus(u, BONUS_DAMAGE, 10000 * diff)
+			call AddUnitBonus(u, BONUS_DAMAGE, 4000 * uniqueDiff)
 
 		//Hammer of Chaos
 		elseif itemId == 'I06H' then

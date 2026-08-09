@@ -1,5 +1,5 @@
 library ShadowBootsItem requires ShadowBootsHeroForm
     function ShadowBoots takes unit u returns nothing
-        call UnitAddShadowBootsForm(u,FORM_SHADOWBOOTS,6)
+        call UnitAddShadowBootsForm(u,FORM_SHADOWBOOTS,10)
     endfunction
 endlibrary

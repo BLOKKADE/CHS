@@ -17,6 +17,9 @@ scope ShortPeriodCheck initializer init
         local integer lowerElement = -1
         local integer prevBonus = GetStoredBulwarkBonus(u)
         local integer prevTarget = GetStoredBulwarkTarget(u)
+        local integer lvl = GetHeroLevel(u)
+        local real newBonus = 10.0 * lvl
+        local real oldBonus = GetUnitCustomState(u, BONUS_BLOCK)
 
         if UnitAlive(u) then
             if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
@@ -137,7 +140,7 @@ scope ShortPeriodCheck initializer init
             set i1 = GetUnitAbilityLevel(u, 'A02C')
             set r1 = LoadReal(HT, hid,'A02C')
             if i1 > 0 or r1 != 0 then
-                set r2 = (BlzGetUnitBaseDamage(u, 0) * (1.5 * i1))
+                set r2 = (BlzGetUnitBaseDamage(u, 0) * (2 * i1))
                 if r1 != r2 then
                     call AddUnitBonus(u, BONUS_DAMAGE, R2I(r2 - r1))
                     call SaveReal(HT, hid, 'A02C', r2)	
@@ -201,6 +204,15 @@ scope ShortPeriodCheck initializer init
                    endif
                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
                    //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
+                endif
+            endif
+
+            // Earth Runestone
+            if UnitHasItemType(u, EARTH_RUNESTONE_ITEM_ID) then
+                call AddUnitCustomState(u, BONUS_BLOCK, newBonus - oldBonus)
+            else
+                if oldBonus > 0.0 then
+                    call AddUnitCustomState(u, BONUS_BLOCK, -oldBonus)
                 endif
             endif
 

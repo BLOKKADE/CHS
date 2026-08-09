@@ -695,6 +695,8 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.8.4", false) // 46 - gold/xp to nextround, balances, moonsteel dagger, etc
         call AddGameVersion("CHS v2.8.5", false) // 47 - creepwave tweaks, item tweak, bugfixes
         call AddGameVersion("CHS v2.8.6", false) // 48 - bugfixes
+        call AddGameVersion("CHS v2.8.7", false) // 49 - Some itemfixes and creepfixes. 1 aug 2026
+        call AddGameVersion("CHS v2.8.8", false) // 50 - Hero attack cooldowns, some item refurbs. 9 aug 2026
     endfunction
 
     private function init takes nothing returns nothing

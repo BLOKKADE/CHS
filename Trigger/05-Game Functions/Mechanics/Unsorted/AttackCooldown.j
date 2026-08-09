@@ -27,9 +27,6 @@ library AttackCooldown requires MegaSpeed, UnitItems, RemoveBuffs
             endif
         endif
 
-        //Hammer of the Gods
-        set r2 = r2 + GetUnitItemTypeCount(u,'I066') * 1.4
-
         //Flimsy Token
         if GetUnitAbilityLevel(u, FLIMSY_TOKEN_BUFF_ID) > 0 then
             set r2 = r2 + 0.3

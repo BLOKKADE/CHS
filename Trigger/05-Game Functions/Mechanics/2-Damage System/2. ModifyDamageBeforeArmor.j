@@ -281,11 +281,8 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Sword of Bloodthirst
         set i1 = GetUnitItemTypeCount(DamageSource, SWORD_OF_BLOODTHRIST_ITEM_ID)
-        if i1 > 0 and IsPhysDamage() then
-            if Damage.index.isAttack then
-                call ActivateSwordOfBloodthirst(DamageTarget)
-            endif
-            set Damage.index.damage = Damage.index.damage + 900 * i1
+        if i1 > 0 then
+            call ActivateSwordOfBloodthirst(DamageTarget)    
         endif
 
         //Finger of Death
@@ -304,6 +301,20 @@ scope ModifyDamageBeforeArmor initializer init
                 set StarfallTable.real[DamageTargetId] = 0
             endif
             call TempAbil.create(DamageTarget, STARFALL_BUFF_ABILITY_ID, 3)
+        endif
+
+        //Trident of Pain
+        if UnitHasItemType(DamageSource, 'I061')  then
+            if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08X') <= 0 then
+                call AbilStartCD(DamageSource, 'A08X', 7)
+                set Damage.index.damage = Damage.index.damage * 1.75
+            elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Y') <= 0 then
+                call AbilStartCD(DamageSource, 'A08Y', 7)
+                set Damage.index.damage = Damage.index.damage * 1.75
+            elseif BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08Z') <= 0 then
+                call AbilStartCD(DamageSource, 'A08Z', 7)
+                set Damage.index.damage = Damage.index.damage * 1.75
+            endif
         endif
 
         //Crits
@@ -420,6 +431,12 @@ scope ModifyDamageBeforeArmor initializer init
         if DamageSourceAbility == FROST_NOVA_ABILITY_ID then
             set Damage.index.damage = Damage.index.damage * (1 + (GetUnitElementCount(DamageSource, Element_Cold) * 0.5))
             call CreateTextTagTimerColor("Frost Nova Slow!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)  
+        endif
+
+        //Frostmourne Nova
+        if DamageSourceAbility == 'FNBB' then
+            set Damage.index.damage = Damage.index.damage * ((GetUnitElementCount(DamageSource, Element_Dark) + GetUnitElementCount(DamageSource, Element_Cold)) * 1)
+            call CreateTextTagTimerColor("Frostmourne Nova Slow!", 0.8, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 80, 2, 180, 0, 255)  
         endif
 
         //Forked Lightning

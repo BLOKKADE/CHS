@@ -183,7 +183,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         endif
 
         // Warlock Illusion Attack Cooldown Sync
-        if (IsUnitIllusion(u) and GetUnitTypeId(u) == WARLOCK_UNIT_ID) then
+        if (IsUnitIllusion(u)) then
             // Copy the hero’s current attack cooldown (weapon index 0 = primary attack)
             call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(hero, 0), 0)
         endif
@@ -531,6 +531,29 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         //Mortar Team
         if GetUnitTypeId(u) == MORTAR_TEAM_UNIT_ID then
             call AddUnitCustomState(u, BONUS_PHYSPOW, 15)
+        endif
+
+        //Demon Hunter
+        if GetUnitTypeId(u) == DEMON_HUNTER_UNIT_ID then
+            call UnitAddAbility(u, ABSOLUTE_ARCANE_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_ARCANE_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_ARCANE_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_ARCANE_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_WIND_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_WIND_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_WIND_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_WIND_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
         endif
 
         //Pit Lord
