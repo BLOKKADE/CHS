@@ -407,11 +407,13 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			call AddUnitBonus(u, BONUS_HEALTH, 10000 * uniqueDiff)
 
 			//Runestones
-		elseif itemId == FIRE_RUNESTONE_ITEM_ID or itemId == POISON_RUNESTONE_ITEM_ID or itemId == ARCANE_RUNESTONE_ITEM_ID or itemId == WILD_RUNESTONE_ITEM_ID or itemId == LIGHT_RUNESTONE_ITEM_ID or itemId == DARK_RUNESTONE_ITEM_ID or itemId == WIND_RUNESTONE_ITEM_ID or itemId == EARTH_RUNESTONE_ITEM_ID or itemId == WATER_RUNESTONE_ITEM_ID then
+		elseif itemId == FIRE_RUNESTONE_ITEM_ID or itemId == COLD_RUNESTONE_ITEM_ID or itemId == POISON_RUNESTONE_ITEM_ID or itemId == ARCANE_RUNESTONE_ITEM_ID or itemId == WILD_RUNESTONE_ITEM_ID or itemId == LIGHT_RUNESTONE_ITEM_ID or itemId == DARK_RUNESTONE_ITEM_ID or itemId == WIND_RUNESTONE_ITEM_ID or itemId == EARTH_RUNESTONE_ITEM_ID or itemId == WATER_RUNESTONE_ITEM_ID then
 			call AddUnitCustomState(u, BONUS_RUNEPOW, 100 * uniqueDiff)
 			
 			if itemId == FIRE_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Fire, 1 * uniqueDiff)
+			elseif itemId == COLD_RUNESTONE_ITEM_ID then
+				call AddUnitAbsoluteBonusCount(u,Element_Cold, 2 * uniqueDiff)
 			elseif itemId == POISON_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Poison, 2 * uniqueDiff)
 			elseif itemId == ARCANE_RUNESTONE_ITEM_ID then
@@ -426,10 +428,8 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 				call AddUnitAbsoluteBonusCount(u,Element_Wind, 1 * uniqueDiff)
 			elseif itemId == WATER_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u, Element_Water, 2 * uniqueDiff)
-				call AddUnitBonus(u, BONUS_MANA, 300 * uniqueDiff * GetHeroLevel(u))
 			elseif itemId == EARTH_RUNESTONE_ITEM_ID then
 				call AddUnitAbsoluteBonusCount(u,Element_Earth, 2 * uniqueDiff)
-				call AddUnitBonus(u, BONUS_ARMOR, 1 * uniqueDiff * GetHeroLevel(u))
 			endif
 		
 			//Blaze Staff

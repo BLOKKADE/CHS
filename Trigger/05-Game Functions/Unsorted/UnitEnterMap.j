@@ -407,7 +407,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
                 call UnitAddAbility(u, TRUE_SIGHT_ABILITY_ID)
                 call SetUnitAbilityLevel(u, TRUE_SIGHT_ABILITY_ID, 1)
                 // Start cooldown
-                call AbilStartCD(hero, 'A0FS', 15)
+                call AbilStartCD(hero, 'A0FS', 7)
             endif
         endif
 

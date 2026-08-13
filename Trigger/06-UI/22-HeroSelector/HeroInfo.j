@@ -8,7 +8,7 @@ library HeroInfo initializer init_function requires GetObjectElement, HeroPassiv
         private string DescHeroNamePrefix             = "|cffffcc00"   //added before the Units Name
         private string DescHeroNameSufix              = "|r"           //added after the units Name
         private real TextAreaSizeX                    = 0.2
-        private real TextAreaSizeY                    = 0.35
+        private real TextAreaSizeY                    = 0.39
         private real TextAreaOffsetX                  = 0.0
         private real TextAreaOffsetY                  = 0.0
         private framepointtype TextAreaPoint          = FRAMEPOINT_TOPLEFT //pos the Tooltip with which Point
@@ -195,7 +195,12 @@ library HeroInfo initializer init_function requires GetObjectElement, HeroPassiv
 
         set descriptionTemp = GetHeroPassiveDescription(unitCode, HeroPassive_Lvlup)
         if descriptionTemp != "" and descriptionTemp != null then
-            set description = description + descriptionTemp
+            set description = description + descriptionTemp + "|n"+ "|n"
+        endif
+
+        set descriptionTemp = GetHeroPassiveDescription(unitCode, HeroPassive_Difficulty)
+        if descriptionTemp != "" and descriptionTemp != null then
+            set description = description + descriptionTemp + "|n"
         endif
 
         if GetLocalPlayer() == p then

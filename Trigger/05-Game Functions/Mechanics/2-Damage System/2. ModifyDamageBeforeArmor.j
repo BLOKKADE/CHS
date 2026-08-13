@@ -14,6 +14,7 @@ scope ModifyDamageBeforeArmor initializer init
         local group g = CreateGroup()
         local unit u
         local real aoe = 300.0
+        local boolean hasRunestone
 
          //Extradimensional Cooperation
          if GetUnitAbilityLevel(DamageSource, EXTRADIMENSIONAL_COOPERATION_BUFF_ID) > 0 and (not IsOnHitDamage()) and DamageSourceAbility != EXTRADIMENSIONAL_COOPERATION_ABILITY_ID then
@@ -700,15 +701,37 @@ scope ModifyDamageBeforeArmor initializer init
             call AbilStartCD(DamageTarget, ICE_ARMOR_SUMMON_ABILITY_ID, 2.05 - (0.05 * i1))
         endif
 
-        //Ice Force
-        set i1 = GetUnitAbilityLevel(DamageTarget,ICE_FORCE_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_FORCE_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then
-            set r1 = 500. / (500. + GetHeroInt(DamageTarget, true))
-            call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
-            set Damage.index.damage = Damage.index.damage * r1
-            call AbilStartCD(DamageTarget, ICE_FORCE_ABILITY_ID, 2.05 - (0.05 * i1))
-            call UpdateAbilityDescriptionString(GetAbilityDescription(ICE_FORCE_ABILITY_ID, i1 - 1), Player(DamageTargetPid), GetDummySpell(DamageTarget, ICE_FORCE_ABILITY_ID), ",s01,", R2S((1 - r1) * 100.), i1)
-        endif  
+        //Ice Force + Cold Runestone
+        set i1 = GetUnitAbilityLevel(DamageTarget, ICE_FORCE_ABILITY_ID)
+        set hasRunestone = UnitHasItemType(DamageTarget, COLD_RUNESTONE_ITEM_ID)
+
+        if GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then
+            if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, ICE_FORCE_ABILITY_ID) <= 0 then
+                // Normal Ice Force (enhanced if Cold Runestone is also equipped)
+                set r1 = 500. / (500. + GetHeroInt(DamageTarget, true))
+
+                if hasRunestone then
+                    // Double the damage reduction effectiveness
+                    set r1 = 1. - (1. - r1) * 2.
+                    if r1 < 0. then
+                        set r1 = 0.
+                    endif
+                endif
+
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
+                set Damage.index.damage = Damage.index.damage * r1
+                call AbilStartCD(DamageTarget, ICE_FORCE_ABILITY_ID, 2.05 - (0.05 * i1))
+                call UpdateAbilityDescriptionString(GetAbilityDescription(ICE_FORCE_ABILITY_ID, i1 - 1), Player(DamageTargetPid), GetDummySpell(DamageTarget, ICE_FORCE_ABILITY_ID), ",s01,", R2S((1. - r1) * 100.), i1)
+
+            elseif hasRunestone and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0G4') <= 0 then
+                // Pure Cold Runestone version (level 20 equivalent reduction, 1 second cooldown on A0G4)
+                set r1 = 500. / (500. + GetHeroInt(DamageTarget, true))
+
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
+                set Damage.index.damage = Damage.index.damage * r1
+                call AbilStartCD(DamageTarget, 'A0G4', 1.0)
+            endif
+        endif
 
         //Blessed Protection
         set i1 = GetUnitAbilityLevel(DamageTarget, 'A0AF')

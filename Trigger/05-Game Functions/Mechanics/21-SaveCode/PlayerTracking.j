@@ -697,6 +697,8 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.8.6", false) // 48 - bugfixes
         call AddGameVersion("CHS v2.8.7", false) // 49 - Some itemfixes and creepfixes. 1 aug 2026
         call AddGameVersion("CHS v2.8.8", false) // 50 - Hero attack cooldowns, some item refurbs. 9 aug 2026
+        call AddGameVersion("CHS v2.8.9", false) // 51 - Hotfixed block bug. 9 aug 2026
+        call AddGameVersion("CHS v2.9.0", false) // 51 - Changed end of round bonuses, modified items, added coldrune, and changed absolute blood. Hotfixed mana bug. 13 aug 2026
     endfunction
 
     private function init takes nothing returns nothing

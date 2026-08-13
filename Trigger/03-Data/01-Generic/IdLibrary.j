@@ -841,6 +841,7 @@ library IdLibrary initializer init
         constant integer RAPIER_OF_THE_GODS_ITEM_ID                     = 'I01E'
         constant integer RUNESTONE_OF_CREATION_ITEM_ID                  = 'I08N'
         constant integer FIRE_RUNESTONE_ITEM_ID                         = 'I08P'
+        constant integer COLD_RUNESTONE_ITEM_ID                         = 'I0E1'
         constant integer WATER_RUNESTONE_ITEM_ID                        = 'I08Q'
         constant integer EARTH_RUNESTONE_ITEM_ID                        = 'I08R'
         constant integer WIND_RUNESTONE_ITEM_ID                         = 'I08S'
@@ -997,6 +998,7 @@ library IdLibrary initializer init
 
         // --- Runestone Ability Ids
         constant integer FIRE_RUNESTONE_ABIL_ID                         = 'A076'
+        constant integer COLD_RUNESTONE_ABIL_ID                         = 'A0G2'
         constant integer WATER_RUNESTONE_ABIL_ID                        = 'A077'
         constant integer EARTH_RUNESTONE_ABIL_ID                        = 'A078'
         constant integer WIND_RUNESTONE_ABIL_ID                         = 'A079'

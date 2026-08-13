@@ -26,6 +26,15 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
                 call AbilStartCD(u,FIRE_RUNESTONE_ABIL_ID, GetRuneCooldown(Element_Fire)) 
             endif
         endif
+
+        //Cold Runestone
+        if UnitHasItemType(u,COLD_RUNESTONE_ITEM_ID) and IsSpellElement(u,id, Element_Cold) then            
+            if BlzGetUnitAbilityCooldownRemaining(u,COLD_RUNESTONE_ABIL_ID) <= 0.001 and GetUnitState(u,UNIT_STATE_MANA) >= 1000 then
+                call UnitAddItem(u,CreateRune(null, 0,0,0,u,Element_Cold)  )
+                call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)- 1000)
+                call AbilStartCD(u,COLD_RUNESTONE_ABIL_ID, GetRuneCooldown(Element_Cold))
+            endif
+        endif
         
         //Water Runestone
         if UnitHasItemType(u,WATER_RUNESTONE_ITEM_ID) and IsSpellElement(u,id,Element_Water) then            

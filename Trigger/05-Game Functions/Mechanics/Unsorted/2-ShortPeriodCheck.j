@@ -17,9 +17,6 @@ scope ShortPeriodCheck initializer init
         local integer lowerElement = -1
         local integer prevBonus = GetStoredBulwarkBonus(u)
         local integer prevTarget = GetStoredBulwarkTarget(u)
-        local integer lvl = GetHeroLevel(u)
-        local real newBonus = 10.0 * lvl
-        local real oldBonus = GetUnitCustomState(u, BONUS_BLOCK)
 
         if UnitAlive(u) then
             if not HasPlayerFinishedLevel(u, GetOwningPlayer(u)) then
@@ -158,6 +155,51 @@ scope ShortPeriodCheck initializer init
                 endif
             endif
 
+            //Earth Runestone BLOCK
+            set i1 = GetHeroLevel(u) * 10
+            set i2 = LoadInteger(HT, hid, EARTH_RUNESTONE_ITEM_ID) 
+            if UnitHasItemType(u, EARTH_RUNESTONE_ITEM_ID) then 
+                if i1 != i2 then 
+                    call AddUnitCustomState(u, BONUS_BLOCK, i1 - i2) 
+                    call SaveInteger(HT, hid, EARTH_RUNESTONE_ITEM_ID, i1) 
+                endif 
+            else 
+                if i2 != 0 then 
+                    call AddUnitCustomState(u, BONUS_BLOCK, -i2) 
+                    call SaveInteger(HT, hid, EARTH_RUNESTONE_ITEM_ID, 0) 
+                endif 
+            endif
+
+            //Earth Runestone ARMOR
+            set i1 = GetHeroLevel(u) * 1
+            set i2 = LoadInteger(HT, hid, EARTH_RUNESTONE_ITEM_ID + 1)   // use a different key so it doesn't clash with the block value
+            if UnitHasItemType(u, EARTH_RUNESTONE_ITEM_ID) then
+                if i1 != i2 then
+                    call AddUnitBonus(u, BONUS_ARMOR, i1 - i2)
+                    call SaveInteger(HT, hid, EARTH_RUNESTONE_ITEM_ID + 1, i1)
+                endif
+            else
+                if i2 != 0 then
+                    call AddUnitBonus(u, BONUS_ARMOR, -i2)
+                    call SaveInteger(HT, hid, EARTH_RUNESTONE_ITEM_ID + 1, 0)
+                endif
+            endif
+
+            //Water Runestone MANA
+            set i1 = GetHeroLevel(u) * 300
+            set i2 = LoadInteger(HT, hid, WATER_RUNESTONE_ITEM_ID)
+            if UnitHasItemType(u, WATER_RUNESTONE_ITEM_ID) then
+                if i1 != i2 then
+                    call AddUnitBonus(u, BONUS_MANA, i1 - i2)
+                    call SaveInteger(HT, hid, WATER_RUNESTONE_ITEM_ID, i1)
+                endif
+            else
+                if i2 != 0 then
+                    call AddUnitBonus(u, BONUS_MANA, -i2)
+                    call SaveInteger(HT, hid, WATER_RUNESTONE_ITEM_ID, 0)
+                endif
+            endif
+
             //glory hp regen
             if GloryRegenLevel[hid] > 0 then
                 set r2 = GetUnitCustomState(u, BONUS_GLORYREGEN)
@@ -204,15 +246,6 @@ scope ShortPeriodCheck initializer init
                    endif
                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + i1)
                    //call DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "Healing unit for " + I2S(i1) + " HP")
-                endif
-            endif
-
-            // Earth Runestone
-            if UnitHasItemType(u, EARTH_RUNESTONE_ITEM_ID) then
-                call AddUnitCustomState(u, BONUS_BLOCK, newBonus - oldBonus)
-            else
-                if oldBonus > 0.0 then
-                    call AddUnitCustomState(u, BONUS_BLOCK, -oldBonus)
                 endif
             endif
 

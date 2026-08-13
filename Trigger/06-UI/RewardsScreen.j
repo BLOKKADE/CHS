@@ -66,13 +66,13 @@ library RewardsScreen initializer init requires PlayerTracking, IconFrames, Util
         private constant string UTILITY_MANA_REGEN_4_ICON               = "ReplaceableTextures\\CommandButtons\\BTNManaStone.blp"
 
         // Reward values
-        private constant real PRIMARY_STAT_BONUS                        = 15.0
-        private constant real PHYSICAL_POWER_BONUS                      = 0.5
-        private constant real MAGIC_POWER_BONUS                         = 0.5
+        private constant real PRIMARY_STAT_BONUS                        = 20.0
+        private constant real PHYSICAL_POWER_BONUS                      = 0.75
+        private constant real MAGIC_POWER_BONUS                         = 0.75
         private constant real OFFENSIVE_STAT_BONUS                      = 0.
         private constant real ARMOR_BONUS                               = 4.0
         private constant real MAGIC_PROTECTION_BONUS                    = 0.75
-        private constant real BLOCK_BONUS                               = 20.0
+        private constant real BLOCK_BONUS                               = 35.0
         private constant real DEFENSIVE_STAT_BONUS                      = 0.
         private constant real HIT_POINTS_BONUS                          = 800.0
         private constant real HIT_POINTS_REGEN_BONUS                    = 25.0

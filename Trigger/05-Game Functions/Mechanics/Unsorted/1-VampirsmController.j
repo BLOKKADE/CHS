@@ -21,34 +21,34 @@ library Vampirism requires UnitItems, DivineBubble
         endif
 
         //Absolute Blood
-        set i1 = GetUnitAbilityLevel(source,ABSOLUTE_BLOOD_ABILITY_ID)
-        if i1 > 0 then
+        //set i1 = GetUnitAbilityLevel(source,ABSOLUTE_BLOOD_ABILITY_ID)
+       // if i1 > 0 then
         
-            set V1 = LoadReal(HT,GetHandleId(source),- 93000)
-            set V2 = LoadReal(HT,GetHandleId(source),- 93001)
-            set V3 = LoadReal(HT,GetHandleId(source),- 93002)
+            //set V1 = LoadReal(HT,GetHandleId(source),- 93000)
+            //set V2 = LoadReal(HT,GetHandleId(source),- 93001)
+            //set V3 = LoadReal(HT,GetHandleId(source),- 93002)
             
-            if V2 == 0 then
-                set V2 = 50
-            endif
+            //if V2 == 0 then
+            //    set V2 = 50
+            //endif
             
-            set V1 = amount + V1
+           // set V1 = amount + V1
             
-            loop
-                exitwhen V2 > V1 
-                set V1 = V1 - V2 
-                set V2 = V2 + 1
-                call BlzSetUnitMaxHP(source,BlzGetUnitMaxHP(source)+ 4)
-                set V3 = V3 + 4
-            endloop
+            //loop
+               // exitwhen V2 > V1 
+                //set V1 = V1 - V2 
+                //set V2 = V2 + 1
+                //call BlzSetUnitMaxHP(source,BlzGetUnitMaxHP(source)+ 4)
+                //set V3 = V3 + 4
+           // endloop
             
-            call SaveReal(HT,GetHandleId(source),- 93000,V1)
-            call SaveReal(HT,GetHandleId(source),- 93001,V2) 
-            call SaveReal(HT,GetHandleId(source),- 93002,V3)
-        endif
+           // call SaveReal(HT,GetHandleId(source),- 93000,V1)
+           // call SaveReal(HT,GetHandleId(source),- 93001,V2) 
+           // call SaveReal(HT,GetHandleId(source),- 93002,V3)
+        //endif
 
-        call ShowLifestealText(source, target, amount)
+        //call ShowLifestealText(source, target, amount)
 
-        call SetWidgetLife(source,GetWidgetLife(source)+ amount )
+        //call SetWidgetLife(source,GetWidgetLife(source)+ amount )
     endfunction
 endlibrary
