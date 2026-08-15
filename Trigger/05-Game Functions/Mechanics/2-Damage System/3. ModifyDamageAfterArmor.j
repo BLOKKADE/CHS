@@ -139,13 +139,11 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         // Absolute Blood
-        if GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_BLOOD_ABILITY_ID) > 0 then
-            set r2 = Damage.index.amount * (0.05 * (I2R(GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_BLOOD_ABILITY_ID)) / 30.0))
-
-            set r2 = r2 + Damage.index.amount * (0.05 * I2R(GetUnitElementCount(DamageSourceHero, Element_Blood)))
-
+        if DamageSourceHero != null and GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_BLOOD_ABILITY_ID) > 0 then
+            set r2 = Damage.index.amount * 0.05 * (I2R(GetUnitAbilityLevel(DamageSourceHero, ABSOLUTE_BLOOD_ABILITY_ID)) / 30.0)
+            set r2 = r2 + Damage.index.amount * 0.05 * I2R(GetUnitElementCount(DamageSourceHero, Element_Blood))
             set vampAmount = vampAmount + r2
-            set vampCount = vampCount + 1
+            set vampCount  = vampCount  + 1
         endif
 
         //Dreadlord Passive

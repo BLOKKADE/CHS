@@ -47,8 +47,8 @@ library Vampirism requires UnitItems, DivineBubble
            // call SaveReal(HT,GetHandleId(source),- 93002,V3)
         //endif
 
-        //call ShowLifestealText(source, target, amount)
+        call ShowLifestealText(source, target, amount)
 
-        //call SetWidgetLife(source,GetWidgetLife(source)+ amount )
+        call SetWidgetLife(source,GetWidgetLife(source)+ amount )
     endfunction
 endlibrary
